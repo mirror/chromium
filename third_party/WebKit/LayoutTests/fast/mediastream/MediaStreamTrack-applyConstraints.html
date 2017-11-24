@@ -41,16 +41,18 @@ promise_test(test => {
 }, 'Attempting to change the deviceId with applyConstraints() fails');
 
 promise_test(() => {
-  return navigator.mediaDevices.getUserMedia({audio: true})
+  let track;
+  return navigator.mediaDevices.getUserMedia({video: true})
       .then(s => {
-    var track = s.getAudioTracks()[0];
+    track = s.getVideoTracks()[0];
+    return track.getSettings();
+  }).then(settings => {
     return track.applyConstraints(
-        { echoCancellation: { exact: true}, notKnownName: { exact: true }})
-    .then(() => {
-      constraints = track.getConstraints();
-      assert_equals(Object.keys(constraints).length, 1);
-      assert_false(constraints.hasOwnProperty('notKnownName'));
-    });
+        { width: { exact: settings.width }, notKnownName: { exact: true }})
+  }).then(() => {
+    constraints = track.getConstraints();
+    assert_equals(Object.keys(constraints).length, 1);
+    assert_false(constraints.hasOwnProperty('notKnownName'));
   });
 }, 'An unsupported constraint is ignored by applyConstraints()');
 
@@ -84,13 +86,14 @@ promise_test(() => {
   const complexConstraintSet = {
     width: { min: 30, max: 480 },
     height: { min: 30, max: 480, exact: 350 },
-    aspectRatio: { ideal: 1.3333333, exact: 1.4444 },
-    frameRate: { exact: 30.0 },
-    facingMode: { exact: "user" }
   };
   // These constraints are syntactically valid, but may cause rejection.
   // They are included in an "advanced" constraint.
   const ignorableConstraintSet = {
+    frameRate: { ideal: 30.0 },
+    facingMode: { ideal: "user" },
+    aspectRatio: { ideal: 1.3333333, exact: 1.4444 },
+
     volume: { ideal: 1.0 },
     sampleRate: { ideal: 42 },
     sampleSize: { ideal: 3 },
@@ -110,7 +113,7 @@ promise_test(() => {
       constraints = track.getConstraints();
       assert_true(constraintElementsEqual(constraints, complexConstraints),
         "Unexpected result: In: " +
-  JSON.stringify(complexConstraints, null, 2) +
+        JSON.stringify(complexConstraints, null, 2) +
         " Out: " + JSON.stringify(constraints, null, 2));
     });
   });
