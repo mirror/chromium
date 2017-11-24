@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb46503a_bdb792de",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T17:02:00Z",
+      "side": 1,
+      "message": ".cc files should have definitions in the same order as declarations in the corresponding .h file. That is a general rule. I don\u0027t want to be the person to block commits based on this argument, just nagging a little for future reviews, where I would not require it either.",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 18
+      },
+      "revId": "2b25fd37cd9b5a84f1cb41051147033ca124845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

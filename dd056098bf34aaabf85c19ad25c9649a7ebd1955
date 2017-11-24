@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f20d30fd_ef5fa3aa",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T17:02:00Z",
+      "side": 1,
+      "message": "as discussed offline, this was not a great suggestion, since base::android::kStartOfText is known not earlier than at dynamic linking time.\n\nconst for locals .. afair it is generally discouraged in chromium",
+      "parentUuid": "147a74a6_441b3e5e",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 8
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e47efdb_2755427b",
         "filename": "tools/cygprofile/lightweight_cygprofile.h",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "They are together here, because it\u0027s less code, and they run fast anyway. From the commit message, all tests collectively took 1.1s here on a N5X, the overhead of splitting the tests is likely higher.",
       "parentUuid": "389ee367_b5d605ad",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 2
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b00de40_333026e5",
+        "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T17:02:00Z",
+      "side": 1,
+      "message": "then let\u0027s call them _perftest.cc to reduce confusion. The fact that they run unittests prior to benchmarking will be an implementation detail. We are also not adding it to the global unit_tests, so it makes this file closer in nature to perftests.",
+      "parentUuid": "e37e8bef_78c6a572",
       "range": {
         "startLine": 1,
         "startChar": 0,
