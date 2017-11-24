@@ -6,8 +6,10 @@
 """Lists all the reached symbols from an instrumentation dump."""
 
 import argparse
+import glob
 import logging
 import os
+import random
 import sys
 
 _SRC_PATH = os.path.abspath(os.path.join(
@@ -35,21 +37,24 @@ def ProcessDump(filename):
   return result
 
 
-def MergeDumps(filenames):
+def MergeDumps(globs):
   """Merges several dumps.
 
   Args:
-    filenames: [str] List of dump filenames.
+    globs: [str] List of dump filenames globs.
 
   Returns:
     A bitwise OR of all the dumps as returned by ProcessDump().
   """
-  dumps = [ProcessDump(filename) for filename in filenames]
+  files = []
+  for g in globs:
+    files.extend(glob.glob(g))
+  dumps = [ProcessDump(f) for f in files]
   assert len(set([len(d) for d in dumps])) == 1
   result = dumps[0]
   for d in dumps:
-    for (i, x) in enumerate(d):
-      result[i] |= x
+      for (i, x) in enumerate(d):
+        result[i] |= x
   return result
 
 
@@ -166,6 +171,11 @@ def MatchSymbolsInRegularBuild(reached_symbol_infos,
   matched_names = reached_symbol_names.intersection(regular_build_symbol_names)
   logging.info('Matched symbols = %d', len(matched_names))
 
+  logging.info('Reached instrumented symbols not in regular build: %d',
+               len(reached_symbol_names - regular_build_symbol_names))
+  map(logging.info,
+      random.sample(reached_symbol_names - regular_build_symbol_names, 5))
+
   symbol_name_to_primary = SymbolNameToPrimary(regular_build_symbol_infos)
   matched_primary_symbols = set()
   for name in matched_names:
@@ -178,6 +188,18 @@ def WriteReachedSymbolNames(filename, reached_symbols):
   with open(filename, 'w') as f:
     for s in reached_symbols:
       f.write(s.name + '\n')
+
+
+def CompareBuilds(instrumented_lib, regular_lib):
+  instrumented_names = set(
+      s.name for s in symbol_extractor.SymbolInfosFromBinary(instrumented_lib))
+  regular_names = set(
+      s.name for s in symbol_extractor.SymbolInfosFromBinary(regular_lib))
+  missing_instrumented = regular_names - instrumented_names
+  logging.info('Regular symbols not in instrumented build: %d',
+               len(missing_instrumented))
+  map(logging.info,
+      random.sample(missing_instrumented, min(10, len(missing_instrumented))))
 
 
 def CreateArgumentParser():
@@ -202,15 +224,16 @@ def main():
   dump = MergeDumps(args.dumps.split(','))
   logging.info('Mapping offsets to symbols')
   instrumented_native_lib = os.path.join(args.instrumented_build_dir,
-                                         'lib.unstripped', 'libchrome.so')
+                                         'lib.unstripped', 'libmonochrome.so')
   regular_native_lib = os.path.join(args.build_dir,
-                                    'lib.unstripped', 'libchrome.so')
+                                    'lib.unstripped', 'libmonochrome.so')
   offset_to_symbol_info = GetOffsetToSymbolArray(instrumented_native_lib)
   logging.info('Matching symbols')
   reached_symbols = GetReachedSymbolsFromDump(dump, offset_to_symbol_info)
   logging.info('Reached Symbols = %d', len(reached_symbols))
   total_size = sum(s.size for s in reached_symbols)
   logging.info('Total reached size = %d', total_size)
+  CompareBuilds(instrumented_native_lib, regular_native_lib)
   matched_in_regular_build = MatchSymbolsInRegularBuild(reached_symbols,
                                                         regular_native_lib)
   WriteReachedSymbolNames(args.output, matched_in_regular_build)

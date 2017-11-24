@@ -9,6 +9,7 @@ static_library("cygprofile") {
     assert(use_order_profiling)
     sources = [
       "lightweight_cygprofile.cc",
+      "lightweight_cygprofile.h",
     ]
   } else {
     sources = [

@@ -11,9 +11,11 @@
 #include <vector>
 
 #include "base/files/file.h"
+#include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
+#include "tools/cygprofile/lightweight_cygprofile.h"
 
 extern "C" {
 void dummy_function_to_check_ordering() {}
@@ -22,18 +24,20 @@ void dummy_function_to_anchor_text() {}
 
 namespace {
 
-constexpr size_t kMaxTextSizeInBytes = 280000000;  // Must be an overestimate.
+constexpr size_t kMaxTextSizeInBytes = 0x02b458b4;  // Must be an overestimate.
 constexpr size_t kArraySize = kMaxTextSizeInBytes / (4 * 32);
 
 // Allocated in .bss. std::atomic<uint32_t> is guaranteed to behave as uint32_t
 // with respect to size and initialization.
 // Having the array in .bss means that instrumentation starts from the very
-// first code executed within the binary.
-std::atomic<uint32_t> g_return_offsets[kArraySize];
+// first code executed within the binary, as well as making it possible to swap
+// arrays cheaply to change instrumentation strategies.
+std::atomic<uint32_t> g_startup_return_offsets[kArraySize];
+std::atomic<uint32_t> g_post_loading_return_offsets[kArraySize];
 
 // Non-null iff collection is enabled. Also used as the pointer to the array
 // to save a global load in the instrumentation function.
-std::atomic<std::atomic<uint32_t>*> g_enabled_and_array = {g_return_offsets};
+std::atomic<std::atomic<uint32_t>*> g_enabled_and_array = {g_startup_return_offsets};
 
 // This needs the orderfile to contain this function as the first entry.
 // Used to compute the offset of any return address inside .text, as relative
@@ -53,10 +57,20 @@ class DelayedDumper {
              reinterpret_cast<size_t>(&dummy_function_to_check_ordering));
 
     std::thread([]() {
+      // TODO(mattcary): explicit dump signal rather than waiting. Particularly
+      // with the array check below, we could race on the dump.
       sleep(kDelayInSeconds);
       // As Dump() is called from the same thread, ensures that the
       // base functions called in the dumping code will not spuriously appear
       // in the profile.
+
+      // Delay dump until post_loading array has been used.
+      // TODO(mattcary): confirm std::memory_order_relaxed usage.
+      while (g_enabled_and_array.load(std::memory_order_relaxed) !=
+             g_post_loading_return_offsets) {
+        sleep(kDelayInSeconds);
+      }
+
       g_enabled_and_array.store(nullptr, std::memory_order_relaxed);
       Dump();
     })
@@ -68,12 +82,23 @@ class DelayedDumper {
   static void Dump() {
     CHECK(!g_enabled_and_array.load(std::memory_order_relaxed));
 
-    auto path = base::StringPrintf(
-        "/data/local/tmp/chrome/cygprofile-instrumented-code-hitmap-%d.txt",
-        getpid());
-    auto file =
-        base::File(base::FilePath(path),
-                   base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+    DumpArray("startup", g_startup_return_offsets);
+    DumpArray("postload", g_post_loading_return_offsets);
+  }
+
+  static void DumpArray(const std::string& specifier,
+                        std::atomic<uint32_t>* offset_array) {
+    auto dir = base::FilePath("/data/local/tmp/chrome");
+    if (!base::PathExists(dir)) {
+      PLOG(WARNING) << "Could not find " << dir
+                  << ", it must be created manually. Trying to continue";
+    }
+    base::FilePath path = dir.Append(
+        base::StringPrintf("cygprofile-instrumented-code-hitmap-%s-%d.txt",
+                           specifier.c_str(), getpid()));
+
+    auto file = base::File(
+        path, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
     if (!file.IsValid()) {
       PLOG(ERROR) << "Could not open " << path;
       return;
@@ -81,16 +106,17 @@ class DelayedDumper {
 
     auto data = std::vector<char>(kArraySize * 32 + 1, '\0');
     for (size_t i = 0; i < kArraySize; i++) {
-      uint32_t value = g_return_offsets[i].load(std::memory_order_relaxed);
+      uint32_t value = offset_array[i].load(std::memory_order_relaxed);
       for (int bit = 0; bit < 32; bit++) {
         data[32 * i + bit] = value & (1 << bit) ? '1' : '0';
       }
     }
     data[32 * kArraySize] = '\n';
     file.WriteAtCurrentPos(&data[0], static_cast<int>(data.size()));
+    PLOG(INFO) << "Wrote dump information to " << path;
   }
 
-  static constexpr int kDelayInSeconds = 30;
+  static constexpr int kDelayInSeconds = 60;
 };
 
 // Static initializer on purpose. Will disable instrumentation after
@@ -98,7 +124,7 @@ class DelayedDumper {
 DelayedDumper g_dump_later;
 
 extern "C" {
-void __cyg_profile_func_enter(void* unused1, void* unused2) {
+void __cyg_profile_func_enter_bare() {
   // To avoid any risk of infinite recusion, this *must* *never* call any
   // instrumented function.
   auto* array = g_enabled_and_array.load(std::memory_order_relaxed);
@@ -135,8 +161,16 @@ void __cyg_profile_func_enter(void* unused1, void* unused2) {
                                           std::memory_order_relaxed));
 }
 
-void __cyg_profile_func_exit(void* unused1, void* unused2) {}
-
 }  // extern "C"
 
 }  // namespace
+
+namespace cygprofile {
+
+void OnDidStopLoading() {
+  // Swap return offset array.
+  g_enabled_and_array.store(g_post_loading_return_offsets,
+                            std::memory_order_relaxed);
+}
+
+}  // namespace cygprofile
