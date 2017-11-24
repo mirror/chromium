@@ -8,7 +8,6 @@ import android.app.Activity;
 
 import org.chromium.chrome.browser.infobar.InfoBarIdentifier;
 import org.chromium.chrome.browser.infobar.SimpleConfirmInfoBarBuilder;
-import org.chromium.chrome.browser.metrics.WebApkUma;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.ui.base.ActivityWindowAndroid;
 
@@ -23,11 +22,6 @@ public class ChromeWindow extends ActivityWindowAndroid {
      */
     public ChromeWindow(ChromeActivity activity) {
         super(activity);
-    }
-
-    @Override
-    protected void logUMAOnRequestPermissionDenied(String permission) {
-        WebApkUma.recordAndroidRuntimePermissionDeniedInWebApk(new String[] {permission});
     }
 
     /**
