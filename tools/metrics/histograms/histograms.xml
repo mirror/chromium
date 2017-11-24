@@ -95203,6 +95203,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebRTC.Audio.EchoCanceller.Erl" units="dB (shifted)">
+  <owner>gustaf@chromium.org</owner>
+  <summary>
+    This histogram logs the echo return loss achieved by the WebRTC echo
+    canceller as described in ITU G.168. A new value is logged every 10 seconds.
+  </summary>
+</histogram>
+
 <histogram name="WebRTC.Audio.EchoCanceller.ErlBand0" units="dB (shifted)">
   <owner>peah@chromium.org</owner>
   <summary>
@@ -95216,6 +95224,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     This histogram logs the echo return loss achieved by the WebRTC echo
     canceller between 4 and 8 kHz. A new value is logged every 10 seconds.
+  </summary>
+</histogram>
+
+<histogram name="WebRTC.Audio.EchoCanceller.Erle" units="dB">
+  <owner>gustaf@chromium.org</owner>
+  <summary>
+    This histogram logs the echo return loss enhancement achieved by the WebRTC
+    echo canceller as described in ITU G.168. A new value is logged every 10
+    seconds.
   </summary>
 </histogram>
 
