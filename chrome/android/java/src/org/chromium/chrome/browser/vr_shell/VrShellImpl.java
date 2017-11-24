@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.vr_shell;
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.StrictMode;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
@@ -63,6 +64,11 @@ public class VrShellImpl
         extends GvrLayout implements VrShell, SurfaceHolder.Callback, FullscreenListener {
     private static final String TAG = "VrShellImpl";
     private static final float INCHES_TO_METERS = 0.0254f;
+    // Display dimensions of the Pixel phone.
+    private static final float PIXEL_DISPLAY_WIDTH_METERS = 4.36f * INCHES_TO_METERS;
+    private static final float PIXEL_DISPLAY_HEIGHT_METERS = 2.45f * INCHES_TO_METERS;
+    private static final int PIXEL_DISPLAY_WIDTH_PIXELS = 1920;
+    private static final int PIXEL_DISPLAY_HEIGHT_PIXELS = 1080;
 
     private final ChromeActivity mActivity;
     private final VrShellDelegate mDelegate;
@@ -315,17 +321,31 @@ public class VrShellImpl
     }
 
     @Override
-    // TODO(crbug.com/762588): Fix getRealMetrics and remove suppression.
-    @SuppressLint("NewApi")
     public void initializeNative(Tab currentTab, boolean forWebVr,
             boolean webVrAutopresentationExpected, boolean inCct) {
         assert currentTab != null;
-        // Get physical and pixel size of the display, which is needed by native
-        // to dynamically calculate the content's resolution and window size.
-        DisplayMetrics dm = new DisplayMetrics();
-        mActivity.getWindowManager().getDefaultDisplay().getRealMetrics(dm);
-        float displayWidthMeters = (dm.widthPixels / dm.xdpi) * INCHES_TO_METERS;
-        float displayHeightMeters = (dm.heightPixels / dm.ydpi) * INCHES_TO_METERS;
+        float displayWidthMeters;
+        float displayHeightMeters;
+        int displayWidthPixels;
+        int displayHeightPixels;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            // Get physical and pixel size of the display, which is needed by native
+            // to dynamically calculate the content's resolution and window size.
+            DisplayMetrics dm = new DisplayMetrics();
+            mActivity.getWindowManager().getDefaultDisplay().getRealMetrics(dm);
+            displayWidthMeters = (dm.widthPixels / dm.xdpi) * INCHES_TO_METERS;
+            displayHeightMeters = (dm.heightPixels / dm.ydpi) * INCHES_TO_METERS;
+            displayWidthPixels = dm.widthPixels;
+            displayHeightPixels = dm.heightPixels;
+        } else {
+            // Display.getRealMetrics() is only available in API level 17+. Use default values on
+            // older platforms. We should never hit this code since VR is only available on Android
+            // K and newer.
+            displayWidthMeters = PIXEL_DISPLAY_WIDTH_METERS;
+            displayHeightMeters = PIXEL_DISPLAY_HEIGHT_METERS;
+            displayWidthPixels = PIXEL_DISPLAY_WIDTH_PIXELS;
+            displayHeightPixels = PIXEL_DISPLAY_HEIGHT_PIXELS;
+        }
 
         mContentVrWindowAndroid = new VrWindowAndroid(mActivity, mContentVirtualDisplay);
         boolean browsingDisabled = !VrShellDelegate.isVrShellEnabled(mDelegate.getVrSupportLevel());
@@ -336,8 +356,8 @@ public class VrShellImpl
         mNativeVrShell = nativeInit(mDelegate, mContentVrWindowAndroid.getNativePointer(), forWebVr,
                 webVrAutopresentationExpected, inCct, browsingDisabled,
                 hasOrCanRequestAudioPermission, getGvrApi().getNativeGvrContext(),
-                mReprojectedRendering, displayWidthMeters, displayHeightMeters, dm.widthPixels,
-                dm.heightPixels);
+                mReprojectedRendering, displayWidthMeters, displayHeightMeters, displayWidthPixels,
+                displayHeightPixels);
 
         reparentAllTabs(mContentVrWindowAndroid);
         swapToTab(currentTab);
