@@ -74,5 +74,19 @@ TEST_F(ShadowTest, AdjustElevationForSmallContents) {
   }
 }
 
+// Test that rounded corner radius is handled correctly.
+TEST_F(ShadowTest, AdjustRoundedCornerRadius) {
+  Shadow shadow;
+  shadow.Init(ShadowElevation::SMALL);
+  gfx::Rect content_bounds(100, 100, 300, 300);
+  shadow.SetContentBounds(content_bounds);
+  EXPECT_EQ(content_bounds, shadow.content_bounds());
+  shadow.SetRoundedCornerRadius(0);
+  gfx::Rect shadow_bounds(content_bounds);
+  shadow_bounds.Inset(InsetsForElevation(6));
+  EXPECT_EQ(shadow_bounds, shadow.layer()->bounds());
+  EXPECT_EQ(0, shadow.effective_rounded_corner_radius_for_testing());
+}
+
 }  // namespace
 }  // namespace wm
