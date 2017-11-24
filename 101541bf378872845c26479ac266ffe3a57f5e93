@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23cc99c2_0efd0fcb",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4036,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-24T05:12:17Z",
+      "side": 1,
+      "message": "The lifecycle callback for frames is already messy... and I\u0027m not really happy about adding more :/\n\nIs it possible to reuse some other existing lifecycle callback? Otherwise I\u0027d prefer to just expose WebScopedVirtualTimePauser::PauseVirtualTime instead of adding a generalized lifecycle callback on frame.",
+      "revId": "101541bf378872845c26479ac266ffe3a57f5e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e547f37f_10433061",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-24T05:12:17Z",
+      "side": 1,
+      "message": "Where is |is_new_navigation| used?",
+      "revId": "101541bf378872845c26479ac266ffe3a57f5e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb95f74e_c085cbbe",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-24T05:12:17Z",
+      "side": 1,
+      "message": "Would you add a comment of the API?",
+      "revId": "101541bf378872845c26479ac266ffe3a57f5e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
