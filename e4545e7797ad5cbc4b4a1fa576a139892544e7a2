@@ -16,6 +16,24 @@
       "revId": "e4545e7797ad5cbc4b4a1fa576a139892544e7a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987ee630_7f2360bc",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestObject.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-11-24T09:56:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f54b69c_3f7355db",
+      "revId": "e4545e7797ad5cbc4b4a1fa576a139892544e7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
