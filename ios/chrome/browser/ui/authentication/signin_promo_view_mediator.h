@@ -25,8 +25,6 @@ enum class SigninPromoViewState {
   NeverVisible = 0,
   // None of the buttons has been used yet.
   Unused,
-  // Sign-in is in progress.
-  SigninStarted,
   // Sign-in buttons have been used at least once.
   UsedAtLeastOnce,
   // Sign-in promo has been closed.
@@ -51,10 +49,13 @@ class PrefRegistrySyncable;
 
 // Chrome identity used to configure the view in a warm state mode. Otherwise
 // contains nil.
-@property(nonatomic, readonly, strong) ChromeIdentity* defaultIdentity;
+@property(nonatomic, readonly) ChromeIdentity* defaultIdentity;
 
 // Sign-in promo view state.
 @property(nonatomic) ios::SigninPromoViewState signinPromoViewState;
+
+// YES if the sign-in interaction controller is shown.
+@property(nonatomic, readonly, getter=isSigninInProgress) BOOL signinInProgress;
 
 // Registers the feature preferences.
 + (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry;
