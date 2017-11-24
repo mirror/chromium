@@ -12,6 +12,7 @@
 #include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
@@ -101,18 +102,20 @@ const char* BookmarkAppNavigationThrottle::GetNameForLogging() {
 
 content::NavigationThrottle::ThrottleCheckResult
 BookmarkAppNavigationThrottle::WillStartRequest() {
-  return ProcessNavigation();
+  return ProcessNavigation(false /* is_redirect */);
 }
 
 content::NavigationThrottle::ThrottleCheckResult
 BookmarkAppNavigationThrottle::WillRedirectRequest() {
-  return ProcessNavigation();
+  return ProcessNavigation(true /* is_redirect */);
 }
 
 content::NavigationThrottle::ThrottleCheckResult
-BookmarkAppNavigationThrottle::ProcessNavigation() {
+BookmarkAppNavigationThrottle::ProcessNavigation(bool is_redirect) {
   ui::PageTransition transition_type = navigation_handle()->GetPageTransition();
-  if (!(PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK))) {
+  if (!PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK) &&
+      !PageTransitionCoreTypeIs(transition_type,
+                                ui::PAGE_TRANSITION_AUTO_BOOKMARK)) {
     DVLOG(1) << "Don't intercept: Transition type is "
              << PageTransitionGetCoreTransitionString(transition_type);
     return content::NavigationThrottle::PROCEED;
@@ -120,6 +123,26 @@ BookmarkAppNavigationThrottle::ProcessNavigation() {
 
   auto app_for_window_ref = GetAppForWindow();
   auto target_app_ref = GetTargetApp();
+
+  if (PageTransitionCoreTypeIs(transition_type,
+                               ui::PAGE_TRANSITION_AUTO_BOOKMARK)) {
+    // Only comparing the app for the window with the target app during app
+    // launch would result in this if statement always being true: during launch
+    // the navigation's WebContents might not have been attached to a window,
+    // thus app_for_window_ref will always be null. This is not true during a
+    // redirection, so we can compare the current app with the target app.
+    //
+    // We could defer the navigation until the WebContents is attached but we
+    // would be delaying all AUTO_BOOKMARK navigations.
+    if (is_redirect && app_for_window_ref != target_app_ref) {
+      DVLOG(1) << "Out-of-scope navigation during launch. Opening in Chrome.";
+      Browser* browser = chrome::FindBrowserWithWebContents(
+          navigation_handle()->GetWebContents());
+      DCHECK(browser);
+      chrome::OpenInChrome(browser);
+    }
+    return content::NavigationThrottle::PROCEED;
+  }
 
   if (app_for_window_ref == target_app_ref) {
     DVLOG(1) << "Don't intercept: The target URL is in the same scope as the "
