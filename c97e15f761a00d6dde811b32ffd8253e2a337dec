@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ad82cf6_b8266463",
+        "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-24T13:35:30Z",
+      "side": 1,
+      "message": "The WebContentImpl tries to connect Device Service earlier than SetUpOnMainThread(), so we move the SetGlobalBinderForTesting() to constructor.",
+      "range": {
+        "startLine": 334,
+        "startChar": 2,
+        "endLine": 346,
+        "endChar": 61
+      },
+      "revId": "c97e15f761a00d6dde811b32ffd8253e2a337dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
