@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.test.util.browser;
 
+import static org.chromium.chrome.test.util.browser.AnnotationProcessingUtils.getAnnotations;
+
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -19,6 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -162,11 +165,8 @@ public class Features {
 
         @Override
         protected void before() throws Throwable {
-            collectDisabledFeatures(
-                    mDescription.getTestClass().getAnnotation(DisableFeatures.class));
-            collectEnabledFeatures(mDescription.getTestClass().getAnnotation(EnableFeatures.class));
-            collectDisabledFeatures(mDescription.getAnnotation(DisableFeatures.class));
-            collectEnabledFeatures(mDescription.getAnnotation(EnableFeatures.class));
+            collectEnabledFeatures();
+            collectDisabledFeatures();
 
             applyFeatures();
         }
@@ -178,12 +178,16 @@ public class Features {
 
         abstract protected void applyFeatures();
 
-        private void collectEnabledFeatures(@Nullable EnableFeatures annotation) {
-            if (annotation != null) getInstance().enable(annotation.value());
+        private void collectEnabledFeatures() {
+            List<EnableFeatures> features = getAnnotations(mDescription, EnableFeatures.class);
+            Collections.reverse(features); // We want to apply the direct annotations last.
+            for (EnableFeatures f : features) getInstance().enable(f.value());
         }
 
-        private void collectDisabledFeatures(@Nullable DisableFeatures annotation) {
-            if (annotation != null) getInstance().disable(annotation.value());
+        private void collectDisabledFeatures() {
+            List<DisableFeatures> features = getAnnotations(mDescription, DisableFeatures.class);
+            Collections.reverse(features); // We want to apply the direct annotations last.
+            for (DisableFeatures f : features) getInstance().disable(f.value());
         }
     }
 }
