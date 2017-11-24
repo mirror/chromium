@@ -102,6 +102,18 @@ bool ProcessedLocalAudioSource::EnsureSourceIsStarted() {
     SetDevice(modified_device);
   }
 
+  // Disable device's ambient noise reduction if constraints explicitly specify
+  // to do so.
+  if (audio_processing_properties_.disable_hw_noise_suppression &&
+      (device().input.effects() &
+       media::AudioParameters::AMBIENT_NOISE_SUPPRESSION)) {
+    MediaStreamDevice modified_device(device());
+    modified_device.input.set_effects(
+        modified_device.input.effects() &
+        ~media::AudioParameters::AMBIENT_NOISE_SUPPRESSION);
+    SetDevice(modified_device);
+  }
+
   // Create the MediaStreamAudioProcessor, bound to the WebRTC audio device
   // module.
   WebRtcAudioDeviceImpl* const rtc_audio_device =
