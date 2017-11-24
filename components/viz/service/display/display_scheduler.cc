@@ -29,6 +29,7 @@ DisplayScheduler::DisplayScheduler(BeginFrameSource* begin_frame_source,
       needs_draw_(false),
       expecting_root_surface_damage_because_of_resize_(false),
       has_pending_surfaces_(false),
+      needs_low_latency_begin_frame_(false),
       next_swap_id_(1),
       pending_swaps_(0),
       max_pending_swaps_(max_pending_swaps),
@@ -108,6 +109,7 @@ void DisplayScheduler::ProcessSurfaceDamage(const SurfaceId& surface_id,
 
   if (display_damaged) {
     needs_draw_ = true;
+    needs_low_latency_begin_frame_ |= surface_states_[surface_id].low_latency;
 
     if (surface_id == root_surface_id_)
       expecting_root_surface_damage_because_of_resize_ = false;
@@ -296,7 +298,12 @@ void DisplayScheduler::OnBeginFrameSourcePausedChanged(bool paused) {
 }
 
 void DisplayScheduler::OnFirstSurfaceActivation(
-    const SurfaceInfo& surface_info) {}
+    const SurfaceInfo& surface_info) {
+  if (surface_info.is_valid()) {
+    // Insert a new state for the surface if we don't know of it yet.
+    surface_states_[surface_info.id()].low_latency = surface_info.low_latency();
+  }
+}
 
 void DisplayScheduler::OnSurfaceActivated(const SurfaceId& surface_id) {}
 
@@ -371,7 +378,7 @@ DisplayScheduler::AdjustedBeginFrameDeadlineMode() const {
 
 DisplayScheduler::BeginFrameDeadlineMode
 DisplayScheduler::DesiredBeginFrameDeadlineMode() const {
-  if (output_surface_lost_) {
+  if (output_surface_lost_ || needs_low_latency_begin_frame_) {
     TRACE_EVENT_INSTANT0("viz", "Lost output surface",
                          TRACE_EVENT_SCOPE_THREAD);
     return BeginFrameDeadlineMode::kImmediate;
@@ -485,7 +492,7 @@ bool DisplayScheduler::AttemptDrawAndSwap() {
 void DisplayScheduler::OnBeginFrameDeadline() {
   TRACE_EVENT0("viz", "DisplayScheduler::OnBeginFrameDeadline");
   DCHECK(inside_begin_frame_deadline_interval_);
-
+  needs_low_latency_begin_frame_ = false;
   bool did_draw = AttemptDrawAndSwap();
   DidFinishFrame(did_draw);
 }

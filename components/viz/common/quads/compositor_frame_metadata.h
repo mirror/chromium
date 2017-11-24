@@ -121,6 +121,11 @@ class VIZ_COMMON_EXPORT CompositorFrameMetadata {
   // CompositorFrameSinkClient.
   uint32_t presentation_token = 0;
 
+  // Setting this to true indicates that the compositor frame must be displayed
+  // with as little latency as possible.  This affects the display scheduler
+  // timing. Animations may not be as smooth when this is enabled.
+  bool low_latency = false;
+
  private:
   CompositorFrameMetadata(const CompositorFrameMetadata& other);
   CompositorFrameMetadata operator=(const CompositorFrameMetadata&) = delete;

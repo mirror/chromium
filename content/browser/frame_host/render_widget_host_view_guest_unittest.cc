@@ -266,7 +266,8 @@ TEST_F(RenderWidgetHostViewGuestSurfaceTest, TestGuestSurface) {
 #endif
   // Surface ID should have been passed to BrowserPluginGuest to
   // be sent to the embedding renderer.
-  EXPECT_EQ(viz::SurfaceInfo(id, scale_factor, view_size),
+  constexpr bool low_latency = false;
+  EXPECT_EQ(viz::SurfaceInfo(id, scale_factor, view_size, low_latency),
             browser_plugin_guest_->last_surface_info_);
 
   browser_plugin_guest_->ResetTestData();
@@ -286,7 +287,7 @@ TEST_F(RenderWidgetHostViewGuestSurfaceTest, TestGuestSurface) {
 #endif
   // Surface ID should have been passed to BrowserPluginGuest to
   // be sent to the embedding renderer.
-  EXPECT_EQ(viz::SurfaceInfo(id, scale_factor, view_size),
+  EXPECT_EQ(viz::SurfaceInfo(id, scale_factor, view_size, low_latency),
             browser_plugin_guest_->last_surface_info_);
 
   browser_plugin_guest_->set_attached(false);

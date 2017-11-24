@@ -25,10 +25,12 @@ class SurfaceInfo {
   SurfaceInfo() = default;
   SurfaceInfo(const SurfaceId& id,
               float device_scale_factor,
-              const gfx::Size& size_in_pixels)
+              const gfx::Size& size_in_pixels,
+              bool low_latency)
       : id_(id),
         device_scale_factor_(device_scale_factor),
-        size_in_pixels_(size_in_pixels) {}
+        size_in_pixels_(size_in_pixels),
+        low_latency_(low_latency) {}
 
   bool is_valid() const {
     return id_.is_valid() && device_scale_factor_ != 0 &&
@@ -46,6 +48,7 @@ class SurfaceInfo {
   const SurfaceId& id() const { return id_; }
   float device_scale_factor() const { return device_scale_factor_; }
   const gfx::Size& size_in_pixels() const { return size_in_pixels_; }
+  bool low_latency() const { return low_latency_; }
 
  private:
   friend struct mojo::StructTraits<mojom::SurfaceInfoDataView, SurfaceInfo>;
@@ -54,6 +57,7 @@ class SurfaceInfo {
   SurfaceId id_;
   float device_scale_factor_ = 1.f;
   gfx::Size size_in_pixels_;
+  bool low_latency_;
 };
 
 }  // namespace viz

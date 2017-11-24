@@ -597,8 +597,9 @@ TEST_F(StructTraitsTest, SurfaceInfo) {
                      base::UnguessableToken::Deserialize(143254, 144132)));
   constexpr float device_scale_factor = 1.234f;
   constexpr gfx::Size size(987, 123);
+  constexpr bool low_latency = false;
 
-  const SurfaceInfo input(surface_id, device_scale_factor, size);
+  const SurfaceInfo input(surface_id, device_scale_factor, size, low_latency);
   SurfaceInfo output;
   SerializeAndDeserialize<mojom::SurfaceInfo>(input, &output);
 

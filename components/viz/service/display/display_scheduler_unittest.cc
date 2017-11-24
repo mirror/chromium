@@ -790,5 +790,52 @@ TEST_F(DisplaySchedulerTest, SetNeedsOneBeginFrame) {
   EXPECT_FALSE(scheduler_.inside_begin_frame_deadline_interval());
 }
 
+TEST_F(DisplaySchedulerTest, LowLatency) {
+  SurfaceId root_surface_id(
+      kArbitraryFrameSinkId,
+      LocalSurfaceId(1, base::UnguessableToken::Create()));
+  SurfaceId low_latency_surface_id(
+      kArbitraryFrameSinkId,
+      LocalSurfaceId(2, base::UnguessableToken::Create()));
+
+  scheduler_.SetVisible(true);
+  scheduler_.SetNewRootSurface(root_surface_id);
+  gfx::Size size(10, 10);
+  SurfaceInfo root_surface_info(root_surface_id, 1.0f, size, false);
+  scheduler_.OnFirstSurfaceActivation(root_surface_info);
+  SurfaceInfo low_latency_surface_info(low_latency_surface_id, 1.0f, size,
+                                       true);
+  scheduler_.OnFirstSurfaceActivation(low_latency_surface_info);
+
+  AdvanceTimeAndBeginFrameForTest({root_surface_id, low_latency_surface_id});
+
+  // Touching the the root surface should result in normal scheduling
+  SurfaceDamaged(root_surface_id);
+  base::TimeTicks late_deadline =
+      now_src().NowTicks() + BeginFrameArgs::DefaultInterval();
+  EXPECT_LT(now_src().NowTicks(),
+            scheduler_.DesiredBeginFrameDeadlineTimeForTest());
+  EXPECT_GE(late_deadline, scheduler_.DesiredBeginFrameDeadlineTimeForTest());
+  // Touching the low latency surface reschedules the BeginFrame for immediate
+  // execution.
+  SurfaceDamaged(low_latency_surface_id);
+  EXPECT_GE(now_src().NowTicks(),
+            scheduler_.DesiredBeginFrameDeadlineTimeForTest());
+
+  AdvanceTimeAndBeginFrameForTest({root_surface_id, low_latency_surface_id});
+
+  // Touching the low latency surface schedules the BeginFrame for immediate
+  // execution.
+  late_deadline = now_src().NowTicks() + BeginFrameArgs::DefaultInterval();
+  EXPECT_LE(late_deadline, scheduler_.DesiredBeginFrameDeadlineTimeForTest());
+  SurfaceDamaged(low_latency_surface_id);
+  EXPECT_GE(now_src().NowTicks(),
+            scheduler_.DesiredBeginFrameDeadlineTimeForTest());
+  // Touching the root surface has no effect on scheduling since it is trumped
+  SurfaceDamaged(root_surface_id);
+  EXPECT_GE(now_src().NowTicks(),
+            scheduler_.DesiredBeginFrameDeadlineTimeForTest());
+}
+
 }  // namespace
 }  // namespace viz
