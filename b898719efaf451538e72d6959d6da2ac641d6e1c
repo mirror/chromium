@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ef2e706_d41dd42c",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-24T20:58:00Z",
+      "side": 1,
+      "message": "quad content space meaning the space before applying transform? Yes it is! I can update the name. It is better.",
+      "parentUuid": "c7661b8c_eb8c310b",
+      "revId": "b898719efaf451538e72d6959d6da2ac641d6e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "117e75d9_19222072",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "be1e62c4_5fd6a5be",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-24T20:58:00Z",
+      "side": 1,
+      "message": "Based on my knowledge, I agree with you. I will ask vollick@ for feedback. Thanks",
+      "parentUuid": "117e75d9_19222072",
+      "revId": "b898719efaf451538e72d6959d6da2ac641d6e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12a4ee18_8aaf7e71",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 3
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "4b2b9899_885ac47f",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-24T20:58:00Z",
+      "side": 1,
+      "message": "Yes, i thought about this as well, so I added a TODO for myself for adaptation to different form. Thank you! I will update this part.",
+      "parentUuid": "12a4ee18_8aaf7e71",
+      "revId": "b898719efaf451538e72d6959d6da2ac641d6e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d23dc0a5_deff5228",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 3
@@ -100,6 +154,24 @@
       "writtenOn": "2017-11-24T18:17:32Z",
       "side": 1,
       "message": "Do we need the IsEmpty? If it\u0027s empty and contains (they\u0027d have to both be empty) then skipping seems okay? Does IsEmpty help with perf?",
+      "revId": "b898719efaf451538e72d6959d6da2ac641d6e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e65180_b4824ac0",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-24T20:58:00Z",
+      "side": 1,
+      "message": "It is a good question. IsEmpty() is a constant function that checks if height or width is 0 and constains is also a constant function. This doesn\u0027t really help with performance. As long as |occlusion_coordinate_space| is not empty, we will skip the else if clause. \n\nIn summary, thank you for bring this up. I will remove the IsEmpty() check!",
+      "parentUuid": "d23dc0a5_deff5228",
       "revId": "b898719efaf451538e72d6959d6da2ac641d6e1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
