@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7c658de_eefae30e",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-24T08:24:37Z",
+      "side": 1,
+      "message": "Not used?",
+      "revId": "349bef426db5bd54681bd10774a8d5a3c7ea8cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae205551_aab5d3d6",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-24T08:24:37Z",
+      "side": 1,
+      "message": "nit: blob could be an in-memory thing, so \u0027persistent content\u0027 might be slightly misleading?",
+      "revId": "349bef426db5bd54681bd10774a8d5a3c7ea8cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8352ed9_92781e41",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-24T08:24:37Z",
+      "side": 1,
+      "message": "nit: Can we make the wording a bit clearer that |calculated_size| is the size of the content mentioned there? (Should |calculated_size| be just |size|?)",
+      "revId": "349bef426db5bd54681bd10774a8d5a3c7ea8cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
