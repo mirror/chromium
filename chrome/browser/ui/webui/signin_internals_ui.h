@@ -13,7 +13,7 @@
 
 // The implementation for the chrome://signin-internals page.
 class SignInInternalsUI : public content::WebUIController,
-                          public AboutSigninInternals::Observer {
+                          public signin::AboutSigninInternals::Observer {
  public:
   explicit SignInInternalsUI(content::WebUI* web_ui);
   ~SignInInternalsUI() override;

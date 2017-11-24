@@ -32,6 +32,8 @@ class SigninClient;
 // This makes it easier to keep values and their associated times together.
 using TimedSigninStatusValue = std::pair<std::string, std::string>;
 
+namespace signin {
+
 // This class collects authentication, signin and token information
 // to propagate to about:signin-internals via SigninInternalsUI.
 class AboutSigninInternals
@@ -57,7 +59,8 @@ class AboutSigninInternals
                        AccountTrackerService* account_tracker,
                        SigninManagerBase* signin_manager,
                        SigninErrorController* signin_error_controller,
-                       GaiaCookieManagerService* cookie_manager_service);
+                       GaiaCookieManagerService* cookie_manager_service,
+                       AccountConsistencyMethod account_consistency);
   ~AboutSigninInternals() override;
 
   // Registers the preferences used by AboutSigninInternals.
@@ -164,7 +167,8 @@ class AboutSigninInternals
         SigninErrorController* signin_error_controller,
         ProfileOAuth2TokenService* token_service,
         GaiaCookieManagerService* cookie_manager_service_,
-        SigninClient* signin_client);
+        SigninClient* signin_client,
+        AccountConsistencyMethod account_consistency);
   };
 
   // SigninManager::SigninDiagnosticsObserver implementation.
@@ -223,9 +227,13 @@ class AboutSigninInternals
   // Most of the values are mirrored in the prefs for persistence.
   SigninStatus signin_status_;
 
+  AccountConsistencyMethod account_consistency_;
+
   base::ObserverList<Observer> signin_observers_;
 
   DISALLOW_COPY_AND_ASSIGN(AboutSigninInternals);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_ABOUT_SIGNIN_INTERNALS_H_
