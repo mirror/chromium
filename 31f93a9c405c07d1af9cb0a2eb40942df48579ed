@@ -22,6 +22,30 @@
       "revId": "31f93a9c405c07d1af9cb0a2eb40942df48579ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2b200a_dcc08c40",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-24T20:22:35Z",
+      "side": 1,
+      "message": "Hmm, the WebApkServiceImplWrapper still calls here to notify the notification. So we can\u0027t simply remove it, unless we change the wrapper to notify directly.",
+      "parentUuid": "c05a4390_44656b23",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "31f93a9c405c07d1af9cb0a2eb40942df48579ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
