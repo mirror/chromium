@@ -1460,6 +1460,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
   }
 }
 
+// TODO(crbug.com/788465): Verify that the history state management here are not
+// needed for WKBasedNavigationManagerImpl and delete this method. The
+// OnNavigationItemCommitted() call is likely the only thing that needs to be
+// retained.
 - (void)updateHTML5HistoryState {
   web::NavigationItemImpl* currentItem = self.currentNavItem;
   if (!currentItem)
@@ -1550,8 +1554,16 @@ registerLoadRequestForURL:(const GURL&)requestURL
   [self executeJavaScript:script
         completionHandler:^(id, NSError*) {
           CRWWebController* strongSelf = weakSelf;
-          if (strongSelf && !strongSelf->_isBeingDestroyed)
+          if (strongSelf &&
+              !strongSelf->_isBeingDestroyed
+              // Make sure that no new navigation has started since URL value
+              // was captured to avoid clobbering _lastRegisteredRequestURL.
+              // See crbug.com/788231.
+              // TODO(crbug.com/788465): simplify history state handling to
+              // avoid this hack.
+              && currentItem == self.currentNavItem) {
             strongSelf->_lastRegisteredRequestURL = URL;
+          }
         }];
 }
 
@@ -1974,14 +1986,23 @@ registerLoadRequestForURL:(const GURL&)requestURL
   [self optOutScrollsToTopForSubviews];
 
   DCHECK((currentURL == _lastRegisteredRequestURL) ||  // latest navigation
-         // previous navigation
+                                                       // previous navigation
          ![[_navigationStates lastAddedNavigation] isEqual:navigation] ||
          // invalid URL load
          (!_lastRegisteredRequestURL.is_valid() &&
           _documentURL.spec() == url::kAboutBlankURL) ||
          // about URL was changed by WebKit (e.g. about:newtab -> about:blank)
          (_lastRegisteredRequestURL.scheme() == url::kAboutScheme &&
-          currentURL.spec() == url::kAboutBlankURL))
+          currentURL.spec() == url::kAboutBlankURL) ||
+         // In a very unfortunate edge case, window.history.didReplaceState
+         // message can arrive between the |webView:didCommitNavigation| and
+         // |webView:didFinishNavigation| callbacks of the page that contains
+         // the replaceState call. In this case, _lastRegisteredRequestURL and
+         // webView.URL are already updated to the replace state URL, but
+         // currentURL is still the old URL. See crbug.com/788464.
+         // TODO(crbug.com/788465): simplify history state handling to avoid
+         // this hack.
+         (_lastRegisteredRequestURL == net::GURLWithNSURL(_webView.URL)))
       << std::endl
       << "currentURL = [" << currentURL << "]" << std::endl
       << "_lastRegisteredRequestURL = [" << _lastRegisteredRequestURL << "]";
@@ -4922,6 +4943,12 @@ registerLoadRequestForURL:(const GURL&)requestURL
       return;
     [self URLDidChangeWithoutDocumentChange:URL];
   } else if ([self isKVOChangePotentialSameDocumentNavigationToURL:URL]) {
+    // Remeber the most recently started navigation. If another navigation
+    // starts before the JS completion block fires, don't run the block to
+    // avoid clobbering global states. See crbug.com/788452.
+    // TODO(crbug.com/788465): simplify history state handling to avoid this
+    // hack.
+    WKNavigation* navigation = [_navigationStates lastAddedNavigation];
     [_webView
         evaluateJavaScript:@"window.location.href"
          completionHandler:^(id result, NSError* error) {
@@ -4952,7 +4979,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
            BOOL URLDidChangeFromDocumentURL = URL != _documentURL;
            if (windowLocationMatchesNewURL &&
                newURLOriginMatchesDocumentURLOrigin &&
-               webViewURLMatchesNewURL && URLDidChangeFromDocumentURL) {
+               webViewURLMatchesNewURL && URLDidChangeFromDocumentURL &&
+               navigation == [_navigationStates lastAddedNavigation]) {
              [self URLDidChangeWithoutDocumentChange:URL];
            }
          }];
