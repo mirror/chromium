@@ -92,6 +92,30 @@
       "revId": "2b25fd37cd9b5a84f1cb41051147033ca124845a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d98c17_cfc1f62f",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T18:36:49Z",
+      "side": 1,
+      "message": "+1 for keeping header-unadvertised stuff in the anonymous namespace",
+      "parentUuid": "1fcb4d4c_993890e9",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 18
+      },
+      "revId": "2b25fd37cd9b5a84f1cb41051147033ca124845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
