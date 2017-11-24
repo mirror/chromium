@@ -591,7 +591,6 @@ void Element::NativeDistributeScroll(ScrollState& scroll_state) {
 
   const double delta_x = scroll_state.deltaX();
   const double delta_y = scroll_state.deltaY();
-
   CallApplyScroll(scroll_state);
 
   if (delta_x != scroll_state.deltaX() || delta_y != scroll_state.deltaY())
