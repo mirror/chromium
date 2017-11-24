@@ -22,6 +22,30 @@
       "revId": "f5c66fa6f3122ba1544de844aeebbf3268dbac49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461d0490_01a45d2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-24T15:38:28Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think this is the problem. The mocked methods are never called from the background thread directly, it just posts a task back to the UI thread. So that can never happen before the expectations are set up.\n\nNo, all methods on LogoCache are called on the background thread, see https://cs.chromium.org/chromium/src/components/search_provider_logos/logo_tracker.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d59. GetCachedLogo() then forwards to the mock method.",
+      "parentUuid": "5b4ea7ea_a473d5b3",
+      "range": {
+        "startLine": 10,
+        "startChar": 67,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "f5c66fa6f3122ba1544de844aeebbf3268dbac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
