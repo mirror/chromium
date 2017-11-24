@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21fba14f_aa4ad722",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T18:52:18Z",
+      "side": 1,
+      "message": "I\u0027m not totally sure that it\u0027s safe - it can lead to strange effects when we\u0027ll try to get a task runner from task destructor. I\u0027ll add a TODO for now.",
+      "parentUuid": "261dc3e8_4ddfbd9e",
+      "range": {
+        "startLine": 65,
+        "startChar": 15,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2602406f_cad5c9c3",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a81a996_3fa34265",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T18:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2602406f_cad5c9c3",
+      "range": {
+        "startLine": 69,
+        "startChar": 52,
+        "endLine": 69,
+        "endChar": 62
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "67bda07f_c36b336f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T18:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38304f7e_6506af30",
+      "range": {
+        "startLine": 70,
+        "startChar": 14,
+        "endLine": 70,
+        "endChar": 19
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9d92ab1_5dad07bc",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65fab8ec_0b2e079e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T18:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9d92ab1_5dad07bc",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 28
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8724c728_54847dad",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3275,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T18:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a523f79_72ddd2c4",
+      "range": {
+        "startLine": 3275,
+        "startChar": 6,
+        "endLine": 3275,
+        "endChar": 38
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a5f0bcb_332c8f22",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/create_task_queue_manager_for_test.h",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf3499d_13dc4aec",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/create_task_queue_manager_for_test.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T18:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a5f0bcb_332c8f22",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 43
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "dc7741f8_c8ee3e7c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/create_task_queue_manager_for_test.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T18:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abf5ce52_0b80f8d0",
+      "range": {
+        "startLine": 16,
+        "startChar": 56,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16ea8ad4_ee0473af",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.cc",
         "patchSetId": 12
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "f870c28b_039afcc7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T18:52:18Z",
+      "side": 1,
+      "message": "The problem isn\u0027t in BelongsToCurrentThread part, the problem is with nested message loops on the same thread, so they\u0027re different. However, I can add a DCHECK if you want.",
+      "parentUuid": "16ea8ad4_ee0473af",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 52
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "282a78c9_d72c3d1b",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
         "patchSetId": 12
@@ -206,6 +398,30 @@
       "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80300489_2534fbd0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T18:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "282a78c9_d72c3d1b",
+      "range": {
+        "startLine": 48,
+        "startChar": 75,
+        "endLine": 49,
+        "endChar": 14
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
