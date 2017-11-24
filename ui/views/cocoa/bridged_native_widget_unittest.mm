@@ -1223,6 +1223,16 @@ TEST_F(BridgedNativeWidgetTest, TextInput_Transpose) {
   TestEditingCommands(@[ @"transpose:" ]);
 }
 
+// Test paste, and edit commands following a paste.
+TEST_F(BridgedNativeWidgetTest, TextInput_NavigateAfterPaste) {
+  InstallTextField("a");
+  // Paste occurs via an action bound to a menu command.
+  [ns_view_ performSelector:@selector(paste:) withObject:nil];
+  // Just sending moveLeft isn't enough to trigger the issue since it doesn't
+  // interact with NSTextInputContext. Send a keyDown.
+  [ns_view_ moveLeft:nil];
+}
+
 // Test firstRectForCharacterRange:actualRange for cases where query range is
 // empty or outside composition range.
 TEST_F(BridgedNativeWidgetTest, TextInput_FirstRectForCharacterRange_Caret) {
