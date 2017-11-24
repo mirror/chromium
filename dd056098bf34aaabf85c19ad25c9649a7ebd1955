@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c511bf33_d09735fc",
+        "filename": "tools/cygprofile/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-24T16:28:43Z",
+      "side": 1,
+      "message": "Because otherwise we have the static constructor even in the tests, which we don\u0027t want/need.",
+      "parentUuid": "a57dfdb1_c188957f",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7587f126_4659ede8",
         "filename": "tools/cygprofile/delayed_dumper.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2dde4251_48bc6f72",
+        "filename": "tools/cygprofile/delayed_dumper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-24T16:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7587f126_4659ede8",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 44
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "410bb8e5_42572585",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-24T15:42:37Z",
       "side": 1,
       "message": "constexpr?",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 8
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147a74a6_441b3e5e",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-24T16:28:43Z",
+      "side": 1,
+      "message": "Done (made it const, constexpr doesn\u0027t compile), though I\u0027m not sure it makes a difference, as the variable is effectively const, but its value is unknown at compile time.\nHaven\u0027t looked at the assembly though.",
+      "parentUuid": "410bb8e5_42572585",
       "range": {
         "startLine": 86,
         "startChar": 2,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2473d5a8_c3718791",
+        "filename": "tools/cygprofile/lightweight_cygprofile.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-24T16:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e47efdb_2755427b",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 28
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "389ee367_b5d605ad",
         "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-24T15:42:37Z",
       "side": 1,
       "message": "our usual convention is to have unittests split from perftests. I think the main rationale is that unittests should be fast to run without listing them explicitly.\n\nIn our case I am suggesting to split this file into:\nlightweight_cygprofile_unittest.cc\nlightweight_cygprofile_perftest.cc\n\nwe have about 55 files that end with _perftest.cc",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 2
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37e8bef_78c6a572",
+        "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-24T16:28:43Z",
+      "side": 1,
+      "message": "They are together here, because it\u0027s less code, and they run fast anyway. From the commit message, all tests collectively took 1.1s here on a N5X, the overhead of splitting the tests is likely higher.",
+      "parentUuid": "389ee367_b5d605ad",
       "range": {
         "startLine": 1,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "121e252b_ed7ed498",
+        "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-24T16:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e53a9da6_90d8f00d",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "992beeda_f2fef4dd",
         "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
         "patchSetId": 1
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "86a1ae1a_7677e25c",
+        "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-24T16:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "992beeda_f2fef4dd",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "260b0b4b_2b2d190e",
         "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18814e6e_fd0474f0",
+        "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-24T16:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "260b0b4b_2b2d190e",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
