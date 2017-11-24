@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8a4ed0b6_e7d6dc08",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T15:03:18Z",
+      "side": 1,
+      "message": "The fast option:\nCreate an enum containing each of the 4 things that are sampled. Also pass the enum value to ReportUKMScrollLatency. Have an array which contains the 4 sampling frequencies, and just look it up from the array, instead of doing a hash table lookup.\n\nI think that\u0027s probably worth doing, though you could argue it\u0027s pre-optimization.\n\nReducing down to a single hash table lookup is okay by me, but I think the approach I\u0027ve proposed makes more sense.",
+      "parentUuid": "1e30723c_00df3e73",
+      "range": {
+        "startLine": 113,
+        "startChar": 23,
+        "endLine": 113,
+        "endChar": 39
+      },
+      "revId": "7fde7fefd59847c94d23764c9373899c555c5e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3aa0765_9d88ffc3",
         "filename": "ui/latency/latency_tracker.h",
         "patchSetId": 1
