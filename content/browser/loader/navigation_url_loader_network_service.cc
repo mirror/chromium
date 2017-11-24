@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/debug/stack_trace.h"
 #include "base/memory/ptr_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/trace_event/trace_event.h"
@@ -50,6 +51,8 @@
 #include "net/url_request/url_request_context.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
+
+#include "content/browser/loader/webpackage_loader.h"
 
 namespace content {
 
@@ -198,6 +201,12 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
         handlers_.push_back(std::move(appcache_handler));
     }
 
+    // For webpackage.
+    std::unique_ptr<URLLoaderRequestHandler> webpkg_handler =
+        std::make_unique<WebPackageRequestHandler>(
+            *resource_request_, default_url_loader_factory_getter_);
+    handlers_.push_back(std::move(webpkg_handler));
+
     Restart();
   }
 
@@ -224,6 +233,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     if (start_loader_callback) {
       // |handler| wants to handle the request.
       DCHECK(handler);
+      // TODO(kinuko): Skip SafeBrowsing throttling after we redirect
+      // into the resource within a WebPackage.
       default_loader_used_ = false;
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
           std::move(start_loader_callback),
@@ -427,6 +438,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   }
 
   void OnComplete(const network::URLLoaderCompletionStatus& status) override {
+    if (status.error_code != net::OK)
+      LOG(ERROR) << "*** OnComplete: " << resource_request_->url << " "
+                 << status.error_code;
     if (status.error_code != net::OK && !received_response_) {
       // If the default loader (network) was used to handle the URL load
       // request we need to see if the handlers want to potentially create a
@@ -463,6 +477,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   std::vector<std::unique_ptr<URLLoaderRequestHandler>> handlers_;
   size_t handler_index_ = 0;
 
+  friend class NavigationURLLoaderNetworkService;
   std::unique_ptr<ResourceRequest> resource_request_;
   int frame_tree_node_id_ = 0;
   net::RedirectInfo redirect_info_;
@@ -629,6 +644,9 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
 }
 
 NavigationURLLoaderNetworkService::~NavigationURLLoaderNetworkService() {
+  // base::debug::StackTrace trace;
+  LOG(ERROR)
+      << "** NavigationURLLoaderNetworkService: DTOR " /* << trace.ToString()*/;
   BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE,
                             request_controller_.release());
 }
@@ -655,6 +673,7 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
     scoped_refptr<ResourceResponse> response,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
+  LOG(ERROR) << "** NAVLOADER @UI: OnReceiveResponse ";
   // TODO(scottmg): This needs to do more of what
   // NavigationResourceHandler::OnResponseStarted() does. Or maybe in
   // OnStartLoadingResponseBody().
@@ -667,6 +686,7 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
 void NavigationURLLoaderNetworkService::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
     scoped_refptr<ResourceResponse> response) {
+  LOG(ERROR) << "** NAVLOADER @UI: OnReceiveRedirect " << redirect_info.new_url;
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   delegate_->OnRequestRedirected(redirect_info, std::move(response));
 }
@@ -674,6 +694,9 @@ void NavigationURLLoaderNetworkService::OnReceiveRedirect(
 void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
     mojo::ScopedDataPipeConsumerHandle body) {
   DCHECK(response_);
+
+  LOG(ERROR) << "** NAVLOADER @UI: OnStartLoadingResponseBody "
+             << body.is_valid();
 
   TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
                          "&NavigationURLLoaderNetworkService", this, "success",
@@ -701,6 +724,10 @@ void NavigationURLLoaderNetworkService::OnComplete(
   // TODO(https://crbug.com/757633): Pass real values in the case of cert
   // errors.
   bool should_ssl_errors_be_fatal = true;
+
+  LOG(ERROR) << "*** OnComplete: "
+             << request_controller_->resource_request_->url << " "
+             << status.error_code;
 
   delegate_->OnRequestFailed(status.exists_in_cache, status.error_code,
                              ssl_info_, should_ssl_errors_be_fatal);

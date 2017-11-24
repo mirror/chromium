@@ -21,6 +21,7 @@ jumbo_source_set("browser") {
     ":for_content_tests",  # See top of //content/BUILD.gn for why.
     "//content/app:*",
     "//content/public/browser:browser_sources",
+    "//wpkg:*",
   ]
 
   configs += [
@@ -188,6 +189,7 @@ jumbo_source_set("browser") {
     "//ui/snapshot",
     "//ui/touch_selection",
     "//v8:v8_version",
+    "//wpkg",
   ]
 
   public_deps = [
@@ -1029,6 +1031,10 @@ jumbo_source_set("browser") {
     "loader/url_loader_request_handler.h",
     "loader/wake_lock_resource_throttle.cc",
     "loader/wake_lock_resource_throttle.h",
+    "loader/webpackage_loader.cc",
+    "loader/webpackage_loader.h",
+    "loader/webpackage_reader_adapter.cc",
+    "loader/webpackage_reader_adapter.h",
     "loader_delegate_impl.cc",
     "loader_delegate_impl.h",
     "mach_broker_mac.h",
@@ -1652,6 +1658,9 @@ jumbo_source_set("browser") {
     "web_contents/web_drag_source_mac.mm",
     "web_contents/web_drag_utils_win.cc",
     "web_contents/web_drag_utils_win.h",
+    "webauth/cbor/cbor_binary.h",
+    "webauth/cbor/cbor_reader.cc",
+    "webauth/cbor/cbor_reader.h",
     "webauth/cbor/cbor_values.cc",
     "webauth/cbor/cbor_values.h",
     "webauth/cbor/cbor_writer.cc",
