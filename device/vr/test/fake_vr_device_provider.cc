@@ -14,27 +14,27 @@ FakeVRDeviceProvider::~FakeVRDeviceProvider() {}
 
 void FakeVRDeviceProvider::AddDevice(std::unique_ptr<VRDevice> device) {
   devices_.push_back(std::move(device));
-}
-
-void FakeVRDeviceProvider::RemoveDevice(std::unique_ptr<VRDevice> device) {
-  std::vector<std::unique_ptr<VRDevice>>::iterator iter = devices_.begin();
-  while (iter != devices_.end()) {
-    if (device == *iter) {
-      iter = devices_.erase(iter);
-    } else {
-      ++iter;
-    }
+  if (initialized_) {
+    add_device_callback_.Run(devices_.back().get());
   }
 }
 
-void FakeVRDeviceProvider::GetDevices(std::vector<VRDevice*>* devices) {
-  for (const auto& device : devices_) {
-    devices->push_back(device.get());
-  }
-}
+void FakeVRDeviceProvider::Initialize(
+    base::Callback<void(VRDevice*)> add_device_callback,
+    base::Callback<void(VRDevice*)> remove_device_callback,
+    base::OnceClosure initialization_complete) {
+  add_device_callback_ = std::move(add_device_callback);
+  remove_device_callback_ = std::move(remove_device_callback);
 
-void FakeVRDeviceProvider::Initialize() {
+  for (std::unique_ptr<VRDevice>& device : devices_) {
+    add_device_callback_.Run(device.get());
+  }
   initialized_ = true;
+  std::move(initialization_complete).Run();
+}
+
+bool FakeVRDeviceProvider::Initialized() {
+  return initialized_;
 }
 
 }  // namespace device
