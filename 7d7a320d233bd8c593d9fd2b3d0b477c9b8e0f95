@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "16451b6b_85d5250a",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T13:22:07Z",
+      "side": 1,
+      "message": "nit: username -\u003e a username",
+      "range": {
+        "startLine": 31,
+        "startChar": 38,
+        "endLine": 31,
+        "endChar": 46
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63a918a4_568c2cf9",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 10
@@ -87,6 +110,236 @@
         "startChar": 2,
         "endLine": 70,
         "endChar": 38
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e76be0_64cf4002",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T13:22:07Z",
+      "side": 1,
+      "message": "It might make more sense to put this directly after the creation of |tokens|.",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 68
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876f9adc_3fd3f7d1",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T13:22:07Z",
+      "side": 1,
+      "message": "optional nit: While comment already speaks about the modification, it could describe it more concretely to spare the reader parsing the erase-remove-if construct:\n\n// Now that tokens are processed, squeeze delimiters out of |lowercase_value|.",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 11
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e27a1ed_29de639a",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T13:22:07Z",
+      "side": 1,
+      "message": "nit: The name is unclear. What about |next_element_range_begin|?",
+      "range": {
+        "startLine": 125,
+        "startChar": 9,
+        "endLine": 125,
+        "endChar": 22
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb05833a_bd91bda4",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T13:22:07Z",
+      "side": 1,
+      "message": "You should cache the resulting string16 during the inside for-loop (it only changes when the outside for-loop advances).",
+      "range": {
+        "startLine": 134,
+        "startChar": 28,
+        "endLine": 134,
+        "endChar": 68
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43855877_73e6bf0e",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T13:22:07Z",
+      "side": 1,
+      "message": "nit: Either \"looking them up\" or \"looking for them\".\n(Also below.)",
+      "range": {
+        "startLine": 153,
+        "startChar": 29,
+        "endLine": 153,
+        "endChar": 50
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb284af_658236cd",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T13:22:07Z",
+      "side": 1,
+      "message": "Looking at https://www.chromium.org/developers/coding-style/cpp-dos-and-donts?pli\u003d1#TOC-Variable-initialization, there should be a \"\u003d\" between kNegativeCategory and \"{\", as long as it compiles.\n(Also applies on several places below.)",
+      "range": {
+        "startLine": 189,
+        "startChar": 48,
+        "endLine": 189,
+        "endChar": 49
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4f458d_0f5b0790",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T13:22:07Z",
+      "side": 1,
+      "message": "nit: Should this sentence about order be in front of the definition of kPositiveCategories instead? The for-loop takes its order from there.",
+      "range": {
+        "startLine": 259,
+        "startChar": 5,
+        "endLine": 260,
+        "endChar": 55
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40419bb_7519727b",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T13:22:07Z",
+      "side": 1,
+      "message": "If the code assumes that the Form() is the same for all members of all_possible_usernames, then we should say so in a comment.",
+      "range": {
+        "startLine": 282,
+        "startChar": 37,
+        "endLine": 282,
+        "endChar": 69
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9727bc9e_1ba231c8",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T13:22:07Z",
+      "side": 1,
+      "message": "Currently there are three look-ups: find() and twice the operator[]().\nThe code could be structured so that there is just a single std::map::insert() call, resulting in more efficient use of the map:\n\n#include \u003ctuple\u003e\n\n...\n\n// True if the cache has no entry for |form|.\nbool cache_miss \u003d true;\n// Iterator pointing to the entry for |form| if |cache_miss| is false.\nUsernameDetectorCache::iterator form_position;\n\nif (username_detector_cache)\n  std::tie(form_position, cache_miss) \u003d username_detector_cache-\u003einsert(blink::WebInputElement());\n\nif (!username_detector_cache || cache_miss) {\n    bool username_found \u003d ...;\n    if (username_detector_cache \u0026\u0026 username_found)\n      *form_position \u003d *username_element;\n    return username_found;\n} else {\n  *username_element \u003d *form_position;\n  return !username_element-\u003eIsNull();\n}",
+      "range": {
+        "startLine": 284,
+        "startChar": 6,
+        "endLine": 284,
+        "endChar": 41
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b398b3e6_196cdc1d",
+        "filename": "components/autofill/content/renderer/html_based_username_detector_vocabulary.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T13:22:07Z",
+      "side": 1,
+      "message": "This is only needed for arraysize, and thus can be pushed into the .cc file instead.",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 23
       },
       "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
