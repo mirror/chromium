@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3859923_eff22ca2",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-24T21:21:13Z",
+      "side": 1,
+      "message": "Based on user statistics about the start time delay in https://chromium-review.googlesource.com/c/chromium/src/+/788280, I hope to put a even more conservative number in complete time delay in order to gather some more useful data (the new metric I\u0027m adding here\nwill not collect data if the encoding idle tasks cannot finish before the threshold).",
+      "revId": "f3aab1ca285e2db07ebf710064816281e5af8cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
