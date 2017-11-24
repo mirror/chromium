@@ -378,7 +378,7 @@ class CupsPrintJobManagerImpl : public CupsPrintJobManager,
     jobs_[key] = std::move(cpj);
 
     CupsPrintJob* job = jobs_[key].get();
-    NotifyJobCreated(job);
+    NotifyJobUpdated(job);
 
     // Always start jobs in the waiting state.
     job->set_state(CupsPrintJob::State::STATE_WAITING);
@@ -465,7 +465,7 @@ class CupsPrintJobManagerImpl : public CupsPrintJobManager,
 
         if (UpdatePrintJob(queue.printer_status, job, print_job)) {
           // The state of the job changed, notify observers.
-          NotifyJobStateUpdate(print_job);
+          NotifyJobUpdated(print_job);
         }
 
         if (print_job->expired()) {
@@ -508,45 +508,10 @@ class CupsPrintJobManagerImpl : public CupsPrintJobManager,
       RecordJobResult(LOST);
       CupsPrintJob* job = entry.second.get();
       job->set_state(CupsPrintJob::State::STATE_ERROR);
-      NotifyJobStateUpdate(job);
+      NotifyJobUpdated(job);
     }
 
     jobs_.clear();
-  }
-
-  // Notify observers that a state update has occured for |job|.
-  void NotifyJobStateUpdate(CupsPrintJob* job) {
-    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-    switch (job->state()) {
-      case State::STATE_NONE:
-        // State does not require notification.
-        break;
-      case State::STATE_WAITING:
-        NotifyJobUpdated(job);
-        break;
-      case State::STATE_STARTED:
-        NotifyJobStarted(job);
-        break;
-      case State::STATE_PAGE_DONE:
-        NotifyJobUpdated(job);
-        break;
-      case State::STATE_RESUMED:
-        NotifyJobResumed(job);
-        break;
-      case State::STATE_SUSPENDED:
-        NotifyJobSuspended(job);
-        break;
-      case State::STATE_CANCELLED:
-        NotifyJobCanceled(job);
-        break;
-      case State::STATE_ERROR:
-        NotifyJobError(job);
-        break;
-      case State::STATE_DOCUMENT_DONE:
-        NotifyJobDone(job);
-        break;
-    }
   }
 
   // Ongoing print jobs.

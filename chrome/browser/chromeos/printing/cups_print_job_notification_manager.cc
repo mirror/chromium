@@ -23,39 +23,15 @@ CupsPrintJobNotificationManager::~CupsPrintJobNotificationManager() {
   print_job_manager_->RemoveObserver(this);
 }
 
-void CupsPrintJobNotificationManager::OnPrintJobCreated(CupsPrintJob* job) {
-  if (base::ContainsKey(notification_map_, job))
-    return;
-  notification_map_[job] =
-      base::MakeUnique<CupsPrintJobNotification>(this, job, profile_);
-}
-
-void CupsPrintJobNotificationManager::OnPrintJobStarted(CupsPrintJob* job) {
-  UpdateNotification(job);
-}
-
 void CupsPrintJobNotificationManager::OnPrintJobUpdated(CupsPrintJob* job) {
-  UpdateNotification(job);
-}
-
-void CupsPrintJobNotificationManager::OnPrintJobSuspended(CupsPrintJob* job) {
-  UpdateNotification(job);
-}
-
-void CupsPrintJobNotificationManager::OnPrintJobResumed(CupsPrintJob* job) {
-  UpdateNotification(job);
-}
-
-void CupsPrintJobNotificationManager::OnPrintJobDone(CupsPrintJob* job) {
-  UpdateNotification(job);
-}
-
-void CupsPrintJobNotificationManager::OnPrintJobError(CupsPrintJob* job) {
-  UpdateNotification(job);
-}
-
-void CupsPrintJobNotificationManager::OnPrintJobCancelled(CupsPrintJob* job) {
-  UpdateNotification(job);
+  if (job->state() == CupsPrintJob::State::STATE_NONE) {
+    if (base::ContainsKey(notification_map_, job))
+      return;
+    notification_map_[job] =
+        base::MakeUnique<CupsPrintJobNotification>(this, job, profile_);
+  } else {
+    notification_map_[job]->OnPrintJobStatusUpdated();
+  }
 }
 
 void CupsPrintJobNotificationManager::OnPrintJobNotificationRemoved(
@@ -70,11 +46,6 @@ void CupsPrintJobNotificationManager::OnPrintJobNotificationRemoved(
 
   if (it != notification_map_.end())
     notification_map_.erase(it);
-}
-
-void CupsPrintJobNotificationManager::UpdateNotification(CupsPrintJob* job) {
-  DCHECK(base::ContainsKey(notification_map_, job));
-  notification_map_[job]->OnPrintJobStatusUpdated();
 }
 
 }  // namespace chromeos

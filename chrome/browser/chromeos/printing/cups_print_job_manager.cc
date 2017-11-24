@@ -30,44 +30,9 @@ void CupsPrintJobManager::RemoveObserver(Observer* observer) {
   observers_.RemoveObserver(observer);
 }
 
-void CupsPrintJobManager::NotifyJobCreated(CupsPrintJob* job) {
-  for (Observer& observer : observers_)
-    observer.OnPrintJobCreated(job);
-}
-
-void CupsPrintJobManager::NotifyJobStarted(CupsPrintJob* job) {
-  for (Observer& observer : observers_)
-    observer.OnPrintJobStarted(job);
-}
-
 void CupsPrintJobManager::NotifyJobUpdated(CupsPrintJob* job) {
   for (Observer& observer : observers_)
     observer.OnPrintJobUpdated(job);
-}
-
-void CupsPrintJobManager::NotifyJobResumed(CupsPrintJob* job) {
-  for (Observer& observer : observers_)
-    observer.OnPrintJobResumed(job);
-}
-
-void CupsPrintJobManager::NotifyJobSuspended(CupsPrintJob* job) {
-  for (Observer& observer : observers_)
-    observer.OnPrintJobSuspended(job);
-}
-
-void CupsPrintJobManager::NotifyJobCanceled(CupsPrintJob* job) {
-  for (Observer& observer : observers_)
-    observer.OnPrintJobCancelled(job);
-}
-
-void CupsPrintJobManager::NotifyJobError(CupsPrintJob* job) {
-  for (Observer& observer : observers_)
-    observer.OnPrintJobError(job);
-}
-
-void CupsPrintJobManager::NotifyJobDone(CupsPrintJob* job) {
-  for (Observer& observer : observers_)
-    observer.OnPrintJobDone(job);
 }
 
 }  // namespace chromeos

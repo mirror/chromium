@@ -22,24 +22,8 @@ class CupsPrintJobManager : public KeyedService {
  public:
   class Observer {
    public:
-    virtual void OnPrintJobCreated(CupsPrintJob* job) {}
-    virtual void OnPrintJobStarted(CupsPrintJob* job) {}
+    // Note, |job| could be deleted depending on status.
     virtual void OnPrintJobUpdated(CupsPrintJob* job) {}
-    virtual void OnPrintJobSuspended(CupsPrintJob* job) {}
-    virtual void OnPrintJobResumed(CupsPrintJob* job) {}
-
-    // Handle print job completion.  Note, |job| will be deleted after
-    // notification is complete.
-    virtual void OnPrintJobDone(CupsPrintJob* job) {}
-
-    // Handle print job error.  Note, |job| will be deleted after
-    // notification is complete.
-    virtual void OnPrintJobError(CupsPrintJob* job) {}
-
-    // Handle print job cancellation.  Note, |job| will be deleted after
-    // notification is complete.
-    virtual void OnPrintJobCancelled(CupsPrintJob* job) {}
-
    protected:
     virtual ~Observer() {}
   };
@@ -62,14 +46,7 @@ class CupsPrintJobManager : public KeyedService {
   void RemoveObserver(Observer* observer);
 
  protected:
-  void NotifyJobCreated(CupsPrintJob* job);
-  void NotifyJobStarted(CupsPrintJob* job);
   void NotifyJobUpdated(CupsPrintJob* job);
-  void NotifyJobResumed(CupsPrintJob* job);
-  void NotifyJobSuspended(CupsPrintJob* job);
-  void NotifyJobCanceled(CupsPrintJob* job);
-  void NotifyJobError(CupsPrintJob* job);
-  void NotifyJobDone(CupsPrintJob* job);
 
   Profile* profile_;
   std::unique_ptr<CupsPrintJobNotificationManager> notification_manager_;
