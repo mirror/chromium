@@ -11,6 +11,8 @@
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/synchronization/waitable_event.h"
+#include "base/test/simple_test_clock.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
@@ -21,6 +23,7 @@
 #include "chrome/browser/media/webrtc/webrtc_browsertest_base.h"
 #include "chrome/browser/media/webrtc/webrtc_browsertest_common.h"
 #include "chrome/common/chrome_switches.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
@@ -29,29 +32,13 @@
 #include "media/base/media_switches.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 
-#if defined(OS_WIN)
-#define IntToStringType base::IntToString16
-#else
-#define IntToStringType base::IntToString
-#endif
-
+using content::WebRtcEventLogManager;
 using extensions::WebrtcLoggingPrivateStartWebRtcEventLoggingFunction;
 using extensions::WebrtcLoggingPrivateStopWebRtcEventLoggingFunction;
 
 namespace utils = extension_function_test_utils;
 
 namespace {
-
-// Get the expected EventLog file name. The name will be
-// <temporary path>.<render process id>.<peer connection id>, for example
-// /tmp/.org.chromium.Chromium.vsygNQ/dnFW8ch/Default/WebRTC
-// Logs/WebRtcEventLog.1.6.1
-base::FilePath GetExpectedEventLogFileName(const base::FilePath& base_file,
-                                           int render_process_id) {
-  static const int kExpectedPeerConnectionId = 1;
-  return base_file.AddExtension(IntToStringType(render_process_id))
-      .AddExtension(IntToStringType(kExpectedPeerConnectionId));
-}
 
 static const char kMainWebrtcTestHtmlPage[] = "/webrtc/webrtc_jsep01_test.html";
 
@@ -103,11 +90,32 @@ class FileWaiter : public base::RefCountedThreadSafe<FileWaiter> {
   DISALLOW_COPY_AND_ASSIGN(FileWaiter);
 };
 
+}  // namespace
+
 class WebrtcEventLogApiTest : public WebRtcTestBase {
  protected:
   void SetUp() override {
+    Initialize();
     WebRtcTestBase::SetUp();
     extension_ = extensions::ExtensionBuilder("Test").Build();
+  }
+
+  ~WebrtcEventLogApiTest() override {
+    WebRtcEventLogManager::GetInstance()->InjectClockForTesting(nullptr);
+  }
+
+  // Needs to happen after WebRtcTestBase::SetUp(), but before the body of the
+  // tests. Therefore, we call it directly from the tests, as the first step.
+  void Initialize() {
+    // We can't get the filename as a reply, because WebRtcEventLogManager is
+    // hidden from us behind WebRTCEventLogHost. We therefore implicitly rely
+    // on the filename being derived in a certain way.
+    // TODO(eladalon): Remove this hack once WebRTCEventLogHost is eliminated,
+    // by getting a reply from WebRtcEventLogManager with the exact filename.
+    // https://crbug.com/775415
+    base::Time frozen_time = base::Time::Now();
+    frozen_clock_.SetNow(frozen_time);
+    WebRtcEventLogManager::GetInstance()->InjectClockForTesting(&frozen_clock_);
   }
 
   void SetUpInProcessBrowserTestFixture() override {
@@ -147,13 +155,41 @@ class WebrtcEventLogApiTest : public WebRtcTestBase {
     parameters->AppendString(tab->GetURL().GetOrigin().spec());
   }
 
+  // Get the expected EventLog file name. The name will be
+  // [temporary path]/[user_defined]_[date]_[time]_[pid]_[lid].log
+  // /tmp/.org.chromium.Chromium.vsygNQ/dnFW8ch/Default/WebRTC
+  // Logs/WebRtcEventLog_20171122_1811_1_1.log
+  // TODO(eladalon): Remove this hack once WebRTCEventLogHost is eliminated,
+  // by getting a reply from WebRtcEventLogManager with the exact filename.
+  // https://crbug.com/775415
+  base::FilePath GetExpectedEventLogFileName(const base::FilePath& base_file,
+                                             int render_process_id) {
+    static const int kExpectedPeerConnectionId = 1;
+
+    base::Time::Exploded time;
+    frozen_clock_.Now().LocalExplode(&time);
+    char stamp[100];
+    int written = base::snprintf(
+        stamp, arraysize(stamp), "%04d%02d%02d_%02d%02d_%d_%d", time.year,
+        time.month, time.day_of_month, time.hour, time.minute,
+        render_process_id, kExpectedPeerConnectionId);
+    CHECK(0 < written);
+    CHECK(static_cast<size_t>(written) < arraysize(stamp));
+
+    const std::string filename_suffix = std::string("_") + stamp;
+
+    return base_file.AddExtension(FILE_PATH_LITERAL("log"))
+        .InsertBeforeExtension(filename_suffix);
+  }
+
  private:
   scoped_refptr<extensions::Extension> extension_;
+  base::SimpleTestClock frozen_clock_;
 };
 
-}  // namespace
-
 IN_PROC_BROWSER_TEST_F(WebrtcEventLogApiTest, TestStartStopWebRtcEventLogging) {
+  Initialize();
+
   ASSERT_TRUE(embedded_test_server()->Start());
 
   content::WebContents* left_tab =
@@ -197,6 +233,13 @@ IN_PROC_BROWSER_TEST_F(WebrtcEventLogApiTest, TestStartStopWebRtcEventLogging) {
   // Video is choppy on Mac OS X. http://crbug.com/443542.
   WaitForVideoToPlay(left_tab);
   WaitForVideoToPlay(right_tab);
+#else
+  // This is a hack, but that shouldn't be a problem, because we're just about
+  // remove this code anyway.
+  // TODO(eladalon): Remove this. http://crbug.com/775415
+  base::WaitableEvent wait(base::WaitableEvent::ResetPolicy::MANUAL,
+                           base::WaitableEvent::InitialState::NOT_SIGNALED);
+  wait.TimedWait(base::TimeDelta::FromSeconds(1));
 #endif
 
   // Stop the event log.
@@ -247,6 +290,8 @@ IN_PROC_BROWSER_TEST_F(WebrtcEventLogApiTest, TestStartStopWebRtcEventLogging) {
 
 IN_PROC_BROWSER_TEST_F(WebrtcEventLogApiTest,
                        TestStartTimedWebRtcEventLogging) {
+  Initialize();
+
   base::ScopedAllowBlockingForTesting allow_blocking;
   ASSERT_TRUE(embedded_test_server()->Start());
 
