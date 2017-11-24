@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f80f8fb9_d08bec74",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:43:48Z",
+      "side": 1,
+      "message": "is there any reason why the delay needs to be passed into the c\u0027tor instead of just being a constant in the impl? i thought you already have a setter that you can use to pass custom values for tests.",
+      "revId": "3a2ca2c7855482f9c9a6f7f6f027612a00953432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506b291c_7902f746",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:43:48Z",
+      "side": 1,
+      "message": "this file is quite large, so it may be better to just instantiate one of the notifier or logger classes here and have it create the other one itself. i know we chatted about this a bit.",
+      "revId": "3a2ca2c7855482f9c9a6f7f6f027612a00953432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45de0c5_c424806a",
+        "filename": "chrome/browser/chromeos/power/ml/ukm_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:43:48Z",
+      "side": 1,
+      "message": "i\u0027d recommend spelling out this acronym and also linking to a doc with more information.",
+      "revId": "3a2ca2c7855482f9c9a6f7f6f027612a00953432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae779ae_1bbb2d0c",
+        "filename": "chrome/browser/chromeos/power/ml/ukm_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:43:48Z",
+      "side": 1,
+      "message": "get rid of \"{};\" (no semicolon needed) and move empty impl to .cc file",
+      "revId": "3a2ca2c7855482f9c9a6f7f6f027612a00953432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
