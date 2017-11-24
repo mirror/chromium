@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "42a01f45_d424d75c",
+        "filename": "components/sessions/core/serialized_navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cd66470_5ea4685d",
+      "range": {
+        "startLine": 150,
+        "startChar": 69,
+        "endLine": 151,
+        "endChar": 19
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "835750d0_ea2738f9",
         "filename": "components/sessions/core/serialized_navigation_entry_unittest.cc",
         "patchSetId": 5
@@ -56,6 +80,24 @@
       "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34259d71_34816e63",
+        "filename": "components/sessions/core/serialized_navigation_entry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "835750d0_ea2738f9",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "6617d60f_6af43c87",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53711763_ebe73c1c",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "561b324f_153dd9d2",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 5
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "34facbd5_fa601c89",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "For now I\u0027ve associated to the very same bug, since I\u0027m not aware of any other code besides sync that will read the page transition types directly from the navigation controller\u0027s history.",
+      "parentUuid": "561b324f_153dd9d2",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e86a417_564530c5",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 5
@@ -104,6 +182,24 @@
       "writtenOn": "2017-11-22T05:36:48Z",
       "side": 1,
       "message": "This is called for subframes too, via RendererDidNavigateNewSubframe.  If we are tracking the value on NavigationEntryImpl instead of FrameNavigationEntry, we may need to avoid your update in the subframe case?\n\nFor example, suppose page A1 does a replaceState to A2.  A2 is the landing page.  A2 has a subframe B1, and it navigates to B2 with NEW_SUBFRAME, creating a new NavigationEntry.  Do we want A2 to be the landing page for the new NavigationEntry, or A1?\n\nLet\u0027s decide, and be sure we have a test and comment for it, since it could go either way.",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25decf0d_11e3b95a",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Correction: in this example the original landing page is A1.\n\nAlso, to clarify, the subframe navigation B1-\u003eB2 would use did_replace_entry\u003d\u003dtrue, right? Otherwise it seems a moot point.\n\nIf so, what\u0027s a realistic example of this? I took a look at the existing tests and none exercise this situation.",
+      "parentUuid": "4e86a417_564530c5",
       "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -130,6 +226,30 @@
       "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35241e5_48072839",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3760,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e593bbd_7b06f210",
+      "range": {
+        "startLine": 3760,
+        "startChar": 23,
+        "endLine": 3760,
+        "endChar": 43
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +293,30 @@
     },
     {
       "key": {
+        "uuid": "22f1f067_cbade6e8",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3778,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done, although I don\u0027t necessarily agree, since all this test cares about is that there is some sort of redirect.",
+      "parentUuid": "633a244a_1166ff28",
+      "range": {
+        "startLine": 3778,
+        "startChar": 11,
+        "endLine": 3778,
+        "endChar": 18
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da16cf16_3f182162",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 5
@@ -184,6 +328,30 @@
       "writtenOn": "2017-11-22T05:36:48Z",
       "side": 1,
       "message": "Let\u0027s pull this into a local variable so that the rest of the test isn\u0027t as verbose.",
+      "range": {
+        "startLine": 3780,
+        "startChar": 8,
+        "endLine": 3780,
+        "endChar": 37
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e61df1_e0a416cf",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3780,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Well, this would be brittle, because precisely history is being modified as part of this test, and hence keeping a pointer to the entry might not verify the intended thing, don\u0027t you think?",
+      "parentUuid": "da16cf16_3f182162",
       "range": {
         "startLine": 3780,
         "startChar": 8,
@@ -213,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "25b14384_7bf87406",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3795,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done, added dedicated test.",
+      "parentUuid": "d026d62a_cca33e27",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a22c4099_2d5606bf",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 5
@@ -236,6 +422,30 @@
     },
     {
       "key": {
+        "uuid": "4e993d5e_906ebfbf",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3800,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a22c4099_2d5606bf",
+      "range": {
+        "startLine": 3800,
+        "startChar": 23,
+        "endLine": 3800,
+        "endChar": 43
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1da7fe9c_60a13fed",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 5
@@ -247,6 +457,30 @@
       "writtenOn": "2017-11-22T05:36:48Z",
       "side": 1,
       "message": "Worth putting in a local variable here as well.",
+      "range": {
+        "startLine": 3834,
+        "startChar": 20,
+        "endLine": 3834,
+        "endChar": 49
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980db32d_a5a464a5",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3834,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Same as earlier, pending clarification.",
+      "parentUuid": "1da7fe9c_60a13fed",
       "range": {
         "startLine": 3834,
         "startChar": 20,
@@ -276,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "30085853_20036ba3",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3849,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1477d4f9_bcf70c22",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6670c58_68b0e3a8",
         "filename": "content/public/browser/navigation_entry.h",
         "patchSetId": 5
@@ -299,6 +551,30 @@
     },
     {
       "key": {
+        "uuid": "9a424f64_b9031fda",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6670c58_68b0e3a8",
+      "range": {
+        "startLine": 221,
+        "startChar": 69,
+        "endLine": 221,
+        "endChar": 73
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "090c0baf_e483ae7c",
         "filename": "content/public/browser/navigation_entry.h",
         "patchSetId": 5
@@ -310,6 +586,24 @@
       "writtenOn": "2017-11-22T05:36:48Z",
       "side": 1,
       "message": "This will raise a lot of questions about what types of navigations it covers, how it relates to the redirect chain, and whether the first iteration of the NavEntry is the right one to track, so let\u0027s expand the comment (especially since it will end up in its own file).\n\nThings worth pointing out:\n - This is not the same as the first entry in the redirect chain or the original_request_url, since many server redirects could have happened in the meantime.\n - This is the first commit that happens for a given NavigationEntry, before any client redirects, location.replace() events, or history.replaceState() events.\n - The value is preserved for cross-document replacement navigations which generate a new NavigationEntry with replacement (e.g., client redirects and location.replace()), as well as same-document cases that update the existing NavigationEntry (e.g., history.replaceState()).\n - Something about only tracking this for main frames, even though the concept is valid for subframes?\n\nQuestions:\nDo we have a way to be confident that there won\u0027t be a later entry we should track?  We may be able to explain something about how we\u0027re tracking the landing page for a typed (etc) navigation which generates a new entry without replacement, and such cases will never replace an entry?\n\nAre we concerned about history navigations that redirect?  I think it\u0027s probably ok, but it might be an interesting case to point out (i.e., it may replace the entry you had before).",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d116c493_cb124837",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done, with some rephrasing, please review. Pending clarification about subframes, which depends on another thread in this review.\n\nWrt to questions:\n1. Yes, the main use-case is to never lose TYPED and AUTO_BOOKMARK navigations which always create a new entry. I documented this explicitly. There are a few corner cases that we don\u0027t handle too well: TYPE(url1), TYPE(url2), back, TYPE(url3). In this case I believe we can lose \"url2\" in this approach, right? Not that I care much.\n\n2. Can you elaborate the scenario that you have in mind? In any case the original \"snapshot\" will never be replaced.",
+      "parentUuid": "090c0baf_e483ae7c",
       "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -333,6 +627,24 @@
     },
     {
       "key": {
+        "uuid": "b4433563_8543661e",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15a1a282_08b5e188",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f5a5683_693a5ff7",
         "filename": "content/public/browser/navigation_entry.h",
         "patchSetId": 5
@@ -344,6 +656,24 @@
       "writtenOn": "2017-11-22T05:36:48Z",
       "side": 1,
       "message": "Can we give this a name, like landing_url or landing_page_url?  Similar for the members below.",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5d9046_65029b08",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "This very same concept (last URL in the server-side redirect chain) is often referred to simply as \u0027url\u0027. Why is this case different?\n\n\u0027The term landing\u0027 is IMO confusing in the context of client-side redirects. WDYT?",
+      "parentUuid": "3f5a5683_693a5ff7",
       "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -367,6 +697,24 @@
     },
     {
       "key": {
+        "uuid": "45da9fff_3752f9c1",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab38e0d3_8176d47b",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6db96333_ae560456",
         "filename": "content/public/browser/navigation_entry.h",
         "patchSetId": 5
@@ -381,6 +729,24 @@
       "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3821b8_04e56490",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-24T11:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6db96333_ae560456",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
