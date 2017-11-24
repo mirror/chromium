@@ -174,6 +174,7 @@ TEST_F(SigninHeaderHelperTest, TestMirrorRequestGoogleCom) {
 // Tests that the Mirror request is returned when the target is a Gaia URL, even
 // if account consistency is disabled.
 TEST_F(SigninHeaderHelperTest, TestMirrorRequestGaiaURL) {
+  ScopedAccountConsistencyDisabled scoped_no_consistency;
   ASSERT_FALSE(IsAccountConsistencyMirrorEnabled());
   CheckMirrorHeaderRequest(GURL("https://accounts.google.com"), "0123456789",
                            "mode=0,enable_account_consistency=false");
@@ -282,6 +283,7 @@ TEST_F(SigninHeaderHelperTest, TestDiceFixAuthError) {
 // Tests that the Mirror request is returned with the GAIA Id on Drive origin,
 // even if account consistency is disabled.
 TEST_F(SigninHeaderHelperTest, TestMirrorRequestDrive) {
+  ScopedAccountConsistencyDisabled scoped_no_consistency;
   ASSERT_FALSE(IsAccountConsistencyMirrorEnabled());
   CheckMirrorHeaderRequest(
       GURL("https://docs.google.com/document"), "0123456789",
