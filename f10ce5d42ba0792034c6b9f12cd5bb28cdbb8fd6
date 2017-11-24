@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8f48978a_e23144e2",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-24T20:06:45Z",
+      "side": 1,
+      "message": "In the same service_unittests process, for each test case, the device_service_test_client calls the CreateDeviceService() where this function is called.",
+      "parentUuid": "1bd1d071_d53fd55a",
+      "revId": "f10ce5d42ba0792034c6b9f12cd5bb28cdbb8fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78971539_a7080365",
         "filename": "device/geolocation/location_arbitrator.cc",
         "patchSetId": 11
