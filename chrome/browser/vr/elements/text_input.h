@@ -10,28 +10,45 @@
 #include "base/callback.h"
 #include "chrome/browser/vr/elements/textured_element.h"
 #include "chrome/browser/vr/elements/ui_texture.h"
+#include "chrome/browser/vr/model/text_input_info.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace vr {
 
 class TextInputTexture;
 
+class TextInputDelegate {
+ public:
+  virtual ~TextInputDelegate() {}
+  virtual void EditInput(const TextInputInfo& info) = 0;
+  virtual void RequestFocus(int element_id) = 0;
+};
+
 // TODO(cjgrant): This class must be refactored to reuse Text and Rect elements
 // for the text and cursor. It exists as-is to facilitate initial integration of
 // the keyboard and omnibox.
 class TextInput : public TexturedElement {
  public:
+  // Called when this element recieves focus.
+  typedef base::Callback<void(bool)> OnFocusChangedCallback;
+  // Called when the user enters text while this element is focused.
+  typedef base::Callback<void(const TextInputInfo&)> OnInputEditedCallback;
   TextInput(int maximum_width_pixels,
             float font_height_meters,
-            float text_width_meters);
+            float text_width_meters,
+            OnFocusChangedCallback focus_changed_callback,
+            OnInputEditedCallback input_edit_callback);
   ~TextInput() override;
 
-  void SetText(const base::string16& text);
-  void SetCursorPosition(int position);
-  void SetColor(SkColor color);
+  void SetTextInputDelegate(TextInputDelegate* text_input_delegate) override;
+  bool editable() override;
+  void OnButtonUp(const gfx::PointF& position) override;
+  void OnFocusChanged(bool focused) override;
+  void OnInputEdited(const TextInputInfo& info) override;
+  void OnInputCommited(const TextInputInfo& info) override;
 
-  typedef base::Callback<void(const base::string16& text)> TextInputCallback;
-  void SetTextChangedCallback(const TextInputCallback& callback);
+  void SetColor(SkColor color);
+  void EditInput(const TextInputInfo& info);
 
   bool OnBeginFrame(const base::TimeTicks& time,
                     const gfx::Vector3dF& look_at) override;
@@ -40,8 +57,11 @@ class TextInput : public TexturedElement {
   UiTexture* GetTexture() const override;
 
   std::unique_ptr<TextInputTexture> texture_;
-  TextInputCallback text_changed_callback_;
-  base::string16 text_;
+  OnFocusChangedCallback focus_changed_callback_;
+  OnInputEditedCallback input_edit_callback_;
+  TextInputDelegate* delegate_ = nullptr;
+  TextInputInfo text_info_;
+  bool focused_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TextInput);
 };

@@ -8,6 +8,7 @@
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "base/numerics/math_constants.h"
+#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/vr/databinding/binding.h"
 #include "chrome/browser/vr/databinding/vector_binding.h"
 #include "chrome/browser/vr/elements/audio_permission_prompt.h"
@@ -19,6 +20,7 @@
 #include "chrome/browser/vr/elements/full_screen_rect.h"
 #include "chrome/browser/vr/elements/grid.h"
 #include "chrome/browser/vr/elements/invisible_hit_target.h"
+#include "chrome/browser/vr/elements/keyboard.h"
 #include "chrome/browser/vr/elements/laser.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/rect.h"
@@ -36,6 +38,7 @@
 #include "chrome/browser/vr/elements/vector_icon.h"
 #include "chrome/browser/vr/elements/viewport_aware_root.h"
 #include "chrome/browser/vr/elements/webvr_url_toast.h"
+#include "chrome/browser/vr/keyboard_delegate.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/target_property.h"
@@ -189,6 +192,23 @@ void UiSceneManager::CreateScene() {
   CreateUnderDevelopmentNotice();
   CreateVoiceSearchUiGroup();
   CreateController();
+  CreateKeyboard();
+}
+
+TextInput::OnFocusChangedCallback
+UiSceneManager::GetFocusChangedCallbackForTextInput(Model* model) {
+  return base::Bind(
+      [](Model* model, bool focused) { model->editing_input = focused; },
+      base::Unretained(model));
+}
+
+TextInput::OnInputEditedCallback
+UiSceneManager::GetInputEditedCallbackForTextInput(TextInputInfo* model) {
+  return base::Bind(
+      [](TextInputInfo* model, const TextInputInfo& text_input_info) {
+        *model = text_input_info;
+      },
+      base::Unretained(model));
 }
 
 void UiSceneManager::Create2dBrowsingSubtreeRoots() {
@@ -907,6 +927,15 @@ void UiSceneManager::CreateController() {
   auto reticle = base::MakeUnique<Reticle>(scene_, model_);
   reticle->set_draw_phase(kPhaseForeground);
   scene_->AddUiElement(kControllerGroup, std::move(reticle));
+}
+
+void UiSceneManager::CreateKeyboard() {
+  auto keyboard = base::MakeUnique<Keyboard>();
+  keyboard->set_draw_phase(kPhaseForeground);
+  keyboard->SetTranslate(0.0, kKeyboardVerticalOffset, -kKeyboardDistance);
+  keyboard->AddBinding(VR_BIND_FUNC(bool, Model, model_, editing_input,
+                                    UiElement, keyboard.get(), SetVisible));
+  scene_->AddUiElement(kRoot, std::move(keyboard));
 }
 
 void UiSceneManager::CreateUrlBar() {

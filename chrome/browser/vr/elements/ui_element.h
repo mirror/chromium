@@ -40,8 +40,10 @@ namespace vr {
 
 class Animation;
 class SkiaSurfaceProvider;
+class TextInputDelegate;
 class UiElementRenderer;
 struct CameraModel;
+struct TextInputInfo;
 
 enum LayoutAlignment {
   NONE = 0,
@@ -124,7 +126,8 @@ class UiElement : public cc::AnimationTarget {
   virtual void Render(UiElementRenderer* renderer,
                       const CameraModel& model) const;
 
-  virtual void Initialize(SkiaSurfaceProvider* provider);
+  virtual void Initialize(SkiaSurfaceProvider* provider,
+                          TextInputDelegate* text_input_delegate);
 
   // Controller interaction methods.
   virtual void OnHoverEnter(const gfx::PointF& position);
@@ -154,7 +157,8 @@ class UiElement : public cc::AnimationTarget {
 
   // Performs a hit test for the ray supplied in the request and populates the
   // result. The ray is in the world coordinate space.
-  void HitTest(const HitTestRequest& request, HitTestResult* result) const;
+  virtual void HitTest(const HitTestRequest& request,
+                       HitTestResult* result) const;
 
   int id() const { return id_; }
 
@@ -186,6 +190,12 @@ class UiElement : public cc::AnimationTarget {
   void set_event_handlers(const EventHandlers& event_handlers) {
     event_handlers_ = event_handlers;
   }
+
+  // Editable elements should override this functions below.
+  virtual bool editable();
+  virtual void OnFocusChanged(bool focused);
+  virtual void OnInputEdited(const TextInputInfo& info);
+  virtual void OnInputCommited(const TextInputInfo& info);
 
   gfx::SizeF size() const;
   void SetSize(float width, float hight);

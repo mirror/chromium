@@ -10,9 +10,11 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "chrome/browser/vr/elements/text_input.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_iterator.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
+#include "chrome/browser/vr/keyboard_delegate.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace base {
@@ -58,6 +60,7 @@ class UiScene {
   Elements GetVisibleSplashScreenElements() const;
   Elements GetVisibleWebVrOverlayForegroundElements() const;
   Elements GetVisibleControllerElements() const;
+  Elements GetVisibleKeyboardElements() const;
 
   float background_distance() const { return background_distance_; }
   void set_background_distance(float d) { background_distance_ = d; }
@@ -70,9 +73,13 @@ class UiScene {
   }
   void set_dirty() { is_dirty_ = true; }
 
-  void OnGlInitialized(SkiaSurfaceProvider* provider);
+  void OnGlInitialized(SkiaSurfaceProvider* provider,
+                       KeyboardDelegate* keyboard_delegate,
+                       TextInputDelegate* text_input_delegate);
 
  private:
+  void InitializeElement(UiElement* element);
+
   std::unique_ptr<UiElement> root_element_;
 
   float background_distance_ = 10.0f;
@@ -87,6 +94,8 @@ class UiScene {
   bool is_dirty_ = false;
 
   SkiaSurfaceProvider* provider_ = nullptr;
+  KeyboardDelegate* keyboard_delegate_ = nullptr;
+  TextInputDelegate* text_input_delegate_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(UiScene);
 };
