@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb958298_bb4e6de9",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/touch-pointer-event-properties.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T17:45:20Z",
+      "side": 1,
+      "message": "Not really that important. But looking at the name of the variables it seems like it is better to pass *2 when you are adding touch points rather than having a /2 here. This way you can also avoid adding an extra check here for width/height.",
+      "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7272d4_2f1efca9",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/touch/touch-browser-zoom-scales-radius.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T17:45:20Z",
+      "side": 1,
+      "message": "I was under the impression that we were only setting the width/height of the pointerevents and you change would preserve the radius of touch events. How come this changed here?",
+      "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f7da55_d0552fc0",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/touch/touch-fractional-coordinates.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T17:45:20Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
