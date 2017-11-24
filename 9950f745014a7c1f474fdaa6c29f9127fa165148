@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d542ff86_37127c07",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-24T11:45:36Z",
+      "side": 1,
+      "message": "Would you mind updating `PublicKeyCredential` calls as well? Here and on 250?",
+      "revId": "9950f745014a7c1f474fdaa6c29f9127fa165148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
