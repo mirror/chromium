@@ -16,6 +16,24 @@
       "revId": "76497d51fbb0bffe5c0a1db8d425cce957233661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e895cabd_6c36a197",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-24T17:38:15Z",
+      "side": 1,
+      "message": "Agreed. But let me have it in a separate followup CL.\nAs a fix, this change may be clear to understand what was the problem :/",
+      "parentUuid": "9f8113a2_fbd70414",
+      "revId": "76497d51fbb0bffe5c0a1db8d425cce957233661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
