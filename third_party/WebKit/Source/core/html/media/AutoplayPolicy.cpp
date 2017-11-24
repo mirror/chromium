@@ -4,6 +4,7 @@
 
 #include "core/html/media/AutoplayPolicy.h"
 
+#include "common/feature_policy/feature_policy_feature.h"
 #include "core/dom/Document.h"
 #include "core/dom/ElementVisibilityObserver.h"
 #include "core/frame/ContentSettingsClient.h"
@@ -61,6 +62,19 @@ bool ComputeLockPendingUserGestureRequired(const Document& document) {
   return true;
 }
 
+bool HasBeenActivated(const Frame& frame) {
+  // Check if the current frame has received a user activation.
+  if (frame.HasBeenActivated() ||
+      frame.HasReceivedUserGestureBeforeNavigation()) {
+    return true;
+  }
+
+  // If there is a parent check if the parent has received a
+  // user gesture.
+  const Frame* parent = frame.Tree().Parent();
+  return parent && HasBeenActivated(*parent);
+}
+
 }  // anonymous namespace
 
 // static
@@ -84,8 +98,14 @@ AutoplayPolicy::Type AutoplayPolicy::GetAutoplayPolicyForDocument(
 bool AutoplayPolicy::IsDocumentAllowedToPlay(const Document& document) {
   if (!document.GetFrame())
     return false;
-  return document.GetFrame()->HasBeenActivated() ||
-         document.GetFrame()->HasReceivedUserGestureBeforeNavigation();
+
+  // Check feature policy to see if autoplay is enabled.
+  if (RuntimeEnabledFeatures::FeaturePolicyAutoplayFeatureEnabled() &&
+      !document.GetFrame()->IsFeatureEnabled(FeaturePolicyFeature::kAutoplay)) {
+    return false;
+  }
+
+  return HasBeenActivated(*document.GetFrame());
 }
 
 AutoplayPolicy::AutoplayPolicy(HTMLMediaElement* element)

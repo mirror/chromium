@@ -390,6 +390,10 @@
       status: "stable",
     },
     {
+      name: "FeaturePolicyAutoplayFeature",
+      status: "test"
+    },
+    {
       name: "FeaturePolicyExperimentalFeatures",
     },
     {
