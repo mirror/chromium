@@ -1,0 +1,8 @@
+CONSOLE MESSAGE: line 20: Testing on: http://127.0.0.1:8000/media/autoplay/resources/nested-iframe-2.html
+CONSOLE MESSAGE: line 15: play() can only be initiated by a user gesture.
+CONSOLE MESSAGE: line 20: Testing on: http://localhost:8000/media/autoplay/resources/nested-iframe-1b.html
+CONSOLE MESSAGE: line 20: Testing on: http://127.0.0.1:8000/media/autoplay/document-user-activation-feature-policy-alternating.html
+PASS successfullyParsed is true
+
+TEST COMPLETE
+
