@@ -4414,8 +4414,15 @@ bubblePresenterForFeature:(const base::Feature&)feature
   if (currentTab && self.viewVisible) {
     [currentTab updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
   }
+  __weak BrowserViewController* weakSelf = self;
   [self addSelectedTabWithURL:GURL(kChromeUINewTabURL)
-                   transition:ui::PAGE_TRANSITION_TYPED];
+                      atIndex:[_model count]
+                   transition:ui::PAGE_TRANSITION_TYPED
+           tabAddedCompletion:^{
+             if (command.shouldFocusOmnibox) {
+               [weakSelf focusOmnibox];
+             }
+           }];
 }
 
 - (void)printTab {
