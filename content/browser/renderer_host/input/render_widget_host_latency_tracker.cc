@@ -179,10 +179,10 @@ void RenderWidgetHostLatencyTracker::ComputeInputLatencyHistograms(
   }
 
   LatencyInfo::LatencyComponent rwh_component;
-  if (!latency.FindLatency(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
-                           latency_component_id, &rwh_component)) {
-    return;
-  }
+  bool found_component =
+      latency.FindLatency(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
+                          latency_component_id, &rwh_component);
+  DCHECK(found_component);
   DCHECK_EQ(rwh_component.event_count, 1u);
 
   bool multi_finger_touch_gesture =
@@ -287,10 +287,8 @@ void RenderWidgetHostLatencyTracker::OnInputEvent(
            event.GetType() == WebInputEvent::kRawKeyDown);
   }
 
-  if (latency->FindLatency(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
-                           latency_component_id_, nullptr)) {
-    return;
-  }
+  DCHECK(!latency->FindLatency(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
+                               latency_component_id_, nullptr));
 
   if (event.TimeStampSeconds() &&
       !latency->FindLatency(ui::INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0,
