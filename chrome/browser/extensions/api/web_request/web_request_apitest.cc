@@ -672,7 +672,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
   GURL url = embedded_test_server()->GetURL(
                  "/cross-site/a.com/iframe_cross_site.html");
   const std::string kHost = "a.com";
-  chrome::NavigateParams params(browser(), url, ui::PAGE_TRANSITION_LINK);
+  NavigateParams params(browser(), url, ui::PAGE_TRANSITION_LINK);
   params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
   ui_test_utils::NavigateToURL(&params);
 
@@ -798,7 +798,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
                                     testcase.main_frame_url, port));
     }
 
-    chrome::NavigateParams params(browser(), url, ui::PAGE_TRANSITION_TYPED);
+    NavigateParams params(browser(), url, ui::PAGE_TRANSITION_TYPED);
     ui_test_utils::NavigateToURL(&params);
 
     EXPECT_EQ(expected_requests_observed,
@@ -1310,7 +1310,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy,
 
   // Navigate the browser to a page in a new tab.
   GURL url = embedded_test_server()->GetURL(protected_domain, "/empty.html");
-  chrome::NavigateParams params(browser(), url, ui::PAGE_TRANSITION_LINK);
+  NavigateParams params(browser(), url, ui::PAGE_TRANSITION_LINK);
   params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
   ui_test_utils::NavigateToURL(&params);
 

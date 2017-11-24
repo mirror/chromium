@@ -126,7 +126,7 @@ void SigninViewController::ShowDiceSigninTab(
     Browser* browser,
     signin_metrics::AccessPoint access_point) {
   signin_metrics::Reason signin_reason = GetSigninReasonFromMode(mode);
-  chrome::ShowSingletonTab(browser, GaiaUrls::GetInstance()->add_account_url());
+  ShowSingletonTab(browser, GaiaUrls::GetInstance()->add_account_url());
   content::WebContents* active_contents =
       browser->tab_strip_model()->GetActiveWebContents();
   DCHECK_EQ(GaiaUrls::GetInstance()->add_account_url(),
