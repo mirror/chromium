@@ -181,6 +181,46 @@ NSArray* GetTestFormInputElementWithLabelFromPrevious() {
           nil]];
 }
 
+NSArray* GetTestFormInputElementWithLabelFromEnclosingLabelBefore() {
+  return @[
+      @("<LABEL>* First name: "
+          "<INPUT type='text' name='firstname' value='John'/>"
+          "</LABEL>"),
+      [NSDictionary dictionaryWithObjectsAndKeys:
+          @"'* First name:'", @"label",
+          @"'firstname'", @"name",
+          @"'text'", @"form_control_type",
+          @"undefined", @"autocomplete_attribute",
+          GetDefaultMaxLengthString(), @"max_length",
+          @"true", @"should_autocomplete",
+          @"false", @"is_checkable",
+          @"'John'", @"value",
+          @"'John'", @"value_option_text",
+          @"undefined", @"option_values",
+          @"undefined", @"option_contents",
+          nil]];
+}
+
+NSArray* GetTestFormInputElementWithLabelFromEnclosingLabelAfter() {
+  return @[
+      @("<LABEL>"
+          "<INPUT type='text' name='firstname' value='John'/>"
+          "* First name: </LABEL>"),
+      [NSDictionary dictionaryWithObjectsAndKeys:
+          @"'* First name:'", @"label",
+          @"'firstname'", @"name",
+          @"'text'", @"form_control_type",
+          @"undefined", @"autocomplete_attribute",
+          GetDefaultMaxLengthString(), @"max_length",
+          @"true", @"should_autocomplete",
+          @"false", @"is_checkable",
+          @"'John'", @"value",
+          @"'John'", @"value_option_text",
+          @"undefined", @"option_values",
+          @"undefined", @"option_contents",
+          nil]];
+}
+
 NSArray* GetTestFormInputElementWithLabelFromPreviousSpan() {
   return @[
       @("* Last name<span>:</span> "
@@ -951,6 +991,18 @@ TEST_F(AutofillControllerJsTest, InferLabelFromPreviousLabelOtherIgnored) {
       @"input");
 }
 
+TEST_F(AutofillControllerJsTest, InferLabelFromEnclosingLabelBefore) {
+  TestInputElementDataEvaluation(
+      @"__gCrWeb.autofill.inferLabelFromEnclosingLabel", @"label",
+      GetTestFormInputElementWithLabelFromEnclosingLabelBefore(), @"input");
+}
+
+TEST_F(AutofillControllerJsTest, InferLabelFromEnclosingLabelAfter) {
+  TestInputElementDataEvaluation(
+      @"__gCrWeb.autofill.inferLabelFromEnclosingLabel", @"label",
+      GetTestFormInputElementWithLabelFromEnclosingLabelAfter(), @"input");
+}
+
 TEST_F(AutofillControllerJsTest, InferLabelFromPreviousTextBrAndSpan) {
   TestInputElementDataEvaluation(
       @"__gCrWeb.autofill.inferLabelFromPrevious", @"label",
@@ -1006,6 +1058,8 @@ TEST_F(AutofillControllerJsTest, InferLabelForElement) {
     GetTestFormInputElementWithLabelFromPreviousParagraph(),
     GetTestFormInputElementWithLabelFromPreviousLabel(),
     GetTestFormInputElementWithLabelFromPreviousLabelOtherIgnored(),
+    GetTestFormInputElementWithLabelFromEnclosingLabelBefore(),
+    GetTestFormInputElementWithLabelFromEnclosingLabelAfter(),
     GetTestFormInputElementWithLabelFromPreviousTextSpanBr(),
     GetTestFormInputElementWithLabelFromPreviousTextBrAndSpan(),
     GetTestFormInputElementWithLabelFromListItem(),
@@ -1267,6 +1321,8 @@ TEST_F(AutofillControllerJsTest, WebFormControlElementToFormField) {
     GetTestFormInputElementWithLabelFromPreviousParagraph(),
     GetTestFormInputElementWithLabelFromPreviousLabel(),
     GetTestFormInputElementWithLabelFromPreviousLabelOtherIgnored(),
+    GetTestFormInputElementWithLabelFromEnclosingLabelBefore(),
+    GetTestFormInputElementWithLabelFromEnclosingLabelAfter(),
     GetTestFormInputElementWithLabelFromPreviousTextBrAndSpan(),
     GetTestFormInputElementWithLabelFromPreviousTextSpanBr(),
     GetTestFormInputElementWithLabelFromListItem(),
@@ -1351,6 +1407,8 @@ TEST_F(AutofillControllerJsTest, WebFormElementToFormData) {
     GetTestFormInputElementWithLabelFromPreviousParagraph(),
     GetTestFormInputElementWithLabelFromPreviousLabel(),
     GetTestFormInputElementWithLabelFromPreviousLabelOtherIgnored(),
+    GetTestFormInputElementWithLabelFromEnclosingLabelBefore(),
+    GetTestFormInputElementWithLabelFromEnclosingLabelAfter(),
     GetTestFormInputElementWithLabelFromPreviousTextSpanBr(),
     GetTestFormInputElementWithLabelFromPreviousTextBrAndSpan(),
     GetTestFormInputElementWithLabelFromListItem(),
@@ -1359,8 +1417,10 @@ TEST_F(AutofillControllerJsTest, WebFormElementToFormData) {
     GetTestFormInputElementWithLabelFromTableNested(),
     GetTestFormInputElementWithLabelFromTableRow(),
     GetTestFormInputElementWithLabelFromDivTable(),
-    GetTestFormInputElementWithLabelFromDefinitionList(), GetTestInputRadio(),
-    GetTestInputCheckbox(), GetTestFormSelectElement(),
+    GetTestFormInputElementWithLabelFromDefinitionList(),
+    GetTestInputRadio(),
+    GetTestInputCheckbox(),
+    GetTestFormSelectElement(),
     GetTestFormSelectElementWithOptgroup()
   ];
   // Test a form that has a signle item in the array.
@@ -1455,6 +1515,8 @@ TEST_F(AutofillControllerJsTest, ExtractFormsAndFormElements) {
     GetTestFormInputElementWithLabelFromPreviousParagraph(),
     GetTestFormInputElementWithLabelFromPreviousLabel(),
     GetTestFormInputElementWithLabelFromPreviousLabelOtherIgnored(),
+    GetTestFormInputElementWithLabelFromEnclosingLabelBefore(),
+    GetTestFormInputElementWithLabelFromEnclosingLabelAfter(),
     GetTestFormInputElementWithLabelFromPreviousTextSpanBr(),
     GetTestFormInputElementWithLabelFromPreviousTextBrAndSpan(),
     GetTestFormInputElementWithLabelFromListItem(),
@@ -1493,6 +1555,8 @@ TEST_F(AutofillControllerJsTest, ExtractFormsAndFormElementsNestedFrame) {
     GetTestFormInputElementWithLabelFromPreviousParagraph(),
     GetTestFormInputElementWithLabelFromPreviousLabel(),
     GetTestFormInputElementWithLabelFromPreviousLabelOtherIgnored(),
+    GetTestFormInputElementWithLabelFromEnclosingLabelBefore(),
+    GetTestFormInputElementWithLabelFromEnclosingLabelAfter(),
     GetTestFormInputElementWithLabelFromPreviousTextSpanBr(),
     GetTestFormInputElementWithLabelFromPreviousTextBrAndSpan(),
     GetTestFormInputElementWithLabelFromListItem(),
