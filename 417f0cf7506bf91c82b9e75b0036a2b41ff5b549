@@ -22,6 +22,30 @@
       "revId": "417f0cf7506bf91c82b9e75b0036a2b41ff5b549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f321b69_3d1cd630",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3053,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-24T03:58:57Z",
+      "side": 0,
+      "message": "These won\u0027t be enabled through a study anymore. We only use them on the command-line to set \u0027download_group\u0027 and \u0027tag\u0027 during manual testing. Would it be better to just remove experiment_group and ExperimentalSwReporterEngineOnAllArchitectures from this config?",
+      "parentUuid": "cc4f6173_cdd49671",
+      "range": {
+        "startLine": 3053,
+        "startChar": 25,
+        "endLine": 3053,
+        "endChar": 53
+      },
+      "revId": "417f0cf7506bf91c82b9e75b0036a2b41ff5b549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
