@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55b44ff3_46deacf2",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkInstrumentation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-11-24T16:23:01Z",
+      "side": 1,
+      "message": "Here I encounter an issue that timing has been released but not resetted to nullptr. Doesn\u0027t look right, is it?",
+      "revId": "c1abf788bcc56aa9b827512b9596928737657be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
