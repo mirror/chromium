@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aba1062_0a44392a",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T22:19:04Z",
+      "side": 1,
+      "message": "I think it\u0027s missing a test where one SQS has an invertible transform, then the next doesn\u0027t, cuz this transform would get left as non-empty and get used but the 2nd SQS could have a different transform getting wrong results. tl;dr there should be an else here, and looks like we need a test :)",
+      "revId": "a670870d347170f8516ec73e886a6c508b215426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
