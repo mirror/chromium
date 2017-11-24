@@ -211,7 +211,13 @@ config("default_cygprofile_instrumentation") {
 
 config("cygprofile_instrumentation") {
   defines = [ "CYGPROFILE_INSTRUMENTATION=1" ]
-  cflags = [ "-finstrument-functions" ]
+  if (use_lightweight_order_profiling) {
+    # Add unrestricted mcount profiling.
+    cflags = [ "-finstrument-function-entry-bare" ]
+    defines += [ "LIGHTWEIGHT_INSTRUMENTATION" ]
+  } else {
+    cflags = [ "-finstrument-functions" ]
+  }
 }
 
 config("no_cygprofile_instrumentation") {
