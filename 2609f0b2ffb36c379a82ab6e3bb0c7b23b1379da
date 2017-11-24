@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9812a57e_e48dbaae",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1234559
+      },
+      "writtenOn": "2017-11-24T05:04:23Z",
+      "side": 1,
+      "message": "in non-RLS path the stack is \n\nLayoutBox::VerticalScrollbarWidth() \nLayoutBox::ScrollbarLogicalWidth()\nLayoutBlock::ComputeIntrinsicLogicalWidths()\nLayoutBlock::ComputePreferredLogicalWidths()\nLayoutBox::MinPreferredLogicalWidth()\nLayoutBlock::ComputeBlockPreferredLogicalWidths()\nLayoutBlock::ComputeIntrinsicLogicalWidths()\nLayoutBlock::ComputePreferredLogicalWidths()\nLayoutBox::MinPreferredLogicalWidth()\nWebViewImpl::ContentsPreferredMinimumSize()\ncontent::RenderViewImpl::CheckPreferredSize()\n\nin VerticalScrollbarWidth() HasOverflowClip() is false hence it returns 0\n\n\n if (!HasOverflowClip() || Style()-\u003eOverflowY() \u003d\u003d EOverflow::kOverlay)\n    return 0;\n\nso the call to  PaintLayerScrollableArea::VerticalScrollbarWidth() is not made\n\nfor RLS case HasOverflowClip() is true from LayoutView::AllowsOverflowClip() is true and overflowclip is set from  LayoutBlock::UpdateFromStyle() hence CanHaveScrollbars() has effect in RLS",
+      "parentUuid": "8025fb96_2298360b",
+      "range": {
+        "startLine": 2112,
+        "startChar": 11,
+        "endLine": 2112,
+        "endChar": 35
+      },
+      "revId": "2609f0b2ffb36c379a82ab6e3bb0c7b23b1379da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "318bd21c_1ba68820",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "71a69292_dd1c5e2c",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1234559
+      },
+      "writtenOn": "2017-11-24T05:04:23Z",
+      "side": 1,
+      "message": "just adding UpdateAllLifecyclePhases(), did not have any effect, I have to keep \"GetLayoutView()-\u003eSetNeedsLayout(LayoutInvalidationReason::kScrollbarChanged);\"\nfor proper outcome",
+      "parentUuid": "318bd21c_1ba68820",
+      "revId": "2609f0b2ffb36c379a82ab6e3bb0c7b23b1379da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "224e111b_2c8a7e82",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 8
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-15T00:48:10Z",
       "side": 1,
       "message": "I think we shouldn\u0027t need to check this here, since as I mentioned on the bug we are checking it in LayoutView::CalculateScrollbarModes.",
+      "revId": "2609f0b2ffb36c379a82ab6e3bb0c7b23b1379da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c6d5a9_c1bb138b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1234559
+      },
+      "writtenOn": "2017-11-24T05:04:23Z",
+      "side": 1,
+      "message": "Accept, will not be needed after adding UpdateAllLifecyclePhases()",
+      "parentUuid": "224e111b_2c8a7e82",
       "revId": "2609f0b2ffb36c379a82ab6e3bb0c7b23b1379da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
