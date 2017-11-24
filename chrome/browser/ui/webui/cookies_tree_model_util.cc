@@ -266,6 +266,16 @@ bool CookiesTreeModelUtil::GetCookieTreeNodeDictionary(
       dict->Set(kKeyScopes, std::move(scopes));
       break;
     }
+    case CookieTreeNode::DetailedInfo::TYPE_SHARED_WORKER: {
+      dict->SetString(kKeyType, "shared_worker");
+
+      const std::pair<GURL, std::string>& shared_worker_info =
+          *node.GetDetailedInfo().shared_worker_info;
+
+      dict->SetString(kKeyOrigin, shared_worker_info.first.spec());
+      dict->SetString(kKeyName, shared_worker_info.second);
+      break;
+    }
     case CookieTreeNode::DetailedInfo::TYPE_CACHE_STORAGE: {
       dict->SetString(kKeyType, "cache_storage");
 
