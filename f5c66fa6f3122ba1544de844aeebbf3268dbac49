@@ -70,6 +70,30 @@
       "revId": "f5c66fa6f3122ba1544de844aeebbf3268dbac49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9a09b68_d0c9501a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-24T16:42:21Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s that bad as long as we\u0027re following the pattern of\n\n1. Set expectations\n2. Exercise test code\n3. Verify expectations and result\n\nin that order. We could make the ScopedTaskEnvironment QUEUED instead of ASYNC so the posted tasks don\u0027t run immediately, but with a proper execution order that\u0027s not necessary (and conversely, it would hide mixing up the execution order).",
+      "parentUuid": "ef48477e_77c0b0e4",
+      "range": {
+        "startLine": 10,
+        "startChar": 67,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "f5c66fa6f3122ba1544de844aeebbf3268dbac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
