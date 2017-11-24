@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "657bb3b5_de87c9c1",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-11-24T09:57:57Z",
+      "side": 1,
+      "message": "It seems this switch statement is long enough now to switch to a static table instead?",
+      "range": {
+        "startLine": 148,
+        "startChar": 1,
+        "endLine": 148,
+        "endChar": 17
+      },
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
