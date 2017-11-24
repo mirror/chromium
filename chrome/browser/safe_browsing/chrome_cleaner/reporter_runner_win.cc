@@ -609,32 +609,16 @@ class ReporterRunner {
 
     ReporterRunTimeInfo time_info(local_state);
 
-    if (IsUserInitiated(invocation_type)) {
-      if (instance_) {
-        // The UI should block a new user-initiated run if another one is
-        // currently happening. For simplicity at this point, simply block the
-        // new invocation with an appropriate error result.
-        if (IsUserInitiated(instance_->invocation_type()))
-          return;
+    // The UI should block a new user-initiated run if the reporter is
+    // currently running. New periodic runs can be simply ignored.
+    if (instance_)
+      return;
 
-        // User-initiated runs have priority over periodic runs. Invalidating
-        // the weak pointers for the ReporterRunner instance will turn all
-        // posted tasks into no-ops. This will also notify any pending action
-        // depending on reporter results that it was interrupted. This will not
-        // stop a reporter process that is still running, but once it finishes,
-        // the corresponding callback will be executed.
-        //
-        // TODO(crbug.com/776538): stop the reporter process if currently
-        //                         running.
-        delete instance_;
-      }
-    } else {
-      // A periodic run will only start if no run is currently happening and
-      // if no sequence have been triggered in the last
-      // |kDaysBetweenSuccessfulSwReporterRuns| days.
-      if (instance_ || !time_info.ShouldRun())
-        return;
-    }
+    // A periodic run will only start if no run is currently happening and
+    // if no sequence have been triggered in the last
+    // |kDaysBetweenSuccessfulSwReporterRuns| days.
+    if (!IsUserInitiated(invocation_type) && !time_info.ShouldRun())
+      return;
 
     // The reporter runner object manages its own lifetime and will delete
     // itself once all invocations finish.
@@ -708,8 +692,7 @@ class ReporterRunner {
                  ReporterRunTimeInfo&& time_info)
       : invocation_type_(invocation_type),
         invocations_(std::move(invocations)),
-        time_info_(std::move(time_info)),
-        weak_ptr_factory_(this) {}
+        time_info_(std::move(time_info)) {}
 
   ~ReporterRunner() {
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -734,8 +717,9 @@ class ReporterRunner {
                             : blocking_task_runner_.get();
     auto launch_and_wait =
         base::Bind(&LaunchAndWaitForExitOnBackgroundThread, next_invocation);
-    auto reporter_done = base::Bind(&ReporterRunner::ReporterDone, GetWeakPtr(),
-                                    Now(), next_invocation);
+    auto reporter_done =
+        base::Bind(&ReporterRunner::ReporterDone, base::Unretained(this), Now(),
+                   next_invocation);
     base::PostTaskAndReplyWithResult(task_runner, FROM_HERE,
                                      std::move(launch_and_wait),
                                      std::move(reporter_done));
@@ -924,10 +908,6 @@ class ReporterRunner {
 
   SwReporterInvocationType invocation_type() const { return invocation_type_; }
 
-  base::WeakPtr<ReporterRunner> GetWeakPtr() {
-    return weak_ptr_factory_.GetWeakPtr();
-  }
-
   // Not null if there is a sequence currently running.
   static ReporterRunner* instance_;
 
@@ -948,8 +928,6 @@ class ReporterRunner {
   ReporterRunTimeInfo time_info_;
 
   SEQUENCE_CHECKER(sequence_checker_);
-
-  base::WeakPtrFactory<ReporterRunner> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ReporterRunner);
 };
@@ -1045,9 +1023,7 @@ SwReporterInvocationSequence::SwReporterInvocationSequence(
       container_(std::move(invocations_sequence.container_)),
       on_sequence_done_(std::move(invocations_sequence.on_sequence_done_)) {}
 
-SwReporterInvocationSequence::~SwReporterInvocationSequence() {
-  NotifySequenceDone(SwReporterInvocationResult::kInterrupted);
-}
+SwReporterInvocationSequence::~SwReporterInvocationSequence() = default;
 
 void SwReporterInvocationSequence::operator=(
     SwReporterInvocationSequence&& invocations_sequence) {

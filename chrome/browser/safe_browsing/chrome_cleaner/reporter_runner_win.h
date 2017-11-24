@@ -123,8 +123,6 @@ class SwReporterInvocation {
 
 enum class SwReporterInvocationResult {
   kUnspecified,
-  // A current or scheduled run was interrupted by a user-initiated run.
-  kInterrupted,
   // Tried to start a new run, but a user-initiated run was already
   // happening. The UI should never allow this to happen.
   kNotScheduled,
