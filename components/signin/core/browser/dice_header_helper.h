@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_header_helper.h"
 
 class GURL;
@@ -28,7 +29,8 @@ class DiceHeaderHelper : public SigninHeaderHelper {
     kShowSignoutConfirmation
   };
 
-  explicit DiceHeaderHelper(bool signed_in_with_auth_error);
+  explicit DiceHeaderHelper(bool signed_in_with_auth_error,
+                            AccountConsistencyMethod account_consistency);
   ~DiceHeaderHelper() override {}
 
   // Returns the parameters contained in the X-Chrome-ID-Consistency-Response
@@ -55,6 +57,7 @@ class DiceHeaderHelper : public SigninHeaderHelper {
   bool IsUrlEligibleForRequestHeader(const GURL& url) override;
 
   bool signed_in_with_auth_error_;
+  AccountConsistencyMethod account_consistency_;
 
   DISALLOW_COPY_AND_ASSIGN(DiceHeaderHelper);
 };

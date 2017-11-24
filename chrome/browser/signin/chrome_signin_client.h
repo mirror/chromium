@@ -37,6 +37,11 @@ class ChromeSigninClient
   explicit ChromeSigninClient(
       Profile* profile, SigninErrorController* signin_error_controller);
   ~ChromeSigninClient() override;
+
+  AccountConsistencyManager* account_consistency_manager() {
+    return &account_consistency_manager_;
+  }
+
   void DoFinalInit() override;
 
   // Utility method.
