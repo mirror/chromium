@@ -75,6 +75,26 @@ class TabLifecycleUnitTest : public ChromeRenderViewHostTestHarness {
   DISALLOW_COPY_AND_ASSIGN(TabLifecycleUnitTest);
 };
 
+TEST_F(TabLifecycleUnitTest, ConstructAndSetWebContents) {
+  {
+    TabLifecycleUnit tab_lifecycle_unit(&observers_, web_contents(),
+                                        tab_strip_model_.get());
+    EXPECT_EQ(&tab_lifecycle_unit,
+              TabLifecycleUnitExternal::FromWebContents(web_contents()));
+    EXPECT_FALSE(
+        TabLifecycleUnitExternal::FromWebContents(other_web_contents_.get()));
+
+    tab_lifecycle_unit.SetWebContents(other_web_contents_.get());
+    EXPECT_FALSE(TabLifecycleUnitExternal::FromWebContents(web_contents()));
+    EXPECT_EQ(&tab_lifecycle_unit, TabLifecycleUnitExternal::FromWebContents(
+                                       other_web_contents_.get()));
+  }
+
+  EXPECT_FALSE(TabLifecycleUnitExternal::FromWebContents(web_contents()));
+  EXPECT_FALSE(
+      TabLifecycleUnitExternal::FromWebContents(other_web_contents_.get()));
+}
+
 TEST_F(TabLifecycleUnitTest, SetFocused) {
   test_clock_.Advance(kShortDelay);
   TabLifecycleUnit tab_lifecycle_unit(&observers_, web_contents(),

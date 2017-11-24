@@ -32,6 +32,7 @@
 #include "chrome/browser/memory/oom_memory_details.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
+#include "chrome/browser/resource_coordinator/discard_metrics_util.h"
 #include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
 #include "chrome/browser/resource_coordinator/tab_lifecycle_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_features.h"
@@ -264,6 +265,7 @@ void TabManager::Start() {
 // MemoryPressureMonitor is not implemented on Linux so far and tabs are never
 // discarded.
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_CHROMEOS)
+  start_time_ = NowTicks();
   // Create a |MemoryPressureListener| to listen for memory events when
   // MemoryCoordinator is disabled. When MemoryCoordinator is enabled
   // it asks TabManager to do tab discarding.
@@ -410,8 +412,12 @@ bool TabManager::CanDiscardTab(const TabStats& tab_stats,
 }
 
 void TabManager::DiscardTab(DiscardReason reason) {
-  if (reason == DiscardReason::kUrgent)
-    stats_collector_->RecordWillDiscardUrgently(GetNumAliveTabs());
+  if (reason == DiscardReason::kUrgent) {
+    const TimeTicks discard_time = NowTicks();
+    RecordWillDiscardUrgently(discard_time, last_urgent_discard_time_,
+                              start_time_, GetNumAliveTabs());
+    last_urgent_discard_time_ = discard_time;
+  }
 
 #if defined(OS_CHROMEOS)
   // Call Chrome OS specific low memory handling process.

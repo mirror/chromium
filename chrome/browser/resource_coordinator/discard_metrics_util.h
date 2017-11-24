@@ -9,6 +9,17 @@
 
 namespace resource_coordinator {
 
+// Records histograms *before* starting to urgently discard LifecycleUnits.
+// |discard_time| is the time of the discard event. |last_urgent_discard_time|
+// is the time of the previous urgent discard event, or a null TimeTicks if
+// there was none. |start_time| is the time at which TabManager was started.
+// |num_alive_tabs| is the number of tabs that are not pending load or
+// discarded.
+void RecordWillDiscardUrgently(base::TimeTicks discard_time,
+                               base::TimeTicks last_urgent_discard_time,
+                               base::TimeTicks start_time,
+                               int num_alive_tabs);
+
 // Records histograms when a tab is discarded.
 void RecordTabDiscarded();
 

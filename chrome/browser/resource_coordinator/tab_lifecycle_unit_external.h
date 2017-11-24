@@ -36,6 +36,12 @@ class TabLifecycleUnitExternal {
 
   // Returns true if the tab is discarded.
   virtual bool IsDiscarded() const = 0;
+
+ protected:
+  // Sets the TabLifecycleUnitExternal associated with |web_contents|.
+  static void SetForWebContents(
+      content::WebContents* web_contents,
+      TabLifecycleUnitExternal* tab_lifecycle_unit_external);
 };
 
 }  // namespace resource_coordinator

@@ -24,9 +24,12 @@ TabLifecycleUnit::TabLifecycleUnit(
   DCHECK(observers_);
   DCHECK(GetWebContents());
   DCHECK(tab_strip_model_);
+  TabLifecycleUnitExternal::SetForWebContents(GetWebContents(), this);
 }
 
-TabLifecycleUnit::~TabLifecycleUnit() = default;
+TabLifecycleUnit::~TabLifecycleUnit() {
+  TabLifecycleUnitExternal::SetForWebContents(GetWebContents(), nullptr);
+}
 
 void TabLifecycleUnit::SetTabStripModel(TabStripModel* tab_strip_model) {
   DCHECK(tab_strip_model);
@@ -35,7 +38,9 @@ void TabLifecycleUnit::SetTabStripModel(TabStripModel* tab_strip_model) {
 
 void TabLifecycleUnit::SetWebContents(content::WebContents* web_contents) {
   DCHECK(web_contents);
+  TabLifecycleUnitExternal::SetForWebContents(GetWebContents(), nullptr);
   web_contents_ = web_contents;
+  TabLifecycleUnitExternal::SetForWebContents(web_contents, this);
 }
 
 void TabLifecycleUnit::SetFocused(bool focused) {

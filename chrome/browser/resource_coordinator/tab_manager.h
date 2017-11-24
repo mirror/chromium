@@ -486,6 +486,14 @@ class TabManager : public TabStripModelObserver,
   // A listener to global memory pressure events.
   std::unique_ptr<base::MemoryPressureListener> memory_pressure_listener_;
 
+  // Time at which TabManager was started.
+  base::TimeTicks start_time_;
+
+  // Last time at which TabManager had to discard tabs or apps urgently, or a
+  // null TimeTicks if that never happened. Does not include requests to discard
+  // a specific tab.
+  base::TimeTicks last_urgent_discard_time_;
+
   // Number of times a tab has been discarded, for statistics.
   int discard_count_;
 
