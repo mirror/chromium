@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f62544e1_e4cbf6a1",
+        "filename": "components/viz/host/forwarding_compositing_mode_reporter_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-24T22:38:58Z",
+      "side": 1,
+      "message": "nit: Can you add a comment this is the binding from the real reporter?",
+      "revId": "5741ab0a45bc668dba3ba21da9fde6a196acef50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
