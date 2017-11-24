@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c5bf173_cfc516b4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/setrequestheader-bogus-name.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1231189
+      },
+      "writtenOn": "2017-11-24T14:03:21Z",
+      "side": 0,
+      "message": "Why are we deleting this? Apart from the tests from invalid_byte_strings, these look like they\u0027re still valid even after moving to ByteString?",
+      "revId": "e1ea6b1bb320eb9cd9b7d10e70e0a5d69ae9977b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16981d8c_e95b8109",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/setrequestheader-bogus-value.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1231189
+      },
+      "writtenOn": "2017-11-24T14:03:21Z",
+      "side": 0,
+      "message": "Why are we deleting this? Except for \u0027 given value ﾃｽﾄ,\u0027, these look like they\u0027re still valid even after moving to ByteString?",
+      "revId": "e1ea6b1bb320eb9cd9b7d10e70e0a5d69ae9977b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
