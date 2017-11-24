@@ -16,6 +16,23 @@
       "revId": "5741ab0a45bc668dba3ba21da9fde6a196acef50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5a7655_32d26131",
+        "filename": "components/viz/host/forwarding_compositing_mode_reporter_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T22:40:46Z",
+      "side": 1,
+      "message": "Done.\n\n  // A binding to |this| that is given to the authoritative reporter to listen                                     \n  // for the compositing mode state.",
+      "revId": "5741ab0a45bc668dba3ba21da9fde6a196acef50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
