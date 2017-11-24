@@ -210,11 +210,13 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   bool IsResourceTimingBufferFull();
   void AddResourceTimingBuffer(PerformanceEntry&);
 
-  void NotifyObserversOfEntry(PerformanceEntry&) const;
+  void NotifyObserversOfEntry(PerformanceEntry&);
   void NotifyObserversOfEntries(PerformanceEntryVector&);
   bool HasObserverFor(PerformanceEntry::EntryType) const;
 
+  void DeliverObservations();
   void DeliverObservationsTimerFired(TimerBase*);
+  void DeliverObservationsIdleCallback(double deadline);
 
   PerformanceEntryVector frame_timing_buffer_;
   unsigned frame_timing_buffer_size_;
@@ -224,6 +226,10 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   Member<UserTiming> user_timing_;
   Member<PerformanceEntry> first_paint_timing_;
   Member<PerformanceEntry> first_contentful_paint_timing_;
+  // Records the index of the last PerformanceEntry for which observers were
+  // notified. Enables determining whether or not observers have been made aware
+  // of a given entry.
+  int last_notified_entry_index_;
 
   double time_origin_;
 

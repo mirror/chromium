@@ -52,7 +52,7 @@ PerformanceObserver::PerformanceObserver(
     ExecutionContext* execution_context,
     PerformanceBase* performance,
     V8PerformanceObserverCallback* callback)
-    : ContextClient(execution_context),
+    : ContextLifecycleObserver(execution_context),
       execution_context_(execution_context),
       callback_(callback),
       performance_(performance),
@@ -110,6 +110,10 @@ bool PerformanceObserver::ShouldBeSuspended() const {
   return execution_context_->IsContextPaused();
 }
 
+void PerformanceObserver::ContextDestroyed(ExecutionContext*) {
+  disconnect();
+}
+
 void PerformanceObserver::Deliver() {
   DCHECK(!ShouldBeSuspended());
 
@@ -129,7 +133,7 @@ void PerformanceObserver::Trace(blink::Visitor* visitor) {
   visitor->Trace(performance_);
   visitor->Trace(performance_entries_);
   ScriptWrappable::Trace(visitor);
-  ContextClient::Trace(visitor);
+  ContextLifecycleObserver::Trace(visitor);
 }
 
 void PerformanceObserver::TraceWrappers(
