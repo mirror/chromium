@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a04e7cf8_3e0a8afc",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-11-24T16:00:52Z",
+      "side": 1,
+      "message": "No, \u0027enabled\u0027 is only set for binary flags. Those with multiple options don\u0027t have it set.",
+      "parentUuid": "114f2dcb_4ed785f3",
+      "range": {
+        "startLine": 90,
+        "startChar": 20,
+        "endLine": 90,
+        "endChar": 51
+      },
+      "revId": "58c29026ff04bb7923707d4da86f4efb5cb04fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b8ada5e_a7e16c1f",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-24T14:20:59Z",
       "side": 1,
       "message": "I would try to use classList so you don\u0027t have to touch the \u0027flex-container\u0027 class at all. Extract the |default| value to a local variable and then do\n\n  experimentContainerEl.classList.toggle(\u0027experiment-default\u0027, default);\n  experimentContainerEl.classList.toggle(\u0027experiment-switched\u0027, !default);\n\n?",
+      "range": {
+        "startLine": 191,
+        "startChar": 26,
+        "endLine": 191,
+        "endChar": 40
+      },
+      "revId": "58c29026ff04bb7923707d4da86f4efb5cb04fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3a82b6_5f67c065",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-11-24T16:00:52Z",
+      "side": 1,
+      "message": "Done, looks cleaner now.",
+      "parentUuid": "3b8ada5e_a7e16c1f",
       "range": {
         "startLine": 191,
         "startChar": 26,
