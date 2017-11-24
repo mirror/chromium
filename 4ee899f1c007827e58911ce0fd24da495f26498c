@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a493ef24_937ad7a1",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-24T19:44:58Z",
+      "side": 1,
+      "message": "This invariant needs to be documented on the CompositorFrameSink interface (mojom is probably the best place to document it?)",
+      "revId": "4ee899f1c007827e58911ce0fd24da495f26498c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
