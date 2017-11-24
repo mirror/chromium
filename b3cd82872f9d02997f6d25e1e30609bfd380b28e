@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d70bc684_fb57f473",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T17:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c91a8a6_06de98e4",
+      "range": {
+        "startLine": 168,
+        "startChar": 28,
+        "endLine": 168,
+        "endChar": 29
+      },
+      "revId": "b3cd82872f9d02997f6d25e1e30609bfd380b28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e43eec3c_38519c45",
         "filename": "third_party/WebKit/Source/platform/text/TextRun.h",
         "patchSetId": 9
@@ -115,6 +139,30 @@
       "revId": "b3cd82872f9d02997f6d25e1e30609bfd380b28e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c15c7aa_f1d3b3e0",
+        "filename": "third_party/WebKit/Source/platform/text/TextRun.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T17:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e43eec3c_38519c45",
+      "range": {
+        "startLine": 311,
+        "startChar": 47,
+        "endLine": 311,
+        "endChar": 48
+      },
+      "revId": "b3cd82872f9d02997f6d25e1e30609bfd380b28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

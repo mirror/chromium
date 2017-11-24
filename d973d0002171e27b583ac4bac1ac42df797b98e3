@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "8dc6840b_3f9ad3ae",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T17:39:25Z",
+      "side": 1,
+      "message": "I think the more important question is: how feasible is it that we are rendering trivial text (like only-whitespace) from other codepaths not covered by this CL. Filed a bug.",
+      "parentUuid": "4f6277eb_fd65e3cd",
+      "range": {
+        "startLine": 1551,
+        "startChar": 2,
+        "endLine": 1551,
+        "endChar": 3
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bdf6a28_efce0650",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
         "patchSetId": 8
