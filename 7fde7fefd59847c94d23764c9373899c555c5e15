@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "1e30723c_00df3e73",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T14:35:47Z",
+      "side": 1,
+      "message": "I don\u0027t know what you mean exactly here. Do you mean instead of passing strings to this function pass an enum? or do you want me to have checks here to translate the string to an enum?\n\nAlternatively I can reduce the search by one here and keep the iterator from the find and not do another search for ShouldReport. Would that suffice?",
+      "parentUuid": "85449908_743f531d",
+      "range": {
+        "startLine": 113,
+        "startChar": 23,
+        "endLine": 113,
+        "endChar": 39
+      },
+      "revId": "7fde7fefd59847c94d23764c9373899c555c5e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3aa0765_9d88ffc3",
         "filename": "ui/latency/latency_tracker.h",
         "patchSetId": 1
