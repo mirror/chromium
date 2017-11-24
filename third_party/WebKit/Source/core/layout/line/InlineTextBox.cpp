@@ -746,6 +746,7 @@ TextRun InlineTextBox::ConstructTextRun(
   // Propagate the maximum length of the characters buffer to the TextRun, even
   // when we're only processing a substring.
   run.SetCharactersLength(maximum_length);
+  run.SetContainsOnlyWhitespace(GetLineLayoutItem().ContainsOnlyWhitespace());
   DCHECK_GE(run.CharactersLength(), run.length());
   return run;
 }
