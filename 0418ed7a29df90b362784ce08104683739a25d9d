@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fda8447_6f933806",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2641,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T00:55:43Z",
+      "side": 1,
+      "message": "matadata -\u003e metadata\nis stored -\u003e to be stored",
+      "range": {
+        "startLine": 2641,
+        "startChar": 19,
+        "endLine": 2641,
+        "endChar": 38
+      },
+      "revId": "0418ed7a29df90b362784ce08104683739a25d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b9f328_763f3a66",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2657,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T00:55:43Z",
+      "side": 1,
+      "message": "ditto. no space before the \u0027.\u0027",
+      "range": {
+        "startLine": 2657,
+        "startChar": 16,
+        "endLine": 2657,
+        "endChar": 40
+      },
+      "revId": "0418ed7a29df90b362784ce08104683739a25d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
