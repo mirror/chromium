@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b2dbaf72_f69f8aad",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestObject.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-11-24T16:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "396e97bc_ede8f6b7",
+      "range": {
+        "startLine": 494,
+        "startChar": 57,
+        "endLine": 494,
+        "endChar": 63
+      },
+      "revId": "0315b78060c51f811d97bd97fb78fa2c3ea2f4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2161b9b5_da413d10",
         "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestObject.idl",
         "patchSetId": 6
@@ -62,6 +86,30 @@
       "revId": "0315b78060c51f811d97bd97fb78fa2c3ea2f4c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d94267_140a186b",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestObject.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-11-24T16:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a411dac_f9b8d47e",
+      "range": {
+        "startLine": 497,
+        "startChar": 53,
+        "endLine": 497,
+        "endChar": 59
+      },
+      "revId": "0315b78060c51f811d97bd97fb78fa2c3ea2f4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
