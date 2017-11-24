@@ -16,6 +16,24 @@
       "revId": "d8a93a0d1a19baba9b25fd3893840a7548bdcbe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7bf00d_53dd454c",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-24T11:09:53Z",
+      "side": 1,
+      "message": "I\u0027ve discussed with escordeiro@ about it and, at least for teamfood, we\u0027re assuming the account is not a child if decoding fails or id_token is not received.\n\nLet\u0027s continue discussing, though, the best way to handle this case. For now, we wouldn\u0027t change the handling if this information isn\u0027t available. Thus, I propose to add it when we start doing something different with this.\n\nBut, definitely, we should better consider this case.",
+      "parentUuid": "99cf0619_88eac19c",
+      "revId": "d8a93a0d1a19baba9b25fd3893840a7548bdcbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
