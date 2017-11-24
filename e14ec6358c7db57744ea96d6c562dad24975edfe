@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "826548a2_90d29990",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T16:13:30Z",
+      "side": 1,
+      "message": "nit: s/a va surface/|va_surface_|/",
+      "range": {
+        "startLine": 76,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 24
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778bd0d4_ad1bd7ca",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T16:13:30Z",
+      "side": 1,
+      "message": "Is there some way we can DCHECK() that the comment is true?\n DCHECK(pixmap_-\u003eAreDmaBufFdsValid()) \nperhaps?",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 6
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c354dda6_aa8b25e7",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T16:13:30Z",
+      "side": 1,
+      "message": "s/the 2 blocks below/this method/ ?",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 33
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1aadc95_00ad2fa2",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T16:13:30Z",
+      "side": 1,
+      "message": "nit: s/the pixmaps/|pixmap_|/?",
+      "range": {
+        "startLine": 126,
+        "startChar": 3,
+        "endLine": 126,
+        "endChar": 10
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3e2d5b_59756fd4",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T16:13:30Z",
+      "side": 1,
+      "message": "Multiline bodies need {}. But perhaps here we can just do\nan early-return as elsewhere in this method, i.e.\n\n    if (!gl::GLContext::GetCurrent())\n      return false;\n    context \u003d\n        reinterpret_cast\u003cEGLContext\u003e(gl::GLContext::GetCurrent()-\u003eGetHandle());",
+      "range": {
+        "startLine": 138,
+        "startChar": 40,
+        "endLine": 141,
+        "endChar": 52
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80997f5_d1b57b76",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T16:13:30Z",
+      "side": 1,
+      "message": "Are we overwriting an input param here?\nWhat about:\nDCHECK_EQ(gfx::BufferFormat::RGBA_8888, format);\nOr, if we expect |format| to be different in some cases,\njust handle it and return false if !\u003d.",
+      "range": {
+        "startLine": 152,
+        "startChar": 4,
+        "endLine": 152,
+        "endChar": 42
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a743c52_db9c9ceb",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T16:13:30Z",
+      "side": 1,
+      "message": "In general prefer DLOG to LOG, so that release builds don\u0027t\nget bloated with strings. Unittests and bots are all compiled\nwith these statements so they should be fine.\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#logging",
+      "range": {
+        "startLine": 162,
+        "startChar": 6,
+        "endLine": 162,
+        "endChar": 16
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22722d47_ed5e8ea7",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T16:13:30Z",
+      "side": 1,
+      "message": "IIUC there\u0027s no need for this as our references\nwill be released in l.182 at the end of the scope.",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 24
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
