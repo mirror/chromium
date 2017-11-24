@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26525fad_6c4f96f8",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-24T13:00:20Z",
+      "side": 0,
+      "message": "This guard didn\u0027t really work. We were effectively shipping the empty write barrier stub on master. \n\nThe good news is that since there were no alerts, the barrier is fast enough in the \"off\" state.",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 247,
+        "endChar": 11
+      },
+      "revId": "a6f7191d202beb201d8b11a576652fec8b0a1598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
