@@ -228,6 +228,39 @@ class RenderWidgetHostLatencyTrackerTest
   ContentBrowserClient* old_browser_client_;
 };
 
+TEST_F(RenderWidgetHostLatencyTrackerTest, TestValidEventTiming) {
+  base::TimeTicks now = base::TimeTicks::Now();
+
+  ui::LatencyInfo latency_info;
+  latency_info.set_trace_id(kTraceEventId);
+  latency_info.set_source_event_type(ui::SourceEventType::WHEEL);
+
+  latency_info.AddLatencyNumberWithTimestamp(
+      ui::INPUT_EVENT_LATENCY_FIRST_SCROLL_UPDATE_ORIGINAL_COMPONENT, 0, 0,
+      now + base::TimeDelta::FromMilliseconds(30), 1);
+
+  latency_info.AddLatencyNumberWithTimestamp(
+      ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
+      tracker()->latency_component_id(), 0,
+      now + base::TimeDelta::FromMilliseconds(20), 1);
+
+  latency_info.AddLatencyNumberWithTimestamp(
+      ui::INPUT_EVENT_GPU_SWAP_BUFFER_COMPONENT, 0, 0,
+      now + base::TimeDelta::FromMilliseconds(10), 1);
+
+  latency_info.AddLatencyNumberWithTimestamp(
+      ui::INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT, 0, 0, now, 1);
+
+  tracker()->OnGpuSwapBuffersCompleted(latency_info);
+
+  // When last_event_time of the end_component is less than the first_event_time
+  // of the start_component, zero is recorded instead of a negative value.
+  histogram_tester().ExpectUniqueSample(
+      "Event.Latency.ScrollBegin.Wheel.TimeToScrollUpdateSwapBegin2", 0, 1);
+  histogram_tester().ExpectUniqueSample(
+      "Event.Latency.Scroll.Wheel.TimeToScrollUpdateSwapBegin2", 0, 1);
+}
+
 TEST_F(RenderWidgetHostLatencyTrackerTest, TestWheelToFirstScrollHistograms) {
   const GURL url(kUrl);
   size_t total_ukm_entry_count = 0;
