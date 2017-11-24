@@ -365,6 +365,23 @@ void ReportBadMessage(const std::string& error);
 MOJO_CPP_BINDINGS_EXPORT
 ReportBadMessageCallback GetBadMessageCallback();
 
+// An observer of reports of bad messages for testing. It is not threadsafe. It
+// is invalid to use this for any messages dispatched from a Binding.
+class MOJO_CPP_BINDINGS_EXPORT BadMessageObserverForTest {
+ public:
+  BadMessageObserverForTest();
+  ~BadMessageObserverForTest();
+
+  const std::vector<std::string>& errors() const { return errors_; }
+
+  void ReportBadMessage(const std::string& error);
+
+ private:
+  std::vector<std::string> errors_;
+
+  DISALLOW_COPY_AND_ASSIGN(BadMessageObserverForTest);
+};
+
 }  // namespace mojo
 
 #endif  // MOJO_PUBLIC_CPP_BINDINGS_MESSAGE_H_

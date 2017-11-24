@@ -123,6 +123,8 @@ void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
       }));
   parameterized_binder_registry_.AddInterface(
       base::Bind(&CreateDedicatedWorkerHostFactory));
+  parameterized_binder_registry_.AddInterface(
+      base::Bind(&BackgroundFetchServiceImpl::Create));
 }
 
 RendererInterfaceBinders& GetRendererInterfaceBinders() {
