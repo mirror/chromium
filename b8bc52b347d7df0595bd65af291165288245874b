@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "076ffa7e_b02dbb2e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommandTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-24T16:21:10Z",
+      "side": 1,
+      "message": "When using Selection().SetSelection(SetSelectionTextToBody()), the focus is coming before \u003ctable\u003e, because of which the crash is not reproduced. So using SetBodyContent()\n\nI tried like this-:\nselection().SetSelection(SetSelectionTextToBody(\n      \"\u003ctable contenteditable\u003e\"\n      \"    \u003ccolgroup style\u003d\u0027-webkit-appearance:radio;\u0027\u003e|\u003c/colgroup\u003e\"\n      \"\u003c/table\u003e\"));",
+      "revId": "b8bc52b347d7df0595bd65af291165288245874b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
