@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4f6b15d_5bf9af8c",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T18:08:41Z",
+      "side": 1,
+      "message": "Nit: this is a bit messy, here are a few ways we could tidy it up, but I don\u0027t love any of them. Feel free to ignore.\n\n\nMight be worth adding a helper method in the anonymous namespace, so you can say:\n\nSetSamplingScheme(\u0026sampling_scheme, InputMetricsEvent::SCROLL_BEGIN_TOUCH, 5);\n\nAlternatively, you could do something like:\n\nsampling_scheme_ \u003d {\n  SamplingScheme(5), // SCROLL_BEGIN_TOUCH\n  ...\n}\n\nOr, getting fancy (I think this syntax works in all our compilers?), you could use initializer designators...\n\nsampling_scheme_ \u003d {\n  [static_cast\u003cint\u003e(InputMetricEvent::SCROLL_BEGIN_TOUCH)] \u003d SamplingScheme(5), \n  ...\n}",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "2b462fc35a21ffe1b6ccd6c8e1c10c166ab63a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be921ec_1a52cf01",
+        "filename": "ui/latency/latency_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T18:08:41Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 40
+      },
+      "revId": "2b462fc35a21ffe1b6ccd6c8e1c10c166ab63a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c1185a_6e431d5d",
+        "filename": "ui/latency/latency_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T18:08:41Z",
+      "side": 1,
+      "message": "Comment the format of this array.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 33
+      },
+      "revId": "2b462fc35a21ffe1b6ccd6c8e1c10c166ab63a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
