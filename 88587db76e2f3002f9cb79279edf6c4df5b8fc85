@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6bc07d2_d188dbf1",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-24T09:38:50Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter if we do \n\np1.then(() \u003d\u003e {\n  p2.then(reportTestSuccess);\n}\n\nor p1.then(() \u003d\u003e {\n  return p2;\n}).then(reportTestSuccess);\n\nI think I prefer the latter if possible, so we might want to rewrite some of the old functions to use this style.",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 31
+      },
+      "revId": "88587db76e2f3002f9cb79279edf6c4df5b8fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
