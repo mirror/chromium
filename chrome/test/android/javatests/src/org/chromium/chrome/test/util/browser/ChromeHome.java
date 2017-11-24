@@ -10,9 +10,11 @@ import static junit.framework.Assert.assertNotNull;
 import android.os.StrictMode;
 
 import org.chromium.base.test.util.AnnotationProcessor;
+import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.ui.test.util.UiRestriction;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -31,6 +33,17 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface ChromeHome {
+    @Inherited
+    @Retention(RetentionPolicy.RUNTIME)
+    @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE)
+    @Target({ElementType.METHOD, ElementType.TYPE, ElementType.ANNOTATION_TYPE})
+    @interface Enable {}
+
+    @Inherited
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.METHOD, ElementType.TYPE, ElementType.ANNOTATION_TYPE})
+    @interface Disable {}
+
     boolean value() default true;
 
     /**
