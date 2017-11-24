@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01fff9bf_51122257",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-24T18:21:53Z",
+      "side": 1,
+      "message": "Now that I look at it, it probably makes sense to not have this api in ui::Gpu. Instead, there could be a separate GpuInfoProvider api for this. So this code would look like:\n\n  service_manager::Connector* connector \u003d ...;\n  mojom::GpuInfoProviderPtr gpu_info_provider_ptr;\n  connector-\u003eConnect(..., \u0026gpu_info_provider_ptr);\n  gpu_info_provider_ptr-\u003eRequestCompleteGpuInfo(base::BindOnce(\u0026UpdateGpuInfoOnIO));\n\nI think that simplifies a fair amount of code (at the cost of introducing a new small/isolated GpuInfoProvider.mojom, which isn\u0027t too bad).",
+      "revId": "3afa10958c412ec64c77f86b6fa6e796d2f37407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
