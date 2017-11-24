@@ -46,6 +46,30 @@
       "revId": "0be7a86aec5b4e7af88741e161e22bd22d041146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567e312a_6b0d684b",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-24T13:26:19Z",
+      "side": 1,
+      "message": "frameRate should work with applyConstraints, does it not?",
+      "parentUuid": "3600dfd7_20a75399",
+      "range": {
+        "startLine": 90,
+        "startChar": 11,
+        "endLine": 90,
+        "endChar": 22
+      },
+      "revId": "0be7a86aec5b4e7af88741e161e22bd22d041146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
