@@ -378,7 +378,10 @@ void UiInputManager::GetVisualTargetElement(
       (reticle_model->target_point - kOrigin).Length();
 
   HitTestRequest request;
-  request.ray_origin = kOrigin;
+  request.ray_origin =
+      hit_test_strategy_ == HitTestStrategy::PROJECT_TO_LASER_ORIGIN
+          ? controller_model.laser_origin
+          : kOrigin;
   request.ray_target = reticle_model->target_point;
   request.max_distance_to_plane = closest_element_distance;
   HitTestElements(&scene_->root_element(), reticle_model, &request);
