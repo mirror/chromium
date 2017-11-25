@@ -234,6 +234,10 @@ class RenderViewImplTest : public RenderViewTest {
     WebRuntimeFeatures::EnableOverlayScrollbars(
         ui::IsOverlayScrollbarEnabled());
     RenderViewTest::SetUp();
+
+    WebPreferences prefs = view()->GetWebkitPreferences();
+    prefs.viewport_enabled = false;
+    view()->SetWebkitPreferences(prefs);
   }
 
   RenderViewImpl* view() {

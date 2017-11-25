@@ -156,13 +156,14 @@ WebPreferences::WebPreferences()
       editing_behavior(EDITING_BEHAVIOR_MAC),
 #endif
       supports_multiple_windows(true),
-      viewport_enabled(false),
 #if defined(OS_ANDROID)
+      viewport_enabled(true),
       viewport_meta_enabled(true),
       shrinks_viewport_contents_to_fit(true),
       viewport_style(ViewportStyle::MOBILE),
       always_show_context_menu_on_touch(false),
 #else
+      viewport_enabled(false),
       viewport_meta_enabled(false),
       shrinks_viewport_contents_to_fit(false),
       viewport_style(ViewportStyle::DEFAULT),
