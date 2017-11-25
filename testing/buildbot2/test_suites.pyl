@@ -1,0 +1,192 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# This is a .pyl, or "Python Literal", file. You can treat it just like a
+# .json file, with the following exceptions:
+# * all keys must be quoted (use single quotes, please);
+# * comments are allowed, using '#' syntax; and
+# * trailing commas are allowed.
+
+{
+  'chromium_gtests': {
+    'accessibility_unittests': {},
+    'app_shell_unittests': {},
+    'aura_unittests': {},
+    'base_unittests': {},
+    'battor_agent_unittests': {},
+    'blink_heap_unittests': {},
+    'blink_platform_unittests': {},
+    'boringssl_crypto_tests': {},
+    'boringssl_ssl_tests': {},
+    'browser_tests': {
+      'swarming': {
+        'shards': 10,
+      },
+    },
+    'cacheinvalidation_unittests': {},
+    'capture_unittests': {},
+    'cast_unittests': {},
+    'cc_unittests': {},
+    'chrome_app_unittests': {},
+    'chrome_elf_import_unittests': {},
+    'chrome_elf_unittests': {},
+    'chromedriver_unittests': {},
+    'components_browsertests': {},
+    'components_unittests': {},
+    'compositor_unittests': {},
+    'content_browsertests': {},
+    'content_unittests': {},
+    'courgette_unittests': {},
+    'crashpad_tests': {},
+    'crypto_unittests': {},
+    'device_unittests': {},
+    'display_unittests': {},
+    'events_unittests': {},
+    'extensions_browsertests': {},
+    'extensions_unittests': {},
+    'gcm_unit_tests': {},
+    'gfx_unittests': {},
+    'gin_unittests': {},
+    'gn_unittests': {},
+    'google_apis_unittests': {},
+    'gpu_ipc_service_unittests': {},
+    'gpu_unittests': {},
+    'headless_browsertests': {},
+    'headless_unittests': {},
+    'install_static_unittests': {},
+    'installer_util_unittests': {
+      'swarming': {
+        'dimension_sets': [
+          {
+            'integrity': 'high',
+          }
+        ],
+      },
+    },
+    'interactive_ui_tests': {
+      'swarming': {
+        'shards': 2,
+      },
+    },
+  'ipc_tests': {},
+    'jingle_unittests': {},
+    'keyboard_unittests': {},
+    'latency_unittests': {},
+    'libjingle_xmpp_unittests': {},
+    'media_blink_unittests': {},
+    'media_unittests': {},
+    'message_center_unittests': {},
+    'midi_unittests': {},
+    'mojo_common_unittests': {},
+    'mojo_public_bindings_unittests': {},
+    'mojo_public_system_unittests': {},
+    'mojo_system_unittests': {},
+    'nacl_loader_unittests': {},
+    'native_theme_unittests': {},
+    'net_unittests': {},
+    'pdf_unittests': {},
+    'ppapi_unittests': {},
+    'printing_unittests': {},
+    'remoting_unittests': {},
+    'sbox_integration_tests': {
+      'swarming': {
+        'dimension_sets': [
+          {
+            'integrity': 'high',
+          }
+        ],
+      },
+    },
+    'sbox_unittests': {},
+    'sbox_validation_tests': {},
+    'service_manager_unittests': {},
+    'services_unittests': {},
+    'setup_unittests': {
+      'swarming': {
+        'dimension_sets': [
+          {
+            'integrity': 'high',
+          }
+        ],
+      },
+    },
+    'skia_unittests': {},
+    'sql_unittests': {},
+    'storage_unittests': {},
+    'sync_integration_tests': {},
+    'ui_base_unittests': {},
+    'ui_touch_selection_unittests': {},
+    'unit_tests': {},
+    'url_unittests': {},
+    'views_unittests': {},
+    'viz_unittests': {},
+    'vr_common_unittests': {},
+    'webkit_unit_tests': {},
+    'wm_unittests': {},
+    'wtf_unittests': {},
+    'zucchini_unittests': {},
+  },
+
+  'win7_32_bit_gtests': {
+    'base_unittests': {},
+    'battor_agent_unittests': {},
+    'browser_tests': {
+      'swarming': {
+        'shards': 5,
+      },
+    },
+    'sbox_integration_tests': {
+      'swarming': {
+        'dimension_sets': [
+          {
+            'integrity': 'high',
+          }
+        ],
+      },
+    },
+    'sbox_unittests': {},
+    'sbox_validation_tests': {},
+  },
+
+  'chromium_isolated_scripts': {
+    'content_shell_crash_test': {},
+    'metrics_python_tests': {},
+    'telemetry_gpu_unittests': {},
+    'telemetry_perf_unittests': {
+      'swarming': {
+        'hard_timeout': 960,
+        'shards': 12,
+      },
+    },
+    'telemetry_unittests': {
+      'swarming': {
+        'shards': 2,
+      },
+    },
+    'webkit_layout_tests': {
+      'args': [
+        '--debug',
+        '--time-out-ms',
+        '60000',
+      ],
+      'isolate_name': 'webkit_layout_tests_exparchive',
+      'merge': {
+        'args': [
+          '--verbose',
+        ],
+        'script': '//third_party/WebKit/Tools/Scripts/merge-layout-test-results',
+      },
+      'swarming': {
+        'shards': 10,
+      }
+    },
+    'webkit_python_tests': {},
+  },
+
+  'chromium_scripts': {
+    'webkit_lint': {
+      'script': 'webkit_lint.py',
+    }
+  },
+}

@@ -1,0 +1,209 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# This is a .pyl, or "Python Literal", file. You can treat it just like a
+# .json file, with the following exceptions:
+# * all keys must be quoted (use single quotes, please);
+# * comments are allowed, using '#' syntax; and
+# * trailing commas are allowed.
+
+# Exceptions to the common test suites can only include removal from
+# particular bots, and modifications on particular bots. By design,
+# it's not possible to add one-off tests to bots. Instead they have to
+# be added to one of the test suites in test_suites.pyl.
+#
+# The goal is to drive the number of exceptions to zero, to make all
+# the bots behave similarly.
+{
+  'browser_tests': {
+    'modifications': {
+      'Win7 Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 20,
+        },
+      },
+    },
+  },
+  'blink_heap_unittests': {
+    # Unclear why these only run on "Win7 Tests (1)".
+    'remove_from': [
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'blink_platform_unittests': {
+    # Unclear why these only run on "Win7 Tests (1)".
+    'remove_from': [
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'components_browsertests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)'
+    ],
+  },
+  'content_browsertests': {
+    'modifications': {
+      'Win7 Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+    },
+  },
+  'content_shell_crash_test': {
+    # Unclear why these only run on "Win7 Tests (1)".
+    'remove_from': [
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'device_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'display_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'gfx_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'gin_unittests': {
+    # Unclear why these only run on "Win7 Tests (1)".
+    'remove_from': [
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'google_apis_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'interactive_ui_tests': {
+    'modifications': {
+      'Win7 Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 4,
+        },
+      },
+    },
+  },
+  'keyboard_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'message_center_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'metrics_python_tests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'service_manager_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+      'Win10 Tests x64',
+    ],
+  },
+  'services_unittests': {
+    'modifications': {
+      'Win10 Tests x64': {
+        'args': [
+          '--test-launcher-filter-file=../../testing/buildbot/filters/win10.services_unittests.filter'
+        ],
+      },
+    },
+  },
+  'sync_integration_tests': {
+    'modifications': {
+      'Win7 Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+    },
+  },
+  'telemetry_perf_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'vr_common_unittests': {
+    'remove_from': [
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+    ],
+  },
+  'viz_unittests': {
+    'remove_from': [
+      'Win10 Tests x64',
+    ],
+  },
+  'webkit_layout_tests': {
+    'remove_from': [
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (1)',
+    ],
+    # TODO(kbr): the "Windows-7-SP1" Swarming dimension set is
+    # implicit, from prefered_os_dimension in
+    # tools/build/scripts/slave/recipe_modules/swarming/api.py. Ideally,
+    # Swarming dimensions would be either specified for all testers on
+    # the waterfall (and therefore, explicitly specified for all tests
+    # in the generated JSON), or this would be removed, and the
+    # implicit one used.
+    'modifications': {
+      'Win7 Tests (dbg)(1)': {
+        'swarming': {
+          'dimension_sets': [
+            {
+              'os': 'Windows-7-SP1',
+            }
+          ],
+        },
+      },
+    },
+  },
+  'webkit_python_tests': {
+    'remove_from': [
+      'Win 7 Tests x64 (1)',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'webkit_unit_tests': {
+    'remove_from': [
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'wtf_unittests': {
+    # Unclear why these only run on "Win7 Tests (1)".
+    'remove_from': [
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'zucchini_unittests': {
+    'remove_from': [
+      'Win10 Tests x64',
+    ],
+  },
+}
