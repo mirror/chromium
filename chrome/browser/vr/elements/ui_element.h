@@ -19,6 +19,7 @@
 #include "chrome/browser/vr/elements/draw_phase.h"
 #include "chrome/browser/vr/elements/ui_element_iterator.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
+#include "chrome/browser/vr/elements/ui_element_type.h"
 #include "chrome/browser/vr/model/camera_model.h"
 #include "chrome/browser/vr/target_property.h"
 #include "ui/gfx/geometry/point3_f.h"
@@ -110,6 +111,13 @@ class UiElement : public cc::AnimationTarget {
     kUpdatedWorldSpaceTransform,
     kClean = kUpdatedWorldSpaceTransform,
   };
+
+  UiElementName name() const { return name_; }
+  void set_name(UiElementName name) { name_ = name; }
+
+  UiElementType type() const { return type_; }
+  void set_type(UiElementType type);
+  virtual void OnSetType();
 
   // Returns true if the element needs to be re-drawn.
   virtual bool PrepareToDraw();
@@ -260,9 +268,6 @@ class UiElement : public cc::AnimationTarget {
   void set_inheritable_transform(const gfx::Transform& transform) {
     inheritable_transform_ = transform;
   }
-
-  UiElementName name() const { return name_; }
-  void set_name(UiElementName name) { name_ = name; }
 
   const gfx::Transform& world_space_transform() const;
   void set_world_space_transform(const gfx::Transform& transform) {
@@ -475,6 +480,10 @@ class UiElement : public cc::AnimationTarget {
   // An optional, but stable and semantic identifier for an element used in lieu
   // of a string.
   UiElementName name_ = UiElementName::kNone;
+
+  // An optional identifier intended to be applied to swaths of elements for
+  // categorization.
+  UiElementType type_ = UiElementType::kTypeNone;
 
   // This local transform operations. They are inherited by descendants and are
   // stored as a list of operations rather than a baked transform to make
