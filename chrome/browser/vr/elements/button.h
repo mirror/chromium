@@ -28,12 +28,7 @@ class VectorIcon;
 // When hovered, background and foreground both move forward on Z axis.
 class Button : public UiElement {
  public:
-  Button(base::Callback<void()> click_handler,
-         DrawPhase draw_phase,
-         float width,
-         float height,
-         float hover_offset,
-         const gfx::VectorIcon& icon);
+  Button(base::Callback<void()> click_handler, const gfx::VectorIcon& icon);
   ~Button() override;
 
   void Render(UiElementRenderer* renderer,
@@ -43,6 +38,7 @@ class Button : public UiElement {
   VectorIcon* foreground() const { return foreground_; }
   UiElement* hit_plane() const { return hit_plane_; }
   void SetButtonColors(const ButtonColors& colors);
+  void set_hover_offset(float hover_offset) { hover_offset_ = hover_offset; }
 
  private:
   void HandleHoverEnter();
@@ -52,6 +48,10 @@ class Button : public UiElement {
   void HandleButtonUp();
   void OnStateUpdated();
 
+  void OnSetDrawPhase() override;
+  void NotifyClientSizeAnimated(const gfx::SizeF& size,
+                                int target_property_id,
+                                cc::Animation* animation) override;
   bool down_ = false;
 
   bool hovered_ = false;
