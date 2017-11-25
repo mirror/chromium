@@ -34,6 +34,24 @@
       "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40873fb8_dc4a38d1",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-25T01:36:42Z",
+      "side": 1,
+      "message": "Sorry, I guess I\u0027m not understanding the problem from the beginning...\n\nWhy can\u0027t we we simply use WrapPersistent(callback)? Since CallbackFunctionBase is GarbageCollected, WrapPersistent() will just work...?",
+      "parentUuid": "f5d727dd_fe92ce82",
+      "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
