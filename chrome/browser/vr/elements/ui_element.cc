@@ -65,6 +65,13 @@ UiElement::~UiElement() {
   animation_player_.set_target(nullptr);
 }
 
+void UiElement::set_type(UiElementType type) {
+  type_ = type;
+  OnSetType();
+}
+
+void UiElement::OnSetType() {}
+
 void UiElement::Render(UiElementRenderer* renderer,
                        const CameraModel& model) const {
   // Elements without an overridden implementation of Render should have their
@@ -358,8 +365,12 @@ void UiElement::DumpHierarchy(std::vector<size_t> counts,
     *os << kYellow << "(h) " << kReset;
   }
 
-  *os << DebugName() << " ";
-  *os << kCyan << DrawPhaseToString(draw_phase_) << " " << kReset;
+  *os << DebugName();
+  if (type_ != kTypeNone) {
+    *os << ":" << UiElementTypeToString(type_);
+  }
+
+  *os << " " << kCyan << DrawPhaseToString(draw_phase_) << " " << kReset;
 
   if (draw_phase_ != kPhaseNone && !size().IsEmpty()) {
     *os << kRed << "[" << size().width() << ", " << size().height() << "] "
