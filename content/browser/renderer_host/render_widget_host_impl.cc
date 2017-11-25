@@ -2656,6 +2656,10 @@ void RenderWidgetHostImpl::SetNeedsBeginFrame(bool needs_begin_frame) {
   OnSetNeedsBeginFrames(needs_begin_frame);
 }
 
+void RenderWidgetHostImpl::SetLowLatency(bool low_latency) {
+  NOTREACHED();
+}
+
 void RenderWidgetHostImpl::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     viz::CompositorFrame frame,

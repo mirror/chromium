@@ -63,6 +63,11 @@ OffscreenCanvasFrameDispatcherImpl::OffscreenCanvasFrameDispatcherImpl(
     binding_.Bind(mojo::MakeRequest(&client), task_runner);
     provider->CreateCompositorFrameSink(frame_sink_id_, std::move(client),
                                         mojo::MakeRequest(&sink_));
+
+    // For testing DO NOT COMMIT
+    if (sink_) {
+      sink_->SetLowLatency(true);
+    }
   }
   offscreen_canvas_resource_provider_ =
       std::make_unique<OffscreenCanvasResourceProvider>(width, height);

@@ -51,6 +51,8 @@ interface CompositorFrameSink {
   // BeginFrame event.
   SetNeedsBeginFrame(bool needs_begin_frame);
 
+  SetLowLatency(bool low_latency);
+
   // Submits a CompositorFrame to the display compositor that will be presented
   // to screen the next time frames from all CompositorFrameSinks are aggregated
   // to produce a display CompositorFrame. If a client wishes to allocate a new

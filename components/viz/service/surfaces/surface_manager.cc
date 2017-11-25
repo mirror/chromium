@@ -164,6 +164,7 @@ void SurfaceManager::RegisterFrameSinkId(const FrameSinkId& frame_sink_id) {
 
 void SurfaceManager::InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) {
   valid_frame_sink_labels_.erase(frame_sink_id);
+  low_latency_frame_sinks_.erase(frame_sink_id);
 
   // Remove any temporary references owned by |frame_sink_id|.
   std::vector<SurfaceId> temp_refs_to_clear;
@@ -177,6 +178,17 @@ void SurfaceManager::InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) {
     RemoveTemporaryReference(surface_id, false);
 
   GarbageCollectSurfaces();
+}
+
+void SurfaceManager::SetLowLatency(const FrameSinkId& frame_sink_id,
+                                   bool low_latency) {
+  DCHECK(valid_frame_sink_labels_.find(frame_sink_id) !=
+         valid_frame_sink_labels_.end());
+  if (low_latency) {
+    low_latency_frame_sinks_.insert(frame_sink_id);
+  } else {
+    low_latency_frame_sinks_.erase(frame_sink_id);
+  }
 }
 
 void SurfaceManager::SetFrameSinkDebugLabel(const FrameSinkId& frame_sink_id,
@@ -506,8 +518,12 @@ bool SurfaceManager::SurfaceModified(const SurfaceId& surface_id,
                                      const BeginFrameAck& ack) {
   CHECK(thread_checker_.CalledOnValidThread());
   bool changed = false;
+  bool is_low_latency =
+      low_latency_frame_sinks_.find(surface_id.frame_sink_id()) !=
+      low_latency_frame_sinks_.end();
   for (auto& observer : observer_list_)
-    changed |= observer.OnSurfaceDamaged(surface_id, ack);
+    changed |= observer.OnSurfaceDamaged(surface_id, ack, is_low_latency);
+
   return changed;
 }
 

@@ -32,7 +32,8 @@ class SurfaceObserver {
   // |ack.sequence_number| is only valid if called in response to a BeginFrame.
   // Should return true if this causes a Display to be damaged.
   virtual bool OnSurfaceDamaged(const SurfaceId& surface_id,
-                                const BeginFrameAck& ack) = 0;
+                                const BeginFrameAck& ack,
+                                bool low_latency) = 0;
 
   // Called when a surface is garbage-collected.
   virtual void OnSurfaceDiscarded(const SurfaceId& surface_id) = 0;

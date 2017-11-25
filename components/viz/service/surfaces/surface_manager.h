@@ -133,6 +133,8 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
     return valid_frame_sink_labels_;
   }
 
+  void SetLowLatency(const FrameSinkId& frame_sink_id, bool low_latency);
+
   // Set |debug_label| of the |frame_sink_id|. |frame_sink_id| must exist in
   // |valid_frame_sink_labels_| already when UpdateFrameSinkDebugLabel is
   // called.
@@ -332,6 +334,9 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   // the embedding client can use them.
   std::unordered_map<FrameSinkId, std::vector<LocalSurfaceId>, FrameSinkIdHash>
       temporary_reference_ranges_;
+
+  // Set of frame sinks that have requested low latency rendering.
+  base::flat_set<FrameSinkId> low_latency_frame_sinks_;
 
   // Timer that ticks every 10 seconds and calls MarkTemporaryReference().
   base::RepeatingTimer temporary_reference_timer_;

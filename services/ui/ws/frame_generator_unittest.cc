@@ -66,6 +66,8 @@ class TestClientBinding : public viz::mojom::CompositorFrameSink,
       begin_frame_source_->RemoveObserver(this);
   }
 
+  void SetLowLatency(bool low_latency) override {}
+
   // viz::BeginFrameObserver implementation.
   void OnBeginFrame(const viz::BeginFrameArgs& args) override {
     sink_client_->OnBeginFrame(args);

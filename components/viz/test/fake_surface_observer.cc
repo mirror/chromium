@@ -29,7 +29,8 @@ bool FakeSurfaceObserver::IsSurfaceSubtreeDamaged(
 }
 
 bool FakeSurfaceObserver::OnSurfaceDamaged(const SurfaceId& surface_id,
-                                           const BeginFrameAck& ack) {
+                                           const BeginFrameAck& ack,
+                                           bool low_latency) {
   if (ack.has_damage)
     damaged_surfaces_.insert(surface_id);
   last_ack_ = ack;

@@ -85,6 +85,7 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
 
   // mojom::CompositorFrameSink implementation.
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
+  void SetLowLatency(bool low_latency) override;
   void DidNotProduceFrame(const BeginFrameAck& ack) override;
   void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
                              CompositorFrame frame,

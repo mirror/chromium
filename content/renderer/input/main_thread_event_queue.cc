@@ -241,7 +241,7 @@ MainThreadEventQueue::MainThreadEventQueue(
       handle_raf_aligned_mouse_input_(
           allow_raf_aligned_input &&
           base::FeatureList::IsEnabled(features::kRafAlignedMouseInputEvents)),
-      needs_low_latency_(false),
+      needs_low_latency_(true),  // For testing DO NOT COMMIT
       main_task_runner_(main_task_runner),
       renderer_scheduler_(renderer_scheduler),
       use_raf_fallback_timer_(true) {

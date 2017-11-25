@@ -152,6 +152,10 @@ void CompositorFrameSinkSupport::DidNotProduceFrame(const BeginFrameAck& ack) {
     begin_frame_source_->DidFinishFrame(this);
 }
 
+void CompositorFrameSinkSupport::SetLowLatency(bool low_latency) {
+  surface_manager_->SetLowLatency(frame_sink_id_, low_latency);
+}
+
 void CompositorFrameSinkSupport::SubmitCompositorFrame(
     const LocalSurfaceId& local_surface_id,
     CompositorFrame frame,

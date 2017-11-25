@@ -23,6 +23,10 @@ void CompositorFrameSinkClientBinding::SetNeedsBeginFrame(
   compositor_frame_sink_->SetNeedsBeginFrame(needs_begin_frame);
 }
 
+void CompositorFrameSinkClientBinding::SetLowLatency(bool low_latency) {
+  compositor_frame_sink_->SetLowLatency(low_latency);
+}
+
 void CompositorFrameSinkClientBinding::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     viz::CompositorFrame frame,

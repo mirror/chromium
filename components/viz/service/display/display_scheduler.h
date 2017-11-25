@@ -9,6 +9,7 @@
 
 #include "base/cancelable_callback.h"
 #include "base/containers/flat_map.h"
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
@@ -70,7 +71,8 @@ class VIZ_SERVICE_EXPORT DisplayScheduler : public BeginFrameObserverBase,
   void OnSurfaceActivated(const SurfaceId& surface_id) override;
   void OnSurfaceDestroyed(const SurfaceId& surface_id) override;
   bool OnSurfaceDamaged(const SurfaceId& surface_id,
-                        const BeginFrameAck& ack) override;
+                        const BeginFrameAck& ack,
+                        bool low_latency) override;
   void OnSurfaceDiscarded(const SurfaceId& surface_id) override;
   void OnSurfaceDamageExpected(const SurfaceId& surface_id,
                                const BeginFrameArgs& args) override;
@@ -119,6 +121,10 @@ class VIZ_SERVICE_EXPORT DisplayScheduler : public BeginFrameObserverBase,
     BeginFrameAck last_ack;
   };
   base::flat_map<SurfaceId, SurfaceBeginFrameState> surface_states_;
+
+  bool all_low_latency_surfaces_damaged_ = false;
+  base::flat_set<FrameSinkId> active_low_latency_frame_sinks_;
+  base::flat_set<FrameSinkId> previous_frame_active_low_latency_frame_sinks_;
 
   int next_swap_id_;
   int pending_swaps_;

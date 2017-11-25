@@ -310,9 +310,29 @@ void DisplayScheduler::OnSurfaceDestroyed(const SurfaceId& surface_id) {
 }
 
 bool DisplayScheduler::OnSurfaceDamaged(const SurfaceId& surface_id,
-                                        const BeginFrameAck& ack) {
+                                        const BeginFrameAck& ack,
+                                        bool low_latency) {
   bool damaged = client_->SurfaceDamaged(surface_id, ack);
   ProcessSurfaceDamage(surface_id, ack, damaged);
+
+  FrameSinkId frame_sink_id = surface_id.frame_sink_id();
+  if (damaged && low_latency) {
+    if (active_low_latency_frame_sinks_.insert(frame_sink_id).second) {
+      // This trigger is imperfect.  We currently have no way of tracking
+      // which low latency surfaces are expected to contribute to the current
+      // frame. Our best guess that if all low latency surfaces that
+      // contributed to the previous frame have contributed to the current
+      // frame, then we've probably updated all the low latency surfaces.
+      // When new low latency surfaces appear and disappear from view
+      // immediate draw and swap will not be triggered.
+      if (!all_low_latency_surfaces_damaged_ &&
+          active_low_latency_frame_sinks_ ==
+              previous_frame_active_low_latency_frame_sinks_) {
+        all_low_latency_surfaces_damaged_ = true;
+        ScheduleBeginFrameDeadline();
+      }
+    }
+  }
 
   return damaged;
 }
@@ -371,6 +391,12 @@ DisplayScheduler::AdjustedBeginFrameDeadlineMode() const {
 
 DisplayScheduler::BeginFrameDeadlineMode
 DisplayScheduler::DesiredBeginFrameDeadlineMode() const {
+  if (all_low_latency_surfaces_damaged_) {
+    TRACE_EVENT_INSTANT0("viz", "All low latency surfaces damaged",
+                         TRACE_EVENT_SCOPE_THREAD);
+    return BeginFrameDeadlineMode::kImmediate;
+  }
+
   if (output_surface_lost_) {
     TRACE_EVENT_INSTANT0("viz", "Lost output surface",
                          TRACE_EVENT_SCOPE_THREAD);
@@ -497,6 +523,10 @@ void DisplayScheduler::DidFinishFrame(bool did_draw) {
   BeginFrameAck ack(current_begin_frame_args_.source_id,
                     current_begin_frame_args_.sequence_number, did_draw);
   client_->DidFinishFrame(ack);
+  all_low_latency_surfaces_damaged_ = false;
+  previous_frame_active_low_latency_frame_sinks_ =
+      active_low_latency_frame_sinks_;
+  active_low_latency_frame_sinks_.clear();
 }
 
 void DisplayScheduler::DidSwapBuffers() {
