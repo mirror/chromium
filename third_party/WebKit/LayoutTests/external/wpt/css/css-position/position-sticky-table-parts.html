@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<title>Nested position:sticky table elements should render correctly</title>
+<link rel="match" href="position-sticky-table-parts-ref.html" />
+<link rel="help" href="https://www.w3.org/TR/css-position-3/#sticky-pos" />
+<meta name="assert" content="This test checks that nested position:sticky table elements render correctly" />
+
+<style>
+.group {
+  position: relative;
+  width: 150px;
+  height: 250px;
+}
+
+.scroller {
+  position: relative;
+  width: 100px;
+  height: 250px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.contents {
+  height: 700px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+#child, td, th {
+  height: 50px;
+  width: 50px;
+  padding: 0;
+}
+
+#child {
+  background: red;
+}
+
+table * {
+  position: sticky;
+  top: 0;
+  border: 1px solid black;
+}
+</style>
+
+<script>
+window.addEventListener('load', function() {
+  document.getElementById('scroller1').scrollTop = 150;
+});
+</script>
+
+<div class="group">
+  <div id="scroller1" class="scroller">
+    <div class="contents">
+      <table>
+        <tbody>
+          <tr><td><div id="child"></div></td></tr>
+          <tr><td><div id="child"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div>No red should be visible.</div>
