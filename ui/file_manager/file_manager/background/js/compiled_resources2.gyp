@@ -175,6 +175,7 @@
         '../../common/js/compiled_resources2.gyp:importer_common',
         '../../common/js/compiled_resources2.gyp:metrics',
         'import_history',
+        'drive_sync_handler',
         'media_scanner',
         'progress_center',
         'task_queue',
