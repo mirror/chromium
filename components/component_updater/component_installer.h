@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "base/callback_forward.h"
+#include "base/cancelable_callback.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -28,6 +29,38 @@ class SingleThreadTaskRunner;
 namespace component_updater {
 
 class ComponentUpdateService;
+
+// A runner that is passed to CustomInstall.
+//
+// The callback is supposed to be triggered within |time| after Start is
+// called; otherwise the callback is triggered automatically after |time|.
+class CustomInstallRunner
+    : public base::RefCountedThreadSafe<CustomInstallRunner> {
+ public:
+  CustomInstallRunner(update_client::CrxInstaller::Callback callback);
+  // Trigger the callback with parameter |result|.
+  void Run(const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+           const update_client::CrxInstaller::Result& result);
+  // Automatically trigger the callback with parameter|result| if Run
+  // is not called within |time|;
+  void Guard(const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+             base::TimeDelta time,
+             const update_client::CrxInstaller::Result& result);
+
+ private:
+  friend class base::RefCountedThreadSafe<CustomInstallRunner>;
+  ~CustomInstallRunner();
+  std::unique_ptr<base::Lock> lock;
+  bool executed;
+  base::CancelableOnceCallback<void(const update_client::CrxInstaller::Result&)>
+      callback;
+  void GuardHelper(
+      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+      const update_client::CrxInstaller::Result& result);
+
+  base::WeakPtrFactory<CustomInstallRunner> weak_factory_;
+  DISALLOW_COPY_AND_ASSIGN(CustomInstallRunner);
+};
 
 // Components should use a ComponentInstaller by defining a class that
 // implements the members of ComponentInstallerPolicy, and then registering a
@@ -58,9 +91,11 @@ class ComponentInstallerPolicy {
   // require custom installation operations should implement them here.
   // Returns false if a custom operation failed, and true otherwise.
   // Called only from a thread belonging to a blocking thread pool.
-  virtual update_client::CrxInstaller::Result OnCustomInstall(
+  virtual void OnCustomInstall(
       const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) = 0;
+      const base::FilePath& install_dir,
+      scoped_refptr<CustomInstallRunner> custom_install_runner,
+      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner) = 0;
 
   // OnCustomUninstall is called during the unregister (uninstall) process.
   // Components that require custom uninstallation operations should implement
@@ -156,11 +191,21 @@ class ComponentInstaller final : public update_client::CrxInstaller {
   bool FindPreinstallation(
       const base::FilePath& root,
       const scoped_refptr<RegistrationInfo>& registration_info);
-  update_client::CrxInstaller::Result InstallHelper(
-      const base::FilePath& unpack_path,
-      std::unique_ptr<base::DictionaryValue>* manifest,
-      base::Version* version,
-      base::FilePath* install_path);
+  void PostInstall(const base::FilePath unpack_path,
+                   Callback callback,
+                   std::unique_ptr<base::DictionaryValue> manifest,
+                   base::Version version,
+                   base::FilePath install_path,
+                   const Result& result);
+  void PostCustomInstall(const base::FilePath unpack_path,
+                         Callback callback,
+                         std::unique_ptr<base::DictionaryValue> manifest,
+                         std::unique_ptr<base::DictionaryValue> local_manifest,
+                         base::Version version,
+                         base::Version manifest_version,
+                         base::FilePath install_path,
+                         base::FilePath local_install_path,
+                         const Result& result);
   void StartRegistration(
       const scoped_refptr<RegistrationInfo>& registration_info);
   void FinishRegistration(
@@ -179,6 +224,9 @@ class ComponentInstaller final : public update_client::CrxInstaller {
 
   // Posts responses back to the main thread.
   scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
+  // Post guard callback.
+  scoped_refptr<base::SingleThreadTaskRunner> guard_task_runner_;
+  scoped_refptr<CustomInstallRunner> custom_install_runner_;
 
   THREAD_CHECKER(thread_checker_);
 
