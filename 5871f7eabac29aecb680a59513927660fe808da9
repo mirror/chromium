@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb8b82c6_0c565143",
+        "filename": "chrome/browser/vr/elements/button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-25T17:35:04Z",
+      "side": 1,
+      "message": "This is somewhat unrelated to the change, but we know that we wanted to categorize the components of these buttons, so I\u0027ve done that here as a test drive of the new UiElementType system (since we\u0027re not yet using the ScaledDepthAdjuster yet).",
+      "revId": "5871f7eabac29aecb680a59513927660fe808da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
