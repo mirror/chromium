@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c4ab771_5d27b522",
+        "filename": "third_party/WebKit/Source/platform/heap/BlinkGC.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-25T02:01:59Z",
+      "side": 1,
+      "message": "In a follow-up CL, would you make the flag controllable from BULID.gn? It\u0027s not really nice to define a macro flag in an individual file.",
+      "revId": "12ea88480139cedc453e0278c23d4869b5471858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29403765_c96a4c52",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-25T02:01:59Z",
+      "side": 1,
+      "message": "Why do we not need to add thread_state_-\u003eIsIncrementalMarking() here? What happens if a weak member is traced during incremental marking?",
+      "revId": "12ea88480139cedc453e0278c23d4869b5471858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd8bcd1_659197f5",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-25T02:01:59Z",
+      "side": 1,
+      "message": "We should land https://chromium-review.googlesource.com/c/chromium/src/+/770670 though.\n\nIn practice, can we simply prohibit an interior pointer to a large object as well? (I don\u0027t think it will happen in practice because the only users of LargeObject are backing stores of HeapVector and HeapHashTable.)",
+      "revId": "12ea88480139cedc453e0278c23d4869b5471858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
