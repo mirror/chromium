@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef2f76c0_4fd06fd4",
+        "filename": "content/browser/accessibility/browser_accessibility_auralinux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-25T00:43:45Z",
+      "side": 1,
+      "message": "Is this needed?\n\nIt looks like AXPlatformNodeAuraLinux handles recreating\nthe ATK object if the interface changes. I don\u0027t think\nthis method needs to do anything.",
+      "revId": "4ed895f18898e80f2d3ce4e7cd41ae4ace320123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
