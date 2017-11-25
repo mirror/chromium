@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4effce8e_d9bd963d",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-25T01:30:46Z",
+      "side": 1,
+      "message": "Not related to the CL...\n\nyukishiino@: The spec says that the return value should be WindowProxy. What\u0027s needed to change the return type from Window to WindowProxy?",
+      "revId": "f6539d5cbe9bf3297569ac40341b9dea87b8cf41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
