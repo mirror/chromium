@@ -43,15 +43,11 @@
                              "\u007f", "", "t\rt", "t\nt", "t: t", "t:t",
                              "t<t", "t t", " tt", ":tt", "\ttt", "\vtt", "t\0t",
                              "t\"t", "t,t", "t;t", "()[]{}", "a?B", "a=B"]
-      var invalid_byte_strings = ["ﾃｽﾄ", "X-ﾃｽﾄ"]
       for (var i = 0; i < 32; ++i) {
         invalid_headers.push(String.fromCharCode(i))
       }
       for (var i = 0; i < invalid_headers.length; ++i) {
         try_name(invalid_headers[i])
-      }
-      for (var i = 0; i < invalid_byte_strings.length; ++i) {
-        try_byte_string(invalid_byte_strings[i])
       }
 
     </script>
