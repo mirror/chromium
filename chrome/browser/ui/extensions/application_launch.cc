@@ -224,10 +224,10 @@ WebContents* OpenApplicationWindow(const AppLaunchParams& params,
       (extension ? ui::PAGE_TRANSITION_AUTO_BOOKMARK
                  : ui::PAGE_TRANSITION_AUTO_TOPLEVEL);
 
-  chrome::NavigateParams nav_params(browser, url, transition);
+  NavigateParams nav_params(browser, url, transition);
   nav_params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
   nav_params.extension_app_id = params.extension_id;
-  chrome::Navigate(&nav_params);
+  Navigate(&nav_params);
 
   WebContents* web_contents = nav_params.target_contents;
   web_contents->GetMutableRendererPrefs()->can_accept_load_drops = false;
@@ -276,7 +276,7 @@ WebContents* OpenApplicationTab(const AppLaunchParams& launch_params,
     add_type |= TabStripModel::ADD_PINNED;
 
   ui::PageTransition transition = ui::PAGE_TRANSITION_AUTO_BOOKMARK;
-  chrome::NavigateParams params(browser, url, transition);
+  NavigateParams params(browser, url, transition);
   params.tabstrip_add_types = add_type;
   params.disposition = disposition;
 
@@ -304,7 +304,7 @@ WebContents* OpenApplicationTab(const AppLaunchParams& launch_params,
 
     contents = existing_tab;
   } else {
-    chrome::Navigate(&params);
+    Navigate(&params);
     contents = params.target_contents;
   }
 
