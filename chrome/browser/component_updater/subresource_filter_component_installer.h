@@ -40,9 +40,11 @@ class SubresourceFilterComponentInstallerPolicy
   // ComponentInstallerPolicy implementation.
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
-  update_client::CrxInstaller::Result OnCustomInstall(
+  void OnCustomInstall(
       const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) override;
+      const base::FilePath& install_dir,
+      scoped_refptr<CustomInstallRunner> custom_install_runner,
+      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner) override;
   void OnCustomUninstall() override;
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& install_dir) const override;
