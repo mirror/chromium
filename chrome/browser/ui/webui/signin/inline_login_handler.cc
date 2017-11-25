@@ -161,12 +161,12 @@ void InlineLoginHandler::HandleSwitchToFullTabMessage(
   main_frame_url = net::AppendOrReplaceQueryParameter(
       main_frame_url, signin::kSignInPromoQueryKeyForceKeepData, "1");
 
-  chrome::NavigateParams params(
+  NavigateParams params(
       profile,
       net::AppendOrReplaceQueryParameter(
           main_frame_url, signin::kSignInPromoQueryKeyConstrained, "0"),
       ui::PAGE_TRANSITION_AUTO_TOPLEVEL);
-  chrome::Navigate(&params);
+  Navigate(&params);
 
   CloseDialogFromJavascript();
 }
