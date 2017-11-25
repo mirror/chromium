@@ -52,6 +52,24 @@
       "revId": "d8a93a0d1a19baba9b25fd3893840a7548bdcbe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c821d4e_308a7db8",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-25T03:42:38Z",
+      "side": 1,
+      "message": "You cannot distinguish between regular users and child accounts here.\nAnd new code should not affect existing users.\n\nTherefore we should return a value that will allow session code to decide whether to end session. I\u0027d suggest returning a pointer to decoded id_token, which can be null.\n\nIn your solution, you decode id_token to a single boolean. Ok, let\u0027s return a pointer to boolean then...",
+      "parentUuid": "1a568e04_1204b0f6",
+      "revId": "d8a93a0d1a19baba9b25fd3893840a7548bdcbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
