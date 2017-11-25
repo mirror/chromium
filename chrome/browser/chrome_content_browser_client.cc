@@ -2471,8 +2471,7 @@ bool ChromeContentBrowserClient::CanCreateWindow(
   BlockedWindowParams blocked_params(target_url, referrer, frame_name,
                                      disposition, features, user_gesture,
                                      opener_suppressed);
-  chrome::NavigateParams nav_params =
-      blocked_params.CreateNavigateParams(web_contents);
+  NavigateParams nav_params = blocked_params.CreateNavigateParams(web_contents);
   if (PopupBlockerTabHelper::MaybeBlockPopup(
           web_contents, opener_top_level_frame_url, nav_params,
           nullptr /*=open_url_params*/, blocked_params.features())) {
@@ -3248,10 +3247,8 @@ void ChromeContentBrowserClient::OpenURL(
   ServiceTabLauncher::GetInstance()->LaunchTab(browser_context, params,
                                                callback);
 #else
-  chrome::NavigateParams nav_params(
-      Profile::FromBrowserContext(browser_context),
-      params.url,
-      params.transition);
+  NavigateParams nav_params(Profile::FromBrowserContext(browser_context),
+                            params.url, params.transition);
   FillNavigateParamsFromOpenURLParams(&nav_params, params);
   nav_params.user_gesture = params.user_gesture;
 

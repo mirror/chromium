@@ -29,27 +29,25 @@ class WebContents;
 struct OpenURLParams;
 }
 
-namespace chrome {
-
 // Parameters that tell Navigate() what to do.
 //
 // Some basic examples:
 //
 // Simple Navigate to URL in current tab:
-// chrome::NavigateParams params(browser, GURL("http://www.google.com/"),
+// NavigateParams params(browser, GURL("http://www.google.com/"),
 //                               ui::PAGE_TRANSITION_LINK);
-// chrome::Navigate(&params);
+// Navigate(&params);
 //
 // Open bookmark in new background tab:
-// chrome::NavigateParams params(browser, url,
+// NavigateParams params(browser, url,
 //                               ui::PAGE_TRANSITION_AUTO_BOOKMARK);
 // params.disposition = NEW_BACKGROUND_TAB;
-// chrome::Navigate(&params);
+// Navigate(&params);
 //
 // Opens a popup WebContents:
-// chrome::NavigateParams params(browser, popup_contents);
+// NavigateParams params(browser, popup_contents);
 // params.source_contents = source_contents;
-// chrome::Navigate(&params);
+// Navigate(&params);
 //
 // See browser_navigator_browsertest.cc for more examples.
 
@@ -248,9 +246,7 @@ struct NavigateParams {
 };
 
 // Copies fields from |params| struct to |nav_params| struct.
-void FillNavigateParamsFromOpenURLParams(chrome::NavigateParams* nav_params,
+void FillNavigateParamsFromOpenURLParams(NavigateParams* nav_params,
                                          const content::OpenURLParams& params);
-
-}  // namespace chrome
 
 #endif  // CHROME_BROWSER_UI_BROWSER_NAVIGATOR_PARAMS_H_
