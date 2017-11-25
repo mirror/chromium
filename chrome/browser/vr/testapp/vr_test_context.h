@@ -76,6 +76,8 @@ class VrTestContext : public vr::UiBrowserInterface {
   bool fullscreen_ = false;
   bool incognito_ = false;
 
+  bool show_web_vr_splash_screen_ = false;
+
   ControllerModel last_controller_model_;
 
   DISALLOW_COPY_AND_ASSIGN(VrTestContext);

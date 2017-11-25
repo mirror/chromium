@@ -53,6 +53,23 @@ void RotateToward(const gfx::Vector3dF& fwd, gfx::Transform* transform) {
   transform->PreconcatTransform(gfx::Transform(quat));
 }
 
+vr::WebVrTimeoutState GetNextWebVrTimeoutState(vr::WebVrTimeoutState state) {
+  switch (state) {
+    case kWebVrNoTimeoutPending:
+      return vr::kWebVrAwaitingFirstFrame;
+      break;
+    case kWebVrAwaitingFirstFrame:
+      return vr::kWebVrTimeoutImminent;
+      break;
+    case kWebVrTimeoutImminent:
+      return vr::kWebVrTimedOut;
+      break;
+    case kWebVrTimedOut:
+      return vr::kWebVrNoTimeoutPending;
+      break;
+  }
+}
+
 }  // namespace
 
 VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
@@ -123,7 +140,7 @@ void VrTestContext::HandleInput(ui::Event* event) {
         incognito_ = !incognito_;
         ui_->SetIncognito(incognito_);
         break;
-      case ui::DomCode::US_S:
+      case ui::DomCode::US_O:
         CreateFakeOmniboxSuggestions();
         break;
       case ui::DomCode::US_D:
@@ -131,6 +148,31 @@ void VrTestContext::HandleInput(ui::Event* event) {
         break;
       case ui::DomCode::US_V:
         ui_->SetVideoCaptureEnabled(!model_->permissions.video_capture_enabled);
+        break;
+      case ui::DomCode::US_W:
+        if (!model_->web_vr_mode) {
+          model_->web_vr_mode = true;
+          model_->web_vr_show_toast = true;
+          model_->web_vr_timeout_state = vr::kWebVrAwaitingFirstFrame;
+        } else if (model_->web_vr_timeout_state == vr::kWebVrTimedOut) {
+          model_->web_vr_mode = false;
+          model_->web_vr_show_toast = false;
+          model_->web_vr_timeout_state = vr::kWebVrNoTimeoutPending;
+        } else {
+          model_->web_vr_timeout_state =
+              GetNextWebVrTimeoutState(model_->web_vr_timeout_state);
+        }
+        break;
+      case ui::DomCode::US_S:
+        if (!show_web_vr_splash_screen_) {
+          ui_->SetWebVrMode(false, false);
+          model_->web_vr_show_splash_screen = true;
+          model_->web_vr_started_for_autopresentation = true;
+        } else {
+          model_->web_vr_show_splash_screen = false;
+          model_->web_vr_started_for_autopresentation = false;
+        }
+        show_web_vr_splash_screen_ = !show_web_vr_splash_screen_;
         break;
       default:
         break;
