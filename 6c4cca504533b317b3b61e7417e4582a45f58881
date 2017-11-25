@@ -34,6 +34,24 @@
       "revId": "6c4cca504533b317b3b61e7417e4582a45f58881",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab90d658_868a3031",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/webappapis/system-state-and-capabilities/the-navigator-object/historical.window.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-11-25T12:17:33Z",
+      "side": 0,
+      "message": "ok, let me upload a CL to restore it within a hour. Could you review it when I upload?",
+      "parentUuid": "0a7da548_5ca410b9",
+      "revId": "6c4cca504533b317b3b61e7417e4582a45f58881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
