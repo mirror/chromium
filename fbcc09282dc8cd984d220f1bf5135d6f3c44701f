@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c162fa0_59932669",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestServiceWorkerPaymentAppTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-25T01:19:12Z",
+      "side": 0,
+      "message": "Is it a good idea to delete a bunch of tests?",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 34
+      },
+      "revId": "fbcc09282dc8cd984d220f1bf5135d6f3c44701f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

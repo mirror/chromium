@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67bed6c7_1555416f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestServiceWorkerPaymentAppTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-25T01:19:12Z",
+      "side": 1,
+      "message": "Please explain why these flags are required.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 68
+      },
+      "revId": "fc4e8d8f722bcf8d2ebc6c1ff191f17bb738a606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
