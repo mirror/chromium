@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f462a26f_5600a258",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-25T03:12:06Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "fa568ae0_aa8ce78d",
+      "revId": "4e3130c668b6e09003f26e97da1be9cb14903899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22275f2d_6fb49742",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "4e3130c668b6e09003f26e97da1be9cb14903899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62dfe391_013fde08",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-25T03:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22275f2d_6fb49742",
+      "revId": "4e3130c668b6e09003f26e97da1be9cb14903899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
