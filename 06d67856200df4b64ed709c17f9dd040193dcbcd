@@ -16,6 +16,24 @@
       "revId": "06d67856200df4b64ed709c17f9dd040193dcbcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612d48cd_6e658a07",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-25T18:01:43Z",
+      "side": 1,
+      "message": "In such a scenario, perhaps we can defer sending those sources until their associated entries are sent?\n\nThis would mean changing the logic to keep sources around that haven\u0027t been sent (and some logic to ensure we don\u0027t accumulate an infinite amount of them).\n\nThe only consequence of this is that sources will no longer appear \"in order\" server-side as some may get sent in later records instead. But I\u0027m not sure we have anything that depends on that.\n\nWDYT?",
+      "parentUuid": "10428c91_c98306cb",
+      "revId": "06d67856200df4b64ed709c17f9dd040193dcbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
