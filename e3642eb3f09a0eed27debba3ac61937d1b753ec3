@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8dbdd995_379b3a2a",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageValue.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-25T23:57:05Z",
+      "side": 1,
+      "message": "yes. i renamed it to Clone().",
+      "parentUuid": "1bfa0976_db69c524",
+      "revId": "e3642eb3f09a0eed27debba3ac61937d1b753ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d47c991_1c915f3e",
         "filename": "third_party/WebKit/Source/core/css/cssom/StylePropertyMap.cpp",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "e3642eb3f09a0eed27debba3ac61937d1b753ec3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea279d7a_f420f1e2",
+        "filename": "third_party/WebKit/Source/core/css/cssom/StylePropertyMap.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-25T23:57:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d47c991_1c915f3e",
+      "revId": "e3642eb3f09a0eed27debba3ac61937d1b753ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
