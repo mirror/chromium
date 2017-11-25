@@ -2,21 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/css/properties/longhands/BorderColorSide.h"
+#include "core/css/properties/ReneesParserStuff.h"
 
-#include "core/CSSPropertyNames.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSParserLocalContext.h"
-#include "core/css/parser/CSSParserMode.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
 namespace blink {
-namespace CSSLonghand {
 
-const CSSValue* BorderColorSide::ParseSingleValue(
+// TODO(rjwright): Move this
+const CSSValue* ReneesParserStuff::ParseBorderColorSide(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext& local_context) const {
+    const CSSParserLocalContext& local_context) {
   CSSPropertyID shorthand = local_context.CurrentShorthand();
   bool allow_quirky_colors =
       IsQuirksModeBehavior(context.Mode()) &&
@@ -25,5 +23,4 @@ const CSSValue* BorderColorSide::ParseSingleValue(
                                                 allow_quirky_colors);
 }
 
-}  // namespace CSSLonghand
 }  // namespace blink
