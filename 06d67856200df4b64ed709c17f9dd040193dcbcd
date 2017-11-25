@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10428c91_c98306cb",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-25T16:51:37Z",
+      "side": 1,
+      "message": "only potential issue here is that it\u0027s possible for sources and entries to be serialized into different records, and we do want to retain the sources in that case. consider:\n\nsource a is created, with id 1\na UKM record is cut and serialized\nentry b is created referencing source id 1\n\nin this case, the source a would look like it didn\u0027t have any entries, when in fact they just hadn\u0027t been recorded yet. we do need to retain source a in this case since entry b will depend on its being recorded.\n\ngiven this i\u0027m disinclined to do this kind of filtering. wdyt?",
+      "revId": "06d67856200df4b64ed709c17f9dd040193dcbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
