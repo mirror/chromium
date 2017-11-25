@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7375da43_58d4b440",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-25T22:50:12Z",
+      "side": 1,
+      "message": "We unmask FULL_SERVER_CARD as well, by the way. You might want to use !\u003d LOCAL_CARD instead.",
+      "range": {
+        "startLine": 166,
+        "startChar": 10,
+        "endLine": 166,
+        "endChar": 80
+      },
+      "revId": "5832540249c4afe73ef3ce51fb58367da8bef5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1d50eb_2b2d741b",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-25T22:50:12Z",
+      "side": 1,
+      "message": "Can we use the same string for iOS and non-iOS instead of the duplication?",
+      "range": {
+        "startLine": 346,
+        "startChar": 6,
+        "endLine": 347,
+        "endChar": 14
+      },
+      "revId": "5832540249c4afe73ef3ce51fb58367da8bef5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
