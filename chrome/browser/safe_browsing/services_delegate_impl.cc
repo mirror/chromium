@@ -47,12 +47,6 @@ ServicesDelegateImpl::~ServicesDelegateImpl() {
 void ServicesDelegateImpl::InitializeCsdService(
     net::URLRequestContextGetter* context_getter) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-#if defined(SAFE_BROWSING_CSD)
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableClientSidePhishingDetection)) {
-    csd_service_.reset(ClientSideDetectionService::Create(context_getter));
-  }
-#endif  // defined(SAFE_BROWSING_CSD)
 }
 
 ExtendedReportingLevel
