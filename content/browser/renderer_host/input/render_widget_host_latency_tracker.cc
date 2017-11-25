@@ -28,6 +28,10 @@ using ui::LatencyInfo;
 namespace content {
 namespace {
 
+bool EventWillBeAcked(blink::WebInputEvent::Type type) {
+  return type != blink::WebInputEvent::kGestureFlingCancel;
+}
+
 ukm::SourceId GenerateUkmSourceId() {
   ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
   return ukm_recorder ? ukm_recorder->GetNewSourceID() : ukm::kInvalidSourceId;
@@ -269,7 +273,7 @@ void RenderWidgetHostLatencyTracker::OnInputEvent(
   DCHECK(latency);
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  OnEventStart(latency);
+  OnEventStart(latency, EventWillBeAcked(event.GetType()));
   if (!set_url_for_ukm_ && render_widget_host_delegate_ &&
       ukm_source_id() != ukm::kInvalidSourceId) {
     render_widget_host_delegate_->UpdateUrlForUkmSource(ukm::UkmRecorder::Get(),
@@ -374,6 +378,7 @@ void RenderWidgetHostLatencyTracker::OnInputEventAck(
   if (!rendering_scheduled || latency->coalesced()) {
     latency->AddLatencyNumber(
         ui::INPUT_EVENT_LATENCY_TERMINATED_NO_SWAP_COMPONENT, 0, 0);
+    OnEventCancel(*latency);
   }
 
   ComputeInputLatencyHistograms(event.GetType(), latency_component_id_,
@@ -383,6 +388,7 @@ void RenderWidgetHostLatencyTracker::OnInputEventAck(
 void RenderWidgetHostLatencyTracker::OnSwapCompositorFrame(
     std::vector<LatencyInfo>* latencies) {
   DCHECK(latencies);
+  OnFrameSubmitted();
   for (LatencyInfo& latency : *latencies) {
     AddLatencyInfoComponentIds(&latency, latency_component_id_);
   }
