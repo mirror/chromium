@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "b15ef7f4_427b8731",
+        "filename": "chrome/browser/chromeos/power/ml/ukm_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-25T01:29:20Z",
+      "side": 1,
+      "message": "can you add at least a brief comment here? something like this is probably okay, right? i see mentions of url-keyed metrics in public bugs.\n\n  // Logs user activity via the URL-Keyed Metrics system.",
+      "parentUuid": "cb2dce81_56ebfbb0",
+      "revId": "3a2ca2c7855482f9c9a6f7f6f027612a00953432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ae779ae_1bbb2d0c",
         "filename": "chrome/browser/chromeos/power/ml/ukm_logger.h",
         "patchSetId": 2
