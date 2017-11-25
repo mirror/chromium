@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96008f4a_043251de",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-25T14:01:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76c6e257_d1e37178",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "f610c1b1909e5a02c24b4f006c9fb02d3ba74d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c51c9103_8e7c0609",
         "filename": "chromeos/login/auth/authpolicy_login_helper.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "f610c1b1909e5a02c24b4f006c9fb02d3ba74d0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3ba78c_f172d912",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-25T14:01:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c51c9103_8e7c0609",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "f610c1b1909e5a02c24b4f006c9fb02d3ba74d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
