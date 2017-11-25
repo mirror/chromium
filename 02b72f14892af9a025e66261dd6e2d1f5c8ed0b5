@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be5cfce5_be087984",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-25T21:53:25Z",
+      "side": 1,
+      "message": "nit, how about adding a new method in ::Draw? i.e\nDraw2dBrowsing(render_info);\nDrawSplashScreen(render_info)\nDrawController",
+      "range": {
+        "startLine": 69,
+        "startChar": 14,
+        "endLine": 69,
+        "endChar": 33
+      },
+      "revId": "02b72f14892af9a025e66261dd6e2d1f5c8ed0b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
