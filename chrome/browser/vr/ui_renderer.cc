@@ -64,8 +64,14 @@ void UiRenderer::DrawSplashScreen(const RenderInfo& render_info) {
   // mode, this will need further testing if those get added
   // later.
   glDisable(GL_CULL_FACE);
-
   DrawUiView(render_info, elements);
+
+  const auto& controller_elements = scene_->GetVisibleControllerElements();
+  if (controller_elements.empty())
+    return;
+
+  glEnable(GL_CULL_FACE);
+  DrawUiView(render_info, controller_elements);
 
   // NB: we do not draw the viewport aware objects here. They get put into
   // another buffer that is size optimized.
