@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d8414b2_e525ed49",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-25T15:39:13Z",
+      "side": 1,
+      "message": "Also fixed this copy/paste error.",
+      "revId": "977c77dfd75b5449c9cc0d417c1b629ae2c3c5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
