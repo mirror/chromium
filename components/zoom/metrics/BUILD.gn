@@ -1,0 +1,32 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+source_set("style_info") {
+  sources = [
+    "style_info.cc",
+    "style_info.h",
+    "style_info_struct_traits.h",
+  ]
+
+  deps = [
+    "//base",
+  ]
+}
+
+static_library("browser") {
+  assert(!is_android && !is_ios,
+         "Desktop zoom is not used on mobile platforms.")
+
+  sources = [
+    "zoom_metrics_recorder.cc",
+    "zoom_metrics_recorder.h",
+  ]
+
+  deps = [
+    ":style_info",
+    "//base",
+    "//content/public/browser",
+    "//services/service_manager/public/cpp",
+  ]
+}

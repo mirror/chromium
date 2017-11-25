@@ -21,6 +21,7 @@ static_library("zoom") {
   deps = [
     "//base",
     "//components/prefs",
+    "//components/zoom/metrics:browser",
     "//content/public/browser",
     "//content/public/common",
     "//ipc",
