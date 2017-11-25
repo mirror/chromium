@@ -68,8 +68,9 @@ void OnJoinedDomain(authpolicy::ErrorType error) {
 }
 
 // Used for the callback from FakeAuthPolicy::RefreshDevicePolicy.
-void OnRefreshedPolicy(const base::Closure& closure, bool status) {
-  EXPECT_TRUE(status);
+void OnRefreshedPolicy(const base::Closure& closure,
+                       authpolicy::ErrorType error) {
+  EXPECT_EQ(authpolicy::ERROR_NONE, error);
   closure.Run();
 }
 

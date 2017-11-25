@@ -60,7 +60,7 @@ class TestAuthPolicyClient : public chromeos::AuthPolicyClient {
                          RefreshPolicyCallback callback) override {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
-                                  refresh_user_policy_callback_success_));
+                                  refresh_user_policy_callback_error_));
   }
 
   void ConnectToSignal(
@@ -70,12 +70,13 @@ class TestAuthPolicyClient : public chromeos::AuthPolicyClient {
     NOTIMPLEMENTED();
   }
 
-  void SetRefreshUserPolicyCallbackSuccess(bool success) {
-    refresh_user_policy_callback_success_ = success;
+  void SetRefreshUserPolicyCallbackError(authpolicy::ErrorType error) {
+    refresh_user_policy_callback_error_ = error;
   }
 
  private:
-  bool refresh_user_policy_callback_success_ = true;
+  authpolicy::ErrorType refresh_user_policy_callback_error_ =
+      authpolicy::ERROR_NONE;
 };
 
 }  // namespace
@@ -156,7 +157,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, DontWait) {
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
   // Configure mock policy fetch to fail.
-  mock_client_->SetRefreshUserPolicyCallbackSuccess(false);
+  mock_client_->SetRefreshUserPolicyCallbackError(authpolicy::ERROR_UNKNOWN);
 
   // Trigger mock policy fetch from authpolicyd.
   policy_manager_->Init(&schema_registry_);
@@ -187,7 +188,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest,
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
   // Configure mock policy fetch to succeed.
-  mock_client_->SetRefreshUserPolicyCallbackSuccess(true);
+  mock_client_->SetRefreshUserPolicyCallbackError(authpolicy::ERROR_NONE);
 
   // Trigger mock policy fetch from authpolicyd.
   policy_manager_->Init(&schema_registry_);
@@ -217,7 +218,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest,
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
   // Configure mock policy fetch to succeed.
-  mock_client_->SetRefreshUserPolicyCallbackSuccess(true);
+  mock_client_->SetRefreshUserPolicyCallbackError(authpolicy::ERROR_NONE);
 
   // Trigger mock policy fetch from authpolicyd.
   policy_manager_->Init(&schema_registry_);
@@ -254,7 +255,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitInfinite_LoadSuccess_FetchFail) {
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
   // Configure mock policy fetch to fail.
-  mock_client_->SetRefreshUserPolicyCallbackSuccess(false);
+  mock_client_->SetRefreshUserPolicyCallbackError(authpolicy::ERROR_UNKNOWN);
 
   // Trigger mock policy fetch from authpolicyd.
   policy_manager_->Init(&schema_registry_);
@@ -289,7 +290,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitFinite_LoadSuccess_FetchFail) {
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
   // Configure mock policy fetch to fail.
-  mock_client_->SetRefreshUserPolicyCallbackSuccess(false);
+  mock_client_->SetRefreshUserPolicyCallbackError(authpolicy::ERROR_UNKNOWN);
 
   // Trigger mock policy fetch from authpolicyd.
   policy_manager_->Init(&schema_registry_);
@@ -323,7 +324,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitFinite_FetchFail_LoadSuccess) {
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
   // Configure mock policy fetch to fail.
-  mock_client_->SetRefreshUserPolicyCallbackSuccess(false);
+  mock_client_->SetRefreshUserPolicyCallbackError(authpolicy::ERROR_UNKNOWN);
 
   // Trigger mock policy fetch from authpolicyd.
   policy_manager_->Init(&schema_registry_);
@@ -349,7 +350,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitFinite_LoadFail_FetchFail) {
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
   // Configure mock policy fetch to fail.
-  mock_client_->SetRefreshUserPolicyCallbackSuccess(false);
+  mock_client_->SetRefreshUserPolicyCallbackError(authpolicy::ERROR_UNKNOWN);
 
   // Trigger mock policy fetch from authpolicyd.
   policy_manager_->Init(&schema_registry_);
@@ -384,7 +385,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitFinite_LoadSuccess_FetchTimeout) {
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
   // Configure mock policy fetch to fail.
-  mock_client_->SetRefreshUserPolicyCallbackSuccess(false);
+  mock_client_->SetRefreshUserPolicyCallbackError(authpolicy::ERROR_UNKNOWN);
 
   // Trigger mock policy fetch from authpolicyd.
   policy_manager_->Init(&schema_registry_);
@@ -418,7 +419,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitFinite_LoadTimeout_FetchTimeout) {
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
   // Configure mock policy fetch to fail.
-  mock_client_->SetRefreshUserPolicyCallbackSuccess(false);
+  mock_client_->SetRefreshUserPolicyCallbackError(authpolicy::ERROR_UNKNOWN);
 
   // Trigger mock policy fetch from authpolicyd.
   policy_manager_->Init(&schema_registry_);
