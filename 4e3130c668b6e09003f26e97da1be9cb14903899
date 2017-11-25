@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa568ae0_aa8ce78d",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-25T01:19:30Z",
+      "side": 1,
+      "message": "if you pass in a PowerManagerClient* to the c\u0027tor instead, it\u0027ll be easier to write tests (since you can just pass a FakePowerManagerClient* there instead of needing to initialize the DBusThreadManager singleton)",
+      "revId": "4e3130c668b6e09003f26e97da1be9cb14903899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22275f2d_6fb49742",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-25T01:19:30Z",
+      "side": 1,
+      "message": "nit: you can just initialize this to false here\n\nalso, i\u0027d add a blank line after it and another one just befor DISALLOW_COPY_AND_ASSIGN",
+      "revId": "4e3130c668b6e09003f26e97da1be9cb14903899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
