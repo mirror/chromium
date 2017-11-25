@@ -16,6 +16,24 @@
       "revId": "a5a483a8038e0c5480119ebe5fd1708a8a744f30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d48f8e01_003d4f90",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logging_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-25T00:41:12Z",
+      "side": 1,
+      "message": "Actually the observer should add itself to the signal classes. So in my IdleEventNotifier class ctor, I\u0027m adding the object itself to the relevant signal-notifiers (e.g. PowerManagerClient), see https://cs.chromium.org/chromium/src/chrome/browser/chromeos/power/ml/idle_event_notifier.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d17. Please do the same to UserActivityLogger. Also remove the obj from the signal-notifiers in the dtor.",
+      "parentUuid": "dcff1f19_03d2d9f2",
+      "revId": "a5a483a8038e0c5480119ebe5fd1708a8a744f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
