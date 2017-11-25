@@ -85,6 +85,26 @@ void AuthPolicyLoginHelper::CancelRequestsAndRestart() {
 
 void AuthPolicyLoginHelper::OnJoinCallback(JoinCallback callback,
                                            authpolicy::ErrorType error) {
+  if (error != authpolicy::ERROR_NONE) {
+    std::move(callback).Run(error);
+    return;
+  }
+  chromeos::DBusThreadManager::Get()
+      ->GetAuthPolicyClient()
+      ->RefreshDevicePolicy(
+          base::BindOnce(&AuthPolicyLoginHelper::OnFirstPolicyRefreshCallback,
+                         weak_factory_.GetWeakPtr(), base::Passed(&callback)));
+}
+
+void AuthPolicyLoginHelper::OnFirstPolicyRefreshCallback(
+    JoinCallback callback,
+    authpolicy::ErrorType error) {
+  // First policy refresh happens before device is locked. So policy store
+  // should not succeed. The error means that authpolicyd cached device policy
+  // and stores it in the next call to RefreshDevicePolicy in STEP_STORE_POLICY.
+  DCHECK(error != authpolicy::ERROR_NONE);
+  if (error == authpolicy::ERROR_DEVICE_POLICY_CACHED_BUT_NOT_SENT)
+    error = authpolicy::ERROR_NONE;
   std::move(callback).Run(error);
 }
 
