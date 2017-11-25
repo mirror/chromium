@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "11a9cc03_1c0c45ec",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/setrequestheader-bogus-name.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-11-25T14:01:32Z",
+      "side": 0,
+      "message": "I notice that I can remove the expected result if all test cases are passed. So I only remove the test regarding invalid_byte_strings. Thank you for pointing it out.",
+      "parentUuid": "8132a4bb_398dc2de",
+      "revId": "e1ea6b1bb320eb9cd9b7d10e70e0a5d69ae9977b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16981d8c_e95b8109",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/setrequestheader-bogus-value.htm",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "e1ea6b1bb320eb9cd9b7d10e70e0a5d69ae9977b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c3b938_24a76bed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/setrequestheader-bogus-value.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-11-25T14:01:32Z",
+      "side": 0,
+      "message": "I notice that I can remove the expected result if all test cases are passed. So I only remove the test regarding \u0027given value ﾃｽﾄ,\u0027. Thank you for pointing it out.",
+      "parentUuid": "05143b49_757c4c6c",
+      "revId": "e1ea6b1bb320eb9cd9b7d10e70e0a5d69ae9977b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
