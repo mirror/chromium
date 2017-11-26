@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d2a318f_6a27afa8",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "I renamed BitstreamBufferRef with ScopedBitstreamBuffer, because there is already BitstreamBufferRef in VDAs. It is more ore less confusing.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a010e4d_5a9efb93",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -16,6 +39,24 @@
       "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7728438_f61f3f65",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a010e4d_5a9efb93",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -42,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "991675ea_7bacb3f3",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a82b2c6_1b64ff61",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 14
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d75bc034_1db2aef7",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -59,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8fe4e138_32a6691c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Yes. This constructor is needed for passing rvalue reference of ScopedBitstreamBuffer to DequeueRequest.",
+      "parentUuid": "d75bc034_1db2aef7",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0585713_5c0f88a8",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -73,6 +156,24 @@
       "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91db84c_dd025090",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Because VDA doesn\u0027t have the ownership of BitstreamBuffer explicitly, ScopedBitstreamBuffer\u0027s destructor is executed in DequeueRequest.\nHmm, in this case, we are really able to use scoped_ptr? How to pass the ownership to VDA? VDA::Decode argument is const BitstreamBuffer\u0026.\nI removed set(), because it was only required to set bitstream_buffer_ after ScopedBitstreamBuffer initialization.",
+      "parentUuid": "e0585713_5c0f88a8",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "0bb35dc5_69891c3b",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28297b36_e7eb3d9d",
+      "range": {
+        "startLine": 74,
+        "startChar": 17,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2df19ae_3bbd98cb",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -113,6 +238,24 @@
       "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fd3a6b_c0f89ffd",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2df19ae_3bbd98cb",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "9badcb37_b8278eb5",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "662abdd9_a5f06f1a",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "508bb04b_2fb3f7a3",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -147,6 +308,24 @@
       "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b0a681_1d192f5f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "508bb04b_2fb3f7a3",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "02ad5756_5609a49b",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "I know this looks awkward. This is needed to output fd value in l.500.\nWe couldn\u0027t acquire fd value in l.500 without this because handle_fd is invalid there and protected_shm_hanlde is also invalid.",
+      "parentUuid": "a0360c56_c19de1bd",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3abd4546_123cbdc7",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -184,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "9febc0bd_66ab1953",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3abd4546_123cbdc7",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74f6d2a4_af98b545",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -198,6 +413,24 @@
       "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2c3fdb_33d1e39a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74f6d2a4_af98b545",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +457,30 @@
     },
     {
       "key": {
+        "uuid": "4ef3be0e_6ea0c0fb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b9620d9_006ad413",
+      "range": {
+        "startLine": 103,
+        "startChar": 9,
+        "endLine": 103,
+        "endChar": 25
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1d161ff_fb066468",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
         "patchSetId": 19
@@ -244,6 +501,30 @@
       "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a67098_df3dcbca",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1d161ff_fb066468",
+      "range": {
+        "startLine": 109,
+        "startChar": 60,
+        "endLine": 110,
+        "endChar": 72
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -270,6 +551,30 @@
     },
     {
       "key": {
+        "uuid": "9736f839_de3df8ba",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a413452_80d4900c",
+      "range": {
+        "startLine": 130,
+        "startChar": 62,
+        "endLine": 130,
+        "endChar": 63
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14250af5_7497f610",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
         "patchSetId": 19
@@ -293,6 +598,30 @@
     },
     {
       "key": {
+        "uuid": "fcd85596_ab989080",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14250af5_7497f610",
+      "range": {
+        "startLine": 158,
+        "startChar": 9,
+        "endLine": 158,
+        "endChar": 28
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a59d45f_31334f8c",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
         "patchSetId": 19
@@ -313,6 +642,30 @@
       "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76d27b0_deadc778",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-26T23:10:57Z",
+      "side": 1,
+      "message": "I mean by \"the number\", the predetermined number which protected buffers are not allowed to allocate more than.\nI clarified more.",
+      "parentUuid": "0a59d45f_31334f8c",
+      "range": {
+        "startLine": 165,
+        "startChar": 5,
+        "endLine": 165,
+        "endChar": 63
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
