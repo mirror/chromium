@@ -22,6 +22,30 @@
       "revId": "75cec48a000c8a72719fbe27db4979cb6322c62b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b59e1a3_30c12f9b",
+        "filename": "components/metrics_services_manager/metrics_services_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-26T22:36:11Z",
+      "side": 0,
+      "message": "Argh!\n\nChromeMetricsServicesManagerClient::UpdateRunningServices was \"hidden\" inside a if defined(OS_WIN), thus preventing Code Search from \"seeing\" it and creating a blind spot.\n\nChanging that to ensure that ChromeMetricsServicesManagerClient::UpdateRunningServices is always defined, but with a non-empty definition only if defined(OS_WIN).",
+      "parentUuid": "60cb2a92_0d79ee72",
+      "range": {
+        "startLine": 62,
+        "startChar": 73,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "75cec48a000c8a72719fbe27db4979cb6322c62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
