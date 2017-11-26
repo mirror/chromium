@@ -242,6 +242,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   std::unique_ptr<WebURLLoaderFactory> CreateURLLoaderFactory() override;
 
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
+  AssociatedInterfaceProvider* GetRemoteNavigationAssociatedInterfaces()
+      override;
 
   void AnnotatedRegionsChanged() override;
 
