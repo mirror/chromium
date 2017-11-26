@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d137a9e_52227424",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/executive.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-26T19:14:47Z",
+      "side": 1,
+      "message": "PEP257 suggests always starting multi-line docstrings with a summary line (https://www.python.org/dev/peps/pep-0257/#multi-line-docstrings).\n\nAlthough for a constructor there\u0027s not much to say besides \"Initializes an Executive\", so I see why you didn\u0027t add a summary line here.\n\nSide note: Some of the classes in webkitpy.common could potentially have more documentation if we think more people are going to read them in the future. How would you describe Executive? Maybe an Executive object represents the \"service\" or \"dependency\" for executing subprocesses, which can be replaced by the test double MockExecutive in tests.",
+      "revId": "b1a2bf00d51e54de0e8be1e51939fee9329564de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
