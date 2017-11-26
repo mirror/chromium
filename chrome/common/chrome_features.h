@@ -308,6 +308,8 @@ extern const base::Feature kInstantTethering;
 extern const base::Feature kEasyUnlockPromotions;
 
 extern const base::Feature kTPMFirmwareUpdate;
+
+extern const base::Feature kUserActivityEventLogging;
 #endif  // defined(OS_CHROMEOS)
 
 bool PrefServiceEnabled();
