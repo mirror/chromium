@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38d53b28_1739d993",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-26T09:28:03Z",
+      "side": 1,
+      "message": "nit: constexpr everywhere possible.",
+      "revId": "b7f574a9a868aded2e68bf241d5fab359cc476d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c315ff_e590fb90",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-26T09:28:03Z",
+      "side": 1,
+      "message": "Who will see this log message? Is it necessary?",
+      "revId": "b7f574a9a868aded2e68bf241d5fab359cc476d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d684185_b372aa59",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-26T09:28:03Z",
+      "side": 1,
+      "message": "Same q about log message.",
+      "revId": "b7f574a9a868aded2e68bf241d5fab359cc476d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962bd52c_0c48b842",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-26T09:28:03Z",
+      "side": 1,
+      "message": "Why is a timer needed? Can you add a test seam somewhere that will run a Closure when the load completes so that this doesn\u0027t need to poll?",
+      "revId": "b7f574a9a868aded2e68bf241d5fab359cc476d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ec0281_7d2ce0ef",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-26T09:28:03Z",
+      "side": 1,
+      "message": "Make the RunLoop instance local to this method and use its QuitClosure method to get a closure to run to stop the loop, passing it to TestIsLoaded via the bind above.",
+      "revId": "b7f574a9a868aded2e68bf241d5fab359cc476d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08c59af_9f699cf4",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-26T09:28:03Z",
+      "side": 1,
+      "message": "nit: protected",
+      "revId": "b7f574a9a868aded2e68bf241d5fab359cc476d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f308160f_3d9e169d",
+        "filename": "chrome/installer/mini_installer/chrome.release",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-26T09:28:03Z",
+      "side": 1,
+      "message": "please also list these files in chrome/tools/build/win/FILES.cfg so that they are included in the archves (and see if this applies to other platforms as well).",
+      "revId": "b7f574a9a868aded2e68bf241d5fab359cc476d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
