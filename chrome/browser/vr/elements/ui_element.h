@@ -113,7 +113,11 @@ class UiElement : public cc::AnimationTarget {
   };
 
   UiElementName name() const { return name_; }
-  void set_name(UiElementName name) { name_ = name; }
+  void set_name(UiElementName name);
+  virtual void OnSetName();
+
+  UiElementName owner_name() const { return owner_name_; }
+  void set_owner_name(UiElementName name) { owner_name_ = name; }
 
   UiElementType type() const { return type_; }
   void set_type(UiElementType type);
@@ -482,6 +486,10 @@ class UiElement : public cc::AnimationTarget {
   // An optional, but stable and semantic identifier for an element used in lieu
   // of a string.
   UiElementName name_ = UiElementName::kNone;
+
+  // This name is used in tests and debugging output to associate a "component"
+  // element with its logical owner.
+  UiElementName owner_name_ = UiElementName::kNone;
 
   // An optional identifier intended to be applied to swaths of elements for
   // categorization.
