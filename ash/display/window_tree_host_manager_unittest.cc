@@ -52,7 +52,7 @@ template <typename T>
 class Resetter {
  public:
   explicit Resetter(T* value) : value_(*value) { *value = 0; }
-  ~Resetter() {}
+  ~Resetter() = default;
   T value() { return value_; }
 
  private:
@@ -198,7 +198,7 @@ class TestHelper {
 };
 
 TestHelper::TestHelper(AshTestBase* delegate) : delegate_(delegate) {}
-TestHelper::~TestHelper() {}
+TestHelper::~TestHelper() = default;
 
 void TestHelper::SetSecondaryDisplayLayoutAndOffset(
     display::DisplayPlacement::Position position,
@@ -230,7 +230,7 @@ class WindowTreeHostManagerShutdownTest : public AshTestBase,
                                           public TestHelper {
  public:
   WindowTreeHostManagerShutdownTest() : TestHelper(this) {}
-  ~WindowTreeHostManagerShutdownTest() override {}
+  ~WindowTreeHostManagerShutdownTest() override = default;
 
   void TearDown() override {
     AshTestBase::TearDown();
@@ -250,7 +250,7 @@ class StartupHelper : public TestShellDelegate,
                       public WindowTreeHostManager::Observer {
  public:
   StartupHelper() : displays_initialized_(false) {}
-  ~StartupHelper() override {}
+  ~StartupHelper() override = default;
 
   // ShellDelegate:
   void PreInit() override {
@@ -275,7 +275,7 @@ class WindowTreeHostManagerStartupTest : public AshTestBase, public TestHelper {
  public:
   WindowTreeHostManagerStartupTest()
       : TestHelper(this), startup_helper_(new StartupHelper) {}
-  ~WindowTreeHostManagerStartupTest() override {}
+  ~WindowTreeHostManagerStartupTest() override = default;
 
   // AshTestBase:
   void SetUp() override {
@@ -305,7 +305,7 @@ class TestEventHandler : public ui::EventHandler {
         scroll_y_offset_(0.0),
         scroll_x_offset_ordinal_(0.0),
         scroll_y_offset_ordinal_(0.0) {}
-  ~TestEventHandler() override {}
+  ~TestEventHandler() override = default;
 
   void OnMouseEvent(ui::MouseEvent* event) override {
     if (event->flags() & ui::EF_IS_SYNTHESIZED &&
@@ -377,7 +377,7 @@ class TestEventHandler : public ui::EventHandler {
 
 class TestMouseWatcherListener : public views::MouseWatcherListener {
  public:
-  TestMouseWatcherListener() {}
+  TestMouseWatcherListener() = default;
 
  private:
   // views::MouseWatcherListener:
@@ -391,7 +391,7 @@ class TestMouseWatcherListener : public views::MouseWatcherListener {
 class WindowTreeHostManagerTest : public AshTestBase, public TestHelper {
  public:
   WindowTreeHostManagerTest() : TestHelper(this) {}
-  ~WindowTreeHostManagerTest() override {}
+  ~WindowTreeHostManagerTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WindowTreeHostManagerTest);
@@ -1484,8 +1484,8 @@ namespace {
 
 class RootWindowTestObserver : public aura::WindowObserver {
  public:
-  RootWindowTestObserver() {}
-  ~RootWindowTestObserver() override {}
+  RootWindowTestObserver() = default;
+  ~RootWindowTestObserver() override = default;
 
   void OnWindowBoundsChanged(aura::Window* window,
                              const gfx::Rect& old_bounds,
