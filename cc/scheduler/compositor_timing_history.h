@@ -30,6 +30,15 @@ class CC_EXPORT CompositorTimingHistory {
     BROWSER_UMA,
     NULL_UMA,
   };
+
+  enum FinishImplFrameState {
+    DID_DRAW,
+    SKIPPED_IMPL_FRAME,
+    SWAP_BACKPRESSURE,
+    MISSED_COMMIT,
+    MISSED_ACTIVATE,
+  };
+
   class UMAReporter;
 
   CompositorTimingHistory(
@@ -61,6 +70,7 @@ class CC_EXPORT CompositorTimingHistory {
                           viz::BeginFrameArgs::BeginFrameArgsType frame_type,
                           base::TimeTicks now);
   void WillFinishImplFrame(bool needs_redraw);
+  void DidFinishImplFrame(FinishImplFrameState state);
   void BeginImplFrameNotExpectedSoon();
   void WillBeginMainFrame(bool on_critical_path,
                           base::TimeTicks main_frame_time);
@@ -80,6 +90,10 @@ class CC_EXPORT CompositorTimingHistory {
   void DidReceiveCompositorFrameAck();
   void WillInvalidateOnImplSide();
   void SetTreePriority(TreePriority priority);
+
+  base::TimeTicks begin_impl_frame_start_time() {
+    return begin_impl_frame_start_time_;
+  }
 
  protected:
   void DidBeginMainFrame(base::TimeTicks begin_main_frame_end_time);
@@ -113,6 +127,7 @@ class CC_EXPORT CompositorTimingHistory {
   RollingTimeDeltaHistory draw_duration_history_;
 
   bool begin_main_frame_on_critical_path_;
+  base::TimeTicks begin_impl_frame_start_time_;
   base::TimeTicks begin_main_frame_frame_time_;
   base::TimeTicks begin_main_frame_sent_time_;
   base::TimeTicks begin_main_frame_start_time_;

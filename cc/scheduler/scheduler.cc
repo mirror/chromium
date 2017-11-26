@@ -416,6 +416,10 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
                                       can_activate_before_deadline)) {
     TRACE_EVENT_INSTANT0("cc", "SkipBeginImplFrameToReduceLatency",
                          TRACE_EVENT_SCOPE_THREAD);
+
+    compositor_timing_history_->DidFinishImplFrame(
+        CompositorTimingHistory::SKIPPED_IMPL_FRAME);
+
     skipped_last_frame_to_reduce_latency_ = true;
     SendBeginFrameAck(begin_main_frame_args_, kBeginFrameSkipped);
     return;
@@ -442,6 +446,25 @@ void Scheduler::BeginImplFrameSynchronous(const viz::BeginFrameArgs& args) {
 }
 
 void Scheduler::FinishImplFrame() {
+  if (!state_machine_.did_draw_in_last_frame()) {
+    if (state_machine_.needs_redraw() && state_machine_.IsDrawThrottled()) {
+      compositor_timing_history_->DidFinishImplFrame(
+          CompositorTimingHistory::SWAP_BACKPRESSURE);
+    } else if (state_machine_.main_thread_missed_last_deadline() &&
+               !state_machine_.ImplLatencyTakesPriority()) {
+      if (state_machine_.has_pending_tree()) {
+        compositor_timing_history_->DidFinishImplFrame(
+            CompositorTimingHistory::MISSED_ACTIVATE);
+      } else {
+        compositor_timing_history_->DidFinishImplFrame(
+            CompositorTimingHistory::MISSED_COMMIT);
+      }
+    }
+  } else {
+    compositor_timing_history_->DidFinishImplFrame(
+        CompositorTimingHistory::DID_DRAW);
+  }
+
   state_machine_.OnBeginImplFrameIdle();
   ProcessScheduledActions();
 
@@ -554,6 +577,7 @@ void Scheduler::ScheduleBeginImplFrameDeadlineIfNeeded() {
 void Scheduler::OnBeginImplFrameDeadline() {
   TRACE_EVENT0("cc,benchmark", "Scheduler::OnBeginImplFrameDeadline");
   begin_impl_frame_deadline_task_.Cancel();
+
   // We split the deadline actions up into two phases so the state machine
   // has a chance to trigger actions that should occur durring and after
   // the deadline separately. For example:
