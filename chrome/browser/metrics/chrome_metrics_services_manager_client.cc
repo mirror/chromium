@@ -264,10 +264,10 @@ bool ChromeMetricsServicesManagerClient::IsMetricsConsentGiven() {
   return enabled_state_provider_->IsConsentGiven();
 }
 
-#if defined(OS_WIN)
 void ChromeMetricsServicesManagerClient::UpdateRunningServices(
     bool may_record,
     bool may_upload) {
+#if defined(OS_WIN)
   // First, set the registry value so that Crashpad will have the sampling state
   // now and for subsequent runs.
   install_static::SetCollectStatsInSample(IsClientInSample());
@@ -277,8 +277,8 @@ void ChromeMetricsServicesManagerClient::UpdateRunningServices(
   // sampling correctly, but may_record already reflects the sampling state.
   // This isn't a problem though, since they will be consistent.
   SetUploadConsent_ExportThunk(may_record && may_upload);
-}
 #endif  // defined(OS_WIN)
+}
 
 metrics::MetricsStateManager*
 ChromeMetricsServicesManagerClient::GetMetricsStateManager() {

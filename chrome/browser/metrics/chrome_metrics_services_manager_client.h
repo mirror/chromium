@@ -79,10 +79,8 @@ class ChromeMetricsServicesManagerClient
   bool IsMetricsReportingEnabled() override;
   bool IsMetricsConsentGiven() override;
 
-#if defined(OS_WIN)
   // On Windows, the client controls whether Crashpad can upload crash reports.
   void UpdateRunningServices(bool may_record, bool may_upload) override;
-#endif  // defined(OS_WIN)
 
   bool IsMetricsReportingForceEnabled() override;
 
