@@ -129,6 +129,12 @@ void Button::OnSetDrawPhase() {
   hit_plane_->set_draw_phase(draw_phase());
 }
 
+void Button::OnSetName() {
+  background_->set_owner_name(name());
+  foreground_->set_owner_name(name());
+  hit_plane_->set_owner_name(name());
+}
+
 void Button::NotifyClientSizeAnimated(const gfx::SizeF& size,
                                       int target_property_id,
                                       cc::Animation* animation) {
