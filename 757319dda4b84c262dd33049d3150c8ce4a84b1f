@@ -16,6 +16,24 @@
       "revId": "757319dda4b84c262dd33049d3150c8ce4a84b1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75c242f_dd7eb04f",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-26T23:01:21Z",
+      "side": 1,
+      "message": "Yep, however the extensions URLLRequestJob/URLLoaderFactory don\u0027t redirect.",
+      "parentUuid": "46f3febf_9a90c761",
+      "revId": "757319dda4b84c262dd33049d3150c8ce4a84b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
