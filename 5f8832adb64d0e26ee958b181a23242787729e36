@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bc0d54e_bf992e3e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-26T09:08:45Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e99de4c_d189bd28",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-26T09:08:45Z",
+      "side": 1,
+      "message": "And this?",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5947a9_4a9f1ffb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-26T09:08:45Z",
+      "side": 1,
+      "message": "Any reason why you cannot do this directly, rather than inside a load handler?\n\nBut maybe after a document.body.offsetTop, just to be evil and make sure that re-layout works as it should. :)",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fde487_1d7e7dbd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-26T09:08:45Z",
+      "side": 1,
+      "message": "Is this element necessary at all?",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d97a99_986fe94b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-26T09:08:45Z",
+      "side": 1,
+      "message": "Duplicate id #child. Use class instead?",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
