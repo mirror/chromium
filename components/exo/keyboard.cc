@@ -274,20 +274,8 @@ void Keyboard::OnWindowFocused(aura::Window* gained_focus,
                                aura::Window* lost_focus) {
   Surface* gained_focus_surface =
       gained_focus ? GetEffectiveFocus(gained_focus) : nullptr;
-  if (gained_focus_surface != focus_) {
-    if (focus_) {
-      delegate_->OnKeyboardLeave(focus_);
-      focus_->RemoveSurfaceObserver(this);
-      focus_ = nullptr;
-      pending_key_acks_.clear();
-    }
-    if (gained_focus_surface) {
-      delegate_->OnKeyboardModifiers(modifier_flags_);
-      delegate_->OnKeyboardEnter(gained_focus_surface, pressed_keys_);
-      focus_ = gained_focus_surface;
-      focus_->AddSurfaceObserver(this);
-    }
-  }
+  if (gained_focus_surface != focus_)
+    SetFocus(gained_focus_surface);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -295,8 +283,7 @@ void Keyboard::OnWindowFocused(aura::Window* gained_focus,
 
 void Keyboard::OnSurfaceDestroying(Surface* surface) {
   DCHECK(surface == focus_);
-  focus_ = nullptr;
-  surface->RemoveSurfaceObserver(this);
+  SetFocus(nullptr);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -337,6 +324,21 @@ Surface* Keyboard::GetEffectiveFocus(aura::Window* window) const {
 
   return focus && delegate_->CanAcceptKeyboardEventsForSurface(focus) ? focus
                                                                       : nullptr;
+}
+
+void Keyboard::SetFocus(Surface* surface) {
+  if (focus_) {
+    delegate_->OnKeyboardLeave(focus_);
+    focus_->RemoveSurfaceObserver(this);
+    focus_ = nullptr;
+    pending_key_acks_.clear();
+  }
+  if (surface) {
+    delegate_->OnKeyboardModifiers(modifier_flags_);
+    delegate_->OnKeyboardEnter(surface, pressed_keys_);
+    focus_ = surface;
+    focus_->AddSurfaceObserver(this);
+  }
 }
 
 void Keyboard::ProcessExpiredPendingKeyAcks() {

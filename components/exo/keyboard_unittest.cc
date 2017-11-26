@@ -123,7 +123,7 @@ TEST_F(KeyboardTest, OnKeyboardLeave) {
   std::unique_ptr<Keyboard> keyboard(new Keyboard(&delegate));
 
   EXPECT_CALL(delegate, CanAcceptKeyboardEventsForSurface(surface.get()))
-      .WillOnce(testing::Return(true));
+      .WillRepeatedly(testing::Return(true));
   EXPECT_CALL(delegate, OnKeyboardModifiers(0));
   EXPECT_CALL(delegate,
               OnKeyboardEnter(surface.get(), std::vector<ui::DomCode>()));
@@ -131,6 +131,15 @@ TEST_F(KeyboardTest, OnKeyboardLeave) {
 
   EXPECT_CALL(delegate, OnKeyboardLeave(surface.get()));
   focus_client->FocusWindow(nullptr);
+
+  EXPECT_CALL(delegate, OnKeyboardModifiers(0));
+  EXPECT_CALL(delegate,
+              OnKeyboardEnter(surface.get(), std::vector<ui::DomCode>()));
+  focus_client->FocusWindow(surface->window());
+
+  EXPECT_CALL(delegate, OnKeyboardLeave(surface.get()));
+  shell_surface.reset();
+  surface.reset();
 
   keyboard.reset();
 }

@@ -75,6 +75,9 @@ class Keyboard : public ui::EventHandler,
   // Returns the effective focus for |window|.
   Surface* GetEffectiveFocus(aura::Window* window) const;
 
+  // Change keyboard focus to |surface|.
+  void SetFocus(Surface* surface);
+
   // Processes expired key state changes in |pending_key_acks_| as they have not
   // been acknowledged.
   void ProcessExpiredPendingKeyAcks();
