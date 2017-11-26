@@ -965,7 +965,7 @@ void TabStripModelExperimental::InternalCloseTabs(
 
   base::WeakPtr<TabStripModel> ref(weak_factory_.GetWeakPtr());
   // TODO(brettw) this closing_all definition is incorrect.
-  const bool closing_all = tabs_.size() == tabs_to_close.size();
+  const bool closing_all = count() == static_cast<int>(tabs_to_close.size());
   if (closing_all) {
     for (auto& observer : observers_)
       observer.WillCloseAllTabs();
