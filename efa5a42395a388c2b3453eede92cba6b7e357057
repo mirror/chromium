@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36dbc9c7_f7228ea8",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-26T23:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fbd4273_37b85216",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "efa5a42395a388c2b3453eede92cba6b7e357057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef9683eb_971f60f2",
         "filename": "components/exo/data_device.cc",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7d13c3e2_ff5132e6",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-26T23:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef9683eb_971f60f2",
+      "revId": "efa5a42395a388c2b3453eede92cba6b7e357057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10ff78bb_8d471b47",
         "filename": "components/exo/data_device.cc",
         "patchSetId": 8
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-22T02:57:05Z",
       "side": 1,
       "message": "nit: Surface* next_focused_surface \u003d surface \u0026\u0026 delegate_-\u003eCanAcceptDataEventsForSurface(surface) ? surface : nullptr;\n\nand then remove \u0027last_focus\u0027 below and simple early out if \"next_focused_surface \u003d\u003d focused_surface_-\u003eget() ?",
+      "range": {
+        "startLine": 155,
+        "startChar": 7,
+        "endLine": 155,
+        "endChar": 20
+      },
+      "revId": "efa5a42395a388c2b3453eede92cba6b7e357057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5318551_9d63744c",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-26T23:48:43Z",
+      "side": 1,
+      "message": "focused_surface_ can be null. So \"focused_surface_-\u003e\" can cause null dereference. Thus changed this to \"if (focused_surface_ \u0026\u0026 focused_surface_-\u003e...)\".",
+      "parentUuid": "10ff78bb_8d471b47",
       "range": {
         "startLine": 155,
         "startChar": 7,
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "39bc84d8_452ce2a7",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-26T23:48:43Z",
+      "side": 1,
+      "message": "Because check at #160 see if the last focused surface is same with the newly focused surface and check at #165 see if the last focused surface is null or not.\n\nAdded comments and simplified the condition.",
+      "parentUuid": "1212ff13_bf953918",
+      "revId": "efa5a42395a388c2b3453eede92cba6b7e357057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9d48270_f5b50166",
         "filename": "components/exo/data_device_unittest.cc",
         "patchSetId": 8
@@ -93,6 +177,24 @@
       "writtenOn": "2017-11-22T02:57:05Z",
       "side": 1,
       "message": "nit: why is this needed? please remove if not",
+      "revId": "efa5a42395a388c2b3453eede92cba6b7e357057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476b47d2_be51c7aa",
+        "filename": "components/exo/data_device_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-26T23:48:43Z",
+      "side": 1,
+      "message": "Replaced this with TestSeat() {}. We need to define a default constructor having no arguments explicitly because we specify a private constructor taking an argument in DISALLOW_COPY_AND_ASSIGN.",
+      "parentUuid": "c9d48270_f5b50166",
       "revId": "efa5a42395a388c2b3453eede92cba6b7e357057",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
