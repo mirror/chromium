@@ -22,6 +22,7 @@
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/gles2_trace_implementation.h"
 #include "gpu/command_buffer/client/gpu_switches.h"
+#include "gpu/command_buffer/client/raster_implementation.h"
 #include "gpu/command_buffer/client/transfer_buffer.h"
 #include "gpu/command_buffer/common/constants.h"
 #include "gpu/ipc/client/command_buffer_proxy_impl.h"
@@ -271,6 +272,7 @@ gpu::ContextResult ContextProviderCommandBuffer::BindToCurrentThread() {
         attributes_.bind_generates_resource,
         attributes_.lose_context_when_out_of_memory, support_client_side_arrays,
         command_buffer_.get());
+
     bind_result_ = gles2_impl_->Initialize(memory_limits_);
     if (bind_result_ != gpu::ContextResult::kSuccess) {
       DLOG(ERROR) << "Failed to initialize GLES2Implementation.";
@@ -332,6 +334,9 @@ gpu::ContextResult ContextProviderCommandBuffer::BindToCurrentThread() {
     gl = trace_impl_.get();
   }
 
+  raster_impl_ = std::make_unique<gpu::raster::RasterImplementation>(
+      gl, gles2_impl_->capabilities());
+
   // Do this last once the context is set up.
   std::string type_name =
       command_buffer_metrics::ContextTypeToString(context_type_);
@@ -360,6 +365,14 @@ gpu::gles2::GLES2Interface* ContextProviderCommandBuffer::ContextGL() {
   if (trace_impl_)
     return trace_impl_.get();
   return gles2_impl_.get();
+}
+
+gpu::raster::RasterInterface* ContextProviderCommandBuffer::RasterContext() {
+  DCHECK(bind_tried_);
+  DCHECK_EQ(bind_result_, gpu::ContextResult::kSuccess);
+  CheckValidThreadOrLockAcquired();
+
+  return raster_impl_.get();
 }
 
 gpu::ContextSupport* ContextProviderCommandBuffer::ContextSupport() {
