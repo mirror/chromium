@@ -295,6 +295,8 @@ bool GLImageIOSurface::BindTexImageWithInternalformat(unsigned target,
     return false;
   }
 
+  glFlush();
+
   UMA_HISTOGRAM_TIMES("GPU.IOSurface.TexImageTime",
                       base::TimeTicks::Now() - start_time);
   return true;

@@ -14,7 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/unguessable_token.h"
-#include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "media/base/media_export.h"
 #include "media/base/video_types.h"
@@ -56,7 +56,7 @@ class MEDIA_EXPORT GpuVideoAcceleratorFactories {
   class ScopedGLContextLock {
    public:
     ScopedGLContextLock() {}
-    virtual gpu::gles2::GLES2Interface* ContextGL() = 0;
+    virtual gpu::raster::RasterInterface* RasterContext() = 0;
     virtual ~ScopedGLContextLock(){};
 
    private:
