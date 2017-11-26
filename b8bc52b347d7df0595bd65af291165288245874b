@@ -16,6 +16,24 @@
       "revId": "b8bc52b347d7df0595bd65af291165288245874b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab319436_145d0f84",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommandTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-26T22:35:34Z",
+      "side": 1,
+      "message": "Could you try this:\n\n\u003ccolgroup\u003e\u003c!--|--\u003e\u003c/colgroup\u003e\n\nThe following unit test gives an example of using such syntax to set selection at positions where text nodes are normally rejected by parser:\n\nhttps://chromium.googlesource.com/chromium/src/+/384a1a848222a0b729321d06694a89d43e5551ab/third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp#204",
+      "parentUuid": "076ffa7e_b02dbb2e",
+      "revId": "b8bc52b347d7df0595bd65af291165288245874b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
