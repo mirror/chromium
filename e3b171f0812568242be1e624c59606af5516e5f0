@@ -46,6 +46,30 @@
       "revId": "e3b171f0812568242be1e624c59606af5516e5f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cb978f_be4aedab",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-26T23:14:39Z",
+      "side": 0,
+      "message": "Such change is risky because it may result in behavior change.\n\nIn general, to reduce risk, we don\u0027t land refactoring and behavior change in one CL.",
+      "parentUuid": "5178efdd_1ea74e83",
+      "range": {
+        "startLine": 1239,
+        "startChar": 6,
+        "endLine": 1240,
+        "endChar": 35
+      },
+      "revId": "e3b171f0812568242be1e624c59606af5516e5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
