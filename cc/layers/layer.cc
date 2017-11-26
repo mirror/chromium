@@ -69,7 +69,7 @@ Layer::Inputs::Inputs(int layer_id)
       scroll_boundary_behavior(
           ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto) {}
 
-Layer::Inputs::~Inputs() {}
+Layer::Inputs::~Inputs() = default;
 
 scoped_refptr<Layer> Layer::Create() {
   return base::WrapRefCounted(new Layer());
