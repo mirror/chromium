@@ -40,7 +40,7 @@ class MetricsStateManager {
   typedef base::Callback<std::unique_ptr<ClientInfo>(void)>
       LoadClientInfoCallback;
 
-  virtual ~MetricsStateManager();
+  ~MetricsStateManager();
 
   std::unique_ptr<MetricsProvider> GetProvider();
 
