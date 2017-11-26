@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea8df70a_996019c0",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-26T23:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b782dcd5_f4d30db3",
+      "range": {
+        "startLine": 67,
+        "startChar": 39,
+        "endLine": 67,
+        "endChar": 54
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0812faaf_e4d9d8e1",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8481bfc7_8f1ba149",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-26T23:53:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0812faaf_e4d9d8e1",
+      "range": {
+        "startLine": 74,
+        "startChar": 25,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "16592c9c_4e610109",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-26T23:53:17Z",
+      "side": 1,
+      "message": "the current power state is stored in on_batter_ and battery_percent_.",
+      "parentUuid": "d3174388_3fd5a6ef",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10933ca1_1a6f1ba4",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a3a3d7_a77c5275",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-26T23:53:17Z",
+      "side": 1,
+      "message": "discussed, since it represents the current state, it\u0027s fine for the current impl.",
+      "parentUuid": "10933ca1_1a6f1ba4",
+      "range": {
+        "startLine": 90,
+        "startChar": 25,
+        "endLine": 90,
+        "endChar": 48
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d6674d8a_d0209705",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-26T23:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3c1baee_58c0fbae",
+      "range": {
+        "startLine": 96,
+        "startChar": 25,
+        "endLine": 96,
+        "endChar": 44
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2433b6ed_474c2aa5",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b55e5c9_c3ff96d2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-26T23:53:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2433b6ed_474c2aa5",
+      "range": {
+        "startLine": 102,
+        "startChar": 25,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
