@@ -26,7 +26,6 @@
 #include "components/metrics/metrics_service.h"
 #include "components/policy/core/browser/browser_policy_connector_base.h"
 #include "components/policy/core/browser/configuration_policy_pref_store.h"
-#include "components/policy/core/browser/url_blacklist_manager.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/in_memory_pref_store.h"
 #include "components/prefs/pref_service.h"
@@ -83,24 +82,6 @@ std::unique_ptr<net::ProxyConfigService> CreateProxyConfigService() {
       static_cast<net::ProxyConfigServiceAndroid*>(config_service.get());
   android_config_service->set_exclude_pac_url(true);
   return config_service;
-}
-
-bool OverrideBlacklistForURL(const GURL& url, bool* block, int* reason) {
-  // We don't have URLs that should never be blacklisted here.
-  return false;
-}
-
-policy::URLBlacklistManager* CreateURLBlackListManager(
-    PrefService* pref_service) {
-  scoped_refptr<base::SequencedTaskRunner> background_task_runner =
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::BACKGROUND});
-  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner =
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
-
-  return new policy::URLBlacklistManager(pref_service, background_task_runner,
-                                         io_task_runner,
-                                         base::Bind(OverrideBlacklistForURL));
 }
 
 std::unique_ptr<AwSafeBrowsingWhitelistManager>
@@ -173,8 +154,6 @@ void AwBrowserContext::PreMainMessageLoopRun() {
 
   EnsureResourceContextInitialized(this);
 
-  blacklist_manager_.reset(CreateURLBlackListManager(user_pref_service_.get()));
-
   AwMetricsServiceClient::GetInstance()->Initialize(
       user_pref_service_.get(),
       content::BrowserContext::GetDefaultStoragePartition(this)
@@ -235,7 +214,6 @@ void AwBrowserContext::InitUserPrefService() {
   // the manager_delegate. We don't use the rest of Autofill, which is why it is
   // hardcoded as disabled here.
   pref_registry->RegisterBooleanPref(autofill::prefs::kAutofillEnabled, false);
-  policy::URLBlacklistManager::RegisterProfilePrefs(pref_registry);
 
   pref_registry->RegisterStringPref(prefs::kAuthServerWhitelist, std::string());
   pref_registry->RegisterStringPref(prefs::kAuthAndroidNegotiateAccountType,
@@ -366,13 +344,6 @@ AwBrowserContext::CreateMediaRequestContextForStoragePartition(
     bool in_memory) {
   NOTREACHED();
   return NULL;
-}
-
-policy::URLBlacklistManager* AwBrowserContext::GetURLBlacklistManager() {
-  // Should not be called until the end of PreMainMessageLoopRun, where
-  // blacklist_manager_ is initialized.
-  DCHECK(blacklist_manager_);
-  return blacklist_manager_.get();
 }
 
 web_restrictions::WebRestrictionsClient*
