@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "159fc6a8_257c5f15",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-26T22:09:44Z",
+      "side": 1,
+      "message": "In this cl, we use PowerChanged for feature extraction (i.e. getting on_battery, and battery_percent). In the later cl, we\u0027ll also need to observe this signal to see if there\u0027s any activity. Please consider add a TODO item here.",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "7dee3d745ef4e1382585e474158082095bfb24a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

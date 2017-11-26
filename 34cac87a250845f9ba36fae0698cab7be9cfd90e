@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b782dcd5_f4d30db3",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-26T22:09:44Z",
+      "side": 1,
+      "message": "As commented below, when we receive signals that determine event types, we will only need to log event type and reason.",
+      "range": {
+        "startLine": 67,
+        "startChar": 39,
+        "endLine": 67,
+        "endChar": 54
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0812faaf_e4d9d8e1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-26T22:09:44Z",
+      "side": 1,
+      "message": "We could receive lid event signals multiple times after we receive idle event signal. The lid state we need to determine DeviceMode is the lid state when we receive idle event.",
+      "range": {
+        "startLine": 74,
+        "startChar": 25,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3174388_3fd5a6ef",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-26T22:09:44Z",
+      "side": 1,
+      "message": "PowerChange signal will be used for two purposes (i). features (battery and battery percent) (ii). as an activity signal (if the ext power is actually changed). For (i). we need to record it only once when idle is received. For (ii). we need to keep track of current power state.",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10933ca1_1a6f1ba4",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-26T22:09:44Z",
+      "side": 1,
+      "message": "Similarly, we need its value when idle event is received.",
+      "range": {
+        "startLine": 90,
+        "startChar": 25,
+        "endLine": 90,
+        "endChar": 48
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c1baee_58c0fbae",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-26T22:09:44Z",
+      "side": 1,
+      "message": "We should run ExtractFeatures when an idle event is observed, because we need the values of the features at this moment.",
+      "range": {
+        "startLine": 96,
+        "startChar": 25,
+        "endLine": 96,
+        "endChar": 44
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2433b6ed_474c2aa5",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-26T22:09:44Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 102,
+        "startChar": 25,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "34cac87a250845f9ba36fae0698cab7be9cfd90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
