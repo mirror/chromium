@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5af50793_4cb2a8f8",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-26T15:29:08Z",
+      "side": 1,
+      "message": "can you make it least be private, though?",
+      "parentUuid": "84ff746b_da356a4c",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "062828f3_a529e5fe",
         "filename": "components/arc/timer/arc_timer.h",
         "patchSetId": 13
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "https://g3doc.corp.google.com/devtools/library_club/g3doc/totw/125.md?cl\u003dhead\n\nLooks like it can still be a hint to inline the function although the compiler can ignore it.",
       "parentUuid": "062828f3_a529e5fe",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd78188a_de54dd22",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-26T15:29:08Z",
+      "side": 1,
+      "message": "yes, but seeing that compiler is probably smarter than us here and that this isn\u0027t a performance-critical method, please leave it off. :-)",
+      "parentUuid": "594b2ca0_25137775",
       "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
