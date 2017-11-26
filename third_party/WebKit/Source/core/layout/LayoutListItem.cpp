@@ -347,9 +347,12 @@ void LayoutListItem::PositionListMarker() {
     // pretty wrong (https://crbug.com/554160).
     // FIXME: Need to account for relative positioning in the layout overflow.
     if (Style()->IsLeftToRightDirection()) {
-      marker_logical_left = marker_->LineOffset() - line_offset -
-                            PaddingStart() - BorderStart() +
-                            marker_->MarginStart();
+      LayoutUnit marker_line_offset =
+          std::min(marker_->LineOffset(),
+                   LogicalLeftOffsetForLine(marker_->LogicalTop(),
+                                            kDoNotIndentText, LayoutUnit()));
+      marker_logical_left = marker_line_offset - line_offset - PaddingStart() -
+                            BorderStart() + marker_->MarginStart();
       marker_->InlineBoxWrapper()->MoveInInlineDirection(
           marker_logical_left - marker_old_logical_left);
       for (InlineFlowBox* box = marker_->InlineBoxWrapper()->Parent(); box;
@@ -380,9 +383,12 @@ void LayoutListItem::PositionListMarker() {
           hit_self_painting_layer = true;
       }
     } else {
-      marker_logical_left = marker_->LineOffset() - line_offset +
-                            PaddingStart() + BorderStart() +
-                            marker_->MarginEnd();
+      LayoutUnit marker_line_offset =
+          std::max(marker_->LineOffset(),
+                   LogicalRightOffsetForLine(marker_->LogicalTop(),
+                                             kDoNotIndentText, LayoutUnit()));
+      marker_logical_left = marker_line_offset - line_offset + PaddingStart() +
+                            BorderStart() + marker_->MarginEnd();
       marker_->InlineBoxWrapper()->MoveInInlineDirection(
           marker_logical_left - marker_old_logical_left);
       for (InlineFlowBox* box = marker_->InlineBoxWrapper()->Parent(); box;
