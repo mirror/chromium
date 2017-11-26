@@ -53,6 +53,11 @@ class VIZ_COMMON_EXPORT LocalSurfaceId {
            std::tie(other.local_id_, other.nonce_);
   }
 
+  bool operator<=(const LocalSurfaceId& other) const {
+    return std::tie(local_id_, nonce_) <=
+           std::tie(other.local_id_, other.nonce_);
+  }
+
   size_t hash() const {
     DCHECK(is_valid()) << ToString();
     return base::HashInts(
