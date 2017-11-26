@@ -42,6 +42,7 @@
 #include "content/browser/bad_message.h"
 #include "content/browser/browsing_data/clear_site_data_throttle.h"
 #include "content/browser/child_process_security_policy_impl.h"
+#include "content/browser/frame_host/cross_site_document_blocking_throttle.h"
 #include "content/browser/frame_host/navigation_request_info.h"
 #include "content/browser/loader/async_resource_handler.h"
 #include "content/browser/loader/detachable_resource_handler.h"
@@ -1541,6 +1542,13 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
   ResourceRequestInfoImpl* info = ResourceRequestInfoImpl::ForRequest(request);
   throttles.push_back(scheduler_->ScheduleRequest(child_id, route_id,
                                                   info->IsAsync(), request));
+
+  // Add a throttle to block cross-site documents from the renderer process.
+  std::unique_ptr<ResourceThrottle> cross_site_document_blocking_throttle =
+      CrossSiteDocumentBlockingThrottle::MaybeCreateThrottleForRequest(
+          request, resource_type);
+  if (cross_site_document_blocking_throttle)
+    throttles.push_back(std::move(cross_site_document_blocking_throttle));
 
   // Split the handler in two groups: the ones that need to execute
   // WillProcessResponse before mime sniffing and the others.
