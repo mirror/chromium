@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "84ff746b_da356a4c",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-26T08:35:23Z",
+      "side": 1,
+      "message": "Renamed.\n\nSo the ArcTimer destructor \u003d default in the .h file wants RefCountedFd to be declared completely in the header too.",
+      "parentUuid": "f57ab802_f92f9512",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "062828f3_a529e5fe",
         "filename": "components/arc/timer/arc_timer.h",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-24T16:11:47Z",
       "side": 1,
       "message": "i think we usually omit \u0027inline\u0027, unless it\u0027s needed here for some reason.",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594b2ca0_25137775",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-26T08:35:23Z",
+      "side": 1,
+      "message": "https://g3doc.corp.google.com/devtools/library_club/g3doc/totw/125.md?cl\u003dhead\n\nLooks like it can still be a hint to inline the function although the compiler can ignore it.",
+      "parentUuid": "062828f3_a529e5fe",
       "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d166cd6e_4fd40789",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-26T08:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2630665c_c4f94e38",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db3694a7_b04ff28b",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2723849a_feb4588f",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-26T08:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db3694a7_b04ff28b",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "86ab5314_fb91c3b1",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-26T08:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf53ecfd_03a1413f",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c6e4b28_db1995be",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 13
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f5c14659_c488e49c",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-26T08:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c6e4b28_db1995be",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f9dbea2_bb89bbbf",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 13
@@ -118,6 +226,24 @@
       "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132221ec_c5f36781",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-26T08:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f9dbea2_bb89bbbf",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
