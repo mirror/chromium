@@ -337,6 +337,9 @@ void AddStringsForCloudImport(base::DictionaryValue* dict) {
              IDS_FILE_BROWSER_CLOUD_IMPORT_TOOLTIP_READY);
   SET_STRING("CLOUD_IMPORT_TOOLTIP_SCANNING",
              IDS_FILE_BROWSER_CLOUD_IMPORT_TOOLTIP_SCANNING);
+
+  SET_STRING("IMPORT_PROGRESS_SUMMARY",
+             IDS_FILE_BROWSER_IMPORT_PROGRESS_SUMMARY);
 }
 
 void AddStringsForCrUiMenuItemShortcuts(base::DictionaryValue* dict) {
