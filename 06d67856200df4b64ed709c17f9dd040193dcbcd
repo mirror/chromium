@@ -34,6 +34,24 @@
       "revId": "06d67856200df4b64ed709c17f9dd040193dcbcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531828fe_222a726f",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-26T00:05:16Z",
+      "side": 1,
+      "message": "Yeah, I think deferring those sources makes sense. The only reason I can think of not to do that is if an event is logged before its source - in that case, we might never send the source. But I don\u0027t think recording an event before its source is necessarily supported/intended, so this buffering scheme seems reasonable to me.\n\nIdeally, we\u0027d somehow figure out that very old sources that never saw an event can be discarded, however I don\u0027t think that\u0027s really something we can do - it\u0027s possible that a source is created early and its event logged much much later - for example, if a source is created at the beginning of a page load and an event is recorded only when the page is ended (for a very long lived gmail tab, for instance, this could be a very long time).\n\nSteven, how does this buffering prposal sound to you?",
+      "parentUuid": "612d48cd_6e658a07",
+      "revId": "06d67856200df4b64ed709c17f9dd040193dcbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
