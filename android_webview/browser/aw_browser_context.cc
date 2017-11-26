@@ -92,14 +92,7 @@ bool OverrideBlacklistForURL(const GURL& url, bool* block, int* reason) {
 
 policy::URLBlacklistManager* CreateURLBlackListManager(
     PrefService* pref_service) {
-  scoped_refptr<base::SequencedTaskRunner> background_task_runner =
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::BACKGROUND});
-  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner =
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
-
-  return new policy::URLBlacklistManager(pref_service, background_task_runner,
-                                         io_task_runner,
+  return new policy::URLBlacklistManager(pref_service,
                                          base::Bind(OverrideBlacklistForURL));
 }
 
