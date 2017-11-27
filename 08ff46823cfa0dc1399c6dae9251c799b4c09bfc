@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e1d19f6_98a4ef1b",
+        "filename": "chrome/browser/vr/service/vr_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-27T17:09:10Z",
+      "side": 1,
+      "message": "Maybe add comment to describe why we have this.",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 25
+      },
+      "revId": "08ff46823cfa0dc1399c6dae9251c799b4c09bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
