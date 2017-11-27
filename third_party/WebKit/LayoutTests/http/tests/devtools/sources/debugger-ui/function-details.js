@@ -118,7 +118,7 @@
   }
 
   function performStandardTestCase(pageExpression, next) {
-    TestRunner.evaluateInPage(pageExpression, didEvaluate);
+    TestRunner.evaluateInPageRemoteObject(pageExpression, didEvaluate);
 
     async function didEvaluate(remote) {
       TestRunner.addResult(pageExpression + ' type = ' + remote.type);

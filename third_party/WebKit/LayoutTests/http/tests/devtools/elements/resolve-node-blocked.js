@@ -15,7 +15,7 @@
       </p>
     `);
 
-  TestRunner.evaluateInPage('document', didReceiveDocumentObject);
+  TestRunner.evaluateInPageRemoteObject('document', didReceiveDocumentObject);
   async function didReceiveDocumentObject(remoteObject) {
     TestRunner.addResult('didReceiveDocumentObject');
     var nodeId = await TestRunner.DOMAgent.requestNode(remoteObject.objectId);
