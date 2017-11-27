@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "382a06e5_e6fbe87c",
+        "filename": "components/exo/wayland/clients/perftests.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T22:00:17Z",
+      "side": 1,
+      "message": "nit: should we be checking that this is not 0?",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 51
+      },
+      "revId": "c08d13ad5b66dc1b2861548873e21788082b9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e0137c_b10a08d7",
+        "filename": "components/exo/wayland/clients/perftests.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T22:00:17Z",
+      "side": 1,
+      "message": "nit: \nauto average_latency \u003d result.num_frames_presented\n    ? result.presentation_latency / result.num_frames_presented\n    : base::TimeDelta::Max();\n\nand a single perf_test::PrintResult line..",
+      "revId": "c08d13ad5b66dc1b2861548873e21788082b9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55da6433_b5377fb2",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T22:00:17Z",
+      "side": 1,
+      "message": "nit: doesn\u0027t seem like these need to be here. please keep them separate as before so it\u0027s clear that presentation timing doesn\u0027t depend on them",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 46
+      },
+      "revId": "c08d13ad5b66dc1b2861548873e21788082b9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5312e3_738577b9",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T22:00:17Z",
+      "side": 1,
+      "message": "nit: submitted_frames? consistent with |submit_time|...",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "c08d13ad5b66dc1b2861548873e21788082b9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f3f496_7cd9dbe7",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T22:00:17Z",
+      "side": 1,
+      "message": "nit: DCHECK_GT is preferred as it will log the size if wrong",
+      "revId": "c08d13ad5b66dc1b2861548873e21788082b9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3876f84f_8e2b7147",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T22:00:17Z",
+      "side": 1,
+      "message": "nit: needed? pop_front not enough?",
+      "revId": "c08d13ad5b66dc1b2861548873e21788082b9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b405afe_97bcc57f",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T22:00:17Z",
+      "side": 1,
+      "message": "nit: DCHECK_GT",
+      "revId": "c08d13ad5b66dc1b2861548873e21788082b9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2746f038_8abdb1e5",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T22:00:17Z",
+      "side": 1,
+      "message": "nit: needed?",
+      "revId": "c08d13ad5b66dc1b2861548873e21788082b9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d5b194_0d4b5732",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T22:00:17Z",
+      "side": 1,
+      "message": "nit: can we do:\n\nFrame frame;\nframe.feedback.reset(...\n\nand then\n\npresentation.scheduled_frames.push_back(std::move(frame))\n\njust before wl_surface_commit? I think that would be a bit easier to read.",
+      "revId": "c08d13ad5b66dc1b2861548873e21788082b9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c6a1cd_b4520351",
+        "filename": "components/exo/wayland/clients/simple.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T22:00:17Z",
+      "side": 1,
+      "message": "nit: PresentationFeedback?",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "c08d13ad5b66dc1b2861548873e21788082b9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157c30d1_16f1be21",
+        "filename": "components/exo/wayland/clients/simple.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T22:00:17Z",
+      "side": 1,
+      "message": "nit: total_presentation_latency",
+      "range": {
+        "startLine": 21,
+        "startChar": 20,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "c08d13ad5b66dc1b2861548873e21788082b9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
