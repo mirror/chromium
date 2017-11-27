@@ -16,6 +16,24 @@
       "revId": "68452b284a511d702632b9172b44827ae6013cbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a424b39_37d7126d",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-27T00:08:09Z",
+      "side": 1,
+      "message": "Let me put this here for now. IMO we wouldn\u0027t want to resume pages for navigation within the same document but would want to stop the intervention on background tabs.",
+      "parentUuid": "67145b4b_46dbfe66",
+      "revId": "68452b284a511d702632b9172b44827ae6013cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
