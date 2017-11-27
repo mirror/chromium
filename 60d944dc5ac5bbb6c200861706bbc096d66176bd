@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4f5acfa_5842ee30",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-27T04:46:41Z",
+      "side": 1,
+      "message": "It\u0027s used in InstallConditionalFeatures().\nFor IWYU, I\u0027d like to keep this.",
+      "parentUuid": "231085f3_88fbc8d0",
+      "revId": "60d944dc5ac5bbb6c200861706bbc096d66176bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44a6af9f_6f0a1963",
         "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "60d944dc5ac5bbb6c200861706bbc096d66176bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0470c2_9765d089",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-27T04:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44a6af9f_6f0a1963",
+      "revId": "60d944dc5ac5bbb6c200861706bbc096d66176bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "60d944dc5ac5bbb6c200861706bbc096d66176bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25db22f6_33e42735",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-27T04:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0012ab3d_eb1d4b72",
+      "range": {
+        "startLine": 86,
+        "startChar": 15,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "60d944dc5ac5bbb6c200861706bbc096d66176bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
