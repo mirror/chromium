@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c231f391_5fcad413",
+        "filename": "base/bind.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-27T11:27:17Z",
+      "side": 1,
+      "message": "Note: this qualification is necessary because it would otherwise become ambiguous with WTF ones due to ADL (argument-dependent lookup).",
+      "range": {
+        "startLine": 242,
+        "startChar": 9,
+        "endLine": 242,
+        "endChar": 15
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
