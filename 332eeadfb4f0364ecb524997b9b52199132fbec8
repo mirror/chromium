@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f03b844b_e1e77ae3",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T18:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99600a22_08b8e954",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a0a186b_d43921c9",
         "filename": "content/browser/notifications/blink_notification_service_impl.h",
         "patchSetId": 8
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "f42b8655_4879931c",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T18:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f41d262_92d57d10",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e1c835d_5165c10c",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
         "patchSetId": 8
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "ab0e96d9_a4b4e302",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T18:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e1c835d_5165c10c",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e070d91b_e9e54b4c",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
         "patchSetId": 8
@@ -81,6 +135,24 @@
       "writtenOn": "2017-11-27T18:09:16Z",
       "side": 1,
       "message": "Maybe do we want to use a per-frame InterfaceProvider?",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a4d121_561287cc",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T18:35:51Z",
+      "side": 1,
+      "message": "Can you explain what that means, and how I get one?",
+      "parentUuid": "e070d91b_e9e54b4c",
       "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "4b6ee254_b2c4b529",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T18:35:51Z",
+      "side": 1,
+      "message": "Good question! I don\u0027t know.. Peter?",
+      "parentUuid": "2f77cbe4_20031ace",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f39378af_b5ea6153",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
         "patchSetId": 8
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "ebd21b4d_314e839e",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T18:35:51Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027ve left the NotificationService method as DisplayNonPersistent because I figure the deeper into the notification internals we are the more okay it is to drop the word \u0027notification\u0027, but happy to change this if you prefer consistency.",
+      "parentUuid": "f39378af_b5ea6153",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6901498b_72d8f2a7",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
         "patchSetId": 8
@@ -135,6 +243,24 @@
       "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9732242_c4436539",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T18:35:51Z",
+      "side": 1,
+      "message": "Aahh this always gets me. Thanks.",
+      "parentUuid": "6901498b_72d8f2a7",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
