@@ -10,10 +10,12 @@
 #include "base/time/time.h"
 #include "chrome/browser/resource_coordinator/lifecycle_unit.h"
 #include "chrome/browser/resource_coordinator/tab_lifecycle_unit_external.h"
+#include "content/public/browser/web_contents_observer.h"
 
 class TabStripModel;
 
 namespace content {
+class RenderProcessHost;
 class WebContents;
 }  // namespace content
 
@@ -22,8 +24,18 @@ namespace resource_coordinator {
 class TabLifecycleObserver;
 
 // Represents a tab.
-class TabLifecycleUnit : public LifecycleUnit, public TabLifecycleUnitExternal {
+class TabLifecycleUnit : public LifecycleUnit,
+                         public TabLifecycleUnitExternal,
+                         public content::WebContentsObserver {
  public:
+  // Time during which a tab cannot be discarded after having played audio.
+  static constexpr base::TimeDelta kAudioProtectionTime =
+      base::TimeDelta::FromMinutes(1);
+
+  // Time during which a tab cannot be discarded after hacing been focused.
+  static constexpr base::TimeDelta kFocusedProtectionTime =
+      base::TimeDelta::FromMinutes(10);
+
   // |observers| is a list of observers to notify when the discarded state or
   // the auto-discardable state of this tab changes. |web_contents| and
   // |tab_strip_model| are the  WebContents and TabStripModel associated with
@@ -45,6 +57,18 @@ class TabLifecycleUnit : public LifecycleUnit, public TabLifecycleUnitExternal {
   // Invoked when the tab gains or loses focus.
   void SetFocused(bool focused);
 
+  // Invoked when the "recently audible" bit of the tab changes (this is the bit
+  // that determines whether a speaker icon is displayed next to the tab in the
+  // tab strip).
+  void SetRecentlyAudible(bool recently_audible);
+
+  // Whether the tab is playing audio, has played audio recently, is accessing
+  // the microphone, is accessing the camera or is being mirrored.
+  bool IsMediaTab() const;
+
+  // Returns the RenderProcessHost associated with this tab.
+  content::RenderProcessHost* GetRenderProcessHost() const;
+
   // LifecycleUnit:
   base::string16 GetTitle() const override;
   std::string GetIconURL() const override;
@@ -62,12 +86,15 @@ class TabLifecycleUnit : public LifecycleUnit, public TabLifecycleUnitExternal {
   bool IsDiscarded() const override;
 
  private:
+  // Invoked when the state goes from DISCARDED to non-DISCARDED and vice-versa.
+  void OnDiscardedStateChange();
+
+  // content::WebContentsObserver:
+  void DidStartLoading() override;
+
   // List of observers to notify when the discarded state or the auto-
   // discardable state of this tab changes.
   base::ObserverList<TabLifecycleObserver>* observers_;
-
-  // The WebContents associated with this tab.
-  content::WebContents* web_contents_;
 
   // TabStripModel to which this tab belongs.
   TabStripModel* tab_strip_model_;
@@ -75,12 +102,21 @@ class TabLifecycleUnit : public LifecycleUnit, public TabLifecycleUnitExternal {
   // Current state of this tab.
   State state_ = State::LOADED;
 
+  // The number of times that this tab has been discarded.
+  int discard_count_ = 0;
+
   // Last time at which this tab was focused, or TimeTicks::Max() if it is
   // currently focused.
   base::TimeTicks last_focused_time_;
 
   // When this is false, CanDiscard() always returns false.
   bool auto_discardable_ = true;
+
+  // Whether the tab was recently audible.
+  bool recently_audible_ = false;
+
+  // The last time at which |recently_audible_| changed.
+  base::TimeTicks recently_audible_change_time_;
 
   DISALLOW_COPY_AND_ASSIGN(TabLifecycleUnit);
 };
