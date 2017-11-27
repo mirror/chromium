@@ -118,8 +118,8 @@ bool ContentSettingsPref::SetWebsiteSetting(
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(prefs_);
   DCHECK(primary_pattern != ContentSettingsPattern::Wildcard() ||
-         secondary_pattern != ContentSettingsPattern::Wildcard() ||
-         !resource_identifier.empty());
+         secondary_pattern != ContentSettingsPattern::Wildcard());
+  DCHECK(resource_identifier.empty());
 
   // At this point take the ownership of the |in_value|.
   std::unique_ptr<base::Value> value(in_value);
@@ -277,6 +277,7 @@ void ContentSettingsPref::ReadContentSettingsFromPref() {
         for (base::DictionaryValue::Iterator j(*resource_dictionary);
              !j.IsAtEnd();
              j.Advance()) {
+          NOTREACHED();
           const std::string& resource_identifier(j.key());
           int setting = CONTENT_SETTING_DEFAULT;
           bool is_integer = j.value().GetAsInteger(&setting);
