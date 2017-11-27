@@ -34,6 +34,24 @@
       "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f92476_f62e7bf6",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-11-27T23:12:17Z",
+      "side": 1,
+      "message": "FYI calling SetParent on the I/O thread like this (particularly inside a lock) is a bit risky. It could cause a synchronous windows message to the parent window (on the UI thread), which could deadlock. In practice it\u0027s probably ok because WS_EX_NOPARENTNOTIFY was specified on the child window.",
+      "parentUuid": "931059b0_83452319",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
