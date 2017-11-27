@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b454e23_f30ad279",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-27T10:27:37Z",
+      "side": 1,
+      "message": "Open-ended question: is there a way to communicate to the user that this value is in milliseconds? Or should we just assume that it\u0027s fine?",
+      "range": {
+        "startLine": 83,
+        "startChar": 15,
+        "endLine": 83,
+        "endChar": 30
+      },
+      "revId": "05cbd0b4b134671c83e4e12771c5560211549cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30465f7_17a117d7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-27T10:27:37Z",
+      "side": 1,
+      "message": "nit: LoadingTaskEstimatedCost?",
+      "range": {
+        "startLine": 241,
+        "startChar": 29,
+        "endLine": 241,
+        "endChar": 55
+      },
+      "revId": "05cbd0b4b134671c83e4e12771c5560211549cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3924a4d_ed0b19e5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-27T10:27:37Z",
+      "side": 1,
+      "message": "I think that we might want to introduce a helper class here - RendererSchedulerTracingHelper or something like that for the values that are used only for tracing (e.g. TraceableStates here are also used for policy decisions and should be left as a part of RendererScheduler, while these TraceableCounters are used only for tracing and can be moved to a helper).",
+      "range": {
+        "startLine": 638,
+        "startChar": 4,
+        "endLine": 638,
+        "endChar": 20
+      },
+      "revId": "05cbd0b4b134671c83e4e12771c5560211549cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
