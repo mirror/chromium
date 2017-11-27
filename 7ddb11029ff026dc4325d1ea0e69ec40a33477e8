@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2fca283_e26fd704",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-27T18:46:08Z",
+      "side": 1,
+      "message": "Moreover, C++ handlers should not be calling JS functions by name anymore. They should be firing events with FireWebuiListener and have the page itself decide whether to listen or not listen to the event.",
+      "revId": "7ddb11029ff026dc4325d1ea0e69ec40a33477e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

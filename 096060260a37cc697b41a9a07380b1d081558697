@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f13546de_3b554e49",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/compiled_resources2.gyp",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-27T18:46:08Z",
+      "side": 1,
+      "message": "\u003e I didn\u0027t actually know we were trying to move off gn for closure compiler\n\nCorrection: We are trying to move off GYP, towards GN for closure compilation.",
+      "parentUuid": "cc23fb37_427db2b7",
+      "range": {
+        "startLine": 4,
+        "startChar": 1,
+        "endLine": 4,
+        "endChar": 0
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63bd307d_a175b9c8",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation.js",
         "patchSetId": 11
@@ -196,6 +220,24 @@
       "side": 1,
       "message": "Oops, placed it at the wrong place - moved it.\n\nThough I\u0027m kind of surprised that both works, and now that I know it works the same, I\u0027m curious why we chose to put it within \u003ctemplate\u003e instead of outside (since it\u0027s not really a \"structural\" element, as I think the word \"template\" implies).\n\nRemoving is\u003dcustom-style, it was remnant of copy-paste from the main file.",
       "parentUuid": "f3ac591e_00fbe18f",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3244145_e9360a66",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-27T18:46:08Z",
+      "side": 1,
+      "message": "\u003cstyle\u003e tags have to be within \u003ctemplate\u003e for Polymer2 (shadow DOM v1). For Polymer1 (shadow DOM v0), they can appear anywhere, see https://www.polymer-project.org/2.0/docs/upgrade#dom-template, specifically the part that says\n\n\"Make sure your element\u0027s styles are defined inside the template. Defining styles outside the template was deprecated in Polymer 1.x and is no longer supported.\"",
+      "parentUuid": "3b0b0e69_ce79851e",
       "revId": "096060260a37cc697b41a9a07380b1d081558697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
