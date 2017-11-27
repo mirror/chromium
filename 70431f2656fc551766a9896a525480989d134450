@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e7a14fc_a3851956",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T09:16:00Z",
+      "side": 1,
+      "message": "s/OnReconcileStarted/OnWillPerformReconcileForAccounts",
+      "range": {
+        "startLine": 408,
+        "startChar": 13,
+        "endLine": 408,
+        "endChar": 31
+      },
+      "revId": "70431f2656fc551766a9896a525480989d134450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca05ba5f_bde98040",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T09:16:00Z",
+      "side": 1,
+      "message": "I think that this function should probably return the new list of chrome accounts that the reconcilor should use to perform the reconcile. Otherwise the list of chrome_accounts_ does not really match the list of accounts in the token service.\n\nHow about we rename this method to PreprocessChromeAccountsBeforePerformReconcile. Or we could return a boolean from OnReconcileStarted informing the reconcile if it needs to reload the chrome_accounts_ again from the token service via another call to LoadValidAccountsFromTokenService.",
+      "range": {
+        "startLine": 408,
+        "startChar": 32,
+        "endLine": 408,
+        "endChar": 48
+      },
+      "revId": "70431f2656fc551766a9896a525480989d134450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e70faa_78685a4c",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T09:16:00Z",
+      "side": 1,
+      "message": "Maybe: s/OnReconcileFinished/OnDidFinishReconcile (for consistency with the suggestion above).",
+      "range": {
+        "startLine": 490,
+        "startChar": 15,
+        "endLine": 490,
+        "endChar": 34
+      },
+      "revId": "70431f2656fc551766a9896a525480989d134450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1611c65_6de3a941",
+        "filename": "components/signin/core/browser/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T09:16:00Z",
+      "side": 1,
+      "message": "I do not understand why the second account should be added to the Gaia cookie if its token was removed?",
+      "range": {
+        "startLine": 1012,
+        "startChar": 36,
+        "endLine": 1012,
+        "endChar": 54
+      },
+      "revId": "70431f2656fc551766a9896a525480989d134450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851ba33b_06726c33",
+        "filename": "components/signin/core/browser/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T09:16:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1021,
+        "startChar": 2,
+        "endLine": 1021,
+        "endChar": 37
+      },
+      "revId": "70431f2656fc551766a9896a525480989d134450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa415311_dc436bfd",
+        "filename": "components/signin/core/browser/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T09:16:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1053,
+        "startChar": 36,
+        "endLine": 1053,
+        "endChar": 54
+      },
+      "revId": "70431f2656fc551766a9896a525480989d134450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9348fc_db129a37",
+        "filename": "components/signin/core/browser/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T09:16:00Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 1061,
+        "startChar": 2,
+        "endLine": 1061,
+        "endChar": 37
+      },
+      "revId": "70431f2656fc551766a9896a525480989d134450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
