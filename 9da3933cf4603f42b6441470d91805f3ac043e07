@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4368f0ed_ac56bc9d",
+        "filename": "chrome/browser/chromeos/system_logs/command_line_log_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-27T19:47:56Z",
+      "side": 1,
+      "message": "Nit: auto response \u003d std::make_unique\u003cSystemLogsResponse\u003e();\nhere and everywhere else similar.",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 71
+      },
+      "revId": "9da3933cf4603f42b6441470d91805f3ac043e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568b7d03_c3a42503",
+        "filename": "chrome/browser/chromeos/system_logs/debug_daemon_log_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-27T19:47:56Z",
+      "side": 1,
+      "message": "This looks like it swaps the unique ptrs rather than the maps, correct?\nThis will leave |response_| as a nullptr that will lead to crashes.",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 35
+      },
+      "revId": "9da3933cf4603f42b6441470d91805f3ac043e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3712889_bc9c3fb3",
+        "filename": "chrome/browser/chromeos/system_logs/debug_daemon_log_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-27T19:47:56Z",
+      "side": 1,
+      "message": "Nit: while you are here, can you please change this to be:\n\nresponse_-\u003einsert(response-\u003ebegin(), response-\u003eend());\n\n?",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 27
+      },
+      "revId": "9da3933cf4603f42b6441470d91805f3ac043e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da8b427_58f017a9",
+        "filename": "chrome/browser/chromeos/system_logs/single_debug_daemon_log_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-27T19:47:56Z",
+      "side": 1,
+      "message": "Nit: This will probably be handled by your other CL, but if not, please add braces.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 76
+      },
+      "revId": "9da3933cf4603f42b6441470d91805f3ac043e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
