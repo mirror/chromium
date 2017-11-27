@@ -163,6 +163,10 @@ target("jumbo_" + modules_target_type, "modules") {
     "//third_party/zlib",
   ]
 
+  if (!is_android) {
+    deps += [ "//third_party/WebKit/Source/modules/zoom_metrics" ]
+  }
+
   if (is_win) {
     cflags = [ "/wd4334" ]  # Result of 32-bit shift implicitly converted to 64 bits.
   }

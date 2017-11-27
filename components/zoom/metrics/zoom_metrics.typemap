@@ -1,0 +1,14 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//third_party/WebKit/public/platform/modules/zoom_metrics/style_collector.mojom"
+traits_headers = [ "//components/zoom/metrics/style_info_struct_traits.h" ]
+public_headers = [ "//components/zoom/metrics/style_info.h" ]
+public_deps = [
+  "//components/zoom/metrics:style_info",
+]
+type_mappings = [
+  "blink.mojom.zoom_metrics.MainFrameStyleInfo=::zoom::metrics::StyleInfo::MainFrameStyleInfo",
+  "blink.mojom.zoom_metrics.StyleInfo=::zoom::metrics::StyleInfo",
+]

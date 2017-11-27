@@ -1251,6 +1251,7 @@ jumbo_component("platform") {
     "mojo/CommonCustomTypesStructTraits.h",
     "mojo/FetchAPIRequestStructTraits.cpp",
     "mojo/MojoHelper.h",
+    "mojo/StyleInfoStructTraits.h",
     "peerconnection/RTCAnswerOptionsPlatform.h",
     "peerconnection/RTCOfferOptionsPlatform.h",
     "peerconnection/RTCSessionDescriptionRequest.h",
@@ -1419,6 +1420,8 @@ jumbo_component("platform") {
     "weborigin/Suborigin.cpp",
     "weborigin/Suborigin.h",
     "weborigin/URLSecurityOriginMap.h",
+    "zoom_metrics/StyleInfo.cpp",
+    "zoom_metrics/StyleInfo.h",
   ]
 
   sources -= blink_platform_neon_files
