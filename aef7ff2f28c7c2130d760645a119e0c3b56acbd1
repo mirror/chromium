@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afcfb8f5_cf9da1f0",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T16:35:46Z",
+      "side": 1,
+      "message": "does it make sense to pass this in too?",
+      "revId": "aef7ff2f28c7c2130d760645a119e0c3b56acbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c31596_4769190f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T16:35:46Z",
+      "side": 1,
+      "message": "there are other possible types here too, right? it looks like you\u0027re leaving the member uninitialized in those cases. should this just be an \u0027else\u0027?",
+      "revId": "aef7ff2f28c7c2130d760645a119e0c3b56acbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15da83d1_061f7863",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T16:35:46Z",
+      "side": 1,
+      "message": "what does this mean? can you make this comment more descriptive about the activity that should be added?",
+      "revId": "aef7ff2f28c7c2130d760645a119e0c3b56acbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5792aa_dbdb6526",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T16:35:46Z",
+      "side": 1,
+      "message": "can you add a comment to the proto enum (if you don\u0027t have one already) documenting that its values must match the ones used by base::Time::Exploded in order to not break casts like this one?",
+      "revId": "aef7ff2f28c7c2130d760645a119e0c3b56acbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f95b641_baffd155",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T16:35:46Z",
+      "side": 1,
+      "message": "nit: remove \u0027explicit\u0027",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "aef7ff2f28c7c2130d760645a119e0c3b56acbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0230337a_54c5a087",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T16:35:46Z",
+      "side": 1,
+      "message": "nit: sorry, i meant that these and the IdleEventNotifier::Observer overrides should be public too",
+      "revId": "aef7ff2f28c7c2130d760645a119e0c3b56acbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71cf750e_4bb2ca9b",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T16:35:46Z",
+      "side": 1,
+      "message": "huge nit: \"Updates ...\", \"Extracts ...\" (below), etc. to match the verb case usually used in method comments in chrome",
+      "revId": "aef7ff2f28c7c2130d760645a119e0c3b56acbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74686c34_595c3791",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T16:35:46Z",
+      "side": 1,
+      "message": "nit: remove unnecessary comment (it\u0027s identical to the member name)",
+      "revId": "aef7ff2f28c7c2130d760645a119e0c3b56acbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8d5065_a0e21c9a",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T16:35:46Z",
+      "side": 1,
+      "message": "nit: remove comment (or change it to give more info, e.g. that this is in the range [0.0, 100.0])",
+      "revId": "aef7ff2f28c7c2130d760645a119e0c3b56acbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c13825_5e04a90d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T16:35:46Z",
+      "side": 1,
+      "message": "these comments can go too",
+      "revId": "aef7ff2f28c7c2130d760645a119e0c3b56acbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
