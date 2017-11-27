@@ -357,7 +357,8 @@ class HistoryObserver : public DownloadHistory::Observer {
   explicit HistoryObserver(Profile* profile)
       : profile_(profile),
         waiting_(false),
-        seen_stored_(false) {
+        seen_stored_(false),
+        minimum_received_bytes_(kNoMinimumReceivedBytes) {
     DownloadCoreServiceFactory::GetForBrowserContext(profile_)
         ->GetDownloadHistory()
         ->AddObserver(this);
@@ -370,6 +371,10 @@ class HistoryObserver : public DownloadHistory::Observer {
       service->GetDownloadHistory()->RemoveObserver(this);
   }
 
+  void set_minimum_received_bytes(int64_t minimum_received_bytes) {
+    minimum_received_bytes_ = minimum_received_bytes;
+  }
+
   void SetFilterCallback(const FilterCallback& callback) {
     callback_ = callback;
   }
@@ -378,6 +383,14 @@ class HistoryObserver : public DownloadHistory::Observer {
                         const history::DownloadRow& info) override {
     if (!callback_.is_null() && (!callback_.Run(info)))
         return;
+
+    LOG(ERROR) << "@@@ " << __func__
+               << ", received bytes = " << info.received_bytes;
+    if (minimum_received_bytes_ != kNoMinimumReceivedBytes &&
+        info.received_bytes < minimum_received_bytes_) {
+      LOG(ERROR) << "@@@ Not enough bytes received yet!";
+      return;
+    }
 
     seen_stored_ = true;
     if (waiting_)
@@ -399,9 +412,11 @@ class HistoryObserver : public DownloadHistory::Observer {
   }
 
  private:
+  static const int64_t kNoMinimumReceivedBytes = -1;
   Profile* profile_;
   bool waiting_;
   bool seen_stored_;
+  int64_t minimum_received_bytes_;
   FilterCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(HistoryObserver);
@@ -1904,6 +1919,8 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, DownloadHistoryCheck) {
             row.total_bytes);
   EXPECT_EQ(history::DownloadState::IN_PROGRESS, row.state);
   EXPECT_FALSE(row.opened);
+
+  LOG(ERROR) << "@@@ first check done.";
 
   // Finish the download.  We're ok relying on the history to be flushed
   // at this point as our queries will be behind the history updates
