@@ -22,6 +22,30 @@
       "revId": "d4f30716ed16e703cf049d494df5bbab4c274ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c658787_0f3c8944",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-27T18:22:07Z",
+      "side": 1,
+      "message": "That\u0027s a good question. It would reduce coupling between WebStateImpl and CRWWebController, but the tradeoff is the session restoration behavior will be duplicated in both places. Given that WebStateImpl is unlikely to be used without CRWWebController (so already tightly coupled), I have a weak preference for Don\u0027t-Repeat-Yourself because I feel it\u0027s the lesser of two evils here. WDYT?",
+      "parentUuid": "37512cda_da7d09b5",
+      "range": {
+        "startLine": 553,
+        "startChar": 11,
+        "endLine": 553,
+        "endChar": 23
+      },
+      "revId": "d4f30716ed16e703cf049d494df5bbab4c274ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
