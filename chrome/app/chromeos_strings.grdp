@@ -748,6 +748,9 @@ Press any key to continue exploring.
   <message name="IDS_FILE_BROWSER_COPY_PROGRESS_SUMMARY" desc="Summary message for multiple copying tasks above the progress bar.">
     Copying...
   </message>
+  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_PROGRESS_SUMMARY" desc="Summary message for multiple importing tasks above the progress bar.">
+    Importing...
+  </message>
   <message name="IDS_FILE_BROWSER_MOVE_PROGRESS_SUMMARY" desc="Summary message for multiple moving tasks above the progress bar.">
     Moving...
   </message>
