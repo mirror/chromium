@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "702255c4_0c43545b",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-27T18:05:56Z",
+      "side": 1,
+      "message": "Ok, I\u0027m not sure what to do differently for the moment. Ok to land? [I still need your lgtm]",
+      "parentUuid": "473c8ef9_53c86777",
+      "range": {
+        "startLine": 805,
+        "startChar": 5,
+        "endLine": 805,
+        "endChar": 11
+      },
+      "revId": "14a3c93c51365f9db02f6724a3a815d1ebb316ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aac2addb_7baf42a0",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
         "patchSetId": 6
