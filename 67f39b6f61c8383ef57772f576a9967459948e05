@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0429ad2c_f931da84",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T22:28:57Z",
+      "side": 1,
+      "message": "It doesn\u0027t change input as far as I know. Input is first copied to culled_input and spaces in culled_input then are removed.",
+      "parentUuid": "3e8f3617_570115e8",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c943e87c_4d460bad",
         "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T20:10:06Z",
       "side": 1,
       "message": "How did you arrive at this set of match types?  Is this the same as Clank?",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc1b6f4_35ec43bb",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T22:28:57Z",
+      "side": 1,
+      "message": "yeap. See here: https://cs.chromium.org/chromium/src/chrome/browser/android/omnibox/autocomplete_controller_android.cc?rcl\u003dd93daf951d9233e012ee7aef4030554cda2633bf\u0026l\u003d603",
+      "parentUuid": "c943e87c_4d460bad",
       "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "903a1279_6a6f5d34",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T22:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7949a1cb_6e1e0c9e",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1774751_dade4ca2",
         "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc22804_e7fc9bc2",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T22:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1774751_dade4ca2",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9bac2946_18ae6d1a",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T22:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdfd48ad_c08da091",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "842afce1_df6a418f",
         "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "28549359_fe02aed2",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T22:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "842afce1_df6a418f",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da7aedc2_c70404ec",
         "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-27T20:10:06Z",
       "side": 1,
       "message": "- The method isn\u0027t voice-specific.  Lets call it \"ClassifyStringAsUrl\", or even just \"StringToUrl\".\n- It\u0027s argument should not be \"result\" - result always refers to the thing being returned or provided.  I\u0027d call it input.",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488afbe5_a366c664",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T22:28:57Z",
+      "side": 1,
+      "message": "talked offline. Changed name to GetUrlFromVoiceInput.",
+      "parentUuid": "da7aedc2_c70404ec",
       "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -141,6 +267,30 @@
       "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c0f74e_e6cb6908",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T22:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cd4235e_70bda047",
+      "range": {
+        "startLine": 255,
+        "startChar": 18,
+        "endLine": 255,
+        "endChar": 40
+      },
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
