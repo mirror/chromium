@@ -37,6 +37,75 @@
     },
     {
       "key": {
+        "uuid": "1a0c2c47_e7747901",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-27T17:53:02Z",
+      "side": 1,
+      "message": "Generally speaking - yes. But do we have a usecase for it, or can we make it a part of the contract that observer remains valid throughout AudioOutputDelegate lifetime and just add DCKECKs? As far as I see, MojoAudioOutputStreamProvider::Acquire() will delete AudioOutputDelegate when unbinding |observer_| anyways.\n\nIf you prefer to keep a possibility for |observer_| being unbound on-the-flight - could you add a comment for that (in the header file maybe)? And a unit test for when |observer_| gets unbound is critical: we should not crash in this case. (If there is one and I missed it - please add a comment to it explaining what we are testing.)",
+      "parentUuid": "40162f22_a775da94",
+      "revId": "903b7acd549b1ebddd3e5c5b2cdadce3206832db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5a11100_e886fce1",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-27T17:53:02Z",
+      "side": 1,
+      "message": "Should we expect them once and in sequence?",
+      "revId": "903b7acd549b1ebddd3e5c5b2cdadce3206832db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3cdc15d_ff6904fe",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-27T17:53:02Z",
+      "side": 1,
+      "message": "Can we set InSequence expectations here as well?",
+      "revId": "903b7acd549b1ebddd3e5c5b2cdadce3206832db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d83c9c_2f3c658a",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-27T17:53:02Z",
+      "side": 1,
+      "message": "Same here and in other places like that",
+      "revId": "903b7acd549b1ebddd3e5c5b2cdadce3206832db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b0f515d_c2d82546",
         "filename": "content/browser/renderer_host/media/audio_output_stream_observer_impl.cc",
         "patchSetId": 13
