@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbb0bcc3_b7ef6c70",
+        "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-27T23:33:02Z",
+      "side": 1,
+      "message": "Min sizes can let child bubbles shrink to fit better in small browser windows. How is that affected here? If this is acceptable, why wouldn\u0027t we want this behavior in BubbleFrameView itself?",
+      "revId": "9cbb9ac8d7bad04249096594a529afc11d55a0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
