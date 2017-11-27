@@ -179,9 +179,8 @@ void ExtensionService::CheckExternalUninstall(const std::string& id) {
                  << "with id: " << id;
     return;
   }
-  UninstallExtension(id,
-                     extensions::UNINSTALL_REASON_ORPHANED_EXTERNAL_EXTENSION,
-                     base::Bind(&base::DoNothing), nullptr);
+  UninstallExtension(
+      id, extensions::UNINSTALL_REASON_ORPHANED_EXTERNAL_EXTENSION, nullptr);
 }
 
 void ExtensionService::ClearProvidersForTesting() {
@@ -278,34 +277,6 @@ void ExtensionService::OnExternalProviderUpdateComplete(
 
   error_controller_->ShowErrorIfNeeded();
   external_install_manager_->UpdateExternalExtensionAlert();
-}
-
-// static
-// This function is used to uninstall an extension via sync.  The LOG statements
-// within this function are used to inform the user if the uninstall cannot be
-// done.
-bool ExtensionService::UninstallExtensionHelper(
-    ExtensionService* extensions_service,
-    const std::string& extension_id,
-    extensions::UninstallReason reason) {
-  // We can't call UninstallExtension with an invalid extension ID.
-  if (!extensions_service->GetInstalledExtension(extension_id)) {
-    LOG(WARNING) << "Attempted uninstallation of non-existent extension with "
-                 << "id: " << extension_id;
-    return false;
-  }
-
-  // The following call to UninstallExtension will not allow an uninstall of a
-  // policy-controlled extension.
-  base::string16 error;
-  if (!extensions_service->UninstallExtension(
-          extension_id, reason, base::Bind(&base::DoNothing), &error)) {
-    LOG(WARNING) << "Cannot uninstall extension with id " << extension_id
-                 << ": " << error;
-    return false;
-  }
-
-  return true;
 }
 
 ExtensionService::ExtensionService(Profile* profile,
@@ -787,7 +758,6 @@ bool ExtensionService::UninstallExtension(
     // to become invalid. Instead, use |extenson->id()|.
     const std::string& transient_extension_id,
     extensions::UninstallReason reason,
-    const base::Closure& deletion_done_callback,
     base::string16* error) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
 
@@ -847,8 +817,8 @@ bool ExtensionService::UninstallExtension(
       NOTREACHED();
   }
 
-  extensions::DataDeleter::StartDeleting(
-      profile_, extension.get(), deletion_done_callback);
+  extensions::DataDeleter::StartDeleting(profile_, extension.get(),
+                                         base::Bind(&base::DoNothing));
 
   extension_registrar_.UntrackTerminatedExtension(extension->id());
 
@@ -2420,7 +2390,7 @@ void ExtensionService::UninstallMigratedExtensions() {
   for (const std::string& extension_id : kMigratedExtensionIds) {
     if (installed_extensions->Contains(extension_id)) {
       UninstallExtension(extension_id, extensions::UNINSTALL_REASON_MIGRATED,
-                         base::Bind(&base::DoNothing), nullptr);
+                         nullptr);
     }
   }
 }

@@ -1132,7 +1132,7 @@ TEST_F(ExtensionServiceTest, InstallObserverNotified) {
 
   // Uninstall the extension.
   ASSERT_TRUE(observer.last_extension_uninstalled.empty());
-  UninstallExtension(good_crx, false);
+  UninstallExtension(good_crx);
   ASSERT_EQ(good_crx, observer.last_extension_uninstalled);
 
   registry->RemoveObserver(&observer);
@@ -1190,7 +1190,7 @@ TEST_F(ExtensionServiceTest, UninstallingExternalExtensions) {
   ASSERT_TRUE(service()->GetExtensionById(good_crx, false));
 
   // Uninstall it and check that its killbit gets set.
-  UninstallExtension(good_crx, false);
+  UninstallExtension(good_crx);
   ValidateIntegerPref(good_crx, "state",
                       Extension::EXTERNAL_EXTENSION_UNINSTALLED);
 
@@ -2466,13 +2466,13 @@ TEST_F(ExtensionServiceTest, InstallAppsWithUnlimitedStorage) {
 
   // Uninstall one of them, unlimited storage should still be granted
   // to the origin.
-  UninstallExtension(id1, false);
+  UninstallExtension(id1);
   EXPECT_EQ(1u, registry()->enabled_extensions().size());
   EXPECT_TRUE(profile()->GetExtensionSpecialStoragePolicy()->IsStorageUnlimited(
       origin1));
 
   // Uninstall the other, unlimited storage should be revoked.
-  UninstallExtension(id2, false);
+  UninstallExtension(id2);
   EXPECT_EQ(0u, registry()->enabled_extensions().size());
   EXPECT_FALSE(
       profile()->GetExtensionSpecialStoragePolicy()->IsStorageUnlimited(
@@ -2507,10 +2507,10 @@ TEST_F(ExtensionServiceTest, InstallAppsAndCheckStorageProtection) {
   EXPECT_TRUE(profile()->GetExtensionSpecialStoragePolicy()->IsStorageProtected(
       origin2));
 
-  UninstallExtension(id1, false);
+  UninstallExtension(id1);
   EXPECT_EQ(1u, registry()->enabled_extensions().size());
 
-  UninstallExtension(id2, false);
+  UninstallExtension(id2);
 
   EXPECT_TRUE(registry()->enabled_extensions().is_empty());
   EXPECT_FALSE(
@@ -3968,7 +3968,6 @@ TEST_F(ExtensionServiceTest, ManagementPolicyProhibitsLoadFromPrefs) {
   EXPECT_TRUE(
       service()->UninstallExtension(extension->id(),
                                     extensions::UNINSTALL_REASON_FOR_TESTING,
-                                    base::Bind(&base::DoNothing),
                                     NULL));
   EXPECT_EQ(0u, registry()->enabled_extensions().size());
 
@@ -4034,7 +4033,6 @@ TEST_F(ExtensionServiceTest, ManagementPolicyProhibitsUninstall) {
   EXPECT_FALSE(
       service()->UninstallExtension(good_crx,
                                     extensions::UNINSTALL_REASON_FOR_TESTING,
-                                    base::Bind(&base::DoNothing),
                                     NULL));
 
   EXPECT_EQ(1u, registry()->enabled_extensions().size());
@@ -4151,7 +4149,7 @@ TEST_F(ExtensionServiceTest, PolicyBlockedPermissionNewExtensionInstall) {
 
   // Uninstall the extension and update policy to block some arbitrary
   // unknown permission.
-  UninstallExtension(id, false);
+  UninstallExtension(id);
   {
     ManagementPrefUpdater pref(profile_->GetTestingPrefService());
     pref.ClearBlockedPermissions("*");
@@ -4685,7 +4683,7 @@ TEST_F(ExtensionServiceTest, UninstallExtension) {
   InitializeEmptyExtensionService();
   InstallCRX(data_dir().AppendASCII("good.crx"), INSTALL_NEW);
   EXPECT_EQ(1u, registry()->enabled_extensions().size());
-  UninstallExtension(good_crx, false);
+  UninstallExtension(good_crx);
   EXPECT_EQ(0u, registry()->enabled_extensions().size());
   EXPECT_EQ(UnloadedExtensionReason::UNINSTALL, unloaded_reason_);
 }
@@ -4694,23 +4692,7 @@ TEST_F(ExtensionServiceTest, UninstallTerminatedExtension) {
   InitializeEmptyExtensionService();
   InstallCRX(data_dir().AppendASCII("good.crx"), INSTALL_NEW);
   TerminateExtension(good_crx);
-  UninstallExtension(good_crx, false);
-  EXPECT_EQ(UnloadedExtensionReason::TERMINATE, unloaded_reason_);
-}
-
-// Tests the uninstaller helper.
-TEST_F(ExtensionServiceTest, UninstallExtensionHelper) {
-  InitializeEmptyExtensionService();
-  InstallCRX(data_dir().AppendASCII("good.crx"), INSTALL_NEW);
-  UninstallExtension(good_crx, true);
-  EXPECT_EQ(UnloadedExtensionReason::UNINSTALL, unloaded_reason_);
-}
-
-TEST_F(ExtensionServiceTest, UninstallExtensionHelperTerminated) {
-  InitializeEmptyExtensionService();
-  InstallCRX(data_dir().AppendASCII("good.crx"), INSTALL_NEW);
-  TerminateExtension(good_crx);
-  UninstallExtension(good_crx, true);
+  UninstallExtension(good_crx);
   EXPECT_EQ(UnloadedExtensionReason::TERMINATE, unloaded_reason_);
 }
 
@@ -4919,14 +4901,14 @@ TEST_F(ExtensionServiceTest, ClearExtensionData) {
   idb_context->ResetCachesForTesting();
 
   // Uninstall the extension.
-  base::RunLoop run_loop;
   ASSERT_TRUE(
       service()->UninstallExtension(good_crx,
                                     extensions::UNINSTALL_REASON_FOR_TESTING,
-                                    run_loop.QuitClosure(),
                                     NULL));
-  // The data deletion happens on the IO thread.
-  run_loop.Run();
+  // The data deletion happens on the IO thread; since we use a
+  // TestBrowserThreadBundle (without REAL_IO_THREAD), the IO and UI threads are
+  // the same, and RunAllTasksUntilIdle() should run IO thread tasks.
+  content::RunAllTasksUntilIdle();
 
   // Check that the cookie is gone.
   cookie_store->GetAllCookiesForURLAsync(
@@ -5042,7 +5024,7 @@ TEST_F(ExtensionServiceTest, ClearAppData) {
 
   // Uninstall one of them, unlimited storage should still be granted
   // to the origin.
-  UninstallExtension(id1, false);
+  UninstallExtension(id1);
   EXPECT_EQ(1u, registry()->enabled_extensions().size());
   EXPECT_TRUE(profile()->GetExtensionSpecialStoragePolicy()->IsStorageUnlimited(
       origin1));
@@ -5056,7 +5038,7 @@ TEST_F(ExtensionServiceTest, ClearAppData) {
   EXPECT_EQ(1U, callback.list_.size());
 
   // Now uninstall the other. Storage should be cleared for the apps.
-  UninstallExtension(id2, false);
+  UninstallExtension(id2);
   EXPECT_EQ(0u, registry()->enabled_extensions().size());
   EXPECT_FALSE(
       profile()->GetExtensionSpecialStoragePolicy()->IsStorageUnlimited(
@@ -5124,7 +5106,6 @@ TEST_F(ExtensionServiceTest, DISABLED_LoadExtension) {
   EXPECT_FALSE(unloaded_id_.length());
   service()->UninstallExtension(id,
                                 extensions::UNINSTALL_REASON_FOR_TESTING,
-                                base::Bind(&base::DoNothing),
                                 NULL);
   content::RunAllTasksUntilIdle();
   EXPECT_EQ(id, unloaded_id_);
@@ -5231,7 +5212,6 @@ void ExtensionServiceTest::TestExternalProvider(MockExternalProvider* provider,
       GetManagementPolicy()->MustRemainEnabled(loaded_[0].get(), NULL);
   service()->UninstallExtension(id,
                                 extensions::UNINSTALL_REASON_FOR_TESTING,
-                                base::Bind(&base::DoNothing),
                                 NULL);
   content::RunAllTasksUntilIdle();
 
@@ -5290,7 +5270,6 @@ void ExtensionServiceTest::TestExternalProvider(MockExternalProvider* provider,
     loaded_.clear();
     service()->UninstallExtension(id,
                                   extensions::UNINSTALL_REASON_FOR_TESTING,
-                                  base::Bind(&base::DoNothing),
                                   NULL);
     content::RunAllTasksUntilIdle();
     ASSERT_EQ(0u, loaded_.size());
@@ -7143,8 +7122,7 @@ TEST_F(ExtensionServiceTest, UninstallBlacklistedExtension) {
   EXPECT_NE(nullptr, registry()->GetInstalledExtension(id));
   base::string16 error;
   EXPECT_TRUE(service()->UninstallExtension(
-      id, extensions::UNINSTALL_REASON_USER_INITIATED,
-      base::Bind(&base::DoNothing), nullptr));
+      id, extensions::UNINSTALL_REASON_USER_INITIATED, nullptr));
   EXPECT_EQ(nullptr, registry()->GetInstalledExtension(id));
 }
 
