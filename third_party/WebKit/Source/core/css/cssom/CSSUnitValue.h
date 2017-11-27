@@ -11,6 +11,8 @@
 
 namespace blink {
 
+class CSSNumericValue;
+
 // Represents numeric values that can be expressed as a single number plus a
 // unit (or a naked number or percentage).
 // See CSSUnitValue.idl for more information about this class.
@@ -41,6 +43,8 @@ class CORE_EXPORT CSSUnitValue final : public CSSNumericValue {
   // From CSSNumericValue.
   CSSUnitValue* to(CSSPrimitiveValue::UnitType) const final;
   bool IsUnitValue() const final { return true; }
+  WTF::Optional<CSSNumericSumValue> SumValue() const final;
+
   bool Equals(const CSSNumericValue&) const final;
 
   // From CSSStyleValue.

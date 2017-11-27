@@ -10,6 +10,8 @@
 
 namespace blink {
 
+struct CSSNumericSumValue;
+
 // Represents the product of one or more CSSNumericValues.
 // See CSSMathProduct.idl for more information about this class.
 class CORE_EXPORT CSSMathProduct final : public CSSMathVariadic {
@@ -30,6 +32,8 @@ class CORE_EXPORT CSSMathProduct final : public CSSMathVariadic {
  private:
   CSSMathProduct(CSSNumericArray* values, const CSSNumericValueType& type)
       : CSSMathVariadic(values, type) {}
+
+  WTF::Optional<CSSNumericSumValue> SumValue() const final;
   DISALLOW_COPY_AND_ASSIGN(CSSMathProduct);
 };
 
