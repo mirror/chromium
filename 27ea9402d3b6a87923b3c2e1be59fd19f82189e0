@@ -16,6 +16,24 @@
       "revId": "27ea9402d3b6a87923b3c2e1be59fd19f82189e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e40694_ccd71495",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrame.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-27T18:29:26Z",
+      "side": 1,
+      "message": "This security origin is not aliased as you expected, but I made this mutable just because of layering issue.\n\n1. url::Origin is passed in //content, and\n2. wrapped by Web(Mutable)SecurityOrigin (i.e. a new blink::SecurityOrigin object is created) in //content.\n3. The Web(Mutable)SecurityOrigin is passed to WebRemoteFrame(Impl) here (public/web and core), and\n4. set to SecurityContext\u0027s SecurityOrigin.\n\nSo alternatives are:\nA. Use WebMutableSecurityOrigin here (this CL), or\nB. Use WebSecurityOrigin here and take IsolatedCopy() in WebRemoteFrameImpl::SetReplicatedOrigin(), or\nC. Pass url::Origin directly to WebRemoteFrameImpl::SetReplicatedOrigin() and construct blink::SecurityOrigin there. Because WebRemoteFrameImpl in core, we\u0027ll need a new DEPS rule to allow url::Origin in core (currently allowed in platform but not in core).\n\nWDYT?",
+      "parentUuid": "431fd4d1_953457e3",
+      "revId": "27ea9402d3b6a87923b3c2e1be59fd19f82189e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
