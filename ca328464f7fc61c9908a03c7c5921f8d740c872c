@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2815a48e_425aac83",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-27T20:54:16Z",
+      "side": 1,
+      "message": "I think you mean:\n/([`\\$\"])/g (must be wrapped in parenthesis)\n\nAlso did you mean literally a \u0027\\\u0027 or are you escaping the \u0027$\u0027? If you mean \u0027\\\u0027 then you must double escape it. If you mean \u0027$\u0027, I do not believe the \u0027\\\u0027 is necessary.",
+      "range": {
+        "startLine": 1773,
+        "startChar": 22,
+        "endLine": 1773,
+        "endChar": 31
+      },
+      "revId": "ca328464f7fc61c9908a03c7c5921f8d740c872c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb6afa1_1a37736c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-27T20:54:16Z",
+      "side": 1,
+      "message": "I am slightly worried about using this because of UTF16 issues. Do we ever need to escape any UTF characters that you know of?\n\neg: \u0027✓\u0027.charCodeAt(0) \u003d\u003d 10003",
+      "range": {
+        "startLine": 1773,
+        "startChar": 86,
+        "endLine": 1773,
+        "endChar": 104
+      },
+      "revId": "ca328464f7fc61c9908a03c7c5921f8d740c872c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553e32e6_177dede1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1781,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-27T20:54:16Z",
+      "side": 1,
+      "message": "Do you see any reason why not to escape this for safety and longevity?",
+      "range": {
+        "startLine": 1781,
+        "startChar": 19,
+        "endLine": 1781,
+        "endChar": 40
+      },
+      "revId": "ca328464f7fc61c9908a03c7c5921f8d740c872c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f8c686_f37a2984",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-27T20:54:16Z",
+      "side": 1,
+      "message": "Since content-length is already in ignoredHeaders we should be able to move this entire thing to around line 1803 and push onto |command| instead of |data|.",
+      "revId": "ca328464f7fc61c9908a03c7c5921f8d740c872c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfadec6_c48b54f2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1788,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-27T20:54:16Z",
+      "side": 1,
+      "message": "nit: This is already in our set.",
+      "revId": "ca328464f7fc61c9908a03c7c5921f8d740c872c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
