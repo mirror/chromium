@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "619e0c1f_64168d8e",
+        "filename": "tools/imagediff/image_diff.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-27T17:52:16Z",
+      "side": 0,
+      "message": "Yikes.",
+      "revId": "b9172952d112e94770710877f5dde33a6fe7e986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
