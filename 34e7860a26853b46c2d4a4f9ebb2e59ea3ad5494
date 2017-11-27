@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "982bbb83_7afc63f8",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T08:04:10Z",
+      "side": 1,
+      "message": "nit: opt_destinationSize or opt_destinationSizeBytes",
+      "range": {
+        "startLine": 456,
+        "startChar": 29,
+        "endLine": 456,
+        "endChar": 49
+      },
+      "revId": "34e7860a26853b46c2d4a4f9ebb2e59ea3ad5494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b51067_c3b8ac86",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T08:04:10Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 458,
+        "startChar": 54,
+        "endLine": 458,
+        "endChar": 74
+      },
+      "revId": "34e7860a26853b46c2d4a4f9ebb2e59ea3ad5494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4073c2_e263f5b8",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T08:04:10Z",
+      "side": 1,
+      "message": "nit: opt_destinationSize or opt_destinationSizeBytes",
+      "range": {
+        "startLine": 513,
+        "startChar": 20,
+        "endLine": 513,
+        "endChar": 40
+      },
+      "revId": "34e7860a26853b46c2d4a4f9ebb2e59ea3ad5494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76febcf_6e11c2e8",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T08:04:10Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 805,
+        "startChar": 29,
+        "endLine": 805,
+        "endChar": 49
+      },
+      "revId": "34e7860a26853b46c2d4a4f9ebb2e59ea3ad5494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b160165_36a3de3a",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T08:04:10Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "34e7860a26853b46c2d4a4f9ebb2e59ea3ad5494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
