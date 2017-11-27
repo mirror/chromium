@@ -124,6 +124,10 @@ class Resource::CachedMetadataHandlerImpl : public CachedMetadataHandler {
   void ClearCachedMetadata(CacheType) override;
   scoped_refptr<CachedMetadata> GetCachedMetadata(uint32_t) const override;
   String Encoding() const override;
+  String CacheStorageCacheName() const override {
+    return GetResponse().CacheStorageCacheName();
+  }
+
   // Sets the serialized metadata retrieved from the platform's cache.
   void SetSerializedCachedMetadata(const char*, size_t);
 
@@ -222,7 +226,6 @@ class Resource::ServiceWorkerResponseCachedMetadataHandler
  private:
   explicit ServiceWorkerResponseCachedMetadataHandler(Resource*,
                                                       SecurityOrigin*);
-  String cache_storage_cache_name_;
   scoped_refptr<SecurityOrigin> security_origin_;
 };
 
@@ -241,7 +244,7 @@ void Resource::ServiceWorkerResponseCachedMetadataHandler::SendToPlatform() {
   // directly fetched via a ServiceWorker (eg:
   // FetchEvent.respondWith(fetch(FetchEvent.request))) to prevent an attacker's
   // Service Worker from poisoning the metadata cache of HTTPCache.
-  if (GetResponse().CacheStorageCacheName().IsNull())
+  if (CacheStorageCacheName().IsNull())
     return;
 
   if (cached_metadata_) {
@@ -249,13 +252,11 @@ void Resource::ServiceWorkerResponseCachedMetadataHandler::SendToPlatform() {
     Platform::Current()->CacheMetadataInCacheStorage(
         GetResponse().Url(), GetResponse().ResponseTime(),
         serialized_data.data(), serialized_data.size(),
-        WebSecurityOrigin(security_origin_),
-        GetResponse().CacheStorageCacheName());
+        WebSecurityOrigin(security_origin_), CacheStorageCacheName());
   } else {
     Platform::Current()->CacheMetadataInCacheStorage(
         GetResponse().Url(), GetResponse().ResponseTime(), nullptr, 0,
-        WebSecurityOrigin(security_origin_),
-        GetResponse().CacheStorageCacheName());
+        WebSecurityOrigin(security_origin_), CacheStorageCacheName());
   }
 }
 
