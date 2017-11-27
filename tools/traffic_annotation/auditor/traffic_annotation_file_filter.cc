@@ -23,28 +23,22 @@ namespace {
 // annotations. This list includes all keywords related to defining annotations
 // and all functions that need one.
 const char* kRelevantKeywords[] = {
-    "network_traffic_annotation",
-    "network_traffic_annotation_test_helper",
-    "NetworkTrafficAnnotationTag",
-    "PartialNetworkTrafficAnnotationTag",
-    "DefineNetworkTrafficAnnotation",
-    "DefinePartialNetworkTrafficAnnotation",
+    "network_traffic_annotation", "network_traffic_annotation_test_helper",
+    "NetworkTrafficAnnotationTag", "PartialNetworkTrafficAnnotationTag",
+    "DefineNetworkTrafficAnnotation", "DefinePartialNetworkTrafficAnnotation",
     "CompleteNetworkTrafficAnnotation",
-    "BranchedCompleteNetworkTrafficAnnotation",
-    "NO_TRAFFIC_ANNOTATION_YET",
-    "NO_PARTIAL_TRAFFIC_ANNOTATION_YET",
-    "MISSING_TRAFFIC_ANNOTATION",
-    "TRAFFIC_ANNOTATION_FOR_TESTS",
-    "PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS",
-    "SSLClientSocket",     // SSLClientSocket::
-    "TCPClientSocket",     // TCPClientSocket::
-    "UDPClientSocket",     // UDPClientSocket::
-    "URLFetcher::Create",  // This one is used with class as it's too generic.
-    "CreateDatagramClientSocket",   // ClientSocketFactory::
-    "CreateSSLClientSocket",        // ClientSocketFactory::
-    "CreateTransportClientSocket",  // ClientSocketFactory::
-    "CreateRequest",                // URLRequestContext::
-    nullptr                         // End Marker
+    "BranchedCompleteNetworkTrafficAnnotation", "NO_TRAFFIC_ANNOTATION_YET",
+    "NO_PARTIAL_TRAFFIC_ANNOTATION_YET", "MISSING_TRAFFIC_ANNOTATION",
+    "TRAFFIC_ANNOTATION_FOR_TESTS", "PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS",
+    //    "SSLClientSocket",     // SSLClientSocket::
+    //   "TCPClientSocket",     // TCPClientSocket::
+    //    "UDPClientSocket",     // UDPClientSocket::
+    //    "URLFetcher::Create",  // This one is used with class as it's too
+    //    generic. "CreateDatagramClientSocket",   // ClientSocketFactory::
+    //    "CreateSSLClientSocket",        // ClientSocketFactory::
+    //    "CreateTransportClientSocket",  // ClientSocketFactory::
+    "CreateRequest",  // URLRequestContext::
+    nullptr           // End Marker
 };
 
 }  // namespace
@@ -101,6 +95,11 @@ bool TrafficAnnotationFileFilter::IsFileRelevant(const std::string& file_path) {
     return false;
   }
 
+  // Ignore unittests.
+  pos = file_path.length() - 12;
+  if (pos >= 12 && !strcmp("_unittest.cc", file_path.c_str() + pos))
+    return false;
+
   base::FilePath converted_file_path =
 #if defined(OS_WIN)
       base::FilePath(
@@ -129,6 +128,7 @@ void TrafficAnnotationFileFilter::GetRelevantFiles(
     const std::vector<std::string>& ignore_list,
     std::string directory_name,
     std::vector<std::string>* file_paths) {
+  LOG(ERROR) << "GETTING FORM GIT.";
   if (!git_files_.size())
     GetFilesFromGit(source_path);
 
@@ -151,4 +151,36 @@ void TrafficAnnotationFileFilter::GetRelevantFiles(
         file_paths->push_back(file_path);
     }
   }
+  LOG(ERROR) << "GIT DONE WITH " << file_paths->size() << " FILES.";
+  // std::string report;
+  // for (int i = 0; kRelevantKeywords[i]; i++) {
+  //   report += kRelevantKeywords[i];
+  //   report += ",";
+  // }
+  // report += "\n";
+  // for (const auto& file_path : *file_paths) {
+  //   report += file_path + ",";
+
+  //   // Check file content.
+  //   std::string file_content;
+  //   if (!base::ReadFileToString(
+  //           base::FilePath(base::FilePath::StringPieceType(file_path)),
+  //           &file_content)) {
+  //     LOG(ERROR) << "Could not open file: " << file_path;
+  //     report += "\n";
+  //     continue;
+  //   }
+
+  //   for (int i = 0; kRelevantKeywords[i]; i++) {
+  //     if (file_content.find(kRelevantKeywords[i]) != std::string::npos)
+  //       report += "Y,";
+  //     else
+  //       report += ",";
+  //   }
+  //   report += "\n";
+  // }
+
+  // base::WriteFile(
+  //     base::FilePath("/usr/local/google/home/rhalavati/Desktop/filter.txt"),
+  //     report.c_str(), report.length());
 }
