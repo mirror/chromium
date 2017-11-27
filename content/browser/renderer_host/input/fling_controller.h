@@ -7,10 +7,28 @@
 
 #include "content/browser/renderer_host/input/touchpad_tap_suppression_controller.h"
 #include "content/browser/renderer_host/input/touchscreen_tap_suppression_controller.h"
+#include "content/public/common/input_event_ack_state.h"
+
+namespace blink {
+class WebGestureCurve;
+}
+
+namespace ui {
+class FlingBooster;
+}
 
 namespace content {
 
 class GestureEventQueue;
+
+// Interface with which the FlingController can forward generated wheel events.
+class CONTENT_EXPORT FlingControllerClient {
+ public:
+  virtual ~FlingControllerClient() {}
+
+  virtual void SendGeneratedWheelEvent(
+      const MouseWheelEventWithLatencyInfo& wheel_event) = 0;
+};
 
 class FlingController {
  public:
@@ -24,12 +42,41 @@ class FlingController {
     TapSuppressionController::Config touchscreen_tap_suppression_config;
   };
 
+  struct ActiveFlingParameters {
+    gfx::Vector2dF velocity;
+    gfx::Vector2d point;
+    gfx::Vector2d global_point;
+    int modifiers;
+    blink::WebGestureDevice source_device;
+    double start_time;
+
+    ActiveFlingParameters() : modifiers(0), start_time(0) {}
+  };
+
   FlingController(GestureEventQueue* gesture_event_queue,
                   TouchpadTapSuppressionControllerClient* touchpad_client,
+                  FlingControllerClient* fling_client,
                   const Config& config);
 
   ~FlingController();
 
+  bool FilterGestureEvent(const GestureEventWithLatencyInfo& gesture_event);
+
+  void OnGestureEventAck(const GestureEventWithLatencyInfo& acked_event,
+                         InputEventAckState ack_result);
+
+  void ProcessGestureFlingStart(
+      const GestureEventWithLatencyInfo& gesture_event);
+
+  void ProcessGestureFlingCancel(
+      const GestureEventWithLatencyInfo& gesture_event);
+
+  bool fling_in_progress() const { return fling_in_progress_; }
+
+  // Returns the |TouchpadTapSuppressionController| instance.
+  TouchpadTapSuppressionController* GetTouchpadTapSuppressionController();
+
+ private:
   // Sub-filter for removing unnecessary GestureFlingCancels.
   bool ShouldForwardForGFCFiltering(
       const GestureEventWithLatencyInfo& gesture_event) const;
@@ -38,16 +85,27 @@ class FlingController {
   bool ShouldForwardForTapSuppression(
       const GestureEventWithLatencyInfo& gesture_event);
 
-  bool FilterGestureEvent(const GestureEventWithLatencyInfo& gesture_event);
+  // Sub-filter for suppressing gesture events to boost an active fling whenever
+  // possible.
+  bool FilterGestureEventForFlingBoosting(
+      const GestureEventWithLatencyInfo& gesture_event);
 
-  void GestureFlingCancelAck(blink::WebGestureDevice source_device,
-                             bool processed);
+  // Used to progress on the fling curve every 16ms.
+  void ProgressFling();
+  void ScheduleFlingProgress();
 
-  // Returns the |TouchpadTapSuppressionController| instance.
-  TouchpadTapSuppressionController* GetTouchpadTapSuppressionController();
+  // Used to generate synthetic wheel events from touchpad fling and sent them.
+  void GenerateAndSendWheelEvents(gfx::Vector2dF delta,
+                                  blink::WebMouseWheelEvent::Phase phase);
 
- private:
+  void CancelCurrentFling();
+
+  void UpdateCurrentFlingState(const blink::WebGestureEvent& fling_start_event,
+                               const gfx::Vector2dF& velocity);
+
   GestureEventQueue* gesture_event_queue_;
+
+  FlingControllerClient* client_;
 
   // An object tracking the state of touchpad on the delivery of mouse events to
   // the renderer to filter mouse immediately after a touchpad fling canceling
@@ -58,6 +116,21 @@ class FlingController {
   // events to the renderer to filter taps immediately after a touchscreen fling
   // canceling tap.
   TouchscreenTapSuppressionController touchscreen_tap_suppression_controller_;
+
+  // Gesture curve of the current active fling.
+  std::unique_ptr<blink::WebGestureCurve> fling_curve_;
+
+  ActiveFlingParameters current_fling_parameters_;
+
+  // True while no GestureFlingCancel has arrived after the FlingController has
+  // processed a GestureFlingStart.
+  bool fling_in_progress_;
+
+  // Whether an active fling has seen a |ProgressFling()| call. This is useful
+  // for determining if the fling start time should be re-initialized.
+  bool has_fling_animation_started_;
+
+  std::unique_ptr<ui::FlingBooster> fling_booster_;
 
   DISALLOW_COPY_AND_ASSIGN(FlingController);
 };
