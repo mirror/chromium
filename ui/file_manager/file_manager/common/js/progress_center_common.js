@@ -51,7 +51,9 @@ var ProgressItemType = {
   SYNC: 'sync',
   // The item is general file transfer operation.
   // This is used for the mixed operation of summarized item.
-  TRANSFER: 'transfer'
+  TRANSFER: 'transfer',
+  // The item is cloud import operation.
+  IMPORT: 'import',
 };
 Object.freeze(ProgressItemType);
 
