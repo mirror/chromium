@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19738050_3768fe72",
+        "filename": "chromeos/dbus/auth_policy_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-27T07:30:03Z",
+      "side": 1,
+      "message": "How about changing this function to take a proto as an argument instead of strings and an int, so that you will never need to edit this file when adding a new field to the proto?\n\nThe same goes for AuthenticateUser().",
+      "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
