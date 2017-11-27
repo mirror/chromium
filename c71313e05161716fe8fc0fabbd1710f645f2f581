@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f7b12af_b5880c58",
+        "filename": "chromeos/dbus/auth_policy_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-27T14:26:24Z",
+      "side": 1,
+      "message": "add \u0027to join a machine/device to an Active Directory domain\u0027.",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55901e9a_27fb7330",
+        "filename": "chromeos/dbus/auth_policy_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-27T14:26:24Z",
+      "side": 1,
+      "message": "Remove, unnecessary. Add \u0027to authenticate a user against Active Directory\u0027.",
+      "range": {
+        "startLine": 51,
+        "startChar": 27,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d849d2c_9f21f018",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-27T14:26:24Z",
+      "side": 1,
+      "message": "This is an implementation details multiple levels down. I\u0027d just say \"Joins machine to Active Directory domain\".",
+      "range": {
+        "startLine": 40,
+        "startChar": 63,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604b4a10_4a9bd13a",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-27T14:26:24Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 52,
+        "startChar": 67,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5d515e_72f3b12a",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-27T14:26:24Z",
+      "side": 1,
+      "message": "Again, a lot of detail. Can this be explained on a higher level, e.g. \"|object_guid| is the user\u0027s LDAP GUID. If specified, it is used instead of |username|. The GUID is guaranteed to be stable, the user\u0027s UPN can change on the server.\"\n\nAlso explain |username| (since it\u0027s not only the username, but the sAMAccountName).",
+      "range": {
+        "startLine": 54,
+        "startChar": 38,
+        "endLine": 56,
+        "endChar": 78
+      },
+      "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d3392a3_2ab425ed",
+        "filename": "chromeos/dbus/auth_policy_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-27T14:26:24Z",
+      "side": 1,
+      "message": "Remove, unnecessary.",
+      "range": {
+        "startLine": 44,
+        "startChar": 24,
+        "endLine": 45,
+        "endChar": 15
+      },
+      "revId": "509831f8c2b273102630a1effb37d94f61520d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

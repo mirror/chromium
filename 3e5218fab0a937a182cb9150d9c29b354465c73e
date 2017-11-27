@@ -106,6 +106,24 @@
       "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bf6720e_8619c5bb",
+        "filename": "chromeos/dbus/auth_policy_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-27T14:26:24Z",
+      "side": 1,
+      "message": "I\u0027ve added a word about protobufs to the docs:\nhttps://chromium-review.googlesource.com/c/chromiumos/docs/+/789882",
+      "parentUuid": "36e037e5_7682bb5c",
+      "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
