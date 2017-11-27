@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "231085f3_88fbc8d0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T04:33:13Z",
+      "side": 1,
+      "message": "nit: Do we need this include?\nSeems like no \"V8PerContext\" in the diff.",
+      "revId": "60d944dc5ac5bbb6c200861706bbc096d66176bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a6af9f_6f0a1963",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T04:33:13Z",
+      "side": 1,
+      "message": "nit: DCHECK?",
+      "revId": "60d944dc5ac5bbb6c200861706bbc096d66176bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0012ab3d_eb1d4b72",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T04:33:13Z",
+      "side": 1,
+      "message": "nit: This was renamed.",
+      "range": {
+        "startLine": 86,
+        "startChar": 15,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "60d944dc5ac5bbb6c200861706bbc096d66176bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
