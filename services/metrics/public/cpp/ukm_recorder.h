@@ -27,6 +27,10 @@ class UkmPageLoadMetricsObserver;
 class UseCounterPageLoadMetricsObserver;
 class LocalNetworkRequestsPageLoadMetricsObserver;
 
+namespace assist_ranker {
+class BasePredictor;
+}
+
 namespace blink {
 class AutoplayUmaHelper;
 }
@@ -85,6 +89,7 @@ class METRICS_EXPORT UkmRecorder {
   virtual void UpdateSourceURL(SourceId source_id, const GURL& url) = 0;
 
  private:
+  friend assist_ranker::BasePredictor;
   friend ContextualSearchRankerLoggerImpl;
   friend DelegatingUkmRecorder;
   friend DocumentWritePageLoadMetricsObserver;

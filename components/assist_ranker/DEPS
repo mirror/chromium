@@ -3,4 +3,5 @@ include_rules = [
   "+components/keyed_service/core",
   "+components/metrics",
   "+net",
+  "+services/metrics/public",
 ]

@@ -6,9 +6,10 @@
 #define CHROME_BROWSER_ANDROID_CONTEXTUALSEARCH_CONTEXTUAL_SEARCH_RANKER_LOGGER_IMPL_H_
 
 #include "base/android/jni_android.h"
+#include "base/memory/weak_ptr.h"
+#include "url/gurl.h"
 
 class ContextualSearchFieldTrial;
-class GURL;
 
 namespace base {
 struct Feature;
@@ -24,11 +25,6 @@ class BinaryClassifierPredictor;
 class RankerExample;
 }  // namespace assist_ranker
 
-namespace ukm {
-class UkmEntryBuilder;
-class UkmRecorder;
-}  // namespace ukm
-
 // A Java counterpart will be generated for this enum.
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.contextualsearch
 enum AssistRankerPrediction {
@@ -41,7 +37,7 @@ enum AssistRankerPrediction {
 // The Feature that queries the Contextual Search Ranker model (and has a URL).
 extern const base::Feature kContextualSearchRankerQuery;
 
-// Runs Ranker inference and logging through UKM for Ranker model development.
+// Runs Ranker inference and logs features for Ranker model development.
 // This is used to prediction whether a tap gesture will be useful to the user
 // or not.
 class ContextualSearchRankerLoggerImpl {
@@ -77,9 +73,8 @@ class ContextualSearchRankerLoggerImpl {
   void WriteLogAndReset(JNIEnv* env, jobject obj);
 
  private:
-  // Set the UKM recorder and base-page URL.
-  // TODO(donnd): write a test, using this to inject a test-ukm-recorder.
-  void SetUkmRecorder(ukm::UkmRecorder* ukm_recorder, const GURL& page_url);
+  // Adds feature to the RankerExample.
+  void LogToExample(const std::string& feature_name, int value);
 
   // Sets up the Ranker Predictor for the given |web_contents|.
   void SetupRankerPredictor(content::WebContents* web_contents);
@@ -87,21 +82,11 @@ class ContextualSearchRankerLoggerImpl {
   // Whether Ranker predicting and model loading is enabled.
   bool IsRankerEnabled();
 
-  // Used to log URL-keyed metrics. This pointer will outlive |this|, and may
-  // be nullptr.
-  ukm::UkmRecorder* ukm_recorder_;
-
-  // The UKM source ID being used for this session.
-  int32_t source_id_;
-
-  // The entry builder for the current record, or nullptr if not yet configured.
-  std::unique_ptr<ukm::UkmEntryBuilder> builder_;
-
   // The field trial helper instance, always set up by the constructor.
   std::unique_ptr<ContextualSearchFieldTrial> field_trial_;
 
   // The Ranker Predictor for whether a tap gesture should be suppressed or not.
-  std::unique_ptr<assist_ranker::BinaryClassifierPredictor> predictor_;
+  base::WeakPtr<assist_ranker::BinaryClassifierPredictor> predictor_;
 
   // The |BrowserContext| currently associated with the above predictor.
   content::BrowserContext* browser_context_;
@@ -110,6 +95,9 @@ class ContextualSearchRankerLoggerImpl {
   // Set of features from one example of a Tap to predict a suppression
   // decision.
   std::unique_ptr<assist_ranker::RankerExample> ranker_example_;
+
+  // URL of the current page.
+  GURL page_url_;
 
   // Whether Ranker has predicted the decision yet.
   bool has_predicted_decision_;
