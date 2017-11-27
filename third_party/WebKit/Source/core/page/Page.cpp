@@ -625,9 +625,13 @@ void Page::DidCommitLoad(LocalFrame* frame) {
     if (frame->GetDocument())
       url = frame->GetDocument()->Url();
 
+    GetConsoleMessageStorage().Clear();
+    // Drop UseCounter measurement on view-source pages. This matches the policy
+    // of page_load_metrics.
+    if (frame->GetDocument()->IsViewSource())
+      GetUseCounter().SetUseCounterContext(UseCounter::kDisabledContext);
     // TODO(rbyers): Most of this doesn't appear to take into account that each
     // SVGImage gets it's own Page instance.
-    GetConsoleMessageStorage().Clear();
     if (frame->Client() && frame->Client()->ShouldTrackUseCounter(url))
       GetUseCounter().DidCommitLoad(url);
     GetDeprecation().ClearSuppression();

@@ -73,11 +73,12 @@ class CORE_EXPORT UseCounter {
     // Counters for extensions.
     kExtensionContext,
     // Context when counters should be disabled (eg, internal pages such as
-    // about, chrome-devtools, etc).
+    // about, chrome-devtools, view-source, etc).
     kDisabledContext
   };
 
   UseCounter(Context = kDefaultContext);
+  void SetUseCounterContext(Context);
 
   // An interface to observe UseCounter changes. Note that this is never
   // notified when the counter is disabled by |m_muteCount| or when |m_context|
