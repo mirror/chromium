@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eaae9739_64e8938d",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-27T20:20:59Z",
+      "side": 1,
+      "message": "Thanks for the heads-up.  Changed to \u003d\u003d LOCAL_CARD to avoid negative logic.",
+      "parentUuid": "7375da43_58d4b440",
+      "range": {
+        "startLine": 166,
+        "startChar": 10,
+        "endLine": 166,
+        "endChar": 80
+      },
+      "revId": "5832540249c4afe73ef3ce51fb58367da8bef5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f1d50eb_2b2d741b",
         "filename": "components/autofill_strings.grdp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "5832540249c4afe73ef3ce51fb58367da8bef5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ee303a_72f3c0c9",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-27T20:20:59Z",
+      "side": 1,
+      "message": "Agh, looks like I dropped the iOS-specific introduction here somehow.  Added it (which keeps the necessary duplication).",
+      "parentUuid": "0f1d50eb_2b2d741b",
+      "range": {
+        "startLine": 346,
+        "startChar": 6,
+        "endLine": 347,
+        "endChar": 14
+      },
+      "revId": "5832540249c4afe73ef3ce51fb58367da8bef5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
