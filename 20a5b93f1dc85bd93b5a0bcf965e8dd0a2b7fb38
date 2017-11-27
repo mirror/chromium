@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "804f6f77_68b09f43",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-27T12:03:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a08dd8da_fb12518f",
+      "revId": "20a5b93f1dc85bd93b5a0bcf965e8dd0a2b7fb38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e3641f1_d180fec1",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Good point! This should probably use GetFocusedFrame()?",
       "parentUuid": "8e3641f1_d180fec1",
+      "revId": "20a5b93f1dc85bd93b5a0bcf965e8dd0a2b7fb38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7583715f_dc8fb25e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-27T12:03:40Z",
+      "side": 1,
+      "message": "Thank you for catching this! I changed to GetFocusedFrame().",
+      "parentUuid": "ae3cc983_ca7ef178",
       "revId": "20a5b93f1dc85bd93b5a0bcf965e8dd0a2b7fb38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
