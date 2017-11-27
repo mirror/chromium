@@ -8,6 +8,7 @@
 #include "ash/accessibility/test_accessibility_controller_client.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "base/macros.h"
 #include "ui/aura/test/test_windows.h"
@@ -246,6 +247,109 @@ TEST_F(DisplayMoveWindowUtilTest, A11yAlert) {
   controller->FlushMojoForTest();
   EXPECT_EQ(mojom::AccessibilityAlert::WINDOW_MOVED_TO_RIGHT_DISPLAY,
             client.last_a11y_alert());
+}
+
+// Tests that window bounds should be kept if it is not changed by user, i.e.
+// if it is changed by display area difference, it should restore to the
+// original bounds when it is moved between displays and there is enough work
+// area to show this window.
+TEST_F(DisplayMoveWindowUtilTest, KeepWindowBoundsIfNotChangedByUser) {
+  display::Screen* screen = display::Screen::GetScreen();
+  int64_t primary_id = screen->GetPrimaryDisplay().id();
+  display::DisplayIdList list =
+      display::test::CreateDisplayIdList2(primary_id, primary_id + 1);
+  // Layout:
+  // +---+---+
+  // | p |   |
+  // +---+ 1 |
+  //     |   |
+  //     +---+
+  display::DisplayLayoutBuilder builder(primary_id);
+  builder.AddDisplayPlacement(list[1], primary_id,
+                              display::DisplayPlacement::RIGHT, 0);
+  display_manager()->layout_store()->RegisterLayoutForDisplayIdList(
+      list, builder.Build());
+  UpdateDisplay("400x300,400x600");
+  EXPECT_EQ(2U, display_manager()->GetNumDisplays());
+  EXPECT_EQ(gfx::Rect(0, 0, 400, 300),
+            display_manager()->GetDisplayAt(0).bounds());
+  EXPECT_EQ(gfx::Rect(400, 0, 400, 600),
+            display_manager()->GetDisplayAt(1).bounds());
+
+  // Create and activate window on display [1].
+  aura::Window* window =
+      CreateTestWindowInShellWithBounds(gfx::Rect(410, 20, 200, 400));
+  wm::ActivateWindow(window);
+  EXPECT_EQ(list[1], screen->GetDisplayNearestWindow(window).id());
+  // Move window to display [p]. Its window bounds is adjusted by available work
+  // area.
+  HandleMoveWindowToDisplay(DisplayMoveWindowDirection::kLeft);
+  EXPECT_EQ(list[0], screen->GetDisplayNearestWindow(window).id());
+  EXPECT_EQ(gfx::Rect(10, 20, 200, 252), window->GetBoundsInScreen());
+  // Move window back to display [1]. Its window bounds should be restored.
+  HandleMoveWindowToDisplay(DisplayMoveWindowDirection::kRight);
+  EXPECT_EQ(list[1], screen->GetDisplayNearestWindow(window).id());
+  EXPECT_EQ(gfx::Rect(410, 20, 200, 400), window->GetBoundsInScreen());
+
+  // Move window to display [p] and set that its bounds is changed by user.
+  wm::WindowState* window_state = wm::GetWindowState(window);
+  HandleMoveWindowToDisplay(DisplayMoveWindowDirection::kLeft);
+  window_state->set_bounds_changed_by_user(true);
+  // Move window back to display [1], but its bounds has been changed by user.
+  // Then window bounds should be kept the same as that in display [p].
+  HandleMoveWindowToDisplay(DisplayMoveWindowDirection::kRight);
+  EXPECT_EQ(list[1], screen->GetDisplayNearestWindow(window).id());
+  EXPECT_EQ(gfx::Rect(410, 20, 200, 252), window->GetBoundsInScreen());
+}
+
+// Tests auto window management on moving window between displays.
+TEST_F(DisplayMoveWindowUtilTest, AutoManaged) {
+  display::Screen* screen = display::Screen::GetScreen();
+  int64_t primary_id = screen->GetPrimaryDisplay().id();
+  display::DisplayIdList list =
+      display::test::CreateDisplayIdList2(primary_id, primary_id + 1);
+  // Layout: [p][1]
+  display::DisplayLayoutBuilder builder(primary_id);
+  builder.AddDisplayPlacement(list[1], primary_id,
+                              display::DisplayPlacement::RIGHT, 0);
+  display_manager()->layout_store()->RegisterLayoutForDisplayIdList(
+      list, builder.Build());
+  UpdateDisplay("400x300,400x300");
+  EXPECT_EQ(2U, display_manager()->GetNumDisplays());
+  EXPECT_EQ(gfx::Rect(0, 0, 400, 300),
+            display_manager()->GetDisplayAt(0).bounds());
+  EXPECT_EQ(gfx::Rect(400, 0, 400, 300),
+            display_manager()->GetDisplayAt(1).bounds());
+
+  // Create and show window on display [p]. Enable auto window position managed,
+  // which will center the window on display [p].
+  aura::Window* window1 =
+      CreateTestWindowInShellWithBounds(gfx::Rect(10, 20, 200, 100));
+  wm::WindowState* window1_state = wm::GetWindowState(window1);
+  window1_state->SetWindowPositionManaged(true);
+  window1->Hide();
+  window1->Show();
+  EXPECT_EQ(gfx::Rect(100, 20, 200, 100), window1->GetBoundsInScreen());
+  EXPECT_EQ(list[0], screen->GetDisplayNearestWindow(window1).id());
+
+  // Create and show window on display [1]. Enable auto window position managed,
+  // which will center the window on display [1].
+  aura::Window* window2 =
+      CreateTestWindowInShellWithBounds(gfx::Rect(410, 20, 200, 100));
+  wm::WindowState* window2_state = wm::GetWindowState(window2);
+  window2_state->SetWindowPositionManaged(true);
+  window2->Hide();
+  window2->Show();
+  EXPECT_EQ(gfx::Rect(500, 20, 200, 100), window2->GetBoundsInScreen());
+  // Activate window2.
+  wm::ActivateWindow(window2);
+  EXPECT_EQ(list[1], screen->GetDisplayNearestWindow(window2).id());
+
+  // Move window2 to display [p] and check auto window management.
+  HandleMoveWindowToDisplay(DisplayMoveWindowDirection::kLeft);
+  EXPECT_EQ(list[0], screen->GetDisplayNearestWindow(window2).id());
+  EXPECT_EQ(gfx::Rect(0, 20, 200, 100), window1->GetBoundsInScreen());
+  EXPECT_EQ(gfx::Rect(200, 20, 200, 100), window2->GetBoundsInScreen());
 }
 
 }  // namespace ash
