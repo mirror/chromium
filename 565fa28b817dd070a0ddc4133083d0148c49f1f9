@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e89934ee_a7aff6a5",
+        "filename": "chrome/browser/tabs/tabs_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-27T17:14:15Z",
+      "side": 1,
+      "message": "Based upon your comment below it looks like you need the Browser the tab is associated with quite a bit. I like your idea of using WebContentsUserData to track it. Perhaps the right thing to do is have TabStripModel keep the data in sync, that way chrome::FindBrowserWithWebContents() can make use of the user-data and everyone gets a faster implementation. How about doing that separate from this patch?",
+      "parentUuid": "ed6140b2_f500ac8d",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "565fa28b817dd070a0ddc4133083d0148c49f1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab983ec3_762f767d",
         "filename": "chrome/browser/tabs/tabs_tracker.cc",
         "patchSetId": 9
