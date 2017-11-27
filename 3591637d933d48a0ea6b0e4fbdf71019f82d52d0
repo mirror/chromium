@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "233d0fd5_0ac388ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-27T07:33:44Z",
+      "side": 1,
+      "message": "I won\u0027t use 781220 here since the previous fix is requesting a merge, and the bug won\u0027t have multiple commit log.",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 8
+      },
+      "revId": "3591637d933d48a0ea6b0e4fbdf71019f82d52d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
