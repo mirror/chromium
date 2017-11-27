@@ -40,9 +40,8 @@ public abstract class FirstRunActivityBase extends AsyncInitializationActivity {
     private boolean mNativeInitialized;
 
     @Override
-    protected boolean requiresFirstRunToBeCompleted(Intent intent) {
-        // The user is already in First Run.
-        return false;
+    public boolean isFirstRunActivity() {
+        return true;
     }
 
     @Override

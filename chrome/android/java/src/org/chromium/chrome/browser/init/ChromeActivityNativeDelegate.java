@@ -51,10 +51,8 @@ public interface ChromeActivityNativeDelegate {
      */
     void onNewIntentWithNative(Intent intent);
 
-    /**
-     * @return The Intent that launched the activity.
-     */
-    Intent getInitialIntent();
+    /** @return whether the associated activity is the first run activity. */
+    boolean isFirstRunActivity();
 
     /**
      * Carry out native code dependent tasks that relate to processing an activity result coming to
