@@ -46,9 +46,8 @@ class OfflinePageTabHelper :
   // Whether the page is an offline preview.
   bool IsShowingOfflinePreview() const;
 
-  // Returns provisional offline page since actual navigation does not happen
-  // during unit tests.
-  const OfflinePageItem* GetOfflinePageForTest() const;
+  // Returns provisional offline page.
+  const OfflinePageItem* provisional_page() const;
 
   // Helper function which normally should only be called by
   // OfflinePageUtils::ScheduleDownload to do the work. This is because we need

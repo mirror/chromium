@@ -235,6 +235,8 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
   SimulateCommit();
   offline_pages::OfflinePageItem item;
   item.url = GURL(kTestUrl);
+  item.file_size = 100;
+  int64_t expected_file_size = .55 * item.file_size;
   offline_pages::OfflinePageHeader header;
   offline_pages::OfflinePageTabHelper::FromWebContents(web_contents())
       ->SetOfflinePage(item, header, true);
@@ -248,6 +250,18 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
   // Navigate to reset the displayed state.
   content::WebContentsTester::For(web_contents())
       ->NavigateAndCommit(GURL(kTestUrl));
+
+  auto* data_reduction_proxy_settings =
+      DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
+          web_contents()->GetBrowserContext());
+  EXPECT_EQ(0, data_reduction_proxy_settings->data_reduction_proxy_service()
+                   ->compression_stats->GetHttpReceivedContentLength());
+
+  // Returns the value the total original size of all HTTP content received from
+  // the network.
+  EXPECT_EQ(expected_file_size,
+            data_reduction_proxy_settings->data_reduction_proxy_service()
+                ->compression_stats->GetHttpOriginalContentLength());
 
   EXPECT_FALSE(infobar_tab_helper->displayed_preview_infobar());
 }
