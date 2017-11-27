@@ -254,6 +254,10 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         return mCallback != EMPTY_CALLBACK;
     }
 
+    private boolean isFloatingActionMode() {
+        return isActionModeValid() && mActionMode.getType() == ActionMode.TYPE_FLOATING;
+    }
+
     @Override
     public void setAllowedMenuItems(int allowedMenuItems) {
         mAllowedMenuItems = allowedMenuItems;
@@ -504,9 +508,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     }
 
     private boolean canHideActionMode() {
-        return supportsFloatingActionMode()
-                && isActionModeValid()
-                && mActionMode.getType() == ActionMode.TYPE_FLOATING;
+        return supportsFloatingActionMode() && isFloatingActionMode();
     }
 
     private long getDefaultHideDuration() {
@@ -852,6 +854,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      */
     @VisibleForTesting
     void selectAll() {
+        // Reset menu on Select All (see crbug.com/791532).
+        if (isFloatingActionMode()) destroyActionModeAndKeepSelection();
         mWebContents.selectAll();
         mClassificationResult = null;
         // Even though the above statement logged a SelectAll user action, we want to
