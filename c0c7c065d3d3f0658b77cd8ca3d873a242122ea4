@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca7c8e1d_a0642d1a",
+        "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-27T23:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86e514b4_b4f92072",
+      "range": {
+        "startLine": 22,
+        "startChar": 49,
+        "endLine": 22,
+        "endChar": 51
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c514467_2f4df011",
         "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
         "patchSetId": 3
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "f0139ce5_29a1a1b9",
+        "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-27T23:30:34Z",
+      "side": 1,
+      "message": "See other response.",
+      "parentUuid": "4c514467_2f4df011",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 77
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f2e5390_61202241",
+        "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-27T23:30:34Z",
+      "side": 1,
+      "message": "Nope - previously, I was using the \"it\" variable twice, but I ended up changing the logic and not using it again.\n\nHowever, count() isn\u0027t the right function since it technically could match with another key. I used find() !\u003d end() instead.",
+      "parentUuid": "f464c9e5_0c499658",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 78
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b37b293f_cbe4ecad",
         "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
         "patchSetId": 3
@@ -105,6 +177,30 @@
       "writtenOn": "2017-11-27T18:23:35Z",
       "side": 1,
       "message": "nit: name",
+      "range": {
+        "startLine": 229,
+        "startChar": 19,
+        "endLine": 229,
+        "endChar": 43
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "816227e8_08baa68d",
+        "filename": "chromeos/components/tether/asynchronous_shutdown_object_container_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-27T23:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee97fb5c_03fed221",
       "range": {
         "startLine": 229,
         "startChar": 19,
