@@ -1998,22 +1998,6 @@
             ]
         }
     ],
-    "NTPMostLikelyFaviconsFromServer": [
-        {
-            "platforms": [
-                "android",
-                "ios"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "NTPMostLikelyFaviconsFromServer"
-                    ]
-                }
-            ]
-        }
-    ],
     "NTPPopularSites": [
         {
             "platforms": [
