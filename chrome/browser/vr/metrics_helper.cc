@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "net/base/network_change_notifier.h"
 
 namespace vr {
 
@@ -97,6 +98,11 @@ void MetricsHelper::OnEnter(Mode mode) {
   if (!component_ready_) {
     enter_time = base::Time::Now();
   }
+}
+
+void MetricsHelper::OnRegisteredComponent() {
+  LOG(INFO) << "MetricsHelper::OnRegisteredComponent "
+            << net::NetworkChangeNotifier::GetConnectionType();
 }
 
 base::Optional<base::Time>& MetricsHelper::GetEnterTime(Mode mode) {
