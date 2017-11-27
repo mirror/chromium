@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f3436802_0fd54e91",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-27T23:09:39Z",
+      "side": 1,
+      "message": "I wonder why the test was calling SetCanHaveScrollbars(false), if this has no effect on preferred size without RLS.\n\nHow does RenderViewImpl::OnResize get called during the test?",
+      "parentUuid": "9812a57e_e48dbaae",
+      "range": {
+        "startLine": 2112,
+        "startChar": 11,
+        "endLine": 2112,
+        "endChar": 35
+      },
+      "revId": "2609f0b2ffb36c379a82ab6e3bb0c7b23b1379da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "318bd21c_1ba68820",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 8
