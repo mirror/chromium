@@ -22,6 +22,30 @@
       "revId": "b710f0ed28792421a2c144ff2cca2ded8eefe278",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583182a4_f828fda3",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-27T22:52:30Z",
+      "side": 1,
+      "message": "Ya, I was slightly concerned about the last CL, but I thought the trybots covered the FILE_PATH_LITERAL() usage.\n\nThis is fine, as the comment says:\n\n\"This function should only be used for cases where you are sure that the input string is UTF-8.\"\n\nAnd we are certain about |kWidevineCdmBaseDirectory|.",
+      "parentUuid": "e4ffeac0_eadd28d2",
+      "range": {
+        "startLine": 359,
+        "startChar": 25,
+        "endLine": 359,
+        "endChar": 39
+      },
+      "revId": "b710f0ed28792421a2c144ff2cca2ded8eefe278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
