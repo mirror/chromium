@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "73e544e9_e60bd905",
+        "filename": "base/trace_event/trace_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-11-27T21:24:39Z",
+      "side": 1,
+      "message": "This is the same args as L438-440, which is what catapult\u0027s map_wake_ups.html currently relies on.",
+      "parentUuid": "37b665cc_b24919fd",
+      "revId": "c4b9deb2699cbeb1465905fec24b560aa2446e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f829b8ae_a1409a84",
         "filename": "base/trace_event/trace_event.h",
         "patchSetId": 4
@@ -76,6 +94,30 @@
       "writtenOn": "2017-11-27T21:12:19Z",
       "side": 1,
       "message": "How much does this add, it\u0027s just the inner-most function name right not a stack? Not sure if we have a planned use for it given the goal is to reduce the size and others haven\u0027t needed it yet :)",
+      "range": {
+        "startLine": 463,
+        "startChar": 48,
+        "endLine": 463,
+        "endChar": 56
+      },
+      "revId": "c4b9deb2699cbeb1465905fec24b560aa2446e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae554fd_6caa5409",
+        "filename": "base/trace_event/trace_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-11-27T21:24:39Z",
+      "side": 1,
+      "message": "I wish. See https://cs.chromium.org/chromium/src/third_party/catapult/trace_processor/experimental/mappers/scheduling/map_wake_ups.html?type\u003dcs\u0026q\u003d%22TaskQueueManager::ProcessTaskFromWorkQueue%22\u0026sq\u003dpackage:chromium\u0026l\u003d33\n\nskyostil will review next and he added this.",
+      "parentUuid": "f829b8ae_a1409a84",
       "range": {
         "startLine": 463,
         "startChar": 48,
