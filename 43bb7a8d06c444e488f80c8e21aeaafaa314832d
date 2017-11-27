@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33bf62d1_698d978b",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-27T16:50:39Z",
+      "side": 1,
+      "message": "Should we add a comment explaining that refresh_token may be empty, and what happens when it is empty?",
+      "range": {
+        "startLine": 96,
+        "startChar": 5,
+        "endLine": 96,
+        "endChar": 20
+      },
+      "revId": "43bb7a8d06c444e488f80c8e21aeaafaa314832d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
