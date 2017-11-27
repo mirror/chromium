@@ -121,7 +121,10 @@ enum class TaskType : unsigned {
   // should be very limited.
   kUnthrottled = 25,
 
-  kCount = 26,
+  // Internal tasks that are used for initialization.
+  kInternalInitialization = 26,
+
+  kCount = 27,
 };
 
 }  // namespace blink
