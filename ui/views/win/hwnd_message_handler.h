@@ -34,9 +34,6 @@
 namespace gfx {
 class ImageSkia;
 class Insets;
-namespace win {
-class DirectManipulationHelper;
-}  // namespace win
 }  // namespace gfx
 
 namespace ui  {
@@ -268,6 +265,10 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
                                  bool* handled) override;
 
   void HandleParentChanged() override;
+
+  LRESULT HandleDManipMessage(float scale,
+                              float scroll_x,
+                              float scroll_y) override;
 
   // Returns the auto-hide edges of the appbar. See
   // ViewsDelegate::GetAppbarAutohideEdges() for details. If the edges change,
@@ -733,12 +734,6 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
 
   // Some assistive software need to track the location of the caret.
   std::unique_ptr<ui::AXSystemCaretWin> ax_system_caret_;
-
-  // This class provides functionality to register the legacy window as a
-  // Direct Manipulation consumer. This allows us to support smooth scroll
-  // in Chrome on Windows 10.
-  std::unique_ptr<gfx::win::DirectManipulationHelper>
-      direct_manipulation_helper_;
 
   // The location where the user clicked on the caption. We cache this when we
   // receive the WM_NCLBUTTONDOWN message. We use this in the subsequent
