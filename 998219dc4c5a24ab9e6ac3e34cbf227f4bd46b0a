@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a9ac7ab_886174a2",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bf0cc3a_2356a392",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e9730f6_39fba287",
         "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_cros_component_delegate_chromeos.h",
         "patchSetId": 15
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3262c3bc_181f3632",
+        "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_cros_component_delegate_chromeos.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e9730f6_39fba287",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 50
+      },
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daa6e2c1_76250326",
         "filename": "extensions/browser/api/extensions_api_client.h",
         "patchSetId": 15
@@ -56,6 +98,24 @@
       "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0184e8_6107bd12",
+        "filename": "extensions/browser/api/extensions_api_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daa6e2c1_76250326",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "f35f5602_40c5cc57",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ae9ac8_5559aeef",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30f4cea4_29d47c64",
         "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
         "patchSetId": 15
@@ -110,6 +188,24 @@
     },
     {
       "key": {
+        "uuid": "1d0fdce4_f97221c9",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30f4cea4_29d47c64",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "069d891c_7f427701",
         "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
         "patchSetId": 15
@@ -124,6 +220,24 @@
       "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1edbccf_082b9616",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "069d891c_7f427701",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +264,30 @@
     },
     {
       "key": {
+        "uuid": "cad317b9_50c32139",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37582c03_12d609b7",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 14
+      },
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5ddc0e9_502f170b",
         "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
         "patchSetId": 15
@@ -164,6 +302,24 @@
       "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb1872f_531d1b4a",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5ddc0e9_502f170b",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +340,24 @@
     },
     {
       "key": {
+        "uuid": "815c0151_69e76ece",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e2db9e52_323256ff",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a04a645_6aa28662",
         "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
         "patchSetId": 15
@@ -201,6 +375,24 @@
     },
     {
       "key": {
+        "uuid": "79e6edac_84d1694f",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a04a645_6aa28662",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0487ea90_88a66d6b",
         "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
         "patchSetId": 15
@@ -212,6 +404,30 @@
       "writtenOn": "2017-11-22T18:20:02Z",
       "side": 1,
       "message": "if you need to be able to run a custom binary, can we make that more explicit?\nMaybe add another component type - PREINSTALLED, or CUSTOM_DEV (and restrict its usage to dev channel), or maybe add a Chrome switch to force a locally installed media analytics binary.",
+      "range": {
+        "startLine": 193,
+        "startChar": 7,
+        "endLine": 193,
+        "endChar": 39
+      },
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8271597b_bc0328d7",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "The other piece of this is to maintain backwards compatibility with the old CrOS deployment path, where the binary is installed onto the device as part of the CrOS image. We may (haven\u0027t made a final decision) choose to keep the binary around for a Chrome release while moving to component updater to ensure a smooth transition.\n\nCan we chat a bit about this?",
+      "parentUuid": "0487ea90_88a66d6b",
       "range": {
         "startLine": 193,
         "startChar": 7,
@@ -241,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "8ed75229_fec7d5c3",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "570f017a_1b881c8b",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f2c8533_d543ddc0",
         "filename": "extensions/browser/api/media_perception_private/media_perception_private_api.h",
         "patchSetId": 15
@@ -261,6 +495,30 @@
       "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49baebec_b6390842",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_private_api.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-27T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f2c8533_d543ddc0",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 36
+      },
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
