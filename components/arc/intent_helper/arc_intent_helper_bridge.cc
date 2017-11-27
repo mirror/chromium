@@ -62,42 +62,6 @@ class ArcIntentHelperBridgeFactory
 // Base URL for the Chrome settings pages.
 constexpr char kSettingsPageBaseUrl[] = "chrome://settings";
 
-// TODO(yusukes): Properly fix b/68953603 and remove the constant.
-constexpr const char* kWhitelistedUrls[] = {
-    "about:blank", "chrome://downloads", "chrome://history",
-    "chrome://settings",
-};
-
-// TODO(yusukes): Properly fix b/68953603 and remove the constant.
-constexpr const char* kWhitelistedSettingsPaths[] = {
-    "accounts",
-    "appearance",
-    "autofill",
-    "bluetoothDevices",
-    "changePicture",
-    "clearBrowserData",
-    "cloudPrinters",
-    "cupsPrinters",
-    "dateTime",
-    "display",
-    "downloads",
-    "help",
-    "keyboard-overlay",
-    "languages",
-    "lockScreen",
-    "manageAccessibility",
-    "networks?type=VPN",
-    "onStartup",
-    "passwords",
-    "pointer-overlay",
-    "power",
-    "privacy",
-    "reset",
-    "search",
-    "storage",
-    "syncSetup",
-};
-
 }  // namespace
 
 // static
@@ -170,55 +134,126 @@ void ArcIntentHelperBridge::OnOpenUrl(const std::string& url) {
   // Converts |url| to a fixed-up one. This converts about: URIs to chrome://,
   // for example.
   const GURL gurl(url_formatter::FixupURL(url, std::string()));
-  // Disallow opening chrome:// URLs.
-  if (!gurl.is_valid() || !IsWhitelistedChromeUrl(gurl))
+  // Disallow opening chrome:// and about:// URLs.
+  if (!gurl.is_valid() || gurl.SchemeIs(kChromeUIScheme) ||
+      gurl.SchemeIs(url::kAboutScheme))
     return;
   open_url_delegate_->OpenUrl(gurl);
 }
 
-void ArcIntentHelperBridge::OnOpenChromeSettings(mojom::SettingsPage page) {
+void ArcIntentHelperBridge::OnOpenChromePage(mojom::ChromePage page) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   // Mapping from the mojom enum values to the URL components.
   const char* sub_url = nullptr;
   switch (page) {
-    case mojom::SettingsPage::MULTIDEVICE:
+    case mojom::ChromePage::MULTIDEVICE:
       sub_url = "multidevice";
       break;
-    case mojom::SettingsPage::MAIN:
+    case mojom::ChromePage::MAIN:
       sub_url = "";
       break;
-    case mojom::SettingsPage::POWER:
+    case mojom::ChromePage::POWER:
       sub_url = "power";
       break;
-    case mojom::SettingsPage::BLUETOOTH:
+    case mojom::ChromePage::BLUETOOTH:
       sub_url = "bluetoothDevices";
       break;
-    case mojom::SettingsPage::DATETIME:
+    case mojom::ChromePage::DATETIME:
       sub_url = "dateTime";
       break;
-    case mojom::SettingsPage::DISPLAY:
+    case mojom::ChromePage::DISPLAY:
       sub_url = "display";
       break;
-    case mojom::SettingsPage::WIFI:
+    case mojom::ChromePage::WIFI:
       sub_url = "networks/?type=WiFi";
       break;
-    case mojom::SettingsPage::LANGUAGE:
-      sub_url = "languages";
-      break;
-    case mojom::SettingsPage::PRIVACY:
+    case mojom::ChromePage::PRIVACY:
       sub_url = "privacy";
       break;
-    case mojom::SettingsPage::HELP:
+    case mojom::ChromePage::HELP:
       sub_url = "help";
+      break;
+    case mojom::ChromePage::ACCOUNTS:
+      sub_url = "accounts";
+      break;
+    case mojom::ChromePage::APPEARANCE:
+      sub_url = "appearance";
+      break;
+    case mojom::ChromePage::AUTOFILL:
+      sub_url = "autofill";
+      break;
+    case mojom::ChromePage::BLUETOOTHDEVICES:
+      sub_url = "bluetoothDevices";
+      break;
+    case mojom::ChromePage::CHANGEPICTURE:
+      sub_url = "changePicture";
+      break;
+    case mojom::ChromePage::CLEARBROWSERDATA:
+      sub_url = "clearBrowserData";
+      break;
+    case mojom::ChromePage::CLOUDPRINTERS:
+      sub_url = "cloudPrinters";
+      break;
+    case mojom::ChromePage::CUPSPRINTERS:
+      sub_url = "cupsPrinters";
+      break;
+    case mojom::ChromePage::DOWNLOADS:
+      sub_url = "downloads";
+      break;
+    case mojom::ChromePage::HISTORY:
+      sub_url = "history";
+      break;
+    case mojom::ChromePage::KEYBOARDOVERLAY:
+      sub_url = "keyboard-overlay";
+      break;
+    case mojom::ChromePage::LANGUAGES:
+      sub_url = "languages";
+      break;
+    case mojom::ChromePage::LOCKSCREEN:
+      sub_url = "lockScreen";
+      break;
+    case mojom::ChromePage::MANAGEACCESSIBILITY:
+      sub_url = "manageAccessibility";
+      break;
+    case mojom::ChromePage::NETWORKSTYPEVPN:
+      sub_url = "networks?type=VPN";
+      break;
+    case mojom::ChromePage::ONSTARTUP:
+      sub_url = "onStartup";
+      break;
+    case mojom::ChromePage::PASSWORDS:
+      sub_url = "passwords";
+      break;
+    case mojom::ChromePage::POINTEROVERLAY:
+      sub_url = "pointer-overlay";
+      break;
+    case mojom::ChromePage::RESET:
+      sub_url = "reset";
+      break;
+    case mojom::ChromePage::SEARCH:
+      sub_url = "search";
+      break;
+    case mojom::ChromePage::STORAGE:
+      sub_url = "storage";
+      break;
+    case mojom::ChromePage::SYNCSETUP:
+      sub_url = "syncSetup";
+      break;
+    case mojom::ChromePage::ABOUTBLANK:
+      // Do nothing, special cased.
       break;
   }
 
-  if (!sub_url) {
-    LOG(ERROR) << "Invalid settings page: " << page;
-    return;
+  if (page == mojom::ChromePage::ABOUTBLANK) {
+    open_url_delegate_->OpenUrl(GURL(url::kAboutBlankURL));
+  } else {
+    if (!sub_url) {
+      LOG(ERROR) << "Invalid settings page: " << page;
+      return;
+    }
+    open_url_delegate_->OpenUrl(GURL(kSettingsPageBaseUrl).Resolve(sub_url));
   }
-  open_url_delegate_->OpenUrl(GURL(kSettingsPageBaseUrl).Resolve(sub_url));
 }
 
 void ArcIntentHelperBridge::OpenWallpaperPicker() {
@@ -306,20 +341,6 @@ void ArcIntentHelperBridge::OnIntentFiltersUpdated(
 void ArcIntentHelperBridge::SetOpenUrlDelegateForTesting(
     std::unique_ptr<OpenUrlDelegate> open_url_delegate) {
   open_url_delegate_ = std::move(open_url_delegate);
-}
-
-bool ArcIntentHelperBridge::IsWhitelistedChromeUrl(const GURL& url) {
-  if (!url.SchemeIs(kChromeUIScheme) && !url.SchemeIs(url::kAboutScheme))
-    return true;
-
-  if (whitelisted_urls_.empty()) {
-    whitelisted_urls_.insert(std::begin(kWhitelistedUrls),
-                             std::end(kWhitelistedUrls));
-    const std::string prefix = "chrome://settings/";
-    for (const char* path : kWhitelistedSettingsPaths)
-      whitelisted_urls_.insert(GURL(prefix + path));
-  }
-  return whitelisted_urls_.count(url) > 0;
 }
 
 }  // namespace arc
