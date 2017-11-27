@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "31f76c92_58278169",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-27T08:17:24Z",
+      "side": 1,
+      "message": "Let\u0027s make a wrapper function with a similar signature as the old one that just returns the unique_ptr\u003cdevice::FakeGeolocationContext\u003e. That way we\u0027re preserving the usability of the test interface compared to what it was before.",
+      "revId": "c97e15f761a00d6dde811b32ffd8253e2a337dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2ab777_3374d387",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-27T08:17:24Z",
+      "side": 1,
+      "message": "Do we need to clear this override in the teardown of the tests, or no?",
+      "range": {
+        "startLine": 533,
+        "startChar": 39,
+        "endLine": 533,
+        "endChar": 64
+      },
+      "revId": "c97e15f761a00d6dde811b32ffd8253e2a337dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ad82cf6_b8266463",
         "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
         "patchSetId": 6
@@ -19,6 +59,23 @@
         "endLine": 346,
         "endChar": 61
       },
+      "revId": "c97e15f761a00d6dde811b32ffd8253e2a337dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ecf51d_293d129e",
+        "filename": "device/geolocation/public/cpp/fake_geolocation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-27T08:17:24Z",
+      "side": 1,
+      "message": "Please add a comment documenting this class\u0027 purpose and usage model. Actually, it would be great to add a simple service test of this class itself that both tests its correctness but also serves as an illustration of how to use this class to mock out geolocation.",
       "revId": "c97e15f761a00d6dde811b32ffd8253e2a337dec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
