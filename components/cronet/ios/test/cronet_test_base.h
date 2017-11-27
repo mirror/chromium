@@ -41,6 +41,8 @@ class Thread;
 @property(readonly) NSMutableDictionary<NSURLSessionDataTask*, NSNumber*>*
     expectedContentLengthPerTask;
 
+@property(readonly) NSURLSessionTaskMetrics* taskMetrics NS_AVAILABLE_IOS(10.0);
+
 // Resets the delegate, so it can be used again for another request.
 - (void)reset;
 
