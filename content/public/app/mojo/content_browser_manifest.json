@@ -38,6 +38,7 @@
           "content::mojom::RendererHost",
           "content::mojom::ReportingServiceProxy",
           "content::mojom::ServiceWorkerDispatcherHost",
+          "content::mojom::SpeechRecognitionHost",
           "content::mojom::StoragePartitionService",
           "content::mojom::URLLoaderFactory",
           "content::mojom::VideoCaptureHost",
