@@ -368,6 +368,30 @@ bool ChromeContentBrowserClientExtensionsPart::ShouldLockToOrigin(
   return true;
 }
 
+bool ChromeContentBrowserClientExtensionsPart::ShouldBypassDocumentBlocking(
+    content::ResourceContext* resource_context,
+    const GURL& url,
+    int child_process_id) {
+  // Don't block documents from extension processes (except for hosted apps).
+  ProfileIOData* io_data = ProfileIOData::FromResourceContext(resource_context);
+  InfoMap* extension_info_map = io_data->GetExtensionInfoMap();
+  const ProcessMap& process_map = extension_info_map->process_map();
+
+  std::set<std::string> extension_ids =
+      process_map.GetExtensionsInProcess(child_process_id);
+  if (extension_ids.empty())
+    return false;
+
+  for (const std::string& extension_id : extension_ids) {
+    const Extension* extension =
+        extension_info_map->extensions().GetByID(extension_id);
+    if (extension && extension->is_hosted_app())
+      return false;
+  }
+
+  return true;
+}
+
 // static
 bool ChromeContentBrowserClientExtensionsPart::CanCommitURL(
     content::RenderProcessHost* process_host, const GURL& url) {

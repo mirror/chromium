@@ -1206,6 +1206,25 @@ bool ChromeContentBrowserClient::ShouldLockToOrigin(
   return true;
 }
 
+bool ChromeContentBrowserClient::ShouldBypassDocumentBlocking(
+    content::ResourceContext* resource_context,
+    const GURL& url,
+    int child_process_id) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  if (ChromeContentBrowserClientExtensionsPart::ShouldBypassDocumentBlocking(
+          resource_context, url, child_process_id)) {
+    return true;
+  }
+#endif
+
+  // TODO(creis): What's the right comparison for LinkDoctor URLs?
+  GURL link_doctor_url = google_util::LinkDoctorBaseURL();
+  if (url == link_doctor_url)
+    return true;
+
+  return false;
+}
+
 // These are treated as WebUI schemes but do not get WebUI bindings. Also,
 // view-source is allowed for these schemes.
 void ChromeContentBrowserClient::GetAdditionalWebUISchemes(

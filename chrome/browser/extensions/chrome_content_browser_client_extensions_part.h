@@ -34,6 +34,10 @@ class ChromeContentBrowserClientExtensionsPart
       const GURL& effective_site_url);
   static bool ShouldLockToOrigin(content::BrowserContext* browser_context,
                                  const GURL& effective_site_url);
+  static bool ShouldBypassDocumentBlocking(
+      content::ResourceContext* resource_context,
+      const GURL& url,
+      int child_process_id);
   static bool CanCommitURL(content::RenderProcessHost* process_host,
                            const GURL& url);
   static bool IsSuitableHost(Profile* profile,
