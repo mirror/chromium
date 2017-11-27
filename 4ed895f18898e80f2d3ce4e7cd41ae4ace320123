@@ -16,6 +16,24 @@
       "revId": "4ed895f18898e80f2d3ce4e7cd41ae4ace320123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ffcbbc_1c4d0327",
+        "filename": "content/browser/accessibility/browser_accessibility_auralinux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-27T11:26:32Z",
+      "side": 1,
+      "message": "That\u0027s exactly what this patch does. If node_ has been created, then it calls DataChanged. DataChanged is the method that will end up checking if the role has changed, and adjust the ATK object accordingly.\n\nAnd, in case node_ has not been created yet, then it creates it (and that will eventually go through the atk object creation).\n\nAn interesting further refactoring would be just creating a common path in BrowserAccessibility or BrowserAccessibilityManager, that would notify the AXPlatformNode directly on OnDataChanged. Right now this signalling is specific to each port. On AuraLinux I added the DataChanged call for this purpose. On Windows, the behavior is based on AXEventGenerator.\n\nThe interesting thing of using AXEventGenerator is that it gives more accurate events (i.e. there is an specific event for ROLE_CHANGED). But it looks like, right now, the expectations are for BrowserAccessibilityManager to provide lower detail events (i.e. sending OnDataChanged for almost any change).\n\nWhat are the right expectations for future development? Something like in Windows? Where OnDataChanged is not used at all, and FireGeneratedEvent is the one doing more detailed event processing? Anything else? Moving somehow more processing to ui/accessibility?",
+      "parentUuid": "ef2f76c0_4fd06fd4",
+      "revId": "4ed895f18898e80f2d3ce4e7cd41ae4ace320123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
