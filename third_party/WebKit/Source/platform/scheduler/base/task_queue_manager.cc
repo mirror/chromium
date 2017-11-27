@@ -496,7 +496,7 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
 
   double task_start_time_sec = 0;
   base::TimeTicks task_start_time;
-  TRACE_TASK_EXECUTION("TaskQueueManager::ProcessTaskFromWorkQueue",
+  TRACE_TASK_EXECUTION_BENCHMARK("TaskQueueManager::ProcessTaskFromWorkQueue",
                        pending_task);
   if (queue->GetShouldNotifyObservers()) {
     for (auto& observer : task_observers_)
