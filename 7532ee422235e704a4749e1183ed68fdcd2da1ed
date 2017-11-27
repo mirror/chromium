@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "653aa348_59f576b9",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-27T10:36:41Z",
+      "side": 1,
+      "message": "\"T\" can be non-nullable type like !FileEntry.\nCould you try typing {!FileEntry} for |entry| in line #430 and {Array\u003c!FileEntry\u003e} for |all| in line #433?",
+      "parentUuid": "bb4f91f8_a399a827",
+      "range": {
+        "startLine": 430,
+        "startChar": 49,
+        "endLine": 431,
+        "endChar": 71
+      },
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e09a165_cfef96de",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 7
@@ -199,6 +223,24 @@
       "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e72de0_9727f76e",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-27T10:36:41Z",
+      "side": 1,
+      "message": "Leaving TODO with asignee:oka@ SGTM. Thanks!",
+      "parentUuid": "f3aa03a6_d5c4c74f",
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
