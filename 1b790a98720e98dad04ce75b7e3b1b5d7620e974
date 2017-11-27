@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bb70f08_d2a4e764",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:51:33Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure RenderFrameHostImplBrowserTest is the best place for this test. Maybe ResourceDispatcherHostBrowserTest alongside the initiator tests?",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "840a7664_63cb8bf4",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:51:33Z",
+      "side": 1,
+      "message": "nit: s/other/others",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bc01ec_4200b507",
+        "filename": "testing/buildbot/filters/site-per-process.content_browsertests.filter",
+        "patchSetId": 20
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:51:33Z",
+      "side": 1,
+      "message": "This is a bit annoying, since site-per-process is partly deployed. Do we know why this is failing?",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21bc82b1_e74f1eee",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:51:33Z",
+      "side": 1,
+      "message": "Can we invert the order of the * (the part on subresources before frames)? I think the comment will flow better this way. Also use simply subresources, no need to qualify them as regular.",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dae87cf_a15fe9dd",
+        "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:51:33Z",
+      "side": 1,
+      "message": "nit: the /* */ should be after the value, not before.",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ab63e5_442c2eec",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:51:33Z",
+      "side": 1,
+      "message": "Wouldn\u0027t the origin be the current document URL in that case?",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

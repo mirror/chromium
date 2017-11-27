@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "36a7c13d_8b94bf63",
+        "filename": "chrome/renderer/net/net_error_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:51:33Z",
+      "side": 1,
+      "message": "Ideally, the initiator should be the initiator of the navigation that resulted in the error page being displayed. If it doesn\u0027t have an initiator, then we should use the URL of the failed navigation. I\u0027m wondering if just using |page_url| all the time might be an issue if the failed request had a different initiator.",
+      "parentUuid": "bb275d1d_080d7c8e",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "816300ea_cc22c4e4",
         "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
         "patchSetId": 16
