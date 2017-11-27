@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2fcd30f_262e222d",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:23:44Z",
+      "side": 1,
+      "message": "3",
+      "range": {
+        "startLine": 187,
+        "startChar": 19,
+        "endLine": 187,
+        "endChar": 20
+      },
+      "revId": "0050b9c6db539d401af30935b6ba6892207642ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2cc8a8_4b17955d",
+        "filename": "components/arc/common/video.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:23:44Z",
+      "side": 1,
+      "message": "2",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "0050b9c6db539d401af30935b6ba6892207642ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7e9744_84fbc499",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:23:44Z",
+      "side": 1,
+      "message": "12",
+      "range": {
+        "startLine": 49,
+        "startChar": 19,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "0050b9c6db539d401af30935b6ba6892207642ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e951cd05_5824439d",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:23:44Z",
+      "side": 1,
+      "message": "IIUC we cannot land this until support for choosing the version is available: otherwise new interfaces that do not implement this cannot land (and I would really like to avoid having them add an InitDeprecated() just to comply with this).",
+      "range": {
+        "startLine": 115,
+        "startChar": 17,
+        "endLine": 115,
+        "endChar": 31
+      },
+      "revId": "0050b9c6db539d401af30935b6ba6892207642ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d46472_2629a2a4",
+        "filename": "components/arc/test/fake_bluetooth_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:23:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be\n\n  Init(std::move(host_ptr), base::Bind(\u0026base::DoNothing));\n\nfor consistency?",
+      "range": {
+        "startLine": 29,
+        "startChar": 77,
+        "endLine": 29,
+        "endChar": 79
+      },
+      "revId": "0050b9c6db539d401af30935b6ba6892207642ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c138ff83_b64bd379",
+        "filename": "components/arc/test/fake_intent_helper_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:23:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be\n\n  Init(std::move(host_ptr), base::Bind(\u0026base::DoNothing));\n\nfor consistency?",
+      "range": {
+        "startLine": 73,
+        "startChar": 41,
+        "endLine": 73,
+        "endChar": 2
+      },
+      "revId": "0050b9c6db539d401af30935b6ba6892207642ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a509ee7_397d27a9",
+        "filename": "components/arc/test/fake_notifications_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:23:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be\n\n  Init(std::move(host_ptr), base::Bind(\u0026base::DoNothing));\n\nfor consistency?",
+      "range": {
+        "startLine": 30,
+        "startChar": 42,
+        "endLine": 30,
+        "endChar": 44
+      },
+      "revId": "0050b9c6db539d401af30935b6ba6892207642ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d24417_cb336498",
+        "filename": "components/arc/test/fake_wallpaper_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:23:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be\n\n  Init(std::move(host_ptr), base::Bind(\u0026base::DoNothing));\n\nfor consistency?",
+      "range": {
+        "startLine": 15,
+        "startChar": 77,
+        "endLine": 15,
+        "endChar": 79
+      },
+      "revId": "0050b9c6db539d401af30935b6ba6892207642ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
