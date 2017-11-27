@@ -27,6 +27,7 @@
 #include "content/browser/accessibility/one_shot_accessibility_tree_search.h"
 #include "content/public/common/content_client.h"
 #include "third_party/skia/include/core/SkColor.h"
+#include "ui/accelerated_widget_mac/accelerated_widget_mac.h"
 #include "ui/accessibility/ax_range.h"
 #include "ui/accessibility/ax_role_properties.h"
 
@@ -1380,7 +1381,7 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
         browserAccessibility_->manager()->GetRootManager()
             ->ToBrowserAccessibilityManagerMac();
     if (manager)
-      return manager->GetParentView();
+      return ui::AcceleratedWidgetMac::GetNSView(manager->GetParentView());
     return nil;
   }
 }
@@ -2184,7 +2185,7 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
   if (!manager || !manager->GetParentView())
     return nil;
 
-  return [manager->GetParentView() window];
+  return [ui::AcceleratedWidgetMac::GetNSView(manager->GetParentView()) window];
 }
 
 - (NSString*)methodNameForAttribute:(NSString*)attribute {
