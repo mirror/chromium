@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2c1752a_99320058",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-27T15:32:21Z",
+      "side": 1,
+      "message": "Fake... already had this very method, so it was trivial to nuke it and the whole class.\n\nI moved some short-cuts stuff down, but hesitated to remove the \u0027pool\u0027 stuff. Reading the class description, it sounds like an intentional addition and, while the test worked for me without it (on one platform), I didn\u0027t want to introduce any flakiness (to the others). I believe you recently looked into some of these class types; if you feel strongly one way, let me know.",
+      "parentUuid": "643a7d13_e164967d",
+      "revId": "7b5bab11dee4fbda8e95b9dba240e8d18d291440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10e7c922_b595f7ed",
         "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "7b5bab11dee4fbda8e95b9dba240e8d18d291440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439887bf_0b1dd490",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-27T15:32:21Z",
+      "side": 1,
+      "message": "resolving",
+      "parentUuid": "f7bc43a6_4612d4cf",
+      "revId": "7b5bab11dee4fbda8e95b9dba240e8d18d291440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
