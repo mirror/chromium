@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae93339d_92165765",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-27T19:22:09Z",
+      "side": 1,
+      "message": "nit: period instead of colon",
+      "range": {
+        "startLine": 1294,
+        "startChar": 63,
+        "endLine": 1294,
+        "endChar": 0
+      },
+      "revId": "1de31457450b394e11567164a6ceb86cd7a764c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ea030a_3c87aa4e",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-27T19:22:09Z",
+      "side": 1,
+      "message": "Is there supposed to be an interstitial showing at this point, or is the page supposed to load? Either way, might be good to have a test expectation that an interstitial is or isn\u0027t showing.",
+      "range": {
+        "startLine": 1341,
+        "startChar": 34,
+        "endLine": 1341,
+        "endChar": 0
+      },
+      "revId": "1de31457450b394e11567164a6ceb86cd7a764c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf12836_61bcebc5",
+        "filename": "chrome/browser/ssl/ssl_error_controller_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-27T19:22:09Z",
+      "side": 1,
+      "message": "Can you please add a comment here to explain why we kick users into Chrome for desktop PWAs?",
+      "range": {
+        "startLine": 160,
+        "startChar": 32,
+        "endLine": 160,
+        "endChar": 0
+      },
+      "revId": "1de31457450b394e11567164a6ceb86cd7a764c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f455deb_08426f6a",
+        "filename": "chrome/browser/ssl/ssl_error_controller_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-27T19:22:09Z",
+      "side": 1,
+      "message": "Is the intended behavior that the page opens in the new browser tab with the interstitial already proceeded through? If not, I\u0027d expect there to be a return here. If so, I\u0027m a little uneasy about storing the exception on line 178 *after* calling chrome::OpenInChrome. Should we be storing the exception before calling OpenInChrome to guarantee that it\u0027s stored before the navigation happens in the new browser tab?",
+      "range": {
+        "startLine": 165,
+        "startChar": 34,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "1de31457450b394e11567164a6ceb86cd7a764c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
