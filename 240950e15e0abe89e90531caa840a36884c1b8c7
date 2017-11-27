@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35917147_cf14bf58",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-27T21:12:24Z",
+      "side": 1,
+      "message": "I\u0027m confused why this is mentioning multiple change ids.  I think only the second one is intended to be included in this CL?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 52
+      },
+      "revId": "240950e15e0abe89e90531caa840a36884c1b8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2e847b_238deaff",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 2895,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-27T21:12:24Z",
+      "side": 1,
+      "message": "nit: I think the stylistic preference is to omit the \"//chrome/test\" prefix for a target that\u0027s defined in this same file.  I\u0027m actually not 100% sure that I\u0027m remembering that correctly, though – please let me know if I\u0027m misremembering!",
+      "range": {
+        "startLine": 2895,
+        "startChar": 17,
+        "endLine": 2895,
+        "endChar": 30
+      },
+      "revId": "240950e15e0abe89e90531caa840a36884c1b8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be486888_90bdbc16",
+        "filename": "chrome/utility/importer/firefox_importer_unittest_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-27T21:12:24Z",
+      "side": 1,
+      "message": "nit: I\u0027d omit these two lines – I don\u0027t think they add extra clarity over the four lines above.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 61
+      },
+      "revId": "240950e15e0abe89e90531caa840a36884c1b8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91e8391_64847708",
+        "filename": "chrome/utility/importer/firefox_importer_unittest_utils_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-27T21:12:24Z",
+      "side": 1,
+      "message": "Hmm, what does this std::move call do?  It\u0027s basically a typecast, right?  Why is it needed here?  (Sorry if this is a dumb question!)",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 14
+      },
+      "revId": "240950e15e0abe89e90531caa840a36884c1b8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b955e7c5_9c02baba",
+        "filename": "chrome/utility/importer/firefox_importer_unittest_utils_mac.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-27T21:12:24Z",
+      "side": 1,
+      "message": "nit: Spurious whitespace (I think?)",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 10
+      },
+      "revId": "240950e15e0abe89e90531caa840a36884c1b8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
