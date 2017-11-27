@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32feed17_24b4bd29",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2307,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-27T22:46:55Z",
+      "side": 1,
+      "message": "nit: maybe explain what this means (if anything) for other platforms? Perhaps update the fixture\u0027s name to be more cross-platform applicable?",
+      "revId": "267437bd65fbba8cffbdb1e1e19d7f180f061b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
