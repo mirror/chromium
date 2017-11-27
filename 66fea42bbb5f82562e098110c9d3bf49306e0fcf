@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f776eb57_9ce37776",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-27T22:49:34Z",
+      "side": 1,
+      "message": "Maybe add here something like \"Severity should be always set if the issue has type Bug-Security\"?",
+      "range": {
+        "startLine": 27,
+        "startChar": 45,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "66fea42bbb5f82562e098110c9d3bf49306e0fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741717e1_8dc207bf",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-27T22:49:34Z",
+      "side": 1,
+      "message": "Let\u0027s make it bold?",
+      "range": {
+        "startLine": 35,
+        "startChar": 65,
+        "endLine": 35,
+        "endChar": 83
+      },
+      "revId": "66fea42bbb5f82562e098110c9d3bf49306e0fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74241d03_4c7e4288",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-27T22:49:34Z",
+      "side": 1,
+      "message": "Let\u0027s remove parens",
+      "range": {
+        "startLine": 35,
+        "startChar": 54,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "66fea42bbb5f82562e098110c9d3bf49306e0fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
