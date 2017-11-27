@@ -22,7 +22,7 @@ UploadBlobElementReader::UploadBlobElementReader(
     FileSystemContext* file_system_context)
     : handle_(std::move(handle)), file_system_context_(file_system_context) {}
 
-UploadBlobElementReader::~UploadBlobElementReader() {}
+UploadBlobElementReader::~UploadBlobElementReader() = default;
 
 int UploadBlobElementReader::Init(const net::CompletionCallback& callback) {
   reader_ = handle_->CreateReader(file_system_context_.get());

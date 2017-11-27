@@ -36,7 +36,7 @@ MojoBlobReader::MojoBlobReader(FileSystemContext* file_system_context,
       base::Bind(&MojoBlobReader::Start, weak_factory_.GetWeakPtr()));
 }
 
-MojoBlobReader::~MojoBlobReader() {}
+MojoBlobReader::~MojoBlobReader() = default;
 
 void MojoBlobReader::Start() {
   if (blob_reader_->net_error()) {
