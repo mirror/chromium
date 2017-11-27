@@ -4,6 +4,8 @@
 
 #include "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.h"
 
+#include <math.h>
+
 #include "base/memory/ptr_util.h"
 #include "base/metrics/metrics_hashes.h"
 #include "base/optional.h"
@@ -303,4 +305,71 @@ TEST_F(UkmPageLoadMetricsObserverTest, PageTransitionReload) {
   test_ukm_recorder().ExpectMetric(*source, internal::kUkmPageLoadEventName,
                                    internal::kUkmPageTransition,
                                    ui::PAGE_TRANSITION_RELOAD);
+}
+
+TEST_F(UkmPageLoadMetricsObserverTest, BodySizeMetrics) {
+  NavigateAndCommit(GURL(kTestUrl1));
+
+  page_load_metrics::ExtraRequestCompleteInfo resources[] = {
+      // Cached request.
+      {GURL(kResourceUrl),
+       net::HostPortPair(),
+       -1 /* frame_tree_node_id */,
+       true /*was_cached*/,
+       1024 * 20 /* raw_body_bytes */,
+       0 /* original_network_content_length */,
+       nullptr /* data_reduction_proxy_data */,
+       content::ResourceType::RESOURCE_TYPE_SCRIPT,
+       0,
+       {} /* load_timing_info */},
+      // Uncached non-proxied request.
+      {GURL(kResourceUrl),
+       net::HostPortPair(),
+       -1 /* frame_tree_node_id */,
+       false /*was_cached*/,
+       1024 * 40 /* raw_body_bytes */,
+       1024 * 40 /* original_network_content_length */,
+       nullptr /* data_reduction_proxy_data */,
+       content::ResourceType::RESOURCE_TYPE_SCRIPT,
+       0,
+       {} /* load_timing_info */},
+  };
+
+  int64_t network_bytes = 0;
+  int64_t cache_bytes = 0;
+  for (const auto& request : resources) {
+    SimulateLoadedResource(request);
+    if (!request.was_cached) {
+      network_bytes += request.raw_body_bytes;
+    } else {
+      cache_bytes += request.raw_body_bytes;
+    }
+  }
+
+  // Simulate closing the tab.
+  DeleteContents();
+
+  double exp_base = 1.3;
+  double log_base = std::log(exp_base);
+
+  int64_t bucketed_network_bytes =
+      network_bytes > 0
+          ? std::ceil(std::pow(exp_base,
+                               std::floor(std::log(network_bytes) / log_base)))
+          : 0;
+  int64_t bucketed_cache_bytes =
+      cache_bytes > 0
+          ? std::ceil(std::pow(exp_base,
+                               std::floor(std::log(cache_bytes) / log_base)))
+          : 0;
+
+  EXPECT_EQ(1ul, test_ukm_recorder().sources_count());
+  const ukm::UkmSource* source = test_ukm_recorder().GetSourceForUrl(kTestUrl1);
+  EXPECT_EQ(GURL(kTestUrl1), source->url());
+
+  EXPECT_GE(test_ukm_recorder().entries_count(), 1ul);
+  test_ukm_recorder().ExpectMetric(*source, internal::kUkmPageLoadEventName,
+                                   "Net.NetworkBytes", bucketed_network_bytes);
+  test_ukm_recorder().ExpectMetric(*source, internal::kUkmPageLoadEventName,
+                                   "Net.CacheBytes", bucketed_cache_bytes);
 }
