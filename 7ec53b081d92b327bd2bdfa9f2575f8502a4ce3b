@@ -22,6 +22,30 @@
       "revId": "7ec53b081d92b327bd2bdfa9f2575f8502a4ce3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e8fa51_7da6cc15",
+        "filename": "third_party/WebKit/LayoutTests/vr/getFrameData_oneframeupdate.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-27T22:55:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c69ec316_3f2a7bdc",
+      "range": {
+        "startLine": 30,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "7ec53b081d92b327bd2bdfa9f2575f8502a4ce3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
