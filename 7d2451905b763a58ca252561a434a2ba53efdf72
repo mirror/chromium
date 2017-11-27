@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df395cad_dc4559dd",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-27T10:22:23Z",
+      "side": 1,
+      "message": "I wanted to do the same as updateHiddenInCurrentSizeClass. I will do it in a followup CL.",
+      "parentUuid": "5367b9a3_2b064db1",
+      "range": {
+        "startLine": 85,
+        "startChar": 1,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "7d2451905b763a58ca252561a434a2ba53efdf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a50331a1_7f9d120d",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.mm",
         "patchSetId": 6
