@@ -18,6 +18,7 @@
 #include "third_party/WebKit/public/platform/modules/notifications/WebNotificationConstants.h"
 
 namespace content {
+namespace notification_database_data_unittest {
 
 const char kNotificationId[] = "my-notification";
 const int64_t kServiceWorkerRegistrationId = 9001;
@@ -211,4 +212,5 @@ TEST(NotificationDatabaseDataTest, SerializeAndDeserializeNullPlaceholder) {
   EXPECT_TRUE(copied_data.notification_data.actions[0].placeholder.is_null());
 }
 
+}  // namespace notification_database_data_unittest
 }  // namespace content

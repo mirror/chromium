@@ -27,8 +27,7 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
-
-namespace {
+namespace link_header_support_unittest {
 
 const int kMockProviderId = 1;
 
@@ -52,8 +51,6 @@ SaveFoundRegistrations(
   return base::Bind(&SaveFoundRegistrationsCallback, expected_status, called,
                     registrations);
 }
-
-}  // namespace
 
 class LinkHeaderServiceWorkerTest : public ::testing::Test {
  public:
@@ -449,4 +446,5 @@ TEST_F(LinkHeaderServiceWorkerTest,
   ASSERT_EQ(1u, registrations.size());
 }
 
+}  // namespace link_header_support_unittest
 }  // namespace content

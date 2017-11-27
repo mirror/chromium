@@ -18,6 +18,10 @@ namespace content {
 
 class PaymentAppContextImpl;
 
+namespace payment_manager_unittest {
+class PaymentManagerTest;
+}
+
 class CONTENT_EXPORT PaymentManager : public payments::mojom::PaymentManager {
  public:
   PaymentManager(
@@ -29,7 +33,7 @@ class CONTENT_EXPORT PaymentManager : public payments::mojom::PaymentManager {
  private:
   friend class PaymentAppContentUnitTestBase;
   friend class PaymentAppProviderTest;
-  friend class PaymentManagerTest;
+  friend class payment_manager_unittest::PaymentManagerTest;
 
   // payments::mojom::PaymentManager methods:
   void Init(const std::string& context, const std::string& scope) override;

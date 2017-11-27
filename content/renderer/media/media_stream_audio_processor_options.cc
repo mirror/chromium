@@ -23,7 +23,14 @@
 #include "content/renderer/media/media_stream_source.h"
 #include "media/base/audio_parameters.h"
 #include "third_party/webrtc/modules/audio_processing/aec_dump/aec_dump_factory.h"
+#ifdef _USE_MATH_DEFINES
+// Header breaks if this is defined because it tried to define it itself.
+#undef _USE_MATH_DEFINES
 #include "third_party/webrtc/modules/audio_processing/include/audio_processing.h"
+#define _USE_MATH_DEFINES 1
+#else
+#include "third_party/webrtc/modules/audio_processing/include/audio_processing.h"
+#endif  // _USE_MATH_DEFINES
 #include "third_party/webrtc/modules/audio_processing/typing_detection.h"
 
 namespace content {
