@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42e82383_12822973",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-27T18:18:04Z",
+      "side": 1,
+      "message": "I would reverse this to avoid the case where host is still null (I don\u0027t know if that is possible in the above case, like would chrome:// have a null host)\n\nBut UrlConstants.NTP_HOST.equals(host) seems safer regardless.",
+      "range": {
+        "startLine": 172,
+        "startChar": 19,
+        "endLine": 172,
+        "endChar": 23
+      },
+      "revId": "146bea30a7e8c79df54aeebfdf4d37a82881301f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
