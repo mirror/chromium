@@ -13,10 +13,13 @@
 #include <cstring>
 #include <limits>
 #include <tuple>
+
+#define USE_EIGEN 0
 #if USE_EIGEN
-#include "third_party/eigen3/Eigen/Core"
+include "third_party/eigen3/Eigen/Core"
 #endif
-namespace highcontrast_tfnative_model {
+
+    namespace highcontrast_tfnative_model {
 namespace {
 
 // -----------------------------------------------------------------------------
@@ -31,7 +34,6 @@ namespace {
 #ifndef USE_TYPED_MEMSETMEMCPY
 #define USE_TYPED_MEMSETMEMCPY 1
 #endif
-#define USE_EIGEN 0
 #ifndef USE_EIGEN
 #error Please define USE_EIGEN to either 0 or 1
 #endif
@@ -1001,157 +1003,159 @@ BROADCAST_BINARY_OP(SquaredDifference,
     }                                                                         \
   }
 
-REDUCE_OP(Max, std::numeric_limits<T>::lowest(), std::max(prev, next), value);
-REDUCE_OP(Sum, 0, prev + next, value);
-REDUCE_OP(Mean, 0, prev + next, value / count);
+  REDUCE_OP(Max, std::numeric_limits<T>::lowest(), std::max(prev, next), value);
+  REDUCE_OP(Sum, 0, prev + next, value);
+  REDUCE_OP(Mean, 0, prev + next, value / count);
 
-// -----------------------------------------------------------------------------
-// Dequantize ops
-// -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
+  // Dequantize ops
+  // -----------------------------------------------------------------------------
 
-template <typename T>
-void DequantizeMinCombined(const int32_t rank,
-                           const int32_t* __restrict input_shape,
-                           const T* __restrict input_values,
-                           const float* __restrict min_range,
-                           const float* __restrict max_range,
-                           float* __restrict output_values) {
-  BENCHMARK_TIMER("DequantizeMinCombined");
-  const int size = ShapeSize(rank, input_shape);
-  const float offset =
-      std::is_signed<T>::value
-          ? (static_cast<float>(std::numeric_limits<T>::max()) -
-             std::numeric_limits<T>::min() + 1) /
-                2.0f
-          : 0.0f;
-  const float range_scale = (max_range[0] - min_range[0]) /
-                            (static_cast<float>(std::numeric_limits<T>::max()) -
-                             std::numeric_limits<T>::min());
-  for (int i = 0; i < size; i++) {
-    output_values[i] =
-        ((static_cast<int32_t>(input_values[i]) + offset) * range_scale) +
-        min_range[0];
+  template <typename T>
+  void DequantizeMinCombined(const int32_t rank,
+                             const int32_t* __restrict input_shape,
+                             const T* __restrict input_values,
+                             const float* __restrict min_range,
+                             const float* __restrict max_range,
+                             float* __restrict output_values) {
+    BENCHMARK_TIMER("DequantizeMinCombined");
+    const int size = ShapeSize(rank, input_shape);
+    const float offset =
+        std::is_signed<T>::value
+            ? (static_cast<float>(std::numeric_limits<T>::max()) -
+               std::numeric_limits<T>::min() + 1) /
+                  2.0f
+            : 0.0f;
+    const float range_scale =
+        (max_range[0] - min_range[0]) /
+        (static_cast<float>(std::numeric_limits<T>::max()) -
+         std::numeric_limits<T>::min());
+    for (int i = 0; i < size; i++) {
+      output_values[i] =
+          ((static_cast<int32_t>(input_values[i]) + offset) * range_scale) +
+          min_range[0];
+    }
   }
-}
 
-template <typename T>
-void DequantizeMinFirst(const int32_t rank,
-                        const int32_t* __restrict input_shape,
-                        const T* __restrict input_values,
-                        const float* __restrict min_range,
-                        const float* __restrict max_range,
-                        float* __restrict output_values) {
-  BENCHMARK_TIMER("DequantizeMinFirst");
-  const int size = ShapeSize(rank, input_shape);
-  const float range_scale = (max_range[0] - min_range[0]) /
-                            (static_cast<float>(std::numeric_limits<T>::max()) -
-                             std::numeric_limits<T>::min());
-  const float range_min_rounded =
-      (max_range[0] == min_range[0]
-           ? min_range[0]
-           : round(min_range[0] / range_scale) * range_scale);
-  for (int i = 0; i < size; i++) {
-    output_values[i] = ((static_cast<int32_t>(input_values[i]) -
-                         std::numeric_limits<T>::min()) *
-                        range_scale) +
-                       range_min_rounded;
+  template <typename T>
+  void DequantizeMinFirst(const int32_t rank,
+                          const int32_t* __restrict input_shape,
+                          const T* __restrict input_values,
+                          const float* __restrict min_range,
+                          const float* __restrict max_range,
+                          float* __restrict output_values) {
+    BENCHMARK_TIMER("DequantizeMinFirst");
+    const int size = ShapeSize(rank, input_shape);
+    const float range_scale =
+        (max_range[0] - min_range[0]) /
+        (static_cast<float>(std::numeric_limits<T>::max()) -
+         std::numeric_limits<T>::min());
+    const float range_min_rounded =
+        (max_range[0] == min_range[0]
+             ? min_range[0]
+             : round(min_range[0] / range_scale) * range_scale);
+    for (int i = 0; i < size; i++) {
+      output_values[i] = ((static_cast<int32_t>(input_values[i]) -
+                           std::numeric_limits<T>::min()) *
+                          range_scale) +
+                         range_min_rounded;
+    }
   }
-}
 
-// -----------------------------------------------------------------------------
-// CONSTANTS
-// Note that for now, endianness of the target machine needs to match that of
-// the one training was performed on.
-// -----------------------------------------------------------------------------
-const int32_t dnn_hiddenlayer_0_weights_part_0_shape[2] = {4, 10};
-const union {
-  uint8_t bytes[160];
-  float values[40];
-} dnn_hiddenlayer_0_weights_part_0 = {{
-    0xbc, 0x22, 0x0a, 0xbf, 0xb4, 0x46, 0x8c, 0x3f, 0xba, 0x31, 0x34, 0xbe,
-    0x4c, 0x65, 0xdb, 0xbe, 0xf0, 0x54, 0x5e, 0xbe, 0xc1, 0x5d, 0xb3, 0x3f,
-    0xf4, 0xe6, 0x15, 0xbf, 0x05, 0xc6, 0x34, 0xbf, 0xc0, 0x37, 0x7e, 0xbd,
-    0x6c, 0x35, 0x0b, 0xbf, 0xca, 0x53, 0x26, 0xbf, 0x58, 0xb4, 0x87, 0x3f,
-    0x37, 0xee, 0x39, 0xbf, 0xda, 0xfa, 0xf9, 0xbe, 0x97, 0xc1, 0x06, 0xbf,
-    0xf9, 0x4e, 0x81, 0x3f, 0xb2, 0x44, 0x85, 0xbf, 0x7f, 0x98, 0x7c, 0x3d,
-    0x15, 0x26, 0xbc, 0xbe, 0x5c, 0x48, 0x05, 0x3f, 0xc8, 0xaa, 0xa1, 0xbd,
-    0x35, 0xb3, 0x43, 0xbe, 0xeb, 0x46, 0x91, 0x3f, 0x80, 0x71, 0xe3, 0x3c,
-    0xd1, 0x98, 0x79, 0x3f, 0x3c, 0xd0, 0x0d, 0xbf, 0x1e, 0x02, 0xd3, 0x3e,
-    0x5d, 0x4b, 0xa2, 0xbf, 0x68, 0xac, 0xaa, 0xbd, 0xf8, 0xe1, 0x75, 0x3e,
-    0x4a, 0x9c, 0x27, 0xbe, 0xf8, 0xae, 0xb2, 0xbe, 0x7f, 0x9d, 0x91, 0x3f,
-    0x1e, 0x8b, 0xa8, 0xbe, 0x35, 0x7e, 0xb2, 0x3f, 0xbe, 0x8c, 0xd3, 0xbe,
-    0xf9, 0xcd, 0xb5, 0x3f, 0xa1, 0x50, 0xaa, 0x3f, 0xe4, 0x6d, 0xdd, 0xbe,
-    0x0d, 0xce, 0xd3, 0xbe,
-}};
-const int32_t dnn_hiddenlayer_0_biases_part_0_shape[1] = {10};
-const union {
-  uint8_t bytes[40];
-  float values[10];
-} dnn_hiddenlayer_0_biases_part_0 = {{
-    0x00, 0x00, 0x00, 0x00, 0xbf, 0x6a, 0x53, 0x3e, 0xd3, 0xc1,
-    0xd0, 0x3e, 0x00, 0x00, 0x00, 0x00, 0xb6, 0xd8, 0xc0, 0x3e,
-    0xca, 0xe7, 0x35, 0x3e, 0x23, 0xa5, 0x44, 0x3f, 0x61, 0xfd,
-    0xd2, 0x3e, 0x00, 0x00, 0x00, 0x00, 0xb6, 0xe0, 0x43, 0x3c,
-}};
-const int32_t dnn_logits_biases_part_0_shape[1] = {1};
-const union {
-  uint8_t bytes[4];
-  float values[1];
-} dnn_logits_biases_part_0 = {{
-    0x75, 0xca, 0xd7, 0xbe,
-}};
-const int32_t dnn_logits_weights_part_0_shape[2] = {10, 1};
-const union {
-  uint8_t bytes[40];
-  float values[10];
-} dnn_logits_weights_part_0 = {{
-    0x13, 0x12, 0x39, 0x3f, 0xf3, 0xa5, 0xc2, 0xbf, 0x81, 0x7f,
-    0xbe, 0x3f, 0xf8, 0x17, 0x26, 0x3e, 0xa4, 0x19, 0xa6, 0x3f,
-    0xf0, 0xc9, 0xb7, 0xbf, 0x6a, 0x99, 0xd2, 0x3f, 0x8a, 0x7d,
-    0xe9, 0x3f, 0x83, 0x9a, 0x3a, 0xbf, 0xf1, 0x6c, 0x08, 0x3e,
-}};
+  // -----------------------------------------------------------------------------
+  // CONSTANTS
+  // Note that for now, endianness of the target machine needs to match that of
+  // the one training was performed on.
+  // -----------------------------------------------------------------------------
+  const int32_t dnn_logits_biases_part_0_shape[1] = {1};
+  const union {
+    uint8_t bytes[4];
+    float values[1];
+  } dnn_logits_biases_part_0 = {{
+      0xf1, 0x29, 0x58, 0xc0,
+  }};
+  const int32_t dnn_logits_weights_part_0_shape[2] = {10, 1};
+  const union {
+    uint8_t bytes[40];
+    float values[10];
+  } dnn_logits_weights_part_0 = {{
+      0x4e, 0xdc, 0x02, 0x40, 0xc6, 0x9d, 0x9e, 0x3e, 0x41, 0xd2,
+      0x23, 0x40, 0xfe, 0xd1, 0x24, 0x40, 0xe2, 0x7d, 0x0a, 0x40,
+      0x4c, 0x65, 0x27, 0xbd, 0xde, 0xab, 0xd8, 0x3e, 0x97, 0xa4,
+      0x56, 0x40, 0x64, 0xe5, 0x4e, 0xbe, 0x8e, 0x5b, 0xb1, 0x3f,
+  }};
+  const int32_t dnn_hiddenlayer_0_weights_part_0_shape[2] = {4, 10};
+  const union {
+    uint8_t bytes[160];
+    float values[40];
+  } dnn_hiddenlayer_0_weights_part_0 = {{
+      0x38, 0x40, 0x44, 0x3e, 0x58, 0x8c, 0x02, 0xbf, 0x73, 0xf2, 0xbf, 0xbf,
+      0x90, 0xe6, 0xb9, 0xbf, 0x90, 0x29, 0x81, 0xbf, 0x17, 0x1d, 0x37, 0xbe,
+      0xbe, 0x5e, 0x16, 0xbf, 0x78, 0x51, 0x97, 0x3e, 0x14, 0x5d, 0x80, 0xbe,
+      0x31, 0x43, 0x54, 0xbf, 0xce, 0xa0, 0x07, 0xc0, 0x91, 0xb0, 0x84, 0xbe,
+      0x5e, 0xaf, 0xdf, 0xbf, 0x02, 0xac, 0xcb, 0xbf, 0xad, 0x64, 0xaf, 0xbf,
+      0x98, 0xa2, 0x1b, 0xbe, 0xd0, 0x71, 0x22, 0xbe, 0xb7, 0x2d, 0x62, 0xc0,
+      0xf8, 0x28, 0xaf, 0xbd, 0x1b, 0xaa, 0x56, 0x3f, 0x15, 0xc2, 0x5c, 0x3f,
+      0x8b, 0x83, 0xdc, 0xbe, 0x1f, 0x99, 0x9c, 0x3e, 0x53, 0xc5, 0x4b, 0x3f,
+      0x8e, 0xdc, 0x29, 0xbe, 0x30, 0x59, 0x09, 0x3f, 0xb5, 0xb8, 0x82, 0xbe,
+      0x96, 0x7b, 0x04, 0x3f, 0x40, 0xf0, 0xcc, 0xbe, 0xd9, 0x35, 0xd9, 0xbe,
+      0x4e, 0x96, 0x0c, 0xbe, 0x94, 0xe7, 0x03, 0xbf, 0xb9, 0xea, 0xab, 0x3f,
+      0xeb, 0xf4, 0x8c, 0x3f, 0x13, 0x15, 0x73, 0x3f, 0x96, 0x85, 0x19, 0xbe,
+      0x41, 0x9b, 0xde, 0xbe, 0x3e, 0x6c, 0xf9, 0xbd, 0x92, 0x69, 0x82, 0x3e,
+      0x72, 0xd9, 0x7b, 0x3f,
+  }};
+  const int32_t dnn_hiddenlayer_0_biases_part_0_shape[1] = {10};
+  const union {
+    uint8_t bytes[40];
+    float values[10];
+  } dnn_hiddenlayer_0_biases_part_0 = {{
+      0xf3, 0x5d, 0x14, 0x3e, 0x00, 0x00, 0x00, 0x00, 0x02, 0xa3,
+      0xbe, 0x3f, 0xcb, 0x36, 0xbd, 0x3f, 0x44, 0xbb, 0x80, 0x3f,
+      0xe6, 0xff, 0x41, 0xbc, 0x00, 0x00, 0x00, 0x00, 0xbe, 0xf6,
+      0x7b, 0x3e, 0x1b, 0xd1, 0x05, 0xbe, 0xff, 0xf4, 0x4b, 0x3e,
+  }};
 
-}  // anonymous namespace
+  }  // anonymous namespace
 
-// -----------------------------------------------------------------------------
-// INFERENCE
-// -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
+  // INFERENCE
+  // -----------------------------------------------------------------------------
 
-int32_t input0Shape[2] = {1, 4};
-int32_t logits_MatMul_merged_with_dnn_logits_BiasAdd0Shape[2] = {1, 1};
+  int32_t input0Shape[2] = {1, 4};
+  int32_t logits_MatMul_merged_with_dnn_logits_BiasAdd0Shape[2] = {1, 1};
 
-void Inference(
-    const float* __restrict input0 /* shape: 1,4 */,
-    float* __restrict logits_MatMul_merged_with_dnn_logits_BiasAdd0 /* shape:
-                                                                       1,1 */
-    ,
-    FixedAllocations* __restrict fixed) {
-  const int32_t input0_shape[] = {1, 4};
-  int32_t logits_MatMul_merged_with_dnn_logits_BiasAdd0_shape[2];
+  void Inference(
+      const float* __restrict input0 /* shape: 1,4 */,
+      float* __restrict logits_MatMul_merged_with_dnn_logits_BiasAdd0 /* shape:
+                                                                         1,1 */
+      ,
+      FixedAllocations* __restrict fixed) {
+    const int32_t input0_shape[] = {1, 4};
+    int32_t logits_MatMul_merged_with_dnn_logits_BiasAdd0_shape[2];
 
-  // dnn/hiddenlayer_0/MatMul_merged_with_dnn/hiddenlayer_0/BiasAdd
-  FullyConnected<float>(input0_shape, input0,
-                        dnn_hiddenlayer_0_weights_part_0_shape,
-                        dnn_hiddenlayer_0_weights_part_0.values,
-                        dnn_hiddenlayer_0_biases_part_0_shape,
-                        dnn_hiddenlayer_0_biases_part_0.values, fixed->alloc0);
-  fixed->alloc0_shape[0] = 1;
-  fixed->alloc0_shape[1] = 10;
+    // dnn/hiddenlayer_0/MatMul_merged_with_dnn/hiddenlayer_0/BiasAdd
+    FullyConnected<float>(
+        input0_shape, input0, dnn_hiddenlayer_0_weights_part_0_shape,
+        dnn_hiddenlayer_0_weights_part_0.values,
+        dnn_hiddenlayer_0_biases_part_0_shape,
+        dnn_hiddenlayer_0_biases_part_0.values, fixed->alloc0);
+    fixed->alloc0_shape[0] = 1;
+    fixed->alloc0_shape[1] = 10;
 
-  // dnn/hiddenlayer_0/hiddenlayer_0/Relu
-  Relu<float>(2,  // rank
-              fixed->alloc0_shape, fixed->alloc0, fixed->alloc1);
-  fixed->alloc1_shape[0] = 1;
-  fixed->alloc1_shape[1] = 10;
+    // dnn/hiddenlayer_0/hiddenlayer_0/Relu
+    Relu<float>(2,  // rank
+                fixed->alloc0_shape, fixed->alloc0, fixed->alloc1);
+    fixed->alloc1_shape[0] = 1;
+    fixed->alloc1_shape[1] = 10;
 
-  // dnn/logits/MatMul_merged_with_dnn/logits/BiasAdd
-  FullyConnected<float>(
-      fixed->alloc1_shape, fixed->alloc1, dnn_logits_weights_part_0_shape,
-      dnn_logits_weights_part_0.values, dnn_logits_biases_part_0_shape,
-      dnn_logits_biases_part_0.values,
-      logits_MatMul_merged_with_dnn_logits_BiasAdd0);
-  logits_MatMul_merged_with_dnn_logits_BiasAdd0_shape[0] = 1;
-  logits_MatMul_merged_with_dnn_logits_BiasAdd0_shape[1] = 1;
-}
+    // dnn/logits/MatMul_merged_with_dnn/logits/BiasAdd
+    FullyConnected<float>(
+        fixed->alloc1_shape, fixed->alloc1, dnn_logits_weights_part_0_shape,
+        dnn_logits_weights_part_0.values, dnn_logits_biases_part_0_shape,
+        dnn_logits_biases_part_0.values,
+        logits_MatMul_merged_with_dnn_logits_BiasAdd0);
+    logits_MatMul_merged_with_dnn_logits_BiasAdd0_shape[0] = 1;
+    logits_MatMul_merged_with_dnn_logits_BiasAdd0_shape[1] = 1;
+  }
 
 }  // namespace highcontrast_tfnative_model
