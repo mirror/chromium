@@ -102,7 +102,10 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
   unsigned NextSafeToBreakOffset(unsigned offset) const;
   unsigned PreviousSafeToBreakOffset(unsigned offset) const;
 
-  unsigned OffsetForPosition(float target_x, bool include_partial_glyphs) const;
+  struct RunInfo;
+  unsigned OffsetForPosition(const TextRun*,
+                             float target_x,
+                             bool include_partial_glyphs) const;
   float PositionForOffset(unsigned offset) const;
   LayoutUnit SnappedStartPositionForOffset(unsigned offset) const {
     return LayoutUnit::FromFloatFloor(PositionForOffset(offset));
@@ -125,7 +128,6 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
   String ToString() const;
   void ToString(StringBuilder*) const;
 
-  struct RunInfo;
   RunInfo* InsertRunForTesting(unsigned start_index,
                                unsigned num_characters,
                                TextDirection,
@@ -158,6 +160,11 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
                  hb_buffer_t*);
   void InsertRun(std::unique_ptr<ShapeResult::RunInfo>);
   void ReorderRtlRuns(unsigned run_size_before);
+  unsigned GetCharacterIndexForXPosition(const TextRun*,
+                                         float target_x,
+                                         bool include_partial_glyphs,
+                                         unsigned characters_so_far,
+                                         const ShapeResult::RunInfo*) const;
 
   float width_;
   FloatRect glyph_bounding_box_;
