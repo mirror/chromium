@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "0f2ceccf_90c31b2f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-27T07:49:15Z",
+      "side": 1,
+      "message": "We, posciak@ and I, reached a decision that the implementation is good enough.",
+      "parentUuid": "a64f2a47_46f1449e",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0585713_5c0f88a8",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "Ah, I\u0027m sorry for the typo, I meant unique_ptr\u003c\u003e not scoped_ptr\u003c\u003e, and you could use unique_ptr\u0027s release() method.",
       "parentUuid": "c91db84c_dd025090",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f19743ae_bd4cca44",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-27T07:49:15Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "7db9c3c9_8f2ba4b4",
       "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -412,6 +448,24 @@
       "side": 1,
       "message": "I think we probably don\u0027t need that value in l.500. The fd value is probably not very informative if we look only at level 1 logs, unless we have the full context of the run, since fd values change each run. We could instead VLOGF(2) fd for all calls to this method at the beginning of it.",
       "parentUuid": "02ad5756_5609a49b",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "beefbc76_e27342dc",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-27T07:49:15Z",
+      "side": 1,
+      "message": "Decode() will be called many times. probably DVLOGF(4)?",
+      "parentUuid": "2143364f_4ccbccd2",
       "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
