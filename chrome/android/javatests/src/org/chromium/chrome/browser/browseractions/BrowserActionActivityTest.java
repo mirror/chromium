@@ -522,7 +522,7 @@ public class BrowserActionActivityTest {
                         && activity2.getTabModelSelector().isTabStateInitialized();
             }
         });
-        String cta2ActivityTabUrl = activity2.getActivityTab().getUrl();
+
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -530,6 +530,8 @@ public class BrowserActionActivityTest {
                         new LoadUrlParams(mTestPage2), TabLaunchType.FROM_CHROME_UI, null);
             }
         });
+        String cta2ActivityTabUrl =
+                activity2.getTabModelSelector().getCurrentModel().getTabAt(0).getUrl();
 
         // Save state and destroy both activities.
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
