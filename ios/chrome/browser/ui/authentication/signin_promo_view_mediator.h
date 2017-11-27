@@ -95,6 +95,10 @@ class PrefRegistrySyncable;
 // called.
 - (void)signinPromoViewRemoved;
 
+// Returns YES if the sign-in promo view is Unused or UsedAtLeastOnce. The
+// sign-in promo view cannot be hidden if NeverVisible, Closed or Invalid.
+- (BOOL)signinPromoViewCanBecomeHidden;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_AUTHENTICATION_SIGNIN_PROMO_VIEW_MEDIATOR_H_
