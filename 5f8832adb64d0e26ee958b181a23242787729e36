@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "ced4b5b1_a7507653",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-27T20:35:51Z",
+      "side": 1,
+      "message": "This test will pass if the browser doesn\u0027t support position sticky at all since it just requires that it hasn\u0027t been shifted right? I\u0027d strongly prefer that we have a test where the nested sticky content is visible.",
+      "parentUuid": "4a5947a9_4a9f1ffb",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62fde487_1d7e7dbd",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
         "patchSetId": 2
