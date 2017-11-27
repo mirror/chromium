@@ -69,6 +69,24 @@
       "revId": "712a2904e2c3e8b90516a4b4fd4d3e9ad12c6cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3759dfc4_30a0b4d7",
+        "filename": "mojo/public/cpp/bindings/interface_ptr_set.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-27T12:57:18Z",
+      "side": 1,
+      "message": "John:  I\u0027ve undone this change because it doesn\u0027t work.  get() returns an Interface*, not an Ptr\u003cInterface\u003e.",
+      "parentUuid": "d8da6ed4_e5e4a0f2",
+      "revId": "712a2904e2c3e8b90516a4b4fd4d3e9ad12c6cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
