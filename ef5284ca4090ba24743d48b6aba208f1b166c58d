@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67f31f72_3b3cc30c",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-27T21:58:06Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to export this with inline? I could be totally wrong though.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 17
+      },
+      "revId": "ef5284ca4090ba24743d48b6aba208f1b166c58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
