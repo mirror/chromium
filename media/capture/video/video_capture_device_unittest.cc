@@ -219,7 +219,7 @@ class MockImageCaptureClient
 
  private:
   friend class base::RefCountedThreadSafe<MockImageCaptureClient>;
-  virtual ~MockImageCaptureClient() {}
+  virtual ~MockImageCaptureClient() = default;
 
   mojom::PhotoStatePtr state_;
 };
@@ -230,7 +230,7 @@ class MojoEnabledTestEnvironment final : public testing::Environment {
  public:
   MojoEnabledTestEnvironment() : mojo_ipc_thread_("MojoIpcThread") {}
 
-  ~MojoEnabledTestEnvironment() final {}
+  ~MojoEnabledTestEnvironment() final = default;
 
   void SetUp() final {
     mojo::edk::Init();

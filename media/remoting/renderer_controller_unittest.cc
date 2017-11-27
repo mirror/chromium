@@ -72,8 +72,8 @@ constexpr double kHighSpeedBitsPerSecond = 15000000;
 class RendererControllerTest : public ::testing::Test,
                                public MediaObserverClient {
  public:
-  RendererControllerTest() {}
-  ~RendererControllerTest() override {}
+  RendererControllerTest() = default;
+  ~RendererControllerTest() override = default;
 
   void TearDown() final { RunUntilIdle(); }
 
