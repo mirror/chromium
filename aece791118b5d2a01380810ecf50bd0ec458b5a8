@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7baaa66_92a9ee7a",
+        "filename": "chrome/browser/chromeos/login/enrollment/auto_enrollment_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-11-27T15:30:32Z",
+      "side": 1,
+      "message": "Let\u0027s put a comment here about what this is doing (trying over and over to get state keys).",
+      "range": {
+        "startLine": 239,
+        "startChar": 6,
+        "endLine": 239,
+        "endChar": 23
+      },
+      "revId": "aece791118b5d2a01380810ecf50bd0ec458b5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
