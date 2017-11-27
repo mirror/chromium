@@ -20,7 +20,7 @@
       }
   `);
 
-  TestRunner.evaluateInPage('whitespaceChild()', childCallback);
+  TestRunner.evaluateInPageRemoteObject('whitespaceChild()', childCallback);
 
   function childCallback(childObject) {
     ElementsTestRunner.firstElementsTreeOutline().addEventListener(

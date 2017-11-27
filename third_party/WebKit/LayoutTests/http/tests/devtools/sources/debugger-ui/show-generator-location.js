@@ -37,7 +37,7 @@
 
   function performStandardTestCase(pageExpression, next) {
     TestRunner.addSniffer(panel, 'showUISourceCode', showUISourceCodeHook);
-    TestRunner.evaluateInPage(pageExpression, didEvaluate);
+    TestRunner.evaluateInPageRemoteObject(pageExpression, didEvaluate);
 
     function didEvaluate(remote) {
       remote.getOwnPropertiesPromise().then(revealLocation.bind(null, remote));

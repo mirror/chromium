@@ -10,5 +10,5 @@
     TestRunner.addResult('date = ' + result.description.substring(0, 25));
     TestRunner.completeTest();
   }
-  TestRunner.evaluateInPage('new Date(2011, 11, 7, 12, 01)', callback);
+  TestRunner.evaluateInPageRemoteObject('new Date(2011, 11, 7, 12, 01)', callback);
 })();
