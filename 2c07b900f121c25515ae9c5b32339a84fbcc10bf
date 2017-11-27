@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "24b36a4a_006cbc55",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T08:18:09Z",
+      "side": 1,
+      "message": "Oh sorry. I misunderstood that the event is sent per file. Thank you for the reference.",
+      "parentUuid": "296a7ba4_62a4ad48",
+      "range": {
+        "startLine": 388,
+        "startChar": 17,
+        "endLine": 388,
+        "endChar": 38
+      },
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "508f5df3_af8591b5",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 6
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "I think this is also affected by what I said above - so I think this doesn\u0027t apply, but maybe I misunderstood you..^^",
       "parentUuid": "508f5df3_af8591b5",
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6072362c_5f8850ab",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T08:18:09Z",
+      "side": 1,
+      "message": "Nevermind the above comment.",
+      "parentUuid": "9e3da74f_884377f9",
       "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
