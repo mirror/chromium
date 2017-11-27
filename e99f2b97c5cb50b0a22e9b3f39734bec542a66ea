@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "833ec1c4_e7576684",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-27T05:21:59Z",
+      "side": 1,
+      "message": "Would it be better to mention that the remaining \"controller\"s are basically meant for ServiceWorkerContainer#controller?\nhttps://w3c.github.io/ServiceWorker/#navigator-service-worker-controller",
+      "revId": "e99f2b97c5cb50b0a22e9b3f39734bec542a66ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
