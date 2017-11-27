@@ -5,8 +5,6 @@
 #ifndef CHROME_BROWSER_EXTENSIONS_DATA_DELETER_H_
 #define CHROME_BROWSER_EXTENSIONS_DATA_DELETER_H_
 
-#include <string>
-#include "base/callback_forward.h"
 #include "base/macros.h"
 
 class Profile;
@@ -21,13 +19,9 @@ class DataDeleter {
   // called. Cookies are deleted on the current thread, local storage and
   // databases/settings are deleted asynchronously on the webkit and file
   // threads, respectively. This function must be called from the UI thread.
-  //
-  // |callback| is called when data deletion is done or at least the deletion
-  // is scheduled.
-  static void StartDeleting(Profile* profile,
-                            const Extension* extenion,
-                            const base::Closure& callback);
+  static void StartDeleting(Profile* profile, const Extension* extenion);
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(DataDeleter);
 };
 

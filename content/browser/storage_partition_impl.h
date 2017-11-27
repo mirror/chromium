@@ -91,11 +91,11 @@ class CONTENT_EXPORT StoragePartitionImpl
   ZoomLevelDelegate* GetZoomLevelDelegate() override;
 #endif  // !defined(OS_ANDROID)
   PlatformNotificationContextImpl* GetPlatformNotificationContext() override;
-  void ClearDataForOrigin(uint32_t remove_mask,
-                          uint32_t quota_storage_remove_mask,
-                          const GURL& storage_origin,
-                          net::URLRequestContextGetter* request_context_getter,
-                          const base::Closure& callback) override;
+  void ClearDataForOrigin(
+      uint32_t remove_mask,
+      uint32_t quota_storage_remove_mask,
+      const GURL& storage_origin,
+      net::URLRequestContextGetter* request_context_getter) override;
   void ClearData(uint32_t remove_mask,
                  uint32_t quota_storage_remove_mask,
                  const GURL& storage_origin,
