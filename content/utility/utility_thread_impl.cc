@@ -68,6 +68,8 @@ void UtilityThreadImpl::EnsureBlinkInitialized() {
 }
 
 void UtilityThreadImpl::Init() {
+  LOG(ERROR) << "Begin UtilityThreadImpl::Init()";
+  LOG(ERROR) << "base::Process::Current().Pid() = " << base::Process::Current().Pid();
   ChildProcess::current()->AddRefProcess();
 
   auto registry = std::make_unique<service_manager::BinderRegistry>();
