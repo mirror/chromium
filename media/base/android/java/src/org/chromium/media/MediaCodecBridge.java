@@ -53,6 +53,7 @@ class MediaCodecBridge {
     private static final int MAXIMUM_INITIAL_FPS = 30;
 
     protected MediaCodec mMediaCodec;
+    protected MediaCrypto mMediaCrypto;
 
     private ByteBuffer[] mInputBuffers;
     private ByteBuffer[] mOutputBuffers;
@@ -231,6 +232,9 @@ class MediaCodecBridge {
             }
             // This logging is to help us identify hung MediaCodecs in crash reports.
             Log.w(TAG, "Releasing: " + codecName);
+            if (mMediaCrypto != null) {
+                mMediaCrypto.release();
+            }
             mMediaCodec.release();
             Log.w(TAG, "Codec released");
         } catch (IllegalStateException e) {
@@ -536,6 +540,7 @@ class MediaCodecBridge {
             }
             maybeSetMaxInputSize(format);
             mMediaCodec.configure(format, surface, crypto, flags);
+            mMediaCrypto = crypto;
             return true;
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Cannot configure the video codec, wrong format or surface", e);
