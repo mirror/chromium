@@ -233,6 +233,22 @@ def GetParamsInStub(native):
                          for param in native.params])
 
 
+def StripGenerics(value):
+  """Strips Java generics from a string."""
+  nest_level = 0  # How deeply we are nested inside the generics.
+  out = ''
+
+  for c in value:
+    if c == '<':
+      nest_level += 1
+    elif c == '>':
+      nest_level -= 1
+    elif nest_level == 0:
+      out += c
+
+  return out
+
+
 class JniParams(object):
   """Get JNI related parameters."""
 
@@ -399,7 +415,8 @@ class JniParams(object):
     if not params:
       return []
     ret = []
-    for p in [p.strip() for p in params.split(',')]:
+    params = StripGenerics(params)
+    for p in (p.strip() for p in params.split(',')):
       items = p.split(' ')
 
       # Remove @Annotations from parameters.
