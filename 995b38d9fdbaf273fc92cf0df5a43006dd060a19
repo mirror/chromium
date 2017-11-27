@@ -22,6 +22,30 @@
       "revId": "995b38d9fdbaf273fc92cf0df5a43006dd060a19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92e1028_581a6bcb",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-27T18:17:41Z",
+      "side": 1,
+      "message": "Is this running on a thread that is not managed by blink?  If so that\u0027s the problem, We can\u0027t use SharedGpuContext there.  Two solutions: do the GPU readback on the original thread :-( or post the task do a different kind of background thread, one that is managed by blink.",
+      "parentUuid": "9867ea73_2339d9d1",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 79
+      },
+      "revId": "995b38d9fdbaf273fc92cf0df5a43006dd060a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
