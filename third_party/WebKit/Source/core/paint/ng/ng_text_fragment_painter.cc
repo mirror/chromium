@@ -85,6 +85,12 @@ void NGTextFragmentPainter::Paint(const Document& document,
   const NGPhysicalTextFragment& text_fragment =
       ToNGPhysicalTextFragment(fragment_.PhysicalFragment());
 
+  NGLineOrientation orientation = text_fragment.LineOrientation();
+  if (orientation != NGLineOrientation::kHorizontal) {
+    context.ConcatCTM(
+        TextPainterBase::Rotation(box_rect, TextPainterBase::kClockwise));
+  }
+
   NGTextPainter text_painter(context, font, text_fragment, text_origin,
                              box_rect, text_fragment.IsHorizontal());
 
@@ -100,7 +106,9 @@ void NGTextFragmentPainter::Paint(const Document& document,
     bool has_line_through_decoration = false;
     if (style.TextDecorationsInEffect() != TextDecoration::kNone) {
       LayoutPoint local_origin = LayoutPoint(box_origin);
-      LayoutUnit width = fragment_.Size().width;
+      LayoutUnit width = orientation == NGLineOrientation::kHorizontal
+                             ? fragment_.Size().width
+                             : fragment_.Size().height;
       const NGPhysicalBoxFragment* decorating_box = nullptr;
       const ComputedStyle* decorating_box_style =
           decorating_box ? &decorating_box->Style() : nullptr;
@@ -142,6 +150,11 @@ void NGTextFragmentPainter::Paint(const Document& document,
       selection_start < selection_end) {
     // Paint only the text that is selected
     text_painter.Paint(selection_start, selection_end, length, selection_style);
+  }
+
+  if (orientation != NGLineOrientation::kHorizontal) {
+    context.ConcatCTM(TextPainterBase::Rotation(
+        box_rect, TextPainterBase::kCounterclockwise));
   }
 }
 
