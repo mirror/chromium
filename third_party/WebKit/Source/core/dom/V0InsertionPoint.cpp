@@ -287,7 +287,8 @@ const V0InsertionPoint* ResolveReprojection(const Node* projected_node) {
   ElementShadow* last_element_shadow = nullptr;
   while (true) {
     ElementShadow* shadow = ShadowWhereNodeCanBeDistributedForV0(*current);
-    if (!shadow || shadow->IsV1() || shadow == last_element_shadow)
+    if (!shadow || shadow->IsV1() || shadow->IsUserAgentShadow() ||
+        shadow == last_element_shadow)
       break;
     last_element_shadow = shadow;
     const V0InsertionPoint* inserted_to =
@@ -308,7 +309,8 @@ void CollectDestinationInsertionPoints(
   ElementShadow* last_element_shadow = nullptr;
   while (true) {
     ElementShadow* shadow = ShadowWhereNodeCanBeDistributedForV0(*current);
-    if (!shadow || shadow->IsV1() || shadow == last_element_shadow)
+    if (!shadow || shadow->IsV1() || shadow->IsUserAgentShadow() ||
+        shadow == last_element_shadow)
       return;
     last_element_shadow = shadow;
     const DestinationInsertionPoints* insertion_points =

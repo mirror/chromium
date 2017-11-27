@@ -95,6 +95,9 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
     return GetType() == ShadowRootType::kOpen ||
            GetType() == ShadowRootType::kClosed;
   }
+  bool IsUserAgentShadow() const {
+    return GetType() == ShadowRootType::kUserAgent;
+  }
 
   void AttachLayoutTree(AttachContext&) override;
   void DetachLayoutTree(const AttachContext& = AttachContext()) override;

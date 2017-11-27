@@ -50,6 +50,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLHRElement.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/forms/FormController.h"
 #include "core/html/forms/FormData.h"
 #include "core/html/forms/HTMLFormElement.h"
@@ -1820,10 +1821,30 @@ void HTMLSelectElement::Trace(blink::Visitor* visitor) {
   HTMLFormControlElementWithState::Trace(visitor);
 }
 
+class SelectElementFilter final : public HTMLSlotAssignmentFilter {
+ public:
+  virtual ~SelectElementFilter() {}
+
+  static SelectElementFilter* Create() { return new SelectElementFilter(); }
+
+  bool CanAssignNode(const Node& node) const override {
+    return node.HasTagName(HTMLNames::optionTag) ||
+           node.HasTagName(HTMLNames::optgroupTag) ||
+           node.HasTagName(HTMLNames::hrTag);
+  }
+
+  virtual void Trace(blink::Visitor* visitor) {
+    HTMLSlotAssignmentFilter::Trace(visitor);
+  }
+
+ private:
+  SelectElementFilter() {}
+};
+
 void HTMLSelectElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
-  HTMLContentElement* content = HTMLContentElement::Create(GetDocument());
-  content->setAttribute(selectAttr, "option,optgroup,hr");
-  root.AppendChild(content);
+  HTMLSlotElement* slot =
+      HTMLSlotElement::Create(GetDocument(), SelectElementFilter::Create());
+  root.AppendChild(slot);
 }
 
 HTMLOptionElement* HTMLSelectElement::SpatialNavigationFocusedOption() {
