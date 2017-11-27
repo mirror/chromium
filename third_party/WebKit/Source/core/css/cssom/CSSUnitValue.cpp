@@ -10,9 +10,19 @@
 #include "core/css/cssom/CSSMathMin.h"
 #include "core/css/cssom/CSSMathProduct.h"
 #include "core/css/cssom/CSSMathSum.h"
+#include "core/css/cssom/CSSNumericSumValue.h"
 #include "platform/wtf/MathExtras.h"
 
 namespace blink {
+
+namespace {
+
+CSSPrimitiveValue::UnitType ToCanonicalUnit(CSSPrimitiveValue::UnitType unit) {
+  return CSSPrimitiveValue::CanonicalUnitTypeForCategory(
+      CSSPrimitiveValue::UnitTypeToUnitCategory(unit));
+}
+
+}  // namespace
 
 CSSUnitValue* CSSUnitValue::Create(double value,
                                    const String& unit_name,
@@ -87,7 +97,7 @@ const CSSValue* CSSUnitValue::ToCSSValue(SecureContextMode) const {
   return CSSPrimitiveValue::Create(value_, unit_);
 }
 
-CSSUnitValue* CSSUnitValue::to(CSSPrimitiveValue::UnitType unit) const {
+CSSUnitValue* CSSUnitValue::ConvertTo(CSSPrimitiveValue::UnitType unit) const {
   if (unit_ == unit)
     return Create(value_, unit_);
 
@@ -103,6 +113,18 @@ CSSUnitValue* CSSUnitValue::to(CSSPrimitiveValue::UnitType unit) const {
     return Create(ConvertAngle(unit), unit);
 
   return nullptr;
+}
+
+WTF::Optional<CSSNumericSumValue> CSSUnitValue::SumValue() const {
+  CSSNumericSumValue sum;
+  CSSNumericSumValue::UnitMap unit_map;
+  if (unit_ != CSSPrimitiveValue::UnitType::kNumber)
+    unit_map.insert(ToCanonicalUnit(unit_), 1);
+
+  sum.terms.emplace_back(
+      value_ * CSSPrimitiveValue::ConversionToCanonicalUnitsScaleFactor(unit_),
+      std::move(unit_map));
+  return sum;
 }
 
 double CSSUnitValue::ConvertFixedLength(
