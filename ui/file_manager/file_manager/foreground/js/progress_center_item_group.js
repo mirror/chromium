@@ -367,6 +367,9 @@ ProgressCenterItemGroup.prototype.getSummarizedItem =
     var numErrors = errorItems.length + numOtherErrors;
     var messages = [];
     switch (summarizedItem.type) {
+      case ProgressItemType.IMPORT:
+        messages.push(str('CLOUD_IMPORT_PROGRESS_SUMMARY'));
+        break;
       case ProgressItemType.COPY:
         messages.push(str('COPY_PROGRESS_SUMMARY'));
         break;
