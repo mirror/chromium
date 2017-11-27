@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09d7cc41_67eb7b9f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "Can you run `git cl lint`? You need at least to #include \u003cutility\u003e",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 8
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834059a1_427756a1",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332a155f_4c377cdd",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "nit:\n\n return std::exchange(bitstream_buffer_, media::BitstreamBuffer());",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0fc3de1_96386302",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "Please move back to L44. If the compiler complains about ScopedBitstreamBuffer, please move that as an internal class of GpuArcVideoDecodeAccelerator.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334d09ba_446160a6",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "nit: guard clause pattern:\n\n if (!secure_mode_)\n   return;\n if (...) {\n   ...\n   return;\n }\n protected_output_handles_.erase(picture_buffer);",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 21
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fda0d1a_5c2a3f1e",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "You shouldn\u0027t name locals with a trailing underscore, since that\u0027s reserved for members. Same in the rest of the code.",
+      "range": {
+        "startLine": 239,
+        "startChar": 8,
+        "endLine": 239,
+        "endChar": 25
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae9dcd7_abe6f814",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "This is not needed, since |callback| is a local and would be destroyed immediately afterwards. \n\n std::move(callback).Run(result);\n\nis okay. Same throughout the rest of the code.",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 22
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c63f70_2c3222d5",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "nit: BindOnce",
+      "range": {
+        "startLine": 526,
+        "startChar": 13,
+        "endLine": 526,
+        "endChar": 17
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378ed87c_da1ebdb7",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "Please mention why base::Unretained is safe.",
+      "range": {
+        "startLine": 527,
+        "startChar": 63,
+        "endLine": 527,
+        "endChar": 73
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c25436d_d2f1dc8f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "This is unnecessary.",
+      "range": {
+        "startLine": 528,
+        "startChar": 11,
+        "endLine": 528,
+        "endChar": 24
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218feef9_7d91d25b",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "Would not finding the id in |protected_output_handles_| be considered a security issue and we would prefer to crash the whole process instead of gracefully handling it? If so, please add a comment. Otherwise, DCHECK_EQ.",
+      "range": {
+        "startLine": 556,
+        "startChar": 6,
+        "endLine": 556,
+        "endChar": 14
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a0f6b4_e7f626cf",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "nit: BindOnce.",
+      "range": {
+        "startLine": 647,
+        "startChar": 24,
+        "endLine": 647,
+        "endChar": 28
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c22116_48c69b84",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "nit: Mention why base::Unretained is safe.",
+      "range": {
+        "startLine": 648,
+        "startChar": 35,
+        "endLine": 648,
+        "endChar": 45
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3cf1acc_abd52704",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "nit: BindOnce.",
+      "range": {
+        "startLine": 655,
+        "startChar": 24,
+        "endLine": 655,
+        "endChar": 28
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d474fe_cc874745",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "nit: \"they are successful\" or \"they succeeded\".",
+      "range": {
+        "startLine": 91,
+        "startChar": 69,
+        "endLine": 92,
+        "endChar": 14
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c4e816_9a064800",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "You should be able to remove the rvalue ref.",
+      "range": {
+        "startLine": 112,
+        "startChar": 21,
+        "endLine": 112,
+        "endChar": 44
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102003d0_735b540a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:13:56Z",
+      "side": 1,
+      "message": "nit: DecodeRequest",
+      "range": {
+        "startLine": 112,
+        "startChar": 7,
+        "endLine": 112,
+        "endChar": 20
+      },
+      "revId": "13021345cdb983c843f28b756f3ca358c416ef6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
