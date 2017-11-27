@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31c71702_c4b45329",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-27T16:42:56Z",
+      "side": 1,
+      "message": "Looking at the output of linux_android_rel_ng, the feature does not get enabled on the bot. It does get enabled on my device. Any hints about when enabling features might break?",
+      "range": {
+        "startLine": 165,
+        "startChar": 5,
+        "endLine": 165,
+        "endChar": 19
+      },
+      "revId": "ca97deda24e049a0d54b0c1e66f82cad1a8f95ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
