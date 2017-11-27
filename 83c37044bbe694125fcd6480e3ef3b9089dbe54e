@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "962cc031_604fe77c",
+        "filename": "chrome/browser/browsing_data/cookies_tree_model.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-27T14:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a239779f_49b9e676",
+      "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9957d32_ce189b4b",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
         "patchSetId": 7
@@ -89,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "197b5442_58230e55",
+        "filename": "content/browser/devtools/shared_worker_devtools_agent_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-27T14:55:42Z",
+      "side": 1,
+      "message": "there\u0027s no way to get to the ids from outside of content, so I\u0027d rather not expose it",
+      "parentUuid": "b59df567_1b406c55",
+      "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "974d105d_5d055d8c",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 7
@@ -103,6 +139,24 @@
       "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70f0f93_5bbe825f",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-27T14:55:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "974d105d_5d055d8c",
+      "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
