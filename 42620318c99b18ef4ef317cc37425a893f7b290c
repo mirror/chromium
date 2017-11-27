@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9435ede0_aaa09b8f",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/touch-pointer-event-properties.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-27T16:22:41Z",
+      "side": 1,
+      "message": "Sorry. You are right. I meant passing pp[\"width\"]/2 (and similarly for height) in AddTouchPoint API.",
+      "parentUuid": "fb1e55d4_efadcfb3",
+      "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a7272d4_2f1efca9",
         "filename": "third_party/WebKit/LayoutTests/fast/events/touch/touch-browser-zoom-scales-radius.html",
         "patchSetId": 3
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "I checked this part, this part is returned as the width/height value of the WebPointerEvent.\nso it is return doubled. is this right?",
       "parentUuid": "73f7da55_d0552fc0",
+      "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd62c2dc_e84e8173",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/touch/touch-fractional-coordinates.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-27T16:22:41Z",
+      "side": 1,
+      "message": "No that is incorrect. I guess here is the problem:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/input/TouchEventManager.cpp?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d201\n\nWe also need to use width/2 and height/2 over there.",
+      "parentUuid": "88de2c2e_cf8a878f",
       "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
