@@ -823,16 +823,19 @@ void TextControlElement::SetInnerEditorValue(const String& value) {
   if (!text_is_changed && inner_editor->HasChildren())
     return;
 
-  // If the last child is a trailing <br> that's appended below, remove it
-  // first so as to enable setInnerText() fast path of updating a text node.
-  if (IsHTMLBRElement(inner_editor->lastChild()))
-    inner_editor->RemoveChild(inner_editor->lastChild(), ASSERT_NO_EXCEPTION);
-
-  // We don't use setTextContent.  It triggers unnecessary paint.
-  if (value.IsEmpty())
+  if (value.IsEmpty()) {
     inner_editor->RemoveChildren();
-  else
+  } else if (!inner_editor->HasChildren()) {
+    Text* text_node = Text::Create(GetDocument(), value);
+    inner_editor->AppendChild(text_node, ASSERT_NO_EXCEPTION);
+  } else {
+    if (IsHTMLBRElement(inner_editor->lastChild())) {
+      // If the last child is a trailing <br> that's appended below, remove it
+      // first so as to enable setInnerText() fast path of updating a text node.
+      inner_editor->RemoveChild(inner_editor->lastChild(), ASSERT_NO_EXCEPTION);
+    }
     ReplaceChildrenWithText(inner_editor, value, ASSERT_NO_EXCEPTION);
+  }
 
   // Add <br> so that we can put the caret at the next line of the last
   // newline.
