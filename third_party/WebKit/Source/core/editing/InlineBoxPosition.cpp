@@ -220,13 +220,26 @@ bool IsCaretAtEdgeOfInlineTextBox(int caret_offset,
   return box.NextLeafChild() && box.NextLeafChild()->IsLineBreak();
 }
 
+template <typename Strategy>
+const LayoutObject& GetLayoutObjectSkippingShadowRoot(
+    const PositionTemplate<Strategy>& position) {
+  DCHECK(!position.IsNull());
+  const Node* anchor_node = position.AnchorNode();
+  const LayoutObject* result =
+      anchor_node->IsShadowRoot()
+          ? ToShadowRoot(anchor_node)->host().GetLayoutObject()
+          : anchor_node->GetLayoutObject();
+  DCHECK(result);
+  return *result;
+}
+
 InlineBoxPosition ComputeInlineBoxPositionForTextNode(
     const LayoutText* text_layout_object,
     int caret_offset,
     TextAffinity affinity,
     TextDirection primary_direction) {
   // TODO(editing-dev): Add the following DCHECK when ready.
-  // DCHECK(CanUseInlineBox(*layout_object));
+  // DCHECK(CanUseInlineBox(*text_layout_object));
 
   InlineBox* inline_box = nullptr;
   InlineTextBox* candidate = nullptr;
@@ -269,10 +282,6 @@ InlineBoxPosition ComputeInlineBoxPositionForAtomicInline(
     const LayoutObject* layout_object,
     int caret_offset,
     TextDirection primary_direction) {
-  // TODO(crbug.com/567964): Change the following branch to DCHECK once fixed.
-  if (!layout_object->IsInline())
-    return InlineBoxPosition();
-
   // TODO(editing-dev): Add the following DCHECK when ready.
   // DCHECK(CanUseInlineBox(*layout_object);
   DCHECK(layout_object->IsBox());
@@ -288,7 +297,21 @@ InlineBoxPosition ComputeInlineBoxPositionForAtomicInline(
 }
 
 template <typename Strategy>
-InlineBoxPosition ComputeInlineBoxPositionForBlockFlow(
+struct PositionAndDirection {
+  STACK_ALLOCATED();
+
+  PositionWithAffinityTemplate<Strategy> position;
+  TextDirection direction = TextDirection::kLtr;
+};
+
+template <typename Strategy>
+PositionAndDirection<Strategy> ComputeInlineAdjustedPosition(
+    const PositionTemplate<Strategy>&,
+    TextAffinity,
+    TextDirection);
+
+template <typename Strategy>
+PositionAndDirection<Strategy> AdjustBlockFlowPositionToInline(
     const PositionTemplate<Strategy>& position,
     TextDirection primary_direction) {
   // Try a visually equivalent position with possibly opposite editability. This
@@ -298,17 +321,65 @@ InlineBoxPosition ComputeInlineBoxPositionForBlockFlow(
   const PositionTemplate<Strategy>& downstream_equivalent =
       DownstreamIgnoringEditingBoundaries(position);
   if (downstream_equivalent != position) {
-    return ComputeInlineBoxPosition(downstream_equivalent,
-                                    TextAffinity::kUpstream, primary_direction);
+    return ComputeInlineAdjustedPosition(
+        downstream_equivalent, TextAffinity::kUpstream, primary_direction);
   }
   const PositionTemplate<Strategy>& upstream_equivalent =
       UpstreamIgnoringEditingBoundaries(position);
   if (upstream_equivalent == position ||
       DownstreamIgnoringEditingBoundaries(upstream_equivalent) == position)
-    return InlineBoxPosition();
+    return {};
 
-  return ComputeInlineBoxPosition(upstream_equivalent, TextAffinity::kUpstream,
-                                  primary_direction);
+  return ComputeInlineAdjustedPosition(
+      upstream_equivalent, TextAffinity::kUpstream, primary_direction);
+}
+
+// TODO(xiaochengh): Expose this function for current callers of
+// ComputeInlineBoxPosition() for deciding to use legacy or NG implementation.
+template <typename Strategy>
+PositionAndDirection<Strategy> ComputeInlineAdjustedPosition(
+    const PositionTemplate<Strategy>& position,
+    TextAffinity affinity,
+    TextDirection primary_direction) {
+  const LayoutObject& layout_object =
+      GetLayoutObjectSkippingShadowRoot(position);
+
+  if (layout_object.IsText())
+    return {{position, affinity}, primary_direction};
+
+  if (layout_object.IsAtomicInlineLevel()) {
+    // TODO(crbug.com/567964): Change the following branch to DCHECK once fixed.
+    if (!layout_object.IsInline())
+      return {};
+    return {{position, affinity}, primary_direction};
+  }
+
+  if (!layout_object.IsLayoutBlockFlow() ||
+      !CanHaveChildrenForEditing(position.AnchorNode()) ||
+      !HasRenderedNonAnonymousDescendantsWithHeight(&layout_object))
+    return {};
+  return AdjustBlockFlowPositionToInline(position, primary_direction);
+}
+
+// TODO(xiaochengh): Expose this function for code depending on legacy layout.
+template <typename Strategy>
+InlineBoxPosition ComputeInlineBoxPositionForInlineAdjustedPosition(
+    const PositionAndDirection<Strategy>& adjusted) {
+  const PositionTemplate<Strategy>& position = adjusted.position.GetPosition();
+  const LayoutObject& layout_object =
+      GetLayoutObjectSkippingShadowRoot(position);
+  const int caret_offset = position.ComputeEditingOffset();
+
+  if (layout_object.IsText()) {
+    return ComputeInlineBoxPositionForTextNode(
+        &ToLayoutText(layout_object), caret_offset,
+        adjusted.position.Affinity(), adjusted.direction);
+  }
+
+  DCHECK(layout_object.IsAtomicInlineLevel());
+  DCHECK(layout_object.IsInline());
+  return ComputeInlineBoxPositionForAtomicInline(&layout_object, caret_offset,
+                                                 adjusted.direction);
 }
 
 template <typename Strategy>
@@ -316,30 +387,11 @@ InlineBoxPosition ComputeInlineBoxPositionTemplate(
     const PositionTemplate<Strategy>& position,
     TextAffinity affinity,
     TextDirection primary_direction) {
-  int caret_offset = position.ComputeEditingOffset();
-  Node* const anchor_node = position.AnchorNode();
-  LayoutObject* layout_object =
-      anchor_node->IsShadowRoot()
-          ? ToShadowRoot(anchor_node)->host().GetLayoutObject()
-          : anchor_node->GetLayoutObject();
-
-  DCHECK(layout_object) << position;
-
-  if (layout_object->IsText()) {
-    return ComputeInlineBoxPositionForTextNode(
-        ToLayoutText(layout_object), caret_offset, affinity, primary_direction);
-  }
-
-  if (layout_object->IsAtomicInlineLevel()) {
-    return ComputeInlineBoxPositionForAtomicInline(layout_object, caret_offset,
-                                                   primary_direction);
-  }
-
-  if (!layout_object->IsLayoutBlockFlow() ||
-      !CanHaveChildrenForEditing(anchor_node) ||
-      !HasRenderedNonAnonymousDescendantsWithHeight(layout_object))
+  const PositionAndDirection<Strategy> adjusted =
+      ComputeInlineAdjustedPosition(position, affinity, primary_direction);
+  if (adjusted.position.IsNull())
     return InlineBoxPosition();
-  return ComputeInlineBoxPositionForBlockFlow(position, primary_direction);
+  return ComputeInlineBoxPositionForInlineAdjustedPosition(adjusted);
 }
 
 template <typename Strategy>
@@ -351,6 +403,9 @@ InlineBoxPosition ComputeInlineBoxPositionTemplate(
 }
 
 }  // namespace
+
+// TODO(xiaochengh): Migrate current callers of ComputeInlineBoxPosition to
+// ComputeInlineAdjustedPosition() instead.
 
 InlineBoxPosition ComputeInlineBoxPosition(const Position& position,
                                            TextAffinity affinity) {
