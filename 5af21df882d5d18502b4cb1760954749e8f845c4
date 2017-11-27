@@ -172,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "f622d425_7f79efa1",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-27T21:17:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "96b2e202_e7518b66",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 21
+      },
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01cdc995_eb96fe5e",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 4
@@ -216,6 +240,30 @@
       "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa98ce0f_38f06e49",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-27T21:17:18Z",
+      "side": 1,
+      "message": "Yeah, that is fine.",
+      "parentUuid": "98391f6f_7bbd26cf",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 30
+      },
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
