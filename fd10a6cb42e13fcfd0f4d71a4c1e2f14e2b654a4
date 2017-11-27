@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d0e198e_a12608c4",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/DOMUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-27T22:10:57Z",
+      "side": 1,
+      "message": "Static here is not a good idea because Chrome can run in multi-window mode (multi-window tests, for example) which would mean the activity last set by the test is not necessarily the one that the test is interacting with.\n\nI think there are two options:\n1) Clean way: change the DomUtils API to take an activity as a parameter. That will require touching a lot of test classes though.\n2) Uglier way: use contentViewCore.getWindowAndroid() to get the AndroidWindow and use getActivity() from there (you\u0027ll need to cast to ChromeActivity) and then proceed to do the computation you have in your callback inside getTopOffset.",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "fd10a6cb42e13fcfd0f4d71a4c1e2f14e2b654a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
