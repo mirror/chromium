@@ -4851,7 +4851,7 @@ void WebGLRenderingContextBase::texImage2D(GLenum target,
 }
 
 void WebGLRenderingContextBase::TexImageHelperHTMLImageElement(
-    SecurityOrigin* security_origin,
+    const SecurityOrigin* security_origin,
     TexImageFunctionID function_id,
     GLenum target,
     GLint level,
@@ -5087,7 +5087,7 @@ void WebGLRenderingContextBase::TexImageByGPU(
 }
 
 void WebGLRenderingContextBase::TexImageHelperHTMLCanvasElement(
-    SecurityOrigin* security_origin,
+    const SecurityOrigin* security_origin,
     TexImageFunctionID function_id,
     GLenum target,
     GLint level,
@@ -5222,7 +5222,7 @@ scoped_refptr<Image> WebGLRenderingContextBase::VideoFrameToImage(
 }
 
 void WebGLRenderingContextBase::TexImageHelperHTMLVideoElement(
-    SecurityOrigin* security_origin,
+    const SecurityOrigin* security_origin,
     TexImageFunctionID function_id,
     GLenum target,
     GLint level,
@@ -7358,7 +7358,7 @@ void WebGLRenderingContextBase::RemoveBoundBuffer(WebGLBuffer* buffer) {
 }
 
 bool WebGLRenderingContextBase::ValidateHTMLImageElement(
-    SecurityOrigin* security_origin,
+    const SecurityOrigin* security_origin,
     const char* function_name,
     HTMLImageElement* image,
     ExceptionState& exception_state) {
@@ -7382,7 +7382,7 @@ bool WebGLRenderingContextBase::ValidateHTMLImageElement(
 }
 
 bool WebGLRenderingContextBase::ValidateHTMLCanvasElement(
-    SecurityOrigin* security_origin,
+    const SecurityOrigin* security_origin,
     const char* function_name,
     HTMLCanvasElement* canvas,
     ExceptionState& exception_state) {
@@ -7399,7 +7399,7 @@ bool WebGLRenderingContextBase::ValidateHTMLCanvasElement(
 }
 
 bool WebGLRenderingContextBase::ValidateHTMLVideoElement(
-    SecurityOrigin* security_origin,
+    const SecurityOrigin* security_origin,
     const char* function_name,
     HTMLVideoElement* video,
     ExceptionState& exception_state) {
