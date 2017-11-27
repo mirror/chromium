@@ -292,6 +292,7 @@ class PLATFORM_EXPORT TextRun final {
 
   float expansion_;
   ExpansionBehavior expansion_behavior_ : 2;
+
   unsigned is8_bit_ : 1;
   unsigned allow_tabs_ : 1;
   unsigned direction_ : 1;
