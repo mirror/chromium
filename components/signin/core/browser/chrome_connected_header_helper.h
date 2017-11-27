@@ -16,12 +16,13 @@ namespace signin {
 // SigninHeaderHelper implementation managing the "X-Chrome-Connected" header.
 class ChromeConnectedHeaderHelper : public SigninHeaderHelper {
  public:
-  ChromeConnectedHeaderHelper(bool is_mirror_enabled);
+  explicit ChromeConnectedHeaderHelper(bool is_mirror_enabled);
   ~ChromeConnectedHeaderHelper() override {}
 
   // Returns the Chrome-Connected cookie, or an empty string if it should not be
   // added to the request to |url|.
   static std::string BuildRequestCookieIfPossible(
+      bool is_mirror_enabled,
       const GURL& url,
       const std::string& account_id,
       const content_settings::CookieSettings* cookie_settings,
