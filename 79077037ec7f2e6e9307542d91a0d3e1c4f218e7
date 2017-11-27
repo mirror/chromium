@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9071379e_fb6c721c",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T22:13:31Z",
+      "side": 1,
+      "message": "nit: I\u0027d slightly prefer a persistent bool here instead.\n\n      let didOpen \u003d false;\n      const onSizeChanged \u003d e \u003d\u003e {\n        this.extensionOptions_.style.height \u003d e.height + \u0027px\u0027;\n        this.extensionOptions_.style.width \u003d e.width + \u0027px\u0027;\n\n        if (!didOpen) {\n          didOpen \u003d true;\n          this.$$(\u0027dialog\u0027).showModal();\n        }\n      };\n\nThis way, if for whatever reason onpreferredsizechanged is triggered after the dialog has closed (or has started to close), we handle it gracefully.\n\nI don\u0027t feel super strongly, but I know we\u0027ve had a good number of bugs with guestview-style tags in the past, so I\u0027d slightly prefer to be safer.",
+      "revId": "79077037ec7f2e6e9307542d91a0d3e1c4f218e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83289195_05b3c9db",
         "filename": "chrome/browser/ui/webui/extensions/extension_settings_browsertest.cc",
         "patchSetId": 11
