@@ -16,6 +16,24 @@
       "revId": "8085bb1d7bb78c7a9689c19af2b76ac53d07763a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04215156_1e4f499b",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-27T21:21:59Z",
+      "side": 0,
+      "message": "Not true.\n\nEven with plain text, selection canonicalization can still move selection boundary. Example:\n\n\u003cdiv\u003efoo\u003c/div\u003e\n\nSelectionInDOMTree: base \u003d DIV@BeforeChildren, extent \u003d DIV@AfterChildren\n\nVisibleSelection: base \u003d \"foo\"@0, extent \u003d \"foo\"@3",
+      "parentUuid": "1a9bcbda_acdedf3f",
+      "revId": "8085bb1d7bb78c7a9689c19af2b76ac53d07763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
