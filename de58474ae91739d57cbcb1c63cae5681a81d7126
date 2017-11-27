@@ -96,6 +96,54 @@
     },
     {
       "key": {
+        "uuid": "de558d69_b7bc7ef1",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Document/document-open-usvstring.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T13:49:13Z",
+      "side": 1,
+      "message": "In future, someone will read this test.  That person wouldn\u0027t read url-constructor.html, or that person wouldn\u0027t realize that this test case is related to url-constructor.html, or url-constructor.html will be deleted.\n\nSo, we need a comment in this file.\n\n--\n\nSurrogate pair is a way to represent a unicode character as 16-bit code (named high surrogate) and another 16-bit code (named low surrogate) so that it represents more characters than 2^16 characters.  High surrogate and low surrogate must be used as a pair, but if it\u0027s not, it\u0027s \"unpaired\".\n\nYou can find more info on the web.  Search for [UTF-16] and/or [surrogate pair].",
+      "parentUuid": "b72939be_a213f890",
+      "range": {
+        "startLine": 8,
+        "startChar": 45,
+        "endLine": 8,
+        "endChar": 51
+      },
+      "revId": "de58474ae91739d57cbcb1c63cae5681a81d7126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59c074c_b989f028",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Document/document-open-usvstring.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T13:49:13Z",
+      "side": 1,
+      "message": "url-constructor.html is not good.  Don\u0027t follow that way.\n\nYou can open a web page of URL \u003d \"data:text/html,\u003cspan\u003ehello\u003c/span\u003e\" for example.\n\nhttps://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs\n\nI think that we don\u0027t need to use \"http:\" for the purpose of this test.  We just want to include an unpaired surrogate in a URL, right?  If \"data:text/html,...\" doesn\u0027t work, let\u0027s think of another way.",
+      "parentUuid": "72d01d99_0b690ec2",
+      "range": {
+        "startLine": 8,
+        "startChar": 23,
+        "endLine": 8,
+        "endChar": 44
+      },
+      "revId": "de58474ae91739d57cbcb1c63cae5681a81d7126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3ad6949_d1550317",
         "filename": "third_party/WebKit/LayoutTests/fast/dom/Document/document-open-usvstring.html",
         "patchSetId": 2
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "This test case verifies, url containing unpaired surrogate codepoints should be handled without throwing any error, so \u0027w\u0027 should be a window object. \nIn case of url type as DOMString scenario, CreateWindow() fails and returns nullptr with syntax error \"Unable to open a window with invalid URL\".",
       "parentUuid": "b3ad6949_d1550317",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 2
+      },
+      "revId": "de58474ae91739d57cbcb1c63cae5681a81d7126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcb1799_c15a1c16",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Document/document-open-usvstring.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T13:49:13Z",
+      "side": 1,
+      "message": "test() function (starting on line 7) takes three arguments at most; the first argument is a function to test, and the second argument is a string to elaborate what the test is.\n\nI\u0027d like you to write a short description at the second argument.\n\nProbably the short description wouldn\u0027t be enough to elaborate details, so it\u0027s a good idea to elaborate details as a comment at the top of the test function.",
+      "parentUuid": "e9211176_99c2fa04",
       "range": {
         "startLine": 10,
         "startChar": 1,
