@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5e4cd703_d65615cd",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-27T22:29:53Z",
+      "side": 1,
+      "message": "Yeah, based on my latest changes, if the tests built and ran for you on even one platform without SequencedWorkerPoolOwner, I\u0027m pretty sure we don\u0027t need it. Regardless, I\u0027d rather not keep it on just a fear that it may be required as opposed to knowing for sure. Can you try removing it, run git cl try and we\u0027ll see if any of the bots fail?",
+      "parentUuid": "b2c1752a_99320058",
+      "revId": "7b5bab11dee4fbda8e95b9dba240e8d18d291440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10e7c922_b595f7ed",
         "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
         "patchSetId": 3
