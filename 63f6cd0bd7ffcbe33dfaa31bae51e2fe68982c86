@@ -52,6 +52,24 @@
       "revId": "63f6cd0bd7ffcbe33dfaa31bae51e2fe68982c86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286ce50e_387c5190",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-27T16:37:39Z",
+      "side": 1,
+      "message": "The proper way to test this would be a browser test.\nI tried that, but did not find a straightforward way to wait for the audible field of the frame to be set to false as a result of a stream being stopped (other than sleeping a nontrivial amount of time, which leads to flaky/slow tests).\nUnless you consider this a show stopper, I think we can land without this test.",
+      "parentUuid": "6fc4e28b_1766ebfb",
+      "revId": "63f6cd0bd7ffcbe33dfaa31bae51e2fe68982c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40162f22_a775da94",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-27T16:37:39Z",
+      "side": 1,
+      "message": "Added DCHECK assuming |observer_| must be bound at this point, but keeping the |observer_| checks since |observer_| could become unbound later on.",
+      "parentUuid": "edd0d652_7286e4e3",
+      "revId": "903b7acd549b1ebddd3e5c5b2cdadce3206832db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b0f515d_c2d82546",
         "filename": "content/browser/renderer_host/media/audio_output_stream_observer_impl.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "903b7acd549b1ebddd3e5c5b2cdadce3206832db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a657f1b_57fc173e",
+        "filename": "content/browser/renderer_host/media/audio_output_stream_observer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-27T16:37:39Z",
+      "side": 1,
+      "message": "Done. Removed the call to DidStopPlaying from MAOSP\u0027s destructor.",
+      "parentUuid": "0b0f515d_c2d82546",
+      "revId": "903b7acd549b1ebddd3e5c5b2cdadce3206832db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
