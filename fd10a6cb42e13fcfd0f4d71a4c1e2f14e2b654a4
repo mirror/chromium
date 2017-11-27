@@ -22,6 +22,30 @@
       "revId": "fd10a6cb42e13fcfd0f4d71a4c1e2f14e2b654a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb46633_f2cc1364",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/DOMUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-27T22:19:26Z",
+      "side": 1,
+      "message": "Thanks for catching the multiwindow scenario - I also wondered if there might be a side effect. Since another goal of this refactoring is to get rid of CVC usage, I do not prefer 2). Let me try 1) or see if there can be other ways.",
+      "parentUuid": "6d0e198e_a12608c4",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "fd10a6cb42e13fcfd0f4d71a4c1e2f14e2b654a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
