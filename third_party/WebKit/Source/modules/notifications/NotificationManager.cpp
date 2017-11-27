@@ -29,7 +29,7 @@ NotificationManager* NotificationManager::From(
   NotificationManager* manager = static_cast<NotificationManager*>(
       Supplement<ExecutionContext>::From(execution_context, SupplementName()));
   if (!manager) {
-    manager = new NotificationManager();
+    manager = new NotificationManager(*execution_context);
     Supplement<ExecutionContext>::ProvideTo(*execution_context,
                                             SupplementName(), manager);
   }
@@ -42,7 +42,8 @@ const char* NotificationManager::SupplementName() {
   return "NotificationManager";
 }
 
-NotificationManager::NotificationManager() {}
+NotificationManager::NotificationManager(ExecutionContext& context)
+    : Supplement<ExecutionContext>(context) {}
 
 NotificationManager::~NotificationManager() {}
 
@@ -106,6 +107,16 @@ void NotificationManager::OnPermissionRequestComplete(
 
 void NotificationManager::OnPermissionServiceConnectionError() {
   permission_service_.reset();
+}
+
+void NotificationManager::DisplayNonPersistent(const String& title) {
+  if (!notification_service_) {
+    Platform::Current()->GetInterfaceProvider()->GetInterface(
+        mojo::MakeRequest(&notification_service_));
+  }
+  // TODO(crbug.com/595685): Pass the rest of the notification properties here.
+  notification_service_->DisplayNonPersistent(
+      GetSupplementable()->GetSecurityOrigin(), title);
 }
 
 void NotificationManager::Trace(blink::Visitor* visitor) {
