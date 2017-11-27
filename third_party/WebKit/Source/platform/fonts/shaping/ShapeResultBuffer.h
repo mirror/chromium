@@ -36,18 +36,12 @@ class PLATFORM_EXPORT ShapeResultBuffer {
   int OffsetForPosition(const TextRun&,
                         float target_x,
                         bool include_partial_glyphs) const;
-  CharacterRange GetCharacterRange(TextDirection,
+  CharacterRange GetCharacterRange(const TextRun&,
                                    float total_width,
                                    unsigned from,
                                    unsigned to) const;
   Vector<CharacterRange> IndividualCharacterRanges(TextDirection,
                                                    float total_width) const;
-
-  static CharacterRange GetCharacterRange(scoped_refptr<const ShapeResult>,
-                                          TextDirection,
-                                          float total_width,
-                                          unsigned from,
-                                          unsigned to);
 
   struct RunFontData {
     SimpleFontData* font_data_;
@@ -60,12 +54,6 @@ class PLATFORM_EXPORT ShapeResultBuffer {
 
  private:
   friend class ShapeResultBloberizer;
-  static CharacterRange GetCharacterRangeInternal(
-      const Vector<scoped_refptr<const ShapeResult>, 64>&,
-      TextDirection,
-      float total_width,
-      unsigned from,
-      unsigned to);
 
   static void AddRunInfoRanges(const ShapeResult::RunInfo&,
                                float offset,
