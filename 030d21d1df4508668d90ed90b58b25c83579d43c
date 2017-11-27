@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76ebb256_583b43e8",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-27T19:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64a5c578_3537bcb9",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a458b414_3627a02a",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T17:43:11Z",
       "side": 1,
       "message": "Is this needed? It seems like a problem if SetUserWallpaperInfo() is being called during startup and being skipped. If this is needed for tests, comment that. If it\u0027s temporary during the refactor, cite a bug. Otherwise, remove it.\n\nIf this is the issue you mentioned in the CL comment, I think it\u0027s reasonable to delay the InitializeWallpaper() call in ash::Shell until after local state is initialized.\n\nAlso, if you have to keep it, no {}",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3f6edc_5d4a3291",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-27T19:46:56Z",
+      "side": 1,
+      "message": "Yes, this is the issue mentioned earlier. This check is now removed after delaying the InitializeWallpaper() call. I think although other types of InitializeWallpaper() do not need the delay since they don\u0027t need local states, for consistency it\u0027s delayed in the same way.",
+      "parentUuid": "a458b414_3627a02a",
       "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bfbd2184_98519c3d",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-27T19:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96714778_c92ee815",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88136fb9_2abcef06",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88292b6d_9bc2b561",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-27T19:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88136fb9_2abcef06",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9f34c077_0f991d77",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-27T19:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9740d0b_991451c6",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9d46c14_96504e16",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 15
@@ -101,6 +191,24 @@
       "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0edd16_6fa00c81",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-27T19:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9d46c14_96504e16",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "beab6568_5fd09cda",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-27T19:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da529a19_39b2ee0c",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4e2c8cf_f8ba4c41",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 15
@@ -135,6 +261,24 @@
       "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b543baf_3f63e4c6",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-27T19:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4e2c8cf_f8ba4c41",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "722f479a_1eebc938",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-27T19:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43505c29_bfbc6500",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf64fe81_54c6521f",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 15
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "5f882c90_e498769b",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2321,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-27T19:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf64fe81_54c6521f",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9176857_af9c17a7",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 15
@@ -186,6 +366,24 @@
       "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35787528_8c55900e",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2331,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-27T19:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9176857_af9c17a7",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
