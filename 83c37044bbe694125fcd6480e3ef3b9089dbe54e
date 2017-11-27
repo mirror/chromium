@@ -52,6 +52,23 @@
       "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "974d105d_5d055d8c",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-27T12:43:10Z",
+      "side": 1,
+      "message": "depending on how the discussions around module workers and allowing cross-origin scripts as workers (but still running in the origin of the tab that creates the worker) turn out, having just the worker_url and main_frame_url might not be enough to make a decision? At least you\u0027d need the url or origin of the frame that created the worker as well I imagine? But then a lot of the other shared worker code will probably need updating if cross-origin scripts for module workers actually ends up being supported.",
+      "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
