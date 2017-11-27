@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9ddada03_12feb7be",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-27T13:03:41Z",
+      "side": 1,
+      "message": "static std::unique_ptr\u003cdevice::FakeGeolocationContext\u003e\nOverrideGeolocationForService(mojom::Geoposition position);\nand\nstatic std::unique_ptr\u003cdevice::FakeGeolocationContext\u003e\nOverrideGeolocationForConnector(mojom::Geoposition position);",
+      "parentUuid": "ed945e32_8ae2eae4",
+      "revId": "c97e15f761a00d6dde811b32ffd8253e2a337dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b2ab777_3374d387",
         "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
         "patchSetId": 6
