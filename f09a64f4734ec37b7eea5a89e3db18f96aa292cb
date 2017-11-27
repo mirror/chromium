@@ -84,6 +84,24 @@
       "revId": "f09a64f4734ec37b7eea5a89e3db18f96aa292cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0845c9_c5b03b8a",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-27T19:46:16Z",
+      "side": 1,
+      "message": "If I put the special cases here, they won\u0027t get the clipsChildren\u003dtrue set on them, right? The rest of the behavior will be correct, but I think I also want to be able to see the clipsChildren\u003dtrue on roles that do clip their children by default.",
+      "parentUuid": "cdbb8de3_b336c2e2",
+      "revId": "f09a64f4734ec37b7eea5a89e3db18f96aa292cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
