@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "74999d51_0672ddf5",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-27T19:10:14Z",
+      "side": 1,
+      "message": "Ah, good point. Given that this is used by workers as well, we should use execution_context-\u003eGetInterfaceProvider(). Will it work?",
+      "parentUuid": "d1b76f92_bf692c3f",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f77cbe4_20031ace",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
         "patchSetId": 8
