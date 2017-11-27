@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8069316_890dd584",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-27T22:56:56Z",
+      "side": 1,
+      "message": "Thank you for the clarification.",
+      "parentUuid": "835ea001_b3c82deb",
+      "revId": "caa6d3c4b19c3aa7edc1f3c8fd9b84a8acfbe9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2935bc5c_a4cefbff",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T22:16:16Z",
       "side": 1,
       "message": "I kept delaying converting these tests because I wanted to first add a function to make sure the disconnect signal was actually sent to the device. If we decide to go ahead and convert these tests, which I think is OK, then we should add a TODO to indicate that the test is not complete e.g.\n\nTODO([#bug number]): Test that the disconnect signal was sent to the device.",
+      "revId": "caa6d3c4b19c3aa7edc1f3c8fd9b84a8acfbe9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989b0287_f9b4be7d",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-27T22:56:56Z",
+      "side": 1,
+      "message": "I added the same TODO comment from disconnect-once.html. Is that fine, or should I do:\n\nTODO([569716]): Test that the disconnect signal was sent to the device.",
+      "parentUuid": "2935bc5c_a4cefbff",
       "revId": "caa6d3c4b19c3aa7edc1f3c8fd9b84a8acfbe9b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "caa6d3c4b19c3aa7edc1f3c8fd9b84a8acfbe9b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9319a2dc_9e7fa228",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/disconnect-twice-in-a-row.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-27T22:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "910f58bf_285ddfa5",
+      "revId": "caa6d3c4b19c3aa7edc1f3c8fd9b84a8acfbe9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
