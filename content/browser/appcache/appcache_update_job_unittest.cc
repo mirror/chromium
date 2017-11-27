@@ -249,7 +249,7 @@ class MockFrontend : public AppCacheFrontend {
         verify_progress_events_(false),
         last_progress_total_(-1),
         last_progress_complete_(-1),
-        start_update_trigger_(APPCACHE_CHECKING_EVENT),
+        start_update_trigger_(AppCacheEventID::APPCACHE_CHECKING_EVENT),
         update_(nullptr) {}
 
   void OnCacheSelected(int host_id, const AppCacheInfo& info) override {}
@@ -276,7 +276,7 @@ class MockFrontend : public AppCacheFrontend {
   void OnErrorEventRaised(const std::vector<int>& host_ids,
                           const AppCacheErrorDetails& details) override {
     error_message_ = details.message;
-    OnEventRaised(host_ids, APPCACHE_ERROR_EVENT);
+    OnEventRaised(host_ids, AppCacheEventID::APPCACHE_ERROR_EVENT);
   }
 
   void OnProgressEventRaised(const std::vector<int>& host_ids,
@@ -284,7 +284,7 @@ class MockFrontend : public AppCacheFrontend {
                              int num_total,
                              int num_complete) override {
     if (!ignore_progress_events_)
-      OnEventRaised(host_ids, APPCACHE_PROGRESS_EVENT);
+      OnEventRaised(host_ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
 
     if (verify_progress_events_) {
       EXPECT_GE(num_total, num_complete);
@@ -322,7 +322,8 @@ class MockFrontend : public AppCacheFrontend {
 
   void AddExpectedEvent(const std::vector<int>& host_ids,
       AppCacheEventID event_id) {
-    DCHECK(!ignore_progress_events_ || event_id != APPCACHE_PROGRESS_EVENT);
+    DCHECK(!ignore_progress_events_ ||
+           event_id != AppCacheEventID::APPCACHE_PROGRESS_EVENT);
     expected_events_.push_back(RaisedEvent(host_ids, event_id));
   }
 
@@ -794,7 +795,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     EXPECT_EQ(expected, events.size());
     EXPECT_EQ(expected, events[0].first.size());
     EXPECT_EQ(host.host_id(), events[0].first[0]);
-    EXPECT_EQ(APPCACHE_CHECKING_EVENT, events[0].second);
+    EXPECT_EQ(AppCacheEventID::APPCACHE_CHECKING_EVENT, events[0].second);
 
     // Abort as we're not testing actual URL fetches in this test.
     delete update;
@@ -851,14 +852,14 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
           != host_ids.end());
       EXPECT_TRUE(std::find(host_ids.begin(), host_ids.end(), host3.host_id())
           != host_ids.end());
-      EXPECT_EQ(APPCACHE_CHECKING_EVENT, events[0].second);
+      EXPECT_EQ(AppCacheEventID::APPCACHE_CHECKING_EVENT, events[0].second);
 
       events = mock_frontend2.raised_events_;
       expected = 1;
       EXPECT_EQ(expected, events.size());
       EXPECT_EQ(expected, events[0].first.size());  // 1 host using frontend2
       EXPECT_EQ(host2.host_id(), events[0].first[0]);
-      EXPECT_EQ(APPCACHE_CHECKING_EVENT, events[0].second);
+      EXPECT_EQ(AppCacheEventID::APPCACHE_CHECKING_EVENT, events[0].second);
 
       events = mock_frontend3.raised_events_;
       EXPECT_TRUE(events.empty());
@@ -888,7 +889,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -925,11 +926,11 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_newest_cache_ = cache;  // newest cache unaffected by update
     expect_full_update_time_equal_to_ = group_->last_full_update_check_time();
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_ERROR_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_ERROR_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_ERROR_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_ERROR_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -961,7 +962,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;  // redirect is like a failed request
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -995,10 +996,13 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     tested_manifest_ = EMPTY_MANIFEST;
     tested_manifest_path_override_ = "files/missing-mime-manifest";
     MockFrontend::HostIds ids(1, host->host_id());
-    frontend->AddExpectedEvent(ids, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_DOWNLOADING_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);  // final
-    frontend->AddExpectedEvent(ids, APPCACHE_UPDATE_READY_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids,
+                               AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend->AddExpectedEvent(
+        ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend->AddExpectedEvent(ids,
+                               AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1030,11 +1034,11 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_has_cache_ = true;
     expect_newest_cache_ = cache;  // newest cache unaffected by update
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_OBSOLETE_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_OBSOLETE_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_OBSOLETE_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_OBSOLETE_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1059,7 +1063,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1084,7 +1088,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;  // treated like cache failure
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1122,11 +1126,13 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_evictable_error_ = false;   // should be reset
     expect_full_update_time_newer_than_ = group_->last_full_update_check_time();
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_NO_UPDATE_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_NO_UPDATE_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_NO_UPDATE_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_NO_UPDATE_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1160,11 +1166,13 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_has_cache_ = true;
     expect_newest_cache_ = cache;  // newest cache unaffected by update
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_NO_UPDATE_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_NO_UPDATE_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_NO_UPDATE_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_NO_UPDATE_EVENT);
 
     // Seed storage with expected manifest data.
     const std::string seed_data(kManifest1Contents);
@@ -1207,8 +1215,8 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_has_cache_ = true;
     expect_newest_cache_ = cache;  // newest cache unaffected by update
     MockFrontend::HostIds id(1, host->host_id());
-    frontend->AddExpectedEvent(id, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(id, APPCACHE_ERROR_EVENT);
+    frontend->AddExpectedEvent(id, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(id, AppCacheEventID::APPCACHE_ERROR_EVENT);
     frontend->expected_error_message_ =
         "Manifest entry not found in existing cache";
     WaitForUpdateToFinish();
@@ -1249,7 +1257,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_full_update_time_newer_than_ = base::Time::Now() - kOneHour;
     tested_manifest_ = MANIFEST1;
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1277,7 +1285,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_has_cache_ = true;
     tested_manifest_ = MANIFEST_WITH_INTERCEPT;
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1318,19 +1326,25 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     tested_manifest_ = MANIFEST1;
     expect_full_update_time_newer_than_ = group_->last_full_update_check_time();
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend1->AddExpectedEvent(ids1, APPCACHE_UPDATE_READY_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // final
-    frontend2->AddExpectedEvent(ids2, APPCACHE_UPDATE_READY_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     // Seed storage with expected manifest data different from manifest1.
     const std::string seed_data("different");
@@ -1378,12 +1392,15 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
         response_writer_->response_id()));
     tested_manifest_ = MANIFEST1;
     MockFrontend::HostIds ids(1, host->host_id());
-    frontend->AddExpectedEvent(ids, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_DOWNLOADING_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);  // final
-    frontend->AddExpectedEvent(ids, APPCACHE_UPDATE_READY_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids,
+                               AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(
+        ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend->AddExpectedEvent(ids,
+                               AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     // Seed storage with expected http response info for entry. Allow reuse.
     const char data[] =
@@ -1437,12 +1454,15 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_old_cache_ = cache;
     tested_manifest_ = MANIFEST1;
     MockFrontend::HostIds ids(1, host->host_id());
-    frontend->AddExpectedEvent(ids, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_DOWNLOADING_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);  // final
-    frontend->AddExpectedEvent(ids, APPCACHE_UPDATE_READY_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids,
+                               AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(
+        ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend->AddExpectedEvent(ids,
+                               AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     // Seed storage with expected http response info for entry. Do NOT
     // allow reuse by setting an expires header in the past.
@@ -1497,12 +1517,15 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_old_cache_ = cache;
     tested_manifest_ = MANIFEST1;
     MockFrontend::HostIds ids(1, host->host_id());
-    frontend->AddExpectedEvent(ids, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_DOWNLOADING_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);  // final
-    frontend->AddExpectedEvent(ids, APPCACHE_UPDATE_READY_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids,
+                               AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(
+        ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend->AddExpectedEvent(ids,
+                               AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     // Seed storage with expected http response info for entry: a vary header.
     const char data[] =
@@ -1560,12 +1583,15 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
         response_writer_->response_id()));
     tested_manifest_ = MANIFEST1;
     MockFrontend::HostIds ids(1, host->host_id());
-    frontend->AddExpectedEvent(ids, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_DOWNLOADING_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids, APPCACHE_PROGRESS_EVENT);  // final
-    frontend->AddExpectedEvent(ids, APPCACHE_UPDATE_READY_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids,
+                               AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(
+        ids, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend->AddExpectedEvent(ids,
+                               AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     // Seed storage with expected http response info for an entry
     // with a vary header for which we allow reuse.
@@ -1624,19 +1650,27 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_old_cache_ = cache;
     tested_manifest_ = MANIFEST_MERGED_TYPES;
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // explicit1
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // manifest
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend1->AddExpectedEvent(ids1, APPCACHE_UPDATE_READY_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // explicit1
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // manifest
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // final
-    frontend2->AddExpectedEvent(ids2, APPCACHE_UPDATE_READY_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1661,7 +1695,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;  // 404 explicit url is cache failure
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1698,13 +1732,15 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_newest_cache_ = cache;  // newest cache unaffectd by failed update
     expect_eviction_ = true;
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_ERROR_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_ERROR_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_ERROR_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_ERROR_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1779,27 +1815,45 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_response_ids_.insert(std::map<GURL, int64_t>::value_type(
         MockHttpServer::GetMockUrl("files/notmodified"), 555));  // copied
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // explicit1
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // fallback1a
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // notfound
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // explicit2
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // servererror
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // notmodified
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend1->AddExpectedEvent(ids1, APPCACHE_UPDATE_READY_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // explicit1
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // fallback1a
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // notfound
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // explicit2
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // servererror
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // notmodified
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // explicit1
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // fallback1a
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // notfound
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // explicit2
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // servererror
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // notmodified
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // final
-    frontend2->AddExpectedEvent(ids2, APPCACHE_UPDATE_READY_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // explicit1
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // fallback1a
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // notfound
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // explicit2
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // servererror
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // notmodified
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1834,15 +1888,21 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_old_cache_ = cache;
     tested_manifest_ = EMPTY_MANIFEST;
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend1->AddExpectedEvent(ids1, APPCACHE_UPDATE_READY_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // final
-    frontend2->AddExpectedEvent(ids2, APPCACHE_UPDATE_READY_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1872,11 +1932,14 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_has_cache_ = true;
     tested_manifest_ = EMPTY_FILE_MANIFEST;
     MockFrontend::HostIds ids1(1, host->host_id());
-    frontend->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend->AddExpectedEvent(ids1, APPCACHE_UPDATE_READY_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids1,
+                               AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend->AddExpectedEvent(ids1,
+                               AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1913,7 +1976,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1950,7 +2013,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -1988,7 +2051,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2025,7 +2088,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = true;
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2062,7 +2125,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = true;
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2091,7 +2154,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;  // storage failed
     frontend->AddExpectedEvent(MockFrontend::HostIds(1, host->host_id()),
-                               APPCACHE_CHECKING_EVENT);
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2127,17 +2190,19 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_has_cache_ = true;
     expect_newest_cache_ = cache;  // unchanged
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_ERROR_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_ERROR_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_ERROR_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_ERROR_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2185,7 +2250,7 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_has_cache_ = true;
     expect_newest_cache_ = cache.get();  // unchanged
     MockFrontend::HostIds ids1(1, host->host_id());
-    frontend->AddExpectedEvent(ids1, APPCACHE_ERROR_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_ERROR_EVENT);
     frontend->expected_error_message_ =
         "Failed to commit new cache to storage";
 
@@ -2223,11 +2288,11 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_has_cache_ = true;
     expect_newest_cache_ = cache;  // newest cache unaffected by update
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_ERROR_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_ERROR_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_ERROR_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_ERROR_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2251,8 +2316,8 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;
     MockFrontend::HostIds ids1(1, host->host_id());
-    frontend->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_ERROR_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_ERROR_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2277,8 +2342,8 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;
     MockFrontend::HostIds ids1(1, host->host_id());
-    frontend->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_ERROR_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_ERROR_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2306,8 +2371,8 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;
     MockFrontend::HostIds ids1(1, host->host_id());
-    frontend->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_ERROR_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_ERROR_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2335,9 +2400,10 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;  // 404 fallback url is cache failure
     MockFrontend::HostIds ids1(1, host->host_id());
-    frontend->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_ERROR_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids1,
+                               AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_ERROR_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2373,13 +2439,15 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_obsolete_ = false;
     expect_group_has_cache_ = false;  // all pending masters failed
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_ERROR_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_ERROR_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_ERROR_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_ERROR_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2422,19 +2490,24 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_old_cache_ = cache;
     tested_manifest_ = MANIFEST1;
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend1->AddExpectedEvent(ids1, APPCACHE_UPDATE_READY_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_ERROR_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_ERROR_EVENT);
     MockFrontend::HostIds ids3(1, host3->host_id());
-    frontend3->AddExpectedEvent(ids3, APPCACHE_CHECKING_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_DOWNLOADING_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_ERROR_EVENT);
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend3->AddExpectedEvent(ids3,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_ERROR_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2473,16 +2546,19 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
         MockHttpServer::GetMockUrl("files/explicit2"),
         AppCacheEntry(AppCacheEntry::MASTER)));
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_ERROR_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_ERROR_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // final
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CACHED_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CACHED_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2527,22 +2603,29 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
         MockHttpServer::GetMockUrl("files/explicit2"),
         AppCacheEntry(AppCacheEntry::MASTER)));
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend1->AddExpectedEvent(ids1, APPCACHE_UPDATE_READY_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_ERROR_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_ERROR_EVENT);
     MockFrontend::HostIds ids3(1, host3->host_id());
-    frontend3->AddExpectedEvent(ids3, APPCACHE_CHECKING_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_DOWNLOADING_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_PROGRESS_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_PROGRESS_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_PROGRESS_EVENT);  // final
-    frontend3->AddExpectedEvent(ids3, APPCACHE_UPDATE_READY_EVENT);
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend3->AddExpectedEvent(ids3,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend3->AddExpectedEvent(
+        ids3, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend3->AddExpectedEvent(ids3,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2589,14 +2672,16 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_non_null_update_time_ = true;
     tested_manifest_ = PENDING_MASTER_NO_UPDATE;
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_NO_UPDATE_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_NO_UPDATE_EVENT);
     MockFrontend::HostIds ids3(1, host3->host_id());
-    frontend2->AddExpectedEvent(ids3, APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_CHECKING_EVENT);
     MockFrontend::HostIds ids2and3;
     ids2and3.push_back(host2->host_id());
     ids2and3.push_back(host3->host_id());
-    frontend2->AddExpectedEvent(ids2and3, APPCACHE_NO_UPDATE_EVENT);
+    frontend2->AddExpectedEvent(ids2and3,
+                                AppCacheEventID::APPCACHE_NO_UPDATE_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2638,7 +2723,8 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     MockFrontend* frontend5 = MakeMockFrontend();
     AppCacheHost* host5 = MakeHost(5, frontend5);  // no master entry url
 
-    frontend1->TriggerAdditionalUpdates(APPCACHE_DOWNLOADING_EVENT, update);
+    frontend1->TriggerAdditionalUpdates(
+        AppCacheEventID::APPCACHE_DOWNLOADING_EVENT, update);
     frontend1->AdditionalUpdateHost(host2);  // fetch will fail
     frontend1->AdditionalUpdateHost(host3);  // same as an explicit entry
     frontend1->AdditionalUpdateHost(host4);  // same as another master entry
@@ -2654,35 +2740,43 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
         MockHttpServer::GetMockUrl("files/explicit2"),
         AppCacheEntry(AppCacheEntry::MASTER)));
     MockFrontend::HostIds ids1(1, host1->host_id());
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CACHED_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CACHED_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_ERROR_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_ERROR_EVENT);
     MockFrontend::HostIds ids3(1, host3->host_id());
-    frontend3->AddExpectedEvent(ids3, APPCACHE_CHECKING_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_DOWNLOADING_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_PROGRESS_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_PROGRESS_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_PROGRESS_EVENT);  // final
-    frontend3->AddExpectedEvent(ids3, APPCACHE_CACHED_EVENT);
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend3->AddExpectedEvent(ids3,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend3->AddExpectedEvent(
+        ids3, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_CACHED_EVENT);
     MockFrontend::HostIds ids4(1, host4->host_id());
-    frontend4->AddExpectedEvent(ids4, APPCACHE_CHECKING_EVENT);
-    frontend4->AddExpectedEvent(ids4, APPCACHE_DOWNLOADING_EVENT);
-    frontend4->AddExpectedEvent(ids4, APPCACHE_PROGRESS_EVENT);
-    frontend4->AddExpectedEvent(ids4, APPCACHE_PROGRESS_EVENT);
-    frontend4->AddExpectedEvent(ids4, APPCACHE_PROGRESS_EVENT);  // final
-    frontend4->AddExpectedEvent(ids4, APPCACHE_CACHED_EVENT);
+    frontend4->AddExpectedEvent(ids4, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend4->AddExpectedEvent(ids4,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend4->AddExpectedEvent(ids4, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend4->AddExpectedEvent(ids4, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend4->AddExpectedEvent(
+        ids4, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend4->AddExpectedEvent(ids4, AppCacheEventID::APPCACHE_CACHED_EVENT);
 
     // Host 5 is not associated with cache so no progress/cached events.
     MockFrontend::HostIds ids5(1, host5->host_id());
-    frontend5->AddExpectedEvent(ids5, APPCACHE_CHECKING_EVENT);
-    frontend5->AddExpectedEvent(ids5, APPCACHE_DOWNLOADING_EVENT);
+    frontend5->AddExpectedEvent(ids5, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend5->AddExpectedEvent(ids5,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2734,7 +2828,8 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     host6->new_master_entry_url_ =
         MockHttpServer::GetMockUrl("files/explicit1");
 
-    frontend2->TriggerAdditionalUpdates(APPCACHE_ERROR_EVENT, update);
+    frontend2->TriggerAdditionalUpdates(AppCacheEventID::APPCACHE_ERROR_EVENT,
+                                        update);
     frontend2->AdditionalUpdateHost(host3);
     frontend2->AdditionalUpdateHost(nullptr);  // no host
     frontend2->AdditionalUpdateHost(host4);  // no master entry url
@@ -2748,21 +2843,25 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_newest_cache_ = cache;  // newest cache unaffected by update
     tested_manifest_ = PENDING_MASTER_NO_UPDATE;
     MockFrontend::HostIds ids1(1, host1->host_id());  // prior associated host
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_NO_UPDATE_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_NO_UPDATE_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_ERROR_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_ERROR_EVENT);
     MockFrontend::HostIds ids3(1, host3->host_id());
-    frontend3->AddExpectedEvent(ids3, APPCACHE_CHECKING_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_NO_UPDATE_EVENT);
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend3->AddExpectedEvent(ids3,
+                                AppCacheEventID::APPCACHE_NO_UPDATE_EVENT);
     MockFrontend::HostIds ids4(1, host4->host_id());  // unassociated w/cache
-    frontend4->AddExpectedEvent(ids4, APPCACHE_CHECKING_EVENT);
+    frontend4->AddExpectedEvent(ids4, AppCacheEventID::APPCACHE_CHECKING_EVENT);
     MockFrontend::HostIds ids5(1, host5->host_id());
-    frontend5->AddExpectedEvent(ids5, APPCACHE_CHECKING_EVENT);
-    frontend5->AddExpectedEvent(ids5, APPCACHE_NO_UPDATE_EVENT);
+    frontend5->AddExpectedEvent(ids5, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend5->AddExpectedEvent(ids5,
+                                AppCacheEventID::APPCACHE_NO_UPDATE_EVENT);
     MockFrontend::HostIds ids6(1, host6->host_id());
-    frontend6->AddExpectedEvent(ids6, APPCACHE_CHECKING_EVENT);
-    frontend6->AddExpectedEvent(ids6, APPCACHE_NO_UPDATE_EVENT);
+    frontend6->AddExpectedEvent(ids6, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend6->AddExpectedEvent(ids6,
+                                AppCacheEventID::APPCACHE_NO_UPDATE_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2805,7 +2904,8 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     host5->new_master_entry_url_ =
         MockHttpServer::GetMockUrl("files/explicit2");
 
-    frontend1->TriggerAdditionalUpdates(APPCACHE_PROGRESS_EVENT, update);
+    frontend1->TriggerAdditionalUpdates(
+        AppCacheEventID::APPCACHE_PROGRESS_EVENT, update);
     frontend1->AdditionalUpdateHost(host2);  // same as entry in manifest
     frontend1->AdditionalUpdateHost(nullptr);  // no host
     frontend1->AdditionalUpdateHost(host3);  // new master entry
@@ -2821,33 +2921,46 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
         MockHttpServer::GetMockUrl("files/explicit2"),
         AppCacheEntry(AppCacheEntry::MASTER)));
     MockFrontend::HostIds ids1(1, host1->host_id());  // prior associated host
-    frontend1->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend1->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend1->AddExpectedEvent(ids1, APPCACHE_UPDATE_READY_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend1->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend1->AddExpectedEvent(ids1,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
     MockFrontend::HostIds ids2(1, host2->host_id());
-    frontend2->AddExpectedEvent(ids2, APPCACHE_CHECKING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_DOWNLOADING_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);
-    frontend2->AddExpectedEvent(ids2, APPCACHE_PROGRESS_EVENT);  // final
-    frontend2->AddExpectedEvent(ids2, APPCACHE_UPDATE_READY_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend2->AddExpectedEvent(ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend2->AddExpectedEvent(
+        ids2, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend2->AddExpectedEvent(ids2,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
     MockFrontend::HostIds ids3(1, host3->host_id());
-    frontend3->AddExpectedEvent(ids3, APPCACHE_CHECKING_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_DOWNLOADING_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_PROGRESS_EVENT);
-    frontend3->AddExpectedEvent(ids3, APPCACHE_PROGRESS_EVENT);  // final
-    frontend3->AddExpectedEvent(ids3, APPCACHE_UPDATE_READY_EVENT);
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend3->AddExpectedEvent(ids3,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend3->AddExpectedEvent(ids3, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend3->AddExpectedEvent(
+        ids3, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend3->AddExpectedEvent(ids3,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
     MockFrontend::HostIds ids4(1, host4->host_id());  // unassociated w/cache
-    frontend4->AddExpectedEvent(ids4, APPCACHE_CHECKING_EVENT);
-    frontend4->AddExpectedEvent(ids4, APPCACHE_DOWNLOADING_EVENT);
+    frontend4->AddExpectedEvent(ids4, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend4->AddExpectedEvent(ids4,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
     MockFrontend::HostIds ids5(1, host5->host_id());
-    frontend5->AddExpectedEvent(ids5, APPCACHE_CHECKING_EVENT);
-    frontend5->AddExpectedEvent(ids5, APPCACHE_DOWNLOADING_EVENT);
-    frontend5->AddExpectedEvent(ids5, APPCACHE_PROGRESS_EVENT);
-    frontend5->AddExpectedEvent(ids5, APPCACHE_PROGRESS_EVENT);  // final
-    frontend5->AddExpectedEvent(ids5, APPCACHE_UPDATE_READY_EVENT);
+    frontend5->AddExpectedEvent(ids5, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend5->AddExpectedEvent(ids5,
+                                AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend5->AddExpectedEvent(ids5, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend5->AddExpectedEvent(
+        ids5, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend5->AddExpectedEvent(ids5,
+                                AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -2891,14 +3004,16 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_extra_entries_.insert(AppCache::EntryMap::value_type(
         host->new_master_entry_url_, AppCacheEntry(AppCacheEntry::MASTER)));
     MockFrontend::HostIds ids1(1, host->host_id());
-    frontend->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend->AddExpectedEvent(ids1, APPCACHE_CACHED_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids1,
+                               AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CACHED_EVENT);
 
-    // Group status will be APPCACHE_STATUS_IDLE so cannot call
+    // Group status will be AppCacheStatus::APPCACHE_STATUS_IDLE so cannot call
     // WaitForUpdateToFinish.
     group_->AddUpdateObserver(this);
   }
@@ -3092,12 +3207,15 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_old_cache_ = cache;
     tested_manifest_ = MANIFEST1;
     MockFrontend::HostIds ids1(1, host->host_id());
-    frontend->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend->AddExpectedEvent(ids1, APPCACHE_UPDATE_READY_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids1,
+                               AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend->AddExpectedEvent(ids1,
+                               AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     // Seed storage with expected manifest response info that will cause
     // an If-Modified-Since header to be put in the manifest fetch request.
@@ -3159,12 +3277,15 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_old_cache_ = cache;
     tested_manifest_ = MANIFEST1;
     MockFrontend::HostIds ids1(1, host->host_id());
-    frontend->AddExpectedEvent(ids1, APPCACHE_CHECKING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_DOWNLOADING_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);
-    frontend->AddExpectedEvent(ids1, APPCACHE_PROGRESS_EVENT);  // final
-    frontend->AddExpectedEvent(ids1, APPCACHE_UPDATE_READY_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(ids1,
+                               AppCacheEventID::APPCACHE_DOWNLOADING_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);
+    frontend->AddExpectedEvent(
+        ids1, AppCacheEventID::APPCACHE_PROGRESS_EVENT);  // final
+    frontend->AddExpectedEvent(ids1,
+                               AppCacheEventID::APPCACHE_UPDATE_READY_EVENT);
 
     // Seed storage with expected manifest response info that will cause
     // an If-None-Match header to be put in the manifest fetch request.
@@ -3315,7 +3436,8 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_has_cache_ = true;
     tested_manifest_ = NONE;
     MockFrontend::HostIds host_ids(1, host->host_id());
-    frontend->AddExpectedEvent(host_ids, APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(host_ids,
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -3343,7 +3465,8 @@ class AppCacheUpdateJobTest : public testing::TestWithParam<RequestHandlerType>,
     expect_group_has_cache_ = false;
     tested_manifest_ = NONE;
     MockFrontend::HostIds host_ids(1, host->host_id());
-    frontend->AddExpectedEvent(host_ids, APPCACHE_CHECKING_EVENT);
+    frontend->AddExpectedEvent(host_ids,
+                               AppCacheEventID::APPCACHE_CHECKING_EVENT);
 
     WaitForUpdateToFinish();
   }
@@ -3817,7 +3940,7 @@ TEST_P(AppCacheUpdateJobTest, AlreadyChecking) {
   EXPECT_EQ(expected, events.size());
   EXPECT_EQ(expected, events[0].first.size());
   EXPECT_EQ(host.host_id(), events[0].first[0]);
-  EXPECT_EQ(APPCACHE_CHECKING_EVENT, events[0].second);
+  EXPECT_EQ(AppCacheEventID::APPCACHE_CHECKING_EVENT, events[0].second);
   EXPECT_EQ(AppCacheGroup::CHECKING, group->update_status());
 }
 
@@ -3846,11 +3969,11 @@ TEST_P(AppCacheUpdateJobTest, AlreadyDownloading) {
   expected = 1;
   EXPECT_EQ(expected, events[0].first.size());
   EXPECT_EQ(host.host_id(), events[0].first[0]);
-  EXPECT_EQ(APPCACHE_CHECKING_EVENT, events[0].second);
+  EXPECT_EQ(AppCacheEventID::APPCACHE_CHECKING_EVENT, events[0].second);
 
   EXPECT_EQ(expected, events[1].first.size());
   EXPECT_EQ(host.host_id(), events[1].first[0]);
-  EXPECT_EQ(APPCACHE_DOWNLOADING_EVENT, events[1].second);
+  EXPECT_EQ(AppCacheEventID::APPCACHE_DOWNLOADING_EVENT, events[1].second);
 
   EXPECT_EQ(AppCacheGroup::DOWNLOADING, group->update_status());
 }
