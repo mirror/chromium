@@ -16,6 +16,24 @@
       "revId": "ef510874cc1f67444b8181e502c160d05b6d314b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a544c1ff_0ab20e46",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T23:26:46Z",
+      "side": 1,
+      "message": "Good catch!  I\u0027ve added the not-yet-rated text, as well as a test for it, and a TODO for the broken plural (though the chances that an extension has exactly one review are low enough that I\u0027m comfortable omitting it from this CL).",
+      "parentUuid": "cc39f0a1_572abac8",
+      "revId": "ef510874cc1f67444b8181e502c160d05b6d314b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
