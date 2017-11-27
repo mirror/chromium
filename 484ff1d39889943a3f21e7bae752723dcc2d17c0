@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "730df369_37128c23",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T22:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdb736bf_dc6c36f2",
+      "revId": "484ff1d39889943a3f21e7bae752723dcc2d17c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6fb6fc_8f567ef3",
         "filename": "chrome/browser/vr/elements/ui_element.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-27T16:15:07Z",
       "side": 1,
       "message": "Do you expect this to only be used for tests? The main issue I see here is that it\u0027s up to an element to set its owner, so we may end up querying it in other parts of non-test code, and base logic around it when an element doesn\u0027t set the owner. Would it be possible to either 1) ensure that an owned element sets an owner 2) this isn\u0027t used in non-tests, maybe SetOwnerNameForTesting. \n\nIf you think this is not a big issue, feel free to ignore this :)",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 21
+      },
+      "revId": "484ff1d39889943a3f21e7bae752723dcc2d17c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c914a516_176bf3c2",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T22:56:49Z",
+      "side": 1,
+      "message": "I do think that this will be useful outside of tests, but I don\u0027t know how to enforce that an owned element sets its owner since I don\u0027t really know what\u0027s owned. We\u0027ll use types for far more than just owned sub-elements, eg.\n\nSince it\u0027s only being used for tests, presently, I\u0027ll update the name.",
+      "parentUuid": "9a6fb6fc_8f567ef3",
       "range": {
         "startLine": 120,
         "startChar": 7,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "470adad4_e388d13d",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T22:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1ad4f11_b6d8d147",
+      "revId": "484ff1d39889943a3f21e7bae752723dcc2d17c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7581ce7f_49d8ed2c",
         "filename": "chrome/browser/vr/ui_unittest.cc",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-27T16:01:44Z",
       "side": 1,
       "message": "Any idea why the formatter doesn\u0027t format this initializer like the one above?  Is it that the items are too long?  This is weird.",
+      "revId": "484ff1d39889943a3f21e7bae752723dcc2d17c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f366ea_3fb99b46",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T22:56:49Z",
+      "side": 1,
+      "message": "No clue, and I agree.",
+      "parentUuid": "7581ce7f_49d8ed2c",
       "revId": "484ff1d39889943a3f21e7bae752723dcc2d17c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
