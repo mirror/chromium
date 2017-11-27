@@ -22,6 +22,30 @@
       "revId": "a996a1d44007ba6226f7f86e862602554a446af4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3888004_fca1c74e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-27T22:08:07Z",
+      "side": 1,
+      "message": "What happens if you add \"activity2.getActivityTab() !\u003d null\" in the Criteria above?  Does that ever finish?\n\nThere maybe no tab states and the initial tab could be created after that finishes, so I wonder if that is sufficient.",
+      "parentUuid": "3186890f_88c5d757",
+      "range": {
+        "startLine": 525,
+        "startChar": 8,
+        "endLine": 525,
+        "endChar": 72
+      },
+      "revId": "a996a1d44007ba6226f7f86e862602554a446af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
