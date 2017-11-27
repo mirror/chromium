@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f913f54_07cb5cf9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-27T02:40:06Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure how much of this needs to be said on each CL... And in this particular case only `modernize-use-equals-default` is doing anything.\n\nI\u0027d move these dot points (and the \"In some cases\" paragraph) to the crbugs, and not put them on each CL description -- it\u0027s just clutter.",
+      "revId": "a47ff6e8bc029b775b0e453ef2a73de4dbf7463a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9eded7a_aefecef6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-27T02:40:06Z",
+      "side": 1,
+      "message": "Thanks for adding this - that\u0027s what I was looking for :). Can you put this in the description of the bugs too?",
+      "revId": "a47ff6e8bc029b775b0e453ef2a73de4dbf7463a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
