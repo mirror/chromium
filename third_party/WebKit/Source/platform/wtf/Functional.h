@@ -290,7 +290,7 @@ class Function<R(Args...)> {
 
  public:
   Function() {}
-  explicit Function(base::Callback<R(Args...)> callback)
+  Function(base::RepeatingCallback<R(Args...)> callback)
       : callback_(std::move(callback)) {}
   ~Function() {}
 
@@ -316,7 +316,8 @@ class Function<R(Args...)> {
   void Reset() { callback_.Reset(); }
   explicit operator bool() const { return static_cast<bool>(callback_); }
 
-  friend base::Callback<R(Args...)> ConvertToBaseCallback(Function function) {
+  friend base::OnceCallback<R(Args...)> ConvertToBaseCallback(
+      Function function) {
     return std::move(function.callback_);
   }
 
@@ -385,11 +386,31 @@ Function<base::MakeUnboundRunType<FunctionType, BoundParameters...>> Bind(
   return Function<UnboundRunType>(std::move(cb));
 }
 
-// TODO(tzik): Replace WTF::Function with base::OnceCallback, and
-// WTF::RepeatingFunction with base::RepeatingCallback.
+template <typename FunctionType, typename... BoundParameters>
+base::RepeatingCallback<
+    base::MakeUnboundRunType<FunctionType, BoundParameters...>>
+BindRepeating(FunctionType function, BoundParameters&&... bound_parameters) {
+  static_assert(internal::CheckGCedTypeRestrictions<
+                    std::index_sequence_for<BoundParameters...>,
+                    std::decay_t<BoundParameters>...>::ok,
+                "A bound argument uses a bad pattern.");
+  using UnboundRunType =
+      base::MakeUnboundRunType<FunctionType, BoundParameters...>;
+  auto cb = base::BindRepeating(
+      function, std::forward<BoundParameters>(bound_parameters)...);
+#if DCHECK_IS_ON()
+  using WrapperType =
+      ThreadCheckingCallbackWrapper<base::RepeatingCallback<UnboundRunType>>;
+  cb = base::BindRepeating(&WrapperType::Run,
+                           std::make_unique<WrapperType>(std::move(cb)));
+#endif
+  return cb;
+}
+
+// TODO(tzik): Replace WTF::Function with base::OnceCallback.
 template <typename T>
-using RepeatingFunction = Function<T>;
-using RepeatingClosure = Function<void()>;
+using RepeatingFunction = base::RepeatingCallback<T>;
+using RepeatingClosure = base::RepeatingCallback<void()>;
 using Closure = Function<void()>;
 
 template <typename T>

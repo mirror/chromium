@@ -134,8 +134,9 @@ void AutoplayPolicy::StartAutoplayMutedWhenVisible() {
     return;
 
   autoplay_visibility_observer_ = new ElementVisibilityObserver(
-      element_, WTF::Bind(&AutoplayPolicy::OnVisibilityChangedForAutoplay,
-                          WrapWeakPersistent(this)));
+      element_,
+      WTF::BindRepeating(&AutoplayPolicy::OnVisibilityChangedForAutoplay,
+                         WrapWeakPersistent(this)));
   autoplay_visibility_observer_->Start();
 }
 
