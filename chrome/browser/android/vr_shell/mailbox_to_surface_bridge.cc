@@ -14,6 +14,7 @@
 #include "content/public/browser/android/compositor.h"
 #include "content/public/browser/browser_thread.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "gpu/command_buffer/common/mailbox_holder.h"
@@ -138,7 +139,11 @@ GLuint ConsumeTexture(gpu::gles2::GLES2Interface* gl,
 
 namespace vr_shell {
 
-MailboxToSurfaceBridge::MailboxToSurfaceBridge() : weak_ptr_factory_(this) {}
+MailboxToSurfaceBridge::MailboxToSurfaceBridge(
+    std::unique_ptr<base::OnceClosure> on_initialized)
+    : on_initialized_(std::move(on_initialized)), weak_ptr_factory_(this) {
+  DVLOG(1) << __FUNCTION__;
+}
 
 MailboxToSurfaceBridge::~MailboxToSurfaceBridge() {
   if (surface_handle_) {
@@ -146,6 +151,7 @@ MailboxToSurfaceBridge::~MailboxToSurfaceBridge() {
     gpu::GpuSurfaceTracker* tracker = gpu::GpuSurfaceTracker::Get();
     tracker->RemoveSurface(surface_handle_);
   }
+  on_initialized_.reset();
   DestroyContext();
 }
 
@@ -163,12 +169,23 @@ void MailboxToSurfaceBridge::OnContextAvailable(
   }
 
   gl_ = context_provider_->ContextGL();
+  context_support_ = context_provider_->ContextSupport();
 
   if (!gl_) {
     DLOG(ERROR) << "Did not get a GL context";
     return;
   }
+  if (!context_support_) {
+    DLOG(ERROR) << "Did not get a ContextSupport";
+    return;
+  }
   InitializeRenderer();
+
+  DVLOG(1) << __FUNCTION__ << ": Context ready";
+  if (on_initialized_) {
+    std::move(*on_initialized_).Run();
+    on_initialized_ = nullptr;
+  }
 }
 
 void MailboxToSurfaceBridge::CreateSurface(
@@ -269,6 +286,33 @@ bool MailboxToSurfaceBridge::CopyMailboxToSurfaceAndSwap(
   gl_->DeleteTextures(1, &sourceTexture);
   gl_->SwapBuffers();
   return true;
+}
+
+void MailboxToSurfaceBridge::InsertGpuFence(
+    const gpu::SyncToken& sync_token,
+    base::OnceCallback<void(const gfx::GpuFenceHandle&)> callback) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  DCHECK(gl_);
+  DCHECK(context_support_);
+  gl_->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
+  GLuint id = gl_->InsertGpuFenceCHROMIUM();
+  context_support_->GetGpuFenceHandle(id, std::move(callback));
+  gl_->DestroyGpuFenceCHROMIUM(id);
+  // Need to flush to avoid tearing. TODO(klausw): Why? Revisit
+  // the ordering assumptions.
+  gl_->ShallowFlushCHROMIUM();
+}
+
+void MailboxToSurfaceBridge::InsertClientGpuFence(ClientGpuFence source) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  if (!gl_) {
+    DLOG(ERROR) << "Unexpectedly no gl_ context";
+    return;
+  }
+  DCHECK(gl_);
+  GLuint id = gl_->InsertClientGpuFenceCHROMIUM(source);
+  gl_->WaitGpuFenceCHROMIUM(id);
+  gl_->DestroyGpuFenceCHROMIUM(id);
 }
 
 void MailboxToSurfaceBridge::DestroyContext() {

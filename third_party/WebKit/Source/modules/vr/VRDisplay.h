@@ -18,6 +18,11 @@
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
+#include "ui/gfx/gpu_fence_passthrough.h"
+
+namespace gfx {
+class GpuFencePassthrough;
+}
 
 namespace gpu {
 namespace gles2 {
@@ -135,6 +140,7 @@ class VRDisplay final : public EventTargetWithInlineData,
   // VRSubmitFrameClient
   void OnSubmitFrameTransferred() override;
   void OnSubmitFrameRendered() override;
+  void OnSubmitFramePostRenderFence(const gfx::GpuFenceHandle&) override;
 
   // VRDisplayClient
   void OnChanged(device::mojom::blink::VRDisplayInfoPtr) override;
@@ -203,6 +209,21 @@ class VRDisplay final : public EventTargetWithInlineData,
   // Used to keep the image alive until the next frame if using
   // waitForPreviousTransferToFinish.
   scoped_refptr<Image> previous_image_;
+
+  // Some implementations need to synchronize submitting with the completion of
+  // the previous frame, i.e. the Android surface path needs to wait
+  // BEFORE_SUBMIT to avoid lost frames in the transfer surface, or to avoid
+  // overstuffed buffers. The OpenVR waits NEVER because the platform handles
+  // timing.
+  enum class WaitPrevStrategy {
+    BEFORE_BITMAP,
+    AFTER_BITMAP,
+    NEVER,
+  };
+  // Backwards compatible default.
+  WaitPrevStrategy wait_for_previous_render_ = WaitPrevStrategy::AFTER_BITMAP;
+
+  std::unique_ptr<gfx::GpuFencePassthrough> prev_frame_fence_;
 
   TraceWrapperMember<ScriptedAnimationController>
       scripted_animation_controller_;

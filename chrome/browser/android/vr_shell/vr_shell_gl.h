@@ -118,6 +118,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
  private:
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
+  void OnGpuProcessConnectionReady();
   // Returns true if successfully resized.
   bool ResizeForWebVR(int16_t frame_index);
   void UpdateSamples();
@@ -168,6 +169,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   void ForceExitVr();
 
+  bool ShouldSkipVSync();
   void SendVSync(base::TimeTicks time, GetVSyncCallback callback);
 
   void ClosePresentationBindings();
@@ -177,6 +179,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   // Set from feature flag.
   bool webvr_vsync_align_;
+  bool webvr_experimental_rendering_;
 
   scoped_refptr<gl::GLSurface> surface_;
   scoped_refptr<gl::GLContext> context_;
@@ -198,10 +201,25 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   int premature_received_frames_ = 0;
   base::queue<uint16_t> pending_frames_;
   std::unique_ptr<MailboxToSurfaceBridge> mailbox_bridge_;
+  bool mailbox_bridge_ready_ = false;
 
   // The default size for the render buffers.
   gfx::Size render_size_default_;
   gfx::Size render_size_webvr_ui_;
+
+  // WebVR currently supports multiple render path choices, with runtime
+  // selection based on underlying support being available and feature flags.
+  // The WebVrUse* helpers choose among the implementations. Please don't check
+  // webvr_experimental_rendering_ or other flags in individual code paths
+  // directly, that can easily lead to inconsistent logic.
+  bool webvr_use_pre_submit_client_wait_ = true;
+  bool WebVrUsePreSubmitClientWait() {
+    return webvr_use_pre_submit_client_wait_;
+  }
+
+  base::TimeDelta last_acquire_time_;
+  base::TimeDelta last_submit_time_;
+  int webvr_unstuff_ratelimit_frames_;
 
   bool cardboard_ = false;
   gfx::Quaternion controller_quat_;
@@ -211,6 +229,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   std::vector<base::TimeTicks> webvr_time_pose_;
   std::vector<base::TimeTicks> webvr_time_js_submit_;
+  std::vector<base::TimeTicks> webvr_time_gvr_submit_;
   std::vector<bool> webvr_frame_oustanding_;
   std::vector<gfx::Transform> webvr_head_pose_;
 
@@ -247,8 +266,17 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   std::unique_ptr<vr::FPSMeter> fps_meter_;
 
+  // JS time is from SendVSync (pose time) to incoming JS submitFrame.
   std::unique_ptr<vr::SlidingAverage> webvr_js_time_;
+  // Render time is from JS submitFrame to estimated render completion.
+  // This is an estimate when submitting incomplete frames to GVR.
+  // If submitFrame blocks, that means the previous frame wasn't done
+  // rendering yet.
   std::unique_ptr<vr::SlidingAverage> webvr_render_time_;
+
+  // For debugging
+  std::unique_ptr<vr::SlidingAverage> webvr_acquire_time_;
+  std::unique_ptr<vr::SlidingAverage> webvr_submit_time_;
 
   gfx::Point3F pointer_start_;
 
