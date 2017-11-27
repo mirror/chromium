@@ -22,6 +22,30 @@
       "revId": "c2eb57a7bc71f751d8a0fc317f1a34f93b0d7458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5914909_69748185",
+        "filename": "chrome/browser/resource_coordinator/background_tab_navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-27T17:48:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1932034c_719ee6df",
+      "range": {
+        "startLine": 45,
+        "startChar": 60,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "c2eb57a7bc71f751d8a0fc317f1a34f93b0d7458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
