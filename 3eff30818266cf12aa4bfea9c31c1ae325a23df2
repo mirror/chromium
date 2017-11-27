@@ -34,6 +34,24 @@
       "revId": "3eff30818266cf12aa4bfea9c31c1ae325a23df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56abd19e_6b0d59d1",
+        "filename": "third_party/webrtc_overrides/rtc_base/event.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T09:48:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8481dc64_c924356d",
+      "revId": "3eff30818266cf12aa4bfea9c31c1ae325a23df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
