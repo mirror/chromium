@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89ad94dc_9d2864a9",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-27T23:18:03Z",
+      "side": 1,
+      "message": "/* twist */ 0\n\n(like pointer_id in the previous line)",
+      "revId": "e08d90d5cbefe4553a43405c1ca5ffa6b604df6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
