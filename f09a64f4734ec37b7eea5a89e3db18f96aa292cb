@@ -102,6 +102,24 @@
       "revId": "f09a64f4734ec37b7eea5a89e3db18f96aa292cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc40c6d_20ba3df1",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-27T20:10:53Z",
+      "side": 1,
+      "message": "I think that\u0027s an argument of setting clips_children properly in\nAXTreeSourceAura::SerializeNode. Then you won\u0027t need any special\ncases here.",
+      "parentUuid": "ad0845c9_c5b03b8a",
+      "revId": "f09a64f4734ec37b7eea5a89e3db18f96aa292cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
