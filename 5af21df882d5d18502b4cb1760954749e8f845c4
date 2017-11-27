@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06328ac6_424da436",
+        "filename": "chrome/browser/vr/elements/button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:50:33Z",
+      "side": 1,
+      "message": "Why not leave default alone?",
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e463f3_ae4ae547",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:50:33Z",
+      "side": 1,
+      "message": "Should definitely have a default now that this isn\u0027t always initialized in the constructor.  But further, could we initialize it to a default button hover offset?  All buttons should be the same, and hence probably don\u0027t need set() calls on all of them.",
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cac449d_0c0b369b",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:50:33Z",
+      "side": 1,
+      "message": "This is getting a tad unwieldy to be a in-line constructor arg.  Optionally consider just splitting out \"base:Callback click_handler\"?  I don\u0027t feel strongly.",
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
