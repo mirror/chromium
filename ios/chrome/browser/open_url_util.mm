@@ -13,7 +13,7 @@
 #endif
 
 void OpenUrlWithCompletionHandler(NSURL* url,
-                                  void (^completion_handler)(BOOL success)) {
+                                  void (^completion_handler)(BOOL)) {
   if (@available(iOS 10, *)) {
     [[UIApplication sharedApplication] openURL:url
                                        options:@{}
