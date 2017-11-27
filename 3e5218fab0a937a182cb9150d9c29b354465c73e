@@ -16,6 +16,24 @@
       "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f53f1db_786eff4f",
+        "filename": "chromeos/dbus/auth_policy_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-27T08:25:13Z",
+      "side": 1,
+      "message": "The reason we\u0027re switching to proto for the D-Bus call is because it\u0027s a major hassle adding/modifying parameters as it crosses the Chrome OS/Chrome boundary. This is not the case for this method - it\u0027s all Chrome. If we switched this function to take a proto, then the caller would have to serialize the proto and the interface would be less readable.",
+      "parentUuid": "19738050_3768fe72",
+      "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
