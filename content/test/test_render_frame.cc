@@ -4,6 +4,10 @@
 
 #include "content/test/test_render_frame.h"
 
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/common/frame_messages.h"
@@ -52,6 +56,15 @@ class MockFrameHost : public mojom::FrameHost {
       override {
     last_commit_params_ = std::move(params);
   }
+
+  void DidChangeName(const std::string& name,
+                     const std::string& unique_name) override {}
+
+  void EnforceInsecureRequestPolicy(
+      blink::WebInsecureRequestPolicy policy) override {}
+
+  void DidSetFeaturePolicyHeader(
+      const blink::ParsedFeaturePolicy& parsed_header) override {}
 
  private:
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
