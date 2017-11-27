@@ -33,7 +33,7 @@ class FileStreamReaderProviderImpl
  public:
   explicit FileStreamReaderProviderImpl(FileSystemContext* file_system_context)
       : file_system_context_(file_system_context) {}
-  ~FileStreamReaderProviderImpl() override {}
+  ~FileStreamReaderProviderImpl() override = default;
 
   std::unique_ptr<FileStreamReader> CreateForLocalFile(
       base::TaskRunner* task_runner,
