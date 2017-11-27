@@ -29,7 +29,7 @@ namespace {
 class TestCaptureDelegate : public aura::client::CaptureDelegate {
  public:
   TestCaptureDelegate() : has_capture_(false) {}
-  ~TestCaptureDelegate() override {}
+  ~TestCaptureDelegate() override = default;
 
   bool HasNativeCapture() const {
     return has_capture_;
@@ -52,7 +52,7 @@ class TestCaptureDelegate : public aura::client::CaptureDelegate {
 
 class CaptureControllerTest : public aura::test::AuraTestBase {
  public:
-  CaptureControllerTest() {}
+  CaptureControllerTest() = default;
 
   void SetUp() override {
     AuraTestBase::SetUp();
@@ -200,7 +200,7 @@ TEST_F(CaptureControllerTest, ReparentedWhileCaptured) {
 class GestureEventDeleteWindowOnScrollEnd
     : public aura::test::TestWindowDelegate {
  public:
-  GestureEventDeleteWindowOnScrollEnd() {}
+  GestureEventDeleteWindowOnScrollEnd() = default;
 
   void SetWindow(std::unique_ptr<aura::Window> window) {
     window_ = std::move(window);

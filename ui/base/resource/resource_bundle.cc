@@ -126,7 +126,7 @@ class ResourceBundle::ResourceBundleImageSource : public gfx::ImageSkiaSource {
  public:
   ResourceBundleImageSource(ResourceBundle* rb, int resource_id)
       : rb_(rb), resource_id_(resource_id) {}
-  ~ResourceBundleImageSource() override {}
+  ~ResourceBundleImageSource() override = default;
 
   // gfx::ImageSkiaSource overrides:
   gfx::ImageSkiaRep GetImageForScale(float scale) override {
@@ -178,7 +178,7 @@ struct ResourceBundle::FontKey {
           gfx::Font::Weight in_weight)
       : size_delta(in_size_delta), style(in_style), weight(in_weight) {}
 
-  ~FontKey() {}
+  ~FontKey() = default;
 
   bool operator==(const FontKey& rhs) const {
     return std::tie(size_delta, style, weight) ==

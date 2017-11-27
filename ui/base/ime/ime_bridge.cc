@@ -35,7 +35,7 @@ class IMEBridgeImpl : public IMEBridge {
                                0) {}
 #endif
 
-  ~IMEBridgeImpl() override {}
+  ~IMEBridgeImpl() override = default;
 
   // IMEBridge override.
   IMEInputContextHandlerInterface* GetInputContextHandler() const override {
@@ -98,9 +98,9 @@ class IMEBridgeImpl : public IMEBridge {
 
 ///////////////////////////////////////////////////////////////////////////////
 // IMEBridge
-IMEBridge::IMEBridge() {}
+IMEBridge::IMEBridge() = default;
 
-IMEBridge::~IMEBridge() {}
+IMEBridge::~IMEBridge() = default;
 
 // static.
 void IMEBridge::Initialize() {

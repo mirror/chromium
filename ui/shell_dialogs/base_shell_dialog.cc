@@ -6,6 +6,6 @@
 
 namespace ui {
 
-BaseShellDialog::~BaseShellDialog() {}
+BaseShellDialog::~BaseShellDialog() = default;
 
 }  // namespace ui

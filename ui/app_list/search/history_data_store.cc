@@ -123,8 +123,7 @@ HistoryDataStore::HistoryDataStore(
   Init(data_store_->cached_dict());
 }
 
-HistoryDataStore::~HistoryDataStore() {
-}
+HistoryDataStore::~HistoryDataStore() = default;
 
 void HistoryDataStore::Init(base::DictionaryValue* cached_dict) {
   DCHECK(cached_dict);

@@ -37,7 +37,7 @@ class Pause : public LayerAnimationElement {
   Pause(AnimatableProperties properties, base::TimeDelta duration)
       : LayerAnimationElement(properties, duration) {
   }
-  ~Pause() override {}
+  ~Pause() override = default;
 
  private:
   std::string DebugName() const override { return "Pause"; }
@@ -60,7 +60,7 @@ class InterpolatedTransformTransition : public LayerAnimationElement {
       base::TimeDelta duration)
       : LayerAnimationElement(TRANSFORM, duration),
         interpolated_transform_(std::move(interpolated_transform)) {}
-  ~InterpolatedTransformTransition() override {}
+  ~InterpolatedTransformTransition() override = default;
 
  protected:
   std::string DebugName() const override {
@@ -95,7 +95,7 @@ class BoundsTransition : public LayerAnimationElement {
       : LayerAnimationElement(BOUNDS, duration),
         target_(target) {
   }
-  ~BoundsTransition() override {}
+  ~BoundsTransition() override = default;
 
  protected:
   std::string DebugName() const override { return "BoundsTransition"; }
@@ -132,7 +132,7 @@ class VisibilityTransition : public LayerAnimationElement {
         start_(false),
         target_(target) {
   }
-  ~VisibilityTransition() override {}
+  ~VisibilityTransition() override = default;
 
  protected:
   std::string DebugName() const override { return "VisibilityTransition"; }
@@ -168,7 +168,7 @@ class BrightnessTransition : public LayerAnimationElement {
         start_(0.0f),
         target_(target) {
   }
-  ~BrightnessTransition() override {}
+  ~BrightnessTransition() override = default;
 
  protected:
   std::string DebugName() const override { return "BrightnessTransition"; }
@@ -205,7 +205,7 @@ class GrayscaleTransition : public LayerAnimationElement {
         start_(0.0f),
         target_(target) {
   }
-  ~GrayscaleTransition() override {}
+  ~GrayscaleTransition() override = default;
 
  protected:
   std::string DebugName() const override { return "GrayscaleTransition"; }
@@ -242,7 +242,7 @@ class ColorTransition : public LayerAnimationElement {
         start_(SK_ColorBLACK),
         target_(target) {
   }
-  ~ColorTransition() override {}
+  ~ColorTransition() override = default;
 
  protected:
   std::string DebugName() const override { return "ColorTransition"; }
@@ -278,7 +278,7 @@ class TemperatureTransition : public LayerAnimationElement {
       : LayerAnimationElement(TEMPERATURE, duration),
         start_(0.0f),
         target_(target) {}
-  ~TemperatureTransition() override {}
+  ~TemperatureTransition() override = default;
 
  protected:
   std::string DebugName() const override { return "TemperatureTransition"; }
@@ -314,7 +314,7 @@ class ThreadedLayerAnimationElement : public LayerAnimationElement {
                                 base::TimeDelta duration)
       : LayerAnimationElement(properties, duration) {
   }
-  ~ThreadedLayerAnimationElement() override {}
+  ~ThreadedLayerAnimationElement() override = default;
 
   bool IsThreaded(LayerAnimationDelegate* delegate) const override {
     return !duration().is_zero();
@@ -385,7 +385,7 @@ class ThreadedOpacityTransition : public ThreadedLayerAnimationElement {
         start_(0.0f),
         target_(target) {
   }
-  ~ThreadedOpacityTransition() override {}
+  ~ThreadedOpacityTransition() override = default;
 
  protected:
   std::string DebugName() const override { return "ThreadedOpacityTransition"; }
@@ -453,7 +453,7 @@ class ThreadedTransformTransition : public ThreadedLayerAnimationElement {
       : ThreadedLayerAnimationElement(TRANSFORM, duration),
         target_(target) {
   }
-  ~ThreadedTransformTransition() override {}
+  ~ThreadedTransformTransition() override = default;
 
  protected:
   std::string DebugName() const override {
@@ -555,8 +555,7 @@ LayerAnimationElement::LayerAnimationElement(
       start_frame_number_(0),
       weak_ptr_factory_(this) {}
 
-LayerAnimationElement::~LayerAnimationElement() {
-}
+LayerAnimationElement::~LayerAnimationElement() = default;
 
 void LayerAnimationElement::Start(LayerAnimationDelegate* delegate,
                                   int animation_group_id) {

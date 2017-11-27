@@ -37,7 +37,7 @@ class PageSwitcherButton : public views::Button {
       : views::Button(listener),
         button_width_(kMaxButtonWidth),
         selected_range_(0) {}
-  ~PageSwitcherButton() override {}
+  ~PageSwitcherButton() override = default;
 
   void SetSelectedRange(double selected_range) {
     if (selected_range_ == selected_range)

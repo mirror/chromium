@@ -29,8 +29,7 @@ OverlayPlane::OverlayPlane(const scoped_refptr<ScanoutBuffer>& buffer,
 
 OverlayPlane::OverlayPlane(const OverlayPlane& other) = default;
 
-OverlayPlane::~OverlayPlane() {
-}
+OverlayPlane::~OverlayPlane() = default;
 
 bool OverlayPlane::operator<(const OverlayPlane& plane) const {
   return std::tie(z_order, display_bounds, crop_rect, plane_transform) <

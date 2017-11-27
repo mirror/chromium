@@ -17,8 +17,8 @@ namespace {
 
 class DisplayObserverImpl : public DisplayObserver {
  public:
-  DisplayObserverImpl() {}
-  ~DisplayObserverImpl() override {}
+  DisplayObserverImpl() = default;
+  ~DisplayObserverImpl() override = default;
 
   std::string GetAndClearChanges() {
     std::string changes;

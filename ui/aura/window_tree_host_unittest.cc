@@ -19,7 +19,7 @@ namespace {
 class CounterEventRewriter : public ui::EventRewriter {
  public:
   CounterEventRewriter() : events_seen_(0) {}
-  ~CounterEventRewriter() override {}
+  ~CounterEventRewriter() override = default;
 
   int events_seen() const { return events_seen_; }
 
@@ -126,7 +126,7 @@ class TestWindow : public ui::StubWindow {
  public:
   explicit TestWindow(ui::PlatformWindowDelegate* delegate)
       : StubWindow(delegate, false, gfx::Rect(400, 600)) {}
-  ~TestWindow() override {}
+  ~TestWindow() override = default;
 
  private:
   // ui::StubWindow

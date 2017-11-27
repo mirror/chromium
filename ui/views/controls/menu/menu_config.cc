@@ -47,7 +47,7 @@ MenuConfig::MenuConfig()
   Init();
 }
 
-MenuConfig::~MenuConfig() {}
+MenuConfig::~MenuConfig() = default;
 
 // static
 const MenuConfig& MenuConfig::instance() {

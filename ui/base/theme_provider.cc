@@ -10,7 +10,6 @@ namespace ui {
 // that includes a virtual function of the class. Leaving it just in the .h file
 // means that GCC will fail to link.
 
-ThemeProvider::~ThemeProvider() {
-}
+ThemeProvider::~ThemeProvider() = default;
 
 }  // namespace ui

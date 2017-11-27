@@ -7,9 +7,9 @@
 namespace app_list {
 namespace test {
 
-TestAppListViewDelegateFactory::TestAppListViewDelegateFactory() {}
+TestAppListViewDelegateFactory::TestAppListViewDelegateFactory() = default;
 
-TestAppListViewDelegateFactory::~TestAppListViewDelegateFactory() {}
+TestAppListViewDelegateFactory::~TestAppListViewDelegateFactory() = default;
 
 AppListViewDelegate* TestAppListViewDelegateFactory::GetDelegate() {
   return &delegate_;

@@ -32,7 +32,7 @@ class Edit {
     REPLACE_EDIT,
   };
 
-  virtual ~Edit() {}
+  virtual ~Edit() = default;
 
   // Revert the change made by this edit in |model|.
   void Undo(TextfieldModel* model) {
@@ -313,7 +313,7 @@ using internal::MERGEABLE;
 /////////////////////////////////////////////////////////////////
 // TextfieldModel: public
 
-TextfieldModel::Delegate::~Delegate() {}
+TextfieldModel::Delegate::~Delegate() = default;
 
 TextfieldModel::TextfieldModel(Delegate* delegate)
     : delegate_(delegate),

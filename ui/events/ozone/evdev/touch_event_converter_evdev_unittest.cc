@@ -58,7 +58,7 @@ void InitEloTouchscreen(TouchEventConverterEvdev* device) {
 enum class GenericEventParamsType { MOUSE_MOVE, MOUSE_BUTTON, TOUCH };
 
 struct GenericEventParams {
-  GenericEventParams() {}
+  GenericEventParams() = default;
   GenericEventParams(const GenericEventParams& other) {
     type = other.type;
     switch (type) {
@@ -73,7 +73,7 @@ struct GenericEventParams {
         break;
     }
   }
-  ~GenericEventParams() {}
+  ~GenericEventParams() = default;
 
   GenericEventParamsType type;
   union {
@@ -123,7 +123,7 @@ class MockDeviceEventDispatcherEvdev : public DeviceEventDispatcherEvdev {
   MockDeviceEventDispatcherEvdev(
       const base::Callback<void(const GenericEventParams& params)>& callback)
       : callback_(callback) {}
-  ~MockDeviceEventDispatcherEvdev() override {}
+  ~MockDeviceEventDispatcherEvdev() override = default;
 
   // DeviceEventDispatcherEvdev:
   void DispatchKeyEvent(const KeyEventParams& params) override {}
@@ -212,7 +212,7 @@ void MockTouchEventConverterEvdev::ConfigureReadMock(struct input_event* queue,
 // Test fixture.
 class TouchEventConverterEvdevTest : public testing::Test {
  public:
-  TouchEventConverterEvdevTest() {}
+  TouchEventConverterEvdevTest() = default;
 
   // Overridden from testing::Test:
   void SetUp() override {
@@ -1130,7 +1130,7 @@ class EventTypeTouchNoiseFilter : public TouchFilter {
  public:
   explicit EventTypeTouchNoiseFilter(EventType noise_event_type)
       : noise_event_type_(noise_event_type) {}
-  ~EventTypeTouchNoiseFilter() override {}
+  ~EventTypeTouchNoiseFilter() override = default;
 
   // TouchFilter:
   void Filter(const std::vector<InProgressTouchEvdev>& touches,
@@ -1168,8 +1168,8 @@ class EventTypeTouchNoiseFilter : public TouchFilter {
 class TouchEventConverterEvdevTouchNoiseTest
     : public TouchEventConverterEvdevTest {
  public:
-  TouchEventConverterEvdevTouchNoiseTest() {}
-  ~TouchEventConverterEvdevTouchNoiseTest() override {}
+  TouchEventConverterEvdevTouchNoiseTest() = default;
+  ~TouchEventConverterEvdevTouchNoiseTest() override = default;
 
   // Makes the FalseTouchFinder use |filter| and only |filter| to filter out
   // touch noise. Also removes the edge touch filter.

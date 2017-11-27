@@ -44,8 +44,7 @@ SnapScrollController::SnapScrollController(float snap_bound,
       mode_(SNAP_NONE) {
 }
 
-SnapScrollController::~SnapScrollController() {
-}
+SnapScrollController::~SnapScrollController() = default;
 
 void SnapScrollController::SetSnapScrollMode(
     const MotionEvent& event,

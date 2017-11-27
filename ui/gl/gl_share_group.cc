@@ -16,8 +16,7 @@ GLShareGroup::GLShareGroup()
 #if defined(OS_MACOSX)
     : renderer_id_(-1)
 #endif
-{
-}
+      = default;
 
 void GLShareGroup::AddContext(GLContext* context) {
   contexts_.insert(context);
@@ -75,7 +74,6 @@ int GLShareGroup::GetRendererID() {
 }
 #endif
 
-GLShareGroup::~GLShareGroup() {
-}
+GLShareGroup::~GLShareGroup() = default;
 
 }  // namespace gl

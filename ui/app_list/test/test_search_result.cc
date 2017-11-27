@@ -6,11 +6,9 @@
 
 namespace app_list {
 
-TestSearchResult::TestSearchResult() {
-}
+TestSearchResult::TestSearchResult() = default;
 
-TestSearchResult::~TestSearchResult() {
-}
+TestSearchResult::~TestSearchResult() = default;
 
 std::unique_ptr<SearchResult> TestSearchResult::Duplicate() const {
   NOTREACHED();

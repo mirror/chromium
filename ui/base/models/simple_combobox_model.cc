@@ -11,8 +11,7 @@ SimpleComboboxModel::SimpleComboboxModel(
     : items_(items) {
 }
 
-SimpleComboboxModel::~SimpleComboboxModel() {
-}
+SimpleComboboxModel::~SimpleComboboxModel() = default;
 
 int SimpleComboboxModel::GetItemCount() const {
   return items_.size();

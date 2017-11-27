@@ -23,10 +23,10 @@ namespace {
 // the vertical candidate window.
 class VerticalCandidateLabel : public views::Label {
  public:
-  VerticalCandidateLabel() {}
+  VerticalCandidateLabel() = default;
 
  private:
-  ~VerticalCandidateLabel() override {}
+  ~VerticalCandidateLabel() override = default;
 
   // views::Label:
   // Returns the preferred size, but guarantees that the width has at

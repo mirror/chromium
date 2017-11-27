@@ -43,7 +43,7 @@ namespace ui {
 
 class GenericGamepadMappingTest : public testing::Test {
  public:
-  GenericGamepadMappingTest() {}
+  GenericGamepadMappingTest() = default;
 
   void CompareGamepadMapper(const GamepadMapper* l_mapper,
                             const GamepadMapper* r_mapper) {

@@ -42,7 +42,7 @@ class MotionEventBufferTest : public testing::Test,
                               public MotionEventBufferClient {
  public:
   MotionEventBufferTest() : needs_flush_(false) {}
-  ~MotionEventBufferTest() override {}
+  ~MotionEventBufferTest() override = default;
 
   // MotionEventBufferClient implementation.
   void ForwardMotionEvent(const MotionEvent& event) override {

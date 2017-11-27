@@ -27,8 +27,8 @@ namespace {
 // AcceleratedWidget.
 class StubPlatformWindowDelegate : public PlatformWindowDelegate {
  public:
-  StubPlatformWindowDelegate() {}
-  ~StubPlatformWindowDelegate() override {}
+  StubPlatformWindowDelegate() = default;
+  ~StubPlatformWindowDelegate() override = default;
 
   gfx::AcceleratedWidget widget() const { return widget_; }
 
@@ -87,7 +87,7 @@ TestCompositorHostOzone::TestCompositorHostOzone(
                   false /* enable_surface_synchronization */,
                   false /* enable_pixel_canvas */) {}
 
-TestCompositorHostOzone::~TestCompositorHostOzone() {}
+TestCompositorHostOzone::~TestCompositorHostOzone() = default;
 
 void TestCompositorHostOzone::Show() {
   // Create a PlatformWindow to get the AcceleratedWidget backing it.

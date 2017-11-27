@@ -16,7 +16,7 @@ TestDisplayLayoutManager::TestDisplayLayoutManager(
     MultipleDisplayState display_state)
     : displays_(std::move(displays)), display_state_(display_state) {}
 
-TestDisplayLayoutManager::~TestDisplayLayoutManager() {}
+TestDisplayLayoutManager::~TestDisplayLayoutManager() = default;
 
 DisplayConfigurator::StateController*
 TestDisplayLayoutManager::GetStateController() const {

@@ -14,7 +14,7 @@ TestScreen::TestScreen() {
   ProcessDisplayChanged(display, true /* is_primary */);
 }
 
-TestScreen::~TestScreen() {}
+TestScreen::~TestScreen() = default;
 
 gfx::Point TestScreen::GetCursorScreenPoint() {
   return gfx::Point();

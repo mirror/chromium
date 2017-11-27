@@ -54,7 +54,7 @@ class Mixer::Group {
         boost_(boost),
         is_fullscreen_app_list_enabled_(
             features::IsFullscreenAppListEnabled()) {}
-  ~Group() {}
+  ~Group() = default;
 
   void AddProvider(SearchProvider* provider) {
     providers_.emplace_back(provider);
@@ -136,8 +136,7 @@ class Mixer::Group {
 Mixer::Mixer(AppListModel::SearchResults* ui_results)
     : ui_results_(ui_results) {
 }
-Mixer::~Mixer() {
-}
+Mixer::~Mixer() = default;
 
 size_t Mixer::AddGroup(size_t max_results, double multiplier, double boost) {
   groups_.push_back(std::make_unique<Group>(max_results, multiplier, boost));

@@ -10,7 +10,7 @@ FixedVelocityCurve::FixedVelocityCurve(const gfx::Vector2dF& velocity,
                                        base::TimeTicks start_timestamp)
     : velocity_(velocity), start_timestamp_(start_timestamp) {}
 
-FixedVelocityCurve::~FixedVelocityCurve() {}
+FixedVelocityCurve::~FixedVelocityCurve() = default;
 
 // GestureCurve implementation.
 bool FixedVelocityCurve::ComputeScrollOffset(base::TimeTicks time,

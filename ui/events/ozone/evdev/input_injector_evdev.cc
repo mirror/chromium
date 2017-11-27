@@ -28,8 +28,7 @@ InputInjectorEvdev::InputInjectorEvdev(
     CursorDelegateEvdev* cursor)
     : cursor_(cursor), dispatcher_(std::move(dispatcher)) {}
 
-InputInjectorEvdev::~InputInjectorEvdev() {
-}
+InputInjectorEvdev::~InputInjectorEvdev() = default;
 
 void InputInjectorEvdev::InjectMouseButton(EventFlags button, bool down) {
   unsigned int code;

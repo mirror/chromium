@@ -51,12 +51,12 @@ bool ValidateShowState(int64_t value) {
 
 }  // namespace
 
-PropertyConverter::PrimitiveProperty::PrimitiveProperty() {}
+PropertyConverter::PrimitiveProperty::PrimitiveProperty() = default;
 
 PropertyConverter::PrimitiveProperty::PrimitiveProperty(
     const PrimitiveProperty& property) = default;
 
-PropertyConverter::PrimitiveProperty::~PrimitiveProperty() {}
+PropertyConverter::PrimitiveProperty::~PrimitiveProperty() = default;
 
 // static
 base::RepeatingCallback<bool(int64_t)>
@@ -98,7 +98,7 @@ PropertyConverter::PropertyConverter() {
                            ui::mojom::WindowManager::kWindowTitle_Property);
 }
 
-PropertyConverter::~PropertyConverter() {}
+PropertyConverter::~PropertyConverter() = default;
 
 bool PropertyConverter::IsTransportNameRegistered(
     const std::string& name) const {

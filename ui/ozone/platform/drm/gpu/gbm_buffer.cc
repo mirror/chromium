@@ -324,8 +324,7 @@ gfx::NativePixmapHandle GbmPixmap::ExportHandle() {
   return handle;
 }
 
-GbmPixmap::~GbmPixmap() {
-}
+GbmPixmap::~GbmPixmap() = default;
 
 void* GbmPixmap::GetEGLClientBuffer() const {
   return nullptr;

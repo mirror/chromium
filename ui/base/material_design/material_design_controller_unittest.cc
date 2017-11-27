@@ -30,11 +30,9 @@ class MaterialDesignControllerTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(MaterialDesignControllerTest);
 };
 
-MaterialDesignControllerTest::MaterialDesignControllerTest() {
-}
+MaterialDesignControllerTest::MaterialDesignControllerTest() = default;
 
-MaterialDesignControllerTest::~MaterialDesignControllerTest() {
-}
+MaterialDesignControllerTest::~MaterialDesignControllerTest() = default;
 
 void MaterialDesignControllerTest::SetUp() {
   testing::Test::SetUp();

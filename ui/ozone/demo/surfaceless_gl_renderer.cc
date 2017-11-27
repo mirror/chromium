@@ -54,8 +54,7 @@ OverlaySurfaceCandidate MakeOverlayCandidate(int z_order,
 
 }  // namespace
 
-SurfacelessGlRenderer::BufferWrapper::BufferWrapper() {
-}
+SurfacelessGlRenderer::BufferWrapper::BufferWrapper() = default;
 
 SurfacelessGlRenderer::BufferWrapper::~BufferWrapper() {
   if (gl_fb_)

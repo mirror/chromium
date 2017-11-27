@@ -21,7 +21,7 @@ class WaylandSurfaceFactoryTest : public WaylandTest {
  public:
   WaylandSurfaceFactoryTest() : surface_factory(&connection) {}
 
-  ~WaylandSurfaceFactoryTest() override {}
+  ~WaylandSurfaceFactoryTest() override = default;
 
   void SetUp() override {
     WaylandTest::SetUp();

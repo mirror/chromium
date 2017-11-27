@@ -176,8 +176,7 @@ class SliderTest : public views::ViewsTestBase {
 SliderTest::SliderTest()
     : slider_(NULL), default_locale_(), max_x_(0), max_y_(0) {}
 
-SliderTest::~SliderTest() {
-}
+SliderTest::~SliderTest() = default;
 
 void SliderTest::SetUp() {
   views::ViewsTestBase::SetUp();

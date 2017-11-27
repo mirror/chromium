@@ -262,7 +262,7 @@ DialogDelegateView::DialogDelegateView() {
   UMA_HISTOGRAM_BOOLEAN("Dialog.DialogDelegateView.Create", true);
 }
 
-DialogDelegateView::~DialogDelegateView() {}
+DialogDelegateView::~DialogDelegateView() = default;
 
 void DialogDelegateView::DeleteDelegate() {
   delete this;

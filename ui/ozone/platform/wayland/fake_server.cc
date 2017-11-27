@@ -343,7 +343,7 @@ MockXdgSurface::MockXdgSurface(wl_resource* resource,
                                  &ServerObject::OnResourceDestroyed);
 }
 
-MockXdgSurface::~MockXdgSurface() {}
+MockXdgSurface::~MockXdgSurface() = default;
 
 MockXdgTopLevel::MockXdgTopLevel(wl_resource* resource)
     : MockXdgSurface(resource, &zxdg_surface_v6_impl) {
@@ -351,7 +351,7 @@ MockXdgTopLevel::MockXdgTopLevel(wl_resource* resource)
                                  &ServerObject::OnResourceDestroyed);
 }
 
-MockXdgTopLevel::~MockXdgTopLevel() {}
+MockXdgTopLevel::~MockXdgTopLevel() = default;
 
 MockSurface::MockSurface(wl_resource* resource) : ServerObject(resource) {
   wl_resource_set_implementation(resource, &surface_impl, this,
@@ -374,14 +374,14 @@ MockPointer::MockPointer(wl_resource* resource) : ServerObject(resource) {
                                  &ServerObject::OnResourceDestroyed);
 }
 
-MockPointer::~MockPointer() {}
+MockPointer::~MockPointer() = default;
 
 MockKeyboard::MockKeyboard(wl_resource* resource) : ServerObject(resource) {
   wl_resource_set_implementation(resource, &keyboard_impl, this,
                                  &ServerObject::OnResourceDestroyed);
 }
 
-MockKeyboard::~MockKeyboard() {}
+MockKeyboard::~MockKeyboard() = default;
 
 void GlobalDeleter::operator()(wl_global* global) {
   wl_global_destroy(global);
@@ -394,7 +394,7 @@ Global::Global(const wl_interface* interface,
       implementation_(implementation),
       version_(version) {}
 
-Global::~Global() {}
+Global::~Global() = default;
 
 bool Global::Initialize(wl_display* display) {
   global_.reset(wl_global_create(display, interface_, version_, this, &Bind));
@@ -430,7 +430,7 @@ void Global::OnResourceDestroyed(wl_resource* resource) {
 MockCompositor::MockCompositor()
     : Global(&wl_compositor_interface, &compositor_impl, kCompositorVersion) {}
 
-MockCompositor::~MockCompositor() {}
+MockCompositor::~MockCompositor() = default;
 
 void MockCompositor::AddSurface(std::unique_ptr<MockSurface> surface) {
   surfaces_.push_back(std::move(surface));
@@ -439,7 +439,7 @@ void MockCompositor::AddSurface(std::unique_ptr<MockSurface> surface) {
 MockOutput::MockOutput()
     : Global(&wl_output_interface, nullptr, kOutputVersion) {}
 
-MockOutput::~MockOutput() {}
+MockOutput::~MockOutput() = default;
 
 // Notify clients of the change for output position.
 void MockOutput::OnBind() {
@@ -453,17 +453,17 @@ void MockOutput::OnBind() {
 
 MockSeat::MockSeat() : Global(&wl_seat_interface, &seat_impl, kSeatVersion) {}
 
-MockSeat::~MockSeat() {}
+MockSeat::~MockSeat() = default;
 
 MockXdgShell::MockXdgShell()
     : Global(&xdg_shell_interface, &xdg_shell_impl, kXdgShellVersion) {}
 
-MockXdgShell::~MockXdgShell() {}
+MockXdgShell::~MockXdgShell() = default;
 
 MockXdgShellV6::MockXdgShellV6()
     : Global(&zxdg_shell_v6_interface, &zxdg_shell_v6_impl, kXdgShellVersion) {}
 
-MockXdgShellV6::~MockXdgShellV6() {}
+MockXdgShellV6::~MockXdgShellV6() = default;
 
 void DisplayDeleter::operator()(wl_display* display) {
   wl_display_destroy(display);

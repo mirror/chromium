@@ -49,8 +49,8 @@ constexpr uint32_t kDefaultClientId = 0u;
 
 class FakeReflector : public Reflector {
  public:
-  FakeReflector() {}
-  ~FakeReflector() override {}
+  FakeReflector() = default;
+  ~FakeReflector() override = default;
   void OnMirroringCompositorResized() override {}
   void AddMirroringLayer(Layer* layer) override {}
   void RemoveMirroringLayer(Layer* layer) override {}
@@ -66,7 +66,7 @@ class DirectOutputSurface : public viz::OutputSurface {
     capabilities_.flipped_output_surface = true;
   }
 
-  ~DirectOutputSurface() override {}
+  ~DirectOutputSurface() override = default;
 
   // viz::OutputSurface implementation.
   void BindToClient(viz::OutputSurfaceClient* client) override {

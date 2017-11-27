@@ -60,7 +60,7 @@ GestureDetector::Config::Config()
 
 GestureDetector::Config::Config(const Config& other) = default;
 
-GestureDetector::Config::~Config() {}
+GestureDetector::Config::~Config() = default;
 
 class GestureDetector::TimeoutGestureHandler {
  public:
@@ -148,7 +148,7 @@ GestureDetector::GestureDetector(
   Init(config);
 }
 
-GestureDetector::~GestureDetector() {}
+GestureDetector::~GestureDetector() = default;
 
 bool GestureDetector::OnTouchEvent(const MotionEvent& ev) {
   const MotionEvent::Action action = ev.GetAction();

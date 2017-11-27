@@ -9,8 +9,7 @@
 
 namespace ui {
 
-EventHandler::EventHandler() {
-}
+EventHandler::EventHandler() = default;
 
 EventHandler::~EventHandler() {
   while (!dispatchers_.empty()) {

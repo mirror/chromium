@@ -21,7 +21,7 @@ namespace {
 
 class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
  public:
-  StructTraitsTest() {}
+  StructTraitsTest() = default;
   ~StructTraitsTest() override = default;
 
  protected:

@@ -20,7 +20,7 @@ PaginationModel::PaginationModel()
       transition_duration_ms_(0),
       overscroll_transition_duration_ms_(0) {}
 
-PaginationModel::~PaginationModel() {}
+PaginationModel::~PaginationModel() = default;
 
 void PaginationModel::SetTotalPages(int total_pages) {
   if (total_pages == total_pages_)

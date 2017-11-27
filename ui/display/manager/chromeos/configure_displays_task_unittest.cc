@@ -40,7 +40,7 @@ class ConfigureDisplaysTaskTest : public testing::Test {
                        .AddMode(small_mode_.Clone())
                        .Build();
   }
-  ~ConfigureDisplaysTaskTest() override {}
+  ~ConfigureDisplaysTaskTest() override = default;
 
   void ConfigureCallback(ConfigureDisplaysTask::Status status) {
     callback_called_ = true;

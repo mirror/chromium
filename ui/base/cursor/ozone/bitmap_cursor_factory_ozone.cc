@@ -44,8 +44,7 @@ BitmapCursorOzone::BitmapCursorOzone(const std::vector<SkBitmap>& bitmaps,
   DCHECK_LE(0, frame_delay_ms);
 }
 
-BitmapCursorOzone::~BitmapCursorOzone() {
-}
+BitmapCursorOzone::~BitmapCursorOzone() = default;
 
 const gfx::Point& BitmapCursorOzone::hotspot() {
   return hotspot_;
@@ -63,9 +62,9 @@ int BitmapCursorOzone::frame_delay_ms() {
   return frame_delay_ms_;
 }
 
-BitmapCursorFactoryOzone::BitmapCursorFactoryOzone() {}
+BitmapCursorFactoryOzone::BitmapCursorFactoryOzone() = default;
 
-BitmapCursorFactoryOzone::~BitmapCursorFactoryOzone() {}
+BitmapCursorFactoryOzone::~BitmapCursorFactoryOzone() = default;
 
 // static
 scoped_refptr<BitmapCursorOzone> BitmapCursorFactoryOzone::GetBitmapCursor(

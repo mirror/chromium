@@ -76,7 +76,7 @@ class RemoveObserver : public MessageCenterObserver {
 class MessageCenterImplTest : public testing::Test,
                               public MessageCenterObserver {
  public:
-  MessageCenterImplTest() {}
+  MessageCenterImplTest() = default;
 
   void SetUp() override {
     MessageCenter::Initialize();
@@ -152,7 +152,7 @@ class ToggledNotificationBlocker : public NotificationBlocker {
   explicit ToggledNotificationBlocker(MessageCenter* message_center)
       : NotificationBlocker(message_center),
         notifications_enabled_(true) {}
-  ~ToggledNotificationBlocker() override {}
+  ~ToggledNotificationBlocker() override = default;
 
   void SetNotificationsEnabled(bool enabled) {
     if (notifications_enabled_ != enabled) {
@@ -179,7 +179,7 @@ class PopupNotificationBlocker : public ToggledNotificationBlocker {
                            const NotifierId& allowed_notifier)
       : ToggledNotificationBlocker(message_center),
         allowed_notifier_(allowed_notifier) {}
-  ~PopupNotificationBlocker() override {}
+  ~PopupNotificationBlocker() override = default;
 
   // NotificationBlocker overrides:
   bool ShouldShowNotificationAsPopup(
@@ -200,7 +200,7 @@ class TotalNotificationBlocker : public PopupNotificationBlocker {
   TotalNotificationBlocker(MessageCenter* message_center,
                            const NotifierId& allowed_notifier)
       : PopupNotificationBlocker(message_center, allowed_notifier) {}
-  ~TotalNotificationBlocker() override {}
+  ~TotalNotificationBlocker() override = default;
 
   // NotificationBlocker overrides:
   bool ShouldShowNotification(const Notification& notification) const override {
@@ -245,7 +245,7 @@ class MockPopupTimersController : public PopupTimersController {
       : PopupTimersController(message_center),
         timer_finished_(0),
         quit_closure_(quit_closure) {}
-  ~MockPopupTimersController() override {}
+  ~MockPopupTimersController() override = default;
 
   void TimerFinished(const std::string& id) override {
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure_);

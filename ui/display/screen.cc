@@ -15,9 +15,9 @@ Screen* g_screen;
 
 }  // namespace
 
-Screen::Screen() {}
+Screen::Screen() = default;
 
-Screen::~Screen() {}
+Screen::~Screen() = default;
 
 // static
 Screen* Screen::GetScreen() {

@@ -21,7 +21,7 @@ DrmOverlayCandidatesHost::DrmOverlayCandidatesHost(
     gfx::AcceleratedWidget widget)
     : overlay_manager_(manager), widget_(widget) {}
 
-DrmOverlayCandidatesHost::~DrmOverlayCandidatesHost() {}
+DrmOverlayCandidatesHost::~DrmOverlayCandidatesHost() = default;
 
 void DrmOverlayCandidatesHost::CheckOverlaySupport(
     OverlaySurfaceCandidateList* candidates) {

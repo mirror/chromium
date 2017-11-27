@@ -21,8 +21,7 @@ ViewsContentClientMainParts::ViewsContentClientMainParts(
     : views_content_client_(views_content_client) {
 }
 
-ViewsContentClientMainParts::~ViewsContentClientMainParts() {
-}
+ViewsContentClientMainParts::~ViewsContentClientMainParts() = default;
 
 void ViewsContentClientMainParts::PreMainMessageLoopRun() {
   ui::MaterialDesignController::Initialize();

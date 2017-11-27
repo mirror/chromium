@@ -14,7 +14,7 @@
 namespace keyboard {
 
 KeyboardUI::KeyboardUI() : keyboard_controller_(nullptr) {}
-KeyboardUI::~KeyboardUI() {}
+KeyboardUI::~KeyboardUI() = default;
 
 void KeyboardUI::ShowKeyboardContainer(aura::Window* container) {
   if (HasContentsWindow()) {

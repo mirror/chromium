@@ -36,7 +36,6 @@ InputDevice::InputDevice(int id,
 
 InputDevice::InputDevice(const InputDevice& other) = default;
 
-InputDevice::~InputDevice() {
-}
+InputDevice::~InputDevice() = default;
 
 }  // namespace ui

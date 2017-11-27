@@ -23,8 +23,7 @@ LongPressDragSelector::LongPressDragSelector(
       has_longpress_drag_start_anchor_(false) {
 }
 
-LongPressDragSelector::~LongPressDragSelector() {
-}
+LongPressDragSelector::~LongPressDragSelector() = default;
 
 bool LongPressDragSelector::WillHandleTouchEvent(const MotionEvent& event) {
   switch (event.GetAction()) {

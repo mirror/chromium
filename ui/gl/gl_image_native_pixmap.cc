@@ -132,7 +132,7 @@ GLImageNativePixmap::GLImageNativePixmap(const gfx::Size& size,
       has_image_flush_external_(
           gl::GLSurfaceEGL::HasEGLExtension("EGL_EXT_image_flush_external")) {}
 
-GLImageNativePixmap::~GLImageNativePixmap() {}
+GLImageNativePixmap::~GLImageNativePixmap() = default;
 
 bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
                                      gfx::BufferFormat format) {

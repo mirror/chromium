@@ -43,7 +43,7 @@ MusContextFactory::MusContextFactory(ui::Gpu* gpu)
           viz::CreateResourceSettings(CreateBufferToTextureTargetMap())),
       weak_ptr_factory_(this) {}
 
-MusContextFactory::~MusContextFactory() {}
+MusContextFactory::~MusContextFactory() = default;
 
 void MusContextFactory::OnEstablishedGpuChannel(
     base::WeakPtr<ui::Compositor> compositor,

@@ -14,7 +14,7 @@ DisplayMode::DisplayMode(const gfx::Size& size,
                          float refresh_rate)
     : size_(size), refresh_rate_(refresh_rate), is_interlaced_(interlaced) {}
 
-DisplayMode::~DisplayMode() {}
+DisplayMode::~DisplayMode() = default;
 
 std::unique_ptr<DisplayMode> DisplayMode::Clone() const {
   return base::WrapUnique(

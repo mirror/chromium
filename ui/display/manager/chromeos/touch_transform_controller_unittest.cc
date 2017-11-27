@@ -99,8 +99,8 @@ void CheckPointsOfInterests(const int touch_id,
 
 class TouchTransformControllerTest : public testing::Test {
  public:
-  TouchTransformControllerTest() {}
-  ~TouchTransformControllerTest() override {}
+  TouchTransformControllerTest() = default;
+  ~TouchTransformControllerTest() override = default;
 
   gfx::Transform GetTouchTransform(
       const ManagedDisplayInfo& display,

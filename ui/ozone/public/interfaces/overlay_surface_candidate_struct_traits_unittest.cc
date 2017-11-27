@@ -16,7 +16,7 @@ namespace {
 
 class OverlaySurfaceCandidateStructTraitsTest : public testing::Test {
  public:
-  OverlaySurfaceCandidateStructTraitsTest() {}
+  OverlaySurfaceCandidateStructTraitsTest() = default;
 };
 
 }  // namespace

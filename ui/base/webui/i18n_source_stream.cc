@@ -13,7 +13,7 @@
 
 namespace ui {
 
-I18nSourceStream::~I18nSourceStream() {}
+I18nSourceStream::~I18nSourceStream() = default;
 
 std::unique_ptr<I18nSourceStream> I18nSourceStream::Create(
     std::unique_ptr<SourceStream> upstream,

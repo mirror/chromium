@@ -304,7 +304,7 @@ std::vector<display::GammaRampRGBEntry> ResampleLut(
 class DrmDevice::PageFlipManager {
  public:
   PageFlipManager() : next_id_(0) {}
-  ~PageFlipManager() {}
+  ~PageFlipManager() = default;
 
   void OnPageFlip(uint32_t frame, base::TimeTicks timestamp, uint64_t id) {
     auto it =
@@ -403,7 +403,7 @@ DrmDevice::DrmDevice(const base::FilePath& device_path,
       page_flip_manager_(new PageFlipManager()),
       is_primary_device_(is_primary_device) {}
 
-DrmDevice::~DrmDevice() {}
+DrmDevice::~DrmDevice() = default;
 
 bool DrmDevice::Initialize(bool use_atomic) {
   // Ignore devices that cannot perform modesetting.

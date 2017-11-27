@@ -20,8 +20,8 @@ namespace {
 
 class DeviceDataManagerTest : public testing::Test {
  public:
-  DeviceDataManagerTest() {}
-  ~DeviceDataManagerTest() override {}
+  DeviceDataManagerTest() = default;
+  ~DeviceDataManagerTest() override = default;
 
   // testing::Test:
   void SetUp() override { DeviceDataManager::CreateInstance(); }

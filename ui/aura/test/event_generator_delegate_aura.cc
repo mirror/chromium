@@ -71,11 +71,9 @@ void InitializeAuraEventGeneratorDelegate() {
   }
 }
 
-EventGeneratorDelegateAura::EventGeneratorDelegateAura() {
-}
+EventGeneratorDelegateAura::EventGeneratorDelegateAura() = default;
 
-EventGeneratorDelegateAura::~EventGeneratorDelegateAura() {
-}
+EventGeneratorDelegateAura::~EventGeneratorDelegateAura() = default;
 
 ui::EventTarget* EventGeneratorDelegateAura::GetTargetAt(
     const gfx::Point& location) {

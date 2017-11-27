@@ -29,8 +29,8 @@ using BasicAXTreeSerializer =
 // member functions.
 class AXTreeSerializerTest : public testing::Test {
  public:
-  AXTreeSerializerTest() {}
-  ~AXTreeSerializerTest() override {}
+  AXTreeSerializerTest() = default;
+  ~AXTreeSerializerTest() override = default;
 
  protected:
   void CreateTreeSerializer();
@@ -198,7 +198,7 @@ class AXTreeSourceWithInvalidId
   AXTreeSourceWithInvalidId(AXTree* tree, int invalid_id)
       : tree_(tree),
         invalid_id_(invalid_id) {}
-  ~AXTreeSourceWithInvalidId() override {}
+  ~AXTreeSourceWithInvalidId() override = default;
 
   // AXTreeSource implementation.
   bool GetTreeData(AXTreeData* data) const override {

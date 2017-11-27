@@ -10,9 +10,9 @@
 
 namespace aura {
 
-WindowPortForShutdown::WindowPortForShutdown() {}
+WindowPortForShutdown::WindowPortForShutdown() = default;
 
-WindowPortForShutdown::~WindowPortForShutdown() {}
+WindowPortForShutdown::~WindowPortForShutdown() = default;
 
 // static
 void WindowPortForShutdown::Install(aura::Window* window) {

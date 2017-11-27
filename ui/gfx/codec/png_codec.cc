@@ -531,7 +531,6 @@ PNGCodec::Comment::Comment(const std::string& k, const std::string& t)
     : key(k), text(t) {
 }
 
-PNGCodec::Comment::~Comment() {
-}
+PNGCodec::Comment::~Comment() = default;
 
 }  // namespace gfx

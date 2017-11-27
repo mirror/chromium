@@ -400,7 +400,7 @@ InputMethodUtil::InputMethodUtil(InputMethodDelegate* delegate)
       << "Duplicate string is found";
 }
 
-InputMethodUtil::~InputMethodUtil() {}
+InputMethodUtil::~InputMethodUtil() = default;
 
 std::string InputMethodUtil::GetLocalizedDisplayName(
     const InputMethodDescriptor& descriptor) const {

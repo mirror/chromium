@@ -338,7 +338,7 @@ class TestSkiaTextRenderer : public internal::SkiaTextRenderer {
 
   explicit TestSkiaTextRenderer(Canvas* canvas)
       : internal::SkiaTextRenderer(canvas) {}
-  ~TestSkiaTextRenderer() override {}
+  ~TestSkiaTextRenderer() override = default;
 
   void GetTextLogAndReset(std::vector<TextLog>* text_log) {
     text_log_.swap(*text_log);
@@ -561,7 +561,7 @@ class RenderTextTest : public testing::Test,
 // RenderTextHarfBuzz.
 class RenderTextHarfBuzzTest : public RenderTextTest {
  public:
-  RenderTextHarfBuzzTest() {}
+  RenderTextHarfBuzzTest() = default;
 
   // Overridden from testing::Test:
   void SetUp() override {

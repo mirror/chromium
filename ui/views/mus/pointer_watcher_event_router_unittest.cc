@@ -20,8 +20,8 @@ namespace {
 
 class TestPointerWatcher : public PointerWatcher {
  public:
-  TestPointerWatcher() {}
-  ~TestPointerWatcher() override {}
+  TestPointerWatcher() = default;
+  ~TestPointerWatcher() override = default;
 
   ui::PointerEvent* last_event_observed() { return last_event_observed_.get(); }
 
@@ -44,8 +44,8 @@ class TestPointerWatcher : public PointerWatcher {
 
 class PointerWatcherEventRouterTest : public testing::Test {
  public:
-  PointerWatcherEventRouterTest() {}
-  ~PointerWatcherEventRouterTest() override {}
+  PointerWatcherEventRouterTest() = default;
+  ~PointerWatcherEventRouterTest() override = default;
 
   void OnPointerEventObserved(const ui::PointerEvent& event) {
     MusClient::Get()->pointer_watcher_event_router()->OnPointerEventObserved(

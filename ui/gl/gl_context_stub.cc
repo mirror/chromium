@@ -69,7 +69,7 @@ void GLContextStub::SetGLVersionString(const char* version_str) {
   version_str_ = std::string(version_str ? version_str : "");
 }
 
-GLContextStub::~GLContextStub() {}
+GLContextStub::~GLContextStub() = default;
 
 GLApi* GLContextStub::CreateGLApi(DriverGL* driver) {
   if (use_stub_api_) {

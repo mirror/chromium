@@ -59,11 +59,9 @@ bool RemoveValueFromMap(std::map<Key, T>* map, const Value& value) {
 ////////////////////////////////////////////////////////////////////////////////
 // GestureRecognizerImpl, public:
 
-GestureRecognizerImpl::GestureRecognizerImpl() {
-}
+GestureRecognizerImpl::GestureRecognizerImpl() = default;
 
-GestureRecognizerImpl::~GestureRecognizerImpl() {
-}
+GestureRecognizerImpl::~GestureRecognizerImpl() = default;
 
 // Checks if this finger is already down, if so, returns the current target.
 // Otherwise, returns NULL.

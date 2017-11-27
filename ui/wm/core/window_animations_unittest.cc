@@ -49,7 +49,7 @@ int GetLayerZPosition(const ui::Layer* child) {
 
 class WindowAnimationsTest : public aura::test::AuraTestBase {
  public:
-  WindowAnimationsTest() {}
+  WindowAnimationsTest() = default;
 
   void TearDown() override { AuraTestBase::TearDown(); }
 
@@ -252,7 +252,7 @@ TEST_F(WindowAnimationsTest, HideAnimationDetachLayersWithTransientChildren) {
 class NotifyHideCompletedAnimationHost : public AnimationHost {
  public:
   NotifyHideCompletedAnimationHost() : hide_completed_(false) {}
-  ~NotifyHideCompletedAnimationHost() override {}
+  ~NotifyHideCompletedAnimationHost() override = default;
 
   // Overridden from AnimationHost:
   void OnWindowHidingAnimationCompleted() override { hide_completed_ = true; }

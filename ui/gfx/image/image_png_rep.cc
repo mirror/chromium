@@ -24,8 +24,7 @@ ImagePNGRep::ImagePNGRep(const scoped_refptr<base::RefCountedMemory>& data,
 
 ImagePNGRep::ImagePNGRep(const ImagePNGRep& other) = default;
 
-ImagePNGRep::~ImagePNGRep() {
-}
+ImagePNGRep::~ImagePNGRep() = default;
 
 gfx::Size ImagePNGRep::Size() const {
   // The only way to get the width and height of a raw PNG stream, at least

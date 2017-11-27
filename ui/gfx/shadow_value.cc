@@ -50,7 +50,7 @@ ShadowValue::ShadowValue(const gfx::Vector2d& offset,
     : offset_(offset), blur_(blur), color_(color) {
 }
 
-ShadowValue::~ShadowValue() {}
+ShadowValue::~ShadowValue() = default;
 
 ShadowValue ShadowValue::Scale(float scale) const {
   gfx::Vector2d scaled_offset =

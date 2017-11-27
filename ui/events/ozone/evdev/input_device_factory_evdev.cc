@@ -169,8 +169,7 @@ InputDeviceFactoryEvdev::InputDeviceFactoryEvdev(
       weak_ptr_factory_(this) {
 }
 
-InputDeviceFactoryEvdev::~InputDeviceFactoryEvdev() {
-}
+InputDeviceFactoryEvdev::~InputDeviceFactoryEvdev() = default;
 
 void InputDeviceFactoryEvdev::AddInputDevice(int id,
                                              const base::FilePath& path) {

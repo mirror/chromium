@@ -21,7 +21,7 @@ class StaticWindowTargeter : public WindowTargeter {
  public:
   explicit StaticWindowTargeter(aura::Window* window)
       : window_(window) {}
-  ~StaticWindowTargeter() override {}
+  ~StaticWindowTargeter() override = default;
 
  private:
   // aura::WindowTargeter:
@@ -181,7 +181,7 @@ TEST_P(WindowTargeterTest, TargetTransformedWindow) {
 class IdCheckingEventTargeter : public WindowTargeter {
  public:
   IdCheckingEventTargeter(int id) : id_(id) {}
-  ~IdCheckingEventTargeter() override {}
+  ~IdCheckingEventTargeter() override = default;
 
  protected:
   // WindowTargeter:
@@ -262,8 +262,8 @@ TEST_P(WindowTargeterTest, Bounds) {
 
 class IgnoreWindowTargeter : public WindowTargeter {
  public:
-  IgnoreWindowTargeter() {}
-  ~IgnoreWindowTargeter() override {}
+  IgnoreWindowTargeter() = default;
+  ~IgnoreWindowTargeter() override = default;
 
  private:
   // WindowTargeter:

@@ -28,9 +28,9 @@ class DisplayComparator {
 
 }  // anonymous namespace
 
-DisplayChangeNotifier::DisplayChangeNotifier() {}
+DisplayChangeNotifier::DisplayChangeNotifier() = default;
 
-DisplayChangeNotifier::~DisplayChangeNotifier() {}
+DisplayChangeNotifier::~DisplayChangeNotifier() = default;
 
 void DisplayChangeNotifier::AddObserver(DisplayObserver* obs) {
   observer_list_.AddObserver(obs);

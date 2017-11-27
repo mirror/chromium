@@ -27,8 +27,7 @@ SearchController::SearchController(SearchBoxModel* search_box,
                                    History* history)
     : search_box_(search_box), mixer_(new Mixer(results)), history_(history) {}
 
-SearchController::~SearchController() {
-}
+SearchController::~SearchController() = default;
 
 void SearchController::Start() {
   base::string16 query;

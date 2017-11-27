@@ -9,11 +9,9 @@
 
 namespace ui {
 
-DrmWindowHostManager::DrmWindowHostManager() {
-}
+DrmWindowHostManager::DrmWindowHostManager() = default;
 
-DrmWindowHostManager::~DrmWindowHostManager() {
-}
+DrmWindowHostManager::~DrmWindowHostManager() = default;
 
 gfx::AcceleratedWidget DrmWindowHostManager::NextAcceleratedWidget() {
   // We're not using 0 since other code assumes that a 0 AcceleratedWidget is an

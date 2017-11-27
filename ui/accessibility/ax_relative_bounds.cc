@@ -15,8 +15,7 @@ AXRelativeBounds::AXRelativeBounds()
     : offset_container_id(-1) {
 }
 
-AXRelativeBounds::~AXRelativeBounds() {
-}
+AXRelativeBounds::~AXRelativeBounds() = default;
 
 AXRelativeBounds::AXRelativeBounds(const AXRelativeBounds& other) {
   offset_container_id = other.offset_container_id;

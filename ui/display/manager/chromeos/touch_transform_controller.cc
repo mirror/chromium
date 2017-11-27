@@ -288,7 +288,7 @@ TouchTransformController::TouchTransformController(
       display_manager_(display_manager),
       touch_transform_setter_(std::move(setter)) {}
 
-TouchTransformController::~TouchTransformController() {}
+TouchTransformController::~TouchTransformController() = default;
 
 void TouchTransformController::UpdateTouchTransforms() const {
   UpdateData update_data;

@@ -172,7 +172,7 @@ class EGLSyncControlVSyncProvider : public SyncControlVSyncProvider {
         surface_(surface) {
   }
 
-  ~EGLSyncControlVSyncProvider() override {}
+  ~EGLSyncControlVSyncProvider() override = default;
 
   static bool IsSupported() {
     return SyncControlVSyncProvider::IsSupported() &&
@@ -534,7 +534,7 @@ void GetEGLInitDisplays(bool supports_angle_d3d,
   }
 }
 
-GLSurfaceEGL::GLSurfaceEGL() {}
+GLSurfaceEGL::GLSurfaceEGL() = default;
 
 GLSurfaceFormat GLSurfaceEGL::GetFormat() {
   return format_;
@@ -756,7 +756,7 @@ bool GLSurfaceEGL::IsAndroidNativeFenceSyncSupported() {
   return g_egl_android_native_fence_sync_supported;
 }
 
-GLSurfaceEGL::~GLSurfaceEGL() {}
+GLSurfaceEGL::~GLSurfaceEGL() = default;
 
 // InitializeDisplay is necessary because the static binding code
 // needs a full Display init before it can query the Display extensions.
@@ -1523,7 +1523,6 @@ void* SurfacelessEGL::GetShareHandle() {
   return NULL;
 }
 
-SurfacelessEGL::~SurfacelessEGL() {
-}
+SurfacelessEGL::~SurfacelessEGL() = default;
 
 }  // namespace gl

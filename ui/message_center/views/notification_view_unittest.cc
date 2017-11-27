@@ -214,11 +214,9 @@ class NotificationViewTest : public views::ViewsTestBase,
   DISALLOW_COPY_AND_ASSIGN(NotificationViewTest);
 };
 
-NotificationViewTest::NotificationViewTest() {
-}
+NotificationViewTest::NotificationViewTest() = default;
 
-NotificationViewTest::~NotificationViewTest() {
-}
+NotificationViewTest::~NotificationViewTest() = default;
 
 void NotificationViewTest::SetUp() {
   views::ViewsTestBase::SetUp();

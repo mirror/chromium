@@ -11,11 +11,9 @@
 
 namespace wm {
 
-DefaultScreenPositionClient::DefaultScreenPositionClient() {
-}
+DefaultScreenPositionClient::DefaultScreenPositionClient() = default;
 
-DefaultScreenPositionClient::~DefaultScreenPositionClient() {
-}
+DefaultScreenPositionClient::~DefaultScreenPositionClient() = default;
 
 gfx::Point DefaultScreenPositionClient::GetOriginInScreen(
     const aura::Window* root_window) {

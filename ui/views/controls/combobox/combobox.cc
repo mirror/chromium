@@ -135,7 +135,7 @@ class TransparentButton : public Button {
       set_has_ink_drop_action_on_click(true);
     }
   }
-  ~TransparentButton() override {}
+  ~TransparentButton() override = default;
 
   bool OnMousePressed(const ui::MouseEvent& mouse_event) override {
 #if !defined(OS_MACOSX)

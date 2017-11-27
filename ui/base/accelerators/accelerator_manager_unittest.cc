@@ -77,8 +77,8 @@ int BuildAcceleratorModifier(int id) {
 // where the id is specified using SetIdForAccelerator().
 class TestAcceleratorManagerDelegate : public AcceleratorManagerDelegate {
  public:
-  TestAcceleratorManagerDelegate() {}
-  ~TestAcceleratorManagerDelegate() override {}
+  TestAcceleratorManagerDelegate() = default;
+  ~TestAcceleratorManagerDelegate() override = default;
 
   void SetIdForAccelerator(const Accelerator& accelerator,
                            const std::string& id) {
@@ -118,7 +118,7 @@ class TestAcceleratorManagerDelegate : public AcceleratorManagerDelegate {
 class AcceleratorManagerTest : public testing::Test {
  public:
   AcceleratorManagerTest() : manager_(&delegate_) {}
-  ~AcceleratorManagerTest() override {}
+  ~AcceleratorManagerTest() override = default;
 
  protected:
   TestAcceleratorManagerDelegate delegate_;

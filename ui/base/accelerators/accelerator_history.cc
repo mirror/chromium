@@ -6,9 +6,9 @@
 
 namespace ui {
 
-AcceleratorHistory::AcceleratorHistory() {}
+AcceleratorHistory::AcceleratorHistory() = default;
 
-AcceleratorHistory::~AcceleratorHistory() {}
+AcceleratorHistory::~AcceleratorHistory() = default;
 
 void AcceleratorHistory::StoreCurrentAccelerator(
     const Accelerator& accelerator) {

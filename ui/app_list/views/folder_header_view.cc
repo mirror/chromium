@@ -39,7 +39,7 @@ class FolderHeaderView::FolderNameView : public views::Textfield {
  public:
   FolderNameView() { SetBorder(views::CreateEmptyBorder(1, 1, 1, 1)); }
 
-  ~FolderNameView() override {}
+  ~FolderNameView() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FolderNameView);

@@ -31,8 +31,8 @@ namespace {
 
 class OzonePlatformWayland : public OzonePlatform {
  public:
-  OzonePlatformWayland() {}
-  ~OzonePlatformWayland() override {}
+  OzonePlatformWayland() = default;
+  ~OzonePlatformWayland() override = default;
 
   // OzonePlatform
   SurfaceFactoryOzone* GetSurfaceFactoryOzone() override {

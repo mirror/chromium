@@ -43,7 +43,7 @@ EasyResizeWindowTargeter::EasyResizeWindowTargeter(
   SetInsets(mouse_extend, touch_extend);
 }
 
-EasyResizeWindowTargeter::~EasyResizeWindowTargeter() {}
+EasyResizeWindowTargeter::~EasyResizeWindowTargeter() = default;
 
 void EasyResizeWindowTargeter::OnSetInsets(
     const gfx::Insets& last_mouse_extend,

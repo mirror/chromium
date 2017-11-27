@@ -55,8 +55,7 @@ uint32_t OverlayTransformToDrmRotationPropertyValue(
 
 }  // namespace
 
-HardwareDisplayPlaneAtomic::Property::Property() {
-}
+HardwareDisplayPlaneAtomic::Property::Property() = default;
 
 bool HardwareDisplayPlaneAtomic::Property::Initialize(
     DrmDevice* drm,
@@ -77,8 +76,7 @@ HardwareDisplayPlaneAtomic::HardwareDisplayPlaneAtomic(uint32_t plane_id,
                                                        uint32_t possible_crtcs)
     : HardwareDisplayPlane(plane_id, possible_crtcs) {
 }
-HardwareDisplayPlaneAtomic::~HardwareDisplayPlaneAtomic() {
-}
+HardwareDisplayPlaneAtomic::~HardwareDisplayPlaneAtomic() = default;
 
 bool HardwareDisplayPlaneAtomic::SetPlaneData(
     drmModeAtomicReq* property_set,

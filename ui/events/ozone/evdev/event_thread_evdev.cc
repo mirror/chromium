@@ -69,11 +69,9 @@ class EvdevThread : public base::Thread {
 
 }  // namespace
 
-EventThreadEvdev::EventThreadEvdev() {
-}
+EventThreadEvdev::EventThreadEvdev() = default;
 
-EventThreadEvdev::~EventThreadEvdev() {
-}
+EventThreadEvdev::~EventThreadEvdev() = default;
 
 void EventThreadEvdev::Start(
     std::unique_ptr<DeviceEventDispatcherEvdev> dispatcher,

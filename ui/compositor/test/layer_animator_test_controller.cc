@@ -15,8 +15,7 @@ LayerAnimatorTestController::LayerAnimatorTestController(
     : animator_(animator) {
 }
 
-LayerAnimatorTestController::~LayerAnimatorTestController() {
-}
+LayerAnimatorTestController::~LayerAnimatorTestController() = default;
 
 LayerAnimationSequence* LayerAnimatorTestController::GetRunningSequence(
     LayerAnimationElement::AnimatableProperty property) {

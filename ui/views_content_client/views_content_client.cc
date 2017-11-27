@@ -21,8 +21,7 @@ ViewsContentClient::ViewsContentClient(int argc, const char** argv)
 }
 #endif
 
-ViewsContentClient::~ViewsContentClient() {
-}
+ViewsContentClient::~ViewsContentClient() = default;
 
 int ViewsContentClient::RunMain() {
   ViewsContentMainDelegate delegate(this);

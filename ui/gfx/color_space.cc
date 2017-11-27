@@ -18,7 +18,7 @@
 
 namespace gfx {
 
-ColorSpace::ColorSpace() {}
+ColorSpace::ColorSpace() = default;
 
 ColorSpace::ColorSpace(PrimaryID primaries,
                        TransferID transfer)

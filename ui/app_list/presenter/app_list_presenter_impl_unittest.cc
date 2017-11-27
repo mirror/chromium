@@ -30,7 +30,7 @@ class AppListPresenterDelegateTest : public AppListPresenterDelegate {
   AppListPresenterDelegateTest(aura::Window* container,
                                test::AppListTestViewDelegate* view_delegate)
       : container_(container), view_delegate_(view_delegate) {}
-  ~AppListPresenterDelegateTest() override {}
+  ~AppListPresenterDelegateTest() override = default;
 
   bool init_called() const { return init_called_; }
   bool on_shown_called() const { return on_shown_called_; }
@@ -81,7 +81,7 @@ class AppListPresenterDelegateFactoryTest
  public:
   explicit AppListPresenterDelegateFactoryTest(aura::Window* container)
       : container_(container) {}
-  ~AppListPresenterDelegateFactoryTest() override {}
+  ~AppListPresenterDelegateFactoryTest() override = default;
 
   // AppListPresenterDelegateFactory:
   std::unique_ptr<AppListPresenterDelegate> GetDelegate(
@@ -127,9 +127,9 @@ class AppListPresenterImplTest : public aura::test::AuraTestBase {
   DISALLOW_COPY_AND_ASSIGN(AppListPresenterImplTest);
 };
 
-AppListPresenterImplTest::AppListPresenterImplTest() {}
+AppListPresenterImplTest::AppListPresenterImplTest() = default;
 
-AppListPresenterImplTest::~AppListPresenterImplTest() {}
+AppListPresenterImplTest::~AppListPresenterImplTest() = default;
 
 void AppListPresenterImplTest::SetUp() {
   AuraTestBase::SetUp();

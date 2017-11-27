@@ -45,7 +45,7 @@ class InkDropHostView::InkDropGestureHandler : public ui::EventHandler {
       : target_handler_(new ui::ScopedTargetHandler(host_view, this)),
         host_view_(host_view) {}
 
-  ~InkDropGestureHandler() override {}
+  ~InkDropGestureHandler() override = default;
 
   // ui::EventHandler:
   void OnGestureEvent(ui::GestureEvent* event) override {

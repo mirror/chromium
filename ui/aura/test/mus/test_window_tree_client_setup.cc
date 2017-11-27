@@ -13,9 +13,9 @@
 
 namespace aura {
 
-TestWindowTreeClientSetup::TestWindowTreeClientSetup() {}
+TestWindowTreeClientSetup::TestWindowTreeClientSetup() = default;
 
-TestWindowTreeClientSetup::~TestWindowTreeClientSetup() {}
+TestWindowTreeClientSetup::~TestWindowTreeClientSetup() = default;
 
 void TestWindowTreeClientSetup::Init(
     WindowTreeClientDelegate* window_tree_delegate) {

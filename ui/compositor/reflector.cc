@@ -6,7 +6,6 @@
 
 namespace ui {
 
-Reflector::~Reflector() {
-}
+Reflector::~Reflector() = default;
 
 }  // namespace ui

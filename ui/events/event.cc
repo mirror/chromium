@@ -451,14 +451,12 @@ CancelModeEvent::CancelModeEvent()
   set_cancelable(false);
 }
 
-CancelModeEvent::~CancelModeEvent() {
-}
+CancelModeEvent::~CancelModeEvent() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // LocatedEvent
 
-LocatedEvent::~LocatedEvent() {
-}
+LocatedEvent::~LocatedEvent() = default;
 
 LocatedEvent::LocatedEvent(const base::NativeEvent& native_event)
     : Event(native_event,
@@ -498,7 +496,7 @@ void LocatedEvent::UpdateForRootTransform(
 ////////////////////////////////////////////////////////////////////////////////
 // PointerDetails
 
-PointerDetails::PointerDetails() {}
+PointerDetails::PointerDetails() = default;
 
 PointerDetails::PointerDetails(EventPointerType pointer_type,
                                PointerId pointer_id)
@@ -542,17 +540,7 @@ PointerDetails::PointerDetails(EventPointerType pointer_type,
   offset = pointer_offset;
 }
 
-PointerDetails::PointerDetails(const PointerDetails& other)
-    : pointer_type(other.pointer_type),
-      radius_x(other.radius_x),
-      radius_y(other.radius_y),
-      force(other.force),
-      tilt_x(other.tilt_x),
-      tilt_y(other.tilt_y),
-      tangential_pressure(other.tangential_pressure),
-      twist(other.twist),
-      id(other.id),
-      offset(other.offset) {}
+PointerDetails::PointerDetails(const PointerDetails& other) = default;
 
 const PointerId PointerDetails::kUnknownPointerId = -1;
 
@@ -1252,7 +1240,7 @@ KeyEvent& KeyEvent::operator=(const KeyEvent& rhs) {
   return *this;
 }
 
-KeyEvent::~KeyEvent() {}
+KeyEvent::~KeyEvent() = default;
 
 void KeyEvent::ApplyLayout() const {
   ui::DomCode code = code_;
@@ -1477,7 +1465,6 @@ GestureEvent::GestureEvent(float x,
   latency()->set_source_event_type(ui::SourceEventType::TOUCH);
 }
 
-GestureEvent::~GestureEvent() {
-}
+GestureEvent::~GestureEvent() = default;
 
 }  // namespace ui

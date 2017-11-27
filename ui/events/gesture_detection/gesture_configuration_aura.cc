@@ -14,8 +14,7 @@ namespace {
 
 class GestureConfigurationAura : public GestureConfiguration {
  public:
-  ~GestureConfigurationAura() override {
-  }
+  ~GestureConfigurationAura() override = default;
 
   static GestureConfigurationAura* GetInstance() {
     return base::Singleton<GestureConfigurationAura>::get();

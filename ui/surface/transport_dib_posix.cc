@@ -25,8 +25,7 @@ TransportDIB::TransportDIB(TransportDIB::Handle dib)
       size_(0) {
 }
 
-TransportDIB::~TransportDIB() {
-}
+TransportDIB::~TransportDIB() = default;
 
 // static
 TransportDIB* TransportDIB::Map(Handle handle) {

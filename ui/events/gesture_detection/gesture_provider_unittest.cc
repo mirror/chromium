@@ -68,7 +68,7 @@ class GestureProviderTest : public testing::Test, public GestureProviderClient {
   GestureProviderTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
-  ~GestureProviderTest() override {}
+  ~GestureProviderTest() override = default;
 
   static MockMotionEvent ObtainMotionEvent(base::TimeTicks event_time,
                                            MotionEvent::Action action,

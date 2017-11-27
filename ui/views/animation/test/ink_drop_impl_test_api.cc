@@ -92,7 +92,7 @@ void InkDropImplTestApi::SetStateOnExitHighlightState::AnimationEnded(
 InkDropImplTestApi::InkDropImplTestApi(InkDropImpl* ink_drop)
     : ui::test::MultiLayerAnimatorTestController(this), ink_drop_(ink_drop) {}
 
-InkDropImplTestApi::~InkDropImplTestApi() {}
+InkDropImplTestApi::~InkDropImplTestApi() = default;
 
 void InkDropImplTestApi::SetShouldHighlight(bool should_highlight) {
   ink_drop_->SetShowHighlightOnHover(should_highlight);

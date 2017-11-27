@@ -202,8 +202,7 @@ SkiaTextRenderer::SkiaTextRenderer(Canvas* canvas)
   flags_.setHinting(cc::PaintFlags::kNormal_Hinting);
 }
 
-SkiaTextRenderer::~SkiaTextRenderer() {
-}
+SkiaTextRenderer::~SkiaTextRenderer() = default;
 
 void SkiaTextRenderer::SetDrawLooper(sk_sp<SkDrawLooper> draw_looper) {
   flags_.setLooper(std::move(draw_looper));
@@ -287,7 +286,7 @@ StyleIterator::StyleIterator(const BreakList<SkColor>& colors,
     style_.push_back(styles_[i].breaks().begin());
 }
 
-StyleIterator::~StyleIterator() {}
+StyleIterator::~StyleIterator() = default;
 
 Range StyleIterator::GetRange() const {
   Range range(colors_.GetRange(color_));
@@ -308,13 +307,13 @@ void StyleIterator::UpdatePosition(size_t position) {
 
 LineSegment::LineSegment() : run(0) {}
 
-LineSegment::~LineSegment() {}
+LineSegment::~LineSegment() = default;
 
 Line::Line() : preceding_heights(0), baseline(0) {}
 
 Line::Line(const Line& other) = default;
 
-Line::~Line() {}
+Line::~Line() = default;
 
 void ApplyRenderParams(const FontRenderParams& params,
                        bool subpixel_rendering_suppressed,
@@ -334,8 +333,7 @@ void ApplyRenderParams(const FontRenderParams& params,
 constexpr base::char16 RenderText::kPasswordReplacementChar;
 constexpr bool RenderText::kDragToEndIfOutsideVerticalBounds;
 
-RenderText::~RenderText() {
-}
+RenderText::~RenderText() = default;
 
 // static
 RenderText* RenderText::CreateInstance() {

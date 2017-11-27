@@ -28,7 +28,7 @@ namespace {
 class TestLayerAnimationObserver : public ImplicitAnimationObserver {
  public:
   TestLayerAnimationObserver(Layer* layer) : layer_(layer) {}
-  ~TestLayerAnimationObserver() override {}
+  ~TestLayerAnimationObserver() override = default;
 
   // ImplicitAnimationObserver:
   void OnImplicitAnimationsCompleted() override {
@@ -67,11 +67,9 @@ class LayerOwnerTestWithCompositor : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(LayerOwnerTestWithCompositor);
 };
 
-LayerOwnerTestWithCompositor::LayerOwnerTestWithCompositor() {
-}
+LayerOwnerTestWithCompositor::LayerOwnerTestWithCompositor() = default;
 
-LayerOwnerTestWithCompositor::~LayerOwnerTestWithCompositor() {
-}
+LayerOwnerTestWithCompositor::~LayerOwnerTestWithCompositor() = default;
 
 void LayerOwnerTestWithCompositor::SetUp() {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =

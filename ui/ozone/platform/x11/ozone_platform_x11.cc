@@ -34,9 +34,9 @@ namespace {
 // Singleton OzonePlatform implementation for X11 platform.
 class OzonePlatformX11 : public OzonePlatform {
  public:
-  OzonePlatformX11() {}
+  OzonePlatformX11() = default;
 
-  ~OzonePlatformX11() override {}
+  ~OzonePlatformX11() override = default;
 
   // OzonePlatform:
   ui::SurfaceFactoryOzone* GetSurfaceFactoryOzone() override {

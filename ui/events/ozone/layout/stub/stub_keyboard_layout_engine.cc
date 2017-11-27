@@ -12,11 +12,9 @@
 
 namespace ui {
 
-StubKeyboardLayoutEngine::StubKeyboardLayoutEngine() {
-}
+StubKeyboardLayoutEngine::StubKeyboardLayoutEngine() = default;
 
-StubKeyboardLayoutEngine::~StubKeyboardLayoutEngine() {
-}
+StubKeyboardLayoutEngine::~StubKeyboardLayoutEngine() = default;
 
 bool StubKeyboardLayoutEngine::CanSetCurrentLayout() const {
   return false;

@@ -30,11 +30,9 @@ bool ShouldAnimateWindow(aura::Window* window) {
 
 }  // namespace
 
-VisibilityController::VisibilityController() {
-}
+VisibilityController::VisibilityController() = default;
 
-VisibilityController::~VisibilityController() {
-}
+VisibilityController::~VisibilityController() = default;
 
 bool VisibilityController::CallAnimateOnChildWindowVisibilityChanged(
     aura::Window* window,

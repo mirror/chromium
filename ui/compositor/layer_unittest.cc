@@ -87,7 +87,7 @@ class ColoredLayer : public Layer, public LayerDelegate {
     set_delegate(this);
   }
 
-  ~ColoredLayer() override {}
+  ~ColoredLayer() override = default;
 
   // Overridden from LayerDelegate:
   void OnPaintLayer(const ui::PaintContext& context) override {
@@ -108,7 +108,7 @@ class DrawFadedStringLayerDelegate : public LayerDelegate {
   DrawFadedStringLayerDelegate(SkColor back_color, const gfx::Size& layer_size)
       : background_color_(back_color), layer_size_(layer_size) {}
 
-  ~DrawFadedStringLayerDelegate() override {}
+  ~DrawFadedStringLayerDelegate() override = default;
 
   // Overridden from LayerDelegate:
   void OnPaintLayer(const ui::PaintContext& context) override {
@@ -141,7 +141,7 @@ class LayerWithRealCompositorTest : public testing::Test {
     }
     gfx::FontList::SetDefaultFontDescription("Arial, Times New Roman, 15px");
   }
-  ~LayerWithRealCompositorTest() override {}
+  ~LayerWithRealCompositorTest() override = default;
 
   // Overridden from testing::Test:
   void SetUp() override {
@@ -269,7 +269,7 @@ class LayerWithRealCompositorTest : public testing::Test {
    private:
     friend class base::RefCountedThreadSafe<ReadbackHolder>;
 
-    virtual ~ReadbackHolder() {}
+    virtual ~ReadbackHolder() = default;
 
     std::unique_ptr<SkBitmap> result_;
     std::unique_ptr<base::RunLoop> run_loop_;
@@ -287,7 +287,7 @@ class LayerWithRealCompositorTest : public testing::Test {
 class TestLayerDelegate : public LayerDelegate {
  public:
   TestLayerDelegate() { reset(); }
-  ~TestLayerDelegate() override {}
+  ~TestLayerDelegate() override = default;
 
   void AddColor(SkColor color) {
     colors_.push_back(color);
@@ -339,7 +339,7 @@ class DrawTreeLayerDelegate : public LayerDelegate {
  public:
   DrawTreeLayerDelegate(const gfx::Rect& layer_bounds)
       : painted_(false), layer_bounds_(layer_bounds) {}
-  ~DrawTreeLayerDelegate() override {}
+  ~DrawTreeLayerDelegate() override = default;
 
   void Reset() {
     painted_ = false;
@@ -366,8 +366,8 @@ class DrawTreeLayerDelegate : public LayerDelegate {
 // The simplest possible layer delegate. Does nothing.
 class NullLayerDelegate : public LayerDelegate {
  public:
-  NullLayerDelegate() {}
-  ~NullLayerDelegate() override {}
+  NullLayerDelegate() = default;
+  ~NullLayerDelegate() override = default;
 
   gfx::Rect invalidation() const { return invalidation_; }
 
@@ -493,8 +493,8 @@ TEST_F(LayerWithRealCompositorTest, Hierarchy) {
 
 class LayerWithDelegateTest : public testing::Test {
  public:
-  LayerWithDelegateTest() {}
-  ~LayerWithDelegateTest() override {}
+  LayerWithDelegateTest() = default;
+  ~LayerWithDelegateTest() override = default;
 
   // Overridden from testing::Test:
   void SetUp() override {
@@ -899,8 +899,8 @@ TEST_F(LayerWithDelegateTest, Mirroring) {
 
 class LayerWithNullDelegateTest : public LayerWithDelegateTest {
  public:
-  LayerWithNullDelegateTest() {}
-  ~LayerWithNullDelegateTest() override {}
+  LayerWithNullDelegateTest() = default;
+  ~LayerWithNullDelegateTest() override = default;
 
   void SetUp() override {
     LayerWithDelegateTest::SetUp();
@@ -1609,7 +1609,7 @@ class SchedulePaintLayerDelegate : public LayerDelegate {
  public:
   SchedulePaintLayerDelegate() : paint_count_(0), layer_(NULL) {}
 
-  ~SchedulePaintLayerDelegate() override {}
+  ~SchedulePaintLayerDelegate() override = default;
 
   void set_layer(Layer* layer) {
     layer_ = layer;
@@ -2554,8 +2554,8 @@ TEST_F(LayerWithRealCompositorTest, CompositorAnimationObserverTest) {
 // when animation completes.
 class TestMetricsReporter : public ui::AnimationMetricsReporter {
  public:
-  TestMetricsReporter() {}
-  ~TestMetricsReporter() override {}
+  TestMetricsReporter() = default;
+  ~TestMetricsReporter() override = default;
 
   bool report_called() { return report_called_; }
   int value() const { return value_; }

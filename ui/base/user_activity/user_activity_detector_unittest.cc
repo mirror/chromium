@@ -43,8 +43,8 @@ class TestUserActivityObserver : public UserActivityObserver {
 // sure that the PlatformEventSource has an instance while in unit tests.
 class TestPlatformEventSource : public ui::PlatformEventSource {
  public:
-  TestPlatformEventSource() {}
-  ~TestPlatformEventSource() override {}
+  TestPlatformEventSource() = default;
+  ~TestPlatformEventSource() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestPlatformEventSource);

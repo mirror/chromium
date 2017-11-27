@@ -18,7 +18,7 @@ WaylandOutput::WaylandOutput(wl_output* output)
   wl_output_add_listener(output, &output_listener, this);
 }
 
-WaylandOutput::~WaylandOutput() {}
+WaylandOutput::~WaylandOutput() = default;
 
 // static
 void WaylandOutput::OutputHandleGeometry(void* data,

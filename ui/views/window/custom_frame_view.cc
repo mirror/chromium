@@ -96,8 +96,7 @@ CustomFrameView::CustomFrameView()
       maximum_title_bar_x_(-1) {
 }
 
-CustomFrameView::~CustomFrameView() {
-}
+CustomFrameView::~CustomFrameView() = default;
 
 void CustomFrameView::Init(Widget* frame) {
   frame_ = frame;

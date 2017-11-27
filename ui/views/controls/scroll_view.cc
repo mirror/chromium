@@ -35,7 +35,7 @@ const base::Feature kToolkitViewsScrollWithLayers {
 
 class ScrollCornerView : public View {
  public:
-  ScrollCornerView() {}
+  ScrollCornerView() = default;
 
   void OnPaint(gfx::Canvas* canvas) override {
     ui::NativeTheme::ExtraParams ignored;
@@ -123,7 +123,7 @@ int AdjustPosition(int current_position,
 class ScrollView::Viewport : public View {
  public:
   explicit Viewport(ScrollView* scroll_view) : scroll_view_(scroll_view) {}
-  ~Viewport() override {}
+  ~Viewport() override = default;
 
   const char* GetClassName() const override { return "ScrollView::Viewport"; }
 
@@ -925,8 +925,7 @@ VariableRowHeightScrollHelper::VariableRowHeightScrollHelper(
     Controller* controller) : controller_(controller) {
 }
 
-VariableRowHeightScrollHelper::~VariableRowHeightScrollHelper() {
-}
+VariableRowHeightScrollHelper::~VariableRowHeightScrollHelper() = default;
 
 int VariableRowHeightScrollHelper::GetPageScrollIncrement(
     ScrollView* scroll_view, bool is_horizontal, bool is_positive) {

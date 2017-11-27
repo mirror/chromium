@@ -14,8 +14,7 @@ DummyTextInputClient::DummyTextInputClient()
 DummyTextInputClient::DummyTextInputClient(TextInputType text_input_type)
     : text_input_type_(text_input_type), insert_char_count_(0) {}
 
-DummyTextInputClient::~DummyTextInputClient() {
-}
+DummyTextInputClient::~DummyTextInputClient() = default;
 
 void DummyTextInputClient::SetCompositionText(
     const CompositionText& composition) {

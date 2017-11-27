@@ -24,7 +24,7 @@ class ImageShadowAnimatorTest : public views::ViewsTestBase,
  public:
   ImageShadowAnimatorTest()
       : shadow_animator_(this), animation_updated_(false) {}
-  ~ImageShadowAnimatorTest() override {}
+  ~ImageShadowAnimatorTest() override = default;
 
   bool animation_updated() { return animation_updated_; }
   void reset_animation_updated() { animation_updated_ = false; }

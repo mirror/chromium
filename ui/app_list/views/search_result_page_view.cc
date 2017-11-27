@@ -58,7 +58,7 @@ class SearchCardView : public views::View {
   // views::View overrides:
   const char* GetClassName() const override { return "SearchCardView"; }
 
-  ~SearchCardView() override {}
+  ~SearchCardView() override = default;
 };
 
 class ZeroWidthVerticalScrollBar : public views::OverlayScrollBar {
@@ -85,7 +85,7 @@ class SearchResultPageBackground : public views::Background {
  public:
   SearchResultPageBackground(SkColor color, int corner_radius)
       : color_(color), corner_radius_(corner_radius) {}
-  ~SearchResultPageBackground() override {}
+  ~SearchResultPageBackground() override = default;
 
  private:
   // views::Background overrides:
@@ -120,7 +120,7 @@ class SearchResultPageView::HorizontalSeparator : public views::View {
         gfx::Insets(0, kSeparatorPadding, 0, kSeparatorPadding)));
   }
 
-  ~HorizontalSeparator() override {}
+  ~HorizontalSeparator() override = default;
 
   // views::View overrides:
   const char* GetClassName() const override { return "HorizontalSeparator"; }

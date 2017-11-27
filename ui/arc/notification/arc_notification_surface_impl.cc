@@ -22,7 +22,7 @@ class CustomWindowDelegate : public aura::WindowDelegate {
  public:
   explicit CustomWindowDelegate(exo::NotificationSurface* notification_surface)
       : notification_surface_(notification_surface) {}
-  ~CustomWindowDelegate() override {}
+  ~CustomWindowDelegate() override = default;
 
   // Overridden from aura::WindowDelegate:
   gfx::Size GetMinimumSize() const override { return gfx::Size(); }

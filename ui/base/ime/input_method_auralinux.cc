@@ -42,8 +42,7 @@ InputMethodAuraLinux::InputMethodAuraLinux(
           this, true);
 }
 
-InputMethodAuraLinux::~InputMethodAuraLinux() {
-}
+InputMethodAuraLinux::~InputMethodAuraLinux() = default;
 
 LinuxInputMethodContext* InputMethodAuraLinux::GetContextForTesting(
     bool is_simple) {

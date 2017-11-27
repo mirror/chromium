@@ -22,8 +22,7 @@ RadioButtonExample::RadioButtonExample()
       count_(0) {
 }
 
-RadioButtonExample::~RadioButtonExample() {
-}
+RadioButtonExample::~RadioButtonExample() = default;
 
 void RadioButtonExample::CreateExampleView(View* container) {
   select_ = new LabelButton(this, base::ASCIIToUTF16("Select"));

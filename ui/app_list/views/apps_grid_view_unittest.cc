@@ -100,7 +100,7 @@ class PageFlipWaiter : public PaginationModelObserver {
 class TestSuggestedSearchResult : public TestSearchResult {
  public:
   TestSuggestedSearchResult() { set_display_type(DISPLAY_RECOMMENDATION); }
-  ~TestSuggestedSearchResult() override {}
+  ~TestSuggestedSearchResult() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestSuggestedSearchResult);

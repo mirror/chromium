@@ -73,8 +73,7 @@ TouchHandleDrawableAura::TouchHandleDrawableAura(aura::Window* parent)
   parent->AddChild(window_.get());
 }
 
-TouchHandleDrawableAura::~TouchHandleDrawableAura() {
-}
+TouchHandleDrawableAura::~TouchHandleDrawableAura() = default;
 
 void TouchHandleDrawableAura::UpdateBounds() {
   gfx::RectF new_bounds = relative_bounds_;

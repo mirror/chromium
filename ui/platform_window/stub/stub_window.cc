@@ -18,8 +18,7 @@ StubWindow::StubWindow(PlatformWindowDelegate* delegate,
     delegate_->OnAcceleratedWidgetAvailable(gfx::kNullAcceleratedWidget, 1.f);
 }
 
-StubWindow::~StubWindow() {
-}
+StubWindow::~StubWindow() = default;
 
 void StubWindow::Show() {
 }

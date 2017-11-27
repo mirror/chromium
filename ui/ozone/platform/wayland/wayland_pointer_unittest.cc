@@ -20,7 +20,7 @@ namespace ui {
 
 class WaylandPointerTest : public WaylandTest {
  public:
-  WaylandPointerTest() {}
+  WaylandPointerTest() = default;
 
   void SetUp() override {
     WaylandTest::SetUp();

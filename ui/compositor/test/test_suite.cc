@@ -28,7 +28,7 @@ namespace test {
 CompositorTestSuite::CompositorTestSuite(int argc, char** argv)
     : TestSuite(argc, argv) {}
 
-CompositorTestSuite::~CompositorTestSuite() {}
+CompositorTestSuite::~CompositorTestSuite() = default;
 
 void CompositorTestSuite::Initialize() {
   base::TestSuite::Initialize();

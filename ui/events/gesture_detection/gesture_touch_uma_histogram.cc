@@ -12,8 +12,7 @@ GestureTouchUMAHistogram::GestureTouchUMAHistogram()
     : max_distance_from_start_squared_(0), is_single_finger_(true) {
 }
 
-GestureTouchUMAHistogram::~GestureTouchUMAHistogram() {
-}
+GestureTouchUMAHistogram::~GestureTouchUMAHistogram() = default;
 
 void GestureTouchUMAHistogram::RecordGestureEvent(
     const GestureEventData& gesture) {

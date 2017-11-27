@@ -41,8 +41,7 @@ ImageShadowAnimator::ImageShadowAnimator(Delegate* delegate)
     : delegate_(delegate), animation_(this) {
 }
 
-ImageShadowAnimator::~ImageShadowAnimator() {
-}
+ImageShadowAnimator::~ImageShadowAnimator() = default;
 
 void ImageShadowAnimator::SetOriginalImage(const gfx::ImageSkia& image) {
   original_image_ = image;

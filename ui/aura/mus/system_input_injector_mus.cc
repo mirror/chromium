@@ -46,7 +46,7 @@ int KeyboardCodeToModifier(ui::KeyboardCode key) {
 SystemInputInjectorMus::SystemInputInjectorMus(WindowManagerClient* client)
     : client_(client) {}
 
-SystemInputInjectorMus::~SystemInputInjectorMus() {}
+SystemInputInjectorMus::~SystemInputInjectorMus() = default;
 
 void SystemInputInjectorMus::MoveCursorTo(const gfx::PointF& location) {
   // TODO(erg): This appears to never be receiving the events from the remote

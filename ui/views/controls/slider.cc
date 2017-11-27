@@ -79,7 +79,7 @@ Slider::Slider(SliderListener* listener)
   SchedulePaint();
 }
 
-Slider::~Slider() {}
+Slider::~Slider() = default;
 
 void Slider::SetValue(float value) {
   SetValueInternal(value, VALUE_CHANGED_BY_API);

@@ -18,7 +18,7 @@ namespace ui {
 
 DrmThreadMessageProxy::DrmThreadMessageProxy() : weak_ptr_factory_(this) {}
 
-DrmThreadMessageProxy::~DrmThreadMessageProxy() {}
+DrmThreadMessageProxy::~DrmThreadMessageProxy() = default;
 
 void DrmThreadMessageProxy::SetDrmThread(DrmThread* thread) {
   drm_thread_ = thread;

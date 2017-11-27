@@ -56,7 +56,7 @@ BorderImages::BorderImages(const int border_image_ids[],
   }
 }
 
-BorderImages::~BorderImages() {}
+BorderImages::~BorderImages() = default;
 
 }  // namespace internal
 
@@ -197,7 +197,7 @@ BubbleBorder::BubbleBorder(Arrow arrow, Shadow shadow, SkColor color)
   }
 }
 
-BubbleBorder::~BubbleBorder() {}
+BubbleBorder::~BubbleBorder() = default;
 
 void BubbleBorder::set_paint_arrow(ArrowPaintType value) {
   if (UseMaterialDesign())

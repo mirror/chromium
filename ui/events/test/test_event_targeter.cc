@@ -14,8 +14,7 @@ TestEventTargeter::TestEventTargeter(TestEventTarget* initial_target,
     : target_(initial_target), should_bubble_(should_bubble) {
 }
 
-TestEventTargeter::~TestEventTargeter() {
-}
+TestEventTargeter::~TestEventTargeter() = default;
 
 void TestEventTargeter::set_target(TestEventTarget* target) {
   target_ = target;

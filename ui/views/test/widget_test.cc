@@ -26,8 +26,8 @@ Widget* CreateTopLevelPlatformWidgetWithStubbedCapture(
 
 }  // namespace
 
-WidgetTest::WidgetTest() {}
-WidgetTest::~WidgetTest() {}
+WidgetTest::WidgetTest() = default;
+WidgetTest::~WidgetTest() = default;
 
 Widget* WidgetTest::CreateTopLevelPlatformWidget() {
   return CreateTopLevelPlatformWidgetWithStubbedCapture(
@@ -144,7 +144,7 @@ TestInitialFocusWidgetDelegate::TestInitialFocusWidgetDelegate(
   GetWidget()->GetContentsView()->AddChildView(view_);
 }
 
-TestInitialFocusWidgetDelegate::~TestInitialFocusWidgetDelegate() {}
+TestInitialFocusWidgetDelegate::~TestInitialFocusWidgetDelegate() = default;
 
 View* TestInitialFocusWidgetDelegate::GetInitiallyFocusedView() {
   return view_;
@@ -159,7 +159,7 @@ WidgetActivationWaiter::WidgetActivationWaiter(Widget* widget, bool active)
   widget->AddObserver(this);
 }
 
-WidgetActivationWaiter::~WidgetActivationWaiter() {}
+WidgetActivationWaiter::~WidgetActivationWaiter() = default;
 
 void WidgetActivationWaiter::Wait() {
   if (!observed_)

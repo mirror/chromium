@@ -53,7 +53,7 @@ class TestPlatformEventSource : public PlatformEventSource {
   TestPlatformEventSource()
       : stop_stream_(false) {
   }
-  ~TestPlatformEventSource() override {}
+  ~TestPlatformEventSource() override = default;
 
   uint32_t Dispatch(const PlatformEvent& event) { return DispatchEvent(event); }
 
@@ -138,8 +138,8 @@ class TestPlatformEventObserver : public PlatformEventObserver {
 
 class PlatformEventTest : public testing::Test {
  public:
-  PlatformEventTest() {}
-  ~PlatformEventTest() override {}
+  PlatformEventTest() = default;
+  ~PlatformEventTest() override = default;
 
   TestPlatformEventSource* source() { return source_.get(); }
 
@@ -332,7 +332,7 @@ class RunCallbackDuringDispatch : public TestPlatformEventDispatcher {
  public:
   RunCallbackDuringDispatch(int id, std::vector<int>* list)
       : TestPlatformEventDispatcher(id, list) {}
-  ~RunCallbackDuringDispatch() override {}
+  ~RunCallbackDuringDispatch() override = default;
 
   void set_callback(const base::Closure& callback) {
     callback_ = callback;
@@ -494,8 +494,8 @@ TEST_F(PlatformEventTest, DispatcherAddedDuringDispatchReceivesEvent) {
 // Provides mechanism for running tests from inside an active message-loop.
 class PlatformEventTestWithMessageLoop : public PlatformEventTest {
  public:
-  PlatformEventTestWithMessageLoop() {}
-  ~PlatformEventTestWithMessageLoop() override {}
+  PlatformEventTestWithMessageLoop() = default;
+  ~PlatformEventTestWithMessageLoop() override = default;
 
   void Run() {
     message_loop_.task_runner()->PostTask(
@@ -561,7 +561,7 @@ class DestroyScopedHandleDispatcher : public TestPlatformEventDispatcher {
  public:
   DestroyScopedHandleDispatcher(int id, std::vector<int>* list)
       : TestPlatformEventDispatcher(id, list) {}
-  ~DestroyScopedHandleDispatcher() override {}
+  ~DestroyScopedHandleDispatcher() override = default;
 
   void SetScopedHandle(std::unique_ptr<ScopedEventDispatcher> handler) {
     handler_ = std::move(handler);

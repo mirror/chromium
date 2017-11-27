@@ -160,6 +160,6 @@ SkColor NativeThemeDarkAura::GetSystemColor(ColorId color_id) const {
 
 NativeThemeDarkAura::NativeThemeDarkAura() : NativeThemeAura(false) {}
 
-NativeThemeDarkAura::~NativeThemeDarkAura() {}
+NativeThemeDarkAura::~NativeThemeDarkAura() = default;
 
 }  // namespace ui

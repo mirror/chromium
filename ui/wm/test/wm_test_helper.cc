@@ -46,8 +46,7 @@ WMTestHelper::WMTestHelper(const gfx::Size& default_window_size,
       new aura::client::DefaultCaptureClient(host_->window()));
 }
 
-WMTestHelper::~WMTestHelper() {
-}
+WMTestHelper::~WMTestHelper() = default;
 
 aura::Window* WMTestHelper::GetDefaultParent(aura::Window* window,
                                              const gfx::Rect& bounds) {

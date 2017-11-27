@@ -80,7 +80,7 @@ MdTextButton* MdTextButton::Create(ButtonListener* listener,
   return button;
 }
 
-MdTextButton::~MdTextButton() {}
+MdTextButton::~MdTextButton() = default;
 
 void MdTextButton::SetProminent(bool is_prominent) {
   if (is_prominent_ == is_prominent)

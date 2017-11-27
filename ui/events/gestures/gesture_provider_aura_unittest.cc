@@ -19,7 +19,7 @@ class GestureProviderAuraTest : public testing::Test,
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
 
-  ~GestureProviderAuraTest() override {}
+  ~GestureProviderAuraTest() override = default;
 
   void OnGestureEvent(GestureConsumer* raw_input_consumer,
                       GestureEvent* event) override {}

@@ -15,7 +15,7 @@ namespace {
 class DefaultFocusManagerFactory : public FocusManagerFactory {
  public:
   DefaultFocusManagerFactory() : FocusManagerFactory() {}
-  ~DefaultFocusManagerFactory() override {}
+  ~DefaultFocusManagerFactory() override = default;
 
  protected:
   std::unique_ptr<FocusManager> CreateFocusManager(
@@ -32,11 +32,9 @@ FocusManagerFactory* g_focus_manager_factory = nullptr;
 
 }  // namespace
 
-FocusManagerFactory::FocusManagerFactory() {
-}
+FocusManagerFactory::FocusManagerFactory() = default;
 
-FocusManagerFactory::~FocusManagerFactory() {
-}
+FocusManagerFactory::~FocusManagerFactory() = default;
 
 // static
 std::unique_ptr<FocusManager> FocusManagerFactory::Create(Widget* widget,

@@ -186,7 +186,7 @@ struct DataPack::Alias {
 // Abstraction of a data source (memory mapped file or in-memory buffer).
 class DataPack::DataSource {
  public:
-  virtual ~DataSource() {}
+  virtual ~DataSource() = default;
 
   virtual size_t GetLength() const = 0;
   virtual const uint8_t* GetData() const = 0;
@@ -197,7 +197,7 @@ class DataPack::MemoryMappedDataSource : public DataPack::DataSource {
   explicit MemoryMappedDataSource(std::unique_ptr<base::MemoryMappedFile> mmap)
       : mmap_(std::move(mmap)) {}
 
-  ~MemoryMappedDataSource() override {}
+  ~MemoryMappedDataSource() override = default;
 
   // DataPack::DataSource:
   size_t GetLength() const override { return mmap_->length(); }
@@ -214,7 +214,7 @@ class DataPack::BufferDataSource : public DataPack::DataSource {
  public:
   explicit BufferDataSource(base::StringPiece buffer) : buffer_(buffer) {}
 
-  ~BufferDataSource() override {}
+  ~BufferDataSource() override = default;
 
   // DataPack::DataSource:
   size_t GetLength() const override { return buffer_.length(); }
@@ -241,8 +241,7 @@ DataPack::DataPack(ui::ScaleFactor scale_factor)
   static_assert(sizeof(Alias) == 4, "size of Alias must be 4");
 }
 
-DataPack::~DataPack() {
-}
+DataPack::~DataPack() = default;
 
 bool DataPack::LoadFromPath(const base::FilePath& path) {
   std::unique_ptr<base::MemoryMappedFile> mmap =

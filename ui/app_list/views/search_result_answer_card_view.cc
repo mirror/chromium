@@ -157,7 +157,7 @@ SearchResultAnswerCardView::SearchResultAnswerCardView(
   SetLayoutManager(new views::FillLayout);
 }
 
-SearchResultAnswerCardView::~SearchResultAnswerCardView() {}
+SearchResultAnswerCardView::~SearchResultAnswerCardView() = default;
 
 const char* SearchResultAnswerCardView::GetClassName() const {
   return "SearchResultAnswerCardView";

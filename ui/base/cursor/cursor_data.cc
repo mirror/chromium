@@ -32,7 +32,7 @@ CursorData::CursorData(const CursorData& cursor) = default;
 
 CursorData::CursorData(CursorData&& cursor) = default;
 
-CursorData::~CursorData() {}
+CursorData::~CursorData() = default;
 
 CursorData& CursorData::operator=(const CursorData& cursor) = default;
 

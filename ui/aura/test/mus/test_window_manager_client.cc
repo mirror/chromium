@@ -8,9 +8,9 @@
 
 namespace aura {
 
-TestWindowManagerClient::TestWindowManagerClient() {}
+TestWindowManagerClient::TestWindowManagerClient() = default;
 
-TestWindowManagerClient::~TestWindowManagerClient() {}
+TestWindowManagerClient::~TestWindowManagerClient() = default;
 
 size_t TestWindowManagerClient::GetChangeCountForType(
     WindowManagerClientChangeType type) {

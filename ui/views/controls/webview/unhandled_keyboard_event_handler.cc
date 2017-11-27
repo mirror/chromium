@@ -13,8 +13,7 @@ UnhandledKeyboardEventHandler::UnhandledKeyboardEventHandler()
     : ignore_next_char_event_(false) {
 }
 
-UnhandledKeyboardEventHandler::~UnhandledKeyboardEventHandler() {
-}
+UnhandledKeyboardEventHandler::~UnhandledKeyboardEventHandler() = default;
 
 void UnhandledKeyboardEventHandler::HandleKeyboardEvent(
     const content::NativeWebKeyboardEvent& event,

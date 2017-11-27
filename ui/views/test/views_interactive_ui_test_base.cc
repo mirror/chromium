@@ -12,9 +12,9 @@
 
 namespace views {
 
-ViewsInteractiveUITestBase::ViewsInteractiveUITestBase() {}
+ViewsInteractiveUITestBase::ViewsInteractiveUITestBase() = default;
 
-ViewsInteractiveUITestBase::~ViewsInteractiveUITestBase() {}
+ViewsInteractiveUITestBase::~ViewsInteractiveUITestBase() = default;
 
 // static
 void ViewsInteractiveUITestBase::InteractiveSetUp() {

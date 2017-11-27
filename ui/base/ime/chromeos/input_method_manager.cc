@@ -13,14 +13,13 @@ namespace {
 InputMethodManager* g_input_method_manager = NULL;
 }
 
-InputMethodManager::State::~State() {
-}
+InputMethodManager::State::~State() = default;
 
-InputMethodManager::MenuItem::MenuItem() {}
+InputMethodManager::MenuItem::MenuItem() = default;
 
 InputMethodManager::MenuItem::MenuItem(const MenuItem& other) = default;
 
-InputMethodManager::MenuItem::~MenuItem() {}
+InputMethodManager::MenuItem::~MenuItem() = default;
 
 // static
 InputMethodManager* InputMethodManager::Get() {

@@ -74,7 +74,7 @@ struct ManagedDisplayModeSorter {
 
 }  // namespace
 
-ManagedDisplayMode::ManagedDisplayMode() {}
+ManagedDisplayMode::ManagedDisplayMode() = default;
 
 ManagedDisplayMode::ManagedDisplayMode(const gfx::Size& size) : size_(size) {}
 
@@ -290,7 +290,7 @@ ManagedDisplayInfo::ManagedDisplayInfo(int64_t id,
 ManagedDisplayInfo::ManagedDisplayInfo(const ManagedDisplayInfo& other) =
     default;
 
-ManagedDisplayInfo::~ManagedDisplayInfo() {}
+ManagedDisplayInfo::~ManagedDisplayInfo() = default;
 
 void ManagedDisplayInfo::SetRotation(Display::Rotation rotation,
                                      Display::RotationSource source) {

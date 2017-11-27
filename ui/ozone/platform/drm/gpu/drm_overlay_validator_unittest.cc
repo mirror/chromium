@@ -42,7 +42,7 @@ const size_t kPlanesPerCrtc = 1;
 
 class DrmOverlayValidatorTest : public testing::Test {
  public:
-  DrmOverlayValidatorTest() {}
+  DrmOverlayValidatorTest() = default;
 
   void SetUp() override;
   void TearDown() override;
