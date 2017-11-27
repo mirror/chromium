@@ -6,7 +6,7 @@
 
 namespace base {
 
-DefaultClock::~DefaultClock() {}
+DefaultClock::~DefaultClock() = default;
 
 Time DefaultClock::Now() {
   return Time::Now();
