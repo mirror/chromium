@@ -16,6 +16,46 @@
       "revId": "f80848341ad193c91ca0f8e1d9592e3ee986a7f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7c248d_955cc29b",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T09:37:39Z",
+      "side": 1,
+      "message": "Could you use PositionWithAffinity?",
+      "revId": "f80848341ad193c91ca0f8e1d9592e3ee986a7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db837627_c2a6ecd9",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T09:37:39Z",
+      "side": 1,
+      "message": "It seems returning TextDirection is redundant.",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 20
+      },
+      "revId": "f80848341ad193c91ca0f8e1d9592e3ee986a7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
