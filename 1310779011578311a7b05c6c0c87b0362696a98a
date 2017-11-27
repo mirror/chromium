@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95c306e5_0a82bbaf",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-27T22:19:11Z",
+      "side": 1,
+      "message": "This is already explained in .h file.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 65
+      },
+      "revId": "1310779011578311a7b05c6c0c87b0362696a98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d126fc_4dd726b5",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-27T22:19:11Z",
+      "side": 1,
+      "message": "proactively",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "1310779011578311a7b05c6c0c87b0362696a98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5d34a5_b31d50fd",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-27T22:19:11Z",
+      "side": 1,
+      "message": "Independent",
+      "range": {
+        "startLine": 67,
+        "startChar": 17,
+        "endLine": 67,
+        "endChar": 29
+      },
+      "revId": "1310779011578311a7b05c6c0c87b0362696a98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464470f4_2a2fa709",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-27T22:19:11Z",
+      "side": 1,
+      "message": "If this param allows tabs to be discarded \"regardless of the number of tabs\", is it true that |min_loaded_tab_count| controls when \"proactive discarding can start discarding\" and that \"no tabs will be discarded if fewer than \u0027min loaded tabs\u0027 are present\"?",
+      "range": {
+        "startLine": 99,
+        "startChar": 50,
+        "endLine": 100,
+        "endChar": 10
+      },
+      "revId": "1310779011578311a7b05c6c0c87b0362696a98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa68168_aa95b8bf",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-27T22:19:11Z",
+      "side": 1,
+      "message": "The way I understand it:\n\nControls how many \"recent\" and \"old\" tabs can live on the machine:\nmax_loaded_tabs_per_gb_ram  -\u003e max_old_loaded_tabs_per_gb\nmin_loaded_tab_count -\u003e max_old_loaded_tabs\nmax_loaded_tab_count -\u003e max_loaded_tabs  (old or recent)\n\nControl when a tab can be discarded and when it becomes \"old\":\nmin_occluded_timeout -\u003e tab_can_be_discarded_occlusion_timeout\nmax_occluded_timeout -\u003e tab_is_old_occlusion_timeout",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 2
+      },
+      "revId": "1310779011578311a7b05c6c0c87b0362696a98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
