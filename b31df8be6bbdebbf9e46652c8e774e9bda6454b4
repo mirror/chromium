@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "181ffe08_055377e8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 92566,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-27T20:10:10Z",
+      "side": 1,
+      "message": "Is there a reason these don\u0027t use the format VR.*? Some Other VR histograms seem to, and some of our tools use the format to group histograms.",
+      "revId": "b31df8be6bbdebbf9e46652c8e774e9bda6454b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
