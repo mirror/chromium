@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99600a22_08b8e954",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T17:47:36Z",
+      "side": 1,
+      "message": "Having a bunch of TODOs here about the remaining work would make it clear that this is temporary.",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a0a186b_d43921c9",
+        "filename": "content/browser/notifications/blink_notification_service_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T17:47:36Z",
+      "side": 1,
+      "message": "Would you mind updating this too? In a separate CL if you wish.",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f41d262_92d57d10",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T17:47:36Z",
+      "side": 1,
+      "message": "nit: no preference, but everything in this file calls it |execution_context|, the new code calls it |context|. We should pick one and use is consistently.",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1c835d_5165c10c",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T17:47:36Z",
+      "side": 1,
+      "message": "nit: drop ExecutionContext* here too? Can be a separate CL :)",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f39378af_b5ea6153",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T17:47:36Z",
+      "side": 1,
+      "message": "As a point of thought, and I realise this was my suggestion, would DisplayNonPersistentNotification() be clearer despite being potentially repetitive?",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6901498b_72d8f2a7",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T17:47:36Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
