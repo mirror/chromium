@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "43e16baf_35b9f301",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T01:33:10Z",
+      "side": 1,
+      "message": "nit: This is called also for the first try right? Can we rename it to tryImportScanEntries_ then?",
+      "range": {
+        "startLine": 355,
+        "startChar": 9,
+        "endLine": 355,
+        "endChar": 14
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1d40470_ee96edf1",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
@@ -87,6 +110,75 @@
         "startChar": 4,
         "endLine": 363,
         "endChar": 9
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fac4384_fc5a8fda",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T01:33:10Z",
+      "side": 1,
+      "message": "In what scenario those can exist? And if they aren\u0027t needed, why aren\u0027t they removed already? Should they?",
+      "range": {
+        "startLine": 369,
+        "startChar": 2,
+        "endLine": 369,
+        "endChar": 45
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3150b0f_cee6bc50",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T01:33:10Z",
+      "side": 1,
+      "message": "Is it possible for this to be an endless loop never completing? If so, in which scenario? Also, should we prevent it?",
+      "range": {
+        "startLine": 386,
+        "startChar": 12,
+        "endLine": 386,
+        "endChar": 73
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5e3cce_609da349",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T01:33:10Z",
+      "side": 1,
+      "message": "What happens if we\u0027re offline?",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 69
       },
       "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
