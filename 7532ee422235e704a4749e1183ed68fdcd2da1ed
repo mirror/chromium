@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d6decf56_2dafd9b0",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-27T09:30:08Z",
+      "side": 1,
+      "message": "Ah, never mind!\nThere are two types of COMPLETED event...!",
+      "parentUuid": "46551b43_fa87ddc0",
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9305df1e_47e13637",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 7
