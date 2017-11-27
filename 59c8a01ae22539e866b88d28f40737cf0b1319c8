@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e611e213_37aa084a",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-27T00:00:17Z",
+      "side": 1,
+      "message": "When data_ didn\u0027t change, we nver send OnOffer as data_ should be emtpy.\nAdded DCHECK_EQ to below #134 like as #104.",
+      "parentUuid": "57dc533e_16541f22",
+      "revId": "59c8a01ae22539e866b88d28f40737cf0b1319c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5522e44e_e3460fb8",
         "filename": "components/exo/data_offer_unittest.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "59c8a01ae22539e866b88d28f40737cf0b1319c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df637e8_8665d716",
+        "filename": "components/exo/data_offer_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-27T00:00:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5522e44e_e3460fb8",
+      "revId": "59c8a01ae22539e866b88d28f40737cf0b1319c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
