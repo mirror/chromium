@@ -434,7 +434,7 @@ struct EVENTS_EXPORT PointerDetails {
                  float tangential_pressure = 0.0f,
                  int twist = 0);
   PointerDetails(EventPointerType pointer_type,
-                 const gfx::Vector2d& pointer_offset,
+                 const gfx::Vector2dF& pointer_offset,
                  PointerId pointer_id = kUnknownPointerId);
   PointerDetails(const PointerDetails& other);
 
@@ -487,7 +487,7 @@ struct EVENTS_EXPORT PointerDetails {
   // Only used by mouse wheel events. The amount to scroll. This is in multiples
   // of kWheelDelta.
   // Note: offset_.x() > 0/offset_.y() > 0 means scroll left/up.
-  gfx::Vector2d offset;
+  gfx::Vector2dF offset;
 };
 
 class EVENTS_EXPORT MouseEvent : public LocatedEvent {
@@ -633,7 +633,9 @@ class EVENTS_EXPORT MouseWheelEvent : public MouseEvent {
   explicit MouseWheelEvent(const base::NativeEvent& native_event);
   explicit MouseWheelEvent(const ScrollEvent& scroll_event);
   explicit MouseWheelEvent(const PointerEvent& pointer_event);
-  MouseWheelEvent(const MouseEvent& mouse_event, int x_offset, int y_offset);
+  MouseWheelEvent(const MouseEvent& mouse_event,
+                  float x_offset,
+                  float y_offset);
   MouseWheelEvent(const MouseWheelEvent& mouse_wheel_event);
 
   template <class T>
@@ -645,7 +647,7 @@ class EVENTS_EXPORT MouseWheelEvent : public MouseEvent {
   }
 
   // Used for synthetic events in testing and by the gesture recognizer.
-  MouseWheelEvent(const gfx::Vector2d& offset,
+  MouseWheelEvent(const gfx::Vector2dF& offset,
                   const gfx::Point& location,
                   const gfx::Point& root_location,
                   base::TimeTicks time_stamp,
@@ -654,12 +656,12 @@ class EVENTS_EXPORT MouseWheelEvent : public MouseEvent {
 
   // The amount to scroll. This is in multiples of kWheelDelta.
   // Note: x_offset() > 0/y_offset() > 0 means scroll left/up.
-  int x_offset() const { return offset_.x(); }
-  int y_offset() const { return offset_.y(); }
-  const gfx::Vector2d& offset() const { return offset_; }
+  float x_offset() const { return offset_.x(); }
+  float y_offset() const { return offset_.y(); }
+  const gfx::Vector2dF& offset() const { return offset_; }
 
  private:
-  gfx::Vector2d offset_;
+  gfx::Vector2dF offset_;
 };
 
 // NOTE: Pen (stylus) events use TouchEvent with POINTER_TYPE_PEN. They were
@@ -996,7 +998,7 @@ class EVENTS_EXPORT ScrollEvent : public MouseEvent {
         finger_count_(model.finger_count_){
   }
 
-  // Used for tests.
+  // Used for tests and gesture recognizer.
   ScrollEvent(EventType type,
               const gfx::Point& location,
               base::TimeTicks time_stamp,

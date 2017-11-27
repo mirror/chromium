@@ -544,7 +544,7 @@ PointerDetails::PointerDetails(EventPointerType pointer_type,
 }
 
 PointerDetails::PointerDetails(EventPointerType pointer_type,
-                               const gfx::Vector2d& pointer_offset,
+                               const gfx::Vector2dF& pointer_offset,
                                PointerId pointer_id)
     : PointerDetails(pointer_type, pointer_id) {
   offset = pointer_offset;
@@ -788,8 +788,8 @@ MouseWheelEvent::MouseWheelEvent(const PointerEvent& pointer_event)
 }
 
 MouseWheelEvent::MouseWheelEvent(const MouseEvent& mouse_event,
-                                 int x_offset,
-                                 int y_offset)
+                                 float x_offset,
+                                 float y_offset)
     : MouseEvent(mouse_event), offset_(x_offset, y_offset) {
   SetType(ET_MOUSEWHEEL);
 }
@@ -800,7 +800,7 @@ MouseWheelEvent::MouseWheelEvent(const MouseWheelEvent& mouse_wheel_event)
   DCHECK_EQ(ET_MOUSEWHEEL, type());
 }
 
-MouseWheelEvent::MouseWheelEvent(const gfx::Vector2d& offset,
+MouseWheelEvent::MouseWheelEvent(const gfx::Vector2dF& offset,
                                  const gfx::Point& location,
                                  const gfx::Point& root_location,
                                  base::TimeTicks time_stamp,

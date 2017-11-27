@@ -827,6 +827,7 @@ void WebViewImpl::ResolveTapDisambiguation(double timestamp_seconds,
 WebInputEventResult WebViewImpl::HandleSyntheticWheelFromTouchpadPinchEvent(
     const WebGestureEvent& pinch_event) {
   DCHECK_EQ(pinch_event.GetType(), WebInputEvent::kGesturePinchUpdate);
+  LOG(ERROR) << "HandleSyntheticWheelFromTouchpadPinchEvent";
 
   // For pinch gesture events, match typical trackpad behavior on Windows by
   // sending fake wheel events with the ctrl modifier set when we see trackpad
