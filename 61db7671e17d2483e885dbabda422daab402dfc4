@@ -16,6 +16,24 @@
       "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931059b0_83452319",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-27T19:53:49Z",
+      "side": 1,
+      "message": "For non-viz there is one ContextProvider/CommandBuffer per Compositor/Display. There is a blocking calls involved in setting that up, which means that SetChild() has been called before DoSetParentOnChild().\n\nIn viz, there is only one ContextProvider/CommandBuffer for all Compositors. The Display is created separate and isn\u0027t involved in this. There is no blocking call for subsequent Compositors and DoSetParentOnChild() can happen before SetChild().",
+      "parentUuid": "7fcb564b_50fe136b",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
