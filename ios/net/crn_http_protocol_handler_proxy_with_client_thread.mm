@@ -185,6 +185,7 @@
   DCHECK(_clientThread);
   if (!_protocol)
     return;
+
   [self postBlockToClientThread:^{
     [self didFinishLoadingOnClientThread];
   }];
