@@ -1,2 +1,5 @@
-# TODO(crbug.com/759291): Test is flakey with ASan.
+# TODO(crbug.com/759291): Test is flaky under CrOS ASan.
 -SamlTest.ScrapedMultiple
+
+# TODO(crbug.com/778405):  Test is flaky under CrOS ASan.
+-MemoryTracingBrowserTest.TestBackgroundMemoryInfra
