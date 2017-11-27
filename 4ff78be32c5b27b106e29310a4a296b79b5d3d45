@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd6e89d6_7ad52ea6",
+        "filename": "chrome/browser/signin/account_consistency_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T17:02:54Z",
+      "side": 1,
+      "message": "Should this be a NOTREACHED(). I guess we should never call the migration code if DICE is not supported.",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 93,
+        "endChar": 14
+      },
+      "revId": "4ff78be32c5b27b106e29310a4a296b79b5d3d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76ac0cb_ec18f8ae",
+        "filename": "chrome/browser/signin/account_consistency_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T17:02:54Z",
+      "side": 1,
+      "message": "This only managed the account consistency state or flag. Should we rename it to AccountConsistencyStateManager or AccountConsistencyModeManager?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 31
+      },
+      "revId": "4ff78be32c5b27b106e29310a4a296b79b5d3d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b577c074_d96be7e5",
+        "filename": "chrome/browser/signin/chrome_signin_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T17:02:54Z",
+      "side": 1,
+      "message": "If you change the name of the class, also change the instance variable to account_consistency_mode_ or account_consistency_state_",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 137,
+        "endChar": 56
+      },
+      "revId": "4ff78be32c5b27b106e29310a4a296b79b5d3d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4d94d6_53b0747b",
+        "filename": "components/signin/core/browser/dice_account_reconcilor_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T17:02:54Z",
+      "side": 1,
+      "message": "Unindent 4 spaces.",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "4ff78be32c5b27b106e29310a4a296b79b5d3d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
