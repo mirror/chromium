@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "985202a1_cfbb344f",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-27T11:50:42Z",
+      "side": 1,
+      "message": "nit: Please use an explicit type here (it\u0027s not mentioned anywhere in this method).",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 6
+      },
+      "revId": "e31eaffcaa77dbe22c45c9e906676d6990f9dc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe304f2_ee34a590",
+        "filename": "components/consent_auditor/consent_auditor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-27T11:50:42Z",
+      "side": 1,
+      "message": "nit: Ordering (pls keep the same as the corresponding attributes)",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 10
+      },
+      "revId": "e31eaffcaa77dbe22c45c9e906676d6990f9dc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecc2167_956dc76d",
+        "filename": "components/sync/user_events/user_event_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-27T11:50:42Z",
+      "side": 1,
+      "message": "Neither the passphrase.\n\nWe\u0027re only using the event logger as a channel to deliver a piece of information tied to the GAIA account. It doesn\u0027t really have much to do with sync datatypes.\n\nSuggestion:\n\nif (!initialized)\n  return false;\n\nif (consent)\n  return true;\n\nreturn (history \u0026\u0026 !passphrase)",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 50
+      },
+      "revId": "e31eaffcaa77dbe22c45c9e906676d6990f9dc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
