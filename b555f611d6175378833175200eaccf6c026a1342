@@ -22,6 +22,23 @@
       "revId": "b555f611d6175378833175200eaccf6c026a1342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a12d9d_05406168",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T03:46:26Z",
+      "side": 1,
+      "message": "I prefer more direct naming like LoaderAndClient. We could use \u0027given_loader\u0027 as a parameter name to imply what this parameter is for?",
+      "revId": "b555f611d6175378833175200eaccf6c026a1342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
