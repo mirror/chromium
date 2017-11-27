@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "4796c579_0f3d4a48",
+        "filename": "tools/gn/args.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-27T19:26:22Z",
+      "side": 1,
+      "message": "Need {} for the outer loop (Chrome style says to use {} for any blocks with \u003e1 line)",
+      "revId": "6ef7e0f5db2bb48cbec04430edf433175fd4de64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db7bad5_147be24d",
+        "filename": "tools/gn/args.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-27T19:26:22Z",
+      "side": 1,
+      "message": "Although it requires one more like, I feel it\u0027s better hygiene to only do the search for \"a\" once, keep the iterator, and use that in the call to erase.",
+      "revId": "6ef7e0f5db2bb48cbec04430edf433175fd4de64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd514317_c843f079",
         "filename": "tools/gn/setup.cc",
         "patchSetId": 1
