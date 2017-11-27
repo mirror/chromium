@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f86f1b6e_19452783",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T04:15:35Z",
+      "side": 1,
+      "message": "We could write:\n\nstatic bool HasSizeAttribute(const LayoutObject\u0026 layout_object) {\n  if (layout_object-\u003eIsLayoutBlock())\n    return ToLayoutBlock(layout_object)-\u003eLogicalHeight();\n\n  if (layout_object-\u003eIsAtomicInlineLevel())\n    return !ToLayoutBox(layout_object)-\u003eSize().IsEmpty();\n  return false;\n}\n\nbool EmptyBlockHaveVisibleObjects(const LayoutObject\u0026 layout_object) {\n  if (HasSizeAttribute(layout_object) || IsHTMLBodyElement(layout_object.GetNode()))\n    return !HasRenderedNonAnonymousDescendantsWithHeight(\u0026layout_object);\n  return false;\n}",
+      "range": {
+        "startLine": 796,
+        "startChar": 0,
+        "endLine": 809,
+        "endChar": 1
+      },
+      "revId": "16bee14d5f29627c8c45501f856d73bbb35131f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e203b4_e6ee7a9d",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T04:15:35Z",
+      "side": 1,
+      "message": "nit: s/LayoutObject*/LayoutObject\u0026/\n\nSince, EmptyBlockHaveVisibleObjects() doesn\u0027t accept nullptr, we should\npass const-ref.",
+      "revId": "16bee14d5f29627c8c45501f856d73bbb35131f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
