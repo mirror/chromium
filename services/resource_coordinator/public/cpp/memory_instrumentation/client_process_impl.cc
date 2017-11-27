@@ -21,6 +21,49 @@
 
 namespace memory_instrumentation {
 
+namespace {
+
+// Small helper class which ensures that the inner callback is invoked
+// on destruction of callback.
+// TODO(lalitm): remove this class once we are able to use an equivalent class
+// from base/.
+class ChromeDumpFallbackCallback {
+ public:
+  ChromeDumpFallbackCallback(
+      const ClientProcessImpl::RequestChromeMemoryDumpCallback& callback,
+      uint64_t dump_guid)
+      : callback_(callback), dump_guid_(dump_guid) {}
+
+  ~ChromeDumpFallbackCallback() {
+    if (!callback_.is_null())
+      callback_.Run(false, dump_guid_, nullptr);
+  }
+
+  void Run(bool success,
+           uint64_t dump_guid,
+           std::unique_ptr<base::trace_event::ProcessMemoryDump> pmd) {
+    callback_.Run(success, dump_guid, std::move(pmd));
+    callback_.Reset();
+  }
+
+ private:
+  ClientProcessImpl::RequestChromeMemoryDumpCallback callback_;
+  uint64_t dump_guid_;
+
+  DISALLOW_COPY_AND_ASSIGN(ChromeDumpFallbackCallback);
+};
+
+ClientProcessImpl::RequestChromeMemoryDumpCallback
+CreateChromeDumpFallbackCallback(
+    const ClientProcessImpl::RequestChromeMemoryDumpCallback& callback,
+    uint64_t dump_guid) {
+  return base::Bind(
+      &ChromeDumpFallbackCallback::Run,
+      std::make_unique<ChromeDumpFallbackCallback>(callback, dump_guid));
+}
+
+}  // namespace
+
 // static
 void ClientProcessImpl::CreateInstance(const Config& config) {
   static ClientProcessImpl* instance = nullptr;
@@ -75,9 +118,13 @@ void ClientProcessImpl::RequestChromeMemoryDump(
     const base::trace_event::MemoryDumpRequestArgs& args,
     const RequestChromeMemoryDumpCallback& callback) {
   DCHECK(!callback.is_null());
+
+  auto fallback_callback = CreateChromeDumpFallbackCallback(
+      base::Bind(&ClientProcessImpl::OnChromeMemoryDumpDone,
+                 base::Unretained(this), callback, args),
+      args.dump_guid);
   base::trace_event::MemoryDumpManager::GetInstance()->CreateProcessDump(
-      args, base::Bind(&ClientProcessImpl::OnChromeMemoryDumpDone,
-                       base::Unretained(this), callback, args));
+      args, fallback_callback);
 }
 
 void ClientProcessImpl::OnChromeMemoryDumpDone(
