@@ -52,6 +52,24 @@
       "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15558173_48d2befc",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T04:08:21Z",
+      "side": 1,
+      "message": "blink::WrapPersistent uses blink::Persistent and it makes an Oilpan object alive.  We need to make an underlying v8::Function inside a CallbackFunctionBase alive.  blink::Persistent does not magically make V8 objects alive (blink::Persistent !\u003d v8::Persistent).\n\nWe can better merge wrapper-tracing into Oilpan and make blink::Persistent automagically invokes wrapper-tracing, however, it\u0027s not happened yet.\n\nThus, we need a custom version of blink::WrapPersistent for callback functions.\n\nWe had a discussion about this and agreed to have a custom version of Persistent/WrapPersistent.  It\u0027s months ago though.",
+      "parentUuid": "40873fb8_dc4a38d1",
+      "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
