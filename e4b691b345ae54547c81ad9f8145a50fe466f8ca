@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa97a9d1_3e1fe7e5",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-27T23:59:06Z",
+      "side": 1,
+      "message": "nit: This is not a great use of auto since the type here is not obvious.",
+      "revId": "e4b691b345ae54547c81ad9f8145a50fe466f8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
