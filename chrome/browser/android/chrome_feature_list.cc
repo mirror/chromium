@@ -65,6 +65,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kChromeHomeBottomNavLabels,
     &kChromeHomeDestroySuggestions,
     &kChromeHomeDropAllButFirstThumbnail,
+    &kChromeHomePersistentIph,
     &kChromeHomePromo,
     &kChromeHomePromoOnStartup,
     &kChromeHomeOptOutSnackbar,
@@ -182,6 +183,9 @@ const base::Feature kChromeHomeDestroySuggestions{
 
 const base::Feature kChromeHomeDropAllButFirstThumbnail{
     "ChromeHomeDropAllButFirstThumbnail", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kChromeHomePersistentIph{"ChromeHomePersistentIph",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kChromeHomePromo{"ChromeHomePromo",
                                      base::FEATURE_DISABLED_BY_DEFAULT};

@@ -1029,6 +1029,9 @@ extern const char kChromeHomeBottomNavLabelsDescription[];
 extern const char kChromeHomeOptOutSnackbarName[];
 extern const char kChromeHomeOptOutSnackbarDescription[];
 
+extern const char kChromeHomePersistentIphName[];
+extern const char kChromeHomePersistentIphDescription[];
+
 extern const char kChromeHomePersonalizedOmniboxSuggestionsName[];
 extern const char kChromeHomePersonalizedOmniboxSuggestionsDescription[];
 

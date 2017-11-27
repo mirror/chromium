@@ -26,6 +26,7 @@ extern const base::Feature kChromeHomeFeature;
 extern const base::Feature kChromeHomeBottomNavLabels;
 extern const base::Feature kChromeHomeDestroySuggestions;
 extern const base::Feature kChromeHomeDropAllButFirstThumbnail;
+extern const base::Feature kChromeHomePersistentIph;
 extern const base::Feature kChromeHomePromo;
 extern const base::Feature kChromeHomePromoOnStartup;
 extern const base::Feature kChromeHomeOptOutSnackbar;

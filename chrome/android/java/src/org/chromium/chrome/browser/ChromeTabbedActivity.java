@@ -572,7 +572,7 @@ public class ChromeTabbedActivity
                                 .show();
                         isShowingPromo = true;
                     } else if (getBottomSheet() != null) {
-                        getBottomSheet().showHelpBubbleIfNecessary();
+                        getBottomSheet().showColdStartHelpBubble();
                     }
                 }
             } else {
