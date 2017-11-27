@@ -127,10 +127,10 @@ void CopyFragmentDataToLayoutBoxForInlineChildren(
     const NGPhysicalContainerFragment& container,
     NGPhysicalOffset offset = {}) {
   for (const auto& child : container.Children()) {
-    // If the child is painted by non-NG painters, they need Location() set
-    // correctly.
+    // Paint needs LayoutBox::Location() for replaced elements and inline
+    // blocks.
     LayoutObject* layout_object = child->GetLayoutObject();
-    if (layout_object && layout_object->IsLayoutReplaced()) {
+    if (layout_object && layout_object->IsBox()) {
       LayoutBox& layout_box = ToLayoutBox(*layout_object);
       layout_box.SetLocation({child->Offset().left, child->Offset().top});
     }

@@ -62,6 +62,7 @@ class NGBoxFragmentPainter : public BoxPainterBase {
       const PaintInfo&);
   bool IntersectsPaintRect(const PaintInfo&, const LayoutPoint&) const;
 
+  void PaintWithAdjustedOffset(PaintInfo&, const LayoutPoint&);
   void PaintBoxDecorationBackground(const PaintInfo&, const LayoutPoint&);
   void PaintBoxDecorationBackgroundWithRect(const PaintInfo&,
                                             const LayoutPoint&,
@@ -70,6 +71,9 @@ class NGBoxFragmentPainter : public BoxPainterBase {
   void PaintChildren(const Vector<std::unique_ptr<NGPaintFragment>>&,
                      const PaintInfo&,
                      const LayoutPoint&);
+  void PaintLegacyFallbackChild(const NGPhysicalFragment&,
+                                const PaintInfo&,
+                                const LayoutPoint&);
   void PaintText(const NGPaintFragment&,
                  const PaintInfo&,
                  const LayoutPoint& paint_offset);
