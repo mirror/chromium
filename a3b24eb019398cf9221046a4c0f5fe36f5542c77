@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "bcd681dd_54cfcda3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-27T17:30:48Z",
+      "side": 1,
+      "message": "I think it makes sense to rename the methods so it\u0027s clear that they are not equivalent. Done",
+      "parentUuid": "0149dff0_ea1b27b9",
+      "revId": "a3b24eb019398cf9221046a4c0f5fe36f5542c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cff73818_d8f59870",
         "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
         "patchSetId": 10
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Doesn\u0027t your new code already fail for the WebFont.cpp case because the whitespace bit is not set on the TextRun in that codepath? It also doesn\u0027t look like there\u0027s a real PaintController. I tried making a test it\u0027s a challenge to get that code to run. I think the trusted webfont codepath is used for PPAPI plugins to draw text into temp buffers.\n\nI see what you mean about putting this bit in the most central code that paints text to ensure we don\u0027t miss any cases, but the existence of the kUnknown tri-state means we are already missing cases. I think it would be cleaner to be exact in the cases we are sure about (i.e., painting laid-out inline text runs) and add a heuristic for the others (e.g., maybe just optimistically call SetTextPainted() from SVGInlineTextBoxPainter::PaintText).",
       "parentUuid": "150e963b_57000ab5",
+      "revId": "a3b24eb019398cf9221046a4c0f5fe36f5542c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691ae573_cf6b8d8a",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-27T17:30:48Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve removed the bit from TextRun. But I still don\u0027t think we can have a bool instead of tristate yet, I added a DCHECK to test that.",
+      "parentUuid": "c202b75e_b91bf316",
       "revId": "a3b24eb019398cf9221046a4c0f5fe36f5542c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
