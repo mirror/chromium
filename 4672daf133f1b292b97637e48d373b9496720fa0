@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c131f291_80701811",
+        "filename": "build/install-build-deps.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-27T20:50:59Z",
+      "side": 1,
+      "message": "$(apt-cache search --names-only \"$1\" | awk \u0027$1 \u003d\u003d \"\u0027$1\u0027\" { print $1; }\u0027)\n\nmaybe? You shouldn\u0027t need both awk and grep here, you just have to get the escaping right.",
+      "revId": "4672daf133f1b292b97637e48d373b9496720fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
