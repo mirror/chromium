@@ -4,33 +4,25 @@
 
 #include "core/css/cssom/FilteredComputedStylePropertyMap.h"
 
+#include <memory>
 #include "core/css/CSSComputedStyleDeclaration.h"
 #include "core/dom/Element.h"
-#include "core/testing/DummyPageHolder.h"
+#include "core/testing/PageTestBase.h"
 #include "platform/heap/Handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include <memory>
 
 namespace blink {
 
-class FilteredComputedStylePropertyMapTest : public ::testing::Test {
- public:
-  FilteredComputedStylePropertyMapTest() : page_(DummyPageHolder::Create()) {
-    declaration_ = CSSComputedStyleDeclaration::Create(
-        page_->GetDocument().documentElement());
-  }
-
-  CSSComputedStyleDeclaration* Declaration() const {
-    return declaration_.Get();
-  }
-  Node* PageNode() { return page_->GetDocument().documentElement(); }
-
- private:
-  std::unique_ptr<DummyPageHolder> page_;
-  Persistent<CSSComputedStyleDeclaration> declaration_;
+class FilteredComputedStylePropertyMapTest : public PageTestBase {
+ protected:
+  Node* PageNode() { return GetDocument().documentElement(); }
 };
 
 TEST_F(FilteredComputedStylePropertyMapTest, GetProperties) {
+  GetDocument().documentElement()->SetInnerHTMLFromString(
+      "<div id='test' style='--foo: 1; --bar: banana'></div>");
+  Element* test_element = GetDocument().getElementById("test");
+
   Vector<CSSPropertyID> native_properties(
       {CSSPropertyColor, CSSPropertyAlignItems});
   Vector<CSSPropertyID> empty_native_properties;
@@ -38,20 +30,24 @@ TEST_F(FilteredComputedStylePropertyMapTest, GetProperties) {
   Vector<AtomicString> empty_custom_properties;
 
   FilteredComputedStylePropertyMap* map =
-      FilteredComputedStylePropertyMap::Create(PageNode(), native_properties,
+      FilteredComputedStylePropertyMap::Create(test_element, native_properties,
                                                custom_properties);
   EXPECT_TRUE(map->getProperties().Contains("color"));
   EXPECT_TRUE(map->getProperties().Contains("align-items"));
   EXPECT_TRUE(map->getProperties().Contains("--foo"));
   EXPECT_TRUE(map->getProperties().Contains("--bar"));
 
-  map = FilteredComputedStylePropertyMap::Create(PageNode(), native_properties,
-                                                 empty_custom_properties);
+  map = FilteredComputedStylePropertyMap::Create(
+      test_element, native_properties, empty_custom_properties);
   EXPECT_TRUE(map->getProperties().Contains("color"));
   EXPECT_TRUE(map->getProperties().Contains("align-items"));
+  EXPECT_FALSE(map->getProperties().Contains("--foo"));
+  EXPECT_FALSE(map->getProperties().Contains("--bar"));
 
   map = FilteredComputedStylePropertyMap::Create(
-      PageNode(), empty_native_properties, custom_properties);
+      test_element, empty_native_properties, custom_properties);
+  EXPECT_FALSE(map->getProperties().Contains("color"));
+  EXPECT_FALSE(map->getProperties().Contains("align-items"));
   EXPECT_TRUE(map->getProperties().Contains("--foo"));
   EXPECT_TRUE(map->getProperties().Contains("--bar"));
 }
