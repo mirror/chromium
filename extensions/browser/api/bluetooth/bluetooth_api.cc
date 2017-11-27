@@ -107,7 +107,7 @@ void BluetoothAPI::OnListenerRemoved(const EventListenerInfo& details) {
 
 namespace api {
 
-BluetoothGetAdapterStateFunction::~BluetoothGetAdapterStateFunction() {}
+BluetoothGetAdapterStateFunction::~BluetoothGetAdapterStateFunction() = default;
 
 bool BluetoothGetAdapterStateFunction::DoWork(
     scoped_refptr<BluetoothAdapter> adapter) {
@@ -118,7 +118,7 @@ bool BluetoothGetAdapterStateFunction::DoWork(
   return true;
 }
 
-BluetoothGetDevicesFunction::~BluetoothGetDevicesFunction() {}
+BluetoothGetDevicesFunction::~BluetoothGetDevicesFunction() = default;
 
 bool BluetoothGetDevicesFunction::DoWork(
     scoped_refptr<BluetoothAdapter> adapter) {
@@ -145,7 +145,7 @@ bool BluetoothGetDevicesFunction::DoWork(
   return true;
 }
 
-BluetoothGetDeviceFunction::~BluetoothGetDeviceFunction() {}
+BluetoothGetDeviceFunction::~BluetoothGetDeviceFunction() = default;
 
 bool BluetoothGetDeviceFunction::DoWork(
     scoped_refptr<BluetoothAdapter> adapter) {

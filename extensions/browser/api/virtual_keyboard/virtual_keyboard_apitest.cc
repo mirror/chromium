@@ -21,7 +21,7 @@ namespace extensions {
 
 class VirtualKeyboardApiTest : public ShellApiTest {
  public:
-  VirtualKeyboardApiTest() {}
+  VirtualKeyboardApiTest() = default;
 
   ~VirtualKeyboardApiTest() override = default;
 

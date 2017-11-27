@@ -38,7 +38,7 @@ class TestProcessManager : public ProcessManager {
     // ProcessManager constructor above assumes non-incognito.
     DCHECK(!context->IsOffTheRecord());
   }
-  ~TestProcessManager() override {}
+  ~TestProcessManager() override = default;
 
   int create_count() { return create_count_; }
 
@@ -68,7 +68,7 @@ std::unique_ptr<KeyedService> CreateTestProcessManager(
 class LazyBackgroundTaskQueueTest : public ExtensionsTest {
  public:
   LazyBackgroundTaskQueueTest() : task_run_count_(0) {}
-  ~LazyBackgroundTaskQueueTest() override {}
+  ~LazyBackgroundTaskQueueTest() override = default;
 
   int task_run_count() { return task_run_count_; }
 

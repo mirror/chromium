@@ -57,9 +57,9 @@ void ConvertHidDeviceFilter(const hid::DeviceFilter& input,
 
 namespace extensions {
 
-HidGetDevicesFunction::HidGetDevicesFunction() {}
+HidGetDevicesFunction::HidGetDevicesFunction() = default;
 
-HidGetDevicesFunction::~HidGetDevicesFunction() {}
+HidGetDevicesFunction::~HidGetDevicesFunction() = default;
 
 ExtensionFunction::ResponseAction HidGetDevicesFunction::Run() {
   std::unique_ptr<api::hid::GetDevices::Params> parameters =
@@ -96,11 +96,11 @@ void HidGetDevicesFunction::OnEnumerationComplete(
   Respond(OneArgument(std::move(devices)));
 }
 
-HidGetUserSelectedDevicesFunction::HidGetUserSelectedDevicesFunction() {
-}
+HidGetUserSelectedDevicesFunction::HidGetUserSelectedDevicesFunction() =
+    default;
 
-HidGetUserSelectedDevicesFunction::~HidGetUserSelectedDevicesFunction() {
-}
+HidGetUserSelectedDevicesFunction::~HidGetUserSelectedDevicesFunction() =
+    default;
 
 ExtensionFunction::ResponseAction HidGetUserSelectedDevicesFunction::Run() {
   std::unique_ptr<api::hid::GetUserSelectedDevices::Params> parameters =
@@ -145,7 +145,7 @@ void HidGetUserSelectedDevicesFunction::OnDevicesChosen(
 HidConnectFunction::HidConnectFunction() : connection_manager_(nullptr) {
 }
 
-HidConnectFunction::~HidConnectFunction() {}
+HidConnectFunction::~HidConnectFunction() = default;
 
 ExtensionFunction::ResponseAction HidConnectFunction::Run() {
   std::unique_ptr<api::hid::Connect::Params> parameters =
@@ -188,9 +188,9 @@ void HidConnectFunction::OnConnectComplete(
   Respond(OneArgument(PopulateHidConnection(connection_id)));
 }
 
-HidDisconnectFunction::HidDisconnectFunction() {}
+HidDisconnectFunction::HidDisconnectFunction() = default;
 
-HidDisconnectFunction::~HidDisconnectFunction() {}
+HidDisconnectFunction::~HidDisconnectFunction() = default;
 
 ExtensionFunction::ResponseAction HidDisconnectFunction::Run() {
   std::unique_ptr<api::hid::Disconnect::Params> parameters =
@@ -212,11 +212,9 @@ ExtensionFunction::ResponseAction HidDisconnectFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-HidConnectionIoFunction::HidConnectionIoFunction() {
-}
+HidConnectionIoFunction::HidConnectionIoFunction() = default;
 
-HidConnectionIoFunction::~HidConnectionIoFunction() {
-}
+HidConnectionIoFunction::~HidConnectionIoFunction() = default;
 
 ExtensionFunction::ResponseAction HidConnectionIoFunction::Run() {
   EXTENSION_FUNCTION_VALIDATE(ReadParameters());
@@ -235,9 +233,9 @@ ExtensionFunction::ResponseAction HidConnectionIoFunction::Run() {
   return RespondLater();
 }
 
-HidReceiveFunction::HidReceiveFunction() {}
+HidReceiveFunction::HidReceiveFunction() = default;
 
-HidReceiveFunction::~HidReceiveFunction() {}
+HidReceiveFunction::~HidReceiveFunction() = default;
 
 bool HidReceiveFunction::ReadParameters() {
   parameters_ = hid::Receive::Params::Create(*args_);
@@ -268,9 +266,9 @@ void HidReceiveFunction::OnFinished(
   }
 }
 
-HidSendFunction::HidSendFunction() {}
+HidSendFunction::HidSendFunction() = default;
 
-HidSendFunction::~HidSendFunction() {}
+HidSendFunction::~HidSendFunction() = default;
 
 bool HidSendFunction::ReadParameters() {
   parameters_ = hid::Send::Params::Create(*args_);
@@ -298,9 +296,9 @@ void HidSendFunction::OnFinished(bool success) {
   }
 }
 
-HidReceiveFeatureReportFunction::HidReceiveFeatureReportFunction() {}
+HidReceiveFeatureReportFunction::HidReceiveFeatureReportFunction() = default;
 
-HidReceiveFeatureReportFunction::~HidReceiveFeatureReportFunction() {}
+HidReceiveFeatureReportFunction::~HidReceiveFeatureReportFunction() = default;
 
 bool HidReceiveFeatureReportFunction::ReadParameters() {
   parameters_ = hid::ReceiveFeatureReport::Params::Create(*args_);
@@ -331,9 +329,9 @@ void HidReceiveFeatureReportFunction::OnFinished(
   }
 }
 
-HidSendFeatureReportFunction::HidSendFeatureReportFunction() {}
+HidSendFeatureReportFunction::HidSendFeatureReportFunction() = default;
 
-HidSendFeatureReportFunction::~HidSendFeatureReportFunction() {}
+HidSendFeatureReportFunction::~HidSendFeatureReportFunction() = default;
 
 bool HidSendFeatureReportFunction::ReadParameters() {
   parameters_ = hid::SendFeatureReport::Params::Create(*args_);

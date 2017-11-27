@@ -55,7 +55,7 @@ class MockImageSkiaSource : public gfx::ImageSkiaSource {
   explicit MockImageSkiaSource(const gfx::ImageSkia& image)
       : image_(image) {
   }
-  ~MockImageSkiaSource() override {}
+  ~MockImageSkiaSource() override = default;
 
   gfx::ImageSkiaRep GetImageForScale(float scale) override {
     return image_.GetRepresentation(scale);
@@ -73,7 +73,7 @@ class ExtensionIconImageTest : public ExtensionsTest,
         image_loaded_count_(0),
         quit_in_image_loaded_(false) {}
 
-  ~ExtensionIconImageTest() override {}
+  ~ExtensionIconImageTest() override = default;
 
   void WaitForImageLoad() {
     quit_in_image_loaded_ = true;

@@ -59,7 +59,7 @@ class BlankImageSource : public gfx::CanvasImageSource {
   explicit BlankImageSource(const gfx::Size& size_in_dip)
       : CanvasImageSource(size_in_dip, /*is_opaque =*/ false) {
   }
-  ~BlankImageSource() override {}
+  ~BlankImageSource() override = default;
 
  private:
   // gfx::CanvasImageSource overrides:
@@ -104,8 +104,7 @@ IconImage::Source::Source(IconImage* host, const gfx::Size& size_in_dip)
       blank_image_(std::make_unique<BlankImageSource>(size_in_dip),
                    size_in_dip) {}
 
-IconImage::Source::~Source() {
-}
+IconImage::Source::~Source() = default;
 
 void IconImage::Source::ResetHost() {
   host_ = NULL;

@@ -68,8 +68,7 @@ PermissionsData::PermissionsData(const Extension* extension)
   withheld_permissions_unsafe_.reset(new PermissionSet());
 }
 
-PermissionsData::~PermissionsData() {
-}
+PermissionsData::~PermissionsData() = default;
 
 // static
 void PermissionsData::SetPolicyDelegate(PolicyDelegate* delegate) {

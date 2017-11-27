@@ -48,7 +48,7 @@ class ShellDesktopControllerAuraTest : public ShellTestBaseAura {
 #endif
       {
   }
-  ~ShellDesktopControllerAuraTest() override {}
+  ~ShellDesktopControllerAuraTest() override = default;
 
   void SetUp() override {
 #if defined(OS_CHROMEOS)

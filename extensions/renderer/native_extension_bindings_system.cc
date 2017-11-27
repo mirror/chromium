@@ -78,7 +78,7 @@ struct BindingsSystemPerContextData : public base::SupportsUserData::Data {
   BindingsSystemPerContextData(
       base::WeakPtr<NativeExtensionBindingsSystem> bindings_system)
       : bindings_system(bindings_system) {}
-  ~BindingsSystemPerContextData() override {}
+  ~BindingsSystemPerContextData() override = default;
 
   v8::Global<v8::Object> api_object;
   v8::Global<v8::Object> internal_apis;
@@ -419,7 +419,7 @@ NativeExtensionBindingsSystem::NativeExtensionBindingsSystem(
       ->SetDelegate(std::make_unique<DeclarativeContentHooksDelegate>());
 }
 
-NativeExtensionBindingsSystem::~NativeExtensionBindingsSystem() {}
+NativeExtensionBindingsSystem::~NativeExtensionBindingsSystem() = default;
 
 void NativeExtensionBindingsSystem::DidCreateScriptContext(
     ScriptContext* context) {

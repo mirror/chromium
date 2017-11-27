@@ -28,6 +28,6 @@ NetworkingCastPrivateDelegate::Credentials::Credentials(
       {device_ssid, device_serial, device_bssid, public_key, nonce}, ",");
 }
 
-NetworkingCastPrivateDelegate::Credentials::~Credentials() {}
+NetworkingCastPrivateDelegate::Credentials::~Credentials() = default;
 
 }  // namespace extensions

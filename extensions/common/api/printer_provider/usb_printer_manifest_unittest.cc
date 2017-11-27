@@ -10,8 +10,8 @@ namespace extensions {
 
 class UsbPrinterManifestTest : public ManifestTest {
  public:
-  UsbPrinterManifestTest() {}
-  ~UsbPrinterManifestTest() override {}
+  UsbPrinterManifestTest() = default;
+  ~UsbPrinterManifestTest() override = default;
 };
 
 TEST_F(UsbPrinterManifestTest, Filters) {

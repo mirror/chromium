@@ -39,7 +39,7 @@ class MockScreen : public Screen {
       displays_.push_back(display);
     }
   }
-  ~MockScreen() override {}
+  ~MockScreen() override = default;
 
  protected:
   // Overridden from display::Screen:
@@ -78,9 +78,9 @@ class MockScreen : public Screen {
 
 class MockDisplayInfoProvider : public DisplayInfoProvider {
  public:
-  MockDisplayInfoProvider() {}
+  MockDisplayInfoProvider() = default;
 
-  ~MockDisplayInfoProvider() override {}
+  ~MockDisplayInfoProvider() override = default;
 
   bool SetInfo(const std::string& display_id,
                const api::system_display::DisplayProperties& params,
@@ -200,7 +200,7 @@ class SystemDisplayApiTest : public ShellApiTest {
   SystemDisplayApiTest()
       : provider_(new MockDisplayInfoProvider), screen_(new MockScreen) {}
 
-  ~SystemDisplayApiTest() override {}
+  ~SystemDisplayApiTest() override = default;
 
   void SetUpOnMainThread() override {
     ShellApiTest::SetUpOnMainThread();

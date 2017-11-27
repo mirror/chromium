@@ -37,7 +37,7 @@ AppWindowGeometryCache::AppWindowGeometryCache(content::BrowserContext* context,
   extension_registry_observer_.Add(ExtensionRegistry::Get(context));
 }
 
-AppWindowGeometryCache::~AppWindowGeometryCache() {}
+AppWindowGeometryCache::~AppWindowGeometryCache() = default;
 
 // static
 AppWindowGeometryCache* AppWindowGeometryCache::Get(
@@ -185,7 +185,7 @@ void AppWindowGeometryCache::Shutdown() { SyncToStorage(); }
 AppWindowGeometryCache::WindowData::WindowData()
     : window_state(ui::SHOW_STATE_DEFAULT) {}
 
-AppWindowGeometryCache::WindowData::~WindowData() {}
+AppWindowGeometryCache::WindowData::~WindowData() = default;
 
 void AppWindowGeometryCache::OnExtensionLoaded(
     content::BrowserContext* browser_context,
@@ -281,7 +281,7 @@ AppWindowGeometryCache::Factory::Factory()
   DependsOn(ExtensionPrefsFactory::GetInstance());
 }
 
-AppWindowGeometryCache::Factory::~Factory() {}
+AppWindowGeometryCache::Factory::~Factory() = default;
 
 KeyedService* AppWindowGeometryCache::Factory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

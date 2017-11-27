@@ -64,7 +64,7 @@ void GetServiceWorkerInfoOnIO(
 ServiceWorkerTaskQueue::ServiceWorkerTaskQueue(
     content::BrowserContext* browser_context) {}
 
-ServiceWorkerTaskQueue::~ServiceWorkerTaskQueue() {}
+ServiceWorkerTaskQueue::~ServiceWorkerTaskQueue() = default;
 
 // static
 ServiceWorkerTaskQueue* ServiceWorkerTaskQueue::Get(

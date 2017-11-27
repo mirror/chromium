@@ -9,10 +9,8 @@ namespace extensions {
 // static
 bool ExtensionInstallUI::disable_failure_ui_for_tests_ = false;
 
-ExtensionInstallUI::ExtensionInstallUI() {
-}
+ExtensionInstallUI::ExtensionInstallUI() = default;
 
-ExtensionInstallUI::~ExtensionInstallUI() {
-}
+ExtensionInstallUI::~ExtensionInstallUI() = default;
 
 }  // namespace extensions

@@ -10,11 +10,9 @@ namespace extensions {
 
 using api::system_cpu::CpuInfo;
 
-SystemCpuGetInfoFunction::SystemCpuGetInfoFunction() {
-}
+SystemCpuGetInfoFunction::SystemCpuGetInfoFunction() = default;
 
-SystemCpuGetInfoFunction::~SystemCpuGetInfoFunction() {
-}
+SystemCpuGetInfoFunction::~SystemCpuGetInfoFunction() = default;
 
 bool SystemCpuGetInfoFunction::RunAsync() {
   CpuInfoProvider::Get()->StartQueryInfo(

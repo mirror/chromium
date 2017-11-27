@@ -49,8 +49,8 @@ int ToTestWindowId(int render_process_id, int frame_routing_id) {
 
 class TestExtensionApiFrameIdMap : public ExtensionApiFrameIdMap {
  public:
-  TestExtensionApiFrameIdMap() {}
-  ~TestExtensionApiFrameIdMap() override {}
+  TestExtensionApiFrameIdMap() = default;
+  ~TestExtensionApiFrameIdMap() override = default;
 
   int GetInternalSize() { return frame_data_map_.size(); }
   int GetInternalCallbackCount() {

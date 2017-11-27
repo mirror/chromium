@@ -86,8 +86,8 @@ class ContentHashFetcherWaiter {
 // Used in setting up the behavior of our ContentHashFetcher.
 class MockDelegate : public ContentVerifierDelegate {
  public:
-  MockDelegate() {}
-  ~MockDelegate() override {}
+  MockDelegate() = default;
+  ~MockDelegate() override = default;
 
   ContentVerifierDelegate::Mode ShouldBeVerified(
       const Extension& extension) override {
@@ -135,7 +135,7 @@ class ContentHashFetcherTest : public ExtensionsTest {
         content::BrowserThread::GetTaskRunnerForThread(
             content::BrowserThread::IO));
   }
-  ~ContentHashFetcherTest() override {}
+  ~ContentHashFetcherTest() override = default;
 
   net::URLRequestContextGetter* request_context() {
     return request_context_.get();

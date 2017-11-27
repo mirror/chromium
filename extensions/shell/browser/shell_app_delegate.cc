@@ -11,11 +11,9 @@
 
 namespace extensions {
 
-ShellAppDelegate::ShellAppDelegate() {
-}
+ShellAppDelegate::ShellAppDelegate() = default;
 
-ShellAppDelegate::~ShellAppDelegate() {
-}
+ShellAppDelegate::~ShellAppDelegate() = default;
 
 void ShellAppDelegate::InitWebContents(content::WebContents* web_contents) {
   ShellExtensionWebContentsObserver::CreateForWebContents(web_contents);

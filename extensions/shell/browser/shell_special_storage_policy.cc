@@ -6,11 +6,9 @@
 
 namespace extensions {
 
-ShellSpecialStoragePolicy::ShellSpecialStoragePolicy() {
-}
+ShellSpecialStoragePolicy::ShellSpecialStoragePolicy() = default;
 
-ShellSpecialStoragePolicy::~ShellSpecialStoragePolicy() {
-}
+ShellSpecialStoragePolicy::~ShellSpecialStoragePolicy() = default;
 
 bool ShellSpecialStoragePolicy::IsStorageProtected(const GURL& origin) {
   return true;

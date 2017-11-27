@@ -405,7 +405,7 @@ class CSPEnforcer {
               const SecureDirectiveValueFunction& secure_function)
       : show_missing_csp_warnings_(show_missing_csp_warnings),
         secure_function_(secure_function) {}
-  virtual ~CSPEnforcer() {}
+  virtual ~CSPEnforcer() = default;
 
   // Returns the enforced CSP.
   // Emits warnings in |warnings| for insecure directive values. If

@@ -47,10 +47,10 @@ bool IsSupportedVerb(const std::string& verb) {
 FileHandlerInfo::FileHandlerInfo()
     : include_directories(false), verb(file_handler_verbs::kOpenWith) {}
 FileHandlerInfo::FileHandlerInfo(const FileHandlerInfo& other) = default;
-FileHandlerInfo::~FileHandlerInfo() {}
+FileHandlerInfo::~FileHandlerInfo() = default;
 
-FileHandlers::FileHandlers() {}
-FileHandlers::~FileHandlers() {}
+FileHandlers::FileHandlers() = default;
+FileHandlers::~FileHandlers() = default;
 
 // static
 const FileHandlersInfo* FileHandlers::GetFileHandlers(
@@ -60,11 +60,9 @@ const FileHandlersInfo* FileHandlers::GetFileHandlers(
   return info ? &info->file_handlers : NULL;
 }
 
-FileHandlersParser::FileHandlersParser() {
-}
+FileHandlersParser::FileHandlersParser() = default;
 
-FileHandlersParser::~FileHandlersParser() {
-}
+FileHandlersParser::~FileHandlersParser() = default;
 
 bool LoadFileHandler(const std::string& handler_id,
                      const base::DictionaryValue& handler_info,

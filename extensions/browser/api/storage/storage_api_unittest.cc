@@ -48,8 +48,8 @@ std::unique_ptr<KeyedService> BuildEventRouter(
 
 class StorageApiUnittest : public ApiUnitTest {
  public:
-  StorageApiUnittest() {}
-  ~StorageApiUnittest() override {}
+  StorageApiUnittest() = default;
+  ~StorageApiUnittest() override = default;
 
  protected:
   // Runs the storage.set() API function with local storage.

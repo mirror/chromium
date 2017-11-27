@@ -61,8 +61,8 @@ const char kCellularName[] = "cellular";
 
 class NetworkingPrivateApiTest : public ApiUnitTest {
  public:
-  NetworkingPrivateApiTest() {}
-  ~NetworkingPrivateApiTest() override {}
+  NetworkingPrivateApiTest() = default;
+  ~NetworkingPrivateApiTest() override = default;
 
   void SetUp() override {
     ApiUnitTest::SetUp();

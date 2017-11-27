@@ -404,11 +404,9 @@ ExtensionFunction::ResponseAction ManagementLaunchAppFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-ManagementSetEnabledFunction::ManagementSetEnabledFunction() {
-}
+ManagementSetEnabledFunction::ManagementSetEnabledFunction() = default;
 
-ManagementSetEnabledFunction::~ManagementSetEnabledFunction() {
-}
+ManagementSetEnabledFunction::~ManagementSetEnabledFunction() = default;
 
 ExtensionFunction::ResponseAction ManagementSetEnabledFunction::Run() {
   std::unique_ptr<management::SetEnabled::Params> params(
@@ -496,11 +494,9 @@ void ManagementSetEnabledFunction::OnRequirementsChecked(
   }
 }
 
-ManagementUninstallFunctionBase::ManagementUninstallFunctionBase() {
-}
+ManagementUninstallFunctionBase::ManagementUninstallFunctionBase() = default;
 
-ManagementUninstallFunctionBase::~ManagementUninstallFunctionBase() {
-}
+ManagementUninstallFunctionBase::~ManagementUninstallFunctionBase() = default;
 
 ExtensionFunction::ResponseAction ManagementUninstallFunctionBase::Uninstall(
     const std::string& target_extension_id,
@@ -589,11 +585,9 @@ void ManagementUninstallFunctionBase::UninstallExtension() {
   Finish(success, error);
 }
 
-ManagementUninstallFunction::ManagementUninstallFunction() {
-}
+ManagementUninstallFunction::ManagementUninstallFunction() = default;
 
-ManagementUninstallFunction::~ManagementUninstallFunction() {
-}
+ManagementUninstallFunction::~ManagementUninstallFunction() = default;
 
 ExtensionFunction::ResponseAction ManagementUninstallFunction::Run() {
   std::unique_ptr<management::Uninstall::Params> params(
@@ -606,11 +600,9 @@ ExtensionFunction::ResponseAction ManagementUninstallFunction::Run() {
   return Uninstall(params->id, show_confirm_dialog);
 }
 
-ManagementUninstallSelfFunction::ManagementUninstallSelfFunction() {
-}
+ManagementUninstallSelfFunction::ManagementUninstallSelfFunction() = default;
 
-ManagementUninstallSelfFunction::~ManagementUninstallSelfFunction() {
-}
+ManagementUninstallSelfFunction::~ManagementUninstallSelfFunction() = default;
 
 ExtensionFunction::ResponseAction ManagementUninstallSelfFunction::Run() {
   std::unique_ptr<management::UninstallSelf::Params> params(
@@ -624,11 +616,11 @@ ExtensionFunction::ResponseAction ManagementUninstallSelfFunction::Run() {
   return Uninstall(extension_->id(), show_confirm_dialog);
 }
 
-ManagementCreateAppShortcutFunction::ManagementCreateAppShortcutFunction() {
-}
+ManagementCreateAppShortcutFunction::ManagementCreateAppShortcutFunction() =
+    default;
 
-ManagementCreateAppShortcutFunction::~ManagementCreateAppShortcutFunction() {
-}
+ManagementCreateAppShortcutFunction::~ManagementCreateAppShortcutFunction() =
+    default;
 
 // static
 void ManagementCreateAppShortcutFunction::SetAutoConfirmForTest(
@@ -739,11 +731,11 @@ ExtensionFunction::ResponseAction ManagementSetLaunchTypeFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-ManagementGenerateAppForLinkFunction::ManagementGenerateAppForLinkFunction() {
-}
+ManagementGenerateAppForLinkFunction::ManagementGenerateAppForLinkFunction() =
+    default;
 
-ManagementGenerateAppForLinkFunction::~ManagementGenerateAppForLinkFunction() {
-}
+ManagementGenerateAppForLinkFunction::~ManagementGenerateAppForLinkFunction() =
+    default;
 
 void ManagementGenerateAppForLinkFunction::FinishCreateBookmarkApp(
     const Extension* extension,
@@ -792,8 +784,7 @@ ManagementEventRouter::ManagementEventRouter(content::BrowserContext* context)
   extension_registry_observer_.Add(ExtensionRegistry::Get(browser_context_));
 }
 
-ManagementEventRouter::~ManagementEventRouter() {
-}
+ManagementEventRouter::~ManagementEventRouter() = default;
 
 void ManagementEventRouter::OnExtensionLoaded(
     content::BrowserContext* browser_context,
@@ -854,8 +845,7 @@ ManagementAPI::ManagementAPI(content::BrowserContext* context)
   event_router->RegisterObserver(this, management::OnDisabled::kEventName);
 }
 
-ManagementAPI::~ManagementAPI() {
-}
+ManagementAPI::~ManagementAPI() = default;
 
 void ManagementAPI::Shutdown() {
   EventRouter::Get(browser_context_)->UnregisterObserver(this);

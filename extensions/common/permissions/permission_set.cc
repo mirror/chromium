@@ -46,7 +46,7 @@ PermissionSet::PermissionSet(
   InitEffectiveHosts();
 }
 
-PermissionSet::~PermissionSet() {}
+PermissionSet::~PermissionSet() = default;
 
 // static
 std::unique_ptr<const PermissionSet> PermissionSet::CreateDifference(
@@ -227,13 +227,7 @@ bool PermissionSet::HasEffectiveFullAccess() const {
   return false;
 }
 
-PermissionSet::PermissionSet(const PermissionSet& permissions)
-    : apis_(permissions.apis_),
-      manifest_permissions_(permissions.manifest_permissions_),
-      explicit_hosts_(permissions.explicit_hosts_),
-      scriptable_hosts_(permissions.scriptable_hosts_),
-      effective_hosts_(permissions.effective_hosts_),
-      should_warn_all_hosts_(permissions.should_warn_all_hosts_) {}
+PermissionSet::PermissionSet(const PermissionSet& permissions) = default;
 
 void PermissionSet::InitImplicitPermissions() {
   // The downloads permission implies the internal version as well.

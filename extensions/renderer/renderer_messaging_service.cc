@@ -36,7 +36,7 @@ namespace extensions {
 RendererMessagingService::RendererMessagingService(
     ExtensionBindingsSystem* bindings_system)
     : bindings_system_(bindings_system) {}
-RendererMessagingService::~RendererMessagingService() {}
+RendererMessagingService::~RendererMessagingService() = default;
 
 void RendererMessagingService::ValidateMessagePort(
     const ScriptContextSet& context_set,

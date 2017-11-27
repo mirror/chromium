@@ -106,8 +106,7 @@ PowerAPI::PowerAPI(content::BrowserContext* context)
   ExtensionRegistry::Get(browser_context_)->AddObserver(this);
 }
 
-PowerAPI::~PowerAPI() {
-}
+PowerAPI::~PowerAPI() = default;
 
 void PowerAPI::UpdateWakeLock() {
   if (extension_levels_.empty()) {

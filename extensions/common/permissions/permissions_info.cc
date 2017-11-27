@@ -71,8 +71,7 @@ PermissionsInfo::PermissionsInfo()
     : permission_count_(0) {
 }
 
-PermissionsInfo::~PermissionsInfo() {
-}
+PermissionsInfo::~PermissionsInfo() = default;
 
 void PermissionsInfo::RegisterAlias(const Alias& alias) {
   DCHECK(base::ContainsKey(name_map_, alias.real_name()));

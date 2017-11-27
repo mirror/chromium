@@ -160,7 +160,7 @@ ValueStoreTest::ValueStoreTest()
   dict123_->Set(key3_, val3_->CreateDeepCopy());
 }
 
-ValueStoreTest::~ValueStoreTest() {}
+ValueStoreTest::~ValueStoreTest() = default;
 
 void ValueStoreTest::SetUp() {
   ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());

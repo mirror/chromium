@@ -17,7 +17,7 @@ class SimpleAPIPermission : public APIPermission {
   explicit SimpleAPIPermission(const APIPermissionInfo* permission)
     : APIPermission(permission) { }
 
-  ~SimpleAPIPermission() override {}
+  ~SimpleAPIPermission() override = default;
 
   extensions::PermissionIDSet GetPermissions() const override {
     extensions::PermissionIDSet permissions;
@@ -87,7 +87,7 @@ APIPermission::APIPermission(const APIPermissionInfo* info)
   DCHECK(info_);
 }
 
-APIPermission::~APIPermission() { }
+APIPermission::~APIPermission() = default;
 
 APIPermission::ID APIPermission::id() const {
   return info()->id();
@@ -108,7 +108,7 @@ APIPermissionInfo::APIPermissionInfo(const APIPermissionInfo::InitInfo& info)
       api_permission_constructor_(info.constructor) {
 }
 
-APIPermissionInfo::~APIPermissionInfo() { }
+APIPermissionInfo::~APIPermissionInfo() = default;
 
 APIPermission* APIPermissionInfo::CreateAPIPermission() const {
   return api_permission_constructor_ ?

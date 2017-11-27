@@ -100,7 +100,7 @@ TestValueStoreFactory::TestValueStoreFactory() = default;
 TestValueStoreFactory::TestValueStoreFactory(const base::FilePath& db_path)
     : db_path_(db_path) {}
 
-TestValueStoreFactory::~TestValueStoreFactory() {}
+TestValueStoreFactory::~TestValueStoreFactory() = default;
 
 std::unique_ptr<ValueStore> TestValueStoreFactory::CreateRulesStore() {
   if (db_path_.empty())

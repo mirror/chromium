@@ -13,8 +13,7 @@ MockExtensionSystem::MockExtensionSystem(content::BrowserContext* context)
     : browser_context_(context) {
 }
 
-MockExtensionSystem::~MockExtensionSystem() {
-}
+MockExtensionSystem::~MockExtensionSystem() = default;
 
 void MockExtensionSystem::InitForRegularProfile(bool extensions_enabled) {
 }

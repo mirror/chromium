@@ -317,8 +317,7 @@ GetPrintersRequest::GetPrintersRequest(
     : callback_(callback) {
 }
 
-GetPrintersRequest::~GetPrintersRequest() {
-}
+GetPrintersRequest::~GetPrintersRequest() = default;
 
 void GetPrintersRequest::AddSource(const std::string& extension_id) {
   extensions_.insert(extension_id);
@@ -337,8 +336,7 @@ void GetPrintersRequest::ReportForExtension(const std::string& extension_id,
 PendingGetPrintersRequests::PendingGetPrintersRequests() : last_request_id_(0) {
 }
 
-PendingGetPrintersRequests::~PendingGetPrintersRequests() {
-}
+PendingGetPrintersRequests::~PendingGetPrintersRequests() = default;
 
 int PendingGetPrintersRequests::Add(
     const PrinterProviderAPI::GetPrintersCallback& callback) {
@@ -388,8 +386,7 @@ PendingGetCapabilityRequests::PendingGetCapabilityRequests()
     : last_request_id_(0) {
 }
 
-PendingGetCapabilityRequests::~PendingGetCapabilityRequests() {
-}
+PendingGetCapabilityRequests::~PendingGetCapabilityRequests() = default;
 
 int PendingGetCapabilityRequests::Add(
     PrinterProviderAPI::GetCapabilityCallback callback) {
@@ -420,8 +417,7 @@ void PendingGetCapabilityRequests::FailAll() {
 PendingPrintRequests::PendingPrintRequests() : last_request_id_(0) {
 }
 
-PendingPrintRequests::~PendingPrintRequests() {
-}
+PendingPrintRequests::~PendingPrintRequests() = default;
 
 int PendingPrintRequests::Add(const PrinterProviderPrintJob& job,
                               PrinterProviderAPI::PrintCallback callback) {
@@ -471,11 +467,9 @@ void PendingPrintRequests::FailAll() {
   pending_requests_.clear();
 }
 
-PendingUsbPrinterInfoRequests::PendingUsbPrinterInfoRequests() {
-}
+PendingUsbPrinterInfoRequests::PendingUsbPrinterInfoRequests() = default;
 
-PendingUsbPrinterInfoRequests::~PendingUsbPrinterInfoRequests() {
-}
+PendingUsbPrinterInfoRequests::~PendingUsbPrinterInfoRequests() = default;
 
 int PendingUsbPrinterInfoRequests::Add(
     PrinterProviderAPI::GetPrinterInfoCallback callback) {
@@ -513,8 +507,7 @@ PrinterProviderAPIImpl::PrinterProviderAPIImpl(
   extension_registry_observer_.Add(ExtensionRegistry::Get(browser_context));
 }
 
-PrinterProviderAPIImpl::~PrinterProviderAPIImpl() {
-}
+PrinterProviderAPIImpl::~PrinterProviderAPIImpl() = default;
 
 void PrinterProviderAPIImpl::DispatchGetPrintersRequested(
     const GetPrintersCallback& callback) {

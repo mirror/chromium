@@ -17,11 +17,9 @@ const char kFirstPage[] = "a";
 
 namespace extensions {
 
-NullAppSorting::NullAppSorting() {
-}
+NullAppSorting::NullAppSorting() = default;
 
-NullAppSorting::~NullAppSorting() {
-}
+NullAppSorting::~NullAppSorting() = default;
 
 void NullAppSorting::FixNTPOrdinalCollisions() {
 }

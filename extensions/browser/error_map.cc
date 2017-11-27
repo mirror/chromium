@@ -40,8 +40,7 @@ ErrorMap::Filter::Filter(const std::string& restrict_to_extension_id,
 
 ErrorMap::Filter::Filter(const Filter& other) = default;
 
-ErrorMap::Filter::~Filter() {
-}
+ErrorMap::Filter::~Filter() = default;
 
 ErrorMap::Filter ErrorMap::Filter::ErrorsForExtension(
     const std::string& extension_id) {
@@ -112,8 +111,7 @@ class ErrorMap::ExtensionEntry {
   DISALLOW_COPY_AND_ASSIGN(ExtensionEntry);
 };
 
-ErrorMap::ExtensionEntry::ExtensionEntry() {
-}
+ErrorMap::ExtensionEntry::ExtensionEntry() = default;
 
 ErrorMap::ExtensionEntry::~ExtensionEntry() {
   DeleteAllErrors();
@@ -165,8 +163,7 @@ const ExtensionError* ErrorMap::ExtensionEntry::AddError(
 
 ////////////////////////////////////////////////////////////////////////////////
 // ErrorMap
-ErrorMap::ErrorMap() {
-}
+ErrorMap::ErrorMap() = default;
 
 ErrorMap::~ErrorMap() {
   RemoveAllErrors();

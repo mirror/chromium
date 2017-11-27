@@ -11,7 +11,6 @@ ExtensionOptionsGuestDelegate::ExtensionOptionsGuestDelegate(
     : guest_(guest) {
 }
 
-ExtensionOptionsGuestDelegate::~ExtensionOptionsGuestDelegate() {
-}
+ExtensionOptionsGuestDelegate::~ExtensionOptionsGuestDelegate() = default;
 
 }  // namespace extensions

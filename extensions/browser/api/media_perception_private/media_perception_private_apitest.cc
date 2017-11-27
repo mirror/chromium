@@ -20,8 +20,8 @@ namespace extensions {
 
 class MediaPerceptionPrivateApiTest : public ShellApiTest {
  public:
-  MediaPerceptionPrivateApiTest() {}
-  ~MediaPerceptionPrivateApiTest() override {}
+  MediaPerceptionPrivateApiTest() = default;
+  ~MediaPerceptionPrivateApiTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ShellApiTest::SetUpCommandLine(command_line);

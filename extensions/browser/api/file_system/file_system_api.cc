@@ -943,9 +943,11 @@ ExtensionFunction::ResponseAction FileSystemGetVolumeListFunction::Run() {
 }
 #else
 
-FileSystemRequestFileSystemFunction::FileSystemRequestFileSystemFunction() {}
+FileSystemRequestFileSystemFunction::FileSystemRequestFileSystemFunction() =
+    default;
 
-FileSystemRequestFileSystemFunction::~FileSystemRequestFileSystemFunction() {}
+FileSystemRequestFileSystemFunction::~FileSystemRequestFileSystemFunction() =
+    default;
 
 ExtensionFunction::ResponseAction FileSystemRequestFileSystemFunction::Run() {
   using file_system::RequestFileSystem::Params;
@@ -984,9 +986,9 @@ void FileSystemRequestFileSystemFunction::OnError(const std::string& error) {
   Respond(Error(error));
 }
 
-FileSystemGetVolumeListFunction::FileSystemGetVolumeListFunction() {}
+FileSystemGetVolumeListFunction::FileSystemGetVolumeListFunction() = default;
 
-FileSystemGetVolumeListFunction::~FileSystemGetVolumeListFunction() {}
+FileSystemGetVolumeListFunction::~FileSystemGetVolumeListFunction() = default;
 
 ExtensionFunction::ResponseAction FileSystemGetVolumeListFunction::Run() {
   FileSystemDelegate* delegate =

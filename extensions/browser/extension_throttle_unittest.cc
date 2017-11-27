@@ -100,7 +100,7 @@ class MockExtensionThrottleEntry : public ExtensionThrottleEntry {
   }
 
  protected:
-  ~MockExtensionThrottleEntry() override {}
+  ~MockExtensionThrottleEntry() override = default;
 
  private:
   mutable TestTickClock fake_clock_;

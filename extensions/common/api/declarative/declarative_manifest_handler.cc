@@ -10,11 +10,9 @@
 
 namespace extensions {
 
-DeclarativeManifestHandler::DeclarativeManifestHandler() {
-}
+DeclarativeManifestHandler::DeclarativeManifestHandler() = default;
 
-DeclarativeManifestHandler::~DeclarativeManifestHandler() {
-}
+DeclarativeManifestHandler::~DeclarativeManifestHandler() = default;
 
 bool DeclarativeManifestHandler::Parse(Extension* extension,
                                        base::string16* error) {

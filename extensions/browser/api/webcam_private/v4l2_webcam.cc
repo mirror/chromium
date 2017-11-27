@@ -53,8 +53,7 @@ namespace extensions {
 V4L2Webcam::V4L2Webcam(const std::string& device_id) : device_id_(device_id) {
 }
 
-V4L2Webcam::~V4L2Webcam() {
-}
+V4L2Webcam::~V4L2Webcam() = default;
 
 bool V4L2Webcam::Open() {
   fd_.reset(HANDLE_EINTR(open(device_id_.c_str(), 0)));

@@ -80,7 +80,7 @@ UserScript::File::File(const base::FilePath& extension_root,
       url_(url) {
 }
 
-UserScript::File::File() {}
+UserScript::File::File() = default;
 
 // File content is not copied.
 UserScript::File::File(const File& other)
@@ -88,7 +88,7 @@ UserScript::File::File(const File& other)
       relative_path_(other.relative_path_),
       url_(other.url_) {}
 
-UserScript::File::~File() {}
+UserScript::File::~File() = default;
 
 UserScript::UserScript()
     : run_location_(DOCUMENT_IDLE),
@@ -99,8 +99,7 @@ UserScript::UserScript()
       match_about_blank_(false),
       incognito_enabled_(false) {}
 
-UserScript::~UserScript() {
-}
+UserScript::~UserScript() = default;
 
 // static.
 std::unique_ptr<UserScript> UserScript::CopyMetadataFrom(

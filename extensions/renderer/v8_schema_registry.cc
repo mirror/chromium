@@ -81,11 +81,9 @@ class SchemaRegistryNativeHandler : public ObjectBackedNativeHandler {
 
 }  // namespace
 
-V8SchemaRegistry::V8SchemaRegistry() {
-}
+V8SchemaRegistry::V8SchemaRegistry() = default;
 
-V8SchemaRegistry::~V8SchemaRegistry() {
-}
+V8SchemaRegistry::~V8SchemaRegistry() = default;
 
 std::unique_ptr<NativeHandler> V8SchemaRegistry::AsNativeHandler() {
   std::unique_ptr<ScriptContext> context(

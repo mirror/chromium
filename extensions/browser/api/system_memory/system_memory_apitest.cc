@@ -12,7 +12,7 @@ using api::system_memory::MemoryInfo;
 
 class MockMemoryInfoProviderImpl : public MemoryInfoProvider {
  public:
-  MockMemoryInfoProviderImpl() {}
+  MockMemoryInfoProviderImpl() = default;
 
   bool QueryInfo() override {
     info_.capacity = 4096;
@@ -21,13 +21,13 @@ class MockMemoryInfoProviderImpl : public MemoryInfoProvider {
   }
 
  private:
-  ~MockMemoryInfoProviderImpl() override {}
+  ~MockMemoryInfoProviderImpl() override = default;
 };
 
 class SystemMemoryApiTest : public ShellApiTest {
  public:
-  SystemMemoryApiTest() {}
-  ~SystemMemoryApiTest() override {}
+  SystemMemoryApiTest() = default;
+  ~SystemMemoryApiTest() override = default;
 
   void SetUpInProcessBrowserTestFixture() override {
     ShellApiTest::SetUpInProcessBrowserTestFixture();

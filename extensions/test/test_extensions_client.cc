@@ -33,8 +33,7 @@ TestExtensionsClient::TestExtensionsClient()
     : webstore_base_url_(extension_urls::kChromeWebstoreBaseURL),
       webstore_update_url_(extension_urls::kChromeWebstoreUpdateURL) {}
 
-TestExtensionsClient::~TestExtensionsClient() {
-}
+TestExtensionsClient::~TestExtensionsClient() = default;
 
 void TestExtensionsClient::AddBrowserImagePathsFilter(
     BrowserImagePathsFilter* filter) {

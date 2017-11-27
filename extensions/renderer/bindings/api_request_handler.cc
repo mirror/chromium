@@ -17,7 +17,7 @@
 
 namespace extensions {
 
-APIRequestHandler::Request::Request() {}
+APIRequestHandler::Request::Request() = default;
 APIRequestHandler::Request::~Request() = default;
 
 APIRequestHandler::PendingRequest::PendingRequest(
@@ -37,7 +37,7 @@ APIRequestHandler::PendingRequest::PendingRequest(
   }
 }
 
-APIRequestHandler::PendingRequest::~PendingRequest() {}
+APIRequestHandler::PendingRequest::~PendingRequest() = default;
 APIRequestHandler::PendingRequest::PendingRequest(PendingRequest&&) = default;
 APIRequestHandler::PendingRequest& APIRequestHandler::PendingRequest::operator=(
     PendingRequest&&) = default;
@@ -51,7 +51,7 @@ APIRequestHandler::APIRequestHandler(const SendRequestMethod& send_request,
       last_error_(std::move(last_error)),
       exception_handler_(exception_handler) {}
 
-APIRequestHandler::~APIRequestHandler() {}
+APIRequestHandler::~APIRequestHandler() = default;
 
 int APIRequestHandler::StartRequest(v8::Local<v8::Context> context,
                                     const std::string& method,

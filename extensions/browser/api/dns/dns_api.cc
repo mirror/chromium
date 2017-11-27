@@ -25,7 +25,7 @@ namespace extensions {
 DnsResolveFunction::DnsResolveFunction()
     : resource_context_(), response_(false), addresses_(new net::AddressList) {}
 
-DnsResolveFunction::~DnsResolveFunction() {}
+DnsResolveFunction::~DnsResolveFunction() = default;
 
 bool DnsResolveFunction::RunAsync() {
   std::unique_ptr<Resolve::Params> params(Resolve::Params::Create(*args_));

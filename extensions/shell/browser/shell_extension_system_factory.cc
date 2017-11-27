@@ -31,8 +31,7 @@ ShellExtensionSystemFactory::ShellExtensionSystemFactory()
   DependsOn(ExtensionRegistryFactory::GetInstance());
 }
 
-ShellExtensionSystemFactory::~ShellExtensionSystemFactory() {
-}
+ShellExtensionSystemFactory::~ShellExtensionSystemFactory() = default;
 
 KeyedService* ShellExtensionSystemFactory::BuildServiceInstanceFor(
     BrowserContext* context) const {

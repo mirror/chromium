@@ -41,7 +41,7 @@ ExtensionTestMessageListener::ExtensionTestMessageListener(bool will_reply)
                  content::NotificationService::AllSources());
 }
 
-ExtensionTestMessageListener::~ExtensionTestMessageListener() {}
+ExtensionTestMessageListener::~ExtensionTestMessageListener() = default;
 
 bool ExtensionTestMessageListener::WaitUntilSatisfied()  {
   if (satisfied_)

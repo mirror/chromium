@@ -40,8 +40,7 @@ ShellBrowserContext::ShellBrowserContext(
       browser_main_parts_(browser_main_parts) {
 }
 
-ShellBrowserContext::~ShellBrowserContext() {
-}
+ShellBrowserContext::~ShellBrowserContext() = default;
 
 content::BrowserPluginGuestManager* ShellBrowserContext::GetGuestManager() {
   return guest_view::GuestViewManager::FromBrowserContext(this);

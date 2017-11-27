@@ -26,7 +26,7 @@ class ArgumentSpecUnitTest : public gin::V8Test {
  protected:
   ArgumentSpecUnitTest()
       : type_refs_(APITypeReferenceMap::InitializeTypeCallback()) {}
-  ~ArgumentSpecUnitTest() override {}
+  ~ArgumentSpecUnitTest() override = default;
 
   enum class TestResult {
     PASS,

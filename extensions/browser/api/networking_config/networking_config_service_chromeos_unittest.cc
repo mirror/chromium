@@ -21,7 +21,7 @@ const char kHexSsidLower[] = "54657374535349445f5a5a5a5a";
 class MockEventDelegate : public NetworkingConfigService::EventDelegate {
  public:
   MockEventDelegate() : extension_registered_(false) {}
-  ~MockEventDelegate() override {}
+  ~MockEventDelegate() override = default;
 
   bool HasExtensionRegisteredForEvent(
       const std::string& extension_id) const override {
@@ -40,8 +40,8 @@ class MockEventDelegate : public NetworkingConfigService::EventDelegate {
 
 class NetworkingConfigServiceTest : public ApiUnitTest {
  public:
-  NetworkingConfigServiceTest() {}
-  ~NetworkingConfigServiceTest() override {}
+  NetworkingConfigServiceTest() = default;
+  ~NetworkingConfigServiceTest() override = default;
 
   void SetUp() override {
     ApiUnitTest::SetUp();

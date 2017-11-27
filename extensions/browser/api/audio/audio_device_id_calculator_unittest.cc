@@ -19,7 +19,7 @@ class TestExtensionsBrowserClientWithPrefService
   explicit TestExtensionsBrowserClientWithPrefService(
       content::BrowserContext* main_context)
       : TestExtensionsBrowserClient(main_context) {}
-  ~TestExtensionsBrowserClientWithPrefService() override {}
+  ~TestExtensionsBrowserClientWithPrefService() override = default;
 
   // ExtensionsBrowserClient override:
   PrefService* GetPrefServiceForContext(
@@ -38,7 +38,7 @@ class TestExtensionsBrowserClientWithPrefService
 class AudioDeviceIdCalculatorTest : public testing::Test {
  public:
   AudioDeviceIdCalculatorTest() : test_browser_client_(&browser_context_) {}
-  ~AudioDeviceIdCalculatorTest() override {}
+  ~AudioDeviceIdCalculatorTest() override = default;
 
   void SetUp() override {
     AudioAPI::RegisterUserPrefs(

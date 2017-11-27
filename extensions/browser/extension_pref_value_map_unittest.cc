@@ -75,8 +75,8 @@ class ExtensionPrefValueMapTest
 class ExtensionPrefValueMapObserverMock
     : public ExtensionPrefValueMap::Observer {
  public:
-  ExtensionPrefValueMapObserverMock() {}
-  virtual ~ExtensionPrefValueMapObserverMock() {}
+  ExtensionPrefValueMapObserverMock() = default;
+  virtual ~ExtensionPrefValueMapObserverMock() = default;
 
   MOCK_METHOD1(OnPrefValueChanged, void(const std::string&));
   MOCK_METHOD0(OnInitializationCompleted, void());

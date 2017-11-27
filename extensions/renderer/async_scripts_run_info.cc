@@ -13,7 +13,7 @@ namespace extensions {
 AsyncScriptsRunInfo::AsyncScriptsRunInfo(UserScript::RunLocation location)
     : run_location_(location) {}
 
-AsyncScriptsRunInfo::~AsyncScriptsRunInfo() {}
+AsyncScriptsRunInfo::~AsyncScriptsRunInfo() = default;
 
 void AsyncScriptsRunInfo::WillExecute(const base::TimeTicks& timestamp) {
   if (!last_completed_time_.is_null()) {

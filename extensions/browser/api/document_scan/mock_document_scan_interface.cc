@@ -8,11 +8,9 @@ namespace extensions {
 
 namespace api {
 
-MockDocumentScanInterface::MockDocumentScanInterface() {
-}
+MockDocumentScanInterface::MockDocumentScanInterface() = default;
 
-MockDocumentScanInterface::~MockDocumentScanInterface() {
-}
+MockDocumentScanInterface::~MockDocumentScanInterface() = default;
 
 }  // namespace api
 

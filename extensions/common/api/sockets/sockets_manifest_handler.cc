@@ -11,9 +11,9 @@
 
 namespace extensions {
 
-SocketsManifestHandler::SocketsManifestHandler() {}
+SocketsManifestHandler::SocketsManifestHandler() = default;
 
-SocketsManifestHandler::~SocketsManifestHandler() {}
+SocketsManifestHandler::~SocketsManifestHandler() = default;
 
 bool SocketsManifestHandler::Parse(Extension* extension,
                                    base::string16* error) {

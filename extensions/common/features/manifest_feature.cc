@@ -8,11 +8,9 @@
 
 namespace extensions {
 
-ManifestFeature::ManifestFeature() {
-}
+ManifestFeature::ManifestFeature() = default;
 
-ManifestFeature::~ManifestFeature() {
-}
+ManifestFeature::~ManifestFeature() = default;
 
 Feature::Availability ManifestFeature::IsAvailableToContext(
     const Extension* extension,

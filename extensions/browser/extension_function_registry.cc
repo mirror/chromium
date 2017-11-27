@@ -21,7 +21,7 @@ ExtensionFunctionRegistry::ExtensionFunctionRegistry() {
   }
 }
 
-ExtensionFunctionRegistry::~ExtensionFunctionRegistry() {}
+ExtensionFunctionRegistry::~ExtensionFunctionRegistry() = default;
 
 bool ExtensionFunctionRegistry::OverrideFunctionForTesting(
     const std::string& name,

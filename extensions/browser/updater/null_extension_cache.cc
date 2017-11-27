@@ -8,11 +8,9 @@
 
 namespace extensions {
 
-NullExtensionCache::NullExtensionCache() {
-}
+NullExtensionCache::NullExtensionCache() = default;
 
-NullExtensionCache::~NullExtensionCache() {
-}
+NullExtensionCache::~NullExtensionCache() = default;
 
 void NullExtensionCache::Start(const base::Closure& callback) {
   callback.Run();

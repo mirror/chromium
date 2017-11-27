@@ -81,8 +81,7 @@ gin::Handle<TestInterfaceProvider> TestInterfaceProvider::Create(
   return gin::CreateHandle(isolate, new TestInterfaceProvider());
 }
 
-TestInterfaceProvider::~TestInterfaceProvider() {
-}
+TestInterfaceProvider::~TestInterfaceProvider() = default;
 
 gin::ObjectTemplateBuilder TestInterfaceProvider::GetObjectTemplateBuilder(
     v8::Isolate* isolate) {
@@ -103,8 +102,7 @@ mojo::Handle TestInterfaceProvider::GetInterface(
   return pipe.handle1.release();
 }
 
-TestInterfaceProvider::TestInterfaceProvider() {
-}
+TestInterfaceProvider::TestInterfaceProvider() = default;
 
 // static
 void TestInterfaceProvider::IgnoreHandle(mojo::ScopedMessagePipeHandle handle) {
@@ -117,8 +115,7 @@ ApiTestEnvironment::ApiTestEnvironment(
   RegisterModules();
 }
 
-ApiTestEnvironment::~ApiTestEnvironment() {
-}
+ApiTestEnvironment::~ApiTestEnvironment() = default;
 
 void ApiTestEnvironment::RegisterModules() {
   v8_schema_registry_.reset(new V8SchemaRegistry);
@@ -241,11 +238,9 @@ void ApiTestEnvironment::RunPromisesAgain() {
   v8::MicrotasksScope::PerformCheckpoint(env()->isolate());
 }
 
-ApiTestBase::ApiTestBase() {
-}
+ApiTestBase::ApiTestBase() = default;
 
-ApiTestBase::~ApiTestBase() {
-}
+ApiTestBase::~ApiTestBase() = default;
 
 void ApiTestBase::SetUp() {
   ModuleSystemTest::SetUp();

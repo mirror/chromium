@@ -128,7 +128,7 @@ class FakeHidConnectionImpl : public device::mojom::HidConnection {
 
 class FakeHidManager : public device::mojom::HidManager {
  public:
-  FakeHidManager() {}
+  FakeHidManager() = default;
   ~FakeHidManager() override = default;
 
   void Bind(const std::string& interface_name,

@@ -31,7 +31,7 @@ class TestProcessManagerDelegate : public ProcessManagerDelegate {
   TestProcessManagerDelegate()
       : is_background_page_allowed_(true),
         defer_creating_startup_background_hosts_(false) {}
-  ~TestProcessManagerDelegate() override {}
+  ~TestProcessManagerDelegate() override = default;
 
   // ProcessManagerDelegate implementation.
   bool AreBackgroundPagesAllowedForContext(
@@ -56,9 +56,9 @@ class TestProcessManagerDelegate : public ProcessManagerDelegate {
 
 class ProcessManagerTest : public ExtensionsTest {
  public:
-  ProcessManagerTest() {}
+  ProcessManagerTest() = default;
 
-  ~ProcessManagerTest() override {}
+  ~ProcessManagerTest() override = default;
 
   void SetUp() override {
     ExtensionsTest::SetUp();

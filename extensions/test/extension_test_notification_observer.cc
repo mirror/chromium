@@ -36,7 +36,8 @@ const Extension* GetNonTerminatedExtensions(const std::string& id,
 
 ExtensionTestNotificationObserver::NotificationSet::NotificationSet()
     : process_manager_observer_(this) {}
-ExtensionTestNotificationObserver::NotificationSet::~NotificationSet() {}
+ExtensionTestNotificationObserver::NotificationSet::~NotificationSet() =
+    default;
 
 void ExtensionTestNotificationObserver::NotificationSet::Add(
     int type,
@@ -80,7 +81,8 @@ ExtensionTestNotificationObserver::ExtensionTestNotificationObserver(
     registry_observer_.Add(ExtensionRegistry::Get(context_));
 }
 
-ExtensionTestNotificationObserver::~ExtensionTestNotificationObserver() {}
+ExtensionTestNotificationObserver::~ExtensionTestNotificationObserver() =
+    default;
 
 void ExtensionTestNotificationObserver::WaitForNotification(
     int notification_type) {

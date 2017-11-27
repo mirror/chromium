@@ -52,8 +52,7 @@ ManifestTest::ManifestTest()
     : enable_apps_(true) {
 }
 
-ManifestTest::~ManifestTest() {
-}
+ManifestTest::~ManifestTest() = default;
 
 // Helper class that simplifies creating methods that take either a filename
 // to a manifest or the manifest itself.
@@ -86,8 +85,7 @@ ManifestTest::ManifestData::ManifestData(const ManifestData& m) {
   NOTREACHED();
 }
 
-ManifestTest::ManifestData::~ManifestData() {
-}
+ManifestTest::ManifestData::~ManifestData() = default;
 
 base::DictionaryValue* ManifestTest::ManifestData::GetManifest(
     const base::FilePath& test_data_dir,

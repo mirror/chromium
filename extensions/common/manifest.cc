@@ -132,8 +132,7 @@ Manifest::Manifest(Location location,
   CHECK_NE(type_, TYPE_UNKNOWN);
 }
 
-Manifest::~Manifest() {
-}
+Manifest::~Manifest() = default;
 
 void Manifest::SetExtensionId(const ExtensionId& id) {
   extension_id_ = id;

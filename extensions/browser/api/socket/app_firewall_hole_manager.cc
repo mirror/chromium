@@ -37,7 +37,7 @@ class AppFirewallHoleManagerFactory : public BrowserContextKeyedServiceFactory {
     DependsOn(AppWindowRegistry::Factory::GetInstance());
   }
 
-  ~AppFirewallHoleManagerFactory() override {}
+  ~AppFirewallHoleManagerFactory() override = default;
 
  private:
   // BrowserContextKeyedServiceFactory
@@ -109,7 +109,7 @@ AppFirewallHoleManager::AppFirewallHoleManager(BrowserContext* context)
   observer_.Add(AppWindowRegistry::Get(context));
 }
 
-AppFirewallHoleManager::~AppFirewallHoleManager() {}
+AppFirewallHoleManager::~AppFirewallHoleManager() = default;
 
 AppFirewallHoleManager* AppFirewallHoleManager::Get(BrowserContext* context) {
   return AppFirewallHoleManagerFactory::GetForBrowserContext(context, true);

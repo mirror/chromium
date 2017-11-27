@@ -51,7 +51,7 @@ BluetoothPrivateAPI::BluetoothPrivateAPI(content::BrowserContext* context)
       ->RegisterObserver(this, bt_private::OnPairing::kEventName);
 }
 
-BluetoothPrivateAPI::~BluetoothPrivateAPI() {}
+BluetoothPrivateAPI::~BluetoothPrivateAPI() = default;
 
 void BluetoothPrivateAPI::Shutdown() {
   EventRouter::Get(browser_context_)->UnregisterObserver(this);
@@ -138,10 +138,10 @@ bool ValidatePairingResponseOptions(
 ////////////////////////////////////////////////////////////////////////////////
 
 BluetoothPrivateSetAdapterStateFunction::
-    BluetoothPrivateSetAdapterStateFunction() {}
+    BluetoothPrivateSetAdapterStateFunction() = default;
 
 BluetoothPrivateSetAdapterStateFunction::
-    ~BluetoothPrivateSetAdapterStateFunction() {}
+    ~BluetoothPrivateSetAdapterStateFunction() = default;
 
 bool BluetoothPrivateSetAdapterStateFunction::DoWork(
     scoped_refptr<device::BluetoothAdapter> adapter) {
@@ -251,10 +251,10 @@ void BluetoothPrivateSetAdapterStateFunction::SendError() {
 ////////////////////////////////////////////////////////////////////////////////
 
 BluetoothPrivateSetPairingResponseFunction::
-    BluetoothPrivateSetPairingResponseFunction() {}
+    BluetoothPrivateSetPairingResponseFunction() = default;
 
 BluetoothPrivateSetPairingResponseFunction::
-    ~BluetoothPrivateSetPairingResponseFunction() {}
+    ~BluetoothPrivateSetPairingResponseFunction() = default;
 
 bool BluetoothPrivateSetPairingResponseFunction::DoWork(
     scoped_refptr<device::BluetoothAdapter> adapter) {
@@ -311,11 +311,11 @@ bool BluetoothPrivateSetPairingResponseFunction::DoWork(
 
 ////////////////////////////////////////////////////////////////////////////////
 
-BluetoothPrivateDisconnectAllFunction::BluetoothPrivateDisconnectAllFunction() {
-}
+BluetoothPrivateDisconnectAllFunction::BluetoothPrivateDisconnectAllFunction() =
+    default;
 
 BluetoothPrivateDisconnectAllFunction::
-    ~BluetoothPrivateDisconnectAllFunction() {}
+    ~BluetoothPrivateDisconnectAllFunction() = default;
 
 bool BluetoothPrivateDisconnectAllFunction::DoWork(
     scoped_refptr<device::BluetoothAdapter> adapter) {
@@ -366,9 +366,11 @@ void BluetoothPrivateDisconnectAllFunction::OnErrorCallback(
 
 ////////////////////////////////////////////////////////////////////////////////
 
-BluetoothPrivateForgetDeviceFunction::BluetoothPrivateForgetDeviceFunction() {}
+BluetoothPrivateForgetDeviceFunction::BluetoothPrivateForgetDeviceFunction() =
+    default;
 
-BluetoothPrivateForgetDeviceFunction::~BluetoothPrivateForgetDeviceFunction() {}
+BluetoothPrivateForgetDeviceFunction::~BluetoothPrivateForgetDeviceFunction() =
+    default;
 
 bool BluetoothPrivateForgetDeviceFunction::DoWork(
     scoped_refptr<device::BluetoothAdapter> adapter) {
@@ -476,9 +478,9 @@ void BluetoothPrivateSetDiscoveryFilterFunction::OnErrorCallback() {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-BluetoothPrivateConnectFunction::BluetoothPrivateConnectFunction() {}
+BluetoothPrivateConnectFunction::BluetoothPrivateConnectFunction() = default;
 
-BluetoothPrivateConnectFunction::~BluetoothPrivateConnectFunction() {}
+BluetoothPrivateConnectFunction::~BluetoothPrivateConnectFunction() = default;
 
 bool BluetoothPrivateConnectFunction::DoWork(
     scoped_refptr<device::BluetoothAdapter> adapter) {
@@ -557,9 +559,9 @@ void BluetoothPrivateConnectFunction::OnErrorCallback(
 
 ////////////////////////////////////////////////////////////////////////////////
 
-BluetoothPrivatePairFunction::BluetoothPrivatePairFunction() {}
+BluetoothPrivatePairFunction::BluetoothPrivatePairFunction() = default;
 
-BluetoothPrivatePairFunction::~BluetoothPrivatePairFunction() {}
+BluetoothPrivatePairFunction::~BluetoothPrivatePairFunction() = default;
 
 bool BluetoothPrivatePairFunction::DoWork(
     scoped_refptr<device::BluetoothAdapter> adapter) {

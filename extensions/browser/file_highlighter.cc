@@ -79,8 +79,7 @@ FileHighlighter::FileHighlighter(const std::string& contents)
     : contents_(contents), start_(0u), end_(contents_.size()) {
 }
 
-FileHighlighter::~FileHighlighter() {
-}
+FileHighlighter::~FileHighlighter() = default;
 
 std::string FileHighlighter::GetBeforeFeature() const {
   return contents_.substr(0, start_);
@@ -119,9 +118,7 @@ ManifestHighlighter::ManifestHighlighter(const std::string& manifest,
   Parse(key, specific);
 }
 
-ManifestHighlighter::~ManifestHighlighter() {
-}
-
+ManifestHighlighter::~ManifestHighlighter() = default;
 
 void ManifestHighlighter::Parse(const std::string& key,
                                 const std::string& specific) {
@@ -200,8 +197,7 @@ SourceHighlighter::SourceHighlighter(const std::string& contents,
   Parse(line_number);
 }
 
-SourceHighlighter::~SourceHighlighter() {
-}
+SourceHighlighter::~SourceHighlighter() = default;
 
 void SourceHighlighter::Parse(size_t line_number) {
   // If line 0 is requested, highlight nothing.

@@ -73,8 +73,7 @@ UsbEventRouter::UsbEventRouter(content::BrowserContext* browser_context)
   }
 }
 
-UsbEventRouter::~UsbEventRouter() {
-}
+UsbEventRouter::~UsbEventRouter() = default;
 
 void UsbEventRouter::Shutdown() {
   EventRouter* event_router = EventRouter::Get(browser_context_);

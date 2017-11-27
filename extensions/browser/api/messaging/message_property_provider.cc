@@ -26,7 +26,7 @@
 
 namespace extensions {
 
-MessagePropertyProvider::MessagePropertyProvider() {}
+MessagePropertyProvider::MessagePropertyProvider() = default;
 
 void MessagePropertyProvider::GetChannelID(
     content::BrowserContext* browser_context,

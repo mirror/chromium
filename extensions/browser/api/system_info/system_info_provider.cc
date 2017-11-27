@@ -19,8 +19,7 @@ SystemInfoProvider::SystemInfoProvider()
            /* default priority, */
            base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})) {}
 
-SystemInfoProvider::~SystemInfoProvider() {
-}
+SystemInfoProvider::~SystemInfoProvider() = default;
 
 void SystemInfoProvider::PrepareQueryOnUIThread() {
 }

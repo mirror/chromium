@@ -50,8 +50,7 @@ PrinterProviderInternalAPI::PrinterProviderInternalAPI(
     content::BrowserContext* browser_context) {
 }
 
-PrinterProviderInternalAPI::~PrinterProviderInternalAPI() {
-}
+PrinterProviderInternalAPI::~PrinterProviderInternalAPI() = default;
 
 void PrinterProviderInternalAPI::AddObserver(
     PrinterProviderInternalAPIObserver* observer) {
@@ -96,12 +95,10 @@ void PrinterProviderInternalAPI::NotifyGetUsbPrinterInfoResult(
 }
 
 PrinterProviderInternalReportPrintResultFunction::
-    PrinterProviderInternalReportPrintResultFunction() {
-}
+    PrinterProviderInternalReportPrintResultFunction() = default;
 
 PrinterProviderInternalReportPrintResultFunction::
-    ~PrinterProviderInternalReportPrintResultFunction() {
-}
+    ~PrinterProviderInternalReportPrintResultFunction() = default;
 
 ExtensionFunction::ResponseAction
 PrinterProviderInternalReportPrintResultFunction::Run() {
@@ -116,12 +113,10 @@ PrinterProviderInternalReportPrintResultFunction::Run() {
 }
 
 PrinterProviderInternalReportPrinterCapabilityFunction::
-    PrinterProviderInternalReportPrinterCapabilityFunction() {
-}
+    PrinterProviderInternalReportPrinterCapabilityFunction() = default;
 
 PrinterProviderInternalReportPrinterCapabilityFunction::
-    ~PrinterProviderInternalReportPrinterCapabilityFunction() {
-}
+    ~PrinterProviderInternalReportPrinterCapabilityFunction() = default;
 
 ExtensionFunction::ResponseAction
 PrinterProviderInternalReportPrinterCapabilityFunction::Run() {
@@ -144,12 +139,10 @@ PrinterProviderInternalReportPrinterCapabilityFunction::Run() {
 }
 
 PrinterProviderInternalReportPrintersFunction::
-    PrinterProviderInternalReportPrintersFunction() {
-}
+    PrinterProviderInternalReportPrintersFunction() = default;
 
 PrinterProviderInternalReportPrintersFunction::
-    ~PrinterProviderInternalReportPrintersFunction() {
-}
+    ~PrinterProviderInternalReportPrintersFunction() = default;
 
 ExtensionFunction::ResponseAction
 PrinterProviderInternalReportPrintersFunction::Run() {
@@ -174,12 +167,10 @@ PrinterProviderInternalReportPrintersFunction::Run() {
 }
 
 PrinterProviderInternalGetPrintDataFunction::
-    PrinterProviderInternalGetPrintDataFunction() {
-}
+    PrinterProviderInternalGetPrintDataFunction() = default;
 
 PrinterProviderInternalGetPrintDataFunction::
-    ~PrinterProviderInternalGetPrintDataFunction() {
-}
+    ~PrinterProviderInternalGetPrintDataFunction() = default;
 
 ExtensionFunction::ResponseAction
 PrinterProviderInternalGetPrintDataFunction::Run() {
@@ -244,12 +235,10 @@ void PrinterProviderInternalGetPrintDataFunction::OnBlob(
 }
 
 PrinterProviderInternalReportUsbPrinterInfoFunction::
-    PrinterProviderInternalReportUsbPrinterInfoFunction() {
-}
+    PrinterProviderInternalReportUsbPrinterInfoFunction() = default;
 
 PrinterProviderInternalReportUsbPrinterInfoFunction::
-    ~PrinterProviderInternalReportUsbPrinterInfoFunction() {
-}
+    ~PrinterProviderInternalReportUsbPrinterInfoFunction() = default;
 
 ExtensionFunction::ResponseAction
 PrinterProviderInternalReportUsbPrinterInfoFunction::Run() {

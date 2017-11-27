@@ -195,8 +195,7 @@ ExtensionUserScriptLoader::ExtensionUserScriptLoader(
   }
 }
 
-ExtensionUserScriptLoader::~ExtensionUserScriptLoader() {
-}
+ExtensionUserScriptLoader::~ExtensionUserScriptLoader() = default;
 
 void ExtensionUserScriptLoader::LoadScriptsForTest(
     UserScriptList* user_scripts) {

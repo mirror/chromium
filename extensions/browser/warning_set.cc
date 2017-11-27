@@ -48,22 +48,11 @@ Warning::Warning(
   CHECK_LE(message_parameters.size(), kMaxNumberOfParameters);
 }
 
-Warning::Warning(const Warning& other)
-  : type_(other.type_),
-    extension_id_(other.extension_id_),
-    message_id_(other.message_id_),
-    message_parameters_(other.message_parameters_) {}
+Warning::Warning(const Warning& other) = default;
 
-Warning::~Warning() {
-}
+Warning::~Warning() = default;
 
-Warning& Warning::operator=(const Warning& other) {
-  type_ = other.type_;
-  extension_id_ = other.extension_id_;
-  message_id_ = other.message_id_;
-  message_parameters_ = other.message_parameters_;
-  return *this;
-}
+Warning& Warning::operator=(const Warning& other) = default;
 
 // static
 Warning Warning::CreateNetworkDelayWarning(

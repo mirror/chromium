@@ -82,7 +82,7 @@ FeedbackPrivateAPI::FeedbackPrivateAPI(content::BrowserContext* context)
 #endif  // defined(OS_CHROMEOS)
 }
 
-FeedbackPrivateAPI::~FeedbackPrivateAPI() {}
+FeedbackPrivateAPI::~FeedbackPrivateAPI() = default;
 
 FeedbackService* FeedbackPrivateAPI::GetService() const {
   return service_.get();

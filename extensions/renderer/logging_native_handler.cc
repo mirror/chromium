@@ -27,7 +27,7 @@ LoggingNativeHandler::LoggingNativeHandler(ScriptContext* context)
       base::Bind(&LoggingNativeHandler::Warning, base::Unretained(this)));
 }
 
-LoggingNativeHandler::~LoggingNativeHandler() {}
+LoggingNativeHandler::~LoggingNativeHandler() = default;
 
 void LoggingNativeHandler::Check(
     const v8::FunctionCallbackInfo<v8::Value>& args) {

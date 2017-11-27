@@ -37,8 +37,8 @@ ExtensionsGuestViewManagerDelegate::ExtensionsGuestViewManagerDelegate(
     : context_(context) {
 }
 
-ExtensionsGuestViewManagerDelegate::~ExtensionsGuestViewManagerDelegate() {
-}
+ExtensionsGuestViewManagerDelegate::~ExtensionsGuestViewManagerDelegate() =
+    default;
 
 void ExtensionsGuestViewManagerDelegate::DispatchEvent(
     const std::string& event_name,

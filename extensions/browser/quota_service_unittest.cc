@@ -34,8 +34,8 @@ const TimeTicks k1MinuteAfterStart = kStartTime + TimeDelta::FromMinutes(1);
 
 class Mapper : public QuotaLimitHeuristic::BucketMapper {
  public:
-  Mapper() {}
-  ~Mapper() override {}
+  Mapper() = default;
+  ~Mapper() override = default;
   void GetBucketsForArgs(const base::ListValue* args,
                          BucketList* buckets) override {
     for (size_t i = 0; i < args->GetSize(); i++) {
@@ -67,7 +67,7 @@ class MockFunction : public ExtensionFunction {
   ResponseAction Run() override { return RespondLater(); }
 
  protected:
-  ~MockFunction() override {}
+  ~MockFunction() override = default;
 };
 
 class TimedLimitMockFunction : public MockFunction {
@@ -80,7 +80,7 @@ class TimedLimitMockFunction : public MockFunction {
   }
 
  private:
-  ~TimedLimitMockFunction() override {}
+  ~TimedLimitMockFunction() override = default;
 };
 
 class FrozenMockFunction : public MockFunction {
@@ -93,7 +93,7 @@ class FrozenMockFunction : public MockFunction {
   }
 
  private:
-  ~FrozenMockFunction() override {}
+  ~FrozenMockFunction() override = default;
 };
 }  // namespace
 

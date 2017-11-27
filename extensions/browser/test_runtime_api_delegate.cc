@@ -10,11 +10,9 @@ namespace extensions {
 
 using api::runtime::PlatformInfo;
 
-TestRuntimeAPIDelegate::TestRuntimeAPIDelegate() {
-}
+TestRuntimeAPIDelegate::TestRuntimeAPIDelegate() = default;
 
-TestRuntimeAPIDelegate::~TestRuntimeAPIDelegate() {
-}
+TestRuntimeAPIDelegate::~TestRuntimeAPIDelegate() = default;
 
 void TestRuntimeAPIDelegate::AddUpdateObserver(UpdateObserver* observer) {
 }

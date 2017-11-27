@@ -40,8 +40,7 @@ ProcessManagerFactory::ProcessManagerFactory()
   DependsOn(extensions::LazyBackgroundTaskQueueFactory::GetInstance());
 }
 
-ProcessManagerFactory::~ProcessManagerFactory() {
-}
+ProcessManagerFactory::~ProcessManagerFactory() = default;
 
 KeyedService* ProcessManagerFactory::BuildServiceInstanceFor(
     BrowserContext* context) const {

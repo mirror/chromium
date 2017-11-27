@@ -16,11 +16,9 @@ using api::system_storage::StorageUnitInfo;
 namespace EjectDevice = api::system_storage::EjectDevice;
 namespace GetAvailableCapacity = api::system_storage::GetAvailableCapacity;
 
-SystemStorageGetInfoFunction::SystemStorageGetInfoFunction() {
-}
+SystemStorageGetInfoFunction::SystemStorageGetInfoFunction() = default;
 
-SystemStorageGetInfoFunction::~SystemStorageGetInfoFunction() {
-}
+SystemStorageGetInfoFunction::~SystemStorageGetInfoFunction() = default;
 
 ExtensionFunction::ResponseAction SystemStorageGetInfoFunction::Run() {
   StorageInfoProvider::Get()->StartQueryInfo(base::Bind(
@@ -37,8 +35,7 @@ void SystemStorageGetInfoFunction::OnGetStorageInfoCompleted(bool success) {
   }
 }
 
-SystemStorageEjectDeviceFunction::~SystemStorageEjectDeviceFunction() {
-}
+SystemStorageEjectDeviceFunction::~SystemStorageEjectDeviceFunction() = default;
 
 ExtensionFunction::ResponseAction SystemStorageEjectDeviceFunction::Run() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -103,8 +100,7 @@ SystemStorageGetAvailableCapacityFunction::
                            base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN))) {}
 
 SystemStorageGetAvailableCapacityFunction::
-    ~SystemStorageGetAvailableCapacityFunction() {
-}
+    ~SystemStorageGetAvailableCapacityFunction() = default;
 
 ExtensionFunction::ResponseAction
 SystemStorageGetAvailableCapacityFunction::Run() {

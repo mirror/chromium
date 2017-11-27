@@ -25,8 +25,8 @@ namespace extensions {
 class NativeRendererMessagingServiceTest
     : public NativeExtensionBindingsSystemUnittest {
  public:
-  NativeRendererMessagingServiceTest() {}
-  ~NativeRendererMessagingServiceTest() override {}
+  NativeRendererMessagingServiceTest() = default;
+  ~NativeRendererMessagingServiceTest() override = default;
 
   // NativeExtensionBindingsSystemUnittest:
   void SetUp() override {

@@ -11,9 +11,9 @@
 
 namespace extensions {
 
-ManifestPermission::ManifestPermission() {}
+ManifestPermission::ManifestPermission() = default;
 
-ManifestPermission::~ManifestPermission() { }
+ManifestPermission::~ManifestPermission() = default;
 
 ManifestPermission* ManifestPermission::Clone() const {
   return Union(this);

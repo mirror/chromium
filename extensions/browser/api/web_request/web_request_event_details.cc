@@ -74,7 +74,7 @@ WebRequestEventDetails::WebRequestEventDetails(const net::URLRequest* request,
     initiator_ = request->initiator();
 }
 
-WebRequestEventDetails::~WebRequestEventDetails() {}
+WebRequestEventDetails::~WebRequestEventDetails() = default;
 
 void WebRequestEventDetails::SetRequestBody(const net::URLRequest* request) {
   if (!(extra_info_spec_ & ExtraInfoSpec::REQUEST_BODY))

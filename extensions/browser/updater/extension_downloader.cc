@@ -167,8 +167,7 @@ UpdateDetails::UpdateDetails(const std::string& id,
                              const base::Version& version)
     : id(id), version(version) {}
 
-UpdateDetails::~UpdateDetails() {
-}
+UpdateDetails::~UpdateDetails() = default;
 
 ExtensionDownloader::ExtensionFetch::ExtensionFetch()
     : url(), credentials(CREDENTIALS_NONE) {
@@ -189,8 +188,7 @@ ExtensionDownloader::ExtensionFetch::ExtensionFetch(
       oauth2_attempt_count(0) {
 }
 
-ExtensionDownloader::ExtensionFetch::~ExtensionFetch() {
-}
+ExtensionDownloader::ExtensionFetch::~ExtensionFetch() = default;
 
 ExtensionDownloader::ExtraParams::ExtraParams() : is_corrupt_reinstall(false) {}
 
@@ -212,8 +210,7 @@ ExtensionDownloader::ExtensionDownloader(
   DCHECK(request_context_.get());
 }
 
-ExtensionDownloader::~ExtensionDownloader() {
-}
+ExtensionDownloader::~ExtensionDownloader() = default;
 
 bool ExtensionDownloader::AddExtension(
     const Extension& extension,

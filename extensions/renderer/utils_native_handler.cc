@@ -17,7 +17,7 @@ UtilsNativeHandler::UtilsNativeHandler(ScriptContext* context)
       base::Bind(&UtilsNativeHandler::DeepCopy, base::Unretained(this)));
 }
 
-UtilsNativeHandler::~UtilsNativeHandler() {}
+UtilsNativeHandler::~UtilsNativeHandler() = default;
 
 void UtilsNativeHandler::DeepCopy(
     const v8::FunctionCallbackInfo<v8::Value>& args) {

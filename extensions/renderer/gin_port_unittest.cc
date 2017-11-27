@@ -33,8 +33,8 @@ void DoNothingOnEventListenersChanged(const std::string& event_name,
 // Stub delegate for testing.
 class TestPortDelegate : public GinPort::Delegate {
  public:
-  TestPortDelegate() {}
-  ~TestPortDelegate() override {}
+  TestPortDelegate() = default;
+  ~TestPortDelegate() override = default;
 
   void PostMessageToPort(v8::Local<v8::Context> context,
                          const PortId& port_id,
@@ -65,8 +65,8 @@ class TestPortDelegate : public GinPort::Delegate {
 
 class GinPortTest : public APIBindingTest {
  public:
-  GinPortTest() {}
-  ~GinPortTest() override {}
+  GinPortTest() = default;
+  ~GinPortTest() override = default;
 
   void SetUp() override {
     APIBindingTest::SetUp();

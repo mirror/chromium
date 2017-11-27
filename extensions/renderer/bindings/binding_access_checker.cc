@@ -12,7 +12,7 @@ namespace extensions {
 BindingAccessChecker::BindingAccessChecker(
     const AvailabilityCallback& is_available)
     : is_available_(is_available) {}
-BindingAccessChecker::~BindingAccessChecker() {}
+BindingAccessChecker::~BindingAccessChecker() = default;
 
 bool BindingAccessChecker::HasAccess(v8::Local<v8::Context> context,
                                      const std::string& full_name) const {

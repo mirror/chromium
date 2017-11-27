@@ -58,7 +58,7 @@ class BluetoothPrivateApiTest : public ExtensionApiTest {
         adapter_powered_(false),
         adapter_discoverable_(false) {}
 
-  ~BluetoothPrivateApiTest() override {}
+  ~BluetoothPrivateApiTest() override = default;
 
   void SetUpOnMainThread() override {
     ExtensionApiTest::SetUpOnMainThread();

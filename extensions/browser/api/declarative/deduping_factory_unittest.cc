@@ -32,7 +32,7 @@ class BaseClass : public base::RefCounted<BaseClass> {
 
  protected:
   friend class base::RefCounted<BaseClass>;
-  virtual ~BaseClass() {}
+  virtual ~BaseClass() = default;
 
  private:
   const Type type_;
@@ -51,7 +51,7 @@ class Foo : public BaseClass {
 
  private:
   friend class base::RefCounted<BaseClass>;
-  ~Foo() override {}
+  ~Foo() override = default;
 
   // Note that this class must be immutable.
   const int parameter_;

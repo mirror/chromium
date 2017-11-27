@@ -101,7 +101,7 @@ void DoNothingWithSilentRequest(
 
 }  // namespace
 
-APIBindingsSystemTest::APIBindingsSystemTest() {}
+APIBindingsSystemTest::APIBindingsSystemTest() = default;
 APIBindingsSystemTest::~APIBindingsSystemTest() = default;
 
 void APIBindingsSystemTest::SetUp() {

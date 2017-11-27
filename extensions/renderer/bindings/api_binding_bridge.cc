@@ -50,7 +50,7 @@ APIBindingBridge::APIBindingBridge(APIBindingHooks* hooks,
   DCHECK(result.IsJust() && result.FromJust());
 }
 
-APIBindingBridge::~APIBindingBridge() {}
+APIBindingBridge::~APIBindingBridge() = default;
 
 gin::ObjectTemplateBuilder APIBindingBridge::GetObjectTemplateBuilder(
     v8::Isolate* isolate) {

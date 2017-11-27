@@ -38,7 +38,7 @@ struct PendingRequest {
 RequestSender::RequestSender(IPCMessageSender* ipc_message_sender)
     : ipc_message_sender_(ipc_message_sender) {}
 
-RequestSender::~RequestSender() {}
+RequestSender::~RequestSender() = default;
 
 void RequestSender::InsertRequest(
     int request_id,

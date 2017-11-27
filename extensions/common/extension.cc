@@ -507,8 +507,7 @@ Extension::Extension(const base::FilePath& path,
   path_ = crx_file::id_util::MaybeNormalizePath(path);
 }
 
-Extension::~Extension() {
-}
+Extension::~Extension() = default;
 
 bool Extension::InitFromValue(int flags, base::string16* error) {
   DCHECK(error);
@@ -760,7 +759,7 @@ ExtensionInfo::ExtensionInfo(const base::DictionaryValue* manifest,
     extension_manifest.reset(manifest->DeepCopy());
 }
 
-ExtensionInfo::~ExtensionInfo() {}
+ExtensionInfo::~ExtensionInfo() = default;
 
 UpdatedExtensionPermissionsInfo::UpdatedExtensionPermissionsInfo(
     const Extension* extension,

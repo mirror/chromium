@@ -23,8 +23,7 @@ ScriptsRunInfo::ScriptsRunInfo(content::RenderFrame* render_frame,
       frame_url_(ScriptContext::GetDocumentLoaderURLForFrame(
           render_frame->GetWebFrame())) {}
 
-ScriptsRunInfo::~ScriptsRunInfo() {
-}
+ScriptsRunInfo::~ScriptsRunInfo() = default;
 
 void ScriptsRunInfo::LogRun(bool send_script_activity) {
   // Notify the browser if any extensions are now executing scripts.

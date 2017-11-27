@@ -19,8 +19,7 @@ AutomationApiHelper::AutomationApiHelper(content::RenderFrame* render_frame)
   DCHECK(render_frame->IsMainFrame());
 }
 
-AutomationApiHelper::~AutomationApiHelper() {
-}
+AutomationApiHelper::~AutomationApiHelper() = default;
 
 bool AutomationApiHelper::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;

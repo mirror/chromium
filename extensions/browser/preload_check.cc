@@ -11,7 +11,7 @@ namespace extensions {
 PreloadCheck::PreloadCheck(scoped_refptr<const Extension> extension)
     : extension_(extension) {}
 
-PreloadCheck::~PreloadCheck() {}
+PreloadCheck::~PreloadCheck() = default;
 
 base::string16 PreloadCheck::GetErrorMessage() const {
   return base::string16();

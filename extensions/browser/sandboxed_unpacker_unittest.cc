@@ -42,7 +42,7 @@ class MockSandboxedUnpackerClient : public SandboxedUnpackerClient {
   base::string16 unpack_err() const { return error_; }
 
  private:
-  ~MockSandboxedUnpackerClient() override {}
+  ~MockSandboxedUnpackerClient() override = default;
 
   void OnUnpackSuccess(
       const base::FilePath& temp_dir,

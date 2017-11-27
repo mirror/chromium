@@ -26,7 +26,7 @@ TestV8ExtensionConfiguration::TestV8ExtensionConfiguration()
   v8::RegisterExtension(safe_builtins_.get());
 }
 
-TestV8ExtensionConfiguration::~TestV8ExtensionConfiguration() {}
+TestV8ExtensionConfiguration::~TestV8ExtensionConfiguration() = default;
 
 // static
 v8::ExtensionConfiguration* TestV8ExtensionConfiguration::GetConfiguration() {

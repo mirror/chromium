@@ -25,7 +25,7 @@ BackgroundPageWatcher::BackgroundPageWatcher(ProcessManager* process_manager,
       is_waiting_for_open_(false),
       is_waiting_for_close_(false) {}
 
-BackgroundPageWatcher::~BackgroundPageWatcher() {}
+BackgroundPageWatcher::~BackgroundPageWatcher() = default;
 
 void BackgroundPageWatcher::WaitForOpen() {
   WaitForOpenState(true);
