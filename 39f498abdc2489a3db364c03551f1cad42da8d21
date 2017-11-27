@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e5c16e20_0ca4c224",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-27T21:09:51Z",
+      "side": 1,
+      "message": "Clarified.",
+      "parentUuid": "3f1479a1_fbc2471e",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2a16c36_4659de3c",
         "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
         "patchSetId": 10
@@ -62,6 +86,24 @@
       "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d46ca2_e9b4c647",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-27T21:09:51Z",
+      "side": 1,
+      "message": "Good suggestion, done.",
+      "parentUuid": "c2a16c36_4659de3c",
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +127,30 @@
       "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd25d46_ecee7bc9",
+        "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-27T21:09:51Z",
+      "side": 1,
+      "message": "libxml2 processes input text into valid UTF8 strings (regardless of the XML document\u0027s encoding):\nhttp://xmlsoft.org/encoding.html\nUpdated this comment.",
+      "parentUuid": "8eb289af_bf62992a",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +391,30 @@
     },
     {
       "key": {
+        "uuid": "eaa49ef2_9de4d234",
+        "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-27T21:09:51Z",
+      "side": 1,
+      "message": "Revisited that example, should be OK now.",
+      "parentUuid": "22d504ba_083f07d9",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 58,
+        "endChar": 56
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3fa4319_d204248e",
         "filename": "services/data_decoder/xml_parser_fuzzer.cc",
         "patchSetId": 10
@@ -345,6 +435,30 @@
       "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ffa3e0_a91ecc62",
+        "filename": "services/data_decoder/xml_parser_fuzzer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-27T21:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3fa4319_d204248e",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
