@@ -93,7 +93,7 @@ bool CanAccessNvidiaDeviceFile() {
 
 }  // namespace
 
-GpuInit::GpuInit() {}
+GpuInit::GpuInit() = default;
 
 GpuInit::~GpuInit() {
   gpu::StopForceDiscreteGPU();
