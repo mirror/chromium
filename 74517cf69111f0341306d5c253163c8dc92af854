@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d66ebf14_80796a9f",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:04:34Z",
+      "side": 1,
+      "message": "I don\u0027t think I am the right person to review this :(",
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6dc5e5_64127319",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:04:34Z",
+      "side": 1,
+      "message": "style: our coding style really insist in not having { } :(\n\n(here and other places)",
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba999159_518fd970",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:04:34Z",
+      "side": 1,
+      "message": "Would it be useful to add a method to check if the list is loaded? and/or if it is empty? (it could be loaded and empty, I guess?)",
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
