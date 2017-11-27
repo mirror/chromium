@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca27ed16_6580a033",
+        "filename": "chrome/browser/ui/aura/accessibility/ax_tree_source_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-27T22:02:50Z",
+      "side": 1,
+      "message": "nit: checking ROOT_WEB_AREA isn\u0027t needed here (that role is only\ngenerated from blink) - I can explain offline if that isn\u0027t\nclear.",
+      "revId": "f33a63505f2b6fe1e735b193130a049f9d54cfbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
