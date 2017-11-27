@@ -16,6 +16,24 @@
       "revId": "542cb0f38ffc91a06231897ab7f8242241a5eb8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d40eaa2_09841692",
+        "filename": "build/config/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1179484
+      },
+      "writtenOn": "2017-11-27T19:24:15Z",
+      "side": 1,
+      "message": "But ios_sdk.gni already exists. The purpose of putting it in a separate file is so that it can be imported on all platforms without the overhead of all the platform-specific stuff. \nOr do you mean move it to //build/config/ios_sdk.gni?",
+      "parentUuid": "7312fe06_68188caf",
+      "revId": "542cb0f38ffc91a06231897ab7f8242241a5eb8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
