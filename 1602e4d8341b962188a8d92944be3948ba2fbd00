@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8568d84_96cd598d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-27T19:03:15Z",
+      "side": 1,
+      "message": "I could not parse this sentence. What does \u0027page load\u0027 mean here? What does \u0027batched together\u0027 mean? What it the \u0027original load\u0027?\n\nDoes it mean that parse start of the prerender loader may arrive after FCP of the prerendered page? This indeed looks real. Thanks!",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 56
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f35bf3_8a3cd2a9",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-27T19:03:15Z",
+      "side": 1,
+      "message": "Is there a way we can hit this CHECK? I thought timing out during Wait() would timeout first.\n\nAfter writing the above I found that it is a simplified copy of the PageLoadMetricsWaiter. Thank you for not reusing it as a whole. Still would like to ask to simplify a little more.",
+      "range": {
+        "startLine": 234,
+        "startChar": 40,
+        "endLine": 234,
+        "endChar": 74
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d457e8_06ef6703",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-27T19:03:15Z",
+      "side": 1,
+      "message": "please add a comment:\n// MetricsWebContentsObserver::TestingObserver implementation.",
+      "range": {
+        "startLine": 236,
+        "startChar": 2,
+        "endLine": 236,
+        "endChar": 23
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea5fc3d_6ef580b7",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-27T19:03:15Z",
+      "side": 1,
+      "message": "It obviously Quit()s from RunLoop only after marking saw_metrics_ as true. I would not object too much to this, but it looks a bit too defensive to me, increasing precious line count. Up to you.",
+      "range": {
+        "startLine": 248,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 30
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed030a7d_db70d901",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-27T19:03:15Z",
+      "side": 1,
+      "message": "Would it be possible to default-construct run_loop_ like it is done in ChannelDestructionWatcher? Not having to care about run_loop_ being nullptr seems to buy some simplicity.",
+      "range": {
+        "startLine": 253,
+        "startChar": 4,
+        "endLine": 253,
+        "endChar": 18
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83b2204_70f6eba8",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-27T19:03:15Z",
+      "side": 1,
+      "message": "nit: prerender_loader.html",
+      "range": {
+        "startLine": 1166,
+        "startChar": 33,
+        "endLine": 1166,
+        "endChar": 53
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
