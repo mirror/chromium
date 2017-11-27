@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b250ee0b_c2804f58",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-27T11:02:13Z",
+      "side": 1,
+      "message": "tab",
+      "range": {
+        "startLine": 13,
+        "startChar": 57,
+        "endLine": 13,
+        "endChar": 61
+      },
+      "revId": "5b481984adacb543b3105bc0117aa4b7ae5bc89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba73ece_4db3b386",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-27T11:02:13Z",
+      "side": 1,
+      "message": "Nit: comment.",
+      "revId": "5b481984adacb543b3105bc0117aa4b7ae5bc89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "061a5f17_eb5f4882",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-27T11:02:13Z",
+      "side": 1,
+      "message": "Nit: comment.",
+      "revId": "5b481984adacb543b3105bc0117aa4b7ae5bc89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c329249f_602678a9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-27T11:02:13Z",
+      "side": 1,
+      "message": "Nit: comment.",
+      "revId": "5b481984adacb543b3105bc0117aa4b7ae5bc89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1ddc7e_8a2dc849",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-27T11:02:13Z",
+      "side": 1,
+      "message": "Maybe add the same comment as above, how the cell height is computed.",
+      "range": {
+        "startLine": 233,
+        "startChar": 75,
+        "endLine": 233,
+        "endChar": 0
+      },
+      "revId": "5b481984adacb543b3105bc0117aa4b7ae5bc89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
