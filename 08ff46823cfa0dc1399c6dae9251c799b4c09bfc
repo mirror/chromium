@@ -22,6 +22,30 @@
       "revId": "08ff46823cfa0dc1399c6dae9251c799b4c09bfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66baba2d_4731128e",
+        "filename": "chrome/browser/vr/service/vr_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-27T17:28:40Z",
+      "side": 1,
+      "message": "On further thought, it\u0027s not needed actually. As far as the VRDeviceManager is concerned, we should just ignore devices with VR_DEVICE_LAST_ID. I added a comment in the .cc file.",
+      "parentUuid": "6e1d19f6_98a4ef1b",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 25
+      },
+      "revId": "08ff46823cfa0dc1399c6dae9251c799b4c09bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
