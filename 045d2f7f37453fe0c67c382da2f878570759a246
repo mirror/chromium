@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5060015_a8ffe2a5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-common.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T22:38:28Z",
+      "side": 1,
+      "message": "I don\u0027t understand. Can you elaborate? Where do we have |offlineContext| global in our test framework?",
+      "parentUuid": "4ea65243_52b928a8",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8874626_36e727fb",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-common.js",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T22:02:11Z",
       "side": 1,
       "message": "Doesn\u0027t this return when windows.internal \u0026 window.internals.runtimeFlags.audioWorkletEnabled are true, independent of whether offlineContext.audioWorklet is the right instance?",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81912224_df9e3834",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-common.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T22:38:28Z",
+      "side": 1,
+      "message": "1. if |audioWorkletEnabled| is true, that means AudioWorklet is usable. We need this for the content shell. I am assuming that if this is true I don\u0027t need to check the validity of AudioWorklet.\n\n2. Otherwise, we need to look up the context object because this case means we\u0027re running this test in the actual browser.\n\nDoes it make sense?",
+      "parentUuid": "a8874626_36e727fb",
       "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bf317692_16b60cf8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T22:38:28Z",
+      "side": 1,
+      "message": "Or |OnGlobalScopeUpdate|. This sounds like an \"event handler\". I was following Worker/Worklet infra\u0027s convention of callback method names like \"DidSomething()\".",
+      "parentUuid": "7cac01ee_f8bca65b",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc343e4e_87255135",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-27T22:02:11Z",
       "side": 1,
       "message": "Would \"worklet_started_\" be more indicative of what\u0027s happened?",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a2eef8_a500bfd7",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T22:38:28Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "cc343e4e_87255135",
       "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e216be7a_e854b8d9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T22:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb148bda_61db6e3d",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
