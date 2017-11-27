@@ -427,7 +427,7 @@ class AllowAnyCertCTPolicyEnforcer : public CTPolicyEnforcer {
   AllowAnyCertCTPolicyEnforcer() {}
   ~AllowAnyCertCTPolicyEnforcer() override = default;
 
-  ct::CTPolicyCompliance DoesConformToCertPolicy(
+  ct::CTPolicyCompliance CheckCompliance(
       X509Certificate* cert,
       const SCTList& verified_scts,
       const NetLogWithSource& net_log) override {

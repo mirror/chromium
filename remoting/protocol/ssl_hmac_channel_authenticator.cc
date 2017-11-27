@@ -73,7 +73,7 @@ class IgnoresCTPolicyEnforcer : public net::CTPolicyEnforcer {
   IgnoresCTPolicyEnforcer() = default;
   ~IgnoresCTPolicyEnforcer() override = default;
 
-  net::ct::CTPolicyCompliance DoesConformToCertPolicy(
+  net::ct::CTPolicyCompliance CheckCompliance(
       net::X509Certificate* cert,
       const net::SCTList& verified_scts,
       const net::NetLogWithSource& net_log) override {

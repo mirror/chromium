@@ -139,8 +139,8 @@ TEST_F(CTPolicyEnforcerTest,
       desired_log_ids.size(), desired_log_ids, true, &scts);
 
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_NOT_DIVERSE_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest,
@@ -153,8 +153,8 @@ TEST_F(CTPolicyEnforcerTest,
       desired_log_ids.size(), desired_log_ids, true, &scts);
 
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_NOT_DIVERSE_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest, ConformsToCTPolicyIfSCTBeforeEnforcementDate) {
@@ -165,8 +165,8 @@ TEST_F(CTPolicyEnforcerTest, ConformsToCTPolicyIfSCTBeforeEnforcementDate) {
                            std::vector<std::string>(), false, &scts);
 
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest, ConformsToCTPolicyWithNonEmbeddedSCTs) {
@@ -175,8 +175,8 @@ TEST_F(CTPolicyEnforcerTest, ConformsToCTPolicyWithNonEmbeddedSCTs) {
       ct::SignedCertificateTimestamp::SCT_FROM_TLS_EXTENSION, 2, &scts);
 
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest, ConformsToCTPolicyWithEmbeddedSCTs) {
@@ -186,8 +186,8 @@ TEST_F(CTPolicyEnforcerTest, ConformsToCTPolicyWithEmbeddedSCTs) {
                            &scts);
 
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest, ConformsToCTPolicyWithPooledNonEmbeddedSCTs) {
@@ -209,8 +209,8 @@ TEST_F(CTPolicyEnforcerTest, ConformsToCTPolicyWithPooledNonEmbeddedSCTs) {
       desired_logs.size(), desired_logs, true, &scts);
 
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest, ConformsToCTPolicyWithPooledEmbeddedSCTs) {
@@ -231,8 +231,8 @@ TEST_F(CTPolicyEnforcerTest, ConformsToCTPolicyWithPooledEmbeddedSCTs) {
       desired_logs.size(), desired_logs, true, &scts);
 
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest, DoesNotConformToCTPolicyNotEnoughSCTs) {
@@ -242,8 +242,8 @@ TEST_F(CTPolicyEnforcerTest, DoesNotConformToCTPolicyNotEnoughSCTs) {
                            &scts);
 
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest, DoesNotConformToCTPolicyNotEnoughFreshSCTs) {
@@ -259,8 +259,8 @@ TEST_F(CTPolicyEnforcerTest, DoesNotConformToCTPolicyNotEnoughFreshSCTs) {
   AddDisqualifiedLogSCT(ct::SignedCertificateTimestamp::SCT_FROM_TLS_EXTENSION,
                         false, &scts);
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_NOT_DIVERSE_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 
   // SCT from after disqualification.
   scts.clear();
@@ -269,8 +269,8 @@ TEST_F(CTPolicyEnforcerTest, DoesNotConformToCTPolicyNotEnoughFreshSCTs) {
   AddDisqualifiedLogSCT(ct::SignedCertificateTimestamp::SCT_FROM_TLS_EXTENSION,
                         true, &scts);
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_NOT_DIVERSE_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 
   // Embedded SCT from before disqualification.
   scts.clear();
@@ -279,8 +279,8 @@ TEST_F(CTPolicyEnforcerTest, DoesNotConformToCTPolicyNotEnoughFreshSCTs) {
   AddDisqualifiedLogSCT(ct::SignedCertificateTimestamp::SCT_EMBEDDED, false,
                         &scts);
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_NOT_DIVERSE_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 
   // Embedded SCT from after disqualification.
   scts.clear();
@@ -289,8 +289,8 @@ TEST_F(CTPolicyEnforcerTest, DoesNotConformToCTPolicyNotEnoughFreshSCTs) {
   AddDisqualifiedLogSCT(ct::SignedCertificateTimestamp::SCT_EMBEDDED, true,
                         &scts);
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_NOT_DIVERSE_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest,
@@ -303,8 +303,8 @@ TEST_F(CTPolicyEnforcerTest,
 
   // |chain_| is valid for 10 years - over 121 months - so requires 5 SCTs.
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest,
@@ -317,8 +317,8 @@ TEST_F(CTPolicyEnforcerTest,
 
   // |chain_| is valid for 10 years - over 121 months - so requires 5 SCTs.
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest,
@@ -334,8 +334,8 @@ TEST_F(CTPolicyEnforcerTest,
 
   // |chain_| is valid for 10 years - over 121 months - so requires 5 SCTs.
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest,
@@ -366,8 +366,8 @@ TEST_F(CTPolicyEnforcerTest,
   // |chain_| is valid for 10 years - over 121 months - so requires 5 SCTs.
   // However, there are only 4 SCTs are from distinct logs.
   EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS,
-            policy_enforcer_->DoesConformToCertPolicy(chain_.get(), scts,
-                                                      NetLogWithSource()));
+            policy_enforcer_->CheckCompliance(chain_.get(), scts,
+                                              NetLogWithSource()));
 }
 
 TEST_F(CTPolicyEnforcerTest,
@@ -442,8 +442,8 @@ TEST_F(CTPolicyEnforcerTest,
       FillListWithSCTsOfOrigin(ct::SignedCertificateTimestamp::SCT_EMBEDDED, i,
                                std::vector<std::string>(), false, &scts);
       EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS,
-                policy_enforcer_->DoesConformToCertPolicy(cert.get(), scts,
-                                                          NetLogWithSource()))
+                policy_enforcer_->CheckCompliance(cert.get(), scts,
+                                                  NetLogWithSource()))
           << " for: " << (end - start).InDays() << " and " << required_scts
           << " scts=" << scts.size() << " i=" << i;
     }
@@ -451,9 +451,9 @@ TEST_F(CTPolicyEnforcerTest,
     FillListWithSCTsOfOrigin(ct::SignedCertificateTimestamp::SCT_EMBEDDED,
                              required_scts, std::vector<std::string>(), false,
                              &scts);
-    EXPECT_EQ(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS,
-              policy_enforcer_->DoesConformToCertPolicy(cert.get(), scts,
-                                                        NetLogWithSource()))
+    EXPECT_EQ(
+        ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS,
+        policy_enforcer_->CheckCompliance(cert.get(), scts, NetLogWithSource()))
         << " for: " << (end - start).InDays() << " and " << required_scts
         << " scts=" << scts.size();
   }

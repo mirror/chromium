@@ -6809,7 +6809,7 @@ class MockCTPolicyEnforcer : public CTPolicyEnforcer {
       : default_result_(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS) {}
   ~MockCTPolicyEnforcer() override {}
 
-  ct::CTPolicyCompliance DoesConformToCertPolicy(
+  ct::CTPolicyCompliance CheckCompliance(
       X509Certificate* cert,
       const SCTList& verified_scts,
       const NetLogWithSource& net_log) override {
@@ -10412,7 +10412,7 @@ class HTTPSOCSPTest : public HTTPSRequestTest {
     AllowAnyCertCTPolicyEnforcer() = default;
     ~AllowAnyCertCTPolicyEnforcer() override = default;
 
-    ct::CTPolicyCompliance DoesConformToCertPolicy(
+    ct::CTPolicyCompliance CheckCompliance(
         X509Certificate* cert,
         const SCTList& verified_scts,
         const NetLogWithSource& net_log) override {

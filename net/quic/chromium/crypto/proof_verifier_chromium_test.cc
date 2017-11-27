@@ -53,7 +53,7 @@ class FailsTestCertVerifier : public CertVerifier {
 // A mock CTPolicyEnforcer that returns a custom verification result.
 class MockCTPolicyEnforcer : public CTPolicyEnforcer {
  public:
-  MOCK_METHOD3(DoesConformToCertPolicy,
+  MOCK_METHOD3(CheckCompliance,
                ct::CTPolicyCompliance(X509Certificate* cert,
                                       const ct::SCTList&,
                                       const NetLogWithSource&));
@@ -109,7 +109,7 @@ class ProofVerifierChromiumTest : public ::testing::Test {
                                                        NetLogWithSource())) {}
 
   void SetUp() override {
-    EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+    EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
         .WillRepeatedly(
             Return(ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS));
 
@@ -286,7 +286,7 @@ TEST_F(ProofVerifierChromiumTest, PreservesEVIfAllowed) {
   MockCertVerifier dummy_verifier;
   dummy_verifier.AddResultForCert(test_cert.get(), dummy_result, OK);
 
-  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+  EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
       .WillRepeatedly(
           Return(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS));
 
@@ -322,7 +322,7 @@ TEST_F(ProofVerifierChromiumTest, StripsEVIfNotAllowed) {
   MockCertVerifier dummy_verifier;
   dummy_verifier.AddResultForCert(test_cert.get(), dummy_result, OK);
 
-  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+  EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
       .WillRepeatedly(
           Return(ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS));
 
@@ -362,7 +362,7 @@ TEST_F(ProofVerifierChromiumTest, CTEVHistogramNonCompliant) {
   MockCertVerifier dummy_verifier;
   dummy_verifier.AddResultForCert(test_cert.get(), dummy_result, OK);
 
-  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+  EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
       .WillRepeatedly(
           Return(ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS));
 
@@ -406,7 +406,7 @@ TEST_F(ProofVerifierChromiumTest, CTEVHistogramCompliant) {
   MockCertVerifier dummy_verifier;
   dummy_verifier.AddResultForCert(test_cert.get(), dummy_result, OK);
 
-  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+  EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
       .WillRepeatedly(
           Return(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS));
 
@@ -543,7 +543,7 @@ TEST_F(ProofVerifierChromiumTest, CTIsRequired) {
   EXPECT_CALL(require_ct_delegate, IsCTRequiredForHost(kTestHostname))
       .WillRepeatedly(Return(TransportSecurityState::RequireCTDelegate::
                                  CTRequirementLevel::REQUIRED));
-  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+  EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
       .WillRepeatedly(
           Return(ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS));
 
@@ -595,7 +595,7 @@ TEST_F(ProofVerifierChromiumTest, CTIsRequiredHistogramNonCompliant) {
   EXPECT_CALL(require_ct_delegate, IsCTRequiredForHost(kTestHostname))
       .WillRepeatedly(Return(TransportSecurityState::RequireCTDelegate::
                                  CTRequirementLevel::REQUIRED));
-  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+  EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
       .WillRepeatedly(
           Return(ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS));
 
@@ -645,7 +645,7 @@ TEST_F(ProofVerifierChromiumTest, CTIsRequiredHistogramCompliant) {
   EXPECT_CALL(require_ct_delegate, IsCTRequiredForHost(kTestHostname))
       .WillRepeatedly(Return(TransportSecurityState::RequireCTDelegate::
                                  CTRequirementLevel::REQUIRED));
-  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+  EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
       .WillRepeatedly(
           Return(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS));
 
@@ -729,7 +729,7 @@ TEST_F(ProofVerifierChromiumTest, PKPAndCTBothTested) {
   EXPECT_CALL(require_ct_delegate, IsCTRequiredForHost(kTestHostname))
       .WillRepeatedly(Return(TransportSecurityState::RequireCTDelegate::
                                  CTRequirementLevel::REQUIRED));
-  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+  EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
       .WillRepeatedly(
           Return(ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS));
 
@@ -772,7 +772,7 @@ TEST_F(ProofVerifierChromiumTest, CTComplianceStatusHistogram) {
   dummy_verifier.AddResultForCert(test_cert.get(), dummy_result, OK);
 
   // Set up CT.
-  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+  EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
       .WillRepeatedly(
           Return(ct::CTPolicyCompliance::CT_POLICY_NOT_DIVERSE_SCTS));
 
@@ -814,7 +814,7 @@ TEST_F(ProofVerifierChromiumTest, CTRequirementsFlagNotMet) {
   EXPECT_CALL(require_ct_delegate, IsCTRequiredForHost(_))
       .WillRepeatedly(Return(TransportSecurityState::RequireCTDelegate::
                                  CTRequirementLevel::REQUIRED));
-  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+  EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
       .WillRepeatedly(
           Return(ct::CTPolicyCompliance::CT_POLICY_NOT_DIVERSE_SCTS));
 
@@ -856,7 +856,7 @@ TEST_F(ProofVerifierChromiumTest, CTRequirementsFlagMet) {
   EXPECT_CALL(require_ct_delegate, IsCTRequiredForHost(_))
       .WillRepeatedly(Return(TransportSecurityState::RequireCTDelegate::
                                  CTRequirementLevel::REQUIRED));
-  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+  EXPECT_CALL(ct_policy_enforcer_, CheckCompliance(_, _, _))
       .WillRepeatedly(
           Return(ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS));
 
