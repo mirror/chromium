@@ -14,12 +14,12 @@
 #include "core/animation/PendingAnimations.h"
 #include "core/animation/StringKeyframe.h"
 #include "core/animation/animatable/AnimatableDouble.h"
-#include "core/testing/DummyPageHolder.h"
+#include "core/testing/PageTestBase.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class AnimationEffectStackTest : public ::testing::Test {
+class AnimationEffectStackTest : public PageTestBase {
  protected:
   void SetUp() override {
     page_holder = DummyPageHolder::Create();
