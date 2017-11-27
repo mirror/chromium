@@ -1505,6 +1505,7 @@ crbug.com/662010 [ Win7 ] http/tests/csspaint/invalidation-background-image.html
 # These tests are skipped as there is no touch support on Mac.
 crbug.com/613672 [ Mac ] fast/events/pointerevents/multi-pointer-event-in-slop-region.html [ Skip ]
 crbug.com/613672 [ Mac ] fast/events/pointerevents/pointerevent_touch-action-pinch_zoom_touch.html [ Skip ]
+crbug.com/613672 [ Mac ] fast/events/pointerevents/pointerevent_touch-adjustment_click_target.html [ Skip ]
 crbug.com/613672 [ Mac ] fast/events/pointerevents/pointer-event-consumed-touchstart-in-slop-region.html [ Skip ]
 crbug.com/613672 [ Mac ] fast/events/pointerevents/pointer-event-in-slop-region.html [ Skip ]
 crbug.com/613672 [ Mac ] external/wpt/pointerevents/pointerlock/pointerevent_movementxy-manual.html [ Skip ]

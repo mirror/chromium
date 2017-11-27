@@ -23,6 +23,7 @@
 #include "base/memory/scoped_refptr.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/geometry/IntRect.h"
+#include "platform/geometry/LayoutSize.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Vector.h"
 
@@ -46,6 +47,15 @@ bool FindBestZoomableArea(Node*& target_node,
                           const IntRect& touch_area,
                           const HeapVector<Member<Node>>&);
 // FIXME: Implement the similar functions for other gestures here as well.
+
+// Apply same bounds to TouchEvent and GestureEvent adjustment area.
+LayoutSize GetHitTestRectForAdjustment(const LayoutSize& touch_area);
+
+struct TouchAdjustmentResult {
+  bool adjusted;
+  uint32_t touch_start_id;
+  FloatPoint adjusted_point;
+};
 
 }  // namespace blink
 

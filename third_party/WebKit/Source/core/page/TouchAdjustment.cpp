@@ -45,6 +45,8 @@ namespace TouchAdjustment {
 
 const float kZeroTolerance = 1e-6f;
 
+const float kMaxAdjustmentRadiusDips = 16.f;
+
 // Class for remembering absolute quads of a target node and what node they
 // represent.
 class SubtargetGeometry {
@@ -572,6 +574,12 @@ bool FindBestZoomableArea(Node*& target_node,
   return TouchAdjustment::FindNodeWithLowestDistanceMetric(
       target_node, target_point, target_area, touch_hotspot, touch_area,
       subtargets, TouchAdjustment::ZoomableIntersectionQuotient);
+}
+
+LayoutSize GetHitTestRectForAdjustment(const LayoutSize& touch_area) {
+  LayoutSize maxSize(TouchAdjustment::kMaxAdjustmentRadiusDips,
+                     TouchAdjustment::kMaxAdjustmentRadiusDips);
+  return touch_area.ShrunkTo(maxSize);
 }
 
 }  // namespace blink

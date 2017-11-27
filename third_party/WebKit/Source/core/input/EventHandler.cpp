@@ -1360,6 +1360,20 @@ bool EventHandler::ShouldApplyTouchAdjustment(
   return !event.TapAreaInRootFrame().IsEmpty();
 }
 
+bool EventHandler::ShouldUseTouchEventAdjustedResult(
+    const WebGestureEvent& event) {
+  if (RuntimeEnabledFeatures::UnifiedTouchAdjustmentEnabled()) {
+    if (event.GetType() == WebInputEvent::kGestureTapDown) {
+      should_use_touch_event_adjusted_point_ =
+          (event.unique_touch_event_id != 0 &&
+           event.unique_touch_event_id ==
+               pointer_event_manager_->adjusted_result.touch_start_id);
+    }
+    return should_use_touch_event_adjusted_point_;
+  }
+  return false;
+}
+
 bool EventHandler::BestClickableNodeForHitTestResult(
     const HitTestResult& result,
     IntPoint& target_point,
@@ -1624,7 +1638,6 @@ GestureEventWithHitTestResults EventHandler::TargetGestureEvent(
     if (should_keep_active_for_min_interval)
       hit_type |= HitTestRequest::kReadOnly;
   }
-
   GestureEventWithHitTestResults event_with_hit_test_results =
       HitTestResultForGestureEvent(gesture_event, hit_type);
   // Now apply hover/active state to the final target.
@@ -1648,35 +1661,47 @@ GestureEventWithHitTestResults EventHandler::TargetGestureEvent(
 GestureEventWithHitTestResults EventHandler::HitTestResultForGestureEvent(
     const WebGestureEvent& gesture_event,
     HitTestRequest::HitTestRequestType hit_type) {
-  // Perform the rect-based hit-test (or point-based if adjustment is disabled).
-  // Note that we don't yet apply hover/active state here because we need to
-  // resolve touch adjustment first so that we apply hover/active it to the
-  // final adjusted node.
-  IntPoint hit_test_point = frame_->View()->RootFrameToContents(
-      FlooredIntPoint(gesture_event.PositionInRootFrame()));
+  WebGestureEvent adjusted_event = gesture_event;
+  HitTestResult hit_test_result;
+
   LayoutSize padding;
   if (ShouldApplyTouchAdjustment(gesture_event)) {
-    padding = LayoutSize(gesture_event.TapAreaInRootFrame());
-    if (!padding.IsEmpty()) {
-      padding.Scale(1.f / 2);
-      hit_type |= HitTestRequest::kListBased;
+    if (ShouldUseTouchEventAdjustedResult(gesture_event)) {
+      LOG(INFO) << "Use touch result ";
+      if (pointer_event_manager_->adjusted_result.adjusted) {
+        LOG(INFO) << "adjusted";
+        adjusted_event.ApplyTouchAdjustment(
+            pointer_event_manager_->adjusted_result.adjusted_point);
+      }
+    } else {
+      padding = LayoutSize(adjusted_event.TapAreaInRootFrame());
+      if (!padding.IsEmpty()) {
+        padding.Scale(1.f / 2);
+        hit_type |= HitTestRequest::kListBased;
+      }
+      LOG(INFO) << padding.ToString();
     }
   }
-  HitTestResult hit_test_result = HitTestResultAtPoint(
+  LayoutPoint hit_test_point(frame_->View()->RootFrameToContents(
+      adjusted_event.PositionInRootFrame()));
+  // Perform the rect-based hit-test (or point-based if adjustment is
+  // disabled). Note that we don't yet apply hover/active state here because
+  // we need to resolve touch adjustment first so that we apply hover/active
+  // it to the final adjusted node.
+  hit_test_result = HitTestResultAtPoint(
       hit_test_point, hit_type | HitTestRequest::kReadOnly, padding);
 
   // Adjust the location of the gesture to the most likely nearby node, as
   // appropriate for the type of event.
-  WebGestureEvent adjusted_event = gesture_event;
   ApplyTouchAdjustment(&adjusted_event, &hit_test_result);
 
-  // Do a new hit-test at the (adjusted) gesture co-ordinates. This is necessary
-  // because rect-based hit testing and touch adjustment sometimes return a
-  // different node than what a point-based hit test would return for the same
-  // point.
+  // Do a new hit-test at the (adjusted) gesture co-ordinates. This is
+  // necessary because rect-based hit testing and touch adjustment sometimes
+  // return a different node than what a point-based hit test would return for
+  // the same point.
   // FIXME: Fix touch adjustment to avoid the need for a redundant hit test.
   // http://crbug.com/398914
-  if (ShouldApplyTouchAdjustment(gesture_event)) {
+  if (hit_test_result.IsRectBasedTest()) {
     LocalFrame* hit_frame = hit_test_result.InnerNodeFrame();
     if (!hit_frame)
       hit_frame = frame_;
@@ -1686,7 +1711,6 @@ GestureEventWithHitTestResults EventHandler::HitTestResultForGestureEvent(
             FlooredIntPoint(adjusted_event.PositionInRootFrame())),
         (hit_type | HitTestRequest::kReadOnly) & ~HitTestRequest::kListBased);
   }
-
   // If we did a rect-based hit test it must be resolved to the best single node
   // by now to ensure consumers don't accidentally use one of the other
   // candidates.
@@ -1697,7 +1721,7 @@ GestureEventWithHitTestResults EventHandler::HitTestResultForGestureEvent(
 
 void EventHandler::ApplyTouchAdjustment(WebGestureEvent* gesture_event,
                                         HitTestResult* hit_test_result) {
-  if (!ShouldApplyTouchAdjustment(*gesture_event))
+  if (!hit_test_result->IsRectBasedTest())
     return;
 
   Node* adjusted_node = nullptr;
