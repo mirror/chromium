@@ -140,6 +140,30 @@
       "revId": "05cbd0b4b134671c83e4e12771c5560211549cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edfefb9_c1e35939",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-11-27T14:13:47Z",
+      "side": 1,
+      "message": "In the offline conversation we\u0027ve reconsidered that. The reason is that if loading_tasks_estimated_cost will not be a first-class citizen, it\u0027s likely to forget to update the value with the evolution of code.",
+      "parentUuid": "ecf78df4_8b318805",
+      "range": {
+        "startLine": 638,
+        "startChar": 4,
+        "endLine": 638,
+        "endChar": 20
+      },
+      "revId": "05cbd0b4b134671c83e4e12771c5560211549cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
