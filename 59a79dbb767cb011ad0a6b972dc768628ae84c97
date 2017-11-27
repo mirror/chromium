@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "cd3346cc_efa7243a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4417,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-27T12:57:11Z",
+      "side": 1,
+      "message": "The BVC\u0027s lifetime is functionally that of the app itself, so there\u0027s no real benefit to weak/strong, is there?",
+      "range": {
+        "startLine": 4417,
+        "startChar": 32,
+        "endLine": 4417,
+        "endChar": 40
+      },
+      "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed5b586_ba040b30",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4418,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-27T12:57:11Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why this call is needed for this case? It seems like it (or some other) tabSelected.. call must be made somewhere already.",
+      "range": {
+        "startLine": 4418,
+        "startChar": 8,
+        "endLine": 4418,
+        "endChar": 34
+      },
+      "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e85916_1ee5f2e7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4422,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-27T12:57:11Z",
+      "side": 1,
+      "message": "Prefer to hoist conditionals that don\u0027t depend on the block\u0027s params out of the block, so:\n\nProceduralBlock completion \u003d nil;\nif (command.shouldFocusOmnibox) {\n  completion \u003d ^{[self focusOmnibox]}\n}\n\n...\n\n[self addSelectedTabWithURL: ... tabAddedCompletion:completion];",
+      "range": {
+        "startLine": 4422,
+        "startChar": 17,
+        "endLine": 4422,
+        "endChar": 24
+      },
+      "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67d15a48_1c5fbd94",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 3
@@ -18,6 +87,29 @@
         "startChar": 30,
         "endLine": 4424,
         "endChar": 14
+      },
+      "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34aef091_34d864c0",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-27T12:57:11Z",
+      "side": 1,
+      "message": "nit: ProceduralBlock?",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 6
       },
       "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
