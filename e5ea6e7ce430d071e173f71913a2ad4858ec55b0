@@ -22,6 +22,30 @@
       "revId": "e5ea6e7ce430d071e173f71913a2ad4858ec55b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8718c6d3_ef076bd9",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-27T15:44:16Z",
+      "side": 1,
+      "message": "I don\u0027t know yet :)\nI have added the behavior triggering this call to the ToolbarMediator. So I know I won\u0027t use this call. I haven\u0027t done it for the others functions.",
+      "parentUuid": "5bceb827_b7a8a844",
+      "range": {
+        "startLine": 97,
+        "startChar": 11,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "e5ea6e7ce430d071e173f71913a2ad4858ec55b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
