@@ -1116,6 +1116,18 @@ const LayoutBoxModelObject& LayoutObject::ContainerForPaintInvalidation()
   return *layout_view;
 }
 
+bool LayoutObject::RecalcOverflowAfterStyleChange() {
+  if (!ChildNeedsOverflowRecalcAfterStyleChange())
+    return false;
+  bool children_overflow_changed = false;
+  for (LayoutObject* current = SlowFirstChild(); current;
+       current = current->NextSibling()) {
+    if (current->RecalcOverflowAfterStyleChange())
+      children_overflow_changed = true;
+  }
+  return children_overflow_changed;
+}
+
 const LayoutBoxModelObject* LayoutObject::EnclosingCompositedContainer() const {
   LayoutBoxModelObject* container = nullptr;
   // FIXME: CompositingState is not necessarily up to date for many callers of
@@ -1585,18 +1597,18 @@ void LayoutObject::MarkAncestorsForOverflowRecalcIfNeeded() {
     // This enables us to only recompute overflow the modified sections / rows.
     object = object->IsTableCell() || object->IsTableRow()
                  ? object->Parent()
-                 : object->ContainingBlock();
+                 : object->Container();
     if (object)
       object->SetChildNeedsOverflowRecalcAfterStyleChange();
   } while (object);
 }
 
 void LayoutObject::SetNeedsOverflowRecalcAfterStyleChange() {
-  bool needed_recalc = NeedsOverflowRecalcAfterStyleChange();
+  // bool needed_recalc = NeedsOverflowRecalcAfterStyleChange();
   SetSelfNeedsOverflowRecalcAfterStyleChange();
   SetMayNeedPaintInvalidation();
-  if (!needed_recalc)
-    MarkAncestorsForOverflowRecalcIfNeeded();
+  // if (!needed_recalc)
+  MarkAncestorsForOverflowRecalcIfNeeded();
 }
 
 DISABLE_CFI_PERF
@@ -1869,7 +1881,7 @@ void LayoutObject::StyleDidChange(StyleDifference diff,
       MarkContainerChainForLayout();
 
     // Ditto.
-    if (NeedsOverflowRecalcAfterStyleChange() &&
+    if ((NeedsOverflowRecalcAfterStyleChange()) &&
         old_style->GetPosition() != style_->GetPosition())
       MarkAncestorsForOverflowRecalcIfNeeded();
 
