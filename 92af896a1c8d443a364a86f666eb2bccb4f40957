@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c073d5b1_2b6b66a8",
+        "filename": "headless/test/headless_render_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-27T08:24:33Z",
+      "side": 1,
+      "message": "#ifndef is terser but I\u0027m surprised we need to do this.  I\u0027d suggest digging into it.",
+      "range": {
+        "startLine": 473,
+        "startChar": 5,
+        "endLine": 473,
+        "endChar": 12
+      },
+      "revId": "92af896a1c8d443a364a86f666eb2bccb4f40957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
