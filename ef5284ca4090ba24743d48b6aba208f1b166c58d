@@ -22,6 +22,30 @@
       "revId": "ef5284ca4090ba24743d48b6aba208f1b166c58d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93d98af_58aa5fdb",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-27T22:22:43Z",
+      "side": 1,
+      "message": "Yup, looks like we don\u0027t need this! Good catch.",
+      "parentUuid": "67f31f72_3b3cc30c",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 17
+      },
+      "revId": "ef5284ca4090ba24743d48b6aba208f1b166c58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
