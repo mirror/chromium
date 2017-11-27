@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2404d00d_ee0925fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "s/suppor/support",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0cc063_4c3583c6",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "This should be a method called RegisterTickers. It is used several places.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 16
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95e5759_4ee90577",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "s/UnregisterTicker/UnregisterTickers/",
+      "range": {
+        "startLine": 134,
+        "startChar": 22,
+        "endLine": 134,
+        "endChar": 38
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bebf8ae4_def901d9",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "This seems to be the \"detach\" equivalent of \"AttachElementWithTicker\".\nPerhaps move into its own method to help readability.",
+      "range": {
+        "startLine": 169,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 34
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3369fff8_ffd9ad87",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "This method seem unnecessary.",
+      "range": {
+        "startLine": 300,
+        "startChar": 24,
+        "endLine": 300,
+        "endChar": 54
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66799dc7_7990c156",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "This seems unnecessary. Why not just always call ActivateAnimations()",
+      "range": {
+        "startLine": 320,
+        "startChar": 22,
+        "endLine": 320,
+        "endChar": 48
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1aa3d2_243b24c5",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "should we DCHECK that this is a valid ID?",
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e322c50b_25d29c99",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "nit: Not sure why this is relevant here.",
+      "range": {
+        "startLine": 40,
+        "startChar": 75,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40424175_76ca76f9",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "I don\u0027t think this method make sense here. There is no special\nelement for animation player.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fcb2f0d_d8e46ae5",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "ditto. This method should only exist for SingleAnimationPlaye",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 52
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197b0302_4e705f7d",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "why is this event need to be exposed?",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 30
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa60794_67163724",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "We are using 4 different preposition With/To/Of/From to refer to tickers.\n\nIt may be grammatically correct but it seems excessive. Can/Should we try to reduce these.\nPerhaps use For in all cases? I think we can at least replace With|Of with For",
+      "range": {
+        "startLine": 85,
+        "startChar": 22,
+        "endLine": 85,
+        "endChar": 26
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8994f71c_0f72a9ee",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "why this needs to be exposed? Tests should just call UpdateState.",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23559281_862a2e67",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "So this tests is creating a SingleAnimationPlayer but then it uses AnimationPlayer methods to\nretrieve specific ticker to verify properties on that ticker. I don\u0027t think this is a good \nidea. Specially it forces AnimationPlayer to have special methods (animation_ticker()) that\nmake no sense for it. Also it is testing SingleAnimationPlayer where we actually want to\ntest AnimationPlayer.\n\n\nI suggest the following approach instead:\nThe test fixture should own its animation ticker (ticker_). That ticker_ is then \nadded to player_ either during the test or as part of \nAnimationTimelinesTest::AttachTimelinePlayerLayer(). \nWith that in place, each test then uses ticker_ instance (and its id) instead of using \nanimation_player_-\u003eanimation_ticker_().\n\nThis can be either done in AnimationPlayerTest or its parent AnimationTimelinesTest.\n\nObviously new tests that require two or more tickers will have thier own ticker and\ndon\u0027t need to use the ticker_",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c584d2d1_2bc2d2c2",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "This is odd. Why is the impl side ticker is created with main thread player and then\nlater change the player to the impl one.\n\nWe should create one without any player and then set its player when it added to a given\nplayer.",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 58
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06284a4_6754649b",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "nit: s/size/side/",
+      "range": {
+        "startLine": 716,
+        "startChar": 60,
+        "endLine": 716,
+        "endChar": 64
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62284aa9_3f8332a6",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "Does not this detach all elements for the player?",
+      "range": {
+        "startLine": 721,
+        "startChar": 48,
+        "endLine": 721,
+        "endChar": 61
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b751c54_6e61490f",
+        "filename": "cc/animation/animation_ticker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-27T21:41:39Z",
+      "side": 1,
+      "message": "It seems that we always call SetAnimationPlayer even when we have a player passed in\nconstructor. I suggest to have a single way to set the player either via constructor \nor require it to always be set via SetAnimationPlayer.\n\n\nMy preference is to do it in constructor if possible but if not then let\u0027s remove\nit from constructor.\n\nSo the code becomes:\nticker_impl_ \u003d ticker-\u003eCreateImplInstance(); // create ticker without any player.\nplayer_impl_-\u003eAddTicker(ticker_impl) // this calls SetAnimationPlayer on added ticker.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
