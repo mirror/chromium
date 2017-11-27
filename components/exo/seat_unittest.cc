@@ -5,9 +5,14 @@
 #include "components/exo/seat.h"
 
 #include "base/memory/scoped_refptr.h"
+#include "base/strings/utf_string_conversions.h"
+#include "components/exo/data_source.h"
+#include "components/exo/data_source_delegate.h"
 #include "components/exo/seat_observer.h"
 #include "components/exo/test/exo_test_base.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/clipboard/clipboard.h"
+#include "ui/base/clipboard/scoped_clipboard_writer.h"
 
 namespace exo {
 namespace {
