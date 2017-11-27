@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abdde188_97a4f466",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-27T08:53:02Z",
+      "side": 1,
+      "message": "I think this condition is not complete.\n\nLet\u0027s say available space is 20MB and we want to import following photos.\nPhoto A (10MB)\nPhoto B (10MB)\nPhoto C (20MB)\n\nIn the 1st pass, photo A and B will be copied and copying C will fail.\nIn the 2nd pass (triggered by the COMPLETED_EVENT of A), copying C will still fail.\nHowever, we should not give up.\nIn the 3rd pass (triggered by the COMPLETED_EVENT of B), copying C will succeed.\n\nCurrent code will give up the import in the 2nd pass.\nMaybe we should keep the |importEntries_| until the user cancel the operation or Files app is quit, and retry the copy every time we receive COMPLETED_EVENT.",
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9305df1e_47e13637",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-27T08:53:02Z",
+      "side": 1,
+      "message": "Really? I expected that if we pass |entries| of Array\u003c!FileEntry\u003e in AsyncUtil.forEach() the |entry| is !FileEntry.\nCould you try casting |sourceEntries| to Array\u003c!FileEntry\u003e in tryImportScanEntries_ and see if the compile error goes?\nIf it doesn\u0027t work, just one assert(entry) in the beginning of importOne_ will work.",
+      "range": {
+        "startLine": 430,
+        "startChar": 49,
+        "endLine": 431,
+        "endChar": 71
+      },
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e09a165_cfef96de",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-27T08:53:02Z",
+      "side": 1,
+      "message": "this \u0027(\u0027 and \u0027)\u0027 in #469 look redundant.",
+      "range": {
+        "startLine": 462,
+        "startChar": 13,
+        "endLine": 462,
+        "endChar": 14
+      },
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a891fc57_c7eaf132",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-27T08:53:02Z",
+      "side": 1,
+      "message": "We should retry copy operations only when it is due to insufficient disk space.\nIf passing the reason from backend to frontend is done separately, could you leave a TODO comment and/or file a bug?",
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a66f227_34311cb8",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler_unittest.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-27T08:53:02Z",
+      "side": 1,
+      "message": "Do you need the real DriveSyncHandler even when you have MockDriveSyncHandler?",
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9223692f_bdb3a812",
+        "filename": "ui/file_manager/file_manager/common/js/progress_center_common.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-27T08:53:02Z",
+      "side": 1,
+      "message": "I prefer CLOUD_IMPORT if it is used only in cloud import.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 8
+      },
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
