@@ -2266,8 +2266,15 @@ void RenderViewImpl::SetScreenMetricsEmulationParameters(
 }
 
 blink::WebSpeechRecognizer* RenderViewImpl::SpeechRecognizer() {
-  if (!speech_recognition_dispatcher_)
-    speech_recognition_dispatcher_ = new SpeechRecognitionDispatcher(this);
+  if (!speech_recognition_dispatcher_) {
+    LOG(ERROR) << "Registering speech recognition dispatcher";
+    LOG(ERROR) << "This: " << (void*)this;
+    LOG(ERROR) << "Main frame: " << (void*)GetMainRenderFrame();
+    LOG(ERROR) << "Main frame view: "
+               << (void*)GetMainRenderFrame()->GetRenderView();
+    speech_recognition_dispatcher_ =
+        new SpeechRecognitionDispatcher(GetMainRenderFrame());
+  }
   return speech_recognition_dispatcher_;
 }
 

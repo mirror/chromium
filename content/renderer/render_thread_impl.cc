@@ -837,7 +837,6 @@ void RenderThreadImpl::Init(
   GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&RenderThreadImpl::OnRendererInterfaceRequest,
                  base::Unretained(this)));
-
   InitSkiaEventTracer();
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       skia::SkiaMemoryDumpProvider::GetInstance(), "Skia", nullptr);

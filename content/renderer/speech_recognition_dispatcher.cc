@@ -10,7 +10,8 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "content/common/speech_recognition_messages.h"
-#include "content/renderer/render_view_impl.h"
+#include "content/renderer/render_frame_impl.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/web/WebSpeechGrammar.h"
@@ -29,20 +30,75 @@ using blink::WebSpeechRecognizerClient;
 namespace content {
 
 SpeechRecognitionDispatcher::SpeechRecognitionDispatcher(
-    RenderViewImpl* render_view)
-    : RenderViewObserver(render_view),
+    RenderFrameImpl* render_frame)
+    : RenderFrameObserver(render_frame),
       recognizer_client_(nullptr),
       next_id_(1) {}
 
 SpeechRecognitionDispatcher::~SpeechRecognitionDispatcher() {}
+
+// static
+void SpeechRecognitionDispatcher::Create(
+    RenderFrameImpl* render_frame,
+    mojom::SpeechRecognitionRequest request) {
+  LOG(ERROR) << "In CREATE METHOD yay mojo";
+  mojo::MakeStrongBinding(
+      base::MakeUnique<SpeechRecognitionDispatcher>(render_frame),
+      std::move(request));
+}
 
 void SpeechRecognitionDispatcher::AbortAllRecognitions() {
   Send(new SpeechRecognitionHostMsg_AbortAllRequests(
       routing_id()));
 }
 
+void SpeechRecognitionDispatcher::ResultRetrieved(
+    int64_t request_id,
+    const std::vector<content::SpeechRecognitionResult>& results) {
+  LOG(ERROR) << "Mojo message received: ResultRetrieved";
+  OnResultsRetrieved(request_id, results);
+}
+
+void SpeechRecognitionDispatcher::ErrorOccurred(
+    int64_t request_id,
+    const content::SpeechRecognitionError& error) {
+  LOG(ERROR) << "Mojo message received: ErrorOccurred";
+  OnErrorOccurred(request_id, error);
+}
+
+void SpeechRecognitionDispatcher::Started(int64_t request_id) {
+  LOG(ERROR) << "Mojo message received: Started";
+  OnRecognitionStarted(request_id);
+}
+
+void SpeechRecognitionDispatcher::AudioStarted(int64_t request_id) {
+  LOG(ERROR) << "Mojo message received: AudioStarted";
+  OnAudioStarted(request_id);
+}
+
+void SpeechRecognitionDispatcher::SoundStarted(int64_t request_id) {
+  LOG(ERROR) << "Mojo message received: SoundStarted";
+  OnSoundStarted(request_id);
+}
+
+void SpeechRecognitionDispatcher::SoundEnded(int64_t request_id) {
+  LOG(ERROR) << "Mojo message received: SoundEnded";
+  OnSoundEnded(request_id);
+}
+
+void SpeechRecognitionDispatcher::AudioEnded(int64_t request_id) {
+  LOG(ERROR) << "Mojo message received: AudioEnded";
+  OnAudioEnded(request_id);
+}
+
+void SpeechRecognitionDispatcher::Ended(int64_t request_id) {
+  LOG(ERROR) << "Mojo message received: Ended";
+  OnRecognitionEnded(request_id);
+}
+
 bool SpeechRecognitionDispatcher::OnMessageReceived(
     const IPC::Message& message) {
+  LOG(ERROR) << "SpeechRecognitionDispatcher::OnMessageReceived";
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(SpeechRecognitionDispatcher, message)
     IPC_MESSAGE_HANDLER(SpeechRecognitionMsg_Started, OnRecognitionStarted)

@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
+#include "content/common/speech_recognition.mojom.h"
 #include "content/public/browser/browser_message_filter.h"
 #include "content/public/browser/speech_recognition_event_listener.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -78,6 +79,8 @@ class CONTENT_EXPORT SpeechRecognitionDispatcherHost
 
   int render_process_id_;
   scoped_refptr<net::URLRequestContextGetter> context_getter_;
+
+  content::mojom::SpeechRecognitionPtr speech_recognition_;
 
   // Used for posting asynchronous tasks (on the IO thread) without worrying
   // about this class being destroyed in the meanwhile (due to browser shutdown)

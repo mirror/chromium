@@ -1,0 +1,54 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "mojo/common/string16.mojom";
+
+struct SpeechRecognitionHypothesis {
+  mojo.common.mojom.String16 utterance;
+  double confidence;
+};
+
+struct SpeechRecognitionResult {
+  array<SpeechRecognitionHypothesis> hypotheses;
+  bool is_provisional;
+};
+
+// TODO(sashab): This needs to match content::SpeechRecognitionErrorCode. Remove
+// the native implementation when android can use mojo types.
+enum SpeechRecognitionErrorCode {
+  kNone,
+  // No speech heard before timeout.
+  kNoSpeech,
+  // The user or a script aborted speech input.
+  kAborted,
+  // There was an error with recording audio.
+  kAudioCapture,
+  // There was a network error.
+  kNetwork,
+  // Not allowed for privacy or security reasons.
+  kNotAllowed,
+  // Speech service is not allowed for privacy or security reasons.
+  kServiceNotAllowed,
+  // There was an error in the speech recognition grammar.
+  kBadGrammar,
+  // The language was not supported.
+  kLanguageNotSupported,
+  // Speech was heard, but could not be interpreted.
+  kNoMatch,
+};
+
+// Error details for the SPEECH_RECOGNITION_ERROR_AUDIO error.
+// TODO(sashab): This needs to match content::SpeechAudioErrorDetails. Remove
+// the native implementation when all users use this enum instead.
+enum SpeechAudioErrorDetails {
+  kNone,
+  kNoMic,
+};
+
+struct SpeechRecognitionError {
+  SpeechRecognitionErrorCode code;
+  SpeechAudioErrorDetails details;
+};

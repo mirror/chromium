@@ -269,6 +269,10 @@ void ModulesInitializer::ProvideModulesToPage(Page& page,
   ::blink::ProvideDatabaseClientTo(page, new DatabaseClient);
   ::blink::ProvideStorageQuotaClientTo(page, StorageQuotaClient::Create());
   StorageNamespaceController::ProvideStorageNamespaceTo(page, client);
+  LOG(ERROR) << "Providing speech recognition to (client) " << (void*)client;
+  LOG(ERROR) << "Providing speech recognition to (page) " << (void*)&page;
+  LOG(ERROR) << "Providing speech recognition to (page frame) "
+             << (void*)page.MainFrame();
   ::blink::ProvideSpeechRecognitionTo(
       page, SpeechRecognitionClientProxy::Create(
                 client ? client->SpeechRecognizer() : nullptr));

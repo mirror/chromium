@@ -1,0 +1,28 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "content/public/common/speech_recognition_types.mojom";
+
+// API for the browser process to send event updates to the renderer process.
+// The messages below follow exactly the same semantic of the corresponding
+// events defined in content/public/browser/speech_recognition_event_listener.h.
+interface SpeechRecognition {
+  ResultRetrieved(int64 request_id, array<content.mojom.SpeechRecognitionResult> results);
+
+  ErrorOccurred(int64 request_id, content.mojom.SpeechRecognitionError error);
+
+  Started(int64 request_id);
+
+  AudioStarted(int64 request_id);
+
+  SoundStarted(int64 request_id);
+
+  SoundEnded(int64 request_id);
+
+  AudioEnded(int64 request_id);
+
+  Ended(int64 request_id);
+};

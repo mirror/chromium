@@ -16,6 +16,7 @@
           "content::mojom::FrameFactory",
           "content::mojom::RenderWidgetWindowTreeClientFactory",
           "content::mojom::SharedWorkerFactory",
+          "content::mojom::SpeechRecognition",
           "IPC::mojom::ChannelBootstrap",
           "visitedlink::mojom::VisitedLinkNotificationSink",
           "web_cache::mojom::WebCache"

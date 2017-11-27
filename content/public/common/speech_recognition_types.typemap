@@ -1,0 +1,20 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//content/public/common/speech_recognition_types.mojom"
+public_headers = [
+  "//content/public/common/speech_recognition_error.h",
+  "//content/public/common/speech_recognition_result.h",
+  "//content/public/common/speech_recognition_types.mojom-shared.h",
+]
+traits_headers =
+    [ "//content/public/common/speech_recognition_types_struct_traits.h" ]
+deps = []
+type_mappings = [
+  "content.mojom.SpeechRecognitionHypothesis=content::SpeechRecognitionHypothesis",
+  "content.mojom.SpeechRecognitionResult=content::SpeechRecognitionResult",
+  "content.mojom.SpeechRecognitionErrorCode=content::SpeechRecognitionErrorCode",
+  "content.mojom.SpeechAudioErrorDetails=content::SpeechAudioErrorDetails",
+  "content.mojom.SpeechRecognitionError=content::SpeechRecognitionError",
+]
