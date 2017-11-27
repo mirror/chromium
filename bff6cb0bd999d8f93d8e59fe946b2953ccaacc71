@@ -99,6 +99,23 @@
     },
     {
       "key": {
+        "uuid": "53f2eb35_46837073",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:49:34Z",
+      "side": 1,
+      "message": "I think this and below should be hooked up to SetFrame and aura-shell API as part of this patch. Also, we shouldn\u0027t have multiple ways to create CustomFrameViewAsh instances but instead consolidate it and just have this single CustomFrameView type for all shell surfaces.",
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "790ab8d9_9184f01c",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 8
