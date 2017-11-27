@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0f94e49_0bc3cdfe",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-27T23:16:21Z",
+      "side": 1,
+      "message": "nit: if it were me, I\u0027d avoid nesting and elses via early returns like:\n\nif (length \u003c\u003d 0) {\n  r-\u003ereset();\n  return true;\n}\nSkFlattenable* flattenable \u003d skia::ValidatingDeserializeFlattenable(...);\nif (!flattenable) {\n   r-\u003ereset();\n   return false;\n}\n*r \u003d sk_sp\u003cSkImageFilter\u003e(static_cast\u003cSkImageFilter*\u003e(flattenable));\nreturn true;",
+      "range": {
+        "startLine": 296,
+        "startChar": 2,
+        "endLine": 305,
+        "endChar": 14
+      },
+      "revId": "645386bcf7bb6b11586c1983558a1ffed8c3e260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
