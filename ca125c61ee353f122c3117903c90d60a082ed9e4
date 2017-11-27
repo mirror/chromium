@@ -46,6 +46,30 @@
       "revId": "ca125c61ee353f122c3117903c90d60a082ed9e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbb4ece_626b61da",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_subpage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-27T22:05:42Z",
+      "side": 0,
+      "message": "Make sense. Done with comment",
+      "parentUuid": "be760d87_257bb7cf",
+      "range": {
+        "startLine": 77,
+        "startChar": 13,
+        "endLine": 77,
+        "endChar": 36
+      },
+      "revId": "ca125c61ee353f122c3117903c90d60a082ed9e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
