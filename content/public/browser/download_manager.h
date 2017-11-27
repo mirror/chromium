@@ -36,6 +36,7 @@
 #include "base/files/file_path.h"
 #include "base/sequenced_task_runner.h"
 #include "base/time/time.h"
+#include "content/public/browser/download_initialization_dependencies.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/download_url_parameters.h"
@@ -173,8 +174,10 @@ class CONTENT_EXPORT DownloadManager : public base::SupportsUserData::Data {
       bool transient,
       const std::vector<DownloadItem::ReceivedSlice>& received_slices) = 0;
 
-  // Called when download manager has loaded all the data.
-  virtual void PostInitialization() = 0;
+  // Called when download manager has loaded all the data, once when the history
+  // db is initialized and once when the in-progress cache is initialized.
+  virtual void PostInitialization(
+      DownloadInitializationDependency dependency) = 0;
 
   // Returns if the manager has been initialized and loaded all the data.
   virtual bool IsManagerInitialized() const = 0;

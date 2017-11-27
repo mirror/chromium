@@ -148,7 +148,7 @@ class MockDownloadManager : public DownloadManager {
 
   MOCK_METHOD1(MockCreateDownloadItem,
                DownloadItem*(CreateDownloadItemAdapter adapter));
-  MOCK_METHOD0(PostInitialization, void());
+  MOCK_METHOD2(PostInitialization, void(bool, bool));
   MOCK_CONST_METHOD0(IsManagerInitialized, bool());
   MOCK_CONST_METHOD0(InProgressCount, int());
   MOCK_CONST_METHOD0(NonMaliciousInProgressCount, int());
