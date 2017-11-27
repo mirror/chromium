@@ -323,8 +323,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     public void showActionModeOrClearOnFailure() {
         if (!isActionModeSupported() || !hasSelection()) return;
 
-        // Just refresh the view if action mode already exists.
-        if (isActionModeValid()) {
+        // Just refresh non-floating action mode if it already exists to avoid blinking.
+        if (isActionModeValid() && mActionMode.getType() != ActionMode.TYPE_FLOATING) {
             // Try/catch necessary for framework bug, crbug.com/446717.
             try {
                 mActionMode.invalidate();
@@ -334,6 +334,9 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
             hideActionMode(false);
             return;
         }
+
+        // Reset menu overflow menu (see crbug.com/791532).
+        destroyActionModeAndKeepSelection();
 
         assert mWebContents != null;
         ActionMode actionMode = supportsFloatingActionMode()
