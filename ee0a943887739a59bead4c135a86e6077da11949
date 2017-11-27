@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e64e1ec0_18321313",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-27T14:28:33Z",
+      "side": 1,
+      "message": "If we\u0027re putting this behind an origin trial, I don\u0027t think it should be given a vendor specific prefix. Regardless, I\u0027ll align the naming here with whatever parameter name is eventually decided on.",
+      "parentUuid": "277dd2c8_02e67106",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8298e224_c0b0e221",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 7
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "11de8d59_fc3cca60",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-27T14:28:33Z",
+      "side": 1,
+      "message": "I\u0027ll limit the change to doing just that for now, and we can revisit the behavior of echoCancellation later.",
+      "parentUuid": "aedec1ed_823ca975",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1058404d_d86ab6b3",
         "filename": "content/renderer/media/webrtc/processed_local_audio_source.cc",
         "patchSetId": 7
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "3997607f_ae1a299f",
+        "filename": "content/renderer/media/webrtc/processed_local_audio_source.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-27T14:28:33Z",
+      "side": 1,
+      "message": "Makes sense.",
+      "parentUuid": "1058404d_d86ab6b3",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffe6de9f_4ff6cf56",
         "filename": "media/audio/mac/audio_manager_mac.cc",
         "patchSetId": 7
@@ -82,6 +136,24 @@
       "writtenOn": "2017-11-27T13:27:21Z",
       "side": 1,
       "message": "Optional: would be great to change the reference for the todo while changing code in its proximity. To for example me or you.",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e003f54_10f64f20",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-27T14:28:33Z",
+      "side": 1,
+      "message": "I\u0027ll let you have this one. :)\nWould rather change it to a bug but I\u0027m not sure there\u0027s one reported (or anything really going wrong here that we know of).",
+      "parentUuid": "ffe6de9f_4ff6cf56",
       "revId": "ee0a943887739a59bead4c135a86e6077da11949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "da1097dd_5a832b60",
+        "filename": "media/audio/mac/audio_manager_mac.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-27T14:28:33Z",
+      "side": 1,
+      "message": "I\u0027d rather not cache if I can just do a quick CoreAudio query.\nI should consider what happens if the availability of NR changes during a stream\u0027s lifetime. I believe this may change if the Mac AGC is activated, for example.",
+      "parentUuid": "76c89798_3b710bde",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81cfa906_3b89d020",
         "filename": "media/base/audio_parameters.h",
         "patchSetId": 7
@@ -150,6 +240,24 @@
       "writtenOn": "2017-11-27T13:27:21Z",
       "side": 1,
       "message": "*_REDUCTION to be consistent with naming. Here and elsewhere.",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71619c73_641798fb",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-27T14:28:33Z",
+      "side": 1,
+      "message": "The pre-existing constraints we have for audio both use the term noise suppression - Apple uses Ambient Noise Reduction. We have a constraint for noise reduction but that one affects video.\nIdeally we\u0027d use the same term throughout Chrome. Naming is hard. :(",
+      "parentUuid": "81cfa906_3b89d020",
       "revId": "ee0a943887739a59bead4c135a86e6077da11949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
