@@ -980,6 +980,22 @@ void PaintLayerPainter::PaintFragmentWithPhase(
     ClipState clip_state) {
   DCHECK(paint_layer_.IsSelfPaintingLayer());
 
+  Optional<ScopedPaintChunkProperties> fragment_paint_chunk_properties;
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+      fragment.fragment_data !=
+          &paint_layer_.GetLayoutObject().FirstFragment()) {
+    PaintChunkProperties properties(
+        context.GetPaintController().CurrentPaintChunkProperties());
+    properties.property_tree_state =
+        *fragment.fragment_data->GetRarePaintData()->LocalBorderBoxProperties();
+    properties.property_tree_state.SetEffect(context.GetPaintController()
+                                                 .CurrentPaintChunkProperties()
+                                                 .property_tree_state.Effect());
+    fragment_paint_chunk_properties.emplace(
+        context.GetPaintController(), paint_layer_,
+        DisplayItem::PaintPhaseToDrawingType(phase), properties);
+  }
+
   DisplayItemClient* client = &paint_layer_.GetLayoutObject();
   Optional<LayerClipRecorder> clip_recorder;
   if (clip_state != kHasClipped &&
