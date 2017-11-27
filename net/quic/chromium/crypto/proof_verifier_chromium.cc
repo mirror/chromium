@@ -391,12 +391,11 @@ int ProofVerifierChromium::Job::DoVerifyCertComplete(int result) {
   if (enforce_policy_checking_ &&
       (result == OK ||
        (IsCertificateError(result) && IsCertStatusMinorError(cert_status)))) {
-    verify_details_->ct_verify_result.ct_policies_applied = true;
     SCTList verified_scts = ct::SCTsMatchingStatus(
         verify_details_->ct_verify_result.scts, ct::SCT_STATUS_OK);
 
     verify_details_->ct_verify_result.policy_compliance =
-        policy_enforcer_->DoesConformToCertPolicy(
+        policy_enforcer_->CheckCompliance(
             cert_verify_result.verified_cert.get(), verified_scts, net_log_);
     if (verify_details_->cert_verify_result.cert_status & CERT_STATUS_IS_EV) {
       if (verify_details_->ct_verify_result.policy_compliance !=
