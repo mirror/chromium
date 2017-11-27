@@ -101,7 +101,10 @@ class FakeVideoCaptureDevice : public VideoCaptureDevice {
 struct FakeDeviceState {
   FakeDeviceState(float zoom, float frame_rate, VideoPixelFormat pixel_format)
       : zoom(zoom),
-        format(gfx::Size(), frame_rate, pixel_format, PIXEL_STORAGE_CPU) {}
+        format(gfx::Size(),
+               frame_rate,
+               pixel_format,
+               VideoPixelStorage::PIXEL_STORAGE_CPU) {}
 
   uint32_t zoom;
   VideoCaptureFormat format;
