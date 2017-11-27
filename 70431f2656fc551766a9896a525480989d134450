@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "88f331c4_8029785d",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-27T10:43:21Z",
+      "side": 1,
+      "message": "I don\u0027t think this kind of API is good.\n\nChanging the list of Chrome accounts on the flight is certainly not something we can do in the general case. The reconcilor does not support this, and that seems very dangerous. What would be a use case for this?\n\nIt works here, because we\u0027re doing it in a very specific case (it works because in particular the reconcilor is not actually really running), but I think this should not be part of the general API.\n\nI understand your concern though: the reconcilor is not aware of the change in chrome accounts. I think this is the right thing to do though, because the reconcilor does not and cannot support it anyway. What we\u0027re doing is not related to reconciliation. We\u0027re just using the reconcilor as a place to plug our code, this is essentially a hack.\n\nIf we want to do this cleanly, I think the best solution would be to do that outside of the reconcilor. We could have another GaiaCookieManagerService observer doing this.\n\nWDYT?",
+      "parentUuid": "ca05ba5f_bde98040",
+      "range": {
+        "startLine": 408,
+        "startChar": 32,
+        "endLine": 408,
+        "endChar": 48
+      },
+      "revId": "70431f2656fc551766a9896a525480989d134450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00e70faa_78685a4c",
         "filename": "components/signin/core/browser/account_reconcilor.cc",
         "patchSetId": 3
