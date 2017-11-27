@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "22e0bffd_5e190630",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-27T17:38:56Z",
+      "side": 1,
+      "message": "This code doesn\u0027t seem to match any common pattern, and does a lot of different things.\n\nFor this Javascript-disabling-specific logic, it seems like all the logic could be done in the render, as it has access to the URL and the previews flags.\n\nLofi-mode itself, which I think only sends magic headers to requests sent to the DRP, on the other hand, I\u0027m not sure about.  If we wanted to make it a web-exposed header (Maybe a client hint or something?), that would be trivial to just attach in the renderer, too, though that would require standardization.",
+      "parentUuid": "32fe1391_1a2e3323",
+      "range": {
+        "startLine": 805,
+        "startChar": 5,
+        "endLine": 805,
+        "endChar": 11
+      },
+      "revId": "14a3c93c51365f9db02f6724a3a815d1ebb316ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aac2addb_7baf42a0",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
         "patchSetId": 6
