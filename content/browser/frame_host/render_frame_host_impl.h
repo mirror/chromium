@@ -161,6 +161,15 @@ class CONTENT_EXPORT RenderFrameHostImpl
   static RenderFrameHostImpl* FromOverlayRoutingToken(
       const base::UnguessableToken& token);
 
+  // Allows overriding the URLLoaderFactory creation for subresources.
+  // Passing a null pointer will restore the default behavior.
+  typedef base::Callback<void(mojom::URLLoaderFactoryRequest request,
+                              int process_id,
+                              mojom::URLLoaderFactoryPtrInfo original_factory)>
+      CreateFactoryCallback;
+  static void SetNetworkFactoryForTesting(
+      const CreateFactoryCallback& url_loader_factory_callback);
+
   ~RenderFrameHostImpl() override;
 
   // RenderFrameHost
