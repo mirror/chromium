@@ -16,6 +16,24 @@
       "revId": "1ae94231a05359bda36ed4fc18a16e36b69c7771",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4bbaca_7afb34a3",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-27T23:59:26Z",
+      "side": 1,
+      "message": "I believe it\u0027s a process wide value, so for instance the one we have in WMPI::DoLoad() will be overwritten by subsequent video loads -- so sometimes we get a subresource_url from the something other than what caused the crash.",
+      "parentUuid": "e63d6222_73af27df",
+      "revId": "1ae94231a05359bda36ed4fc18a16e36b69c7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
