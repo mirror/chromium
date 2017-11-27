@@ -33,6 +33,24 @@
       "revId": "8001e86879f41176a3cfd17b96dd0c28c4a15983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff31dbdf_54edc6c2",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/touch/multi-touch-user-gesture.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-27T21:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f776762f_0164d87a",
+      "revId": "8001e86879f41176a3cfd17b96dd0c28c4a15983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
