@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46c7e6d2_d29b0e0b",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T20:30:36Z",
+      "side": 1,
+      "message": "arc_bridge_service_-\u003eusb_host()-\u003eSetHost(this);\n\n(and set it to nullptr in the dtor).",
+      "revId": "7a844d8d5ba68861192936bf200e07f26ab084ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7818b24a_7adaed9a",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T20:30:36Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need this after letting the ConnectionHolder deal with it :)",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 40
+      },
+      "revId": "7a844d8d5ba68861192936bf200e07f26ab084ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
