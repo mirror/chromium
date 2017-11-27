@@ -63,6 +63,30 @@
       "revId": "289e3a179fc8ebb2aeec22ab1bffef411c801445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edeacf58_f7848270",
+        "filename": "chrome/common/render_messages.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-27T17:40:40Z",
+      "side": 1,
+      "message": "Ok, on the IP then.\nThe risk is that someone one the other side then takes GURL(string) and gets a different parse.  Do you actually have a GURL for these?  If not, then OK, otherwise its better to pass as GURL and take the string on the other side.",
+      "parentUuid": "29b0cccc_c3e1fef9",
+      "range": {
+        "startLine": 185,
+        "startChar": 18,
+        "endLine": 185,
+        "endChar": 33
+      },
+      "revId": "289e3a179fc8ebb2aeec22ab1bffef411c801445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
