@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17e519fe_353831ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T08:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e903f9a8_b3964cb5",
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c952b19_45baaf16",
         "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_strings.cc",
         "patchSetId": 5
@@ -157,6 +175,30 @@
       "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12adc89d_7f1c42f0",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T08:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89ba927b_ab4cc4eb",
+      "range": {
+        "startLine": 103,
+        "startChar": 33,
+        "endLine": 103,
+        "endChar": 39
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -372,6 +414,30 @@
     },
     {
       "key": {
+        "uuid": "96f63657_aa4a8478",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T08:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be62b43f_dc7a7216",
+      "range": {
+        "startLine": 369,
+        "startChar": 2,
+        "endLine": 369,
+        "endChar": 45
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3150b0f_cee6bc50",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
@@ -466,6 +532,30 @@
     },
     {
       "key": {
+        "uuid": "11ce0871_b1012536",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T08:15:02Z",
+      "side": 1,
+      "message": "Actually, that shouldn\u0027t happen - this code is called when AsyncUtil is complete, so the only case it would happen is if the time for Drive to sync one file is faster than the overhead of AsyncUtil.forEach to signal that it is done - in other cases, at least one file _just_ finished copying and still needs to be synced.\n\nI\u0027m starting that argument because this check would have great impact on the behavior if the user is offline: in that case, this.driveSyncHandler_.syncing would evaluate to false, triggering the next try, which would not be able to change anything, and all retries would stop because there was no success at all during the last try.",
+      "parentUuid": "0304cddd_010327a0",
+      "range": {
+        "startLine": 388,
+        "startChar": 10,
+        "endLine": 388,
+        "endChar": 50
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c5e3cce_609da349",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
@@ -537,6 +627,30 @@
     },
     {
       "key": {
+        "uuid": "a4f24707_7cac206c",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T08:15:02Z",
+      "side": 1,
+      "message": "The cancel should work as it used to, I\u0027m still using the same ImportTask, after all (so retrying doesn\u0027t create a new task). But let me test that first!\n\nI didn\u0027t ask UX, but looked at the existing code, supposedly it should have only offered CI anyways only if there is internet connection: https://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/import_controller.js?l\u003d347\u0026rcl\u003d5c08d895d20dcde58e3f33ca3f68f52df03386b1\nThere is some issue that this let\u0027s Drive appear to be mounted if there is no internet connection (so this doesn\u0027t trigger in the case of being offline), so I added a check in that other cl.\nIf it is WAI that Drive appears to be mounted even if offline, that would be inconsistent with e. g. external drives etc, they even get unmounted when you close the lid of the chromebook without really rebooting it (you get a message saying that they got mounted when you reopen it)",
+      "parentUuid": "d5a249d6_94993d6c",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 69
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59b50ba7_f2f00b7c",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
@@ -595,6 +709,24 @@
       "writtenOn": "2017-11-27T06:57:20Z",
       "side": 1,
       "message": "Is it possible to detect the failure reason and push the entry only when the error is retryable?\nYou may leave TODO if not.",
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b3bb3b_df85cb6a",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T08:15:02Z",
+      "side": 1,
+      "message": "First, by checking what the error message in the case of Drive refusing to snapshot the file: there seems to be bug in some point in the chain between the error being first raised and printed. I do remember seeing and fixing this before, it\u0027s probably in that \"Check Drive Quota\" cl, so not in effect yet in this cl.\n\nSecond, the error message right before the importer.getLogger() is printing is:\n\"Copy failed. sourceUrl:\u003centry\u003e error: InvalidStateError.\n\nI remember having tracked that one down at some point in the past, IIRC it is the generic error message with \"something went wrong\", so I think that filtering here might be difficult..\n\nWho should I assign that TODO to? Seeing as this is my last week etc.",
+      "parentUuid": "9b59a81a_5965e2c8",
       "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

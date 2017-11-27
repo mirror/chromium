@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "296a7ba4_62a4ad48",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T08:15:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure I\u0027m understanding the question - DriveSyncHandler.COMPLETED_EVENT only gets sent once all syncs that are scheduled are done, and that number can dynamically readjust. Also, this function is the completion_callback for AsyncUtil to signal that it has processed all elements, meaning it does get called once all of sourceEntries have been processed, and not once for every entry. Or, in short, I have witnessed the following situation that describes what I\u0027m trying to describe here:\n\nThere is quite a lot of local space available, so a lot of snapshots can be done before running out of space. So DriveSyncHandler as a lot of time of noticing the new files - which means it starts syncing while the first try is still in progress. So the number of files to be synced (as witnessed in the text above the progress bar) slowly grows (because more files are scheduled than done, the progress bar also readjusts by jumping back). At some point, the current try runs out of memory and schedules a retry. The import progress bar freezes until Drive has completed _all_ of the syncs, then DriveSyncHandler.COMPLETED_EVENT is being sent, triggering the next try.\n\nSee also https://cs.chromium.org/chromium/src/ui/file_manager/file_manager/background/js/drive_sync_handler.js?l\u003d140\u0026rcl\u003d5c08d895d20dcde58e3f33ca3f68f52df03386b1 - \u0027in_progress\u0027 notifies of the completion of the sync of one single file, whereas \u0027completed\u0027 notifies of all of them finishing.\n\nBut maybe I just misunderstood what you tried to say, so please do correct me if you were talking about something different!",
+      "parentUuid": "af9df406_a7600ed0",
+      "range": {
+        "startLine": 388,
+        "startChar": 17,
+        "endLine": 388,
+        "endChar": 38
+      },
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "508f5df3_af8591b5",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-27T06:57:20Z",
       "side": 1,
       "message": "I think addEventListener should be done at the very end of the execution of this function, or the same tryImportScanEntries_ can be executed simultaneously (ignore this comment if you adopt the above idea)",
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3da74f_884377f9",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T08:15:02Z",
+      "side": 1,
+      "message": "I think this is also affected by what I said above - so I think this doesn\u0027t apply, but maybe I misunderstood you..^^",
+      "parentUuid": "508f5df3_af8591b5",
       "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +112,24 @@
       "writtenOn": "2017-11-27T06:57:20Z",
       "side": 1,
       "message": "Let\u0027s avoid using timeout in tests. It could introduce timing issues.\nHow about adding dispatchEvent(type) function, and call it from the test?",
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603023a3_00082cd1",
+        "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T08:15:02Z",
+      "side": 1,
+      "message": "The problem about that is the timing of the call - it needs to be called after the  handler has been registered, which only happens after one complete try. Unless introducing a new event, it won\u0027t be possible to inject that from the outside at the right moment - WDYT?\n\nI\u0027ll also wait with fixing the other comment about only removing the handler for what we decide to do here - because it also applies to addEventListener, and if both of these are properly implemented + dispatchEvent, then this file will be an exact copy of cr.EventTarget, and in this case we could just inherit from it rather than have that code duplication.",
+      "parentUuid": "d7b90763_1bebff25",
       "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
