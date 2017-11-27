@@ -51,7 +51,7 @@ class MetricsServiceClient;
 class MetricsStateManager;
 
 // See metrics_service.cc for a detailed description.
-class MetricsService : public base::HistogramFlattener {
+class MetricsService : private base::HistogramFlattener {
  public:
   // Creates the MetricsService with the given |state_manager|, |client|, and
   // |local_state|.  Does not take ownership of the paramaters; instead stores
