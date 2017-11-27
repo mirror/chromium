@@ -101600,6 +101600,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Alert"/>
   <suffix name="Confirm"/>
   <suffix name="Prompt"/>
+  <suffix name="BeforeUnload"/>
   <affected-histogram name="JSDialogs.DismissalCause"/>
   <affected-histogram name="JSDialogs.IsForemost"/>
   <affected-histogram name="JSDialogs.Scheme"/>
