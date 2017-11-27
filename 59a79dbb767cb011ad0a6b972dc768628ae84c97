@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67d15a48_1c5fbd94",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4424,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-27T08:22:32Z",
+      "side": 1,
+      "message": "I think you can add this block to |self.foregroundTabWasAddedCompletionBlock|, it should be the same.",
+      "range": {
+        "startLine": 4421,
+        "startChar": 30,
+        "endLine": 4424,
+        "endChar": 14
+      },
+      "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
