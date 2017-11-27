@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "d0313586_13a29141",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-27T17:57:52Z",
+      "side": 1,
+      "message": "The general problem is that we need to make a \"final\" previews decision upon receiving the main frame headers (since it could contain flywheel preview determination). We have 3 places currently using that decision: UMA in I/O; PreviewsInfoBar in UI; and doing the intervention in the renderer (if LoFi or NoScript). Currently the response headers are [re]checked in all 3 places. This isn\u0027t scaling well especially wrt handling redirects between HTTP and HTTPS - to try to correctly repeat the decision in 3 places. That is the motivation for trying to do it in I/O thread before response sent to renderer (with the result).\n\nWe certainly could repeat the decision for NoScript for now in renderer and PreviewsInfoBarTabHelper - but the fragility concerns me.",
+      "parentUuid": "22e0bffd_5e190630",
+      "range": {
+        "startLine": 805,
+        "startChar": 5,
+        "endLine": 805,
+        "endChar": 11
+      },
+      "revId": "14a3c93c51365f9db02f6724a3a815d1ebb316ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aac2addb_7baf42a0",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
         "patchSetId": 6
