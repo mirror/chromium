@@ -42,10 +42,13 @@ class NotificationManager final
       ScriptState*,
       NotificationPermissionCallback* deprecated_callback);
 
+  // Shows a non-persistent notification.
+  void DisplayNonPersistent(const String& title);
+
   virtual void Trace(blink::Visitor*);
 
  private:
-  NotificationManager();
+  NotificationManager(ExecutionContext&);
 
   void OnPermissionRequestComplete(ScriptPromiseResolver*,
                                    NotificationPermissionCallback*,
