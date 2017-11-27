@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "ac9349e0_864c9109",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-27T23:16:54Z",
+      "side": 1,
+      "message": "Yeah, no need to match the constness of `CBORReader::end_` in the parameter type of `end`.",
+      "parentUuid": "25bb500c_6aa2942d",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 62
+      },
+      "revId": "3e9f54b543d83496ec7a4daf31cb758b32785568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6edb4f90_217350ce",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 20
@@ -99,6 +123,30 @@
       "writtenOn": "2017-11-27T22:23:06Z",
       "side": 1,
       "message": "nit: 0xFFUL, or maybe omit it fully, unless Jeffrey requested this format specifically.",
+      "range": {
+        "startLine": 131,
+        "startChar": 26,
+        "endLine": 131,
+        "endChar": 31
+      },
+      "revId": "3e9f54b543d83496ec7a4daf31cb758b32785568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ae7e42_183d88ca",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-27T23:16:54Z",
+      "side": 1,
+      "message": "I don\u0027t have a preference here. UL isn\u0027t guaranteed to be the same type as uint64_t, and the resulting value will be right with even 0xFF or no `\u0026` at all.",
+      "parentUuid": "6344bbdf_cd856f5c",
       "range": {
         "startLine": 131,
         "startChar": 26,
@@ -168,6 +216,30 @@
       "writtenOn": "2017-11-27T22:23:06Z",
       "side": 1,
       "message": "nit: Can we omit this?",
+      "range": {
+        "startLine": 217,
+        "startChar": 25,
+        "endLine": 217,
+        "endChar": 29
+      },
+      "revId": "3e9f54b543d83496ec7a4daf31cb758b32785568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8895ad33_f19108c1",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-27T23:16:54Z",
+      "side": 1,
+      "message": "Or use base::ContainsKey(): https://cs.chromium.org/chromium/src/base/stl_util.h?l\u003d82\u0026rcl\u003dc3d017eb59cfe91c1aae384a8339bf76e53e34a6",
+      "parentUuid": "700d9081_7a3b9aac",
       "range": {
         "startLine": 217,
         "startChar": 25,
