@@ -22,6 +22,30 @@
       "revId": "1040283f73172a45cf7b168641eb36f9251aeb9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2464db9_7c7486e4",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-27T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c6225fa_ffff7c61",
+      "range": {
+        "startLine": 595,
+        "startChar": 42,
+        "endLine": 595,
+        "endChar": 52
+      },
+      "revId": "1040283f73172a45cf7b168641eb36f9251aeb9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
