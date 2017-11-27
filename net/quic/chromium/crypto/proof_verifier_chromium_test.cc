@@ -349,7 +349,8 @@ TEST_F(ProofVerifierChromiumTest, StripsEVIfNotAllowed) {
 // Tests that the when a certificate's EV status is stripped to EV
 // non-compliance, the correct histogram is recorded.
 TEST_F(ProofVerifierChromiumTest, CTEVHistogramNonCompliant) {
-  const char kHistogramName[] = "Net.CertificateTransparency.EVCompliance.QUIC";
+  const char kHistogramName[] =
+      "Net.CertificateTransparency.EVCompliance2.QUIC";
   base::HistogramTester histograms;
 
   scoped_refptr<X509Certificate> test_cert = GetTestServerCertificate();
@@ -358,6 +359,7 @@ TEST_F(ProofVerifierChromiumTest, CTEVHistogramNonCompliant) {
   CertVerifyResult dummy_result;
   dummy_result.verified_cert = test_cert;
   dummy_result.cert_status = CERT_STATUS_IS_EV;
+  dummy_result.is_issued_by_known_root = true;
 
   MockCertVerifier dummy_verifier;
   dummy_verifier.AddResultForCert(test_cert.get(), dummy_result, OK);
@@ -394,7 +396,8 @@ TEST_F(ProofVerifierChromiumTest, CTEVHistogramNonCompliant) {
 // Tests that when a connection is CT-compliant and its EV status is preserved,
 // the correct histogram is recorded.
 TEST_F(ProofVerifierChromiumTest, CTEVHistogramCompliant) {
-  const char kHistogramName[] = "Net.CertificateTransparency.EVCompliance.QUIC";
+  const char kHistogramName[] =
+      "Net.CertificateTransparency.EVCompliance2.QUIC";
   base::HistogramTester histograms;
 
   scoped_refptr<X509Certificate> test_cert = GetTestServerCertificate();
@@ -403,6 +406,7 @@ TEST_F(ProofVerifierChromiumTest, CTEVHistogramCompliant) {
   CertVerifyResult dummy_result;
   dummy_result.verified_cert = test_cert;
   dummy_result.cert_status = CERT_STATUS_IS_EV;
+  dummy_result.is_issued_by_known_root = true;
 
   MockCertVerifier dummy_verifier;
   dummy_verifier.AddResultForCert(test_cert.get(), dummy_result, OK);
@@ -573,7 +577,7 @@ TEST_F(ProofVerifierChromiumTest, CTIsRequired) {
 // properly.
 TEST_F(ProofVerifierChromiumTest, CTIsRequiredHistogramNonCompliant) {
   const char kHistogramName[] =
-      "Net.CertificateTransparency.CTRequiredConnectionComplianceStatus.QUIC";
+      "Net.CertificateTransparency.CTRequiredConnectionComplianceStatus2.QUIC";
   base::HistogramTester histograms;
 
   scoped_refptr<X509Certificate> test_cert = GetTestServerCertificate();
@@ -624,7 +628,7 @@ TEST_F(ProofVerifierChromiumTest, CTIsRequiredHistogramNonCompliant) {
 // properly.
 TEST_F(ProofVerifierChromiumTest, CTIsRequiredHistogramCompliant) {
   const char kHistogramName[] =
-      "Net.CertificateTransparency.CTRequiredConnectionComplianceStatus.QUIC";
+      "Net.CertificateTransparency.CTRequiredConnectionComplianceStatus2.QUIC";
   base::HistogramTester histograms;
 
   scoped_refptr<X509Certificate> test_cert = GetTestServerCertificate();
@@ -674,7 +678,7 @@ TEST_F(ProofVerifierChromiumTest, CTIsRequiredHistogramCompliant) {
 // the CT-required histogram is not recorded.
 TEST_F(ProofVerifierChromiumTest, CTIsNotRequiredHistogram) {
   const char kHistogramName[] =
-      "Net.CertificateTransparency.CTRequiredConnectionComplianceStatus.QUIC";
+      "Net.CertificateTransparency.CTRequiredConnectionComplianceStatus2.QUIC";
   base::HistogramTester histograms;
 
   scoped_refptr<X509Certificate> test_cert = GetTestServerCertificate();
@@ -761,7 +765,7 @@ TEST_F(ProofVerifierChromiumTest, PKPAndCTBothTested) {
 // Test that CT compliance status is recorded in a histogram.
 TEST_F(ProofVerifierChromiumTest, CTComplianceStatusHistogram) {
   const char kHistogramName[] =
-      "Net.CertificateTransparency.ConnectionComplianceStatus.QUIC";
+      "Net.CertificateTransparency.ConnectionComplianceStatus2.QUIC";
   base::HistogramTester histograms;
 
   scoped_refptr<X509Certificate> test_cert = GetTestServerCertificate();
@@ -797,6 +801,44 @@ TEST_F(ProofVerifierChromiumTest, CTComplianceStatusHistogram) {
       kHistogramName,
       static_cast<int>(ct::CertPolicyCompliance::CERT_POLICY_NOT_DIVERSE_SCTS),
       1);
+}
+
+// Test that CT compliance status histogram is not recorded for
+// locally-installed roots.
+TEST_F(ProofVerifierChromiumTest, CTComplianceStatusHistogramLocalRoot) {
+  const char kHistogramName[] =
+      "Net.CertificateTransparency.ConnectionComplianceStatus2.QUIC";
+  base::HistogramTester histograms;
+
+  scoped_refptr<X509Certificate> test_cert = GetTestServerCertificate();
+  ASSERT_TRUE(test_cert);
+
+  CertVerifyResult dummy_result;
+  dummy_result.verified_cert = test_cert;
+  dummy_result.is_issued_by_known_root = false;
+  dummy_result.cert_status = 0;
+
+  MockCertVerifier dummy_verifier;
+  dummy_verifier.AddResultForCert(test_cert.get(), dummy_result, OK);
+
+  // Set up CT.
+  EXPECT_CALL(ct_policy_enforcer_, DoesConformToCertPolicy(_, _, _))
+      .WillRepeatedly(
+          Return(ct::CertPolicyCompliance::CERT_POLICY_NOT_DIVERSE_SCTS));
+
+  ProofVerifierChromium proof_verifier(&dummy_verifier, &ct_policy_enforcer_,
+                                       &transport_security_state_,
+                                       ct_verifier_.get());
+
+  std::unique_ptr<DummyProofVerifierCallback> callback(
+      new DummyProofVerifierCallback);
+  QuicAsyncStatus status = proof_verifier.VerifyProof(
+      kTestHostname, kTestPort, kTestConfig, QUIC_VERSION_35, kTestChloHash,
+      certs_, kTestEmptySCT, GetTestSignature(), verify_context_.get(),
+      &error_details_, &details_, std::move(callback));
+  ASSERT_EQ(QUIC_SUCCESS, status);
+
+  histograms.ExpectTotalCount(kHistogramName, 0);
 }
 
 // Tests that the VerifyCertChain verifies certificates.
