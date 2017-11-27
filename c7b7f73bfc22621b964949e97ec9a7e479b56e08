@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "899f8c7e_b3aa43b0",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-27T02:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a10ed2c_4c3ebd9f",
+      "range": {
+        "startLine": 89,
+        "startChar": 14,
+        "endLine": 89,
+        "endChar": 30
+      },
+      "revId": "c7b7f73bfc22621b964949e97ec9a7e479b56e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31e63204_381c40cb",
         "filename": "base/memory/shared_memory_posix.cc",
         "patchSetId": 16
@@ -39,6 +63,24 @@
       "revId": "c7b7f73bfc22621b964949e97ec9a7e479b56e08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2db2ec_61ee05e0",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-27T02:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31e63204_381c40cb",
+      "revId": "c7b7f73bfc22621b964949e97ec9a7e479b56e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b77ad475_672de602",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-27T02:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91a4f889_63dba0bf",
+      "revId": "c7b7f73bfc22621b964949e97ec9a7e479b56e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f453a84b_cec172cd",
         "filename": "base/memory/shared_memory_posix.cc",
         "patchSetId": 16
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-24T06:12:11Z",
       "side": 1,
       "message": "Could we use F_SEAL_WRITE here instead? Not needed as part of this patch but maybe add a TODO?",
+      "revId": "c7b7f73bfc22621b964949e97ec9a7e479b56e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836aa55c_e2dedb7a",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-27T02:55:44Z",
+      "side": 1,
+      "message": "I tried, but I don\u0027t think it supports our use case: once you do add a F_SEALS_WRITE, then the file no longer can be mapped as MAP_SHARED.",
+      "parentUuid": "f453a84b_cec172cd",
       "revId": "c7b7f73bfc22621b964949e97ec9a7e479b56e08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
