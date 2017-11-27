@@ -217,7 +217,8 @@ void WebRemoteFrameImpl::SetReplicatedOrigin(
     const WebSecurityOrigin& origin,
     bool is_potentially_trustworthy_unique_origin) {
   DCHECK(GetFrame());
-  scoped_refptr<SecurityOrigin> security_origin = origin.Get()->IsolatedCopy();
+  scoped_refptr<const SecurityOrigin> security_origin =
+      origin.Get()->IsolatedCopy();
   security_origin->SetUniqueOriginIsPotentiallyTrustworthy(
       is_potentially_trustworthy_unique_origin);
   GetFrame()->GetSecurityContext()->SetReplicatedOrigin(security_origin);

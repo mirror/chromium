@@ -173,15 +173,15 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
   XMLHttpRequest(ExecutionContext*,
                  v8::Isolate*,
                  bool is_isolated_world,
-                 scoped_refptr<SecurityOrigin>);
+                 scoped_refptr<const SecurityOrigin>);
 
   Document* GetDocument() const;
 
   // Returns the SecurityOrigin of the isolated world if the XMLHttpRequest was
   // created in an isolated world. Otherwise, returns the SecurityOrigin of the
   // execution context.
-  SecurityOrigin* GetSecurityOrigin() const;
-  SecurityOrigin* GetMutableSecurityOrigin();
+  const SecurityOrigin* GetSecurityOrigin() const;
+  const SecurityOrigin* GetMutableSecurityOrigin();
 
   void DidSendData(unsigned long long bytes_sent,
                    unsigned long long total_bytes_to_be_sent) override;
@@ -348,7 +348,7 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
   // Set to true if the XMLHttpRequest was created in an isolated world.
   bool is_isolated_world_;
   // Stores the SecurityOrigin associated with the isolated world if any.
-  scoped_refptr<SecurityOrigin> isolated_world_security_origin_;
+  scoped_refptr<const SecurityOrigin> isolated_world_security_origin_;
 
   // This blob loader will be used if |m_downloadingToFile| is true and
   // |m_responseTypeCode| is NOT ResponseTypeBlob.

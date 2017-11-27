@@ -327,7 +327,8 @@ WorkerGlobalScope::WorkerGlobalScope(
       font_selector_(OffscreenFontSelector::Create(this)) {
   InstanceCounters::IncrementCounter(
       InstanceCounters::kWorkerGlobalScopeCounter);
-  scoped_refptr<SecurityOrigin> security_origin = SecurityOrigin::Create(url_);
+  scoped_refptr<const SecurityOrigin> security_origin =
+      SecurityOrigin::Create(url_);
   if (creation_params->starter_origin) {
     security_origin->TransferPrivilegesFrom(
         creation_params->starter_origin->CreatePrivilegeData());

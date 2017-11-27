@@ -55,14 +55,14 @@ namespace blink {
 class BlobOriginMap : public URLSecurityOriginMap {
  public:
   BlobOriginMap();
-  SecurityOrigin* GetOrigin(const KURL&) override;
+  const SecurityOrigin* GetOrigin(const KURL&) override;
 };
 
 static WebBlobRegistry* GetBlobRegistry() {
   return Platform::Current()->GetBlobRegistry();
 }
 
-typedef HashMap<String, scoped_refptr<SecurityOrigin>> BlobURLOriginMap;
+typedef HashMap<String, scoped_refptr<const SecurityOrigin>> BlobURLOriginMap;
 static ThreadSpecific<BlobURLOriginMap>& OriginMap() {
   // We want to create the BlobOriginMap exactly once because it is shared by
   // all the threads.
@@ -73,7 +73,7 @@ static ThreadSpecific<BlobURLOriginMap>& OriginMap() {
   return map;
 }
 
-static void SaveToOriginMap(SecurityOrigin* origin, const KURL& url) {
+static void SaveToOriginMap(const SecurityOrigin* origin, const KURL& url) {
   // If the blob URL contains null origin, as in the context with unique
   // security origin or file URL, save the mapping between url and origin so
   // that the origin can be retrieved when doing security origin check.
@@ -101,7 +101,7 @@ void BlobRegistry::RemoveBlobDataRef(const String& uuid) {
   GetBlobRegistry()->RemoveBlobDataRef(uuid);
 }
 
-void BlobRegistry::RegisterPublicBlobURL(SecurityOrigin* origin,
+void BlobRegistry::RegisterPublicBlobURL(const SecurityOrigin* origin,
                                          const KURL& url,
                                          scoped_refptr<BlobDataHandle> handle) {
   SaveToOriginMap(origin, url);
@@ -117,7 +117,7 @@ BlobOriginMap::BlobOriginMap() {
   SecurityOrigin::SetMap(this);
 }
 
-SecurityOrigin* BlobOriginMap::GetOrigin(const KURL& url) {
+const SecurityOrigin* BlobOriginMap::GetOrigin(const KURL& url) {
   if (url.ProtocolIs("blob"))
     return OriginMap()->at(url.GetString());
   return nullptr;
