@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f16af16_58c63f6d",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-27T20:26:16Z",
+      "side": 1,
+      "message": "Moved them out of the class because I think it makes more sense for them to go in cronet_metrics.h/mm, and added short explanatory comments.",
+      "parentUuid": "c1867655_cd8903ee",
+      "range": {
+        "startLine": 143,
+        "startChar": 10,
+        "endLine": 143,
+        "endChar": 21
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0244367d_cc337b68",
         "filename": "components/cronet/ios/Cronet.mm",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b797a60d_7e2a3150",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-27T20:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0244367d_cc337b68",
+      "range": {
+        "startLine": 152,
+        "startChar": 23,
+        "endLine": 152,
+        "endChar": 35
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec54c01e_edecd429",
         "filename": "components/cronet/ios/Cronet.mm",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8dc61e7_93ef9b7a",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-27T20:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec54c01e_edecd429",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 18
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "6f6ac5e3_1003e965",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-27T20:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85092fd1_645886d1",
+      "range": {
+        "startLine": 43,
+        "startChar": 11,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a66fa2f3_ef01a4a2",
         "filename": "ios/net/crn_http_protocol_handler.h",
         "patchSetId": 10
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "293a81ff_88bcf786",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-27T20:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a66fa2f3_ef01a4a2",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d752673_592915a3",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 10
@@ -151,6 +271,30 @@
       "writtenOn": "2017-11-21T22:23:54Z",
       "side": 1,
       "message": "Is there a reason why this callback is called didFinishCollectingMetrics? I did not find any metrics collection code in this file.",
+      "range": {
+        "startLine": 741,
+        "startChar": 24,
+        "endLine": 741,
+        "endChar": 50
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b89a173_01e3765b",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-27T20:26:16Z",
+      "side": 1,
+      "message": "It\u0027s called at the end of the request with all of the net metrics data (the LoadTimingInfo and HttpResponseInfo structs).",
+      "parentUuid": "2d752673_592915a3",
       "range": {
         "startLine": 741,
         "startChar": 24,
@@ -183,6 +327,30 @@
       "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ebf066_bc2b291e",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-27T20:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96c7c303_584a40c2",
+      "range": {
+        "startLine": 931,
+        "startChar": 35,
+        "endLine": 931,
+        "endChar": 36
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
