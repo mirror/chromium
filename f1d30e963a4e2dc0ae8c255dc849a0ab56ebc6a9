@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dadfa69b_a423ed8c",
+        "filename": "base/allocator/partition_allocator/partition_alloc_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-27T23:27:37Z",
+      "side": 1,
+      "message": "This code has been moved from Blink to base, and so it has some legacy Blink-style naming. Let\u0027s move to base style: in_core. (Here and on line 257)",
+      "revId": "f1d30e963a4e2dc0ae8c255dc849a0ab56ebc6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86673fcd_17608b37",
+        "filename": "base/allocator/partition_allocator/partition_alloc_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-27T23:27:37Z",
+      "side": 1,
+      "message": "I\u0027d put a\n\n  // defined(OS_LINUX)\n\ntag after the #endif.",
+      "revId": "f1d30e963a4e2dc0ae8c255dc849a0ab56ebc6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
