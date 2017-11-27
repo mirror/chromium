@@ -16,6 +16,24 @@
       "revId": "1e93239b596dfe69bae9396c8e4eef0bc3ba4e1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37bc56e_67f2d680",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-11-27T15:07:36Z",
+      "side": 1,
+      "message": "Renamed to AllowZeroSuggestMostVisitedURLs and added comment to explain when displaying these suggestions is allowed. PTAL.",
+      "parentUuid": "919b1e97_5c3819dc",
+      "revId": "1e93239b596dfe69bae9396c8e4eef0bc3ba4e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
