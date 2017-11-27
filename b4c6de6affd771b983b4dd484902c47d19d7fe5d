@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "f6c3964e_3447e131",
+        "filename": "chrome/browser/resources/print_preview/new/document_info.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-27T20:11:22Z",
+      "side": 1,
+      "message": "Are there other parts of print preview that depend on size.js, coordinate2d.js or printable_area.js? If there are, this is going to be a problem, because we will endup importing those files twice (because they are not guarded by HTML imports which are deduplicated).\n\nBasically I am trying to determine if we need to do the following:\n - Create a *.html file for every file in ../data/ that we are going to depend on.\n - Change these lines here to by an HTML import instead as follows\n\n\u003clink rel\u003d\"import\" href\u003d\"size.html\"\u003e\n\u003clink rel\u003d\"import\" href\u003d\"coordinate2d.html\"\u003e\n\u003clink rel\u003d\"import\" href\u003d\"printable_area.html\"\u003e\n\nThis way, if another file also depends on these, it will use the same HTML import, which will get correctly de-duplicated.",
+      "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97663cca_c8fa9cfa",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 4
