@@ -458,6 +458,9 @@ class AutofillManager : public AutofillHandler,
                           FormFieldData* field_data,
                           bool should_notify);
 
+  AutofillMetrics::CardNumberStatus GetCardNumberStatus(
+      CreditCard& credit_card);
+
   AutofillClient* const client_;
 
   // Handles Payments service requests.
