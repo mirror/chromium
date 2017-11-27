@@ -31,6 +31,8 @@ class TestingUserActivityLoggerDelegate : public UserActivityLoggerDelegate {
 
   const std::vector<UserActivityEvent>& events() const { return events_; }
 
+  void GetOpenTabsURLs() override {}
+
   // UserActivityLoggerDelegate overrides:
   void LogActivity(const UserActivityEvent& event) override {
     events_.push_back(event);

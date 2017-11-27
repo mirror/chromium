@@ -16,6 +16,9 @@ class UserActivityLoggerDelegate {
  public:
   virtual ~UserActivityLoggerDelegate() = default;
 
+  // Get source ids of all open tabs' URLs.
+  virtual void GetOpenTabsURLs() = 0;
+
   // Log user activity event.
   virtual void LogActivity(const UserActivityEvent& event) = 0;
 };
