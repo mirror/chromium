@@ -16,6 +16,24 @@
       "revId": "771aef826464abd0635037f911e96ee2b5e0c294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e57c98f_66148357",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-27T16:32:47Z",
+      "side": 1,
+      "message": "Yes - this line is needed - the tabs end up in separate processes when running the test with --site-per-process.  I am guessing that process reuse is disabled when a process is locked to an origin (even if the reuse candidate hosts the same site).",
+      "parentUuid": "3a72737e_f61c7ab5",
+      "revId": "771aef826464abd0635037f911e96ee2b5e0c294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
