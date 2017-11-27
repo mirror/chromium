@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdb736bf_dc6c36f2",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T16:01:44Z",
+      "side": 1,
+      "message": "Reminder to not make this yellow.",
+      "revId": "484ff1d39889943a3f21e7bae752723dcc2d17c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ad4f11_b6d8d147",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T16:01:44Z",
+      "side": 1,
+      "message": "...  , such as a button icon within a specific named button instance.  (?)",
+      "revId": "484ff1d39889943a3f21e7bae752723dcc2d17c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7581ce7f_49d8ed2c",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T16:01:44Z",
+      "side": 1,
+      "message": "Any idea why the formatter doesn\u0027t format this initializer like the one above?  Is it that the items are too long?  This is weird.",
+      "revId": "484ff1d39889943a3f21e7bae752723dcc2d17c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
