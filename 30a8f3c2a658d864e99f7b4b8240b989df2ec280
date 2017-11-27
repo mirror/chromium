@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "267aa693_e94512b5",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-27T13:54:42Z",
+      "side": 1,
+      "message": "Could you document or refer to documentation on how the code above relies on group ids?",
+      "revId": "30a8f3c2a658d864e99f7b4b8240b989df2ec280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837a562e_805ccde7",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-27T13:54:42Z",
+      "side": 1,
+      "message": "Could you file a bug for AudioSystem to expose it?",
+      "revId": "30a8f3c2a658d864e99f7b4b8240b989df2ec280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a514214a_5271e290",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-27T13:54:42Z",
+      "side": 1,
+      "message": "Does it worth a separate bug maybe as well?",
+      "revId": "30a8f3c2a658d864e99f7b4b8240b989df2ec280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
