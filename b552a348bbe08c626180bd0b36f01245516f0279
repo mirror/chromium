@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c63f3165_927be188",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-27T01:20:18Z",
+      "side": 1,
+      "message": "Thank you for pointing it. IOTFOG should be in the title.\nDone",
+      "parentUuid": "21b1a5fc_9815e2a8",
+      "revId": "b552a348bbe08c626180bd0b36f01245516f0279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fa5a722_2b7966ca",
         "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "b552a348bbe08c626180bd0b36f01245516f0279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb55a2a6_13b7e74d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-27T01:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fa5a722_2b7966ca",
+      "revId": "b552a348bbe08c626180bd0b36f01245516f0279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "74d04b6b_0a639121",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-27T01:20:18Z",
+      "side": 1,
+      "message": "Just a historical reason, and we (binding team) want to use ScriptState as the first argument as a common rule. I\u0027ll work for it in another CL.",
+      "parentUuid": "17cdff2f_eeae270e",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 22
+      },
+      "revId": "b552a348bbe08c626180bd0b36f01245516f0279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b69871e5_cf84cf09",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
         "patchSetId": 12
@@ -79,6 +139,30 @@
       "revId": "b552a348bbe08c626180bd0b36f01245516f0279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac97222_1f9cd83e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-27T01:20:18Z",
+      "side": 1,
+      "message": "Because of the data structure in IDL compiler, we have\n  conditionally_enabled_attributes \u003d conditional_attributes + conditional_interface_object\nfor now.\nI used the variable before splitting them, but it seems confusing. Updated.",
+      "parentUuid": "b69871e5_cf84cf09",
+      "range": {
+        "startLine": 447,
+        "startChar": 0,
+        "endLine": 447,
+        "endChar": 78
+      },
+      "revId": "b552a348bbe08c626180bd0b36f01245516f0279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
