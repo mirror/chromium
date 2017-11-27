@@ -77,9 +77,9 @@ void DataDevice::StartDrag(const DataSource* source_resource,
   NOTIMPLEMENTED();
 }
 
-void DataDevice::SetSelection(const DataSource* source, uint32_t serial) {
+void DataDevice::SetSelection(DataSource* source, uint32_t serial) {
   // TODO(hirono): Check if serial is valid. crbug.com/746111
-  NOTIMPLEMENTED();
+  seat_->SetSelection(source);
 }
 
 void DataDevice::OnDragEntered(const ui::DropTargetEvent& event) {
@@ -148,6 +148,7 @@ int DataDevice::OnPerformDrop(const ui::DropTargetEvent& event) {
 void DataDevice::OnClipboardDataChanged() {
   if (!focused_surface_)
     return;
+  // Notifies data.
   SendSelection();
 }
 
