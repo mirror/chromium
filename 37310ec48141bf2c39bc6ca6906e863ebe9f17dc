@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12d9de73_f8a73e8c",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/touch-pointer-event-properties.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-27T18:42:37Z",
+      "side": 1,
+      "message": "I\u0027d still like this test to listen to touchmove perhaps and assert that the touchmove\u0027s radii are 2x the corresponding pointermove\u0027s width/height.",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "37310ec48141bf2c39bc6ca6906e863ebe9f17dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
