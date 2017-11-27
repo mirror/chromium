@@ -151,6 +151,30 @@
       "revId": "5eda2833a0f052d8e9235ba11d59b139cf0aa64f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8742b6af_02eddc68",
+        "filename": "tools/android/native_lib_memory/visualize.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T15:11:01Z",
+      "side": 1,
+      "message": "Oh Javascript... https://wtfjs.com/wtfs/2015-04-08-array-sort",
+      "parentUuid": "b4616b3e_d6bd0df5",
+      "range": {
+        "startLine": 213,
+        "startChar": 39,
+        "endLine": 213,
+        "endChar": 54
+      },
+      "revId": "5eda2833a0f052d8e9235ba11d59b139cf0aa64f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
