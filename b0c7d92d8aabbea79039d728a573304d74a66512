@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d01a8ce_4ba16472",
+        "filename": "ui/android/java/src/org/chromium/ui/display/PhysicalDisplayAndroid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2017-11-27T07:44:57Z",
+      "side": 1,
+      "message": "According to https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/graphics/java/android/graphics/PixelFormat.java#146, it looks like RGBX_8888 doesn\u0027t have alpha channel.",
+      "revId": "b0c7d92d8aabbea79039d728a573304d74a66512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
