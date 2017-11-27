@@ -16,6 +16,24 @@
       "revId": "34079496fc1ebaf387283d5dd42d0d518befe014",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9547d8_915347dc",
+        "filename": "content/common/shared_worker/shared_worker_info.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-27T12:36:36Z",
+      "side": 1,
+      "message": "I think there is no way to do it in the SharedWorker mechanism. Is there a common way to get document\u0027s origin in the browser process?",
+      "parentUuid": "1fe01cb5_e13ae0d4",
+      "revId": "34079496fc1ebaf387283d5dd42d0d518befe014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
