@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a729081_76d5ed40",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_event_log_apitest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T22:41:18Z",
+      "side": 1,
+      "message": "What needs to happen before this?  Would it be sufficient to call this as the last step of SetUp()?\n\nWebrtcEventLogApiTest::SetUp() {\n  WebRtcTestBase::SetUp();\n  Initialize();  // Must be called after WebrtcTestBase::SetUp().\n}",
+      "revId": "44cedd47dda28b2196e9669d01701476371360e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
