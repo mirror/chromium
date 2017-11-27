@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c69ec316_3f2a7bdc",
+        "filename": "third_party/WebKit/LayoutTests/vr/getFrameData_oneframeupdate.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-27T22:40:44Z",
+      "side": 1,
+      "message": "Was this change intended to be part of the CL? If yes, please update the CL description and add 787196 to the Bug: line.",
+      "range": {
+        "startLine": 30,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "7ec53b081d92b327bd2bdfa9f2575f8502a4ce3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
