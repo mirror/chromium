@@ -12,4 +12,10 @@ TimeTicks DefaultTickClock::NowTicks() {
   return TimeTicks::Now();
 }
 
+// static
+DefaultTickClock* DefaultTickClock::GetInstance() {
+  CR_DEFINE_STATIC_LOCAL(DefaultTickClock, s_instance, ());
+  return &s_instance;
+}
+
 }  // namespace base
