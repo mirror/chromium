@@ -261,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "c7f6f7ec_e5576886",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-27T22:09:46Z",
+      "side": 1,
+      "message": "Thanks for explanation, using SequencedTaskRunnerHandle now.",
+      "parentUuid": "02224336_ced2cdbf",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "770076f6_afb70ac7",
         "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
         "patchSetId": 3
@@ -539,6 +557,24 @@
       "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9093c9_894381ca",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-27T22:09:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85c5cec2_d249edd7",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
