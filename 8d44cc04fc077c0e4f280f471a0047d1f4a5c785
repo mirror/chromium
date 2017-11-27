@@ -22,6 +22,30 @@
       "revId": "8d44cc04fc077c0e4f280f471a0047d1f4a5c785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f889622f_d2e38b40",
+        "filename": "ios/chrome/browser/autofill/form_structure_browsertest.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-27T21:17:07Z",
+      "side": 1,
+      "message": "You don\u0027t actually want to to this. It registers a destructor to be run on shutdown.\n\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Static-variables",
+      "parentUuid": "1ddb7128_1f31f3fa",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "8d44cc04fc077c0e4f280f471a0047d1f4a5c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
