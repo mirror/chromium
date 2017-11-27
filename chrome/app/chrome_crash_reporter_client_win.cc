@@ -28,6 +28,8 @@
 #include "components/crash/core/common/crash_keys.h"
 #include "components/version_info/channel.h"
 #include "gpu/config/gpu_crash_keys.h"
+#include "media/base/media_crash_keys.h"
+#include "media/media_features.h"
 
 namespace {
 
@@ -165,6 +167,11 @@ size_t RegisterCrashKeysHelper() {
       // Accessibility keys. Temporary for http://crbug.com/765490.
       {"ax_tree_error", kSmallSize},
       {"ax_tree_update", kMediumSize},
+
+      // media/
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+      {media::crash_keys::kCdmVersion, kSmallSize},
+#endif
   };
 
   // This dynamic set of keys is used for sets of key value pairs when gathering

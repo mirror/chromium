@@ -32,6 +32,7 @@ include_rules = [
   "+headless/public",  # For headless mode.
   "+mash/common",
   "+mash/quick_launch/public",
+  "+media/base/media_crash_keys.h",
   "+native_client/src/trusted/service_runtime/osx",
   "+remoting/client/plugin",
   "+sandbox",

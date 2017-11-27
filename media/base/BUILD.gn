@@ -155,6 +155,8 @@ source_set("base") {
     "media_client.h",
     "media_content_type.cc",
     "media_content_type.h",
+    "media_crash_keys.cc",
+    "media_crash_keys.h",
     "media_export.h",
     "media_log.cc",
     "media_log.h",

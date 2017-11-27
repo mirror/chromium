@@ -4,11 +4,13 @@
 
 #include "media/cdm/cdm_module.h"
 
+#include "base/debug/crash_logging.h"
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "media/base/media_crash_keys.h"
 
 #if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
 #include "media/cdm/cdm_host_files.h"
@@ -150,17 +152,24 @@ bool CdmModule::Initialize(const base::FilePath& cdm_path) {
       library_.GetFunctionPointer("DeinitializeCdmModule"));
   create_cdm_func_ = reinterpret_cast<CreateCdmFunc>(
       library_.GetFunctionPointer("CreateCdmInstance"));
+  get_cdm_version_func_ = reinterpret_cast<GetCdmVersionFunc>(
+      library_.GetFunctionPointer("GetCdmVersion"));
 
   if (!initialize_cdm_module_func_ || !deinitialize_cdm_module_func_ ||
-      !create_cdm_func_) {
+      !create_cdm_func_ || !get_cdm_version_func_) {
     LOG(ERROR) << "Missing entry function in CDM at " << cdm_path.value();
     initialize_cdm_module_func_ = nullptr;
     deinitialize_cdm_module_func_ = nullptr;
     create_cdm_func_ = nullptr;
+    get_cdm_version_func_ = nullptr;
     library_.Release();
     ReportLoadResult(LoadResult::kEntryPointMissing);
     return false;
   }
+
+  // In case of crashes, the crash dump doesn't indicate the CDM version.
+  std::string cdm_version = get_cdm_version_func_();
+  base::debug::SetCrashKeyValue(crash_keys::kCdmVersion, cdm_version);
 
 #if defined(OS_WIN)
   // Load DXVA before sandbox lockdown to give CDM access to Output Protection

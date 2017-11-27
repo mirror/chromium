@@ -17,6 +17,8 @@
 #include "components/flags_ui/flags_ui_switches.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/config/gpu_crash_keys.h"
+#include "media/base/media_crash_keys.h"
+#include "media/media_features.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/common/chrome_switches.h"
@@ -203,6 +205,11 @@ size_t RegisterChromeCrashKeys() {
     // Accessibility keys. Temporary for http://crbug.com/765490.
     {"ax_tree_error", kSmallSize},
     {"ax_tree_update", kMediumSize},
+
+    // media/
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+    {media::crash_keys::kCdmVersion, kSmallSize},
+#endif
   };
 
   // This dynamic set of keys is used for sets of key value pairs when gathering
