@@ -57,6 +57,8 @@ class TestNavigationObserver::TestWebContentsObserver
 
     parent_->OnDidFinishNavigation(navigation_handle->IsErrorPage(),
                                    navigation_handle->GetURL(),
+                                   navigation_handle->IsPost(),
+                                   navigation_handle->GetResourceRequestBody(),
                                    navigation_handle->GetNetErrorCode());
   }
 
@@ -131,6 +133,7 @@ TestNavigationObserver::TestNavigationObserver(
       number_of_navigations_(number_of_navigations),
       target_url_(target_url),
       last_navigation_succeeded_(false),
+      last_navigation_is_post_(false),
       last_net_error_code_(net::OK),
       message_loop_runner_(new MessageLoopRunner(quit_mode)),
       web_contents_created_callback_(
@@ -184,11 +187,16 @@ void TestNavigationObserver::OnDidStartNavigation() {
   last_navigation_succeeded_ = false;
 }
 
-void TestNavigationObserver::OnDidFinishNavigation(bool is_error_page,
-                                                   const GURL& url,
-                                                   net::Error error_code) {
+void TestNavigationObserver::OnDidFinishNavigation(
+    bool is_error_page,
+    const GURL& url,
+    bool is_post,
+    const scoped_refptr<ResourceRequestBody>& resource_request_body,
+    net::Error error_code) {
   last_navigation_url_ = url;
   last_navigation_succeeded_ = !is_error_page;
+  last_navigation_is_post_ = is_post;
+  last_resource_request_body_ = resource_request_body;
   last_net_error_code_ = error_code;
 
   if (wait_event_ == WaitEvent::kNavigationFinished)
