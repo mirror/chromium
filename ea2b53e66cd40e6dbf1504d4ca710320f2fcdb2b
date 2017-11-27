@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "aaae1eb5_e111841d",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T06:21:52Z",
+      "side": 1,
+      "message": "That\u0027s mostly what this patch does, I think?\n\nNote that WrapPersistent is used with PostTask.  For example, given that we have\n\n    func_ptr \u003d void (*func_ptr)(CallbackFunctionBase* callback);\n\nand we\u0027d like to bind |func_ptr| with |callback_function_base| of type CallbackFunctionBase*.  Your idea sounds like one of the followings.\n\n    V8CallbackFunctionHolder holder(callback_function_base);\n    // |holder| makes the underlying v8::Function alive, but\n    // it does NOT make |callback_function_base| alive.\n    // Someone needs |callback_function_base| alive.\n\n    Bind(func_ptr, WrapPersistent(holder));  // NG\n    // |func_ptr| takes a CallbackFunctionBase* as the argument.\n\n    Bind(func_ptr,\n         WrapPersistent(callback_function_base),\n         WrapPersistent(holder));  // NG\n    // |func_ptr| does NOT take two arguments.  It only takes\n    // a CallbackFunctionBase*.\n\n    Bind(func_ptr,\n         WrapPersistent(callback_function_base));\n    persistent_holder \u003d WrapPersistent(holder);  // NG\n    // No one holds |persistent_holder|.\n\nThis patch combines the above |holder| and |callback_function_base| into one thing: CallbackFunctionBase::Persistent, which makes both of CallbackFunctionBase and v8::Function alive, and also which behaves as if CallbackFunctionBase* as same as blink::Persistent behaves so.\n\n    auto p \u003d WrapPersistentCallbackFunction(callback_function_base)\n    Bind(func_ptr, p);\n\nThis works because |p| makes both of |callback_function_base| and its underlying v8::Function alive, plus |p| behaves as if |callback_function_base| so that |func_ptr| can take |p| as the argument.",
+      "parentUuid": "cbe70f47_97dfa237",
+      "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0938f716_964d8de2",
         "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
         "patchSetId": 3
@@ -102,6 +120,24 @@
       "writtenOn": "2017-11-27T05:44:24Z",
       "side": 1,
       "message": "Why does this need to be Copyable? It\u0027s discouraged...",
+      "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1bcf985_b9fa9ed4",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T06:21:52Z",
+      "side": 1,
+      "message": "The arguments of Bind need to be copyable or movable.  I was lazy to implement this class as a movable type.  If it matters, I\u0027m happy to make this a movable (and non-copyable) type.",
+      "parentUuid": "0938f716_964d8de2",
       "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
