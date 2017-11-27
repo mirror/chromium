@@ -89,7 +89,7 @@ def _IsRelevantNmName(name):
   # 00000000 t $t
   # 00000000 r $d
   # 00000344 N
-  return name and not (len(name) == 2 and name.startswith('$'))
+  return name and not name.startswith('$')
 
 
 def _IsRelevantObjectFileName(name):
