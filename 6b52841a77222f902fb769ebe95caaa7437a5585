@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "971b69f3_958b4ff6",
+        "filename": "content/browser/webauth/cbor/cbor_binary.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "optional nit: Do we need \"Data\" here and in the next?",
+      "range": {
+        "startLine": 15,
+        "startChar": 47,
+        "endLine": 15,
+        "endChar": 51
+      },
+      "revId": "6b52841a77222f902fb769ebe95caaa7437a5585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d867210_48ea5686",
+        "filename": "content/browser/webauth/cbor/cbor_binary.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "nit: Indicates the number of bits the \"initial byte\" needs to be shifted to the right after applying |kMajorTypeDataMask| to produce the major type in the lowermost bits.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "6b52841a77222f902fb769ebe95caaa7437a5585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d8b0a5_356bcd7b",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "nit: Lead with the spelled out name:\n\nConcise Binary Object Representation (CBOR) decoder ...",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 45
+      },
+      "revId": "6b52841a77222f902fb769ebe95caaa7437a5585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99aea7a_f5a5081e",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "nit: No need to mention RFC 7049, it\u0027s obvious from the URL.",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "6b52841a77222f902fb769ebe95caaa7437a5585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86780ea6_313c80ec",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 15
@@ -13,6 +105,30 @@
       "writtenOn": "2017-11-18T00:41:19Z",
       "side": 1,
       "message": "Maybe \"only accepts canonical CBOR as defined by section 3.9\"? @Balazs, you\u0027re right that the decoder side is formally \"strict mode\" rather than \"canonical CBOR\", but I think it\u0027s right to define the input of a strict decoder as needing to be canonical. Does that make sense?",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 72
+      },
+      "revId": "6b52841a77222f902fb769ebe95caaa7437a5585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4090a026_926bb328",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "I\u0027m fine either way, but note that the set of constraints mandated by \"strict mode\" (3.10) is different than that of \"canonical\" (3.9). We seem to enforcing a combination of the two.",
+      "parentUuid": "86780ea6_313c80ec",
       "range": {
         "startLine": 18,
         "startChar": 3,

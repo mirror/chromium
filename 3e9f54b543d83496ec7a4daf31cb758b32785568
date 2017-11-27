@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6943abbf_e88cba53",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "nit: ... of the error ...",
+      "range": {
+        "startLine": 28,
+        "startChar": 40,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "3e9f54b543d83496ec7a4daf31cb758b32785568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bb500c_6aa2942d",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "Hmm, why do we take one by const value, and the other by mutable value? We are making a copy of both anyway, so let\u0027s just take both by mutable value, unless Jeffrey objects. :-)",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 62
+      },
+      "revId": "3e9f54b543d83496ec7a4daf31cb758b32785568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6edb4f90_217350ce",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "nit: Consider doing this case in the GetMajorType, so that you could just use const auto for the major_type variable.",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 34
+      },
+      "revId": "3e9f54b543d83496ec7a4daf31cb758b32785568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43667e0_01de38ff",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "nit: Can we avoid having a default label here, so that we have compile time checking that at least the supported (\u003d in CBORValue::Type) major types can be decoded?",
+      "revId": "3e9f54b543d83496ec7a4daf31cb758b32785568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6344bbdf_cd856f5c",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "nit: 0xFFUL, or maybe omit it fully, unless Jeffrey requested this format specifically.",
+      "range": {
+        "startLine": 131,
+        "startChar": 26,
+        "endLine": 131,
+        "endChar": 31
+      },
+      "revId": "3e9f54b543d83496ec7a4daf31cb758b32785568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f1e369_d337ea7e",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "make_optional\u003cCBORValue\u003e(...)",
+      "range": {
+        "startLine": 145,
+        "startChar": 21,
+        "endLine": 145,
+        "endChar": 44
+      },
+      "revId": "3e9f54b543d83496ec7a4daf31cb758b32785568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d557c7_1ce3e125",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "Can we use bit shifting here to avoid using doubles?",
+      "range": {
+        "startLine": 203,
+        "startChar": 19,
+        "endLine": 203,
+        "endChar": 62
+      },
+      "revId": "3e9f54b543d83496ec7a4daf31cb758b32785568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700d9081_7a3b9aac",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-27T22:23:06Z",
+      "side": 1,
+      "message": "nit: Can we omit this?",
+      "range": {
+        "startLine": 217,
+        "startChar": 25,
+        "endLine": 217,
+        "endChar": 29
+      },
+      "revId": "3e9f54b543d83496ec7a4daf31cb758b32785568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
