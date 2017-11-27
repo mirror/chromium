@@ -45,7 +45,9 @@
 #include "url/gurl.h"
 
 #if defined(OS_CHROMEOS)
+#include "chrome/browser/component_updater/cros_component_installer.h"
 #include "chrome/browser/extensions/api/file_handlers/non_native_file_system_delegate_chromeos.h"
+#include "chrome/browser/extensions/api/media_perception_private/media_perception_api_delegate_chromeos.h"
 #include "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.h"
 #include "chrome/browser/extensions/clipboard_extension_helper_chromeos.h"
 #endif
@@ -219,6 +221,15 @@ ChromeExtensionsAPIClient::GetNonNativeFileSystemDelegate() {
         base::MakeUnique<NonNativeFileSystemDelegateChromeOS>();
   }
   return non_native_file_system_delegate_.get();
+}
+
+MediaPerceptionAPIDelegate*
+ChromeExtensionsAPIClient::GetMediaPerceptionAPIDelegate() {
+  if (!media_perception_api_delegate_) {
+    media_perception_api_delegate_ =
+        std::make_unique<MediaPerceptionAPIDelegateChromeOS>();
+  }
+  return media_perception_api_delegate_.get();
 }
 
 void ChromeExtensionsAPIClient::SaveImageDataToClipboard(

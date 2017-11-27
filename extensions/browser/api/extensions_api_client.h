@@ -42,6 +42,7 @@ class ExtensionOptionsGuestDelegate;
 class FeedbackPrivateDelegate;
 class FileSystemDelegate;
 class ManagementAPIDelegate;
+class MediaPerceptionAPIDelegate;
 class MessagingDelegate;
 class MetricsPrivateDelegate;
 class MimeHandlerViewGuest;
@@ -161,6 +162,10 @@ class ExtensionsAPIClient {
   // If supported by the embedder, returns a delegate for querying non-native
   // file systems.
   virtual NonNativeFileSystemDelegate* GetNonNativeFileSystemDelegate();
+
+  // Provides an interface through which a Chrome OS media analytics component
+  // from Component Updater can be loaded and mounted on a device.
+  virtual MediaPerceptionAPIDelegate* GetMediaPerceptionAPIDelegate();
 
   // Saves image data on clipboard.
   virtual void SaveImageDataToClipboard(
