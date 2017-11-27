@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f903eef7_b36cfb9c",
+        "filename": "third_party/WebKit/Source/platform/loader/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-27T06:34:33Z",
+      "side": 1,
+      "message": "Does adding \"//third_party/WebKit/public:blink_headers\" instead work?",
+      "revId": "056cac49423c1fe4ef1a5f2888e6a24236e51851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8054a163_95bc75fb",
+        "filename": "third_party/WebKit/Source/platform/loader/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-27T06:34:33Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "056cac49423c1fe4ef1a5f2888e6a24236e51851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
