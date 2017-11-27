@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b029cbd4_9c6fcace",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-27T22:20:55Z",
+      "side": 1,
+      "message": "IWYU: add includes for TemplateURLService, SearchTermsData and FilePath.",
+      "revId": "c93c52b0731814bddf498d0dcdf66d6b1184e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1de60c_0ba8df41",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-27T22:20:55Z",
+      "side": 1,
+      "message": "Move these above IsTabOpenWithURL so that they\u0027re in the same order as the base class.",
+      "revId": "c93c52b0731814bddf498d0dcdf66d6b1184e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6e37a9_8becb906",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-27T22:20:55Z",
+      "side": 1,
+      "message": "IWYU: Add an include for ShortcutsBackend (or maybe a forward declaration is sufficient? I\u0027m not sure whether scoped_refptr needs the include or not).",
+      "revId": "c93c52b0731814bddf498d0dcdf66d6b1184e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d3c2c7_b5f2b1e5",
+        "filename": "components/omnibox/browser/shortcuts_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-27T22:20:55Z",
+      "side": 1,
+      "message": "Remove this and history_service_test_util.h.",
+      "revId": "c93c52b0731814bddf498d0dcdf66d6b1184e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
