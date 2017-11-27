@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3b44434_be8a9139",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/touch/multi-touch-user-gesture.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-27T20:41:34Z",
+      "side": 1,
+      "message": "Please fix the test label.",
+      "revId": "8001e86879f41176a3cfd17b96dd0c28c4a15983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f776762f_0164d87a",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/touch/multi-touch-user-gesture.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-27T20:41:34Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "8001e86879f41176a3cfd17b96dd0c28c4a15983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
