@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "863c2a04_fa607dda",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-27T22:55:30Z",
+      "side": 1,
+      "message": "We should also verify that task_GetMimeType() returns the original MimeType before setting the other MimeType.",
+      "revId": "330f065175875acc70c6f6218e2802c48564bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
