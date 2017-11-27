@@ -88,6 +88,24 @@
       "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87350d94_22361544",
+        "filename": "chromeos/dbus/auth_policy_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-27T11:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36e037e5_7682bb5c",
+      "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
