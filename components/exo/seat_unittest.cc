@@ -5,6 +5,7 @@
 #include "components/exo/seat.h"
 
 #include "base/memory/scoped_refptr.h"
+#include "components/exo/data_source.h"
 #include "components/exo/seat_observer.h"
 #include "components/exo/test/exo_test_base.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -45,6 +46,8 @@ TEST_F(SeatTest, OnSurfaceFocused) {
   seat.OnWindowFocused(nullptr, nullptr);
   ASSERT_EQ(1, observer.on_surface_focused_count());
 }
+
+TEST_F(SeatTest, OnSetSelection) {}
 
 }  // namespace
 }  // namespace exo
