@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e64adc7b_e1ff06ea",
+        "filename": "chromeos/dbus/auth_policy_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-27T16:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f7b12af_b5880c58",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55901e9a_27fb7330",
         "filename": "chromeos/dbus/auth_policy_client.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c49f10_dfab1bb1",
+        "filename": "chromeos/dbus/auth_policy_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-27T16:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55901e9a_27fb7330",
+      "range": {
+        "startLine": 51,
+        "startChar": 27,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c93c2b6f_3751a5b5",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-27T16:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d849d2c_9f21f018",
+      "range": {
+        "startLine": 40,
+        "startChar": 63,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "604b4a10_4a9bd13a",
         "filename": "chromeos/login/auth/authpolicy_login_helper.h",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1721ee4d_e19d460b",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-27T16:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "604b4a10_4a9bd13a",
+      "range": {
+        "startLine": 52,
+        "startChar": 67,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db5d515e_72f3b12a",
         "filename": "chromeos/login/auth/authpolicy_login_helper.h",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57806c46_710895b5",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-27T16:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db5d515e_72f3b12a",
+      "range": {
+        "startLine": 54,
+        "startChar": 38,
+        "endLine": 56,
+        "endChar": 78
+      },
+      "revId": "c71313e05161716fe8fc0fabbd1710f645f2f581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
