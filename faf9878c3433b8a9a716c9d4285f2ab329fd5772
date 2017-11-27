@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd37af31_fdf98ca6",
+        "filename": "extensions/browser/app_window/app_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T20:11:15Z",
+      "side": 1,
+      "message": "It would be nice to break this apart by extensions vs apps, since that might better inform future decisions.",
+      "revId": "faf9878c3433b8a9a716c9d4285f2ab329fd5772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b6cbf3_7e075720",
+        "filename": "extensions/browser/app_window/app_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T20:11:15Z",
+      "side": 1,
+      "message": "nit: add a note that these should not be reordered/deleted since they\u0027re used in UMA.",
+      "revId": "faf9878c3433b8a9a716c9d4285f2ab329fd5772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
