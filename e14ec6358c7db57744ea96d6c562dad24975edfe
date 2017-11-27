@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "504bb17c_0090a1c5",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-27T15:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "826548a2_90d29990",
+      "range": {
+        "startLine": 76,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 24
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "778bd0d4_ad1bd7ca",
         "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7769660e_ed788e21",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-27T15:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "778bd0d4_ad1bd7ca",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 6
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dfdc0c74_478028ab",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-27T15:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c354dda6_aa8b25e7",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 33
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1aadc95_00ad2fa2",
         "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945597bb_a399e898",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-27T15:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1aadc95_00ad2fa2",
+      "range": {
+        "startLine": 126,
+        "startChar": 3,
+        "endLine": 126,
+        "endChar": 10
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c273b53d_be9a3361",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-27T15:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac3e2d5b_59756fd4",
+      "range": {
+        "startLine": 138,
+        "startChar": 40,
+        "endLine": 141,
+        "endChar": 52
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d80997f5_d1b57b76",
         "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5624c335_41ac865e",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-27T15:50:30Z",
+      "side": 1,
+      "message": "You are right, the caller should pass a different format depending if it is ozone or not. So I will update into the other CL: https://chromium-review.googlesource.com/c/chromium/src/+/787290",
+      "parentUuid": "d80997f5_d1b57b76",
+      "range": {
+        "startLine": 152,
+        "startChar": 4,
+        "endLine": 152,
+        "endChar": 42
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "1465a99f_a6b9b645",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-27T15:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a743c52_db9c9ceb",
+      "range": {
+        "startLine": 162,
+        "startChar": 6,
+        "endLine": 162,
+        "endChar": 16
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22722d47_ed5e8ea7",
         "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
         "patchSetId": 12
@@ -183,6 +351,30 @@
       "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45daadb6_6859fe9b",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-27T15:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22722d47_ed5e8ea7",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 24
+      },
+      "revId": "e14ec6358c7db57744ea96d6c562dad24975edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
