@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcfe849c_0bd80057",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2105,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-27T19:25:24Z",
+      "side": 1,
+      "message": "Oh, one last comment, sorry: can we please have a layouttest that captures the multi-pointerup user gesture behavior?  We would need to call window.open and check for non-null return value for /each/ pointerup.",
+      "revId": "e2e521293aab8576ab2b24762bf4097088b231d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
