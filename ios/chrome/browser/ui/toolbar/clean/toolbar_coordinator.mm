@@ -15,6 +15,7 @@
 #include "components/omnibox/browser/omnibox_edit_model.h"
 #include "components/search_engines/util.h"
 #include "ios/chrome/browser/autocomplete/autocomplete_scheme_classifier_impl.h"
+#include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
@@ -153,6 +154,8 @@
 
   self.mediator.consumer = self.toolbarViewController;
   self.mediator.webStateList = self.webStateList;
+  self.mediator.bookmarkModel =
+      ios::BookmarkModelFactory::GetForBrowserState(self.browserState);
 }
 
 - (void)stop {
