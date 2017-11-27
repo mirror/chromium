@@ -10,7 +10,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
 #include "content/common/content_export.h"
-#include "content/common/media/media_devices.mojom.h"
+#include "content/public/common/media/media_devices.mojom.h"
 #include "content/renderer/media/media_stream_constraints_util.h"
 #include "media/capture/video_capture_types.h"
 #include "third_party/WebKit/public/web/WebApplyConstraintsRequest.h"

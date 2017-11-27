@@ -14,7 +14,7 @@
 namespace media {
 struct AudioDeviceDescription;
 struct VideoCaptureDeviceDescriptor;
-}
+}  // namespace media
 
 namespace content {
 

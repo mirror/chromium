@@ -13,7 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/system_monitor/system_monitor.h"
 #include "content/common/content_export.h"
-#include "content/common/media/media_devices.h"
+#include "content/public/common/media/media_devices.h"
 #include "media/audio/audio_device_description.h"
 #include "media/capture/video/video_capture_device_descriptor.h"
 

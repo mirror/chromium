@@ -10,7 +10,7 @@
 
 #include "base/callback.h"
 #include "content/common/content_export.h"
-#include "content/common/media/media_devices.h"
+#include "content/public/common/media/media_devices.h"
 #include "url/origin.h"
 
 namespace content {

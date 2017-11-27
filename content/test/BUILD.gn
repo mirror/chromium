@@ -1472,7 +1472,6 @@ test("content_unittests") {
     "../common/inter_process_time_ticks_converter_unittest.cc",
     "../common/mac/attributed_string_coder_unittest.mm",
     "../common/manifest_util_unittest.cc",
-    "../common/media/media_devices_unittest.cc",
     "../common/origin_util_unittest.cc",
     "../common/page_state_serialization_unittest.cc",
     "../common/page_zoom_unittest.cc",
@@ -1501,6 +1500,7 @@ test("content_unittests") {
     "../network/upload_progress_tracker_unittest.cc",
     "../network/url_loader_unittest.cc",
     "../public/common/drop_data_unittest.cc",
+    "../public/common/media/media_devices_unittest.cc",
     "../public/common/network_connection_tracker_unittest.cc",
     "../public/common/simple_url_loader_unittest.cc",
     "../public/common/url_utils_unittest.cc",
@@ -1827,6 +1827,7 @@ test("content_unittests") {
       "../renderer/p2p/ipc_network_manager_unittest.cc",
     ]
     deps += [
+      "//content/public/common:media_devices",
       "//services/device/public/interfaces",
       "//third_party/opus",
       "//third_party/webrtc/api:libjingle_peerconnection",

@@ -14,8 +14,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "content/common/content_export.h"
-#include "content/common/media/media_devices.h"
-#include "content/common/media/media_devices.mojom.h"
+#include "content/public/common/media/media_devices.h"
+#include "content/public/common/media/media_devices.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_frame_observer_tracker.h"
 

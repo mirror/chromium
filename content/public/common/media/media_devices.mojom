@@ -42,7 +42,7 @@ struct AudioInputDeviceCapabilities {
 interface MediaDevicesDispatcherHost {
   // The reply always contains NUM_MEDIA_DEVICE_TYPES elements.
   // The result is indexed by device type as defined in 
-  // content/common/media/media_devices.h.
+  // content/public/common/media/media_devices.h.
   EnumerateDevices(bool request_audio_input,
                    bool request_video_input,
                    bool request_audio_output)

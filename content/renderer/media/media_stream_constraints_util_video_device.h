@@ -10,7 +10,7 @@
 
 #include "base/optional.h"
 #include "content/common/content_export.h"
-#include "content/common/media/media_devices.mojom.h"
+#include "content/public/common/media/media_devices.mojom.h"
 #include "content/renderer/media/media_stream_constraints_util.h"
 #include "media/capture/video_capture_types.h"
 

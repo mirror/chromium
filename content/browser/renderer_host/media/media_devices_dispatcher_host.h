@@ -15,7 +15,7 @@
 #include "content/browser/media/media_devices_util.h"
 #include "content/browser/renderer_host/media/media_devices_manager.h"
 #include "content/common/content_export.h"
-#include "content/common/media/media_devices.mojom.h"
+#include "content/public/common/media/media_devices.mojom.h"
 #include "media/capture/video/video_capture_device_descriptor.h"
 #include "url/origin.h"
 

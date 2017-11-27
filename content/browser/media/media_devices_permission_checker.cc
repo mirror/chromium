@@ -12,12 +12,12 @@
 #include "base/feature_list.h"
 #include "content/browser/frame_host/render_frame_host_delegate.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
-#include "content/common/media/media_devices.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/media/media_devices.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 

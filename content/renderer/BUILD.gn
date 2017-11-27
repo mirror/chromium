@@ -911,6 +911,7 @@ target(link_target_type, "renderer") {
     }
 
     deps += [
+      "//content/public/common:media_devices",
       "//crypto",
       "//jingle:jingle_glue",
       "//third_party/libvpx",
