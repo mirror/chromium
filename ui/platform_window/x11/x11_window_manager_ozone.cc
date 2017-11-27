@@ -6,22 +6,30 @@
 
 #include <X11/Xlib.h>
 
+#include "ui/platform_window/x11/x11_window_ozone.h"
+
 namespace ui {
 
-X11WindowManagerOzone::X11WindowManagerOzone() : event_grabber_(None) {}
+X11WindowManagerOzone::X11WindowManagerOzone() : event_grabber_(nullptr) {}
 
 X11WindowManagerOzone::~X11WindowManagerOzone() {}
 
-void X11WindowManagerOzone::GrabEvents(XID xwindow) {
-  if (event_grabber_ != None)
+void X11WindowManagerOzone::GrabEvents(X11WindowOzone* window) {
+  if (event_grabber_ == window)
     return;
-  event_grabber_ = xwindow;
+
+  X11WindowOzone* old_grabber = event_grabber_;
+  if (old_grabber)
+    old_grabber->OnLostCapture();
+
+  event_grabber_ = window;
 }
 
-void X11WindowManagerOzone::UngrabEvents(XID xwindow) {
-  if (event_grabber_ != xwindow)
+void X11WindowManagerOzone::UngrabEvents(X11WindowOzone* window) {
+  if (event_grabber_ != window)
     return;
-  event_grabber_ = None;
+  event_grabber_->OnLostCapture();
+  event_grabber_ = nullptr;
 }
 
 }  // namespace ui
