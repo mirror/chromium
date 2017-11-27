@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c23109a8_8f622546",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "This was needed to avoid a crash in the appcache unittests since my change from URLLoaderFactoryPtr to URLLoaderFactory changed the timing slightly.",
+      "parentUuid": "319e67d8_9357dfce",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39c9d3f3_16b7ca9d",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20162b51_5cc2f886",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39c9d3f3_16b7ca9d",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f83b29d7_ab21069e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba7fef8d_79142e72",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0995635_ef5f4add",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d6de34_646115eb",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0995635_ef5f4add",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "96f4630a_4cf2f4dd",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cce807a0_af8111c5",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e4fdc7c_b4557fcd",
         "filename": "content/browser/loader/resource_message_filter.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66259ec1_0663bb91",
+        "filename": "content/browser/loader/resource_message_filter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e4fdc7c_b4557fcd",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "26d19ef0_95036cf6",
+        "filename": "content/browser/loader/resource_message_filter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44ab6c54_3ceeafa8",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98296b29_06f0a465",
         "filename": "content/browser/url_loader_factory_getter.h",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d28bec5_f48304a1",
+        "filename": "content/browser/url_loader_factory_getter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98296b29_06f0a465",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "1bdd5b33_12663432",
+        "filename": "content/public/test/url_loader_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "869c1937_1db40d12",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b668912_fdaa4259",
         "filename": "content/public/test/url_loader_interceptor.cc",
         "patchSetId": 5
@@ -166,6 +328,24 @@
       "writtenOn": "2017-11-27T07:35:43Z",
       "side": 1,
       "message": "nit: for a bit of readability could this be wrapped in a method like parent_-\u003eIntercept(...)",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98beb1b6_3e4b7410",
+        "filename": "content/public/test/url_loader_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Given that it\u0027s called once, I prefer to leave as is.",
+      "parentUuid": "6b668912_fdaa4259",
       "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "90f316cf_1c908b96",
+        "filename": "content/public/test/url_loader_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50d110db_bbec4d09",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4821fe0_dc88f5ba",
         "filename": "content/public/test/url_loader_interceptor.cc",
         "patchSetId": 5
@@ -200,6 +398,24 @@
       "writtenOn": "2017-11-27T07:35:43Z",
       "side": 1,
       "message": "This returns RMF, not a factory.",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29cadef3_a3e8973d",
+        "filename": "content/public/test/url_loader_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "an RMF is a URLLoaderFactory. I had to have this line to avoid the compiler making the return type of this lambda be the RMF* and not URLLoaderFactory*",
+      "parentUuid": "e4821fe0_dc88f5ba",
       "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "ef0e8f6a_36c1cefc",
+        "filename": "content/public/test/url_loader_interceptor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37f74b72_cf79da75",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e724346_3a75980a",
         "filename": "content/public/test/url_loader_interceptor.h",
         "patchSetId": 5
@@ -237,6 +471,24 @@
       "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7788e006_2ef307c9",
+        "filename": "content/public/test/url_loader_interceptor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e724346_3a75980a",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "343d8f18_e82cf327",
+        "filename": "content/public/test/url_loader_interceptor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f22f5b4_c220a41c",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b57ebd51_85f5b356",
         "filename": "content/public/test/url_loader_interceptor.h",
         "patchSetId": 5
@@ -271,6 +541,24 @@
       "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9419056_d4e0cae8",
+        "filename": "content/public/test/url_loader_interceptor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T15:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b57ebd51_85f5b356",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
