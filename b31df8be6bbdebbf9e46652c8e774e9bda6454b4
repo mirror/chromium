@@ -16,6 +16,24 @@
       "revId": "b31df8be6bbdebbf9e46652c8e774e9bda6454b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c86e58e_7d8fdbce",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 92566,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T21:05:04Z",
+      "side": 1,
+      "message": "Talked offline. I was trying to make it consistent with other counts that we already have for VR. Ideally, we want to have all VR related metrics to use one format. But we already have two formats and it is not very trivial to rename these UMAs (need to deprecate old one and create new ones). So keep it as it is. Thanks!",
+      "parentUuid": "181ffe08_055377e8",
+      "revId": "b31df8be6bbdebbf9e46652c8e774e9bda6454b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
