@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "024a4619_079413e4",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-27T22:39:47Z",
+      "side": 1,
+      "message": "\u003e Specifically, you can\u0027t call these functions on full pages that were detached from the active list.\n\nReally? e.g., wouldn\u0027t it be safe to call is_full() for full pages?",
+      "revId": "08c755385f06397347fe111e7433d6366a3731b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
