@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "799c85a6_953ddfc3",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-27T18:53:37Z",
+      "side": 1,
+      "message": "This is what the old observer was doing btw:\nhttps://cs.chromium.org/chromium/src/content/renderer/media/rtc_peer_connection_handler.cc?q\u003drtc_peer_connection_handler.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d481",
+      "revId": "ae9c814c64c8a8712f85c726aa5d87982915faf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
