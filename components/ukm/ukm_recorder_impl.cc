@@ -33,6 +33,14 @@ size_t GetMaxSources() {
       kUkmFeature, "MaxSources", kDefaultMaxSources));
 }
 
+// Gets the maximum number of unferenced Sources kept after purging sources
+// that were added to the log.
+size_t GetMaxKeptSources() {
+  constexpr size_t kDefaultMaxKeptSources = 100;
+  return static_cast<size_t>(base::GetFieldTrialParamByFeatureAsInt(
+      kUkmFeature, "MaxKeptSources", kDefaultMaxKeptSources));
+}
+
 // Gets the maximum number of Entries we'll keep in memory before discarding any
 // new ones being added.
 size_t GetMaxEntries() {
@@ -103,20 +111,39 @@ void UkmRecorderImpl::Purge() {
 
 void UkmRecorderImpl::StoreRecordingsInReport(Report* report) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  for (const auto& kv : sources_) {
+
+  std::set<SourceId> ids_seen;
+  for (const auto& entry : entries_) {
+    Entry* proto_entry = report->add_entries();
+    StoreEntryProto(*entry, proto_entry);
+    ids_seen.insert(entry->source_id);
+  }
+
+  std::map<SourceId, std::unique_ptr<UkmSource>> unsent_sources;
+  for (auto& kv : sources_) {
+    if (!base::ContainsKey(ids_seen, kv.first)) {
+      unsent_sources.insert(std::make_pair(kv.first, std::move(kv.second)));
+      continue;
+    }
     Source* proto_source = report->add_sources();
     kv.second->PopulateProto(proto_source);
     if (!ShouldRecordInitialUrl())
       proto_source->clear_initial_url();
   }
-  for (const auto& entry : entries_) {
-    Entry* proto_entry = report->add_entries();
-    StoreEntryProto(*entry, proto_entry);
-  }
 
-  UMA_HISTOGRAM_COUNTS_1000("UKM.Sources.SerializedCount", sources_.size());
+  UMA_HISTOGRAM_COUNTS_1000("UKM.Sources.SerializedCount",
+                            sources_.size() - unsent_sources.size());
   UMA_HISTOGRAM_COUNTS_1000("UKM.Entries.SerializedCount", entries_.size());
-  sources_.clear();
+
+  // Only keep the last N sources - delete the others from the front (since
+  // std::map is sorted by source id).
+  const size_t max_kept_sources = GetMaxKeptSources();
+  if (unsent_sources.size() > max_kept_sources) {
+    unsent_sources.erase(unsent_sources.begin(),
+                         std::next(unsent_sources.begin(),
+                                   unsent_sources.size() - max_kept_sources));
+  }
+  sources_.swap(unsent_sources);
   entries_.clear();
 }
 
