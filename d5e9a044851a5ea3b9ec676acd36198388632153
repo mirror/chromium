@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb993477_1d39c0a9",
+        "filename": "base/android/java/src/org/chromium/base/BuildInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-11-27T19:52:12Z",
+      "side": 1,
+      "message": "Probably add another comment before this explaining that the commented block is used for a code gen tool?",
+      "revId": "d5e9a044851a5ea3b9ec676acd36198388632153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
