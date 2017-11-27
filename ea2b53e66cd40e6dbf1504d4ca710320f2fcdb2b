@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "7cda63d7_0792388a",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T09:19:53Z",
+      "side": 1,
+      "message": "I simplified things in the previous reply.  |func_ptr| actually takes |FooCallback*| as the argument type.\n\nMore realistic example is:\n\n    // IDL\n    callback FooCallback \u003d void (DOMString);\n\n    // C++\n    auto func_ptr \u003d \u0026FooCallback::Invoke;\n    FooCallback* callback \u003d ...;\n    Bind(func_ptr, WrapPersistentCallbackFunction(callback), String(\"foo\"));\n\nwhere |func_ptr| is actually a reference to a member function of FooCallback, so the first argument must be a pointer to FooCallback as |this| pointer.\n\nIt\u0027s the same question as \"Why do we need to pass T* to blink::Persistent\u003cT\u003e?\".",
+      "parentUuid": "5d85f4d2_1c1447b1",
+      "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0938f716_964d8de2",
         "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
         "patchSetId": 3
