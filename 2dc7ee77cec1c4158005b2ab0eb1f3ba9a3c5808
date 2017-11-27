@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c761569d_ec62f5b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T12:03:52Z",
+      "side": 1,
+      "message": "The version check isn\u0027t really necessary here, I would just set the channel name even on \u003cO since it doesn\u0027t involve any extra work. (Unlike getting the channel ID).",
+      "range": {
+        "startLine": 629,
+        "startChar": 0,
+        "endLine": 630,
+        "endChar": 26
+      },
+      "revId": "2dc7ee77cec1c4158005b2ab0eb1f3ba9a3c5808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5e5d7b_5dd17221",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T12:03:52Z",
+      "side": 1,
+      "message": "Extract this to a named variable eg \u0027originForDisplay\u0027 before creating the notification builder further up to avoid duplication with line 597 and improve readability.",
+      "range": {
+        "startLine": 631,
+        "startChar": 22,
+        "endLine": 631,
+        "endChar": 94
+      },
+      "revId": "2dc7ee77cec1c4158005b2ab0eb1f3ba9a3c5808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9856358_2b2a109b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkServiceClient.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T12:03:52Z",
+      "side": 1,
+      "message": "I want to check I understand what this is calling in practice, because it\u0027s confusing.\n\nMy best guess:\n- This calls through to the WebApkServiceImpl.notifyNotificationWithChannel method if the runtime library has updated so this method exists there\n- Otherwise it calls through to WebApkServiceImplWrapper.notifyNotification via some special casing in WebApkServiceImplWrapper.onTransact (which creates and sets the General channel on the notification, then posts it to the NotificationManager)\n\nIs this understanding correct? Please correct me if it\u0027s wrong.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 54
+      },
+      "revId": "2dc7ee77cec1c4158005b2ab0eb1f3ba9a3c5808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34b0c9d_a8c0245a",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T12:03:52Z",
+      "side": 1,
+      "message": "nit: javadoc goes on top of @Annotations",
+      "revId": "2dc7ee77cec1c4158005b2ab0eb1f3ba9a3c5808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95950813_4c5d0ec3",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T12:03:52Z",
+      "side": 1,
+      "message": "Hmm there\u0027s some duplication here with the wrapper\u0027s ensureNotificationChannelExists method. Can it be avoided?",
+      "revId": "2dc7ee77cec1c4158005b2ab0eb1f3ba9a3c5808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
