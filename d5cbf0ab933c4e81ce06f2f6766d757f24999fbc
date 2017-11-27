@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e66925a9_b003d331",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-27T19:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ecdd04e_9b5f9c73",
+      "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f051044_9010a975",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fd0f89_af2d7402",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-27T19:16:46Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I did it incorrect last week, or the code changed, but you are right, this works now. I changed it.",
+      "parentUuid": "9f051044_9010a975",
+      "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "18de73f1_f58dce56",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-27T19:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cee659cd_644a5c57",
+      "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4700a99b_7f790597",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "193786e9_01914e3f",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-27T19:16:46Z",
+      "side": 1,
+      "message": "I removed the else and moved the DICE part to a helper function.",
+      "parentUuid": "4700a99b_7f790597",
+      "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fbe9db3_4ea25708",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733d1110_909275c1",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-27T19:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fbe9db3_4ea25708",
+      "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
