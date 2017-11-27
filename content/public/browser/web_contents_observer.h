@@ -44,7 +44,6 @@ struct FaviconURL;
 struct LoadCommittedDetails;
 struct PrunedDetails;
 struct Referrer;
-struct ResourceRequestDetails;
 
 // An observer API implemented by classes which are interested in various page
 // load events from WebContents.  They also get a chance to filter IPC messages.
@@ -251,11 +250,6 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener {
       const GURL& url,
       const std::string& mime_type,
       ResourceType resource_type) {}
-
-  // This method is invoked when a response has been received for a resource
-  // request.
-  virtual void DidGetResourceResponseStart(
-      const ResourceRequestDetails& details) {}
 
   // This method is invoked when a new non-pending navigation entry is created.
   // This corresponds to one NavigationController entry being created
