@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad3c7989_f2ea8fcf",
+        "filename": "components/safe_browsing/password_protection/password_protection_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-11-27T20:09:46Z",
+      "side": 1,
+      "message": "nit: maybe just add a comment to clarify why this only happens when a warning is not shown",
+      "range": {
+        "startLine": 19,
+        "startChar": 14,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "fea181bf97bddd46e00e998f6e6ecccbf123c51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
