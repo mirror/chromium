@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "038d1551_d1a6b941",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-27T18:34:43Z",
+      "side": 1,
+      "message": "Maybe expand the descriptions for \"User did autofill\" and \"Field was autofilled\" so it\u0027s clearer how they differ.\n\nHow about something like:\n\n  \"User triggered autofill\"\n  \"A field was populated by autofill\"\n\nSimilarly for the comments in the header file.",
+      "revId": "f8d498f0456c9a1cc08fed3bb48262ddac4b4640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
