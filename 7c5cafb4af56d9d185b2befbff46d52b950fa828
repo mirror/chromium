@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a45b96a4_12f55501",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-27T21:08:45Z",
+      "side": 1,
+      "message": "|data| -\u003e |u2f_register_response|",
+      "parentUuid": "f3a8af7e_9499cdd3",
+      "range": {
+        "startLine": 123,
+        "startChar": 17,
+        "endLine": 123,
+        "endChar": 33
+      },
+      "revId": "7c5cafb4af56d9d185b2befbff46d52b950fa828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5cd3876_f9dd90f1",
         "filename": "device/u2f/u2f_request.h",
         "patchSetId": 3
