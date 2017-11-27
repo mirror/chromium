@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b969d6e_0732c87f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-27T02:51:04Z",
+      "side": 1,
+      "message": "this can be initialized in the initializer list",
+      "revId": "3b2fc8aa5a399641bbae328f37b04a0773676d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f42d28_cc9d41a9",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-27T02:51:04Z",
+      "side": 1,
+      "message": "why not just round the battery_percent?",
+      "revId": "3b2fc8aa5a399641bbae328f37b04a0773676d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c488f544_b33e68f9",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-27T02:51:04Z",
+      "side": 1,
+      "message": "~UserActivityLoggerUKM() override \u003d default ?",
+      "revId": "3b2fc8aa5a399641bbae328f37b04a0773676d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ce29d7_bc0e03cf",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-27T02:51:04Z",
+      "side": 1,
+      "message": "who will call this function?",
+      "revId": "3b2fc8aa5a399641bbae328f37b04a0773676d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95650398_712d695d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-27T02:51:04Z",
+      "side": 1,
+      "message": "nit: blank line",
+      "revId": "3b2fc8aa5a399641bbae328f37b04a0773676d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
