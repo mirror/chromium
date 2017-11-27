@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "174d49f6_39d1df56",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 92566,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-27T19:53:28Z",
+      "side": 1,
+      "message": "Add a units here, probably just \"searches\" makes sense.",
+      "revId": "dfc86595deff9d790a621704040a9ee37183d656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
