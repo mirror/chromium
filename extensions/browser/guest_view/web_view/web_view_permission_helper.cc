@@ -157,8 +157,7 @@ WebViewPermissionHelper::WebViewPermissionHelper(WebViewGuest* web_view_guest)
               this));
 }
 
-WebViewPermissionHelper::~WebViewPermissionHelper() {
-}
+WebViewPermissionHelper::~WebViewPermissionHelper() = default;
 
 // static
 WebViewPermissionHelper* WebViewPermissionHelper::FromFrameID(
@@ -392,6 +391,7 @@ WebViewPermissionHelper::PermissionResponseInfo&
 WebViewPermissionHelper::PermissionResponseInfo::operator=(
     WebViewPermissionHelper::PermissionResponseInfo&& other) = default;
 
-WebViewPermissionHelper::PermissionResponseInfo::~PermissionResponseInfo() {}
+WebViewPermissionHelper::PermissionResponseInfo::~PermissionResponseInfo() =
+    default;
 
 }  // namespace extensions

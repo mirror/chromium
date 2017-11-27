@@ -91,7 +91,7 @@ AudioNode CreateAudioNode(const AudioNodeInfo& info, int version) {
 class AudioApiTest : public ShellApiTest {
  public:
   AudioApiTest() : cras_audio_handler_(NULL), fake_cras_audio_client_(NULL) {}
-  ~AudioApiTest() override {}
+  ~AudioApiTest() override = default;
 
   void SetUp() override {
     session_feature_type_ = extensions::ScopedCurrentFeatureSessionType(
@@ -286,7 +286,7 @@ IN_PROC_BROWSER_TEST_F(AudioApiTest, OnNodesChangedRemoveNodes) {
 
 class WhitelistedAudioApiTest : public AudioApiTest {
  public:
-  WhitelistedAudioApiTest() {}
+  WhitelistedAudioApiTest() = default;
   ~WhitelistedAudioApiTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {

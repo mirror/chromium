@@ -50,7 +50,7 @@ namespace {
 
 class RuntimeAPIUpdateTest : public ExtensionApiTest {
  public:
-  RuntimeAPIUpdateTest() {}
+  RuntimeAPIUpdateTest() = default;
 
  protected:
   void SetUpOnMainThread() override {

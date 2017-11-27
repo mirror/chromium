@@ -216,8 +216,7 @@ RuntimeAPI::RuntimeAPI(content::BrowserContext* context)
       ->AddObserver(this);
 }
 
-RuntimeAPI::~RuntimeAPI() {
-}
+RuntimeAPI::~RuntimeAPI() = default;
 
 void RuntimeAPI::OnExtensionLoaded(content::BrowserContext* browser_context,
                                    const Extension* extension) {

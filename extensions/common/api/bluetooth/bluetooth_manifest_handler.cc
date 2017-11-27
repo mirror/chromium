@@ -11,9 +11,9 @@
 
 namespace extensions {
 
-BluetoothManifestHandler::BluetoothManifestHandler() {}
+BluetoothManifestHandler::BluetoothManifestHandler() = default;
 
-BluetoothManifestHandler::~BluetoothManifestHandler() {}
+BluetoothManifestHandler::~BluetoothManifestHandler() = default;
 
 bool BluetoothManifestHandler::Parse(Extension* extension,
                                      base::string16* error) {

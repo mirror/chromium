@@ -25,8 +25,7 @@ WebViewContentScriptManager::WebViewContentScriptManager(
     : user_script_loader_observer_(this), browser_context_(browser_context)  {
 }
 
-WebViewContentScriptManager::~WebViewContentScriptManager() {
-}
+WebViewContentScriptManager::~WebViewContentScriptManager() = default;
 
 WebViewContentScriptManager* WebViewContentScriptManager::Get(
     content::BrowserContext* browser_context) {

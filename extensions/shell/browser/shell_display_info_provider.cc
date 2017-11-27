@@ -8,11 +8,9 @@
 
 namespace extensions {
 
-ShellDisplayInfoProvider::ShellDisplayInfoProvider() {
-}
+ShellDisplayInfoProvider::ShellDisplayInfoProvider() = default;
 
-ShellDisplayInfoProvider::~ShellDisplayInfoProvider() {
-}
+ShellDisplayInfoProvider::~ShellDisplayInfoProvider() = default;
 
 bool ShellDisplayInfoProvider::SetInfo(
     const std::string& display_id,

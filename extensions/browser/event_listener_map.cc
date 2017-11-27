@@ -61,7 +61,7 @@ std::unique_ptr<EventListener> EventListener::ForExtensionServiceWorker(
                         true, worker_thread_id, std::move(filter)));
 }
 
-EventListener::~EventListener() {}
+EventListener::~EventListener() = default;
 
 bool EventListener::Equals(const EventListener* other) const {
   // We don't check matcher_id equality because we want a listener with a
@@ -122,7 +122,7 @@ EventListenerMap::EventListenerMap(Delegate* delegate)
     : delegate_(delegate) {
 }
 
-EventListenerMap::~EventListenerMap() {}
+EventListenerMap::~EventListenerMap() = default;
 
 bool EventListenerMap::AddListener(std::unique_ptr<EventListener> listener) {
   if (HasListener(listener.get()))

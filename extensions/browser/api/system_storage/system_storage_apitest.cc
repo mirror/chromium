@@ -54,8 +54,7 @@ TestStorageInfoProvider::TestStorageInfoProvider(
     : testing_data_(testing_data, testing_data + n) {
 }
 
-TestStorageInfoProvider::~TestStorageInfoProvider() {
-}
+TestStorageInfoProvider::~TestStorageInfoProvider() = default;
 
 double TestStorageInfoProvider::GetStorageFreeSpaceFromTransientIdAsync(
     const std::string& transient_id) {
@@ -71,8 +70,8 @@ double TestStorageInfoProvider::GetStorageFreeSpaceFromTransientIdAsync(
 
 class SystemStorageApiTest : public extensions::ShellApiTest {
  public:
-  SystemStorageApiTest() {}
-  ~SystemStorageApiTest() override {}
+  SystemStorageApiTest() = default;
+  ~SystemStorageApiTest() override = default;
 
   void SetUpOnMainThread() override {
     ShellApiTest::SetUpOnMainThread();

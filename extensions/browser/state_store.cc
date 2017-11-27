@@ -38,7 +38,7 @@ namespace extensions {
 class StateStore::DelayedTaskQueue {
  public:
   DelayedTaskQueue() : ready_(false) {}
-  ~DelayedTaskQueue() {}
+  ~DelayedTaskQueue() = default;
 
   // Queues up a task for invoking once we're ready. Invokes immediately if
   // we're already ready.
@@ -92,8 +92,7 @@ StateStore::StateStore(content::BrowserContext* context,
   }
 }
 
-StateStore::~StateStore() {
-}
+StateStore::~StateStore() = default;
 
 void StateStore::RequestInitAfterDelay() {
   InitAfterDelay();

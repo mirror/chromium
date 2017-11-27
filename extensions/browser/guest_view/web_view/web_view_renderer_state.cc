@@ -9,25 +9,21 @@ using content::BrowserThread;
 
 namespace extensions {
 
-WebViewRendererState::WebViewInfo::WebViewInfo() {
-}
+WebViewRendererState::WebViewInfo::WebViewInfo() = default;
 
 WebViewRendererState::WebViewInfo::WebViewInfo(const WebViewInfo& other) =
     default;
 
-WebViewRendererState::WebViewInfo::~WebViewInfo() {
-}
+WebViewRendererState::WebViewInfo::~WebViewInfo() = default;
 
 // static
 WebViewRendererState* WebViewRendererState::GetInstance() {
   return base::Singleton<WebViewRendererState>::get();
 }
 
-WebViewRendererState::WebViewRendererState() {
-}
+WebViewRendererState::WebViewRendererState() = default;
 
-WebViewRendererState::~WebViewRendererState() {
-}
+WebViewRendererState::~WebViewRendererState() = default;
 
 bool WebViewRendererState::IsGuest(int render_process_id) const {
   base::AutoLock auto_lock(web_view_partition_id_map_lock_);

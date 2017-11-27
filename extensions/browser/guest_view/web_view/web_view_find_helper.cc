@@ -19,8 +19,7 @@ WebViewFindHelper::WebViewFindHelper(WebViewGuest* webview_guest)
     : webview_guest_(webview_guest), current_find_request_id_(0) {
 }
 
-WebViewFindHelper::~WebViewFindHelper() {
-}
+WebViewFindHelper::~WebViewFindHelper() = default;
 
 void WebViewFindHelper::CancelAllFindSessions() {
   current_find_session_ = nullptr;
@@ -190,8 +189,7 @@ WebViewFindHelper::FindResults::FindResults()
     : number_of_matches_(0), active_match_ordinal_(0) {
 }
 
-WebViewFindHelper::FindResults::~FindResults() {
-}
+WebViewFindHelper::FindResults::~FindResults() = default;
 
 void WebViewFindHelper::FindResults::AggregateResults(
     int number_of_matches,
@@ -231,8 +229,7 @@ WebViewFindHelper::FindUpdateEvent::FindUpdateEvent(
     : search_text_(search_text) {
 }
 
-WebViewFindHelper::FindUpdateEvent::~FindUpdateEvent() {
-}
+WebViewFindHelper::FindUpdateEvent::~FindUpdateEvent() = default;
 
 void WebViewFindHelper::FindUpdateEvent::AggregateResults(
     int number_of_matches,
@@ -288,6 +285,6 @@ void WebViewFindHelper::FindInfo::SendResponse(bool canceled) {
   find_function_->SendResponse(true);
 }
 
-WebViewFindHelper::FindInfo::~FindInfo() {}
+WebViewFindHelper::FindInfo::~FindInfo() = default;
 
 }  // namespace extensions

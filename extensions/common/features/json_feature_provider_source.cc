@@ -17,8 +17,7 @@ JSONFeatureProviderSource::JSONFeatureProviderSource(const std::string& name)
     : name_(name) {
 }
 
-JSONFeatureProviderSource::~JSONFeatureProviderSource() {
-}
+JSONFeatureProviderSource::~JSONFeatureProviderSource() = default;
 
 void JSONFeatureProviderSource::LoadJSON(int resource_id) {
   const base::StringPiece features_file =

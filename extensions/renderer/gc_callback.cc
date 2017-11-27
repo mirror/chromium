@@ -45,7 +45,7 @@ GCCallback::GCCallback(ScriptContext* context,
                                               weak_ptr_factory_.GetWeakPtr()));
 }
 
-GCCallback::~GCCallback() {}
+GCCallback::~GCCallback() = default;
 
 // static
 void GCCallback::OnObjectGC(const v8::WeakCallbackInfo<GCCallback>& data) {

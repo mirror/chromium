@@ -102,8 +102,7 @@ VpnService::VpnConfiguration::VpnConfiguration(
       vpn_service_(vpn_service) {
 }
 
-VpnService::VpnConfiguration::~VpnConfiguration() {
-}
+VpnService::VpnConfiguration::~VpnConfiguration() = default;
 
 void VpnService::VpnConfiguration::OnPacketReceived(
     const std::vector<char>& data) {

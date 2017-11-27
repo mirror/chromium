@@ -37,7 +37,7 @@ class MockEventRouterObserver : public EventRouter::Observer {
   MockEventRouterObserver()
       : listener_added_count_(0),
         listener_removed_count_(0) {}
-  ~MockEventRouterObserver() override {}
+  ~MockEventRouterObserver() override = default;
 
   int listener_added_count() const { return listener_added_count_; }
   int listener_removed_count() const { return listener_removed_count_; }
@@ -182,7 +182,7 @@ class EventRouterTest : public ExtensionsTest {
 
 class EventRouterFilterTest : public ExtensionsTest {
  public:
-  EventRouterFilterTest() {}
+  EventRouterFilterTest() = default;
 
   void SetUp() override {
     ExtensionsTest::SetUp();

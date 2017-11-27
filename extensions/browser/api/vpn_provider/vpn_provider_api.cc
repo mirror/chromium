@@ -153,8 +153,7 @@ void ConvertParameters(const api_vpn::Parameters& parameters,
 
 }  // namespace
 
-VpnThreadExtensionFunction::~VpnThreadExtensionFunction() {
-}
+VpnThreadExtensionFunction::~VpnThreadExtensionFunction() = default;
 
 void VpnThreadExtensionFunction::SignalCallCompletionSuccess() {
   Respond(NoArguments());
@@ -185,8 +184,7 @@ void VpnThreadExtensionFunction::SignalCallCompletionFailure(
   }
 }
 
-VpnProviderCreateConfigFunction::~VpnProviderCreateConfigFunction() {
-}
+VpnProviderCreateConfigFunction::~VpnProviderCreateConfigFunction() = default;
 
 ExtensionFunction::ResponseAction VpnProviderCreateConfigFunction::Run() {
   std::unique_ptr<api_vpn::CreateConfig::Params> params(
@@ -215,8 +213,7 @@ ExtensionFunction::ResponseAction VpnProviderCreateConfigFunction::Run() {
   return RespondLater();
 }
 
-VpnProviderDestroyConfigFunction::~VpnProviderDestroyConfigFunction() {
-}
+VpnProviderDestroyConfigFunction::~VpnProviderDestroyConfigFunction() = default;
 
 ExtensionFunction::ResponseAction VpnProviderDestroyConfigFunction::Run() {
   std::unique_ptr<api_vpn::DestroyConfig::Params> params(
@@ -242,8 +239,7 @@ ExtensionFunction::ResponseAction VpnProviderDestroyConfigFunction::Run() {
   return RespondLater();
 }
 
-VpnProviderSetParametersFunction::~VpnProviderSetParametersFunction() {
-}
+VpnProviderSetParametersFunction::~VpnProviderSetParametersFunction() = default;
 
 ExtensionFunction::ResponseAction VpnProviderSetParametersFunction::Run() {
   std::unique_ptr<api_vpn::SetParameters::Params> params(
@@ -277,8 +273,7 @@ ExtensionFunction::ResponseAction VpnProviderSetParametersFunction::Run() {
   return RespondLater();
 }
 
-VpnProviderSendPacketFunction::~VpnProviderSendPacketFunction() {
-}
+VpnProviderSendPacketFunction::~VpnProviderSendPacketFunction() = default;
 
 ExtensionFunction::ResponseAction VpnProviderSendPacketFunction::Run() {
   std::unique_ptr<api_vpn::SendPacket::Params> params(
@@ -305,8 +300,7 @@ ExtensionFunction::ResponseAction VpnProviderSendPacketFunction::Run() {
 }
 
 VpnProviderNotifyConnectionStateChangedFunction::
-    ~VpnProviderNotifyConnectionStateChangedFunction() {
-}
+    ~VpnProviderNotifyConnectionStateChangedFunction() = default;
 
 ExtensionFunction::ResponseAction
 VpnProviderNotifyConnectionStateChangedFunction::Run() {

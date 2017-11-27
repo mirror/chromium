@@ -29,11 +29,9 @@ const WebAccessibleResourcesInfo* GetResourcesInfo(const Extension* extension) {
 
 }  // namespace
 
-WebAccessibleResourcesInfo::WebAccessibleResourcesInfo() {
-}
+WebAccessibleResourcesInfo::WebAccessibleResourcesInfo() = default;
 
-WebAccessibleResourcesInfo::~WebAccessibleResourcesInfo() {
-}
+WebAccessibleResourcesInfo::~WebAccessibleResourcesInfo() = default;
 
 // static
 bool WebAccessibleResourcesInfo::IsResourceWebAccessible(
@@ -58,11 +56,9 @@ bool WebAccessibleResourcesInfo::HasWebAccessibleResources(
   return info && info->web_accessible_resources_.size() > 0;
 }
 
-WebAccessibleResourcesHandler::WebAccessibleResourcesHandler() {
-}
+WebAccessibleResourcesHandler::WebAccessibleResourcesHandler() = default;
 
-WebAccessibleResourcesHandler::~WebAccessibleResourcesHandler() {
-}
+WebAccessibleResourcesHandler::~WebAccessibleResourcesHandler() = default;
 
 bool WebAccessibleResourcesHandler::Parse(Extension* extension,
                                           base::string16* error) {

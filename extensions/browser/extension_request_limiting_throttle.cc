@@ -20,8 +20,7 @@ ExtensionRequestLimitingThrottle::ExtensionRequestLimitingThrottle(
   DCHECK(manager_);
 }
 
-ExtensionRequestLimitingThrottle::~ExtensionRequestLimitingThrottle() {
-}
+ExtensionRequestLimitingThrottle::~ExtensionRequestLimitingThrottle() = default;
 
 void ExtensionRequestLimitingThrottle::WillStartRequest(bool* defer) {
   throttling_entry_ = manager_->RegisterRequestUrl(request_->url());

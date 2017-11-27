@@ -36,11 +36,9 @@ struct MimeTypesHandlerInfo : public extensions::Extension::ManifestData {
   ~MimeTypesHandlerInfo() override;
 };
 
-MimeTypesHandlerInfo::MimeTypesHandlerInfo() {
-}
+MimeTypesHandlerInfo::MimeTypesHandlerInfo() = default;
 
-MimeTypesHandlerInfo::~MimeTypesHandlerInfo() {
-}
+MimeTypesHandlerInfo::~MimeTypesHandlerInfo() = default;
 
 }  // namespace
 
@@ -52,11 +50,9 @@ std::vector<std::string> MimeTypesHandler::GetMIMETypeWhitelist() {
   return whitelist;
 }
 
-MimeTypesHandler::MimeTypesHandler() {
-}
+MimeTypesHandler::MimeTypesHandler() = default;
 
-MimeTypesHandler::~MimeTypesHandler() {
-}
+MimeTypesHandler::~MimeTypesHandler() = default;
 
 void MimeTypesHandler::AddMIMEType(const std::string& mime_type) {
   mime_type_set_.insert(mime_type);
@@ -88,11 +84,9 @@ MimeTypesHandler* MimeTypesHandler::GetHandler(
   return NULL;
 }
 
-MimeTypesHandlerParser::MimeTypesHandlerParser() {
-}
+MimeTypesHandlerParser::MimeTypesHandlerParser() = default;
 
-MimeTypesHandlerParser::~MimeTypesHandlerParser() {
-}
+MimeTypesHandlerParser::~MimeTypesHandlerParser() = default;
 
 bool MimeTypesHandlerParser::Parse(extensions::Extension* extension,
                                    base::string16* error) {

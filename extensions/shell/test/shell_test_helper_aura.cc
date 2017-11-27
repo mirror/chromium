@@ -10,9 +10,9 @@
 
 namespace extensions {
 
-ShellTestHelperAura::ShellTestHelperAura() {}
+ShellTestHelperAura::ShellTestHelperAura() = default;
 
-ShellTestHelperAura::~ShellTestHelperAura() {}
+ShellTestHelperAura::~ShellTestHelperAura() = default;
 
 void ShellTestHelperAura::SetUp() {
   // The ContextFactory must exist before any Compositors are created.

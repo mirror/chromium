@@ -66,7 +66,7 @@ class Handler : public content::WebContentsObserver {
 
  private:
   // This class manages its own lifetime.
-  ~Handler() override {}
+  ~Handler() override = default;
 
   // content::WebContentsObserver:
   void WebContentsDestroyed() override { Finish(); }
@@ -215,8 +215,7 @@ class Handler : public content::WebContentsObserver {
 
 }  // namespace
 
-ScriptExecutionObserver::~ScriptExecutionObserver() {
-}
+ScriptExecutionObserver::~ScriptExecutionObserver() = default;
 
 ScriptExecutor::ScriptExecutor(
     content::WebContents* web_contents,
@@ -227,8 +226,7 @@ ScriptExecutor::ScriptExecutor(
   CHECK(web_contents_);
 }
 
-ScriptExecutor::~ScriptExecutor() {
-}
+ScriptExecutor::~ScriptExecutor() = default;
 
 void ScriptExecutor::ExecuteScript(const HostID& host_id,
                                    ScriptExecutor::ScriptType script_type,

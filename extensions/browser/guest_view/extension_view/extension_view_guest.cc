@@ -37,8 +37,7 @@ const char ExtensionViewGuest::Type[] = "extensionview";
 ExtensionViewGuest::ExtensionViewGuest(WebContents* owner_web_contents)
     : GuestView<ExtensionViewGuest>(owner_web_contents) {}
 
-ExtensionViewGuest::~ExtensionViewGuest() {
-}
+ExtensionViewGuest::~ExtensionViewGuest() = default;
 
 // static
 GuestViewBase* ExtensionViewGuest::Create(WebContents* owner_web_contents) {

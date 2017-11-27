@@ -290,10 +290,10 @@ class FormDataParserMultipart : public FormDataParser {
   DISALLOW_COPY_AND_ASSIGN(FormDataParserMultipart);
 };
 
-FormDataParser::Result::Result() {}
-FormDataParser::Result::~Result() {}
+FormDataParser::Result::Result() = default;
+FormDataParser::Result::~Result() = default;
 
-FormDataParser::~FormDataParser() {}
+FormDataParser::~FormDataParser() = default;
 
 // static
 std::unique_ptr<FormDataParser> FormDataParser::Create(
@@ -350,7 +350,7 @@ std::unique_ptr<FormDataParser> FormDataParser::CreateFromContentTypeHeader(
   return std::unique_ptr<FormDataParser>();
 }
 
-FormDataParser::FormDataParser() {}
+FormDataParser::FormDataParser() = default;
 
 const net::UnescapeRule::Type FormDataParserUrlEncoded::unescape_rules_ =
     net::UnescapeRule::PATH_SEPARATORS |
@@ -369,7 +369,7 @@ FormDataParserUrlEncoded::FormDataParserUrlEncoded()
   args_[1] = &arg_value_;
 }
 
-FormDataParserUrlEncoded::~FormDataParserUrlEncoded() {}
+FormDataParserUrlEncoded::~FormDataParserUrlEncoded() = default;
 
 bool FormDataParserUrlEncoded::AllDataReadOK() {
   // All OK means we read the whole source.
@@ -447,7 +447,7 @@ FormDataParserMultipart::FormDataParserMultipart(
       state_(dash_boundary_pattern_.ok() ? STATE_INIT : STATE_ERROR),
       patterns_(g_patterns.Pointer()) {}
 
-FormDataParserMultipart::~FormDataParserMultipart() {}
+FormDataParserMultipart::~FormDataParserMultipart() = default;
 
 bool FormDataParserMultipart::AllDataReadOK() {
   return state_ == STATE_FINISHED;

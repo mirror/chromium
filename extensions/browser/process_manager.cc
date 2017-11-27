@@ -94,7 +94,7 @@ class IncognitoProcessManager : public ProcessManager {
   IncognitoProcessManager(BrowserContext* incognito_context,
                           BrowserContext* original_context,
                           ExtensionRegistry* extension_registry);
-  ~IncognitoProcessManager() override {}
+  ~IncognitoProcessManager() override = default;
   bool CreateBackgroundHost(const Extension* extension,
                             const GURL& url) override;
   scoped_refptr<content::SiteInstance> GetSiteInstanceForURL(const GURL& url)

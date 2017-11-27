@@ -36,8 +36,8 @@ const Extension* GetExtensionForWebContents(
 class JavaScriptDialogExtensionsClientImpl
     : public app_modal::JavaScriptDialogExtensionsClient {
  public:
-  JavaScriptDialogExtensionsClientImpl() {}
-  ~JavaScriptDialogExtensionsClientImpl() override {}
+  JavaScriptDialogExtensionsClientImpl() = default;
+  ~JavaScriptDialogExtensionsClientImpl() override = default;
 
   // JavaScriptDialogExtensionsClient:
   void OnDialogOpened(content::WebContents* web_contents) override {

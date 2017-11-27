@@ -35,8 +35,8 @@ void OnCollectForEntriesPath(
 
 class IsDirectoryUtilTest : public testing::Test {
  protected:
-  IsDirectoryUtilTest() {}
-  ~IsDirectoryUtilTest() override {}
+  IsDirectoryUtilTest() = default;
+  ~IsDirectoryUtilTest() override = default;
 
   void SetUp() override {
     EXPECT_TRUE(

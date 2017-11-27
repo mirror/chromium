@@ -199,7 +199,7 @@ class ScopedExtensionPrefUpdate : public prefs::ScopedDictionaryPrefUpdate {
     DCHECK(crx_file::id_util::IdIsValid(extension_id_));
   }
 
-  ~ScopedExtensionPrefUpdate() override {}
+  ~ScopedExtensionPrefUpdate() override = default;
 
   // ScopedDictionaryPrefUpdate overrides:
   std::unique_ptr<prefs::DictionaryValueUpdate> Get() override {
@@ -350,8 +350,7 @@ ExtensionPrefs* ExtensionPrefs::Create(
                             extensions_disabled, early_observers);
 }
 
-ExtensionPrefs::~ExtensionPrefs() {
-}
+ExtensionPrefs::~ExtensionPrefs() = default;
 
 // static
 ExtensionPrefs* ExtensionPrefs::Get(content::BrowserContext* context) {

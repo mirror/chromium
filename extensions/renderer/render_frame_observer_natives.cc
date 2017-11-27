@@ -59,7 +59,7 @@ RenderFrameObserverNatives::RenderFrameObserverNatives(ScriptContext* context)
                  base::Unretained(this)));
 }
 
-RenderFrameObserverNatives::~RenderFrameObserverNatives() {}
+RenderFrameObserverNatives::~RenderFrameObserverNatives() = default;
 
 void RenderFrameObserverNatives::Invalidate() {
   weak_ptr_factory_.InvalidateWeakPtrs();

@@ -14,8 +14,7 @@ ExtensionPrefValueMapFactory::ExtensionPrefValueMapFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-ExtensionPrefValueMapFactory::~ExtensionPrefValueMapFactory() {
-}
+ExtensionPrefValueMapFactory::~ExtensionPrefValueMapFactory() = default;
 
 // static
 ExtensionPrefValueMap* ExtensionPrefValueMapFactory::GetForBrowserContext(

@@ -34,8 +34,7 @@ VpnServiceFactory::VpnServiceFactory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-VpnServiceFactory::~VpnServiceFactory() {
-}
+VpnServiceFactory::~VpnServiceFactory() = default;
 
 bool VpnServiceFactory::ServiceIsCreatedWithBrowserContext() const {
   return true;

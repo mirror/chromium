@@ -41,9 +41,9 @@ std::string GetErrorString(lock_screen_data::OperationResult result) {
 
 }  // namespace
 
-LockScreenDataCreateFunction::LockScreenDataCreateFunction() {}
+LockScreenDataCreateFunction::LockScreenDataCreateFunction() = default;
 
-LockScreenDataCreateFunction::~LockScreenDataCreateFunction() {}
+LockScreenDataCreateFunction::~LockScreenDataCreateFunction() = default;
 
 ExtensionFunction::ResponseAction LockScreenDataCreateFunction::Run() {
   lock_screen_data::LockScreenItemStorage* storage =
@@ -77,9 +77,9 @@ void LockScreenDataCreateFunction::OnDone(
       ArgumentList(api::lock_screen_data::Create::Results::Create(item_info)));
 }
 
-LockScreenDataGetAllFunction::LockScreenDataGetAllFunction() {}
+LockScreenDataGetAllFunction::LockScreenDataGetAllFunction() = default;
 
-LockScreenDataGetAllFunction::~LockScreenDataGetAllFunction() {}
+LockScreenDataGetAllFunction::~LockScreenDataGetAllFunction() = default;
 
 ExtensionFunction::ResponseAction LockScreenDataGetAllFunction::Run() {
   lock_screen_data::LockScreenItemStorage* storage =
@@ -107,9 +107,9 @@ void LockScreenDataGetAllFunction::OnDone(
       ArgumentList(api::lock_screen_data::GetAll::Results::Create(items_info)));
 }
 
-LockScreenDataGetContentFunction::LockScreenDataGetContentFunction() {}
+LockScreenDataGetContentFunction::LockScreenDataGetContentFunction() = default;
 
-LockScreenDataGetContentFunction::~LockScreenDataGetContentFunction() {}
+LockScreenDataGetContentFunction::~LockScreenDataGetContentFunction() = default;
 
 ExtensionFunction::ResponseAction LockScreenDataGetContentFunction::Run() {
   lock_screen_data::LockScreenItemStorage* storage =
@@ -142,9 +142,9 @@ void LockScreenDataGetContentFunction::OnDone(
   Respond(Error(GetErrorString(result)));
 }
 
-LockScreenDataSetContentFunction::LockScreenDataSetContentFunction() {}
+LockScreenDataSetContentFunction::LockScreenDataSetContentFunction() = default;
 
-LockScreenDataSetContentFunction::~LockScreenDataSetContentFunction() {}
+LockScreenDataSetContentFunction::~LockScreenDataSetContentFunction() = default;
 
 ExtensionFunction::ResponseAction LockScreenDataSetContentFunction::Run() {
   std::unique_ptr<api::lock_screen_data::SetContent::Params> params(
@@ -175,9 +175,9 @@ void LockScreenDataSetContentFunction::OnDone(
   Respond(Error(GetErrorString(result)));
 }
 
-LockScreenDataDeleteFunction::LockScreenDataDeleteFunction() {}
+LockScreenDataDeleteFunction::LockScreenDataDeleteFunction() = default;
 
-LockScreenDataDeleteFunction::~LockScreenDataDeleteFunction() {}
+LockScreenDataDeleteFunction::~LockScreenDataDeleteFunction() = default;
 
 ExtensionFunction::ResponseAction LockScreenDataDeleteFunction::Run() {
   std::unique_ptr<api::lock_screen_data::Delete::Params> params(

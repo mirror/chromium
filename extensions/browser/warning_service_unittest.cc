@@ -19,7 +19,7 @@ class TestWarningService : public WarningService {
   explicit TestWarningService(content::BrowserContext* browser_context)
       : WarningService(browser_context) {
   }
-  ~TestWarningService() override {}
+  ~TestWarningService() override = default;
 
   void AddWarning(const Warning& warning) {
     WarningSet warnings;
@@ -30,7 +30,7 @@ class TestWarningService : public WarningService {
 
 class MockObserver : public WarningService::Observer {
  public:
-  virtual ~MockObserver() {}
+  virtual ~MockObserver() = default;
   MOCK_METHOD1(ExtensionWarningsChanged, void(const ExtensionIdSet&));
 };
 

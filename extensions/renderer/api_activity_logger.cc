@@ -32,7 +32,7 @@ APIActivityLogger::APIActivityLogger(ScriptContext* context,
                                          base::Unretained(this), APICALL));
 }
 
-APIActivityLogger::~APIActivityLogger() {}
+APIActivityLogger::~APIActivityLogger() = default;
 
 // static
 void APIActivityLogger::LogAPICall(

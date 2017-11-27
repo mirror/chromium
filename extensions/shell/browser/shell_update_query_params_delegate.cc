@@ -8,11 +8,9 @@
 
 namespace extensions {
 
-ShellUpdateQueryParamsDelegate::ShellUpdateQueryParamsDelegate() {
-}
+ShellUpdateQueryParamsDelegate::ShellUpdateQueryParamsDelegate() = default;
 
-ShellUpdateQueryParamsDelegate::~ShellUpdateQueryParamsDelegate() {
-}
+ShellUpdateQueryParamsDelegate::~ShellUpdateQueryParamsDelegate() = default;
 
 std::string ShellUpdateQueryParamsDelegate::GetExtraParams() {
   // This version number is high enough to be supported by Omaha
