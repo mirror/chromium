@@ -30,6 +30,13 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient {
 
   static WallpaperControllerClient* Get();
 
+  // TODO(crbug.com/776464): Move this to anonymous namesapce.
+  // Returns true if wallpaper files id can be returned successfully.
+  bool CanGetWallpaperFilesId() const;
+
+  // Ruturns files identifier for the |account_id|.
+  wallpaper::WallpaperFilesId GetFilesId(const AccountId& account_id) const;
+
   // Wrappers around the ash::mojom::WallpaperController interface.
   void SetCustomWallpaper(const AccountId& account_id,
                           const wallpaper::WallpaperFilesId& wallpaper_files_id,
@@ -60,6 +67,9 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient {
  private:
   // Binds this object to its mojo interface and sets it as the ash client.
   void BindAndSetClient();
+
+  // Shows the first wallpaper at startup.
+  void ShowInitialWallpaper();
 
   // WallpaperController interface in ash.
   ash::mojom::WallpaperControllerPtr wallpaper_controller_;
