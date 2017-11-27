@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61f33c71_20a0ea2e",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-27T20:32:45Z",
+      "side": 0,
+      "message": "Ditto.",
+      "revId": "316e035cd2bff593e99410ee786b0e956a89d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad0edf0_441cd990",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.11/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-27T20:32:45Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "316e035cd2bff593e99410ee786b0e956a89d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
