@@ -16,6 +16,24 @@
       "revId": "a4552899257add073e69d8a88cac05ec27621826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bba4780_93a4b4c7",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-27T18:23:38Z",
+      "side": 1,
+      "message": "It seems wm::ActiveWindow now returns the window ptr when we are in overview mode, which is why i added check on line 168 (pretty pretty sure it used to return nullptr). Added a comment for more clarity.",
+      "parentUuid": "854bae7a_e6a53e34",
+      "revId": "a4552899257add073e69d8a88cac05ec27621826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
