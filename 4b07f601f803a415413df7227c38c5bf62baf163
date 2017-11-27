@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec3b2452_aa3f4832",
+        "filename": "chrome/common/extensions/docs/templates/articles/permission_warnings.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-27T22:26:32Z",
+      "side": 0,
+      "message": "This permission message is also used by the automation API, but it\u0027s only enabled in Dev and I didn\u0027t find their manifest format documented.",
+      "range": {
+        "startLine": 140,
+        "startChar": 13,
+        "endLine": 140,
+        "endChar": 19
+      },
+      "revId": "4b07f601f803a415413df7227c38c5bf62baf163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3612de43_31bc68e9",
+        "filename": "extensions/common/permissions/api_permission.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-27T22:26:32Z",
+      "side": 0,
+      "message": "I didn\u0027t find these being persisted anywhere (histograms, preferences) but the 1\u003c\u003c2 flag is missing. So chose to remain safe and not renumber the flag masks.",
+      "range": {
+        "startLine": 355,
+        "startChar": 4,
+        "endLine": 355,
+        "endChar": 26
+      },
+      "revId": "4b07f601f803a415413df7227c38c5bf62baf163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
