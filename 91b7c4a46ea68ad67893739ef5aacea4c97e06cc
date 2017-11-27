@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "480460df_bccf57d5",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17927,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-27T20:18:19Z",
+      "side": 1,
+      "message": "nit: I\u0027d recommend making this be the first entry in the enum.  That way, if you ever add additional task types, \"unknown\" won\u0027t end up buried in the middle of the list.",
+      "range": {
+        "startLine": 17927,
+        "startChar": 34,
+        "endLine": 17927,
+        "endChar": 0
+      },
+      "revId": "91b7c4a46ea68ad67893739ef5aacea4c97e06cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
