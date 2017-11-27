@@ -16,6 +16,24 @@
       "revId": "d46581c53fe38948263796aa9472ded99c35c6cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1295b18e_67321da6",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-27T11:32:06Z",
+      "side": 0,
+      "message": "it was an unsuccessful attempt at deflaking, but apparently timer throttling was not to blame :/",
+      "parentUuid": "e98f024f_9a9aafd1",
+      "revId": "d46581c53fe38948263796aa9472ded99c35c6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
