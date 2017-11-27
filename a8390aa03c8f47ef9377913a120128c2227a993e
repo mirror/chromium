@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc3cc0d3_04fbf256",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-27T15:22:10Z",
+      "side": 1,
+      "message": "An example for why it might not be the actual value? If not many cases, an enumeration of all the situations when it is not the same? I have found that sort of information to be super helpful when debugging issues, because such behavior tends to be very counter-intuitive.",
+      "range": {
+        "startLine": 55,
+        "startChar": 63,
+        "endLine": 56,
+        "endChar": 71
+      },
+      "revId": "a8390aa03c8f47ef9377913a120128c2227a993e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
