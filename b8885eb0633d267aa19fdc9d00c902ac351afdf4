@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50295d72_6bf2e3a8",
+        "filename": "third_party/WebKit/Source/core/xml/XSLImportRule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-27T19:51:01Z",
+      "side": 0,
+      "message": "This does very similar work to XSLStyleSheet::OwnerDocument(), which walks up its ancestor chain to find a valid OwnerDocument(). It\u0027s unnecessary.",
+      "revId": "b8885eb0633d267aa19fdc9d00c902ac351afdf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4326808_59735328",
+        "filename": "third_party/WebKit/Source/core/xml/XSLStyleSheetLibxslt.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-27T19:51:01Z",
+      "side": 0,
+      "message": "XSLImportRule::loading_ was always false, so XSLStyleSheet::IsLoading() would always be false, too.",
+      "revId": "b8885eb0633d267aa19fdc9d00c902ac351afdf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
