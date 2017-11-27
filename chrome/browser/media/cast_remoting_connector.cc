@@ -367,9 +367,15 @@ void CastRemotingConnector::OnStopped(RemotingStopReason reason) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   VLOG(2) << __func__ << ": reason = " << reason;
 
-  if (!active_bridge_)
-    return;
-  StopRemoting(active_bridge_, reason);
+  if (active_bridge_) {
+    StopRemoting(active_bridge_, reason);
+  } else if (reason == RemotingStopReason::USER_DISABLED) {
+    // Notify all the sources that the sink is gone. No further remoting
+    // sessions can be initiated before user re-enables Media Remoting.
+    sink_metadata_ = RemotingSinkMetadata();
+    for (RemotingBridge* notifyee : bridges_)
+      notifyee->OnSinkGone();
+  }
 }
 
 void CastRemotingConnector::SendMessageToSink(
