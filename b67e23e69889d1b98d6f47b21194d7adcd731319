@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ec00df7_8d457df2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T22:17:25Z",
+      "side": 1,
+      "message": "should you stop the timer if the screen is later undimmed?",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a491084_6cf66def",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T22:17:25Z",
+      "side": 1,
+      "message": "nit: remove unnecessary comment",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad86128a_b90942b5",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T22:17:25Z",
+      "side": 1,
+      "message": "nit: remove unnecessary comment; all of these words are in the member definition :-)\n\n(this applies to the previous three members as well)",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185a1dc5_a4a3a39a",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T22:17:25Z",
+      "side": 1,
+      "message": "a comment would actually be useful here, though",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a83b1a8_b5ec340b",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T22:17:25Z",
+      "side": 1,
+      "message": "please use fake_power_manager_client_ to send this\n\n(you may need to add a method in the pattern of existing methods if it doesn\u0027t already exist)",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16e1cfd_92b8eedb",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T22:17:25Z",
+      "side": 1,
+      "message": "remove these comments unless you\u0027re going to add more detail. they currently match the test names",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
