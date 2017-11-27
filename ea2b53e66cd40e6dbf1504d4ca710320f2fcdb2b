@@ -70,6 +70,41 @@
       "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe70f47_97dfa237",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-27T05:44:24Z",
+      "side": 1,
+      "message": "Can we create a GCed object that holds v8::Persistent\u003cv8::Function\u003e?\n\nclass V8CallbackFunctionHolder : public GarbageCollected\u003c\u003e {\n  v8::Persistent\u003cv8::Function\u003e function_;\n}\n\nThen we can pass in the holder pointer to blink::WrapPersistent.",
+      "parentUuid": "15558173_48d2befc",
+      "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0938f716_964d8de2",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-27T05:44:24Z",
+      "side": 1,
+      "message": "Why does this need to be Copyable? It\u0027s discouraged...",
+      "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
