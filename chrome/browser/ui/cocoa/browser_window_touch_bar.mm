@@ -162,6 +162,8 @@ class BrowserTouchBarNotificationBridge : public CommandObserver {
   // Used to monitor the optional home button pref.
   BooleanPrefMember showHomeButton_;
 
+  PrefChangeRegistrar profile_pref_registrar_;
+
   // Used to receive and handle notifications.
   std::unique_ptr<BrowserTouchBarNotificationBridge> notificationBridge_;
 
@@ -210,6 +212,12 @@ class BrowserTouchBarNotificationBridge : public CommandObserver {
     PrefService* prefs = browser->profile()->GetPrefs();
     showHomeButton_.Init(
         prefs::kShowHomeButton, prefs,
+        base::Bind(&BrowserTouchBarNotificationBridge::UpdateTouchBar,
+                   base::Unretained(notificationBridge_.get())));
+
+    profile_pref_registrar_.Init(prefs);
+    profile_pref_registrar_.Add(
+        DefaultSearchManager::kDefaultSearchProviderDataPrefName,
         base::Bind(&BrowserTouchBarNotificationBridge::UpdateTouchBar,
                    base::Unretained(notificationBridge_.get())));
   }
