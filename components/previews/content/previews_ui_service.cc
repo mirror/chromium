@@ -55,9 +55,10 @@ void PreviewsUIService::LogPreviewNavigation(const GURL& url,
 void PreviewsUIService::LogPreviewDecisionMade(PreviewsEligibilityReason reason,
                                                const GURL& url,
                                                base::Time time,
-                                               PreviewsType type) {
+                                               PreviewsType type,
+                                               bool checked) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  logger_->LogPreviewDecisionMade(reason, url, time, type);
+  logger_->LogPreviewDecisionMade(reason, url, time, type, checked);
 }
 
 void PreviewsUIService::OnNewBlacklistedHost(const std::string& host,

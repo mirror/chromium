@@ -29,42 +29,56 @@ std::string GetDescriptionForPreviewsNavigation(PreviewsType type,
                             opt_out ? "True" : "False");
 }
 
-std::string GetReasonDescription(PreviewsEligibilityReason reason) {
+std::string GetReasonDescription(PreviewsEligibilityReason reason,
+                                 bool checked) {
   switch (reason) {
     case PreviewsEligibilityReason::ALLOWED:
+      // Return "Allowed" regardless. Because if reason is "Not Allowed", then a
+      // more specific reason should be logged instead.
       return "Allowed";
     case PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE:
-      return "Blacklist failed to be created";
+      return checked ? "Blacklist not null" : "Blacklist failed to be created";
     case PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED:
-      return "Blacklist not loaded from disk yet";
+      return checked ? "Blacklist loaded from disk"
+                     : "Blacklist not loaded from disk yet";
     case PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT:
-      return "User recently opted out";
+      return checked ? "User did not opt out recently"
+                     : "User recently opted out";
     case PreviewsEligibilityReason::USER_BLACKLISTED:
-      return "All previews are blacklisted";
+      return checked ? "Not all previews are blacklisted"
+                     : "All previews are blacklisted";
     case PreviewsEligibilityReason::HOST_BLACKLISTED:
-      return "All previews on this host are blacklisted";
+      return checked ? "Host is not blacklisted on all previews"
+                     : "All previews on this host are blacklisted";
     case PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE:
-      return "Network quality unavailable";
+      return checked ? "Network quality available"
+                     : "Network quality unavailable";
     case PreviewsEligibilityReason::NETWORK_NOT_SLOW:
-      return "Network not slow";
+      return checked ? "Network is slow" : "Network not slow";
     case PreviewsEligibilityReason::RELOAD_DISALLOWED:
-      return "Page reloads do not show previews for this preview type";
+      return checked
+                 ? "Page reloads allowed"
+                 : "Page reloads do not show previews for this preview type";
     case PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER:
-      return "Host blacklisted by server rules";
+      return checked ? "Host not blacklisted by server rules"
+                     : "Host blacklisted by server rules";
     case PreviewsEligibilityReason::HOST_NOT_WHITELISTED_BY_SERVER:
-      return "Host not whitelisted by server rules";
+      return checked ? "Host whitelisted by server rules"
+                     : "Host not whitelisted by server rules";
     case PreviewsEligibilityReason::ALLOWED_WITHOUT_OPTIMIZATION_HINTS:
-      return "Allowed (but without server rule check)";
+      return checked ? "Not allowed (without server rule check)"
+                     : "Allowed (but without server rule check)";
   }
   NOTREACHED();
   return "";
 }
 
 std::string GetDescriptionForPreviewsDecision(PreviewsEligibilityReason reason,
-                                              PreviewsType type) {
+                                              PreviewsType type,
+                                              bool checked) {
   return base::StringPrintf("%s preview - %s",
                             GetStringNameForType(type).c_str(),
-                            GetReasonDescription(reason).c_str());
+                            GetReasonDescription(reason, checked).c_str());
 }
 
 }  // namespace
@@ -170,11 +184,13 @@ void PreviewsLogger::LogPreviewNavigation(const GURL& url,
 void PreviewsLogger::LogPreviewDecisionMade(PreviewsEligibilityReason reason,
                                             const GURL& url,
                                             base::Time time,
-                                            PreviewsType type) {
+                                            PreviewsType type,
+                                            bool checked) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK_GE(kMaximumDecisionLogs, decisions_logs_.size());
 
-  std::string description = GetDescriptionForPreviewsDecision(reason, type);
+  std::string description =
+      GetDescriptionForPreviewsDecision(reason, type, checked);
   LogMessage(kPreviewDecisionMadeEventType, description, url, time);
 
   // Pop out the oldest message when the list is full.
