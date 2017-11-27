@@ -69,6 +69,30 @@
       "revId": "4b07f601f803a415413df7227c38c5bf62baf163",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c521ee_e189bacc",
+        "filename": "extensions/common/permissions/api_permission.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-27T23:24:05Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "081baf34_fd696c3c",
+      "range": {
+        "startLine": 355,
+        "startChar": 4,
+        "endLine": 355,
+        "endChar": 26
+      },
+      "revId": "4b07f601f803a415413df7227c38c5bf62baf163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
