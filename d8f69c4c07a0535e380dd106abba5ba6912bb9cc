@@ -16,6 +16,24 @@
       "revId": "d8f69c4c07a0535e380dd106abba5ba6912bb9cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab4c43a_50cbc78d",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-27T18:10:12Z",
+      "side": 1,
+      "message": "Nit done. Yep, OnComponentReady will be called every time a new component version is successfully installed.",
+      "parentUuid": "b7e3f041_6bf2f7ac",
+      "revId": "d8f69c4c07a0535e380dd106abba5ba6912bb9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
