@@ -464,8 +464,7 @@ AudioOutputDevice::AudioThreadCallback::AudioThreadCallback(
       render_callback_(render_callback),
       callback_num_(0) {}
 
-AudioOutputDevice::AudioThreadCallback::~AudioThreadCallback() {
-}
+AudioOutputDevice::AudioThreadCallback::~AudioThreadCallback() = default;
 
 void AudioOutputDevice::AudioThreadCallback::MapSharedMemory() {
   CHECK_EQ(total_segments_, 1u);
