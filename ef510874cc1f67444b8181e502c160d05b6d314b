@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc39f0a1_572abac8",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-27T17:08:57Z",
+      "side": 1,
+      "message": "Tiny nit, but maybe one decimal is plenty?\n\nProbably the case of 1 rating (and the broken plural) isn\u0027t a big deal,\nbut what about 0 ratings? There are probably lots of extensions with\nno ratings, would it make sense to have a separate string like\n\"Not yet rated by any users\"?",
+      "revId": "ef510874cc1f67444b8181e502c160d05b6d314b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
