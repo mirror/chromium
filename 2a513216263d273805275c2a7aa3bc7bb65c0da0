@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c395320_88b2c8ee",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/worklet-context-interaction.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T21:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96341ccd_faa13fc1",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14216d24_af733fda",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-21T23:03:49Z",
       "side": 1,
       "message": "What do we need to do for this TODO?",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3424c679_e307ed42",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T21:15:00Z",
+      "side": 1,
+      "message": "This is more of Web Audio API V2 issue, which is the support BaseAudioContext in Worker scope.",
+      "parentUuid": "14216d24_af733fda",
       "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "17534e98_1980957f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T21:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bbf00f3_2cacd8af",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24cc2a3c_f27d4e39",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
         "patchSetId": 8
@@ -79,6 +145,24 @@
       "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd93c6b_4cfa4821",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T21:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24cc2a3c_f27d4e39",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "8ec8240a_5536d62b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T21:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d90a6b61_c14d9c06",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1ac0c4c_104da97c",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
         "patchSetId": 8
@@ -110,6 +212,24 @@
       "writtenOn": "2017-11-22T01:16:19Z",
       "side": 1,
       "message": "Is it possible that GetBackingThread() returns nullptr? I guess GetBackingThread() forcibly instantiates a backing thread.",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49386be0_6cde24ec",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T21:15:00Z",
+      "side": 1,
+      "message": "This method is to check if AudioWorklet is capable of processing audio stream, and that is when:\n1. MessagingProxy should be constructed, initialized.\n2. The worklet backing thread must exist.\n\n|did_worklet_start_| means that the first user-supplied code successfully fetched and evaluated. Perhaps I should rename this flag?",
+      "parentUuid": "f1ac0c4c_104da97c",
       "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "c056f0e0_428d7986",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T21:15:00Z",
+      "side": 1,
+      "message": "Actually I think it\u0027s better to fix |import-on-insecure-context.html| test. Done.",
+      "parentUuid": "d84d4340_2363fc53",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e16efcd_c400a35e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
         "patchSetId": 8
@@ -144,6 +282,24 @@
       "writtenOn": "2017-11-22T01:16:19Z",
       "side": 1,
       "message": "Shall we rename \"SynchronizeWorkletProcessorInfoList\" to DidGlobalScopeUpdate?",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58666258_63d7142c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T21:15:00Z",
+      "side": 1,
+      "message": "Actually I like to keep this name because the name clearly manifest what it does.",
+      "parentUuid": "0e16efcd_c400a35e",
       "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "428be492_4895292c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T21:15:00Z",
+      "side": 1,
+      "message": "Can I do that in the follow-up CL? That requires a lot of small changes to make things Oilpan friendly.",
+      "parentUuid": "5f4e4bcb_f127d904",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ab534a9_2057b2d2",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 8
@@ -178,6 +352,24 @@
       "writtenOn": "2017-11-22T01:16:19Z",
       "side": 1,
       "message": "Just to confirm: You don\u0027t need to reset audio_worklet_ in Uninitialize, right?",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ca7e86_e770e7d1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-27T21:15:00Z",
+      "side": 1,
+      "message": "Uninitializing means that we\u0027re throwing away the context object. |audio_worklet_| belongs to the context, so the worklet object in turn will get destroyed too.\n\nDo I need a manual reset for the worklet obejct here?",
+      "parentUuid": "6ab534a9_2057b2d2",
       "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
