@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8549d553_061f9175",
+        "filename": "ui/file_manager/file_manager/background/js/compiled_resources2.gyp",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T01:20:50Z",
+      "side": 1,
+      "message": "Please keep sort order.",
+      "range": {
+        "startLine": 178,
+        "startChar": 9,
+        "endLine": 178,
+        "endChar": 27
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a33654_8590e689",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T01:20:50Z",
+      "side": 1,
+      "message": "jsdoc missing for arguments.",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d40470_ee96edf1",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T01:20:50Z",
+      "side": 1,
+      "message": "Second param missing.",
+      "range": {
+        "startLine": 363,
+        "startChar": 4,
+        "endLine": 363,
+        "endChar": 9
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b50ba7_f2f00b7c",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T01:20:50Z",
+      "side": 1,
+      "message": "nit: \"!\" not needed? It\u0027s not a class.",
+      "range": {
+        "startLine": 430,
+        "startChar": 11,
+        "endLine": 430,
+        "endChar": 12
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e99520_606b6113",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler_unittest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T01:20:50Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 566,
+        "startChar": 55,
+        "endLine": 566,
+        "endChar": 58
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13dacf71_e5bdf284",
+        "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T01:20:50Z",
+      "side": 1,
+      "message": "Any reason to prefer this over simple {}?",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 40
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
