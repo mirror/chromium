@@ -16,6 +16,7 @@
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
 #include "ui/gfx/gpu_fence_passthrough.h"
@@ -155,7 +156,9 @@ class VRDisplay final : public EventTargetWithInlineData,
       device::mojom::blink::VRPosePtr,
       WTF::TimeDelta,
       int16_t frame_id,
-      device::mojom::blink::VRPresentationProvider::VSyncStatus);
+      device::mojom::blink::VRPresentationProvider::VSyncStatus,
+      const WTF::Optional<gpu::MailboxHolder>& buffer,
+      const blink::WebSize& buffer_size);
   void OnPresentationProviderConnectionError();
 
   void OnMagicWindowPose(device::mojom::blink::VRPosePtr);
@@ -222,6 +225,22 @@ class VRDisplay final : public EventTargetWithInlineData,
   };
   // Backwards compatible default.
   WaitPrevStrategy wait_for_previous_render_ = WaitPrevStrategy::AFTER_BITMAP;
+
+  void AllocateAHBResources();
+  void ReleaseAHBResources();
+  void CreateAndBindAHBImage(
+      const base::Optional<gpu::MailboxHolder>& buffer_holder);
+  void BindAHBToBufferHolder(
+      const base::Optional<gpu::MailboxHolder>& buffer_holder,
+      const blink::WebSize& buffer_size);
+
+  bool gvr_zero_copy_ = false;
+  int ahb_sample_count_ = 4;
+  int ahb_width_;
+  int ahb_height_;
+  GLuint ahb_fbo_ = 0;
+  GLuint ahb_depthbuffer_ = 0;
+  GLuint ahb_texture_ = 0;
 
   std::unique_ptr<gfx::GpuFencePassthrough> prev_frame_fence_;
 

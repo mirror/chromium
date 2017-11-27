@@ -9,9 +9,13 @@
 namespace gl {
 
 GLImageAHardwareBuffer::GLImageAHardwareBuffer(const gfx::Size& size)
-    : GLImageEGL(size) {}
+    : GLImageEGL(size) {
+  LOG(INFO) << __FUNCTION__ << ";;;";
+}
 
-GLImageAHardwareBuffer::~GLImageAHardwareBuffer() {}
+GLImageAHardwareBuffer::~GLImageAHardwareBuffer() {
+  LOG(INFO) << __FUNCTION__ << ";;;";
+}
 
 unsigned GLImageAHardwareBuffer::GetInternalFormat() {
   return GL_RGBA;
