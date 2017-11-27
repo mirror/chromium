@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e1152e0_9dc0bedb",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-27T18:37:04Z",
+      "side": 1,
+      "message": "nit: It\u0027s like 10% weird to me to have an unref function but not a ref function. Probably fine for now, but it seems saner to make all ref count changes go through common functions and not modify the variable directly.",
+      "range": {
+        "startLine": 282,
+        "startChar": 17,
+        "endLine": 282,
+        "endChar": 26
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b76e373_c221a580",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -77,6 +100,53 @@
         "startChar": 6,
         "endLine": 576,
         "endChar": 26
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c9a17d_610d91df",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-27T18:37:04Z",
+      "side": 1,
+      "message": "Ok, this all makes sense now. I wonder if something like: use_unscaled_subset or something (with a comment at first use / definition) might be clearer for 2. Naming in 3 makes sense.",
+      "parentUuid": "4fd44cd6_5380db1b",
+      "range": {
+        "startLine": 576,
+        "startChar": 6,
+        "endLine": 576,
+        "endChar": 26
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad88119_57a90683",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-27T18:37:04Z",
+      "side": 1,
+      "message": "I\u0027m like 10% confused by this, as it leaves the ref counts etc... but as far as I can tell the object becomes invalid. Can we take a \u0026\u0026 to it and force the caller to std::move(*entry), which makes it really clear you can\u0027t use the entry after this.",
+      "range": {
+        "startLine": 974,
+        "startChar": 43,
+        "endLine": 974,
+        "endChar": 60
       },
       "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
