@@ -189,6 +189,7 @@
 #include "ui/base/resource/resource_bundle_android.h"
 #else
 #include "chrome/browser/feedback/feedback_profile_observer.h"
+#include "chrome/browser/ui/tabs/tab_activity_watcher.h"
 #endif  // defined(OS_ANDROID)
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
@@ -1348,6 +1349,7 @@ void ChromeBrowserMainParts::PostBrowserStart() {
         base::BindOnce(&WebUsbDetector::Initialize,
                        base::Unretained(web_usb_detector_.get())));
   }
+  TabActivityWatcher::GetInstance();
 #endif
 
   // At this point, StartupBrowserCreator::Start has run creating initial
