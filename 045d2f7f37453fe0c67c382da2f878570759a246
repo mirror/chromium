@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8d0e5c60_6260314b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-common.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T23:08:35Z",
+      "side": 1,
+      "message": "Oh, right. windows.internals is only available in content_shell when running tests.  A comment here that you\u0027re supporting run-webkit-tests and plain browsers would be helpful.",
+      "parentUuid": "81912224_df9e3834",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cac01ee_f8bca65b",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
         "patchSetId": 10
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Or |OnGlobalScopeUpdate|. This sounds like an \"event handler\". I was following Worker/Worklet infra\u0027s convention of callback method names like \"DidSomething()\".",
       "parentUuid": "7cac01ee_f8bca65b",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef88f831_61983ec4",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T23:08:35Z",
+      "side": 1,
+      "message": "Don\u0027t know.  I find it hard to tell from the comments and name whether this function is called to make things happen or if it\u0027s called after things have happened.",
+      "parentUuid": "bf317692_16b60cf8",
       "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
