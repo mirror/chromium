@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e1234a4_0f79a034",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T05:02:05Z",
+      "side": 1,
+      "message": "We should not use bool parameter. But in this case, we can think\n1. is_directional will be removed from VisibleSelection and SelectionTemplate\n2. This function is used only once.",
+      "range": {
+        "startLine": 344,
+        "startChar": 4,
+        "endLine": 344,
+        "endChar": 23
+      },
+      "revId": "abcd3858e96c16d7c034303f80bd4d184571c4d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea127c56_a5b61b02",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T05:02:05Z",
+      "side": 1,
+      "message": "Can we handle is_directional here in another step?\n|is_directional| isn\u0027t an essential part of AdjustSelectionCanonicalize().\nNote: It is better to name AdjustSelectionType().\nIn this way, we can avoid to use bool parameter.\n\nreturn SelectionTemplate\u003cStrategy\u003e::Builder(adjusted_seleciton)\n  .SetIsDireitonal(passed_selection.IsDirectional())\n  .Build();\n\nIt seems we can also handle affinity here.\n\nreturn SelectionTemplate\u003cStrategy\u003e::Builder(adjusted_selection)\n  .SetAffinity(adjusted_seleciton.IsCaret() ? passed_selection.Affinity() : TextAffinity::kDownstream)\n  .SetIsDireitonal(passed_selection.IsDirectional())\n  .Build();",
+      "revId": "abcd3858e96c16d7c034303f80bd4d184571c4d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
