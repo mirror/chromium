@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9581e4fe_5a22ebab",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1185219
+      },
+      "writtenOn": "2017-11-27T21:25:07Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "61f33c71_20a0ea2e",
+      "revId": "316e035cd2bff593e99410ee786b0e956a89d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ad0edf0_441cd990",
         "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.11/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https-expected.txt",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "316e035cd2bff593e99410ee786b0e956a89d1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ccb14d_00f7b31a",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.11/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1185219
+      },
+      "writtenOn": "2017-11-27T21:25:07Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4ad0edf0_441cd990",
+      "revId": "316e035cd2bff593e99410ee786b0e956a89d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

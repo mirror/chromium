@@ -16,6 +16,24 @@
       "revId": "962fb8061e75ed685c0c9a20a7e10912bd56ff15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ed4fa6_ee1162af",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/virtual/mojo-blobs/external/wpt/service-workers/service-worker/ServiceWorkerGlobalScope/registration-attribute.https-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1185219
+      },
+      "writtenOn": "2017-11-27T21:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "148066a9_4355512c",
+      "revId": "962fb8061e75ed685c0c9a20a7e10912bd56ff15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
