@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7e3f041_6bf2f7ac",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T17:40:39Z",
+      "side": 1,
+      "message": "Does this mean OnComponentReady could be called multiple times during one Chrome session?\n\nAlso nit:\nif (logged_ready_latency_on_launch_browser_) {\n  return;\n}",
+      "revId": "d8f69c4c07a0535e380dd106abba5ba6912bb9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
