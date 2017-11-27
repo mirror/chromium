@@ -51,7 +51,7 @@ BufferedPacket::BufferedPacket(BufferedPacket&& other) = default;
 
 BufferedPacket& BufferedPacket::operator=(BufferedPacket&& other) = default;
 
-BufferedPacket::~BufferedPacket() {}
+BufferedPacket::~BufferedPacket() = default;
 
 BufferedPacketList::BufferedPacketList() : creation_time(QuicTime::Zero()) {}
 
@@ -60,7 +60,7 @@ BufferedPacketList::BufferedPacketList(BufferedPacketList&& other) = default;
 BufferedPacketList& BufferedPacketList::operator=(BufferedPacketList&& other) =
     default;
 
-BufferedPacketList::~BufferedPacketList() {}
+BufferedPacketList::~BufferedPacketList() = default;
 
 QuicBufferedPacketStore::QuicBufferedPacketStore(
     VisitorInterface* visitor,
@@ -73,7 +73,7 @@ QuicBufferedPacketStore::QuicBufferedPacketStore(
       expiration_alarm_(
           alarm_factory->CreateAlarm(new ConnectionExpireAlarm(this))) {}
 
-QuicBufferedPacketStore::~QuicBufferedPacketStore() {}
+QuicBufferedPacketStore::~QuicBufferedPacketStore() = default;
 
 EnqueuePacketResult QuicBufferedPacketStore::EnqueuePacket(
     QuicConnectionId connection_id,

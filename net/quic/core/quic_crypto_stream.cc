@@ -30,7 +30,7 @@ QuicCryptoStream::QuicCryptoStream(QuicSession* session)
   DisableConnectionFlowControlForThisStream();
 }
 
-QuicCryptoStream::~QuicCryptoStream() {}
+QuicCryptoStream::~QuicCryptoStream() = default;
 
 // static
 QuicByteCount QuicCryptoStream::CryptoMessageFramingOverhead(

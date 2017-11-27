@@ -18,7 +18,7 @@ Simulator::Simulator()
       alarm_factory_.CreateAlarm(new RunForDelegate(&run_for_should_stop_)));
 }
 
-Simulator::~Simulator() {}
+Simulator::~Simulator() = default;
 
 Simulator::Clock::Clock() : now_(kStartTime) {}
 

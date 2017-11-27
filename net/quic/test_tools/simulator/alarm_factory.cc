@@ -19,7 +19,7 @@ class Alarm : public QuicAlarm {
         string name,
         QuicArenaScopedPtr<QuicAlarm::Delegate> delegate)
       : QuicAlarm(std::move(delegate)), adapter_(simulator, name, this) {}
-  ~Alarm() override {}
+  ~Alarm() override = default;
 
   void SetImpl() override {
     DCHECK(deadline().IsInitialized());
@@ -36,7 +36,7 @@ class Alarm : public QuicAlarm {
    public:
     Adapter(Simulator* simulator, string name, Alarm* parent)
         : Actor(simulator, name), parent_(parent) {}
-    ~Adapter() override {}
+    ~Adapter() override = default;
 
     void Set(QuicTime time) { Schedule(time); }
     void Cancel() { Unschedule(); }
@@ -55,7 +55,7 @@ class Alarm : public QuicAlarm {
 AlarmFactory::AlarmFactory(Simulator* simulator, string name)
     : simulator_(simulator), name_(std::move(name)), counter_(0) {}
 
-AlarmFactory::~AlarmFactory() {}
+AlarmFactory::~AlarmFactory() = default;
 
 string AlarmFactory::GetNewAlarmName() {
   ++counter_;

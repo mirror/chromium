@@ -17,7 +17,7 @@ Actor::Actor(Simulator* simulator, string name)
   simulator->AddActor(this);
 }
 
-Actor::~Actor() {}
+Actor::~Actor() = default;
 
 void Actor::Schedule(QuicTime next_tick) {
   simulator_->Schedule(this, next_tick);

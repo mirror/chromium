@@ -16,7 +16,8 @@ TlsClientHandshaker::ProofVerifierCallbackImpl::ProofVerifierCallbackImpl(
     TlsClientHandshaker* parent)
     : parent_(parent) {}
 
-TlsClientHandshaker::ProofVerifierCallbackImpl::~ProofVerifierCallbackImpl() {}
+TlsClientHandshaker::ProofVerifierCallbackImpl::~ProofVerifierCallbackImpl() =
+    default;
 
 void TlsClientHandshaker::ProofVerifierCallbackImpl::Run(
     bool ok,

@@ -242,7 +242,7 @@ class ServerDelegate : public PacketDroppingTestWriter::Delegate {
  public:
   explicit ServerDelegate(QuicDispatcher* dispatcher)
       : dispatcher_(dispatcher) {}
-  ~ServerDelegate() override {}
+  ~ServerDelegate() override = default;
   void OnCanWrite() override { dispatcher_->OnCanWrite(); }
 
  private:
@@ -252,7 +252,7 @@ class ServerDelegate : public PacketDroppingTestWriter::Delegate {
 class ClientDelegate : public PacketDroppingTestWriter::Delegate {
  public:
   explicit ClientDelegate(QuicClient* client) : client_(client) {}
-  ~ClientDelegate() override {}
+  ~ClientDelegate() override = default;
   void OnCanWrite() override {
     EpollEvent event(EPOLLOUT);
     client_->epoll_network_helper()->OnEvent(client_->GetLatestFD(), &event);
@@ -2213,7 +2213,7 @@ class ServerStreamWithErrorResponseBody : public QuicSimpleServerStream {
       : QuicSimpleServerStream(id, session, response_cache),
         response_body_(std::move(response_body)) {}
 
-  ~ServerStreamWithErrorResponseBody() override {}
+  ~ServerStreamWithErrorResponseBody() override = default;
 
  protected:
   void SendErrorResponse() override {
@@ -2236,7 +2236,7 @@ class StreamWithErrorFactory : public QuicTestServer::StreamFactory {
   explicit StreamWithErrorFactory(string response_body)
       : response_body_(std::move(response_body)) {}
 
-  ~StreamWithErrorFactory() override {}
+  ~StreamWithErrorFactory() override = default;
 
   QuicSimpleServerStream* CreateStream(
       QuicStreamId id,
@@ -2258,7 +2258,7 @@ class ServerStreamThatDropsBody : public QuicSimpleServerStream {
                             QuicHttpResponseCache* response_cache)
       : QuicSimpleServerStream(id, session, response_cache) {}
 
-  ~ServerStreamThatDropsBody() override {}
+  ~ServerStreamThatDropsBody() override = default;
 
  protected:
   void OnDataAvailable() override {
@@ -2292,9 +2292,9 @@ class ServerStreamThatDropsBody : public QuicSimpleServerStream {
 
 class ServerStreamThatDropsBodyFactory : public QuicTestServer::StreamFactory {
  public:
-  ServerStreamThatDropsBodyFactory() {}
+  ServerStreamThatDropsBodyFactory() = default;
 
-  ~ServerStreamThatDropsBodyFactory() override {}
+  ~ServerStreamThatDropsBodyFactory() override = default;
 
   QuicSimpleServerStream* CreateStream(
       QuicStreamId id,
@@ -2314,7 +2314,7 @@ class ServerStreamThatSendsHugeResponse : public QuicSimpleServerStream {
       : QuicSimpleServerStream(id, session, response_cache),
         body_bytes_(body_bytes) {}
 
-  ~ServerStreamThatSendsHugeResponse() override {}
+  ~ServerStreamThatSendsHugeResponse() override = default;
 
  protected:
   void SendResponse() override {
@@ -2337,7 +2337,7 @@ class ServerStreamThatSendsHugeResponseFactory
   explicit ServerStreamThatSendsHugeResponseFactory(int64_t body_bytes)
       : body_bytes_(body_bytes) {}
 
-  ~ServerStreamThatSendsHugeResponseFactory() override {}
+  ~ServerStreamThatSendsHugeResponseFactory() override = default;
 
   QuicSimpleServerStream* CreateStream(
       QuicStreamId id,
@@ -2355,7 +2355,7 @@ class ClientStreamThatDropsBody : public QuicSpdyClientStream {
  public:
   ClientStreamThatDropsBody(QuicStreamId id, QuicSpdyClientSession* session)
       : QuicSpdyClientStream(id, session) {}
-  ~ClientStreamThatDropsBody() override {}
+  ~ClientStreamThatDropsBody() override = default;
 
   void OnDataAvailable() override {
     while (HasBytesToRead()) {
@@ -2386,7 +2386,7 @@ class ClientSessionThatDropsBody : public QuicSpdyClientSession {
                               crypto_config,
                               push_promise_index) {}
 
-  ~ClientSessionThatDropsBody() override {}
+  ~ClientSessionThatDropsBody() override = default;
 
   std::unique_ptr<QuicSpdyClientStream> CreateClientStream() override {
     return QuicMakeUnique<ClientStreamThatDropsBody>(GetNextOutgoingStreamId(),
@@ -2407,7 +2407,7 @@ class MockableQuicClientThatDropsBody : public MockableQuicClient {
                            config,
                            supported_versions,
                            epoll_server) {}
-  ~MockableQuicClientThatDropsBody() override {}
+  ~MockableQuicClientThatDropsBody() override = default;
 
   std::unique_ptr<QuicSession> CreateQuicClientSession(
       QuicConnection* connection) override {
@@ -2434,7 +2434,7 @@ class QuicTestClientThatDropsBody : public QuicTestClient {
                      PRIVACY_MODE_DISABLED),
         config, supported_versions, epoll_server()));
   }
-  ~QuicTestClientThatDropsBody() override {}
+  ~QuicTestClientThatDropsBody() override = default;
 };
 
 TEST_P(EndToEndTest, EarlyResponseFinRecording) {

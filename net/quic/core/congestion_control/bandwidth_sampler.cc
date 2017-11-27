@@ -22,7 +22,7 @@ BandwidthSampler::BandwidthSampler()
       end_of_app_limited_phase_(0),
       connection_state_map_() {}
 
-BandwidthSampler::~BandwidthSampler() {}
+BandwidthSampler::~BandwidthSampler() = default;
 
 void BandwidthSampler::OnPacketSent(
     QuicTime sent_time,
