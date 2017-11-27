@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdf854aa_b6510d6a",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-27T21:49:46Z",
+      "side": 1,
+      "message": "I don\u0027t understand - is this function now just testing each potential file and returning true for whichever first exists? I don\u0027t like this approach, I think it should be controlled from external as to what type the caller expects to load, and only map the snapshot if the type expected by the caller exists.\n\nDo you have a design-doc of what you are intending to do with this series of CLs?",
+      "range": {
+        "startLine": 301,
+        "startChar": 4,
+        "endLine": 301,
+        "endChar": 21
+      },
+      "revId": "13f963b88c503dec45d25e7ca518a7b0fb4609d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
