@@ -28,6 +28,7 @@
 #include "chrome/browser/shell_integration.h"
 #include "chrome/browser/signin/signin_promo.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
+#include "chrome/browser/ui/apps/app_info_dialog.h"
 #include "chrome/browser/ui/bookmarks/bookmark_tab_helper.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -676,6 +677,13 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
           browser_,
           browser_->tab_strip_model()->GetActiveWebContents()->GetVisibleURL());
       break;
+    case IDC_APP_INFO:
+#if defined(TOOLKIT_VIEWS)
+      ShowAppInfoInNativeDialog(
+          browser_->tab_strip_model()->GetActiveWebContents(), profile(),
+          browser_->hosted_app_controller()->GetExtension(), base::Closure());
+#endif
+      break;
 
     default:
       LOG(WARNING) << "Received Unimplemented Command: " << id;
@@ -860,6 +868,8 @@ void BrowserCommandController::InitCommandState() {
   command_updater_.UpdateCommandEnabled(IDC_OPEN_IN_CHROME,
                                         is_experimental_hosted_app);
   command_updater_.UpdateCommandEnabled(IDC_SITE_SETTINGS,
+                                        is_experimental_hosted_app);
+  command_updater_.UpdateCommandEnabled(IDC_APP_INFO,
                                         is_experimental_hosted_app);
 
   // Window management commands

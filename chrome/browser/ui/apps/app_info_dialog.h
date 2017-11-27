@@ -51,4 +51,6 @@ void ShowAppInfoInNativeDialog(content::WebContents* web_contents,
                                const extensions::Extension* app,
                                const base::Closure& close_callback);
 
+void SetAppInfoDialogCreatedCallbackForTesting(base::Closure* callback);
+
 #endif  // CHROME_BROWSER_UI_APPS_APP_INFO_DIALOG_H_

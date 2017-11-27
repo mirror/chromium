@@ -43,6 +43,8 @@
 
 namespace {
 
+base::Closure* g_dialog_created_callback_ = nullptr;
+
 // The color of the separator used inside the dialog - should match the app
 // list's app_list::kDialogSeparatorColor
 const SkColor kDialogSeparatorColor = SkColorSetRGB(0xD1, 0xD1, 0xD1);
@@ -104,6 +106,14 @@ void ShowAppInfoInNativeDialog(content::WebContents* web_contents,
         constrained_window::CreateBrowserModalDialogViews(dialog, window);
     dialog_widget->Show();
   }
+  if (g_dialog_created_callback_)
+    g_dialog_created_callback_->Run();
+}
+
+// static
+void SetAppInfoDialogCreatedCallbackForTesting(
+    base::Closure* callback) {
+  g_dialog_created_callback_ = callback;
 }
 
 AppInfoDialog::AppInfoDialog(gfx::NativeWindow parent_window,
