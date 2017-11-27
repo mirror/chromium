@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4ba7c00_b30c566f",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-27T22:31:51Z",
+      "side": 1,
+      "message": "Do we still need this?",
+      "range": {
+        "startLine": 52,
+        "startChar": 35,
+        "endLine": 52,
+        "endChar": 63
+      },
+      "revId": "32c1c7684fc5f444a39d4c07b06df262e7869ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f31bde6_1f6eb758",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-27T22:31:51Z",
+      "side": 1,
+      "message": "I think this method should add metrics to the map indexed by task.",
+      "range": {
+        "startLine": 147,
+        "startChar": 35,
+        "endLine": 147,
+        "endChar": 61
+      },
+      "revId": "32c1c7684fc5f444a39d4c07b06df262e7869ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

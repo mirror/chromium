@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "f0806c1f_a1af2f71",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-27T22:31:51Z",
+      "side": 1,
+      "message": "Is there particular reason why helper methods are public in header file?",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 10
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "032f9f95_2be6960d",
         "filename": "components/cronet/ios/cronet_metrics.h",
         "patchSetId": 18
@@ -186,6 +209,29 @@
     },
     {
       "key": {
+        "uuid": "5ba4ca85_ac6fb539",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-27T22:31:51Z",
+      "side": 1,
+      "message": "can these and following methods be inside of namespace {} ?\nAS IS they appear to be public global.",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 19
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70da1713_474efcca",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 18
@@ -255,6 +301,29 @@
     },
     {
       "key": {
+        "uuid": "e56be495_625d51cc",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-27T22:31:51Z",
+      "side": 1,
+      "message": "Could you add a comment to describe why we need this?",
+      "range": {
+        "startLine": 133,
+        "startChar": 11,
+        "endLine": 133,
+        "endChar": 38
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "262aeb28_25ec0691",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 18
@@ -294,6 +363,75 @@
         "startChar": 15,
         "endLine": 158,
         "endChar": 26
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835e69af_65355efe",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-27T22:31:51Z",
+      "side": 1,
+      "message": "Per offline discussion the metricsForTask does NOT belong to CRNHTTPProtocolHandler. It should move to Cronet.",
+      "range": {
+        "startLine": 158,
+        "startChar": 28,
+        "endLine": 158,
+        "endChar": 29
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0355f2ba_c4ceadb3",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-27T22:31:51Z",
+      "side": 1,
+      "message": "Is conformsToProtocol equivalent to respondsToSelector? \nWhat if some other protocol method is not implemented?",
+      "range": {
+        "startLine": 176,
+        "startChar": 19,
+        "endLine": 176,
+        "endChar": 37
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec667fe_3aebc663",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-27T22:31:51Z",
+      "side": 1,
+      "message": "Hrm, I wonder whether there is some way to make swizzling optional, e.g. don\u0027t do that unless [Cronet enableMetricsCollection:YES] is called.",
+      "range": {
+        "startLine": 187,
+        "startChar": 8,
+        "endLine": 187,
+        "endChar": 12
       },
       "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
