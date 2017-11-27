@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "961b5c30_cc0020cc",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-27T22:44:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ae8121_ea636a50",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c54ee13e_210d21fb",
         "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc00e81_a5cc1233",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-27T22:44:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c54ee13e_210d21fb",
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "378170ca_0d4015c1",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-27T22:44:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe12b6ac_16fdd805",
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acca9345_701d09b7",
         "filename": "third_party/WebKit/Source/core/dom/Policy.h",
         "patchSetId": 1
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "097522e4_88d993d5",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-27T22:44:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acca9345_701d09b7",
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81fb81af_21d505fd",
         "filename": "third_party/WebKit/Source/core/dom/Policy.h",
         "patchSetId": 1
@@ -87,6 +165,24 @@
       "writtenOn": "2017-11-27T19:28:31Z",
       "side": 1,
       "message": "Is this just used to retain the policy for a frame so that we control its lifetime? If we don\u0027t mind creating a copy of the policy in the Document.policy case, we could probably merge these two into a single FeaturePolicy object, and just store that.",
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236636c5_6de7c43e",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-27T22:44:40Z",
+      "side": 1,
+      "message": "We could.\nDo you think it is better to keep a local copy of document.policy? I can totally do that but I just think it is a waste of memory especially the policy could potentially get pretty big.",
+      "parentUuid": "81fb81af_21d505fd",
       "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
