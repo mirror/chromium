@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a64f2a47_46f1449e",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-27T05:09:09Z",
+      "side": 1,
+      "message": "Sorry, I meant it should not have been if we used unique_ptr.",
+      "parentUuid": "8fe4e138_32a6691c",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0585713_5c0f88a8",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "Because VDA doesn\u0027t have the ownership of BitstreamBuffer explicitly, ScopedBitstreamBuffer\u0027s destructor is executed in DequeueRequest.\nHmm, in this case, we are really able to use scoped_ptr? How to pass the ownership to VDA? VDA::Decode argument is const BitstreamBuffer\u0026.\nI removed set(), because it was only required to set bitstream_buffer_ after ScopedBitstreamBuffer initialization.",
       "parentUuid": "e0585713_5c0f88a8",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7db9c3c9_8f2ba4b4",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-27T05:09:09Z",
+      "side": 1,
+      "message": "Ah, I\u0027m sorry for the typo, I meant unique_ptr\u003c\u003e not scoped_ptr\u003c\u003e, and you could use unique_ptr\u0027s release() method.",
+      "parentUuid": "c91db84c_dd025090",
       "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -358,6 +394,24 @@
       "side": 1,
       "message": "I know this looks awkward. This is needed to output fd value in l.500.\nWe couldn\u0027t acquire fd value in l.500 without this because handle_fd is invalid there and protected_shm_hanlde is also invalid.",
       "parentUuid": "a0360c56_c19de1bd",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2143364f_4ccbccd2",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-27T05:09:09Z",
+      "side": 1,
+      "message": "I think we probably don\u0027t need that value in l.500. The fd value is probably not very informative if we look only at level 1 logs, unless we have the full context of the run, since fd values change each run. We could instead VLOGF(2) fd for all calls to this method at the beginning of it.",
+      "parentUuid": "02ad5756_5609a49b",
       "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

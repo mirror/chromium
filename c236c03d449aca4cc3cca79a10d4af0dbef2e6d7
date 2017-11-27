@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87184716_43bd6d84",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-27T05:09:09Z",
+      "side": 1,
+      "message": "For this, we would have to actually handle the passed ids to know which ids to reassign later on on subsequent assigns from the client. Otherwise, if, for example, client called GAVDA::AssignPB(32), we\u0027d VDA::AssingPB() for ids 0-31. If VDA later called GAVDA::DismissPB(5), we\u0027d allow another GAVDA::AssignPB(1) from client, but would VDA::AssignPB(0), which would fail.\n\nHowever, in general I think we should be ok if we only reset the current set of buffers on AssignPB(), just as we do it now, instead of adding to the current working output buffer set?",
+      "revId": "c236c03d449aca4cc3cca79a10d4af0dbef2e6d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60720080_892b5a92",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-27T05:09:09Z",
+      "side": 1,
+      "message": "I meant that perhaps we could create a BitstreamBufferHandle here only, and BitstreamBuffer in common code below?",
+      "range": {
+        "startLine": 506,
+        "startChar": 40,
+        "endLine": 506,
+        "endChar": 60
+      },
+      "revId": "c236c03d449aca4cc3cca79a10d4af0dbef2e6d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eeab654_56079167",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-27T05:09:09Z",
+      "side": 1,
+      "message": "This could cause an overflow if count was sufficiently high.",
+      "range": {
+        "startLine": 530,
+        "startChar": 6,
+        "endLine": 530,
+        "endChar": 35
+      },
+      "revId": "c236c03d449aca4cc3cca79a10d4af0dbef2e6d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35665cbb_d152ee04",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-27T05:09:09Z",
+      "side": 1,
+      "message": "id would have to start from output_buffer_count_, but please see my comment at l.189.",
+      "revId": "c236c03d449aca4cc3cca79a10d4af0dbef2e6d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5bc60e_b7cd2881",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-27T05:09:09Z",
+      "side": 1,
+      "message": "Code using native_pixmap_handle should be under if defined(OS_LINUX) (https://cs.chromium.org/chromium/src/ui/gfx/gpu_memory_buffer.h?l\u003d53).",
+      "revId": "c236c03d449aca4cc3cca79a10d4af0dbef2e6d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
