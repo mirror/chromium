@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb166b61_0f784f0f",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T17:04:33Z",
+      "side": 1,
+      "message": "A comment here on why OS_MACOSX requires something different would be useful.",
+      "revId": "f2c0f1d8e76b194ccb5595b72f223a48812212dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e4d1674_1c2a4bea",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T17:04:33Z",
+      "side": 1,
+      "message": "Is this really what you want? If not OS_MACOSX, you get both EXPECT_FLOAT_EQ and EXPECT_NEAR.  Rather redundant.",
+      "revId": "f2c0f1d8e76b194ccb5595b72f223a48812212dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a66375e_e9bd55ec",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T17:04:33Z",
+      "side": 1,
+      "message": "Isn\u0027t this redundant?  We can only get here if line 409 fails, which means dest_real[i] isn\u0027t finite.",
+      "revId": "f2c0f1d8e76b194ccb5595b72f223a48812212dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92be219_92e8a384",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T17:04:33Z",
+      "side": 1,
+      "message": "Again, if OS_MACOSX is undefined, you get two tests that seem redundant.",
+      "revId": "f2c0f1d8e76b194ccb5595b72f223a48812212dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb72a90f_4c846533",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T17:04:33Z",
+      "side": 1,
+      "message": "Redundant test again since we get here only if line 421 fails.",
+      "revId": "f2c0f1d8e76b194ccb5595b72f223a48812212dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
