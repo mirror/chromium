@@ -16,6 +16,24 @@
       "revId": "d6cd466292f5c75f57939db7a9459ca0d481e30a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f98428_084165ee",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-11-27T17:45:54Z",
+      "side": 0,
+      "message": "Done (well, I moved ShouldOverrideUrlLoading :)).",
+      "parentUuid": "5d569014_45a14d8a",
+      "revId": "d6cd466292f5c75f57939db7a9459ca0d481e30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
