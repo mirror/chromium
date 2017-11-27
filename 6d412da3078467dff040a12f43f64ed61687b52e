@@ -428,6 +428,24 @@
       "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cdc4d39_75487613",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-27T23:28:50Z",
+      "side": 1,
+      "message": "\u003e I\u0027ve realized that I don\u0027t want to use LazyInstance::Pointer(), because this would cause an unnecessary allocation.\n\nAaaand as soon as I hit \"send\" I realized that what I wrote is not quite accurate - calling LazyInstance::Pointer would default-construct the T (without doing an allocation as I\u0027ve incorrectly said above).  Still - this is something that we want to avoid doing outside of tests.",
+      "parentUuid": "c471d600_aa5afea0",
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
