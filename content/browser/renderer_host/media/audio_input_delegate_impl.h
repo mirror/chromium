@@ -43,13 +43,13 @@ class CONTENT_EXPORT AudioInputDelegateImpl : public media::AudioInputDelegate {
       media::UserInputMonitor* user_input_monitor,
       AudioInputDeviceManager* audio_input_device_manager,
       std::unique_ptr<media::AudioLog> audio_log,
+      int render_process_id,
+      int render_frame_id,
       AudioInputDeviceManager::KeyboardMicRegistration
           keyboard_mic_registration,
       uint32_t shared_memory_count,
       int stream_id,
       int session_id,
-      int render_process_id,
-      int render_frame_id,
       bool automatic_gain_control,
       const media::AudioParameters& audio_parameters);
 
@@ -68,11 +68,11 @@ class CONTENT_EXPORT AudioInputDelegateImpl : public media::AudioInputDelegate {
       std::unique_ptr<AudioInputSyncWriter> writer,
       std::unique_ptr<base::CancelableSyncSocket> foreign_socket,
       std::unique_ptr<media::AudioLog> audio_log,
+      int render_process_id,
+      int render_frame_id,
       AudioInputDeviceManager::KeyboardMicRegistration
           keyboard_mic_registration,
       int stream_id,
-      int render_process_id,
-      int render_frame_id,
       bool automatic_gain_control,
       const MediaStreamDevice* device);
 

@@ -182,9 +182,9 @@ class AudioInputDelegateTest : public testing::Test {
         media_stream_manager_.audio_input_device_manager(),
         MediaInternals::GetInstance()->CreateAudioLog(
             media::AudioLogFactory::AudioComponent::AUDIO_INPUT_CONTROLLER),
-        AudioInputDeviceManager::KeyboardMicRegistration(),
-        shared_memory_count, kStreamId, session_id, kRenderProcessId,
-        kRenderFrameId, enable_agc, ValidAudioParameters());
+        kRenderProcessId, kRenderFrameId,
+        AudioInputDeviceManager::KeyboardMicRegistration(), shared_memory_count,
+        kStreamId, session_id, enable_agc, ValidAudioParameters());
   }
 
   base::Optional<TestBrowserThreadBundle> thread_bundle_;
