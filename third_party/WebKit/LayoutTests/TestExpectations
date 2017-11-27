@@ -3952,6 +3952,7 @@ crbug.com/771492 [ Win Linux Mac ] external/wpt/css/css-tables/table-model-fixup
 # Suspended WebRTC tests
 # Test fails, and output changes for each run.
 crbug.com/771540 external/wpt/webrtc/RTCPeerConnection-setLocalDescription-answer.html [ Failure ]
+crbug.com/788737 external/wpt/webrtc/RTCDataChannel-id.html [ Failure ]
 # Timeout due to events not firing
 crbug.com/781935 fast/mediastream/MediaStreamTrack-observer-iterate-no-crash.html [ Timeout ]
 crbug.com/781935 fast/mediastream/MediaStreamTrack.html [ Timeout ]
