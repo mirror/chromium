@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "353e0fb4_992fcb8f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-27T18:51:44Z",
+      "side": 1,
+      "message": "Just to confirm my understanding here:\n\nWe can still have another ChainedTasks created here, if I were to call warmupInternal back to back and things went through different Binder threads. But this line is our fail safe for avoiding to start if the current one is the second one.",
+      "range": {
+        "startLine": 447,
+        "startChar": 12,
+        "endLine": 447,
+        "endChar": 24
+      },
+      "revId": "3ad285912d85bde62fbc8119890d52d3df8b3e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
