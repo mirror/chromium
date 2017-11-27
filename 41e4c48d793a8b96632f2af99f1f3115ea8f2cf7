@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cde94ac_ea4d4849",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2345,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T23:14:50Z",
+      "side": 1,
+      "message": "Should this be behind #if defined(OS_ANDROID)?\n\nI never really know with chrome://flags.",
+      "range": {
+        "startLine": 2345,
+        "startChar": 64,
+        "endLine": 2345,
+        "endChar": 74
+      },
+      "revId": "41e4c48d793a8b96632f2af99f1f3115ea8f2cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
