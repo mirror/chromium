@@ -1942,6 +1942,8 @@ void AutofillManager::FillFieldWithValue(
     // it. This allows the renderer to distinguish autofilled fields from
     // fields with non-empty values, such as select-one fields.
     field_data->is_autofilled = true;
+    AutofillMetrics::LogUserHappinessMetric(
+        AutofillMetrics::FIELD_WAS_AUTOFILLED, autofill_field->Type().group());
 
     if (should_notify)
       client_->DidFillOrPreviewField(value, profile_full_name);
