@@ -1,0 +1,266 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41772cdb_84bafbcf",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "nit: remove blank line",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bc7d7c_b67f25d3",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "are all above includes needed?",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb9b2e5_e19f4b71",
+        "filename": "components/exo/keyboard_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "let\u0027s keep everything needed for non-shell-surface tests in ShellSurface class for now and move or refactor as follow up. wdyt?",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8e05b3_cf8bcec3",
+        "filename": "components/exo/pointer_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932fa1fd_548fe6ac",
+        "filename": "components/exo/pointer_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4136bd90_a8f160db",
+        "filename": "components/exo/shell_surface_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "please move xdg specific tests to a xdg_shell_surface_unittests.cc file and client controlled specific tests to a client_controlled_shell_surface_unittests.cc file.",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f31f86b_aa21c443",
+        "filename": "components/exo/test/exo_test_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "can we keep what is needed in the base ShellSurface class for now so we can avoid these type of shell-surface specific test hooks?",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f734c0e4_9e3acf66",
+        "filename": "components/exo/touch_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9445c756_fa3081f5",
+        "filename": "components/exo/xdg_shell_surface.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "maybe bump this?",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bcc257c_ed3e9419",
+        "filename": "components/exo/xdg_shell_surface.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "I suspect that most of these includes are not needed. can you fix so we only include what\u0027s needed here and in other files that are changed by this?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 35
+      },
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c4f895_17ff9081",
+        "filename": "components/exo/xdg_shell_surface.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "why is this empty?",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a91657f_9cd298bb",
+        "filename": "components/exo/xdg_shell_surface.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "resizing",
+      "range": {
+        "startLine": 233,
+        "startChar": 37,
+        "endLine": 233,
+        "endChar": 45
+      },
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39976ae4_df32da67",
+        "filename": "components/exo/xdg_shell_surface.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "is this comment still relevant? not sure if I understand it..",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c46831_1851e5d8",
+        "filename": "components/exo/xdg_shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T23:36:54Z",
+      "side": 1,
+      "message": "nit: remove this as location can never be controlled by client using XDG protocol. ideally we\u0027d remove bounds_mode param too as |origin| is enough to determine if this is a fixed position surface but fine to just add a TODO here for that for now.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 56
+      },
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
