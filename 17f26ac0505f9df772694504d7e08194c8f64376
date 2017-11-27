@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f16dcbf9_1f9c303a",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T21:20:42Z",
+      "side": 1,
+      "message": "nit: Can you declare+define it after CreateQueryOnIOThread? It\u0027s easier to read that way.",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 32
+      },
+      "revId": "17f26ac0505f9df772694504d7e08194c8f64376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5318337_26ca9d50",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T21:20:42Z",
+      "side": 1,
+      "message": "This is no longer necessary :D\n\nSee https://chromium-review.googlesource.com/c/chromium/src/+/776742/4/chrome/browser/ui/app_list/arc/arc_app_list_prefs.h for more details as to the pattern that should be used going forward.",
+      "range": {
+        "startLine": 413,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 1
+      },
+      "revId": "17f26ac0505f9df772694504d7e08194c8f64376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
