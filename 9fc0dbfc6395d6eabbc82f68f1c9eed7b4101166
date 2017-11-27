@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "417db629_c86a362d",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-27T22:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d3ee4e6_cd0c51e4",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff2ef6ce_9cfdeb47",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8874a3a2_90786554",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-27T22:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff2ef6ce_9cfdeb47",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4247b47_575f63c1",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-27T21:38:43Z",
       "side": 1,
       "message": "Do we also need to delete any existing zh-rHK files here? (or rather, in a previous pass)",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cffb28_9922b222",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-27T22:26:09Z",
+      "side": 1,
+      "message": "I assumed that shutil.copyfile would just replace the zh-rHK files and the files should have the same name (why would a file exist in one language but not the other).",
+      "parentUuid": "d4247b47_575f63c1",
       "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a010238b_2ff742a1",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-27T22:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f5224b8_f79799d1",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fc2045f_b1b83399",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e652b4b9_4c74daee",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-27T22:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fc2045f_b1b83399",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "aa1b2f2d_9fd40eed",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-27T22:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4202b2e7_f965fee5",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d558dd4_cb220a8c",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71efb39f_889dd291",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-27T22:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d558dd4_cb220a8c",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "033ba03c_d9c23f77",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-27T22:26:09Z",
+      "side": 1,
+      "message": "Sorry it was a comment for myself that I forgot to remove.",
+      "parentUuid": "9df089c6_5db0b689",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97f31318_781d37b9",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 4
@@ -152,6 +296,24 @@
       "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9781b67_12e34ccc",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-27T22:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97f31318_781d37b9",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "c6759b77_1c97b5df",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-27T22:26:09Z",
+      "side": 1,
+      "message": "there was no check in the original since language splits defaults to [] but I will add it.",
+      "parentUuid": "4749785e_3451c8c3",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88d91ee3_4e384fba",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 4
@@ -186,6 +366,24 @@
       "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc681098_71eb7ece",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-27T22:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88d91ee3_4e384fba",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
