@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01c6438f_bc1681a3",
+        "filename": "third_party/WebKit/Source/core/dom/SecurityContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-27T20:17:11Z",
+      "side": 1,
+      "message": "Hrm. Making this return a `bool` feels strange, as it succeeds at applying sandbox flags regardless. Did you consider returning a new enum instead? Something like:\n\n```\nenum SandboxingOperationResult {\n  kSameOrigin,\n  kCreatedUniqueOrigin,\n};\n```\n\nThat seems like it would be clearer to me. But I\u0027ll leave that up to you.",
+      "revId": "4af9358e61a2daea7f760fc7a7e5d770fe4aab59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
