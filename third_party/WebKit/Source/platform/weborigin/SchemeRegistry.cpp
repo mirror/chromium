@@ -51,7 +51,8 @@ class URLSchemesRegistry final {
          // other http pages are filtered out.
         service_worker_schemes({"http", "https"}),
         fetch_api_schemes({"http", "https"}),
-        allowed_in_referrer_schemes({"http", "https"}) {
+        allowed_in_referrer_schemes({"http", "https"}),
+        wasm_eval_csp_schemes({"chrome-extension"}) {
     for (auto& scheme : url::GetLocalSchemes())
       local_schemes.insert(scheme.c_str());
     for (auto& scheme : url::GetSecureSchemes())
@@ -84,6 +85,7 @@ class URLSchemesRegistry final {
       content_security_policy_bypassing_schemes;
   URLSchemesSet secure_context_bypassing_schemes;
   URLSchemesSet allowed_in_referrer_schemes;
+  URLSchemesSet wasm_eval_csp_schemes;
 
  private:
   friend const URLSchemesRegistry& GetURLSchemesRegistry();
@@ -375,6 +377,13 @@ bool SchemeRegistry::SchemeShouldBypassSecureContextCheck(
   DCHECK_EQ(scheme, scheme.DeprecatedLower());
   return GetURLSchemesRegistry().secure_context_bypassing_schemes.Contains(
       scheme);
+}
+
+bool SchemeRegistry::SchemeSupportsWasmEvalCSP(const String& scheme) {
+  if (scheme.IsEmpty())
+    return false;
+  DCHECK_EQ(scheme, scheme.DeprecatedLower());
+  return GetURLSchemesRegistry().wasm_eval_csp_schemes.Contains(scheme);
 }
 
 }  // namespace blink
