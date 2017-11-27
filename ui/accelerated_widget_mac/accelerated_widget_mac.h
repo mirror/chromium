@@ -66,6 +66,12 @@ class ACCELERATED_WIDGET_MAC_EXPORT AcceleratedWidgetMac {
       base::TimeTicks* timebase, base::TimeDelta* interval) const;
 
   static AcceleratedWidgetMac* Get(gfx::AcceleratedWidget widget);
+
+  // Translate from a gfx::AcceleratedWidget to the NSView in which it will
+  // appear. This may return nil if |widget| is invalid or is not currently
+  // attached to an NSView.
+  static NSView* GetNSView(gfx::AcceleratedWidget widget);
+
   void GotCALayerFrame(
       base::scoped_nsobject<CALayer> content_layer,
       bool fullscreen_low_power_layer_valid,
