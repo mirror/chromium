@@ -230,6 +230,10 @@ const base::Feature kBackgroundVideoPauseOptimization{
 const base::Feature kComplexityBasedVideoBuffering{
     "ComplexityBasedVideoBuffering", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enable MCVD.  Has no effect except on Android.
+const base::Feature kMediaCodecVideoDecoder{"MediaCodecVideoDecoder",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Make MSE garbage collection algorithm more aggressive when we are under
 // moderate or critical memory pressure. This will relieve memory pressure by
 // releasing stale data from MSE buffers.
