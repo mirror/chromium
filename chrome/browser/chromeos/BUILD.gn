@@ -1041,6 +1041,8 @@ source_set("chromeos") {
     "login/signin/token_handle_fetcher.h",
     "login/signin/token_handle_util.cc",
     "login/signin/token_handle_util.h",
+    "login/signin_certs_user_data.cc",
+    "login/signin_certs_user_data.h",
     "login/signin_screen_controller.cc",
     "login/signin_screen_controller.h",
     "login/signin_specifics.h",
