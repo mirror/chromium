@@ -16,6 +16,24 @@
       "revId": "9a2d5735f829d799c1611b988c7196e4c2534962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f249124c_a0097f5e",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-27T23:34:41Z",
+      "side": 1,
+      "message": "Yeah, I think there are - e.g. the Ads permission. But I think this is fine because calling SetPermissionInfo directly avoids all those codepaths (I think as long as none of the comboboxes are changed). All that should be called are the relevant string and icon retrievals on PageInfoUI.",
+      "parentUuid": "ae34bf54_a4878101",
+      "revId": "9a2d5735f829d799c1611b988c7196e4c2534962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
