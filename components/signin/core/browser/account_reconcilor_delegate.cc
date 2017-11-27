@@ -26,4 +26,11 @@ std::string AccountReconcilorDelegate::GetFirstGaiaAccountForReconcile(
   return std::string();
 }
 
+bool AccountReconcilorDelegate::ShouldReconcileAccount(
+    const std::string& chrome_account,
+    const std::vector<gaia::ListedAccount>& gaia_accounts,
+    const std::string& primary_account) {
+  return true;
+}
+
 }  // namespace signin
