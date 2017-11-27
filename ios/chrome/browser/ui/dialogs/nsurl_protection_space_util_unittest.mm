@@ -122,26 +122,18 @@ TEST_F(NSURLProtectionSpaceUtilTest, ShowForHttpsProxy) {
   ASSERT_TRUE(CanShow(protectionSpace));
 
   NSString* expectedText = nil;
-  // On iOS 10, HTTPS Proxy protection space reports itself as unsecure
+  // HTTPS Proxy protection space reports itself as unsecure
   // (crbug.com/629570).
-  if (base::ios::IsRunningOnIOS10OrLater()) {
-    // Expecting the following text:
-    // The proxy https://chromium.org requires a username and password.
-    // Your connection to this site is not private.
-    expectedText = [NSString
-        stringWithFormat:@"%@ %@",
-                         l10n_util::GetNSStringF(
-                             IDS_LOGIN_DIALOG_PROXY_AUTHORITY,
-                             base::SysNSStringToUTF16(kTestHttpsOrigin)),
-                         l10n_util::GetNSString(
-                             IDS_PAGE_INFO_NOT_SECURE_SUMMARY)];
-  } else {
-    // Expecting the following text:
-    // The proxy https://chromium.org:80 requires a username and password.
-    expectedText =
-        l10n_util::GetNSStringF(IDS_LOGIN_DIALOG_PROXY_AUTHORITY,
-                                base::SysNSStringToUTF16(kTestHttpsOrigin));
-  }
+  // Expecting the following text:
+  // The proxy https://chromium.org requires a username and password.
+  // Your connection to this site is not private.
+  expectedText = [NSString
+      stringWithFormat:@"%@ %@",
+                       l10n_util::GetNSStringF(
+                           IDS_LOGIN_DIALOG_PROXY_AUTHORITY,
+                           base::SysNSStringToUTF16(kTestHttpsOrigin)),
+                       l10n_util::GetNSString(
+                           IDS_PAGE_INFO_NOT_SECURE_SUMMARY)];
   EXPECT_NSEQ(expectedText, MessageForHTTPAuth(protectionSpace));
 }
 

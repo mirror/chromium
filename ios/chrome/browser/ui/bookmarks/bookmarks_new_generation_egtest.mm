@@ -155,12 +155,10 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
     EARL_GREY_TEST_SKIPPED(@"Test not applicable for iPad");
   }
 
-// TODO(crbug.com/768339): This test is faling on devices with iOS > 9 because
+// TODO(crbug.com/768339): This test is faling on devices because
 // grey_swipeFastInDirectionWithStartPoint does not work.
 #if !TARGET_IPHONE_SIMULATOR
-  if (@available(iOS 10.0, *)) {
-    EARL_GREY_TEST_DISABLED(@"Test disabled on iOS 10+ devices.");
-  }
+  EARL_GREY_TEST_DISABLED(@"Test disabled on devices.");
 #endif
 
   base::test::ScopedFeatureList scoped_feature_list;
