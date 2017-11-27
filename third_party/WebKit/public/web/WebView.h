@@ -41,7 +41,6 @@
 
 namespace blink {
 
-class WebCredentialManagerClient;
 class WebFrame;
 class WebHitTestResult;
 class WebLocalFrame;
@@ -118,7 +117,6 @@ class WebView : protected WebWidget {
                                       mojom::PageVisibilityState);
 
   // Initializes the various client interfaces.
-  virtual void SetCredentialManagerClient(WebCredentialManagerClient*) = 0;
   virtual void SetPrerendererClient(WebPrerendererClient*) = 0;
 
   // Options -------------------------------------------------------------
