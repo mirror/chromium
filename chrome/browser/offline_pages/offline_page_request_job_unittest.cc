@@ -805,37 +805,37 @@ TEST_F(OfflinePageRequestJobTest, FailedToCreateRequestJob) {
                    content::RESOURCE_TYPE_MAIN_FRAME);
   base::RunLoop().Run();
   EXPECT_EQ(0, bytes_read());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
 
   InterceptRequest(GURL("file:///path/doc"), "GET", "", "",
                    content::RESOURCE_TYPE_MAIN_FRAME);
   base::RunLoop().Run();
   EXPECT_EQ(0, bytes_read());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
 
   // Must be GET method.
   InterceptRequest(kTestUrl1, "POST", "", "",
                    content::RESOURCE_TYPE_MAIN_FRAME);
   base::RunLoop().Run();
   EXPECT_EQ(0, bytes_read());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
 
   InterceptRequest(kTestUrl1, "HEAD", "", "",
                    content::RESOURCE_TYPE_MAIN_FRAME);
   base::RunLoop().Run();
   EXPECT_EQ(0, bytes_read());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
 
   // Must be main resource.
   InterceptRequest(kTestUrl1, "POST", "", "", content::RESOURCE_TYPE_SUB_FRAME);
   base::RunLoop().Run();
   EXPECT_EQ(0, bytes_read());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
 
   InterceptRequest(kTestUrl1, "POST", "", "", content::RESOURCE_TYPE_IMAGE);
   base::RunLoop().Run();
   EXPECT_EQ(0, bytes_read());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
 
   ExpectNoSamplesInAggregatedRequestResult();
   ExpectOfflinePageSizeTotalSuffixCount(0);
@@ -850,9 +850,9 @@ TEST_F(OfflinePageRequestJobTest, LoadOfflinePageOnDisconnectedNetwork) {
 
   EXPECT_EQ(kTestFileSize2, bytes_read());
   EXPECT_TRUE(is_offline_page_set_in_navigation_data());
-  ASSERT_TRUE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ASSERT_TRUE(offline_page_tab_helper()->provisional_page()());
   EXPECT_EQ(offline_id2(),
-            offline_page_tab_helper()->GetOfflinePageForTest()->offline_id);
+            offline_page_tab_helper()->provisional_page()()->offline_id);
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_DISCONNECTED_NETWORK);
@@ -870,7 +870,7 @@ TEST_F(OfflinePageRequestJobTest, PageNotFoundOnDisconnectedNetwork) {
 
   EXPECT_EQ(0, bytes_read());
   EXPECT_FALSE(is_offline_page_set_in_navigation_data());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           PAGE_NOT_FOUND_ON_DISCONNECTED_NETWORK);
@@ -889,9 +889,9 @@ TEST_F(OfflinePageRequestJobTest, LoadOfflinePageOnProhibitivelySlowNetwork) {
 
   EXPECT_EQ(kTestFileSize2, bytes_read());
   EXPECT_TRUE(is_offline_page_set_in_navigation_data());
-  ASSERT_TRUE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ASSERT_TRUE(offline_page_tab_helper()->provisional_page()());
   EXPECT_EQ(offline_id2(),
-            offline_page_tab_helper()->GetOfflinePageForTest()->offline_id);
+            offline_page_tab_helper()->provisional_page()()->offline_id);
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_PROHIBITIVELY_SLOW_NETWORK);
@@ -916,7 +916,7 @@ TEST_F(OfflinePageRequestJobTest,
 
   EXPECT_EQ(0, bytes_read());
   EXPECT_FALSE(is_offline_page_set_in_navigation_data());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
   ExpectNoAccessEntryPoint();
   ExpectNoSamplesInAggregatedRequestResult();
   ExpectOfflinePageSizeTotalSuffixCount(0);
@@ -933,7 +933,7 @@ TEST_F(OfflinePageRequestJobTest, PageNotFoundOnProhibitivelySlowNetwork) {
 
   EXPECT_EQ(0, bytes_read());
   EXPECT_FALSE(is_offline_page_set_in_navigation_data());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           PAGE_NOT_FOUND_ON_PROHIBITIVELY_SLOW_NETWORK);
@@ -955,9 +955,9 @@ TEST_F(OfflinePageRequestJobTest, LoadOfflinePageOnFlakyNetwork) {
 
   EXPECT_EQ(kTestFileSize2, bytes_read());
   EXPECT_TRUE(is_offline_page_set_in_navigation_data());
-  ASSERT_TRUE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ASSERT_TRUE(offline_page_tab_helper()->provisional_page()());
   EXPECT_EQ(offline_id2(),
-            offline_page_tab_helper()->GetOfflinePageForTest()->offline_id);
+            offline_page_tab_helper()->provisional_page()()->offline_id);
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_FLAKY_NETWORK);
@@ -980,7 +980,7 @@ TEST_F(OfflinePageRequestJobTest, PageNotFoundOnFlakyNetwork) {
 
   EXPECT_EQ(0, bytes_read());
   EXPECT_FALSE(is_offline_page_set_in_navigation_data());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           PAGE_NOT_FOUND_ON_FLAKY_NETWORK);
@@ -1001,9 +1001,9 @@ TEST_F(OfflinePageRequestJobTest, ForceLoadOfflinePageOnConnectedNetwork) {
 
   EXPECT_EQ(kTestFileSize2, bytes_read());
   EXPECT_TRUE(is_offline_page_set_in_navigation_data());
-  ASSERT_TRUE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ASSERT_TRUE(offline_page_tab_helper()->provisional_page()());
   EXPECT_EQ(offline_id2(),
-            offline_page_tab_helper()->GetOfflinePageForTest()->offline_id);
+            offline_page_tab_helper()->provisional_page()()->offline_id);
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_CONNECTED_NETWORK);
@@ -1025,7 +1025,7 @@ TEST_F(OfflinePageRequestJobTest, PageNotFoundOnConnectedNetwork) {
 
   EXPECT_EQ(0, bytes_read());
   EXPECT_FALSE(is_offline_page_set_in_navigation_data());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           PAGE_NOT_FOUND_ON_CONNECTED_NETWORK);
@@ -1042,7 +1042,7 @@ TEST_F(OfflinePageRequestJobTest, DoNotLoadOfflinePageOnConnectedNetwork) {
 
   EXPECT_EQ(0, bytes_read());
   EXPECT_FALSE(is_offline_page_set_in_navigation_data());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
   ExpectNoAccessEntryPoint();
   ExpectNoSamplesInAggregatedRequestResult();
   ExpectOfflinePageSizeTotalSuffixCount(0);
@@ -1061,9 +1061,9 @@ TEST_F(OfflinePageRequestJobTest, LoadOfflinePageByOfflineID) {
 
   EXPECT_EQ(kTestFileSize1, bytes_read());
   EXPECT_TRUE(is_offline_page_set_in_navigation_data());
-  ASSERT_TRUE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ASSERT_TRUE(offline_page_tab_helper()->provisional_page()());
   EXPECT_EQ(offline_id(),
-            offline_page_tab_helper()->GetOfflinePageForTest()->offline_id);
+            offline_page_tab_helper()->provisional_page()()->offline_id);
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_CONNECTED_NETWORK);
@@ -1089,7 +1089,7 @@ TEST_F(OfflinePageRequestJobTest,
 
   EXPECT_EQ(0, bytes_read());
   EXPECT_FALSE(is_offline_page_set_in_navigation_data());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  EXPECT_FALSE(offline_page_tab_helper()->provisional_page()());
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           PAGE_NOT_FOUND_ON_CONNECTED_NETWORK);
@@ -1109,9 +1109,9 @@ TEST_F(OfflinePageRequestJobTest, LoadOfflinePageForUrlWithFragment) {
   base::RunLoop().Run();
 
   EXPECT_EQ(kTestFileSize2, bytes_read());
-  ASSERT_TRUE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ASSERT_TRUE(offline_page_tab_helper()->provisional_page()());
   EXPECT_EQ(offline_id2(),
-            offline_page_tab_helper()->GetOfflinePageForTest()->offline_id);
+            offline_page_tab_helper()->provisional_page()()->offline_id);
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_DISCONNECTED_NETWORK);
@@ -1125,9 +1125,9 @@ TEST_F(OfflinePageRequestJobTest, LoadOfflinePageForUrlWithFragment) {
   base::RunLoop().Run();
 
   EXPECT_EQ(kTestFileSize3, bytes_read());
-  ASSERT_TRUE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ASSERT_TRUE(offline_page_tab_helper()->provisional_page()());
   EXPECT_EQ(offline_id3(),
-            offline_page_tab_helper()->GetOfflinePageForTest()->offline_id);
+            offline_page_tab_helper()->provisional_page()()->offline_id);
   ExpectMultiUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_DISCONNECTED_NETWORK, 2);
@@ -1144,9 +1144,9 @@ TEST_F(OfflinePageRequestJobTest, LoadOfflinePageForUrlWithFragment) {
   base::RunLoop().Run();
 
   EXPECT_EQ(kTestFileSize3, bytes_read());
-  ASSERT_TRUE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ASSERT_TRUE(offline_page_tab_helper()->provisional_page()());
   EXPECT_EQ(offline_id3(),
-            offline_page_tab_helper()->GetOfflinePageForTest()->offline_id);
+            offline_page_tab_helper()->provisional_page()()->offline_id);
   ExpectMultiUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_DISCONNECTED_NETWORK, 3);
@@ -1166,9 +1166,9 @@ TEST_F(OfflinePageRequestJobTest, LoadOfflinePageAfterRedirect) {
 
   EXPECT_EQ(kTestFileSize3, bytes_read());
   EXPECT_TRUE(is_offline_page_set_in_navigation_data());
-  ASSERT_TRUE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ASSERT_TRUE(offline_page_tab_helper()->provisional_page()());
   EXPECT_EQ(offline_id3(),
-            offline_page_tab_helper()->GetOfflinePageForTest()->offline_id);
+            offline_page_tab_helper()->provisional_page()()->offline_id);
   ExpectOneNonuniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           REDIRECTED_ON_DISCONNECTED_NETWORK);
@@ -1190,9 +1190,9 @@ TEST_F(OfflinePageRequestJobTest, NoRedirectForOfflinePageWithSameOriginalURL) {
 
   EXPECT_EQ(kTestFileSize5, bytes_read());
   EXPECT_TRUE(is_offline_page_set_in_navigation_data());
-  ASSERT_TRUE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ASSERT_TRUE(offline_page_tab_helper()->provisional_page()());
   EXPECT_EQ(offline_id5(),
-            offline_page_tab_helper()->GetOfflinePageForTest()->offline_id);
+            offline_page_tab_helper()->provisional_page()()->offline_id);
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_DISCONNECTED_NETWORK);
@@ -1210,9 +1210,9 @@ TEST_F(OfflinePageRequestJobTest, LoadOfflinePageFromNonExistentFile) {
 
   EXPECT_EQ(0, bytes_read());
   EXPECT_TRUE(is_offline_page_set_in_navigation_data());
-  ASSERT_TRUE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ASSERT_TRUE(offline_page_tab_helper()->provisional_page()());
   EXPECT_EQ(offline_id4(),
-            offline_page_tab_helper()->GetOfflinePageForTest()->offline_id);
+            offline_page_tab_helper()->provisional_page()()->offline_id);
   ExpectOneUniqueSampleForAggregatedRequestResult(
       OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_DISCONNECTED_NETWORK);

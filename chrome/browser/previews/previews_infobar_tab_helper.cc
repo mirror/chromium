@@ -103,11 +103,25 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
         data_reduction_proxy_settings =
             DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
                 web_contents()->GetBrowserContext());
+
+    const OfflinePageItem* offline_page = tab_helper->provisional_page()()
+                                              ? tab_helper->provisional_page()()
+                                              : tab_helper->offline_page();
+
+    // From UMA, the percent of network bytes (as opposed to cached bytes).
+    int64_t uncached_size = offline_page->file_size * 0.55;
+
+    bool data_saver_enabled =
+        data_reduction_proxy_settings->IsDataReductionProxyEnabled();
+    data_reduction_proxy_settings->data_reduction_proxy_service()
+        ->UpdateContentLengths(0, uncached_size, data_saver_enabled,
+                               data_reduction_proxy::HTTPS,
+                               "multipart/related");
+
     PreviewsInfoBarDelegate::Create(
         web_contents(), previews::PreviewsType::OFFLINE,
         base::Time() /* previews_freshness */, false /* is_reload */,
-        data_reduction_proxy_settings &&
-            data_reduction_proxy_settings->IsDataReductionProxyEnabled(),
+        data_reduction_proxy_settings && data_saver_enabled,
         base::Bind(&AddPreviewNavigationCallback,
                    web_contents()->GetBrowserContext(),
                    navigation_handle->GetRedirectChain()[0],
