@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ddb7128_1f31f3fa",
+        "filename": "ios/chrome/browser/autofill/form_structure_browsertest.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-27T20:26:08Z",
+      "side": 1,
+      "message": "nit:\n  static std::set\u003cstd::string\u003e failing_test_names \u003d {\n      \"067_register_rei.com.html\", \"074_register_threadless.com.html\",\n  };\n  return failing_test_names;",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "8d44cc04fc077c0e4f280f471a0047d1f4a5c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
