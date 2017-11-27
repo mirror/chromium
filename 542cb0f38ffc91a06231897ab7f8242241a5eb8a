@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7312fe06_68188caf",
+        "filename": "build/config/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-27T19:15:38Z",
+      "side": 1,
+      "message": "Can you call this ios_sdk.gni instead? This file doesn\u0027t override anything, and there\u0027s no such thing as \"an override\" in GN. It\u0027s really just exposing some build arguments that builds or users can set.\n\nIt would be nice to make the mac_sdk one match, can you do that also? Could be in this patch or a followup.",
+      "revId": "542cb0f38ffc91a06231897ab7f8242241a5eb8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
