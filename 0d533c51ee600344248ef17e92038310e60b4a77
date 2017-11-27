@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0981b0b8_1c9f62e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-27T06:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "817bab72_dc03cc16",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "0d533c51ee600344248ef17e92038310e60b4a77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e59d65ff_3c8c0845",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "0d533c51ee600344248ef17e92038310e60b4a77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6865d1c9_bda90004",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-27T06:26:01Z",
+      "side": 1,
+      "message": "No, unfortunately. ExtensionPrefs::Get() takes a non-const :/",
+      "parentUuid": "e59d65ff_3c8c0845",
+      "range": {
+        "startLine": 42,
+        "startChar": 36,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "0d533c51ee600344248ef17e92038310e60b4a77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
