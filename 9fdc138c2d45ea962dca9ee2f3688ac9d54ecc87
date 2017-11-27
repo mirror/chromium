@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "063a9863_d79cd90e",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-27T19:04:59Z",
+      "side": 1,
+      "message": "Can you rename this to CreateTestEvent() to be consistent with CreateUserConsentEvent().",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf3bf9e_1ab82f5d",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-27T19:04:59Z",
+      "side": 1,
+      "message": "specifics# is a bad name now that you have consent#. Can you make them consistent?",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b264730_a652f636",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-27T19:04:59Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8530514d_3d068c83",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-27T19:04:59Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this still be 2? I don\u0027t understand why this isn\u0027t failing your tests, can you investigate? Recording consents shouldn\u0027t cause more SESSIONS data.",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f8f6d9_7ae0c4b3",
+        "filename": "components/sync/user_events/user_event_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-27T19:04:59Z",
+      "side": 1,
+      "message": "I\u0027m not convinced you want to drop the consent events before the engine inits. I think we\u0027d prefer to write it to persistent storage (level db), and wait for the engine to init, by returning true in this method.",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8832770_65985ce3",
+        "filename": "components/sync/user_events/user_event_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-27T19:04:59Z",
+      "side": 1,
+      "message": "Nice comment.",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a60b2d1_7131e012",
+        "filename": "components/sync/user_events/user_event_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-27T19:04:59Z",
+      "side": 1,
+      "message": "Can you wait for https://chromium-review.googlesource.com/c/chromium/src/+/764408/12/components/sync/user_events/user_event_service_impl.cc to land instead?",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
