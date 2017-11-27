@@ -63,19 +63,15 @@ void FramePainter::Paint(GraphicsContext& context,
   if (should_paint_contents) {
     // TODO(pdr): Creating frame paint properties here will not be needed once
     // settings()->rootLayerScrolls() is enabled.
-    // TODO(pdr): Make this conditional on the rootLayerScrolls setting.
     Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
         !RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-      if (const PropertyTreeState* contents_state =
-              frame_view_->TotalPropertyTreeStateForContents()) {
-        PaintChunkProperties properties(
-            context.GetPaintController().CurrentPaintChunkProperties());
-        properties.property_tree_state = *contents_state;
-        scoped_paint_chunk_properties.emplace(context.GetPaintController(),
-                                              *GetFrameView().GetLayoutView(),
-                                              properties);
-      }
+      const auto* contents_state =
+          frame_view_->TotalPropertyTreeStateForContents();
+      DCHECK(contents_state);
+      scoped_paint_chunk_properties.emplace(context.GetPaintController(),
+                                            *contents_state,
+                                            *GetFrameView().GetLayoutView());
     }
 
     TransformRecorder transform_recorder(
@@ -101,13 +97,10 @@ void FramePainter::Paint(GraphicsContext& context,
 
     Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-      PaintChunkProperties properties(
-          context.GetPaintController().CurrentPaintChunkProperties());
-      properties.property_tree_state =
-          GetFrameView().PreContentClipProperties();
-      scoped_paint_chunk_properties.emplace(context.GetPaintController(),
-                                            *GetFrameView().GetLayoutView(),
-                                            properties);
+      scoped_paint_chunk_properties.emplace(
+          context.GetPaintController(),
+          GetFrameView().PreContentClipProperties(),
+          *GetFrameView().GetLayoutView());
     }
 
     TransformRecorder transform_recorder(
