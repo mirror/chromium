@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "c7af5a46_cd2c6411",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-27T18:00:55Z",
+      "side": 1,
+      "message": "This seems like a caller bug. Callers should be performing appropriate action when this returns false. TODO to fix?",
+      "range": {
+        "startLine": 53,
+        "startChar": 71,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "89fc221a13c9af647327288249cfe380e4346bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5333e213_7afa8cf3",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-27T18:00:55Z",
+      "side": 1,
+      "message": "Nit: afterwards",
+      "range": {
+        "startLine": 54,
+        "startChar": 57,
+        "endLine": 54,
+        "endChar": 62
+      },
+      "revId": "89fc221a13c9af647327288249cfe380e4346bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85054ecb_f7864de5",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 8
