@@ -4,6 +4,8 @@
 
 #include "core/css/cssom/FilteredComputedStylePropertyMap.h"
 
+#include "core/css/CSSCustomPropertyDeclaration.h"
+
 namespace blink {
 
 FilteredComputedStylePropertyMap::FilteredComputedStylePropertyMap(
@@ -36,17 +38,19 @@ const CSSValue* FilteredComputedStylePropertyMap::GetCustomProperty(
   return ComputedStylePropertyMap::GetCustomProperty(property_name);
 }
 
-Vector<String> FilteredComputedStylePropertyMap::getProperties() {
-  Vector<String> result;
-  for (const auto& native_property : native_properties_) {
-    result.push_back(getPropertyNameString(native_property));
-  }
-
-  for (const auto& custom_property : custom_properties_) {
-    result.push_back(custom_property);
-  }
-
-  return result;
+void FilteredComputedStylePropertyMap::ForEachProperty(
+    const IterationCallback& callback) {
+  ComputedStylePropertyMap::ForEachProperty([&](CSSPropertyID property_id,
+                                                const CSSValue& value) {
+    DCHECK(isValidCSSPropertyID(property_id));
+    if (property_id == CSSPropertyVariable) {
+      const auto& custom_declaration = ToCSSCustomPropertyDeclaration(value);
+      if (custom_properties_.Contains(custom_declaration.GetName()))
+        callback(property_id, value);
+    } else if (native_properties_.Contains(property_id)) {
+      callback(property_id, value);
+    }
+  });
 }
 
 }  // namespace blink

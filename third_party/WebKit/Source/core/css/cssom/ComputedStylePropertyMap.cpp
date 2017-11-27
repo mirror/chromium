@@ -4,8 +4,8 @@
 
 #include "core/css/cssom/ComputedStylePropertyMap.h"
 
+#include "core/css/CSSVariableData.h"
 #include "core/css/ComputedStyleCSSValueMapping.h"
-#include "core/css/cssom/StyleValueFactory.h"
 #include "core/dom/Document.h"
 #include "core/dom/PseudoElement.h"
 
@@ -48,13 +48,12 @@ const ComputedStyle* ComputedStylePropertyMap::UpdateStyle() {
 
 const CSSValue* ComputedStylePropertyMap::GetProperty(
     CSSPropertyID property_id) {
-  if (property_id == CSSPropertyInvalid)
-    return nullptr;
   const ComputedStyle* style = UpdateStyle();
   if (!style)
     return nullptr;
   return ComputedStyleCSSValueMapping::Get(CSSProperty::Get(property_id),
-                                           *style, nullptr /* layout_object */);
+                                           *style, nullptr /* layout_object */,
+                                           StyledNode());
 }
 
 const CSSValue* ComputedStylePropertyMap::GetCustomProperty(
@@ -66,13 +65,32 @@ const CSSValue* ComputedStylePropertyMap::GetCustomProperty(
       property_name, *style, node_->GetDocument().GetPropertyRegistry());
 }
 
-Vector<String> ComputedStylePropertyMap::getProperties() {
-  Vector<String> result;
+void ComputedStylePropertyMap::ForEachProperty(
+    const IterationCallback& callback) {
+  const ComputedStyle* style = UpdateStyle();
+  if (!style)
+    return;
+
   for (CSSPropertyID property_id :
        CSSComputedStyleDeclaration::ComputableProperties()) {
-    result.push_back(getPropertyNameString(property_id));
+    DCHECK_NE(property_id, CSSPropertyVariable);
+    const CSSValue* value = ComputedStyleCSSValueMapping::Get(
+        CSSProperty::Get(property_id), *style, nullptr /* layout_object */,
+        StyledNode());
+    if (value)
+      callback(property_id, *value);
   }
-  return result;
+
+  const auto variables = ComputedStyleCSSValueMapping::GetVariables(*style);
+  if (!variables)
+    return;
+
+  for (const auto& name_and_data : *variables) {
+    // FIXME(785132): Can we get a CSS value from name_and_data.value?
+    const CSSValue* value = GetCustomProperty(name_and_data.key);
+    if (value)
+      callback(CSSPropertyVariable, *value);
+  }
 }
 
 }  // namespace blink
