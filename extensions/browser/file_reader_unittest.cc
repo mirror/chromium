@@ -20,7 +20,7 @@ namespace extensions {
 
 class FileReaderTest : public testing::Test {
  public:
-  FileReaderTest() {}
+  FileReaderTest() = default;
 
  private:
   base::test::ScopedTaskEnvironment task_environment_;

@@ -26,7 +26,7 @@ LazyEventDispatcher::LazyEventDispatcher(
       event_(event),
       dispatch_function_(dispatch_function) {}
 
-LazyEventDispatcher::~LazyEventDispatcher() {}
+LazyEventDispatcher::~LazyEventDispatcher() = default;
 
 void LazyEventDispatcher::DispatchToEventPage(
     const ExtensionId& extension_id,

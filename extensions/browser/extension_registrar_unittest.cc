@@ -38,7 +38,7 @@ class TestExtensionSystem : public MockExtensionSystem {
       : MockExtensionSystem(context),
         runtime_data_(ExtensionRegistry::Get(context)) {}
 
-  ~TestExtensionSystem() override {}
+  ~TestExtensionSystem() override = default;
 
   // MockExtensionSystem:
   void RegisterExtensionWithRequestContexts(

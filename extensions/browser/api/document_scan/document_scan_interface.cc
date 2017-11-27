@@ -8,20 +8,16 @@ namespace extensions {
 
 namespace api {
 
-DocumentScanInterface::DocumentScanInterface() {
-}
+DocumentScanInterface::DocumentScanInterface() = default;
 
-DocumentScanInterface::~DocumentScanInterface() {
-}
+DocumentScanInterface::~DocumentScanInterface() = default;
 
-DocumentScanInterface::ScannerDescription::ScannerDescription() {
-}
+DocumentScanInterface::ScannerDescription::ScannerDescription() = default;
 
 DocumentScanInterface::ScannerDescription::ScannerDescription(
     const ScannerDescription& other) = default;
 
-DocumentScanInterface::ScannerDescription::~ScannerDescription() {
-}
+DocumentScanInterface::ScannerDescription::~ScannerDescription() = default;
 
 }  // namespace api
 

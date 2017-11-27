@@ -39,7 +39,7 @@ const int kCld3MinimumByteThreshold = 50;
 struct DetectedLanguage {
   DetectedLanguage(const std::string& language, int percentage)
       : language(language), percentage(percentage) {}
-  ~DetectedLanguage() {}
+  ~DetectedLanguage() = default;
 
   // Returns a new v8::Local<v8::Value> representing the serialized form of
   // this DetectedLanguage object.
@@ -55,10 +55,10 @@ struct DetectedLanguage {
 // LanguageDetectionResult object that holds detected langugae reliability and
 // array of DetectedLanguage
 struct LanguageDetectionResult {
-  LanguageDetectionResult() {}
+  LanguageDetectionResult() = default;
   explicit LanguageDetectionResult(bool is_reliable)
       : is_reliable(is_reliable) {}
-  ~LanguageDetectionResult() {}
+  ~LanguageDetectionResult() = default;
 
   // Returns a new v8::Local<v8::Value> representing the serialized form of
   // this Result object.

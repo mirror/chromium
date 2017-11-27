@@ -24,9 +24,8 @@ namespace guest_view_internal = extensions::api::guest_view_internal;
 
 namespace extensions {
 
-GuestViewInternalCreateGuestFunction::
-    GuestViewInternalCreateGuestFunction() {
-}
+GuestViewInternalCreateGuestFunction::GuestViewInternalCreateGuestFunction() =
+    default;
 
 bool GuestViewInternalCreateGuestFunction::RunAsync() {
   std::string view_type;
@@ -83,13 +82,11 @@ void GuestViewInternalCreateGuestFunction::CreateGuestCallback(
   SendResponse(true);
 }
 
-GuestViewInternalDestroyGuestFunction::
-    GuestViewInternalDestroyGuestFunction() {
-}
+GuestViewInternalDestroyGuestFunction::GuestViewInternalDestroyGuestFunction() =
+    default;
 
 GuestViewInternalDestroyGuestFunction::
-    ~GuestViewInternalDestroyGuestFunction() {
-}
+    ~GuestViewInternalDestroyGuestFunction() = default;
 
 bool GuestViewInternalDestroyGuestFunction::RunAsync() {
   std::unique_ptr<guest_view_internal::DestroyGuest::Params> params(
@@ -104,11 +101,9 @@ bool GuestViewInternalDestroyGuestFunction::RunAsync() {
   return true;
 }
 
-GuestViewInternalSetSizeFunction::GuestViewInternalSetSizeFunction() {
-}
+GuestViewInternalSetSizeFunction::GuestViewInternalSetSizeFunction() = default;
 
-GuestViewInternalSetSizeFunction::~GuestViewInternalSetSizeFunction() {
-}
+GuestViewInternalSetSizeFunction::~GuestViewInternalSetSizeFunction() = default;
 
 bool GuestViewInternalSetSizeFunction::RunAsync() {
   std::unique_ptr<guest_view_internal::SetSize::Params> params(

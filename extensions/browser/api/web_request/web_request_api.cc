@@ -447,7 +447,7 @@ void WebRequestAPI::OnListenerRemoved(const EventListenerInfo& details) {
 // not play well with event pages. See downloads.onDeterminingFilename and
 // ExtensionDownloadsEventRouter for an alternative approach.
 ExtensionWebRequestEventRouter::EventListener::EventListener(ID id) : id(id) {}
-ExtensionWebRequestEventRouter::EventListener::~EventListener() {}
+ExtensionWebRequestEventRouter::EventListener::~EventListener() = default;
 
 // Contains info about requests that are blocked waiting for a response from
 // an extension.
@@ -575,8 +575,7 @@ ExtensionWebRequestEventRouter::EventResponse::EventResponse(
       cancel(false) {
 }
 
-ExtensionWebRequestEventRouter::EventResponse::~EventResponse() {
-}
+ExtensionWebRequestEventRouter::EventResponse::~EventResponse() = default;
 
 ExtensionWebRequestEventRouter::RequestFilter::RequestFilter()
     : tab_id(-1), window_id(-1) {
@@ -585,8 +584,7 @@ ExtensionWebRequestEventRouter::RequestFilter::RequestFilter()
 ExtensionWebRequestEventRouter::RequestFilter::RequestFilter(
     const RequestFilter& other) = default;
 
-ExtensionWebRequestEventRouter::RequestFilter::~RequestFilter() {
-}
+ExtensionWebRequestEventRouter::RequestFilter::~RequestFilter() = default;
 
 //
 // ExtensionWebRequestEventRouter
@@ -2140,7 +2138,7 @@ class ClearCacheQuotaHeuristic : public QuotaLimitHeuristic {
             "MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES"),
         callback_registered_(false),
         weak_ptr_factory_(this) {}
-  ~ClearCacheQuotaHeuristic() override {}
+  ~ClearCacheQuotaHeuristic() override = default;
   bool Apply(Bucket* bucket, const base::TimeTicks& event_time) override;
 
  private:

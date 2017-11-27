@@ -12,7 +12,7 @@
 
 namespace extensions {
 
-ShellVirtualKeyboardDelegate::ShellVirtualKeyboardDelegate() {}
+ShellVirtualKeyboardDelegate::ShellVirtualKeyboardDelegate() = default;
 
 void ShellVirtualKeyboardDelegate::GetKeyboardConfig(
     OnKeyboardSettingsCallback on_settings_callback) {

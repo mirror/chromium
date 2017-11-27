@@ -10,11 +10,9 @@
 
 namespace extensions {
 
-ExtensionSystem::ExtensionSystem() {
-}
+ExtensionSystem::ExtensionSystem() = default;
 
-ExtensionSystem::~ExtensionSystem() {
-}
+ExtensionSystem::~ExtensionSystem() = default;
 
 // static
 ExtensionSystem* ExtensionSystem::Get(content::BrowserContext* context) {

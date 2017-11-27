@@ -46,8 +46,7 @@ SerialExtensionHostQueue::SerialExtensionHostQueue()
     : pending_create_(false), ptr_factory_(this) {
 }
 
-SerialExtensionHostQueue::~SerialExtensionHostQueue() {
-}
+SerialExtensionHostQueue::~SerialExtensionHostQueue() = default;
 
 void SerialExtensionHostQueue::Add(DeferredStartRenderHost* host) {
   queue_.push_back(host);

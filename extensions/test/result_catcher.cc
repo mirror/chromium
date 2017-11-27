@@ -21,8 +21,7 @@ ResultCatcher::ResultCatcher()
                  content::NotificationService::AllSources());
 }
 
-ResultCatcher::~ResultCatcher() {
-}
+ResultCatcher::~ResultCatcher() = default;
 
 bool ResultCatcher::GetNextResult() {
   // Depending on the tests, multiple results can come in from a single call

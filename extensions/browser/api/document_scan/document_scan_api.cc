@@ -26,7 +26,7 @@ namespace api {
 DocumentScanScanFunction::DocumentScanScanFunction()
     : document_scan_interface_(DocumentScanInterface::CreateInstance()) {}
 
-DocumentScanScanFunction::~DocumentScanScanFunction() {}
+DocumentScanScanFunction::~DocumentScanScanFunction() = default;
 
 bool DocumentScanScanFunction::Prepare() {
   set_work_task_runner(base::CreateSequencedTaskRunnerWithTraits(

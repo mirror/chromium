@@ -29,8 +29,7 @@ DeclarativeUserScriptMaster::DeclarativeUserScriptMaster(
   }
 }
 
-DeclarativeUserScriptMaster::~DeclarativeUserScriptMaster() {
-}
+DeclarativeUserScriptMaster::~DeclarativeUserScriptMaster() = default;
 
 void DeclarativeUserScriptMaster::AddScript(
     std::unique_ptr<UserScript> script) {

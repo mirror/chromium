@@ -88,7 +88,7 @@ struct HidDeviceManager::GetApiDevicesParams {
                       const std::vector<HidDeviceFilter>& filters,
                       const GetApiDevicesCallback& callback)
       : extension(extension), filters(filters), callback(callback) {}
-  ~GetApiDevicesParams() {}
+  ~GetApiDevicesParams() = default;
 
   const Extension* extension;
   std::vector<HidDeviceFilter> filters;

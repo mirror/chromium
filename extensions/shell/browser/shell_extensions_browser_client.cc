@@ -52,8 +52,7 @@ ShellExtensionsBrowserClient::ShellExtensionsBrowserClient(
   SetCurrentChannel(version_info::Channel::UNKNOWN);
 }
 
-ShellExtensionsBrowserClient::~ShellExtensionsBrowserClient() {
-}
+ShellExtensionsBrowserClient::~ShellExtensionsBrowserClient() = default;
 
 bool ShellExtensionsBrowserClient::IsShuttingDown() {
   return false;

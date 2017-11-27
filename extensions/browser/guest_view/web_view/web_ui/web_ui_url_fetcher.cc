@@ -22,8 +22,7 @@ WebUIURLFetcher::WebUIURLFetcher(content::BrowserContext* context,
       url_(url),
       callback_(std::move(callback)) {}
 
-WebUIURLFetcher::~WebUIURLFetcher() {
-}
+WebUIURLFetcher::~WebUIURLFetcher() = default;
 
 void WebUIURLFetcher::Start() {
   net::NetworkTrafficAnnotationTag traffic_annotation =

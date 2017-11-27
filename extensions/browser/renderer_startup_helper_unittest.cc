@@ -23,8 +23,8 @@ namespace extensions {
 
 class RendererStartupHelperTest : public ExtensionsTest {
  public:
-  RendererStartupHelperTest() {}
-  ~RendererStartupHelperTest() override {}
+  RendererStartupHelperTest() = default;
+  ~RendererStartupHelperTest() override = default;
 
   void SetUp() override {
     ExtensionsTest::SetUp();

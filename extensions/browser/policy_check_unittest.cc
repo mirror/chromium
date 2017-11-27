@@ -54,7 +54,7 @@ class TestExtensionSystem : public MockExtensionSystem {
  public:
   explicit TestExtensionSystem(content::BrowserContext* context)
       : MockExtensionSystem(context) {}
-  ~TestExtensionSystem() override {}
+  ~TestExtensionSystem() override = default;
 
   ManagementPolicy* management_policy() override { return &management_policy_; }
 
@@ -66,9 +66,9 @@ class TestExtensionSystem : public MockExtensionSystem {
 
 class PolicyCheckTest : public ExtensionsTest {
  public:
-  PolicyCheckTest() {}
+  PolicyCheckTest() = default;
 
-  ~PolicyCheckTest() override {}
+  ~PolicyCheckTest() override = default;
 
   void SetUp() override {
     ExtensionsTest::SetUp();

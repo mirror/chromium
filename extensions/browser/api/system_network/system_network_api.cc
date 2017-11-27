@@ -25,12 +25,10 @@ namespace extensions {
 namespace api {
 
 SystemNetworkGetNetworkInterfacesFunction::
-    SystemNetworkGetNetworkInterfacesFunction() {
-}
+    SystemNetworkGetNetworkInterfacesFunction() = default;
 
 SystemNetworkGetNetworkInterfacesFunction::
-    ~SystemNetworkGetNetworkInterfacesFunction() {
-}
+    ~SystemNetworkGetNetworkInterfacesFunction() = default;
 
 ExtensionFunction::ResponseAction
 SystemNetworkGetNetworkInterfacesFunction::Run() {

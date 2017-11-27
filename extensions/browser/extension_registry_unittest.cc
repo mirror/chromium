@@ -37,7 +37,7 @@ testing::AssertionResult HasSingleExtension(
 
 class TestObserver : public ExtensionRegistryObserver {
  public:
-  TestObserver() {}
+  TestObserver() = default;
 
   void Reset() {
     loaded_.clear();

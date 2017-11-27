@@ -46,7 +46,7 @@ RulesCacheDelegate::RulesCacheDelegate(bool log_storage_init_delay)
       weak_ptr_factory_(this) {
 }
 
-RulesCacheDelegate::~RulesCacheDelegate() {}
+RulesCacheDelegate::~RulesCacheDelegate() = default;
 
 // Returns the key to use for storing whether the rules have been stored.
 // static

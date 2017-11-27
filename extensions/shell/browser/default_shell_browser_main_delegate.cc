@@ -82,11 +82,9 @@ void LoadAppsFromCommandLine(ShellExtensionSystem* extension_system,
 
 }  // namespace
 
-DefaultShellBrowserMainDelegate::DefaultShellBrowserMainDelegate() {
-}
+DefaultShellBrowserMainDelegate::DefaultShellBrowserMainDelegate() = default;
 
-DefaultShellBrowserMainDelegate::~DefaultShellBrowserMainDelegate() {
-}
+DefaultShellBrowserMainDelegate::~DefaultShellBrowserMainDelegate() = default;
 
 void DefaultShellBrowserMainDelegate::Start(
     content::BrowserContext* browser_context) {

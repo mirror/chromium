@@ -56,7 +56,7 @@ class ShellNativeCursorManager : public wm::NativeCursorManager {
       ShellDesktopControllerAura* desktop_controller)
       : desktop_controller_(desktop_controller),
         image_cursors_(new ui::ImageCursors) {}
-  ~ShellNativeCursorManager() override {}
+  ~ShellNativeCursorManager() override = default;
 
   // wm::NativeCursorManager overrides.
   void SetDisplay(const display::Display& display,
@@ -119,8 +119,8 @@ class ShellNativeCursorManager : public wm::NativeCursorManager {
 
 class AppsFocusRules : public wm::BaseFocusRules {
  public:
-  AppsFocusRules() {}
-  ~AppsFocusRules() override {}
+  AppsFocusRules() = default;
+  ~AppsFocusRules() override = default;
 
   bool SupportsChildActivation(aura::Window* window) const override {
     return true;

@@ -24,7 +24,7 @@ class FakeApiResource : public ApiResource {
  public:
   explicit FakeApiResource(const std::string& owner_extension_id)
       : ApiResource(owner_extension_id) {}
-  ~FakeApiResource() override {}
+  ~FakeApiResource() override = default;
   static const BrowserThread::ID kThreadId = BrowserThread::UI;
 };
 

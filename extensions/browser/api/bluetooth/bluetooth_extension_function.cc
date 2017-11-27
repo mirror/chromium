@@ -43,11 +43,9 @@ void GetAdapter(const device::BluetoothAdapterFactory::AdapterCallback callback,
 namespace extensions {
 namespace api {
 
-BluetoothExtensionFunction::BluetoothExtensionFunction() {
-}
+BluetoothExtensionFunction::BluetoothExtensionFunction() = default;
 
-BluetoothExtensionFunction::~BluetoothExtensionFunction() {
-}
+BluetoothExtensionFunction::~BluetoothExtensionFunction() = default;
 
 bool BluetoothExtensionFunction::RunAsync() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

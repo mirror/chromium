@@ -60,7 +60,7 @@ void SetSocketProperties(ResumableTCPServerSocket* socket,
 namespace extensions {
 namespace api {
 
-TCPServerSocketAsyncApiFunction::~TCPServerSocketAsyncApiFunction() {}
+TCPServerSocketAsyncApiFunction::~TCPServerSocketAsyncApiFunction() = default;
 
 std::unique_ptr<SocketResourceManagerInterface>
 TCPServerSocketAsyncApiFunction::CreateSocketResourceManager() {
@@ -73,9 +73,9 @@ ResumableTCPServerSocket* TCPServerSocketAsyncApiFunction::GetTcpSocket(
   return static_cast<ResumableTCPServerSocket*>(GetSocket(socket_id));
 }
 
-SocketsTcpServerCreateFunction::SocketsTcpServerCreateFunction() {}
+SocketsTcpServerCreateFunction::SocketsTcpServerCreateFunction() = default;
 
-SocketsTcpServerCreateFunction::~SocketsTcpServerCreateFunction() {}
+SocketsTcpServerCreateFunction::~SocketsTcpServerCreateFunction() = default;
 
 bool SocketsTcpServerCreateFunction::Prepare() {
   params_ = sockets_tcp_server::Create::Params::Create(*args_);
@@ -97,9 +97,9 @@ void SocketsTcpServerCreateFunction::Work() {
   results_ = sockets_tcp_server::Create::Results::Create(create_info);
 }
 
-SocketsTcpServerUpdateFunction::SocketsTcpServerUpdateFunction() {}
+SocketsTcpServerUpdateFunction::SocketsTcpServerUpdateFunction() = default;
 
-SocketsTcpServerUpdateFunction::~SocketsTcpServerUpdateFunction() {}
+SocketsTcpServerUpdateFunction::~SocketsTcpServerUpdateFunction() = default;
 
 bool SocketsTcpServerUpdateFunction::Prepare() {
   params_ = sockets_tcp_server::Update::Params::Create(*args_);
@@ -121,7 +121,8 @@ void SocketsTcpServerUpdateFunction::Work() {
 SocketsTcpServerSetPausedFunction::SocketsTcpServerSetPausedFunction()
     : socket_event_dispatcher_(NULL) {}
 
-SocketsTcpServerSetPausedFunction::~SocketsTcpServerSetPausedFunction() {}
+SocketsTcpServerSetPausedFunction::~SocketsTcpServerSetPausedFunction() =
+    default;
 
 bool SocketsTcpServerSetPausedFunction::Prepare() {
   params_ = api::sockets_tcp_server::SetPaused::Params::Create(*args_);
@@ -158,7 +159,7 @@ void SocketsTcpServerSetPausedFunction::Work() {
 SocketsTcpServerListenFunction::SocketsTcpServerListenFunction()
     : socket_event_dispatcher_(NULL) {}
 
-SocketsTcpServerListenFunction::~SocketsTcpServerListenFunction() {}
+SocketsTcpServerListenFunction::~SocketsTcpServerListenFunction() = default;
 
 bool SocketsTcpServerListenFunction::Prepare() {
   params_ = api::sockets_tcp_server::Listen::Params::Create(*args_);
@@ -207,9 +208,11 @@ void SocketsTcpServerListenFunction::AsyncWorkStart() {
   OpenFirewallHole(params_->address, params_->socket_id, socket);
 }
 
-SocketsTcpServerDisconnectFunction::SocketsTcpServerDisconnectFunction() {}
+SocketsTcpServerDisconnectFunction::SocketsTcpServerDisconnectFunction() =
+    default;
 
-SocketsTcpServerDisconnectFunction::~SocketsTcpServerDisconnectFunction() {}
+SocketsTcpServerDisconnectFunction::~SocketsTcpServerDisconnectFunction() =
+    default;
 
 bool SocketsTcpServerDisconnectFunction::Prepare() {
   params_ = sockets_tcp_server::Disconnect::Params::Create(*args_);
@@ -228,9 +231,9 @@ void SocketsTcpServerDisconnectFunction::Work() {
   results_ = sockets_tcp_server::Disconnect::Results::Create();
 }
 
-SocketsTcpServerCloseFunction::SocketsTcpServerCloseFunction() {}
+SocketsTcpServerCloseFunction::SocketsTcpServerCloseFunction() = default;
 
-SocketsTcpServerCloseFunction::~SocketsTcpServerCloseFunction() {}
+SocketsTcpServerCloseFunction::~SocketsTcpServerCloseFunction() = default;
 
 bool SocketsTcpServerCloseFunction::Prepare() {
   params_ = sockets_tcp_server::Close::Params::Create(*args_);
@@ -249,9 +252,9 @@ void SocketsTcpServerCloseFunction::Work() {
   results_ = sockets_tcp_server::Close::Results::Create();
 }
 
-SocketsTcpServerGetInfoFunction::SocketsTcpServerGetInfoFunction() {}
+SocketsTcpServerGetInfoFunction::SocketsTcpServerGetInfoFunction() = default;
 
-SocketsTcpServerGetInfoFunction::~SocketsTcpServerGetInfoFunction() {}
+SocketsTcpServerGetInfoFunction::~SocketsTcpServerGetInfoFunction() = default;
 
 bool SocketsTcpServerGetInfoFunction::Prepare() {
   params_ = sockets_tcp_server::GetInfo::Params::Create(*args_);
@@ -271,9 +274,11 @@ void SocketsTcpServerGetInfoFunction::Work() {
   results_ = sockets_tcp_server::GetInfo::Results::Create(socket_info);
 }
 
-SocketsTcpServerGetSocketsFunction::SocketsTcpServerGetSocketsFunction() {}
+SocketsTcpServerGetSocketsFunction::SocketsTcpServerGetSocketsFunction() =
+    default;
 
-SocketsTcpServerGetSocketsFunction::~SocketsTcpServerGetSocketsFunction() {}
+SocketsTcpServerGetSocketsFunction::~SocketsTcpServerGetSocketsFunction() =
+    default;
 
 bool SocketsTcpServerGetSocketsFunction::Prepare() { return true; }
 

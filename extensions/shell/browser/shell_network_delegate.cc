@@ -24,7 +24,7 @@ ShellNetworkDelegate::ShellNetworkDelegate(
   extension_info_map_ = extension_info_map;
 }
 
-ShellNetworkDelegate::~ShellNetworkDelegate() {}
+ShellNetworkDelegate::~ShellNetworkDelegate() = default;
 
 void ShellNetworkDelegate::SetAcceptAllCookies(bool accept) {
   g_accept_all_cookies = accept;

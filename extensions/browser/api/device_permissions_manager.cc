@@ -300,8 +300,7 @@ DevicePermissionEntry::DevicePermissionEntry(
       last_used_(last_used) {
 }
 
-DevicePermissionEntry::~DevicePermissionEntry() {
-}
+DevicePermissionEntry::~DevicePermissionEntry() = default;
 
 bool DevicePermissionEntry::IsPersistent() const {
   return !serial_number_.empty();
@@ -343,8 +342,7 @@ base::string16 DevicePermissionEntry::GetPermissionMessageString() const {
       serial_number_, type_ == Type::USB);
 }
 
-DevicePermissions::~DevicePermissions() {
-}
+DevicePermissions::~DevicePermissions() = default;
 
 scoped_refptr<DevicePermissionEntry> DevicePermissions::FindUsbDeviceEntry(
     scoped_refptr<UsbDevice> device) const {
@@ -705,8 +703,7 @@ DevicePermissionsManagerFactory::DevicePermissionsManagerFactory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-DevicePermissionsManagerFactory::~DevicePermissionsManagerFactory() {
-}
+DevicePermissionsManagerFactory::~DevicePermissionsManagerFactory() = default;
 
 KeyedService* DevicePermissionsManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

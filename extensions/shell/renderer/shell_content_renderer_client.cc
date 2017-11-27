@@ -31,11 +31,9 @@ using content::RenderThread;
 
 namespace extensions {
 
-ShellContentRendererClient::ShellContentRendererClient() {
-}
+ShellContentRendererClient::ShellContentRendererClient() = default;
 
-ShellContentRendererClient::~ShellContentRendererClient() {
-}
+ShellContentRendererClient::~ShellContentRendererClient() = default;
 
 void ShellContentRendererClient::RenderThreadStarted() {
   RenderThread* thread = RenderThread::Get();

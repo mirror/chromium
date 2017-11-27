@@ -14,7 +14,7 @@ namespace extensions {
 PreloadCheckGroup::PreloadCheckGroup()
     : PreloadCheck(nullptr), weak_ptr_factory_(this) {}
 
-PreloadCheckGroup::~PreloadCheckGroup() {}
+PreloadCheckGroup::~PreloadCheckGroup() = default;
 
 void PreloadCheckGroup::AddCheck(PreloadCheck* check) {
   DCHECK_EQ(0, running_checks_);

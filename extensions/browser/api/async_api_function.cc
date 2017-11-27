@@ -17,7 +17,7 @@ AsyncApiFunction::AsyncApiFunction()
     : work_task_runner_(
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)) {}
 
-AsyncApiFunction::~AsyncApiFunction() {}
+AsyncApiFunction::~AsyncApiFunction() = default;
 
 bool AsyncApiFunction::RunAsync() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

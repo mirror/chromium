@@ -89,7 +89,7 @@ bool UpdateInstallShim::Uninstall() {
   return false;
 }
 
-UpdateInstallShim::~UpdateInstallShim() {}
+UpdateInstallShim::~UpdateInstallShim() = default;
 
 void UpdateInstallShim::RunCallbackOnUIThread(const base::FilePath& temp_dir) {
   if (callback_.is_null()) {

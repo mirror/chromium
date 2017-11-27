@@ -17,11 +17,9 @@
 
 namespace extensions {
 
-UsbPrinterManifestData::UsbPrinterManifestData() {
-}
+UsbPrinterManifestData::UsbPrinterManifestData() = default;
 
-UsbPrinterManifestData::~UsbPrinterManifestData() {
-}
+UsbPrinterManifestData::~UsbPrinterManifestData() = default;
 
 // static
 const UsbPrinterManifestData* UsbPrinterManifestData::Get(

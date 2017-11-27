@@ -6,11 +6,9 @@
 
 namespace extensions {
 
-TestPermissionMessageProvider::TestPermissionMessageProvider() {
-}
+TestPermissionMessageProvider::TestPermissionMessageProvider() = default;
 
-TestPermissionMessageProvider::~TestPermissionMessageProvider() {
-}
+TestPermissionMessageProvider::~TestPermissionMessageProvider() = default;
 
 PermissionMessages TestPermissionMessageProvider::GetPermissionMessages(
     const PermissionIDSet& permissions) const {

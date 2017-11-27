@@ -10,12 +10,10 @@
 namespace extensions {
 
 ExtensionsGuestViewContainerDispatcher::
-    ExtensionsGuestViewContainerDispatcher() {
-}
+    ExtensionsGuestViewContainerDispatcher() = default;
 
 ExtensionsGuestViewContainerDispatcher::
-    ~ExtensionsGuestViewContainerDispatcher() {
-}
+    ~ExtensionsGuestViewContainerDispatcher() = default;
 
 bool ExtensionsGuestViewContainerDispatcher::HandlesMessage(
     const IPC::Message& message) {

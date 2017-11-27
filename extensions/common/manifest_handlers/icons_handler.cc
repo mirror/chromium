@@ -51,11 +51,9 @@ GURL IconsInfo::GetIconURL(const Extension* extension,
   return path.empty() ? GURL() : extension->GetResourceURL(path);
 }
 
-IconsHandler::IconsHandler() {
-}
+IconsHandler::IconsHandler() = default;
 
-IconsHandler::~IconsHandler() {
-}
+IconsHandler::~IconsHandler() = default;
 
 bool IconsHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<IconsInfo> icons_info(new IconsInfo);

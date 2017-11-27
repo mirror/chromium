@@ -212,7 +212,7 @@ SimpleFeature::ScopedThreadUnsafeWhitelistForTest::
 SimpleFeature::SimpleFeature()
     : component_extensions_auto_granted_(true), is_internal_(false) {}
 
-SimpleFeature::~SimpleFeature() {}
+SimpleFeature::~SimpleFeature() = default;
 
 Feature::Availability SimpleFeature::IsAvailableToManifest(
     const HashedExtensionId& hashed_id,

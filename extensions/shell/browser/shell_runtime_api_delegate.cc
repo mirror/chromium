@@ -17,11 +17,9 @@ using extensions::api::runtime::PlatformInfo;
 
 namespace extensions {
 
-ShellRuntimeAPIDelegate::ShellRuntimeAPIDelegate() {
-}
+ShellRuntimeAPIDelegate::ShellRuntimeAPIDelegate() = default;
 
-ShellRuntimeAPIDelegate::~ShellRuntimeAPIDelegate() {
-}
+ShellRuntimeAPIDelegate::~ShellRuntimeAPIDelegate() = default;
 
 void ShellRuntimeAPIDelegate::AddUpdateObserver(UpdateObserver* observer) {
 }

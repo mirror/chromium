@@ -81,8 +81,7 @@ OptionsPageInfo::OptionsPageInfo(const GURL& options_page,
       open_in_tab_(open_in_tab) {
 }
 
-OptionsPageInfo::~OptionsPageInfo() {
-}
+OptionsPageInfo::~OptionsPageInfo() = default;
 
 // static
 const GURL& OptionsPageInfo::GetOptionsPage(const Extension* extension) {
@@ -169,11 +168,9 @@ std::unique_ptr<OptionsPageInfo> OptionsPageInfo::Create(
       new OptionsPageInfo(options_page, chrome_style, open_in_tab));
 }
 
-OptionsPageManifestHandler::OptionsPageManifestHandler() {
-}
+OptionsPageManifestHandler::OptionsPageManifestHandler() = default;
 
-OptionsPageManifestHandler::~OptionsPageManifestHandler() {
-}
+OptionsPageManifestHandler::~OptionsPageManifestHandler() = default;
 
 bool OptionsPageManifestHandler::Parse(Extension* extension,
                                        base::string16* error) {

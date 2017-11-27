@@ -20,8 +20,8 @@ namespace {
 // A BrowserContext that uses a test data directory as its data path.
 class PrefsTestBrowserContext : public content::TestBrowserContext {
  public:
-  PrefsTestBrowserContext() {}
-  ~PrefsTestBrowserContext() override {}
+  PrefsTestBrowserContext() = default;
+  ~PrefsTestBrowserContext() override = default;
 
   // content::BrowserContext:
   base::FilePath GetPath() const override {
@@ -36,8 +36,8 @@ class PrefsTestBrowserContext : public content::TestBrowserContext {
 
 class ShellPrefsTest : public testing::Test {
  public:
-  ShellPrefsTest() {}
-  ~ShellPrefsTest() override {}
+  ShellPrefsTest() = default;
+  ~ShellPrefsTest() override = default;
 
  protected:
   content::TestBrowserThreadBundle thread_bundle_;

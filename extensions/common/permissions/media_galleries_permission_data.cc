@@ -10,8 +10,7 @@
 
 namespace extensions {
 
-MediaGalleriesPermissionData::MediaGalleriesPermissionData() {
-}
+MediaGalleriesPermissionData::MediaGalleriesPermissionData() = default;
 
 bool MediaGalleriesPermissionData::Check(
     const APIPermission::CheckParam* param) const {

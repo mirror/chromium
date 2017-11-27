@@ -38,8 +38,7 @@ void AppWindowRegistry::Observer::OnAppWindowShown(AppWindow* app_window,
 void AppWindowRegistry::Observer::OnAppWindowActivated(AppWindow* app_window) {
 }
 
-AppWindowRegistry::Observer::~Observer() {
-}
+AppWindowRegistry::Observer::~Observer() = default;
 
 AppWindowRegistry::AppWindowRegistry(content::BrowserContext* context)
     : context_(context) {
@@ -247,7 +246,7 @@ AppWindowRegistry::Factory::Factory()
           "AppWindowRegistry",
           BrowserContextDependencyManager::GetInstance()) {}
 
-AppWindowRegistry::Factory::~Factory() {}
+AppWindowRegistry::Factory::~Factory() = default;
 
 KeyedService* AppWindowRegistry::Factory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

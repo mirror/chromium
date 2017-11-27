@@ -130,7 +130,7 @@ class GeneratedBackgroundPageJob : public net::URLRequestSimpleJob {
   }
 
  private:
-  ~GeneratedBackgroundPageJob() override {}
+  ~GeneratedBackgroundPageJob() override = default;
 
   scoped_refptr<const Extension> extension_;
   net::HttpResponseInfo response_info_;
@@ -513,7 +513,7 @@ class ExtensionProtocolHandler
                            extensions::InfoMap* extension_info_map)
       : is_incognito_(is_incognito), extension_info_map_(extension_info_map) {}
 
-  ~ExtensionProtocolHandler() override {}
+  ~ExtensionProtocolHandler() override = default;
 
   net::URLRequestJob* MaybeCreateJob(
       net::URLRequest* request,

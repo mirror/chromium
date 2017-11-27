@@ -131,8 +131,8 @@ bool ExtraInfoSpec::InitFromValue(const base::ListValue& value,
   return true;
 }
 
-RequestCookie::RequestCookie() {}
-RequestCookie::~RequestCookie() {}
+RequestCookie::RequestCookie() = default;
+RequestCookie::~RequestCookie() = default;
 
 bool NullableEquals(const RequestCookie* a, const RequestCookie* b) {
   if ((a && !b) || (!a && b))
@@ -143,8 +143,8 @@ bool NullableEquals(const RequestCookie* a, const RequestCookie* b) {
          NullableEquals(a->value.get(), b->value.get());
 }
 
-ResponseCookie::ResponseCookie() {}
-ResponseCookie::~ResponseCookie() {}
+ResponseCookie::ResponseCookie() = default;
+ResponseCookie::~ResponseCookie() = default;
 
 bool NullableEquals(const ResponseCookie* a, const ResponseCookie* b) {
   if ((a && !b) || (!a && b))
@@ -161,8 +161,8 @@ bool NullableEquals(const ResponseCookie* a, const ResponseCookie* b) {
          NullableEquals(a->http_only.get(), b->http_only.get());
 }
 
-FilterResponseCookie::FilterResponseCookie() {}
-FilterResponseCookie::~FilterResponseCookie() {}
+FilterResponseCookie::FilterResponseCookie() = default;
+FilterResponseCookie::~FilterResponseCookie() = default;
 
 bool NullableEquals(const FilterResponseCookie* a,
                     const FilterResponseCookie* b) {
@@ -175,8 +175,8 @@ bool NullableEquals(const FilterResponseCookie* a,
          NullableEquals(a->session_cookie.get(), b->session_cookie.get());
 }
 
-RequestCookieModification::RequestCookieModification() {}
-RequestCookieModification::~RequestCookieModification() {}
+RequestCookieModification::RequestCookieModification() = default;
+RequestCookieModification::~RequestCookieModification() = default;
 
 bool NullableEquals(const RequestCookieModification* a,
                     const RequestCookieModification* b) {
@@ -189,7 +189,7 @@ bool NullableEquals(const RequestCookieModification* a,
 }
 
 ResponseCookieModification::ResponseCookieModification() : type(ADD) {}
-ResponseCookieModification::~ResponseCookieModification() {}
+ResponseCookieModification::~ResponseCookieModification() = default;
 
 bool NullableEquals(const ResponseCookieModification* a,
                     const ResponseCookieModification* b) {
@@ -209,9 +209,7 @@ EventResponseDelta::EventResponseDelta(
       cancel(false) {
 }
 
-EventResponseDelta::~EventResponseDelta() {
-}
-
+EventResponseDelta::~EventResponseDelta() = default;
 
 // Creates a NetLog callback the returns a Value with the ID of the extension
 // that caused an event.  |delta| must remain valid for the lifetime of the

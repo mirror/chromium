@@ -23,7 +23,7 @@ SendMessageTester::SendMessageTester(TestIPCMessageSender* ipc_sender,
       next_port_id_(next_port_id),
       api_namespace_(api_namespace) {}
 
-SendMessageTester::~SendMessageTester() {}
+SendMessageTester::~SendMessageTester() = default;
 
 void SendMessageTester::TestSendMessage(const std::string& args,
                                         const std::string& expected_message,

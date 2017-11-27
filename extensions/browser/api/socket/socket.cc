@@ -138,6 +138,6 @@ Socket::WriteRequest::WriteRequest(scoped_refptr<net::IOBuffer> io_buffer,
 
 Socket::WriteRequest::WriteRequest(const WriteRequest& other) = default;
 
-Socket::WriteRequest::~WriteRequest() {}
+Socket::WriteRequest::~WriteRequest() = default;
 
 }  // namespace extensions

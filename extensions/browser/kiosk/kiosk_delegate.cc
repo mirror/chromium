@@ -6,8 +6,8 @@
 
 namespace extensions {
 
-KioskDelegate::KioskDelegate() {}
+KioskDelegate::KioskDelegate() = default;
 
-KioskDelegate::~KioskDelegate() {}
+KioskDelegate::~KioskDelegate() = default;
 
 }  // namespace extensions

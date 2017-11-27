@@ -6,13 +6,13 @@
 
 namespace extensions {
 
-DisplaySourceConnectionDelegate::Connection::Connection() {}
+DisplaySourceConnectionDelegate::Connection::Connection() = default;
 
-DisplaySourceConnectionDelegate::Connection::~Connection() {}
+DisplaySourceConnectionDelegate::Connection::~Connection() = default;
 
-DisplaySourceConnectionDelegate::DisplaySourceConnectionDelegate() {}
+DisplaySourceConnectionDelegate::DisplaySourceConnectionDelegate() = default;
 
-DisplaySourceConnectionDelegate::~DisplaySourceConnectionDelegate() {}
+DisplaySourceConnectionDelegate::~DisplaySourceConnectionDelegate() = default;
 
 void DisplaySourceConnectionDelegate::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);

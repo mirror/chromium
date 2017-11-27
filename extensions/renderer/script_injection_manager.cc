@@ -117,8 +117,7 @@ ScriptInjectionManager::RFOHelper::RFOHelper(content::RenderFrame* render_frame,
       weak_factory_(this) {
 }
 
-ScriptInjectionManager::RFOHelper::~RFOHelper() {
-}
+ScriptInjectionManager::RFOHelper::~RFOHelper() = default;
 
 bool ScriptInjectionManager::RFOHelper::OnMessageReceived(
     const IPC::Message& message) {

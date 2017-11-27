@@ -87,7 +87,7 @@ namespace api {
 
 using content::SocketPermissionRequest;
 
-TCPSocketAsyncApiFunction::~TCPSocketAsyncApiFunction() {}
+TCPSocketAsyncApiFunction::~TCPSocketAsyncApiFunction() = default;
 
 std::unique_ptr<SocketResourceManagerInterface>
 TCPSocketAsyncApiFunction::CreateSocketResourceManager() {
@@ -100,7 +100,7 @@ ResumableTCPSocket* TCPSocketAsyncApiFunction::GetTcpSocket(int socket_id) {
 }
 
 TCPSocketExtensionWithDnsLookupFunction::
-    ~TCPSocketExtensionWithDnsLookupFunction() {}
+    ~TCPSocketExtensionWithDnsLookupFunction() = default;
 
 std::unique_ptr<SocketResourceManagerInterface>
 TCPSocketExtensionWithDnsLookupFunction::CreateSocketResourceManager() {
@@ -113,9 +113,9 @@ ResumableTCPSocket* TCPSocketExtensionWithDnsLookupFunction::GetTcpSocket(
   return static_cast<ResumableTCPSocket*>(GetSocket(socket_id));
 }
 
-SocketsTcpCreateFunction::SocketsTcpCreateFunction() {}
+SocketsTcpCreateFunction::SocketsTcpCreateFunction() = default;
 
-SocketsTcpCreateFunction::~SocketsTcpCreateFunction() {}
+SocketsTcpCreateFunction::~SocketsTcpCreateFunction() = default;
 
 bool SocketsTcpCreateFunction::Prepare() {
   params_ = sockets_tcp::Create::Params::Create(*args_);
@@ -136,9 +136,9 @@ void SocketsTcpCreateFunction::Work() {
   results_ = sockets_tcp::Create::Results::Create(create_info);
 }
 
-SocketsTcpUpdateFunction::SocketsTcpUpdateFunction() {}
+SocketsTcpUpdateFunction::SocketsTcpUpdateFunction() = default;
 
-SocketsTcpUpdateFunction::~SocketsTcpUpdateFunction() {}
+SocketsTcpUpdateFunction::~SocketsTcpUpdateFunction() = default;
 
 bool SocketsTcpUpdateFunction::Prepare() {
   params_ = sockets_tcp::Update::Params::Create(*args_);
@@ -160,7 +160,7 @@ void SocketsTcpUpdateFunction::Work() {
 SocketsTcpSetPausedFunction::SocketsTcpSetPausedFunction()
     : socket_event_dispatcher_(NULL) {}
 
-SocketsTcpSetPausedFunction::~SocketsTcpSetPausedFunction() {}
+SocketsTcpSetPausedFunction::~SocketsTcpSetPausedFunction() = default;
 
 bool SocketsTcpSetPausedFunction::Prepare() {
   params_ = api::sockets_tcp::SetPaused::Params::Create(*args_);
@@ -193,9 +193,9 @@ void SocketsTcpSetPausedFunction::Work() {
   results_ = sockets_tcp::SetPaused::Results::Create();
 }
 
-SocketsTcpSetKeepAliveFunction::SocketsTcpSetKeepAliveFunction() {}
+SocketsTcpSetKeepAliveFunction::SocketsTcpSetKeepAliveFunction() = default;
 
-SocketsTcpSetKeepAliveFunction::~SocketsTcpSetKeepAliveFunction() {}
+SocketsTcpSetKeepAliveFunction::~SocketsTcpSetKeepAliveFunction() = default;
 
 bool SocketsTcpSetKeepAliveFunction::Prepare() {
   params_ = api::sockets_tcp::SetKeepAlive::Params::Create(*args_);
@@ -219,9 +219,9 @@ void SocketsTcpSetKeepAliveFunction::Work() {
   results_ = sockets_tcp::SetKeepAlive::Results::Create(net_result);
 }
 
-SocketsTcpSetNoDelayFunction::SocketsTcpSetNoDelayFunction() {}
+SocketsTcpSetNoDelayFunction::SocketsTcpSetNoDelayFunction() = default;
 
-SocketsTcpSetNoDelayFunction::~SocketsTcpSetNoDelayFunction() {}
+SocketsTcpSetNoDelayFunction::~SocketsTcpSetNoDelayFunction() = default;
 
 bool SocketsTcpSetNoDelayFunction::Prepare() {
   params_ = api::sockets_tcp::SetNoDelay::Params::Create(*args_);
@@ -246,7 +246,7 @@ void SocketsTcpSetNoDelayFunction::Work() {
 SocketsTcpConnectFunction::SocketsTcpConnectFunction()
     : socket_event_dispatcher_(NULL) {}
 
-SocketsTcpConnectFunction::~SocketsTcpConnectFunction() {}
+SocketsTcpConnectFunction::~SocketsTcpConnectFunction() = default;
 
 bool SocketsTcpConnectFunction::Prepare() {
   params_ = sockets_tcp::Connect::Params::Create(*args_);
@@ -315,9 +315,9 @@ void SocketsTcpConnectFunction::OnCompleted(int net_result) {
   AsyncWorkCompleted();
 }
 
-SocketsTcpDisconnectFunction::SocketsTcpDisconnectFunction() {}
+SocketsTcpDisconnectFunction::SocketsTcpDisconnectFunction() = default;
 
-SocketsTcpDisconnectFunction::~SocketsTcpDisconnectFunction() {}
+SocketsTcpDisconnectFunction::~SocketsTcpDisconnectFunction() = default;
 
 bool SocketsTcpDisconnectFunction::Prepare() {
   params_ = sockets_tcp::Disconnect::Params::Create(*args_);
@@ -338,7 +338,7 @@ void SocketsTcpDisconnectFunction::Work() {
 
 SocketsTcpSendFunction::SocketsTcpSendFunction() : io_buffer_size_(0) {}
 
-SocketsTcpSendFunction::~SocketsTcpSendFunction() {}
+SocketsTcpSendFunction::~SocketsTcpSendFunction() = default;
 
 bool SocketsTcpSendFunction::Prepare() {
   params_ = sockets_tcp::Send::Params::Create(*args_);
@@ -384,9 +384,9 @@ void SocketsTcpSendFunction::SetSendResult(int net_result, int bytes_sent) {
   AsyncWorkCompleted();
 }
 
-SocketsTcpCloseFunction::SocketsTcpCloseFunction() {}
+SocketsTcpCloseFunction::SocketsTcpCloseFunction() = default;
 
-SocketsTcpCloseFunction::~SocketsTcpCloseFunction() {}
+SocketsTcpCloseFunction::~SocketsTcpCloseFunction() = default;
 
 bool SocketsTcpCloseFunction::Prepare() {
   params_ = sockets_tcp::Close::Params::Create(*args_);
@@ -405,9 +405,9 @@ void SocketsTcpCloseFunction::Work() {
   results_ = sockets_tcp::Close::Results::Create();
 }
 
-SocketsTcpGetInfoFunction::SocketsTcpGetInfoFunction() {}
+SocketsTcpGetInfoFunction::SocketsTcpGetInfoFunction() = default;
 
-SocketsTcpGetInfoFunction::~SocketsTcpGetInfoFunction() {}
+SocketsTcpGetInfoFunction::~SocketsTcpGetInfoFunction() = default;
 
 bool SocketsTcpGetInfoFunction::Prepare() {
   params_ = sockets_tcp::GetInfo::Params::Create(*args_);
@@ -427,9 +427,9 @@ void SocketsTcpGetInfoFunction::Work() {
   results_ = sockets_tcp::GetInfo::Results::Create(socket_info);
 }
 
-SocketsTcpGetSocketsFunction::SocketsTcpGetSocketsFunction() {}
+SocketsTcpGetSocketsFunction::SocketsTcpGetSocketsFunction() = default;
 
-SocketsTcpGetSocketsFunction::~SocketsTcpGetSocketsFunction() {}
+SocketsTcpGetSocketsFunction::~SocketsTcpGetSocketsFunction() = default;
 
 bool SocketsTcpGetSocketsFunction::Prepare() { return true; }
 
@@ -447,11 +447,9 @@ void SocketsTcpGetSocketsFunction::Work() {
   results_ = sockets_tcp::GetSockets::Results::Create(socket_infos);
 }
 
-SocketsTcpSecureFunction::SocketsTcpSecureFunction() {
-}
+SocketsTcpSecureFunction::SocketsTcpSecureFunction() = default;
 
-SocketsTcpSecureFunction::~SocketsTcpSecureFunction() {
-}
+SocketsTcpSecureFunction::~SocketsTcpSecureFunction() = default;
 
 bool SocketsTcpSecureFunction::Prepare() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

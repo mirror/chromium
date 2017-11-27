@@ -9,10 +9,10 @@ namespace media_perception = extensions::api::media_perception_private;
 namespace extensions {
 
 MediaPerceptionPrivateGetStateFunction ::
-    MediaPerceptionPrivateGetStateFunction() {}
+    MediaPerceptionPrivateGetStateFunction() = default;
 
 MediaPerceptionPrivateGetStateFunction ::
-    ~MediaPerceptionPrivateGetStateFunction() {}
+    ~MediaPerceptionPrivateGetStateFunction() = default;
 
 ExtensionFunction::ResponseAction
 MediaPerceptionPrivateGetStateFunction::Run() {
@@ -29,10 +29,10 @@ void MediaPerceptionPrivateGetStateFunction::GetStateCallback(
 }
 
 MediaPerceptionPrivateSetStateFunction ::
-    MediaPerceptionPrivateSetStateFunction() {}
+    MediaPerceptionPrivateSetStateFunction() = default;
 
 MediaPerceptionPrivateSetStateFunction ::
-    ~MediaPerceptionPrivateSetStateFunction() {}
+    ~MediaPerceptionPrivateSetStateFunction() = default;
 
 ExtensionFunction::ResponseAction
 MediaPerceptionPrivateSetStateFunction::Run() {
@@ -67,10 +67,10 @@ void MediaPerceptionPrivateSetStateFunction::SetStateCallback(
 }
 
 MediaPerceptionPrivateGetDiagnosticsFunction ::
-    MediaPerceptionPrivateGetDiagnosticsFunction() {}
+    MediaPerceptionPrivateGetDiagnosticsFunction() = default;
 
 MediaPerceptionPrivateGetDiagnosticsFunction ::
-    ~MediaPerceptionPrivateGetDiagnosticsFunction() {}
+    ~MediaPerceptionPrivateGetDiagnosticsFunction() = default;
 
 ExtensionFunction::ResponseAction
 MediaPerceptionPrivateGetDiagnosticsFunction::Run() {
@@ -88,10 +88,10 @@ void MediaPerceptionPrivateGetDiagnosticsFunction::GetDiagnosticsCallback(
 }
 
 MediaPerceptionPrivateSetAnalyticsComponentFunction::
-    MediaPerceptionPrivateSetAnalyticsComponentFunction() {}
+    MediaPerceptionPrivateSetAnalyticsComponentFunction() = default;
 
 MediaPerceptionPrivateSetAnalyticsComponentFunction::
-    ~MediaPerceptionPrivateSetAnalyticsComponentFunction() {}
+    ~MediaPerceptionPrivateSetAnalyticsComponentFunction() = default;
 
 ExtensionFunction::ResponseAction
 MediaPerceptionPrivateSetAnalyticsComponentFunction::Run() {

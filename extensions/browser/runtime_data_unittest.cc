@@ -33,7 +33,7 @@ scoped_refptr<Extension> CreateExtensionWithBackgroundPage() {
 class RuntimeDataTest : public testing::Test {
  public:
   RuntimeDataTest() : registry_(nullptr), runtime_data_(&registry_) {}
-  ~RuntimeDataTest() override {}
+  ~RuntimeDataTest() override = default;
 
  protected:
   ExtensionRegistry registry_;

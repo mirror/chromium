@@ -53,8 +53,8 @@ class OverscanTracker {
                             const std::string& id);
   static void RemoveObserver(content::WebContents* web_contents);
 
-  OverscanTracker() {}
-  ~OverscanTracker() {}
+  OverscanTracker() = default;
+  ~OverscanTracker() = default;
 
  private:
   class OverscanWebObserver;
@@ -75,7 +75,7 @@ class OverscanTracker::OverscanWebObserver
  public:
   explicit OverscanWebObserver(content::WebContents* web_contents)
       : content::WebContentsObserver(web_contents) {}
-  ~OverscanWebObserver() override {}
+  ~OverscanWebObserver() override = default;
 
   // WebContentsObserver
   void RenderFrameDeleted(

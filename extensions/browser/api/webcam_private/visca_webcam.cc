@@ -144,8 +144,7 @@ namespace extensions {
 
 ViscaWebcam::ViscaWebcam() : pan_(0), tilt_(0), weak_ptr_factory_(this) {}
 
-ViscaWebcam::~ViscaWebcam() {
-}
+ViscaWebcam::~ViscaWebcam() = default;
 
 void ViscaWebcam::Open(const std::string& path,
                        const std::string& extension_id,

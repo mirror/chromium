@@ -54,17 +54,14 @@ SerialEventDispatcher::SerialEventDispatcher(content::BrowserContext* context)
   connections_ = manager->data_;
 }
 
-SerialEventDispatcher::~SerialEventDispatcher() {
-}
+SerialEventDispatcher::~SerialEventDispatcher() = default;
 
-SerialEventDispatcher::ReceiveParams::ReceiveParams() {
-}
+SerialEventDispatcher::ReceiveParams::ReceiveParams() = default;
 
 SerialEventDispatcher::ReceiveParams::ReceiveParams(
     const ReceiveParams& other) = default;
 
-SerialEventDispatcher::ReceiveParams::~ReceiveParams() {
-}
+SerialEventDispatcher::ReceiveParams::~ReceiveParams() = default;
 
 void SerialEventDispatcher::PollConnection(const std::string& extension_id,
                                            int connection_id) {

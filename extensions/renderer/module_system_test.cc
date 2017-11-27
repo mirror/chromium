@@ -243,8 +243,7 @@ ModuleSystemTest::ModuleSystemTest()
       context_set_(&extension_ids_),
       should_assertions_be_made_(true) {}
 
-ModuleSystemTest::~ModuleSystemTest() {
-}
+ModuleSystemTest::~ModuleSystemTest() = default;
 
 void ModuleSystemTest::SetUp() {
   extension_ = CreateExtension();

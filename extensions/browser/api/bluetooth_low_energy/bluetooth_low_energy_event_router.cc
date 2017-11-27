@@ -233,8 +233,8 @@ BluetoothLowEnergyEventRouter::AttributeValueRequest::AttributeValueRequest(
   this->error_callback = error_callback;
 }
 
-BluetoothLowEnergyEventRouter::AttributeValueRequest::~AttributeValueRequest() {
-}
+BluetoothLowEnergyEventRouter::AttributeValueRequest::~AttributeValueRequest() =
+    default;
 
 BluetoothLowEnergyEventRouter::BluetoothLowEnergyEventRouter(
     content::BrowserContext* context)

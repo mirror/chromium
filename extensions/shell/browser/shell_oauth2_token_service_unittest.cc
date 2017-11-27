@@ -14,7 +14,7 @@ class ShellOAuth2TokenServiceTest : public ExtensionsTest {
  public:
   ShellOAuth2TokenServiceTest()
       : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
-  ~ShellOAuth2TokenServiceTest() override {}
+  ~ShellOAuth2TokenServiceTest() override = default;
 };
 
 // Verifies setting the refresh token makes it available.

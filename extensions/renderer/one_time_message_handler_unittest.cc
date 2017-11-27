@@ -38,8 +38,8 @@ constexpr char kEchoArgsAndError[] =
 
 class OneTimeMessageHandlerTest : public NativeExtensionBindingsSystemUnittest {
  public:
-  OneTimeMessageHandlerTest() {}
-  ~OneTimeMessageHandlerTest() override {}
+  OneTimeMessageHandlerTest() = default;
+  ~OneTimeMessageHandlerTest() override = default;
 
   void SetUp() override {
     NativeExtensionBindingsSystemUnittest::SetUp();

@@ -58,7 +58,7 @@ class UsbDeviceInfo : public DevicePermissionsPrompt::Prompt::DeviceInfo {
     serial_number_ = device->serial_number();
   }
 
-  ~UsbDeviceInfo() override {}
+  ~UsbDeviceInfo() override = default;
 
   const scoped_refptr<UsbDevice>& device() const { return device_; }
 
@@ -83,7 +83,7 @@ class UsbDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
         service_observer_(this) {}
 
  private:
-  ~UsbDevicePermissionsPrompt() override {}
+  ~UsbDevicePermissionsPrompt() override = default;
 
   // DevicePermissionsPrompt::Prompt implementation:
   void SetObserver(
@@ -171,7 +171,7 @@ class HidDeviceInfo : public DevicePermissionsPrompt::Prompt::DeviceInfo {
     serial_number_ = base::UTF8ToUTF16(device_->serial_number);
   }
 
-  ~HidDeviceInfo() override {}
+  ~HidDeviceInfo() override = default;
 
   device::mojom::HidDeviceInfoPtr& device() { return device_; }
 
@@ -195,7 +195,7 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
         binding_(this) {}
 
  private:
-  ~HidDevicePermissionsPrompt() override {}
+  ~HidDevicePermissionsPrompt() override = default;
 
   // DevicePermissionsPrompt::Prompt implementation:
   void SetObserver(
@@ -306,14 +306,11 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
 
 }  // namespace
 
-DevicePermissionsPrompt::Prompt::DeviceInfo::DeviceInfo() {
-}
+DevicePermissionsPrompt::Prompt::DeviceInfo::DeviceInfo() = default;
 
-DevicePermissionsPrompt::Prompt::DeviceInfo::~DeviceInfo() {
-}
+DevicePermissionsPrompt::Prompt::DeviceInfo::~DeviceInfo() = default;
 
-DevicePermissionsPrompt::Prompt::Observer::~Observer() {
-}
+DevicePermissionsPrompt::Prompt::Observer::~Observer() = default;
 
 DevicePermissionsPrompt::Prompt::Prompt(const Extension* extension,
                                         content::BrowserContext* context,
@@ -342,8 +339,7 @@ void DevicePermissionsPrompt::Prompt::GrantDevicePermission(size_t index) {
   devices_[index]->set_granted();
 }
 
-DevicePermissionsPrompt::Prompt::~Prompt() {
-}
+DevicePermissionsPrompt::Prompt::~Prompt() = default;
 
 void DevicePermissionsPrompt::Prompt::AddCheckedDevice(
     std::unique_ptr<DeviceInfo> device,
@@ -361,8 +357,7 @@ DevicePermissionsPrompt::DevicePermissionsPrompt(
     : web_contents_(web_contents) {
 }
 
-DevicePermissionsPrompt::~DevicePermissionsPrompt() {
-}
+DevicePermissionsPrompt::~DevicePermissionsPrompt() = default;
 
 void DevicePermissionsPrompt::AskForUsbDevices(
     const Extension* extension,

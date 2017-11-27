@@ -24,7 +24,7 @@ void FileReader::Start() {
       FROM_HERE, base::Bind(&FileReader::ReadFileOnFileSequence, this));
 }
 
-FileReader::~FileReader() {}
+FileReader::~FileReader() = default;
 
 void FileReader::ReadFileOnFileSequence() {
   DCHECK(

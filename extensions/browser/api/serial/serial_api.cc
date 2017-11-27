@@ -56,7 +56,7 @@ void SetDefaultScopedPtrValue(std::unique_ptr<T>& ptr, const T& value) {
 
 SerialAsyncApiFunction::SerialAsyncApiFunction() : manager_(nullptr) {}
 
-SerialAsyncApiFunction::~SerialAsyncApiFunction() {}
+SerialAsyncApiFunction::~SerialAsyncApiFunction() = default;
 
 bool SerialAsyncApiFunction::PrePrepare() {
   manager_ = ApiResourceManager<SerialConnection>::Get(browser_context());
@@ -77,9 +77,9 @@ void SerialAsyncApiFunction::RemoveSerialConnection(int api_resource_id) {
   manager_->Remove(extension_->id(), api_resource_id);
 }
 
-SerialGetDevicesFunction::SerialGetDevicesFunction() {}
+SerialGetDevicesFunction::SerialGetDevicesFunction() = default;
 
-SerialGetDevicesFunction::~SerialGetDevicesFunction() {}
+SerialGetDevicesFunction::~SerialGetDevicesFunction() = default;
 
 ExtensionFunction::ResponseAction SerialGetDevicesFunction::Run() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -104,9 +104,9 @@ void SerialGetDevicesFunction::OnGotDevices(
   Respond(ArgumentList(std::move(results)));
 }
 
-SerialConnectFunction::SerialConnectFunction() {}
+SerialConnectFunction::SerialConnectFunction() = default;
 
-SerialConnectFunction::~SerialConnectFunction() {}
+SerialConnectFunction::~SerialConnectFunction() = default;
 
 bool SerialConnectFunction::Prepare() {
   params_ = serial::Connect::Params::Create(*args_);
@@ -195,9 +195,9 @@ void SerialConnectFunction::FinishConnect(
   AsyncWorkCompleted();
 }
 
-SerialUpdateFunction::SerialUpdateFunction() {}
+SerialUpdateFunction::SerialUpdateFunction() = default;
 
-SerialUpdateFunction::~SerialUpdateFunction() {}
+SerialUpdateFunction::~SerialUpdateFunction() = default;
 
 bool SerialUpdateFunction::Prepare() {
   params_ = serial::Update::Params::Create(*args_);
@@ -224,9 +224,9 @@ void SerialUpdateFunction::OnUpdated(bool success) {
   AsyncWorkCompleted();
 }
 
-SerialDisconnectFunction::SerialDisconnectFunction() {}
+SerialDisconnectFunction::SerialDisconnectFunction() = default;
 
-SerialDisconnectFunction::~SerialDisconnectFunction() {}
+SerialDisconnectFunction::~SerialDisconnectFunction() = default;
 
 bool SerialDisconnectFunction::Prepare() {
   params_ = serial::Disconnect::Params::Create(*args_);
@@ -245,9 +245,9 @@ void SerialDisconnectFunction::Work() {
   results_ = serial::Disconnect::Results::Create(true);
 }
 
-SerialSendFunction::SerialSendFunction() {}
+SerialSendFunction::SerialSendFunction() = default;
 
-SerialSendFunction::~SerialSendFunction() {}
+SerialSendFunction::~SerialSendFunction() = default;
 
 bool SerialSendFunction::Prepare() {
   params_ = serial::Send::Params::Create(*args_);
@@ -280,9 +280,9 @@ void SerialSendFunction::OnSendComplete(uint32_t bytes_sent,
   AsyncWorkCompleted();
 }
 
-SerialFlushFunction::SerialFlushFunction() {}
+SerialFlushFunction::SerialFlushFunction() = default;
 
-SerialFlushFunction::~SerialFlushFunction() {}
+SerialFlushFunction::~SerialFlushFunction() = default;
 
 bool SerialFlushFunction::Prepare() {
   params_ = serial::Flush::Params::Create(*args_);
@@ -307,9 +307,9 @@ void SerialFlushFunction::OnFlushed(bool success) {
   AsyncWorkCompleted();
 }
 
-SerialSetPausedFunction::SerialSetPausedFunction() {}
+SerialSetPausedFunction::SerialSetPausedFunction() = default;
 
-SerialSetPausedFunction::~SerialSetPausedFunction() {}
+SerialSetPausedFunction::~SerialSetPausedFunction() = default;
 
 bool SerialSetPausedFunction::Prepare() {
   params_ = serial::SetPaused::Params::Create(*args_);
@@ -338,9 +338,9 @@ void SerialSetPausedFunction::Work() {
   results_ = serial::SetPaused::Results::Create();
 }
 
-SerialGetInfoFunction::SerialGetInfoFunction() {}
+SerialGetInfoFunction::SerialGetInfoFunction() = default;
 
-SerialGetInfoFunction::~SerialGetInfoFunction() {}
+SerialGetInfoFunction::~SerialGetInfoFunction() = default;
 
 bool SerialGetInfoFunction::Prepare() {
   params_ = serial::GetInfo::Params::Create(*args_);
@@ -371,9 +371,9 @@ void SerialGetInfoFunction::OnGotInfo(
   AsyncWorkCompleted();
 }
 
-SerialGetConnectionsFunction::SerialGetConnectionsFunction() {}
+SerialGetConnectionsFunction::SerialGetConnectionsFunction() = default;
 
-SerialGetConnectionsFunction::~SerialGetConnectionsFunction() {}
+SerialGetConnectionsFunction::~SerialGetConnectionsFunction() = default;
 
 bool SerialGetConnectionsFunction::Prepare() {
   return true;
@@ -420,9 +420,9 @@ void SerialGetConnectionsFunction::OnGotAll() {
   AsyncWorkCompleted();
 }
 
-SerialGetControlSignalsFunction::SerialGetControlSignalsFunction() {}
+SerialGetControlSignalsFunction::SerialGetControlSignalsFunction() = default;
 
-SerialGetControlSignalsFunction::~SerialGetControlSignalsFunction() {}
+SerialGetControlSignalsFunction::~SerialGetControlSignalsFunction() = default;
 
 bool SerialGetControlSignalsFunction::Prepare() {
   params_ = serial::GetControlSignals::Params::Create(*args_);
@@ -456,9 +456,9 @@ void SerialGetControlSignalsFunction::OnGotControlSignals(
   AsyncWorkCompleted();
 }
 
-SerialSetControlSignalsFunction::SerialSetControlSignalsFunction() {}
+SerialSetControlSignalsFunction::SerialSetControlSignalsFunction() = default;
 
-SerialSetControlSignalsFunction::~SerialSetControlSignalsFunction() {}
+SerialSetControlSignalsFunction::~SerialSetControlSignalsFunction() = default;
 
 bool SerialSetControlSignalsFunction::Prepare() {
   params_ = serial::SetControlSignals::Params::Create(*args_);
@@ -488,9 +488,9 @@ void SerialSetControlSignalsFunction::OnSetControlSignals(bool success) {
   AsyncWorkCompleted();
 }
 
-SerialSetBreakFunction::SerialSetBreakFunction() {}
+SerialSetBreakFunction::SerialSetBreakFunction() = default;
 
-SerialSetBreakFunction::~SerialSetBreakFunction() {}
+SerialSetBreakFunction::~SerialSetBreakFunction() = default;
 
 bool SerialSetBreakFunction::Prepare() {
   params_ = serial::SetBreak::Params::Create(*args_);
@@ -517,9 +517,9 @@ void SerialSetBreakFunction::OnSetBreak(bool success) {
   AsyncWorkCompleted();
 }
 
-SerialClearBreakFunction::SerialClearBreakFunction() {}
+SerialClearBreakFunction::SerialClearBreakFunction() = default;
 
-SerialClearBreakFunction::~SerialClearBreakFunction() {}
+SerialClearBreakFunction::~SerialClearBreakFunction() = default;
 
 bool SerialClearBreakFunction::Prepare() {
   params_ = serial::ClearBreak::Params::Create(*args_);

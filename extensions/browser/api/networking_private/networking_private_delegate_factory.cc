@@ -22,9 +22,11 @@ namespace extensions {
 
 using content::BrowserContext;
 
-NetworkingPrivateDelegateFactory::UIDelegateFactory::UIDelegateFactory() {}
+NetworkingPrivateDelegateFactory::UIDelegateFactory::UIDelegateFactory() =
+    default;
 
-NetworkingPrivateDelegateFactory::UIDelegateFactory::~UIDelegateFactory() {}
+NetworkingPrivateDelegateFactory::UIDelegateFactory::~UIDelegateFactory() =
+    default;
 
 // static
 NetworkingPrivateDelegate*
@@ -46,8 +48,7 @@ NetworkingPrivateDelegateFactory::NetworkingPrivateDelegateFactory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-NetworkingPrivateDelegateFactory::~NetworkingPrivateDelegateFactory() {
-}
+NetworkingPrivateDelegateFactory::~NetworkingPrivateDelegateFactory() = default;
 
 void NetworkingPrivateDelegateFactory::SetUIDelegateFactory(
     std::unique_ptr<UIDelegateFactory> factory) {

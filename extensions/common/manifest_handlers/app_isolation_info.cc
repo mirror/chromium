@@ -26,8 +26,7 @@ AppIsolationInfo::AppIsolationInfo(bool isolated_storage)
     : has_isolated_storage(isolated_storage) {
 }
 
-AppIsolationInfo::~AppIsolationInfo() {
-}
+AppIsolationInfo::~AppIsolationInfo() = default;
 
 // static
 bool AppIsolationInfo::HasIsolatedStorage(const Extension* extension) {
@@ -36,11 +35,9 @@ bool AppIsolationInfo::HasIsolatedStorage(const Extension* extension) {
   return info ? info->has_isolated_storage : false;
 }
 
-AppIsolationHandler::AppIsolationHandler() {
-}
+AppIsolationHandler::AppIsolationHandler() = default;
 
-AppIsolationHandler::~AppIsolationHandler() {
-}
+AppIsolationHandler::~AppIsolationHandler() = default;
 
 bool AppIsolationHandler::Parse(Extension* extension, base::string16* error) {
   // Platform apps always get isolated storage.

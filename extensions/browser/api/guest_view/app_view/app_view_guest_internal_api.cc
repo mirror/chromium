@@ -13,8 +13,7 @@ namespace extensions {
 namespace appview = api::app_view_guest_internal;
 
 AppViewGuestInternalAttachFrameFunction::
-    AppViewGuestInternalAttachFrameFunction() {
-}
+    AppViewGuestInternalAttachFrameFunction() = default;
 
 ExtensionFunction::ResponseAction
 AppViewGuestInternalAttachFrameFunction::Run() {
@@ -37,8 +36,7 @@ AppViewGuestInternalAttachFrameFunction::Run() {
 }
 
 AppViewGuestInternalDenyRequestFunction::
-    AppViewGuestInternalDenyRequestFunction() {
-}
+    AppViewGuestInternalDenyRequestFunction() = default;
 
 ExtensionFunction::ResponseAction
 AppViewGuestInternalDenyRequestFunction::Run() {

@@ -12,8 +12,7 @@ StaticV8ExternalOneByteStringResource::StaticV8ExternalOneByteStringResource(
 }
 
 StaticV8ExternalOneByteStringResource::
-    ~StaticV8ExternalOneByteStringResource() {
-}
+    ~StaticV8ExternalOneByteStringResource() = default;
 
 const char* StaticV8ExternalOneByteStringResource::data() const {
   return buffer_.data();

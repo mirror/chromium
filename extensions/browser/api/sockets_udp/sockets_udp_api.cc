@@ -20,7 +20,7 @@ const char kPermissionError[] = "App does not have permission";
 const char kWildcardAddress[] = "*";
 const int kWildcardPort = 0;
 
-UDPSocketAsyncApiFunction::~UDPSocketAsyncApiFunction() {}
+UDPSocketAsyncApiFunction::~UDPSocketAsyncApiFunction() = default;
 
 std::unique_ptr<SocketResourceManagerInterface>
 UDPSocketAsyncApiFunction::CreateSocketResourceManager() {
@@ -33,7 +33,7 @@ ResumableUDPSocket* UDPSocketAsyncApiFunction::GetUdpSocket(int socket_id) {
 }
 
 UDPSocketExtensionWithDnsLookupFunction::
-    ~UDPSocketExtensionWithDnsLookupFunction() {}
+    ~UDPSocketExtensionWithDnsLookupFunction() = default;
 
 std::unique_ptr<SocketResourceManagerInterface>
 UDPSocketExtensionWithDnsLookupFunction::CreateSocketResourceManager() {
@@ -85,9 +85,9 @@ void SetSocketProperties(ResumableUDPSocket* socket,
   }
 }
 
-SocketsUdpCreateFunction::SocketsUdpCreateFunction() {}
+SocketsUdpCreateFunction::SocketsUdpCreateFunction() = default;
 
-SocketsUdpCreateFunction::~SocketsUdpCreateFunction() {}
+SocketsUdpCreateFunction::~SocketsUdpCreateFunction() = default;
 
 bool SocketsUdpCreateFunction::Prepare() {
   params_ = sockets_udp::Create::Params::Create(*args_);
@@ -108,9 +108,9 @@ void SocketsUdpCreateFunction::Work() {
   results_ = sockets_udp::Create::Results::Create(create_info);
 }
 
-SocketsUdpUpdateFunction::SocketsUdpUpdateFunction() {}
+SocketsUdpUpdateFunction::SocketsUdpUpdateFunction() = default;
 
-SocketsUdpUpdateFunction::~SocketsUdpUpdateFunction() {}
+SocketsUdpUpdateFunction::~SocketsUdpUpdateFunction() = default;
 
 bool SocketsUdpUpdateFunction::Prepare() {
   params_ = sockets_udp::Update::Params::Create(*args_);
@@ -132,7 +132,7 @@ void SocketsUdpUpdateFunction::Work() {
 SocketsUdpSetPausedFunction::SocketsUdpSetPausedFunction()
     : socket_event_dispatcher_(NULL) {}
 
-SocketsUdpSetPausedFunction::~SocketsUdpSetPausedFunction() {}
+SocketsUdpSetPausedFunction::~SocketsUdpSetPausedFunction() = default;
 
 bool SocketsUdpSetPausedFunction::Prepare() {
   params_ = api::sockets_udp::SetPaused::Params::Create(*args_);
@@ -168,7 +168,7 @@ void SocketsUdpSetPausedFunction::Work() {
 SocketsUdpBindFunction::SocketsUdpBindFunction()
     : socket_event_dispatcher_(NULL) {}
 
-SocketsUdpBindFunction::~SocketsUdpBindFunction() {}
+SocketsUdpBindFunction::~SocketsUdpBindFunction() = default;
 
 bool SocketsUdpBindFunction::Prepare() {
   params_ = sockets_udp::Bind::Params::Create(*args_);
@@ -215,7 +215,7 @@ void SocketsUdpBindFunction::AsyncWorkStart() {
 
 SocketsUdpSendFunction::SocketsUdpSendFunction() : io_buffer_size_(0) {}
 
-SocketsUdpSendFunction::~SocketsUdpSendFunction() {}
+SocketsUdpSendFunction::~SocketsUdpSendFunction() = default;
 
 bool SocketsUdpSendFunction::Prepare() {
   params_ = sockets_udp::Send::Params::Create(*args_);
@@ -288,9 +288,9 @@ void SocketsUdpSendFunction::SetSendResult(int net_result, int bytes_sent) {
   AsyncWorkCompleted();
 }
 
-SocketsUdpCloseFunction::SocketsUdpCloseFunction() {}
+SocketsUdpCloseFunction::SocketsUdpCloseFunction() = default;
 
-SocketsUdpCloseFunction::~SocketsUdpCloseFunction() {}
+SocketsUdpCloseFunction::~SocketsUdpCloseFunction() = default;
 
 bool SocketsUdpCloseFunction::Prepare() {
   params_ = sockets_udp::Close::Params::Create(*args_);
@@ -310,9 +310,9 @@ void SocketsUdpCloseFunction::Work() {
   results_ = sockets_udp::Close::Results::Create();
 }
 
-SocketsUdpGetInfoFunction::SocketsUdpGetInfoFunction() {}
+SocketsUdpGetInfoFunction::SocketsUdpGetInfoFunction() = default;
 
-SocketsUdpGetInfoFunction::~SocketsUdpGetInfoFunction() {}
+SocketsUdpGetInfoFunction::~SocketsUdpGetInfoFunction() = default;
 
 bool SocketsUdpGetInfoFunction::Prepare() {
   params_ = sockets_udp::GetInfo::Params::Create(*args_);
@@ -332,9 +332,9 @@ void SocketsUdpGetInfoFunction::Work() {
   results_ = sockets_udp::GetInfo::Results::Create(socket_info);
 }
 
-SocketsUdpGetSocketsFunction::SocketsUdpGetSocketsFunction() {}
+SocketsUdpGetSocketsFunction::SocketsUdpGetSocketsFunction() = default;
 
-SocketsUdpGetSocketsFunction::~SocketsUdpGetSocketsFunction() {}
+SocketsUdpGetSocketsFunction::~SocketsUdpGetSocketsFunction() = default;
 
 bool SocketsUdpGetSocketsFunction::Prepare() { return true; }
 
@@ -352,9 +352,9 @@ void SocketsUdpGetSocketsFunction::Work() {
   results_ = sockets_udp::GetSockets::Results::Create(socket_infos);
 }
 
-SocketsUdpJoinGroupFunction::SocketsUdpJoinGroupFunction() {}
+SocketsUdpJoinGroupFunction::SocketsUdpJoinGroupFunction() = default;
 
-SocketsUdpJoinGroupFunction::~SocketsUdpJoinGroupFunction() {}
+SocketsUdpJoinGroupFunction::~SocketsUdpJoinGroupFunction() = default;
 
 bool SocketsUdpJoinGroupFunction::Prepare() {
   params_ = sockets_udp::JoinGroup::Params::Create(*args_);
@@ -384,9 +384,9 @@ void SocketsUdpJoinGroupFunction::Work() {
   results_ = sockets_udp::JoinGroup::Results::Create(net_result);
 }
 
-SocketsUdpLeaveGroupFunction::SocketsUdpLeaveGroupFunction() {}
+SocketsUdpLeaveGroupFunction::SocketsUdpLeaveGroupFunction() = default;
 
-SocketsUdpLeaveGroupFunction::~SocketsUdpLeaveGroupFunction() {}
+SocketsUdpLeaveGroupFunction::~SocketsUdpLeaveGroupFunction() = default;
 
 bool SocketsUdpLeaveGroupFunction::Prepare() {
   params_ = api::sockets_udp::LeaveGroup::Params::Create(*args_);
@@ -417,10 +417,10 @@ void SocketsUdpLeaveGroupFunction::Work() {
 }
 
 SocketsUdpSetMulticastTimeToLiveFunction::
-    SocketsUdpSetMulticastTimeToLiveFunction() {}
+    SocketsUdpSetMulticastTimeToLiveFunction() = default;
 
 SocketsUdpSetMulticastTimeToLiveFunction::
-    ~SocketsUdpSetMulticastTimeToLiveFunction() {}
+    ~SocketsUdpSetMulticastTimeToLiveFunction() = default;
 
 bool SocketsUdpSetMulticastTimeToLiveFunction::Prepare() {
   params_ = api::sockets_udp::SetMulticastTimeToLive::Params::Create(*args_);
@@ -442,10 +442,10 @@ void SocketsUdpSetMulticastTimeToLiveFunction::Work() {
 }
 
 SocketsUdpSetMulticastLoopbackModeFunction::
-    SocketsUdpSetMulticastLoopbackModeFunction() {}
+    SocketsUdpSetMulticastLoopbackModeFunction() = default;
 
 SocketsUdpSetMulticastLoopbackModeFunction::
-    ~SocketsUdpSetMulticastLoopbackModeFunction() {}
+    ~SocketsUdpSetMulticastLoopbackModeFunction() = default;
 
 bool SocketsUdpSetMulticastLoopbackModeFunction::Prepare() {
   params_ = api::sockets_udp::SetMulticastLoopbackMode::Params::Create(*args_);
@@ -466,9 +466,11 @@ void SocketsUdpSetMulticastLoopbackModeFunction::Work() {
   results_ = sockets_udp::SetMulticastLoopbackMode::Results::Create(net_result);
 }
 
-SocketsUdpGetJoinedGroupsFunction::SocketsUdpGetJoinedGroupsFunction() {}
+SocketsUdpGetJoinedGroupsFunction::SocketsUdpGetJoinedGroupsFunction() =
+    default;
 
-SocketsUdpGetJoinedGroupsFunction::~SocketsUdpGetJoinedGroupsFunction() {}
+SocketsUdpGetJoinedGroupsFunction::~SocketsUdpGetJoinedGroupsFunction() =
+    default;
 
 bool SocketsUdpGetJoinedGroupsFunction::Prepare() {
   params_ = api::sockets_udp::GetJoinedGroups::Params::Create(*args_);
@@ -496,11 +498,9 @@ void SocketsUdpGetJoinedGroupsFunction::Work() {
   results_ = sockets_udp::GetJoinedGroups::Results::Create(groups);
 }
 
-SocketsUdpSetBroadcastFunction::SocketsUdpSetBroadcastFunction() {
-}
+SocketsUdpSetBroadcastFunction::SocketsUdpSetBroadcastFunction() = default;
 
-SocketsUdpSetBroadcastFunction::~SocketsUdpSetBroadcastFunction() {
-}
+SocketsUdpSetBroadcastFunction::~SocketsUdpSetBroadcastFunction() = default;
 
 bool SocketsUdpSetBroadcastFunction::Prepare() {
   params_ = api::sockets_udp::SetBroadcast::Params::Create(*args_);

@@ -110,7 +110,7 @@ class ArgumentListResponseValue
     // for some reason.
   }
 
-  ~ArgumentListResponseValue() override {}
+  ~ArgumentListResponseValue() override = default;
 
   bool Apply() override { return true; }
 };
@@ -124,7 +124,7 @@ class ErrorWithArgumentsResponseValue : public ArgumentListResponseValue {
     SetFunctionError(function, error);
   }
 
-  ~ErrorWithArgumentsResponseValue() override {}
+  ~ErrorWithArgumentsResponseValue() override = default;
 
   bool Apply() override { return false; }
 };
@@ -137,7 +137,7 @@ class ErrorResponseValue : public ExtensionFunction::ResponseValueObject {
     SetFunctionError(function, error);
   }
 
-  ~ErrorResponseValue() override {}
+  ~ErrorResponseValue() override = default;
 
   bool Apply() override { return false; }
 };
@@ -149,7 +149,7 @@ class BadMessageResponseValue : public ExtensionFunction::ResponseValueObject {
     NOTREACHED() << function->name() << ": bad message";
   }
 
-  ~BadMessageResponseValue() override {}
+  ~BadMessageResponseValue() override = default;
 
   bool Apply() override { return false; }
 };
@@ -160,7 +160,7 @@ class RespondNowAction : public ExtensionFunction::ResponseActionObject {
   RespondNowAction(ExtensionFunction::ResponseValue result,
                    const SendResponseCallback& send_response)
       : result_(std::move(result)), send_response_(send_response) {}
-  ~RespondNowAction() override {}
+  ~RespondNowAction() override = default;
 
   void Execute() override { send_response_.Run(result_->Apply()); }
 
@@ -171,14 +171,14 @@ class RespondNowAction : public ExtensionFunction::ResponseActionObject {
 
 class RespondLaterAction : public ExtensionFunction::ResponseActionObject {
  public:
-  ~RespondLaterAction() override {}
+  ~RespondLaterAction() override = default;
 
   void Execute() override {}
 };
 
 class AlreadyRespondedAction : public ExtensionFunction::ResponseActionObject {
  public:
-  ~AlreadyRespondedAction() override {}
+  ~AlreadyRespondedAction() override = default;
 
   void Execute() override {}
 };
@@ -301,8 +301,7 @@ ExtensionFunction::ExtensionFunction()
       source_process_id_(-1),
       did_respond_(false) {}
 
-ExtensionFunction::~ExtensionFunction() {
-}
+ExtensionFunction::~ExtensionFunction() = default;
 
 UIThreadExtensionFunction* ExtensionFunction::AsUIThreadExtensionFunction() {
   return NULL;
@@ -604,8 +603,7 @@ IOThreadExtensionFunction::IOThreadExtensionFunction()
     : routing_id_(MSG_ROUTING_NONE) {
 }
 
-IOThreadExtensionFunction::~IOThreadExtensionFunction() {
-}
+IOThreadExtensionFunction::~IOThreadExtensionFunction() = default;
 
 IOThreadExtensionFunction*
 IOThreadExtensionFunction::AsIOThreadExtensionFunction() {
@@ -625,8 +623,7 @@ void IOThreadExtensionFunction::Destruct() const {
   BrowserThread::DeleteOnIOThread::Destruct(this);
 }
 
-AsyncExtensionFunction::AsyncExtensionFunction() {
-}
+AsyncExtensionFunction::AsyncExtensionFunction() = default;
 
 void AsyncExtensionFunction::SetError(const std::string& error) {
   error_ = error;
@@ -636,8 +633,7 @@ const std::string& AsyncExtensionFunction::GetError() const {
   return error_.empty() ? UIThreadExtensionFunction::GetError() : error_;
 }
 
-AsyncExtensionFunction::~AsyncExtensionFunction() {
-}
+AsyncExtensionFunction::~AsyncExtensionFunction() = default;
 
 void AsyncExtensionFunction::SetResult(std::unique_ptr<base::Value> result) {
   results_.reset(new base::ListValue());

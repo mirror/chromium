@@ -76,8 +76,7 @@ CSPInfo::CSPInfo(const std::string& security_policy)
     : content_security_policy(security_policy) {
 }
 
-CSPInfo::~CSPInfo() {
-}
+CSPInfo::~CSPInfo() = default;
 
 // static
 const std::string& CSPInfo::GetContentSecurityPolicy(
@@ -100,8 +99,7 @@ CSPHandler::CSPHandler(bool is_platform_app)
     : is_platform_app_(is_platform_app) {
 }
 
-CSPHandler::~CSPHandler() {
-}
+CSPHandler::~CSPHandler() = default;
 
 bool CSPHandler::Parse(Extension* extension, base::string16* error) {
   const std::string key = Keys()[0];

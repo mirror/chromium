@@ -28,8 +28,7 @@ RequirementsInfo::RequirementsInfo(const Manifest* manifest)
           !list_value->empty();
 }
 
-RequirementsInfo::~RequirementsInfo() {
-}
+RequirementsInfo::~RequirementsInfo() = default;
 
 // static
 const RequirementsInfo& RequirementsInfo::GetRequirements(
@@ -43,11 +42,9 @@ const RequirementsInfo& RequirementsInfo::GetRequirements(
   return *info;
 }
 
-RequirementsHandler::RequirementsHandler() {
-}
+RequirementsHandler::RequirementsHandler() = default;
 
-RequirementsHandler::~RequirementsHandler() {
-}
+RequirementsHandler::~RequirementsHandler() = default;
 
 const std::vector<std::string> RequirementsHandler::PrerequisiteKeys() const {
   return SingleKey(keys::kPlugins);

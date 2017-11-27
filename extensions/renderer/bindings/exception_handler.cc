@@ -47,7 +47,7 @@ ExceptionHandler::ExceptionHandler(
     const binding::AddConsoleError& add_console_error,
     const binding::RunJSFunction& run_js)
     : add_console_error_(add_console_error), run_js_(run_js) {}
-ExceptionHandler::~ExceptionHandler() {}
+ExceptionHandler::~ExceptionHandler() = default;
 
 void ExceptionHandler::HandleException(v8::Local<v8::Context> context,
                                        const std::string& message,

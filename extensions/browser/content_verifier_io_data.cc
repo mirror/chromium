@@ -17,14 +17,11 @@ ContentVerifierIOData::ExtensionData::ExtensionData(
   this->version = version;
 }
 
-ContentVerifierIOData::ContentVerifierIOData() {
-}
+ContentVerifierIOData::ContentVerifierIOData() = default;
 
-ContentVerifierIOData::ExtensionData::~ExtensionData() {
-}
+ContentVerifierIOData::ExtensionData::~ExtensionData() = default;
 
-ContentVerifierIOData::~ContentVerifierIOData() {
-}
+ContentVerifierIOData::~ContentVerifierIOData() = default;
 
 void ContentVerifierIOData::AddData(const std::string& extension_id,
                                     std::unique_ptr<ExtensionData> data) {

@@ -32,8 +32,7 @@ IdentityAPI::IdentityAPI(content::BrowserContext* context)
     : device_id_(base::GenerateGUID()) {
 }
 
-IdentityAPI::~IdentityAPI() {
-}
+IdentityAPI::~IdentityAPI() = default;
 
 // static
 IdentityAPI* IdentityAPI::Get(content::BrowserContext* context) {
@@ -54,8 +53,7 @@ IdentityGetAuthTokenFunction::IdentityGetAuthTokenFunction()
     : OAuth2TokenService::Consumer(kIdentityApiId) {
 }
 
-IdentityGetAuthTokenFunction::~IdentityGetAuthTokenFunction() {
-}
+IdentityGetAuthTokenFunction::~IdentityGetAuthTokenFunction() = default;
 
 void IdentityGetAuthTokenFunction::SetMintTokenFlowForTesting(
     OAuth2MintTokenFlow* flow) {
@@ -146,12 +144,11 @@ void IdentityGetAuthTokenFunction::OnMintTokenFailure(
 
 ///////////////////////////////////////////////////////////////////////////////
 
-IdentityRemoveCachedAuthTokenFunction::IdentityRemoveCachedAuthTokenFunction() {
-}
+IdentityRemoveCachedAuthTokenFunction::IdentityRemoveCachedAuthTokenFunction() =
+    default;
 
 IdentityRemoveCachedAuthTokenFunction::
-    ~IdentityRemoveCachedAuthTokenFunction() {
-}
+    ~IdentityRemoveCachedAuthTokenFunction() = default;
 
 ExtensionFunction::ResponseAction IdentityRemoveCachedAuthTokenFunction::Run() {
   std::unique_ptr<api::identity::RemoveCachedAuthToken::Params> params(

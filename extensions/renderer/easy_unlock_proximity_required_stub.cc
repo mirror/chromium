@@ -27,7 +27,7 @@ v8::Local<v8::Object> EasyUnlockProximityRequiredStub::Create(
 EasyUnlockProximityRequiredStub::EasyUnlockProximityRequiredStub(
     APIEventHandler* event_handler)
     : event_handler_(event_handler) {}
-EasyUnlockProximityRequiredStub::~EasyUnlockProximityRequiredStub() {}
+EasyUnlockProximityRequiredStub::~EasyUnlockProximityRequiredStub() = default;
 
 gin::WrapperInfo EasyUnlockProximityRequiredStub::kWrapperInfo = {
     gin::kEmbedderNativeGin};

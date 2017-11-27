@@ -80,7 +80,7 @@ void GetRegisteredItemsCallback(
 
 class DataItemTest : public testing::Test {
  public:
-  DataItemTest() {}
+  DataItemTest() = default;
   ~DataItemTest() override = default;
 
   void SetUp() override {

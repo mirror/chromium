@@ -49,7 +49,7 @@ void ClipboardAPI::OnClipboardDataChanged() {
   }
 }
 
-ClipboardSetImageDataFunction::~ClipboardSetImageDataFunction() {}
+ClipboardSetImageDataFunction::~ClipboardSetImageDataFunction() = default;
 
 ExtensionFunction::ResponseAction ClipboardSetImageDataFunction::Run() {
   std::unique_ptr<clipboard::SetImageData::Params> params(

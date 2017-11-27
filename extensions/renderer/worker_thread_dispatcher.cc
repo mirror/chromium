@@ -39,8 +39,8 @@ ServiceWorkerData* GetServiceWorkerData() {
 
 }  // namespace
 
-WorkerThreadDispatcher::WorkerThreadDispatcher() {}
-WorkerThreadDispatcher::~WorkerThreadDispatcher() {}
+WorkerThreadDispatcher::WorkerThreadDispatcher() = default;
+WorkerThreadDispatcher::~WorkerThreadDispatcher() = default;
 
 WorkerThreadDispatcher* WorkerThreadDispatcher::Get() {
   return g_instance.Pointer();

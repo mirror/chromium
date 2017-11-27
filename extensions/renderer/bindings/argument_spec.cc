@@ -206,7 +206,7 @@ void ArgumentSpec::InitializeType(const base::DictionaryValue* dict) {
   }
 }
 
-ArgumentSpec::~ArgumentSpec() {}
+ArgumentSpec::~ArgumentSpec() = default;
 
 bool ArgumentSpec::IsCorrectType(v8::Local<v8::Value> value,
                                  const APITypeReferenceMap& refs,

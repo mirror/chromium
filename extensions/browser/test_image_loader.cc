@@ -13,7 +13,7 @@ namespace extensions {
 
 TestImageLoader::TestImageLoader() : waiting_(false), image_loaded_(false) {}
 
-TestImageLoader::~TestImageLoader() {}
+TestImageLoader::~TestImageLoader() = default;
 
 // static
 SkBitmap TestImageLoader::LoadAndGetExtensionBitmap(

@@ -70,8 +70,7 @@ UsbGuidMap::UsbGuidMap(content::BrowserContext* browser_context)
   observer_.Add(service);
 }
 
-UsbGuidMap::~UsbGuidMap() {
-}
+UsbGuidMap::~UsbGuidMap() = default;
 
 void UsbGuidMap::OnDeviceRemovedCleanup(
     scoped_refptr<device::UsbDevice> device) {

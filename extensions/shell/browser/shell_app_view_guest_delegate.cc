@@ -8,11 +8,9 @@
 
 namespace extensions {
 
-ShellAppViewGuestDelegate::ShellAppViewGuestDelegate() {
-}
+ShellAppViewGuestDelegate::ShellAppViewGuestDelegate() = default;
 
-ShellAppViewGuestDelegate::~ShellAppViewGuestDelegate() {
-}
+ShellAppViewGuestDelegate::~ShellAppViewGuestDelegate() = default;
 
 bool ShellAppViewGuestDelegate::HandleContextMenu(
     content::WebContents* web_contents,

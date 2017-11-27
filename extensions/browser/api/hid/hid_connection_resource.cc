@@ -28,8 +28,7 @@ HidConnectionResource::HidConnectionResource(
     device::mojom::HidConnectionPtr connection)
     : ApiResource(owner_extension_id), connection_(std::move(connection)) {}
 
-HidConnectionResource::~HidConnectionResource() {
-}
+HidConnectionResource::~HidConnectionResource() = default;
 
 bool HidConnectionResource::IsPersistent() const {
   return false;

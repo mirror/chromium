@@ -11,11 +11,9 @@
 
 namespace extensions {
 
-ShellAppWindowClient::ShellAppWindowClient() {
-}
+ShellAppWindowClient::ShellAppWindowClient() = default;
 
-ShellAppWindowClient::~ShellAppWindowClient() {
-}
+ShellAppWindowClient::~ShellAppWindowClient() = default;
 
 AppWindow* ShellAppWindowClient::CreateAppWindow(
     content::BrowserContext* context,

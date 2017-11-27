@@ -32,8 +32,7 @@ ObjectBackedNativeHandler::ObjectBackedNativeHandler(ScriptContext* context)
                        v8::ObjectTemplate::New(context->isolate())) {
 }
 
-ObjectBackedNativeHandler::~ObjectBackedNativeHandler() {
-}
+ObjectBackedNativeHandler::~ObjectBackedNativeHandler() = default;
 
 v8::Local<v8::Object> ObjectBackedNativeHandler::NewInstance() {
   return v8::Local<v8::ObjectTemplate>::New(GetIsolate(), object_template_)

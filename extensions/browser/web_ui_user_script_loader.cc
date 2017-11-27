@@ -50,8 +50,7 @@ WebUIUserScriptLoader::WebUIUserScriptLoader(
   SetReady(true);
 }
 
-WebUIUserScriptLoader::~WebUIUserScriptLoader() {
-}
+WebUIUserScriptLoader::~WebUIUserScriptLoader() = default;
 
 void WebUIUserScriptLoader::AddScripts(
     std::unique_ptr<extensions::UserScriptList> scripts,

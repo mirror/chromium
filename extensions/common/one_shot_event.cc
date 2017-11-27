@@ -19,7 +19,7 @@ using base::SingleThreadTaskRunner;
 namespace extensions {
 
 struct OneShotEvent::TaskInfo {
-  TaskInfo() {}
+  TaskInfo() = default;
   TaskInfo(const base::Location& from_here,
            const scoped_refptr<SingleThreadTaskRunner>& runner,
            const base::Closure& task,
@@ -41,7 +41,7 @@ OneShotEvent::OneShotEvent() : signaled_(false) {
 OneShotEvent::OneShotEvent(bool signaled) : signaled_(signaled) {
   thread_checker_.DetachFromThread();
 }
-OneShotEvent::~OneShotEvent() {}
+OneShotEvent::~OneShotEvent() = default;
 
 void OneShotEvent::Post(const base::Location& from_here,
                         const base::Closure& task) const {

@@ -31,8 +31,7 @@ ProgrammaticScriptInjector::ProgrammaticScriptInjector(
       finished_(false) {
 }
 
-ProgrammaticScriptInjector::~ProgrammaticScriptInjector() {
-}
+ProgrammaticScriptInjector::~ProgrammaticScriptInjector() = default;
 
 UserScript::InjectionType ProgrammaticScriptInjector::script_type()
     const {

@@ -912,7 +912,7 @@ Event::Event(events::HistogramValue histogram_value,
       << "See extension_event_histogram_value.h for inspiration.";
 }
 
-Event::~Event() {}
+Event::~Event() = default;
 
 Event* Event::DeepCopy() {
   Event* copy = new Event(

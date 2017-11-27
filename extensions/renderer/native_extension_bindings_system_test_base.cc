@@ -18,8 +18,8 @@
 
 namespace extensions {
 
-TestIPCMessageSender::TestIPCMessageSender() {}
-TestIPCMessageSender::~TestIPCMessageSender() {}
+TestIPCMessageSender::TestIPCMessageSender() = default;
+TestIPCMessageSender::~TestIPCMessageSender() = default;
 void TestIPCMessageSender::SendRequestIPC(
     ScriptContext* context,
     std::unique_ptr<ExtensionHostMsg_Request_Params> params,
@@ -27,11 +27,11 @@ void TestIPCMessageSender::SendRequestIPC(
   last_params_ = std::move(params);
 }
 
-NativeExtensionBindingsSystemUnittest::NativeExtensionBindingsSystemUnittest() {
-}
+NativeExtensionBindingsSystemUnittest::NativeExtensionBindingsSystemUnittest() =
+    default;
 
 NativeExtensionBindingsSystemUnittest::
-    ~NativeExtensionBindingsSystemUnittest() {}
+    ~NativeExtensionBindingsSystemUnittest() = default;
 
 v8::ExtensionConfiguration*
 NativeExtensionBindingsSystemUnittest::GetV8ExtensionConfiguration() {

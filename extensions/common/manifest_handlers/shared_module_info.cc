@@ -45,11 +45,9 @@ const SharedModuleInfo& GetSharedModuleInfo(const Extension* extension) {
 
 }  // namespace
 
-SharedModuleInfo::SharedModuleInfo() {
-}
+SharedModuleInfo::SharedModuleInfo() = default;
 
-SharedModuleInfo::~SharedModuleInfo() {
-}
+SharedModuleInfo::~SharedModuleInfo() = default;
 
 // static
 void SharedModuleInfo::ParseImportedPath(const std::string& path,
@@ -199,12 +197,9 @@ bool SharedModuleInfo::Parse(const Extension* extension,
   return true;
 }
 
+SharedModuleHandler::SharedModuleHandler() = default;
 
-SharedModuleHandler::SharedModuleHandler() {
-}
-
-SharedModuleHandler::~SharedModuleHandler() {
-}
+SharedModuleHandler::~SharedModuleHandler() = default;
 
 bool SharedModuleHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<SharedModuleInfo> info(new SharedModuleInfo);

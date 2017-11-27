@@ -24,7 +24,7 @@ namespace {
 class MainThreadIPCMessageSender : public IPCMessageSender {
  public:
   MainThreadIPCMessageSender() : render_thread_(content::RenderThread::Get()) {}
-  ~MainThreadIPCMessageSender() override {}
+  ~MainThreadIPCMessageSender() override = default;
 
   void SendRequestIPC(ScriptContext* context,
                       std::unique_ptr<ExtensionHostMsg_Request_Params> params,
@@ -173,7 +173,7 @@ class WorkerThreadIPCMessageSender : public IPCMessageSender {
                                int64_t service_worker_version_id)
       : dispatcher_(dispatcher),
         service_worker_version_id_(service_worker_version_id) {}
-  ~WorkerThreadIPCMessageSender() override {}
+  ~WorkerThreadIPCMessageSender() override = default;
 
   void SendRequestIPC(ScriptContext* context,
                       std::unique_ptr<ExtensionHostMsg_Request_Params> params,
@@ -314,7 +314,7 @@ class WorkerThreadIPCMessageSender : public IPCMessageSender {
 
 }  // namespace
 
-IPCMessageSender::IPCMessageSender() {}
+IPCMessageSender::IPCMessageSender() = default;
 IPCMessageSender::~IPCMessageSender() = default;
 
 // static

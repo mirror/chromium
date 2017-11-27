@@ -45,7 +45,7 @@ bool VirtualKeyboardPrivateFunction::PreRunValidation(std::string* error) {
   return true;
 }
 
-VirtualKeyboardPrivateFunction::~VirtualKeyboardPrivateFunction() {}
+VirtualKeyboardPrivateFunction::~VirtualKeyboardPrivateFunction() = default;
 
 ExtensionFunction::ResponseAction
 VirtualKeyboardPrivateInsertTextFunction::Run() {
@@ -148,8 +148,7 @@ VirtualKeyboardAPI::VirtualKeyboardAPI(content::BrowserContext* context) {
       ExtensionsAPIClient::Get()->CreateVirtualKeyboardDelegate(context);
 }
 
-VirtualKeyboardAPI::~VirtualKeyboardAPI() {
-}
+VirtualKeyboardAPI::~VirtualKeyboardAPI() = default;
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>>::
     DestructorAtExit g_factory = LAZY_INSTANCE_INITIALIZER;
