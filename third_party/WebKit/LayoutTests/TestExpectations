@@ -3952,6 +3952,12 @@ crbug.com/771492 [ Win Linux Mac ] external/wpt/css/css-tables/table-model-fixup
 # Suspended WebRTC tests
 # Test fails, and output changes for each run.
 crbug.com/771540 external/wpt/webrtc/RTCPeerConnection-setLocalDescription-answer.html [ Failure ]
+crbug.com/788737 external/wpt/webrtc/RTCDataChannel-id.html [ Failure Crash ]
+crbug.com/788737 external/wpt/webrtc/RTCIceTransport.html [ Failure Crash ]
+crbug.com/788737 external/wpt/webrtc/RTCPeerConnection-onnegotiationneeded.html [ Failure Crash ]
+crbug.com/788737 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-pranswer.html [ Failure Crash ]
+crbug.com/788737 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https.html [ Failure Crash ]
+crbug.com/788737 external/wpt/webrtc/interfaces.https.html [ Failure Crash ]
 # Timeout due to events not firing
 crbug.com/781935 fast/mediastream/MediaStreamTrack-observer-iterate-no-crash.html [ Timeout ]
 crbug.com/781935 fast/mediastream/MediaStreamTrack.html [ Timeout ]
