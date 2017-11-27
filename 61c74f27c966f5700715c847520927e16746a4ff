@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e5ee9c57_7c0f0fb8",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T16:22:37Z",
+      "side": 1,
+      "message": "Ooog. For consistency, it might be better to still DCHECK, then return false if not success.  Previously I\u0027ve grepped for instances of CHECK to make sure we aren\u0027t using it where we shouldn\u0027t be... this would cause confusion.",
+      "parentUuid": "d9918bd2_a92b551d",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b4c0cdd_9c65463b",
         "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.cc",
         "patchSetId": 5
