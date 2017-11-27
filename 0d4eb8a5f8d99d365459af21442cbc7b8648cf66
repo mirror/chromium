@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "559123ad_0faa2ee4",
+        "filename": "mojo/edk/system/node_channel.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-27T21:27:27Z",
+      "side": 1,
+      "message": "Could this be CHECK_LT() instead of CHECK, so we\u0027ll get the data_num_bytes() and max_message_num_bytes values logged in crash dumps?",
+      "range": {
+        "startLine": 915,
+        "startChar": 2,
+        "endLine": 915,
+        "endChar": 77
+      },
+      "revId": "0d4eb8a5f8d99d365459af21442cbc7b8648cf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
