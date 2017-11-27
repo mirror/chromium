@@ -16,6 +16,24 @@
       "revId": "7611d0a6349d6a286adcf19c78bdefbe62c2ff09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7905f8b8_c58062e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-27T10:21:54Z",
+      "side": 1,
+      "message": "Yes. Anonymous namespaces make something local to the current translation unit (what I think of as compilation unit but I\u0027ve been told that is the wrong name technically) which is the \"main file\" and everything it includes (all 200k lines). In jumbo builds many cc files (20-50 of them) will compile in the same translation unit.\n\nThere is unfortunately nothing in C++ to automatically make a file local namespace.",
+      "parentUuid": "415b590d_5a784f9c",
+      "revId": "7611d0a6349d6a286adcf19c78bdefbe62c2ff09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
