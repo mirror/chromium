@@ -158,7 +158,7 @@ DownloadCleanupTask::DownloadCleanupTask(
       success_downloads_(success_downloads),
       weak_ptr_factory_(this) {}
 
-DownloadCleanupTask::~DownloadCleanupTask() {}
+DownloadCleanupTask::~DownloadCleanupTask() = default;
 
 void DownloadCleanupTask::Run() {
   prefetch_store_->Execute(

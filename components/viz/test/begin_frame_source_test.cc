@@ -24,7 +24,7 @@ MockBeginFrameObserver::MockBeginFrameObserver()
       .WillByDefault(::testing::ReturnPointee(&last_begin_frame_args));
 }
 
-MockBeginFrameObserver::~MockBeginFrameObserver() {}
+MockBeginFrameObserver::~MockBeginFrameObserver() = default;
 
 const BeginFrameArgs MockBeginFrameObserver::kDefaultBeginFrameArgs =
     CreateBeginFrameArgsForTesting(

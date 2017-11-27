@@ -68,8 +68,7 @@ void WebResourceService::StartAfterDelay() {
     OnResourceRequestsAllowed();
 }
 
-WebResourceService::~WebResourceService() {
-}
+WebResourceService::~WebResourceService() = default;
 
 void WebResourceService::OnURLFetchComplete(const net::URLFetcher* source) {
   // Delete the URLFetcher when this function exits.

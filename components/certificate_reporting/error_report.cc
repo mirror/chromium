@@ -96,7 +96,7 @@ ErrorReport::ErrorReport(const std::string& hostname,
 #endif
 }
 
-ErrorReport::~ErrorReport() {}
+ErrorReport::~ErrorReport() = default;
 
 bool ErrorReport::InitializeFromString(const std::string& serialized_report) {
   return cert_report_->ParseFromString(serialized_report);

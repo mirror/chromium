@@ -42,9 +42,9 @@ bool ReverseStringLess::operator()(const base::string16& lhs,
                                       rhs.rend());
 }
 
-PasswordReuseDetector::PasswordReuseDetector() {}
+PasswordReuseDetector::PasswordReuseDetector() = default;
 
-PasswordReuseDetector::~PasswordReuseDetector() {}
+PasswordReuseDetector::~PasswordReuseDetector() = default;
 
 void PasswordReuseDetector::OnGetPasswordStoreResults(
     std::vector<std::unique_ptr<autofill::PasswordForm>> results) {

@@ -14,11 +14,9 @@
 
 namespace ownership {
 
-MockOwnerKeyUtil::MockOwnerKeyUtil() {
-}
+MockOwnerKeyUtil::MockOwnerKeyUtil() = default;
 
-MockOwnerKeyUtil::~MockOwnerKeyUtil() {
-}
+MockOwnerKeyUtil::~MockOwnerKeyUtil() = default;
 
 bool MockOwnerKeyUtil::ImportPublicKey(std::vector<uint8_t>* output) {
   *output = public_key_;

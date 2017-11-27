@@ -86,8 +86,8 @@ SuggestionsProfile CreateSuggestionsProfile() {
 
 class MockSyncService : public syncer::FakeSyncService {
  public:
-  MockSyncService() {}
-  virtual ~MockSyncService() {}
+  MockSyncService() = default;
+  virtual ~MockSyncService() = default;
   MOCK_CONST_METHOD0(CanSyncStart, bool());
   MOCK_CONST_METHOD0(IsSyncActive, bool());
   MOCK_CONST_METHOD0(ConfigurationDone, bool());
@@ -114,8 +114,8 @@ class TestSuggestionsStore : public suggestions::SuggestionsStore {
 
 class MockImageManager : public suggestions::ImageManager {
  public:
-  MockImageManager() {}
-  virtual ~MockImageManager() {}
+  MockImageManager() = default;
+  virtual ~MockImageManager() = default;
   MOCK_METHOD1(Initialize, void(const SuggestionsProfile&));
   MOCK_METHOD2(GetImageForURL,
                void(const GURL&,
@@ -155,7 +155,7 @@ class SuggestionsServiceTest : public testing::Test {
     token_service_.set_auto_post_fetch_response_on_message_loop(true);
   }
 
-  ~SuggestionsServiceTest() override {}
+  ~SuggestionsServiceTest() override = default;
 
   void SetUp() override {
     EXPECT_CALL(*sync_service(), CanSyncStart())

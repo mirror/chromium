@@ -103,7 +103,7 @@ SyncManagerImpl::~SyncManagerImpl() {
 }
 
 SyncManagerImpl::NotificationInfo::NotificationInfo() : total_count(0) {}
-SyncManagerImpl::NotificationInfo::~NotificationInfo() {}
+SyncManagerImpl::NotificationInfo::~NotificationInfo() = default;
 
 base::DictionaryValue* SyncManagerImpl::NotificationInfo::ToValue() const {
   base::DictionaryValue* value = new base::DictionaryValue();

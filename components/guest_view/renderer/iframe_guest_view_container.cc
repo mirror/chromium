@@ -19,8 +19,7 @@ IframeGuestViewContainer::IframeGuestViewContainer(
   ready_ = true;
 }
 
-IframeGuestViewContainer::~IframeGuestViewContainer() {
-}
+IframeGuestViewContainer::~IframeGuestViewContainer() = default;
 
 bool IframeGuestViewContainer::OnMessage(const IPC::Message& message) {
   // TODO(lazyboy): Do not send this message in --site-per-process.

@@ -6,10 +6,10 @@
 
 namespace physical_web {
 
-Metadata::Metadata() {}
+Metadata::Metadata() = default;
 
 Metadata::Metadata(const Metadata& other) = default;
 
-Metadata::~Metadata() {}
+Metadata::~Metadata() = default;
 
 }  // namespace physical_web

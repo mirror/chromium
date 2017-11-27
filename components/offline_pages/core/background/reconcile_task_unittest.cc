@@ -85,7 +85,7 @@ ReconcileTaskTest::ReconcileTaskTest()
       task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {}
 
-ReconcileTaskTest::~ReconcileTaskTest() {}
+ReconcileTaskTest::~ReconcileTaskTest() = default;
 
 void ReconcileTaskTest::SetUp() {
   DeviceConditions conditions;

@@ -77,7 +77,7 @@ class MockImageDecoder : public image_fetcher::ImageDecoder {
 // the normal implementation to proceed.
 class MockResourceDelegate : public ui::ResourceBundle::Delegate {
  public:
-  ~MockResourceDelegate() override {}
+  ~MockResourceDelegate() override = default;
 
   MOCK_METHOD1(GetImageNamed, gfx::Image(int resource_id));
   MOCK_METHOD1(GetNativeImageNamed, gfx::Image(int resource_id));

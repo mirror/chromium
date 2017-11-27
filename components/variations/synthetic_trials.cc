@@ -11,6 +11,6 @@ SyntheticTrialGroup::SyntheticTrialGroup(uint32_t trial, uint32_t group) {
   id.group = group;
 }
 
-SyntheticTrialGroup::~SyntheticTrialGroup() {}
+SyntheticTrialGroup::~SyntheticTrialGroup() = default;
 
 }  // namespace variations

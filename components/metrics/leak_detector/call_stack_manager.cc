@@ -13,7 +13,7 @@
 namespace metrics {
 namespace leak_detector {
 
-CallStackManager::CallStackManager() {}
+CallStackManager::CallStackManager() = default;
 
 CallStackManager::~CallStackManager() {
   // Free all call stack objects and clear |call_stacks_|. Make sure to save the

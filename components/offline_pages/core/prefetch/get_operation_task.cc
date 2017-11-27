@@ -91,7 +91,7 @@ GetOperationTask::GetOperationTask(
       callback_(callback),
       weak_factory_(this) {}
 
-GetOperationTask::~GetOperationTask() {}
+GetOperationTask::~GetOperationTask() = default;
 
 void GetOperationTask::Run() {
   prefetch_store_->Execute(

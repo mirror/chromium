@@ -50,9 +50,9 @@ SavePasswordProgressLogger::StringID FormSchemeToStringID(
 
 }  // namespace
 
-SavePasswordProgressLogger::SavePasswordProgressLogger() {}
+SavePasswordProgressLogger::SavePasswordProgressLogger() = default;
 
-SavePasswordProgressLogger::~SavePasswordProgressLogger() {}
+SavePasswordProgressLogger::~SavePasswordProgressLogger() = default;
 
 void SavePasswordProgressLogger::LogPasswordForm(
     SavePasswordProgressLogger::StringID label,

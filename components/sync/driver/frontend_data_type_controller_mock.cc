@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-FrontendDataTypeControllerMock::FrontendDataTypeControllerMock() {}
+FrontendDataTypeControllerMock::FrontendDataTypeControllerMock() = default;
 
-FrontendDataTypeControllerMock::~FrontendDataTypeControllerMock() {}
+FrontendDataTypeControllerMock::~FrontendDataTypeControllerMock() = default;
 
 }  // namespace syncer

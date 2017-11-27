@@ -93,9 +93,9 @@ SurfaceAggregator::~SurfaceAggregator() {
   ProcessAddedAndRemovedSurfaces();
 }
 
-SurfaceAggregator::PrewalkResult::PrewalkResult() {}
+SurfaceAggregator::PrewalkResult::PrewalkResult() = default;
 
-SurfaceAggregator::PrewalkResult::~PrewalkResult() {}
+SurfaceAggregator::PrewalkResult::~PrewalkResult() = default;
 
 // Create a clip rect for an aggregated quad from the original clip rect and
 // the clip rect from the surface it's on.

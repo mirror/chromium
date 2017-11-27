@@ -15,7 +15,7 @@ PreviewsBlackListItem::OptOutRecord::OptOutRecord(base::Time entry_time,
                                                   bool opt_out)
     : entry_time_(entry_time), opt_out_(opt_out) {}
 
-PreviewsBlackListItem::OptOutRecord::~OptOutRecord() {}
+PreviewsBlackListItem::OptOutRecord::~OptOutRecord() = default;
 
 PreviewsBlackListItem::OptOutRecord::OptOutRecord(OptOutRecord&&) = default;
 
@@ -38,7 +38,7 @@ PreviewsBlackListItem::PreviewsBlackListItem(
       max_black_list_duration_(black_list_duration),
       total_opt_out_(0) {}
 
-PreviewsBlackListItem::~PreviewsBlackListItem() {}
+PreviewsBlackListItem::~PreviewsBlackListItem() = default;
 
 void PreviewsBlackListItem::AddPreviewNavigation(bool opt_out,
                                                  base::Time entry_time) {

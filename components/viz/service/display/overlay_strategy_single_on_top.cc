@@ -21,7 +21,7 @@ OverlayStrategySingleOnTop::OverlayStrategySingleOnTop(
   DCHECK(capability_checker);
 }
 
-OverlayStrategySingleOnTop::~OverlayStrategySingleOnTop() {}
+OverlayStrategySingleOnTop::~OverlayStrategySingleOnTop() = default;
 
 bool OverlayStrategySingleOnTop::Attempt(
     cc::DisplayResourceProvider* resource_provider,

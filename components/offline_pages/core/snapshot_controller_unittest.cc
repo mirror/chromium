@@ -51,7 +51,7 @@ SnapshotControllerTest::SnapshotControllerTest()
       snapshot_started_(true),
       snapshot_count_(0) {}
 
-SnapshotControllerTest::~SnapshotControllerTest() {}
+SnapshotControllerTest::~SnapshotControllerTest() = default;
 
 void SnapshotControllerTest::SetUp() {
   controller_ =

@@ -67,7 +67,7 @@ MarkOperationDoneTask::MarkOperationDoneTask(
       operation_name_(operation_name),
       weak_factory_(this) {}
 
-MarkOperationDoneTask::~MarkOperationDoneTask() {}
+MarkOperationDoneTask::~MarkOperationDoneTask() = default;
 
 void MarkOperationDoneTask::Run() {
   prefetch_store_->Execute(

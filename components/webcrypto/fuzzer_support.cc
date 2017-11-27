@@ -28,7 +28,7 @@ class InitOnce : public blink::Platform {
     mojo::edk::Init();
     blink::Platform::Initialize(this);
   }
-  ~InitOnce() override {}
+  ~InitOnce() override = default;
 
  private:
   base::MessageLoop loop_;

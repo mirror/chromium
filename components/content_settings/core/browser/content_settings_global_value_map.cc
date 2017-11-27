@@ -37,9 +37,9 @@ class RuleIteratorSimple : public RuleIterator {
 
 }  // namespace
 
-GlobalValueMap::GlobalValueMap() {}
+GlobalValueMap::GlobalValueMap() = default;
 
-GlobalValueMap::~GlobalValueMap() {}
+GlobalValueMap::~GlobalValueMap() = default;
 
 std::unique_ptr<RuleIterator> GlobalValueMap::GetRuleIterator(
     ContentSettingsType content_type,

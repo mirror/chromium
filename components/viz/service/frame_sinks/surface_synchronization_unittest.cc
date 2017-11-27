@@ -70,7 +70,7 @@ class FakeExternalBeginFrameSourceClient
 class SurfaceSynchronizationTest : public testing::Test {
  public:
   SurfaceSynchronizationTest() : surface_observer_(false) {}
-  ~SurfaceSynchronizationTest() override {}
+  ~SurfaceSynchronizationTest() override = default;
 
   CompositorFrameSinkSupport& display_support() {
     return *supports_[kDisplayFrameSink];

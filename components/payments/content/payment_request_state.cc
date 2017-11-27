@@ -75,7 +75,7 @@ PaymentRequestState::PaymentRequestState(
   spec_->AddObserver(this);
 }
 
-PaymentRequestState::~PaymentRequestState() {}
+PaymentRequestState::~PaymentRequestState() = default;
 
 void PaymentRequestState::GetAllPaymentAppsCallback(
     content::BrowserContext* context,

@@ -18,7 +18,7 @@ const char kGCMScope[] = "GCM";
 InstanceID::InstanceID(const std::string& app_id, gcm::GCMDriver* gcm_driver)
     : gcm_driver_(gcm_driver), app_id_(app_id), weak_ptr_factory_(this) {}
 
-InstanceID::~InstanceID() {}
+InstanceID::~InstanceID() = default;
 
 void InstanceID::SetTokenRefreshCallback(const TokenRefreshCallback& callback) {
   token_refresh_callback_ = callback;

@@ -24,7 +24,7 @@ DomDistillerModel::DomDistillerModel(
   }
 }
 
-DomDistillerModel::~DomDistillerModel() {}
+DomDistillerModel::~DomDistillerModel() = default;
 
 bool DomDistillerModel::GetEntryById(const std::string& entry_id,
                                      ArticleEntry* entry) const {

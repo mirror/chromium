@@ -66,8 +66,8 @@ void SaveValidationResultWithSessionKeys(bool* out_success,
 
 class CryptAuthDeviceToDeviceOperationsTest : public testing::Test {
  protected:
-  CryptAuthDeviceToDeviceOperationsTest() {}
-  ~CryptAuthDeviceToDeviceOperationsTest() override {}
+  CryptAuthDeviceToDeviceOperationsTest() = default;
+  ~CryptAuthDeviceToDeviceOperationsTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(

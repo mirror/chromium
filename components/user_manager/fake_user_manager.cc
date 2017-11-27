@@ -27,7 +27,7 @@ class FakeTaskRunner : public base::TaskRunner {
   bool RunsTasksInCurrentSequence() const override { return true; }
 
  protected:
-  ~FakeTaskRunner() override {}
+  ~FakeTaskRunner() override = default;
 };
 
 }  // namespace
@@ -37,8 +37,7 @@ namespace user_manager {
 FakeUserManager::FakeUserManager()
     : UserManagerBase(new FakeTaskRunner()), primary_user_(nullptr) {}
 
-FakeUserManager::~FakeUserManager() {
-}
+FakeUserManager::~FakeUserManager() = default;
 
 const user_manager::User* FakeUserManager::AddUser(
     const AccountId& account_id) {

@@ -20,7 +20,7 @@ SurfaceHittest::SurfaceHittest(SurfaceHittestDelegate* delegate,
                                SurfaceManager* manager)
     : delegate_(delegate), manager_(manager) {}
 
-SurfaceHittest::~SurfaceHittest() {}
+SurfaceHittest::~SurfaceHittest() = default;
 
 SurfaceId SurfaceHittest::GetTargetSurfaceAtPoint(
     const SurfaceId& root_surface_id,

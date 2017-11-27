@@ -181,7 +181,7 @@ const size_t kMaxPendingSyncQueries = 16;
 
 // Parameters needed to draw a RenderPassDrawQuad.
 struct DrawRenderPassDrawQuadParams {
-  DrawRenderPassDrawQuadParams() {}
+  DrawRenderPassDrawQuadParams() = default;
   ~DrawRenderPassDrawQuadParams() {
     // Don't leak the texture.
     DCHECK(!background_texture);
@@ -373,7 +373,7 @@ class GLRenderer::SyncQuery {
     }
 
    private:
-    ~Fence() override {}
+    ~Fence() override = default;
 
     base::WeakPtr<SyncQuery> query_;
 

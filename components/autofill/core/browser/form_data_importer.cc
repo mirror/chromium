@@ -104,7 +104,7 @@ FormDataImporter::FormDataImporter(AutofillClient* client,
       personal_data_manager_(personal_data_manager),
       app_locale_(app_locale) {}
 
-FormDataImporter::~FormDataImporter() {}
+FormDataImporter::~FormDataImporter() = default;
 
 void FormDataImporter::ImportFormData(const FormStructure& submitted_form,
                                       bool credit_card_autofill_enabled) {

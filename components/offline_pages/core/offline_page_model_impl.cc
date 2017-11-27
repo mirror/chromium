@@ -351,7 +351,7 @@ OfflinePageModelImpl::OfflinePageModelImpl(
                  weak_ptr_factory_.GetWeakPtr(), base::TimeTicks::Now()));
 }
 
-OfflinePageModelImpl::~OfflinePageModelImpl() {}
+OfflinePageModelImpl::~OfflinePageModelImpl() = default;
 
 void OfflinePageModelImpl::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);

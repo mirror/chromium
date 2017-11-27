@@ -15,11 +15,9 @@
 #include "base/files/file_util.h"
 #endif  // NDEBUG
 
-DependencyManager::DependencyManager() {
-}
+DependencyManager::DependencyManager() = default;
 
-DependencyManager::~DependencyManager() {
-}
+DependencyManager::~DependencyManager() = default;
 
 void DependencyManager::AddComponent(KeyedServiceBaseFactory* component) {
   dependency_graph_.AddNode(component);

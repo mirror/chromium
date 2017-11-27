@@ -20,7 +20,7 @@ DataReductionProxyData::DataReductionProxyData()
       lofi_received_(false),
       effective_connection_type_(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN) {}
 
-DataReductionProxyData::~DataReductionProxyData() {}
+DataReductionProxyData::~DataReductionProxyData() = default;
 
 std::unique_ptr<DataReductionProxyData> DataReductionProxyData::DeepCopy()
     const {

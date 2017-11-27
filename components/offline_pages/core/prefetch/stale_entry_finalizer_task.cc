@@ -190,7 +190,7 @@ StaleEntryFinalizerTask::StaleEntryFinalizerTask(
   DCHECK(prefetch_store_);
 }
 
-StaleEntryFinalizerTask::~StaleEntryFinalizerTask() {}
+StaleEntryFinalizerTask::~StaleEntryFinalizerTask() = default;
 
 void StaleEntryFinalizerTask::Run() {
   prefetch_store_->Execute(

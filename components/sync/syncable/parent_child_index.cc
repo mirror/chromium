@@ -45,7 +45,7 @@ ParentChildIndex::ParentChildIndex() {
   type_root_child_sets_.resize(MODEL_TYPE_COUNT);
 }
 
-ParentChildIndex::~ParentChildIndex() {}
+ParentChildIndex::~ParentChildIndex() = default;
 
 bool ParentChildIndex::ShouldInclude(const EntryKernel* entry) {
   // This index excludes deleted items and the root item.  The root

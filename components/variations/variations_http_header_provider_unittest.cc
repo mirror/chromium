@@ -53,9 +53,9 @@ scoped_refptr<base::FieldTrial> CreateTrialAndAssociateId(
 
 class VariationsHttpHeaderProviderTest : public ::testing::Test {
  public:
-  VariationsHttpHeaderProviderTest() {}
+  VariationsHttpHeaderProviderTest() = default;
 
-  ~VariationsHttpHeaderProviderTest() override {}
+  ~VariationsHttpHeaderProviderTest() override = default;
 
   void TearDown() override { testing::ClearAllVariationIDs(); }
 };

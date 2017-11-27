@@ -80,8 +80,8 @@ AffiliatedFacetsWithUpdateTime TestEquivalenceClass3() {
 
 class AffiliationDatabaseTest : public testing::Test {
  public:
-  AffiliationDatabaseTest() {}
-  ~AffiliationDatabaseTest() override {}
+  AffiliationDatabaseTest() = default;
+  ~AffiliationDatabaseTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(temp_directory_.CreateUniqueTempDir());

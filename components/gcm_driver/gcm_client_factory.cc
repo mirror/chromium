@@ -14,10 +14,8 @@ std::unique_ptr<GCMClient> GCMClientFactory::BuildInstance() {
       base::WrapUnique<GCMInternalsBuilder>(new GCMInternalsBuilder())));
 }
 
-GCMClientFactory::GCMClientFactory() {
-}
+GCMClientFactory::GCMClientFactory() = default;
 
-GCMClientFactory::~GCMClientFactory() {
-}
+GCMClientFactory::~GCMClientFactory() = default;
 
 }  // namespace gcm

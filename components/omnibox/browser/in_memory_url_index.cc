@@ -38,11 +38,9 @@ void InitializeSchemeWhitelist(
 
 // Restore/SaveCacheObserver ---------------------------------------------------
 
-InMemoryURLIndex::RestoreCacheObserver::~RestoreCacheObserver() {
-}
+InMemoryURLIndex::RestoreCacheObserver::~RestoreCacheObserver() = default;
 
-InMemoryURLIndex::SaveCacheObserver::~SaveCacheObserver() {
-}
+InMemoryURLIndex::SaveCacheObserver::~SaveCacheObserver() = default;
 
 // RebuildPrivateDataFromHistoryDBTask -----------------------------------------
 
@@ -71,8 +69,7 @@ void InMemoryURLIndex::RebuildPrivateDataFromHistoryDBTask::
 }
 
 InMemoryURLIndex::RebuildPrivateDataFromHistoryDBTask::
-    ~RebuildPrivateDataFromHistoryDBTask() {
-}
+    ~RebuildPrivateDataFromHistoryDBTask() = default;
 
 // InMemoryURLIndex ------------------------------------------------------------
 

@@ -20,7 +20,7 @@ TestEngineComponentsFactory::TestEngineComponentsFactory(
       storage_override_(option),
       storage_used_(storage_used) {}
 
-TestEngineComponentsFactory::~TestEngineComponentsFactory() {}
+TestEngineComponentsFactory::~TestEngineComponentsFactory() = default;
 
 std::unique_ptr<SyncScheduler> TestEngineComponentsFactory::BuildScheduler(
     const std::string& name,

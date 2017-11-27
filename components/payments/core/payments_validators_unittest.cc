@@ -15,7 +15,7 @@ struct CurrencyCodeTestCase {
                        const char* system,
                        bool expected_valid)
       : code(code), system(system), expected_valid(expected_valid) {}
-  ~CurrencyCodeTestCase() {}
+  ~CurrencyCodeTestCase() = default;
 
   const char* code;
   const char* system;
@@ -88,7 +88,7 @@ INSTANTIATE_TEST_CASE_P(
 struct TestCase {
   TestCase(const char* input, bool expected_valid)
       : input(input), expected_valid(expected_valid) {}
-  ~TestCase() {}
+  ~TestCase() = default;
 
   const char* input;
   bool expected_valid;
@@ -232,7 +232,7 @@ struct LanguageTagTestCase {
       : language_tag(language_tag),
         expected_language_code(expected_language_code),
         expected_script_code(expected_script_code) {}
-  ~LanguageTagTestCase() {}
+  ~LanguageTagTestCase() = default;
 
   const char* language_tag;
   const char* expected_language_code;

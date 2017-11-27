@@ -13,7 +13,7 @@ namespace subresource_filter {
 PageLoadStatistics::PageLoadStatistics(const ActivationState& state)
     : activation_state_(state) {}
 
-PageLoadStatistics::~PageLoadStatistics() {}
+PageLoadStatistics::~PageLoadStatistics() = default;
 
 void PageLoadStatistics::OnDocumentLoadStatistics(
     const DocumentLoadStatistics& statistics) {

@@ -80,7 +80,7 @@ void InitSyncableServicesOnDBSequence(
 
 }  // namespace
 
-WebDataServiceWrapper::WebDataServiceWrapper() {}
+WebDataServiceWrapper::WebDataServiceWrapper() = default;
 
 WebDataServiceWrapper::WebDataServiceWrapper(
     const base::FilePath& context_path,
@@ -148,7 +148,7 @@ WebDataServiceWrapper::WebDataServiceWrapper(
                  autofill_web_data_, context_path, application_locale));
 }
 
-WebDataServiceWrapper::~WebDataServiceWrapper() {}
+WebDataServiceWrapper::~WebDataServiceWrapper() = default;
 
 void WebDataServiceWrapper::Shutdown() {
   autofill_web_data_->ShutdownOnUISequence();

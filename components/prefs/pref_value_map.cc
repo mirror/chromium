@@ -12,9 +12,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/values.h"
 
-PrefValueMap::PrefValueMap() {}
+PrefValueMap::PrefValueMap() = default;
 
-PrefValueMap::~PrefValueMap() {}
+PrefValueMap::~PrefValueMap() = default;
 
 bool PrefValueMap::GetValue(const std::string& key,
                             const base::Value** value) const {

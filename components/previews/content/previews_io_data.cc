@@ -87,7 +87,7 @@ PreviewsIOData::PreviewsIOData(
       page_id_(1u),
       weak_factory_(this) {}
 
-PreviewsIOData::~PreviewsIOData() {}
+PreviewsIOData::~PreviewsIOData() = default;
 
 void PreviewsIOData::Initialize(
     base::WeakPtr<PreviewsUIService> previews_ui_service,

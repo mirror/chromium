@@ -34,7 +34,7 @@ class BookmarkUndoOperation : public UndoOperation {
  public:
   explicit BookmarkUndoOperation(BookmarkModel* bookmark_model)
       : bookmark_model_(bookmark_model) {}
-  ~BookmarkUndoOperation() override {}
+  ~BookmarkUndoOperation() override = default;
 
   BookmarkModel* bookmark_model() { return bookmark_model_; }
 
@@ -50,7 +50,7 @@ class BookmarkAddOperation : public BookmarkUndoOperation {
   BookmarkAddOperation(BookmarkModel* bookmark_model,
                        const BookmarkNode* parent,
                        int index);
-  ~BookmarkAddOperation() override {}
+  ~BookmarkAddOperation() override = default;
 
   // UndoOperation:
   void Undo() override;
@@ -131,8 +131,7 @@ BookmarkRemoveOperation::BookmarkRemoveOperation(
       index_(index),
       node_(std::move(node)) {}
 
-BookmarkRemoveOperation::~BookmarkRemoveOperation() {
-}
+BookmarkRemoveOperation::~BookmarkRemoveOperation() = default;
 
 void BookmarkRemoveOperation::Undo() {
   DCHECK(node_.get());
@@ -159,7 +158,7 @@ class BookmarkEditOperation : public BookmarkUndoOperation {
  public:
   BookmarkEditOperation(BookmarkModel* bookmark_model,
                         const BookmarkNode* node);
-  ~BookmarkEditOperation() override {}
+  ~BookmarkEditOperation() override = default;
 
   // UndoOperation:
   void Undo() override;
@@ -210,7 +209,7 @@ class BookmarkMoveOperation : public BookmarkUndoOperation {
                         int old_index,
                         const BookmarkNode* new_parent,
                         int new_index);
-  ~BookmarkMoveOperation() override {}
+  ~BookmarkMoveOperation() override = default;
   int GetUndoLabelId() const override;
   int GetRedoLabelId() const override;
 
@@ -302,8 +301,7 @@ BookmarkReorderOperation::BookmarkReorderOperation(
     ordered_bookmarks_[i] = parent->GetChild(i)->id();
 }
 
-BookmarkReorderOperation::~BookmarkReorderOperation() {
-}
+BookmarkReorderOperation::~BookmarkReorderOperation() = default;
 
 void BookmarkReorderOperation::Undo() {
   BookmarkModel* model = bookmark_model();
@@ -336,8 +334,7 @@ BookmarkUndoService::BookmarkUndoService()
     : model_(nullptr), scoped_observer_(this) {
 }
 
-BookmarkUndoService::~BookmarkUndoService() {
-}
+BookmarkUndoService::~BookmarkUndoService() = default;
 
 void BookmarkUndoService::Start(BookmarkModel* model) {
   DCHECK(!model_);

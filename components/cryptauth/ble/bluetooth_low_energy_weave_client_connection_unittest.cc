@@ -222,7 +222,7 @@ class TestBluetoothLowEnergyWeaveClientConnection
             mock_bluetooth_device,
             should_set_low_connection_latency) {}
 
-  ~TestBluetoothLowEnergyWeaveClientConnection() override {}
+  ~TestBluetoothLowEnergyWeaveClientConnection() override = default;
 
   bool should_set_low_connection_latency() {
     return BluetoothLowEnergyWeaveClientConnection::
@@ -254,8 +254,8 @@ class TestBluetoothLowEnergyWeaveClientConnection
 class MockBluetoothLowEnergyCharacteristicsFinder
     : public BluetoothLowEnergyCharacteristicsFinder {
  public:
-  MockBluetoothLowEnergyCharacteristicsFinder() {}
-  ~MockBluetoothLowEnergyCharacteristicsFinder() override {}
+  MockBluetoothLowEnergyCharacteristicsFinder() = default;
+  ~MockBluetoothLowEnergyCharacteristicsFinder() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockBluetoothLowEnergyCharacteristicsFinder);
@@ -338,7 +338,7 @@ class CryptAuthBluetoothLowEnergyWeaveClientConnectionTest
         service_uuid_(device::BluetoothUUID(kServiceUUID)),
         tx_characteristic_uuid_(device::BluetoothUUID(kTXCharacteristicUUID)),
         rx_characteristic_uuid_(device::BluetoothUUID(kRXCharacteristicUUID)) {}
-  ~CryptAuthBluetoothLowEnergyWeaveClientConnectionTest() override {}
+  ~CryptAuthBluetoothLowEnergyWeaveClientConnectionTest() override = default;
 
   void SetUp() override {
     test_timer_ = nullptr;

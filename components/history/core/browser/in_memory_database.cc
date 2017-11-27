@@ -16,8 +16,7 @@ namespace history {
 InMemoryDatabase::InMemoryDatabase() : URLDatabase() {
 }
 
-InMemoryDatabase::~InMemoryDatabase() {
-}
+InMemoryDatabase::~InMemoryDatabase() = default;
 
 bool InMemoryDatabase::InitDB() {
   // Set the database page size to 4K for better performance.

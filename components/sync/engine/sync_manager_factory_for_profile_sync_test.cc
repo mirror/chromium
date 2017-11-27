@@ -12,7 +12,8 @@ SyncManagerFactoryForProfileSyncTest::SyncManagerFactoryForProfileSyncTest(
     base::Closure init_callback)
     : SyncManagerFactory(), init_callback_(init_callback) {}
 
-SyncManagerFactoryForProfileSyncTest::~SyncManagerFactoryForProfileSyncTest() {}
+SyncManagerFactoryForProfileSyncTest::~SyncManagerFactoryForProfileSyncTest() =
+    default;
 
 std::unique_ptr<SyncManager>
 SyncManagerFactoryForProfileSyncTest::CreateSyncManager(

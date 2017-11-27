@@ -37,7 +37,7 @@ const ProximityAuthPrefManager::ProximityThreshold kProximityThreshold2 =
 
 class ProximityAuthProfilePrefManagerTest : public testing::Test {
  protected:
-  ProximityAuthProfilePrefManagerTest() {}
+  ProximityAuthProfilePrefManagerTest() = default;
 
   void SetUp() override {
     ProximityAuthProfilePrefManager::RegisterPrefs(pref_service_.registry());

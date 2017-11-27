@@ -117,7 +117,7 @@ ClientSharedBitmapManager::ClientSharedBitmapManager(
     : shared_bitmap_allocation_notifier_(
           std::move(shared_bitmap_allocation_notifier)) {}
 
-ClientSharedBitmapManager::~ClientSharedBitmapManager() {}
+ClientSharedBitmapManager::~ClientSharedBitmapManager() = default;
 
 std::unique_ptr<SharedBitmap> ClientSharedBitmapManager::AllocateSharedBitmap(
     const gfx::Size& size) {

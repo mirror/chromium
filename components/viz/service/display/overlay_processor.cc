@@ -53,7 +53,7 @@ void OverlayProcessor::Initialize() {
     validator->GetStrategies(&strategies_);
 }
 
-OverlayProcessor::~OverlayProcessor() {}
+OverlayProcessor::~OverlayProcessor() = default;
 
 gfx::Rect OverlayProcessor::GetAndResetOverlayDamage() {
   gfx::Rect result = overlay_damage_rect_;

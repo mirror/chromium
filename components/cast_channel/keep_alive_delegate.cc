@@ -87,7 +87,7 @@ KeepAliveDelegate::KeepAliveDelegate(
   pong_message_ = CreateKeepAliveMessage(kHeartbeatPongType);
 }
 
-KeepAliveDelegate::~KeepAliveDelegate() {}
+KeepAliveDelegate::~KeepAliveDelegate() = default;
 
 void KeepAliveDelegate::SetTimersForTest(
     std::unique_ptr<base::Timer> injected_ping_timer,

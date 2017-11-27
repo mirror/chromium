@@ -28,7 +28,7 @@ SyncApiComponentFactoryMock::SyncApiComponentFactoryMock(
       change_processor_(change_processor),
       local_device_(new LocalDeviceInfoProviderMock()) {}
 
-SyncApiComponentFactoryMock::~SyncApiComponentFactoryMock() {}
+SyncApiComponentFactoryMock::~SyncApiComponentFactoryMock() = default;
 
 std::unique_ptr<AttachmentService>
 SyncApiComponentFactoryMock::CreateAttachmentService(

@@ -29,7 +29,7 @@ const char kExtendedInfoValue2[] = "Value 2";
 class TestExtendedInfoHandler : public ExtendedInfoHandler {
  public:
   explicit TestExtendedInfoHandler(const std::string& key) : key_(key) {}
-  ~TestExtendedInfoHandler() override {}
+  ~TestExtendedInfoHandler() override = default;
 
   std::string GetExtendedInfo(
       const content::NavigationEntry& entry) const override {
@@ -93,8 +93,8 @@ void SetExtendedInfoForTest(content::NavigationEntry* entry) {
 
 class ContentSerializedNavigationBuilderTest : public testing::Test {
  public:
-  ContentSerializedNavigationBuilderTest() {}
-  ~ContentSerializedNavigationBuilderTest() override {}
+  ContentSerializedNavigationBuilderTest() = default;
+  ~ContentSerializedNavigationBuilderTest() override = default;
 
   void SetUp() override {
     ContentSerializedNavigationDriver* driver =

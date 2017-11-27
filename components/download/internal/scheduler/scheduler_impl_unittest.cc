@@ -33,7 +33,7 @@ class MockTaskScheduler : public TaskScheduler {
 
 class DownloadSchedulerImplTest : public testing::Test {
  public:
-  DownloadSchedulerImplTest() {}
+  DownloadSchedulerImplTest() = default;
   ~DownloadSchedulerImplTest() override = default;
 
   void TearDown() override { DestroyScheduler(); }

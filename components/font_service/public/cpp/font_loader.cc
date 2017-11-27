@@ -19,7 +19,7 @@ FontLoader::FontLoader(service_manager::Connector* connector) {
   thread_ = new internal::FontServiceThread(std::move(font_service));
 }
 
-FontLoader::~FontLoader() {}
+FontLoader::~FontLoader() = default;
 
 void FontLoader::Shutdown() {
   thread_->Stop();

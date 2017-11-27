@@ -139,8 +139,8 @@ namespace safe_browsing {
 class V4GetHashProtocolManagerFactoryImpl
     : public V4GetHashProtocolManagerFactory {
  public:
-  V4GetHashProtocolManagerFactoryImpl() {}
-  ~V4GetHashProtocolManagerFactoryImpl() override {}
+  V4GetHashProtocolManagerFactoryImpl() = default;
+  ~V4GetHashProtocolManagerFactoryImpl() override = default;
   std::unique_ptr<V4GetHashProtocolManager> CreateProtocolManager(
       net::URLRequestContextGetter* request_context_getter,
       const StoresToCheck& stores_to_check,
@@ -155,16 +155,16 @@ class V4GetHashProtocolManagerFactoryImpl
 
 // ----------------------------------------------------------------
 
-CachedHashPrefixInfo::CachedHashPrefixInfo() {}
+CachedHashPrefixInfo::CachedHashPrefixInfo() = default;
 
 CachedHashPrefixInfo::CachedHashPrefixInfo(const CachedHashPrefixInfo& other) =
     default;
 
-CachedHashPrefixInfo::~CachedHashPrefixInfo() {}
+CachedHashPrefixInfo::~CachedHashPrefixInfo() = default;
 
 // ----------------------------------------------------------------
 
-FullHashCallbackInfo::FullHashCallbackInfo() {}
+FullHashCallbackInfo::FullHashCallbackInfo() = default;
 
 FullHashCallbackInfo::FullHashCallbackInfo(
     const std::vector<FullHashInfo>& cached_full_hash_infos,
@@ -182,7 +182,7 @@ FullHashCallbackInfo::FullHashCallbackInfo(
       network_start_time(network_start_time),
       prefixes_requested(prefixes_requested) {}
 
-FullHashCallbackInfo::~FullHashCallbackInfo() {}
+FullHashCallbackInfo::~FullHashCallbackInfo() = default;
 
 // ----------------------------------------------------------------
 
@@ -195,7 +195,7 @@ FullHashInfo::FullHashInfo(const FullHash& full_hash,
 
 FullHashInfo::FullHashInfo(const FullHashInfo& other) = default;
 
-FullHashInfo::~FullHashInfo() {}
+FullHashInfo::~FullHashInfo() = default;
 
 bool FullHashInfo::operator==(const FullHashInfo& other) const {
   return full_hash == other.full_hash && list_id == other.list_id &&

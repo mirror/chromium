@@ -92,7 +92,7 @@ ContextualSuggestionsService::ContextualSuggestionsService(
       token_service_(token_service),
       token_fetcher_(nullptr) {}
 
-ContextualSuggestionsService::~ContextualSuggestionsService() {}
+ContextualSuggestionsService::~ContextualSuggestionsService() = default;
 
 void ContextualSuggestionsService::CreateContextualSuggestionsRequest(
     const std::string& current_url,

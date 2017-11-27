@@ -245,7 +245,7 @@ AuthResult::AuthResult()
 AuthResult::AuthResult(const std::string& error_message, ErrorType error_type)
     : error_message(error_message), error_type(error_type) {}
 
-AuthResult::~AuthResult() {}
+AuthResult::~AuthResult() = default;
 
 // static
 AuthResult AuthResult::CreateWithParseError(const std::string& error_message,
@@ -260,7 +260,7 @@ AuthContext AuthContext::Create() {
 
 AuthContext::AuthContext(const std::string& nonce) : nonce_(nonce) {}
 
-AuthContext::~AuthContext() {}
+AuthContext::~AuthContext() = default;
 
 AuthResult AuthContext::VerifySenderNonce(
     const std::string& nonce_response) const {

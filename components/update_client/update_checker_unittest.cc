@@ -150,8 +150,7 @@ UpdateCheckerTest::UpdateCheckerTest()
     : scoped_task_environment_(
           base::test::ScopedTaskEnvironment::MainThreadType::IO) {}
 
-UpdateCheckerTest::~UpdateCheckerTest() {
-}
+UpdateCheckerTest::~UpdateCheckerTest() = default;
 
 void UpdateCheckerTest::SetUp() {
   config_ = base::MakeRefCounted<TestConfigurator>();

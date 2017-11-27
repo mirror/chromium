@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-TypeDebugInfoObserver::TypeDebugInfoObserver() {}
+TypeDebugInfoObserver::TypeDebugInfoObserver() = default;
 
-TypeDebugInfoObserver::~TypeDebugInfoObserver() {}
+TypeDebugInfoObserver::~TypeDebugInfoObserver() = default;
 
 }  // namespace syncer

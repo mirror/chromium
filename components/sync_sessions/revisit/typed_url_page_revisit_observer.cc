@@ -16,7 +16,7 @@ TypedUrlPageRevisitObserver::TypedUrlPageRevisitObserver(
     history::HistoryService* history)
     : history_(base::AsWeakPtr(history)) {}
 
-TypedUrlPageRevisitObserver::~TypedUrlPageRevisitObserver() {}
+TypedUrlPageRevisitObserver::~TypedUrlPageRevisitObserver() = default;
 
 void TypedUrlPageRevisitObserver::OnPageVisit(
     const GURL& url,

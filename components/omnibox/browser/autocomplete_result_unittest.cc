@@ -74,7 +74,7 @@ class MockAutocompleteProvider : public AutocompleteProvider {
   void Start(const AutocompleteInput& input, bool minimal_changes) override {}
 
  private:
-  ~MockAutocompleteProvider() override {}
+  ~MockAutocompleteProvider() override = default;
 };
 
 }  // namespace

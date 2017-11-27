@@ -21,7 +21,6 @@ HistoryDatabaseParams::HistoryDatabaseParams(
       download_interrupt_reason_crash(download_interrupt_reason_crash) {
 }
 
-HistoryDatabaseParams::~HistoryDatabaseParams() {
-}
+HistoryDatabaseParams::~HistoryDatabaseParams() = default;
 
 }  // namespace history

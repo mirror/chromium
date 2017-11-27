@@ -32,8 +32,7 @@ PrintMockRenderThread::PrintMockRenderThread()
 {
 }
 
-PrintMockRenderThread::~PrintMockRenderThread() {
-}
+PrintMockRenderThread::~PrintMockRenderThread() = default;
 
 scoped_refptr<base::SingleThreadTaskRunner>
 PrintMockRenderThread::GetIOTaskRunner() {

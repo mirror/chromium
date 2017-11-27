@@ -40,7 +40,7 @@ class PaymentResponseHelperTest : public testing::Test,
         "visa", visa_card, /*matches_merchant_card_type_exactly=*/true,
         billing_addresses_, "en-US", &test_payment_request_delegate_);
   }
-  ~PaymentResponseHelperTest() override {}
+  ~PaymentResponseHelperTest() override = default;
 
   // PaymentRequestState::Delegate:
   void OnPaymentResponseReady(mojom::PaymentResponsePtr response) override {

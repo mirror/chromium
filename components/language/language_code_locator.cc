@@ -17,7 +17,7 @@ GenerateDistrictLanguageMapping();
 LanguageCodeLocator::LanguageCodeLocator()
     : district_languages_(internal::GenerateDistrictLanguageMapping()) {}
 
-LanguageCodeLocator::~LanguageCodeLocator() {}
+LanguageCodeLocator::~LanguageCodeLocator() = default;
 
 std::vector<std::string> LanguageCodeLocator::GetLanguageCode(
     double latitude,

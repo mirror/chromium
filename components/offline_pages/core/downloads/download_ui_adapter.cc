@@ -78,7 +78,7 @@ DownloadUIAdapter::ItemInfo::ItemInfo(const SavePageRequest& request,
       client_id(request.client_id()),
       temporarily_hidden() {}
 
-DownloadUIAdapter::ItemInfo::~ItemInfo() {}
+DownloadUIAdapter::ItemInfo::~ItemInfo() = default;
 
 DownloadUIAdapter::DownloadUIAdapter(OfflineContentAggregator* aggregator,
                                      OfflinePageModel* model,

@@ -19,7 +19,7 @@ BookmarksPageRevisitObserver::BookmarksPageRevisitObserver(
     std::unique_ptr<BookmarksByUrlProvider> provider)
     : provider_(std::move(provider)) {}
 
-BookmarksPageRevisitObserver::~BookmarksPageRevisitObserver() {}
+BookmarksPageRevisitObserver::~BookmarksPageRevisitObserver() = default;
 
 void BookmarksPageRevisitObserver::OnPageVisit(
     const GURL& url,

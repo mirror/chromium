@@ -10,7 +10,7 @@
 
 using base::Value;
 
-DefaultPrefStore::DefaultPrefStore() {}
+DefaultPrefStore::DefaultPrefStore() = default;
 
 bool DefaultPrefStore::GetValue(const std::string& key,
                                 const Value** result) const {
@@ -57,4 +57,4 @@ DefaultPrefStore::const_iterator DefaultPrefStore::end() const {
   return prefs_.end();
 }
 
-DefaultPrefStore::~DefaultPrefStore() {}
+DefaultPrefStore::~DefaultPrefStore() = default;

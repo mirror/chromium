@@ -19,9 +19,9 @@
 
 namespace syncer {
 
-JsSyncEncryptionHandlerObserver::JsSyncEncryptionHandlerObserver() {}
+JsSyncEncryptionHandlerObserver::JsSyncEncryptionHandlerObserver() = default;
 
-JsSyncEncryptionHandlerObserver::~JsSyncEncryptionHandlerObserver() {}
+JsSyncEncryptionHandlerObserver::~JsSyncEncryptionHandlerObserver() = default;
 
 void JsSyncEncryptionHandlerObserver::SetJsEventHandler(
     const WeakHandle<JsEventHandler>& event_handler) {

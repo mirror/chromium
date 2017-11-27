@@ -42,7 +42,7 @@ FullCardRequest::FullCardRequest(RiskDataLoader* risk_data_loader,
   DCHECK(personal_data_manager_);
 }
 
-FullCardRequest::~FullCardRequest() {}
+FullCardRequest::~FullCardRequest() = default;
 
 void FullCardRequest::GetFullCard(const CreditCard& card,
                                   AutofillClient::UnmaskCardReason reason,

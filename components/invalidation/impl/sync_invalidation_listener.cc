@@ -29,7 +29,7 @@ const char kApplicationName[] = "chrome-sync";
 
 namespace syncer {
 
-SyncInvalidationListener::Delegate::~Delegate() {}
+SyncInvalidationListener::Delegate::~Delegate() = default;
 
 SyncInvalidationListener::SyncInvalidationListener(
     std::unique_ptr<SyncNetworkChannel> network_channel)

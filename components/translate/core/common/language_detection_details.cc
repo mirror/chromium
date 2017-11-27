@@ -13,6 +13,6 @@ LanguageDetectionDetails::LanguageDetectionDetails()
 LanguageDetectionDetails::LanguageDetectionDetails(
     const LanguageDetectionDetails& other) = default;
 
-LanguageDetectionDetails::~LanguageDetectionDetails() {}
+LanguageDetectionDetails::~LanguageDetectionDetails() = default;
 
 }  // namespace translate

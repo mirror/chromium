@@ -8,11 +8,9 @@
 
 namespace metrics {
 
-MetricsProvider::MetricsProvider() {
-}
+MetricsProvider::MetricsProvider() = default;
 
-MetricsProvider::~MetricsProvider() {
-}
+MetricsProvider::~MetricsProvider() = default;
 
 void MetricsProvider::Init() {
 }

@@ -134,7 +134,7 @@ int CountBits(const ByteVector& vector) {
 ByteVectorGenerator::ByteVectorGenerator(size_t byte_count)
     : byte_count_(byte_count) {}
 
-ByteVectorGenerator::~ByteVectorGenerator() {}
+ByteVectorGenerator::~ByteVectorGenerator() = default;
 
 ByteVector ByteVectorGenerator::GetRandomByteVector() {
   ByteVector bytes(byte_count_);
@@ -192,7 +192,7 @@ HmacByteVectorGenerator::HmacByteVectorGenerator(
     NOTREACHED();
 }
 
-HmacByteVectorGenerator::~HmacByteVectorGenerator() {}
+HmacByteVectorGenerator::~HmacByteVectorGenerator() = default;
 
 HmacByteVectorGenerator::HmacByteVectorGenerator(
     const HmacByteVectorGenerator& prev_request)

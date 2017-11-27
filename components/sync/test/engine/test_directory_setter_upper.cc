@@ -21,7 +21,7 @@ namespace syncer {
 
 TestDirectorySetterUpper::TestDirectorySetterUpper() : name_("Test") {}
 
-TestDirectorySetterUpper::~TestDirectorySetterUpper() {}
+TestDirectorySetterUpper::~TestDirectorySetterUpper() = default;
 
 void TestDirectorySetterUpper::SetUp() {
   test_transaction_observer_ =

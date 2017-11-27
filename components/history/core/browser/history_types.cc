@@ -14,7 +14,7 @@ namespace history {
 
 // VisitRow --------------------------------------------------------------------
 
-VisitRow::VisitRow() {}
+VisitRow::VisitRow() = default;
 
 VisitRow::VisitRow(URLID arg_url_id,
                    base::Time arg_visit_time,
@@ -27,15 +27,14 @@ VisitRow::VisitRow(URLID arg_url_id,
       transition(arg_transition),
       segment_id(arg_segment_id) {}
 
-VisitRow::~VisitRow() {
-}
+VisitRow::~VisitRow() = default;
 
 // QueryResults ----------------------------------------------------------------
 
 QueryResults::QueryResults() : reached_beginning_(false) {
 }
 
-QueryResults::~QueryResults() {}
+QueryResults::~QueryResults() = default;
 
 const size_t* QueryResults::MatchesForURL(const GURL& url,
                                           size_t* num_matches) const {
@@ -145,7 +144,7 @@ void QueryResults::AdjustResultMap(size_t begin, size_t end, ptrdiff_t delta) {
 
 // QueryOptions ----------------------------------------------------------------
 
-QueryOptions::QueryOptions() {}
+QueryOptions::QueryOptions() = default;
 
 void QueryOptions::SetRecentDayRange(int days_ago) {
   end_time = base::Time::Now();
@@ -167,14 +166,13 @@ int QueryOptions::EffectiveMaxCount() const {
 
 // QueryURLResult -------------------------------------------------------------
 
-QueryURLResult::QueryURLResult() {}
+QueryURLResult::QueryURLResult() = default;
 
-QueryURLResult::~QueryURLResult() {
-}
+QueryURLResult::~QueryURLResult() = default;
 
 // MostVisitedURL --------------------------------------------------------------
 
-MostVisitedURL::MostVisitedURL() {}
+MostVisitedURL::MostVisitedURL() = default;
 
 MostVisitedURL::MostVisitedURL(const GURL& url,
                                const base::string16& title,
@@ -198,7 +196,7 @@ MostVisitedURL::MostVisitedURL(MostVisitedURL&& other) noexcept
       last_forced_time(other.last_forced_time),
       redirects(std::move(other.redirects)) {}
 
-MostVisitedURL::~MostVisitedURL() {}
+MostVisitedURL::~MostVisitedURL() = default;
 
 void MostVisitedURL::InitRedirects(const RedirectList& redirects_from) {
   redirects.clear();
@@ -219,7 +217,7 @@ MostVisitedURL& MostVisitedURL::operator=(const MostVisitedURL&) = default;
 
 // FilteredURL -----------------------------------------------------------------
 
-FilteredURL::FilteredURL() {}
+FilteredURL::FilteredURL() = default;
 
 FilteredURL::FilteredURL(const PageUsageData& page_data)
     : url(page_data.GetURL()),
@@ -229,7 +227,7 @@ FilteredURL::FilteredURL(const PageUsageData& page_data)
 
 FilteredURL::FilteredURL(FilteredURL&& other) noexcept = default;
 
-FilteredURL::~FilteredURL() {}
+FilteredURL::~FilteredURL() = default;
 
 // FilteredURL::ExtendedInfo ---------------------------------------------------
 
@@ -237,19 +235,19 @@ FilteredURL::ExtendedInfo::ExtendedInfo() = default;
 
 // Images ---------------------------------------------------------------------
 
-Images::Images() {}
+Images::Images() = default;
 
 Images::Images(const Images& other) = default;
 
-Images::~Images() {}
+Images::~Images() = default;
 
 // TopSitesDelta --------------------------------------------------------------
 
-TopSitesDelta::TopSitesDelta() {}
+TopSitesDelta::TopSitesDelta() = default;
 
 TopSitesDelta::TopSitesDelta(const TopSitesDelta& other) = default;
 
-TopSitesDelta::~TopSitesDelta() {}
+TopSitesDelta::~TopSitesDelta() = default;
 
 // HistoryAddPageArgs ---------------------------------------------------------
 
@@ -292,62 +290,60 @@ HistoryAddPageArgs::HistoryAddPageArgs(const GURL& url,
 HistoryAddPageArgs::HistoryAddPageArgs(const HistoryAddPageArgs& other) =
     default;
 
-HistoryAddPageArgs::~HistoryAddPageArgs() {}
+HistoryAddPageArgs::~HistoryAddPageArgs() = default;
 
 // ThumbnailMigration ---------------------------------------------------------
 
-ThumbnailMigration::ThumbnailMigration() {}
+ThumbnailMigration::ThumbnailMigration() = default;
 
-ThumbnailMigration::~ThumbnailMigration() {}
+ThumbnailMigration::~ThumbnailMigration() = default;
 
 // MostVisitedThumbnails ------------------------------------------------------
 
-MostVisitedThumbnails::MostVisitedThumbnails() {}
+MostVisitedThumbnails::MostVisitedThumbnails() = default;
 
-MostVisitedThumbnails::~MostVisitedThumbnails() {}
+MostVisitedThumbnails::~MostVisitedThumbnails() = default;
 
 // IconMapping ----------------------------------------------------------------
 
-IconMapping::IconMapping() {}
+IconMapping::IconMapping() = default;
 IconMapping::IconMapping(const IconMapping&) = default;
 IconMapping::IconMapping(IconMapping&&) noexcept = default;
 
-IconMapping::~IconMapping() {}
+IconMapping::~IconMapping() = default;
 
 IconMapping& IconMapping::operator=(const IconMapping&) = default;
 
 // FaviconBitmapIDSize ---------------------------------------------------------
 
-FaviconBitmapIDSize::FaviconBitmapIDSize() {}
+FaviconBitmapIDSize::FaviconBitmapIDSize() = default;
 
-FaviconBitmapIDSize::~FaviconBitmapIDSize() {}
+FaviconBitmapIDSize::~FaviconBitmapIDSize() = default;
 
 // IconMappingsForExpiry ------------------------------------------------------
 
-IconMappingsForExpiry::IconMappingsForExpiry() {}
+IconMappingsForExpiry::IconMappingsForExpiry() = default;
 
 IconMappingsForExpiry::IconMappingsForExpiry(
     const IconMappingsForExpiry& other) = default;
 
-IconMappingsForExpiry::~IconMappingsForExpiry() {}
+IconMappingsForExpiry::~IconMappingsForExpiry() = default;
 
 // FaviconBitmap --------------------------------------------------------------
 
-FaviconBitmap::FaviconBitmap() {}
+FaviconBitmap::FaviconBitmap() = default;
 
 FaviconBitmap::FaviconBitmap(const FaviconBitmap& other) = default;
 
-FaviconBitmap::~FaviconBitmap() {}
+FaviconBitmap::~FaviconBitmap() = default;
 
 // ExpireHistoryArgs ----------------------------------------------------------
 
-ExpireHistoryArgs::ExpireHistoryArgs() {
-}
+ExpireHistoryArgs::ExpireHistoryArgs() = default;
 
 ExpireHistoryArgs::ExpireHistoryArgs(const ExpireHistoryArgs& other) = default;
 
-ExpireHistoryArgs::~ExpireHistoryArgs() {
-}
+ExpireHistoryArgs::~ExpireHistoryArgs() = default;
 
 void ExpireHistoryArgs::SetTimeRangeForOneDay(base::Time time) {
   begin_time = time.LocalMidnight();

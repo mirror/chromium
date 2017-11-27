@@ -23,7 +23,7 @@ class FaviconUrlParserTest : public testing::Test {
         new ui::test::ScopedSetSupportedScaleFactors(supported_scale_factors));
   }
 
-  ~FaviconUrlParserTest() override {}
+  ~FaviconUrlParserTest() override = default;
 
  private:
   typedef std::unique_ptr<ui::test::ScopedSetSupportedScaleFactors>

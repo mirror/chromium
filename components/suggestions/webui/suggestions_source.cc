@@ -107,7 +107,7 @@ SuggestionsSource::SuggestionsSource(SuggestionsService* suggestions_service,
       base_url_(base_url),
       weak_ptr_factory_(this) {}
 
-SuggestionsSource::~SuggestionsSource() {}
+SuggestionsSource::~SuggestionsSource() = default;
 
 SuggestionsSource::RequestContext::RequestContext(
     bool is_refresh_in,
@@ -118,7 +118,7 @@ SuggestionsSource::RequestContext::RequestContext(
       callback(callback_in)                         // Copy.
 {}
 
-SuggestionsSource::RequestContext::~RequestContext() {}
+SuggestionsSource::RequestContext::~RequestContext() = default;
 
 void SuggestionsSource::StartDataRequest(const std::string& path,
                                          const GotDataCallback& callback) {

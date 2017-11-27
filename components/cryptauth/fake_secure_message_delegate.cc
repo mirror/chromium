@@ -93,8 +93,7 @@ FakeSecureMessageDelegate::FakeSecureMessageDelegate()
     : next_public_key_(std::string(kKeyPrefix) + "0") {
 }
 
-FakeSecureMessageDelegate::~FakeSecureMessageDelegate() {
-}
+FakeSecureMessageDelegate::~FakeSecureMessageDelegate() = default;
 
 void FakeSecureMessageDelegate::GenerateKeyPair(
     const GenerateKeyPairCallback& callback) {

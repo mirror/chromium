@@ -20,7 +20,7 @@ ClearServerData::ClearServerData(const std::string& account_name) {
   request_.mutable_clear_server_data();
 }
 
-ClearServerData::~ClearServerData() {}
+ClearServerData::~ClearServerData() = default;
 
 SyncerError ClearServerData::SendRequest(SyncCycle* cycle) {
   if (cycle->context()->debug_info_getter()) {

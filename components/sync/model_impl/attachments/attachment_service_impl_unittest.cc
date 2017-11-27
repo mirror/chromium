@@ -36,7 +36,7 @@ class MockAttachmentStoreBackend
       const scoped_refptr<base::SequencedTaskRunner>& callback_task_runner)
       : AttachmentStoreBackend(callback_task_runner) {}
 
-  ~MockAttachmentStoreBackend() override {}
+  ~MockAttachmentStoreBackend() override = default;
 
   void Init(const AttachmentStore::InitCallback& callback) override {}
 
@@ -134,7 +134,7 @@ class MockAttachmentDownloader
     : public AttachmentDownloader,
       public base::SupportsWeakPtr<MockAttachmentDownloader> {
  public:
-  MockAttachmentDownloader() {}
+  MockAttachmentDownloader() = default;
 
   void DownloadAttachment(const AttachmentId& id,
                           const DownloadCallback& callback) override {
@@ -169,7 +169,7 @@ class MockAttachmentUploader
     : public AttachmentUploader,
       public base::SupportsWeakPtr<MockAttachmentUploader> {
  public:
-  MockAttachmentUploader() {}
+  MockAttachmentUploader() = default;
 
   // AttachmentUploader implementation.
   void UploadAttachment(const Attachment& attachment,
@@ -197,7 +197,7 @@ class MockAttachmentUploader
 class AttachmentServiceImplTest : public testing::Test,
                                   public AttachmentService::Delegate {
  protected:
-  AttachmentServiceImplTest() {}
+  AttachmentServiceImplTest() = default;
 
   void SetUp() override {
     network_change_notifier_.reset(net::NetworkChangeNotifier::CreateMock());

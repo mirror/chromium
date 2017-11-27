@@ -74,7 +74,7 @@ P2PNotificationData::P2PNotificationData(
       target_(target),
       invalidation_map_(invalidation_map) {}
 
-P2PNotificationData::~P2PNotificationData() {}
+P2PNotificationData::~P2PNotificationData() = default;
 
 bool P2PNotificationData::IsTargeted(const std::string& id) const {
   switch (target_) {

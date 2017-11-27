@@ -32,7 +32,7 @@ const void* const kWhitelistKey = &kWhitelistKey;
 // SafeBrowsingUIManager)
 class WhitelistUrlSet : public base::SupportsUserData::Data {
  public:
-  WhitelistUrlSet() {}
+  WhitelistUrlSet() = default;
   bool Contains(const GURL url, SBThreatType* threat_type) {
     auto found = map_.find(url);
     if (found == map_.end())
@@ -111,14 +111,14 @@ WhitelistUrlSet* GetOrCreateWhitelist(WebContents* web_contents) {
 
 namespace safe_browsing {
 
-BaseUIManager::BaseUIManager() {}
+BaseUIManager::BaseUIManager() = default;
 
 void BaseUIManager::StopOnIOThread(bool shutdown) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   return;
 }
 
-BaseUIManager::~BaseUIManager() {}
+BaseUIManager::~BaseUIManager() = default;
 
 bool BaseUIManager::IsWhitelisted(const UnsafeResource& resource) {
   NavigationEntry* entry = nullptr;

@@ -118,7 +118,7 @@ ConfiguratorImpl::ConfiguratorImpl(
     extra_info_ += "testrequest=\"1\"";
 }
 
-ConfiguratorImpl::~ConfiguratorImpl() {}
+ConfiguratorImpl::~ConfiguratorImpl() = default;
 
 int ConfiguratorImpl::InitialDelay() const {
   return fast_update_ ? 10 : (6 * kDelayOneMinute);

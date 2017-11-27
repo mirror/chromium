@@ -6,11 +6,9 @@
 
 namespace guest_view {
 
-GuestViewManagerDelegate::GuestViewManagerDelegate() {
-}
+GuestViewManagerDelegate::GuestViewManagerDelegate() = default;
 
-GuestViewManagerDelegate::~GuestViewManagerDelegate() {
-}
+GuestViewManagerDelegate::~GuestViewManagerDelegate() = default;
 
 bool GuestViewManagerDelegate::IsGuestAvailableToContext(GuestViewBase* guest) {
   return false;

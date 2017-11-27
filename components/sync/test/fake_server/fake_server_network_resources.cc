@@ -21,7 +21,7 @@ FakeServerNetworkResources::FakeServerNetworkResources(
     : fake_server_(fake_server),
       fake_server_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
 
-FakeServerNetworkResources::~FakeServerNetworkResources() {}
+FakeServerNetworkResources::~FakeServerNetworkResources() = default;
 
 std::unique_ptr<syncer::HttpPostProviderFactory>
 FakeServerNetworkResources::GetHttpPostProviderFactory(

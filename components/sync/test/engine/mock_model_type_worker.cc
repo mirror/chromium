@@ -29,7 +29,7 @@ MockModelTypeWorker::MockModelTypeWorker(
   model_type_state_.set_initial_sync_done(true);
 }
 
-MockModelTypeWorker::~MockModelTypeWorker() {}
+MockModelTypeWorker::~MockModelTypeWorker() = default;
 
 void MockModelTypeWorker::NudgeForCommit() {
   CommitRequestDataList commit_request;

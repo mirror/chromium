@@ -171,8 +171,7 @@ DataReductionProxyEventCreator::DataReductionProxyEventCreator(
   thread_checker_.DetachFromThread();
 }
 
-DataReductionProxyEventCreator::~DataReductionProxyEventCreator() {
-}
+DataReductionProxyEventCreator::~DataReductionProxyEventCreator() = default;
 
 void DataReductionProxyEventCreator::AddProxyEnabledEvent(
     net::NetLog* net_log,

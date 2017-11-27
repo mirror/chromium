@@ -101,8 +101,7 @@ VariationsSeedSimulator::Result::Result()
       kill_critical_group_change_count(0) {
 }
 
-VariationsSeedSimulator::Result::~Result() {
-}
+VariationsSeedSimulator::Result::~Result() = default;
 
 VariationsSeedSimulator::VariationsSeedSimulator(
     const base::FieldTrial::EntropyProvider& default_entropy_provider,
@@ -110,8 +109,7 @@ VariationsSeedSimulator::VariationsSeedSimulator(
     : default_entropy_provider_(default_entropy_provider),
       low_entropy_provider_(low_entropy_provider) {}
 
-VariationsSeedSimulator::~VariationsSeedSimulator() {
-}
+VariationsSeedSimulator::~VariationsSeedSimulator() = default;
 
 VariationsSeedSimulator::Result VariationsSeedSimulator::SimulateSeedStudies(
     const VariationsSeed& seed,

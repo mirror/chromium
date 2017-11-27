@@ -78,15 +78,11 @@ PreviewsLogger::MessageLog::MessageLog(const std::string& event_type,
       url(url),
       time(time) {}
 
-PreviewsLogger::MessageLog::MessageLog(const MessageLog& other)
-    : event_type(other.event_type),
-      event_description(other.event_description),
-      url(other.url),
-      time(other.time) {}
+PreviewsLogger::MessageLog::MessageLog(const MessageLog& other) = default;
 
 PreviewsLogger::PreviewsLogger() : blacklist_ignored_(false) {}
 
-PreviewsLogger::~PreviewsLogger() {}
+PreviewsLogger::~PreviewsLogger() = default;
 
 void PreviewsLogger::AddAndNotifyObserver(PreviewsLoggerObserver* observer) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

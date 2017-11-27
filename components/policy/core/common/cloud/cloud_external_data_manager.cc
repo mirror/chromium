@@ -9,8 +9,7 @@
 
 namespace policy {
 
-CloudExternalDataManager::MetadataEntry::MetadataEntry() {
-}
+CloudExternalDataManager::MetadataEntry::MetadataEntry() = default;
 
 CloudExternalDataManager::MetadataEntry::MetadataEntry(const std::string& url,
                                                        const std::string& hash)
@@ -26,8 +25,7 @@ bool CloudExternalDataManager::MetadataEntry::operator!=(
 CloudExternalDataManager::CloudExternalDataManager()
     : policy_store_(nullptr), weak_factory_(this) {}
 
-CloudExternalDataManager::~CloudExternalDataManager() {
-}
+CloudExternalDataManager::~CloudExternalDataManager() = default;
 
 void CloudExternalDataManager::SetPolicyStore(CloudPolicyStore* policy_store) {
   weak_factory_.InvalidateWeakPtrs();

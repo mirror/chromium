@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-UserEventService::UserEventService() {}
+UserEventService::UserEventService() = default;
 
-UserEventService::~UserEventService() {}
+UserEventService::~UserEventService() = default;
 
 }  // namespace syncer

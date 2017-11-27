@@ -84,7 +84,7 @@ void ExtractLicenseMap(const em::CheckDeviceLicenseResponse& license_response,
 
 }  // namespace
 
-CloudPolicyClient::Observer::~Observer() {}
+CloudPolicyClient::Observer::~Observer() = default;
 
 void CloudPolicyClient::Observer::OnRobotAuthCodesFetched(
     CloudPolicyClient* client) {}
@@ -103,8 +103,7 @@ CloudPolicyClient::CloudPolicyClient(
       weak_ptr_factory_(this) {
 }
 
-CloudPolicyClient::~CloudPolicyClient() {
-}
+CloudPolicyClient::~CloudPolicyClient() = default;
 
 void CloudPolicyClient::SetupRegistration(const std::string& dm_token,
                                           const std::string& client_id) {

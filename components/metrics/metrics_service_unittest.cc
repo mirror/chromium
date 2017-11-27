@@ -52,7 +52,7 @@ class TestMetricsService : public MetricsService {
                      MetricsServiceClient* client,
                      PrefService* local_state)
       : MetricsService(state_manager, client, local_state) {}
-  ~TestMetricsService() override {}
+  ~TestMetricsService() override = default;
 
   using MetricsService::log_manager;
   using MetricsService::log_store;
@@ -69,7 +69,7 @@ class TestMetricsLog : public MetricsLog {
                  MetricsServiceClient* client)
       : MetricsLog(client_id, session_id, MetricsLog::ONGOING_LOG, client) {}
 
-  ~TestMetricsLog() override {}
+  ~TestMetricsLog() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestMetricsLog);

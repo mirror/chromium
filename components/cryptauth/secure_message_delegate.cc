@@ -6,25 +6,19 @@
 
 namespace cryptauth {
 
-SecureMessageDelegate::SecureMessageDelegate() {
-}
+SecureMessageDelegate::SecureMessageDelegate() = default;
 
-SecureMessageDelegate::~SecureMessageDelegate() {
-}
+SecureMessageDelegate::~SecureMessageDelegate() = default;
 
-SecureMessageDelegate::CreateOptions::CreateOptions() {
-}
+SecureMessageDelegate::CreateOptions::CreateOptions() = default;
 
 SecureMessageDelegate::CreateOptions::CreateOptions(
     const CreateOptions& other) = default;
 
-SecureMessageDelegate::CreateOptions::~CreateOptions() {
-}
+SecureMessageDelegate::CreateOptions::~CreateOptions() = default;
 
-SecureMessageDelegate::UnwrapOptions::UnwrapOptions() {
-}
+SecureMessageDelegate::UnwrapOptions::UnwrapOptions() = default;
 
-SecureMessageDelegate::UnwrapOptions::~UnwrapOptions() {
-}
+SecureMessageDelegate::UnwrapOptions::~UnwrapOptions() = default;
 
 }  // namespace cryptauth

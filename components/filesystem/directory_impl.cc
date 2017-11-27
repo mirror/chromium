@@ -27,7 +27,7 @@ DirectoryImpl::DirectoryImpl(base::FilePath directory_path,
       temp_dir_(std::move(temp_dir)),
       lock_table_(std::move(lock_table)) {}
 
-DirectoryImpl::~DirectoryImpl() {}
+DirectoryImpl::~DirectoryImpl() = default;
 
 void DirectoryImpl::Read(ReadCallback callback) {
   std::vector<mojom::DirectoryEntryPtr> entries;

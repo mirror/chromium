@@ -21,7 +21,7 @@ TranslateDownloadManager::TranslateDownloadManager()
     : language_list_(new TranslateLanguageList),
       script_(new TranslateScript) {}
 
-TranslateDownloadManager::~TranslateDownloadManager() {}
+TranslateDownloadManager::~TranslateDownloadManager() = default;
 
 void TranslateDownloadManager::Shutdown() {
   DCHECK(sequence_checker_.CalledOnValidSequence());

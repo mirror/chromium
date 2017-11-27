@@ -49,8 +49,8 @@ const uint8_t kTestKeyData[] = {
 
 class OwnerKeyUtilImplTest : public testing::Test {
  protected:
-  OwnerKeyUtilImplTest() {}
-  ~OwnerKeyUtilImplTest() override {}
+  OwnerKeyUtilImplTest() = default;
+  ~OwnerKeyUtilImplTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(tmpdir_.CreateUniqueTempDir());

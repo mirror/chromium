@@ -39,7 +39,7 @@ DomDistillerHandler::DomDistillerHandler(DomDistillerService* service,
                                          const std::string& scheme)
     : service_(service), article_scheme_(scheme), weak_ptr_factory_(this) {}
 
-DomDistillerHandler::~DomDistillerHandler() {}
+DomDistillerHandler::~DomDistillerHandler() = default;
 
 void DomDistillerHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

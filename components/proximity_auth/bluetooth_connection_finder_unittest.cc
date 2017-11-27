@@ -69,7 +69,7 @@ class MockBluetoothConnectionFinder : public BluetoothConnectionFinder {
       : BluetoothConnectionFinder(cryptauth::CreateClassicRemoteDeviceForTest(),
                                   device::BluetoothUUID(kUuid),
                                   base::TimeDelta()) {}
-  ~MockBluetoothConnectionFinder() override {}
+  ~MockBluetoothConnectionFinder() override = default;
 
   MOCK_METHOD0(CreateConnectionProxy, cryptauth::Connection*());
 

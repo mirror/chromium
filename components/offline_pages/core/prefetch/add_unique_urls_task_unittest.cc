@@ -51,7 +51,7 @@ class AddUniqueUrlsTaskTest : public TaskTestBase {
   TestPrefetchDispatcher dispatcher_;
 };
 
-AddUniqueUrlsTaskTest::AddUniqueUrlsTaskTest() {}
+AddUniqueUrlsTaskTest::AddUniqueUrlsTaskTest() = default;
 
 std::map<std::string, PrefetchItem> AddUniqueUrlsTaskTest::GetAllItems() {
   std::set<PrefetchItem> set;

@@ -208,7 +208,7 @@ AutofillWalletSyncableService::AutofillWalletSyncableService(
     const std::string& app_locale)
     : webdata_backend_(webdata_backend) {}
 
-AutofillWalletSyncableService::~AutofillWalletSyncableService() {}
+AutofillWalletSyncableService::~AutofillWalletSyncableService() = default;
 
 syncer::SyncMergeResult AutofillWalletSyncableService::MergeDataAndStartSyncing(
     syncer::ModelType type,

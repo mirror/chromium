@@ -18,7 +18,7 @@ class MetricsLogStoreTest : public testing::Test {
   MetricsLogStoreTest() {
     MetricsLogStore::RegisterPrefs(pref_service_.registry());
   }
-  ~MetricsLogStoreTest() override {}
+  ~MetricsLogStoreTest() override = default;
 
   MetricsLog* CreateLog(MetricsLog::LogType log_type) {
     return new MetricsLog("id", 0, log_type, &client_);

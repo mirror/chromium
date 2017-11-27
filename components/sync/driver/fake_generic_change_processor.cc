@@ -24,7 +24,7 @@ FakeGenericChangeProcessor::FakeGenericChangeProcessor(ModelType type,
       sync_model_has_user_created_nodes_(true),
       sync_model_has_user_created_nodes_success_(true) {}
 
-FakeGenericChangeProcessor::~FakeGenericChangeProcessor() {}
+FakeGenericChangeProcessor::~FakeGenericChangeProcessor() = default;
 
 void FakeGenericChangeProcessor::set_sync_model_has_user_created_nodes(
     bool has_nodes) {
@@ -68,7 +68,8 @@ FakeGenericChangeProcessorFactory::FakeGenericChangeProcessorFactory(
     std::unique_ptr<FakeGenericChangeProcessor> processor)
     : processor_(std::move(processor)) {}
 
-FakeGenericChangeProcessorFactory::~FakeGenericChangeProcessorFactory() {}
+FakeGenericChangeProcessorFactory::~FakeGenericChangeProcessorFactory() =
+    default;
 
 std::unique_ptr<GenericChangeProcessor>
 FakeGenericChangeProcessorFactory::CreateGenericChangeProcessor(

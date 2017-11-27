@@ -66,7 +66,7 @@ class MockPasswordManagerClient : public StubPasswordManagerClient {
     prefs_.registry()->RegisterBooleanPref(
         prefs::kWasAutoSignInFirstRunExperienceShown, true);
   }
-  ~MockPasswordManagerClient() override {}
+  ~MockPasswordManagerClient() override = default;
 
   bool PromptUserToSaveOrUpdatePassword(
       std::unique_ptr<PasswordFormManager> manager,
@@ -168,7 +168,7 @@ GURL HttpURLFromHttps(const GURL& https_url) {
 
 class CredentialManagerImplTest : public testing::Test {
  public:
-  CredentialManagerImplTest() {}
+  CredentialManagerImplTest() = default;
 
   void SetUp() override {
     store_ = new TestPasswordStore;

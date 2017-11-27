@@ -12,7 +12,7 @@ SharedChangeProcessorRef::SharedChangeProcessorRef(
   DCHECK(change_processor_.get());
 }
 
-SharedChangeProcessorRef::~SharedChangeProcessorRef() {}
+SharedChangeProcessorRef::~SharedChangeProcessorRef() = default;
 
 SyncError SharedChangeProcessorRef::ProcessSyncChanges(
     const base::Location& from_here,

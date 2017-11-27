@@ -16,13 +16,10 @@ ExternalDataFetcher::ExternalDataFetcher(
       policy_(policy) {
 }
 
-ExternalDataFetcher::ExternalDataFetcher(const ExternalDataFetcher& other)
-    : manager_(other.manager_),
-      policy_(other.policy_) {
-}
+ExternalDataFetcher::ExternalDataFetcher(const ExternalDataFetcher& other) =
+    default;
 
-ExternalDataFetcher::~ExternalDataFetcher() {
-}
+ExternalDataFetcher::~ExternalDataFetcher() = default;
 
 // static
 bool ExternalDataFetcher::Equals(const ExternalDataFetcher* first,

@@ -17,8 +17,7 @@ ContentSettingsUsagesState::ContentSettingsUsagesState(
       type_(type) {
 }
 
-ContentSettingsUsagesState::~ContentSettingsUsagesState() {
-}
+ContentSettingsUsagesState::~ContentSettingsUsagesState() = default;
 
 void ContentSettingsUsagesState::OnPermissionSet(
     const GURL& requesting_origin, bool allowed) {

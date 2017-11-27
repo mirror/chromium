@@ -115,7 +115,7 @@ CastTransportImpl::WriteRequest::WriteRequest(
 CastTransportImpl::WriteRequest::WriteRequest(const WriteRequest& other) =
     default;
 
-CastTransportImpl::WriteRequest::~WriteRequest() {}
+CastTransportImpl::WriteRequest::~WriteRequest() = default;
 
 void CastTransportImpl::SetReadState(ReadState read_state) {
   if (read_state_ != read_state)

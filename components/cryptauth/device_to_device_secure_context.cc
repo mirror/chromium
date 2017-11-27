@@ -44,7 +44,7 @@ DeviceToDeviceSecureContext::DeviceToDeviceSecureContext(
       last_decode_sequence_number_(kAuthenticationDecodeSequenceNumber),
       weak_ptr_factory_(this) {}
 
-DeviceToDeviceSecureContext::~DeviceToDeviceSecureContext() {}
+DeviceToDeviceSecureContext::~DeviceToDeviceSecureContext() = default;
 
 void DeviceToDeviceSecureContext::Decode(const std::string& encoded_message,
                                          const MessageCallback& callback) {

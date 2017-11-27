@@ -24,8 +24,7 @@ Sample::Sample(int32_t cohort_seed, const RapporParameters& parameters)
   DCHECK_LE(parameters_.bloom_filter_size_bytes, 8u);
 }
 
-Sample::~Sample() {
-}
+Sample::~Sample() = default;
 
 void Sample::SetStringField(const std::string& field_name,
                             const std::string& value) {

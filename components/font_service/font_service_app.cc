@@ -44,7 +44,7 @@ FontServiceApp::FontServiceApp() {
       base::Bind(&FontServiceApp::Create, base::Unretained(this)));
 }
 
-FontServiceApp::~FontServiceApp() {}
+FontServiceApp::~FontServiceApp() = default;
 
 void FontServiceApp::OnStart() {}
 

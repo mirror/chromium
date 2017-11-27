@@ -57,7 +57,7 @@ class MockUIDelegate : public FullCardRequest::UIDelegate,
 class MockPersonalDataManager : public PersonalDataManager {
  public:
   MockPersonalDataManager() : PersonalDataManager("en-US") {}
-  ~MockPersonalDataManager() override {}
+  ~MockPersonalDataManager() override = default;
   MOCK_METHOD1(UpdateCreditCard, void(const CreditCard& credit_card));
   MOCK_METHOD1(UpdateServerCreditCard, void(const CreditCard& credit_card));
 };
@@ -85,7 +85,7 @@ class FullCardRequestTest : public testing::Test,
         "sync-url", "https://google.com");
   }
 
-  ~FullCardRequestTest() override {}
+  ~FullCardRequestTest() override = default;
 
   MockPersonalDataManager* personal_data() { return &personal_data_; }
 

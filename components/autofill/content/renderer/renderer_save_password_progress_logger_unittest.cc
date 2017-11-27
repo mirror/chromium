@@ -21,7 +21,7 @@ class FakeContentPasswordManagerDriver : public mojom::PasswordManagerDriver {
  public:
   FakeContentPasswordManagerDriver()
       : called_record_save_(false), binding_(this) {}
-  ~FakeContentPasswordManagerDriver() override {}
+  ~FakeContentPasswordManagerDriver() override = default;
 
   mojom::PasswordManagerDriverPtr CreateInterfacePtrAndBind() {
     mojom::PasswordManagerDriverPtr ptr;

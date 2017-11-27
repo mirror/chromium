@@ -17,7 +17,7 @@ EntityBuilderFactory::EntityBuilderFactory()
 EntityBuilderFactory::EntityBuilderFactory(const string& cache_guid)
     : cache_guid_(cache_guid), latest_client_item_id_(0L) {}
 
-EntityBuilderFactory::~EntityBuilderFactory() {}
+EntityBuilderFactory::~EntityBuilderFactory() = default;
 
 BookmarkEntityBuilder EntityBuilderFactory::NewBookmarkEntityBuilder(
     const string& title) {

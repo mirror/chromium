@@ -118,7 +118,7 @@ void VariationsHttpHeaderProvider::ResetForTesting() {
 VariationsHttpHeaderProvider::VariationsHttpHeaderProvider()
     : variation_ids_cache_initialized_(false) {}
 
-VariationsHttpHeaderProvider::~VariationsHttpHeaderProvider() {}
+VariationsHttpHeaderProvider::~VariationsHttpHeaderProvider() = default;
 
 void VariationsHttpHeaderProvider::OnFieldTrialGroupFinalized(
     const std::string& trial_name,

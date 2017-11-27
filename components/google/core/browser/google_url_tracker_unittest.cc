@@ -48,8 +48,7 @@ class TestCallbackListener {
 TestCallbackListener::TestCallbackListener() : notified_(false) {
 }
 
-TestCallbackListener::~TestCallbackListener() {
-}
+TestCallbackListener::~TestCallbackListener() = default;
 
 void TestCallbackListener::OnGoogleURLUpdated() {
   notified_ = true;
@@ -91,8 +90,7 @@ TestGoogleURLTrackerClient::TestGoogleURLTrackerClient(PrefService* prefs)
           base::ThreadTaskRunnerHandle::Get())) {
 }
 
-TestGoogleURLTrackerClient::~TestGoogleURLTrackerClient() {
-}
+TestGoogleURLTrackerClient::~TestGoogleURLTrackerClient() = default;
 
 bool TestGoogleURLTrackerClient::IsBackgroundNetworkingEnabled() {
   return true;
@@ -151,8 +149,7 @@ GoogleURLTrackerTest::GoogleURLTrackerTest() {
       GoogleURLTracker::kDefaultGoogleHomepage);
 }
 
-GoogleURLTrackerTest::~GoogleURLTrackerTest() {
-}
+GoogleURLTrackerTest::~GoogleURLTrackerTest() = default;
 
 void GoogleURLTrackerTest::SetUp() {
   network_change_notifier_.reset(net::NetworkChangeNotifier::CreateMock());

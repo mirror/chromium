@@ -19,8 +19,7 @@ TestAutofillClient::TestAutofillClient()
 #endif
       form_origin_(GURL("https://example.test")) {}
 
-TestAutofillClient::~TestAutofillClient() {
-}
+TestAutofillClient::~TestAutofillClient() = default;
 
 PersonalDataManager* TestAutofillClient::GetPersonalDataManager() {
   return nullptr;

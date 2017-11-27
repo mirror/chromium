@@ -16,7 +16,7 @@ OfflinerStub::OfflinerStub()
       cancel_called_(false),
       snapshot_on_last_retry_(false) {}
 
-OfflinerStub::~OfflinerStub() {}
+OfflinerStub::~OfflinerStub() = default;
 
 bool OfflinerStub::LoadAndSave(const SavePageRequest& request,
                                const CompletionCallback& completion_callback,

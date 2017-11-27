@@ -19,7 +19,7 @@ static const char kPaymentRequestOptions[] = "options";
 
 }  // namespace
 
-WebPaymentRequest::WebPaymentRequest() {}
+WebPaymentRequest::WebPaymentRequest() = default;
 WebPaymentRequest::WebPaymentRequest(const WebPaymentRequest& other) = default;
 WebPaymentRequest::~WebPaymentRequest() = default;
 

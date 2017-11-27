@@ -45,7 +45,7 @@ void BookmarkProvider::Start(const AutocompleteInput& input,
   DoAutocomplete(input);
 }
 
-BookmarkProvider::~BookmarkProvider() {}
+BookmarkProvider::~BookmarkProvider() = default;
 
 void BookmarkProvider::DoAutocomplete(const AutocompleteInput& input) {
   // We may not have a bookmark model for some unit tests.

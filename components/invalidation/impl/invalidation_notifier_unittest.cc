@@ -27,7 +27,7 @@ namespace {
 
 class InvalidationNotifierTestDelegate {
  public:
-  InvalidationNotifierTestDelegate() {}
+  InvalidationNotifierTestDelegate() = default;
 
   ~InvalidationNotifierTestDelegate() {
     DestroyInvalidator();

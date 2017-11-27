@@ -38,11 +38,9 @@ std::unique_ptr<RegistrationInfo> RegistrationInfo::BuildFromString(
   return registration;
 }
 
-RegistrationInfo::RegistrationInfo() {
-}
+RegistrationInfo::RegistrationInfo() = default;
 
-RegistrationInfo::~RegistrationInfo() {
-}
+RegistrationInfo::~RegistrationInfo() = default;
 
 // static
 const GCMRegistrationInfo* GCMRegistrationInfo::FromRegistrationInfo(
@@ -60,11 +58,9 @@ GCMRegistrationInfo* GCMRegistrationInfo::FromRegistrationInfo(
   return static_cast<GCMRegistrationInfo*>(registration_info);
 }
 
-GCMRegistrationInfo::GCMRegistrationInfo() {
-}
+GCMRegistrationInfo::GCMRegistrationInfo() = default;
 
-GCMRegistrationInfo::~GCMRegistrationInfo() {
-}
+GCMRegistrationInfo::~GCMRegistrationInfo() = default;
 
 RegistrationInfo::RegistrationType GCMRegistrationInfo::GetType() const {
   return GCM_REGISTRATION;
@@ -147,11 +143,9 @@ InstanceIDTokenInfo* InstanceIDTokenInfo::FromRegistrationInfo(
   return static_cast<InstanceIDTokenInfo*>(registration_info);
 }
 
-InstanceIDTokenInfo::InstanceIDTokenInfo() {
-}
+InstanceIDTokenInfo::InstanceIDTokenInfo() = default;
 
-InstanceIDTokenInfo::~InstanceIDTokenInfo() {
-}
+InstanceIDTokenInfo::~InstanceIDTokenInfo() = default;
 
 RegistrationInfo::RegistrationType InstanceIDTokenInfo::GetType() const {
   return INSTANCE_ID_TOKEN;

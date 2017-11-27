@@ -16,7 +16,7 @@
 
 namespace syncer {
 
-MigrationObserver::~MigrationObserver() {}
+MigrationObserver::~MigrationObserver() = default;
 
 BackendMigrator::BackendMigrator(const std::string& name,
                                  UserShare* user_share,
@@ -31,7 +31,7 @@ BackendMigrator::BackendMigrator(const std::string& name,
       migration_done_callback_(migration_done_callback),
       weak_ptr_factory_(this) {}
 
-BackendMigrator::~BackendMigrator() {}
+BackendMigrator::~BackendMigrator() = default;
 
 // Helper macros to log with the syncer thread name; useful when there
 // are multiple syncer threads involved.

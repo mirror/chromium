@@ -70,7 +70,7 @@ SearchSuggestionParser::Result::Result(bool from_keyword_provider,
 
 SearchSuggestionParser::Result::Result(const Result& other) = default;
 
-SearchSuggestionParser::Result::~Result() {}
+SearchSuggestionParser::Result::~Result() = default;
 
 // SearchSuggestionParser::SuggestResult ---------------------------------------
 
@@ -123,7 +123,7 @@ SearchSuggestionParser::SuggestResult::SuggestResult(
       should_prefetch_(result.should_prefetch_) {
 }
 
-SearchSuggestionParser::SuggestResult::~SuggestResult() {}
+SearchSuggestionParser::SuggestResult::~SuggestResult() = default;
 
 SearchSuggestionParser::SuggestResult&
     SearchSuggestionParser::SuggestResult::operator=(const SuggestResult& rhs) {
@@ -260,7 +260,7 @@ SearchSuggestionParser::NavigationResult::NavigationResult(
   CalculateAndClassifyMatchContents(true, input_text);
 }
 
-SearchSuggestionParser::NavigationResult::~NavigationResult() {}
+SearchSuggestionParser::NavigationResult::~NavigationResult() = default;
 
 void
 SearchSuggestionParser::NavigationResult::CalculateAndClassifyMatchContents(
@@ -321,7 +321,7 @@ SearchSuggestionParser::Results::Results()
       field_trial_triggered(false),
       relevances_from_server(false) {}
 
-SearchSuggestionParser::Results::~Results() {}
+SearchSuggestionParser::Results::~Results() = default;
 
 void SearchSuggestionParser::Results::Clear() {
   suggest_results.clear();

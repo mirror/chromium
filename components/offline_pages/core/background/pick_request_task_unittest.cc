@@ -145,7 +145,7 @@ PickRequestTaskTest::PickRequestTaskTest()
     : task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {}
 
-PickRequestTaskTest::~PickRequestTaskTest() {}
+PickRequestTaskTest::~PickRequestTaskTest() = default;
 
 void PickRequestTaskTest::SetUp() {
   DeviceConditions conditions;

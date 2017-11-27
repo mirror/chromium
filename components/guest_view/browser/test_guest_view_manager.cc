@@ -23,8 +23,7 @@ TestGuestViewManager::TestGuestViewManager(
       waiting_for_guests_created_(false),
       waiting_for_attach_(nullptr) {}
 
-TestGuestViewManager::~TestGuestViewManager() {
-}
+TestGuestViewManager::~TestGuestViewManager() = default;
 
 size_t TestGuestViewManager::GetNumGuestsActive() const {
   return guest_web_contents_by_instance_id_.size();
@@ -171,8 +170,7 @@ void TestGuestViewManager::ViewGarbageCollected(int embedder_process_id,
 TestGuestViewManagerFactory::TestGuestViewManagerFactory()
     : test_guest_view_manager_(nullptr) {}
 
-TestGuestViewManagerFactory::~TestGuestViewManagerFactory() {
-}
+TestGuestViewManagerFactory::~TestGuestViewManagerFactory() = default;
 
 GuestViewManager* TestGuestViewManagerFactory::CreateGuestViewManager(
     content::BrowserContext* context,

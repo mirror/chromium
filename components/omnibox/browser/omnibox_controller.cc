@@ -25,8 +25,7 @@ OmniboxController::OmniboxController(OmniboxEditModel* omnibox_edit_model,
           AutocompleteClassifier::DefaultOmniboxProviders())),
       weak_ptr_factory_(this) {}
 
-OmniboxController::~OmniboxController() {
-}
+OmniboxController::~OmniboxController() = default;
 
 void OmniboxController::StartAutocomplete(
     const AutocompleteInput& input) const {

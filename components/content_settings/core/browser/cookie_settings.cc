@@ -173,8 +173,7 @@ void CookieSettings::GetCookieSetting(const GURL& url,
   *cookie_setting = block ? CONTENT_SETTING_BLOCK : setting;
 }
 
-CookieSettings::~CookieSettings() {
-}
+CookieSettings::~CookieSettings() = default;
 
 void CookieSettings::OnBlockThirdPartyCookiesChanged() {
   DCHECK(thread_checker_.CalledOnValidThread());

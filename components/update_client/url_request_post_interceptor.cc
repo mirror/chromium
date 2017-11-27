@@ -53,7 +53,7 @@ class URLRequestMockJob : public net::URLRequestSimpleJob {
   }
 
  private:
-  ~URLRequestMockJob() override {}
+  ~URLRequestMockJob() override = default;
 
   int response_code_;
   std::string response_body_;
@@ -176,7 +176,7 @@ class URLRequestPostInterceptor::Delegate : public net::URLRequestInterceptor {
   }
 
  private:
-  ~Delegate() override {}
+  ~Delegate() override = default;
 
   net::URLRequestJob* MaybeInterceptRequest(
       net::URLRequest* request,
@@ -296,8 +296,7 @@ InterceptorFactory::InterceptorFactory(
                                        io_task_runner) {
 }
 
-InterceptorFactory::~InterceptorFactory() {
-}
+InterceptorFactory::~InterceptorFactory() = default;
 
 URLRequestPostInterceptor* InterceptorFactory::CreateInterceptor() {
   return CreateInterceptorForPath(POST_INTERCEPT_PATH);

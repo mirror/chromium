@@ -29,8 +29,8 @@ const char kCryptAuthMessageCollapseKey[] =
 // Mock GCMDriver implementation for testing.
 class MockGCMDriver : public gcm::FakeGCMDriver {
  public:
-  MockGCMDriver() {}
-  ~MockGCMDriver() override {}
+  MockGCMDriver() = default;
+  ~MockGCMDriver() override = default;
 
   MOCK_METHOD2(AddAppHandler,
                void(const std::string& app_id, gcm::GCMAppHandler* handler));

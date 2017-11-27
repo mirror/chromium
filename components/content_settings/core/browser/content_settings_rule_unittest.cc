@@ -19,7 +19,7 @@ class ListIterator : public RuleIterator {
   explicit ListIterator(const std::list<Rule>& rules)
       : rules_(rules) {}
 
-  ~ListIterator() override {}
+  ~ListIterator() override = default;
 
   bool HasNext() const override { return !rules_.empty(); }
 

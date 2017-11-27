@@ -6,21 +6,12 @@
 
 namespace autofill {
 
-FormFieldDataPredictions::FormFieldDataPredictions() {
-}
+FormFieldDataPredictions::FormFieldDataPredictions() = default;
 
 FormFieldDataPredictions::FormFieldDataPredictions(
-    const FormFieldDataPredictions& other)
-    : field(other.field),
-      signature(other.signature),
-      heuristic_type(other.heuristic_type),
-      server_type(other.server_type),
-      overall_type(other.overall_type),
-      parseable_name(other.parseable_name) {
-}
+    const FormFieldDataPredictions& other) = default;
 
-FormFieldDataPredictions::~FormFieldDataPredictions() {
-}
+FormFieldDataPredictions::~FormFieldDataPredictions() = default;
 
 bool FormFieldDataPredictions::operator==(
     const FormFieldDataPredictions& predictions) const {

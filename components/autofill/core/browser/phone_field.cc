@@ -31,7 +31,7 @@ std::string GetAreaRegex() {
 
 }  // namespace
 
-PhoneField::~PhoneField() {}
+PhoneField::~PhoneField() = default;
 
 // Phone field grammars - first matched grammar will be parsed. Grammars are
 // separated by { REGEX_SEPARATOR, FIELD_NONE, 0 }. Suffix and extension are

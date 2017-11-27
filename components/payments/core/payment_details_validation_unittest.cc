@@ -25,7 +25,7 @@ struct TestCase {
       : details(details),
         require_total(require_total),
         expect_valid(expect_valid) {}
-  ~TestCase() {}
+  ~TestCase() = default;
 
   const char* const details;
   const bool require_total;

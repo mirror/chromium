@@ -10,8 +10,8 @@ namespace syncer {
 
 class InMemoryAttachmentStoreFactory {
  public:
-  InMemoryAttachmentStoreFactory() {}
-  ~InMemoryAttachmentStoreFactory() {}
+  InMemoryAttachmentStoreFactory() = default;
+  ~InMemoryAttachmentStoreFactory() = default;
 
   std::unique_ptr<AttachmentStore> CreateAttachmentStore() {
     return AttachmentStore::CreateInMemoryStore();

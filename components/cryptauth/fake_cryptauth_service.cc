@@ -11,9 +11,9 @@
 
 namespace cryptauth {
 
-FakeCryptAuthService::FakeCryptAuthService() {}
+FakeCryptAuthService::FakeCryptAuthService() = default;
 
-FakeCryptAuthService::~FakeCryptAuthService() {}
+FakeCryptAuthService::~FakeCryptAuthService() = default;
 
 CryptAuthDeviceManager* FakeCryptAuthService::GetCryptAuthDeviceManager() {
   return cryptauth_device_manager_;

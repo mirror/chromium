@@ -43,7 +43,7 @@ void AppendWithSpace(const SuggestionAnswer::TextField* text,
 
 SuggestionAnswer::TextField::TextField()
     : type_(-1), has_num_lines_(false), num_lines_(1) {}
-SuggestionAnswer::TextField::~TextField() {}
+SuggestionAnswer::TextField::~TextField() = default;
 
 // static
 bool SuggestionAnswer::TextField::ParseTextField(
@@ -78,7 +78,7 @@ SuggestionAnswer::ImageLine::ImageLine(const ImageLine& line)
                    new TextField(*line.status_text_) : nullptr),
       image_url_(line.image_url_) {}
 
-SuggestionAnswer::ImageLine::~ImageLine() {}
+SuggestionAnswer::ImageLine::~ImageLine() = default;
 
 // static
 bool SuggestionAnswer::ImageLine::ParseImageLine(
@@ -190,7 +190,7 @@ base::string16 SuggestionAnswer::ImageLine::AccessibleText() const {
 
 SuggestionAnswer::SuggestionAnswer() : type_(-1) {}
 
-SuggestionAnswer::~SuggestionAnswer() {}
+SuggestionAnswer::~SuggestionAnswer() = default;
 
 // static
 std::unique_ptr<SuggestionAnswer> SuggestionAnswer::ParseAnswer(

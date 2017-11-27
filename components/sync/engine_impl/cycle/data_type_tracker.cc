@@ -26,7 +26,7 @@ WaitInterval::WaitInterval() : mode(UNKNOWN) {}
 WaitInterval::WaitInterval(BlockingMode mode, base::TimeDelta length)
     : mode(mode), length(length) {}
 
-WaitInterval::~WaitInterval() {}
+WaitInterval::~WaitInterval() = default;
 
 const char* WaitInterval::GetModeString(BlockingMode mode) {
   switch (mode) {
@@ -46,7 +46,7 @@ DataTypeTracker::DataTypeTracker()
       initial_sync_required_(false),
       sync_required_to_resolve_conflict_(false) {}
 
-DataTypeTracker::~DataTypeTracker() {}
+DataTypeTracker::~DataTypeTracker() = default;
 
 base::TimeDelta DataTypeTracker::RecordLocalChange() {
   local_nudge_count_++;

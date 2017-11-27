@@ -14,7 +14,7 @@ namespace syncer {
 FakeSyncableService::FakeSyncableService()
     : syncing_(false), type_(UNSPECIFIED) {}
 
-FakeSyncableService::~FakeSyncableService() {}
+FakeSyncableService::~FakeSyncableService() = default;
 
 void FakeSyncableService::set_merge_data_and_start_syncing_error(
     const SyncError& error) {

@@ -68,7 +68,7 @@ void ModelTypeDebugInfo::RecordMemoryUsageHistogram(
                               memory_usage);
 }
 
-ModelTypeDebugInfo::ModelTypeDebugInfo() {}
+ModelTypeDebugInfo::ModelTypeDebugInfo() = default;
 
 // static
 void ModelTypeDebugInfo::MergeDataWithMetadata(

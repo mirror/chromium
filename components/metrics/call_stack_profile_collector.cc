@@ -18,7 +18,7 @@ CallStackProfileCollector::CallStackProfileCollector(
     CallStackProfileParams::Process expected_process)
     : expected_process_(expected_process) {}
 
-CallStackProfileCollector::~CallStackProfileCollector() {}
+CallStackProfileCollector::~CallStackProfileCollector() = default;
 
 // static
 void CallStackProfileCollector::Create(

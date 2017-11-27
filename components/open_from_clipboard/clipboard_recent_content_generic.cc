@@ -20,7 +20,7 @@ const char* kAuthorizedSchemes[] = {
 
 }  // namespace
 
-ClipboardRecentContentGeneric::ClipboardRecentContentGeneric() {}
+ClipboardRecentContentGeneric::ClipboardRecentContentGeneric() = default;
 
 bool ClipboardRecentContentGeneric::GetRecentURLFromClipboard(GURL* url) {
   if (GetClipboardContentAge() > MaximumAgeOfClipboard())

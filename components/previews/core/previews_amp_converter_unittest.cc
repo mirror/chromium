@@ -17,7 +17,7 @@ namespace {
 
 class PreviewsAMPConverterTest : public testing::Test {
  public:
-  PreviewsAMPConverterTest() {}
+  PreviewsAMPConverterTest() = default;
 
   void Initialize() { amp_converter_.reset(new PreviewsAMPConverter()); }
 

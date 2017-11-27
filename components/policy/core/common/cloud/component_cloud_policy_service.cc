@@ -57,7 +57,7 @@ bool ToPolicyNamespace(const std::pair<std::string, std::string>& key,
 
 }  // namespace
 
-ComponentCloudPolicyService::Delegate::~Delegate() {}
+ComponentCloudPolicyService::Delegate::~Delegate() = default;
 
 // Owns the objects that live on the background thread, and posts back to the
 // thread that the ComponentCloudPolicyService runs on whenever the policy

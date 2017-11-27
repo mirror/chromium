@@ -22,7 +22,7 @@ UpdateApplicator::UpdateApplicator(Cryptographer* cryptographer)
       encryption_conflicts_(0),
       hierarchy_conflicts_(0) {}
 
-UpdateApplicator::~UpdateApplicator() {}
+UpdateApplicator::~UpdateApplicator() = default;
 
 // Attempt to apply all updates, using multiple passes if necessary.
 //

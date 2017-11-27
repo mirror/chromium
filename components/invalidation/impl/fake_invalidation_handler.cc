@@ -10,7 +10,7 @@ FakeInvalidationHandler::FakeInvalidationHandler()
     : state_(DEFAULT_INVALIDATION_ERROR),
       invalidation_count_(0) {}
 
-FakeInvalidationHandler::~FakeInvalidationHandler() {}
+FakeInvalidationHandler::~FakeInvalidationHandler() = default;
 
 InvalidatorState FakeInvalidationHandler::GetInvalidatorState() const {
   return state_;

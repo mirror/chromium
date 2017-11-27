@@ -57,8 +57,7 @@ ContentPasswordManagerDriver::ContentPasswordManagerDriver(
   }
 }
 
-ContentPasswordManagerDriver::~ContentPasswordManagerDriver() {
-}
+ContentPasswordManagerDriver::~ContentPasswordManagerDriver() = default;
 
 // static
 ContentPasswordManagerDriver*

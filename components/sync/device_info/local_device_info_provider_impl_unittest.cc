@@ -19,7 +19,7 @@ const char kSigninScopedDeviceId[] = "device_id";
 class LocalDeviceInfoProviderImplTest : public testing::Test {
  public:
   LocalDeviceInfoProviderImplTest() : called_back_(false) {}
-  ~LocalDeviceInfoProviderImplTest() override {}
+  ~LocalDeviceInfoProviderImplTest() override = default;
 
   void SetUp() override {
     provider_ = std::make_unique<LocalDeviceInfoProviderImpl>(

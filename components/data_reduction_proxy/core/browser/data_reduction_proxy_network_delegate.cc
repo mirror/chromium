@@ -300,8 +300,8 @@ DataReductionProxyNetworkDelegate::DataReductionProxyNetworkDelegate(
   DCHECK(configurator_);
 }
 
-DataReductionProxyNetworkDelegate::~DataReductionProxyNetworkDelegate() {
-}
+DataReductionProxyNetworkDelegate::~DataReductionProxyNetworkDelegate() =
+    default;
 
 void DataReductionProxyNetworkDelegate::InitIODataAndUMA(
     DataReductionProxyIOData* io_data,

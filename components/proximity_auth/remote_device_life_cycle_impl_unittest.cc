@@ -35,8 +35,8 @@ namespace {
 
 class StubSecureContext : public cryptauth::SecureContext {
  public:
-  StubSecureContext() {}
-  ~StubSecureContext() override {}
+  StubSecureContext() = default;
+  ~StubSecureContext() override = default;
 
   void Decode(const std::string& encoded_message,
               const MessageCallback& callback) override {
@@ -63,7 +63,7 @@ class FakeConnectionFinder : public cryptauth::ConnectionFinder {
  public:
   FakeConnectionFinder(const cryptauth::RemoteDevice& remote_device)
       : remote_device_(remote_device), connection_(nullptr) {}
-  ~FakeConnectionFinder() override {}
+  ~FakeConnectionFinder() override = default;
 
   void OnConnectionFound() {
     ASSERT_FALSE(connection_callback_.is_null());
@@ -134,7 +134,7 @@ class TestableRemoteDeviceLifeCycleImpl : public RemoteDeviceLifeCycleImpl {
       : RemoteDeviceLifeCycleImpl(remote_device, nullptr),
         remote_device_(remote_device) {}
 
-  ~TestableRemoteDeviceLifeCycleImpl() override {}
+  ~TestableRemoteDeviceLifeCycleImpl() override = default;
 
   FakeConnectionFinder* connection_finder() { return connection_finder_; }
   FakeAuthenticator* authenticator() { return authenticator_; }

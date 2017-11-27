@@ -12,8 +12,7 @@ FakeGCMAppHandler::FakeGCMAppHandler()
     : received_event_(NO_EVENT) {
 }
 
-FakeGCMAppHandler::~FakeGCMAppHandler() {
-}
+FakeGCMAppHandler::~FakeGCMAppHandler() = default;
 
 void FakeGCMAppHandler::WaitForNotification() {
   run_loop_.reset(new base::RunLoop);

@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-ModelTypeProcessor::ModelTypeProcessor() {}
+ModelTypeProcessor::ModelTypeProcessor() = default;
 
-ModelTypeProcessor::~ModelTypeProcessor() {}
+ModelTypeProcessor::~ModelTypeProcessor() = default;
 
 }  // namespace syncer

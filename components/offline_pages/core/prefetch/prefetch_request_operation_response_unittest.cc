@@ -40,8 +40,8 @@ const char kErrorMessage[] = "Invalid parameter";
 // Builds the request for GeneratePageBundleRequest / GetOperationRequest.
 class RequestBuilder {
  public:
-  RequestBuilder() {}
-  virtual ~RequestBuilder() {}
+  RequestBuilder() = default;
+  virtual ~RequestBuilder() = default;
 
   virtual void CreateRequest(
       net::URLRequestContextGetter* request_context_getter,
@@ -77,7 +77,7 @@ class GetOperationRequestBuilder : public RequestBuilder {
 // Builds the response that returns a pending/done operation.
 class OperationBuilder {
  public:
-  virtual ~OperationBuilder() {}
+  virtual ~OperationBuilder() = default;
 
   // Builds the opereation with an Any value and returns it in binary serialized
   // format. Notes that Any value could be set in either 'metadata' or
@@ -121,7 +121,7 @@ class OperationBuilder {
 
 class DoneOperationBuilder : public OperationBuilder {
  public:
-  ~DoneOperationBuilder() override {}
+  ~DoneOperationBuilder() override = default;
 
   std::string BuildFromAny(const std::string& any_type_url,
                            const std::string& any_value) override {
@@ -137,7 +137,7 @@ class DoneOperationBuilder : public OperationBuilder {
 
 class PendingOperationBuilder : public OperationBuilder {
  public:
-  ~PendingOperationBuilder() override {}
+  ~PendingOperationBuilder() override = default;
 
   std::string BuildFromAny(const std::string& any_type_url,
                            const std::string& any_value) override {
@@ -155,8 +155,8 @@ class PendingOperationBuilder : public OperationBuilder {
 // PrefetchRequestOperationResponseTest.
 class PrefetchRequestOperationResponseTestBuilder {
  public:
-  PrefetchRequestOperationResponseTestBuilder() {}
-  virtual ~PrefetchRequestOperationResponseTestBuilder() {}
+  PrefetchRequestOperationResponseTestBuilder() = default;
+  virtual ~PrefetchRequestOperationResponseTestBuilder() = default;
 
   void CreateRequest(net::URLRequestContextGetter* request_context_getter,
                      const PrefetchRequestFinishedCallback& callback) {

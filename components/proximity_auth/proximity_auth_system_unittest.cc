@@ -63,8 +63,8 @@ RemoteDevice CreateRemoteDevice(const std::string& user_id,
 // Mock implementation of UnlockManager.
 class MockUnlockManager : public UnlockManager {
  public:
-  MockUnlockManager() {}
-  ~MockUnlockManager() override {}
+  MockUnlockManager() = default;
+  ~MockUnlockManager() override = default;
   MOCK_METHOD0(IsUnlockAllowed, bool());
   MOCK_METHOD1(SetRemoteDeviceLifeCycle, void(RemoteDeviceLifeCycle*));
   MOCK_METHOD0(OnLifeCycleStateChanged, void());
@@ -78,7 +78,7 @@ class MockUnlockManager : public UnlockManager {
 class MockProximityAuthPrefManager : public ProximityAuthProfilePrefManager {
  public:
   MockProximityAuthPrefManager() : ProximityAuthProfilePrefManager(nullptr) {}
-  ~MockProximityAuthPrefManager() override {}
+  ~MockProximityAuthPrefManager() override = default;
   MOCK_CONST_METHOD0(GetLastPasswordEntryTimestampMs, int64_t());
 
  private:
@@ -99,7 +99,7 @@ class TestableProximityAuthSystem : public ProximityAuthSystem {
                             std::move(clock),
                             pref_manager),
         life_cycle_(nullptr) {}
-  ~TestableProximityAuthSystem() override {}
+  ~TestableProximityAuthSystem() override = default;
 
   FakeRemoteDeviceLifeCycle* life_cycle() { return life_cycle_; }
 

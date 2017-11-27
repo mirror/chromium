@@ -17,11 +17,9 @@
 
 namespace gcm {
 
-InstanceIDHandler::InstanceIDHandler() {
-}
+InstanceIDHandler::InstanceIDHandler() = default;
 
-InstanceIDHandler::~InstanceIDHandler() {
-}
+InstanceIDHandler::~InstanceIDHandler() = default;
 
 void InstanceIDHandler::DeleteAllTokensForApp(
     const std::string& app_id, const DeleteTokenCallback& callback) {
@@ -38,8 +36,7 @@ GCMDriver::GCMDriver(
     encryption_provider_.Init(store_path, blocking_task_runner);
 }
 
-GCMDriver::~GCMDriver() {
-}
+GCMDriver::~GCMDriver() = default;
 
 void GCMDriver::Register(const std::string& app_id,
                          const std::vector<std::string>& sender_ids,

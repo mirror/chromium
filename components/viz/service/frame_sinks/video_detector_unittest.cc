@@ -78,7 +78,7 @@ class VideoDetectorTest : public testing::Test {
                             nullptr,
                             false) {}
 
-  ~VideoDetectorTest() override {}
+  ~VideoDetectorTest() override = default;
 
   void SetUp() override {
     mock_task_runner_ = base::MakeRefCounted<base::TestMockTimeTaskRunner>();

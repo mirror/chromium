@@ -352,10 +352,9 @@ class GCMStatsRecorderImplTest : public testing::Test {
   GCMStatsRecorderImpl recorder_;
 };
 
-GCMStatsRecorderImplTest::GCMStatsRecorderImplTest(){
-}
+GCMStatsRecorderImplTest::GCMStatsRecorderImplTest() = default;
 
-GCMStatsRecorderImplTest::~GCMStatsRecorderImplTest() {}
+GCMStatsRecorderImplTest::~GCMStatsRecorderImplTest() = default;
 
 void GCMStatsRecorderImplTest::SetUp(){
   source_ = "s1,s2";

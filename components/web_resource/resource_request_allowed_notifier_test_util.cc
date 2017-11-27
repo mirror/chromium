@@ -12,8 +12,7 @@ TestRequestAllowedNotifier::TestRequestAllowedNotifier(PrefService* local_state)
       requests_allowed_(true) {
 }
 
-TestRequestAllowedNotifier::~TestRequestAllowedNotifier() {
-}
+TestRequestAllowedNotifier::~TestRequestAllowedNotifier() = default;
 
 void TestRequestAllowedNotifier::InitWithEulaAcceptNotifier(
     Observer* observer,

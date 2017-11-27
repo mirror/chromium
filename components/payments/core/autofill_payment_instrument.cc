@@ -43,7 +43,7 @@ AutofillPaymentInstrument::AutofillPaymentInstrument(
       delegate_(nullptr),
       payment_request_delegate_(payment_request_delegate),
       weak_ptr_factory_(this) {}
-AutofillPaymentInstrument::~AutofillPaymentInstrument() {}
+AutofillPaymentInstrument::~AutofillPaymentInstrument() = default;
 
 void AutofillPaymentInstrument::InvokePaymentApp(
     PaymentInstrument::Delegate* delegate) {

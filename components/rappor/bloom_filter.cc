@@ -31,7 +31,7 @@ BloomFilter::BloomFilter(size_t bytes_size,
   DCHECK_GT(bytes_size, 0u);
 }
 
-BloomFilter::~BloomFilter() {}
+BloomFilter::~BloomFilter() = default;
 
 void BloomFilter::SetString(const std::string& str) {
   for (size_t i = 0; i < bytes_.size(); ++i) {

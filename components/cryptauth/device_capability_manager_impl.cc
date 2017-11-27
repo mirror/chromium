@@ -40,7 +40,7 @@ DeviceCapabilityManagerImpl::DeviceCapabilityManagerImpl(
     : crypt_auth_client_factory_(cryptauth_client_factory),
       weak_ptr_factory_(this) {}
 
-DeviceCapabilityManagerImpl::~DeviceCapabilityManagerImpl() {}
+DeviceCapabilityManagerImpl::~DeviceCapabilityManagerImpl() = default;
 
 void DeviceCapabilityManagerImpl::SetCapabilityEnabled(
     const std::string& public_key,
@@ -115,7 +115,7 @@ DeviceCapabilityManagerImpl::Request::Request(
       public_key(public_key),
       is_device_promotable_callback(is_device_promotable_callback) {}
 
-DeviceCapabilityManagerImpl::Request::~Request() {}
+DeviceCapabilityManagerImpl::Request::~Request() = default;
 
 void DeviceCapabilityManagerImpl::CreateNewCryptAuthClient() {
   DCHECK(!current_cryptauth_client_);

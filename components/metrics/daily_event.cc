@@ -24,11 +24,9 @@ void RecordIntervalTypeHistogram(const std::string& histogram_name,
 
 }  // namespace
 
-DailyEvent::Observer::Observer() {
-}
+DailyEvent::Observer::Observer() = default;
 
-DailyEvent::Observer::~Observer() {
-}
+DailyEvent::Observer::~Observer() = default;
 
 DailyEvent::DailyEvent(PrefService* pref_service,
                        const char* pref_name,
@@ -38,8 +36,7 @@ DailyEvent::DailyEvent(PrefService* pref_service,
       histogram_name_(histogram_name) {
 }
 
-DailyEvent::~DailyEvent() {
-}
+DailyEvent::~DailyEvent() = default;
 
 // static
 void DailyEvent::RegisterPref(PrefRegistrySimple* registry,

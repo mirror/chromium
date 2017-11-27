@@ -346,7 +346,7 @@ FormStructure::FormStructure(const FormData& form)
   ProcessExtractedFields();
 }
 
-FormStructure::~FormStructure() {}
+FormStructure::~FormStructure() = default;
 
 void FormStructure::DetermineHeuristicTypes(ukm::UkmRecorder* ukm_recorder) {
   const auto determine_heuristic_types_start_time = base::TimeTicks::Now();

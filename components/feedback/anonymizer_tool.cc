@@ -231,7 +231,7 @@ AnonymizerTool::AnonymizerTool()
       custom_patterns_without_context_(
           arraysize(kCustomPatternsWithoutContext)) {}
 
-AnonymizerTool::~AnonymizerTool() {}
+AnonymizerTool::~AnonymizerTool() = default;
 
 std::string AnonymizerTool::Anonymize(const std::string& input) {
   std::string anonymized = AnonymizeMACAddresses(input);

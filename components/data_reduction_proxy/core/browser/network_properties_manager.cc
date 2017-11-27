@@ -6,9 +6,9 @@
 
 namespace data_reduction_proxy {
 
-NetworkPropertiesManager::NetworkPropertiesManager() {}
+NetworkPropertiesManager::NetworkPropertiesManager() = default;
 
-NetworkPropertiesManager::~NetworkPropertiesManager() {}
+NetworkPropertiesManager::~NetworkPropertiesManager() = default;
 
 bool NetworkPropertiesManager::IsSecureProxyAllowed() const {
   return !network_properties_.secure_proxy_disallowed_by_carrier() &&

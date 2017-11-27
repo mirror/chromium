@@ -227,8 +227,7 @@ DomDistillerViewerSource::DomDistillerViewerSource(
       dom_distiller_service_(dom_distiller_service),
       distiller_ui_handle_(std::move(ui_handle)) {}
 
-DomDistillerViewerSource::~DomDistillerViewerSource() {
-}
+DomDistillerViewerSource::~DomDistillerViewerSource() = default;
 
 std::string DomDistillerViewerSource::GetSource() const {
   return scheme_ + "://";

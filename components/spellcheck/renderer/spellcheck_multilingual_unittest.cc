@@ -47,7 +47,7 @@ base::FilePath GetHunspellDirectory() {
 
 class MultilingualSpellCheckTest : public testing::Test {
  public:
-  MultilingualSpellCheckTest() {}
+  MultilingualSpellCheckTest() = default;
 
   void ReinitializeSpellCheck(const std::string& unsplit_languages) {
     spellcheck_ = new SpellCheck(nullptr);
@@ -69,7 +69,7 @@ class MultilingualSpellCheckTest : public testing::Test {
     }
   }
 
-  ~MultilingualSpellCheckTest() override {}
+  ~MultilingualSpellCheckTest() override = default;
   TestingSpellCheckProvider* provider() { return provider_.get(); }
 
  protected:

@@ -39,7 +39,7 @@ const int kTab3 = 35;
 class SyncedSessionTrackerTest : public testing::Test {
  public:
   SyncedSessionTrackerTest() : tracker_(&sessions_client_) {}
-  ~SyncedSessionTrackerTest() override {}
+  ~SyncedSessionTrackerTest() override = default;
 
   SyncedSessionTracker* GetTracker() { return &tracker_; }
   TabNodePool* GetTabNodePool() { return &tracker_.local_tab_pool_; }

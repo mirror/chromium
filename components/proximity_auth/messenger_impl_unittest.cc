@@ -70,7 +70,7 @@ class TestMessenger : public MessengerImpl {
   TestMessenger(std::unique_ptr<cryptauth::Connection> connection)
       : MessengerImpl(std::move(connection),
                       base::MakeUnique<cryptauth::FakeSecureContext>()) {}
-  ~TestMessenger() override {}
+  ~TestMessenger() override = default;
 
   // Simple getters for the mock objects owned by |this| messenger.
   cryptauth::FakeConnection* GetFakeConnection() {

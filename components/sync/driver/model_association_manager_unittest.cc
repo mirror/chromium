@@ -20,8 +20,8 @@ namespace syncer {
 class MockModelAssociationManagerDelegate
     : public ModelAssociationManagerDelegate {
  public:
-  MockModelAssociationManagerDelegate() {}
-  ~MockModelAssociationManagerDelegate() {}
+  MockModelAssociationManagerDelegate() = default;
+  ~MockModelAssociationManagerDelegate() = default;
   MOCK_METHOD0(OnAllDataTypesReadyForConfigure, void());
   MOCK_METHOD2(OnSingleDataTypeAssociationDone,
                void(ModelType type,
@@ -50,7 +50,7 @@ ACTION_P(VerifyResult, expected_result) {
 
 class SyncModelAssociationManagerTest : public testing::Test {
  public:
-  SyncModelAssociationManagerTest() {}
+  SyncModelAssociationManagerTest() = default;
 
  protected:
   base::MessageLoopForUI ui_loop_;

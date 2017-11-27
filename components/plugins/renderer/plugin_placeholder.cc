@@ -34,8 +34,7 @@ PluginPlaceholderBase::PluginPlaceholderBase(
                                     GURL(kPluginPlaceholderDataURL))),
       hidden_(false) {}
 
-PluginPlaceholderBase::~PluginPlaceholderBase() {
-}
+PluginPlaceholderBase::~PluginPlaceholderBase() = default;
 
 const blink::WebPluginParams& PluginPlaceholderBase::GetPluginParams() const {
   return plugin_params_;
@@ -121,8 +120,7 @@ PluginPlaceholder::PluginPlaceholder(content::RenderFrame* render_frame,
                                      const std::string& html_data)
     : PluginPlaceholderBase(render_frame, params, html_data) {}
 
-PluginPlaceholder::~PluginPlaceholder() {
-}
+PluginPlaceholder::~PluginPlaceholder() = default;
 
 v8::Local<v8::Value> PluginPlaceholder::GetV8Handle(v8::Isolate* isolate) {
   return gin::CreateHandle(isolate, this).ToV8();

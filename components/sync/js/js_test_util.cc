@@ -24,7 +24,7 @@ class HasDetailsMatcher
   explicit HasDetailsMatcher(const JsEventDetails& expected_details)
       : expected_details_(expected_details) {}
 
-  virtual ~HasDetailsMatcher() {}
+  virtual ~HasDetailsMatcher() = default;
 
   virtual bool MatchAndExplain(const JsEventDetails& details,
                                ::testing::MatchResultListener* listener) const {
@@ -60,24 +60,24 @@ class HasDetailsMatcher
   return HasDetails(JsEventDetails(expected_details_copy.get()));
 }
 
-MockJsBackend::MockJsBackend() {}
+MockJsBackend::MockJsBackend() = default;
 
-MockJsBackend::~MockJsBackend() {}
+MockJsBackend::~MockJsBackend() = default;
 
 WeakHandle<JsBackend> MockJsBackend::AsWeakHandle() {
   return MakeWeakHandle(AsWeakPtr());
 }
 
-MockJsController::MockJsController() {}
+MockJsController::MockJsController() = default;
 
-MockJsController::~MockJsController() {}
+MockJsController::~MockJsController() = default;
 
-MockJsEventHandler::MockJsEventHandler() {}
+MockJsEventHandler::MockJsEventHandler() = default;
 
 WeakHandle<JsEventHandler> MockJsEventHandler::AsWeakHandle() {
   return MakeWeakHandle(AsWeakPtr());
 }
 
-MockJsEventHandler::~MockJsEventHandler() {}
+MockJsEventHandler::~MockJsEventHandler() = default;
 
 }  // namespace syncer

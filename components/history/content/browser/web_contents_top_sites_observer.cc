@@ -32,8 +32,7 @@ WebContentsTopSitesObserver::WebContentsTopSitesObserver(
     : content::WebContentsObserver(web_contents), top_sites_(top_sites) {
 }
 
-WebContentsTopSitesObserver::~WebContentsTopSitesObserver() {
-}
+WebContentsTopSitesObserver::~WebContentsTopSitesObserver() = default;
 
 void WebContentsTopSitesObserver::NavigationEntryCommitted(
     const content::LoadCommittedDetails& load_details) {

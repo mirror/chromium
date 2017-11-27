@@ -57,8 +57,8 @@ base::Version StubGetVersionForSimulation() {
 
 class TestVariationsServiceClient : public VariationsServiceClient {
  public:
-  TestVariationsServiceClient() {}
-  ~TestVariationsServiceClient() override {}
+  TestVariationsServiceClient() = default;
+  ~TestVariationsServiceClient() override = default;
 
   // VariationsServiceClient:
   std::string GetApplicationLocale() override { return std::string(); }
@@ -116,7 +116,7 @@ class TestVariationsService : public VariationsService {
         GetVariationsServerURL(local_state, std::string()));
   }
 
-  ~TestVariationsService() override {}
+  ~TestVariationsService() override = default;
 
   void set_intercepts_fetch(bool value) {
     intercepts_fetch_ = value;
@@ -173,7 +173,7 @@ class TestVariationsServiceObserver : public VariationsService::Observer {
  public:
   TestVariationsServiceObserver()
       : best_effort_changes_notified_(0), crticial_changes_notified_(0) {}
-  ~TestVariationsServiceObserver() override {}
+  ~TestVariationsServiceObserver() override = default;
 
   void OnExperimentChangesDetected(Severity severity) override {
     switch (severity) {

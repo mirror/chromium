@@ -19,7 +19,7 @@ namespace metrics {
 ExecutionPhaseManager::ExecutionPhaseManager(PrefService* local_state)
     : local_state_(local_state) {}
 
-ExecutionPhaseManager::~ExecutionPhaseManager() {}
+ExecutionPhaseManager::~ExecutionPhaseManager() = default;
 
 // static
 void ExecutionPhaseManager::RegisterPrefs(PrefRegistrySimple* registry) {

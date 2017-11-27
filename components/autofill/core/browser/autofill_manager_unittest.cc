@@ -87,9 +87,9 @@ const char kUTF8MidlineEllipsis[] =
 
 class MockAutofillClient : public TestAutofillClient {
  public:
-  MockAutofillClient() {}
+  MockAutofillClient() = default;
 
-  ~MockAutofillClient() override {}
+  ~MockAutofillClient() override = default;
 
   MOCK_METHOD0(ShouldShowSigninPromo, bool());
 
@@ -532,7 +532,7 @@ class TestAutofillManager : public AutofillManager {
         /*unmask_delegate=*/this,
         /*save_delegate=*/nullptr));
   }
-  ~TestAutofillManager() override {}
+  ~TestAutofillManager() override = default;
 
   bool IsAutofillEnabled() const override { return autofill_enabled_; }
 
@@ -677,7 +677,7 @@ class TestAutofillExternalDelegate : public AutofillExternalDelegate {
       : AutofillExternalDelegate(autofill_manager, autofill_driver),
         on_query_seen_(false),
         on_suggestions_returned_seen_(false) {}
-  ~TestAutofillExternalDelegate() override {}
+  ~TestAutofillExternalDelegate() override = default;
 
   void OnQuery(int query_id,
                const FormData& form,
@@ -782,7 +782,7 @@ class TestAutofillExternalDelegate : public AutofillExternalDelegate {
 
 class AutofillManagerTest : public testing::Test {
  public:
-  AutofillManagerTest() {}
+  AutofillManagerTest() = default;
 
   void SetUp() override {
     autofill_client_.SetPrefs(test::PrefServiceForTesting());
@@ -994,7 +994,7 @@ class AutofillManagerTest : public testing::Test {
 class TestFormStructure : public FormStructure {
  public:
   explicit TestFormStructure(const FormData& form) : FormStructure(form) {}
-  ~TestFormStructure() override {}
+  ~TestFormStructure() override = default;
 
   void SetFieldTypes(const std::vector<ServerFieldType>& heuristic_types,
                      const std::vector<ServerFieldType>& server_types) {

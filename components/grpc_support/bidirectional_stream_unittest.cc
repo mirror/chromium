@@ -44,8 +44,8 @@ class BidirectionalStreamTest : public ::testing::TestWithParam<bool> {
     ShutdownQuicTestServer();
   }
 
-  BidirectionalStreamTest() {}
-  ~BidirectionalStreamTest() override {}
+  BidirectionalStreamTest() = default;
+  ~BidirectionalStreamTest() override = default;
 
   stream_engine* engine() {
     return GetTestStreamEngine(GetQuicTestServerPort());
@@ -263,7 +263,7 @@ TestBidirectionalStreamCallback::WriteData::WriteData(const std::string& data,
                                                       bool flush_after)
     : buffer(data), flush(flush_after) {}
 
-TestBidirectionalStreamCallback::WriteData::~WriteData() {}
+TestBidirectionalStreamCallback::WriteData::~WriteData() = default;
 
 TEST_P(BidirectionalStreamTest, StartExampleBidiStream) {
   TestBidirectionalStreamCallback test;

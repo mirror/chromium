@@ -22,7 +22,7 @@ CommitRequestEvent::CommitRequestEvent(
       contributing_types_(contributing_types),
       request_(request) {}
 
-CommitRequestEvent::~CommitRequestEvent() {}
+CommitRequestEvent::~CommitRequestEvent() = default;
 
 base::Time CommitRequestEvent::GetTimestamp() const {
   return timestamp_;

@@ -62,7 +62,7 @@ std::unique_ptr<const void* []> CopyStack(const CallStack* stack) {
 
 class CallStackManagerTest : public ::testing::Test {
  public:
-  CallStackManagerTest() {}
+  CallStackManagerTest() = default;
 
   void SetUp() override { CustomAllocator::Initialize(); }
   void TearDown() override { EXPECT_TRUE(CustomAllocator::Shutdown()); }

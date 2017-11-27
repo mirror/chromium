@@ -55,8 +55,8 @@ std::string RemoveQuotes(const std::string& has_quotes) {
 // |WebDatabase::MigrateOldVersionsAsNeeded()|.
 class WebDatabaseMigrationTest : public testing::Test {
  public:
-  WebDatabaseMigrationTest() {}
-  ~WebDatabaseMigrationTest() override {}
+  WebDatabaseMigrationTest() = default;
+  ~WebDatabaseMigrationTest() override = default;
 
   void SetUp() override { ASSERT_TRUE(temp_dir_.CreateUniqueTempDir()); }
 

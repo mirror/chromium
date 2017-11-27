@@ -53,7 +53,7 @@ class TestSyncSchedulerImpl : public SyncSchedulerImpl {
                           max_jitter_ratio,
                           kTestSchedulerName) {}
 
-  ~TestSyncSchedulerImpl() override {}
+  ~TestSyncSchedulerImpl() override = default;
 
   base::MockTimer* timer() { return mock_timer_; }
 
@@ -86,7 +86,7 @@ class CryptAuthSyncSchedulerImplTest : public testing::Test,
                                              base_recovery_period_,
                                              0)) {}
 
-  ~CryptAuthSyncSchedulerImplTest() override {}
+  ~CryptAuthSyncSchedulerImplTest() override = default;
 
   void OnSyncRequested(
       std::unique_ptr<SyncScheduler::SyncRequest> sync_request) override {

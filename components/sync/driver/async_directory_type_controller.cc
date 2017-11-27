@@ -159,7 +159,7 @@ AsyncDirectoryTypeController::AsyncDirectoryTypeController()
                                   nullptr,
                                   GROUP_PASSIVE) {}
 
-AsyncDirectoryTypeController::~AsyncDirectoryTypeController() {}
+AsyncDirectoryTypeController::~AsyncDirectoryTypeController() = default;
 
 void AsyncDirectoryTypeController::StartDone(
     DataTypeController::ConfigureResult start_result,

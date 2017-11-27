@@ -18,7 +18,7 @@ namespace test {
 
 ExoTestBase::ExoTestBase() : exo_test_helper_(new ExoTestHelper) {}
 
-ExoTestBase::~ExoTestBase() {}
+ExoTestBase::~ExoTestBase() = default;
 
 void ExoTestBase::SetUp() {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();

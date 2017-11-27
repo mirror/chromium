@@ -42,7 +42,7 @@ class MockWebDataService : public AutofillWebDataService {
   MOCK_METHOD1(AddFormFields, void(const std::vector<FormFieldData>&));
 
  protected:
-  virtual ~MockWebDataService() {}
+  virtual ~MockWebDataService() = default;
 };
 
 class MockAutofillClient : public TestAutofillClient {
@@ -50,7 +50,7 @@ class MockAutofillClient : public TestAutofillClient {
   MockAutofillClient(scoped_refptr<MockWebDataService> web_data_service)
       : web_data_service_(web_data_service),
         prefs_(test::PrefServiceForTesting()) {}
-  ~MockAutofillClient() override {}
+  ~MockAutofillClient() override = default;
   scoped_refptr<AutofillWebDataService> GetDatabase() override {
     return web_data_service_;
   }
@@ -67,7 +67,7 @@ class MockAutofillClient : public TestAutofillClient {
 
 class AutocompleteHistoryManagerTest : public testing::Test {
  protected:
-  AutocompleteHistoryManagerTest() {}
+  AutocompleteHistoryManagerTest() = default;
 
   void SetUp() override {
     web_data_service_ = new MockWebDataService();
@@ -193,7 +193,7 @@ class MockAutofillExternalDelegate : public AutofillExternalDelegate {
   MockAutofillExternalDelegate(AutofillManager* autofill_manager,
                                AutofillDriver* autofill_driver)
       : AutofillExternalDelegate(autofill_manager, autofill_driver) {}
-  virtual ~MockAutofillExternalDelegate() {}
+  virtual ~MockAutofillExternalDelegate() = default;
 
   MOCK_METHOD2(OnSuggestionsReturned,
                void(int query_id,

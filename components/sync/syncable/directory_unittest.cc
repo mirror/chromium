@@ -58,9 +58,9 @@ void ExpectDataFromBookmarkFaviconEquals(BaseTransaction* trans,
 
 const char SyncableDirectoryTest::kDirectoryName[] = "Foo";
 
-SyncableDirectoryTest::SyncableDirectoryTest() {}
+SyncableDirectoryTest::SyncableDirectoryTest() = default;
 
-SyncableDirectoryTest::~SyncableDirectoryTest() {}
+SyncableDirectoryTest::~SyncableDirectoryTest() = default;
 
 void SyncableDirectoryTest::SetUp() {
   ASSERT_TRUE(connection_.OpenInMemory());

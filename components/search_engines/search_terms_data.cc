@@ -8,11 +8,9 @@
 #include "components/google/core/browser/google_url_tracker.h"
 #include "url/gurl.h"
 
-SearchTermsData::SearchTermsData() {
-}
+SearchTermsData::SearchTermsData() = default;
 
-SearchTermsData::~SearchTermsData() {
-}
+SearchTermsData::~SearchTermsData() = default;
 
 std::string SearchTermsData::GoogleBaseURLValue() const {
   return GoogleURLTracker::kDefaultGoogleHomepage;

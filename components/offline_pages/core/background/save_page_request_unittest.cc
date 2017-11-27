@@ -22,7 +22,7 @@ class SavePageRequestTest : public testing::Test {
   ~SavePageRequestTest() override;
 };
 
-SavePageRequestTest::~SavePageRequestTest() {}
+SavePageRequestTest::~SavePageRequestTest() = default;
 
 TEST_F(SavePageRequestTest, CreatePendingReqeust) {
   base::Time creation_time = base::Time::Now();

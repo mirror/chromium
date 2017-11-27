@@ -28,7 +28,7 @@ struct TestingRemoteCommandsServer::RemoteCommandWithCallback {
       : command_proto(command_proto),
         issued_time(issued_time),
         reported_callback(reported_callback) {}
-  ~RemoteCommandWithCallback() {}
+  ~RemoteCommandWithCallback() = default;
 
   em::RemoteCommand command_proto;
   base::TimeTicks issued_time;

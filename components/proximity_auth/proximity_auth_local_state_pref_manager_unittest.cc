@@ -49,7 +49,7 @@ class ProximityAuthLocalStatePrefManagerTest : public testing::Test {
         user2_(AccountId::FromUserEmail(kUser2)),
         unknown_user_(AccountId::FromUserEmail(kUnknownUser)) {}
 
-  ~ProximityAuthLocalStatePrefManagerTest() override {}
+  ~ProximityAuthLocalStatePrefManagerTest() override = default;
 
   void SetUp() override {
     ProximityAuthLocalStatePrefManager::RegisterPrefs(local_state_.registry());

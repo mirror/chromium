@@ -32,7 +32,7 @@ ForegroundEidGenerator::EidData::EidData(
     std::unique_ptr<DataWithTimestamp> adjacent_data)
     : current_data(current_data), adjacent_data(std::move(adjacent_data)) {}
 
-ForegroundEidGenerator::EidData::~EidData() {}
+ForegroundEidGenerator::EidData::~EidData() = default;
 
 ForegroundEidGenerator::EidData::AdjacentDataType
 ForegroundEidGenerator::EidData::GetAdjacentDataType() const {
@@ -67,7 +67,7 @@ ForegroundEidGenerator::ForegroundEidGenerator(
     : clock_(std::move(clock)),
       raw_eid_generator_(std::move(raw_eid_generator)) {}
 
-ForegroundEidGenerator::~ForegroundEidGenerator() {}
+ForegroundEidGenerator::~ForegroundEidGenerator() = default;
 
 std::unique_ptr<ForegroundEidGenerator::EidData>
 ForegroundEidGenerator::GenerateBackgroundScanFilter(

@@ -12,7 +12,7 @@ ExpiredHistogramsChecker::ExpiredHistogramsChecker(const uint64_t* array,
                                                    size_t size)
     : array_(array), size_(size) {}
 
-ExpiredHistogramsChecker::~ExpiredHistogramsChecker() {}
+ExpiredHistogramsChecker::~ExpiredHistogramsChecker() = default;
 
 bool ExpiredHistogramsChecker::ShouldRecord(uint64_t histogram_hash) const {
   return !std::binary_search(array_, array_ + size_, histogram_hash);

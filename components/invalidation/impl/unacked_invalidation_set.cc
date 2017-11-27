@@ -29,13 +29,9 @@ UnackedInvalidationSet::UnackedInvalidationSet(
       object_id_(id) {}
 
 UnackedInvalidationSet::UnackedInvalidationSet(
-    const UnackedInvalidationSet& other)
-    : registered_(other.registered_),
-      object_id_(other.object_id_),
-      invalidations_(other.invalidations_) {
-}
+    const UnackedInvalidationSet& other) = default;
 
-UnackedInvalidationSet::~UnackedInvalidationSet() {}
+UnackedInvalidationSet::~UnackedInvalidationSet() = default;
 
 const invalidation::ObjectId& UnackedInvalidationSet::object_id() const {
   return object_id_;

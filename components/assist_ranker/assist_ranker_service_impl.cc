@@ -17,7 +17,7 @@ AssistRankerServiceImpl::AssistRankerServiceImpl(
     : url_request_context_getter_(url_request_context_getter),
       base_path_(std::move(base_path)) {}
 
-AssistRankerServiceImpl::~AssistRankerServiceImpl() {}
+AssistRankerServiceImpl::~AssistRankerServiceImpl() = default;
 
 std::unique_ptr<BinaryClassifierPredictor>
 AssistRankerServiceImpl::FetchBinaryClassifierPredictor(

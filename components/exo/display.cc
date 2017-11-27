@@ -76,7 +76,7 @@ Display::Display(NotificationSurfaceManager* notification_surface_manager,
 #endif
 }
 
-Display::~Display() {}
+Display::~Display() = default;
 
 std::unique_ptr<Surface> Display::CreateSurface() {
   TRACE_EVENT0("exo", "Display::CreateSurface");

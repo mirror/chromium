@@ -29,7 +29,7 @@ class WorkerEntityTrackerTest : public ::testing::Test {
     specifics.mutable_preference()->set_value("pref.value");
   }
 
-  ~WorkerEntityTrackerTest() override {}
+  ~WorkerEntityTrackerTest() override = default;
 
   UpdateResponseData MakeUpdateResponseData(int64_t response_version) {
     EntityData data;

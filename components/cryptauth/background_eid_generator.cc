@@ -46,7 +46,7 @@ BackgroundEidGenerator::BackgroundEidGenerator()
     : BackgroundEidGenerator(base::MakeUnique<RawEidGeneratorImpl>(),
                              base::MakeUnique<base::DefaultClock>()) {}
 
-BackgroundEidGenerator::~BackgroundEidGenerator() {}
+BackgroundEidGenerator::~BackgroundEidGenerator() = default;
 
 BackgroundEidGenerator::BackgroundEidGenerator(
     std::unique_ptr<RawEidGenerator> raw_eid_generator,

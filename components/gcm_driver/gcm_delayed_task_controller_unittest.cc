@@ -31,8 +31,7 @@ GCMDelayedTaskControllerTest::GCMDelayedTaskControllerTest()
     : controller_(new GCMDelayedTaskController), number_of_triggered_tasks_(0) {
 }
 
-GCMDelayedTaskControllerTest::~GCMDelayedTaskControllerTest() {
-}
+GCMDelayedTaskControllerTest::~GCMDelayedTaskControllerTest() = default;
 
 void GCMDelayedTaskControllerTest::TestTask() {
   ++number_of_triggered_tasks_;

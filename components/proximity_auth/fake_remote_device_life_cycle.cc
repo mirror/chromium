@@ -12,7 +12,7 @@ FakeRemoteDeviceLifeCycle::FakeRemoteDeviceLifeCycle(
       started_(false),
       state_(RemoteDeviceLifeCycle::State::STOPPED) {}
 
-FakeRemoteDeviceLifeCycle::~FakeRemoteDeviceLifeCycle() {}
+FakeRemoteDeviceLifeCycle::~FakeRemoteDeviceLifeCycle() = default;
 
 void FakeRemoteDeviceLifeCycle::Start() {
   started_ = true;

@@ -11,9 +11,9 @@ namespace cryptauth {
 
 const int32_t RawEidGenerator::kNumBytesInEidValue = 2;
 
-RawEidGeneratorImpl::RawEidGeneratorImpl() {}
+RawEidGeneratorImpl::RawEidGeneratorImpl() = default;
 
-RawEidGeneratorImpl::~RawEidGeneratorImpl() {}
+RawEidGeneratorImpl::~RawEidGeneratorImpl() = default;
 
 std::string RawEidGeneratorImpl::GenerateEid(
     const std::string& eid_seed,

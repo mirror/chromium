@@ -58,8 +58,8 @@ struct ExpectedProtoProfile {
 
 class ProfilesFactory {
  public:
-  ProfilesFactory() {}
-  ~ProfilesFactory() {}
+  ProfilesFactory() = default;
+  ~ProfilesFactory() = default;
 
   ProfilesFactory& AddMilestone(int milestone);
   ProfilesFactory& NewProfile(int duration_ms, int interval_ms);
@@ -126,7 +126,7 @@ class CallStackProfileMetricsProviderTest : public testing::Test {
     TestState::ResetStaticStateForTesting();
   }
 
-  ~CallStackProfileMetricsProviderTest() override {}
+  ~CallStackProfileMetricsProviderTest() override = default;
 
   // Utility function to append profiles to the metrics provider.
   void AppendProfiles(CallStackProfileParams* params, Profiles profiles) {

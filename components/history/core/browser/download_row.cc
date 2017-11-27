@@ -81,7 +81,7 @@ DownloadRow::DownloadRow(
 
 DownloadRow::DownloadRow(const DownloadRow& other) = default;
 
-DownloadRow::~DownloadRow() {}
+DownloadRow::~DownloadRow() = default;
 
 bool DownloadRow::operator==(const DownloadRow& rhs) const {
   return current_path == rhs.current_path && target_path == rhs.target_path &&

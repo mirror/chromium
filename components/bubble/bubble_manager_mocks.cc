@@ -6,7 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 
-MockBubbleUi::MockBubbleUi() {}
+MockBubbleUi::MockBubbleUi() = default;
 
 MockBubbleUi::~MockBubbleUi() { Destroyed(); }
 

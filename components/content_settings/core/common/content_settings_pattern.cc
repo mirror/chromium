@@ -133,7 +133,7 @@ class ContentSettingsPattern::Builder :
 
 ContentSettingsPattern::Builder::Builder() : is_valid_(true) {}
 
-ContentSettingsPattern::Builder::~Builder() {}
+ContentSettingsPattern::Builder::~Builder() = default;
 
 BuilderInterface* ContentSettingsPattern::Builder::WithPort(
     const std::string& port) {
@@ -303,7 +303,7 @@ ContentSettingsPattern::PatternParts::PatternParts()
 ContentSettingsPattern::PatternParts::PatternParts(const PatternParts& other) =
     default;
 
-ContentSettingsPattern::PatternParts::~PatternParts() {}
+ContentSettingsPattern::PatternParts::~PatternParts() = default;
 
 // ////////////////////////////////////////////////////////////////////////////
 // ContentSettingsPattern

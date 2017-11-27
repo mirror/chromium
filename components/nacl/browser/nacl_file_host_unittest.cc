@@ -19,7 +19,7 @@ using nacl_file_host::PnaclCanOpenFile;
 
 class FileHostTestNaClBrowserDelegate : public TestNaClBrowserDelegate {
  public:
-  FileHostTestNaClBrowserDelegate() {}
+  FileHostTestNaClBrowserDelegate() = default;
 
   bool GetPnaclDirectory(base::FilePath* pnacl_dir) override {
     *pnacl_dir = pnacl_path_;
@@ -60,8 +60,7 @@ class NaClFileHostTest : public testing::Test {
 
 NaClFileHostTest::NaClFileHostTest() : nacl_browser_delegate_(NULL) {}
 
-NaClFileHostTest::~NaClFileHostTest() {
-}
+NaClFileHostTest::~NaClFileHostTest() = default;
 
 // Try to pass a few funny filenames with a dummy PNaCl directory set.
 TEST_F(NaClFileHostTest, TestFilenamesWithPnaclPath) {

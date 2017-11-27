@@ -53,8 +53,7 @@ OmniboxPopupModel::OmniboxPopupModel(OmniboxPopupView* popup_view,
   edit_model->set_popup_model(this);
 }
 
-OmniboxPopupModel::~OmniboxPopupModel() {
-}
+OmniboxPopupModel::~OmniboxPopupModel() = default;
 
 // static
 void OmniboxPopupModel::ComputeMatchMaxWidths(int contents_width,

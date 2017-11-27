@@ -21,8 +21,7 @@ HistoryDeleteDirectivesDataTypeController::
       sync_client_(sync_client) {}
 
 HistoryDeleteDirectivesDataTypeController::
-    ~HistoryDeleteDirectivesDataTypeController() {
-}
+    ~HistoryDeleteDirectivesDataTypeController() = default;
 
 bool HistoryDeleteDirectivesDataTypeController::ReadyForStart() const {
   DCHECK(CalledOnValidThread());

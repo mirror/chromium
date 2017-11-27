@@ -8,7 +8,7 @@ namespace viz {
 
 TestFrameSinkManagerImpl::TestFrameSinkManagerImpl() : binding_(this) {}
 
-TestFrameSinkManagerImpl::~TestFrameSinkManagerImpl() {}
+TestFrameSinkManagerImpl::~TestFrameSinkManagerImpl() = default;
 
 void TestFrameSinkManagerImpl::BindRequest(
     mojom::FrameSinkManagerRequest request) {

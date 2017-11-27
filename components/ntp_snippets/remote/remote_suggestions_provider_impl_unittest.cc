@@ -216,7 +216,7 @@ class MockImageFetcher : public ImageFetcher {
 
 class FakeImageDecoder : public image_fetcher::ImageDecoder {
  public:
-  FakeImageDecoder() {}
+  FakeImageDecoder() = default;
   ~FakeImageDecoder() override = default;
   void DecodeImage(
       const std::string& image_data,

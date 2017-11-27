@@ -58,8 +58,8 @@ DataWithTimestamp CreateEid(const std::string& eid_seed,
 
 class TestRawEidGenerator : public RawEidGenerator {
  public:
-  TestRawEidGenerator() {}
-  ~TestRawEidGenerator() override {}
+  TestRawEidGenerator() = default;
+  ~TestRawEidGenerator() override = default;
 
   // RawEidGenerator:
   std::string GenerateEid(const std::string& eid_seed,

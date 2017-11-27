@@ -23,7 +23,7 @@ LocalDeviceInfoProviderMock::LocalDeviceInfoProviderMock(
       signin_scoped_device_id);
 }
 
-LocalDeviceInfoProviderMock::~LocalDeviceInfoProviderMock() {}
+LocalDeviceInfoProviderMock::~LocalDeviceInfoProviderMock() = default;
 
 const DeviceInfo* LocalDeviceInfoProviderMock::GetLocalDeviceInfo() const {
   return is_initialized_ ? local_device_info_.get() : nullptr;

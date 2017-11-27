@@ -27,7 +27,7 @@ class PnaclTranslationCacheTest : public testing::Test {
  protected:
   PnaclTranslationCacheTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP) {}
-  ~PnaclTranslationCacheTest() override {}
+  ~PnaclTranslationCacheTest() override = default;
   void SetUp() override { cache_.reset(new PnaclTranslationCache()); }
   void TearDown() override {
     // The destructor of PnaclTranslationCacheWriteEntry posts a task to the IO

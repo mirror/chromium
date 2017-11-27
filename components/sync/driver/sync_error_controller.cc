@@ -13,7 +13,7 @@ SyncErrorController::SyncErrorController(SyncService* service)
   DCHECK(service_);
 }
 
-SyncErrorController::~SyncErrorController() {}
+SyncErrorController::~SyncErrorController() = default;
 
 bool SyncErrorController::HasError() {
   return service_->IsFirstSetupComplete() && service_->IsPassphraseRequired() &&

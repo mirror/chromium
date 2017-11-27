@@ -36,8 +36,7 @@ BookmarkNodeData::Element::Element(const BookmarkNode* node)
 
 BookmarkNodeData::Element::Element(const Element& other) = default;
 
-BookmarkNodeData::Element::~Element() {
-}
+BookmarkNodeData::Element::~Element() = default;
 
 void BookmarkNodeData::Element::WriteToPickle(base::Pickle* pickle) const {
   pickle->WriteBool(is_url);
@@ -100,8 +99,7 @@ bool BookmarkNodeData::Element::ReadFromPickle(base::PickleIterator* iterator) {
 
 // BookmarkNodeData -----------------------------------------------------------
 
-BookmarkNodeData::BookmarkNodeData() {
-}
+BookmarkNodeData::BookmarkNodeData() = default;
 
 BookmarkNodeData::BookmarkNodeData(const BookmarkNodeData& other) = default;
 
@@ -114,8 +112,7 @@ BookmarkNodeData::BookmarkNodeData(
   ReadFromVector(nodes);
 }
 
-BookmarkNodeData::~BookmarkNodeData() {
-}
+BookmarkNodeData::~BookmarkNodeData() = default;
 
 #if !defined(OS_MACOSX)
 // static

@@ -13,7 +13,7 @@ DataTypeDebugInfoEmitter::DataTypeDebugInfoEmitter(
     base::ObserverList<TypeDebugInfoObserver>* observers)
     : type_(type), type_debug_info_observers_(observers) {}
 
-DataTypeDebugInfoEmitter::~DataTypeDebugInfoEmitter() {}
+DataTypeDebugInfoEmitter::~DataTypeDebugInfoEmitter() = default;
 
 const CommitCounters& DataTypeDebugInfoEmitter::GetCommitCounters() const {
   return commit_counters_;

@@ -33,7 +33,7 @@ BluetoothLowEnergyWeavePacketReceiver::BluetoothLowEnergyWeavePacketReceiver(
 }
 
 BluetoothLowEnergyWeavePacketReceiver::
-    ~BluetoothLowEnergyWeavePacketReceiver() {}
+    ~BluetoothLowEnergyWeavePacketReceiver() = default;
 
 BluetoothLowEnergyWeavePacketReceiver::State
 BluetoothLowEnergyWeavePacketReceiver::GetState() {

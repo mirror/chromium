@@ -4,8 +4,6 @@
 
 #include "components/proxy_config/pref_proxy_config_tracker.h"
 
-PrefProxyConfigTracker::PrefProxyConfigTracker() {
-}
+PrefProxyConfigTracker::PrefProxyConfigTracker() = default;
 
-PrefProxyConfigTracker::~PrefProxyConfigTracker() {
-}
+PrefProxyConfigTracker::~PrefProxyConfigTracker() = default;

@@ -24,11 +24,9 @@
 
 namespace history {
 
-VisitDatabase::VisitDatabase() {
-}
+VisitDatabase::VisitDatabase() = default;
 
-VisitDatabase::~VisitDatabase() {
-}
+VisitDatabase::~VisitDatabase() = default;
 
 bool VisitDatabase::InitVisitTable() {
   if (!GetDB().DoesTableExist("visits")) {

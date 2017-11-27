@@ -114,8 +114,7 @@ InstanceIDDriverTest::InstanceIDDriverTest()
       result_(InstanceID::UNKNOWN_ERROR),
       async_operation_completed_(false) {}
 
-InstanceIDDriverTest::~InstanceIDDriverTest() {
-}
+InstanceIDDriverTest::~InstanceIDDriverTest() = default;
 
 void InstanceIDDriverTest::SetUp() {
   gcm_driver_.reset(new FakeGCMDriverForInstanceID);

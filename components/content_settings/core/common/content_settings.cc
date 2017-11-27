@@ -130,12 +130,12 @@ ContentSettingPatternSource& ContentSettingPatternSource::operator=(
   return *this;
 }
 
-ContentSettingPatternSource::~ContentSettingPatternSource() {}
+ContentSettingPatternSource::~ContentSettingPatternSource() = default;
 
 ContentSetting ContentSettingPatternSource::GetContentSetting() const {
   return content_settings::ValueToContentSetting(setting_value.get());
 }
 
-RendererContentSettingRules::RendererContentSettingRules() {}
+RendererContentSettingRules::RendererContentSettingRules() = default;
 
-RendererContentSettingRules::~RendererContentSettingRules() {}
+RendererContentSettingRules::~RendererContentSettingRules() = default;

@@ -15,7 +15,7 @@ FakeSyncService::FakeSyncService()
     : error_(GoogleServiceAuthError::NONE),
       user_share_(std::make_unique<UserShare>()) {}
 
-FakeSyncService::~FakeSyncService() {}
+FakeSyncService::~FakeSyncService() = default;
 
 bool FakeSyncService::IsFirstSetupComplete() const {
   return false;

@@ -19,7 +19,7 @@ RequestQueueInMemoryStore::RequestQueueInMemoryStore()
 RequestQueueInMemoryStore::RequestQueueInMemoryStore(TestScenario scenario)
     : state_(StoreState::NOT_LOADED), scenario_(scenario) {}
 
-RequestQueueInMemoryStore::~RequestQueueInMemoryStore() {}
+RequestQueueInMemoryStore::~RequestQueueInMemoryStore() = default;
 
 void RequestQueueInMemoryStore::Initialize(const InitializeCallback& callback) {
   if (scenario_ == TestScenario::SUCCESSFUL)

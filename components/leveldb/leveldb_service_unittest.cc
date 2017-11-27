@@ -117,7 +117,7 @@ void LevelDBSyncOpenInMemory(mojom::LevelDBService* leveldb,
 class LevelDBServiceTest : public service_manager::test::ServiceTest {
  public:
   LevelDBServiceTest() : ServiceTest("leveldb_service_unittests") {}
-  ~LevelDBServiceTest() override {}
+  ~LevelDBServiceTest() override = default;
 
  protected:
   // Overridden from mojo::test::ApplicationTestBase:

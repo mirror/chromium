@@ -239,8 +239,8 @@ void RecordResetStoreErrorToUMA(ResetStoreError error) {
 
 }  // namespace
 
-GCMInternalsBuilder::GCMInternalsBuilder() {}
-GCMInternalsBuilder::~GCMInternalsBuilder() {}
+GCMInternalsBuilder::GCMInternalsBuilder() = default;
+GCMInternalsBuilder::~GCMInternalsBuilder() = default;
 
 std::unique_ptr<base::Clock> GCMInternalsBuilder::BuildClock() {
   return base::WrapUnique<base::Clock>(new base::DefaultClock());
@@ -271,8 +271,7 @@ GCMClientImpl::CheckinInfo::CheckinInfo()
     : android_id(0), secret(0), accounts_set(false) {
 }
 
-GCMClientImpl::CheckinInfo::~CheckinInfo() {
-}
+GCMClientImpl::CheckinInfo::~CheckinInfo() = default;
 
 void GCMClientImpl::CheckinInfo::SnapshotCheckinAccounts() {
   last_checkin_accounts.clear();
@@ -305,8 +304,7 @@ GCMClientImpl::GCMClientImpl(
       destroying_gcm_store_ptr_factory_(this),
       weak_ptr_factory_(this) {}
 
-GCMClientImpl::~GCMClientImpl() {
-}
+GCMClientImpl::~GCMClientImpl() = default;
 
 void GCMClientImpl::Initialize(
     const ChromeBuildInfo& chrome_build_info,

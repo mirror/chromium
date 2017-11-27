@@ -27,7 +27,7 @@ bool PasswordModelWorker::IsOnModelSequence() {
   return true;
 }
 
-PasswordModelWorker::~PasswordModelWorker() {}
+PasswordModelWorker::~PasswordModelWorker() = default;
 
 void PasswordModelWorker::ScheduleWork(base::OnceClosure work) {
   base::AutoLock lock(password_store_lock_);

@@ -44,9 +44,9 @@ sql::InitStatus FailedMigrationTo(int version_num) {
 
 }  // namespace
 
-WebDatabase::WebDatabase() {}
+WebDatabase::WebDatabase() = default;
 
-WebDatabase::~WebDatabase() {}
+WebDatabase::~WebDatabase() = default;
 
 void WebDatabase::AddTable(WebDatabaseTable* table) {
   tables_[table->GetTypeKey()] = table;

@@ -13,7 +13,7 @@ BaseWriteTransaction::BaseWriteTransaction(const base::Location location,
                                            Directory* directory)
     : BaseTransaction(location, name, writer, directory) {}
 
-BaseWriteTransaction::~BaseWriteTransaction() {}
+BaseWriteTransaction::~BaseWriteTransaction() = default;
 
 }  // namespace syncable
 }  // namespace syncer

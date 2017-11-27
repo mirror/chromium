@@ -32,7 +32,7 @@ AccountInfo::AccountInfo()
       picture_url(),
       is_child_account(false) {}
 AccountInfo::AccountInfo(const AccountInfo& other) = default;
-AccountInfo::~AccountInfo() {}
+AccountInfo::~AccountInfo() = default;
 
 bool AccountInfo::IsValid() const {
   return !account_id.empty() && !email.empty() && !gaia.empty() &&

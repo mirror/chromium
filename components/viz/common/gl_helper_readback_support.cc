@@ -14,7 +14,7 @@ GLHelperReadbackSupport::GLHelperReadbackSupport(gpu::gles2::GLES2Interface* gl)
   InitializeReadbackSupport();
 }
 
-GLHelperReadbackSupport::~GLHelperReadbackSupport() {}
+GLHelperReadbackSupport::~GLHelperReadbackSupport() = default;
 
 void GLHelperReadbackSupport::InitializeReadbackSupport() {
   // We are concerned about 16, 32-bit formats only.  The below are the most

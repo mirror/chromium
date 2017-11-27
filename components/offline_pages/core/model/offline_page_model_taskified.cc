@@ -102,7 +102,7 @@ OfflinePageModelTaskified::OfflinePageModelTaskified(
   PostClearCachedPagesTask(true /* is_initializing */);
 }
 
-OfflinePageModelTaskified::~OfflinePageModelTaskified() {}
+OfflinePageModelTaskified::~OfflinePageModelTaskified() = default;
 
 void OfflinePageModelTaskified::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);

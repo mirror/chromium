@@ -30,7 +30,7 @@ class TestCardUnmaskDelegate : public CardUnmaskDelegate {
  public:
   TestCardUnmaskDelegate() : weak_factory_(this) {}
 
-  virtual ~TestCardUnmaskDelegate() {}
+  virtual ~TestCardUnmaskDelegate() = default;
 
   // CardUnmaskDelegate implementation.
   void OnUnmaskResponse(const UnmaskResponse& response) override {
@@ -89,7 +89,7 @@ class TestCardUnmaskPromptController : public CardUnmaskPromptControllerImpl {
 
 class CardUnmaskPromptControllerImplGenericTest {
  public:
-  CardUnmaskPromptControllerImplGenericTest() {}
+  CardUnmaskPromptControllerImplGenericTest() = default;
 
   void ShowPrompt() {
     controller_->ShowPrompt(test_unmask_prompt_view_.get(),
@@ -136,8 +136,8 @@ class CardUnmaskPromptControllerImplTest
     : public CardUnmaskPromptControllerImplGenericTest,
       public testing::Test {
  public:
-  CardUnmaskPromptControllerImplTest() {}
-  ~CardUnmaskPromptControllerImplTest() override {}
+  CardUnmaskPromptControllerImplTest() = default;
+  ~CardUnmaskPromptControllerImplTest() override = default;
 
   void SetUp() override {
     test_unmask_prompt_view_.reset(new TestCardUnmaskPromptView());
@@ -458,8 +458,8 @@ struct CvcCase {
 class CvcInputValidationTest : public CardUnmaskPromptControllerImplGenericTest,
                                public testing::TestWithParam<CvcCase> {
  public:
-  CvcInputValidationTest() {}
-  ~CvcInputValidationTest() override {}
+  CvcInputValidationTest() = default;
+  ~CvcInputValidationTest() override = default;
 
   void SetUp() override {
     test_unmask_prompt_view_.reset(new TestCardUnmaskPromptView());
@@ -499,8 +499,8 @@ class CvcInputAmexValidationTest
     : public CardUnmaskPromptControllerImplGenericTest,
       public testing::TestWithParam<CvcCase> {
  public:
-  CvcInputAmexValidationTest() {}
-  ~CvcInputAmexValidationTest() override {}
+  CvcInputAmexValidationTest() = default;
+  ~CvcInputAmexValidationTest() override = default;
 
   void SetUp() override {
     test_unmask_prompt_view_.reset(new TestCardUnmaskPromptView());
@@ -548,8 +548,8 @@ class ExpirationDateValidationTest
     : public CardUnmaskPromptControllerImplGenericTest,
       public testing::TestWithParam<ExpirationDateTestCase> {
  public:
-  ExpirationDateValidationTest() {}
-  ~ExpirationDateValidationTest() override {}
+  ExpirationDateValidationTest() = default;
+  ~ExpirationDateValidationTest() override = default;
 
   void SetUp() override {
     test_unmask_prompt_view_.reset(new TestCardUnmaskPromptView());

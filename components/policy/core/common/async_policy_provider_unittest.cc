@@ -62,7 +62,7 @@ MockPolicyLoader::MockPolicyLoader(
     scoped_refptr<base::SequencedTaskRunner> task_runner)
     : AsyncPolicyLoader(task_runner) {}
 
-MockPolicyLoader::~MockPolicyLoader() {}
+MockPolicyLoader::~MockPolicyLoader() = default;
 
 std::unique_ptr<PolicyBundle> MockPolicyLoader::Load() {
   std::unique_ptr<PolicyBundle> bundle;
@@ -94,9 +94,9 @@ class AsyncPolicyProviderTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(AsyncPolicyProviderTest);
 };
 
-AsyncPolicyProviderTest::AsyncPolicyProviderTest() {}
+AsyncPolicyProviderTest::AsyncPolicyProviderTest() = default;
 
-AsyncPolicyProviderTest::~AsyncPolicyProviderTest() {}
+AsyncPolicyProviderTest::~AsyncPolicyProviderTest() = default;
 
 void AsyncPolicyProviderTest::SetUp() {
   SetPolicy(&initial_bundle_, "policy", "initial");

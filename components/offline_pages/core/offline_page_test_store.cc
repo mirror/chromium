@@ -30,7 +30,7 @@ OfflinePageTestStore::OfflinePageTestStore(
       initialize_attempts_count_(0),
       offline_pages_(other_store.offline_pages_) {}
 
-OfflinePageTestStore::~OfflinePageTestStore() {}
+OfflinePageTestStore::~OfflinePageTestStore() = default;
 
 void OfflinePageTestStore::Initialize(const InitializeCallback& callback) {
   initialize_attempts_count_++;

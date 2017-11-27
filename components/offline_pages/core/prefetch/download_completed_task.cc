@@ -100,7 +100,7 @@ DownloadCompletedTask::DownloadCompletedTask(
   DCHECK(!download_result_.download_id.empty());
 }
 
-DownloadCompletedTask::~DownloadCompletedTask() {}
+DownloadCompletedTask::~DownloadCompletedTask() = default;
 
 void DownloadCompletedTask::Run() {
   if (download_result_.success) {

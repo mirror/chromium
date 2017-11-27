@@ -43,7 +43,7 @@ ExoTestWindow::ExoTestWindow(ExoTestWindow&& other) {
   shell_surface_ = std::move(other.shell_surface_);
 }
 
-ExoTestWindow::~ExoTestWindow() {}
+ExoTestWindow::~ExoTestWindow() = default;
 
 gfx::Point ExoTestWindow::origin() {
   return surface_->window()->GetBoundsInScreen().origin();
@@ -56,7 +56,7 @@ ExoTestHelper::ExoTestHelper() {
   ash::WindowPositioner::DisableAutoPositioning(true);
 }
 
-ExoTestHelper::~ExoTestHelper() {}
+ExoTestHelper::~ExoTestHelper() = default;
 
 std::unique_ptr<gfx::GpuMemoryBuffer> ExoTestHelper::CreateGpuMemoryBuffer(
     const gfx::Size& size,

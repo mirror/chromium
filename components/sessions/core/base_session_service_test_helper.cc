@@ -15,8 +15,7 @@ BaseSessionServiceTestHelper::BaseSessionServiceTestHelper(
   CHECK(base_session_service);
 }
 
-BaseSessionServiceTestHelper::~BaseSessionServiceTestHelper() {
-}
+BaseSessionServiceTestHelper::~BaseSessionServiceTestHelper() = default;
 
 void BaseSessionServiceTestHelper::RunTaskOnBackendThread(
     const base::Location& from_here,

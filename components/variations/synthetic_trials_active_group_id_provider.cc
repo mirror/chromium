@@ -15,9 +15,11 @@ SyntheticTrialsActiveGroupIdProvider::GetInstance() {
   return base::Singleton<SyntheticTrialsActiveGroupIdProvider>::get();
 }
 
-SyntheticTrialsActiveGroupIdProvider::SyntheticTrialsActiveGroupIdProvider() {}
+SyntheticTrialsActiveGroupIdProvider::SyntheticTrialsActiveGroupIdProvider() =
+    default;
 
-SyntheticTrialsActiveGroupIdProvider::~SyntheticTrialsActiveGroupIdProvider() {}
+SyntheticTrialsActiveGroupIdProvider::~SyntheticTrialsActiveGroupIdProvider() =
+    default;
 
 void SyntheticTrialsActiveGroupIdProvider::OnSyntheticTrialsChanged(
     const std::vector<SyntheticTrialGroup>& groups) {

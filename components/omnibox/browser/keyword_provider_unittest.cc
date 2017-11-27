@@ -69,7 +69,7 @@ class KeywordProviderTest : public testing::Test {
         base::MakeUnique<metrics::SHA1EntropyProvider>("foo")));
     variations::testing::ClearAllVariationParams();
   }
-  ~KeywordProviderTest() override {}
+  ~KeywordProviderTest() override = default;
 
   // Should be called at least once during a test case.  This is a separate
   // function from SetUp() because the client may want to set parameters

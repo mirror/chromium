@@ -66,7 +66,7 @@ CompositorOverlayCandidateValidatorOzone::
 }
 
 CompositorOverlayCandidateValidatorOzone::
-    ~CompositorOverlayCandidateValidatorOzone() {}
+    ~CompositorOverlayCandidateValidatorOzone() = default;
 
 void CompositorOverlayCandidateValidatorOzone::GetStrategies(
     OverlayProcessor::StrategyList* strategies) {

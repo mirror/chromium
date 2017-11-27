@@ -113,15 +113,17 @@ bool ContainsEqualPasswordFormsUnordered(
   return !had_mismatched_actual_form && remaining_expectations.empty();
 }
 
-MockPasswordStoreObserver::MockPasswordStoreObserver() {}
+MockPasswordStoreObserver::MockPasswordStoreObserver() = default;
 
-MockPasswordStoreObserver::~MockPasswordStoreObserver() {}
+MockPasswordStoreObserver::~MockPasswordStoreObserver() = default;
 
 // TODO(crbug.com/706392): Fix password reuse detection for Android.
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
-MockPasswordReuseDetectorConsumer::MockPasswordReuseDetectorConsumer() {}
+MockPasswordReuseDetectorConsumer::MockPasswordReuseDetectorConsumer() =
+    default;
 
-MockPasswordReuseDetectorConsumer::~MockPasswordReuseDetectorConsumer() {}
+MockPasswordReuseDetectorConsumer::~MockPasswordReuseDetectorConsumer() =
+    default;
 #endif
 
 HSTSStateManager::HSTSStateManager(net::TransportSecurityState* state,

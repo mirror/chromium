@@ -29,7 +29,7 @@ ManifestDownloader::ManifestDownloader(
   CHECK(!cb.is_null());
 }
 
-ManifestDownloader::~ManifestDownloader() { }
+ManifestDownloader::~ManifestDownloader() = default;
 
 void ManifestDownloader::Load(const blink::WebURLRequest& request) {
   url_loader_->LoadAsynchronously(request, this);

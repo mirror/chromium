@@ -23,7 +23,7 @@ WebDataModelTypeController::WebDataModelTypeController(
       web_data_service_(web_data_service),
       bridge_from_web_data_(bridge_from_web_data) {}
 
-WebDataModelTypeController::~WebDataModelTypeController() {}
+WebDataModelTypeController::~WebDataModelTypeController() = default;
 
 ModelTypeController::BridgeProvider
 WebDataModelTypeController::GetBridgeProvider() {

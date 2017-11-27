@@ -43,7 +43,7 @@ SyncStoppedReporter::SyncStoppedReporter(
   DCHECK(request_context);
 }
 
-SyncStoppedReporter::~SyncStoppedReporter() {}
+SyncStoppedReporter::~SyncStoppedReporter() = default;
 
 void SyncStoppedReporter::ReportSyncStopped(const std::string& access_token,
                                             const std::string& cache_guid,

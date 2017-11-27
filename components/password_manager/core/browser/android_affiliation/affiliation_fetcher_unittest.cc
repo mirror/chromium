@@ -30,8 +30,8 @@ const char kExampleWebFacet2URI[] = "https://www.example.org";
 class MockAffiliationFetcherDelegate
     : public testing::StrictMock<AffiliationFetcherDelegate> {
  public:
-  MockAffiliationFetcherDelegate() {}
-  ~MockAffiliationFetcherDelegate() {}
+  MockAffiliationFetcherDelegate() = default;
+  ~MockAffiliationFetcherDelegate() = default;
 
   MOCK_METHOD0(OnFetchSucceededProxy, void());
   MOCK_METHOD0(OnFetchFailed, void());
@@ -58,7 +58,7 @@ class AffiliationFetcherTest : public testing::Test {
       : request_context_getter_(new net::TestURLRequestContextGetter(
             base::MakeRefCounted<base::NullTaskRunner>())) {}
 
-  ~AffiliationFetcherTest() override {}
+  ~AffiliationFetcherTest() override = default;
 
  protected:
   void VerifyRequestPayload(const std::vector<FacetURI>& expected_facet_uris) {

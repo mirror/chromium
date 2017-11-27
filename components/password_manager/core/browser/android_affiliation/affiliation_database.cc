@@ -30,11 +30,9 @@ const int kCompatibleVersion = 1;
 
 }  // namespace
 
-AffiliationDatabase::AffiliationDatabase() {
-}
+AffiliationDatabase::AffiliationDatabase() = default;
 
-AffiliationDatabase::~AffiliationDatabase() {
-}
+AffiliationDatabase::~AffiliationDatabase() = default;
 
 bool AffiliationDatabase::Init(const base::FilePath& path) {
   sql_connection_.reset(new sql::Connection);

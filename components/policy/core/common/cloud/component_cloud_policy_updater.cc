@@ -54,8 +54,7 @@ ComponentCloudPolicyUpdater::ComponentCloudPolicyUpdater(
                                     std::move(external_policy_data_fetcher),
                                     kMaxParallelPolicyDataFetches) {}
 
-ComponentCloudPolicyUpdater::~ComponentCloudPolicyUpdater() {
-}
+ComponentCloudPolicyUpdater::~ComponentCloudPolicyUpdater() = default;
 
 void ComponentCloudPolicyUpdater::UpdateExternalPolicy(
     const PolicyNamespace& ns,

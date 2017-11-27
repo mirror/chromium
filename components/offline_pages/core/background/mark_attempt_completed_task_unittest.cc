@@ -48,7 +48,7 @@ MarkAttemptCompletedTaskTest::MarkAttemptCompletedTaskTest()
     : task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {}
 
-MarkAttemptCompletedTaskTest::~MarkAttemptCompletedTaskTest() {}
+MarkAttemptCompletedTaskTest::~MarkAttemptCompletedTaskTest() = default;
 
 void MarkAttemptCompletedTaskTest::PumpLoop() {
   task_runner_->RunUntilIdle();

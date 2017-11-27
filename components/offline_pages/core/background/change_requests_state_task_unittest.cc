@@ -50,7 +50,7 @@ ChangeRequestsStateTaskTest::ChangeRequestsStateTaskTest()
     : task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {}
 
-ChangeRequestsStateTaskTest::~ChangeRequestsStateTaskTest() {}
+ChangeRequestsStateTaskTest::~ChangeRequestsStateTaskTest() = default;
 
 void ChangeRequestsStateTaskTest::PumpLoop() {
   task_runner_->RunUntilIdle();

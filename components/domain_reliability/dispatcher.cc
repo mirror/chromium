@@ -41,12 +41,12 @@ DomainReliabilityDispatcher::Task::Task(
       max_delay(max_delay),
       eligible(false) {}
 
-DomainReliabilityDispatcher::Task::~Task() {}
+DomainReliabilityDispatcher::Task::~Task() = default;
 
 DomainReliabilityDispatcher::DomainReliabilityDispatcher(MockableTime* time)
     : time_(time) {}
 
-DomainReliabilityDispatcher::~DomainReliabilityDispatcher() {}
+DomainReliabilityDispatcher::~DomainReliabilityDispatcher() = default;
 
 void DomainReliabilityDispatcher::ScheduleTask(
     const base::Closure& closure,

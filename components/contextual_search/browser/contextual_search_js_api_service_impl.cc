@@ -16,7 +16,7 @@ ContextualSearchJsApiServiceImpl::ContextualSearchJsApiServiceImpl(
     ContextualSearchJsApiHandler* contextual_search_js_api_handler)
     : contextual_search_js_api_handler_(contextual_search_js_api_handler) {}
 
-ContextualSearchJsApiServiceImpl::~ContextualSearchJsApiServiceImpl() {}
+ContextualSearchJsApiServiceImpl::~ContextualSearchJsApiServiceImpl() = default;
 
 void ContextualSearchJsApiServiceImpl::HandleSetCaption(
     const std::string& caption,

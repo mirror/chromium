@@ -207,8 +207,7 @@ DefaultProvider::DefaultProvider(PrefService* prefs, bool incognito)
     pref_change_registrar_.Add(info->default_value_pref_name(), callback);
 }
 
-DefaultProvider::~DefaultProvider() {
-}
+DefaultProvider::~DefaultProvider() = default;
 
 bool DefaultProvider::SetWebsiteSetting(
     const ContentSettingsPattern& primary_pattern,

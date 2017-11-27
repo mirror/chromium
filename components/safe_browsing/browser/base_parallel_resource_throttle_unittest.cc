@@ -84,7 +84,7 @@ class TestDatabaseManager : public TestSafeBrowsingDatabaseManager {
   }
 
  private:
-  ~TestDatabaseManager() override {}
+  ~TestDatabaseManager() override = default;
 
   int check_browse_url_called_ = 0;
   Client* last_client_ = nullptr;
@@ -124,7 +124,7 @@ class TestUrlCheckerDelegate : public UrlCheckerDelegate {
   BaseUIManager* GetUIManager() override { return nullptr; }
 
  private:
-  ~TestUrlCheckerDelegate() override {}
+  ~TestUrlCheckerDelegate() override = default;
 
   SBThreatTypeSet threat_types_;
   scoped_refptr<TestDatabaseManager> database_manager_;

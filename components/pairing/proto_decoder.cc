@@ -30,7 +30,7 @@ ProtoDecoder::ProtoDecoder(Observer* observer)
   DCHECK(observer_);
 }
 
-ProtoDecoder::~ProtoDecoder() {}
+ProtoDecoder::~ProtoDecoder() = default;
 
 bool ProtoDecoder::DecodeIOBuffer(int size,
                                   ProtoDecoder::IOBufferRefPtr io_buffer) {
