@@ -16,6 +16,24 @@
       "revId": "a01fede4a33594781885be3483bf5dee64649828",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7896ba9_79b4def8",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-27T18:18:22Z",
+      "side": 1,
+      "message": "keeping SetFocus as it\u0027s somewhat more consistent with other Set* function in exo.",
+      "parentUuid": "25e8abab_64127244",
+      "revId": "a01fede4a33594781885be3483bf5dee64649828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
