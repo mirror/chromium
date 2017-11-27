@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0a07b33_83a34976",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-27T17:58:00Z",
+      "side": 1,
+      "message": "Hmm that makes sense. I think that\u0027s a pretty rare case and if in the loop below one of them can be locked it\u0027s probably still better than decoding the original. The actual source we use to downscale doesn\u0027t really matter, but this might be a good follow up for improvement.\n\nOne thing we might do, since we know these are all mips is to compare only the largest dimension.",
+      "parentUuid": "8b76e373_c221a580",
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72b7601d_8a2aa4d1",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-21T23:21:05Z",
       "side": 1,
       "message": "I\u0027m not quite following how extracting a subset is different from using a subrect? In both cases aren\u0027t we caching a sub-rect of the image?",
+      "range": {
+        "startLine": 576,
+        "startChar": 6,
+        "endLine": 576,
+        "endChar": 26
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd44cd6_5380db1b",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-27T17:58:00Z",
+      "side": 1,
+      "message": "As discussed offline, there are two three possible cases here:\n1. No scale, original size is decoded and stored.\n2. No scale, subrected size is decoded and stored (for memory reasons)\n3. Scale, which always uses src rect to subrect.\n\nneeds_extract_subset refers to case 2. If it\u0027s false, case 3 would still subrect. \n\nWe can clean this up with naming/more enums maybe.",
+      "parentUuid": "72b7601d_8a2aa4d1",
       "range": {
         "startLine": 576,
         "startChar": 6,
