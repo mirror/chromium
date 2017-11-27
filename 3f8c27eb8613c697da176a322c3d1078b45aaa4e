@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46644134_4e5a85a6",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ComputedStylePropertyMap.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-27T06:22:18Z",
+      "side": 1,
+      "message": "What was the reason for this? I intended GetProperty to never receive an invalid property ID, but I might\u0027ve missed a check in some caller?",
+      "revId": "3f8c27eb8613c697da176a322c3d1078b45aaa4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
