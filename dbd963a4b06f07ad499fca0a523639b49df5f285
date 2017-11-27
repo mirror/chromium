@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cfc987a_95a5fd5e",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T21:08:11Z",
+      "side": 1,
+      "message": "Still seems a bit redundant to test this when the if condition on line 410 clearly says it\u0027s not finite.  Not exactly sure what to do here (and below as well).\n\nAlso, would EXPECT_TRUE(!std::isfinite()) be better to indicate what\u0027s happening?",
+      "revId": "dbd963a4b06f07ad499fca0a523639b49df5f285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
