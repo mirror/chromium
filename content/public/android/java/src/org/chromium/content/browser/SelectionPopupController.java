@@ -852,6 +852,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      */
     @VisibleForTesting
     void selectAll() {
+        mActionMode.hide(true);
         mWebContents.selectAll();
         mClassificationResult = null;
         // Even though the above statement logged a SelectAll user action, we want to
