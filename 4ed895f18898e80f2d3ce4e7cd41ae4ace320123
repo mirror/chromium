@@ -52,6 +52,24 @@
       "revId": "4ed895f18898e80f2d3ce4e7cd41ae4ace320123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6c7428_2cec8d8c",
+        "filename": "content/browser/accessibility/browser_accessibility_auralinux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-27T22:43:46Z",
+      "side": 1,
+      "message": "It\u0027d be great to document all these ideas somewhere, so we can pick tasks as needed. I am willing to help mostly on the Linux adaptation (at least for now). For actually implementing in other platforms I should check if I can get proper build environments.",
+      "parentUuid": "23615a27_b25e46c9",
+      "revId": "4ed895f18898e80f2d3ce4e7cd41ae4ace320123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
