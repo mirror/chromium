@@ -15,6 +15,7 @@
 #include "chrome/browser/ui/login/login_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/oobe_ui.h"
 #include "chrome/common/chrome_switches.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_controller.h"
@@ -90,9 +91,8 @@ IN_PROC_BROWSER_TEST_F(ProxyAuthOnUserBoardScreenTest,
   StartupUtils::MarkOobeCompleted();
 }
 
-// Flaky: https://crbug.com/481651 and https://crbug.com/772072
 IN_PROC_BROWSER_TEST_F(ProxyAuthOnUserBoardScreenTest,
-                       DISABLED_ProxyAuthDialogOnUserBoardScreen) {
+                       ProxyAuthDialogOnUserBoardScreen) {
   LoginDisplayHost* login_display_host = LoginDisplayHost::default_host();
   WebUILoginView* web_ui_login_view = login_display_host->GetWebUILoginView();
   OobeUI* oobe_ui = web_ui_login_view->GetOobeUI();
@@ -107,6 +107,8 @@ IN_PROC_BROWSER_TEST_F(ProxyAuthOnUserBoardScreenTest,
     auth_dialog_waiter.login_handler()->CancelAuth();
   }
 
+  LOG(ERROR) << "#### Start Gaia screen";
+
   {
     OobeScreenWaiter screen_waiter(OobeScreen::SCREEN_GAIA_SIGNIN);
     ProxyAuthDialogWaiter auth_dialog_waiter;
@@ -117,7 +119,13 @@ IN_PROC_BROWSER_TEST_F(ProxyAuthOnUserBoardScreenTest,
     ASSERT_TRUE(auth_dialog_waiter.login_handler());
     auth_dialog_waiter.login_handler()->CancelAuth();
   }
-  base::RunLoop().RunUntilIdle();
+
+  // Makes sure the proxy auth UI goes away on test ends. Otherwise, the
+  // interstitial contents it holds triggers DCHECK on profile destruction.
+  content::RunAllPendingInMessageLoop(content::BrowserThread::IO);
+  content::RunAllTasksUntilIdle();
+
+  LOG(ERROR) << "#### Test end";
 }
 
 }  // namespace chromeos
