@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af7926b5_1830d041",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-27T16:56:54Z",
+      "side": 1,
+      "message": "nit: A\"llow CBOR maps to use integer keys.\"",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83dd1895_38529d9b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-27T16:56:54Z",
+      "side": 1,
+      "message": "nit: \"Currently, CBOR maps only permit keys to be UTF-8 strings. Add support for unsigned integer keys. Support for...\"",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4b21de_02ae896b",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-27T16:56:54Z",
+      "side": 1,
+      "message": "nit: \"unsigned integer and string keys\"",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0128228_bc348536",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-27T16:56:54Z",
+      "side": 1,
+      "message": "nit: \"invalid key:\" just to make it clearer to the casual reader",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533a75cd_a3403b5b",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-27T16:56:54Z",
+      "side": 1,
+      "message": "I kind of prefer the previous style of formatting to break down the CBOR, even though it uses more lines. Can you still do that with the vector-of-vectors?",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e740e68_5feb37ac",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-27T16:56:54Z",
+      "side": 1,
+      "message": "Do we want to fatally crash? Or can we handle it without crashing?",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdc83b3_1333fd7f",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-27T16:56:54Z",
+      "side": 1,
+      "message": "nit: Maybe highlight that this is needed due to the two different types of keys.",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
