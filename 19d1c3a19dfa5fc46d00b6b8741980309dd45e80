@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20adb1fa_002815e0",
+        "filename": "components/cronet/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-27T17:41:50Z",
+      "side": 1,
+      "message": "qq: Where is |android_sdk_jar| value coming from?",
+      "range": {
+        "startLine": 1199,
+        "startChar": 16,
+        "endLine": 1199,
+        "endChar": 31
+      },
+      "revId": "19d1c3a19dfa5fc46d00b6b8741980309dd45e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
