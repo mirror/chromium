@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "e37049eb_3879a15b",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T23:04:09Z",
+      "side": 1,
+      "message": "nit: IDs",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 19
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0ace36_f3aaf257",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T23:04:09Z",
+      "side": 1,
+      "message": "nit: Update instead of Get? it\u0027s a bit confusing to have a \"Get\" method that returns void; i think that \"Update\" makes more sense for a method that updates internal state. please also document when this should be called (e.g. whenever a tab navigates somewhere or is closed?)",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda18200_ee3e19a2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T23:04:09Z",
+      "side": 1,
+      "message": "nit: avoid \u0027auto\u0027 here since the type isn\u0027t obvious",
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e09b19a_28f8f416",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T23:04:09Z",
+      "side": 1,
+      "message": "when is \u0027contents\u0027 null? can you invert this check and use a continue so the rest isn\u0027t indented?",
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fa819f4_6d627737",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
         "patchSetId": 4
@@ -59,6 +139,23 @@
         "endLine": 18,
         "endChar": 27
       },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ddb1b44_253267b8",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T23:04:09Z",
+      "side": 1,
+      "message": "this should be moved down just below the \u0027overrides\u0027 comment",
       "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
