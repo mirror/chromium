@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fa819f4_6d627737",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T22:22:31Z",
+      "side": 1,
+      "message": "Add a TODO (somewhere in this fn) to use the existing Source ID for these navigations once UKM is more complete.",
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38348939_3104958d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T22:22:31Z",
+      "side": 1,
+      "message": "multiple \u003d\u003e rounded_battery_percent\n\nand explain why this is reported this way",
+      "range": {
+        "startLine": 70,
+        "startChar": 14,
+        "endLine": 70,
+        "endChar": 22
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b0a5cc_9a9e851a",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T22:22:31Z",
+      "side": 1,
+      "message": "The names UserActivityLogger and UserActivityLoggerUKM are confusing. The \"UKM\" isn\u0027t enough to explain the relationship between the classes (at a glance, I would guess UserActivityLoggerUKM is a subclass of UserActivityLogger). Maybe UserActivityLoggerDelegateUkm?\n\nalso, nit: UKM \u003d\u003e Ukm in names",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498cc384_8ed9d4f6",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1918,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T22:22:31Z",
+      "side": 1,
+      "message": "explain how it\u0027s bucketed (normally, bucketing would mean anything \u003c 5% goes in the 0 bucket, anything \u003c 10% goes in the 5% bucket, etc., but it looks like you\u0027re rounding instead)",
+      "range": {
+        "startLine": 1918,
+        "startChar": 29,
+        "endLine": 1918,
+        "endChar": 52
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b967cf_818ff1d7",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1963,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T22:22:31Z",
+      "side": 1,
+      "message": "nit: \"currently on battery power\" (as opposed to battery-powered devices [Chromebooks] and non-battery-powered devices [Chromeboxes])",
+      "range": {
+        "startLine": 1963,
+        "startChar": 55,
+        "endLine": 1963,
+        "endChar": 73
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141adf88_3fa59f31",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1968,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T22:22:31Z",
+      "side": 1,
+      "message": "\"since\"?",
+      "range": {
+        "startLine": 1968,
+        "startChar": 38,
+        "endLine": 1968,
+        "endChar": 43
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57130a89_36018c94",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T22:22:31Z",
+      "side": 1,
+      "message": "mouse or touch (if you\u0027re reporting them together)",
+      "range": {
+        "startLine": 1978,
+        "startChar": 21,
+        "endLine": 1978,
+        "endChar": 26
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
