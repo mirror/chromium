@@ -4,6 +4,8 @@
 
 #include "components/sync_preferences/pref_service_syncable.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
@@ -27,7 +29,7 @@ namespace sync_preferences {
 
 PrefServiceSyncable::PrefServiceSyncable(
     PrefNotifierImpl* pref_notifier,
-    PrefValueStore* pref_value_store,
+    std::unique_ptr<PrefValueStore> pref_value_store,
     PersistentPrefStore* user_prefs,
     user_prefs::PrefRegistrySyncable* pref_registry,
     const PrefModelAssociatorClient* pref_model_associator_client,
@@ -35,7 +37,7 @@ PrefServiceSyncable::PrefServiceSyncable(
         read_error_callback,
     bool async)
     : PrefService(pref_notifier,
-                  pref_value_store,
+                  std::move(pref_value_store),
                   user_prefs,
                   pref_registry,
                   read_error_callback,
@@ -48,7 +50,7 @@ PrefServiceSyncable::PrefServiceSyncable(
   priority_pref_sync_associator_.SetPrefService(this);
 
   // Let PrefModelAssociators know about changes to preference values.
-  pref_value_store->set_callback(base::Bind(
+  pref_value_store_->set_callback(base::Bind(
       &PrefServiceSyncable::ProcessPrefChange, base::Unretained(this)));
 
   // Add already-registered syncable preferences to PrefModelAssociator.

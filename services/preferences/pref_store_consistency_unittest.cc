@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
 #include <utility>
 
 #include "base/containers/circular_deque.h"
@@ -73,11 +74,11 @@ class PrefServiceConnection : public mojom::PrefStoreObserver,
     pref_registry->RegisterIntegerPref(kKey, kInitialValue);
     pref_registry->RegisterIntegerPref(kOtherKey, kInitialValue);
     pref_registry->RegisterDictionaryPref(kDictionaryKey);
-    auto* pref_value_store = new PrefValueStore(
+    auto pref_value_store = std::make_unique<PrefValueStore>(
         nullptr, nullptr, nullptr, nullptr, pref_store_client_.get(), nullptr,
         pref_registry->defaults().get(), pref_notifier);
     pref_service_ = std::make_unique<::PrefService>(
-        pref_notifier, pref_value_store, pref_store_client_.get(),
+        pref_notifier, std::move(pref_value_store), pref_store_client_.get(),
         pref_registry.get(), base::Bind(&DoNothingHandleReadError), true);
   }
 
