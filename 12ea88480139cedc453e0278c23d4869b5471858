@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1192dd97_b5adeae5",
+        "filename": "third_party/WebKit/Source/platform/heap/BlinkGC.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-27T08:17:21Z",
+      "side": 1,
+      "message": "I just copied the approach that was used for HeapCompact. In fact, I\u0027d rather like to remove this flag at all, since we have anyways been shipping with the always-off barrier already.",
+      "parentUuid": "3c4ab771_5d27b522",
+      "revId": "12ea88480139cedc453e0278c23d4869b5471858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29403765_c96a4c52",
         "filename": "third_party/WebKit/Source/platform/heap/Heap.cpp",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "aef947ad_0064d1df",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-27T08:17:21Z",
+      "side": 1,
+      "message": "You are right. However, this is not write barrier related. We need to fix this up in a follow up.",
+      "parentUuid": "29403765_c96a4c52",
+      "revId": "12ea88480139cedc453e0278c23d4869b5471858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fd8bcd1_659197f5",
         "filename": "third_party/WebKit/Source/platform/heap/Member.h",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "12ea88480139cedc453e0278c23d4869b5471858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c31911_9419c9c1",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-27T08:17:21Z",
+      "side": 1,
+      "message": "Yes, I was assuming that this would land soon.\n\nWe don\u0027t have interior pointers to large objects. AFAIK, there was only one (theoretical) case where one could\u0027ve constructed a mixin object so large that it would end up on a LargeObjectPage. We don\u0027t allow this.\n\nAre you thinking of another case?",
+      "parentUuid": "5fd8bcd1_659197f5",
+      "revId": "12ea88480139cedc453e0278c23d4869b5471858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
