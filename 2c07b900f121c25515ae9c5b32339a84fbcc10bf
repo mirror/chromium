@@ -193,6 +193,24 @@
       "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d40c29_6a952721",
+        "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T09:12:00Z",
+      "side": 1,
+      "message": "There\u0027s no theoretical guarantee that the handler is registered in 0.5 seconds. I think it\u0027s scary.\n\nDispatching test-only event sounds better, or instead, you could inject a test-only observer from test.\n\nMediaImportHandler.ImportTask:\nthis.onTryImportScanEntriesForTest \u003d null;\n...\nif (this.onTryImportScanEntriesForTest) this.onTryImportScanEntriesForTest();\n\nTest:\nimportTask.onTryImportScanEntriesForTest \u003d function() { ... }",
+      "parentUuid": "603023a3_00082cd1",
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

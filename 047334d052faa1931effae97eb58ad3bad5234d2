@@ -757,6 +757,24 @@
     },
     {
       "key": {
+        "uuid": "b39c292d_707962b1",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T09:12:00Z",
+      "side": 1,
+      "message": "OK. You can file a bug assigning it to me, and add TODO(crbug.com/xxx) .",
+      "parentUuid": "69b3bb3b_df85cb6a",
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1e99520_606b6113",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler_unittest.js",
         "patchSetId": 5
