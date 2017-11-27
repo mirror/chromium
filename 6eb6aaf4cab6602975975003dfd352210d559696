@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "236a6fba_bf8f8479",
+        "filename": "components/sync/mojo/syncer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-27T20:31:17Z",
+      "side": 1,
+      "message": "The problem is string is expected to be UTF-8 in Mojo. Does Ordinal actually provide this guarantee? A quick look at it suggested that the a-z clamping is purely an external representation.",
+      "parentUuid": "a44ef525_5e4f23bc",
+      "revId": "6eb6aaf4cab6602975975003dfd352210d559696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3418d4f_f9c4d167",
         "filename": "components/sync/mojo/syncer_struct_traits.h",
         "patchSetId": 3
