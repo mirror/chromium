@@ -8,6 +8,8 @@
 #import <UIKit/UIKit.h>
 
 @protocol SigninPresenter;
+@class SigninPromoViewConfigurator;
+@class SigninPromoViewMediator;
 
 namespace ios {
 class ChromeBrowserState;
@@ -16,7 +18,13 @@ class ChromeBrowserState;
 @protocol BookmarkPromoControllerDelegate
 
 // Controls the state of the promo.
-- (void)promoStateChanged:(BOOL)promoEnabled;
+- (void)shouldShowSigninPromoChanged:(BOOL)promoEnabled;
+
+// Configures the sign-in promo view using |configurator|, and reloads the view
+// needed.
+- (void)configureSigninPromoWithConfigurator:
+            (SigninPromoViewConfigurator*)configurator
+                             identityChanged:(BOOL)identityChanged;
 
 @end
 
@@ -27,22 +35,21 @@ class ChromeBrowserState;
 @property(nonatomic, weak) id<BookmarkPromoControllerDelegate> delegate;
 
 // Holds the current state of the promo. When the promo state change, it will
-// call the promoStateChanged: selector on the delegate.
-@property(nonatomic, assign) BOOL promoState;
+// call the shouldShowSigninPromoChanged: selector on the delegate.
+@property(nonatomic) BOOL shouldShowSigninPromo;
+
+@property(nonatomic, readonly) SigninPromoViewMediator* signinPromoViewMediator;
 
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                             delegate:
                                 (id<BookmarkPromoControllerDelegate>)delegate
                            presenter:(id<SigninPresenter>)presenter;
 
-// Presents the sign-in UI, presenting from |baseViewController|.
-- (void)showSignInFromViewController:(UIViewController*)baseViewController;
-
 // Hides the promo cell. It won't be presented again on this profile.
 - (void)hidePromoCell;
 
-// Updates the promo state based on the sign-in state of the user.
-- (void)updatePromoState;
+// Updates |shouldShowSigninPromo| based on the sign-in state of the user.
+- (void)updateShouldShowSigninPromo;
 
 @end
 
