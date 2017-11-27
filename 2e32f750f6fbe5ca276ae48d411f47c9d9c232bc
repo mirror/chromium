@@ -22,6 +22,30 @@
       "revId": "2e32f750f6fbe5ca276ae48d411f47c9d9c232bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9f7325_b3ba2c42",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-27T18:44:12Z",
+      "side": 1,
+      "message": "I would be natural if TabLifecycleUnit was responsible for updating its WebContents and TabStripModel. However, I\u0027d like to avoid having every TabLifecycleUnit observing every TabStripModel (we don\u0027t know to which TabStipModel a tab will move). Thoughts?\n\nFor now, I added \"The component that created this TabLifecycleUnit is responsible for calling this when the tab moves to a different TabStripModel\"",
+      "parentUuid": "3f64c1b6_6ce06148",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "2e32f750f6fbe5ca276ae48d411f47c9d9c232bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
