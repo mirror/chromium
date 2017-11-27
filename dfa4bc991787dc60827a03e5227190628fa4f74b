@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1906ee8e_d987d0d9",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-27T17:47:58Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 55,
+        "startChar": 11,
+        "endLine": 55,
+        "endChar": 15
+      },
+      "revId": "dfa4bc991787dc60827a03e5227190628fa4f74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78ce9e4_f799b8b5",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-27T17:47:58Z",
+      "side": 1,
+      "message": "As MouseEvent is a real class, how about mouse_event_callback here too?",
+      "range": {
+        "startLine": 27,
+        "startChar": 36,
+        "endLine": 27,
+        "endChar": 47
+      },
+      "revId": "dfa4bc991787dc60827a03e5227190628fa4f74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39268fa_e2872ce7",
+        "filename": "chrome/browser/ui/views/tabs/tab_experimental.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-27T17:47:58Z",
+      "side": 1,
+      "message": "constexpr?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "dfa4bc991787dc60827a03e5227190628fa4f74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acf48bf_53d90243",
+        "filename": "chrome/browser/ui/views/tabs/tab_experimental.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-27T17:47:58Z",
+      "side": 1,
+      "message": "I suspect you\u0027re going to need to flip this for rtl.",
+      "range": {
+        "startLine": 162,
+        "startChar": 17,
+        "endLine": 162,
+        "endChar": 68
+      },
+      "revId": "dfa4bc991787dc60827a03e5227190628fa4f74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd9ea7d_3979137d",
+        "filename": "chrome/browser/ui/views/tabs/tab_experimental.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-27T17:47:58Z",
+      "side": 1,
+      "message": "You never set this to invisible, and given true is the default, you should be able to safely remove this.",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 34
+      },
+      "revId": "dfa4bc991787dc60827a03e5227190628fa4f74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61156ab5_b1c5ec4a",
+        "filename": "chrome/browser/ui/views/tabs/tab_experimental.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-27T17:47:58Z",
+      "side": 1,
+      "message": "Initialize to null as you don\u0027t initialize in member initializer?",
+      "range": {
+        "startLine": 111,
+        "startChar": 18,
+        "endLine": 111,
+        "endChar": 31
+      },
+      "revId": "dfa4bc991787dc60827a03e5227190628fa4f74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
