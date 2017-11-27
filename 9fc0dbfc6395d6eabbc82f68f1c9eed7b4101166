@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d3ee4e6_cd0c51e4",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T21:38:43Z",
+      "side": 1,
+      "message": "sort and remove this dupe",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2ef6ce_9cfdeb47",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T21:38:43Z",
+      "side": 1,
+      "message": "nit: also update the comment in LocaleUtils.java",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4247b47_575f63c1",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T21:38:43Z",
+      "side": 1,
+      "message": "Do we also need to delete any existing zh-rHK files here? (or rather, in a previous pass)",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5224b8_f79799d1",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T21:38:43Z",
+      "side": 1,
+      "message": "nit: 2 lines between top-level functions (here and everywhere)",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc2045f_b1b83399",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T21:38:43Z",
+      "side": 1,
+      "message": "Remove blank line",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4202b2e7_f965fee5",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T21:38:43Z",
+      "side": 1,
+      "message": "_Gen* sounds like the method will return a generator, and you can\u0027t +\u003d a generator. I\u0027d either rename the function, or use .extend()",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d558dd4_cb220a8c",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T21:38:43Z",
+      "side": 1,
+      "message": "nit: nested if a bit harder to read than:\n\nif not keep_predicate(f):\n  delete\nelif f.endswith(\u0027.png\u0027);\n  append",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df089c6_5db0b689",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T21:38:43Z",
+      "side": 1,
+      "message": "none apk -\u003e library?\nAlso - it\u0027s not clear what \"this\" refers to.",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f31318_781d37b9",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T21:38:43Z",
+      "side": 1,
+      "message": "nit: Call this _CreateRTxtAndSrcJar()",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4749785e_3451c8c3",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T21:38:43Z",
+      "side": 1,
+      "message": "and options.language_splits?",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d91ee3_4e384fba",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T21:38:43Z",
+      "side": 1,
+      "message": "nit: these can just go inline as str(options.png_to_webp), str(options.suppoort_zh_hk)",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
