@@ -16,6 +16,7 @@
 #include "base/synchronization/lock.h"
 #include "components/cronet/ios/accept_languages_table.h"
 #include "components/cronet/ios/cronet_environment.h"
+#include "components/cronet/ios/cronet_metrics.h"
 #include "components/cronet/url_request_context_config.h"
 #include "ios/net/crn_http_protocol_handler.h"
 #include "ios/net/empty_nsurlcache.h"
@@ -34,6 +35,7 @@ NSString* const CRNInvalidArgumentKey = @"CRNInvalidArgumentKey";
 namespace {
 
 class CronetHttpProtocolHandlerDelegate;
+class CronetMetricsDelegateAdapter;
 
 using QuicHintVector =
     std::vector<std::unique_ptr<cronet::URLRequestContextConfig::QuicHint>>;
@@ -45,6 +47,9 @@ base::LazyInstance<std::unique_ptr<cronet::CronetEnvironment>>::Leaky
 
 base::LazyInstance<std::unique_ptr<CronetHttpProtocolHandlerDelegate>>::Leaky
     gHttpProtocolHandlerDelegate = LAZY_INSTANCE_INITIALIZER;
+
+base::LazyInstance<std::unique_ptr<CronetMetricsDelegateAdapter>>::Leaky
+    gMetricsDelegateAdapter = LAZY_INSTANCE_INITIALIZER;
 
 // See [Cronet initialize] method to set the default values of the global
 // variables.
@@ -123,6 +128,42 @@ class CronetHttpProtocolHandlerDelegate
   base::mac::ScopedBlock<RequestFilterBlock> filter_;
   base::Lock lock_;
 };
+
+// net::MetricsDelegate for Cronet.
+class CronetMetricsDelegateAdapter : public net::MetricsDelegate {
+ public:
+  CronetMetricsDelegateAdapter() { queue = [[NSOperationQueue alloc] init]; }
+
+  void didFinishCollectingMetrics(
+      NSURLSessionTask* task,
+      const net::LoadTimingInfo& load_timing_info,
+      const net::HttpResponseInfo& response_info) override;
+
+ private:
+  NSOperationQueue* queue;
+};
+
+void CronetMetricsDelegateAdapter::didFinishCollectingMetrics(
+    NSURLSessionTask* task,
+    const net::LoadTimingInfo& load_timing_info,
+    const net::HttpResponseInfo& response_info) {
+  if (@available(iOS 10, *)) {
+    CronetTransactionMetrics* transaction_metrics =
+        nativeToIOSMetrics(net::Metrics{task, load_timing_info, response_info});
+
+    CronetMetrics* cronet_metrics = [[CronetMetrics alloc] init];
+    [cronet_metrics setTransactionMetrics:@[ transaction_metrics ]];
+
+    @synchronized(gMetricsDelegates) {
+      for (id<CronetMetricsDelegate> delegate in gMetricsDelegates) {
+        [queue addOperationWithBlock:^{
+          [delegate URLSession:nil task:task
+             didFinishCollectingMetrics:cronet_metrics];
+        }];
+      }
+    }
+  }
+}
 
 }  // namespace
 
@@ -331,8 +372,10 @@ class CronetHttpProtocolHandlerDelegate
   gHttpProtocolHandlerDelegate.Get().reset(
       new CronetHttpProtocolHandlerDelegate(
           gChromeNet.Get()->GetURLRequestContextGetter(), gRequestFilterBlock));
+  gMetricsDelegateAdapter.Get().reset(new CronetMetricsDelegateAdapter());
   net::HTTPProtocolHandlerDelegate::SetInstance(
       gHttpProtocolHandlerDelegate.Get().get());
+  net::MetricsDelegate::SetInstance(gMetricsDelegateAdapter.Get().get());
   gRequestFilterBlock = nil;
 }
 
@@ -506,6 +549,7 @@ class CronetHttpProtocolHandlerDelegate
   gPkpList.clear();
   gRequestFilterBlock = nil;
   gHttpProtocolHandlerDelegate.Get().reset(nullptr);
+  gMetricsDelegateAdapter.Get().reset(nullptr);
   gPreservedSharedURLCache = nil;
   gEnableTestCertVerifierForTesting = NO;
   gMockCertVerifier.reset(nullptr);

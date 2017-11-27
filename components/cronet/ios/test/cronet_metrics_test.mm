@@ -4,20 +4,31 @@
 
 #import <Cronet/Cronet.h>
 
+#include "base/strings/sys_string_conversions.h"
 #include "components/cronet/ios/cronet_metrics.h"
 #include "components/cronet/ios/test/cronet_test_base.h"
-
+#include "components/cronet/ios/test/start_cronet.h"
+#include "components/cronet/ios/test/test_server.h"
+#include "components/grpc_support/test/quic_test_server.h"
+#include "ios/net/crn_http_protocol_handler.h"
+#include "net/base/mac/url_conversions.h"
 #include "testing/gtest_mac.h"
+#include "url/gurl.h"
 
 @interface TestMetricsDelegate : NSObject<CronetMetricsDelegate>
+@property(assign, readwrite) BOOL callbackCalled;
 @end
 
 @implementation TestMetricsDelegate
+
 - (void)URLSession:(NSURLSession*)session task:(NSURLSessionTask*)task
                     didFinishCollectingMetrics:(NSURLSessionTaskMetrics*)metrics
     NS_AVAILABLE_IOS(10.0) {
-  // This is never actually called, so its definition currently doesn't matter.
+  _callbackCalled = YES;
 }
+
+@synthesize callbackCalled = _callbackCalled;
+
 @end
 
 namespace cronet {
@@ -26,11 +37,36 @@ class CronetMetricsTest : public CronetTestBase {
  protected:
   CronetMetricsTest() {}
   ~CronetMetricsTest() override {}
+
+  void SetUp() override {
+    CronetTestBase::SetUp();
+    TestServer::Start();
+
+    StartCronet(grpc_support::GetQuicTestServerPort());
+    [Cronet registerHttpProtocolHandler];
+    NSURLSessionConfiguration* config =
+        [NSURLSessionConfiguration ephemeralSessionConfiguration];
+    config.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    [Cronet installIntoSessionConfiguration:config];
+    session_ = [NSURLSession sessionWithConfiguration:config
+                                             delegate:delegate_
+                                        delegateQueue:nil];
+  }
+
+  void TearDown() override {
+    [Cronet shutdownForTesting];
+
+    TestServer::Shutdown();
+    CronetTestBase::TearDown();
+  }
+
+  NSURLSession* session_;
 };
 
 TEST_F(CronetMetricsTest, Setters) {
   if (@available(iOS 10, *)) {
-    CronetMetrics* cronet_metrics = [[CronetMetrics alloc] init];
+    CronetTransactionMetrics* cronet_metrics =
+        [[CronetTransactionMetrics alloc] init];
 
     NSDate* test_date = [NSDate date];
     NSURLRequest* test_req = [NSURLRequest
@@ -87,6 +123,31 @@ TEST_F(CronetMetricsTest, Setters) {
   }
 }
 
+TEST_F(CronetMetricsTest, CallbackCalled) {
+  if (@available(iOS 10, *)) {
+    TestMetricsDelegate* metrics_delegate = [[TestMetricsDelegate alloc] init];
+    [metrics_delegate setCallbackCalled:NO];
+
+    [Cronet addMetricsDelegate:metrics_delegate];
+
+    NSURL* url = net::NSURLWithGURL(GURL(grpc_support::kTestServerSimpleUrl));
+    __block BOOL block_used = NO;
+    NSURLSessionDataTask* task = [session_ dataTaskWithURL:url];
+    [Cronet setRequestFilterBlock:^(NSURLRequest* request) {
+      block_used = YES;
+      EXPECT_EQ([request URL], url);
+      return YES;
+    }];
+    StartDataTaskAndWaitForCompletion(task);
+    EXPECT_TRUE(block_used);
+    EXPECT_EQ(nil, [delegate_ error]);
+    EXPECT_STREQ(grpc_support::kSimpleBodyValue,
+                 base::SysNSStringToUTF8([delegate_ responseBody]).c_str());
+
+    EXPECT_TRUE([metrics_delegate callbackCalled]);
+  }
+}
+
 TEST_F(CronetMetricsTest, Delegate) {
   if (@available(iOS 10, *)) {
     TestMetricsDelegate* metrics_delegate =
@@ -95,6 +156,38 @@ TEST_F(CronetMetricsTest, Delegate) {
     EXPECT_FALSE([Cronet addMetricsDelegate:metrics_delegate]);
     EXPECT_TRUE([Cronet removeMetricsDelegate:metrics_delegate]);
     EXPECT_FALSE([Cronet removeMetricsDelegate:metrics_delegate]);
+  }
+}
+
+TEST_F(CronetMetricsTest, NSURLSessionTaskMetrics) {
+  if (@available(iOS 10, *)) {
+    NSURL* url = net::NSURLWithGURL(GURL(grpc_support::kTestServerSimpleUrl));
+    __block BOOL block_used = NO;
+    NSURLSessionDataTask* task = [session_ dataTaskWithURL:url];
+    [Cronet setRequestFilterBlock:^(NSURLRequest* request) {
+      block_used = YES;
+      EXPECT_EQ([request URL], url);
+      return YES;
+    }];
+    StartDataTaskAndWaitForCompletion(task);
+    EXPECT_TRUE(block_used);
+    EXPECT_EQ(nil, [delegate_ error]);
+    EXPECT_STREQ(grpc_support::kSimpleBodyValue,
+                 base::SysNSStringToUTF8([delegate_ responseBody]).c_str());
+    NSURLSessionTaskMetrics* task_metrics = [delegate_ taskMetrics];
+    ASSERT_TRUE(task_metrics);
+    ASSERT_EQ(1lU, task_metrics.transactionMetrics.count);
+    NSURLSessionTaskTransactionMetrics* metrics =
+        task_metrics.transactionMetrics.firstObject;
+    ASSERT_TRUE([metrics isMemberOfClass:[CronetTransactionMetrics class]]);
+
+    NSLog(@"%@", metrics.fetchStartDate);
+
+    // CronetMetrics* cronet_metrics =
+    //    (CronetMetrics*)metrics;
+    // ASSERT_STREQ(
+    //    "Hello from Cronet!",
+    //    base::SysNSStringToUTF8(cronet_metrics.cronetCustomField).c_str());
   }
 }
 
