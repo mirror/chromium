@@ -37,13 +37,24 @@ class CHROMEOS_EXPORT AuthPolicyLoginHelper {
   // Restarts AuthPolicy service.
   static void Restart();
 
-  // See AuthPolicyClient::JoinAdDomain.
+  // Packs arguments and calls AuthPolicyClient::JoinAdDomain. authpolicyd runs
+  // "net ads join ..." which joins machine to Active directory domain.
+  // |machine_name| is a name for a local machine. |user_principal_name|,
+  // |password_fd| are credentials of the Active directory account which has
+  // right to join the machine to the domain. |password| is a plain text
+  // password of the |username|. The caller should close it after the call.
+  // |callback| is called after getting (or failing to get) D-BUS response.
   void JoinAdDomain(const std::string& machine_name,
                     const std::string& username,
                     const std::string& password,
                     JoinCallback callback);
 
-  // See AuthPolicyClient::AuthenticateUser.
+  // Packs arguments and calls AuthPolicyClient::AuthenticateUser. authpolicyd
+  // runs "kinit <user_principal_name> .. " which does kerberos authentication
+  // against Active Directory server. If |object_guid| is not empty authpolicy
+  // service first does ldap search by that |object_guid| for samAccountName and
+  // uses it for kinit. |password| is a plain text password of the |username|.
+  // |callback| is called after getting (or failing to get) D-BUS response.
   void AuthenticateUser(const std::string& username,
                         const std::string& object_guid,
                         const std::string& password,
