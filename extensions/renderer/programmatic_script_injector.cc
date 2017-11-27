@@ -165,7 +165,7 @@ bool ProgrammaticScriptInjector::CanShowUrlInError() const {
 }
 
 UserScript::RunLocation ProgrammaticScriptInjector::GetRunLocation() const {
-  return static_cast<UserScript::RunLocation>(params_->run_at);
+  return params_->run_at;
 }
 
 void ProgrammaticScriptInjector::Finish(const std::string& error,
