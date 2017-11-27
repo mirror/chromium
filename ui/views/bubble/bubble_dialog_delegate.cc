@@ -30,6 +30,22 @@ namespace views {
 
 namespace {
 
+// The frame view for bubble dialog widgets (popups). These are not user-sizable
+// so have simplified logic for minimum and maximum sizes to avoid repeated
+// calls to CalculatePreferredSize().
+class BubbleDialogFrameView : public BubbleFrameView {
+ public:
+  explicit BubbleDialogFrameView(const gfx::Insets& title_margins)
+      : BubbleFrameView(title_margins, gfx::Insets()) {}
+
+  // View:
+  gfx::Size GetMinimumSize() const override { return gfx::Size(); }
+  gfx::Size GetMaximumSize() const override { return gfx::Size(); }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(BubbleDialogFrameView);
+};
+
 // Create a widget to host the bubble.
 Widget* CreateBubbleWidget(BubbleDialogDelegateView* bubble) {
   Widget* bubble_widget = new Widget();
@@ -104,7 +120,7 @@ ClientView* BubbleDialogDelegateView::CreateClientView(Widget* widget) {
 
 NonClientFrameView* BubbleDialogDelegateView::CreateNonClientFrameView(
     Widget* widget) {
-  BubbleFrameView* frame = new BubbleFrameView(title_margins_, gfx::Insets());
+  BubbleFrameView* frame = new BubbleDialogFrameView(title_margins_);
 
   // By default, assume the footnote only contains text.
   frame->set_footnote_margins(
