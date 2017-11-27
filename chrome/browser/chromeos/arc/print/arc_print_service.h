@@ -9,6 +9,7 @@
 #include <unordered_map>
 
 #include "base/memory/weak_ptr.h"
+#include "chrome/browser/chromeos/printing/cups_print_job_manager.h"
 #include "components/arc/common/print.mojom.h"
 #include "components/arc/connection_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -20,12 +21,17 @@ namespace content {
 class BrowserContext;
 }  // namespace content
 
+namespace chromeos {
+class CupsPrintJob;
+}  // namespace chromeos
+
 namespace arc {
 
 class ArcBridgeService;
 
 class ArcPrintService : public KeyedService,
                         public ConnectionObserver<mojom::PrintInstance>,
+                        public chromeos::CupsPrintJobManager::Observer,
                         public mojom::PrintHost {
  public:
   // Returns singleton instance for the given BrowserContext,
@@ -49,6 +55,13 @@ class ArcPrintService : public KeyedService,
       mojom::PrinterDiscoverySessionInstancePtr instance,
       CreateDiscoverySessionCallback callback) override;
 
+ protected:
+  // chromeos::CupsPrintJobManager::Observer overrides:
+  void OnPrintJobCreated(chromeos::CupsPrintJob* job) override;
+  void OnPrintJobCancelled(chromeos::CupsPrintJob* job) override;
+  void OnPrintJobError(chromeos::CupsPrintJob* job) override;
+  void OnPrintJobDone(chromeos::CupsPrintJob* job) override;
+
  private:
   class PrintJobHostImpl;
 
@@ -57,6 +70,9 @@ class ArcPrintService : public KeyedService,
   Profile* const profile_;                      // Owned by ProfileManager.
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
   mojo::Binding<mojom::PrintHost> binding_;
+
+  // Managed by PrintJobHostImpl instances.
+  std::unordered_map<std::string, PrintJobHostImpl*> jobs_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcPrintService);
 };

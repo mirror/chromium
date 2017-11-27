@@ -17,6 +17,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/chromeos/printing/cups_print_job.h"
 #include "chrome/browser/chromeos/printing/cups_print_job_manager_factory.h"
 #include "chrome/browser/chromeos/printing/cups_printers_manager.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
@@ -300,10 +301,13 @@ class ArcPrintService::PrintJobHostImpl : public mojom::PrintJobHost,
                                           public content::NotificationObserver {
  public:
   PrintJobHostImpl(mojom::PrintJobInstancePtr instance,
+                   ArcPrintService* service,
                    std::unique_ptr<printing::PrintSettings> settings,
                    base::File file,
                    size_t data_size)
-      : instance_(std::move(instance)), weak_ptr_factory_(this) {
+      : instance_(std::move(instance)),
+        service_(service),
+        weak_ptr_factory_(this) {
     // We read printing data from pipe on working thread in parallel with
     // initializing PrinterQuery on IO thread. When both tasks are complete we
     // start printing.
@@ -319,13 +323,46 @@ class ArcPrintService::PrintJobHostImpl : public mojom::PrintJobHost,
                                       weak_ptr_factory_.GetWeakPtr())));
   }
 
+  ~PrintJobHostImpl() override {
+    if (!job_id_.empty())
+      service_->jobs_.erase(job_id_);
+  }
+
   void SetBinding(mojo::StrongBindingPtr<mojom::PrintJobHost> binding) {
     binding_ = binding;
   }
 
+  void CupsJobCreated(chromeos::CupsPrintJob* cups_job) {
+    cups_job_ = cups_job;
+  }
+
+  void CupsJobCanceled() {
+    instance_->Cancel();
+    binding_->Close();
+  }
+
+  void CupsJobError() {
+    // TODO(vkuzkokov) transform cups_job_->error_code() into localized string.
+    instance_->Fail({});
+    binding_->Close();
+  }
+
+  void CupsJobDone() {
+    instance_->Complete();
+    binding_->Close();
+  }
+
   // mojom::PrintJobHost override:
   void Cancel() override {
-    // TODO(vkuzkokov) implement.
+    if (cups_job_) {
+      // Job already spooled.
+      chromeos::CupsPrintJobManagerFactory::GetForBrowserContext(
+          service_->profile_)
+          ->CancelPrintJob(cups_job_);
+    } else {
+      instance_->Cancel();
+      binding_->Close();
+    }
   }
 
   // content::NotificationObserver override:
@@ -335,10 +372,13 @@ class ArcPrintService::PrintJobHostImpl : public mojom::PrintJobHost,
     const printing::JobEventDetails& event_details =
         *content::Details<printing::JobEventDetails>(details).ptr();
     switch (event_details.type()) {
-      case printing::JobEventDetails::JOB_DONE:
-        // TODO(vkuzkokov) not actually complete, just spooled.
-        instance_->Complete();
-        binding_->Close();
+      case printing::JobEventDetails::NEW_PAGE:
+        DCHECK(event_details.document());
+        job_id_ = chromeos::CupsPrintJob::GetUniqueId(
+            base::UTF16ToUTF8(
+                event_details.document()->settings().device_name()),
+            event_details.job_id());
+        service_->jobs_[job_id_] = this;
         break;
       case printing::JobEventDetails::FAILED:
         // TODO(vkuzkokov) see if we can extract an error message.
@@ -384,9 +424,11 @@ class ArcPrintService::PrintJobHostImpl : public mojom::PrintJobHost,
   mojo::StrongBindingPtr<mojom::PrintJobHost> binding_;
 
   mojom::PrintJobInstancePtr instance_;
+  ArcPrintService* service_;
   std::unique_ptr<printing::PdfMetafileSkia> metafile_;
   scoped_refptr<printing::PrintJob> job_;
   std::string job_id_;
+  chromeos::CupsPrintJob* cups_job_;
   content::NotificationRegistrar registrar_;
   base::WeakPtrFactory<PrintJobHostImpl> weak_ptr_factory_;
 
@@ -405,11 +447,13 @@ ArcPrintService::ArcPrintService(content::BrowserContext* context,
       arc_bridge_service_(bridge_service),
       binding_(this) {
   arc_bridge_service_->print()->AddObserver(this);
-  // Initialize CupsPrintJobManager.
-  chromeos::CupsPrintJobManagerFactory::GetForBrowserContext(profile_);
+  chromeos::CupsPrintJobManagerFactory::GetForBrowserContext(profile_)
+      ->AddObserver(this);
 }
 
 ArcPrintService::~ArcPrintService() {
+  chromeos::CupsPrintJobManagerFactory::GetForBrowserContext(profile_)
+      ->RemoveObserver(this);
   arc_bridge_service_->print()->RemoveObserver(this);
 }
 
@@ -428,6 +472,30 @@ void ArcPrintService::OnConnectionReady() {
 void ArcPrintService::OnConnectionError() {
   arc_bridge_service_->print()->SetInstance(nullptr);
   binding_.Close();
+}
+
+void ArcPrintService::OnPrintJobCreated(chromeos::CupsPrintJob* job) {
+  auto it = jobs_.find(job->GetUniqueId());
+  if (it != jobs_.end())
+    it->second->CupsJobCreated(job);
+}
+
+void ArcPrintService::OnPrintJobCancelled(chromeos::CupsPrintJob* job) {
+  auto it = jobs_.find(job->GetUniqueId());
+  if (it != jobs_.end())
+    it->second->CupsJobCanceled();
+}
+
+void ArcPrintService::OnPrintJobError(chromeos::CupsPrintJob* job) {
+  auto it = jobs_.find(job->GetUniqueId());
+  if (it != jobs_.end())
+    it->second->CupsJobError();
+}
+
+void ArcPrintService::OnPrintJobDone(chromeos::CupsPrintJob* job) {
+  auto it = jobs_.find(job->GetUniqueId());
+  if (it != jobs_.end())
+    it->second->CupsJobDone();
 }
 
 void ArcPrintService::PrintDeprecated(mojo::ScopedHandle pdf_data) {
@@ -492,7 +560,7 @@ void ArcPrintService::Print(mojom::PrintJobInstancePtr instance,
   mojo::InterfaceRequest<mojom::PrintJobHost> request =
       mojo::MakeRequest(&host_proxy);
   auto host = std::make_unique<PrintJobHostImpl>(
-      std::move(instance), std::move(settings),
+      std::move(instance), this, std::move(settings),
       base::File(scoped_handle.release().handle), print_job->data_size);
   PrintJobHostImpl* host_ptr = host.get();
   host_ptr->SetBinding(
