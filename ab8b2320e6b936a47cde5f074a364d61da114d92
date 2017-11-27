@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd2129b7_ae35420e",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-27T23:06:54Z",
+      "side": 1,
+      "message": "It looks like this is ultimately owned by BrowserProcessImpl ? As such, this may get destroyed after NetworkHandler is shut down, so we need to test against NetworkHandler::IsInitialized() here. (It\u0027s generally a good idea to do so for anything that isn\u0027t clearly a DBus service and explicitly destroyed before DBus services).",
+      "revId": "ab8b2320e6b936a47cde5f074a364d61da114d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
