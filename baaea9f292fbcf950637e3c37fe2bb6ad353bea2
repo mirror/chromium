@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "674246fe_3f308de6",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T18:26:23Z",
+      "side": 1,
+      "message": "nit: #include \"base/strings/string_util.h\" is missing.",
+      "revId": "baaea9f292fbcf950637e3c37fe2bb6ad353bea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
