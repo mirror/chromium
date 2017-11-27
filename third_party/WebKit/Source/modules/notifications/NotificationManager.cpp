@@ -17,6 +17,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/modules/permissions/permission.mojom-blink.h"
 #include "public/platform/modules/permissions/permission_status.mojom-blink.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -49,14 +50,12 @@ NotificationManager::~NotificationManager() {}
 mojom::blink::PermissionStatus NotificationManager::GetPermissionStatus(
     ExecutionContext* execution_context) {
   if (!notification_service_) {
-    Platform::Current()->GetInterfaceProvider()->GetInterface(
+    execution_context->GetInterfaceProvider()->GetInterface(
         mojo::MakeRequest(&notification_service_));
   }
 
   mojom::blink::PermissionStatus permission_status;
-  if (!notification_service_->GetPermissionStatus(
-          execution_context->GetSecurityOrigin()->ToString(),
-          &permission_status)) {
+  if (!notification_service_->GetPermissionStatus(&permission_status)) {
     NOTREACHED();
     return mojom::blink::PermissionStatus::DENIED;
   }
