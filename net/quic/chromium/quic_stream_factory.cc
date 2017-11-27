@@ -221,7 +221,7 @@ class QuicStreamFactory::CertVerifierJob {
    public:
     explicit ProofVerifierCallbackImpl(CertVerifierJob* job) : job_(job) {}
 
-    ~ProofVerifierCallbackImpl() override {}
+    ~ProofVerifierCallbackImpl() override = default;
 
     void Run(bool ok,
              const std::string& error_details,

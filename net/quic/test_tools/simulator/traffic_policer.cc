@@ -23,7 +23,7 @@ TrafficPolicer::TrafficPolicer(Simulator* simulator,
       target_bandwidth_(target_bandwidth),
       last_refill_time_(clock_->Now()) {}
 
-TrafficPolicer::~TrafficPolicer() {}
+TrafficPolicer::~TrafficPolicer() = default;
 
 void TrafficPolicer::Refill() {
   QuicTime::Delta time_passed = clock_->Now() - last_refill_time_;

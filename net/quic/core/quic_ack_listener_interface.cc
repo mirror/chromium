@@ -6,6 +6,6 @@
 
 namespace net {
 
-QuicAckListenerInterface::~QuicAckListenerInterface() {}
+QuicAckListenerInterface::~QuicAckListenerInterface() = default;
 
 }  // namespace net

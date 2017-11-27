@@ -28,7 +28,7 @@ PacingSender::PacingSender()
       was_last_send_delayed_(false),
       initial_burst_size_(kInitialUnpacedBurst) {}
 
-PacingSender::~PacingSender() {}
+PacingSender::~PacingSender() = default;
 
 void PacingSender::set_sender(SendAlgorithmInterface* sender) {
   DCHECK(sender != nullptr);

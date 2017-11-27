@@ -75,7 +75,7 @@ class QuicSentPacketManagerTest : public QuicTest {
         .Times(AnyNumber());
   }
 
-  ~QuicSentPacketManagerTest() override {}
+  ~QuicSentPacketManagerTest() override = default;
 
   QuicByteCount BytesInFlight() {
     return QuicSentPacketManagerPeer::GetBytesInFlight(&manager_);

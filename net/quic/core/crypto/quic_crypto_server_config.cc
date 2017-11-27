@@ -114,11 +114,11 @@ ClientHelloInfo::ClientHelloInfo(const QuicIpAddress& in_client_ip,
 
 ClientHelloInfo::ClientHelloInfo(const ClientHelloInfo& other) = default;
 
-ClientHelloInfo::~ClientHelloInfo() {}
+ClientHelloInfo::~ClientHelloInfo() = default;
 
-PrimaryConfigChangedCallback::PrimaryConfigChangedCallback() {}
+PrimaryConfigChangedCallback::PrimaryConfigChangedCallback() = default;
 
-PrimaryConfigChangedCallback::~PrimaryConfigChangedCallback() {}
+PrimaryConfigChangedCallback::~PrimaryConfigChangedCallback() = default;
 
 ValidateClientHelloResultCallback::Result::Result(
     const CryptoHandshakeMessage& in_client_hello,
@@ -128,15 +128,17 @@ ValidateClientHelloResultCallback::Result::Result(
       info(in_client_ip, in_now),
       error_code(QUIC_NO_ERROR) {}
 
-ValidateClientHelloResultCallback::Result::~Result() {}
+ValidateClientHelloResultCallback::Result::~Result() = default;
 
-ValidateClientHelloResultCallback::ValidateClientHelloResultCallback() {}
+ValidateClientHelloResultCallback::ValidateClientHelloResultCallback() =
+    default;
 
-ValidateClientHelloResultCallback::~ValidateClientHelloResultCallback() {}
+ValidateClientHelloResultCallback::~ValidateClientHelloResultCallback() =
+    default;
 
-ProcessClientHelloResultCallback::ProcessClientHelloResultCallback() {}
+ProcessClientHelloResultCallback::ProcessClientHelloResultCallback() = default;
 
-ProcessClientHelloResultCallback::~ProcessClientHelloResultCallback() {}
+ProcessClientHelloResultCallback::~ProcessClientHelloResultCallback() = default;
 
 QuicCryptoServerConfig::ConfigOptions::ConfigOptions()
     : expiry_time(QuicWallTime::Zero()),
@@ -146,7 +148,7 @@ QuicCryptoServerConfig::ConfigOptions::ConfigOptions()
 QuicCryptoServerConfig::ConfigOptions::ConfigOptions(
     const ConfigOptions& other) = default;
 
-QuicCryptoServerConfig::ConfigOptions::~ConfigOptions() {}
+QuicCryptoServerConfig::ConfigOptions::~ConfigOptions() = default;
 
 QuicCryptoServerConfig::QuicCryptoServerConfig(
     QuicStringPiece source_address_token_secret,
@@ -177,7 +179,7 @@ QuicCryptoServerConfig::QuicCryptoServerConfig(
       {string(reinterpret_cast<char*>(key_bytes.get()), key_size)});
 }
 
-QuicCryptoServerConfig::~QuicCryptoServerConfig() {}
+QuicCryptoServerConfig::~QuicCryptoServerConfig() = default;
 
 // static
 std::unique_ptr<QuicServerConfigProtobuf>
@@ -1365,7 +1367,7 @@ void QuicCryptoServerConfig::BuildServerConfigUpdateMessage(
 }
 
 QuicCryptoServerConfig::BuildServerConfigUpdateMessageProofSourceCallback::
-    ~BuildServerConfigUpdateMessageProofSourceCallback() {}
+    ~BuildServerConfigUpdateMessageProofSourceCallback() = default;
 
 QuicCryptoServerConfig::BuildServerConfigUpdateMessageProofSourceCallback::
     BuildServerConfigUpdateMessageProofSourceCallback(
@@ -1924,9 +1926,9 @@ QuicCryptoServerConfig::Config::Config()
       priority(0),
       source_address_token_boxer(nullptr) {}
 
-QuicCryptoServerConfig::Config::~Config() {}
+QuicCryptoServerConfig::Config::~Config() = default;
 
-QuicSignedServerConfig::QuicSignedServerConfig() {}
-QuicSignedServerConfig::~QuicSignedServerConfig() {}
+QuicSignedServerConfig::QuicSignedServerConfig() = default;
+QuicSignedServerConfig::~QuicSignedServerConfig() = default;
 
 }  // namespace net

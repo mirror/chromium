@@ -26,7 +26,7 @@ OneWayLink::OneWayLink(Simulator* simulator,
       propagation_delay_(propagation_delay),
       next_write_at_(QuicTime::Zero()) {}
 
-OneWayLink::~OneWayLink() {}
+OneWayLink::~OneWayLink() = default;
 
 OneWayLink::QueuedPacket::QueuedPacket(std::unique_ptr<Packet> packet,
                                        QuicTime dequeue_time)
@@ -34,7 +34,7 @@ OneWayLink::QueuedPacket::QueuedPacket(std::unique_ptr<Packet> packet,
 
 OneWayLink::QueuedPacket::QueuedPacket(QueuedPacket&& other) = default;
 
-OneWayLink::QueuedPacket::~QueuedPacket() {}
+OneWayLink::QueuedPacket::~QueuedPacket() = default;
 
 void OneWayLink::AcceptPacket(std::unique_ptr<Packet> packet) {
   DCHECK(TimeUntilAvailable().IsZero());

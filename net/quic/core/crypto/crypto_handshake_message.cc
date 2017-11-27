@@ -35,7 +35,7 @@ CryptoHandshakeMessage::CryptoHandshakeMessage(
 CryptoHandshakeMessage::CryptoHandshakeMessage(CryptoHandshakeMessage&& other) =
     default;
 
-CryptoHandshakeMessage::~CryptoHandshakeMessage() {}
+CryptoHandshakeMessage::~CryptoHandshakeMessage() = default;
 
 CryptoHandshakeMessage& CryptoHandshakeMessage::operator=(
     const CryptoHandshakeMessage& other) {

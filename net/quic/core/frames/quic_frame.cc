@@ -9,7 +9,7 @@ using std::string;
 
 namespace net {
 
-QuicFrame::QuicFrame() {}
+QuicFrame::QuicFrame() = default;
 
 QuicFrame::QuicFrame(QuicPaddingFrame padding_frame)
     : type(PADDING_FRAME), padding_frame(padding_frame) {}

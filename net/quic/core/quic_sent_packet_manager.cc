@@ -88,7 +88,7 @@ QuicSentPacketManager::QuicSentPacketManager(
   SetSendAlgorithm(congestion_control_type);
 }
 
-QuicSentPacketManager::~QuicSentPacketManager() {}
+QuicSentPacketManager::~QuicSentPacketManager() = default;
 
 void QuicSentPacketManager::SetFromConfig(const QuicConfig& config) {
   if (config.HasReceivedInitialRoundTripTimeUs() &&

@@ -147,8 +147,8 @@ class CommonCertSetsQUIC : public CommonCertSets {
   }
 
  private:
-  CommonCertSetsQUIC() {}
-  ~CommonCertSetsQUIC() override {}
+  CommonCertSetsQUIC() = default;
+  ~CommonCertSetsQUIC() override = default;
 
   friend struct base::DefaultSingletonTraits<CommonCertSetsQUIC>;
   DISALLOW_COPY_AND_ASSIGN(CommonCertSetsQUIC);
@@ -156,7 +156,7 @@ class CommonCertSetsQUIC : public CommonCertSets {
 
 }  // anonymous namespace
 
-CommonCertSets::~CommonCertSets() {}
+CommonCertSets::~CommonCertSets() = default;
 
 // static
 const CommonCertSets* CommonCertSets::GetInstanceQUIC() {

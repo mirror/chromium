@@ -104,7 +104,7 @@ class ReadErrorUploadDataStream : public UploadDataStream {
 
   explicit ReadErrorUploadDataStream(FailureMode mode)
       : UploadDataStream(true, 0), async_(mode), weak_factory_(this) {}
-  ~ReadErrorUploadDataStream() override {}
+  ~ReadErrorUploadDataStream() override = default;
 
  private:
   void CompleteRead() { UploadDataStream::OnReadCompleted(ERR_FAILED); }
