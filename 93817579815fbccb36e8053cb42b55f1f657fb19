@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8b6ad99_a31a0ee6",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-27T18:52:20Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need the !is_nacl check here. is_nacl and is_win are mutually exclusive. You may be thinking about the old GYP system where you needed to write this kind of thing.",
+      "revId": "93817579815fbccb36e8053cb42b55f1f657fb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
