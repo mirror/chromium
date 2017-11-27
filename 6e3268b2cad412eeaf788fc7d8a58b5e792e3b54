@@ -22,6 +22,30 @@
       "revId": "6e3268b2cad412eeaf788fc7d8a58b5e792e3b54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a63fd8b_ed004996",
+        "filename": "content/common/service_worker/embedded_worker_start_params_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-27T10:45:24Z",
+      "side": 1,
+      "message": "(see https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#StructTraits-getters-should-be-simple which mentions this--though I think I\u0027ll need to update it to more clearer about the reasons why)",
+      "parentUuid": "e4983490_ff27e385",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 13
+      },
+      "revId": "6e3268b2cad412eeaf788fc7d8a58b5e792e3b54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
