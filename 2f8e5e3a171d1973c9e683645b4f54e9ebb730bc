@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89f6ca0a_ec3064e9",
+        "filename": "build/config/win/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-27T18:08:08Z",
+      "side": 1,
+      "message": "Thanks!\n\nI\u0027ve moved the asserts into the if-statement in default_cygprofile_instrumentation above.",
+      "parentUuid": "92bfe16c_61556022",
+      "revId": "2f8e5e3a171d1973c9e683645b4f54e9ebb730bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45a666d9_9ed93ad3",
         "filename": "build/config/win/BUILD.gn",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T02:26:26Z",
       "side": 1,
       "message": "Is this define needed? It doesn\u0027t look like you\u0027re using it. If we do need it, can we convert it to be a generated header to avoid adding more global defines? (see //build/buildflag_header.gni)",
+      "revId": "2f8e5e3a171d1973c9e683645b4f54e9ebb730bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf0dbd7_edea753f",
+        "filename": "build/config/win/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-27T18:08:08Z",
+      "side": 1,
+      "message": "I was using it for the assert in tools/cygprofile_win/cygprofile.cc, but it\u0027s not important. I\u0027ll remove it.",
+      "parentUuid": "45a666d9_9ed93ad3",
       "revId": "2f8e5e3a171d1973c9e683645b4f54e9ebb730bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -68,6 +104,24 @@
       "revId": "2f8e5e3a171d1973c9e683645b4f54e9ebb730bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468e113f_c68c1b61",
+        "filename": "docs/win_order_files.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-27T18:08:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34bb3d36_7f4ed129",
+      "revId": "2f8e5e3a171d1973c9e683645b4f54e9ebb730bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
