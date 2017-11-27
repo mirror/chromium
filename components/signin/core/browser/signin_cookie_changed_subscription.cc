@@ -10,11 +10,11 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
-SigninCookieChangedSubscription::SubscriptionHolder::SubscriptionHolder() {
-}
+SigninCookieChangedSubscription::SubscriptionHolder::SubscriptionHolder() =
+    default;
 
-SigninCookieChangedSubscription::SubscriptionHolder::~SubscriptionHolder() {
-}
+SigninCookieChangedSubscription::SubscriptionHolder::~SubscriptionHolder() =
+    default;
 
 SigninCookieChangedSubscription::SigninCookieChangedSubscription(
     scoped_refptr<net::URLRequestContextGetter> context_getter,

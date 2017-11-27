@@ -42,13 +42,13 @@ namespace safe_browsing {
 
 class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  public:
-  MockSafeBrowsingDatabaseManager() {}
+  MockSafeBrowsingDatabaseManager() = default;
 
   MOCK_METHOD2(CheckCsdWhitelistUrl,
                AsyncMatch(const GURL&, SafeBrowsingDatabaseManager::Client*));
 
  protected:
-  ~MockSafeBrowsingDatabaseManager() override {}
+  ~MockSafeBrowsingDatabaseManager() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockSafeBrowsingDatabaseManager);
@@ -67,7 +67,7 @@ class DummyURLRequestContextGetter : public net::URLRequestContextGetter {
   }
 
  private:
-  ~DummyURLRequestContextGetter() override {}
+  ~DummyURLRequestContextGetter() override = default;
 
   scoped_refptr<base::SingleThreadTaskRunner> dummy_task_runner_;
 };
@@ -125,7 +125,7 @@ class TestPasswordProtectionService : public PasswordProtectionService {
     return latest_response_.get();
   }
 
-  ~TestPasswordProtectionService() override {}
+  ~TestPasswordProtectionService() override = default;
 
   size_t GetPendingRequestsCount() { return pending_requests_.size(); }
 
@@ -157,7 +157,8 @@ class TestPasswordProtectionService : public PasswordProtectionService {
 class PasswordProtectionServiceTest
     : public ::testing::TestWithParam<std::vector<bool>> {
  public:
-  PasswordProtectionServiceTest(){};
+  PasswordProtectionServiceTest() = default;
+  ;
 
   LoginReputationClientResponse CreateVerdictProto(
       LoginReputationClientResponse::VerdictType verdict,

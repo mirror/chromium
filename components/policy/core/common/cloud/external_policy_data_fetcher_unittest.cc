@@ -73,8 +73,7 @@ ExternalPolicyDataFetcherTest::ExternalPolicyDataFetcherTest()
     : callback_count_(0) {
 }
 
-ExternalPolicyDataFetcherTest::~ExternalPolicyDataFetcherTest() {
-}
+ExternalPolicyDataFetcherTest::~ExternalPolicyDataFetcherTest() = default;
 
 void ExternalPolicyDataFetcherTest::SetUp() {
   fetcher_factory_.set_remove_fetcher_on_delete(true);

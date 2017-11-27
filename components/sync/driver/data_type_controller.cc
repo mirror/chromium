@@ -11,7 +11,7 @@ namespace syncer {
 
 DataTypeController::DataTypeController(ModelType type) : type_(type) {}
 
-DataTypeController::~DataTypeController() {}
+DataTypeController::~DataTypeController() = default;
 
 // static
 bool DataTypeController::IsUnrecoverableResult(ConfigureResult result) {

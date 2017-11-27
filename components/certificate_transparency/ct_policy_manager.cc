@@ -240,7 +240,7 @@ CTPolicyManager::CTPolicyManager(
   ScheduleUpdate();
 }
 
-CTPolicyManager::~CTPolicyManager() {}
+CTPolicyManager::~CTPolicyManager() = default;
 
 void CTPolicyManager::Shutdown() {
   // Cancel any pending updates, since the preferences are going away.

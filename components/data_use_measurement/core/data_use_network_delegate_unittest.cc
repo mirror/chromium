@@ -52,7 +52,7 @@ class TestURLRequestClassifier : public base::SupportsUserData::Data,
 
 class TestDataUseAscriber : public DataUseAscriber {
  public:
-  TestDataUseAscriber() {}
+  TestDataUseAscriber() = default;
 
   DataUseRecorder* GetOrCreateDataUseRecorder(
       net::URLRequest* request) override {

@@ -19,7 +19,7 @@
 
 namespace policy {
 
-CloudPolicyCore::Observer::~Observer() {}
+CloudPolicyCore::Observer::~Observer() = default;
 
 void CloudPolicyCore::Observer::OnRemoteCommandsServiceStarted(
     CloudPolicyCore* core) {
@@ -35,7 +35,7 @@ CloudPolicyCore::CloudPolicyCore(
       store_(store),
       task_runner_(task_runner) {}
 
-CloudPolicyCore::~CloudPolicyCore() {}
+CloudPolicyCore::~CloudPolicyCore() = default;
 
 void CloudPolicyCore::Connect(std::unique_ptr<CloudPolicyClient> client) {
   CHECK(!client_);

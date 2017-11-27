@@ -40,7 +40,7 @@ namespace arc {
 
 FakeAppInstance::FakeAppInstance(mojom::AppHost* app_host)
     : app_host_(app_host) {}
-FakeAppInstance::~FakeAppInstance() {}
+FakeAppInstance::~FakeAppInstance() = default;
 
 void FakeAppInstance::Init(mojom::AppHostPtr host_ptr) {
   // ARC app instance calls RefreshAppList after Init() successfully. Call

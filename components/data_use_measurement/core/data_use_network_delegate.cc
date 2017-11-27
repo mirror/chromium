@@ -25,7 +25,7 @@ DataUseNetworkDelegate::DataUseNetworkDelegate(
   DCHECK(ascriber);
 }
 
-DataUseNetworkDelegate::~DataUseNetworkDelegate() {}
+DataUseNetworkDelegate::~DataUseNetworkDelegate() = default;
 
 void DataUseNetworkDelegate::OnBeforeURLRequestInternal(
     net::URLRequest* request,

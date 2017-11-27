@@ -416,7 +416,7 @@ Buffer::Buffer(std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer,
       wait_for_release_delay_(
           base::TimeDelta::FromMilliseconds(kWaitForReleaseDelayMs)) {}
 
-Buffer::~Buffer() {}
+Buffer::~Buffer() = default;
 
 bool Buffer::ProduceTransferableResource(
     LayerTreeFrameSinkHolder* layer_tree_frame_sink_holder,

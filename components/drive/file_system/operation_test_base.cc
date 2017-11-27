@@ -22,11 +22,9 @@
 namespace drive {
 namespace file_system {
 
-OperationTestBase::LoggingDelegate::LoggingDelegate() {
-}
+OperationTestBase::LoggingDelegate::LoggingDelegate() = default;
 
-OperationTestBase::LoggingDelegate::~LoggingDelegate() {
-}
+OperationTestBase::LoggingDelegate::~LoggingDelegate() = default;
 
 void OperationTestBase::LoggingDelegate::OnFileChangedByOperation(
     const FileChange& changed_files) {
@@ -51,15 +49,13 @@ bool OperationTestBase::LoggingDelegate::WaitForSyncComplete(
       false : wait_for_sync_complete_handler_.Run(local_id, callback);
 }
 
-OperationTestBase::OperationTestBase() {
-}
+OperationTestBase::OperationTestBase() = default;
 
 OperationTestBase::OperationTestBase(int test_thread_bundle_options)
     : thread_bundle_(test_thread_bundle_options) {
 }
 
-OperationTestBase::~OperationTestBase() {
-}
+OperationTestBase::~OperationTestBase() = default;
 
 void OperationTestBase::SetUp() {
   blocking_task_runner_ =

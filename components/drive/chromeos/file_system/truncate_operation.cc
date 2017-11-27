@@ -71,8 +71,7 @@ TruncateOperation::TruncateOperation(
       weak_ptr_factory_(this) {
 }
 
-TruncateOperation::~TruncateOperation() {
-}
+TruncateOperation::~TruncateOperation() = default;
 
 void TruncateOperation::Truncate(const base::FilePath& file_path,
                                  int64_t length,

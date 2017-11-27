@@ -69,7 +69,7 @@ AutofillProfileComparator::AutofillProfileComparator(
   transliterator_ = std::move(transliterator);
 }
 
-AutofillProfileComparator::~AutofillProfileComparator() {}
+AutofillProfileComparator::~AutofillProfileComparator() = default;
 
 base::string16 AutofillProfileComparator::NormalizeForComparison(
     base::StringPiece16 text,

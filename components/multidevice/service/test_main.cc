@@ -12,8 +12,8 @@ namespace {
 
 class FakeDeviceSyncFactory : public multidevice::DeviceSyncImpl::Factory {
  public:
-  FakeDeviceSyncFactory() {}
-  ~FakeDeviceSyncFactory() override {}
+  FakeDeviceSyncFactory() = default;
+  ~FakeDeviceSyncFactory() override = default;
 
   // DeviceSyncImpl::Factory:
   std::unique_ptr<device_sync::mojom::DeviceSync> BuildInstance(

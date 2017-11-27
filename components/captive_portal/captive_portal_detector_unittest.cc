@@ -54,8 +54,8 @@ class CaptivePortalClient {
 class CaptivePortalDetectorTest : public testing::Test,
                                   public CaptivePortalDetectorTestBase {
  public:
-  CaptivePortalDetectorTest() {}
-  ~CaptivePortalDetectorTest() override {}
+  CaptivePortalDetectorTest() = default;
+  ~CaptivePortalDetectorTest() override = default;
 
   void SetUp() override {
     scoped_refptr<net::URLRequestContextGetter> request_context_getter(

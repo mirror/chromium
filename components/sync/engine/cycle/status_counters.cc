@@ -11,7 +11,7 @@ namespace syncer {
 StatusCounters::StatusCounters()
     : num_entries(0), num_entries_and_tombstones(0) {}
 
-StatusCounters::~StatusCounters() {}
+StatusCounters::~StatusCounters() = default;
 
 std::unique_ptr<base::DictionaryValue> StatusCounters::ToValue() const {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());

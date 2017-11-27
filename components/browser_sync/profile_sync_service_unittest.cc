@@ -58,7 +58,7 @@ class FakeDataTypeManager : public syncer::DataTypeManager {
   explicit FakeDataTypeManager(const ConfigureCalled& configure_called)
       : configure_called_(configure_called) {}
 
-  ~FakeDataTypeManager() override {}
+  ~FakeDataTypeManager() override = default;
 
   void Configure(syncer::ModelTypeSet desired_types,
                  syncer::ConfigureReason reason) override {
@@ -174,7 +174,7 @@ void DoNothing(DataTypeController::ConfigureResult ignored1,
 class ProfileSyncServiceTest : public ::testing::Test {
  protected:
   ProfileSyncServiceTest() : component_factory_(nullptr) {}
-  ~ProfileSyncServiceTest() override {}
+  ~ProfileSyncServiceTest() override = default;
 
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(

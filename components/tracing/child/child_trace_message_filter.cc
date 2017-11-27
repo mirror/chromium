@@ -53,7 +53,7 @@ bool ChildTraceMessageFilter::OnMessageReceived(const IPC::Message& message) {
   return handled;
 }
 
-ChildTraceMessageFilter::~ChildTraceMessageFilter() {}
+ChildTraceMessageFilter::~ChildTraceMessageFilter() = default;
 
 void ChildTraceMessageFilter::OnSetTracingProcessId(
     uint64_t tracing_process_id) {

@@ -20,7 +20,7 @@ UpdateRequestTask::UpdateRequestTask(
       callback_(callback),
       weak_ptr_factory_(this) {}
 
-UpdateRequestTask::~UpdateRequestTask() {}
+UpdateRequestTask::~UpdateRequestTask() = default;
 
 void UpdateRequestTask::Run() {
   ReadRequest();

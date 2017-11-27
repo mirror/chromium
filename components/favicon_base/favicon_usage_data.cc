@@ -6,12 +6,10 @@
 
 namespace favicon_base {
 
-FaviconUsageData::FaviconUsageData() {
-}
+FaviconUsageData::FaviconUsageData() = default;
 
 FaviconUsageData::FaviconUsageData(const FaviconUsageData& other) = default;
 
-FaviconUsageData::~FaviconUsageData() {
-}
+FaviconUsageData::~FaviconUsageData() = default;
 
 }  // namespace favicon_base

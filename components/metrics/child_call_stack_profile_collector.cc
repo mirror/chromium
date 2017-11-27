@@ -34,9 +34,9 @@ ChildCallStackProfileCollector::ProfilesState&
 ChildCallStackProfileCollector::ProfilesState::operator=(ProfilesState&&) =
     default;
 
-ChildCallStackProfileCollector::ChildCallStackProfileCollector() {}
+ChildCallStackProfileCollector::ChildCallStackProfileCollector() = default;
 
-ChildCallStackProfileCollector::~ChildCallStackProfileCollector() {}
+ChildCallStackProfileCollector::~ChildCallStackProfileCollector() = default;
 
 base::StackSamplingProfiler::CompletedCallback
 ChildCallStackProfileCollector::GetProfilerCallback(

@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-AsyncDirectoryTypeControllerMock::AsyncDirectoryTypeControllerMock() {}
+AsyncDirectoryTypeControllerMock::AsyncDirectoryTypeControllerMock() = default;
 
-AsyncDirectoryTypeControllerMock::~AsyncDirectoryTypeControllerMock() {}
+AsyncDirectoryTypeControllerMock::~AsyncDirectoryTypeControllerMock() = default;
 
 }  // namespace syncer

@@ -28,8 +28,7 @@ UndoGroup::UndoGroup()
       redo_label_id_(IDS_BOOKMARK_BAR_REDO) {
 }
 
-UndoGroup::~UndoGroup() {
-}
+UndoGroup::~UndoGroup() = default;
 
 void UndoGroup::AddOperation(std::unique_ptr<UndoOperation> operation) {
   if (operations_.empty()) {

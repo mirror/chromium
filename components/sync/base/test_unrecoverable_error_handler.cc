@@ -11,7 +11,7 @@ namespace syncer {
 TestUnrecoverableErrorHandler::TestUnrecoverableErrorHandler()
     : weak_ptr_factory_(this) {}
 
-TestUnrecoverableErrorHandler::~TestUnrecoverableErrorHandler() {}
+TestUnrecoverableErrorHandler::~TestUnrecoverableErrorHandler() = default;
 
 void TestUnrecoverableErrorHandler::OnUnrecoverableError(
     const base::Location& from_here,

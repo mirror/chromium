@@ -52,7 +52,7 @@ class TestMetricsLog : public MetricsLog {
                  MetricsServiceClient* client)
       : MetricsLog(client_id, session_id, log_type, client) {}
 
-  ~TestMetricsLog() override {}
+  ~TestMetricsLog() override = default;
 
   const ChromeUserMetricsExtension& uma_proto() const {
     return *MetricsLog::uma_proto();
@@ -74,8 +74,8 @@ class TestMetricsLog : public MetricsLog {
 
 class MetricsLogTest : public testing::Test {
  public:
-  MetricsLogTest() {}
-  ~MetricsLogTest() override {}
+  MetricsLogTest() = default;
+  ~MetricsLogTest() override = default;
 
  protected:
   // Check that the values in |system_values| correspond to the test data

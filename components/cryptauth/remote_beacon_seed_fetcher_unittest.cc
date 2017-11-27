@@ -39,8 +39,8 @@ const std::string public_key2 = "publicKey2";
 
 class MockDeviceManager : public CryptAuthDeviceManager {
  public:
-  MockDeviceManager() {}
-  ~MockDeviceManager() override {}
+  MockDeviceManager() = default;
+  ~MockDeviceManager() override = default;
 
   MOCK_CONST_METHOD0(GetSyncedDevices, std::vector<ExternalDeviceInfo>());
 };

@@ -28,7 +28,7 @@ RapporMetric::RapporMetric(const std::string& metric_name,
   DCHECK_EQ(0, RapporParameters::kMaxCohorts % parameters.num_cohorts);
 }
 
-RapporMetric::~RapporMetric() {}
+RapporMetric::~RapporMetric() = default;
 
 void RapporMetric::AddSample(const std::string& str) {
   ++sample_count_;

@@ -423,9 +423,9 @@ void AnalyseForm(const FormInputCollection& form_input_collection,
 }  // namespace
 
 // Out-of-line definitions to keep [chromium-style] happy.
-PagePasswordsAnalyser::PagePasswordsAnalyser() {}
+PagePasswordsAnalyser::PagePasswordsAnalyser() = default;
 
-PagePasswordsAnalyser::~PagePasswordsAnalyser() {}
+PagePasswordsAnalyser::~PagePasswordsAnalyser() = default;
 
 void PagePasswordsAnalyser::Reset() {
   skip_nodes_.clear();

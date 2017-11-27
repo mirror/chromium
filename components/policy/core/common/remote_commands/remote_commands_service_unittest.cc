@@ -116,7 +116,7 @@ class TestingCloudPolicyClientForRemoteCommands : public CloudPolicyClient {
         : expected_command_results(expected_command_results),
           expected_fetched_commands(expected_fetched_commands),
           commands_fetched_callback(commands_fetched_callback) {}
-    virtual ~FetchCallExpectation() {}
+    virtual ~FetchCallExpectation() = default;
 
     const size_t expected_command_results;
     const size_t expected_fetched_commands;

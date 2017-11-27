@@ -40,7 +40,7 @@ class TestPermissionManager : public content::PermissionManager {
 
   // content::PermissionManager:
 
-  ~TestPermissionManager() override {}
+  ~TestPermissionManager() override = default;
 
   blink::mojom::PermissionStatus GetPermissionStatus(
       content::PermissionType permission,

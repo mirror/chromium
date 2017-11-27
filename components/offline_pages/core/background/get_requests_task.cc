@@ -15,7 +15,7 @@ GetRequestsTask::GetRequestsTask(
     const RequestQueueStore::GetRequestsCallback& callback)
     : store_(store), callback_(callback), weak_ptr_factory_(this) {}
 
-GetRequestsTask::~GetRequestsTask() {}
+GetRequestsTask::~GetRequestsTask() = default;
 
 void GetRequestsTask::Run() {
   ReadRequest();

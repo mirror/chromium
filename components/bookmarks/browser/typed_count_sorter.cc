@@ -48,7 +48,7 @@ TypedCountSorter::TypedCountSorter(BookmarkClient* client)
   DCHECK(client_);
 }
 
-TypedCountSorter::~TypedCountSorter() {}
+TypedCountSorter::~TypedCountSorter() = default;
 
 void TypedCountSorter::SortMatches(const TitledUrlNodeSet& matches,
                                    TitledUrlNodes* sorted_nodes) const {

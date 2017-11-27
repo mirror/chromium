@@ -13,7 +13,8 @@ PasswordProtectionNavigationThrottle::PasswordProtectionNavigationThrottle(
     : content::NavigationThrottle(navigation_handle),
       is_warning_showing_(is_warning_showing) {}
 
-PasswordProtectionNavigationThrottle::~PasswordProtectionNavigationThrottle() {}
+PasswordProtectionNavigationThrottle::~PasswordProtectionNavigationThrottle() =
+    default;
 
 content::NavigationThrottle::ThrottleCheckResult
 PasswordProtectionNavigationThrottle::WillStartRequest() {

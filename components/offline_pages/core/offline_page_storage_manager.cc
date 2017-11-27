@@ -40,7 +40,7 @@ OfflinePageStorageManager::OfflinePageStorageManager(
       reported_usage_this_launch_(false),
       weak_ptr_factory_(this) {}
 
-OfflinePageStorageManager::~OfflinePageStorageManager() {}
+OfflinePageStorageManager::~OfflinePageStorageManager() = default;
 
 void OfflinePageStorageManager::ClearPagesIfNeeded(
     const ClearStorageCallback& callback) {

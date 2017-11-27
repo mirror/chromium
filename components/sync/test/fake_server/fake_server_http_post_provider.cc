@@ -18,7 +18,8 @@ FakeServerHttpPostProviderFactory::FakeServerHttpPostProviderFactory(
     : fake_server_(fake_server),
       fake_server_task_runner_(fake_server_task_runner) {}
 
-FakeServerHttpPostProviderFactory::~FakeServerHttpPostProviderFactory() {}
+FakeServerHttpPostProviderFactory::~FakeServerHttpPostProviderFactory() =
+    default;
 
 void FakeServerHttpPostProviderFactory::Init(
     const std::string& user_agent,
@@ -42,7 +43,7 @@ FakeServerHttpPostProvider::FakeServerHttpPostProvider(
     : fake_server_(fake_server),
       fake_server_task_runner_(fake_server_task_runner) {}
 
-FakeServerHttpPostProvider::~FakeServerHttpPostProvider() {}
+FakeServerHttpPostProvider::~FakeServerHttpPostProvider() = default;
 
 void FakeServerHttpPostProvider::SetExtraRequestHeaders(const char* headers) {
   // TODO(pvalenzuela): Add assertions on this value.

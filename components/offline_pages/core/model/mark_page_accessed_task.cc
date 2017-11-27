@@ -40,7 +40,8 @@ MarkPageAccessedTask::MarkPageAccessedTask(OfflinePageMetadataStoreSQL* store,
       access_time_(access_time),
       weak_ptr_factory_(this) {}
 
-MarkPageAccessedTask::~MarkPageAccessedTask(){};
+MarkPageAccessedTask::~MarkPageAccessedTask() = default;
+;
 
 void MarkPageAccessedTask::Run() {
   store_->Execute(

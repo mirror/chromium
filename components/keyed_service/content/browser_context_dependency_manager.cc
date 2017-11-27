@@ -76,11 +76,9 @@ BrowserContextDependencyManager::GetInstance() {
   return base::Singleton<BrowserContextDependencyManager>::get();
 }
 
-BrowserContextDependencyManager::BrowserContextDependencyManager() {
-}
+BrowserContextDependencyManager::BrowserContextDependencyManager() = default;
 
-BrowserContextDependencyManager::~BrowserContextDependencyManager() {
-}
+BrowserContextDependencyManager::~BrowserContextDependencyManager() = default;
 
 #ifndef NDEBUG
 void BrowserContextDependencyManager::DumpContextDependencies(

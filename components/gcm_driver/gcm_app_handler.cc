@@ -6,8 +6,8 @@
 
 namespace gcm {
 
-GCMAppHandler::GCMAppHandler() {}
-GCMAppHandler::~GCMAppHandler() {}
+GCMAppHandler::GCMAppHandler() = default;
+GCMAppHandler::~GCMAppHandler() = default;
 
 bool GCMAppHandler::CanHandle(const std::string& app_id) const {
   return false;

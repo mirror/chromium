@@ -8,9 +8,9 @@
 
 namespace dom_distiller {
 
-FeedbackReporter::FeedbackReporter() {}
+FeedbackReporter::FeedbackReporter() = default;
 
-FeedbackReporter::~FeedbackReporter() {}
+FeedbackReporter::~FeedbackReporter() = default;
 
 // static
 void FeedbackReporter::ReportQuality(bool good) {

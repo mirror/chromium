@@ -119,9 +119,9 @@ class ChangeReorderBuffer::Traversal {
   DISALLOW_COPY_AND_ASSIGN(Traversal);
 };
 
-ChangeReorderBuffer::ChangeReorderBuffer() {}
+ChangeReorderBuffer::ChangeReorderBuffer() = default;
 
-ChangeReorderBuffer::~ChangeReorderBuffer() {}
+ChangeReorderBuffer::~ChangeReorderBuffer() = default;
 
 void ChangeReorderBuffer::PushAddedItem(int64_t id) {
   operations_[id] = ChangeRecord::ACTION_ADD;

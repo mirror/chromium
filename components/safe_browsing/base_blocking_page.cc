@@ -66,7 +66,7 @@ BaseBlockingPage::BaseBlockingPage(
           base::Time::NowFromSystemTime(),
           controller())) {}
 
-BaseBlockingPage::~BaseBlockingPage() {}
+BaseBlockingPage::~BaseBlockingPage() = default;
 
 // static
 const security_interstitials::BaseSafeBrowsingErrorUI::SBErrorDisplayOptions

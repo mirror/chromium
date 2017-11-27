@@ -408,7 +408,7 @@ TEST_F(CloudPolicyRefreshSchedulerTest, OnIPAddressChangedAfterSleep) {
 class CloudPolicyRefreshSchedulerSteadyStateTest
     : public CloudPolicyRefreshSchedulerTest {
  protected:
-  CloudPolicyRefreshSchedulerSteadyStateTest() {}
+  CloudPolicyRefreshSchedulerSteadyStateTest() = default;
 
   void SetUp() override {
     refresh_scheduler_.reset(CreateRefreshScheduler());

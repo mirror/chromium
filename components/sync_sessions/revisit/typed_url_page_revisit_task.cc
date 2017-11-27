@@ -17,7 +17,7 @@ TypedUrlPageRevisitTask::TypedUrlPageRevisitTask(
     const PageVisitObserver::TransitionType transition)
     : url_(url), transition_(transition) {}
 
-TypedUrlPageRevisitTask::~TypedUrlPageRevisitTask() {}
+TypedUrlPageRevisitTask::~TypedUrlPageRevisitTask() = default;
 
 bool TypedUrlPageRevisitTask::FillVisitsAndSources(
     history::HistoryBackend* backend,

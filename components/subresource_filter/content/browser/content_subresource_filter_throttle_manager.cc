@@ -46,7 +46,7 @@ ContentSubresourceFilterThrottleManager::
 }
 
 ContentSubresourceFilterThrottleManager::
-    ~ContentSubresourceFilterThrottleManager() {}
+    ~ContentSubresourceFilterThrottleManager() = default;
 
 void ContentSubresourceFilterThrottleManager::OnSubresourceFilterGoingAway() {
   // Stop observing here because the observer manager could be destroyed by the

@@ -48,8 +48,8 @@ const int kRssiThreshold = -70;
 
 class MockProximityMonitorObserver : public ProximityMonitorObserver {
  public:
-  MockProximityMonitorObserver() {}
-  ~MockProximityMonitorObserver() override {}
+  MockProximityMonitorObserver() = default;
+  ~MockProximityMonitorObserver() override = default;
 
   MOCK_METHOD0(OnProximityStateChanged, void());
 
@@ -60,7 +60,7 @@ class MockProximityMonitorObserver : public ProximityMonitorObserver {
 class MockProximityAuthPrefManager : public ProximityAuthProfilePrefManager {
  public:
   MockProximityAuthPrefManager() : ProximityAuthProfilePrefManager(nullptr) {}
-  ~MockProximityAuthPrefManager() override {}
+  ~MockProximityAuthPrefManager() override = default;
 
   MOCK_CONST_METHOD0(GetProximityThreshold,
                      ProximityAuthPrefManager::ProximityThreshold(void));
@@ -114,7 +114,7 @@ class ProximityAuthProximityMonitorImplTest : public testing::Test {
         .WillByDefault(Return(kProximityThresholdPrefValue));
   }
 
-  ~ProximityAuthProximityMonitorImplTest() override {}
+  ~ProximityAuthProximityMonitorImplTest() override = default;
 
   void RunPendingTasks() { task_runner_->RunPendingTasks(); }
 

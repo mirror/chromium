@@ -28,7 +28,7 @@ LeakDetectorValueType Value(uint32_t value) {
 
 class RankedSetTest : public ::testing::Test {
  public:
-  RankedSetTest() {}
+  RankedSetTest() = default;
 
   void SetUp() override { CustomAllocator::Initialize(); }
   void TearDown() override { EXPECT_TRUE(CustomAllocator::Shutdown()); }

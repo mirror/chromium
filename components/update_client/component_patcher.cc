@@ -55,8 +55,7 @@ ComponentPatcher::ComponentPatcher(
       installer_(installer),
       connector_(std::move(connector)) {}
 
-ComponentPatcher::~ComponentPatcher() {
-}
+ComponentPatcher::~ComponentPatcher() = default;
 
 void ComponentPatcher::Start(Callback callback) {
   callback_ = std::move(callback);

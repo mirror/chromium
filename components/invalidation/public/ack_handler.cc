@@ -8,10 +8,8 @@
 
 namespace syncer {
 
-AckHandler::AckHandler() {
-}
+AckHandler::AckHandler() = default;
 
-AckHandler::~AckHandler() {
-}
+AckHandler::~AckHandler() = default;
 
 }  // namespace syncer

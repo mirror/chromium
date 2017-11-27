@@ -7,5 +7,4 @@
 GoogleURLTrackerClient::GoogleURLTrackerClient()
     : google_url_tracker_(nullptr) {}
 
-GoogleURLTrackerClient::~GoogleURLTrackerClient() {
-}
+GoogleURLTrackerClient::~GoogleURLTrackerClient() = default;

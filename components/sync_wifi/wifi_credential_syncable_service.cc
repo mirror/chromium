@@ -113,7 +113,7 @@ WifiCredentialSyncableService::WifiCredentialSyncableService(
   DCHECK(network_config_delegate_);
 }
 
-WifiCredentialSyncableService::~WifiCredentialSyncableService() {}
+WifiCredentialSyncableService::~WifiCredentialSyncableService() = default;
 
 syncer::SyncMergeResult WifiCredentialSyncableService::MergeDataAndStartSyncing(
     syncer::ModelType type,

@@ -86,7 +86,7 @@ class BidirectionalStreamTestURLRequestContextGetter
                            "MAP test.example.com 127.0.0.1:%d",
                            test_server_port_));
   }
-  ~BidirectionalStreamTestURLRequestContextGetter() override {}
+  ~BidirectionalStreamTestURLRequestContextGetter() override = default;
 
   int test_server_port_;
   std::unique_ptr<net::HttpServerProperties> server_properties_;

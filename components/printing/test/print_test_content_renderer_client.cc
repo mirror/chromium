@@ -15,7 +15,7 @@ namespace {
 
 class PrintRenderFrameHelperDelegate : public PrintRenderFrameHelper::Delegate {
  public:
-  ~PrintRenderFrameHelperDelegate() override {}
+  ~PrintRenderFrameHelperDelegate() override = default;
 
   bool CancelPrerender(content::RenderFrame* render_frame) override {
     return false;
@@ -35,11 +35,9 @@ class PrintRenderFrameHelperDelegate : public PrintRenderFrameHelper::Delegate {
 
 }  // namespace
 
-PrintTestContentRendererClient::PrintTestContentRendererClient() {
-}
+PrintTestContentRendererClient::PrintTestContentRendererClient() = default;
 
-PrintTestContentRendererClient::~PrintTestContentRendererClient() {
-}
+PrintTestContentRendererClient::~PrintTestContentRendererClient() = default;
 
 void PrintTestContentRendererClient::RenderFrameCreated(
     content::RenderFrame* render_frame) {

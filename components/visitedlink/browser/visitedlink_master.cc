@@ -160,8 +160,7 @@ VisitedLinkMaster::LoadFromFileResult::LoadFromFileResult(
   memcpy(this->salt, salt, LINK_SALT_LENGTH);
 }
 
-VisitedLinkMaster::LoadFromFileResult::~LoadFromFileResult() {
-}
+VisitedLinkMaster::LoadFromFileResult::~LoadFromFileResult() = default;
 
 // TableBuilder ---------------------------------------------------------------
 
@@ -198,7 +197,7 @@ class VisitedLinkMaster::TableBuilder
   void OnComplete(bool succeed) override;
 
  private:
-  ~TableBuilder() override {}
+  ~TableBuilder() override = default;
 
   // OnComplete mashals to this function on the main thread to do the
   // notification.

@@ -118,7 +118,7 @@ CreateArchiveTaskTest::CreateArchiveTaskTest()
     : task_runner_(new base::TestSimpleTaskRunner()),
       task_runner_handle_(task_runner_) {}
 
-CreateArchiveTaskTest::~CreateArchiveTaskTest() {}
+CreateArchiveTaskTest::~CreateArchiveTaskTest() = default;
 
 void CreateArchiveTaskTest::SetUp() {
   ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());

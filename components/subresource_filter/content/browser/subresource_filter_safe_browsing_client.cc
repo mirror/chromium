@@ -42,7 +42,8 @@ SubresourceFilterSafeBrowsingClient::SubresourceFilterSafeBrowsingClient(
       io_task_runner_(std::move(io_task_runner)),
       throttle_task_runner_(std::move(throttle_task_runner)) {}
 
-SubresourceFilterSafeBrowsingClient::~SubresourceFilterSafeBrowsingClient() {}
+SubresourceFilterSafeBrowsingClient::~SubresourceFilterSafeBrowsingClient() =
+    default;
 
 void SubresourceFilterSafeBrowsingClient::CheckUrlOnIO(const GURL& url,
                                                        size_t request_id) {

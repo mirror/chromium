@@ -37,7 +37,7 @@ class FrontendDataTypeControllerFake : public FrontendDataTypeController {
       : FrontendDataTypeController(BOOKMARKS, base::Closure(), sync_client),
         mock_(mock),
         sync_client_(sync_client) {}
-  ~FrontendDataTypeControllerFake() override {}
+  ~FrontendDataTypeControllerFake() override = default;
 
  private:
   void CreateSyncComponents() override {

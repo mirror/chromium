@@ -38,7 +38,7 @@ ReadingListModelImpl::ReadingListModelImpl(
   has_unseen_ = GetPersistentHasUnseen();
 }
 
-ReadingListModelImpl::~ReadingListModelImpl() {}
+ReadingListModelImpl::~ReadingListModelImpl() = default;
 
 void ReadingListModelImpl::StoreLoaded(
     std::unique_ptr<ReadingListEntries> entries) {

@@ -42,9 +42,9 @@ class TestOptimizationGuideService
 
 class PreviewsOptimizationGuideTest : public testing::Test {
  public:
-  PreviewsOptimizationGuideTest() {}
+  PreviewsOptimizationGuideTest() = default;
 
-  ~PreviewsOptimizationGuideTest() override {}
+  ~PreviewsOptimizationGuideTest() override = default;
 
   void SetUp() override {
     optimization_guide_service_ =

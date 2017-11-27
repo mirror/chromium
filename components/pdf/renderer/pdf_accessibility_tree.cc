@@ -51,8 +51,7 @@ PdfAccessibilityTree::PdfAccessibilityTree(
       zoom_(1.0) {
 }
 
-PdfAccessibilityTree::~PdfAccessibilityTree() {
-}
+PdfAccessibilityTree::~PdfAccessibilityTree() = default;
 
 void PdfAccessibilityTree::SetAccessibilityViewportInfo(
     const PP_PrivateAccessibilityViewportInfo& viewport_info) {

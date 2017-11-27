@@ -11,7 +11,7 @@ namespace data_use_measurement {
 DataUseRecorder::DataUseRecorder(DataUse::TrafficType traffic_type)
     : main_url_request_(nullptr), data_use_(traffic_type), is_visible_(false) {}
 
-DataUseRecorder::~DataUseRecorder() {}
+DataUseRecorder::~DataUseRecorder() = default;
 
 bool DataUseRecorder::IsDataUseComplete() {
   return pending_url_requests_.empty();

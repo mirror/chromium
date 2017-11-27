@@ -59,8 +59,7 @@ IterateUrlsDBTask::IterateUrlsDBTask(const scoped_refptr<
     : enumerator_(enumerator) {
 }
 
-IterateUrlsDBTask::~IterateUrlsDBTask() {
-}
+IterateUrlsDBTask::~IterateUrlsDBTask() = default;
 
 bool IterateUrlsDBTask::RunOnDBThread(HistoryBackend* backend,
                                       HistoryDatabase* db) {
@@ -90,8 +89,7 @@ ContentVisitDelegate::ContentVisitDelegate(
           new visitedlink::VisitedLinkMaster(browser_context, this, true)) {
 }
 
-ContentVisitDelegate::~ContentVisitDelegate() {
-}
+ContentVisitDelegate::~ContentVisitDelegate() = default;
 
 bool ContentVisitDelegate::Init(HistoryService* history_service) {
   DCHECK(history_service);

@@ -42,8 +42,7 @@ class CountingNetworkDelegate : public net::NetworkDelegateImpl {
   CountingNetworkDelegate() : created_requests_(0) {
   }
 
-  ~CountingNetworkDelegate() final {
-  }
+  ~CountingNetworkDelegate() final = default;
 
   int OnBeforeURLRequest(net::URLRequest* request,
                          const net::CompletionCallback& callback,

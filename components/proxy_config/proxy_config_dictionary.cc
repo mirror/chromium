@@ -36,7 +36,7 @@ ProxyConfigDictionary::ProxyConfigDictionary(
     std::unique_ptr<base::DictionaryValue> dict)
     : dict_(std::move(dict)) {}
 
-ProxyConfigDictionary::~ProxyConfigDictionary() {}
+ProxyConfigDictionary::~ProxyConfigDictionary() = default;
 
 bool ProxyConfigDictionary::GetMode(ProxyPrefs::ProxyMode* out) const {
   std::string mode_str;

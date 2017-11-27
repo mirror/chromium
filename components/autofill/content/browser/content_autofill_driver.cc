@@ -55,7 +55,7 @@ ContentAutofillDriver::ContentAutofillDriver(
   }
 }
 
-ContentAutofillDriver::~ContentAutofillDriver() {}
+ContentAutofillDriver::~ContentAutofillDriver() = default;
 
 // static
 ContentAutofillDriver* ContentAutofillDriver::GetForRenderFrameHost(

@@ -465,7 +465,7 @@ void DeviceManagementRequestJobImpl::ReportError(DeviceManagementStatus code) {
   callback_.Run(code, net::OK, dummy_response);
 }
 
-DeviceManagementRequestJob::~DeviceManagementRequestJob() {}
+DeviceManagementRequestJob::~DeviceManagementRequestJob() = default;
 
 void DeviceManagementRequestJob::SetGaiaToken(const std::string& gaia_token) {
   gaia_token_ = gaia_token;
