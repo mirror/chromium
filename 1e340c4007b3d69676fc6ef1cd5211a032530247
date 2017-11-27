@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15fc3dd1_81926924",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T17:50:27Z",
+      "side": 1,
+      "message": "Do we really want to include that here? Or should it be compiled up separately?\n\nAlso, it isn\u0027t really VectorMathCommon.cpp because it\u0027s not really common.  Maybe VectorMathImpl.cpp would be a better name?",
+      "revId": "1e340c4007b3d69676fc6ef1cd5211a032530247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
