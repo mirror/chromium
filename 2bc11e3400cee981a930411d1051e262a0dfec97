@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "191ad831_7bc69804",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-27T23:25:27Z",
+      "side": 0,
+      "message": "It\u0027s better to create a separate CL for HTMLDocumentParser.cpp change (and make |resource_| here Member\u003c\u003e) into a separate CL to catch memory regressions.",
+      "parentUuid": "49e3cb37_17b09cf9",
+      "revId": "2bc11e3400cee981a930411d1051e262a0dfec97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5b385a1_d262863c",
         "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
         "patchSetId": 14

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95920cc4_88a76b4f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-27T23:25:27Z",
+      "side": 0,
+      "message": "I want to keep RawResourceClientStateChecker as this is quite important for catching security errors.\nWhat is the reason behind removing RawResourceClientStateChecker?",
+      "revId": "499acc806321146dc13bb215691e9f0505c95120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

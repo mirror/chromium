@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57b925c4_7f5c8e50",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-27T23:25:27Z",
+      "side": 1,
+      "message": "Slight behavior change: this can be true when revalidation occurs after loaded (previously loading_ was false in such cases).",
+      "revId": "55d554c650ee2912cc78571e01a0f9cc978dd3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f60407c_adee01a1",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-27T23:25:27Z",
+      "side": 1,
+      "message": "Can we move the SetStatus() call into ScriptResource::CreateForTest()?\n(Calling SetStatus() inside Resource subclasses is better than calling from core/dom)",
+      "revId": "55d554c650ee2912cc78571e01a0f9cc978dd3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88700f31_795b9bd7",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-27T23:25:27Z",
+      "side": 1,
+      "message": "We can change |resource_keep_alive_| to Member\u003cResource\u003e and remove ToScriptResource() here.",
+      "revId": "55d554c650ee2912cc78571e01a0f9cc978dd3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2231800b_758d90ac",
+        "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-27T23:25:27Z",
+      "side": 1,
+      "message": "If the SetResource()-timing issues are resolved by merging ResourceClient and ResourceOwner, we can revert this |resource| plumbing here.",
+      "revId": "55d554c650ee2912cc78571e01a0f9cc978dd3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6f193f_03acaea3",
+        "filename": "third_party/WebKit/Source/core/html/imports/HTMLImportLoader.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-27T23:25:27Z",
+      "side": 1,
+      "message": "Perhaps removing HTMLImportLoader::StartLoading() and calling RawResource::FetchImport() directly is better.",
+      "revId": "55d554c650ee2912cc78571e01a0f9cc978dd3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
