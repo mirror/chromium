@@ -628,19 +628,10 @@ CreateContextProviderOnWorkerThread(
 
 bool WebGLRenderingContextBase::SupportOwnOffscreenSurface(
     ExecutionContext* execution_context) {
-  // If there's a possibility this context may be used with WebVR make sure it
-  // is created with an offscreen surface that can be swapped out for a
-  // VR-specific surface if needed.
-  //
-  // At this time, treat this as an experimental rendering optimization
-  // that needs a separate opt-in. See crbug.com/691102 for details.
-  if (RuntimeEnabledFeatures::WebVRExperimentalRenderingEnabled()) {
-    if (RuntimeEnabledFeatures::WebVREnabled() ||
-        OriginTrials::webVREnabled(execution_context)) {
-      DVLOG(1) << "Requesting supportOwnOffscreenSurface";
-      return true;
-    }
-  }
+  // Using an own offscreen surface disables virtualized contexts, and this
+  // doesn't currently work properly. Keep this disabled, the
+  // WebVRExperimentalRenderingEnabled flag which used to control this is
+  // now repurposed for the replacement AHardwareBuffer path.
   return false;
 }
 
