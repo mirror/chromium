@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c26959c5_0ba332e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-27T07:26:47Z",
+      "side": 1,
+      "message": "Where?",
+      "revId": "e1c49e45640d82f6a343594a56c909ea0057f77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a955cf_1b0806ba",
+        "filename": "services/preferences/public/cpp/in_process_service_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-27T07:26:47Z",
+      "side": 1,
+      "message": "Can we leave this as it was? Chromium style tends to name unused parameters.",
+      "revId": "e1c49e45640d82f6a343594a56c909ea0057f77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
