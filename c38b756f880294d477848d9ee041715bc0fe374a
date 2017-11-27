@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4e67f80_921e3eb7",
+        "filename": "third_party/WebKit/Source/modules/websockets/WebSocketHandleImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T17:49:39Z",
+      "side": 1,
+      "message": "optional nit: TODO(crbug.com/786608) is a nice convention instead of tying the TODO to a specific owner. Especially if for whatever reason this ends up staying in the code longer than anticipated.",
+      "revId": "c38b756f880294d477848d9ee041715bc0fe374a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
