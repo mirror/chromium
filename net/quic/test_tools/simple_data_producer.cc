@@ -10,8 +10,8 @@ namespace net {
 
 namespace test {
 
-SimpleDataProducer::SimpleDataProducer() {}
-SimpleDataProducer::~SimpleDataProducer() {}
+SimpleDataProducer::SimpleDataProducer() = default;
+SimpleDataProducer::~SimpleDataProducer() = default;
 
 void SimpleDataProducer::SaveStreamData(QuicStreamId id,
                                         const struct iovec* iov,

@@ -25,6 +25,6 @@ Aes128GcmEncrypter::Aes128GcmEncrypter()
   static_assert(kNonceSize <= kMaxNonceSize, "nonce size too big");
 }
 
-Aes128GcmEncrypter::~Aes128GcmEncrypter() {}
+Aes128GcmEncrypter::~Aes128GcmEncrypter() = default;
 
 }  // namespace net

@@ -55,7 +55,7 @@ class PacketCollector : public QuicPacketCreator::DelegateInterface,
  public:
   explicit PacketCollector(QuicBufferAllocator* allocator)
       : send_buffer_(allocator) {}
-  ~PacketCollector() override {}
+  ~PacketCollector() override = default;
 
   // QuicPacketCreator::DelegateInterface methods:
   void OnSerializedPacket(SerializedPacket* serialized_packet) override {

@@ -10,6 +10,6 @@ namespace net {
 
 ProofSource::Chain::Chain(const std::vector<string>& certs) : certs(certs) {}
 
-ProofSource::Chain::~Chain() {}
+ProofSource::Chain::~Chain() = default;
 
 }  // namespace net

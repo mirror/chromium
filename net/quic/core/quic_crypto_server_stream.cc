@@ -57,7 +57,7 @@ QuicCryptoServerStream::QuicCryptoServerStream(
       use_stateless_rejects_if_peer_supported, session, helper));
 }
 
-QuicCryptoServerStream::~QuicCryptoServerStream() {}
+QuicCryptoServerStream::~QuicCryptoServerStream() = default;
 
 void QuicCryptoServerStream::CancelOutstandingCallbacks() {
   handshaker()->CancelOutstandingCallbacks();

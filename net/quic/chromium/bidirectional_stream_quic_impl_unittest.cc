@@ -99,7 +99,7 @@ class TestDelegateBase : public BidirectionalStreamImpl::Delegate {
     loop_.reset(new base::RunLoop);
   }
 
-  ~TestDelegateBase() override {}
+  ~TestDelegateBase() override = default;
 
   void OnStreamReady(bool request_headers_sent) override {
     CHECK(!is_ready_);
@@ -325,7 +325,7 @@ class DeleteStreamDelegate : public TestDelegateBase {
 
   DeleteStreamDelegate(IOBuffer* buf, int buf_len, Phase phase)
       : TestDelegateBase(buf, buf_len), phase_(phase) {}
-  ~DeleteStreamDelegate() override {}
+  ~DeleteStreamDelegate() override = default;
 
   void OnStreamReady(bool request_headers_sent) override {
     TestDelegateBase::OnStreamReady(request_headers_sent);

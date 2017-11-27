@@ -37,7 +37,7 @@ class MockQuicSpdyClientSession : public QuicSpdyClientSession {
             push_promise_index),
         crypto_config_(crypto_test_utils::ProofVerifierForTesting()),
         authorized_(true) {}
-  ~MockQuicSpdyClientSession() override {}
+  ~MockQuicSpdyClientSession() override = default;
 
   bool IsAuthorized(const string& authority) override { return authorized_; }
 

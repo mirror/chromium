@@ -27,7 +27,7 @@ QuicHeaderList& QuicHeaderList::operator=(const QuicHeaderList& other) =
 
 QuicHeaderList& QuicHeaderList::operator=(QuicHeaderList&& other) = default;
 
-QuicHeaderList::~QuicHeaderList() {}
+QuicHeaderList::~QuicHeaderList() = default;
 
 void QuicHeaderList::OnHeaderBlockStart() {
   QUIC_BUG_IF(current_header_list_size_ != 0)

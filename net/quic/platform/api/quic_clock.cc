@@ -6,9 +6,9 @@
 
 namespace net {
 
-QuicClock::QuicClock() {}
+QuicClock::QuicClock() = default;
 
-QuicClock::~QuicClock() {}
+QuicClock::~QuicClock() = default;
 
 QuicTime QuicClock::ConvertWallTimeToQuicTime(
     const QuicWallTime& walltime) const {

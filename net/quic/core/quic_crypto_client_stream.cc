@@ -40,7 +40,7 @@ QuicCryptoClientStream::QuicCryptoClientStream(
       server_id, this, session, verify_context, crypto_config, proof_handler));
 }
 
-QuicCryptoClientStream::~QuicCryptoClientStream() {}
+QuicCryptoClientStream::~QuicCryptoClientStream() = default;
 
 bool QuicCryptoClientStream::CryptoConnect() {
   return handshaker_->CryptoConnect();

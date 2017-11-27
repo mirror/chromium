@@ -25,6 +25,6 @@ ChaCha20Poly1305Encrypter::ChaCha20Poly1305Encrypter()
   static_assert(kNonceSize <= kMaxNonceSize, "nonce size too big");
 }
 
-ChaCha20Poly1305Encrypter::~ChaCha20Poly1305Encrypter() {}
+ChaCha20Poly1305Encrypter::~ChaCha20Poly1305Encrypter() = default;
 
 }  // namespace net

@@ -871,8 +871,7 @@ HttpUtil::HeadersIterator::HeadersIterator(
     : lines_(headers_begin, headers_end, line_delimiter) {
 }
 
-HttpUtil::HeadersIterator::~HeadersIterator() {
-}
+HttpUtil::HeadersIterator::~HeadersIterator() = default;
 
 bool HttpUtil::HeadersIterator::GetNext() {
   while (lines_.GetNext()) {
@@ -930,8 +929,7 @@ HttpUtil::ValuesIterator::ValuesIterator(
 
 HttpUtil::ValuesIterator::ValuesIterator(const ValuesIterator& other) = default;
 
-HttpUtil::ValuesIterator::~ValuesIterator() {
-}
+HttpUtil::ValuesIterator::~ValuesIterator() = default;
 
 bool HttpUtil::ValuesIterator::GetNext() {
   while (values_.GetNext()) {
@@ -978,7 +976,7 @@ HttpUtil::NameValuePairsIterator::NameValuePairsIterator(
 HttpUtil::NameValuePairsIterator::NameValuePairsIterator(
     const NameValuePairsIterator& other) = default;
 
-HttpUtil::NameValuePairsIterator::~NameValuePairsIterator() {}
+HttpUtil::NameValuePairsIterator::~NameValuePairsIterator() = default;
 
 // We expect properties to be formatted as one of:
 //   name="value"

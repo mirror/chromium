@@ -72,7 +72,7 @@ QuicTlsAdapter::QuicTlsAdapter(Visitor* visitor)
   bio_->init = 1;
 }
 
-QuicTlsAdapter::~QuicTlsAdapter() {}
+QuicTlsAdapter::~QuicTlsAdapter() = default;
 
 QuicErrorCode QuicTlsAdapter::error() const {
   // QuicTlsAdapter passes messages received from ProcessInput straight through

@@ -24,7 +24,7 @@ QuicCryptoClientHandshaker::ChannelIDSourceCallbackImpl::
     : parent_(parent) {}
 
 QuicCryptoClientHandshaker::ChannelIDSourceCallbackImpl::
-    ~ChannelIDSourceCallbackImpl() {}
+    ~ChannelIDSourceCallbackImpl() = default;
 
 void QuicCryptoClientHandshaker::ChannelIDSourceCallbackImpl::Run(
     std::unique_ptr<ChannelIDKey>* channel_id_key) {
@@ -50,7 +50,7 @@ QuicCryptoClientHandshaker::ProofVerifierCallbackImpl::
     : parent_(parent) {}
 
 QuicCryptoClientHandshaker::ProofVerifierCallbackImpl::
-    ~ProofVerifierCallbackImpl() {}
+    ~ProofVerifierCallbackImpl() = default;
 
 void QuicCryptoClientHandshaker::ProofVerifierCallbackImpl::Run(
     bool ok,
