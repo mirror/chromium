@@ -16,6 +16,24 @@
       "revId": "6f78f94c71d169c29187acdef12ea555d43c8eaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67ccd0f_5c76cffa",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-27T17:19:07Z",
+      "side": 0,
+      "message": "Whoops! Totally a typo (cut/paste instead of copy/paste, etc).\n\nThanks for catching it.",
+      "parentUuid": "f3ab3455_80f15fa2",
+      "revId": "6f78f94c71d169c29187acdef12ea555d43c8eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
