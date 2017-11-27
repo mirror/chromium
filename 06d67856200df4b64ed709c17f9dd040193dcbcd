@@ -70,6 +70,24 @@
       "revId": "06d67856200df4b64ed709c17f9dd040193dcbcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1b4c39_cc1f15ed",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-27T16:41:11Z",
+      "side": 1,
+      "message": "I don\u0027t think we should block fixing the whitelist mechanism on the proposal.\n\nI propose we go with this for now and separately discuss the path forward for that proposal. We can add a first-class mechanism for associating multiple sources - or require them to log a metric with their sources to mark them as referenced.\n\nI\u0027ve added the logic to persistent unsent sources, with a parameter for max to keep. I\u0027ll work on adding tests.",
+      "parentUuid": "44425bab_23cb49e3",
+      "revId": "06d67856200df4b64ed709c17f9dd040193dcbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
