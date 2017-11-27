@@ -45,6 +45,30 @@
       "revId": "4b07f601f803a415413df7227c38c5bf62baf163",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081baf34_fd696c3c",
+        "filename": "extensions/common/permissions/api_permission.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T23:14:11Z",
+      "side": 0,
+      "message": "nit: I\u0027d actually prefer we leave this in a commented-out way:\nenum Flag {\n  kFlagNone \u003d 0;\n\n  // Plugins (NPAPI) are deprecated.\n  // kFlagImpliesFullAccess \u003d 1 \u003c\u003c 0;\n\n  ...\n\nThis helps document that the missing value is intentional, and makes git blames/lookups much easier.",
+      "parentUuid": "3612de43_31bc68e9",
+      "range": {
+        "startLine": 355,
+        "startChar": 4,
+        "endLine": 355,
+        "endChar": 26
+      },
+      "revId": "4b07f601f803a415413df7227c38c5bf62baf163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
