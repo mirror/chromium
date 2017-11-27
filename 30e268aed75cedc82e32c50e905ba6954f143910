@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6683de17_45994299",
+        "filename": "content/public/test/test_navigation_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:04:06Z",
+      "side": 1,
+      "message": "I would prefer if we avoided adding these parameters to TestNavigationObserver. I think it should be relatively easy to write a test without them since they are query-able from the NavigationHandle.",
+      "revId": "30e268aed75cedc82e32c50e905ba6954f143910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
