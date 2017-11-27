@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d29b0502_4fc689f9",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-27T17:23:10Z",
+      "side": 1,
+      "message": "Modify the comment.",
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a09f185c_cca5ec5c",
+        "filename": "ash/wm/client_controlled_state.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-27T17:23:10Z",
+      "side": 1,
+      "message": "Do we still use |state_type_|? Remove it and change it here to window_state-\u003eGetStateType()?",
+      "range": {
+        "startLine": 49,
+        "startChar": 44,
+        "endLine": 49,
+        "endChar": 55
+      },
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70252971_dde9bda5",
+        "filename": "ash/wm/client_controlled_state.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-27T17:23:10Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 75,
+        "startChar": 31,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9bcbcba_28f196c9",
+        "filename": "ash/wm/client_controlled_state.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-27T17:23:10Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee7dccb_e43d6529",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-27T17:23:10Z",
+      "side": 1,
+      "message": "Why here change to window_state. Do we want to make it mojom?",
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790ab8d9_9184f01c",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-27T17:23:10Z",
+      "side": 1,
+      "message": "From the comment in view, SetEnabled false will clear the focus. Not sure how this will affect the exo window. Maybe make it not focusable?",
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20475e3c_e737f709",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-27T17:23:10Z",
+      "side": 1,
+      "message": "Could you please comment why we return false for this two states?",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 70
+      },
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
