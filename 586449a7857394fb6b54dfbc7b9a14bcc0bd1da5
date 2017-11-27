@@ -16,6 +16,24 @@
       "revId": "586449a7857394fb6b54dfbc7b9a14bcc0bd1da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db571fe4_3bb176bf",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-27T23:00:25Z",
+      "side": 1,
+      "message": "\u003e Is this safe to do on the IO thread? 2 specific questions:\n\u003e 1- is it ok to call into the JVM on this thread?\n\nYeah, we do it all the time...\n\n\u003e 2- can this block? blocking the IO thread is even more of a no-no than the UI thread.\n\nI know :)\n\nLooks checked and it looks ok. It acquires a lock, then checks if activity info is stale, and calls this method if it is stale: https://cs.chromium.org/chromium/src/base/android/java/src/org/chromium/base/ApplicationStatus.java?rcl\u003dede64f0550074d7b450dffcc3f156ee0688bf2c4\u0026l\u003d594\n\nIt\u0027s looping over an existing map, so it\u0027s not doing IPC or anything. And it\u0027s looping over chrome activities in existence, which I\u0027d guess most of time the time is 1, or at most in a single digit number. So hopefully not too expensive even if stale.\n\nI suppose it\u0027s slightly better to do the loop on the UI thread where activity changes happen, but improvement is probably not that big.",
+      "parentUuid": "959ceba2_43fcf106",
+      "revId": "586449a7857394fb6b54dfbc7b9a14bcc0bd1da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
