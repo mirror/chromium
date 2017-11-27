@@ -49,11 +49,13 @@ bool VrAssetsComponentInstallerTraits::RequiresNetworkEncryption() const {
   return false;
 }
 
-update_client::CrxInstaller::Result
-VrAssetsComponentInstallerTraits::OnCustomInstall(
+void VrAssetsComponentInstallerTraits::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
-  return update_client::CrxInstaller::Result(0);
+    const base::FilePath& install_dir,
+    scoped_refptr<CustomInstallRunner> custom_install_runner,
+    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner) {
+  custom_install_runner->Run(task_runner,
+                             update_client::CrxInstaller::Result(0));
 }
 
 void VrAssetsComponentInstallerTraits::OnCustomUninstall() {}
