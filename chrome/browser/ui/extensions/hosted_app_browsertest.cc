@@ -20,6 +20,7 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
@@ -44,6 +45,10 @@
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/base/clipboard/clipboard.h"
+
+#if defined(TOOLKIT_VIEWS)
+#include "ui/views/widget/widget.h"
+#endif
 
 #if defined(OS_MACOSX)
 #include "chrome/common/chrome_features.h"
@@ -444,6 +449,56 @@ IN_PROC_BROWSER_TEST_P(HostedAppPWAOnlyTest, OpenInChrome) {
   content::RunAllPendingInMessageLoop();
   ASSERT_EQ(1u, chrome::GetBrowserCount(browser()->profile()));
 }
+
+#if defined(TOOLKIT_VIEWS)
+// Check the 'App info' menu button for Hosted App windows.
+IN_PROC_BROWSER_TEST_P(HostedAppPWAOnlyTest, AppInfo) {
+  WebApplicationInfo web_app_info;
+  web_app_info.app_url = GURL(kExampleURL);
+  const extensions::Extension* app = InstallBookmarkApp(web_app_info);
+  Browser* app_browser = LaunchAppBrowser(app);
+
+  auto find_info_dialog = [app_browser]() -> views::Widget* {
+    views::Widget::Widgets widgets;
+    views::Widget::GetAllOwnedWidgets(
+        views::Widget::GetWidgetForNativeWindow(
+            app_browser->window()->GetNativeWindow())
+            ->GetNativeView(),
+        &widgets);
+    views::Widget::GetAllOwnedWidgets(
+        views::Widget::GetWidgetForNativeWindow(app_browser->tab_strip_model()
+                                                    ->GetActiveWebContents()
+                                                    ->GetTopLevelNativeWindow())
+            ->GetNativeView(),
+        &widgets);
+
+    LOG(ERROR) << app_browser->tab_strip_model()
+                      ->GetActiveWebContents()
+                      ->GetTopLevelNativeWindow();
+    LOG(ERROR) << app_browser->window()->GetNativeWindow();
+    LOG(ERROR) << widgets.size();
+    for (auto* w : widgets) {
+      views::View* cv = w->client_view();
+      LOG(ERROR) << cv;
+      LOG(ERROR) << cv->child_count();
+      LOG(ERROR) << cv->child_at(0)->GetClassName();
+      if (cv && cv->child_count() &&
+          std::string(cv->child_at(0)->GetClassName()) ==
+              "AppInfoDialogContainer") {
+        return w;
+      }
+    }
+
+    return nullptr;
+  };
+
+  EXPECT_FALSE(find_info_dialog());
+
+  chrome::ExecuteCommand(app_browser, IDC_APP_INFO);
+
+  EXPECT_TRUE(find_info_dialog());
+}
+#endif
 
 class HostedAppVsTdiTest : public HostedAppTest {
  public:
