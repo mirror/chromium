@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efdc0b7b_1a1ec0d7",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4136,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-27T13:10:16Z",
+      "side": 1,
+      "message": "Actually (sorry for the late review comment), this DCHECK is inappropriate. We shouldn\u0027t trust the renderer to not send spurious messages (yet another mojo advantage: the renderer cannot call callbacks for calls that haven\u0027t been made).",
+      "revId": "0400f0fadf4b62224be300a3130b6c88d8c730a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
