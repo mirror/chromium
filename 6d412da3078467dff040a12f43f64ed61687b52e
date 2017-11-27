@@ -410,6 +410,24 @@
       "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c471d600_aa5afea0",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-27T23:25:18Z",
+      "side": 1,
+      "message": "I\u0027ve realized that I don\u0027t want to use LazyInstance::Pointer(), because this would cause an unnecessary allocation (allocating the lazy instance is only needed for tests).  I can replace |x !\u003d nullptr| with |!(x \u003d\u003d nullptr)| as is already done for LazyInstance comparisons in ui/gfx/font_list.cc [1], base/logging.cc [2] and a few other places).\n\nI talked with dcheng@ and he suggested getting rid of operator\u003d\u003d altogether and replacing it with something like empty() / is_initialized() / etc.  I\u0027ll try doing this in https://chromium-review.googlesource.com/c/chromium/src/+/792124\n\n[1] https://chromium.googlesource.com/chromium/src/+/c3d017eb59cfe91c1aae384a8339bf76e53e34a6/ui/gfx/font_list.cc#223\n\n[2] https://chromium.googlesource.com/chromium/src/+/c3d017eb59cfe91c1aae384a8339bf76e53e34a6/base/logging.cc#818",
+      "parentUuid": "44fc4cdd_763ff836",
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
