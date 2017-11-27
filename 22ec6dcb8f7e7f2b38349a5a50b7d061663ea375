@@ -196,6 +196,30 @@
     },
     {
       "key": {
+        "uuid": "bda080f6_74642644",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-27T21:03:16Z",
+      "side": 1,
+      "message": "Here we are calling bluetooth.getDevices() within the setTimeout() call so this is correct, it will only call bluetooth,.getDevices() and populateDeviceList_ once per second. This looks correct to me with the comment above about using \u0027undefined\u0027 instead of -1.",
+      "parentUuid": "c86824a7_7cc0759d",
+      "range": {
+        "startLine": 483,
+        "startChar": 6,
+        "endLine": 493,
+        "endChar": 35
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5db202fd_e5568151",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
         "patchSetId": 4
@@ -225,6 +249,24 @@
       "side": 1,
       "message": "I like the idea of there being an abstraction layer for devices, and controlling devices there, but we may be going for an overkill. Though it would reduce the limiting and sorting code from two places to one, I am not sure there will be any other benefit. Given that we will end up introducing quite a bit more complexity and new code to handle the layer, I am not convinced that it will be worth it.\n\nFor 64, I\u0027m \"more\" comfortable with having this limited and sorted in the UI, even though it does mean it needs to be done here and in the tray code.\n\nWDYT? We can discuss this offline more if needed.",
       "parentUuid": "5db202fd_e5568151",
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67fa5ab_a100edc2",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-27T21:03:16Z",
+      "side": 1,
+      "message": "As discussed in email I am fine with a short term approach with the feedback in this CL addressed.",
+      "parentUuid": "a6a438e7_14a622e6",
       "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
