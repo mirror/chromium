@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dc0e3070_6b534655",
+        "filename": "content/browser/service_manager/common_browser_interfaces.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T16:05:34Z",
+      "side": 1,
+      "message": "nit: convention is to add a blank line above",
+      "revId": "a1266693ffcaa33d0482627b62d9b5460d5e9fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42165ba9_300888e5",
         "filename": "content/common/child_process_host_impl.cc",
         "patchSetId": 11
@@ -13,6 +30,24 @@
       "writtenOn": "2017-11-24T01:32:10Z",
       "side": 1,
       "message": "+jam, I\u0027m curious if you know why ChildProcessHostImpl / ChildProcessHost are in content/common? I would have expected this to be browser-process specific.",
+      "revId": "a1266693ffcaa33d0482627b62d9b5460d5e9fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bcfb27_4bfff8d0",
+        "filename": "content/common/child_process_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-27T16:05:34Z",
+      "side": 1,
+      "message": "because they\u0027re used by service process (not mojo service), which also launches child processes\n\nsee https://cs.chromium.org/chromium/src/chrome/service/service_utility_process_host.cc?rcl\u003d417487eaa0c0937760b2ccb33c964f1317b346d6\u0026l\u003d179",
+      "parentUuid": "42165ba9_300888e5",
       "revId": "a1266693ffcaa33d0482627b62d9b5460d5e9fab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
