@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2af5adb9_47dfa3bd",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T05:26:36Z",
+      "side": 1,
+      "message": "How about carrying |affinity| and |is_directional| from first step\nof ComputeVisibleSelection()? In other words, taking them from\n|editing_adjusted_selection|.\n\nBefore introducing cached start/end of SelectionTemplate, we used\nEphemeralRange and taking |affinity| and |is_directional| from\n|passed_selection|. Now, we use SelectionTemplate for all steps of\ncanaonicalization steps, we can set them in return value of each\nstep.",
+      "revId": "abcd3858e96c16d7c034303f80bd4d184571c4d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e1234a4_0f79a034",
         "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
         "patchSetId": 4
@@ -19,6 +36,40 @@
         "endLine": 344,
         "endChar": 23
       },
+      "revId": "abcd3858e96c16d7c034303f80bd4d184571c4d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0f3b9c_a91a6744",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T05:26:36Z",
+      "side": 1,
+      "message": "BTW, we don\u0027t need to use |editing_adjusted_range|. It was introduced\nbefore cached start/end of SelectionTemplate.",
+      "revId": "abcd3858e96c16d7c034303f80bd4d184571c4d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6f0d7f_314af79e",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T05:26:36Z",
+      "side": 1,
+      "message": "BTW, it is better to change ComputeSelectionType() to take SelectionTemplate.",
       "revId": "abcd3858e96c16d7c034303f80bd4d184571c4d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
