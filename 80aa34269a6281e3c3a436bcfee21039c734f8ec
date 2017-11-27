@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c556d9a7_689eaa12",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-11-27T20:43:06Z",
+      "side": 1,
+      "message": "This one needs to run on UI thread as well.",
+      "range": {
+        "startLine": 981,
+        "startChar": 20,
+        "endLine": 981,
+        "endChar": 53
+      },
+      "revId": "80aa34269a6281e3c3a436bcfee21039c734f8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
