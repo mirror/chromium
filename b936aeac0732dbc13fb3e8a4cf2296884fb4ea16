@@ -22,6 +22,30 @@
       "revId": "b936aeac0732dbc13fb3e8a4cf2296884fb4ea16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34a79b5_737205fc",
+        "filename": "chrome/browser/sync/test/integration/two_client_uss_sync_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-27T19:44:10Z",
+      "side": 1,
+      "message": "I need to ensure kValue3 reaches server before I trigger sync on client 0. ServerCountMatchStatusChecker is convenient checker to do it, only it checks number of items, not their values. kKey1 is already on the server so I write kKey2 and then wait for server to have two items.",
+      "parentUuid": "cc83cabc_460e7bd8",
+      "range": {
+        "startLine": 350,
+        "startChar": 10,
+        "endLine": 350,
+        "endChar": 19
+      },
+      "revId": "b936aeac0732dbc13fb3e8a4cf2296884fb4ea16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
