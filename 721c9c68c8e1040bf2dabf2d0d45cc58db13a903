@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1132c8e4_4e302b00",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1229425
+      },
+      "writtenOn": "2017-11-27T14:19:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c187e1a_bcaf21f0",
+      "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b318083_b3390cae",
         "filename": "content/renderer/media/gpu/rtc_video_decoder_factory.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ea38a5_3b017afd",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1229425
+      },
+      "writtenOn": "2017-11-27T14:19:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b318083_b3390cae",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 22,
+        "endChar": 57
+      },
+      "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f3877a49_f644816b",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1229425
+      },
+      "writtenOn": "2017-11-27T14:19:35Z",
+      "side": 1,
+      "message": "Good point, lets keep the existing behavior.",
+      "parentUuid": "2185597b_78f23f45",
+      "range": {
+        "startLine": 85,
+        "startChar": 9,
+        "endLine": 85,
+        "endChar": 46
+      },
+      "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1517bcaa_0ffc0ffd",
         "filename": "content/renderer/media/gpu/rtc_video_encoder_factory.h",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faaa09d6_a7dc1845",
+        "filename": "content/renderer/media/gpu/rtc_video_encoder_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1229425
+      },
+      "writtenOn": "2017-11-27T14:19:35Z",
+      "side": 1,
+      "message": "Done. Is this some Chromium style guide? For me this comment is unnecessary since it\u0027s clear that the overrides in this class are for webrtc::VideoEncoderFactory.",
+      "parentUuid": "1517bcaa_0ffc0ffd",
+      "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "d2cecdfb_d919177d",
+        "filename": "content/renderer/media/webrtc/video_codec_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1229425
+      },
+      "writtenOn": "2017-11-27T14:19:35Z",
+      "side": 1,
+      "message": "This wrapping will actually only take place for VP8. The logic is in the static CreateEncoder() function in this file. I guess it\u0027s too confusing, so I inlined the logic here, even though it\u0027s duplicated for the internal and external encoder factory.",
+      "parentUuid": "930d8d7c_48666a9a",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 48
+      },
+      "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf0ac30_844e823e",
         "filename": "content/renderer/media/webrtc/video_codec_factory.cc",
         "patchSetId": 1
@@ -125,6 +233,30 @@
       "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ddcf728_dbcd24bc",
+        "filename": "content/renderer/media/webrtc/video_codec_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1229425
+      },
+      "writtenOn": "2017-11-27T14:19:35Z",
+      "side": 1,
+      "message": "libvpx VP8 has built-in support for Simulcast, unless it happens to be screensharing. This is the logic that VP8EncoderSimulcastProxy implements. That\u0027s why it\u0027s more efficient to do the SW fallback wrapper afterwards.",
+      "parentUuid": "7cf0ac30_844e823e",
+      "range": {
+        "startLine": 109,
+        "startChar": 3,
+        "endLine": 111,
+        "endChar": 53
+      },
+      "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
