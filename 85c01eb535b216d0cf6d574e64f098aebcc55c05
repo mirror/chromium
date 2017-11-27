@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4d7d0e8_0d25be67",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-27T20:04:34Z",
+      "side": 1,
+      "message": "The extension currently handles IDs without the prefix. I looked into prefixing it there, but it seemed error-prone to modify the presentation ID while it gets passed around. It\u0027d be unclear which functions take prefixed/non-prefixed IDs.",
+      "parentUuid": "740f461f_70fb57cd",
+      "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b114f178_6b65c1d1",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-22T19:04:15Z",
       "side": 1,
       "message": "Note that this logic applies to Android too if we were to merge MediaRouterAndroid with MediaRouterMojoImpl in the future. Maybe add a TODO here?",
+      "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b7dd8c9_210899fd",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-27T20:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b114f178_6b65c1d1",
       "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
