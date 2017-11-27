@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66d9a207_7ab8942b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-27T21:42:31Z",
+      "side": 1,
+      "message": "This patch is refactoring. Changed patch description.",
+      "parentUuid": "b7dd1e19_c531efd7",
+      "revId": "f80848341ad193c91ca0f8e1d9592e3ee986a7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd7c248d_955cc29b",
         "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "efc92800_f368a8d6",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-27T21:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7c248d_955cc29b",
+      "revId": "f80848341ad193c91ca0f8e1d9592e3ee986a7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db837627_c2a6ecd9",
         "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
         "patchSetId": 3
@@ -47,6 +83,30 @@
       "writtenOn": "2017-11-27T09:37:39Z",
       "side": 1,
       "message": "It seems returning TextDirection is redundant.",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 20
+      },
+      "revId": "f80848341ad193c91ca0f8e1d9592e3ee986a7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb25b599_8c001f2a",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-27T21:42:31Z",
+      "side": 1,
+      "message": "I haven\u0027t seen it.\n\nThe result is passed to ComputeInlineBoxPositionForTextNode/AtomicInline(), both of which take a TextDirection parameter. And the parameter can be different from PrimaryDirectionOf(*position.AnchorNode())",
+      "parentUuid": "db837627_c2a6ecd9",
       "range": {
         "startLine": 341,
         "startChar": 0,
