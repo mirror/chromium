@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eaeac0d_01188765",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Document/document-open-usvstring.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T12:36:39Z",
+      "side": 1,
+      "message": "Please elaborate what this is for.  Without a comment, I don\u0027t understand that this is an \"unpaired\" surrogate codepoint (i.e. it\u0027s out of scope of DOMString).  It\u0027s also good that unpaired surrogate codepoints must be converted to U+FFFD.",
+      "range": {
+        "startLine": 8,
+        "startChar": 45,
+        "endLine": 8,
+        "endChar": 51
+      },
+      "revId": "de58474ae91739d57cbcb1c63cae5681a81d7126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091b84bc_18c97a19",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Document/document-open-usvstring.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T12:36:39Z",
+      "side": 1,
+      "message": "Please do not use other websites, especially ones that exist.  You can use data:... or javascript:... or something like that.",
+      "range": {
+        "startLine": 8,
+        "startChar": 23,
+        "endLine": 8,
+        "endChar": 44
+      },
+      "revId": "de58474ae91739d57cbcb1c63cae5681a81d7126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ad6949_d1550317",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Document/document-open-usvstring.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T12:36:39Z",
+      "side": 1,
+      "message": "Please elaborate what this test case is testing.  If the short comment for the test case is not enough, then you can write more detailed comments at the top of test case or somewhere appropriate.",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 2
+      },
+      "revId": "de58474ae91739d57cbcb1c63cae5681a81d7126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
