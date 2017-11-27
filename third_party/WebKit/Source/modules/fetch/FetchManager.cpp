@@ -49,6 +49,8 @@
 #include "public/platform/WebURLRequest.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 
+using network::mojom::FetchRequestMode;
+
 namespace blink {
 
 namespace {
@@ -289,8 +291,8 @@ class FetchManager::Loader final
 
   Member<FetchManager> fetch_manager_;
   Member<ScriptPromiseResolver> resolver_;
-  Member<FetchRequestData> request_;
-  Member<ThreadableLoader> loader_;
+  Member<FetchRequestData> fetch_request_data_;
+  Member<ThreadableLoader> threadable_loader_;
   bool failed_;
   bool finished_;
   int response_http_status_code_;
@@ -308,7 +310,7 @@ FetchManager::Loader::Loader(ExecutionContext* execution_context,
                              bool is_isolated_world)
     : fetch_manager_(fetch_manager),
       resolver_(resolver),
-      request_(request),
+      fetch_request_data_(request),
       failed_(false),
       finished_(false),
       response_http_status_code_(0),
@@ -320,14 +322,14 @@ FetchManager::Loader::Loader(ExecutionContext* execution_context,
 }
 
 FetchManager::Loader::~Loader() {
-  DCHECK(!loader_);
+  DCHECK(!threadable_loader_);
 }
 
 void FetchManager::Loader::Trace(blink::Visitor* visitor) {
   visitor->Trace(fetch_manager_);
   visitor->Trace(resolver_);
-  visitor->Trace(request_);
-  visitor->Trace(loader_);
+  visitor->Trace(fetch_request_data_);
+  visitor->Trace(threadable_loader_);
   visitor->Trace(integrity_verifier_);
   visitor->Trace(execution_context_);
 }
@@ -360,10 +362,10 @@ void FetchManager::Loader::DidReceiveResponse(
   }
 
   response_http_status_code_ = response.HttpStatusCode();
-  FetchRequestData::Tainting tainting = request_->ResponseTainting();
+  FetchRequestData::Tainting tainting = fetch_request_data_->ResponseTainting();
 
   if (response.Url().ProtocolIsData()) {
-    if (request_->Url() == response.Url()) {
+    if (fetch_request_data_->Url() == response.Url()) {
       // A direct request to data.
       tainting = FetchRequestData::kBasicTainting;
     } else {
@@ -372,37 +374,37 @@ void FetchManager::Loader::DidReceiveResponse(
       // same-origin data-URL flag is unset, except for no-cors mode.
       // TODO(hiroshige): currently redirects to data URLs in no-cors
       // mode is also rejected by Chromium side.
-      switch (request_->Mode()) {
-        case network::mojom::FetchRequestMode::kNoCORS:
+      switch (fetch_request_data_->Mode()) {
+        case FetchRequestMode::kNoCORS:
           tainting = FetchRequestData::kOpaqueTainting;
           break;
-        case network::mojom::FetchRequestMode::kSameOrigin:
-        case network::mojom::FetchRequestMode::kCORS:
-        case network::mojom::FetchRequestMode::kCORSWithForcedPreflight:
-        case network::mojom::FetchRequestMode::kNavigate:
+        case FetchRequestMode::kSameOrigin:
+        case FetchRequestMode::kCORS:
+        case FetchRequestMode::kCORSWithForcedPreflight:
+        case FetchRequestMode::kNavigate:
           PerformNetworkError("Fetch API cannot load " +
-                              request_->Url().GetString() +
+                              fetch_request_data_->Url().GetString() +
                               ". Redirects to data: URL are allowed only when "
                               "mode is \"no-cors\".");
           return;
       }
     }
   } else if (!SecurityOrigin::Create(response.Url())
-                  ->IsSameSchemeHostPort(request_->Origin().get())) {
+                  ->IsSameSchemeHostPort(fetch_request_data_->Origin().get())) {
     // Recompute the tainting if the request was redirected to a different
     // origin.
-    switch (request_->Mode()) {
-      case network::mojom::FetchRequestMode::kSameOrigin:
+    switch (fetch_request_data_->Mode()) {
+      case FetchRequestMode::kSameOrigin:
         NOTREACHED();
         break;
-      case network::mojom::FetchRequestMode::kNoCORS:
+      case FetchRequestMode::kNoCORS:
         tainting = FetchRequestData::kOpaqueTainting;
         break;
-      case network::mojom::FetchRequestMode::kCORS:
-      case network::mojom::FetchRequestMode::kCORSWithForcedPreflight:
+      case FetchRequestMode::kCORS:
+      case FetchRequestMode::kCORSWithForcedPreflight:
         tainting = FetchRequestData::kCORSTainting;
         break;
-      case network::mojom::FetchRequestMode::kNavigate:
+      case FetchRequestMode::kNavigate:
         LOG(FATAL);
         break;
     }
@@ -433,7 +435,7 @@ void FetchManager::Loader::DidReceiveResponse(
 
   FetchResponseData* response_data = nullptr;
   SRIBytesConsumer* sri_consumer = nullptr;
-  if (request_->Integrity().IsEmpty()) {
+  if (fetch_request_data_->Integrity().IsEmpty()) {
     response_data = FetchResponseData::CreateWithBuffer(new BodyStreamBuffer(
         script_state,
         new BytesConsumerForDataConsumerHandle(
@@ -463,10 +465,12 @@ void FetchManager::Loader::DidReceiveResponse(
 
   DCHECK(!(NetworkUtils::IsRedirectResponseCode(response_http_status_code_) &&
            response_data->HeaderList()->Has(HTTPNames::Location) &&
-           request_->Redirect() != WebURLRequest::kFetchRedirectModeManual));
+           fetch_request_data_->Redirect() !=
+               WebURLRequest::kFetchRedirectModeManual));
 
   if (NetworkUtils::IsRedirectResponseCode(response_http_status_code_) &&
-      request_->Redirect() == WebURLRequest::kFetchRedirectModeManual) {
+      fetch_request_data_->Redirect() ==
+          WebURLRequest::kFetchRedirectModeManual) {
     tainted_response = response_data->CreateOpaqueRedirectFilteredResponse();
   } else {
     switch (tainting) {
@@ -501,14 +505,14 @@ void FetchManager::Loader::DidReceiveResponse(
   }
   r->headers()->SetGuard(Headers::kImmutableGuard);
 
-  if (request_->Integrity().IsEmpty()) {
+  if (fetch_request_data_->Integrity().IsEmpty()) {
     resolver_->Resolve(r);
     resolver_.Clear();
   } else {
     DCHECK(!integrity_verifier_);
     integrity_verifier_ =
         new SRIVerifier(std::move(handle), sri_consumer, r, this,
-                        request_->Integrity(), response.Url());
+                        fetch_request_data_->Integrity(), response.Url());
   }
 }
 
@@ -528,7 +532,7 @@ void FetchManager::Loader::DidFail(const ResourceError& error) {
 }
 
 void FetchManager::Loader::DidFailRedirectCheck() {
-  Failed("Fetch API cannot load " + request_->Url().GetString() +
+  Failed("Fetch API cannot load " + fetch_request_data_->Url().GetString() +
          ". Redirect failed.");
 }
 
@@ -550,8 +554,8 @@ void FetchManager::Loader::LoadSucceeded() {
     GetDocument()->GetFrame()->GetPage()->GetChromeClient().AjaxSucceeded(
         GetDocument()->GetFrame());
   }
-  probe::didFinishFetch(execution_context_, this, request_->Method(),
-                        request_->Url().GetString());
+  probe::didFinishFetch(execution_context_, this, fetch_request_data_->Method(),
+                        fetch_request_data_->Url().GetString());
   NotifyFinished();
 }
 
@@ -580,10 +584,10 @@ void FetchManager::Loader::Start() {
   //    blocked"
   if (!ContentSecurityPolicy::ShouldBypassMainWorld(execution_context_) &&
       !execution_context_->GetContentSecurityPolicy()->AllowConnectToSource(
-          request_->Url())) {
+          fetch_request_data_->Url())) {
     // "A network error."
     PerformNetworkError(
-        "Refused to connect to '" + request_->Url().ElidedString() +
+        "Refused to connect to '" + fetch_request_data_->Url().ElidedString() +
         "' because it violates the document's Content Security Policy.");
     return;
   }
@@ -595,30 +599,33 @@ void FetchManager::Loader::Start() {
   // "- |request|'s url's scheme is 'about'"
   // Note we don't support to call this method with |CORS flag|
   // "- |request|'s mode is |navigate|".
-  if ((SecurityOrigin::Create(request_->Url())
-           ->IsSameSchemeHostPortAndSuborigin(request_->Origin().get())) ||
-      (request_->Url().ProtocolIsData() && request_->SameOriginDataURLFlag()) ||
-      (request_->Url().ProtocolIsAbout()) ||
-      (request_->Mode() == network::mojom::FetchRequestMode::kNavigate)) {
+  if ((SecurityOrigin::Create(fetch_request_data_->Url())
+           ->IsSameSchemeHostPortAndSuborigin(
+               fetch_request_data_->Origin().get())) ||
+      (fetch_request_data_->Url().ProtocolIsData() &&
+       fetch_request_data_->SameOriginDataURLFlag()) ||
+      (fetch_request_data_->Url().ProtocolIsAbout()) ||
+      (fetch_request_data_->Mode() == FetchRequestMode::kNavigate)) {
     // "The result of performing a scheme fetch using request."
     PerformSchemeFetch();
     return;
   }
 
   // "- |request|'s mode is |same-origin|"
-  if (request_->Mode() == network::mojom::FetchRequestMode::kSameOrigin) {
+  if (fetch_request_data_->Mode() == FetchRequestMode::kSameOrigin) {
     // "A network error."
-    PerformNetworkError("Fetch API cannot load " + request_->Url().GetString() +
+    PerformNetworkError("Fetch API cannot load " +
+                        fetch_request_data_->Url().GetString() +
                         ". Request mode is \"same-origin\" but the URL\'s "
                         "origin is not same as the request origin " +
-                        request_->Origin()->ToString() + ".");
+                        fetch_request_data_->Origin()->ToString() + ".");
     return;
   }
 
   // "- |request|'s mode is |no CORS|"
-  if (request_->Mode() == network::mojom::FetchRequestMode::kNoCORS) {
+  if (fetch_request_data_->Mode() == FetchRequestMode::kNoCORS) {
     // "Set |request|'s response tainting to |opaque|."
-    request_->SetResponseTainting(FetchRequestData::kOpaqueTainting);
+    fetch_request_data_->SetResponseTainting(FetchRequestData::kOpaqueTainting);
     // "The result of performing a scheme fetch using |request|."
     PerformSchemeFetch();
     return;
@@ -628,16 +635,16 @@ void FetchManager::Loader::Start() {
   // This may include other HTTP-like schemes if the embedder has added them
   // to SchemeRegistry::registerURLSchemeAsSupportingFetchAPI.
   if (!SchemeRegistry::ShouldTreatURLSchemeAsSupportingFetchAPI(
-          request_->Url().Protocol())) {
+          fetch_request_data_->Url().Protocol())) {
     // "A network error."
     PerformNetworkError(
-        "Fetch API cannot load " + request_->Url().GetString() +
+        "Fetch API cannot load " + fetch_request_data_->Url().GetString() +
         ". URL scheme must be \"http\" or \"https\" for CORS request.");
     return;
   }
 
   // "Set |request|'s response tainting to |CORS|."
-  request_->SetResponseTainting(FetchRequestData::kCORSTainting);
+  fetch_request_data_->SetResponseTainting(FetchRequestData::kCORSTainting);
 
   // "The result of performing an HTTP fetch using |request| with the
   // |CORS flag| set."
@@ -648,12 +655,12 @@ void FetchManager::Loader::Dispose() {
   probe::detachClientRequest(execution_context_, this);
   // Prevent notification
   fetch_manager_ = nullptr;
-  if (loader_) {
+  if (threadable_loader_) {
     if (request_->Keepalive())
-      loader_->Detach();
+      threadable_loader_->Detach();
     else
-      loader_->Cancel();
-    loader_ = nullptr;
+      threadable_loader_->Cancel();
+    threadable_loader_ = nullptr;
   }
   if (integrity_verifier_)
     integrity_verifier_->Cancel();
@@ -664,17 +671,18 @@ void FetchManager::Loader::PerformSchemeFetch() {
   // "To perform a scheme fetch using |request|, switch on |request|'s url's
   // scheme, and run the associated steps:"
   if (SchemeRegistry::ShouldTreatURLSchemeAsSupportingFetchAPI(
-          request_->Url().Protocol()) ||
-      request_->Url().ProtocolIs("blob")) {
+          fetch_request_data_->Url().Protocol()) ||
+      fetch_request_data_->Url().ProtocolIs("blob")) {
     // "Return the result of performing an HTTP fetch using |request|."
     PerformHTTPFetch();
-  } else if (request_->Url().ProtocolIsData()) {
+  } else if (fetch_request_data_->Url().ProtocolIsData()) {
     PerformDataFetch();
   } else {
     // FIXME: implement other protocols.
-    PerformNetworkError("Fetch API cannot load " + request_->Url().GetString() +
-                        ". URL scheme \"" + request_->Url().Protocol() +
-                        "\" is not supported.");
+    PerformNetworkError(
+        "Fetch API cannot load " + fetch_request_data_->Url().GetString() +
+        ". URL scheme \"" + fetch_request_data_->Url().Protocol() +
+        "\" is not supported.");
   }
 }
 
@@ -690,43 +698,42 @@ void FetchManager::Loader::PerformHTTPFetch() {
   //  body is a tee of |request|'s body."
   // We use ResourceRequest class for HTTPRequest.
   // FIXME: Support body.
-  ResourceRequest request(request_->Url());
-  request.SetRequestContext(request_->Context());
-  request.SetHTTPMethod(request_->Method());
+  ResourceRequest request(fetch_request_data_->Url());
+  request.SetRequestContext(fetch_request_data_->Context());
+  request.SetHTTPMethod(fetch_request_data_->Method());
 
-  switch (request_->Mode()) {
-    case network::mojom::FetchRequestMode::kSameOrigin:
-    case network::mojom::FetchRequestMode::kNoCORS:
-    case network::mojom::FetchRequestMode::kCORS:
-    case network::mojom::FetchRequestMode::kCORSWithForcedPreflight:
-      request.SetFetchRequestMode(request_->Mode());
+  switch (fetch_request_data_->Mode()) {
+    case FetchRequestMode::kSameOrigin:
+    case FetchRequestMode::kNoCORS:
+    case FetchRequestMode::kCORS:
+    case FetchRequestMode::kCORSWithForcedPreflight:
+      request.SetFetchRequestMode(fetch_request_data_->Mode());
       break;
-    case network::mojom::FetchRequestMode::kNavigate:
+    case FetchRequestMode::kNavigate:
       // Using kSameOrigin here to reduce the security risk.
       // "navigate" request is only available in ServiceWorker.
-      request.SetFetchRequestMode(
-          network::mojom::FetchRequestMode::kSameOrigin);
+      request.SetFetchRequestMode(FetchRequestMode::kSameOrigin);
       break;
   }
 
-  request.SetFetchCredentialsMode(request_->Credentials());
-  for (const auto& header : request_->HeaderList()->List()) {
-    // Since |request_|'s headers are populated with either of the "request"
-    // guard or "request-no-cors" guard, we can assume that none of the headers
-    // have a name listed in the forbidden header names.
+  request.SetFetchCredentialsMode(fetch_request_data_->Credentials());
+  for (const auto& header : fetch_request_data_->HeaderList()->List()) {
+    // Since |fetch_request_data_|'s headers are populated with either of the
+    // "request" guard or "request-no-cors" guard, we can assume that none of
+    // the headers have a name listed in the forbidden header names.
     DCHECK(!FetchUtils::IsForbiddenHeaderName(header.first));
 
     request.AddHTTPHeaderField(AtomicString(header.first),
                                AtomicString(header.second));
   }
 
-  if (request_->Method() != HTTPNames::GET &&
-      request_->Method() != HTTPNames::HEAD) {
-    if (request_->Buffer())
-      request.SetHTTPBody(request_->Buffer()->DrainAsFormData());
+  if (fetch_request_data_->Method() != HTTPNames::GET &&
+      fetch_request_data_->Method() != HTTPNames::HEAD) {
+    if (fetch_request_data_->Buffer())
+      request.SetHTTPBody(fetch_request_data_->Buffer()->DrainAsFormData());
   }
-  request.SetCacheMode(request_->CacheMode());
-  request.SetFetchRedirectMode(request_->Redirect());
+  request.SetCacheMode(fetch_request_data_->CacheMode());
+  request.SetFetchRedirectMode(fetch_request_data_->Redirect());
   request.SetUseStreamOnResponse(true);
   request.SetExternalRequestStateFromRequestorAddressSpace(
       execution_context_->GetSecurityContext().AddressSpace());
@@ -738,17 +745,18 @@ void FetchManager::Loader::PerformHTTPFetch() {
   // The following code also invokes "determine request's referrer" which is
   // written in "Main fetch" operation.
   const ReferrerPolicy referrer_policy =
-      request_->GetReferrerPolicy() == kReferrerPolicyDefault
+      fetch_request_data_->GetReferrerPolicy() == kReferrerPolicyDefault
           ? execution_context_->GetReferrerPolicy()
-          : request_->GetReferrerPolicy();
+          : fetch_request_data_->GetReferrerPolicy();
   const String referrer_string =
-      request_->ReferrerString() == FetchRequestData::ClientReferrerString()
+      fetch_request_data_->ReferrerString() ==
+              FetchRequestData::ClientReferrerString()
           ? execution_context_->OutgoingReferrer()
-          : request_->ReferrerString();
+          : fetch_request_data_->ReferrerString();
   // Note that generateReferrer generates |no-referrer| from |no-referrer|
   // referrer string (i.e. String()).
   request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
-      referrer_policy, request_->Url(), referrer_string));
+      referrer_policy, fetch_request_data_->Url(), referrer_string));
   request.SetServiceWorkerMode(is_isolated_world_
                                    ? WebURLRequest::ServiceWorkerMode::kNone
                                    : WebURLRequest::ServiceWorkerMode::kAll);
@@ -779,15 +787,15 @@ void FetchManager::Loader::PerformHTTPFetch() {
 
   ResourceLoaderOptions resource_loader_options;
   resource_loader_options.data_buffering_policy = kDoNotBufferData;
-  resource_loader_options.security_origin = request_->Origin().get();
+  resource_loader_options.security_origin = fetch_request_data_->Origin().get();
 
   ThreadableLoaderOptions threadable_loader_options;
 
   probe::willStartFetch(execution_context_, this);
-  loader_ = ThreadableLoader::Create(*execution_context_, this,
-                                     threadable_loader_options,
-                                     resource_loader_options);
-  loader_->Start(request);
+  threadable_loader_ = ThreadableLoader::Create(*execution_context_, this,
+                                                threadable_loader_options,
+                                                resource_loader_options);
+  threadable_loader_->Start(request);
 }
 
 // performDataFetch() is almost the same as performHTTPFetch(), except for:
@@ -795,12 +803,12 @@ void FetchManager::Loader::PerformHTTPFetch() {
 //   'same-origin' mode.
 // - We reject non-GET method.
 void FetchManager::Loader::PerformDataFetch() {
-  DCHECK(request_->Url().ProtocolIsData());
+  DCHECK(fetch_request_data_->Url().ProtocolIsData());
 
-  ResourceRequest request(request_->Url());
-  request.SetRequestContext(request_->Context());
+  ResourceRequest request(fetch_request_data_->Url());
+  request.SetRequestContext(fetch_request_data_->Context());
   request.SetUseStreamOnResponse(true);
-  request.SetHTTPMethod(request_->Method());
+  request.SetHTTPMethod(fetch_request_data_->Method());
   request.SetFetchCredentialsMode(network::mojom::FetchCredentialsMode::kOmit);
   request.SetFetchRedirectMode(WebURLRequest::kFetchRedirectModeError);
   // We intentionally skip 'setExternalRequestStateFromRequestorAddressSpace',
@@ -808,15 +816,15 @@ void FetchManager::Loader::PerformDataFetch() {
 
   ResourceLoaderOptions resource_loader_options;
   resource_loader_options.data_buffering_policy = kDoNotBufferData;
-  resource_loader_options.security_origin = request_->Origin().get();
+  resource_loader_options.security_origin = fetch_request_data_->Origin().get();
 
   ThreadableLoaderOptions threadable_loader_options;
 
   probe::willStartFetch(execution_context_, this);
-  loader_ = ThreadableLoader::Create(*execution_context_, this,
-                                     threadable_loader_options,
-                                     resource_loader_options);
-  loader_->Start(request);
+  threadable_loader_ = ThreadableLoader::Create(*execution_context_, this,
+                                                threadable_loader_options,
+                                                resource_loader_options);
+  threadable_loader_->Start(request);
 }
 
 void FetchManager::Loader::Failed(const String& message) {
