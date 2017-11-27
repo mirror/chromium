@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39b51faf_f8284259",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-27T20:27:39Z",
+      "side": 1,
+      "message": "I think you don\u0027t need this attribute – or did I miss histogram suffixes that are modifying this name?",
+      "range": {
+        "startLine": 2313,
+        "startChar": 11,
+        "endLine": 2313,
+        "endChar": 23
+      },
+      "revId": "cbb14d91a7b01dd501103b844e0d8b6ac6610a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
