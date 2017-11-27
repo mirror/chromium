@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b3663ccf_e3786301",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1162055
+      },
+      "writtenOn": "2017-11-27T23:12:04Z",
+      "side": 1,
+      "message": "Instead I added a paragraph at the bottom with labels (and fields) that should always be set.",
+      "parentUuid": "f776eb57_9ce37776",
+      "range": {
+        "startLine": 27,
+        "startChar": 45,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "66fea42bbb5f82562e098110c9d3bf49306e0fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "741717e1_8dc207bf",
         "filename": "docs/security/security-labels.md",
         "patchSetId": 1
@@ -68,6 +92,54 @@
       "revId": "66fea42bbb5f82562e098110c9d3bf49306e0fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa51b2e8_5d06c984",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1162055
+      },
+      "writtenOn": "2017-11-27T23:12:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "741717e1_8dc207bf",
+      "range": {
+        "startLine": 35,
+        "startChar": 65,
+        "endLine": 35,
+        "endChar": 83
+      },
+      "revId": "66fea42bbb5f82562e098110c9d3bf49306e0fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93f71696_5567baa3",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1162055
+      },
+      "writtenOn": "2017-11-27T23:12:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74241d03_4c7e4288",
+      "range": {
+        "startLine": 35,
+        "startChar": 54,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "66fea42bbb5f82562e098110c9d3bf49306e0fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
