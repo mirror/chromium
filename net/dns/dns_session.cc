@@ -13,10 +13,12 @@
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sample_vector.h"
 #include "base/rand_util.h"
 #include "base/stl_util.h"
+#include "base/strings/string_util.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "net/base/ip_endpoint.h"
@@ -29,6 +31,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/socket/datagram_client_socket.h"
 #include "net/socket/stream_socket.h"
+#include "url/gurl.h"
 
 namespace net {
 
@@ -117,6 +120,14 @@ DnsSession::DnsSession(const DnsConfig& config,
   UpdateTimeouts(NetworkChangeNotifier::GetConnectionType());
   InitializeServerStats();
   NetworkChangeNotifier::AddConnectionTypeObserver(this);
+  std::string group_name = base::FieldTrialList::FindFullName("DoH");
+  if (!group_name.empty() &&
+      !base::StartsWith(group_name, "control",
+                        base::CompareCase::INSENSITIVE_ASCII)) {
+    std::string spec(base::GetFieldTrialParamValue("DoH", "server"));
+    std::string method(base::GetFieldTrialParamValue("DoH", "method"));
+    dohservers.push_back(std::make_tuple(GURL(spec), method == "POST"));
+  }
 }
 
 DnsSession::~DnsSession() {
