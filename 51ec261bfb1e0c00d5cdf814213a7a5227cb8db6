@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f3bb9e5_1d54373c",
+        "filename": "components/flags_ui/resources/flags.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T23:20:01Z",
+      "side": 1,
+      "message": "This duplication (and this bug) is why we use the -webkit-margin-start and -webkit-margin-end extensions instead of margin-left and margin-right (same with padding). Can we do that in this file?",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 345,
+        "endChar": 1
+      },
+      "revId": "51ec261bfb1e0c00d5cdf814213a7a5227cb8db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
