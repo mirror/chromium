@@ -22,6 +22,63 @@
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5c6898_2b5fe9a1",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-27T21:22:28Z",
+      "side": 1,
+      "message": "You\u0027ll want to bind params-\u003eclient_request to an implementation of device::mojom::SensorClient as well so you are informed of sensor reading errors even if you aren\u0027t interested in reading change notifications.",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a25bd6_62cd1319",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-27T21:22:28Z",
+      "side": 1,
+      "message": "GetReading() can return false. Do you want to handle that?",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed43367_dcd06b96",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-27T21:22:28Z",
+      "side": 1,
+      "message": "Suffix these member fields with \u0027_\u0027.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
