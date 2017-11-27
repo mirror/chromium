@@ -34,6 +34,24 @@
       "revId": "6a3201b116a9170cd1fd47c44ade6c1f1bb4491f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd6017e_258b2d35",
+        "filename": "third_party/breakpad/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-27T21:52:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4843ee5_54d1d494",
+      "revId": "6a3201b116a9170cd1fd47c44ade6c1f1bb4491f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
