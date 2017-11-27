@@ -46,6 +46,30 @@
       "revId": "995b38d9fdbaf273fc92cf0df5a43006dd060a19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5019d3_83c7852f",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-27T20:56:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f92e1028_581a6bcb",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 79
+      },
+      "revId": "995b38d9fdbaf273fc92cf0df5a43006dd060a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

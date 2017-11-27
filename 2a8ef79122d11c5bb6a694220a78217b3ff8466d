@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30a89120_254ef2e1",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-27T20:56:10Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "a5b81798_804c843a",
+      "revId": "2a8ef79122d11c5bb6a694220a78217b3ff8466d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dd79c09_7afa996b",
         "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T16:03:38Z",
       "side": 1,
       "message": "I\u0027m still wondering if there is anyway to make Context_-\u003eGetImage() handle the unpremultipliedAlpha case, as that can really make the code much cleaner. \n\nI look at the code inside WebGLRenderingContextBase::GetImage(), and traces its function to ImageBuffer::CopyRenderingResultsFromDrawingBuffer, which uses DrawingBuffer::CopyToPlatformTexture. That function signature contains a boolean variable \"premultiplied_alpha\", and the caller hard-codes it to be \"true\". I believe that we can change this part to make the copying handles unpremultiplied data. \n\nCould you look into that? If there\u0027s a way to do this, that would really remove a lot of old code and simplifies things a lot.",
+      "revId": "2a8ef79122d11c5bb6a694220a78217b3ff8466d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aef4cb7_d53e1c8f",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-27T20:56:10Z",
+      "side": 1,
+      "message": "We can set the parameter to false, which will result in not-premultipyling the texture pixels if they are unpremul, but IMHO it does not solve the problem. Part of the problem is that after calling context_-\u003ePaintRenderingResultsToCanvas(ImageBuffer), we call ImageBuffer::NewImageSnapshot() that always results in a premul SkImage (because it calls SkSurface::makeSnapshot() which always creates a premul image). We can retag the SkImage to unpremul, but it will be costly for accelerated images (and needs read back). It can be risky too because the current code base assumes such a snapshot is always premul. I\u0027m not sure if we get into any problem with alpha clamping, etc. or not.",
+      "parentUuid": "3dd79c09_7afa996b",
       "revId": "2a8ef79122d11c5bb6a694220a78217b3ff8466d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
