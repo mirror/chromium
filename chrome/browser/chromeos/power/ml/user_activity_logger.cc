@@ -18,10 +18,12 @@ namespace ml {
 UserActivityLogger::UserActivityLogger(
     UserActivityLoggerDelegate* const delegate,
     IdleEventNotifier* const idle_event_notifier,
-    chromeos::PowerManagerClient* const power_manager_client)
+    chromeos::PowerManagerClient* const power_manager_client,
+    viz::mojom::VideoDetectorObserverRequest request)
     : logger_delegate_(delegate),
       idle_event_notifier_(idle_event_notifier),
-      power_manager_client_(power_manager_client) {
+      power_manager_client_(power_manager_client),
+      binding_(this, std::move(request)) {
   DCHECK(idle_event_notifier_);
   idle_event_notifier_->AddObserver(this);
 
@@ -54,37 +56,36 @@ UserActivityLogger::~UserActivityLogger() {
   detector->RemoveObserver(this);
 }
 
-// Only log when we observe an idle event.
 void UserActivityLogger::OnUserActivity(const ui::Event* /* event */) {
-  if (!idle_event_observed_)
-    return;
-  UserActivityEvent activity_event;
-
-  UserActivityEvent::Event* event = activity_event.mutable_event();
-  event->set_type(UserActivityEvent::Event::REACTIVATE);
-  event->set_reason(UserActivityEvent::Event::USER_ACTIVITY);
-
-  *activity_event.mutable_features() = features_;
-
-  // Log to metrics.
-  logger_delegate_->LogActivity(activity_event);
-  idle_event_observed_ = false;
+  MaybeLogEvent(UserActivityEvent::Event::REACTIVATE,
+                UserActivityEvent::Event::USER_ACTIVITY);
 }
 
 void UserActivityLogger::LidEventReceived(
     chromeos::PowerManagerClient::LidState state,
     const base::TimeTicks& /* timestamp */) {
   lid_state_ = state;
+  if (lid_state_ == chromeos::PowerManagerClient::LidState::CLOSED) {
+    MaybeLogEvent(UserActivityEvent::Event::OFF,
+                  UserActivityEvent::Event::LID_CLOSED);
+  }
 }
 
-// TODO(renjieliu): Add power related activity.
 void UserActivityLogger::PowerChanged(
     const power_manager::PowerSupplyProperties& proto) {
-  on_battery_ = (proto.external_power() ==
-                 power_manager::PowerSupplyProperties::DISCONNECTED);
+  bool battery_status = (proto.external_power() ==
+                         power_manager::PowerSupplyProperties::DISCONNECTED);
+
+  bool power_source_changed = (battery_status != on_battery_);
+  on_battery_ = battery_status;
 
   if (proto.has_battery_percent()) {
     battery_percent_ = proto.battery_percent();
+  }
+  // Only log when power source changed, don't care about percentage change.
+  if (power_source_changed) {
+    MaybeLogEvent(UserActivityEvent::Event::REACTIVATE,
+                  UserActivityEvent::Event::POWER_CHANGED);
   }
 }
 
@@ -92,6 +93,19 @@ void UserActivityLogger::TabletModeEventReceived(
     chromeos::PowerManagerClient::TabletMode mode,
     const base::TimeTicks& /* timestamp */) {
   tablet_mode_ = mode;
+}
+
+void UserActivityLogger::SuspendImminent(
+    power_manager::SuspendImminent::Reason reason) {
+  if (reason == power_manager::SuspendImminent::IDLE) {
+    MaybeLogEvent(UserActivityEvent::Event::TIMEOUT,
+                  UserActivityEvent::Event::IDLE_SLEEP);
+  }
+}
+
+void UserActivityLogger::OnVideoActivityStarted() {
+  MaybeLogEvent(UserActivityEvent::Event::REACTIVATE,
+                UserActivityEvent::Event::VIDEO_ACTIVITY);
 }
 
 void UserActivityLogger::OnIdleEventObserved(
@@ -162,6 +176,24 @@ void UserActivityLogger::ExtractFeatures(
     features_.set_battery_percent(*battery_percent_);
   }
   features_.set_on_battery(on_battery_);
+}
+
+void UserActivityLogger::MaybeLogEvent(
+    UserActivityEvent::Event::Type type,
+    UserActivityEvent::Event::Reason reason) {
+  if (!idle_event_observed_)
+    return;
+  UserActivityEvent activity_event;
+
+  UserActivityEvent::Event* event = activity_event.mutable_event();
+  event->set_type(type);
+  event->set_reason(reason);
+
+  *activity_event.mutable_features() = features_;
+
+  // Log to metrics.
+  logger_delegate_->LogActivity(activity_event);
+  idle_event_observed_ = false;
 }
 
 }  // namespace ml

@@ -55,7 +55,8 @@ class UserActivityLoggerTest : public testing::Test {
     idle_event_notifier_ = std::make_unique<IdleEventNotifier>(
         &fake_power_manager_client_, mojo::MakeRequest(&observer));
     activity_logger_ = std::make_unique<UserActivityLogger>(
-        &delegate_, idle_event_notifier_.get(), &fake_power_manager_client_);
+        &delegate_, idle_event_notifier_.get(), &fake_power_manager_client_,
+        mojo::MakeRequest(&observer));
   }
 
   ~UserActivityLoggerTest() override = default;
@@ -84,6 +85,12 @@ class UserActivityLoggerTest : public testing::Test {
 
   void ReportTabletModeEvent(chromeos::PowerManagerClient::TabletMode mode) {
     fake_power_manager_client_.SetTabletMode(mode, base::TimeTicks::Now());
+  }
+
+  void ReportVideoStart() { activity_logger_->OnVideoActivityStarted(); }
+
+  void ReportSuspendImminent(power_manager::SuspendImminent::Reason reason) {
+    activity_logger_->SuspendImminent(reason);
   }
 
   const std::vector<UserActivityEvent>& GetEvents() {
@@ -169,6 +176,75 @@ TEST_F(UserActivityLoggerTest, LogMultipleEvents) {
   expected_event.set_reason(UserActivityEvent::Event::USER_ACTIVITY);
   EqualEvent(expected_event, events[0].event());
   EqualEvent(expected_event, events[1].event());
+}
+
+// Test closed lid.
+TEST_F(UserActivityLoggerTest, UserCloseLid) {
+  ReportLidEvent(chromeos::PowerManagerClient::LidState::OPEN);
+  // Trigger an idle event.
+  base::Time now = base::Time::UnixEpoch();
+  ReportIdleEvent({now, now});
+
+  ReportLidEvent(chromeos::PowerManagerClient::LidState::CLOSED);
+  const auto& events = GetEvents();
+  ASSERT_EQ(1U, events.size());
+
+  UserActivityEvent::Event expected_event;
+  expected_event.set_type(UserActivityEvent::Event::OFF);
+  expected_event.set_reason(UserActivityEvent::Event::LID_CLOSED);
+  EqualEvent(expected_event, events[0].event());
+}
+
+// Test power change activity.
+TEST_F(UserActivityLoggerTest, PowerChangeActivity) {
+  ReportPowerChangeEvent(power_manager::PowerSupplyProperties::AC, 23.0f);
+  // Trigger an idle event.
+  base::Time now = base::Time::UnixEpoch();
+  ReportIdleEvent({now, now});
+
+  // We don't care about battery percentage change, but only power source.
+  ReportPowerChangeEvent(power_manager::PowerSupplyProperties::AC, 25.0f);
+  ReportPowerChangeEvent(power_manager::PowerSupplyProperties::DISCONNECTED,
+                         28.0f);
+  const auto& events = GetEvents();
+  ASSERT_EQ(1U, events.size());
+
+  UserActivityEvent::Event expected_event;
+  expected_event.set_type(UserActivityEvent::Event::REACTIVATE);
+  expected_event.set_reason(UserActivityEvent::Event::POWER_CHANGED);
+  EqualEvent(expected_event, events[0].event());
+}
+
+// Test video activity.
+TEST_F(UserActivityLoggerTest, VideoActivity) {
+  // Trigger an idle event.
+  base::Time now = base::Time::UnixEpoch();
+  ReportIdleEvent({now, now});
+
+  ReportVideoStart();
+  const auto& events = GetEvents();
+  ASSERT_EQ(1U, events.size());
+
+  UserActivityEvent::Event expected_event;
+  expected_event.set_type(UserActivityEvent::Event::REACTIVATE);
+  expected_event.set_reason(UserActivityEvent::Event::VIDEO_ACTIVITY);
+  EqualEvent(expected_event, events[0].event());
+}
+
+// Test system idle.
+TEST_F(UserActivityLoggerTest, SystemIdle) {
+  // Trigger an idle event.
+  base::Time now = base::Time::UnixEpoch();
+  ReportIdleEvent({now, now});
+
+  ReportSuspendImminent(power_manager::SuspendImminent::IDLE);
+  const auto& events = GetEvents();
+  ASSERT_EQ(1U, events.size());
+
+  UserActivityEvent::Event expected_event;
+  expected_event.set_type(UserActivityEvent::Event::TIMEOUT);
+  expected_event.set_reason(UserActivityEvent::Event::IDLE_SLEEP);
+  EqualEvent(expected_event, events[0].event());
 }
 
 // Test feature extraction.

@@ -12,6 +12,7 @@
 #include "chrome/browser/chromeos/power/ml/user_activity_event.pb.h"
 #include "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h"
 #include "chromeos/dbus/power_manager_client.h"
+#include "services/viz/public/interfaces/compositing/video_detector_observer.mojom.h"
 #include "ui/base/user_activity/user_activity_observer.h"
 
 namespace chromeos {
@@ -22,13 +23,18 @@ namespace ml {
 // TODO(renjieliu): Add power-related activity as well.
 class UserActivityLogger : public ui::UserActivityObserver,
                            public IdleEventNotifier::Observer,
-                           public PowerManagerClient::Observer {
+                           public PowerManagerClient::Observer,
+                           public viz::mojom::VideoDetectorObserver {
  public:
   explicit UserActivityLogger(
       UserActivityLoggerDelegate* delegate,
       IdleEventNotifier* idle_event_notifier,
-      chromeos::PowerManagerClient* power_manager_client);
+      chromeos::PowerManagerClient* power_manager_client,
+      viz::mojom::VideoDetectorObserverRequest request);
   ~UserActivityLogger() override;
+
+  // ui::UserActivityObserver overrides.
+  void OnUserActivity(const ui::Event* event) override;
 
   // chromeos::PowerManagerClient::Observer overrides:
   void LidEventReceived(chromeos::PowerManagerClient::LidState state,
@@ -36,12 +42,14 @@ class UserActivityLogger : public ui::UserActivityObserver,
   void PowerChanged(const power_manager::PowerSupplyProperties& proto) override;
   void TabletModeEventReceived(chromeos::PowerManagerClient::TabletMode mode,
                                const base::TimeTicks& timestamp) override;
+  void SuspendImminent(power_manager::SuspendImminent::Reason reason) override;
+
+  // viz::mojom::VideoDetectorObserver overrides:
+  void OnVideoActivityStarted() override;
+  void OnVideoActivityEnded() override {}  // We don't care about this.
 
  private:
   friend class UserActivityLoggerTest;
-
-  // ui::UserActivityObserver overrides.
-  void OnUserActivity(const ui::Event* event) override;
 
   // IdleEventNotifier::Observer overrides.
   void OnIdleEventObserved(
@@ -53,6 +61,10 @@ class UserActivityLogger : public ui::UserActivityObserver,
 
   // Extract features from last known activity data and from device states.
   void ExtractFeatures(const IdleEventNotifier::ActivityData& activity_data);
+
+  // Log event only when an idle event is observed.
+  void MaybeLogEvent(UserActivityEvent::Event::Type type,
+                     UserActivityEvent::Event::Reason reason);
 
   // Flag indicating whether an idle event has been observed.
   bool idle_event_observed_ = false;
@@ -83,6 +95,9 @@ class UserActivityLogger : public ui::UserActivityObserver,
 
   // Power manager client.
   chromeos::PowerManagerClient* const power_manager_client_;
+
+  // Video detector observer binding.
+  mojo::Binding<viz::mojom::VideoDetectorObserver> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(UserActivityLogger);
 };
