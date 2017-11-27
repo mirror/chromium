@@ -34,6 +34,24 @@
       "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9de85a_55c77802",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-27T10:59:17Z",
+      "side": 1,
+      "message": "correct. Without JS already running in that origin, there\u0027s no shared worker",
+      "parentUuid": "8e699815_e4b045e0",
+      "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

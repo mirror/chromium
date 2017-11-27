@@ -311,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "31641ea1_cb4d253b",
+        "filename": "chrome/browser/content_settings/local_shared_objects_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-27T10:59:17Z",
+      "side": 1,
+      "message": "it\u0027s the URL of the worker script",
+      "parentUuid": "9b8db2bf_928a389a",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deb1a293_1910b9b6",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
         "patchSetId": 5
