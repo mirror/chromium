@@ -4544,11 +4544,32 @@ void RenderFrameImpl::SaveImageFromDataURL(const blink::WebString& data_url) {
 }
 
 void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
+  LOG(INFO) << "RenderFrameImpl::WillSendRequest url " << request.Url()
+            << ", doc origin "
+            << frame_->GetDocument().GetSecurityOrigin().ToString().Utf8()
+            << ", requestor origin "
+            << request.RequestorOrigin().ToString().Utf8() << ", http origin "
+            << request.HttpHeaderField("Origin").Utf8() << ", referer "
+            << request.HttpHeaderField("Referer").Utf8();
   WebDocumentLoader* provisional_document_loader =
       frame_->GetProvisionalDocumentLoader();
   WebDocumentLoader* document_loader = provisional_document_loader
                                            ? provisional_document_loader
                                            : frame_->GetDocumentLoader();
+
+  auto http_origin = request.HttpHeaderField("Origin").Utf8();
+  if (!http_origin.empty() &&
+      request.GetFetchRequestMode() !=
+          blink::WebURLRequest::FetchRequestMode::kFetchRequestModeNavigate) {
+    auto document_origin =
+        url::Origin(frame_->GetDocument().GetSecurityOrigin()).Serialize();
+    if (http_origin != document_origin) {
+      LOG(INFO) << "ALERT THE WEIRDNESS POLICE -- Witnessing a weird Origin "
+                   "header; origin "
+                << http_origin << " from document with origin "
+                << document_origin;
+    }
+  }
 
   DocumentState* document_state =
       DocumentState::FromDocumentLoader(document_loader);
@@ -4607,6 +4628,8 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
 
   // Add an empty HTTP origin header for non GET methods if none is currently
   // present.
+  //
+  // TODO(nick): Why isn't this in blink??
   request.AddHTTPOriginIfNeeded(WebSecurityOrigin::CreateUnique());
 
   // Attach |should_replace_current_entry| state to requests so that, should
@@ -4718,6 +4741,14 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
 
   if (!render_view_->renderer_preferences_.enable_referrers)
     request.SetHTTPReferrer(WebString(), blink::kWebReferrerPolicyDefault);
+
+  LOG(INFO) << "END RenderFrameImpl::WillSendRequest url " << request.Url()
+            << ", doc origin "
+            << frame_->GetDocument().GetSecurityOrigin().ToString().Utf8()
+            << ", requestor origin "
+            << request.RequestorOrigin().ToString().Utf8() << ", http origin "
+            << request.HttpHeaderField("Origin").Utf8() << ", referer "
+            << request.HttpHeaderField("Referer").Utf8();
 }
 
 void RenderFrameImpl::DidReceiveResponse(

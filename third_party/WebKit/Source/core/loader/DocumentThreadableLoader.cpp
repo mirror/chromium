@@ -148,11 +148,11 @@ DocumentThreadableLoader::DocumentThreadableLoader(
     : client_(client),
       loading_context_(&loading_context),
       options_(options),
-      resource_loader_options_(resource_loader_options),
+      original_resource_loader_options_(resource_loader_options),
       out_of_blink_cors_(RuntimeEnabledFeatures::OutOfBlinkCORSEnabled()),
       cors_flag_(false),
       suborigin_force_credentials_(false),
-      security_origin_(resource_loader_options_.security_origin),
+      security_origin_(original_resource_loader_options_.security_origin),
       is_using_data_consumer_handle_(false),
       async_(blocking_behavior == kLoadAsynchronously),
       request_context_(WebURLRequest::kRequestContextUnspecified),
@@ -170,6 +170,11 @@ DocumentThreadableLoader::DocumentThreadableLoader(
 }
 
 void DocumentThreadableLoader::Start(const ResourceRequest& request) {
+#if 0
+  LOG(INFO) << "DocumentThreadableLoader::Start() "
+            << security_origin_->ToString().Utf8() << ", cors "
+            << out_of_blink_cors_;
+#endif
   if (out_of_blink_cors_)
     StartOutOfBlinkCORS(request);
   else
@@ -366,7 +371,7 @@ void DocumentThreadableLoader::StartBlinkCORS(const ResourceRequest& request) {
         WebURLRequest::ServiceWorkerMode::kForeign);
   }
 
-  LoadRequest(new_request, resource_loader_options_);
+  LoadRequest(new_request, original_resource_loader_options_);
 }
 
 void DocumentThreadableLoader::DispatchInitialRequest(
@@ -380,7 +385,7 @@ void DocumentThreadableLoader::DispatchInitialRequest(
 void DocumentThreadableLoader::DispatchInitialRequestBlinkCORS(
     ResourceRequest& request) {
   if (!request.IsExternalRequest() && !cors_flag_) {
-    LoadRequest(request, resource_loader_options_);
+    LoadRequest(request, original_resource_loader_options_);
     return;
   }
 
@@ -475,7 +480,7 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequestBlinkCORS(
   }
 
   ResourceRequest cross_origin_request(request);
-  ResourceLoaderOptions cross_origin_options(resource_loader_options_);
+  ResourceLoaderOptions cross_origin_options(original_resource_loader_options_);
 
   cross_origin_request.RemoveUserAndPassFromURL();
 

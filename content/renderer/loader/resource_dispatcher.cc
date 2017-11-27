@@ -187,9 +187,9 @@ void ResourceDispatcher::OnReceivedResponse(
   ToResourceResponseInfo(*request_info, response_head, &renderer_response_info);
   request_info->site_isolation_metadata =
       SiteIsolationStatsGatherer::OnReceivedResponse(
-          request_info->frame_origin, request_info->response_url,
-          request_info->resource_type, request_info->origin_pid,
-          renderer_response_info);
+          request_info->frame_origin, request_info->requestor_origin,
+          request_info->response_url, request_info->resource_type,
+          request_info->origin_pid, renderer_response_info);
   request_info->peer->OnReceivedResponse(renderer_response_info);
 }
 
@@ -486,6 +486,8 @@ ResourceDispatcher::PendingRequestInfo::PendingRequestInfo(
     int render_frame_id,
     int origin_pid,
     const url::Origin& frame_origin,
+    const url::Origin& requestor_origin,
+    bool frame_origin_access_whitelisted,
     const GURL& request_url,
     const std::string& method,
     const GURL& referrer,
@@ -494,8 +496,10 @@ ResourceDispatcher::PendingRequestInfo::PendingRequestInfo(
       resource_type(resource_type),
       render_frame_id(render_frame_id),
       origin_pid(origin_pid),
+      frame_origin_access_whitelisted(frame_origin_access_whitelisted),
       url(request_url),
       frame_origin(frame_origin),
+      requestor_origin(requestor_origin),
       response_url(request_url),
       response_method(method),
       response_referrer(referrer),
@@ -562,6 +566,7 @@ void ResourceDispatcher::StartSync(
     std::unique_ptr<ResourceRequest> request,
     int routing_id,
     const url::Origin& frame_origin,
+    bool frame_origin_access_whitelisted,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     SyncLoadResponse* response,
     blink::WebURLRequest::LoadingIPCType ipc_type,
@@ -587,9 +592,9 @@ void ResourceDispatcher::StartSync(
         FROM_HERE,
         base::BindOnce(&SyncLoadContext::StartAsyncWithWaitableEvent,
                        std::move(request), routing_id, frame_origin,
-                       traffic_annotation, std::move(url_loader_factory_copy),
-                       std::move(throttles), base::Unretained(response),
-                       base::Unretained(&event)));
+                       frame_origin_access_whitelisted, traffic_annotation,
+                       std::move(url_loader_factory_copy), std::move(throttles),
+                       base::Unretained(response), base::Unretained(&event)));
 
     event.Wait();
   } else {
@@ -625,6 +630,7 @@ int ResourceDispatcher::StartAsync(
     int routing_id,
     scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner,
     const url::Origin& frame_origin,
+    bool frame_origin_access_whitelisted,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     bool is_sync,
     std::unique_ptr<RequestPeer> peer,
@@ -636,10 +642,11 @@ int ResourceDispatcher::StartAsync(
 
   // Compute a unique request_id for this renderer process.
   int request_id = MakeRequestID();
-  pending_requests_[request_id] = std::make_unique<PendingRequestInfo>(
+  pending_requests_[request_id] = base::MakeUnique<PendingRequestInfo>(
       std::move(peer), request->resource_type, request->render_frame_id,
-      request->origin_pid, frame_origin, request->url, request->method,
-      request->referrer, request->download_to_file);
+      request->origin_pid, frame_origin,
+      request->request_initiator ? *request->request_initiator : frame_origin,
+      frame_origin_access_whitelisted, request->url, request->download_to_file);
 
   if (resource_scheduling_filter_.get() && loading_task_runner) {
     resource_scheduling_filter_->SetRequestIdTaskRunner(request_id,

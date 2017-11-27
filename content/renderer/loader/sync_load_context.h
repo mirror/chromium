@@ -35,6 +35,7 @@ class SyncLoadContext : public RequestPeer {
       std::unique_ptr<ResourceRequest> request,
       int routing_id,
       const url::Origin& frame_origin,
+      bool frame_origin_access_whitelisted,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       mojom::URLLoaderFactoryPtrInfo url_loader_factory_pipe,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,

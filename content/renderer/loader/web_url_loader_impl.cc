@@ -683,8 +683,10 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
 
     resource_dispatcher_->StartSync(
         std::move(resource_request), request.RequestorID(),
-        extra_data->frame_origin(), GetTrafficAnnotationTag(request),
-        sync_load_response, request.GetLoadingIPCType(), url_loader_factory_,
+        extra_data->frame_origin(),
+        extra_data->frame_origin_access_whitelisted(),
+        GetTrafficAnnotationTag(request), sync_load_response,
+        request.GetLoadingIPCType(), url_loader_factory_,
         extra_data->TakeURLLoaderThrottles());
     return;
   }
@@ -693,8 +695,8 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
                          TRACE_EVENT_FLAG_FLOW_OUT);
   request_id_ = resource_dispatcher_->StartAsync(
       std::move(resource_request), request.RequestorID(), task_runner_,
-      extra_data->frame_origin(), GetTrafficAnnotationTag(request),
-      false /* is_sync */,
+      extra_data->frame_origin(), extra_data->frame_origin_access_whitelisted(),
+      GetTrafficAnnotationTag(request), false /* is_sync */,
       std::make_unique<WebURLLoaderImpl::RequestPeerImpl>(this),
       request.GetLoadingIPCType(), url_loader_factory_,
       extra_data->TakeURLLoaderThrottles(), std::move(consumer_handle));

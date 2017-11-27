@@ -18,6 +18,8 @@ RequestExtraData::RequestExtraData()
     : visibility_state_(blink::mojom::PageVisibilityState::kVisible),
       render_frame_id_(MSG_ROUTING_NONE),
       is_main_frame_(false),
+      frame_origin_access_whitelisted_(false),
+      frame_origin_access_universal_(false),
       allow_download_(true),
       transition_type_(ui::PAGE_TRANSITION_LINK),
       should_replace_current_entry_(false),

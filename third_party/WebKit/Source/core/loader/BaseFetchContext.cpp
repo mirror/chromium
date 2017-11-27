@@ -163,6 +163,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
   if (ShouldBlockRequestByInspector(resource_request.Url()))
     return ResourceRequestBlockedReason::kInspector;
 
+  // options.security_origin here should contain the actual script origin.
+  // BaseFetchContext is the base class of FrameFetchContext.
   SecurityOrigin* security_origin = options.security_origin.get();
   if (!security_origin)
     security_origin = GetSecurityOrigin();
@@ -194,6 +196,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
     case Resource::kMedia:
     case Resource::kManifest:
     case Resource::kMock:
+      // kMock is horrible!
+      //
       // By default these types of resources can be loaded from any origin.
       // FIXME: Are we sure about Resource::kFont?
       if (origin_restriction == FetchParameters::kRestrictToSameOrigin &&

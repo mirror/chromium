@@ -45,6 +45,19 @@ class CONTENT_EXPORT RequestExtraData : public blink::WebURLRequest::ExtraData {
   void set_frame_origin(const url::Origin& frame_origin) {
     frame_origin_ = frame_origin;
   }
+  bool frame_origin_access_whitelisted() const {
+    return frame_origin_access_whitelisted_;
+  }
+  void set_frame_origin_access_whitelisted(
+      bool frame_origin_access_whitelisted) {
+    frame_origin_access_whitelisted_ = frame_origin_access_whitelisted;
+  }
+  bool frame_origin_access_universal() const {
+    return frame_origin_access_universal_;
+  }
+  void set_frame_origin_access_universal(bool frame_origin_access_universal) {
+    frame_origin_access_universal_ = frame_origin_access_universal;
+  }
   void set_allow_download(bool allow_download) {
     allow_download_ = allow_download;
   }
@@ -151,6 +164,8 @@ class CONTENT_EXPORT RequestExtraData : public blink::WebURLRequest::ExtraData {
   int render_frame_id_;
   bool is_main_frame_;
   url::Origin frame_origin_;
+  bool frame_origin_access_whitelisted_;
+  bool frame_origin_access_universal_;
   bool allow_download_;
   ui::PageTransition transition_type_;
   bool should_replace_current_entry_;

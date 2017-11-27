@@ -241,10 +241,12 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   Member<ThreadableLoadingContext> loading_context_;
 
   const ThreadableLoaderOptions options_;
-  // Some items may be overridden by m_forceDoNotAllowStoredCredentials and
-  // m_securityOrigin. In such a case, build a ResourceLoaderOptions with
+
+  // The ResourceLoaderOptions originally passed to this class on construction.
+  // Some values ay be overridden by m_forceDoNotAllowStoredCredentials and
+  // security_origin_. In such a case, build a ResourceLoaderOptions with
   // up-to-date values from them and this variable, and use it.
-  const ResourceLoaderOptions resource_loader_options_;
+  const ResourceLoaderOptions original_resource_loader_options_;
 
   // True when feature OutOfBlinkCORS is enabled (https://crbug.com/736308).
   bool out_of_blink_cors_;
