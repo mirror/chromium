@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57a71fb6_735d4f6f",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "My comment regarding lock_id still stands for all \"id\" instances in LockHandleImpl.",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44aee1ce_aacc099a",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "This shows up twice, could be extracted into OriginState::MergeLockState(scope, mode).",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa68471f_133f0169",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "granted \u003d IsGrantable(origin, lock-\u003escope, lock-\u003emode)?\n\nThe redundant checks coming out of this simplification could be removed by extracting the \"if\" inside LockManager::IsGrantable to OriginState::IsGrantable and calling it from here.",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e399b61_f72701e3",
+        "filename": "content/browser/locks/lock_manager.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs to be public anymore. Please keep the comment (minus \"internally\"), it\u0027s useful.",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8368a8bb_af24d12b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "nit: s -\u003e scope? s makes me think of \"shared\", and these would be exclusive.\n\nSorry I missed this in my first review, I just assumed shared is the default 😢  (not implying it should be... exclusive is definitely the right default)",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7277cb13_38ab1742",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "The tests here and in worker.html are really nice, given the difficulty of the surface being covered!",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36ce2a86_dd42d5f8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "nit: lock_granted?",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6508a98_7cc27d88",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "Could we avoid snoozing by asserting that trying to get the lock with ifAvailable: true returns no lock in the callback?\n\nTo be completely clear, I think got_it checks should remain here and at the end of the file. I just hope that issuing a call with ifAvailable: true would get the same guarantees (that the lock whose callback sets got_it has been requested, and the request has been considered and not granted) as waiting for some time.\n\nPlease consider the same question below and in worker.html.",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b472564d_841cc7ab",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "Would it make sense to also test for termination by navigation?",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceef3c39_b449c2bf",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "I think you can also eliminate this snooze (and the one below) by adding ifAvailable: true support to the iframe/worker postMessage handler (the option would have to be plumbed through, and the request callback should report a null lock, but not create a map entry for it). I\u0027d replace the \"await snooze\" here with awaiting a postAndWait to frame3 with ifAvailable: true, and assert that the returned lock was null.",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62eb5383_097610b7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "nit: \"2nd lock granted\"  (same reasoning as above)\n\nSorry I forgot to write \"also below\" in my last round of feedback!",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec3d462_5c881eaf",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "nit: lock not available, callback throws (w/o clarification, can be interpreted to say that the request should throw)",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5c0fcf_09600b92",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/lock-attributes.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "super-nit, feel free to disregard: This test covers both sorting and deduplication. [\u0027r1, \u0027r1\u0027]\n or [\u0027r1\u0027, \u0027r1\u0027, \u0027r2\u0027, \u0027r2\u0027] would only cover deduplication.",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154b977b_d7de3150",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/resources/worker.js",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "nit (this is fine as-as): It might be nice to rename this to postMessage-handler.js, add a comment describing the API (will become more useful as the file grows, e.g. to include abort), and include it via a \u003cscript\u003e tag in iframe.html.",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c018a496_0d086549",
+        "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "nit (the code is fine as-is): Another approach here would be:\n\n1. Dump strings in an std::vector\n2. Sort the string\n3. Check for duplicates in O(N) (they must be in consecutive positions)\n4. If duplicates were found, build a de-duplicated vector (for each element, add to tail if the element !\u003d the current tail) and swap it with the original vector.\n\nThis would be a tad faster and would use up less memory for the common case (no duplicates).",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

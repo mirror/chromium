@@ -334,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "b60fb933_3a7439cc",
+        "filename": "content/browser/storage_partition_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "It seems reasonable to me that a Content embedder would want to use this API from C++, because it\u0027s a general solution for the problem of \"API that receives a callback and invokes it when it\u0027s safe to X\" for any X.\n\nI agree that we should be able to get full test coverage for this feature without browser tests, and it makes sense that we\u0027d want to add DevTools support after we receive some feedback. This line of reasoning leads me to prefer the path of adding a crbug TODO for exposing this publicly when we\u0027re closer to shipping. This would avoid churn in the Content API, and avoid dependencies from major Content consumers before we\u0027re ready to commit to the API shape for Locks.",
+      "parentUuid": "00a1e566_d75e9ebc",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dec9478c_0f6cbef7",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
         "patchSetId": 25
@@ -751,6 +769,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230d5a56_8a028cdc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T20:02:57Z",
+      "side": 1,
+      "message": "Sorry, I somehow failed to read that first test case. My 2nd paragraph tried to describe the extra coverage such a test would add, but doesn\u0027t matter given that the test is already there.",
+      "parentUuid": "535a0684_781237a1",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
