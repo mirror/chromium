@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "107a30c8_e5547f50",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T05:09:32Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/base/timer/timer.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d42\n\nAll methods except dtor and SetTaskRunner must be called on the blocking thread, if you set?\nYou can find DCHECKs in timer.cc, too (for a race issue, the check is currently disabled, but the API is designed so).",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8f664c_5bd4a8b9",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T05:09:32Z",
+      "side": 1,
+      "message": "nit: BindOnce",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9283b9_45a9ab1f",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T05:09:32Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "350faf8d_ff6f56c3",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T05:09:32Z",
+      "side": 1,
+      "message": "Move above?\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f77bb7_55f0f533",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T05:09:32Z",
+      "side": 1,
+      "message": "nit: Could you declare a variable just before it is actually needed. In this case, move to L94.",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67a17e3_5a1d82d4",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T05:09:32Z",
+      "side": 1,
+      "message": "missing includes. base/optional.h, vector.\n\nCould you always run \"git cl lint\" and fix all lint errors before each uploading?",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

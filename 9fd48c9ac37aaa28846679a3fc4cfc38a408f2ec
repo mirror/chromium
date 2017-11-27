@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1423f2ea_f3f60f1a",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T05:09:32Z",
+      "side": 1,
+      "message": "Rather, could you move \"\u003d default\" to .cc, instead?\nThen, you can move all the definition of the nested class to .cc?",
+      "parentUuid": "5af50793_4cb2a8f8",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "062828f3_a529e5fe",
         "filename": "components/arc/timer/arc_timer.h",
         "patchSetId": 13
