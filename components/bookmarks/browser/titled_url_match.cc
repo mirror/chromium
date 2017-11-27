@@ -13,7 +13,7 @@ TitledUrlMatch::TitledUrlMatch() : node(nullptr) {}
 
 TitledUrlMatch::TitledUrlMatch(const TitledUrlMatch& other) = default;
 
-TitledUrlMatch::~TitledUrlMatch() {}
+TitledUrlMatch::~TitledUrlMatch() = default;
 
 // static
 std::vector<size_t> TitledUrlMatch::OffsetsFromMatchPositions(

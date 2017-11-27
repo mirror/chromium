@@ -25,13 +25,13 @@
 
 namespace autofill {
 
-Address::Address() {}
+Address::Address() = default;
 
 Address::Address(const Address& address) : FormGroup() {
   *this = address;
 }
 
-Address::~Address() {}
+Address::~Address() = default;
 
 Address& Address::operator=(const Address& address) {
   if (this == &address)

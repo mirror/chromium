@@ -151,19 +151,16 @@ bool AlarmTimer::CanWakeFromSuspend() const {
 OneShotAlarmTimer::OneShotAlarmTimer() : AlarmTimer(false, false) {
 }
 
-OneShotAlarmTimer::~OneShotAlarmTimer() {
-}
+OneShotAlarmTimer::~OneShotAlarmTimer() = default;
 
 RepeatingAlarmTimer::RepeatingAlarmTimer() : AlarmTimer(true, true) {
 }
 
-RepeatingAlarmTimer::~RepeatingAlarmTimer() {
-}
+RepeatingAlarmTimer::~RepeatingAlarmTimer() = default;
 
 SimpleAlarmTimer::SimpleAlarmTimer() : AlarmTimer(true, false) {
 }
 
-SimpleAlarmTimer::~SimpleAlarmTimer() {
-}
+SimpleAlarmTimer::~SimpleAlarmTimer() = default;
 
 }  // namespace timers

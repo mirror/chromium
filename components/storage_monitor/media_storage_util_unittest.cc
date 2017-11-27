@@ -31,7 +31,7 @@ class MediaStorageUtilTest : public testing::Test {
   MediaStorageUtilTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
-  ~MediaStorageUtilTest() override {}
+  ~MediaStorageUtilTest() override = default;
 
   // Verify mounted device type.
   void CheckDCIMDeviceType(const base::FilePath& mount_point) {

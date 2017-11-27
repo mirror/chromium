@@ -17,7 +17,7 @@ class EnvironmentRecorderTest : public testing::Test {
     EnvironmentRecorder::RegisterPrefs(prefs_.registry());
   }
 
-  ~EnvironmentRecorderTest() override {}
+  ~EnvironmentRecorderTest() override = default;
 
  protected:
   TestingPrefServiceSimple prefs_;

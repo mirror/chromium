@@ -66,7 +66,7 @@ GLHelperScaling::GLHelperScaling(GLES2Interface* gl, GLHelper* helper)
   InitBuffer();
 }
 
-GLHelperScaling::~GLHelperScaling() {}
+GLHelperScaling::~GLHelperScaling() = default;
 
 // Used to keep track of a generated shader program. The program
 // is passed in as text through Setup and is used by calling

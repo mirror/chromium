@@ -19,8 +19,7 @@
 
 class SpellcheckHostMetricsTest : public testing::Test {
  public:
-  SpellcheckHostMetricsTest() {
-  }
+  SpellcheckHostMetricsTest() = default;
 
   static void SetUpTestCase() {
     base::StatisticsRecorder::Initialize();

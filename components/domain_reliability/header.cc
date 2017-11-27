@@ -195,7 +195,7 @@ bool ParseMaxAge(const std::vector<base::StringPiece> in,
 
 namespace domain_reliability {
 
-DomainReliabilityHeader::~DomainReliabilityHeader() {}
+DomainReliabilityHeader::~DomainReliabilityHeader() = default;
 
 // static
 std::unique_ptr<DomainReliabilityHeader> DomainReliabilityHeader::Parse(

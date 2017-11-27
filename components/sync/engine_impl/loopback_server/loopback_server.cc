@@ -59,7 +59,7 @@ class UpdateSieve {
  public:
   explicit UpdateSieve(const sync_pb::GetUpdatesMessage& message)
       : UpdateSieve(MessageToVersionMap(message)) {}
-  ~UpdateSieve() {}
+  ~UpdateSieve() = default;
 
   // Sets the progress markers in |get_updates_response| based on the highest
   // version between request progress markers and response entities.
@@ -140,7 +140,7 @@ LoopbackServer::LoopbackServer(const base::FilePath& persistent_file)
   Init();
 }
 
-LoopbackServer::~LoopbackServer() {}
+LoopbackServer::~LoopbackServer() = default;
 
 void LoopbackServer::Init() {
   if (LoadStateFromFile(persistent_file_))

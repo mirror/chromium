@@ -63,8 +63,8 @@ TestUkmRecorder::TestUkmRecorder() {
   EnableRecording();
 }
 
-TestUkmRecorder::~TestUkmRecorder() {
-};
+TestUkmRecorder::~TestUkmRecorder() = default;
+;
 
 bool TestUkmRecorder::ShouldRestrictToWhitelistedSourceIds() const {
   // In tests, we want to record all source ids (not just hose that are

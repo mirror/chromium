@@ -17,8 +17,7 @@ TestDataReductionProxyEventStorageDelegate::
 }
 
 TestDataReductionProxyEventStorageDelegate::
-    ~TestDataReductionProxyEventStorageDelegate() {
-}
+    ~TestDataReductionProxyEventStorageDelegate() = default;
 
 void TestDataReductionProxyEventStorageDelegate::SetStorageDelegate(
     DataReductionProxyEventStorageDelegate* delegate) {

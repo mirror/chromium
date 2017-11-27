@@ -163,7 +163,7 @@ std::string IntToStroageKey(int id) {
 
 class TestHistoryBackendDelegate : public HistoryBackend::Delegate {
  public:
-  TestHistoryBackendDelegate() {}
+  TestHistoryBackendDelegate() = default;
 
   void NotifyProfileError(sql::InitStatus init_status,
                           const std::string& diagnostics) override {}
@@ -221,7 +221,7 @@ class TestHistoryBackend : public HistoryBackend {
   }
 
  private:
-  ~TestHistoryBackend() override {}
+  ~TestHistoryBackend() override = default;
 };
 
 }  // namespace
@@ -229,7 +229,7 @@ class TestHistoryBackend : public HistoryBackend {
 class TypedURLSyncBridgeTest : public testing::Test {
  public:
   TypedURLSyncBridgeTest() : typed_url_sync_bridge_(nullptr) {}
-  ~TypedURLSyncBridgeTest() override {}
+  ~TypedURLSyncBridgeTest() override = default;
 
   void SetUp() override {
     fake_history_backend_ = new TestHistoryBackend();

@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-CommitContributor::CommitContributor() {}
+CommitContributor::CommitContributor() = default;
 
-CommitContributor::~CommitContributor() {}
+CommitContributor::~CommitContributor() = default;
 
 }  // namespace syncer

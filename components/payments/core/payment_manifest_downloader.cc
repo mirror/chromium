@@ -94,7 +94,7 @@ PaymentManifestDownloader::PaymentManifestDownloader(
     const scoped_refptr<net::URLRequestContextGetter>& context)
     : context_(context) {}
 
-PaymentManifestDownloader::~PaymentManifestDownloader() {}
+PaymentManifestDownloader::~PaymentManifestDownloader() = default;
 
 void PaymentManifestDownloader::DownloadPaymentMethodManifest(
     const GURL& url,
@@ -110,9 +110,9 @@ void PaymentManifestDownloader::DownloadWebAppManifest(
   InitiateDownload(url, net::URLFetcher::GET, std::move(callback));
 }
 
-PaymentManifestDownloader::Download::Download() {}
+PaymentManifestDownloader::Download::Download() = default;
 
-PaymentManifestDownloader::Download::~Download() {}
+PaymentManifestDownloader::Download::~Download() = default;
 
 void PaymentManifestDownloader::OnURLFetchComplete(
     const net::URLFetcher* source) {

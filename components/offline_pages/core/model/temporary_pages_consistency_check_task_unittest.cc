@@ -67,7 +67,7 @@ TemporaryPagesConsistencyCheckTaskTest::TemporaryPagesConsistencyCheckTaskTest()
       remove_file_(false) {}
 
 TemporaryPagesConsistencyCheckTaskTest::
-    ~TemporaryPagesConsistencyCheckTaskTest() {}
+    ~TemporaryPagesConsistencyCheckTaskTest() = default;
 
 void TemporaryPagesConsistencyCheckTaskTest::SetUp() {
   store_test_util_.BuildStoreInMemory();

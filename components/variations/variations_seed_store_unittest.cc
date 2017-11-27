@@ -27,7 +27,7 @@ class TestVariationsSeedStore : public VariationsSeedStore {
  public:
   explicit TestVariationsSeedStore(PrefService* local_state)
       : VariationsSeedStore(local_state) {}
-  ~TestVariationsSeedStore() override {}
+  ~TestVariationsSeedStore() override = default;
 
   bool StoreSeedForTesting(const std::string& seed_data) {
     return StoreSeedData(seed_data, std::string(), std::string(),
@@ -47,7 +47,7 @@ class SignatureVerifyingVariationsSeedStore : public VariationsSeedStore {
  public:
   explicit SignatureVerifyingVariationsSeedStore(PrefService* local_state)
       : VariationsSeedStore(local_state) {}
-  ~SignatureVerifyingVariationsSeedStore() override {}
+  ~SignatureVerifyingVariationsSeedStore() override = default;
 
   bool SignatureVerificationEnabled() override { return true; }
 

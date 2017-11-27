@@ -16,8 +16,7 @@ ProfileInvalidationProvider::ProfileInvalidationProvider(
     std::unique_ptr<InvalidationService> invalidation_service)
     : invalidation_service_(std::move(invalidation_service)) {}
 
-ProfileInvalidationProvider::~ProfileInvalidationProvider() {
-}
+ProfileInvalidationProvider::~ProfileInvalidationProvider() = default;
 
 InvalidationService* ProfileInvalidationProvider::GetInvalidationService() {
   return invalidation_service_.get();

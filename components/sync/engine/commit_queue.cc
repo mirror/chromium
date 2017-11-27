@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-CommitQueue::CommitQueue() {}
+CommitQueue::CommitQueue() = default;
 
-CommitQueue::~CommitQueue() {}
+CommitQueue::~CommitQueue() = default;
 
 }  // namespace syncer

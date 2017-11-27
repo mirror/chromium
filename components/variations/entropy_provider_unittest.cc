@@ -70,7 +70,7 @@ double GeneratePermutedEntropy(uint16_t entropy_source,
 // entropy source values internally to produce each output entropy value.
 class TrialEntropyGenerator {
  public:
-  virtual ~TrialEntropyGenerator() {}
+  virtual ~TrialEntropyGenerator() = default;
   virtual double GenerateEntropyValue() const = 0;
 };
 
@@ -83,7 +83,7 @@ class SHA1EntropyGenerator : public TrialEntropyGenerator {
       : trial_name_(trial_name) {
   }
 
-  ~SHA1EntropyGenerator() override {}
+  ~SHA1EntropyGenerator() override = default;
 
   double GenerateEntropyValue() const override {
     // Use a random GUID + 13 additional bits of entropy to match how the
@@ -115,7 +115,7 @@ class PermutedEntropyGenerator : public TrialEntropyGenerator {
                                                    &mapping_);
   }
 
-  ~PermutedEntropyGenerator() override {}
+  ~PermutedEntropyGenerator() override = default;
 
   double GenerateEntropyValue() const override {
     const int low_entropy_source =

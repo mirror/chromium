@@ -85,7 +85,7 @@ ClientPolicyController::ClientPolicyController() {
                                     base::TimeDelta::FromDays(1), 10, 1)));
 }
 
-ClientPolicyController::~ClientPolicyController() {}
+ClientPolicyController::~ClientPolicyController() = default;
 
 // static
 const OfflinePageClientPolicy ClientPolicyController::MakePolicy(

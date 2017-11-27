@@ -56,8 +56,7 @@ GCMChannelStatusRequestTest::GCMChannelStatusRequestTest()
       poll_interval_seconds_(0) {
 }
 
-GCMChannelStatusRequestTest::~GCMChannelStatusRequestTest() {
-}
+GCMChannelStatusRequestTest::~GCMChannelStatusRequestTest() = default;
 
 void GCMChannelStatusRequestTest::StartRequest() {
   request_.reset(new GCMChannelStatusRequest(

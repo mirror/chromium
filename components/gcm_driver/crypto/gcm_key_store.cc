@@ -60,7 +60,7 @@ GCMKeyStore::GCMKeyStore(
   DCHECK(blocking_task_runner);
 }
 
-GCMKeyStore::~GCMKeyStore() {}
+GCMKeyStore::~GCMKeyStore() = default;
 
 void GCMKeyStore::GetKeys(const std::string& app_id,
                           const std::string& authorized_entity,

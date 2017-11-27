@@ -72,8 +72,7 @@ UserImage::ImageFormat UserImage::ChooseImageFormat(const SkBitmap& bitmap) {
   return SkBitmap::ComputeIsOpaque(bitmap) ? FORMAT_JPEG : FORMAT_PNG;
 }
 
-UserImage::UserImage() {
-}
+UserImage::UserImage() = default;
 
 UserImage::UserImage(const gfx::ImageSkia& image)
     : image_(image) {
@@ -87,7 +86,7 @@ UserImage::UserImage(const gfx::ImageSkia& image,
       image_format_(image_format) {
 }
 
-UserImage::~UserImage() {}
+UserImage::~UserImage() = default;
 
 void UserImage::MarkAsSafe() {
   is_safe_format_ = true;

@@ -81,7 +81,7 @@ CallbackProxy::CallbackProxy(
     : callback_(callback),
       running_thread_(base::ThreadTaskRunnerHandle::Get()) {}
 
-CallbackProxy::~CallbackProxy() {}
+CallbackProxy::~CallbackProxy() = default;
 
 void CallbackProxy::DoRun(
     base::Callback<void(const base::DictionaryValue&)> callback,
@@ -148,8 +148,7 @@ NonBlockingInvalidator::Core::Core(
   DCHECK(delegate_observer_task_runner_.get());
 }
 
-NonBlockingInvalidator::Core::~Core() {
-}
+NonBlockingInvalidator::Core::~Core() = default;
 
 void NonBlockingInvalidator::Core::Initialize(
     const NonBlockingInvalidator::InitializeOptions& initialize_options) {

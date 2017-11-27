@@ -61,8 +61,7 @@ GetFileForSavingOperation::GetFileForSavingOperation(
       cache_(cache),
       weak_ptr_factory_(this) {}
 
-GetFileForSavingOperation::~GetFileForSavingOperation() {
-}
+GetFileForSavingOperation::~GetFileForSavingOperation() = default;
 
 void GetFileForSavingOperation::GetFileForSaving(
     const base::FilePath& file_path,

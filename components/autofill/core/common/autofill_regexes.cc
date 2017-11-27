@@ -41,11 +41,9 @@ AutofillRegexes* AutofillRegexes::GetInstance() {
   return base::Singleton<AutofillRegexes>::get();
 }
 
-AutofillRegexes::AutofillRegexes() {
-}
+AutofillRegexes::AutofillRegexes() = default;
 
-AutofillRegexes::~AutofillRegexes() {
-}
+AutofillRegexes::~AutofillRegexes() = default;
 
 icu::RegexMatcher* AutofillRegexes::GetMatcher(const base::string16& pattern) {
   auto it = matchers_.find(pattern);

@@ -98,7 +98,7 @@ class TestDataReductionProxyDelegate : public DataReductionProxyDelegate {
                                    net_log),
         proxy_supports_quic_(proxy_supports_quic) {}
 
-  ~TestDataReductionProxyDelegate() override {}
+  ~TestDataReductionProxyDelegate() override = default;
 
   bool SupportsQUIC(const net::ProxyServer& proxy_server) const override {
     return proxy_supports_quic_;
@@ -461,8 +461,8 @@ const Client kClient = Client::UNKNOWN;
 
 class TestLoFiUIService : public LoFiUIService {
  public:
-  TestLoFiUIService() {}
-  ~TestLoFiUIService() override {}
+  TestLoFiUIService() = default;
+  ~TestLoFiUIService() override = default;
 
   void OnLoFiReponseReceived(const net::URLRequest& request) override {}
 };

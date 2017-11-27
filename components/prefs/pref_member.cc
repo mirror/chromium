@@ -93,7 +93,7 @@ PrefMemberBase::Internal::Internal()
       is_managed_(false),
       is_user_modifiable_(false) {
 }
-PrefMemberBase::Internal::~Internal() { }
+PrefMemberBase::Internal::~Internal() = default;
 
 bool PrefMemberBase::Internal::IsOnCorrectThread() const {
   return thread_task_runner_->BelongsToCurrentThread();

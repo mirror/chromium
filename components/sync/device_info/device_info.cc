@@ -21,7 +21,7 @@ DeviceInfo::DeviceInfo(const std::string& guid,
       device_type_(device_type),
       signin_scoped_device_id_(signin_scoped_device_id) {}
 
-DeviceInfo::~DeviceInfo() {}
+DeviceInfo::~DeviceInfo() = default;
 
 const std::string& DeviceInfo::guid() const {
   return guid_;

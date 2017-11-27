@@ -20,7 +20,7 @@ MockCloudPolicyClient::MockCloudPolicyClient()
                         nullptr,       /* request_context */
                         nullptr /* signing_service */) {}
 
-MockCloudPolicyClient::~MockCloudPolicyClient() {}
+MockCloudPolicyClient::~MockCloudPolicyClient() = default;
 
 void MockCloudPolicyClient::SetDMToken(const std::string& token) {
   dm_token_ = token;
@@ -42,8 +42,8 @@ void MockCloudPolicyClient::SetStatus(DeviceManagementStatus status) {
   status_ = status;
 }
 
-MockCloudPolicyClientObserver::MockCloudPolicyClientObserver() {}
+MockCloudPolicyClientObserver::MockCloudPolicyClientObserver() = default;
 
-MockCloudPolicyClientObserver::~MockCloudPolicyClientObserver() {}
+MockCloudPolicyClientObserver::~MockCloudPolicyClientObserver() = default;
 
 }  // namespace policy

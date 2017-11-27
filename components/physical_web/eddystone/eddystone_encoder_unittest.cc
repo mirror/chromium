@@ -15,8 +15,8 @@ using std::equal;
 
 class EddystoneEncoderTest : public testing::Test {
  public:
-  EddystoneEncoderTest() {}
-  ~EddystoneEncoderTest() override {}
+  EddystoneEncoderTest() = default;
+  ~EddystoneEncoderTest() override = default;
 
   void SetUp() override {}
   void TearDown() override {}

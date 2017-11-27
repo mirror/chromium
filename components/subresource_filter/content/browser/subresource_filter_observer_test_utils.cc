@@ -19,7 +19,7 @@ TestSubresourceFilterObserver::TestSubresourceFilterObserver(
   Observe(web_contents);
 }
 
-TestSubresourceFilterObserver::~TestSubresourceFilterObserver() {}
+TestSubresourceFilterObserver::~TestSubresourceFilterObserver() = default;
 
 void TestSubresourceFilterObserver::OnSubresourceFilterGoingAway() {
   scoped_observer_.RemoveAll();

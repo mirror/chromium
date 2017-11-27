@@ -85,7 +85,7 @@ CreditCardSaveManager::CreditCardSaveManager(
   }
 }
 
-CreditCardSaveManager::~CreditCardSaveManager() {}
+CreditCardSaveManager::~CreditCardSaveManager() = default;
 
 void CreditCardSaveManager::OfferCardLocalSave(const CreditCard& card) {
   client_->ConfirmSaveCreditCardLocally(

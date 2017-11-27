@@ -9,9 +9,9 @@
 
 namespace filesystem {
 
-LockTable::LockTable() {}
+LockTable::LockTable() = default;
 
-LockTable::~LockTable() {}
+LockTable::~LockTable() = default;
 
 base::File::Error LockTable::LockFile(FileImpl* file) {
   DCHECK(file->IsValid());

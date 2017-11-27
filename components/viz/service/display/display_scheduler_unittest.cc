@@ -29,7 +29,7 @@ class FakeDisplaySchedulerClient : public DisplaySchedulerClient {
   FakeDisplaySchedulerClient()
       : draw_and_swap_count_(0), next_draw_and_swap_fails_(false) {}
 
-  ~FakeDisplaySchedulerClient() override {}
+  ~FakeDisplaySchedulerClient() override = default;
 
   bool DrawAndSwap() override {
     draw_and_swap_count_++;

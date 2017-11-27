@@ -32,8 +32,7 @@
 namespace {
 class FakeEmptyTopSites : public history::TopSites {
  public:
-  FakeEmptyTopSites() {
-  }
+  FakeEmptyTopSites() = default;
 
   // history::TopSites:
   bool SetPageThumbnail(const GURL& url, const gfx::Image& thumbnail,
@@ -91,7 +90,7 @@ class FakeEmptyTopSites : public history::TopSites {
   GetMostVisitedURLsCallback mv_callback;
 
  protected:
-  ~FakeEmptyTopSites() override {}
+  ~FakeEmptyTopSites() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(FakeEmptyTopSites);
 };

@@ -70,17 +70,9 @@ void LogDeserializationError(int version) {
 
 FormData::FormData() : is_form_tag(true), is_formless_checkout(false) {}
 
-FormData::FormData(const FormData& data)
-    : name(data.name),
-      origin(data.origin),
-      action(data.action),
-      main_frame_origin(data.main_frame_origin),
-      is_form_tag(data.is_form_tag),
-      is_formless_checkout(data.is_formless_checkout),
-      fields(data.fields) {}
+FormData::FormData(const FormData& data) = default;
 
-FormData::~FormData() {
-}
+FormData::~FormData() = default;
 
 bool FormData::SameFormAs(const FormData& form) const {
   if (name != form.name || origin != form.origin || action != form.action ||

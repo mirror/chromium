@@ -49,7 +49,7 @@ AccountInvestigator::AccountInvestigator(
       pref_service_(pref_service),
       signin_manager_(signin_manager) {}
 
-AccountInvestigator::~AccountInvestigator() {}
+AccountInvestigator::~AccountInvestigator() = default;
 
 // static
 void AccountInvestigator::RegisterPrefs(PrefRegistrySimple* registry) {

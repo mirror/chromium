@@ -95,7 +95,7 @@ DeletePageTaskTest::DeletePageTaskTest()
       runner_(task_runner_),
       last_delete_page_result_(DeletePageResult::RESULT_COUNT) {}
 
-DeletePageTaskTest::~DeletePageTaskTest() {}
+DeletePageTaskTest::~DeletePageTaskTest() = default;
 
 void DeletePageTaskTest::SetUp() {
   ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());

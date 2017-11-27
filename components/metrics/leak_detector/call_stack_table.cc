@@ -39,7 +39,7 @@ CallStackTable::CallStackTable(int call_stack_suspicion_threshold)
       leak_analyzer_(kMaxCountOfSuspciousStacks,
                      call_stack_suspicion_threshold) {}
 
-CallStackTable::~CallStackTable() {}
+CallStackTable::~CallStackTable() = default;
 
 void CallStackTable::Add(const CallStack* call_stack) {
   ++entry_map_[call_stack].count;

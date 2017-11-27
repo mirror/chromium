@@ -16,7 +16,7 @@ TestDownloader::TestDownloader(
     const scoped_refptr<net::URLRequestContextGetter>& context)
     : impl_(context) {}
 
-TestDownloader::~TestDownloader() {}
+TestDownloader::~TestDownloader() = default;
 
 void TestDownloader::AddTestServerURL(const std::string& prefix,
                                       const GURL& test_server_url) {

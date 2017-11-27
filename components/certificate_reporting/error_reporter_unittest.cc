@@ -57,7 +57,7 @@ class MockCertificateReportSender : public net::ReportSender {
  public:
   MockCertificateReportSender()
       : net::ReportSender(nullptr, TRAFFIC_ANNOTATION_FOR_TESTS) {}
-  ~MockCertificateReportSender() override {}
+  ~MockCertificateReportSender() override = default;
 
   void Send(const GURL& report_uri,
             base::StringPiece content_type,
@@ -115,7 +115,7 @@ class ErrorReporterTest : public ::testing::Test {
     X25519_public_from_private(server_public_key_, server_private_key_);
   }
 
-  ~ErrorReporterTest() override {}
+  ~ErrorReporterTest() override = default;
 
  protected:
   base::MessageLoopForIO loop_;

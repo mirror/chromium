@@ -19,7 +19,7 @@ namespace printing {
 PrintCompositeClient::PrintCompositeClient(content::WebContents* web_contents)
     : for_preview_(false) {}
 
-PrintCompositeClient::~PrintCompositeClient() {}
+PrintCompositeClient::~PrintCompositeClient() = default;
 
 void PrintCompositeClient::CreateConnectorRequest() {
   connector_ = service_manager::Connector::Create(&connector_request_);

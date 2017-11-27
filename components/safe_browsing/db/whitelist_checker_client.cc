@@ -56,7 +56,7 @@ WhitelistCheckerClient::WhitelistCheckerClient(
                timeout_callback);
 }
 
-WhitelistCheckerClient::~WhitelistCheckerClient() {}
+WhitelistCheckerClient::~WhitelistCheckerClient() = default;
 
 // SafeBrowsingDatabaseMananger::Client impl
 void WhitelistCheckerClient::OnCheckWhitelistUrlResult(bool is_whitelisted) {

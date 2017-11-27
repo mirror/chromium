@@ -37,7 +37,7 @@ SyncCycleContext::SyncCycleContext(
     listeners_.AddObserver(*it);
 }
 
-SyncCycleContext::~SyncCycleContext() {}
+SyncCycleContext::~SyncCycleContext() = default;
 
 ModelTypeSet SyncCycleContext::GetEnabledTypes() const {
   return model_type_registry_->GetEnabledTypes();

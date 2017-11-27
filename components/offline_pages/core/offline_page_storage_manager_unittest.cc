@@ -166,7 +166,7 @@ int64_t OfflinePageTestModel::GetTemporaryPagesSize() const {
   return res;
 }
 
-OfflinePageTestModel::~OfflinePageTestModel() {}
+OfflinePageTestModel::~OfflinePageTestModel() = default;
 
 void OfflinePageTestModel::AddPages(const PageSettings& setting) {
   std::string name_space = setting.name_space;

@@ -628,8 +628,8 @@ PasswordAutofillAgent::PasswordValueGatekeeper::PasswordValueGatekeeper()
     : was_user_gesture_seen_(false) {
 }
 
-PasswordAutofillAgent::PasswordValueGatekeeper::~PasswordValueGatekeeper() {
-}
+PasswordAutofillAgent::PasswordValueGatekeeper::~PasswordValueGatekeeper() =
+    default;
 
 void PasswordAutofillAgent::PasswordValueGatekeeper::RegisterElement(
     blink::WebInputElement* element) {

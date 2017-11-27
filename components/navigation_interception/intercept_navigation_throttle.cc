@@ -18,7 +18,7 @@ InterceptNavigationThrottle::InterceptNavigationThrottle(
     : content::NavigationThrottle(navigation_handle),
       should_ignore_callback_(should_ignore_callback) {}
 
-InterceptNavigationThrottle::~InterceptNavigationThrottle() {}
+InterceptNavigationThrottle::~InterceptNavigationThrottle() = default;
 
 content::NavigationThrottle::ThrottleCheckResult
 InterceptNavigationThrottle::WillStartRequest() {

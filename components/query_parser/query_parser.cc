@@ -99,7 +99,7 @@ QueryNodeWord::QueryNodeWord(const base::string16& word,
       literal_(false),
       matching_algorithm_(matching_algorithm) {}
 
-QueryNodeWord::~QueryNodeWord() {}
+QueryNodeWord::~QueryNodeWord() = default;
 
 int QueryNodeWord::AppendToSQLiteQuery(base::string16* query) const {
   query->append(word_);
@@ -181,10 +181,9 @@ class QueryNodeList : public QueryNode {
   DISALLOW_COPY_AND_ASSIGN(QueryNodeList);
 };
 
-QueryNodeList::QueryNodeList() {}
+QueryNodeList::QueryNodeList() = default;
 
-QueryNodeList::~QueryNodeList() {
-}
+QueryNodeList::~QueryNodeList() = default;
 
 void QueryNodeList::AddChild(std::unique_ptr<QueryNode> node) {
   children_.push_back(std::move(node));
@@ -262,9 +261,9 @@ class QueryNodePhrase : public QueryNodeList {
   DISALLOW_COPY_AND_ASSIGN(QueryNodePhrase);
 };
 
-QueryNodePhrase::QueryNodePhrase() {}
+QueryNodePhrase::QueryNodePhrase() = default;
 
-QueryNodePhrase::~QueryNodePhrase() {}
+QueryNodePhrase::~QueryNodePhrase() = default;
 
 int QueryNodePhrase::AppendToSQLiteQuery(base::string16* query) const {
   query->push_back(L'"');
@@ -317,7 +316,7 @@ bool QueryNodePhrase::HasMatchIn(const QueryWordVector& words) const {
   return MatchesAll(words, &first_word, &last_word);
 }
 
-QueryParser::QueryParser() {}
+QueryParser::QueryParser() = default;
 
 // static
 bool QueryParser::IsWordLongEnoughForPrefixSearch(

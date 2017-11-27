@@ -80,7 +80,7 @@ MetricsUploadScheduler::MetricsUploadScheduler(
       initial_backoff_interval_(GetInitialBackoffInterval()),
       backoff_interval_(initial_backoff_interval_) {}
 
-MetricsUploadScheduler::~MetricsUploadScheduler() {}
+MetricsUploadScheduler::~MetricsUploadScheduler() = default;
 
 void MetricsUploadScheduler::UploadFinished(bool server_is_healthy) {
   // If the server is having issues, back off. Otherwise, reset to default

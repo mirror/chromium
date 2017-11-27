@@ -533,7 +533,7 @@ base::string16 RemoveWhitespace(const base::string16& value) {
 FieldFiller::FieldFiller(const std::string& app_locale)
     : app_locale_(app_locale) {}
 
-FieldFiller::~FieldFiller() {}
+FieldFiller::~FieldFiller() = default;
 
 bool FieldFiller::FillFormField(const AutofillField& field,
                                 const base::string16& value,

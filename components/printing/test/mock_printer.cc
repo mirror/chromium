@@ -59,8 +59,7 @@ MockPrinterPage::MockPrinterPage(const void* source_data,
     memcpy(source_data_.get(), source_data, source_size);
 }
 
-MockPrinterPage::~MockPrinterPage() {
-}
+MockPrinterPage::~MockPrinterPage() = default;
 
 MockPrinter::MockPrinter()
     : dpi_(printing::kPointsPerInch),
@@ -89,8 +88,7 @@ MockPrinter::MockPrinter()
       static_cast<int>(8 * dpi_), static_cast<int>(10.5 * dpi_));
 }
 
-MockPrinter::~MockPrinter() {
-}
+MockPrinter::~MockPrinter() = default;
 
 void MockPrinter::ResetPrinter() {
   printer_status_ = PRINTER_READY;

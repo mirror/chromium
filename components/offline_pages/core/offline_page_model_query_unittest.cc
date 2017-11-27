@@ -88,7 +88,7 @@ OfflinePageModelQueryTest::OfflinePageModelQueryTest() {
           .SetIsOnlyShownInOriginalTab(true));
 }
 
-OfflinePageModelQueryTest::~OfflinePageModelQueryTest() {}
+OfflinePageModelQueryTest::~OfflinePageModelQueryTest() = default;
 
 TEST_F(OfflinePageModelQueryTest, DefaultValues) {
   std::unique_ptr<OfflinePageModelQuery> query = builder_.Build(&policy_);

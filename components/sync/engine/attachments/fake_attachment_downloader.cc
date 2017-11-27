@@ -14,7 +14,7 @@
 
 namespace syncer {
 
-FakeAttachmentDownloader::FakeAttachmentDownloader() {}
+FakeAttachmentDownloader::FakeAttachmentDownloader() = default;
 
 FakeAttachmentDownloader::~FakeAttachmentDownloader() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

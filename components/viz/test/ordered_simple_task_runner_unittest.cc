@@ -59,7 +59,7 @@ class OrderedSimpleTaskRunnerTest : public testing::Test {
   OrderedSimpleTaskRunnerTest()
       : now_src_(new base::SimpleTestTickClock()),
         task_runner_(new OrderedSimpleTaskRunner(now_src_.get(), true)) {}
-  ~OrderedSimpleTaskRunnerTest() override {}
+  ~OrderedSimpleTaskRunnerTest() override = default;
 
  protected:
   std::string executed_tasks_;

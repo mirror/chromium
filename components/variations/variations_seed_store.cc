@@ -108,8 +108,7 @@ UpdateSeedDateResult GetSeedDateChangeState(
 VariationsSeedStore::VariationsSeedStore(PrefService* local_state)
     : local_state_(local_state) {}
 
-VariationsSeedStore::~VariationsSeedStore() {
-}
+VariationsSeedStore::~VariationsSeedStore() = default;
 
 bool VariationsSeedStore::LoadSeed(VariationsSeed* seed) {
 #if defined(OS_ANDROID)

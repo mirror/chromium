@@ -212,7 +212,7 @@ class ActualTimer : public MockableTime::Timer {
   // Initialize base timer with retain_user_info and is_repeating false.
   ActualTimer() : base_timer_(false, false) {}
 
-  ~ActualTimer() override {}
+  ~ActualTimer() override = default;
 
   // MockableTime::Timer implementation:
   void Start(const base::Location& posted_from,
@@ -231,14 +231,14 @@ class ActualTimer : public MockableTime::Timer {
 
 }  // namespace
 
-MockableTime::Timer::~Timer() {}
-MockableTime::Timer::Timer() {}
+MockableTime::Timer::~Timer() = default;
+MockableTime::Timer::Timer() = default;
 
-MockableTime::~MockableTime() {}
-MockableTime::MockableTime() {}
+MockableTime::~MockableTime() = default;
+MockableTime::MockableTime() = default;
 
-ActualTime::ActualTime() {}
-ActualTime::~ActualTime() {}
+ActualTime::ActualTime() = default;
+ActualTime::~ActualTime() = default;
 
 base::Time ActualTime::Now() { return base::Time::Now(); }
 base::TimeTicks ActualTime::NowTicks() { return base::TimeTicks::Now(); }

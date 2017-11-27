@@ -120,8 +120,7 @@ ProcessedStudy::ProcessedStudy()
       all_assignments_to_one_group_(false),
       is_expired_(false) {}
 
-ProcessedStudy::~ProcessedStudy() {
-}
+ProcessedStudy::~ProcessedStudy() = default;
 
 bool ProcessedStudy::Init(const Study* study, bool is_expired) {
   base::FieldTrial::Probability total_probability = 0;

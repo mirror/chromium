@@ -120,8 +120,7 @@ SuggestionDeletionHandler::SuggestionDeletionHandler(
   deletion_fetcher_->Start();
 }
 
-SuggestionDeletionHandler::~SuggestionDeletionHandler() {
-}
+SuggestionDeletionHandler::~SuggestionDeletionHandler() = default;
 
 void SuggestionDeletionHandler::OnURLFetchComplete(
     const net::URLFetcher* source) {
@@ -222,7 +221,7 @@ const char BaseSearchProvider::kDeletionUrlKey[] = "deletion_url";
 const char BaseSearchProvider::kTrue[] = "true";
 const char BaseSearchProvider::kFalse[] = "false";
 
-BaseSearchProvider::~BaseSearchProvider() {}
+BaseSearchProvider::~BaseSearchProvider() = default;
 
 void BaseSearchProvider::SetDeletionURL(const std::string& deletion_url,
                                         AutocompleteMatch* match) {

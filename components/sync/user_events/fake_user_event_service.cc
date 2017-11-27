@@ -8,9 +8,9 @@ using sync_pb::UserEventSpecifics;
 
 namespace syncer {
 
-FakeUserEventService::FakeUserEventService() {}
+FakeUserEventService::FakeUserEventService() = default;
 
-FakeUserEventService::~FakeUserEventService() {}
+FakeUserEventService::~FakeUserEventService() = default;
 
 void FakeUserEventService::RecordUserEvent(
     std::unique_ptr<UserEventSpecifics> specifics) {

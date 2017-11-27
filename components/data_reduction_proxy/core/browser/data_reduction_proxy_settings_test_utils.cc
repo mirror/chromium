@@ -37,7 +37,8 @@ DataReductionProxySettingsTestBase::DataReductionProxySettingsTestBase()
     : testing::Test() {
 }
 
-DataReductionProxySettingsTestBase::~DataReductionProxySettingsTestBase() {}
+DataReductionProxySettingsTestBase::~DataReductionProxySettingsTestBase() =
+    default;
 
 // testing::Test implementation:
 void DataReductionProxySettingsTestBase::SetUp() {

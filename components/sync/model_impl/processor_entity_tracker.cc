@@ -60,7 +60,7 @@ ProcessorEntityTracker::ProcessorEntityTracker(
   metadata_.Swap(metadata);
 }
 
-ProcessorEntityTracker::~ProcessorEntityTracker() {}
+ProcessorEntityTracker::~ProcessorEntityTracker() = default;
 
 void ProcessorEntityTracker::SetStorageKey(const std::string& storage_key) {
   DCHECK(storage_key_.empty());

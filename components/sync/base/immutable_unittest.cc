@@ -30,7 +30,7 @@ class TokenCore : public base::RefCounted<TokenCore> {
  private:
   friend class base::RefCounted<TokenCore>;
 
-  ~TokenCore() {}
+  ~TokenCore() = default;
 
   const char* const token_;
   int copy_count_;

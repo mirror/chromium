@@ -90,7 +90,7 @@ PrefetchStore::PrefetchStore(
       initialization_status_(InitializationStatus::NOT_INITIALIZED),
       weak_ptr_factory_(this) {}
 
-PrefetchStore::~PrefetchStore() {}
+PrefetchStore::~PrefetchStore() = default;
 
 void PrefetchStore::Initialize(base::OnceClosure pending_command) {
   DCHECK_EQ(initialization_status_, InitializationStatus::NOT_INITIALIZED);

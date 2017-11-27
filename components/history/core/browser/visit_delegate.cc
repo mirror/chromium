@@ -6,10 +6,8 @@
 
 namespace history {
 
-VisitDelegate::VisitDelegate() {
-}
+VisitDelegate::VisitDelegate() = default;
 
-VisitDelegate::~VisitDelegate() {
-}
+VisitDelegate::~VisitDelegate() = default;
 
 }  // namespace history

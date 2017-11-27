@@ -13,7 +13,7 @@ const void* const kPreviewsUserDataKey = &kPreviewsUserDataKey;
 
 PreviewsUserData::PreviewsUserData(uint64_t page_id) : page_id_(page_id) {}
 
-PreviewsUserData::~PreviewsUserData() {}
+PreviewsUserData::~PreviewsUserData() = default;
 
 std::unique_ptr<PreviewsUserData> PreviewsUserData::DeepCopy() const {
   std::unique_ptr<PreviewsUserData> copy(new PreviewsUserData(page_id_));

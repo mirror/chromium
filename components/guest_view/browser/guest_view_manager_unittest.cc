@@ -23,8 +23,8 @@ namespace {
 
 class GuestViewManagerTest : public content::RenderViewHostTestHarness {
  public:
-  GuestViewManagerTest() {}
-  ~GuestViewManagerTest() override {}
+  GuestViewManagerTest() = default;
+  ~GuestViewManagerTest() override = default;
 
   std::unique_ptr<WebContents> CreateWebContents() {
     return std::unique_ptr<WebContents>(

@@ -238,7 +238,7 @@ int DomainToOrganizationIdMap::GetCanonicalOrganizationId(
 
 DomainToOrganizationIdMap::DomainToOrganizationIdMap() : data_(BuildData()) {}
 
-DomainToOrganizationIdMap::~DomainToOrganizationIdMap() {}
+DomainToOrganizationIdMap::~DomainToOrganizationIdMap() = default;
 
 // static
 base::flat_map<std::string, int> DomainToOrganizationIdMap::BuildData() {
@@ -335,8 +335,7 @@ LargeIconWorker::LargeIconWorker(
       fallback_icon_style_(
           base::MakeUnique<favicon_base::FallbackIconStyle>()) {}
 
-LargeIconWorker::~LargeIconWorker() {
-}
+LargeIconWorker::~LargeIconWorker() = default;
 
 void LargeIconWorker::OnIconLookupComplete(
     const GURL& page_url,
@@ -458,8 +457,7 @@ LargeIconService::LargeIconService(
   // a DCHECK(image_fetcher_) here.
 }
 
-LargeIconService::~LargeIconService() {
-}
+LargeIconService::~LargeIconService() = default;
 
 base::CancelableTaskTracker::TaskId
 LargeIconService::GetLargeIconOrFallbackStyle(

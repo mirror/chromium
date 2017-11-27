@@ -14,9 +14,9 @@ namespace rappor {
 
 namespace internal {
 
-Sampler::Sampler() {}
+Sampler::Sampler() = default;
 
-Sampler::~Sampler() {}
+Sampler::~Sampler() = default;
 
 void Sampler::AddSample(const std::string& metric_name,
                         std::unique_ptr<Sample> sample) {

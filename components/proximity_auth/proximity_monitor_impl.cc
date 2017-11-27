@@ -54,8 +54,7 @@ ProximityMonitorImpl::ProximityMonitorImpl(
   }
 }
 
-ProximityMonitorImpl::~ProximityMonitorImpl() {
-}
+ProximityMonitorImpl::~ProximityMonitorImpl() = default;
 
 void ProximityMonitorImpl::Start() {
   is_active_ = true;

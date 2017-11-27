@@ -8,8 +8,7 @@ KeywordExtensionsDelegate::KeywordExtensionsDelegate(
     KeywordProvider* provider) {
 }
 
-KeywordExtensionsDelegate::~KeywordExtensionsDelegate() {
-}
+KeywordExtensionsDelegate::~KeywordExtensionsDelegate() = default;
 
 void KeywordExtensionsDelegate::IncrementInputId() {
 }

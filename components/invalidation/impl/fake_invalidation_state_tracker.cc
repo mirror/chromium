@@ -14,9 +14,9 @@ namespace syncer {
 
 const int64_t FakeInvalidationStateTracker::kMinVersion = INT64_MIN;
 
-FakeInvalidationStateTracker::FakeInvalidationStateTracker() {}
+FakeInvalidationStateTracker::FakeInvalidationStateTracker() = default;
 
-FakeInvalidationStateTracker::~FakeInvalidationStateTracker() {}
+FakeInvalidationStateTracker::~FakeInvalidationStateTracker() = default;
 
 void FakeInvalidationStateTracker::ClearAndSetNewClientId(
     const std::string& client_id) {

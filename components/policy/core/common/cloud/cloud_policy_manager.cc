@@ -38,7 +38,7 @@ CloudPolicyManager::CloudPolicyManager(
       waiting_for_policy_refresh_(false),
       io_task_runner_(io_task_runner) {}
 
-CloudPolicyManager::~CloudPolicyManager() {}
+CloudPolicyManager::~CloudPolicyManager() = default;
 
 void CloudPolicyManager::Init(SchemaRegistry* registry) {
   ConfigurationPolicyProvider::Init(registry);

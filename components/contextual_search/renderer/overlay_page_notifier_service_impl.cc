@@ -14,7 +14,7 @@ OverlayPageNotifierServiceImpl::OverlayPageNotifierServiceImpl(
     base::WeakPtr<OverlayJsRenderFrameObserver> observer)
     : overlay_js_observer_(observer) {}
 
-OverlayPageNotifierServiceImpl::~OverlayPageNotifierServiceImpl() {}
+OverlayPageNotifierServiceImpl::~OverlayPageNotifierServiceImpl() = default;
 
 void OverlayPageNotifierServiceImpl::NotifyIsContextualSearchOverlay() {
   if (overlay_js_observer_ != nullptr)

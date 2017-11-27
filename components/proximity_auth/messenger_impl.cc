@@ -141,7 +141,7 @@ cryptauth::Connection* MessengerImpl::GetConnection() const {
   return connection_.get();
 }
 
-MessengerImpl::PendingMessage::PendingMessage() {}
+MessengerImpl::PendingMessage::PendingMessage() = default;
 
 MessengerImpl::PendingMessage::PendingMessage(
     const base::DictionaryValue& message)
@@ -151,7 +151,7 @@ MessengerImpl::PendingMessage::PendingMessage(
 MessengerImpl::PendingMessage::PendingMessage(const std::string& message)
     : json_message(message), type(std::string()) {}
 
-MessengerImpl::PendingMessage::~PendingMessage() {}
+MessengerImpl::PendingMessage::~PendingMessage() = default;
 
 void MessengerImpl::ProcessMessageQueue() {
   if (pending_message_ || queued_messages_.empty() ||

@@ -15,7 +15,7 @@ FakeSyncEncryptionHandler::FakeSyncEncryptionHandler()
       encrypt_everything_(false),
       passphrase_type_(PassphraseType::IMPLICIT_PASSPHRASE),
       cryptographer_(&encryptor_) {}
-FakeSyncEncryptionHandler::~FakeSyncEncryptionHandler() {}
+FakeSyncEncryptionHandler::~FakeSyncEncryptionHandler() = default;
 
 void FakeSyncEncryptionHandler::Init() {
   // Set up a basic cryptographer.

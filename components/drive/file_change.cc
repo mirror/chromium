@@ -41,11 +41,9 @@ std::string FileChange::Change::DebugString() const {
   return base::StringPrintf("%s:%s", change_string, type_string);
 }
 
-FileChange::ChangeList::ChangeList() {
-}
+FileChange::ChangeList::ChangeList() = default;
 FileChange::ChangeList::ChangeList(const ChangeList& other) = default;
-FileChange::ChangeList::~ChangeList() {
-}
+FileChange::ChangeList::~ChangeList() = default;
 
 void FileChange::ChangeList::Update(const Change& new_change) {
   if (list_.empty()) {
@@ -89,10 +87,9 @@ std::string FileChange::ChangeList::DebugString() const {
   return ss.str();
 }
 
-FileChange::FileChange() {
-}
+FileChange::FileChange() = default;
 FileChange::FileChange(const FileChange& other) = default;
-FileChange::~FileChange() {}
+FileChange::~FileChange() = default;
 
 void FileChange::Update(const base::FilePath file_path,
                         const FileChange::Change& new_change) {

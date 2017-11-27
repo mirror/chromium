@@ -56,11 +56,9 @@ void WriteScreenDPIInformationProto(SystemProfileProto::Hardware* hardware) {
 
 #endif  // defined(OS_WIN)
 
-ScreenInfoMetricsProvider::ScreenInfoMetricsProvider() {
-}
+ScreenInfoMetricsProvider::ScreenInfoMetricsProvider() = default;
 
-ScreenInfoMetricsProvider::~ScreenInfoMetricsProvider() {
-}
+ScreenInfoMetricsProvider::~ScreenInfoMetricsProvider() = default;
 
 void ScreenInfoMetricsProvider::ProvideSystemProfileMetrics(
     SystemProfileProto* system_profile_proto) {

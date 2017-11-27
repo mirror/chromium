@@ -34,7 +34,7 @@ const char* const kFieldTypes[] = {
 
 class PhoneFieldTest : public testing::Test {
  public:
-  PhoneFieldTest() {}
+  PhoneFieldTest() = default;
 
  protected:
   // Downcast for tests.

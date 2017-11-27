@@ -19,7 +19,7 @@ BackgroundLoaderContentsStub::BackgroundLoaderContentsStub(
   web_contents_.get()->SetDelegate(this);
 }
 
-BackgroundLoaderContentsStub::~BackgroundLoaderContentsStub() {}
+BackgroundLoaderContentsStub::~BackgroundLoaderContentsStub() = default;
 
 void BackgroundLoaderContentsStub::LoadPage(const GURL& url) {
   is_loading_ = true;

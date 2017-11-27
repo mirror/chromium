@@ -15,7 +15,7 @@ ClearServerDataResponseEvent::ClearServerDataResponseEvent(
     const sync_pb::ClientToServerResponse& response)
     : timestamp_(timestamp), result_(result), response_(response) {}
 
-ClearServerDataResponseEvent::~ClearServerDataResponseEvent() {}
+ClearServerDataResponseEvent::~ClearServerDataResponseEvent() = default;
 
 base::Time ClearServerDataResponseEvent::GetTimestamp() const {
   return timestamp_;

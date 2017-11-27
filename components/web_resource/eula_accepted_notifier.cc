@@ -16,8 +16,7 @@ EulaAcceptedNotifier::EulaAcceptedNotifier(PrefService* local_state)
     : local_state_(local_state), observer_(nullptr) {
 }
 
-EulaAcceptedNotifier::~EulaAcceptedNotifier() {
-}
+EulaAcceptedNotifier::~EulaAcceptedNotifier() = default;
 
 void EulaAcceptedNotifier::Init(Observer* observer) {
   DCHECK(!observer_ && observer);

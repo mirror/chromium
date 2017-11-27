@@ -94,7 +94,7 @@ OfflinePageHeader::OfflinePageHeader(const std::string& header_value)
   }
 }
 
-OfflinePageHeader::~OfflinePageHeader() {}
+OfflinePageHeader::~OfflinePageHeader() = default;
 
 std::string OfflinePageHeader::GetCompleteHeaderString() const {
   if (reason == Reason::NONE)

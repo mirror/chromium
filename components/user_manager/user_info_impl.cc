@@ -13,8 +13,7 @@ namespace user_manager {
 
 UserInfoImpl::UserInfoImpl() : account_id_(StubAccountId()) {}
 
-UserInfoImpl::~UserInfoImpl() {
-}
+UserInfoImpl::~UserInfoImpl() = default;
 
 base::string16 UserInfoImpl::GetDisplayName() const {
   return base::UTF8ToUTF16("stub-user");

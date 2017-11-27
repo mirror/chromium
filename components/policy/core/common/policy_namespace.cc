@@ -8,24 +8,19 @@
 
 namespace policy {
 
-PolicyNamespace::PolicyNamespace() {}
+PolicyNamespace::PolicyNamespace() = default;
 
 PolicyNamespace::PolicyNamespace(PolicyDomain domain,
                                  const std::string& component_id)
     : domain(domain),
       component_id(component_id) {}
 
-PolicyNamespace::PolicyNamespace(const PolicyNamespace& other)
-    : domain(other.domain),
-      component_id(other.component_id) {}
+PolicyNamespace::PolicyNamespace(const PolicyNamespace& other) = default;
 
-PolicyNamespace::~PolicyNamespace() {}
+PolicyNamespace::~PolicyNamespace() = default;
 
-PolicyNamespace& PolicyNamespace::operator=(const PolicyNamespace& other) {
-  domain = other.domain;
-  component_id = other.component_id;
-  return *this;
-}
+PolicyNamespace& PolicyNamespace::operator=(const PolicyNamespace& other) =
+    default;
 
 bool PolicyNamespace::operator<(const PolicyNamespace& other) const {
   return std::tie(domain, component_id) <

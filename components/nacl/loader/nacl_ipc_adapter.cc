@@ -260,7 +260,7 @@ std::unique_ptr<NaClDescWrapper> MakeShmNaClDesc(
 class NaClIPCAdapter::RewrittenMessage {
  public:
   RewrittenMessage();
-  ~RewrittenMessage() {}
+  ~RewrittenMessage() = default;
 
   bool is_consumed() const { return data_read_cursor_ == data_len_; }
 
@@ -339,14 +339,11 @@ NaClIPCAdapter::LockedData::LockedData()
     : channel_closed_(false) {
 }
 
-NaClIPCAdapter::LockedData::~LockedData() {
-}
+NaClIPCAdapter::LockedData::~LockedData() = default;
 
-NaClIPCAdapter::IOThreadData::IOThreadData() {
-}
+NaClIPCAdapter::IOThreadData::IOThreadData() = default;
 
-NaClIPCAdapter::IOThreadData::~IOThreadData() {
-}
+NaClIPCAdapter::IOThreadData::~IOThreadData() = default;
 
 NaClIPCAdapter::NaClIPCAdapter(
     const IPC::ChannelHandle& handle,

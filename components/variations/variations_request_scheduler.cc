@@ -16,8 +16,7 @@ VariationsRequestScheduler::VariationsRequestScheduler(
     const base::Closure& task) : task_(task) {
 }
 
-VariationsRequestScheduler::~VariationsRequestScheduler() {
-}
+VariationsRequestScheduler::~VariationsRequestScheduler() = default;
 
 void VariationsRequestScheduler::Start() {
   task_.Run();

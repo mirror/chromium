@@ -107,8 +107,7 @@ class DirectoryLoader::FeedFetcher {
         weak_ptr_factory_(this) {
   }
 
-  ~FeedFetcher() {
-  }
+  ~FeedFetcher() = default;
 
   void Run(const FileOperationCallback& callback) {
     DCHECK(thread_checker_.CalledOnValidThread());
@@ -211,8 +210,7 @@ DirectoryLoader::DirectoryLoader(
       weak_ptr_factory_(this) {
 }
 
-DirectoryLoader::~DirectoryLoader() {
-}
+DirectoryLoader::~DirectoryLoader() = default;
 
 void DirectoryLoader::AddObserver(ChangeListLoaderObserver* observer) {
   DCHECK(thread_checker_.CalledOnValidThread());

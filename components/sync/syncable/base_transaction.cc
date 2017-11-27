@@ -15,7 +15,7 @@ BaseTransaction::BaseTransaction(UserShare* share) : user_share_(share) {
   DCHECK(share && share->directory.get());
 }
 
-BaseTransaction::~BaseTransaction() {}
+BaseTransaction::~BaseTransaction() = default;
 
 Cryptographer* BaseTransaction::GetCryptographer() const {
   return GetDirectory()->GetCryptographer(this->GetWrappedTrans());

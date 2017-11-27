@@ -160,9 +160,9 @@ GCMProfileService::GCMProfileService(
 }
 #endif  // BUILDFLAG(USE_GCM_FROM_PLATFORM)
 
-GCMProfileService::GCMProfileService() {}
+GCMProfileService::GCMProfileService() = default;
 
-GCMProfileService::~GCMProfileService() {}
+GCMProfileService::~GCMProfileService() = default;
 
 void GCMProfileService::Shutdown() {
 #if !BUILDFLAG(USE_GCM_FROM_PLATFORM)

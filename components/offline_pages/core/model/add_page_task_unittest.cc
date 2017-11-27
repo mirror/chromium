@@ -86,7 +86,7 @@ AddPageTaskTest::AddPageTaskTest()
       runner_(task_runner_),
       last_add_page_result_(AddPageResult::RESULT_COUNT) {}
 
-AddPageTaskTest::~AddPageTaskTest() {}
+AddPageTaskTest::~AddPageTaskTest() = default;
 
 void AddPageTaskTest::SetUp() {
   store_test_util_.BuildStoreInMemory();

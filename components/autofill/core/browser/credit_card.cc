@@ -134,7 +134,7 @@ CreditCard::CreditCard(const CreditCard& credit_card) : CreditCard() {
   operator=(credit_card);
 }
 
-CreditCard::~CreditCard() {}
+CreditCard::~CreditCard() = default;
 
 // static
 const base::string16 CreditCard::StripSeparators(const base::string16& number) {

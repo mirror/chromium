@@ -8,9 +8,9 @@
 
 namespace proximity_auth {
 
-MockProximityAuthClient::MockProximityAuthClient() {}
+MockProximityAuthClient::MockProximityAuthClient() = default;
 
-MockProximityAuthClient::~MockProximityAuthClient() {}
+MockProximityAuthClient::~MockProximityAuthClient() = default;
 
 std::unique_ptr<cryptauth::SecureMessageDelegate>
 MockProximityAuthClient::CreateSecureMessageDelegate() {

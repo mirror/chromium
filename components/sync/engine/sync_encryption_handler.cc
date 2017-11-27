@@ -6,11 +6,11 @@
 
 namespace syncer {
 
-SyncEncryptionHandler::Observer::Observer() {}
-SyncEncryptionHandler::Observer::~Observer() {}
+SyncEncryptionHandler::Observer::Observer() = default;
+SyncEncryptionHandler::Observer::~Observer() = default;
 
-SyncEncryptionHandler::SyncEncryptionHandler() {}
-SyncEncryptionHandler::~SyncEncryptionHandler() {}
+SyncEncryptionHandler::SyncEncryptionHandler() = default;
+SyncEncryptionHandler::~SyncEncryptionHandler() = default;
 
 // Static.
 ModelTypeSet SyncEncryptionHandler::SensitiveTypes() {

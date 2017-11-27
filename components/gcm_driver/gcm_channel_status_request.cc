@@ -43,8 +43,7 @@ GCMChannelStatusRequest::GCMChannelStatusRequest(
       weak_ptr_factory_(this) {
 }
 
-GCMChannelStatusRequest::~GCMChannelStatusRequest() {
-}
+GCMChannelStatusRequest::~GCMChannelStatusRequest() = default;
 
 // static
 int GCMChannelStatusRequest::default_poll_interval_seconds() {

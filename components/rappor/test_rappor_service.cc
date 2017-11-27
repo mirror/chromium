@@ -27,7 +27,7 @@ bool MockIsIncognito(bool* is_incognito) {
 TestSample::TestSample(RapporType type)
     : Sample(0, internal::kRapporParametersForType[type]), shadow_(type) {}
 
-TestSample::~TestSample() {}
+TestSample::~TestSample() = default;
 
 void TestSample::SetStringField(const std::string& field_name,
                                 const std::string& value) {
@@ -59,7 +59,7 @@ TestSample::Shadow::Shadow(const TestSample::Shadow& other) {
   uint64_fields = other.uint64_fields;
 }
 
-TestSample::Shadow::~Shadow() {}
+TestSample::Shadow::~Shadow() = default;
 
 TestRapporServiceImpl::TestRapporServiceImpl()
     : RapporServiceImpl(&test_prefs_,
@@ -73,7 +73,7 @@ TestRapporServiceImpl::TestRapporServiceImpl()
   Update(true, true);
 }
 
-TestRapporServiceImpl::~TestRapporServiceImpl() {}
+TestRapporServiceImpl::~TestRapporServiceImpl() = default;
 
 std::unique_ptr<Sample> TestRapporServiceImpl::CreateSample(RapporType type) {
   std::unique_ptr<TestSample> test_sample(new TestSample(type));

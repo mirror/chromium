@@ -15,7 +15,7 @@ SyncManagerForProfileSyncTest::SyncManagerForProfileSyncTest(
     base::Closure init_callback)
     : SyncManagerImpl(name), init_callback_(init_callback) {}
 
-SyncManagerForProfileSyncTest::~SyncManagerForProfileSyncTest() {}
+SyncManagerForProfileSyncTest::~SyncManagerForProfileSyncTest() = default;
 
 void SyncManagerForProfileSyncTest::NotifyInitializationSuccess() {
   UserShare* user_share = GetUserShare();

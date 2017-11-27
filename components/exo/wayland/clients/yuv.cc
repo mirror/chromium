@@ -27,7 +27,7 @@ void FrameCallback(void* data, wl_callback* callback, uint32_t time) {
 
 class YuvClient : public ClientBase {
  public:
-  YuvClient() {}
+  YuvClient() = default;
 
   bool WriteSolidColor(gbm_bo* bo, SkColor color);
 

@@ -19,7 +19,7 @@ ChangeRequestsStateTask::ChangeRequestsStateTask(
       callback_(callback),
       weak_ptr_factory_(this) {}
 
-ChangeRequestsStateTask::~ChangeRequestsStateTask() {}
+ChangeRequestsStateTask::~ChangeRequestsStateTask() = default;
 
 void ChangeRequestsStateTask::Run() {
   ReadRequests();

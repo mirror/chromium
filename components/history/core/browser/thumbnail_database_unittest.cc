@@ -182,8 +182,8 @@ void SortMappingsByIconUrl(std::vector<IconMapping>* mappings) {
 
 class ThumbnailDatabaseTest : public testing::Test {
  public:
-  ThumbnailDatabaseTest() {}
-  ~ThumbnailDatabaseTest() override {}
+  ThumbnailDatabaseTest() = default;
+  ~ThumbnailDatabaseTest() override = default;
 
   // Initialize a thumbnail database instance from the SQL file at
   // |golden_path| in the "History/" subdirectory of test data.

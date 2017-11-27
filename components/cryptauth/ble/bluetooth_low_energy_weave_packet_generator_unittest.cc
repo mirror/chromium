@@ -19,7 +19,7 @@ namespace weave {
 class CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest
     : public testing::Test {
  protected:
-  CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest() {}
+  CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest() = default;
 
   void TestConnectionCloseWithReason(ReasonForClose reason_for_close,
                                      uint8_t expected_reason_for_close) {

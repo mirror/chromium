@@ -25,8 +25,7 @@ GuestViewRequest::GuestViewRequest(GuestViewContainer* container,
       isolate_(isolate) {
 }
 
-GuestViewRequest::~GuestViewRequest() {
-}
+GuestViewRequest::~GuestViewRequest() = default;
 
 void GuestViewRequest::ExecuteCallbackIfAvailable(
     int argc,
@@ -58,8 +57,7 @@ GuestViewAttachRequest::GuestViewAttachRequest(
       guest_instance_id_(guest_instance_id),
       params_(std::move(params)) {}
 
-GuestViewAttachRequest::~GuestViewAttachRequest() {
-}
+GuestViewAttachRequest::~GuestViewAttachRequest() = default;
 
 void GuestViewAttachRequest::PerformRequest() {
   if (!container()->render_frame())
@@ -109,8 +107,7 @@ GuestViewDetachRequest::GuestViewDetachRequest(
     : GuestViewRequest(container, callback, isolate) {
 }
 
-GuestViewDetachRequest::~GuestViewDetachRequest() {
-}
+GuestViewDetachRequest::~GuestViewDetachRequest() = default;
 
 void GuestViewDetachRequest::PerformRequest() {
   if (!container()->render_frame())

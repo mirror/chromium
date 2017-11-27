@@ -21,7 +21,7 @@ WDKeywordsResult::WDKeywordsResult()
 
 WDKeywordsResult::WDKeywordsResult(const WDKeywordsResult& other) = default;
 
-WDKeywordsResult::~WDKeywordsResult() {}
+WDKeywordsResult::~WDKeywordsResult() = default;
 
 KeywordWebDataService::BatchModeScoper::BatchModeScoper(
     KeywordWebDataService* service)

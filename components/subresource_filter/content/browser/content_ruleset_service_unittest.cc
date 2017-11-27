@@ -43,7 +43,7 @@ using MockClosureTarget =
 
 class TestContentBrowserClient : public ::content::ContentBrowserClient {
  public:
-  TestContentBrowserClient() {}
+  TestContentBrowserClient() = default;
 
   // ::content::ContentBrowserClient:
   void PostAfterStartupTask(const base::Location&,

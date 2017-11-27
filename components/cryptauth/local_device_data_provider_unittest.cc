@@ -38,8 +38,8 @@ const int64_t kBeaconSeed2EndMs = 3000L;
 
 class MockCryptAuthDeviceManager : public CryptAuthDeviceManager {
  public:
-  MockCryptAuthDeviceManager() {}
-  ~MockCryptAuthDeviceManager() override {}
+  MockCryptAuthDeviceManager() = default;
+  ~MockCryptAuthDeviceManager() override = default;
 
   MOCK_CONST_METHOD0(GetSyncedDevices, std::vector<ExternalDeviceInfo>());
 };
@@ -54,7 +54,7 @@ class MockCryptAuthEnrollmentManager : public CryptAuthEnrollmentManager {
                                    GcmDeviceInfo(),
                                    fake_cryptauth_gcm_manager,
                                    nullptr /* pref_service */) {}
-  ~MockCryptAuthEnrollmentManager() override {}
+  ~MockCryptAuthEnrollmentManager() override = default;
 
   MOCK_CONST_METHOD0(GetUserPublicKey, std::string());
 };

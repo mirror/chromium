@@ -99,7 +99,7 @@ class ChangePolicyObserver : public PolicyService::Observer {
 
 class PolicyServiceTest : public testing::Test {
  public:
-  PolicyServiceTest() {}
+  PolicyServiceTest() = default;
   void SetUp() override {
     EXPECT_CALL(provider0_, IsInitializationComplete(_))
         .WillRepeatedly(Return(true));

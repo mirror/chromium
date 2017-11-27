@@ -88,7 +88,7 @@ bool PrefixSet::PrefixLess(const IndexPair& a, const IndexPair& b) {
   return a.first < b.first;
 }
 
-PrefixSet::PrefixSet() {}
+PrefixSet::PrefixSet() = default;
 
 PrefixSet::PrefixSet(IndexVector* index,
                      std::vector<uint16_t>* deltas,
@@ -99,7 +99,7 @@ PrefixSet::PrefixSet(IndexVector* index,
   full_hashes_.swap(*full_hashes);
 }
 
-PrefixSet::~PrefixSet() {}
+PrefixSet::~PrefixSet() = default;
 
 bool PrefixSet::PrefixExists(SBPrefix prefix) const {
   if (index_.empty())
@@ -366,7 +366,7 @@ PrefixSetBuilder::PrefixSetBuilder(const std::vector<SBPrefix>& prefixes)
   }
 }
 
-PrefixSetBuilder::~PrefixSetBuilder() {}
+PrefixSetBuilder::~PrefixSetBuilder() = default;
 
 std::unique_ptr<const PrefixSet> PrefixSetBuilder::GetPrefixSet(
     const std::vector<SBFullHash>& hashes) {

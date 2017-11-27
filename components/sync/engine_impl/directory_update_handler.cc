@@ -36,7 +36,7 @@ DirectoryUpdateHandler::DirectoryUpdateHandler(
       cached_gc_directive_version_(0),
       cached_gc_directive_aged_out_day_(base::Time::FromDoubleT(0)) {}
 
-DirectoryUpdateHandler::~DirectoryUpdateHandler() {}
+DirectoryUpdateHandler::~DirectoryUpdateHandler() = default;
 
 bool DirectoryUpdateHandler::IsInitialSyncEnded() const {
   return dir_->InitialSyncEndedForType(type_);

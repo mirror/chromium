@@ -329,7 +329,7 @@ std::string GetServerId(const DataType& data) {
 }  // namespace
 
 AutofillWalletMetadataSyncableService::
-    ~AutofillWalletMetadataSyncableService() {}
+    ~AutofillWalletMetadataSyncableService() = default;
 
 syncer::SyncMergeResult
 AutofillWalletMetadataSyncableService::MergeDataAndStartSyncing(

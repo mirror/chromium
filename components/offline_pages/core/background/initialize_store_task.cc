@@ -18,7 +18,7 @@ InitializeStoreTask::InitializeStoreTask(
       callback_(callback),
       weak_ptr_factory_(this) {}
 
-InitializeStoreTask::~InitializeStoreTask() {}
+InitializeStoreTask::~InitializeStoreTask() = default;
 
 void InitializeStoreTask::Run() {
   InitializeStore();

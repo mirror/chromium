@@ -15,9 +15,9 @@
 
 namespace payments {
 
-CanMakePaymentQuery::CanMakePaymentQuery() {}
+CanMakePaymentQuery::CanMakePaymentQuery() = default;
 
-CanMakePaymentQuery::~CanMakePaymentQuery() {}
+CanMakePaymentQuery::~CanMakePaymentQuery() = default;
 
 bool CanMakePaymentQuery::CanQuery(
     const GURL& top_level_origin,

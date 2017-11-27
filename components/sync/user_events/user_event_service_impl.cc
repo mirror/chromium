@@ -29,7 +29,7 @@ UserEventServiceImpl::UserEventServiceImpl(
   // TODO(skym): Subscribe to events about field trial membership changing.
 }
 
-UserEventServiceImpl::~UserEventServiceImpl() {}
+UserEventServiceImpl::~UserEventServiceImpl() = default;
 
 void UserEventServiceImpl::Shutdown() {}
 

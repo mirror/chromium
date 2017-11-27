@@ -21,8 +21,7 @@ NaClStartParams::NaClStartParams()
 
 NaClStartParams::NaClStartParams(const NaClStartParams& other) = default;
 
-NaClStartParams::~NaClStartParams() {
-}
+NaClStartParams::~NaClStartParams() = default;
 
 NaClResourcePrefetchResult::NaClResourcePrefetchResult()
     : file(IPC::InvalidPlatformFileForTransit()) {
@@ -35,11 +34,9 @@ NaClResourcePrefetchResult::NaClResourcePrefetchResult(
     : file(file), file_path_metadata(file_path_metadata), file_key(file_key) {
 }
 
-NaClResourcePrefetchResult::~NaClResourcePrefetchResult() {
-}
+NaClResourcePrefetchResult::~NaClResourcePrefetchResult() = default;
 
-NaClResourcePrefetchRequest::NaClResourcePrefetchRequest() {
-}
+NaClResourcePrefetchRequest::NaClResourcePrefetchRequest() = default;
 
 NaClResourcePrefetchRequest::NaClResourcePrefetchRequest(
     const std::string& file_key,
@@ -48,8 +45,7 @@ NaClResourcePrefetchRequest::NaClResourcePrefetchRequest(
       resource_url(resource_url) {
 }
 
-NaClResourcePrefetchRequest::~NaClResourcePrefetchRequest() {
-}
+NaClResourcePrefetchRequest::~NaClResourcePrefetchRequest() = default;
 
 NaClLaunchParams::NaClLaunchParams()
     : nexe_file(IPC::InvalidPlatformFileForTransit()),
@@ -83,8 +79,7 @@ NaClLaunchParams::NaClLaunchParams(
 
 NaClLaunchParams::NaClLaunchParams(const NaClLaunchParams& other) = default;
 
-NaClLaunchParams::~NaClLaunchParams() {
-}
+NaClLaunchParams::~NaClLaunchParams() = default;
 
 NaClLaunchResult::NaClLaunchResult()
     : ppapi_ipc_channel_handle(),
@@ -107,7 +102,6 @@ NaClLaunchResult::NaClLaunchResult(
       crash_info_shmem_handle(crash_info_shmem_handle) {
 }
 
-NaClLaunchResult::~NaClLaunchResult() {
-}
+NaClLaunchResult::~NaClLaunchResult() = default;
 
 }  // namespace nacl

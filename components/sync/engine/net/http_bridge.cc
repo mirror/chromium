@@ -123,7 +123,7 @@ HttpBridge::URLFetchState::URLFetchState()
       request_succeeded(false),
       http_response_code(-1),
       error_code(-1) {}
-HttpBridge::URLFetchState::~URLFetchState() {}
+HttpBridge::URLFetchState::~URLFetchState() = default;
 
 HttpBridge::HttpBridge(
     const std::string& user_agent,
@@ -138,7 +138,7 @@ HttpBridge::HttpBridge(
       network_time_update_callback_(network_time_update_callback),
       bind_to_tracker_callback_(bind_to_tracker_callback) {}
 
-HttpBridge::~HttpBridge() {}
+HttpBridge::~HttpBridge() = default;
 
 void HttpBridge::SetExtraRequestHeaders(const char* headers) {
   DCHECK(extra_headers_.empty())

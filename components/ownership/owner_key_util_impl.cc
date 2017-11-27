@@ -19,8 +19,7 @@ OwnerKeyUtilImpl::OwnerKeyUtilImpl(const base::FilePath& public_key_file)
     : public_key_file_(public_key_file) {
 }
 
-OwnerKeyUtilImpl::~OwnerKeyUtilImpl() {
-}
+OwnerKeyUtilImpl::~OwnerKeyUtilImpl() = default;
 
 bool OwnerKeyUtilImpl::ImportPublicKey(std::vector<uint8_t>* output) {
   // Get the file size (must fit in a 32 bit int for NSS).

@@ -16,10 +16,10 @@ namespace domain_reliability {
 using base::Value;
 using base::DictionaryValue;
 
-DomainReliabilityBeacon::DomainReliabilityBeacon() {}
+DomainReliabilityBeacon::DomainReliabilityBeacon() = default;
 DomainReliabilityBeacon::DomainReliabilityBeacon(
     const DomainReliabilityBeacon& other) = default;
-DomainReliabilityBeacon::~DomainReliabilityBeacon() {}
+DomainReliabilityBeacon::~DomainReliabilityBeacon() = default;
 
 std::unique_ptr<Value> DomainReliabilityBeacon::ToValue(
     base::TimeTicks upload_time,

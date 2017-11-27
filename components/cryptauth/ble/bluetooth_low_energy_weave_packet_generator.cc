@@ -21,7 +21,7 @@ BluetoothLowEnergyWeavePacketGenerator::BluetoothLowEnergyWeavePacketGenerator()
     : max_packet_size_(kDefaultMaxPacketSize), next_packet_counter_(0) {}
 
 BluetoothLowEnergyWeavePacketGenerator::
-    ~BluetoothLowEnergyWeavePacketGenerator() {}
+    ~BluetoothLowEnergyWeavePacketGenerator() = default;
 
 Packet BluetoothLowEnergyWeavePacketGenerator::CreateConnectionRequest() {
   Packet packet(kMinConnectionRequestSize, 0);

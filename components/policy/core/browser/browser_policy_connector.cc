@@ -102,8 +102,7 @@ BrowserPolicyConnector::BrowserPolicyConnector(
     : BrowserPolicyConnectorBase(handler_list_factory) {
 }
 
-BrowserPolicyConnector::~BrowserPolicyConnector() {
-}
+BrowserPolicyConnector::~BrowserPolicyConnector() = default;
 
 void BrowserPolicyConnector::InitInternal(
     PrefService* local_state,

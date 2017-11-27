@@ -45,7 +45,7 @@ const int kAutofillProfileId = 1;
 
 class MockAutofillDriver : public TestAutofillDriver {
  public:
-  MockAutofillDriver() {}
+  MockAutofillDriver() = default;
   // Mock methods to enable testability.
   MOCK_METHOD1(RendererShouldAcceptDataListSuggestion,
                void(const base::string16&));
@@ -61,7 +61,7 @@ class MockAutofillDriver : public TestAutofillDriver {
 
 class MockAutofillClient : public TestAutofillClient {
  public:
-  MockAutofillClient() {}
+  MockAutofillClient() = default;
 
   MOCK_METHOD1(ScanCreditCard,
                void(const CreditCardScanCallback& callbacK));
@@ -90,7 +90,7 @@ class MockAutofillManager : public AutofillManager {
       // Force to use the constructor designated for unit test, but we don't
       // really need personal_data in this test so we pass a NULL pointer.
       : AutofillManager(driver, client, nullptr) {}
-  virtual ~MockAutofillManager() {}
+  virtual ~MockAutofillManager() = default;
 
   MOCK_METHOD2(ShouldShowScanCreditCard,
                bool(const FormData& form, const FormFieldData& field));

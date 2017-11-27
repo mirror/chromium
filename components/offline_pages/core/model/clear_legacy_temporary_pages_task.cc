@@ -122,7 +122,7 @@ ClearLegacyTemporaryPagesTask::ClearLegacyTemporaryPagesTask(
       legacy_archives_dir_(legacy_archives_dir),
       weak_ptr_factory_(this) {}
 
-ClearLegacyTemporaryPagesTask::~ClearLegacyTemporaryPagesTask() {}
+ClearLegacyTemporaryPagesTask::~ClearLegacyTemporaryPagesTask() = default;
 
 void ClearLegacyTemporaryPagesTask::Run() {
   std::vector<std::string> temp_namespaces =

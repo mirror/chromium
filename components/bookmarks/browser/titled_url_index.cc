@@ -52,8 +52,7 @@ TitledUrlIndex::TitledUrlIndex(std::unique_ptr<TitledUrlNodeSorter> sorter)
     : sorter_(std::move(sorter)) {
 }
 
-TitledUrlIndex::~TitledUrlIndex() {
-}
+TitledUrlIndex::~TitledUrlIndex() = default;
 
 void TitledUrlIndex::Add(const TitledUrlNode* node) {
   std::vector<base::string16> terms =

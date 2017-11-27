@@ -61,7 +61,7 @@ StartupController::StartupController(const SyncPrefs* sync_prefs,
   }
 }
 
-StartupController::~StartupController() {}
+StartupController::~StartupController() = default;
 
 void StartupController::Reset(const ModelTypeSet registered_types) {
   received_start_request_ = false;

@@ -37,8 +37,8 @@ class ActivationStateComputingNavigationThrottleTest
     : public content::RenderViewHostTestHarness,
       public content::WebContentsObserver {
  public:
-  ActivationStateComputingNavigationThrottleTest() {}
-  ~ActivationStateComputingNavigationThrottleTest() override {}
+  ActivationStateComputingNavigationThrottleTest() = default;
+  ~ActivationStateComputingNavigationThrottleTest() override = default;
 
   void SetUp() override {
     content::RenderViewHostTestHarness::SetUp();

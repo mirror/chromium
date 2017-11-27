@@ -20,8 +20,8 @@ const float kScreenScaleFactor = 2;
 
 class TestScreenInfoMetricsProvider : public ScreenInfoMetricsProvider {
  public:
-  TestScreenInfoMetricsProvider() {}
-  ~TestScreenInfoMetricsProvider() override {}
+  TestScreenInfoMetricsProvider() = default;
+  ~TestScreenInfoMetricsProvider() override = default;
 
  private:
   gfx::Size GetScreenSize() const override {
@@ -41,8 +41,8 @@ class TestScreenInfoMetricsProvider : public ScreenInfoMetricsProvider {
 
 class ScreenInfoMetricsProviderTest : public testing::Test {
  public:
-  ScreenInfoMetricsProviderTest() {}
-  ~ScreenInfoMetricsProviderTest() override {}
+  ScreenInfoMetricsProviderTest() = default;
+  ~ScreenInfoMetricsProviderTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ScreenInfoMetricsProviderTest);

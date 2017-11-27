@@ -43,7 +43,7 @@ const char kSsidNonUtf8[] = "\xc0";
 class FakeWifiConfigDelegate : public WifiConfigDelegate {
  public:
   FakeWifiConfigDelegate() : add_count_(0) {}
-  ~FakeWifiConfigDelegate() override {}
+  ~FakeWifiConfigDelegate() override = default;
 
   // WifiConfigDelegate implementation.
   void AddToLocalNetworks(const WifiCredential& network_credential) override {

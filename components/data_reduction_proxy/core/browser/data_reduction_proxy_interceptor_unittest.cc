@@ -108,7 +108,7 @@ class TestURLRequestContextWithDataReductionProxy
     set_network_delegate(delegate);
   }
 
-  ~TestURLRequestContextWithDataReductionProxy() override {}
+  ~TestURLRequestContextWithDataReductionProxy() override = default;
 };
 
 class DataReductionProxyInterceptorTest : public testing::Test {
@@ -291,7 +291,7 @@ class DataReductionProxyInterceptorEndToEndTest : public testing::Test {
   DataReductionProxyInterceptorEndToEndTest()
       : context_(true), context_storage_(&context_) {}
 
-  ~DataReductionProxyInterceptorEndToEndTest() override {}
+  ~DataReductionProxyInterceptorEndToEndTest() override = default;
 
   void SetUp() override {
     drp_test_context_ =

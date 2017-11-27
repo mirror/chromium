@@ -39,7 +39,7 @@ class HasTypedURLsTask : public history::HistoryDBTask {
   void DoneRunOnMainThread() override { cb_.Run(has_typed_urls_); }
 
  private:
-  ~HasTypedURLsTask() override {}
+  ~HasTypedURLsTask() override = default;
 
   bool has_typed_urls_;
   base::Callback<void(bool)> cb_;

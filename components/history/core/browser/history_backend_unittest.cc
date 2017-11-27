@@ -163,7 +163,7 @@ class HistoryBackendTestBase : public testing::Test {
   HistoryBackendTestBase()
       : loaded_(false) {}
 
-  ~HistoryBackendTestBase() override {}
+  ~HistoryBackendTestBase() override = default;
 
  protected:
   std::vector<GURL> favicon_changed_notifications_page_urls() const {
@@ -341,8 +341,8 @@ void HistoryBackendTestDelegate::DBLoaded() {
 
 class HistoryBackendTest : public HistoryBackendTestBase {
  public:
-  HistoryBackendTest() {}
-  ~HistoryBackendTest() override {}
+  HistoryBackendTest() = default;
+  ~HistoryBackendTest() override = default;
 
  protected:
   void AddRedirectChain(const char* sequence[], int nav_entry_id) {
@@ -489,8 +489,8 @@ class HistoryBackendTest : public HistoryBackendTestBase {
 
 class InMemoryHistoryBackendTest : public HistoryBackendTestBase {
  public:
-  InMemoryHistoryBackendTest() {}
-  ~InMemoryHistoryBackendTest() override {}
+  InMemoryHistoryBackendTest() = default;
+  ~InMemoryHistoryBackendTest() override = default;
 
  protected:
   void SimulateNotificationURLsDeleted(const URLRow* row1,

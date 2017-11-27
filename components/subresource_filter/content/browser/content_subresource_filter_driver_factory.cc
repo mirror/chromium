@@ -66,7 +66,7 @@ ContentSubresourceFilterDriverFactory::ContentSubresourceFilterDriverFactory(
               web_contents)) {}
 
 ContentSubresourceFilterDriverFactory::
-    ~ContentSubresourceFilterDriverFactory() {}
+    ~ContentSubresourceFilterDriverFactory() = default;
 
 void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
     content::NavigationHandle* navigation_handle,

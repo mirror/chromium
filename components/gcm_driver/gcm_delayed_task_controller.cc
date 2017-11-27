@@ -13,8 +13,7 @@ namespace gcm {
 GCMDelayedTaskController::GCMDelayedTaskController() : ready_(false) {
 }
 
-GCMDelayedTaskController::~GCMDelayedTaskController() {
-}
+GCMDelayedTaskController::~GCMDelayedTaskController() = default;
 
 void GCMDelayedTaskController::AddTask(const base::Closure& task) {
   delayed_tasks_.push_back(task);

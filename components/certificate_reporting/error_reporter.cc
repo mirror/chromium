@@ -92,7 +92,7 @@ ErrorReporter::ErrorReporter(
   DCHECK(!upload_url.is_empty());
 }
 
-ErrorReporter::~ErrorReporter() {}
+ErrorReporter::~ErrorReporter() = default;
 
 void ErrorReporter::SendExtendedReportingReport(
     const std::string& serialized_report,

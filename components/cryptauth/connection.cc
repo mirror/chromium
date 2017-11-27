@@ -19,7 +19,7 @@ Connection::Connection(const RemoteDevice& remote_device)
       status_(DISCONNECTED),
       is_sending_message_(false) {}
 
-Connection::~Connection() {}
+Connection::~Connection() = default;
 
 bool Connection::IsConnected() const {
   return status_ == CONNECTED;

@@ -8,11 +8,11 @@ namespace syncer {
 
 ExtensionsActivity::Record::Record() : bookmark_write_count(0U) {}
 
-ExtensionsActivity::Record::~Record() {}
+ExtensionsActivity::Record::~Record() = default;
 
-ExtensionsActivity::ExtensionsActivity() {}
+ExtensionsActivity::ExtensionsActivity() = default;
 
-ExtensionsActivity::~ExtensionsActivity() {}
+ExtensionsActivity::~ExtensionsActivity() = default;
 
 void ExtensionsActivity::GetAndClearRecords(Records* buffer) {
   base::AutoLock lock(records_lock_);

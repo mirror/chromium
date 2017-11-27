@@ -73,7 +73,7 @@ SyncEngineForProfileSyncTest::SyncEngineForProfileSyncTest(
           temp_dir.Append(base::FilePath(FILE_PATH_LITERAL("test")))),
       callback_(callback) {}
 
-SyncEngineForProfileSyncTest::~SyncEngineForProfileSyncTest() {}
+SyncEngineForProfileSyncTest::~SyncEngineForProfileSyncTest() = default;
 
 void SyncEngineForProfileSyncTest::Initialize(InitParams params) {
   params.http_factory_getter = base::Bind(&GetHttpPostProviderFactory);
@@ -195,7 +195,7 @@ CreateRootHelper::CreateRootHelper(AbstractProfileSyncServiceTest* test,
       model_type_(model_type),
       success_(false) {}
 
-CreateRootHelper::~CreateRootHelper() {}
+CreateRootHelper::~CreateRootHelper() = default;
 
 const base::Closure& CreateRootHelper::callback() const {
   return callback_;

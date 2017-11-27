@@ -29,7 +29,7 @@ namespace update_client {
 class PingManagerTest : public testing::Test {
  public:
   PingManagerTest();
-  ~PingManagerTest() override {}
+  ~PingManagerTest() override = default;
 
   void RunThreadsUntilIdle();
 
@@ -47,7 +47,7 @@ class PingManagerTest : public testing::Test {
   base::MessageLoopForIO loop_;
 };
 
-PingManagerTest::PingManagerTest() {}
+PingManagerTest::PingManagerTest() = default;
 
 void PingManagerTest::SetUp() {
   config_ = base::MakeRefCounted<TestConfigurator>();

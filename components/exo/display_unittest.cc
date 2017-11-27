@@ -224,7 +224,7 @@ class TestDataDeviceDelegate : public DataDeviceDelegate {
 class TestFileHelper : public FileHelper {
  public:
   // Overriden from TestFileHelper:
-  TestFileHelper() {}
+  TestFileHelper() = default;
   std::string GetMimeTypeForUriList() const override { return ""; }
   bool ConvertPathToUrl(const base::FilePath& path, GURL* out) override {
     return true;

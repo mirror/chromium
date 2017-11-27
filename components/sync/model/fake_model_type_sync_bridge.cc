@@ -25,8 +25,8 @@ namespace {
 // A simple InMemoryMetadataChangeList that provides accessors for its data.
 class TestMetadataChangeList : public InMemoryMetadataChangeList {
  public:
-  TestMetadataChangeList() {}
-  ~TestMetadataChangeList() override {}
+  TestMetadataChangeList() = default;
+  ~TestMetadataChangeList() override = default;
 
   void UpdateMetadata(const std::string& storage_key,
                       const sync_pb::EntityMetadata& metadata) override {
@@ -86,8 +86,8 @@ std::unique_ptr<EntityData> FakeModelTypeSyncBridge::GenerateEntityData(
   return entity_data;
 }
 
-FakeModelTypeSyncBridge::Store::Store() {}
-FakeModelTypeSyncBridge::Store::~Store() {}
+FakeModelTypeSyncBridge::Store::Store() = default;
+FakeModelTypeSyncBridge::Store::~Store() = default;
 
 void FakeModelTypeSyncBridge::Store::PutData(const std::string& key,
                                              const EntityData& data) {

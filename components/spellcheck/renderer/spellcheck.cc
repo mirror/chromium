@@ -67,7 +67,7 @@ bool UpdateSpellcheckEnabled::Visit(content::RenderFrame* render_frame) {
 class DocumentMarkersRemover : public content::RenderFrameVisitor {
  public:
   explicit DocumentMarkersRemover(const std::set<std::string>& words);
-  ~DocumentMarkersRemover() override {}
+  ~DocumentMarkersRemover() override = default;
   bool Visit(content::RenderFrame* render_frame) override;
 
  private:
@@ -140,7 +140,7 @@ class SpellCheck::SpellcheckRequest {
       : text_(text), completion_(completion) {
     DCHECK(completion);
   }
-  ~SpellcheckRequest() {}
+  ~SpellcheckRequest() = default;
 
   base::string16 text() { return text_; }
   blink::WebTextCheckingCompletion* completion() { return completion_; }
@@ -188,8 +188,7 @@ SpellCheck::SpellCheck(
       base::MakeUnique<content::SimpleConnectionFilter>(std::move(registry)));
 }
 
-SpellCheck::~SpellCheck() {
-}
+SpellCheck::~SpellCheck() = default;
 
 void SpellCheck::FillSuggestions(
     const std::vector<std::vector<base::string16>>& suggestions_list,

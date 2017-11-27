@@ -48,7 +48,7 @@ class DirectoryUpdateHandlerProcessUpdateTest : public ::testing::Test {
   DirectoryUpdateHandlerProcessUpdateTest()
       : ui_worker_(new FakeModelWorker(GROUP_UI)) {}
 
-  ~DirectoryUpdateHandlerProcessUpdateTest() override {}
+  ~DirectoryUpdateHandlerProcessUpdateTest() override = default;
 
   void SetUp() override { dir_maker_.SetUp(); }
 

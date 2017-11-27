@@ -32,7 +32,7 @@ CachedImageFetcher::CachedImageFetcher(
   }
 }
 
-CachedImageFetcher::~CachedImageFetcher() {}
+CachedImageFetcher::~CachedImageFetcher() = default;
 
 void CachedImageFetcher::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,

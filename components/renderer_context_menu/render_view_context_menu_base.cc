@@ -166,8 +166,7 @@ RenderViewContextMenuBase::RenderViewContextMenuBase(
       render_process_id_(render_frame_host->GetProcess()->GetID()),
       command_executed_(false) {}
 
-RenderViewContextMenuBase::~RenderViewContextMenuBase() {
-}
+RenderViewContextMenuBase::~RenderViewContextMenuBase() = default;
 
 // Menu construction functions -------------------------------------------------
 

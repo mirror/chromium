@@ -16,7 +16,8 @@ RendererSavePasswordProgressLogger::RendererSavePasswordProgressLogger(
   DCHECK(password_manager_driver);
 }
 
-RendererSavePasswordProgressLogger::~RendererSavePasswordProgressLogger() {}
+RendererSavePasswordProgressLogger::~RendererSavePasswordProgressLogger() =
+    default;
 
 void RendererSavePasswordProgressLogger::SendLog(const std::string& log) {
   password_manager_driver_->RecordSavePasswordProgress(log);

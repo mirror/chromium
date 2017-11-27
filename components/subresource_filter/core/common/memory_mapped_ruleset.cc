@@ -12,6 +12,6 @@ MemoryMappedRuleset::MemoryMappedRuleset(base::File ruleset_file) {
   ruleset_.Initialize(std::move(ruleset_file));
 }
 
-MemoryMappedRuleset::~MemoryMappedRuleset() {}
+MemoryMappedRuleset::~MemoryMappedRuleset() = default;
 
 }  // namespace subresource_filter

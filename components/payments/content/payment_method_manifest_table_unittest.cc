@@ -16,8 +16,8 @@ namespace {
 
 class PaymentMethodManifestTableTest : public testing::Test {
  public:
-  PaymentMethodManifestTableTest() {}
-  ~PaymentMethodManifestTableTest() override {}
+  PaymentMethodManifestTableTest() = default;
+  ~PaymentMethodManifestTableTest() override = default;
 
  protected:
   void SetUp() override {

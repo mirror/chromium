@@ -25,9 +25,9 @@ const std::string TestHttpBridge::GetResponseHeaderValue(
 
 void TestHttpBridge::Abort() {}
 
-TestHttpBridgeFactory::TestHttpBridgeFactory() {}
+TestHttpBridgeFactory::TestHttpBridgeFactory() = default;
 
-TestHttpBridgeFactory::~TestHttpBridgeFactory() {}
+TestHttpBridgeFactory::~TestHttpBridgeFactory() = default;
 
 void TestHttpBridgeFactory::Init(
     const std::string& user_agent,

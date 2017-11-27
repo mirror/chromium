@@ -28,7 +28,7 @@ using TouchTest = test::ExoTestBase;
 
 class MockTouchDelegate : public TouchDelegate {
  public:
-  MockTouchDelegate() {}
+  MockTouchDelegate() = default;
 
   // Overridden from TouchDelegate:
   MOCK_METHOD1(OnTouchDestroying, void(Touch*));
@@ -44,7 +44,7 @@ class MockTouchDelegate : public TouchDelegate {
 
 class MockTouchStylusDelegate : public TouchStylusDelegate {
  public:
-  MockTouchStylusDelegate() {}
+  MockTouchStylusDelegate() = default;
 
   // Overridden from TouchStylusDelegate:
   MOCK_METHOD1(OnTouchDestroying, void(Touch*));

@@ -45,7 +45,7 @@ AutofillWalletDataTypeController::AutofillWalletDataTypeController(
                  base::AsWeakPtr(this)));
 }
 
-AutofillWalletDataTypeController::~AutofillWalletDataTypeController() {}
+AutofillWalletDataTypeController::~AutofillWalletDataTypeController() = default;
 
 bool AutofillWalletDataTypeController::StartModels() {
   DCHECK(CalledOnValidThread());

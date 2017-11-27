@@ -155,7 +155,7 @@ class ShuntedHttpBridge : public HttpBridge {
   }
 
  private:
-  ~ShuntedHttpBridge() override {}
+  ~ShuntedHttpBridge() override = default;
 
   void CallOnURLFetchComplete() {
     ASSERT_TRUE(

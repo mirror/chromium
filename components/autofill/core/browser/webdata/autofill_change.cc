@@ -12,7 +12,6 @@ AutofillChange::AutofillChange(Type type, const AutofillKey& key)
     : GenericAutofillChange<AutofillKey>(type, key) {
 }
 
-AutofillChange::~AutofillChange() {
-}
+AutofillChange::~AutofillChange() = default;
 
 }  // namespace autofill

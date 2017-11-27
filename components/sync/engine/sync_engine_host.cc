@@ -6,7 +6,7 @@
 
 namespace syncer {
 
-SyncEngineHost::SyncEngineHost() {}
-SyncEngineHost::~SyncEngineHost() {}
+SyncEngineHost::SyncEngineHost() = default;
+SyncEngineHost::~SyncEngineHost() = default;
 
 }  // namespace syncer

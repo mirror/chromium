@@ -14,11 +14,11 @@ namespace autofill {
 FieldCandidate::FieldCandidate(ServerFieldType field_type, float field_score)
     : type(field_type), score(field_score) {}
 
-FieldCandidates::FieldCandidates() {}
+FieldCandidates::FieldCandidates() = default;
 
 FieldCandidates::FieldCandidates(const FieldCandidates& other) = default;
 
-FieldCandidates::~FieldCandidates() {}
+FieldCandidates::~FieldCandidates() = default;
 
 void FieldCandidates::AddFieldCandidate(ServerFieldType type, float score) {
   field_candidates_.emplace_back(type, score);

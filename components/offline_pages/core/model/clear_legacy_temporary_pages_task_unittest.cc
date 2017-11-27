@@ -63,7 +63,8 @@ ClearLegacyTemporaryPagesTaskTest::ClearLegacyTemporaryPagesTaskTest()
       store_test_util_(task_runner_),
       runner_(task_runner_) {}
 
-ClearLegacyTemporaryPagesTaskTest::~ClearLegacyTemporaryPagesTaskTest() {}
+ClearLegacyTemporaryPagesTaskTest::~ClearLegacyTemporaryPagesTaskTest() =
+    default;
 
 void ClearLegacyTemporaryPagesTaskTest::SetUp() {
   store_test_util_.BuildStoreInMemory();

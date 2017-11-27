@@ -27,7 +27,7 @@ FeedbackUploaderDelegate::FeedbackUploaderDelegate(
     const ReportFailureCallback& error_callback)
     : success_callback_(success_callback), error_callback_(error_callback) {}
 
-FeedbackUploaderDelegate::~FeedbackUploaderDelegate() {}
+FeedbackUploaderDelegate::~FeedbackUploaderDelegate() = default;
 
 void FeedbackUploaderDelegate::OnURLFetchComplete(
     const net::URLFetcher* source) {

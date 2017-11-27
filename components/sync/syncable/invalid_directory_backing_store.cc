@@ -10,7 +10,7 @@ namespace syncable {
 InvalidDirectoryBackingStore::InvalidDirectoryBackingStore()
     : DirectoryBackingStore("some_fake_user") {}
 
-InvalidDirectoryBackingStore::~InvalidDirectoryBackingStore() {}
+InvalidDirectoryBackingStore::~InvalidDirectoryBackingStore() = default;
 
 DirOpenResult InvalidDirectoryBackingStore::Load(
     Directory::MetahandlesMap* handles_map,

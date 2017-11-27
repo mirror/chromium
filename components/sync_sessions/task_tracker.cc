@@ -30,13 +30,13 @@ bool DoesTransitionContinueTask(ui::PageTransition transition) {
 
 }  // namespace
 
-TabTasks::TabTasks() {}
+TabTasks::TabTasks() = default;
 
 TabTasks::TabTasks(const TabTasks& rhs)
     : nav_to_task_id_map_(rhs.nav_to_task_id_map_),
       most_recent_nav_id_(rhs.most_recent_nav_id_) {}
 
-TabTasks::~TabTasks() {}
+TabTasks::~TabTasks() = default;
 
 std::vector<int64_t> TabTasks::GetTaskIdsForNavigation(int nav_id) const {
   std::vector<int64_t> task_id_chain;
@@ -109,9 +109,9 @@ void TabTasks::RemoveOldestNavigation() {
   nav_to_task_id_map_.erase(oldest_nav_id);
 }
 
-TaskTracker::TaskTracker() {}
+TaskTracker::TaskTracker() = default;
 
-TaskTracker::~TaskTracker() {}
+TaskTracker::~TaskTracker() = default;
 
 TabTasks* TaskTracker::GetTabTasks(SessionID::id_type tab_id,
                                    SessionID::id_type parent_tab_id) {

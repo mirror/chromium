@@ -150,7 +150,7 @@ RequestQueueTest::RequestQueueTest()
       task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {}
 
-RequestQueueTest::~RequestQueueTest() {}
+RequestQueueTest::~RequestQueueTest() = default;
 
 void RequestQueueTest::SetUp() {
   std::unique_ptr<RequestQueueInMemoryStore> store(

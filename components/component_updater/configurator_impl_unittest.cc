@@ -22,8 +22,8 @@ using base::CommandLine;
 
 class ComponentUpdaterConfiguratorImplTest : public testing::Test {
  public:
-  ComponentUpdaterConfiguratorImplTest() {}
-  ~ComponentUpdaterConfiguratorImplTest() override {}
+  ComponentUpdaterConfiguratorImplTest() = default;
+  ~ComponentUpdaterConfiguratorImplTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ComponentUpdaterConfiguratorImplTest);

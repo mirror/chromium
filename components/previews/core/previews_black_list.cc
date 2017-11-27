@@ -71,7 +71,7 @@ PreviewsBlackList::PreviewsBlackList(
   }
 }
 
-PreviewsBlackList::~PreviewsBlackList() {}
+PreviewsBlackList::~PreviewsBlackList() = default;
 
 base::Time PreviewsBlackList::AddPreviewNavigation(const GURL& url,
                                                    bool opt_out,

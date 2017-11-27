@@ -15,8 +15,7 @@ PrintManager::PrintManager(content::WebContents* contents)
       cookie_(0) {
 }
 
-PrintManager::~PrintManager() {
-}
+PrintManager::~PrintManager() = default;
 
 bool PrintManager::OnMessageReceived(
     const IPC::Message& message,

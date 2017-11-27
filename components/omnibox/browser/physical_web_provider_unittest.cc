@@ -80,7 +80,7 @@ class PhysicalWebProviderTest : public testing::Test {
  protected:
   PhysicalWebProviderTest() : provider_(nullptr) { ResetFieldTrialList(); }
 
-  ~PhysicalWebProviderTest() override {}
+  ~PhysicalWebProviderTest() override = default;
 
   void SetUp() override {
     base::FieldTrial* trial = CreatePhysicalWebFieldTrial();

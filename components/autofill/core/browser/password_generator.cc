@@ -74,7 +74,7 @@ void ForceFixPassword(std::string* password) {
 
 PasswordGenerator::PasswordGenerator(int max_length)
     : password_length_(GetLengthFromHint(max_length, kDefaultPasswordLength)) {}
-PasswordGenerator::~PasswordGenerator() {}
+PasswordGenerator::~PasswordGenerator() = default;
 
 std::string PasswordGenerator::Generate() const {
   char password[255];

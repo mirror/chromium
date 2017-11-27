@@ -150,7 +150,7 @@ SuggestionsServiceImpl::SuggestionsServiceImpl(
   blacklist_upload_backoff_.InformOfRequest(/*succeeded=*/true);
 }
 
-SuggestionsServiceImpl::~SuggestionsServiceImpl() {}
+SuggestionsServiceImpl::~SuggestionsServiceImpl() = default;
 
 bool SuggestionsServiceImpl::FetchSuggestionsData() {
   DCHECK(thread_checker_.CalledOnValidThread());

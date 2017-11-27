@@ -12,7 +12,7 @@
 
 namespace syncer {
 
-HttpBridgeNetworkResources::~HttpBridgeNetworkResources() {}
+HttpBridgeNetworkResources::~HttpBridgeNetworkResources() = default;
 
 std::unique_ptr<HttpPostProviderFactory>
 HttpBridgeNetworkResources::GetHttpPostProviderFactory(

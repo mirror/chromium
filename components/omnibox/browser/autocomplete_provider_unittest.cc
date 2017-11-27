@@ -47,7 +47,7 @@ const char kTestTemplateURLKeyword[] = "t";
 
 class TestingSchemeClassifier : public AutocompleteSchemeClassifier {
  public:
-  TestingSchemeClassifier() {}
+  TestingSchemeClassifier() = default;
 
   metrics::OmniboxInputType GetInputTypeForScheme(
       const std::string& scheme) const override {
@@ -65,7 +65,7 @@ class TestingSchemeClassifier : public AutocompleteSchemeClassifier {
 class AutocompleteProviderClientWithClosure
     : public MockAutocompleteProviderClient {
  public:
-  AutocompleteProviderClientWithClosure() {}
+  AutocompleteProviderClientWithClosure() = default;
 
   void set_closure(const base::Closure& closure) { closure_ = closure; }
 
@@ -107,7 +107,7 @@ class TestProvider : public AutocompleteProvider {
   }
 
  private:
-  ~TestProvider() override {}
+  ~TestProvider() override = default;
 
   void Run();
 

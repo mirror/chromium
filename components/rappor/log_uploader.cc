@@ -63,7 +63,7 @@ LogUploader::LogUploader(const GURL& server_url,
           kUnsentLogsIntervalSeconds)) {
 }
 
-LogUploader::~LogUploader() {}
+LogUploader::~LogUploader() = default;
 
 void LogUploader::Start() {
   is_running_ = true;

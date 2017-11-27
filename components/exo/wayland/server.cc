@@ -3888,7 +3888,7 @@ class WaylandGamepadDelegate : public GamepadDelegate {
 
  private:
   // The object should be deleted by OnRemoved().
-  ~WaylandGamepadDelegate() override {}
+  ~WaylandGamepadDelegate() override = default;
 
   // The client who own this gamepad instance.
   wl_client* client() const {
@@ -4483,7 +4483,7 @@ Server::Server(Display* display)
                    display_, bind_keyboard_extension);
 }
 
-Server::~Server() {}
+Server::~Server() = default;
 
 // static
 std::unique_ptr<Server> Server::Create(Display* display) {

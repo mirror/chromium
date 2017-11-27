@@ -20,7 +20,7 @@ namespace {
 
 class MockContextSupport : public cc::TestContextSupport {
  public:
-  MockContextSupport() {}
+  MockContextSupport() = default;
   MOCK_METHOD1(SetAggressivelyFreeResources,
                void(bool aggressively_free_resources));
 };

@@ -19,8 +19,8 @@ namespace {
 
 class MockNotifierObserver : public AllDownloadItemNotifier::Observer {
  public:
-  MockNotifierObserver() {}
-  virtual ~MockNotifierObserver() {}
+  MockNotifierObserver() = default;
+  virtual ~MockNotifierObserver() = default;
 
   MOCK_METHOD2(OnDownloadCreated,
                void(content::DownloadManager* manager,
@@ -44,7 +44,7 @@ class AllDownloadItemNotifierTest : public testing::Test {
   AllDownloadItemNotifierTest()
       : download_manager_(new content::MockDownloadManager) {}
 
-  virtual ~AllDownloadItemNotifierTest() {}
+  virtual ~AllDownloadItemNotifierTest() = default;
 
   content::MockDownloadManager& manager() { return *download_manager_.get(); }
 

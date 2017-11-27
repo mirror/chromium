@@ -139,7 +139,7 @@ GeneratePageBundleTask::GeneratePageBundleTask(
       callback_(callback),
       weak_factory_(this) {}
 
-GeneratePageBundleTask::~GeneratePageBundleTask() {}
+GeneratePageBundleTask::~GeneratePageBundleTask() = default;
 
 void GeneratePageBundleTask::Run() {
   prefetch_store_->Execute(

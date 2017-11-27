@@ -13,7 +13,7 @@ namespace viz {
 
 LocalSurfaceIdAllocator::LocalSurfaceIdAllocator() : next_id_(1u) {}
 
-LocalSurfaceIdAllocator::~LocalSurfaceIdAllocator() {}
+LocalSurfaceIdAllocator::~LocalSurfaceIdAllocator() = default;
 
 LocalSurfaceId LocalSurfaceIdAllocator::GenerateId() {
   LocalSurfaceId id(next_id_, base::UnguessableToken::Create());

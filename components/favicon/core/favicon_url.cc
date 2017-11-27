@@ -16,7 +16,6 @@ FaviconURL::FaviconURL(const GURL& url,
 
 FaviconURL::FaviconURL(const FaviconURL& other) = default;
 
-FaviconURL::~FaviconURL() {
-}
+FaviconURL::~FaviconURL() = default;
 
 }  // namespace favicon

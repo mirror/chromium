@@ -21,7 +21,7 @@ class MockModelTypeChangeProcessor : public FakeModelTypeChangeProcessor {
  public:
   explicit MockModelTypeChangeProcessor(const base::Closure& disabled_callback)
       : disabled_callback_(disabled_callback) {}
-  ~MockModelTypeChangeProcessor() override {}
+  ~MockModelTypeChangeProcessor() override = default;
 
   void DisableSync() override { disabled_callback_.Run(); }
 
@@ -48,7 +48,7 @@ class MockModelTypeSyncBridge : public StubModelTypeSyncBridge {
       : StubModelTypeSyncBridge(
             base::Bind(&MockModelTypeSyncBridge::CreateProcessor,
                        base::Unretained(this))) {}
-  ~MockModelTypeSyncBridge() override {}
+  ~MockModelTypeSyncBridge() override = default;
 
   MockModelTypeChangeProcessor* change_processor() const {
     return static_cast<MockModelTypeChangeProcessor*>(
@@ -75,8 +75,8 @@ class MockModelTypeSyncBridge : public StubModelTypeSyncBridge {
 
 class ModelTypeSyncBridgeTest : public ::testing::Test {
  public:
-  ModelTypeSyncBridgeTest() {}
-  ~ModelTypeSyncBridgeTest() override {}
+  ModelTypeSyncBridgeTest() = default;
+  ~ModelTypeSyncBridgeTest() override = default;
 
   void OnSyncStarting() {
     bridge_.OnSyncStarting(

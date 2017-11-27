@@ -97,7 +97,7 @@ const base::Feature kTranslateRankerPreviousLanguageMatchesOverride{
     "TranslateRankerPreviousLanguageMatchesOverride",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
-TranslateRankerFeatures::TranslateRankerFeatures() {}
+TranslateRankerFeatures::TranslateRankerFeatures() = default;
 
 TranslateRankerFeatures::TranslateRankerFeatures(int accepted,
                                                  int denied,
@@ -129,7 +129,7 @@ TranslateRankerFeatures::TranslateRankerFeatures(
                               translate_event.country(),
                               "" /*locale*/) {}
 
-TranslateRankerFeatures::~TranslateRankerFeatures() {}
+TranslateRankerFeatures::~TranslateRankerFeatures() = default;
 
 void TranslateRankerFeatures::WriteTo(std::ostream& stream) const {
   stream << "src_lang='" << src_lang << "', "
@@ -171,7 +171,7 @@ TranslateRankerImpl::TranslateRankerImpl(const base::FilePath& model_path,
   }
 }
 
-TranslateRankerImpl::~TranslateRankerImpl() {}
+TranslateRankerImpl::~TranslateRankerImpl() = default;
 
 // static
 base::FilePath TranslateRankerImpl::GetModelPath(

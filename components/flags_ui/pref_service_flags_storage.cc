@@ -17,7 +17,7 @@ namespace flags_ui {
 PrefServiceFlagsStorage::PrefServiceFlagsStorage(PrefService* prefs)
     : prefs_(prefs) {}
 
-PrefServiceFlagsStorage::~PrefServiceFlagsStorage() {}
+PrefServiceFlagsStorage::~PrefServiceFlagsStorage() = default;
 
 std::set<std::string> PrefServiceFlagsStorage::GetFlags() {
   const base::ListValue* enabled_experiments =

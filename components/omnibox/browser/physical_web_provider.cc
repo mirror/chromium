@@ -203,8 +203,7 @@ PhysicalWebProvider::PhysicalWebProvider(
       had_physical_web_suggestions_(false),
       had_physical_web_suggestions_at_focus_or_later_(false) {}
 
-PhysicalWebProvider::~PhysicalWebProvider() {
-}
+PhysicalWebProvider::~PhysicalWebProvider() = default;
 
 void PhysicalWebProvider::ConstructZeroSuggestMatches(
     std::unique_ptr<physical_web::MetadataList> metadata_list) {

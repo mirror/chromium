@@ -49,9 +49,9 @@ constexpr gfx::Size kAsyncImageSize = gfx::Size(50, 50);
 class TestWallpaperColorCalculatorObserver
     : public WallpaperColorCalculatorObserver {
  public:
-  TestWallpaperColorCalculatorObserver() {}
+  TestWallpaperColorCalculatorObserver() = default;
 
-  ~TestWallpaperColorCalculatorObserver() override {}
+  ~TestWallpaperColorCalculatorObserver() override = default;
 
   bool WasNotified() const { return notified_; }
 
@@ -120,7 +120,7 @@ WallPaperColorCalculatorTest::WallPaperColorCalculatorTest()
   InstallTaskRunner(task_runner_);
 }
 
-WallPaperColorCalculatorTest::~WallPaperColorCalculatorTest() {}
+WallPaperColorCalculatorTest::~WallPaperColorCalculatorTest() = default;
 
 void WallPaperColorCalculatorTest::InstallTaskRunner(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {

@@ -153,7 +153,7 @@ bool CaseInsensitiveStringCompare::operator()(const std::string& a,
   return base::CompareCaseInsensitiveASCII(a, b) < 0;
 }
 
-RegistryDict::RegistryDict() {}
+RegistryDict::RegistryDict() = default;
 
 RegistryDict::~RegistryDict() {
   ClearKeys();

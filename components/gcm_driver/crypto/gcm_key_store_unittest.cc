@@ -29,8 +29,8 @@ const char kSecondFakeAuthorizedEntity[] = "my_other_sender_id";
 
 class GCMKeyStoreTest : public ::testing::Test {
  public:
-  GCMKeyStoreTest() {}
-  ~GCMKeyStoreTest() override {}
+  GCMKeyStoreTest() = default;
+  ~GCMKeyStoreTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(scoped_temp_dir_.CreateUniqueTempDir());

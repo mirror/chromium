@@ -273,7 +273,7 @@ CALayerOverlay::CALayerOverlay() : filter(GL_LINEAR) {}
 
 CALayerOverlay::CALayerOverlay(const CALayerOverlay& other) = default;
 
-CALayerOverlay::~CALayerOverlay() {}
+CALayerOverlay::~CALayerOverlay() = default;
 
 bool ProcessForCALayerOverlays(
     cc::ResourceProvider* resource_provider,

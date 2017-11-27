@@ -31,8 +31,7 @@ FileDownloader::FileDownloader(
   CHECK(!status_cb.is_null());
 }
 
-FileDownloader::~FileDownloader() {
-}
+FileDownloader::~FileDownloader() = default;
 
 void FileDownloader::Load(const blink::WebURLRequest& request) {
   url_loader_->LoadAsynchronously(request, this);

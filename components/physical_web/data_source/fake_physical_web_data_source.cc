@@ -54,7 +54,7 @@ std::unique_ptr<MetadataList> CreateDummyPhysicalWebPages(
   return list;
 }
 
-FakePhysicalWebDataSource::FakePhysicalWebDataSource() {}
+FakePhysicalWebDataSource::FakePhysicalWebDataSource() = default;
 
 FakePhysicalWebDataSource::~FakePhysicalWebDataSource() = default;
 

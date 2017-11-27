@@ -60,7 +60,7 @@ class TestNotifier : public OfflinePageDownloadNotifier {
 TestNotifier::TestNotifier()
     : last_notification_type_(LastNotificationType::NONE) {}
 
-TestNotifier::~TestNotifier() {}
+TestNotifier::~TestNotifier() = default;
 
 void TestNotifier::NotifyDownloadSuccessful(const OfflineItem& item) {
   last_notification_type_ = LastNotificationType::DOWNLOAD_SUCCESSFUL;
@@ -116,9 +116,9 @@ class DownloadNotifyingObserverTest : public testing::Test {
   std::unique_ptr<ClientPolicyController> policy_controller_;
 };
 
-DownloadNotifyingObserverTest::DownloadNotifyingObserverTest() {}
+DownloadNotifyingObserverTest::DownloadNotifyingObserverTest() = default;
 
-DownloadNotifyingObserverTest::~DownloadNotifyingObserverTest() {}
+DownloadNotifyingObserverTest::~DownloadNotifyingObserverTest() = default;
 
 void DownloadNotifyingObserverTest::SetUp() {
   std::unique_ptr<TestNotifier> notifier(new TestNotifier);

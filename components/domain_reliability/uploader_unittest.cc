@@ -65,7 +65,7 @@ class UploadMockURLRequestJob : public net::URLRequestJob {
   }
 
  private:
-  ~UploadMockURLRequestJob() override {}
+  ~UploadMockURLRequestJob() override = default;
 
   void OnStreamInitialized(int rv) {
     EXPECT_EQ(net::OK, rv);

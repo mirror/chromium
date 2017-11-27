@@ -30,7 +30,7 @@ class TestForeignSessionsProvider : public ForeignSessionsProvider {
   TestForeignSessionsProvider(const std::vector<const SyncedSession*>& sessions,
                               bool return_value)
       : sessions_(sessions), return_value_(return_value) {}
-  ~TestForeignSessionsProvider() override {}
+  ~TestForeignSessionsProvider() override = default;
 
   bool GetAllForeignSessions(
       std::vector<const SyncedSession*>* sessions) override {

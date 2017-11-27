@@ -20,7 +20,7 @@ bool UIModelWorker::IsOnModelSequence() {
   return ui_thread_->BelongsToCurrentThread();
 }
 
-UIModelWorker::~UIModelWorker() {}
+UIModelWorker::~UIModelWorker() = default;
 
 void UIModelWorker::ScheduleWork(base::OnceClosure work) {
   ui_thread_->PostTask(FROM_HERE, std::move(work));

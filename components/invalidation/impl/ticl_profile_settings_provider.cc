@@ -28,7 +28,7 @@ TiclProfileSettingsProvider::TiclProfileSettingsProvider(PrefService* prefs)
                  base::Unretained(this)));
 }
 
-TiclProfileSettingsProvider::~TiclProfileSettingsProvider() {}
+TiclProfileSettingsProvider::~TiclProfileSettingsProvider() = default;
 
 bool TiclProfileSettingsProvider::UseGCMChannel() const {
   if (prefs_->GetBoolean(prefs::kInvalidationServiceUseGCMChannel)) {

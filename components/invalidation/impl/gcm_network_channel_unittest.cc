@@ -134,7 +134,7 @@ class GCMNetworkChannelTest
         url_fetchers_created_count_(0),
         last_invalidator_state_(TRANSIENT_INVALIDATION_ERROR) {}
 
-  ~GCMNetworkChannelTest() override {}
+  ~GCMNetworkChannelTest() override = default;
 
   void SetUp() override {
     request_context_getter_ = new net::TestURLRequestContextGetter(

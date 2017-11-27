@@ -62,7 +62,7 @@ BaseSessionService::BaseSessionService(SessionType type,
   DCHECK(backend_.get());
 }
 
-BaseSessionService::~BaseSessionService() {}
+BaseSessionService::~BaseSessionService() = default;
 
 void BaseSessionService::MoveCurrentSessionToLastSession() {
   Save();

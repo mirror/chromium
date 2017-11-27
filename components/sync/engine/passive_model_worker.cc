@@ -10,7 +10,7 @@ namespace syncer {
 
 PassiveModelWorker::PassiveModelWorker() = default;
 
-PassiveModelWorker::~PassiveModelWorker() {}
+PassiveModelWorker::~PassiveModelWorker() = default;
 
 void PassiveModelWorker::ScheduleWork(base::OnceClosure work) {
   std::move(work).Run();

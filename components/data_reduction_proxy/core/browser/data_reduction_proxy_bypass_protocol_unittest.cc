@@ -86,7 +86,7 @@ class DataReductionProxyProtocolEmbeddedServerTest : public testing::Test {
                    base::Unretained(this)));
   }
 
-  ~DataReductionProxyProtocolEmbeddedServerTest() override {}
+  ~DataReductionProxyProtocolEmbeddedServerTest() override = default;
 
   std::unique_ptr<net::test_server::HttpResponse> HandleRequest(
       const net::test_server::HttpRequest& request) {
@@ -1043,7 +1043,7 @@ TEST_F(DataReductionProxyProtocolTest, BypassLogic) {
 
 class DataReductionProxyBypassProtocolEndToEndTest : public testing::Test {
  public:
-  DataReductionProxyBypassProtocolEndToEndTest() {}
+  DataReductionProxyBypassProtocolEndToEndTest() = default;
 
   void ResetDependencies() {
     context_.reset(new net::TestURLRequestContext(true));

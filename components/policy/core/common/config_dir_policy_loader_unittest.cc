@@ -79,7 +79,7 @@ TestHarness::TestHarness()
                                 POLICY_SOURCE_PLATFORM),
       next_policy_file_index_(100) {}
 
-TestHarness::~TestHarness() {}
+TestHarness::~TestHarness() = default;
 
 void TestHarness::SetUp() {
   ASSERT_TRUE(test_dir_.CreateUniqueTempDir());

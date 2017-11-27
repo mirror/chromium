@@ -6,11 +6,9 @@
 
 namespace web_modal {
 
-ModalDialogHostObserver::~ModalDialogHostObserver() {
-}
+ModalDialogHostObserver::~ModalDialogHostObserver() = default;
 
-ModalDialogHost::~ModalDialogHost() {
-}
+ModalDialogHost::~ModalDialogHost() = default;
 
 bool ModalDialogHost::ShouldActivateDialog() const {
   return true;

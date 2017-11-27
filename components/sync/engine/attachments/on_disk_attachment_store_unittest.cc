@@ -39,8 +39,8 @@ void AttachmentStoreCreated(AttachmentStore::Result* result_dest,
 // Instantiation of common attachment store tests.
 class OnDiskAttachmentStoreFactory {
  public:
-  OnDiskAttachmentStoreFactory() {}
-  ~OnDiskAttachmentStoreFactory() {}
+  OnDiskAttachmentStoreFactory() = default;
+  ~OnDiskAttachmentStoreFactory() = default;
 
   std::unique_ptr<AttachmentStore> CreateAttachmentStore() {
     EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
@@ -71,7 +71,7 @@ class OnDiskAttachmentStoreSpecificTest : public testing::Test {
   base::MessageLoop message_loop_;
   std::unique_ptr<AttachmentStore> store_;
 
-  OnDiskAttachmentStoreSpecificTest() {}
+  OnDiskAttachmentStoreSpecificTest() = default;
 
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());

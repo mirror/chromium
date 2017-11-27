@@ -26,7 +26,7 @@ CanMakePaymentQueryFactory::CanMakePaymentQueryFactory()
           "CanMakePaymentQuery",
           BrowserContextDependencyManager::GetInstance()) {}
 
-CanMakePaymentQueryFactory::~CanMakePaymentQueryFactory() {}
+CanMakePaymentQueryFactory::~CanMakePaymentQueryFactory() = default;
 
 content::BrowserContext* CanMakePaymentQueryFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {

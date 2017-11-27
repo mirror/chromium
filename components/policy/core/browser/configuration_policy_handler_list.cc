@@ -27,8 +27,7 @@ ConfigurationPolicyHandlerList::ConfigurationPolicyHandlerList(
     : parameters_callback_(parameters_callback),
       details_callback_(details_callback) {}
 
-ConfigurationPolicyHandlerList::~ConfigurationPolicyHandlerList() {
-}
+ConfigurationPolicyHandlerList::~ConfigurationPolicyHandlerList() = default;
 
 void ConfigurationPolicyHandlerList::AddHandler(
     std::unique_ptr<ConfigurationPolicyHandler> handler) {

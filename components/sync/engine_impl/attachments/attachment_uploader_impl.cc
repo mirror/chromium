@@ -155,7 +155,7 @@ AttachmentUploaderImpl::UploadState::UploadState(
   GetToken();
 }
 
-AttachmentUploaderImpl::UploadState::~UploadState() {}
+AttachmentUploaderImpl::UploadState::~UploadState() = default;
 
 bool AttachmentUploaderImpl::UploadState::IsStopped() const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

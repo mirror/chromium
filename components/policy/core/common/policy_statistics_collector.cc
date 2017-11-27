@@ -36,8 +36,7 @@ PolicyStatisticsCollector::PolicyStatisticsCollector(
       task_runner_(task_runner) {
 }
 
-PolicyStatisticsCollector::~PolicyStatisticsCollector() {
-}
+PolicyStatisticsCollector::~PolicyStatisticsCollector() = default;
 
 void PolicyStatisticsCollector::Initialize() {
   using base::Time;

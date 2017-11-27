@@ -23,8 +23,8 @@ namespace {
 // Thin Invalidator wrapper around InvalidatorRegistrar.
 class RegistrarInvalidator : public Invalidator {
  public:
-  RegistrarInvalidator() {}
-  ~RegistrarInvalidator() override {}
+  RegistrarInvalidator() = default;
+  ~RegistrarInvalidator() override = default;
 
   InvalidatorRegistrar* GetRegistrar() {
     return &registrar_;
@@ -66,7 +66,7 @@ class RegistrarInvalidator : public Invalidator {
 
 class RegistrarInvalidatorTestDelegate {
  public:
-  RegistrarInvalidatorTestDelegate() {}
+  RegistrarInvalidatorTestDelegate() = default;
 
   ~RegistrarInvalidatorTestDelegate() {
     DestroyInvalidator();

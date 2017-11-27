@@ -7,7 +7,7 @@
 namespace syncer {
 namespace syncable {
 
-NullDirectoryChangeDelegate::~NullDirectoryChangeDelegate() {}
+NullDirectoryChangeDelegate::~NullDirectoryChangeDelegate() = default;
 
 void NullDirectoryChangeDelegate::HandleCalculateChangesChangeEventFromSyncApi(
     const ImmutableWriteTransactionInfo& write_transaction_info,

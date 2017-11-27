@@ -82,8 +82,7 @@ GaiaCookieManagerService::GaiaCookieRequest::GaiaCookieRequest(
     const std::string& source)
     : request_type_(request_type), account_id_(account_id), source_(source) {}
 
-GaiaCookieManagerService::GaiaCookieRequest::~GaiaCookieRequest() {
-}
+GaiaCookieManagerService::GaiaCookieRequest::~GaiaCookieRequest() = default;
 
 // static
 GaiaCookieManagerService::GaiaCookieRequest

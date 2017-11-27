@@ -479,7 +479,7 @@ OfflinePageMetadataStoreTest::OfflinePageMetadataStoreTest()
   EXPECT_TRUE(temp_directory_.CreateUniqueTempDir());
 }
 
-OfflinePageMetadataStoreTest::~OfflinePageMetadataStoreTest() {}
+OfflinePageMetadataStoreTest::~OfflinePageMetadataStoreTest() = default;
 
 void OfflinePageMetadataStoreTest::PumpLoop() {
   task_runner_->RunUntilIdle();

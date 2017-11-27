@@ -163,6 +163,6 @@ InMemoryAttachmentStore::AttachmentEntry::AttachmentEntry(
 InMemoryAttachmentStore::AttachmentEntry::AttachmentEntry(
     const AttachmentEntry& other) = default;
 
-InMemoryAttachmentStore::AttachmentEntry::~AttachmentEntry() {}
+InMemoryAttachmentStore::AttachmentEntry::~AttachmentEntry() = default;
 
 }  // namespace syncer

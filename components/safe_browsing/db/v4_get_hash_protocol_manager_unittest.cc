@@ -40,7 +40,7 @@ struct KeyValue {
   explicit KeyValue(const KeyValue& other) = default;
 
  private:
-  KeyValue();
+  KeyValue() = delete;
 };
 
 struct ResponseInfo {
@@ -50,13 +50,11 @@ struct ResponseInfo {
 
   explicit ResponseInfo(FullHash full_hash, ListIdentifier list_id)
       : full_hash(full_hash), list_id(list_id){};
-  explicit ResponseInfo(const ResponseInfo& other)
-      : full_hash(other.full_hash),
-        list_id(other.list_id),
-        key_values(other.key_values){};
+  explicit ResponseInfo(const ResponseInfo& other) = default;
+  ;
 
  private:
-  ResponseInfo();
+  ResponseInfo() = delete;
 };
 
 }  // namespace

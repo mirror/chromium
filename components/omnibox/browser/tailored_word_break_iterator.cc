@@ -17,7 +17,7 @@ TailoredWordBreakIterator::TailoredWordBreakIterator(
   DCHECK_EQ(BreakIterator::BREAK_WORD, break_type);
 }
 
-TailoredWordBreakIterator::~TailoredWordBreakIterator() {}
+TailoredWordBreakIterator::~TailoredWordBreakIterator() = default;
 
 bool TailoredWordBreakIterator::Advance() {
   if (HasUnderscoreWord()) {

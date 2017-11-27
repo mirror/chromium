@@ -191,7 +191,7 @@ class PasswordFormBuilder {
 class MAYBE_PasswordFormConversionUtilsTest : public content::RenderViewTest {
  public:
   MAYBE_PasswordFormConversionUtilsTest() : content::RenderViewTest() {}
-  ~MAYBE_PasswordFormConversionUtilsTest() override {}
+  ~MAYBE_PasswordFormConversionUtilsTest() override = default;
 
  protected:
   // Loads the given |html|, retrieves the sole WebFormElement from it, and then

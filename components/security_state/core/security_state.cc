@@ -292,7 +292,7 @@ SecurityInfo::SecurityInfo()
       incognito_downgraded_security_level(false),
       field_edit_downgraded_security_level(false) {}
 
-SecurityInfo::~SecurityInfo() {}
+SecurityInfo::~SecurityInfo() = default;
 
 void GetSecurityInfo(
     std::unique_ptr<VisibleSecurityState> visible_security_state,
@@ -325,7 +325,7 @@ VisibleSecurityState::VisibleSecurityState()
       is_error_page(false),
       is_view_source(false) {}
 
-VisibleSecurityState::~VisibleSecurityState() {}
+VisibleSecurityState::~VisibleSecurityState() = default;
 
 bool IsSchemeCryptographic(const GURL& url) {
   return url.is_valid() && url.SchemeIsCryptographic();

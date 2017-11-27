@@ -18,7 +18,7 @@ ExternalClearKeyProperties::ExternalClearKeyProperties(
     const std::string& key_system_name)
     : key_system_name_(key_system_name) {}
 
-ExternalClearKeyProperties::~ExternalClearKeyProperties() {}
+ExternalClearKeyProperties::~ExternalClearKeyProperties() = default;
 
 std::string ExternalClearKeyProperties::GetKeySystemName() const {
   return key_system_name_;

@@ -16,8 +16,7 @@ GuestViewEvent::GuestViewEvent(const std::string& name,
                                std::unique_ptr<base::DictionaryValue> args)
     : name_(name), args_(std::move(args)) {}
 
-GuestViewEvent::~GuestViewEvent() {
-}
+GuestViewEvent::~GuestViewEvent() = default;
 
 void GuestViewEvent::Dispatch(GuestViewBase* guest, int instance_id) {
   DCHECK(args_) << "Dispatch was probably invoked twice!";

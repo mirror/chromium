@@ -10,7 +10,7 @@
 
 namespace content_settings {
 
-Rule::Rule() {}
+Rule::Rule() = default;
 
 Rule::Rule(
     const ContentSettingsPattern& primary_pattern,
@@ -24,9 +24,9 @@ Rule::Rule(
 
 Rule::Rule(const Rule& other) = default;
 
-Rule::~Rule() {}
+Rule::~Rule() = default;
 
-RuleIterator::~RuleIterator() {}
+RuleIterator::~RuleIterator() = default;
 
 ConcatenationIterator::ConcatenationIterator(
     std::vector<std::unique_ptr<RuleIterator>> iterators,
@@ -41,7 +41,7 @@ ConcatenationIterator::ConcatenationIterator(
   }
 }
 
-ConcatenationIterator::~ConcatenationIterator() {}
+ConcatenationIterator::~ConcatenationIterator() = default;
 
 bool ConcatenationIterator::HasNext() const {
   return !iterators_.empty();

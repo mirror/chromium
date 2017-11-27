@@ -61,7 +61,7 @@ FaviconServiceImpl::FaviconServiceImpl(
   DCHECK(history_service_);
 }
 
-FaviconServiceImpl::~FaviconServiceImpl() {}
+FaviconServiceImpl::~FaviconServiceImpl() = default;
 
 base::CancelableTaskTracker::TaskId FaviconServiceImpl::GetFaviconImage(
     const GURL& icon_url,

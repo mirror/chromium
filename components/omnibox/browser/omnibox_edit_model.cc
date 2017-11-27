@@ -113,9 +113,7 @@ OmniboxEditModel::State::State(bool user_input_in_progress,
 
 OmniboxEditModel::State::State(const State& other) = default;
 
-OmniboxEditModel::State::~State() {
-}
-
+OmniboxEditModel::State::~State() = default;
 
 // OmniboxEditModel -----------------------------------------------------------
 
@@ -139,8 +137,7 @@ OmniboxEditModel::OmniboxEditModel(OmniboxView* view,
   omnibox_controller_.reset(new OmniboxController(this, client_.get()));
 }
 
-OmniboxEditModel::~OmniboxEditModel() {
-}
+OmniboxEditModel::~OmniboxEditModel() = default;
 
 const OmniboxEditModel::State OmniboxEditModel::GetStateForTabSwitch() {
   // Like typing, switching tabs "accepts" the temporary text as the user

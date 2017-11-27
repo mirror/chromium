@@ -82,7 +82,7 @@ CompositorFrame CreateCompositorFrame(const gfx::Rect& root_rect,
 TestSurfaceHittestDelegate::TestSurfaceHittestDelegate()
     : reject_target_overrides_(0), accept_target_overrides_(0) {}
 
-TestSurfaceHittestDelegate::~TestSurfaceHittestDelegate() {}
+TestSurfaceHittestDelegate::~TestSurfaceHittestDelegate() = default;
 
 void TestSurfaceHittestDelegate::AddInsetsForRejectSurface(
     const SurfaceId& surface_id,

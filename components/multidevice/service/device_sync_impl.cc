@@ -19,7 +19,7 @@ DeviceSyncImpl::Factory::NewInstance(
   return factory_instance_->BuildInstance(std::move(service_ref));
 }
 
-DeviceSyncImpl::Factory::~Factory() {}
+DeviceSyncImpl::Factory::~Factory() = default;
 
 // static
 void DeviceSyncImpl::Factory::SetInstanceForTesting(Factory* factory) {
@@ -36,7 +36,7 @@ DeviceSyncImpl::DeviceSyncImpl(
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
     : service_ref_(std::move(service_ref)) {}
 
-DeviceSyncImpl::~DeviceSyncImpl() {}
+DeviceSyncImpl::~DeviceSyncImpl() = default;
 
 void DeviceSyncImpl::ForceEnrollmentNow() {
   observers_.ForAllPtrs([](device_sync::mojom::DeviceSyncObserver* observer) {

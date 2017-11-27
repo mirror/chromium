@@ -28,7 +28,7 @@ enum class DragEvent { kOffer, kEnter, kLeave, kMotion, kDrop, kDestroy };
 
 class TestDataOfferDelegate : public DataOfferDelegate {
  public:
-  ~TestDataOfferDelegate() override {}
+  ~TestDataOfferDelegate() override = default;
 
   // Overridden from DataOfferDelegate:
   void OnDataOfferDestroying(DataOffer* offer) override { delete this; }
@@ -40,7 +40,7 @@ class TestDataOfferDelegate : public DataOfferDelegate {
 
 class TestDataDeviceDelegate : public DataDeviceDelegate {
  public:
-  TestDataDeviceDelegate() {}
+  TestDataDeviceDelegate() = default;
 
   size_t PopEvents(std::vector<DragEvent>* out) {
     out->swap(events_);

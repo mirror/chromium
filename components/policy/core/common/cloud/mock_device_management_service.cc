@@ -27,7 +27,7 @@ class MockRequestJobBase : public DeviceManagementRequestJob {
                      MockDeviceManagementService* service)
       : DeviceManagementRequestJob(type, std::string(), std::string()),
         service_(service) {}
-  ~MockRequestJobBase() override {}
+  ~MockRequestJobBase() override = default;
 
  protected:
   void Run() override {
@@ -67,7 +67,7 @@ class SyncRequestJob : public MockRequestJobBase {
       : MockRequestJobBase(type, service),
         status_(status),
         response_(response) {}
-  ~SyncRequestJob() override {}
+  ~SyncRequestJob() override = default;
 
  protected:
   void Run() override {
@@ -88,7 +88,7 @@ class AsyncRequestJob : public MockRequestJobBase,
  public:
   AsyncRequestJob(JobType type, MockDeviceManagementService* service)
       : MockRequestJobBase(type, service) {}
-  ~AsyncRequestJob() override {}
+  ~AsyncRequestJob() override = default;
 
  protected:
   void RetryJob() override {
@@ -118,7 +118,7 @@ ACTION_P2(CreateAsyncMockDeviceManagementJob, service, mock_job) {
   return job;
 }
 
-MockDeviceManagementJob::~MockDeviceManagementJob() {}
+MockDeviceManagementJob::~MockDeviceManagementJob() = default;
 
 MockDeviceManagementServiceConfiguration::
     MockDeviceManagementServiceConfiguration()
@@ -129,7 +129,7 @@ MockDeviceManagementServiceConfiguration::
     : server_url_(server_url) {}
 
 MockDeviceManagementServiceConfiguration::
-    ~MockDeviceManagementServiceConfiguration() {}
+    ~MockDeviceManagementServiceConfiguration() = default;
 
 std::string MockDeviceManagementServiceConfiguration::GetServerUrl() {
   return server_url_;
@@ -147,7 +147,7 @@ MockDeviceManagementService::MockDeviceManagementService()
     : DeviceManagementService(std::unique_ptr<Configuration>(
           new MockDeviceManagementServiceConfiguration)) {}
 
-MockDeviceManagementService::~MockDeviceManagementService() {}
+MockDeviceManagementService::~MockDeviceManagementService() = default;
 
 Action<MockDeviceManagementService::CreateJobFunction>
     MockDeviceManagementService::SucceedJob(

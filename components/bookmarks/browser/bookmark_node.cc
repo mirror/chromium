@@ -37,8 +37,7 @@ BookmarkNode::BookmarkNode(int64_t id, const GURL& url) : url_(url) {
   Initialize(id);
 }
 
-BookmarkNode::~BookmarkNode() {
-}
+BookmarkNode::~BookmarkNode() = default;
 
 void BookmarkNode::SetTitle(const base::string16& title) {
   // Replace newlines and other problematic whitespace characters in
@@ -134,8 +133,7 @@ void BookmarkNode::InvalidateFavicon() {
 BookmarkPermanentNode::BookmarkPermanentNode(int64_t id)
     : BookmarkNode(id, GURL()), visible_(true) {}
 
-BookmarkPermanentNode::~BookmarkPermanentNode() {
-}
+BookmarkPermanentNode::~BookmarkPermanentNode() = default;
 
 bool BookmarkPermanentNode::IsVisible() const {
   return visible_ || !empty();

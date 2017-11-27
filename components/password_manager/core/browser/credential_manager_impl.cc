@@ -28,7 +28,7 @@ CredentialManagerImpl::CredentialManagerImpl(PasswordManagerClient* client)
                             client_->GetPrefs());
 }
 
-CredentialManagerImpl::~CredentialManagerImpl() {}
+CredentialManagerImpl::~CredentialManagerImpl() = default;
 
 void CredentialManagerImpl::Store(const CredentialInfo& credential,
                                   StoreCallback callback) {

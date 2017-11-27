@@ -88,7 +88,7 @@ class TestOverrideStringCallback {
       : callback_(base::Bind(&TestOverrideStringCallback::Override,
                              base::Unretained(this))) {}
 
-  virtual ~TestOverrideStringCallback() {}
+  virtual ~TestOverrideStringCallback() = default;
 
   const VariationsSeedProcessor::UIStringOverrideCallback& callback() const {
     return callback_;
@@ -111,8 +111,7 @@ class TestOverrideStringCallback {
 
 class VariationsSeedProcessorTest : public ::testing::Test {
  public:
-  VariationsSeedProcessorTest() {
-  }
+  VariationsSeedProcessorTest() = default;
 
   ~VariationsSeedProcessorTest() override {
     // Ensure that the maps are cleared between tests, since they are stored as

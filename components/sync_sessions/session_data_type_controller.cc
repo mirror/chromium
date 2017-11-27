@@ -38,7 +38,7 @@ SessionDataTypeController::SessionDataTypeController(
                  base::AsWeakPtr(this)));
 }
 
-SessionDataTypeController::~SessionDataTypeController() {}
+SessionDataTypeController::~SessionDataTypeController() = default;
 
 bool SessionDataTypeController::StartModels() {
   DCHECK(CalledOnValidThread());

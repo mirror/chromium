@@ -17,8 +17,8 @@ GURL kUrl = GURL("https://www.google.com");
 
 class TestPhysicalWebDataSource : public PhysicalWebDataSourceImpl {
  public:
-  TestPhysicalWebDataSource() {}
-  ~TestPhysicalWebDataSource() override {}
+  TestPhysicalWebDataSource() = default;
+  ~TestPhysicalWebDataSource() override = default;
 
   void StartDiscovery(bool network_request_enabled) override;
   void StopDiscovery() override;
@@ -46,7 +46,7 @@ class TestPhysicalWebListener : public PhysicalWebListener {
         on_lost_notified_(false),
         on_distance_changed_notified_(false) {}
 
-  ~TestPhysicalWebListener() {}
+  ~TestPhysicalWebListener() = default;
 
   void OnFound(const GURL& url) override {
     on_found_notified_ = true;
@@ -82,8 +82,8 @@ class TestPhysicalWebListener : public PhysicalWebListener {
 
 class PhysicalWebDataSourceImplTest : public ::testing::Test {
  public:
-  PhysicalWebDataSourceImplTest() {}
-  ~PhysicalWebDataSourceImplTest() override {}
+  PhysicalWebDataSourceImplTest() = default;
+  ~PhysicalWebDataSourceImplTest() override = default;
 
   // testing::Test
   void SetUp() override;

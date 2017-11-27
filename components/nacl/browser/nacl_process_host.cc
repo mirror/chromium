@@ -163,7 +163,7 @@ namespace {
 class NaClSandboxedProcessLauncherDelegate
     : public content::SandboxedProcessLauncherDelegate {
  public:
-  NaClSandboxedProcessLauncherDelegate() {}
+  NaClSandboxedProcessLauncherDelegate() = default;
 
 #if defined(OS_WIN)
   void PostSpawnTarget(base::ProcessHandle process) override {

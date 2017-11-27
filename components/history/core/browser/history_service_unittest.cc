@@ -57,7 +57,7 @@ class HistoryServiceTest : public testing::Test {
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
         query_url_success_(false) {}
 
-  ~HistoryServiceTest() override {}
+  ~HistoryServiceTest() override = default;
 
   void OnMostVisitedURLsAvailable(const MostVisitedURLList* url_list) {
     most_visited_urls_ = *url_list;
@@ -613,7 +613,7 @@ class HistoryDBTaskImpl : public HistoryDBTask {
   bool* done_invoked_;
 
  private:
-  ~HistoryDBTaskImpl() override {}
+  ~HistoryDBTaskImpl() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(HistoryDBTaskImpl);
 };

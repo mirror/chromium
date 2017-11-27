@@ -16,7 +16,7 @@ DebugInfoEventListener::DebugInfoEventListener()
       cryptographer_ready_(false),
       weak_ptr_factory_(this) {}
 
-DebugInfoEventListener::~DebugInfoEventListener() {}
+DebugInfoEventListener::~DebugInfoEventListener() = default;
 
 void DebugInfoEventListener::OnSyncCycleCompleted(
     const SyncCycleSnapshot& snapshot) {

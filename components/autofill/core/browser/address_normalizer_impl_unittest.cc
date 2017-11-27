@@ -32,7 +32,7 @@ class ChromiumTestdataSource : public TestdataSource {
  public:
   ChromiumTestdataSource() : TestdataSource(true) {}
 
-  ~ChromiumTestdataSource() override {}
+  ~ChromiumTestdataSource() override = default;
 
   // For this test, only load the rules for the "US".
   void Get(const std::string& key, const Callback& data_ready) const override {
@@ -59,7 +59,7 @@ class TestAddressNormalizer : public AddressNormalizerImpl {
                         std::unique_ptr<::i18n::addressinput::Storage> storage)
       : AddressNormalizerImpl(std::move(source), std::move(storage), "en-US") {}
 
-  ~TestAddressNormalizer() override {}
+  ~TestAddressNormalizer() override = default;
 
   void ShouldLoadRules(bool should_load_rules) {
     should_load_rules_ = should_load_rules;
@@ -91,7 +91,7 @@ class AddressNormalizerTest : public testing::Test {
       : normalizer_(std::unique_ptr<Source>(new ChromiumTestdataSource),
                     std::unique_ptr<Storage>(new NullStorage)) {}
 
-  ~AddressNormalizerTest() override {}
+  ~AddressNormalizerTest() override = default;
 
   bool normalization_successful() const { return success_; }
 

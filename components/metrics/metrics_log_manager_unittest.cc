@@ -30,7 +30,7 @@ class MetricsLogManagerTest : public testing::Test {
     MetricsLogStore::RegisterPrefs(pref_service_.registry());
     log_store()->LoadPersistedUnsentLogs();
   }
-  ~MetricsLogManagerTest() override {}
+  ~MetricsLogManagerTest() override = default;
 
   MetricsLogStore* log_store() { return &log_store_; }
 

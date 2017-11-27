@@ -14,7 +14,7 @@ DirectoryCommitContributor::DirectoryCommitContributor(
     DataTypeDebugInfoEmitter* debug_info_emitter)
     : dir_(dir), type_(type), debug_info_emitter_(debug_info_emitter) {}
 
-DirectoryCommitContributor::~DirectoryCommitContributor() {}
+DirectoryCommitContributor::~DirectoryCommitContributor() = default;
 
 std::unique_ptr<CommitContribution> DirectoryCommitContributor::GetContribution(
     size_t max_entries) {

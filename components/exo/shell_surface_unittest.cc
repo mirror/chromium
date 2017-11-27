@@ -73,8 +73,8 @@ class ShellSurfaceBoundsModeTest
     : public ShellSurfaceTest,
       public testing::WithParamInterface<ShellSurface::BoundsMode> {
  public:
-  ShellSurfaceBoundsModeTest() {}
-  ~ShellSurfaceBoundsModeTest() override {}
+  ShellSurfaceBoundsModeTest() = default;
+  ~ShellSurfaceBoundsModeTest() override = default;
 
   bool IsClientBoundsMode() const {
     return GetParam() == ShellSurface::BoundsMode::CLIENT;

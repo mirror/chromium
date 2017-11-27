@@ -14,8 +14,7 @@ BrowserContextKeyedServiceShutdownNotifierFactory::
           BrowserContextDependencyManager::GetInstance()) {
 }
 BrowserContextKeyedServiceShutdownNotifierFactory::
-    ~BrowserContextKeyedServiceShutdownNotifierFactory() {
-}
+    ~BrowserContextKeyedServiceShutdownNotifierFactory() = default;
 
 KeyedServiceShutdownNotifier*
 BrowserContextKeyedServiceShutdownNotifierFactory::Get(

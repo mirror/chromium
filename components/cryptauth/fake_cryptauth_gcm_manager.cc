@@ -10,7 +10,7 @@ FakeCryptAuthGCMManager::FakeCryptAuthGCMManager(
     const std::string& registration_id)
     : registration_in_progress_(false), registration_id_(registration_id) {}
 
-FakeCryptAuthGCMManager::~FakeCryptAuthGCMManager() {}
+FakeCryptAuthGCMManager::~FakeCryptAuthGCMManager() = default;
 
 void FakeCryptAuthGCMManager::StartListening() {}
 

@@ -47,7 +47,7 @@ FeedbackUploaderFactory::FeedbackUploaderFactory()
           BrowserContextDependencyManager::GetInstance()),
       task_runner_(CreateUploaderTaskRunner()) {}
 
-FeedbackUploaderFactory::~FeedbackUploaderFactory() {}
+FeedbackUploaderFactory::~FeedbackUploaderFactory() = default;
 
 KeyedService* FeedbackUploaderFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

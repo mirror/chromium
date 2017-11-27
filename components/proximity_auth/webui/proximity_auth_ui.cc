@@ -41,7 +41,6 @@ ProximityAuthUI::ProximityAuthUI(content::WebUI* web_ui,
       base::MakeUnique<ProximityAuthWebUIHandler>(delegate));
 }
 
-ProximityAuthUI::~ProximityAuthUI() {
-}
+ProximityAuthUI::~ProximityAuthUI() = default;
 
 }  // namespace proximity_auth

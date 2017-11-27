@@ -47,7 +47,7 @@ std::vector<std::unique_ptr<PageRenovation>> MakeRenovationList() {
 PageRenovationLoader::PageRenovationLoader()
     : renovations_(MakeRenovationList()), is_loaded_(false) {}
 
-PageRenovationLoader::~PageRenovationLoader() {}
+PageRenovationLoader::~PageRenovationLoader() = default;
 
 bool PageRenovationLoader::GetRenovationScript(
     const std::vector<std::string>& renovation_ids,

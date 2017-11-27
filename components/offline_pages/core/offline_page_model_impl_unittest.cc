@@ -261,7 +261,7 @@ OfflinePageModelImplTest::OfflinePageModelImplTest()
       last_deleted_offline_id_(-1),
       temporary_dir_same_with_persistent_(false) {}
 
-OfflinePageModelImplTest::~OfflinePageModelImplTest() {}
+OfflinePageModelImplTest::~OfflinePageModelImplTest() = default;
 
 void OfflinePageModelImplTest::SetUp() {
   ASSERT_TRUE(temporary_dir_.CreateUniqueTempDir());

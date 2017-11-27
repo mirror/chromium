@@ -14,8 +14,7 @@
 
 namespace plugin {
 
-NaClSubprocess::NaClSubprocess() {
-}
+NaClSubprocess::NaClSubprocess() = default;
 
 // Shutdown the socket connection and service runtime, in that order.
 void NaClSubprocess::Shutdown() {

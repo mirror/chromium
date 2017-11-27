@@ -6,12 +6,12 @@
 
 namespace syncer {
 
-StartCallbackMock::StartCallbackMock() {}
+StartCallbackMock::StartCallbackMock() = default;
 
-StartCallbackMock::~StartCallbackMock() {}
+StartCallbackMock::~StartCallbackMock() = default;
 
-ModelLoadCallbackMock::ModelLoadCallbackMock() {}
+ModelLoadCallbackMock::ModelLoadCallbackMock() = default;
 
-ModelLoadCallbackMock::~ModelLoadCallbackMock() {}
+ModelLoadCallbackMock::~ModelLoadCallbackMock() = default;
 
 }  // namespace syncer

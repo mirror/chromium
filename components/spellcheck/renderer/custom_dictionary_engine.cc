@@ -8,11 +8,9 @@
 
 #include "base/strings/utf_string_conversions.h"
 
-CustomDictionaryEngine::CustomDictionaryEngine() {
-}
+CustomDictionaryEngine::CustomDictionaryEngine() = default;
 
-CustomDictionaryEngine::~CustomDictionaryEngine() {
-}
+CustomDictionaryEngine::~CustomDictionaryEngine() = default;
 
 void CustomDictionaryEngine::Init(const std::set<std::string>& custom_words) {
   dictionary_.clear();

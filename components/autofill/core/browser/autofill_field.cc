@@ -45,7 +45,7 @@ AutofillField::AutofillField(const FormFieldData& field,
       form_classifier_outcome_(AutofillUploadContents::Field::NO_OUTCOME),
       username_vote_type_(AutofillUploadContents::Field::NO_INFORMATION) {}
 
-AutofillField::~AutofillField() {}
+AutofillField::~AutofillField() = default;
 
 void AutofillField::set_heuristic_type(ServerFieldType type) {
   if (type >= 0 && type < MAX_VALID_FIELD_TYPE &&

@@ -32,7 +32,7 @@ class ChildCallStackProfileCollectorTest : public testing::Test {
 
     explicit Receiver(mojom::CallStackProfileCollectorRequest request)
         : binding_(this, std::move(request)) {}
-    ~Receiver() override {}
+    ~Receiver() override = default;
 
     void Collect(const CallStackProfileParams& params,
                  base::TimeTicks start_timestamp,

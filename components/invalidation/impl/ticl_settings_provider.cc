@@ -6,14 +6,11 @@
 
 namespace invalidation {
 
-TiclSettingsProvider::Observer::~Observer() {
-}
+TiclSettingsProvider::Observer::~Observer() = default;
 
-TiclSettingsProvider::TiclSettingsProvider() {
-}
+TiclSettingsProvider::TiclSettingsProvider() = default;
 
-TiclSettingsProvider::~TiclSettingsProvider() {
-}
+TiclSettingsProvider::~TiclSettingsProvider() = default;
 
 void TiclSettingsProvider::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);

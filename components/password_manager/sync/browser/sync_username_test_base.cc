@@ -14,7 +14,7 @@ namespace password_manager {
 SyncUsernameTestBase::LocalFakeSyncService::LocalFakeSyncService()
     : syncing_passwords_(true) {}
 
-SyncUsernameTestBase::LocalFakeSyncService::~LocalFakeSyncService() {}
+SyncUsernameTestBase::LocalFakeSyncService::~LocalFakeSyncService() = default;
 
 syncer::ModelTypeSet
 SyncUsernameTestBase::LocalFakeSyncService::GetPreferredDataTypes() const {
@@ -31,7 +31,7 @@ SyncUsernameTestBase::SyncUsernameTestBase()
   account_tracker_.Initialize(&signin_client_);
 }
 
-SyncUsernameTestBase::~SyncUsernameTestBase() {}
+SyncUsernameTestBase::~SyncUsernameTestBase() = default;
 
 void SyncUsernameTestBase::FakeSigninAs(const std::string& email) {
   signin_manager_.SetAuthenticatedAccountInfo("12345", email);
