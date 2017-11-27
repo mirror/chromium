@@ -772,7 +772,7 @@ if (is_linux || is_android) {
     if (is_component_build) {
       ldflags = [
         "-Wl,-rpath,",
-        rebase_path(root_build_dir),
+        "$ORIGIN",
       ]
     }
   }
