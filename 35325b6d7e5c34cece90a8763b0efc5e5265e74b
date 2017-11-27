@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d96317e7_d2aba184",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-27T11:12:35Z",
+      "side": 1,
+      "message": "use video.srcObject \u003d stream instead of createObjectURL",
+      "revId": "35325b6d7e5c34cece90a8763b0efc5e5265e74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa819675_671bff86",
         "filename": "content/test/data/media/getusermedia.html",
         "patchSetId": 1
@@ -22,6 +39,29 @@
       "revId": "35325b6d7e5c34cece90a8763b0efc5e5265e74b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b2c9a17_daefd97f",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-27T11:12:35Z",
+      "side": 1,
+      "message": "user srcObject here as well, or maybe just remove the function and use srcObject directly at the call sites.",
+      "range": {
+        "startLine": 371,
+        "startChar": 20,
+        "endLine": 371,
+        "endChar": 23
+      },
+      "revId": "35325b6d7e5c34cece90a8763b0efc5e5265e74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
