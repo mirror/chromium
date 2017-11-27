@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4983490_ff27e385",
+        "filename": "content/common/service_worker/embedded_worker_start_params_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-27T10:43:59Z",
+      "side": 1,
+      "message": "Please return const ref here and for other members (GURL, base::UnguessableToken) where copying is more expensive than passing by ref.",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 13
+      },
+      "revId": "6e3268b2cad412eeaf788fc7d8a58b5e792e3b54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
