@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0da19222_2e380d98",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T04:32:09Z",
+      "side": 1,
+      "message": "(optional): WDYT to rebase this on top of https://chromium-review.googlesource.com/c/chromium/src/+/785434?\n\nThen;\n- Arg counting is no longer needed. Mojo does not allow method overloading, so once the CL is\nlanded, what we need to see is if there is Init() or not.\n- It also means, we can remove one CallInstanceInit at L173, now.\n\nI\u0027m also ok to move forward with this now, and clean up later.",
+      "revId": "a73eb7fadd96cb95b67707d88df21cd5708e7716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34432895_c291a1ff",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T04:32:09Z",
+      "side": 1,
+      "message": "I found that this won\u0027t work for XxxInstance case, because the class has pure-virtual methods. (sorry for my broken suggestion).\n\ncf) Here\u0027s the fix I found.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/782479/2..3/components/arc/connection_holder.h",
+      "revId": "a73eb7fadd96cb95b67707d88df21cd5708e7716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
