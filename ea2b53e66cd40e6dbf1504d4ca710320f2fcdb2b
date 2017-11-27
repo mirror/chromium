@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "5d85f4d2_1c1447b1",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-27T09:07:59Z",
+      "side": 1,
+      "message": "Hmm.\n\nWhy do we need to pass T* to Persistent\u0027s constructor? If we pass callback_function_, then Persistent won\u0027t need T. Then can we remove the specialization?\n\nI\u0027m assuming that the following code will work.\n\n  V8CallbackFunctionHolder* holder \u003d new V8CallbackFunctionHolder(callback_function_);\n  Bind(func_ptr, WrapPersistent(holder));",
+      "parentUuid": "aaae1eb5_e111841d",
+      "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0938f716_964d8de2",
         "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
         "patchSetId": 3
