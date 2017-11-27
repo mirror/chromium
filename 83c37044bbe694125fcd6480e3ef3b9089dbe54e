@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9957d32_ce189b4b",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-27T02:31:33Z",
+      "side": 1,
+      "message": "Do we need to worry about JS here, as above?",
+      "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

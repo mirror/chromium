@@ -294,6 +294,23 @@
     },
     {
       "key": {
+        "uuid": "9b8db2bf_928a389a",
+        "filename": "chrome/browser/content_settings/local_shared_objects_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-27T02:31:33Z",
+      "side": 1,
+      "message": "I\u0027m assuming that it.worker is the origin? origin may be a clearer name?",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "deb1a293_1910b9b6",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
         "patchSetId": 5
