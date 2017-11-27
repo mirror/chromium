@@ -22,6 +22,64 @@
       "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2036ef6_a3a5d351",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-27T23:10:08Z",
+      "side": 1,
+      "message": "Good point, although I wonder why the erase() method returns size_t rather than a boolean...",
+      "parentUuid": "55d0479d_f17719a4",
+      "range": {
+        "startLine": 1746,
+        "startChar": 0,
+        "endLine": 1746,
+        "endChar": 70
+      },
+      "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "348c9c1f_0e98a0ac",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2592,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-27T23:10:08Z",
+      "side": 1,
+      "message": "Iterating the container to find the stream id seems not efficient enough, I understand we couldn\u0027t cancel the stream by URL as it\u0027s possible that a url is pushed, claimed, and repushed. \n\nHow \u0027bout have two args passed in, url used for locate the stream, and stream id used to double check whether we want to cancel the stream?",
+      "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3515a7f6_f57d71d6",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-27T23:10:08Z",
+      "side": 1,
+      "message": "How \u0027bout pass in two args in this method? Both the GURL and the stream id? Use the url to locate the stream and cancel the stream if the stream id if matches?",
+      "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
