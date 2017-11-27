@@ -69,7 +69,7 @@ int ConvertBlobErrorToNetError(BlobStatus reason) {
 }
 }  // namespace
 
-BlobReader::FileStreamReaderProvider::~FileStreamReaderProvider() {}
+BlobReader::FileStreamReaderProvider::~FileStreamReaderProvider() = default;
 
 BlobReader::BlobReader(
     const BlobDataHandle* blob_handle,
@@ -88,8 +88,7 @@ BlobReader::BlobReader(
   }
 }
 
-BlobReader::~BlobReader() {
-}
+BlobReader::~BlobReader() = default;
 
 BlobReader::Status BlobReader::CalculateSize(
     const net::CompletionCallback& done) {

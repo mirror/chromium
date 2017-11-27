@@ -9,8 +9,7 @@
 
 namespace storage {
 
-BlobDataItem::DataHandle::~DataHandle() {
-}
+BlobDataItem::DataHandle::~DataHandle() = default;
 
 BlobDataItem::BlobDataItem(std::unique_ptr<DataElement> item)
     : item_(std::move(item)),
@@ -37,7 +36,7 @@ BlobDataItem::BlobDataItem(std::unique_ptr<DataElement> item,
       disk_cache_stream_index_(disk_cache_stream_index),
       disk_cache_side_stream_index_(disk_cache_side_stream_index) {}
 
-BlobDataItem::~BlobDataItem() {}
+BlobDataItem::~BlobDataItem() = default;
 
 void PrintTo(const BlobDataItem& x, ::std::ostream* os) {
   DCHECK(os);
