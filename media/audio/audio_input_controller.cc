@@ -420,6 +420,7 @@ void AudioInputController::DoClose() {
         audio_callback_->received_callback() ? "" : " (no callbacks received)");
 
     if (type_ == LOW_LATENCY) {
+      CHECK(false) << "Explosions in the code";
       if (audio_callback_->received_callback()) {
         UMA_HISTOGRAM_LONG_TIMES("Media.InputStreamDuration", duration);
       } else {
