@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf177d51_a3dd3aec",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T22:07:30Z",
+      "side": 1,
+      "message": "This map makes me a bit nervous.  I wouldn\u0027t be surprised if typical users have hundreds or thousands of active network requests (with extreme cases being even higher), and the lookup here could become expensive enough (given it\u0027s on a fairly critical path).  Are we worried about the cost of this at all?",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6785c1da_e6b83935",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T22:07:30Z",
+      "side": 1,
+      "message": "Are there times we would not call OnBeforeURLRequest() (which creates a WebRequestInfo object) first?  When?",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7846014_ca5789fb",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T22:07:30Z",
+      "side": 1,
+      "message": "Hmm... this means that the WebRequestInfo is basically locked into whatever information we had at the start of the request.  Are there any pieces of data (e.g., frame data, navigation ui data, etc) that wouldn\u0027t be available at this time, that would otherwise be available?",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f907be7_e5135d2e",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T22:07:30Z",
+      "side": 1,
+      "message": "Are we sure this is called for 100% of net::URLRequests?",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3526c6a_a5f58e4b",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T22:07:30Z",
+      "side": 1,
+      "message": "\u003d nullptr?",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2552a5cf_e3adb2ed",
+        "filename": "extensions/browser/api/web_request/web_request_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T22:07:30Z",
+      "side": 1,
+      "message": "OnRequestDone -\u003e OnRequestWillBeDestroyed()?",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048743f8_9ba486af",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T22:07:30Z",
+      "side": 1,
+      "message": "can we instantiate these in the initializer list instead?",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d3b639_94776939",
+        "filename": "extensions/browser/api/web_request/web_request_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T22:07:30Z",
+      "side": 1,
+      "message": "this might be a good time to rename this to something like \"render_process_id\" instead of \"child_id\".",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d162da63_cfe04fac",
+        "filename": "extensions/browser/api/web_request/web_request_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-27T22:07:30Z",
+      "side": 1,
+      "message": "When is this false, but WebViewRendererState::GetInstance()-\u003eIsGuest(process_id) true?",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
