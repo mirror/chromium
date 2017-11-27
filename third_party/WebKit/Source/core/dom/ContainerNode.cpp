@@ -146,6 +146,13 @@ static inline bool CollectChildrenAndRemoveFromOldParent(
   return !exception_state.HadException() && !nodes.IsEmpty();
 }
 
+static inline bool IsOrIsInUserAgentShadowRoot(ContainerNode* node) {
+  return (node->IsShadowRoot() &&
+          ToShadowRoot(node)->GetType() == ShadowRootType::kUserAgent) ||
+         (node->IsInShadowTree() && node->ContainingShadowRoot()->GetType() ==
+                                        ShadowRootType::kUserAgent);
+}
+
 void ContainerNode::ParserTakeAllChildrenFrom(ContainerNode& old_parent) {
   while (Node* child = old_parent.firstChild()) {
     // Explicitly remove since appending can fail, but this loop shouldn't be
@@ -810,6 +817,11 @@ void ContainerNode::RemoveChildren(SubtreeModificationAction action) {
 Node* ContainerNode::AppendChild(Node* new_child,
                                  ExceptionState& exception_state) {
   DCHECK(new_child);
+  if (!new_child->IsDocumentFragment() && IsOrIsInUserAgentShadowRoot(this)) {
+    FastAppendChild(new_child, kChildrenChangeSourceAPI);
+    return new_child;
+  }
+
   // Make sure adding the new child is ok
   if (!EnsurePreInsertionValidity(*new_child, nullptr, nullptr,
                                   exception_state))
@@ -840,13 +852,12 @@ Node* ContainerNode::AppendChild(Node* new_child) {
   return AppendChild(new_child, ASSERT_NO_EXCEPTION);
 }
 
-void ContainerNode::ParserAppendChild(Node* new_child) {
+void ContainerNode::FastAppendChild(
+    Node* new_child,
+    ChildrenChangeSource children_change_source) {
   DCHECK(new_child);
   DCHECK(!new_child->IsDocumentFragment());
   DCHECK(!IsHTMLTemplateElement(this));
-
-  RUNTIME_CALL_TIMER_SCOPE(V8PerIsolateData::MainThreadIsolate(),
-                           RuntimeCallStats::CounterId::kParserAppendChild);
 
   if (!CheckParserAcceptChild(*new_child))
     return;
@@ -869,7 +880,13 @@ void ContainerNode::ParserAppendChild(Node* new_child) {
     ChildListMutationScope(*this).ChildAdded(*new_child);
   }
 
-  NotifyNodeInserted(*new_child, kChildrenChangeSourceParser);
+  NotifyNodeInserted(*new_child, children_change_source);
+}
+
+void ContainerNode::ParserAppendChild(Node* new_child) {
+  RUNTIME_CALL_TIMER_SCOPE(V8PerIsolateData::MainThreadIsolate(),
+                           RuntimeCallStats::CounterId::kParserAppendChild);
+  FastAppendChild(new_child, kChildrenChangeSourceParser);
 }
 
 DISABLE_CFI_PERF

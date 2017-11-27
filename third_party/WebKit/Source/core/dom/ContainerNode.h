@@ -396,6 +396,9 @@ class CORE_EXPORT ContainerNode : public Node {
   friend class AdoptAndAppendChild;
   void InsertBeforeCommon(Node& next_child, Node& new_child);
   void AppendChildCommon(Node& child);
+  // AppendChild without pre insertion validity checks and MutationEvent
+  // dispatches. |child| cannot be a DocumentFragment.
+  void FastAppendChild(Node* child, ChildrenChangeSource);
   void WillRemoveChildren();
   void WillRemoveChild(Node& child);
   void RemoveDetachedChildrenInContainer(ContainerNode&);
