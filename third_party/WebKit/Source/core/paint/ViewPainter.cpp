@@ -87,9 +87,8 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
                               layout_view_.ScrolledContentOffset());
     }
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-      PaintChunkProperties properties(layout_view_.FirstFragment()
-                                          .GetRarePaintData()
-                                          ->ContentsProperties());
+      PaintChunkProperties properties(
+          paint_info.Fragment().GetRarePaintData()->ContentsProperties());
       scoped_scroll_property.emplace(
           paint_info.context.GetPaintController(), *display_item_client,
           DisplayItem::kDocumentBackground, properties);

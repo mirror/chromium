@@ -172,6 +172,8 @@ class FindObjectPropertiesNeedingUpdateScope {
                                 object_properties->Mask());
       DCHECK_OBJECT_PROPERTY_EQ(object_, original_properties_->MaskClip(),
                                 object_properties->MaskClip());
+      DCHECK_OBJECT_PROPERTY_EQ(object_, original_properties_->FragmentClip(),
+                                object_properties->FragmentClip());
       DCHECK_OBJECT_PROPERTY_EQ(object_, original_properties_->CssClip(),
                                 object_properties->CssClip());
       DCHECK_OBJECT_PROPERTY_EQ(object_,

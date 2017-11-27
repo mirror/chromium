@@ -179,8 +179,7 @@ void BlockPainter::PaintScrollHitTestDisplayItem(const PaintInfo& paint_info) {
   // crbug.com/753124 in the future where the scrolling element's border is hit
   // test differently if composited.
 
-  const auto& fragment = layout_block_.FirstFragment();
-  const auto* properties = fragment.PaintProperties();
+  const auto* properties = paint_info.Fragment().PaintProperties();
 
   // Without RootLayerScrolling, the LayoutView will not create scroll paint
   // properties and will rely on the LocalFrameView providing a scroll
@@ -227,7 +226,7 @@ void BlockPainter::PaintScrollHitTestDisplayItem(const PaintInfo& paint_info) {
     // properties so that the scroll hit test is not clipped or scrolled.
     ScopedPaintChunkProperties scroll_hit_test_properties(
         paint_info.context.GetPaintController(), layout_block_,
-        *fragment.LocalBorderBoxProperties());
+        *paint_info.Fragment().LocalBorderBoxProperties());
     ScrollHitTestDisplayItem::Record(paint_info.context, layout_block_,
                                      DisplayItem::kScrollHitTest,
                                      properties->ScrollTranslation());
@@ -280,8 +279,7 @@ void BlockPainter::PaintObject(const PaintInfo& paint_info,
     Optional<ScrollRecorder> scroll_recorder;
     Optional<PaintInfo> scrolled_paint_info;
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-      const auto* object_properties =
-          layout_block_.FirstFragment().PaintProperties();
+      const auto* object_properties = paint_info.Fragment().PaintProperties();
       auto* scroll_translation =
           object_properties ? object_properties->ScrollTranslation() : nullptr;
       if (scroll_translation) {

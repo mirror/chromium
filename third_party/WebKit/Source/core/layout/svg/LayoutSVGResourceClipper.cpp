@@ -220,7 +220,8 @@ sk_sp<const PaintRecord> LayoutSVGResourceClipper::CreatePaintRecord() {
   PaintInfo info(builder.Context(), LayoutRect::InfiniteIntRect(),
                  PaintPhase::kForeground, kGlobalPaintNormalPhase,
                  kPaintLayerPaintingRenderingClipPathAsMask |
-                     kPaintLayerPaintingRenderingResourceSubtree);
+                     kPaintLayerPaintingRenderingResourceSubtree,
+                 GetElement()->GetLayoutObject()->FirstFragment());
 
   for (const SVGElement& child_element :
        Traversal<SVGElement>::ChildrenOf(*GetElement())) {

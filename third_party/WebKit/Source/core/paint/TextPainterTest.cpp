@@ -35,7 +35,8 @@ class TextPainterTest : public RenderingTest {
         context_, IntRect(),
         uses_text_as_clip ? PaintPhase::kTextClip
                           : PaintPhase::kSelfBlockBackgroundOnly,
-        is_printing ? kGlobalPaintPrinting : kGlobalPaintNormalPhase, 0);
+        is_printing ? kGlobalPaintPrinting : kGlobalPaintNormalPhase, 0,
+        GetLayoutView().FirstFragment());
   }
 
  private:

@@ -35,7 +35,7 @@ void TableCellPaintInvalidator::InvalidateContainerForCellGeometryChange(
           container_context.paint_invalidation_container) {
     ObjectPaintInvalidatorWithContext(container, container_context)
         .InvalidatePaintRectangleWithContext(
-            container.FirstFragment().VisualRect(),
+            container_context.fragment_data->VisualRect(),
             PaintInvalidationReason::kGeometry);
   }
 }
