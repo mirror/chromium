@@ -26,7 +26,7 @@ class FixedSource : public ImageSkiaSource {
  public:
   explicit FixedSource(const ImageSkiaRep& image) : image_(image) {}
 
-  ~FixedSource() override {}
+  ~FixedSource() override = default;
 
   ImageSkiaRep GetImageForScale(float scale) override { return image_; }
 
@@ -40,7 +40,7 @@ class FixedScaleSource : public ImageSkiaSource {
  public:
   explicit FixedScaleSource(const ImageSkiaRep& image) : image_(image) {}
 
-  ~FixedScaleSource() override {}
+  ~FixedScaleSource() override = default;
 
   ImageSkiaRep GetImageForScale(float scale) override {
     if (!image_.unscaled() && image_.scale() != scale)
@@ -60,7 +60,7 @@ class DynamicSource : public ImageSkiaSource {
       : size_(size),
         last_requested_scale_(0.0f) {}
 
-  ~DynamicSource() override {}
+  ~DynamicSource() override = default;
 
   ImageSkiaRep GetImageForScale(float scale) override {
     last_requested_scale_ = scale;
@@ -82,10 +82,9 @@ class DynamicSource : public ImageSkiaSource {
 
 class NullSource: public ImageSkiaSource {
  public:
-  NullSource() {
-  }
+  NullSource() = default;
 
-  ~NullSource() override {}
+  ~NullSource() override = default;
 
   ImageSkiaRep GetImageForScale(float scale) override {
     return gfx::ImageSkiaRep();

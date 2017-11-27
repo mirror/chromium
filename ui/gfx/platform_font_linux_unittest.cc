@@ -23,7 +23,7 @@ class TestFontDelegate : public LinuxFontDelegate {
  public:
   TestFontDelegate()
       : size_pixels_(0), style_(Font::NORMAL), weight_(Font::Weight::NORMAL) {}
-  ~TestFontDelegate() override {}
+  ~TestFontDelegate() override = default;
 
   void set_family(const std::string& family) { family_ = family; }
   void set_size_pixels(int size_pixels) { size_pixels_ = size_pixels; }

@@ -16,8 +16,8 @@ namespace test {
 class SpeechViewTest : public views::test::WidgetTest,
                        public AppListTestViewDelegate {
  public:
-  SpeechViewTest() {}
-  ~SpeechViewTest() override {}
+  SpeechViewTest() = default;
+  ~SpeechViewTest() override = default;
 
   // Overridden from testing::Test:
   void SetUp() override {

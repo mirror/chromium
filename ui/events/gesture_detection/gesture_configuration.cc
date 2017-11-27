@@ -72,7 +72,6 @@ GestureConfiguration::GestureConfiguration()
       velocity_tracker_strategy_(VelocityTracker::Strategy::STRATEGY_DEFAULT) {
 }
 
-GestureConfiguration::~GestureConfiguration() {
-}
+GestureConfiguration::~GestureConfiguration() = default;
 
 }  // namespace ui

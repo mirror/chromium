@@ -20,8 +20,7 @@ RepeatController::RepeatController(const base::Closure& callback)
     : callback_(callback) {
 }
 
-RepeatController::~RepeatController() {
-}
+RepeatController::~RepeatController() = default;
 
 void RepeatController::Start() {
   // The first timer is slightly longer than subsequent repeats.

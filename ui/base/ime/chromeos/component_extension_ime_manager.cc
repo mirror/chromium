@@ -90,29 +90,25 @@ bool InputMethodCompare(const input_method::InputMethodDescriptor& im1,
 
 } // namespace
 
-ComponentExtensionEngine::ComponentExtensionEngine() {
-}
+ComponentExtensionEngine::ComponentExtensionEngine() = default;
 
 ComponentExtensionEngine::ComponentExtensionEngine(
     const ComponentExtensionEngine& other) = default;
 
-ComponentExtensionEngine::~ComponentExtensionEngine() {
-}
+ComponentExtensionEngine::~ComponentExtensionEngine() = default;
 
-ComponentExtensionIME::ComponentExtensionIME() {
-}
+ComponentExtensionIME::ComponentExtensionIME() = default;
 
 ComponentExtensionIME::ComponentExtensionIME(
     const ComponentExtensionIME& other) = default;
 
-ComponentExtensionIME::~ComponentExtensionIME() {
-}
+ComponentExtensionIME::~ComponentExtensionIME() = default;
 
-ComponentExtensionIMEManagerDelegate::ComponentExtensionIMEManagerDelegate() {
-}
+ComponentExtensionIMEManagerDelegate::ComponentExtensionIMEManagerDelegate() =
+    default;
 
-ComponentExtensionIMEManagerDelegate::~ComponentExtensionIMEManagerDelegate() {
-}
+ComponentExtensionIMEManagerDelegate::~ComponentExtensionIMEManagerDelegate() =
+    default;
 
 ComponentExtensionIMEManager::ComponentExtensionIMEManager() {
   for (size_t i = 0; i < arraysize(kLoginLayoutWhitelist); ++i) {
@@ -120,8 +116,7 @@ ComponentExtensionIMEManager::ComponentExtensionIMEManager() {
   }
 }
 
-ComponentExtensionIMEManager::~ComponentExtensionIMEManager() {
-}
+ComponentExtensionIMEManager::~ComponentExtensionIMEManager() = default;
 
 void ComponentExtensionIMEManager::Initialize(
     std::unique_ptr<ComponentExtensionIMEManagerDelegate> delegate) {

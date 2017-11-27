@@ -22,8 +22,7 @@ CandidateWindow::CandidateWindow()
     : property_(new CandidateWindowProperty) {
 }
 
-CandidateWindow::~CandidateWindow() {
-}
+CandidateWindow::~CandidateWindow() = default;
 
 bool CandidateWindow::IsEqual(const CandidateWindow& cw) const {
   if (page_size() != cw.page_size() ||
@@ -93,15 +92,12 @@ CandidateWindow::CandidateWindowProperty::CandidateWindowProperty()
       is_auxiliary_text_visible(false) {
 }
 
-CandidateWindow::CandidateWindowProperty::~CandidateWindowProperty() {
-}
+CandidateWindow::CandidateWindowProperty::~CandidateWindowProperty() = default;
 
-CandidateWindow::Entry::Entry() {
-}
+CandidateWindow::Entry::Entry() = default;
 
 CandidateWindow::Entry::Entry(const Entry& other) = default;
 
-CandidateWindow::Entry::~Entry() {
-}
+CandidateWindow::Entry::~Entry() = default;
 
 }  // namespace ui

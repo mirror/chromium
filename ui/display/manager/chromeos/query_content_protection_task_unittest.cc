@@ -39,7 +39,7 @@ class QueryContentProtectionTaskTest : public testing::Test {
  public:
   QueryContentProtectionTaskTest()
       : display_delegate_(&log_), has_response_(false) {}
-  ~QueryContentProtectionTaskTest() override {}
+  ~QueryContentProtectionTaskTest() override = default;
 
   void ResponseCallback(QueryContentProtectionTask::Response response) {
     has_response_ = true;

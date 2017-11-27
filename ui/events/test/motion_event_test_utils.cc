@@ -85,12 +85,9 @@ MockMotionEvent::MockMotionEvent(Action action,
     PushPointer(positions[i].x(), positions[i].y());
 }
 
-MockMotionEvent::MockMotionEvent(const MockMotionEvent& other)
-    : MotionEventGeneric(other) {
-}
+MockMotionEvent::MockMotionEvent(const MockMotionEvent& other) = default;
 
-MockMotionEvent::~MockMotionEvent() {
-}
+MockMotionEvent::~MockMotionEvent() = default;
 
 MockMotionEvent& MockMotionEvent::PressPoint(float x, float y) {
   UpdatePointersAndID();

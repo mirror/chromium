@@ -32,7 +32,7 @@ class TestObserver : public AppListModelObserver {
         items_removed_(0),
         items_updated_(0) {
   }
-  ~TestObserver() override {}
+  ~TestObserver() override = default;
 
   // AppListModelObserver
   void OnAppListModelStatusChanged() override { ++status_changed_count_; }
@@ -70,8 +70,8 @@ class TestObserver : public AppListModelObserver {
 
 class AppListModelTest : public testing::Test {
  public:
-  AppListModelTest() {}
-  ~AppListModelTest() override {}
+  AppListModelTest() = default;
+  ~AppListModelTest() override = default;
 
   // testing::Test overrides:
   void SetUp() override { model_.AddObserver(&observer_); }
@@ -226,7 +226,7 @@ class AppListModelFolderTest : public AppListModelTest {
   AppListModelFolderTest() {
     model_.SetFoldersEnabled(true);
   }
-  ~AppListModelFolderTest() override {}
+  ~AppListModelFolderTest() override = default;
 
   // testing::Test overrides:
   void SetUp() override { AppListModelTest::SetUp(); }

@@ -161,7 +161,7 @@ class DesktopNativeWidgetTopLevelHandler : public aura::WindowObserver {
       : top_level_widget_(NULL),
         child_window_(NULL) {}
 
-  ~DesktopNativeWidgetTopLevelHandler() override {}
+  ~DesktopNativeWidgetTopLevelHandler() override = default;
 
   Widget* top_level_widget_;
   aura::Window* child_window_;
@@ -213,7 +213,7 @@ class RootWindowDestructionObserver : public aura::WindowObserver {
  public:
   explicit RootWindowDestructionObserver(DesktopNativeWidgetAura* parent)
     : parent_(parent) {}
-  ~RootWindowDestructionObserver() override {}
+  ~RootWindowDestructionObserver() override = default;
 
  private:
   // Overridden from aura::WindowObserver:

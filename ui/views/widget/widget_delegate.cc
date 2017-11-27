@@ -201,8 +201,7 @@ WidgetDelegateView::WidgetDelegateView() {
   set_owned_by_client();
 }
 
-WidgetDelegateView::~WidgetDelegateView() {
-}
+WidgetDelegateView::~WidgetDelegateView() = default;
 
 void WidgetDelegateView::DeleteDelegate() {
   delete this;

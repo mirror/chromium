@@ -48,8 +48,7 @@ TouchSelectionController::Config::Config()
       enable_adaptive_handle_orientation(false),
       enable_longpress_drag_selection(false) {}
 
-TouchSelectionController::Config::~Config() {
-}
+TouchSelectionController::Config::~Config() = default;
 
 TouchSelectionController::TouchSelectionController(
     TouchSelectionControllerClient* client,
@@ -70,8 +69,7 @@ TouchSelectionController::TouchSelectionController(
   DCHECK(client_);
 }
 
-TouchSelectionController::~TouchSelectionController() {
-}
+TouchSelectionController::~TouchSelectionController() = default;
 
 void TouchSelectionController::OnSelectionBoundsChanged(
     const gfx::SelectionBound& start,

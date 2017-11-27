@@ -119,11 +119,9 @@ struct AXTreeUpdateState {
   std::set<int> removed_node_ids;
 };
 
-AXTreeDelegate::AXTreeDelegate() {
-}
+AXTreeDelegate::AXTreeDelegate() = default;
 
-AXTreeDelegate::~AXTreeDelegate() {
-}
+AXTreeDelegate::~AXTreeDelegate() = default;
 
 AXTree::AXTree()
     : delegate_(NULL), root_(NULL) {

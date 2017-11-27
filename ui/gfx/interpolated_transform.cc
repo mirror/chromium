@@ -81,7 +81,7 @@ InterpolatedTransform::InterpolatedTransform(float start_time,
       reversed_(false) {
 }
 
-InterpolatedTransform::~InterpolatedTransform() {}
+InterpolatedTransform::~InterpolatedTransform() = default;
 
 gfx::Transform InterpolatedTransform::Interpolate(float t) const {
   if (reversed_)
@@ -143,7 +143,7 @@ InterpolatedRotation::InterpolatedRotation(float start_degrees,
       end_degrees_(end_degrees) {
 }
 
-InterpolatedRotation::~InterpolatedRotation() {}
+InterpolatedRotation::~InterpolatedRotation() = default;
 
 gfx::Transform InterpolatedRotation::InterpolateButDoNotCompose(float t) const {
   gfx::Transform result;
@@ -180,7 +180,7 @@ InterpolatedAxisAngleRotation::InterpolatedAxisAngleRotation(
       end_degrees_(end_degrees) {
 }
 
-InterpolatedAxisAngleRotation::~InterpolatedAxisAngleRotation() {}
+InterpolatedAxisAngleRotation::~InterpolatedAxisAngleRotation() = default;
 
 gfx::Transform
 InterpolatedAxisAngleRotation::InterpolateButDoNotCompose(float t) const {
@@ -222,7 +222,7 @@ InterpolatedScale::InterpolatedScale(const gfx::Point3F& start_scale,
       end_scale_(end_scale) {
 }
 
-InterpolatedScale::~InterpolatedScale() {}
+InterpolatedScale::~InterpolatedScale() = default;
 
 gfx::Transform InterpolatedScale::InterpolateButDoNotCompose(float t) const {
   gfx::Transform result;
@@ -263,7 +263,7 @@ InterpolatedTranslation::InterpolatedTranslation(const gfx::Point3F& start_pos,
       end_pos_(end_pos) {
 }
 
-InterpolatedTranslation::~InterpolatedTranslation() {}
+InterpolatedTranslation::~InterpolatedTranslation() = default;
 
 gfx::Transform
 InterpolatedTranslation::InterpolateButDoNotCompose(float t) const {
@@ -289,7 +289,7 @@ InterpolatedConstantTransform::InterpolateButDoNotCompose(float t) const {
   return transform_;
 }
 
-InterpolatedConstantTransform::~InterpolatedConstantTransform() {}
+InterpolatedConstantTransform::~InterpolatedConstantTransform() = default;
 
 ///////////////////////////////////////////////////////////////////////////////
 // InterpolatedTransformAboutPivot
@@ -311,7 +311,7 @@ InterpolatedTransformAboutPivot::InterpolatedTransformAboutPivot(
   Init(pivot, std::move(transform));
 }
 
-InterpolatedTransformAboutPivot::~InterpolatedTransformAboutPivot() {}
+InterpolatedTransformAboutPivot::~InterpolatedTransformAboutPivot() = default;
 
 gfx::Transform
 InterpolatedTransformAboutPivot::InterpolateButDoNotCompose(float t) const {
@@ -355,7 +355,7 @@ InterpolatedMatrixTransform::InterpolatedMatrixTransform(
   Init(start_transform, end_transform);
 }
 
-InterpolatedMatrixTransform::~InterpolatedMatrixTransform() {}
+InterpolatedMatrixTransform::~InterpolatedMatrixTransform() = default;
 
 gfx::Transform
 InterpolatedMatrixTransform::InterpolateButDoNotCompose(float t) const {

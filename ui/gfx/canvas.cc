@@ -47,8 +47,7 @@ Canvas::Canvas(cc::PaintCanvas* canvas, float image_scale)
   DCHECK(canvas_);
 }
 
-Canvas::~Canvas() {
-}
+Canvas::~Canvas() = default;
 
 void Canvas::RecreateBackingCanvas(const Size& size,
                                    float image_scale,

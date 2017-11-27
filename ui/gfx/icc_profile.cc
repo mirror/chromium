@@ -350,7 +350,7 @@ ICCProfile::Internals::Internals(std::vector<char> data, uint64_t id)
   }
 }
 
-ICCProfile::Internals::~Internals() {}
+ICCProfile::Internals::~Internals() = default;
 
 void ICCProfile::HistogramDisplay(int64_t display_id) const {
   if (!internals_) {

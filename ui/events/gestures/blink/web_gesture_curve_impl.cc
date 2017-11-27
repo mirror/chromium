@@ -86,7 +86,7 @@ WebGestureCurveImpl::WebGestureCurveImpl(std::unique_ptr<GestureCurve> curve,
       first_animate_time_(0),
       last_animate_time_(0) {}
 
-WebGestureCurveImpl::~WebGestureCurveImpl() {}
+WebGestureCurveImpl::~WebGestureCurveImpl() = default;
 
 bool WebGestureCurveImpl::Apply(double time,
                                 blink::WebGestureCurveTarget* target) {

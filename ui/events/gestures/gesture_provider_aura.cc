@@ -27,7 +27,7 @@ GestureProviderAura::GestureProviderAura(GestureConsumer* consumer,
   filtered_gesture_provider_.SetDoubleTapSupportForPlatformEnabled(false);
 }
 
-GestureProviderAura::~GestureProviderAura() {}
+GestureProviderAura::~GestureProviderAura() = default;
 
 bool GestureProviderAura::OnTouchEvent(TouchEvent* event) {
   if (!pointer_state_.OnTouch(*event))

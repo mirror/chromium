@@ -204,8 +204,7 @@ AXNodeData::AXNodeData()
       actions(AX_ACTION_NONE),
       offset_container_id(-1) {}
 
-AXNodeData::~AXNodeData() {
-}
+AXNodeData::~AXNodeData() = default;
 
 AXNodeData::AXNodeData(const AXNodeData& other) {
   id = other.id;

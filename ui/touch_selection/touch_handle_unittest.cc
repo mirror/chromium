@@ -39,7 +39,7 @@ struct MockDrawableData {
 class MockTouchHandleDrawable : public TouchHandleDrawable {
  public:
   explicit MockTouchHandleDrawable(MockDrawableData* data) : data_(data) {}
-  ~MockTouchHandleDrawable() override {}
+  ~MockTouchHandleDrawable() override = default;
 
   void SetEnabled(bool enabled) override { data_->enabled = enabled; }
 
@@ -82,7 +82,7 @@ class TouchHandleTest : public testing::Test, public TouchHandleClient {
         tapped_(false),
         needs_animate_(false) {}
 
-  ~TouchHandleTest() override {}
+  ~TouchHandleTest() override = default;
 
   // TouchHandleClient implementation.
   void OnDragBegin(const TouchSelectionDraggable& handler,

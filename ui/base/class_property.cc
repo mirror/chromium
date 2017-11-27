@@ -9,7 +9,7 @@
 
 namespace ui {
 
-PropertyHandler::PropertyHandler() {}
+PropertyHandler::PropertyHandler() = default;
 
 PropertyHandler::~PropertyHandler() {
   ClearProperties();

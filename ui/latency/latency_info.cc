@@ -99,8 +99,7 @@ LatencyInfoTracedValue::FromValue(std::unique_ptr<base::Value> value) {
       new LatencyInfoTracedValue(value.release()));
 }
 
-LatencyInfoTracedValue::~LatencyInfoTracedValue() {
-}
+LatencyInfoTracedValue::~LatencyInfoTracedValue() = default;
 
 void LatencyInfoTracedValue::AppendAsTraceFormat(std::string* out) const {
   std::string tmp;
@@ -142,7 +141,7 @@ LatencyInfo::LatencyInfo(SourceEventType type)
 
 LatencyInfo::LatencyInfo(const LatencyInfo& other) = default;
 
-LatencyInfo::~LatencyInfo() {}
+LatencyInfo::~LatencyInfo() = default;
 
 LatencyInfo::LatencyInfo(int64_t trace_id, bool terminated)
     : trace_id_(trace_id),

@@ -43,7 +43,7 @@ WaylandKeyboard::WaylandKeyboard(wl_keyboard* keyboard,
   // TODO(tonikitoo): Default auto-repeat to ON here?
 }
 
-WaylandKeyboard::~WaylandKeyboard() {}
+WaylandKeyboard::~WaylandKeyboard() = default;
 
 void WaylandKeyboard::Keymap(void* data,
                              wl_keyboard* obj,

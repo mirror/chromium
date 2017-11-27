@@ -31,7 +31,7 @@ static const int kEventFlagFromModifiers[] = {
 EventModifiers::EventModifiers() {
   memset(modifiers_down_, 0, sizeof(modifiers_down_));
 }
-EventModifiers::~EventModifiers() {}
+EventModifiers::~EventModifiers() = default;
 
 void EventModifiers::UpdateModifier(unsigned int modifier, bool down) {
   DCHECK_LT(modifier, static_cast<unsigned int>(MODIFIER_NUM_MODIFIERS));

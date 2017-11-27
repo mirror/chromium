@@ -20,7 +20,7 @@ class AX_EXPORT AXTreeSourceAdapter
     : public AXTreeSource<const AXNode*, AXNodeData, AXTreeData> {
  public:
   AXTreeSourceAdapter(AXTree* tree) : tree_(tree) {}
-  ~AXTreeSourceAdapter() override {}
+  ~AXTreeSourceAdapter() override = default;
 
   // AXTreeSource implementation.
   bool GetTreeData(AXTreeData* data) const override {
@@ -68,8 +68,7 @@ AXSerializableTree::AXSerializableTree(
     : AXTree(initial_state) {
 }
 
-AXSerializableTree::~AXSerializableTree() {
-}
+AXSerializableTree::~AXSerializableTree() = default;
 
 AXTreeSource<const AXNode*, AXNodeData, AXTreeData>*
 AXSerializableTree::CreateTreeSource() {

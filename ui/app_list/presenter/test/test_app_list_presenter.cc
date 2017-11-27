@@ -9,7 +9,7 @@ namespace test {
 
 TestAppListPresenter::TestAppListPresenter() : binding_(this) {}
 
-TestAppListPresenter::~TestAppListPresenter() {}
+TestAppListPresenter::~TestAppListPresenter() = default;
 
 mojom::AppListPresenterPtr TestAppListPresenter::CreateInterfacePtrAndBind() {
   mojom::AppListPresenterPtr ptr;

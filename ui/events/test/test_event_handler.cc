@@ -19,7 +19,7 @@ TestEventHandler::TestEventHandler()
       handler_name_("unknown") {
 }
 
-TestEventHandler::~TestEventHandler() {}
+TestEventHandler::~TestEventHandler() = default;
 
 void TestEventHandler::Reset() {
   num_key_events_ = 0;

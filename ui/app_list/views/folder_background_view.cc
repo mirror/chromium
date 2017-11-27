@@ -31,8 +31,7 @@ FolderBackgroundView::FolderBackgroundView()
   layer()->SetFillsBoundsOpaquely(false);
 }
 
-FolderBackgroundView::~FolderBackgroundView() {
-}
+FolderBackgroundView::~FolderBackgroundView() = default;
 
 void FolderBackgroundView::UpdateFolderContainerBubble(ShowState state) {
   if (show_state_ == state ||

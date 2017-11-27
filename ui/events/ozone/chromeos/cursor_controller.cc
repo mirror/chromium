@@ -66,10 +66,8 @@ void CursorController::ApplyCursorConfigForWindow(gfx::AcceleratedWidget widget,
     TransformCursorMove(it->second.rotation, it->second.scale, delta);
 }
 
-CursorController::CursorController() {
-}
+CursorController::CursorController() = default;
 
-CursorController::~CursorController() {
-}
+CursorController::~CursorController() = default;
 
 }  // namespace ui

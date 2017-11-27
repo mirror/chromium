@@ -20,8 +20,8 @@ namespace wm {
 
 class TransientWindowStackingClientTest : public aura::test::AuraTestBase {
  public:
-  TransientWindowStackingClientTest() {}
-  ~TransientWindowStackingClientTest() override {}
+  TransientWindowStackingClientTest() = default;
+  ~TransientWindowStackingClientTest() override = default;
 
   void SetUp() override {
     AuraTestBase::SetUp();

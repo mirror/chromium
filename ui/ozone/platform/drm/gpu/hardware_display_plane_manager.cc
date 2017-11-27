@@ -26,8 +26,7 @@ HardwareDisplayPlaneList::HardwareDisplayPlaneList() {
   atomic_property_set.reset(drmModeAtomicAlloc());
 }
 
-HardwareDisplayPlaneList::~HardwareDisplayPlaneList() {
-}
+HardwareDisplayPlaneList::~HardwareDisplayPlaneList() = default;
 
 HardwareDisplayPlaneList::PageFlipInfo::PageFlipInfo(uint32_t crtc_id,
                                                      uint32_t framebuffer,
@@ -38,8 +37,7 @@ HardwareDisplayPlaneList::PageFlipInfo::PageFlipInfo(uint32_t crtc_id,
 HardwareDisplayPlaneList::PageFlipInfo::PageFlipInfo(
     const PageFlipInfo& other) = default;
 
-HardwareDisplayPlaneList::PageFlipInfo::~PageFlipInfo() {
-}
+HardwareDisplayPlaneList::PageFlipInfo::~PageFlipInfo() = default;
 
 HardwareDisplayPlaneList::PageFlipInfo::Plane::Plane(int plane,
                                                      int framebuffer,
@@ -51,14 +49,12 @@ HardwareDisplayPlaneList::PageFlipInfo::Plane::Plane(int plane,
       src_rect(src_rect) {
 }
 
-HardwareDisplayPlaneList::PageFlipInfo::Plane::~Plane() {
-}
+HardwareDisplayPlaneList::PageFlipInfo::Plane::~Plane() = default;
 
 HardwareDisplayPlaneManager::HardwareDisplayPlaneManager() : drm_(nullptr) {
 }
 
-HardwareDisplayPlaneManager::~HardwareDisplayPlaneManager() {
-}
+HardwareDisplayPlaneManager::~HardwareDisplayPlaneManager() = default;
 
 bool HardwareDisplayPlaneManager::Initialize(DrmDevice* drm) {
   drm_ = drm;

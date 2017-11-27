@@ -21,7 +21,7 @@ namespace {
 
 class TestEventTargetIterator : public EventTargetIterator {
  public:
-  TestEventTargetIterator() {}
+  TestEventTargetIterator() = default;
 
   // EventTargetIterator:
   EventTarget* GetNextTarget() override { return nullptr; }
@@ -33,8 +33,8 @@ private:
 // An EventTarget that holds ownership of its target and delegate EventHandlers.
 class TestEventTarget : public EventTarget {
  public:
-  TestEventTarget() {}
-  ~TestEventTarget() override {}
+  TestEventTarget() = default;
+  ~TestEventTarget() override = default;
 
   void SetHandler(std::unique_ptr<EventHandler> target_handler,
                   std::unique_ptr<EventHandler> delegate) {
@@ -124,7 +124,7 @@ class EventCountingEventHandler : public EventHandler {
   EventCountingEventHandler(EventTarget* target, int* count)
       : scoped_target_handler_(new ScopedTargetHandler(target, this)),
         count_(count) {}
-  ~EventCountingEventHandler() override {}
+  ~EventCountingEventHandler() override = default;
 
  protected:
   void OnEvent(Event* event) override { (*count_)++; }

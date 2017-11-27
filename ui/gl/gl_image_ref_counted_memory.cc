@@ -19,7 +19,7 @@ GLImageRefCountedMemory::GLImageRefCountedMemory(const gfx::Size& size,
                                                  unsigned internalformat)
     : GLImageMemory(size, internalformat) {}
 
-GLImageRefCountedMemory::~GLImageRefCountedMemory() {}
+GLImageRefCountedMemory::~GLImageRefCountedMemory() = default;
 
 bool GLImageRefCountedMemory::Initialize(
     base::RefCountedMemory* ref_counted_memory,

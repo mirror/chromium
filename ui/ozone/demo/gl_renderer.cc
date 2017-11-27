@@ -19,8 +19,7 @@ GlRenderer::GlRenderer(gfx::AcceleratedWidget widget,
                        const gfx::Size& size)
     : RendererBase(widget, size), surface_(surface), weak_ptr_factory_(this) {}
 
-GlRenderer::~GlRenderer() {
-}
+GlRenderer::~GlRenderer() = default;
 
 bool GlRenderer::Initialize() {
   context_ = gl::init::CreateGLContext(nullptr, surface_.get(),

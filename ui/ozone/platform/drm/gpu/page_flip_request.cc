@@ -10,8 +10,7 @@ PageFlipRequest::PageFlipRequest(int crtc_count,
                                  SwapCompletionOnceCallback callback)
     : callback_(std::move(callback)), crtc_count_(crtc_count) {}
 
-PageFlipRequest::~PageFlipRequest() {
-}
+PageFlipRequest::~PageFlipRequest() = default;
 
 void PageFlipRequest::Signal(gfx::SwapResult result) {
   if (result == gfx::SwapResult::SWAP_FAILED)

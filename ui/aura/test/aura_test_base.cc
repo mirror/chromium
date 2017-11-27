@@ -249,7 +249,7 @@ PropertyConverter* AuraTestBase::GetPropertyConverter() {
   return &property_converter_;
 }
 
-AuraTestBaseWithType::AuraTestBaseWithType() {}
+AuraTestBaseWithType::AuraTestBaseWithType() = default;
 
 AuraTestBaseWithType::~AuraTestBaseWithType() {
   DCHECK(setup_called_);
@@ -262,9 +262,9 @@ void AuraTestBaseWithType::SetUp() {
   AuraTestBase::SetUp();
 }
 
-AuraTestBaseMus::AuraTestBaseMus() {}
+AuraTestBaseMus::AuraTestBaseMus() = default;
 
-AuraTestBaseMus::~AuraTestBaseMus() {}
+AuraTestBaseMus::~AuraTestBaseMus() = default;
 
 void AuraTestBaseMus::SetUp() {
   ConfigureBackend(test::BackendType::MUS);

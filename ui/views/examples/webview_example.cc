@@ -18,8 +18,7 @@ WebViewExample::WebViewExample(content::BrowserContext* browser_context)
       browser_context_(browser_context) {
 }
 
-WebViewExample::~WebViewExample() {
-}
+WebViewExample::~WebViewExample() = default;
 
 void WebViewExample::CreateExampleView(View* container) {
   webview_ = new WebView(browser_context_);

@@ -147,8 +147,7 @@ TouchDispositionGestureFilter::TouchDispositionGestureFilter(
   DCHECK(client_);
 }
 
-TouchDispositionGestureFilter::~TouchDispositionGestureFilter() {
-}
+TouchDispositionGestureFilter::~TouchDispositionGestureFilter() = default;
 
 TouchDispositionGestureFilter::PacketResult
 TouchDispositionGestureFilter::OnGesturePacket(

@@ -39,7 +39,7 @@ DisplayLayoutStore::DisplayLayoutStore()
   }
 }
 
-DisplayLayoutStore::~DisplayLayoutStore() {}
+DisplayLayoutStore::~DisplayLayoutStore() = default;
 
 void DisplayLayoutStore::SetDefaultDisplayPlacement(
     const DisplayPlacement& placement) {

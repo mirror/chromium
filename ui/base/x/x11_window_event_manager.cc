@@ -53,7 +53,7 @@ class XWindowEventManager::MultiMask {
       mask_bits_[i] = 0;
   }
 
-  ~MultiMask() {}
+  ~MultiMask() = default;
 
   void AddMask(uint32_t mask) {
     for (int i = 0; i < kMaskSize; i++) {

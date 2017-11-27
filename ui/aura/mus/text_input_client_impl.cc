@@ -18,7 +18,7 @@ TextInputClientImpl::TextInputClientImpl(
       binding_(this),
       delegate_(delegate) {}
 
-TextInputClientImpl::~TextInputClientImpl() {}
+TextInputClientImpl::~TextInputClientImpl() = default;
 
 ui::mojom::TextInputClientPtr TextInputClientImpl::CreateInterfacePtrAndBind() {
   ui::mojom::TextInputClientPtr ptr;

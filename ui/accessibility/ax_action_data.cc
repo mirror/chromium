@@ -30,8 +30,7 @@ AXActionData::AXActionData()
 
 AXActionData::AXActionData(const AXActionData& other) = default;
 
-AXActionData::~AXActionData() {
-}
+AXActionData::~AXActionData() = default;
 
 // Note that this includes an initial space character if nonempty, but
 // that works fine because this is normally printed by AXAction::ToString.

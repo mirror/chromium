@@ -26,7 +26,7 @@ SpeechUIModel::SpeechUIModel()
       maximum_sound_level_(kDefaultSoundLevel) {
 }
 
-SpeechUIModel::~SpeechUIModel() {}
+SpeechUIModel::~SpeechUIModel() = default;
 
 void SpeechUIModel::SetSpeechResult(const base::string16& result,
                                     bool is_final) {

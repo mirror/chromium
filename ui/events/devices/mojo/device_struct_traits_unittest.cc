@@ -20,7 +20,7 @@ namespace {
 class DeviceStructTraitsTest : public testing::Test,
                                public mojom::DeviceStructTraitsTest {
  public:
-  DeviceStructTraitsTest() {}
+  DeviceStructTraitsTest() = default;
 
  protected:
   mojom::DeviceStructTraitsTestPtr GetTraitsTestProxy() {

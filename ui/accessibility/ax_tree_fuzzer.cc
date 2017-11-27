@@ -6,7 +6,7 @@
 
 class EmptyAXTreeDelegate : public ui::AXTreeDelegate {
  public:
-  EmptyAXTreeDelegate() {}
+  EmptyAXTreeDelegate() = default;
 
   void OnNodeDataWillChange(ui::AXTree* tree,
                             const ui::AXNodeData& old_node_data,

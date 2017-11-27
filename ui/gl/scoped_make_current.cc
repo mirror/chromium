@@ -45,6 +45,6 @@ ScopedReleaseCurrent::ScopedReleaseCurrent(gl::GLSurface* this_surface) {
   }
 }
 
-ScopedReleaseCurrent::~ScopedReleaseCurrent() {}
+ScopedReleaseCurrent::~ScopedReleaseCurrent() = default;
 
 }  // namespace ui

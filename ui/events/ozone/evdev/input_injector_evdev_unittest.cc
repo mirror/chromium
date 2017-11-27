@@ -47,8 +47,8 @@ class EventObserver {
 
 class MockCursorEvdev : public CursorDelegateEvdev {
  public:
-  MockCursorEvdev() {}
-  ~MockCursorEvdev() override {}
+  MockCursorEvdev() = default;
+  ~MockCursorEvdev() override = default;
 
   // CursorDelegateEvdev:
   void MoveCursorTo(gfx::AcceleratedWidget widget,

@@ -15,8 +15,7 @@ TestTableModel::TestTableModel(int row_count)
       observer_(NULL) {
 }
 
-TestTableModel::~TestTableModel() {
-}
+TestTableModel::~TestTableModel() = default;
 
 int TestTableModel::RowCount() {
   return row_count_;

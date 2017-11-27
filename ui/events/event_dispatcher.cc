@@ -104,8 +104,7 @@ EventDispatcher::EventDispatcher(EventDispatcherDelegate* delegate)
       current_event_(NULL) {
 }
 
-EventDispatcher::~EventDispatcher() {
-}
+EventDispatcher::~EventDispatcher() = default;
 
 void EventDispatcher::OnHandlerDestroyed(EventHandler* handler) {
   handler_list_.erase(std::find(handler_list_.begin(),

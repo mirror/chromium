@@ -21,7 +21,7 @@ WindowTreeClientPrivate::WindowTreeClientPrivate(Window* window)
     : WindowTreeClientPrivate(WindowPortMus::Get(window)->window_tree_client_) {
 }
 
-WindowTreeClientPrivate::~WindowTreeClientPrivate() {}
+WindowTreeClientPrivate::~WindowTreeClientPrivate() = default;
 
 void WindowTreeClientPrivate::OnEmbed(ui::mojom::WindowTree* window_tree) {
   ui::mojom::WindowDataPtr root_data(ui::mojom::WindowData::New());

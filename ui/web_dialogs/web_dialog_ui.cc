@@ -30,7 +30,7 @@ class WebDialogDelegateUserData : public base::SupportsUserData::Data {
  public:
   explicit WebDialogDelegateUserData(WebDialogDelegate* delegate)
       : delegate_(delegate) {}
-  ~WebDialogDelegateUserData() override {}
+  ~WebDialogDelegateUserData() override = default;
   WebDialogDelegate* delegate() { return delegate_; }
 
  private:

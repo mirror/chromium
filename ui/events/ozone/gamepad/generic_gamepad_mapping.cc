@@ -55,7 +55,7 @@ class GenericGamepadMapper : public ui::GamepadMapper {
     return false;
   }
 
-  ~GenericGamepadMapper() override {}
+  ~GenericGamepadMapper() override = default;
 
  private:
   std::vector<ui::AbsMapEntry> axis_mapping_;

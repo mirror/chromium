@@ -38,8 +38,7 @@ InputDeviceFactoryEvdevProxy::InputDeviceFactoryEvdevProxy(
     : task_runner_(task_runner), input_device_factory_(input_device_factory) {
 }
 
-InputDeviceFactoryEvdevProxy::~InputDeviceFactoryEvdevProxy() {
-}
+InputDeviceFactoryEvdevProxy::~InputDeviceFactoryEvdevProxy() = default;
 
 void InputDeviceFactoryEvdevProxy::AddInputDevice(int id,
                                                   const base::FilePath& path) {

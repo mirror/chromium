@@ -10,7 +10,7 @@ namespace message_center {
 
 PopupAlignmentDelegate::PopupAlignmentDelegate() : collection_(NULL) {}
 
-PopupAlignmentDelegate::~PopupAlignmentDelegate() {}
+PopupAlignmentDelegate::~PopupAlignmentDelegate() = default;
 
 void PopupAlignmentDelegate::DoUpdateIfPossible() {
   if (collection_)

@@ -21,13 +21,13 @@ NativePixmapPlane::NativePixmapPlane(int stride,
 
 NativePixmapPlane::NativePixmapPlane(const NativePixmapPlane& other) = default;
 
-NativePixmapPlane::~NativePixmapPlane() {}
+NativePixmapPlane::~NativePixmapPlane() = default;
 
-NativePixmapHandle::NativePixmapHandle() {}
+NativePixmapHandle::NativePixmapHandle() = default;
 NativePixmapHandle::NativePixmapHandle(const NativePixmapHandle& other) =
     default;
 
-NativePixmapHandle::~NativePixmapHandle() {}
+NativePixmapHandle::~NativePixmapHandle() = default;
 
 #if defined(OS_LINUX)
 NativePixmapHandle CloneHandleForIPC(const NativePixmapHandle& handle) {

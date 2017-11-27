@@ -33,8 +33,7 @@ AXTreeData::AXTreeData()
 
 AXTreeData::AXTreeData(const AXTreeData& other) = default;
 
-AXTreeData::~AXTreeData() {
-}
+AXTreeData::~AXTreeData() = default;
 
 // Note that this includes an initial space character if nonempty, but
 // that works fine because this is normally printed by AXTree::ToString.

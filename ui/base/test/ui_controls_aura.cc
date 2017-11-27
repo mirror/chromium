@@ -88,11 +88,9 @@ void RunClosureAfterAllPendingUIEvents(const base::Closure& closure) {
   instance_->RunClosureAfterAllPendingUIEvents(closure);
 }
 
-UIControlsAura::UIControlsAura() {
-}
+UIControlsAura::UIControlsAura() = default;
 
-UIControlsAura::~UIControlsAura() {
-}
+UIControlsAura::~UIControlsAura() = default;
 
 // static. declared in ui_controls.h
 void InstallUIControlsAura(UIControlsAura* instance) {

@@ -33,8 +33,8 @@ namespace {
 // Provides functionality to create a test WebContents.
 class WebViewTestViewsDelegate : public views::TestViewsDelegate {
  public:
-  WebViewTestViewsDelegate() {}
-  ~WebViewTestViewsDelegate() override {}
+  WebViewTestViewsDelegate() = default;
+  ~WebViewTestViewsDelegate() override = default;
 
   // Overriden from TestViewsDelegate.
   content::WebContents* CreateWebContents(
@@ -109,7 +109,7 @@ class WebViewTestWebContentsObserver : public content::WebContentsObserver {
 class WebViewTestWebContentsDelegate : public content::WebContentsDelegate {
  public:
   WebViewTestWebContentsDelegate() : is_fullscreened_(false) {}
-  ~WebViewTestWebContentsDelegate() override {}
+  ~WebViewTestWebContentsDelegate() override = default;
 
   void set_is_fullscreened(bool fs) { is_fullscreened_ = fs; }
 
@@ -132,7 +132,7 @@ class WebViewUnitTest : public views::test::WidgetTest {
  public:
   WebViewUnitTest() = default;
 
-  ~WebViewUnitTest() override {}
+  ~WebViewUnitTest() override = default;
 
   void SetUp() override {
     set_views_delegate(base::WrapUnique(new WebViewTestViewsDelegate));

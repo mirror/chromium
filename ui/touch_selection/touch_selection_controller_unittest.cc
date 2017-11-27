@@ -28,7 +28,7 @@ class MockTouchHandleDrawable : public TouchHandleDrawable {
  public:
   explicit MockTouchHandleDrawable(bool* contains_point)
       : intersects_rect_(contains_point) {}
-  ~MockTouchHandleDrawable() override {}
+  ~MockTouchHandleDrawable() override = default;
   void SetEnabled(bool enabled) override {}
   void SetOrientation(ui::TouchHandleOrientation orientation,
                       bool mirror_vertical,
@@ -60,7 +60,7 @@ class TouchSelectionControllerTest : public testing::Test,
         animation_enabled_(true),
         dragging_enabled_(false) {}
 
-  ~TouchSelectionControllerTest() override {}
+  ~TouchSelectionControllerTest() override = default;
 
   // testing::Test implementation.
 

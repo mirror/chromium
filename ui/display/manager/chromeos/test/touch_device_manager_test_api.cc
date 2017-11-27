@@ -16,7 +16,7 @@ TouchDeviceManagerTestApi::TouchDeviceManagerTestApi(
   DCHECK(touch_device_manager_);
 }
 
-TouchDeviceManagerTestApi::~TouchDeviceManagerTestApi() {}
+TouchDeviceManagerTestApi::~TouchDeviceManagerTestApi() = default;
 
 void TouchDeviceManagerTestApi::Associate(ManagedDisplayInfo* display_info,
                                           const ui::TouchscreenDevice& device) {

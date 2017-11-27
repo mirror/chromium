@@ -9,9 +9,11 @@
 
 namespace ui {
 
-TestLayerThreadedAnimationDelegate::TestLayerThreadedAnimationDelegate() {}
+TestLayerThreadedAnimationDelegate::TestLayerThreadedAnimationDelegate() =
+    default;
 
-TestLayerThreadedAnimationDelegate::~TestLayerThreadedAnimationDelegate() {}
+TestLayerThreadedAnimationDelegate::~TestLayerThreadedAnimationDelegate() =
+    default;
 
 TestLayerAnimationDelegate::TestLayerAnimationDelegate()
     : opacity_(1.0f),
@@ -37,8 +39,7 @@ TestLayerAnimationDelegate::TestLayerAnimationDelegate(
 TestLayerAnimationDelegate::TestLayerAnimationDelegate(
     const TestLayerAnimationDelegate& other) = default;
 
-TestLayerAnimationDelegate::~TestLayerAnimationDelegate() {
-}
+TestLayerAnimationDelegate::~TestLayerAnimationDelegate() = default;
 
 void TestLayerAnimationDelegate::ExpectLastPropertyChangeReasonIsUnset() {
   EXPECT_FALSE(last_property_change_reason_is_set_);

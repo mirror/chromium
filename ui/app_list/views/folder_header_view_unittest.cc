@@ -29,8 +29,8 @@ namespace {
 
 class TestFolderHeaderViewDelegate : public FolderHeaderViewDelegate {
  public:
-  TestFolderHeaderViewDelegate() {}
-  ~TestFolderHeaderViewDelegate() override {}
+  TestFolderHeaderViewDelegate() = default;
+  ~TestFolderHeaderViewDelegate() override = default;
 
   // FolderHeaderViewDelegate
   void NavigateBack(AppListFolderItem* item,
@@ -54,8 +54,8 @@ class TestFolderHeaderViewDelegate : public FolderHeaderViewDelegate {
 
 class FolderHeaderViewTest : public views::ViewsTestBase {
  public:
-  FolderHeaderViewTest() {}
-  ~FolderHeaderViewTest() override {}
+  FolderHeaderViewTest() = default;
+  ~FolderHeaderViewTest() override = default;
 
   // testing::Test overrides:
   void SetUp() override {

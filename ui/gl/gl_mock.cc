@@ -17,11 +17,9 @@ void MakeFunctionUnique(const char* func_name) {
 
 }  // namespace anonymous
 
-MockGLInterface::MockGLInterface() {
-}
+MockGLInterface::MockGLInterface() = default;
 
-MockGLInterface::~MockGLInterface() {
-}
+MockGLInterface::~MockGLInterface() = default;
 
 MockGLInterface* MockGLInterface::interface_;
 

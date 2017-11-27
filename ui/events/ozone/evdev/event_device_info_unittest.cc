@@ -23,8 +23,7 @@ class EventDeviceInfoTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(EventDeviceInfoTest);
 };
 
-EventDeviceInfoTest::EventDeviceInfoTest() {
-}
+EventDeviceInfoTest::EventDeviceInfoTest() = default;
 
 TEST_F(EventDeviceInfoTest, BasicUsbGamepad) {
   EventDeviceInfo devinfo;

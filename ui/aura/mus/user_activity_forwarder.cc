@@ -26,7 +26,7 @@ UserActivityForwarder::UserActivityForwarder(
   monitor_->AddUserActivityObserver(kNotifyIntervalSec, std::move(observer));
 }
 
-UserActivityForwarder::~UserActivityForwarder() {}
+UserActivityForwarder::~UserActivityForwarder() = default;
 
 void UserActivityForwarder::OnUserActivity() {
   detector_->HandleExternalUserActivity();

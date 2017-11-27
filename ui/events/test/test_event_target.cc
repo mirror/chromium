@@ -22,7 +22,7 @@ TestEventTarget::TestEventTarget()
       target_name_("unknown") {
   SetTargetHandler(this);
 }
-TestEventTarget::~TestEventTarget() {}
+TestEventTarget::~TestEventTarget() = default;
 
 void TestEventTarget::AddChild(std::unique_ptr<TestEventTarget> child) {
   DCHECK(!child->parent());

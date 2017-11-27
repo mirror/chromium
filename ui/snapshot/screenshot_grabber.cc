@@ -142,8 +142,7 @@ class ScreenshotGrabber::ScopedCursorHider {
 ScreenshotGrabber::ScreenshotGrabber(ScreenshotGrabberDelegate* client)
     : client_(client), factory_(this) {}
 
-ScreenshotGrabber::~ScreenshotGrabber() {
-}
+ScreenshotGrabber::~ScreenshotGrabber() = default;
 
 void ScreenshotGrabber::TakeScreenshot(gfx::NativeWindow window,
                                        const gfx::Rect& rect,

@@ -29,7 +29,7 @@ class BoundedLabelTest : public views::ViewsTestBase {
         gfx::GetStringWidthF(base::UTF8ToUTF16("\xE2\x80\xA6"), font_list_);
   }
 
-  ~BoundedLabelTest() override {}
+  ~BoundedLabelTest() override = default;
 
   // Replaces all occurences of three periods ("...") in the specified string
   // with an ellipses character (UTF8 "\xE2\x80\xA6") and returns a string16

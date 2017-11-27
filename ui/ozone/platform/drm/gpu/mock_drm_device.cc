@@ -65,7 +65,7 @@ MockDrmDevice::MockDrmDevice(bool use_sync_flips,
       new MockHardwareDisplayPlaneManager(this, crtcs, planes_per_crtc));
 }
 
-MockDrmDevice::~MockDrmDevice() {}
+MockDrmDevice::~MockDrmDevice() = default;
 
 ScopedDrmCrtcPtr MockDrmDevice::GetCrtc(uint32_t crtc_id) {
   get_crtc_call_count_++;

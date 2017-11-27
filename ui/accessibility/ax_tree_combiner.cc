@@ -8,11 +8,9 @@
 
 namespace ui {
 
-AXTreeCombiner::AXTreeCombiner() {
-}
+AXTreeCombiner::AXTreeCombiner() = default;
 
-AXTreeCombiner::~AXTreeCombiner() {
-}
+AXTreeCombiner::~AXTreeCombiner() = default;
 
 void AXTreeCombiner::AddTree(const AXTreeUpdate& tree, bool is_root) {
   trees_.push_back(tree);

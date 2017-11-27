@@ -24,7 +24,7 @@ class TestWindowTargeter : public WindowTargeter {
   TestWindowTargeter() {
     SetInsets(gfx::Insets(kMouseInset), gfx::Insets(kTouchInset));
   }
-  ~TestWindowTargeter() override {}
+  ~TestWindowTargeter() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestWindowTargeter);
@@ -45,7 +45,7 @@ class TestWindowTargeter : public WindowTargeter {
 class TestHoleWindowTargeter : public aura::WindowTargeter {
  public:
   TestHoleWindowTargeter() = default;
-  ~TestHoleWindowTargeter() override {}
+  ~TestHoleWindowTargeter() override = default;
 
  private:
   // aura::WindowTargeter:
@@ -80,8 +80,8 @@ class TestHoleWindowTargeter : public aura::WindowTargeter {
 //        |_ window4
 class HitTestDataProviderAuraTest : public test::AuraTestBaseMus {
  public:
-  HitTestDataProviderAuraTest() {}
-  ~HitTestDataProviderAuraTest() override {}
+  HitTestDataProviderAuraTest() = default;
+  ~HitTestDataProviderAuraTest() override = default;
 
   void SetUp() override {
     test::AuraTestBaseMus::SetUp();

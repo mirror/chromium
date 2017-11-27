@@ -63,7 +63,7 @@ DragDropControllerMus::DragDropControllerMus(
     : drag_drop_controller_host_(drag_drop_controller_host),
       window_tree_(window_tree) {}
 
-DragDropControllerMus::~DragDropControllerMus() {}
+DragDropControllerMus::~DragDropControllerMus() = default;
 
 bool DragDropControllerMus::DoesChangeIdMatchDragChangeId(uint32_t id) const {
   return current_drag_state_ && current_drag_state_->change_id == id;

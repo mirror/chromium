@@ -277,7 +277,7 @@ ImageSkiaStorage::~ImageSkiaStorage() = default;
 
 }  // internal
 
-ImageSkia::ImageSkia() {}
+ImageSkia::ImageSkia() = default;
 
 ImageSkia::ImageSkia(std::unique_ptr<ImageSkiaSource> source,
                      const gfx::Size& size)
@@ -305,16 +305,11 @@ ImageSkia::ImageSkia(const ImageSkiaRep& image_rep) {
   DetachStorageFromSequence();
 }
 
-ImageSkia::ImageSkia(const ImageSkia& other) : storage_(other.storage_) {
-}
+ImageSkia::ImageSkia(const ImageSkia& other) = default;
 
-ImageSkia& ImageSkia::operator=(const ImageSkia& other) {
-  storage_ = other.storage_;
-  return *this;
-}
+ImageSkia& ImageSkia::operator=(const ImageSkia& other) = default;
 
-ImageSkia::~ImageSkia() {
-}
+ImageSkia::~ImageSkia() = default;
 
 // static
 void ImageSkia::SetSupportedScales(const std::vector<float>& supported_scales) {

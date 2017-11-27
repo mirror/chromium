@@ -34,8 +34,7 @@ bool Authenticate(int fd) {
 
 }  // namespace
 
-DrmDeviceHandle::DrmDeviceHandle() {
-}
+DrmDeviceHandle::DrmDeviceHandle() = default;
 
 DrmDeviceHandle::~DrmDeviceHandle() {
   if (file_.is_valid())

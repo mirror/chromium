@@ -35,8 +35,8 @@ namespace {
 
 class MusViewsDelegate : public ViewsDelegate {
  public:
-  MusViewsDelegate() {}
-  ~MusViewsDelegate() override {}
+  MusViewsDelegate() = default;
+  ~MusViewsDelegate() override = default;
 
  private:
 #if defined(OS_WIN)

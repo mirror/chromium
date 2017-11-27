@@ -213,7 +213,7 @@ const Font& FontListImpl::GetPrimaryFont() const {
   return GetFonts()[0];
 }
 
-FontListImpl::~FontListImpl() {}
+FontListImpl::~FontListImpl() = default;
 
 void FontListImpl::CacheCommonFontHeightAndBaseline() const {
   int ascent = 0;

@@ -19,7 +19,7 @@ AXViewObjWrapper::AXViewObjWrapper(View* view)  : view_(view) {
     AXAuraObjCache::GetInstance()->GetOrCreate(view->GetWidget());
 }
 
-AXViewObjWrapper::~AXViewObjWrapper() {}
+AXViewObjWrapper::~AXViewObjWrapper() = default;
 
 AXAuraObjWrapper* AXViewObjWrapper::GetParent() {
   AXAuraObjCache* cache = AXAuraObjCache::GetInstance();

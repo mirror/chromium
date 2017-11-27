@@ -28,7 +28,7 @@ const float InkDropRipple::kHiddenOpacity = 0.f;
 InkDropRipple::InkDropRipple()
     : target_ink_drop_state_(InkDropState::HIDDEN), observer_(nullptr) {}
 
-InkDropRipple::~InkDropRipple() {}
+InkDropRipple::~InkDropRipple() = default;
 
 void InkDropRipple::HostSizeChanged(const gfx::Size& new_size) {}
 

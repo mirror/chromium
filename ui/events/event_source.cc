@@ -12,9 +12,9 @@
 
 namespace ui {
 
-EventSource::EventSource() {}
+EventSource::EventSource() = default;
 
-EventSource::~EventSource() {}
+EventSource::~EventSource() = default;
 
 void EventSource::AddEventRewriter(EventRewriter* rewriter) {
   DCHECK(rewriter);

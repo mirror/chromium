@@ -34,7 +34,8 @@ HandleNotificationClickedDelegate::HandleNotificationClickedDelegate(
     : closure_(closure) {
 }
 
-HandleNotificationClickedDelegate::~HandleNotificationClickedDelegate() {}
+HandleNotificationClickedDelegate::~HandleNotificationClickedDelegate() =
+    default;
 
 void HandleNotificationClickedDelegate::Click() {
   if (!closure_.is_null())
@@ -49,7 +50,7 @@ HandleNotificationButtonClickDelegate::HandleNotificationButtonClickDelegate(
 }
 
 HandleNotificationButtonClickDelegate::
-    ~HandleNotificationButtonClickDelegate() {}
+    ~HandleNotificationButtonClickDelegate() = default;
 
 void HandleNotificationButtonClickDelegate::ButtonClick(int button_index) {
   if (!button_callback_.is_null())

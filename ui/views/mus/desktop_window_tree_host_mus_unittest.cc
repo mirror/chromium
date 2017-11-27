@@ -36,7 +36,7 @@ class DesktopWindowTreeHostMusTest : public ViewsTestBase,
  public:
   DesktopWindowTreeHostMusTest()
       : widget_activated_(nullptr), widget_deactivated_(nullptr) {}
-  ~DesktopWindowTreeHostMusTest() override {}
+  ~DesktopWindowTreeHostMusTest() override = default;
 
   // Creates a test widget. Takes ownership of |delegate|.
   std::unique_ptr<Widget> CreateWidget(WidgetDelegate* delegate = nullptr,

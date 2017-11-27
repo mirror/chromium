@@ -10,11 +10,9 @@
 namespace ui {
 namespace test {
 
-DeviceDataManagerTestAPI::DeviceDataManagerTestAPI() {
-}
+DeviceDataManagerTestAPI::DeviceDataManagerTestAPI() = default;
 
-DeviceDataManagerTestAPI::~DeviceDataManagerTestAPI() {
-}
+DeviceDataManagerTestAPI::~DeviceDataManagerTestAPI() = default;
 
 void DeviceDataManagerTestAPI::
     NotifyObserversTouchscreenDeviceConfigurationChanged() {

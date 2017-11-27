@@ -53,7 +53,7 @@ class ImageRep {
   explicit ImageRep(Image::RepresentationType rep) : type_(rep) {}
 
   // Deletes the associated pixels of an ImageRep.
-  virtual ~ImageRep() {}
+  virtual ~ImageRep() = default;
 
   // Cast helpers ("fake RTTI").
   const ImageRepPNG* AsImageRepPNG() const {
@@ -114,7 +114,7 @@ class ImageRepPNG : public ImageRep {
         image_png_reps_(image_png_reps) {
   }
 
-  ~ImageRepPNG() override {}
+  ~ImageRepPNG() override = default;
 
   int Width() const override { return Size().width(); }
 
@@ -155,7 +155,7 @@ class ImageRepSkia : public ImageRep {
         image_(image) {
   }
 
-  ~ImageRepSkia() override {}
+  ~ImageRepSkia() override = default;
 
   int Width() const override { return image_->width(); }
 
@@ -299,7 +299,7 @@ class ImageStorage : public base::RefCounted<ImageStorage> {
  private:
   friend class base::RefCounted<ImageStorage>;
 
-  ~ImageStorage() {}
+  ~ImageStorage() = default;
 
   // The type of image that was passed to the constructor. This key will always
   // exist in the |representations_| map.
@@ -374,7 +374,7 @@ Image& Image::operator=(const Image& other) = default;
 
 Image& Image::operator=(Image&& other) = default;
 
-Image::~Image() {}
+Image::~Image() = default;
 
 // static
 Image Image::CreateFrom1xBitmap(const SkBitmap& bitmap) {

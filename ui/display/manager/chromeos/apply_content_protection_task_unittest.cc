@@ -45,7 +45,7 @@ class ApplyContentProtectionTaskTest : public testing::Test {
 
   ApplyContentProtectionTaskTest()
       : response_(NOT_CALLED), display_delegate_(&log_) {}
-  ~ApplyContentProtectionTaskTest() override {}
+  ~ApplyContentProtectionTaskTest() override = default;
 
   void ResponseCallback(bool success) { response_ = success ? SUCCESS : ERROR; }
 

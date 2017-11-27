@@ -26,8 +26,7 @@ GPUTimingFake::GPUTimingFake() {
   Reset();
 }
 
-GPUTimingFake::~GPUTimingFake() {
-}
+GPUTimingFake::~GPUTimingFake() = default;
 
 void GPUTimingFake::Reset() {
   current_gl_time_ = 0;

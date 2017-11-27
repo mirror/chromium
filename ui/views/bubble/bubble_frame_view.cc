@@ -75,7 +75,7 @@ int GetOffScreenLength(const gfx::Rect& available_bounds,
 // A container that changes visibility with its contents.
 class FootnoteContainerView : public View {
  public:
-  FootnoteContainerView() {}
+  FootnoteContainerView() = default;
 
   // View:
   void ChildVisibilityChanged(View* child) override {
@@ -117,7 +117,7 @@ BubbleFrameView::BubbleFrameView(const gfx::Insets& title_margins,
   AddChildView(close_);
 }
 
-BubbleFrameView::~BubbleFrameView() {}
+BubbleFrameView::~BubbleFrameView() = default;
 
 // static
 std::unique_ptr<Label> BubbleFrameView::CreateDefaultTitleLabel(

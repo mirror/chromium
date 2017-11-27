@@ -15,7 +15,7 @@ class FilteredGestureProviderTest : public GestureProviderClient,
   FilteredGestureProviderTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
-  ~FilteredGestureProviderTest() override {}
+  ~FilteredGestureProviderTest() override = default;
 
   // GestureProviderClient implementation.
   void OnGestureEvent(const GestureEventData&) override {}

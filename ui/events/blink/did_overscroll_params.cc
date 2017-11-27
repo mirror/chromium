@@ -6,8 +6,8 @@
 
 namespace ui {
 
-DidOverscrollParams::DidOverscrollParams() {}
+DidOverscrollParams::DidOverscrollParams() = default;
 
-DidOverscrollParams::~DidOverscrollParams() {}
+DidOverscrollParams::~DidOverscrollParams() = default;
 
 }  // namespace ui

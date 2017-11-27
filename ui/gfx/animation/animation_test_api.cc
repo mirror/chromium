@@ -23,7 +23,7 @@ AnimationTestApi::SetRichAnimationRenderMode(
 AnimationTestApi::AnimationTestApi(Animation* animation)
     : animation_(animation) {}
 
-AnimationTestApi::~AnimationTestApi() {}
+AnimationTestApi::~AnimationTestApi() = default;
 
 void AnimationTestApi::SetStartTime(base::TimeTicks ticks) {
   animation_->SetStartTime(ticks);

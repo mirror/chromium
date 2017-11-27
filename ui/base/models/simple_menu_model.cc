@@ -86,8 +86,7 @@ SimpleMenuModel::SimpleMenuModel(Delegate* delegate)
       method_factory_(this) {
 }
 
-SimpleMenuModel::~SimpleMenuModel() {
-}
+SimpleMenuModel::~SimpleMenuModel() = default;
 
 void SimpleMenuModel::AddItem(int command_id, const base::string16& label) {
   Item item = { command_id, label, base::string16(), base::string16(),

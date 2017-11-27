@@ -27,11 +27,11 @@ void AtomicPageFlipCallback(std::vector<base::WeakPtr<CrtcController>> crtcs,
 
 }  // namespace
 
-HardwareDisplayPlaneManagerAtomic::HardwareDisplayPlaneManagerAtomic() {
-}
+HardwareDisplayPlaneManagerAtomic::HardwareDisplayPlaneManagerAtomic() =
+    default;
 
-HardwareDisplayPlaneManagerAtomic::~HardwareDisplayPlaneManagerAtomic() {
-}
+HardwareDisplayPlaneManagerAtomic::~HardwareDisplayPlaneManagerAtomic() =
+    default;
 
 bool HardwareDisplayPlaneManagerAtomic::Commit(
     HardwareDisplayPlaneList* plane_list,

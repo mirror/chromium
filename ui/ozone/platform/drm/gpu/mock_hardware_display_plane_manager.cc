@@ -47,7 +47,7 @@ MockHardwareDisplayPlaneManager::MockHardwareDisplayPlaneManager(
   drm_ = drm;
 }
 
-MockHardwareDisplayPlaneManager::~MockHardwareDisplayPlaneManager() {}
+MockHardwareDisplayPlaneManager::~MockHardwareDisplayPlaneManager() = default;
 
 void MockHardwareDisplayPlaneManager::InitForTest(
     const FakePlaneInfo* planes,

@@ -7,9 +7,9 @@
 namespace display {
 namespace test {
 
-ActionLogger::ActionLogger() {}
+ActionLogger::ActionLogger() = default;
 
-ActionLogger::~ActionLogger() {}
+ActionLogger::~ActionLogger() = default;
 
 void ActionLogger::AppendAction(const std::string& action) {
   if (!actions_.empty())

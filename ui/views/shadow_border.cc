@@ -29,8 +29,7 @@ ShadowBorder::ShadowBorder(const gfx::ShadowValue& shadow)
       insets_(GetInsetsFromShadowValue(shadow)) {
 }
 
-ShadowBorder::~ShadowBorder() {
-}
+ShadowBorder::~ShadowBorder() = default;
 
 // TODO(sidharthms): Re-painting a shadow looper on every paint call may yield
 // poor performance. Ideally we should be caching the border to bitmaps.

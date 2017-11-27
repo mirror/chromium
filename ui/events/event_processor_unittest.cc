@@ -25,7 +25,7 @@ namespace test {
 
 class SelfDestroyingEventProcessor : public TestEventProcessor {
  public:
-  SelfDestroyingEventProcessor() {}
+  SelfDestroyingEventProcessor() = default;
 
  protected:
   EventDispatchDetails PostDispatchEvent(EventTarget* target,
@@ -59,8 +59,8 @@ EventDispatchDetails SelfDestroyingEventProcessor::PostDispatchEvent(
 
 class EventProcessorTest : public testing::Test {
  public:
-  EventProcessorTest() {}
-  ~EventProcessorTest() override {}
+  EventProcessorTest() = default;
+  ~EventProcessorTest() override = default;
 
  protected:
   // testing::Test:
@@ -122,7 +122,7 @@ class ReDispatchEventHandler : public TestEventHandler {
  public:
   ReDispatchEventHandler(EventProcessor* processor, EventTarget* target)
       : processor_(processor), expected_target_(target) {}
-  ~ReDispatchEventHandler() override {}
+  ~ReDispatchEventHandler() override = default;
 
   // TestEventHandler:
   void OnMouseEvent(MouseEvent* event) override {

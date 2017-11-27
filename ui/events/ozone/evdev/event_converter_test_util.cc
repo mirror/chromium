@@ -18,8 +18,8 @@ namespace {
 
 class TestDeviceManager : public ui::DeviceManager {
  public:
-  TestDeviceManager() {}
-  ~TestDeviceManager() override {}
+  TestDeviceManager() = default;
+  ~TestDeviceManager() override = default;
 
   // DeviceManager:
   void ScanDevices(DeviceEventObserver* observer) override {}
@@ -31,7 +31,7 @@ class TestDeviceEventDispatcherEvdev : public DeviceEventDispatcherEvdev {
  public:
   TestDeviceEventDispatcherEvdev(EventFactoryEvdev* event_factory_evdev)
       : event_factory_evdev_(event_factory_evdev) {}
-  ~TestDeviceEventDispatcherEvdev() override {}
+  ~TestDeviceEventDispatcherEvdev() override = default;
 
   // DeviceEventDispatcher:
 
@@ -107,7 +107,7 @@ class TestEventFactoryEvdev : public EventFactoryEvdev {
                         const EventDispatchCallback& callback)
       : EventFactoryEvdev(cursor, device_manager, keyboard_layout_engine),
         callback_(callback) {}
-  ~TestEventFactoryEvdev() override {}
+  ~TestEventFactoryEvdev() override = default;
 
  private:
   uint32_t DispatchEvent(PlatformEvent platform_event) override {

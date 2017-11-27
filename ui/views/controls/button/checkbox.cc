@@ -139,8 +139,7 @@ Checkbox::Checkbox(const base::string16& label, bool force_md)
   SetMinSize(gfx::Size(0, preferred_size.height() + 4));
 }
 
-Checkbox::~Checkbox() {
-}
+Checkbox::~Checkbox() = default;
 
 void Checkbox::SetChecked(bool checked) {
   checked_ = checked;

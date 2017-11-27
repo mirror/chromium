@@ -953,6 +953,6 @@ LayerAnimator::RunningAnimation::RunningAnimation(
 LayerAnimator::RunningAnimation::RunningAnimation(
     const RunningAnimation& other) = default;
 
-LayerAnimator::RunningAnimation::~RunningAnimation() { }
+LayerAnimator::RunningAnimation::~RunningAnimation() = default;
 
 }  // namespace ui

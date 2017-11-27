@@ -23,7 +23,7 @@ namespace {
 
 class TestProperty {
  public:
-  TestProperty() {}
+  TestProperty() = default;
   ~TestProperty() {
     last_deleted_ = this;
   }

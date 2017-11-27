@@ -37,7 +37,7 @@ ScaleGestureDetector::Config::Config()
       min_pinch_update_span_delta(0),
       stylus_scale_enabled(false) {}
 
-ScaleGestureDetector::Config::~Config() {}
+ScaleGestureDetector::Config::~Config() = default;
 
 ScaleGestureDetector::ScaleGestureDetector(const Config& config,
                                            ScaleGestureListener* listener)
@@ -64,7 +64,7 @@ ScaleGestureDetector::ScaleGestureDetector(const Config& config,
   min_span_ = config.min_scaling_span + kSlopEpsilon;
 }
 
-ScaleGestureDetector::~ScaleGestureDetector() {}
+ScaleGestureDetector::~ScaleGestureDetector() = default;
 
 bool ScaleGestureDetector::OnTouchEvent(const MotionEvent& event) {
   curr_time_ = event.GetEventTime();

@@ -254,7 +254,7 @@ X11AtomCache::X11AtomCache() : xdisplay_(gfx::GetXDisplay()) {
     cached_atoms_[kAtomsToCache[i]] = cached_atoms[i];
 }
 
-X11AtomCache::~X11AtomCache() {}
+X11AtomCache::~X11AtomCache() = default;
 
 XAtom X11AtomCache::GetAtom(const char* name) const {
   const auto it = cached_atoms_.find(name);

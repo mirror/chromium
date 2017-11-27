@@ -26,7 +26,7 @@ AppListTestViewDelegate::AppListTestViewDelegate()
   model_->SetFoldersEnabled(true);
 }
 
-AppListTestViewDelegate::~AppListTestViewDelegate() {}
+AppListTestViewDelegate::~AppListTestViewDelegate() = default;
 
 int AppListTestViewDelegate::GetStopSpeechRecognitionCountAndReset() {
   int count = stop_speech_recognition_count_;

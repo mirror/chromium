@@ -36,9 +36,9 @@ constexpr base::TimeDelta kConfigureDisplayDelay =
 
 }  // namespace
 
-FakeDisplayDelegate::FakeDisplayDelegate() {}
+FakeDisplayDelegate::FakeDisplayDelegate() = default;
 
-FakeDisplayDelegate::~FakeDisplayDelegate() {}
+FakeDisplayDelegate::~FakeDisplayDelegate() = default;
 
 int64_t FakeDisplayDelegate::AddDisplay(const gfx::Size& display_size) {
   DCHECK(!display_size.IsEmpty());

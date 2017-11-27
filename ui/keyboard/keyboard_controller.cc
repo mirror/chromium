@@ -91,8 +91,8 @@ bool isAllowedStateTransition(keyboard::KeyboardControllerState from,
 // The delegate deletes itself when the window is destroyed.
 class KeyboardWindowDelegate : public aura::WindowDelegate {
  public:
-  KeyboardWindowDelegate() {}
-  ~KeyboardWindowDelegate() override {}
+  KeyboardWindowDelegate() = default;
+  ~KeyboardWindowDelegate() override = default;
 
  private:
   // Overridden from aura::WindowDelegate:

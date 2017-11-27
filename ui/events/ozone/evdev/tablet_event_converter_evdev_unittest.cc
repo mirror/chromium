@@ -116,7 +116,7 @@ class MockTabletEventConverterEvdev : public TabletEventConverterEvdev {
                                 CursorDelegateEvdev* cursor,
                                 const EventDeviceInfo& devinfo,
                                 DeviceEventDispatcherEvdev* dispatcher);
-  ~MockTabletEventConverterEvdev() override {}
+  ~MockTabletEventConverterEvdev() override = default;
 
   void ConfigureReadMock(struct input_event* queue,
                          long read_this_many,
@@ -140,7 +140,7 @@ class MockTabletEventConverterEvdev : public TabletEventConverterEvdev {
 class MockTabletCursorEvdev : public CursorDelegateEvdev {
  public:
   MockTabletCursorEvdev() { cursor_confined_bounds_ = gfx::Rect(1024, 768); }
-  ~MockTabletCursorEvdev() override {}
+  ~MockTabletCursorEvdev() override = default;
 
   // CursorDelegateEvdev:
   void MoveCursorTo(gfx::AcceleratedWidget widget,
@@ -202,7 +202,7 @@ void MockTabletEventConverterEvdev::ConfigureReadMock(struct input_event* queue,
 // Test fixture.
 class TabletEventConverterEvdevTest : public testing::Test {
  public:
-  TabletEventConverterEvdevTest() {}
+  TabletEventConverterEvdevTest() = default;
 
   // Overridden from testing::Test:
   void SetUp() override {

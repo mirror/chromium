@@ -105,7 +105,7 @@ bool FontList::ParseDescription(const std::string& description,
 
 FontList::FontList() : impl_(GetDefaultImpl()) {}
 
-FontList::FontList(const FontList& other) : impl_(other.impl_) {}
+FontList::FontList(const FontList& other) = default;
 
 FontList::FontList(const std::string& font_description_string)
     : impl_(new FontListImpl(font_description_string)) {}
@@ -121,12 +121,9 @@ FontList::FontList(const std::vector<Font>& fonts)
 
 FontList::FontList(const Font& font) : impl_(new FontListImpl(font)) {}
 
-FontList::~FontList() {}
+FontList::~FontList() = default;
 
-FontList& FontList::operator=(const FontList& other) {
-  impl_ = other.impl_;
-  return *this;
-}
+FontList& FontList::operator=(const FontList& other) = default;
 
 // static
 void FontList::SetDefaultFontDescription(const std::string& font_description) {

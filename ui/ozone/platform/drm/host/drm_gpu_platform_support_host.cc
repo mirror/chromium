@@ -50,7 +50,7 @@ CursorIPC::CursorIPC(scoped_refptr<base::SingleThreadTaskRunner> send_runner,
                      const base::Callback<void(IPC::Message*)>& send_callback)
     : send_runner_(send_runner), send_callback_(send_callback) {}
 
-CursorIPC::~CursorIPC() {}
+CursorIPC::~CursorIPC() = default;
 
 bool CursorIPC::IsConnected() {
   return !send_callback_.is_null();
@@ -85,7 +85,7 @@ void CursorIPC::Send(IPC::Message* message) {
 DrmGpuPlatformSupportHost::DrmGpuPlatformSupportHost(DrmCursor* cursor)
     : cursor_(cursor), weak_ptr_factory_(this) {}
 
-DrmGpuPlatformSupportHost::~DrmGpuPlatformSupportHost() {}
+DrmGpuPlatformSupportHost::~DrmGpuPlatformSupportHost() = default;
 
 void DrmGpuPlatformSupportHost::AddGpuThreadObserver(
     GpuThreadObserver* observer) {

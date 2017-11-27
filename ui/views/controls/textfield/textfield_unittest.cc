@@ -141,8 +141,7 @@ MockInputMethod::MockInputMethod()
       cancel_composition_called_(false) {
 }
 
-MockInputMethod::~MockInputMethod() {
-}
+MockInputMethod::~MockInputMethod() = default;
 
 bool MockInputMethod::OnUntranslatedIMEMessage(const base::NativeEvent& event,
                                                NativeEventResult* result) {

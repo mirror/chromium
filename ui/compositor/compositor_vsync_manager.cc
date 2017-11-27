@@ -10,7 +10,7 @@ CompositorVSyncManager::CompositorVSyncManager()
     : authoritative_vsync_interval_(base::TimeDelta::FromSeconds(0)) {
 }
 
-CompositorVSyncManager::~CompositorVSyncManager() {}
+CompositorVSyncManager::~CompositorVSyncManager() = default;
 
 void CompositorVSyncManager::SetAuthoritativeVSyncInterval(
     base::TimeDelta interval) {

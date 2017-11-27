@@ -18,7 +18,7 @@ DisplayListObserverLock::DisplayListObserverLock(DisplayList* display_list)
   display_list_->IncrementObserverSuspendLockCount();
 }
 
-DisplayList::DisplayList() {}
+DisplayList::DisplayList() = default;
 
 DisplayList::~DisplayList() {
   DCHECK_EQ(0, observer_suspend_lock_count_);

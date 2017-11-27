@@ -29,8 +29,8 @@ class FalseTouchFinderTest : public testing::Test {
     bool expect_delay;
   };
 
-  FalseTouchFinderTest() {}
-  ~FalseTouchFinderTest() override {}
+  FalseTouchFinderTest() = default;
+  ~FalseTouchFinderTest() override = default;
 
   bool FilterAndCheck(const TouchEntry entries[], size_t count) {
     std::vector<InProgressTouchEvdev> touches;

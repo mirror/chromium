@@ -35,7 +35,7 @@ scoped_refptr<X11CursorOzone> CreateAuraX11Cursor(CursorType type) {
 X11CursorFactoryOzone::X11CursorFactoryOzone()
     : invisible_cursor_(X11CursorOzone::CreateInvisible()) {}
 
-X11CursorFactoryOzone::~X11CursorFactoryOzone() {}
+X11CursorFactoryOzone::~X11CursorFactoryOzone() = default;
 
 PlatformCursor X11CursorFactoryOzone::GetDefaultCursor(CursorType type) {
   return ToPlatformCursor(GetDefaultCursorInternal(type).get());

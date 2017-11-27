@@ -6,6 +6,6 @@
 
 namespace app_list {
 
-AppListViewDelegateFactory::~AppListViewDelegateFactory() {}
+AppListViewDelegateFactory::~AppListViewDelegateFactory() = default;
 
 }  // namespace app_list

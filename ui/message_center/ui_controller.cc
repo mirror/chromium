@@ -63,7 +63,7 @@ NotificationMenuModel::NotificationMenuModel(UiController* controller,
 #endif
 }
 
-NotificationMenuModel::~NotificationMenuModel() {}
+NotificationMenuModel::~NotificationMenuModel() = default;
 
 bool NotificationMenuModel::IsCommandIdChecked(int command_id) const {
   return false;

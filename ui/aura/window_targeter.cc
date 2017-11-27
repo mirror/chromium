@@ -17,8 +17,8 @@
 
 namespace aura {
 
-WindowTargeter::WindowTargeter() {}
-WindowTargeter::~WindowTargeter() {}
+WindowTargeter::WindowTargeter() = default;
+WindowTargeter::~WindowTargeter() = default;
 
 bool WindowTargeter::SubtreeShouldBeExploredForEvent(
     Window* window,

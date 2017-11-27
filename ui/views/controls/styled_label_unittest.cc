@@ -39,8 +39,8 @@ std::string SecondaryUiModeToString(
 
 class StyledLabelTest : public ViewsTestBase, public StyledLabelListener {
  public:
-  StyledLabelTest() {}
-  ~StyledLabelTest() override {}
+  StyledLabelTest() = default;
+  ~StyledLabelTest() override = default;
 
   // StyledLabelListener implementation.
   void StyledLabelLinkClicked(StyledLabel* label,
@@ -71,7 +71,7 @@ class MDStyledLabelTest
     : public StyledLabelTest,
       public ::testing::WithParamInterface<SecondaryUiMode> {
  public:
-  MDStyledLabelTest() {}
+  MDStyledLabelTest() = default;
 
   // StyledLabelTest:
   void SetUp() override {

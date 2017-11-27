@@ -23,7 +23,7 @@ using InkDropMode = InkDropHostViewTestApi::InkDropMode;
 
 class TestInkDropHostView : public InkDropHostView {
  public:
-  TestInkDropHostView() {}
+  TestInkDropHostView() = default;
 
   // Accessors to InkDropHostView internals.
   ui::EventHandler* GetTargetHandler() { return target_handler(); }
@@ -68,7 +68,7 @@ InkDropHostViewTest::InkDropHostViewTest()
       animation_mode_reset_(gfx::AnimationTestApi::SetRichAnimationRenderMode(
           gfx::Animation::RichAnimationRenderMode::FORCE_DISABLED)) {}
 
-InkDropHostViewTest::~InkDropHostViewTest() {}
+InkDropHostViewTest::~InkDropHostViewTest() = default;
 
 // Verifies the return value of GetInkDropCenterBasedOnLastEvent() for a null
 // Event.

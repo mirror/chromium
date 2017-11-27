@@ -40,7 +40,7 @@ class ProxyDeviceEventDispatcher : public DeviceEventDispatcherEvdev {
       base::WeakPtr<EventFactoryEvdev> event_factory_evdev)
       : ui_thread_runner_(ui_thread_runner),
         event_factory_evdev_(event_factory_evdev) {}
-  ~ProxyDeviceEventDispatcher() override {}
+  ~ProxyDeviceEventDispatcher() override = default;
 
   // DeviceEventDispatcher:
   void DispatchKeyEvent(const KeyEventParams& params) override {
@@ -186,8 +186,7 @@ EventFactoryEvdev::EventFactoryEvdev(CursorDelegateEvdev* cursor,
   DCHECK(device_manager_);
 }
 
-EventFactoryEvdev::~EventFactoryEvdev() {
-}
+EventFactoryEvdev::~EventFactoryEvdev() = default;
 
 void EventFactoryEvdev::Init() {
   DCHECK(!initialized_);
