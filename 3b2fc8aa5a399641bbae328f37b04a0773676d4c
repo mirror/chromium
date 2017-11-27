@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "090b4241_73b8de25",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-27T03:38:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a42e7965_7e12dddf",
+      "revId": "3b2fc8aa5a399641bbae328f37b04a0773676d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c488f544_b33e68f9",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.h",
         "patchSetId": 2
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "b2a0d8fe_48ed656a",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-27T03:38:08Z",
+      "side": 1,
+      "message": "that\u0027s right, should be in the cc file :)",
+      "parentUuid": "e72eaeb8_904c8a20",
+      "revId": "3b2fc8aa5a399641bbae328f37b04a0773676d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0ce29d7_bc0e03cf",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.h",
         "patchSetId": 2
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "UserActivityLogger will need to call this as part of ExtractFeatures.",
       "parentUuid": "b0ce29d7_bc0e03cf",
+      "revId": "3b2fc8aa5a399641bbae328f37b04a0773676d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482209a5_a46d3d79",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-27T03:38:08Z",
+      "side": 1,
+      "message": "in that sense, since UserActivityLogger isn\u0027t aware of UserActivityLoggerUKM, can you put the method declaration in UserActivityLoggerDelegate?",
+      "parentUuid": "450ec89c_4c971690",
       "revId": "3b2fc8aa5a399641bbae328f37b04a0773676d4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
