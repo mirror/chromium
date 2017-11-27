@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fca5fb9_a516cfa3",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-27T21:47:53Z",
+      "side": 1,
+      "message": "nit: add a comment the time unit that this constant is supposed to be?",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "bb8f503c99bc68e650427c7e415af94e006e50c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
