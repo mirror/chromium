@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e79860bf_5bd8322a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-27T12:19:37Z",
+      "side": 1,
+      "message": "I assume we can\u0027t easily make this private? Maybe still add a comment pointing to TakeOverCurrentThread()?",
+      "range": {
+        "startLine": 71,
+        "startChar": 11,
+        "endLine": 71,
+        "endChar": 27
+      },
+      "revId": "fa4494e3a5b8572df4daa8de13033d902e677aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
