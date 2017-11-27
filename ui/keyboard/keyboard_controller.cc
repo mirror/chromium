@@ -492,6 +492,13 @@ void KeyboardController::OnTextInputStateChanged(
   bool focused =
       client && (client->GetTextInputType() != ui::TEXT_INPUT_TYPE_NONE);
   bool should_hide = !focused && container_behavior_->TextBlurHidesKeyboard();
+  if (client) {
+    client_source_info_ = client->GetClientSourceInfo();
+    client_input_type_ = client->GetTextInputType();
+  } else {
+    client_source_info_ = base::EmptyString();
+    client_input_type_ = ui::TEXT_INPUT_TYPE_NONE;
+  }
 
   if (should_hide) {
     switch (state_) {
@@ -625,6 +632,8 @@ void KeyboardController::PopulateKeyboardContent(int64_t display_id,
   DCHECK_EQ(state_, KeyboardControllerState::HIDDEN);
 
   keyboard::LogKeyboardControlEvent(keyboard::KEYBOARD_CONTROL_SHOW);
+  if (GURL(client_source_info_).is_valid())
+    ukm_recorder_.RecordUkm(GURL(client_source_info_), client_input_type_);
 
   container_animator->set_preemption_strategy(
       ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
