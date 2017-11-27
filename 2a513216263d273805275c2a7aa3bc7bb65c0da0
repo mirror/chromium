@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "bf6109ca_71b8921f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-27T22:16:11Z",
+      "side": 1,
+      "message": "I see. Thank you for clarifying it.",
+      "parentUuid": "3424c679_e307ed42",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bbf00f3_2cacd8af",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
         "patchSetId": 8
@@ -335,6 +353,24 @@
       "side": 1,
       "message": "Can I do that in the follow-up CL? That requires a lot of small changes to make things Oilpan friendly.",
       "parentUuid": "5f4e4bcb_f127d904",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d1bec1_bc4c9986",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-27T22:16:11Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "428be492_4895292c",
       "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
