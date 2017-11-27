@@ -56,6 +56,24 @@
       "revId": "56e4f5a22bbd6f5df87e6f9d8a0af198bfff83bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f30e9c_bbb8281a",
+        "filename": "third_party/WebKit/Source/core/svg/graphics/SVGImage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-27T20:36:05Z",
+      "side": 1,
+      "message": "\u003e IIUC if the SVG is invalid (i.e. SvgRootElement(page_.Get()) is false), then it\u0027s loading is always completed synchronously (i.e. load_state_ is always kLoadCompleted here), and therefore we can always assume kSizeAvailable in ImageResourceContent::AsyncLoadCompleted(), right?\n\nYes, that sounds right to me.",
+      "parentUuid": "4de003b6_3228350e",
+      "revId": "56e4f5a22bbd6f5df87e6f9d8a0af198bfff83bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
