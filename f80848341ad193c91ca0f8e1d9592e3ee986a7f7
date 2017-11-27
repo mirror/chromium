@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7dd1e19_c531efd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-27T09:26:46Z",
+      "side": 1,
+      "message": "Could you clarify if this patch is refactoring or not for ease of reviewing.",
+      "revId": "f80848341ad193c91ca0f8e1d9592e3ee986a7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
