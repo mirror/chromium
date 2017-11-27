@@ -411,8 +411,8 @@ id<GREYMatcher> TabWithTitle(const std::string& tab_title) {
 // modifies history.
 - (void)testBrowsingUserJavaScriptNavigation {
   // TODO(crbug.com/640220): Keyboard entry inside the omnibox fails only on
-  // iPad running iOS 10.
-  if (IsIPadIdiom() && base::ios::IsRunningOnIOS10OrLater())
+  // iPad.
+  if (IsIPadIdiom())
     return;
 
   // Create map of canned responses and set up the test HTML server.
@@ -447,8 +447,8 @@ id<GREYMatcher> TabWithTitle(const std::string& tab_title) {
 // Tests that evaluating non-navigation user JavaScript doesn't affect history.
 - (void)testBrowsingUserJavaScriptWithoutNavigation {
   // TODO(crbug.com/640220): Keyboard entry inside the omnibox fails only on
-  // iPad running iOS 10.
-  if (IsIPadIdiom() && base::ios::IsRunningOnIOS10OrLater())
+  // iPad.
+  if (IsIPadIdiom())
     return;
 
   // Create map of canned responses and set up the test HTML server.

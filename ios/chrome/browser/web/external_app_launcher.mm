@@ -73,16 +73,9 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
   UMA_HISTOGRAM_BOOLEAN("IOS.MailtoURLRewritten", launchURL != nil);
   NSURL* URLToOpen = [launchURL length] ? [NSURL URLWithString:launchURL]
                                         : net::NSURLWithGURL(URL);
-  if (@available(iOS 10, *)) {
-    [[UIApplication sharedApplication] openURL:URLToOpen
-                                       options:@{}
-                             completionHandler:nil];
-  }
-#if !defined(__IPHONE_10_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0
-  else {
-    [[UIApplication sharedApplication] openURL:URLToOpen];
-  }
-#endif
+  [[UIApplication sharedApplication] openURL:URLToOpen
+                                     options:@{}
+                           completionHandler:nil];
 }
 
 }  // namespace

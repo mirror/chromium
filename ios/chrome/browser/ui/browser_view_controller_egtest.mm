@@ -37,7 +37,7 @@
   // TODO(crbug.com/640220): Keyboard entry inside the omnibox fails only on
   // iPad
   // running iOS X.
-  if (IsIPadIdiom() && base::ios::IsRunningOnIOS10OrLater())
+  if (IsIPadIdiom())
     return;
 
   // Preps the http server with two URLs serving content.
