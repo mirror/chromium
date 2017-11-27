@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52148dc3_f21d3ac2",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 2072,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T15:08:51Z",
+      "side": 1,
+      "message": "nit: I would rephrase as\nThe NavigationUIData has only been initialized for main frames. Do not pass it to subframes.",
+      "revId": "6b4683166e61c602a4022e552377607bdb07874d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3612fea_7d09e50d",
+        "filename": "content/public/browser/navigation_controller.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T15:08:51Z",
+      "side": 1,
+      "message": "Can you add a comment specifying that this can only be set for main frame navigations? Subframe navigations will always get their NavigationUIData from ContentBrowserClient::GetNavigationUIData.",
+      "revId": "6b4683166e61c602a4022e552377607bdb07874d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
