@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "d1b76f92_bf692c3f",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T19:06:30Z",
+      "side": 1,
+      "message": "Should the first example read ToDocument(execution_context)-\u003eGetFrame() or execution_context-\u003eGetInterfaceProvider()?\n\nThe methods on this interface will be available not just for documents, but also all sorts of workers. While we can find a frame for dedicated and (less ideally) shared workers, there is none for service workers. If the latter works that\u0027d be grand.\n\n(Also we should remove the duplication, and just add GetNotificationService() or something that issues the request if necessary.",
+      "parentUuid": "31761cc6_5ca901d0",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f77cbe4_20031ace",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
         "patchSetId": 8
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "Good question! I don\u0027t know.. Peter?",
       "parentUuid": "2f77cbe4_20031ace",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d824265_59845953",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T19:06:30Z",
+      "side": 1,
+      "message": "Extending on my answer to haraken\u0027s question:\n\nYes, definitively knowing the origin on the browser side would be much better. I\u0027m not familiar with the latest infrastructure though -- is renderer_interface_binders.cc where we should be looking? If so, we probably should update a bunch of other features too.",
+      "parentUuid": "4b6ee254_b2c4b529",
       "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
