@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24b9db4c_9418651f",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-27T06:43:02Z",
+      "side": 1,
+      "message": "That\u0027s good idea. \nPlus since |is_directional| refactoring is on-going,\nI take down this CL. Thanks.",
+      "parentUuid": "2af5adb9_47dfa3bd",
+      "revId": "abcd3858e96c16d7c034303f80bd4d184571c4d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e1234a4_0f79a034",
         "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
         "patchSetId": 4
