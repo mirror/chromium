@@ -22,6 +22,30 @@
       "revId": "163c206b6c90655985bb08c9943a51b4f667e7f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abc9bc4_77ad90d5",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-27T18:13:03Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "1c0dbc9e_6a75d686",
+      "range": {
+        "startLine": 85,
+        "startChar": 48,
+        "endLine": 85,
+        "endChar": 64
+      },
+      "revId": "163c206b6c90655985bb08c9943a51b4f667e7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
