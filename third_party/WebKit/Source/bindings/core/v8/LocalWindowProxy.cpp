@@ -263,10 +263,11 @@ void LocalWindowProxy::InstallConditionalFeatures() {
 
   v8::Local<v8::Object> unused_prototype_object;
   v8::Local<v8::Function> unused_interface_object;
+  v8::Local<v8::FunctionTemplate> interface_template =
+      wrapper_type_info->domTemplate(GetIsolate(), World());
   wrapper_type_info->InstallConditionalFeatures(
-      context, World(), global_proxy, unused_prototype_object,
-      unused_interface_object,
-      wrapper_type_info->domTemplate(GetIsolate(), World()));
+      script_state_.get(), global_proxy, unused_prototype_object,
+      unused_interface_object, interface_template);
 
   if (World().IsMainWorld()) {
     // For the main world, install any remaining conditional bindings (i.e.

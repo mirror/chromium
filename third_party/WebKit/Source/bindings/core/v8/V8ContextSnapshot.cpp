@@ -195,7 +195,7 @@ bool V8ContextSnapshot::InstallConditionalFeatures(
                                           .As<v8::Object>();
     V8Window::install_runtime_enabled_features_function_(
         isolate, world, window_wrapper, prototype, interface);
-    type->InstallConditionalFeatures(context, world, window_wrapper, prototype,
+    type->InstallConditionalFeatures(script_state, window_wrapper, prototype,
                                      interface,
                                      type->domTemplate(isolate, world));
     InstallOriginTrialFeatures(type, script_state, prototype, interface);
@@ -208,7 +208,7 @@ bool V8ContextSnapshot::InstallConditionalFeatures(
                                           .As<v8::Object>();
     V8EventTarget::InstallRuntimeEnabledFeatures(
         isolate, world, v8::Local<v8::Object>(), prototype, interface);
-    type->InstallConditionalFeatures(context, world, v8::Local<v8::Object>(),
+    type->InstallConditionalFeatures(script_state, v8::Local<v8::Object>(),
                                      prototype, interface,
                                      type->domTemplate(isolate, world));
     InstallOriginTrialFeatures(type, script_state, prototype, interface);
@@ -232,8 +232,8 @@ bool V8ContextSnapshot::InstallConditionalFeatures(
                                           .As<v8::Object>();
     V8HTMLDocument::InstallRuntimeEnabledFeatures(
         isolate, world, document_wrapper, prototype, interface);
-    type->InstallConditionalFeatures(context, world, document_wrapper,
-                                     prototype, interface,
+    type->InstallConditionalFeatures(script_state, document_wrapper, prototype,
+                                     interface,
                                      type->domTemplate(isolate, world));
     InstallOriginTrialFeatures(type, script_state, prototype, interface);
   }
@@ -245,7 +245,7 @@ bool V8ContextSnapshot::InstallConditionalFeatures(
                                           .As<v8::Object>();
     V8Document::InstallRuntimeEnabledFeatures(
         isolate, world, v8::Local<v8::Object>(), prototype, interface);
-    type->InstallConditionalFeatures(context, world, v8::Local<v8::Object>(),
+    type->InstallConditionalFeatures(script_state, v8::Local<v8::Object>(),
                                      prototype, interface,
                                      type->domTemplate(isolate, world));
     InstallOriginTrialFeatures(type, script_state, prototype, interface);
@@ -258,7 +258,7 @@ bool V8ContextSnapshot::InstallConditionalFeatures(
                                           .As<v8::Object>();
     V8Node::InstallRuntimeEnabledFeatures(
         isolate, world, v8::Local<v8::Object>(), prototype, interface);
-    type->InstallConditionalFeatures(context, world, v8::Local<v8::Object>(),
+    type->InstallConditionalFeatures(script_state, v8::Local<v8::Object>(),
                                      prototype, interface,
                                      type->domTemplate(isolate, world));
     InstallOriginTrialFeatures(type, script_state, prototype, interface);

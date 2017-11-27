@@ -121,16 +121,14 @@ class {{v8_class}} {
 
   {% if install_conditional_features_func %}
   {{exported}}static void InstallConditionalFeatures(
-      v8::Local<v8::Context>,
-      const DOMWrapperWorld&,
+      ScriptState*,
       v8::Local<v8::Object> instanceObject,
       v8::Local<v8::Object> prototypeObject,
       v8::Local<v8::Function> interfaceObject,
       v8::Local<v8::FunctionTemplate> interfaceTemplate);
   {% elif has_partial_interface %}
   {{exported}}static void InstallConditionalFeatures(
-      v8::Local<v8::Context>,
-      const DOMWrapperWorld&,
+      ScriptState*,
       v8::Local<v8::Object> instanceObject,
       v8::Local<v8::Object> prototypeObject,
       v8::Local<v8::Function> interfaceObject,

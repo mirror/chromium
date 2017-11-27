@@ -3668,8 +3668,7 @@ TestInterfaceImplementation* NativeValueTraits<TestInterfaceImplementation>::Nat
 }
 
 void V8TestInterface::InstallConditionalFeatures(
-    v8::Local<v8::Context> context,
-    const DOMWrapperWorld& world,
+    ScriptState* script_state,
     v8::Local<v8::Object> instanceObject,
     v8::Local<v8::Object> prototypeObject,
     v8::Local<v8::Function> interfaceObject,
@@ -3678,9 +3677,11 @@ void V8TestInterface::InstallConditionalFeatures(
   DCHECK((!prototypeObject.IsEmpty() && !interfaceObject.IsEmpty()) ||
          !instanceObject.IsEmpty());
 
-  v8::Isolate* isolate = context->GetIsolate();
+  v8::Isolate* isolate = script_state->GetIsolate();
+  v8::Local<v8::Context> context = script_state->GetContext();
 
   v8::Local<v8::Signature> signature = v8::Signature::New(isolate, interfaceTemplate);
+  const DOMWrapperWorld& world = script_state->World();
   ExecutionContext* executionContext = ToExecutionContext(context);
   DCHECK(executionContext);
   bool isSecureContext = (executionContext && executionContext->IsSecureContext());

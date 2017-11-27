@@ -32,8 +32,7 @@ class V8TestInterfacePartial {
   static void initialize();
   static void implementsCustomVoidMethodMethodCustom(const v8::FunctionCallbackInfo<v8::Value>&);
   static void InstallConditionalFeatures(
-      v8::Local<v8::Context>,
-      const DOMWrapperWorld&,
+      ScriptState*,
       v8::Local<v8::Object> instance,
       v8::Local<v8::Object> prototype,
       v8::Local<v8::Function> interface,

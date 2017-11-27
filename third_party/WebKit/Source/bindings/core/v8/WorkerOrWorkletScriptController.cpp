@@ -238,9 +238,11 @@ bool WorkerOrWorkletScriptController::InitializeContextIfNeeded(
                                              human_readable_name);
   }
 
+  v8::Local<v8::Object> unused_prototype_object;
+  v8::Local<v8::Function> unused_interface_object;
   wrapper_type_info->InstallConditionalFeatures(
-      context, *world_, global_object, v8::Local<v8::Object>(),
-      v8::Local<v8::Function>(), global_interface_template);
+      script_state_.get(), global_object, unused_prototype_object,
+      unused_interface_object, global_interface_template);
 
   return true;
 }

@@ -13907,8 +13907,7 @@ TestObject* NativeValueTraits<TestObject>::NativeValue(v8::Isolate* isolate, v8:
 }
 
 void V8TestObject::InstallConditionalFeatures(
-    v8::Local<v8::Context> context,
-    const DOMWrapperWorld& world,
+    ScriptState* script_state,
     v8::Local<v8::Object> instanceObject,
     v8::Local<v8::Object> prototypeObject,
     v8::Local<v8::Function> interfaceObject,
@@ -13917,7 +13916,8 @@ void V8TestObject::InstallConditionalFeatures(
   DCHECK((!prototypeObject.IsEmpty() && !interfaceObject.IsEmpty()) ||
          !instanceObject.IsEmpty());
 
-  v8::Isolate* isolate = context->GetIsolate();
+  v8::Isolate* isolate = script_state->GetIsolate();
+  v8::Local<v8::Context> context = script_state->GetContext();
 
   if (!prototypeObject.IsEmpty()) {
     v8::Local<v8::Name> unscopablesSymbol(v8::Symbol::GetUnscopables(isolate));

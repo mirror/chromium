@@ -949,8 +949,7 @@ void {{v8_class_or_partial}}::install{{feature.name}}(ScriptState* scriptState) 
 {% from 'methods.cpp.tmpl' import install_conditional_methods with context %}
 {% if install_conditional_features_func %}
 void {{v8_class_or_partial}}::InstallConditionalFeatures(
-    v8::Local<v8::Context> context,
-    const DOMWrapperWorld& world,
+    ScriptState* script_state,
     v8::Local<v8::Object> instanceObject,
     v8::Local<v8::Object> prototypeObject,
     v8::Local<v8::Function> interfaceObject,
@@ -960,10 +959,11 @@ void {{v8_class_or_partial}}::InstallConditionalFeatures(
          !instanceObject.IsEmpty());
   {% if is_partial %}
   {{v8_class}}::InstallConditionalFeatures(
-      context, world, instanceObject, prototypeObject, interfaceObject, interfaceTemplate);
+      script_state, instanceObject, prototypeObject, interfaceObject, interfaceTemplate);
   {% endif %}
 
-  v8::Isolate* isolate = context->GetIsolate();
+  v8::Isolate* isolate = script_state->GetIsolate();
+  v8::Local<v8::Context> context = script_state->GetContext();
 
   {% if unscopables %}
   if (!prototypeObject.IsEmpty()) {
@@ -990,6 +990,7 @@ void {{v8_class_or_partial}}::InstallConditionalFeatures(
   v8::Local<v8::Signature> signature = v8::Signature::New(isolate, interfaceTemplate);
   {% endif %}
   {% if conditional_attributes or conditional_methods or conditional_interface_objects %}
+  const DOMWrapperWorld& world = script_state->World();
   ExecutionContext* executionContext = ToExecutionContext(context);
   DCHECK(executionContext);
   {% if has_conditional_secure_attributes or has_conditional_secure_methods %}

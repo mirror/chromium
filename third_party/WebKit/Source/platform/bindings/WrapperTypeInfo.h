@@ -41,6 +41,7 @@
 namespace blink {
 
 class DOMWrapperWorld;
+class ScriptState;
 class ScriptWrappable;
 
 ScriptWrappable* ToScriptWrappable(
@@ -68,8 +69,7 @@ typedef void (*ResolveWrapperReachabilityFunction)(
     ScriptWrappable*,
     const v8::Persistent<v8::Object>&);
 typedef void (*InstallConditionalFeaturesFunction)(
-    v8::Local<v8::Context>,
-    const DOMWrapperWorld&,
+    ScriptState*,
     v8::Local<v8::Object>,
     v8::Local<v8::Object>,
     v8::Local<v8::Function>,
@@ -146,14 +146,13 @@ struct WrapperTypeInfo {
   }
 
   void InstallConditionalFeatures(
-      v8::Local<v8::Context> context,
-      const DOMWrapperWorld& world,
+      ScriptState* script_state,
       v8::Local<v8::Object> instance_object,
       v8::Local<v8::Object> prototype_object,
       v8::Local<v8::Function> interface_object,
       v8::Local<v8::FunctionTemplate> interface_template) const {
     if (install_conditional_features_function) {
-      install_conditional_features_function(context, world, instance_object,
+      install_conditional_features_function(script_state, instance_object,
                                             prototype_object, interface_object,
                                             interface_template);
     }

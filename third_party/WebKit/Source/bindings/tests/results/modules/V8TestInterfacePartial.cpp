@@ -547,8 +547,7 @@ void V8TestInterfacePartial::installOriginTrialPartialFeature(ScriptState* scrip
 }
 
 void V8TestInterfacePartial::InstallConditionalFeatures(
-    v8::Local<v8::Context> context,
-    const DOMWrapperWorld& world,
+    ScriptState* script_state,
     v8::Local<v8::Object> instanceObject,
     v8::Local<v8::Object> prototypeObject,
     v8::Local<v8::Function> interfaceObject,
@@ -557,9 +556,10 @@ void V8TestInterfacePartial::InstallConditionalFeatures(
   DCHECK((!prototypeObject.IsEmpty() && !interfaceObject.IsEmpty()) ||
          !instanceObject.IsEmpty());
   V8TestInterface::InstallConditionalFeatures(
-      context, world, instanceObject, prototypeObject, interfaceObject, interfaceTemplate);
+      script_state, instanceObject, prototypeObject, interfaceObject, interfaceTemplate);
 
-  v8::Isolate* isolate = context->GetIsolate();
+  v8::Isolate* isolate = script_state->GetIsolate();
+  v8::Local<v8::Context> context = script_state->GetContext();
 
   if (!prototypeObject.IsEmpty()) {
     v8::Local<v8::Name> unscopablesSymbol(v8::Symbol::GetUnscopables(isolate));

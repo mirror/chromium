@@ -71,8 +71,7 @@ class V8TestObject {
   static const int internalFieldCount = kV8DefaultWrapperInternalFieldCount;
 
   CORE_EXPORT static void InstallConditionalFeatures(
-      v8::Local<v8::Context>,
-      const DOMWrapperWorld&,
+      ScriptState*,
       v8::Local<v8::Object> instanceObject,
       v8::Local<v8::Object> prototypeObject,
       v8::Local<v8::Function> interfaceObject,
