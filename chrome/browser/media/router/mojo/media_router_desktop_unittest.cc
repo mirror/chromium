@@ -30,6 +30,8 @@ namespace media_router {
 
 namespace {
 
+const char kAutoJoinPresentationId[] = "auto-join";
+const char kCastPresentationIdPrefix[] = "cast-session_";
 const char kOrigin[] = "http://origin/";
 const char kRouteId[] = "routeId";
 const char kSource[] = "source1";
@@ -144,6 +146,13 @@ TEST_F(MediaRouterDesktopTest, TestProvideSinks) {
       static_cast<MediaRouterDesktop*>(router());
   media_router_desktop->ProvideSinks(provider_name, sinks);
   base::RunLoop().RunUntilIdle();
+}
+
+// Tests that auto-join and Cast SDK join requests are routed to the extension
+// MediaRouteProvider.
+TEST_F(MediaRouterDesktopTest, SendCastJoinRequestsToExtension) {
+  TestJoinRoute(kAutoJoinPresentationId);
+  TestJoinRoute(kCastPresentationIdPrefix + std::string("123"));
 }
 
 }  // namespace media_router
