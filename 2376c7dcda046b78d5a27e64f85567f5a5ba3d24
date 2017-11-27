@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc7b99e6_b41945bb",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-27T20:26:43Z",
+      "side": 1,
+      "message": "Do we also need an external observer interface? This is only for the extensions API, no?",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 43
+      },
+      "revId": "2376c7dcda046b78d5a27e64f85567f5a5ba3d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f3dd13_410c47d0",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-27T20:26:43Z",
+      "side": 1,
+      "message": "Remove extra space",
+      "range": {
+        "startLine": 29,
+        "startChar": 30,
+        "endLine": 29,
+        "endChar": 31
+      },
+      "revId": "2376c7dcda046b78d5a27e64f85567f5a5ba3d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffad335_854d97c6",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-27T20:26:43Z",
+      "side": 1,
+      "message": "Does it make sense to pass the observers in at construction time? Do we always know this then? Is there never a case when an observer will want to add/remove itself at runtime?\n\n(The usual pattern seems to be Add/Remove methods.)",
+      "range": {
+        "startLine": 31,
+        "startChar": 25,
+        "endLine": 31,
+        "endChar": 37
+      },
+      "revId": "2376c7dcda046b78d5a27e64f85567f5a5ba3d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
