@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b2be512a_6470c494",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-27T22:58:50Z",
+      "side": 1,
+      "message": "No square brackets, but the latter.",
+      "parentUuid": "989b0287_f9b4be7d",
+      "revId": "caa6d3c4b19c3aa7edc1f3c8fd9b84a8acfbe9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "910f58bf_285ddfa5",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/disconnect-twice-in-a-row.html",
         "patchSetId": 5
