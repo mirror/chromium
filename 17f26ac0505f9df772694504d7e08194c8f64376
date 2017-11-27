@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82a7adbd_efda2ce8",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-27T22:06:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f16dcbf9_1f9c303a",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 32
+      },
+      "revId": "17f26ac0505f9df772694504d7e08194c8f64376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5318337_26ca9d50",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 24
@@ -45,6 +69,30 @@
       "revId": "17f26ac0505f9df772694504d7e08194c8f64376",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3ff379_6282ee12",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-27T22:06:43Z",
+      "side": 1,
+      "message": "Last time I tried this I hit DCHECK on reconnect here (that\u0027s why SetInstance(nullptr) is required):\nhttps://cs.chromium.org/chromium/src/components/arc/connection_holder.h?q\u003dcomponents/arc/connection_holder.h\u0026l\u003d133",
+      "parentUuid": "b5318337_26ca9d50",
+      "range": {
+        "startLine": 413,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 1
+      },
+      "revId": "17f26ac0505f9df772694504d7e08194c8f64376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
