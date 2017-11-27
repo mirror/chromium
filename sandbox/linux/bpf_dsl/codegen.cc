@@ -54,8 +54,7 @@ const CodeGen::Node CodeGen::kNullNode;
 CodeGen::CodeGen() : program_(), equivalent_(), memos_() {
 }
 
-CodeGen::~CodeGen() {
-}
+CodeGen::~CodeGen() = default;
 
 CodeGen::Program CodeGen::Compile(CodeGen::Node head) {
   return Program(program_.rbegin() + Offset(head), program_.rend());

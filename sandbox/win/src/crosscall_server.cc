@@ -301,8 +301,8 @@ Dispatcher* Dispatcher::OnMessageReady(IPCParams* ipc,
   return nullptr;
 }
 
-Dispatcher::Dispatcher() {}
+Dispatcher::Dispatcher() = default;
 
-Dispatcher::~Dispatcher() {}
+Dispatcher::~Dispatcher() = default;
 
 }  // namespace sandbox
