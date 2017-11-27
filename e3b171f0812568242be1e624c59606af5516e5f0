@@ -70,6 +70,30 @@
       "revId": "e3b171f0812568242be1e624c59606af5516e5f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30120c88_4a407ffb",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-27T01:55:25Z",
+      "side": 0,
+      "message": "+1 to split refactoring and  behavior change.",
+      "parentUuid": "b3cb978f_be4aedab",
+      "range": {
+        "startLine": 1239,
+        "startChar": 6,
+        "endLine": 1240,
+        "endChar": 35
+      },
+      "revId": "e3b171f0812568242be1e624c59606af5516e5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
