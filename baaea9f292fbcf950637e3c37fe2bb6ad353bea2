@@ -16,6 +16,23 @@
       "revId": "baaea9f292fbcf950637e3c37fe2bb6ad353bea2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f46df90_0ed2297f",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-27T23:30:53Z",
+      "side": 1,
+      "message": "When you add code that actually calls this function, please make sure to add a unit-test to make sure the caller can deal with both url and non-url return strings.",
+      "revId": "baaea9f292fbcf950637e3c37fe2bb6ad353bea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
