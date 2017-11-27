@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23f65226_02a8187f",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-27T16:58:07Z",
+      "side": 1,
+      "message": "It feels like these should really be null pointers, and we should fix VRDisplay.cpp to handle the eye parameters being null.",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
