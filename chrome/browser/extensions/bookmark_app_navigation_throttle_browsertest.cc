@@ -98,6 +98,19 @@ content::RenderFrameHost* GetIFrame(content::WebContents* web_contents) {
   return *it;
 }
 
+void ExecuteContextMenuLinkCommandAndWait(content::WebContents* web_contents,
+                                          const GURL& target_url,
+                                          int command_id) {
+  auto observer = GetTestNavigationObserver(target_url);
+  content::ContextMenuParams params;
+  params.page_url = web_contents->GetLastCommittedURL();
+  params.link_url = target_url;
+  TestRenderViewContextMenu menu(web_contents->GetMainFrame(), params);
+  menu.Init();
+  menu.ExecuteCommand(command_id, 0 /* event_flags */);
+  observer->WaitForNavigationFinished();
+}
+
 // Creates an <a> element, sets its href and target to |link_url| and |target|
 // respectively, adds it to the DOM, and clicks on it. Returns once |target_url|
 // has loaded.
@@ -292,6 +305,32 @@ class BookmarkAppNavigationThrottleBrowserTest : public ExtensionBrowserTest {
     EXPECT_EQ(initial_tab,
               browser()->tab_strip_model()->GetActiveWebContents());
     EXPECT_EQ(initial_url, initial_tab->GetLastCommittedURL());
+  }
+
+  // Checks that, after running |action|, a new tab is opened with |target_url|,
+  // the initial tab is still focused, and that the initial tab didn't
+  // navigate.
+  void TestTabActionOpensBackgroundTab(const GURL& target_url,
+                                       const base::Closure& action) {
+    size_t num_browsers = chrome::GetBrowserCount(profile());
+    int num_tabs = browser()->tab_strip_model()->count();
+    content::WebContents* initial_tab =
+        browser()->tab_strip_model()->GetActiveWebContents();
+    GURL initial_url = initial_tab->GetLastCommittedURL();
+
+    action.Run();
+
+    EXPECT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
+    EXPECT_EQ(browser(), chrome::FindLastActive());
+    EXPECT_EQ(++num_tabs, browser()->tab_strip_model()->count());
+    EXPECT_EQ(initial_tab,
+              browser()->tab_strip_model()->GetActiveWebContents());
+    EXPECT_EQ(initial_url, initial_tab->GetLastCommittedURL());
+
+    content::WebContents* new_tab =
+        browser()->tab_strip_model()->GetWebContentsAt(num_tabs - 1);
+    EXPECT_NE(new_tab, initial_tab);
+    EXPECT_EQ(target_url, new_tab->GetLastCommittedURL());
   }
 
   // Checks that, after running |action|, the initial tab's window doesn't have
@@ -860,6 +899,65 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest, Fetch) {
       },
       browser()->tab_strip_model()->GetActiveWebContents(),
       embedded_test_server()->GetURL(kAppUrlHost, kInScopeUrlPath)));
+}
+
+// Tests that clicking "Open link in new tab" to an in-scope URL opens a new
+// tab in the background.
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       ContextMenuNewTab) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  const GURL app_url = embedded_test_server()->GetURL(kAppUrlHost, kAppUrlPath);
+  TestTabActionOpensBackgroundTab(
+      app_url, base::Bind(&ExecuteContextMenuLinkCommandAndWait,
+                          browser()->tab_strip_model()->GetActiveWebContents(),
+                          app_url, IDC_CONTENT_CONTEXT_OPENLINKNEWTAB));
+}
+
+// Tests that clicking "Open link in new window" to an in-scope URL opens a new
+// window in the foreground.
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       ContextMenuNewWindow) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  size_t num_browsers = chrome::GetBrowserCount(profile());
+  int num_tabs = browser()->tab_strip_model()->count();
+  content::WebContents* initial_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  GURL initial_url = initial_tab->GetLastCommittedURL();
+
+  const GURL app_url = embedded_test_server()->GetURL(kAppUrlHost, kAppUrlPath);
+  ExecuteContextMenuLinkCommandAndWait(initial_tab, app_url,
+                                       IDC_CONTENT_CONTEXT_OPENLINKNEWWINDOW);
+
+  EXPECT_EQ(++num_browsers, chrome::GetBrowserCount(profile()));
+
+  Browser* new_window = chrome::FindLastActive();
+  EXPECT_NE(new_window, browser());
+  EXPECT_FALSE(new_window->is_app());
+  EXPECT_EQ(app_url, new_window->tab_strip_model()
+                         ->GetActiveWebContents()
+                         ->GetLastCommittedURL());
+
+  EXPECT_EQ(num_tabs, browser()->tab_strip_model()->count());
+  EXPECT_EQ(initial_url, initial_tab->GetLastCommittedURL());
+}
+
+// Tests that clicking "Open link in new tab" in an app to an in-scope URL opens
+// a new foreground tab in a regular browser window.
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       InAppContextMenuNewTab) {
+  InstallTestBookmarkApp();
+  Browser* app_browser = OpenTestBookmarkApp();
+
+  const GURL app_url = embedded_test_server()->GetURL(kAppUrlHost, kAppUrlPath);
+  TestAppActionOpensForegroundTab(
+      app_browser, app_url,
+      base::Bind(&ExecuteContextMenuLinkCommandAndWait,
+                 app_browser->tab_strip_model()->GetActiveWebContents(),
+                 app_url, IDC_CONTENT_CONTEXT_OPENLINKNEWTAB));
 }
 
 // Tests that clicking "Open link in incognito window" to an in-scope URL opens
