@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c0a6895_3806a3ee",
+        "filename": "chrome/browser/resources/cryptotoken/signer.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1253854
+      },
+      "writtenOn": "2017-11-27T22:59:29Z",
+      "side": 1,
+      "message": "ddp\u003d\u003d",
+      "revId": "4c41f8611da5b49a1ff9f540b827469cd11b8473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
