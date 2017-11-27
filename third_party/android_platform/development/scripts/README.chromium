@@ -1,0 +1,8 @@
+Name: scripts
+Version: 0
+License: BSD
+Short Name: scripts
+Security Critical: no
+
+Description:
+This contains scripts used to symbolize stacktraces.

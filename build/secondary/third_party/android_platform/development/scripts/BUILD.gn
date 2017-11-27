@@ -17,5 +17,6 @@ group("stack_py") {
     "${android_tool_prefix}addr2line",
     "${android_tool_prefix}objdump",
     "${android_tool_prefix}c++filt",
+    "//third_party/llvm-build/Release+Asserts/bin/llvm-symbolizer",
   ]
 }
