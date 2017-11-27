@@ -46,7 +46,7 @@ CryptoFramer::CryptoFramer()
   Clear();
 }
 
-CryptoFramer::~CryptoFramer() {}
+CryptoFramer::~CryptoFramer() = default;
 
 // static
 std::unique_ptr<CryptoHandshakeMessage> CryptoFramer::ParseMessage(

@@ -62,7 +62,7 @@ class TestProofVerifierChromium : public ProofVerifierChromium {
     scoped_root_.Reset(root_cert.get());
   }
 
-  ~TestProofVerifierChromium() override {}
+  ~TestProofVerifierChromium() override = default;
 
   CertVerifier* cert_verifier() { return cert_verifier_.get(); }
 

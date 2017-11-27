@@ -28,7 +28,7 @@ Aes128GcmDecrypter::Aes128GcmDecrypter()
   static_assert(kNonceSize <= kMaxNonceSize, "nonce size too big");
 }
 
-Aes128GcmDecrypter::~Aes128GcmDecrypter() {}
+Aes128GcmDecrypter::~Aes128GcmDecrypter() = default;
 
 uint32_t Aes128GcmDecrypter::cipher_id() const {
   return TLS1_CK_AES_128_GCM_SHA256;

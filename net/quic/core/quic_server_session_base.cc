@@ -32,7 +32,7 @@ QuicServerSessionBase::QuicServerSessionBase(
       last_scup_time_(QuicTime::Zero()),
       last_scup_packet_number_(0) {}
 
-QuicServerSessionBase::~QuicServerSessionBase() {}
+QuicServerSessionBase::~QuicServerSessionBase() = default;
 
 void QuicServerSessionBase::Initialize() {
   crypto_stream_.reset(

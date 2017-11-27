@@ -60,7 +60,7 @@ QuicPacketHeader::QuicPacketHeader()
 
 QuicPacketHeader::QuicPacketHeader(const QuicPacketHeader& other) = default;
 
-QuicPacketHeader::~QuicPacketHeader() {}
+QuicPacketHeader::~QuicPacketHeader() = default;
 
 QuicPublicResetPacket::QuicPublicResetPacket()
     : connection_id(0), nonce_proof(0) {}
@@ -78,7 +78,7 @@ QuicVersionNegotiationPacket::QuicVersionNegotiationPacket(
 QuicVersionNegotiationPacket::QuicVersionNegotiationPacket(
     const QuicVersionNegotiationPacket& other) = default;
 
-QuicVersionNegotiationPacket::~QuicVersionNegotiationPacket() {}
+QuicVersionNegotiationPacket::~QuicVersionNegotiationPacket() = default;
 
 std::ostream& operator<<(std::ostream& os, const QuicPacketHeader& header) {
   os << "{ connection_id: " << header.connection_id
@@ -235,7 +235,7 @@ SerializedPacket::SerializedPacket(SerializedPacket&& other)
   retransmittable_frames.swap(other.retransmittable_frames);
 }
 
-SerializedPacket::~SerializedPacket() {}
+SerializedPacket::~SerializedPacket() = default;
 
 void ClearSerializedPacket(SerializedPacket* serialized_packet) {
   if (!serialized_packet->retransmittable_frames.empty()) {
