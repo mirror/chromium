@@ -7,6 +7,7 @@
 
 #include <cstdint>
 
+#include "base/base_export.h"
 #include "build/build_config.h"
 
 #if defined(ARCH_CPU_ARMEL)
@@ -14,8 +15,8 @@ namespace base {
 namespace android {
 
 // Start and end of .text, respectively.
-extern const size_t kStartOfText;
-extern const size_t kEndOfText;
+BASE_EXPORT extern const size_t kStartOfText;
+BASE_EXPORT extern const size_t kEndOfText;
 
 // Basic CHECK()s ensuring that the symbols above are correctly set.
 void CheckOrderingSanity();
