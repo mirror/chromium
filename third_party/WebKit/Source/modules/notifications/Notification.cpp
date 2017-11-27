@@ -172,8 +172,7 @@ void Notification::PrepareShow() {
     return;
   }
 
-  if (NotificationManager::From(GetExecutionContext())
-          ->GetPermissionStatus(GetExecutionContext()) !=
+  if (NotificationManager::From(GetExecutionContext())->GetPermissionStatus() !=
       mojom::blink::PermissionStatus::GRANTED) {
     DispatchErrorEvent();
     return;
@@ -187,11 +186,17 @@ void Notification::PrepareShow() {
 void Notification::DidLoadResources(NotificationResourcesLoader* loader) {
   DCHECK_EQ(loader, loader_.Get());
 
-  SecurityOrigin* origin = GetExecutionContext()->GetSecurityOrigin();
+  ExecutionContext* execution_context = GetExecutionContext();
+  SecurityOrigin* origin = execution_context->GetSecurityOrigin();
   DCHECK(origin);
 
-  GetWebNotificationManager()->Show(WebSecurityOrigin(origin), data_,
-                                    loader->GetResources(), this);
+  if (RuntimeEnabledFeatures::NotificationsWithMojoEnabled()) {
+    NotificationManager::From(execution_context)
+        ->DisplayNonPersistentNotification(data_.title);
+  } else {
+    GetWebNotificationManager()->Show(WebSecurityOrigin(origin), data_,
+                                      loader->GetResources(), this);
+  }
   loader_.Clear();
 
   state_ = State::kShowing;
@@ -210,7 +215,11 @@ void Notification::close() {
                                               WrapPersistent(this)));
     state_ = State::kClosing;
 
-    GetWebNotificationManager()->Close(this);
+    if (RuntimeEnabledFeatures::NotificationsWithMojoEnabled()) {
+      // TODO(crbug.com/595685): Implement Close path via Mojo.
+    } else {
+      GetWebNotificationManager()->Close(this);
+    }
     return;
   }
 
@@ -380,7 +389,7 @@ String Notification::permission(ExecutionContext* context) {
     return PermissionString(mojom::blink::PermissionStatus::DENIED);
 
   mojom::blink::PermissionStatus status =
-      NotificationManager::From(context)->GetPermissionStatus(context);
+      NotificationManager::From(context)->GetPermissionStatus();
 
   // Permission can only be requested from top-level frames and same-origin
   // iframes. This should be reflected in calls getting permission status.

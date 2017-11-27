@@ -29,7 +29,7 @@ NotificationManager* NotificationManager::From(
   NotificationManager* manager = static_cast<NotificationManager*>(
       Supplement<ExecutionContext>::From(execution_context, SupplementName()));
   if (!manager) {
-    manager = new NotificationManager();
+    manager = new NotificationManager(*execution_context);
     Supplement<ExecutionContext>::ProvideTo(*execution_context,
                                             SupplementName(), manager);
   }
@@ -42,12 +42,12 @@ const char* NotificationManager::SupplementName() {
   return "NotificationManager";
 }
 
-NotificationManager::NotificationManager() {}
+NotificationManager::NotificationManager(ExecutionContext& execution_context)
+    : Supplement<ExecutionContext>(execution_context) {}
 
 NotificationManager::~NotificationManager() {}
 
-mojom::blink::PermissionStatus NotificationManager::GetPermissionStatus(
-    ExecutionContext* execution_context) {
+mojom::blink::PermissionStatus NotificationManager::GetPermissionStatus() {
   if (!notification_service_) {
     Platform::Current()->GetInterfaceProvider()->GetInterface(
         mojo::MakeRequest(&notification_service_));
@@ -55,7 +55,7 @@ mojom::blink::PermissionStatus NotificationManager::GetPermissionStatus(
 
   mojom::blink::PermissionStatus permission_status;
   if (!notification_service_->GetPermissionStatus(
-          execution_context->GetSecurityOrigin()->ToString(),
+          GetSupplementable()->GetSecurityOrigin()->ToString(),
           &permission_status)) {
     NOTREACHED();
     return mojom::blink::PermissionStatus::DENIED;
@@ -106,6 +106,17 @@ void NotificationManager::OnPermissionRequestComplete(
 
 void NotificationManager::OnPermissionServiceConnectionError() {
   permission_service_.reset();
+}
+
+void NotificationManager::DisplayNonPersistentNotification(
+    const String& title) {
+  if (!notification_service_) {
+    Platform::Current()->GetInterfaceProvider()->GetInterface(
+        mojo::MakeRequest(&notification_service_));
+  }
+  // TODO(crbug.com/595685): Pass the rest of the notification properties here.
+  notification_service_->DisplayNonPersistent(
+      GetSupplementable()->GetSecurityOrigin(), title);
 }
 
 void NotificationManager::Trace(blink::Visitor* visitor) {

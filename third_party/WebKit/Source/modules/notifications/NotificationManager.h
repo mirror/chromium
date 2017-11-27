@@ -36,16 +36,20 @@ class NotificationManager final
 
   // Returns the notification permission status of the current origin. This
   // method is synchronous to support the Notification.permission getter.
-  mojom::blink::PermissionStatus GetPermissionStatus(ExecutionContext*);
+  mojom::blink::PermissionStatus GetPermissionStatus();
 
   ScriptPromise RequestPermission(
       ScriptState*,
       NotificationPermissionCallback* deprecated_callback);
 
+  // Shows a notification that is not tied to any service worker.
+  // Click and close events will be delivered back to the notification object.
+  void DisplayNonPersistentNotification(const String& title);
+
   virtual void Trace(blink::Visitor*);
 
  private:
-  NotificationManager();
+  explicit NotificationManager(ExecutionContext&);
 
   void OnPermissionRequestComplete(ScriptPromiseResolver*,
                                    NotificationPermissionCallback*,
