@@ -16,6 +16,24 @@
       "revId": "f6539d5cbe9bf3297569ac40341b9dea87b8cf41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37982c24_2960861d",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-11-27T05:41:31Z",
+      "side": 1,
+      "message": "Shall I try to make this return type modification from Window to WindowProxy?",
+      "parentUuid": "4effce8e_d9bd963d",
+      "revId": "f6539d5cbe9bf3297569ac40341b9dea87b8cf41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
