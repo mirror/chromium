@@ -2558,4 +2558,8 @@ const char kIsolateOrigins[] = "site_isolation.isolate_origins";
 // Boolean that specifies opting into --site-per-process (full Site Isolation).
 const char kSitePerProcess[] = "site_isolation.site_per_process";
 
+// A list of URLs (for U2F) or domains (for webauthn) that automatically permit
+// direct attestation of a Security Key.
+const char kSecurityKeyPermitAttestation[] = "securitykey.permit_attestation";
+
 }  // namespace prefs

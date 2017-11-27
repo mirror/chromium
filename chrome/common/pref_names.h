@@ -898,6 +898,7 @@ extern const char kPrefetchUsageMixedCount[];
 #endif
 
 extern const char kMediaEngagementSchemaVersion[];
+extern const char kSecurityKeyPermitAttestation[];
 
 // Preferences for recording metrics about tab and window usage.
 extern const char kTabStatsTotalTabCountMax[];

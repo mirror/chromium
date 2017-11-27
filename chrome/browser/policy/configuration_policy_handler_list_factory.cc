@@ -340,6 +340,9 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kPromptForDownloadLocation,
     prefs::kPromptForDownload,
     base::Value::Type::BOOLEAN },
+  { key::kSecurityKeyPermitAttestation,
+    prefs::kSecurityKeyPermitAttestation,
+    base::Value::Type::LIST },
 
   // First run import.
   { key::kImportBookmarks,
