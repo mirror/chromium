@@ -16,6 +16,24 @@
       "revId": "4672daf133f1b292b97637e48d373b9496720fa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6101518d_b229ac7a",
+        "filename": "build/install-build-deps.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-27T21:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c131f291_80701811",
+      "revId": "4672daf133f1b292b97637e48d373b9496720fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
