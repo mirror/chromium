@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6916b128_943ae6ad",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertParagraphSeparatorCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-27T02:07:01Z",
+      "side": 0,
+      "message": "|if (visible_pos.IsNotNull() \u0026\u0026 visible_pos.DeepEquivalent().AnchorNode()-\u003eGetLayoutObject()-\u003eIsBR())| is better.",
+      "revId": "97ccc87eaf42b22a2f586f03510fb134fbfe231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
