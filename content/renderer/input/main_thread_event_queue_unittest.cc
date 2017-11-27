@@ -39,7 +39,7 @@ bool operator==(const WebTouchEvent& lhs, const WebTouchEvent& rhs) {
 }  // namespace blink
 
 namespace content {
-namespace {
+namespace main_thread_event_queue_unittest {
 
 const unsigned kRafAlignedEnabledMouse = 1;
 
@@ -48,8 +48,6 @@ const base::TimeDelta kFrameInterval = base::TimeDelta::FromMilliseconds(16);
 
 const char* kCoalescedCountHistogram =
     "Event.MainThreadEventQueue.CoalescedCount";
-
-}  // namespace
 
 class HandledTask {
  public:
@@ -1358,4 +1356,5 @@ TEST_P(MainThreadEventQueueTest, BlockingTouchMoveWithTouchEnd) {
                 .dispatch_type);
 }
 
+}  // namespace main_thread_event_queue_unittest
 }  // namespace content
