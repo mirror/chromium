@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5b106bb6_109f8fa1",
+        "filename": "ash/system/cast/tray_cast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-27T18:58:46Z",
+      "side": 1,
+      "message": "I see. Can you give me the pointer? I couldn\u0027t find it.",
+      "parentUuid": "74f171a5_275710db",
+      "revId": "fe8516b8b375d71fcfb289d3d6923294ec5dbb80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56e25a09_93a97cde",
         "filename": "chrome/browser/ui/ash/cast_config_client_media_router.cc",
         "patchSetId": 2
