@@ -88,6 +88,24 @@
       "revId": "06d67856200df4b64ed709c17f9dd040193dcbcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944f3bcf_a585aecf",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-27T16:53:05Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t mean to block progress on this change for very long. I was hoping we could drive high level clarity on the discussion in that doc in the next few days. I\u0027ll start a thread. If there\u0027s quick resolution then that can help us to know how to proceed here; otherwise I agree we should not block long term on that discussion.",
+      "parentUuid": "9c1b4c39_cc1f15ed",
+      "revId": "06d67856200df4b64ed709c17f9dd040193dcbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
