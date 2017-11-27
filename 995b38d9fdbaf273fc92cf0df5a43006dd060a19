@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9867ea73_2339d9d1",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-27T16:53:44Z",
+      "side": 1,
+      "message": "After I do image_-\u003eTransfer() and reach here,\n\nAcceleratedStaticBitmapImage::PaintImageForCurrentFrame() -\u003e\nAcceleratedStaticBitmapImage::IsValid() -\u003e\nMailboxTextureHolder::IsValid() -\u003e\nPlatform::Current()-\u003eCurrentThread() is nil, which creashes the renderer.\n\nIf I extend the check in MailboxTextureHolder::IsValid() to \nif (!Platform::Current()-\u003eCurrentThread() || thread_id_ !\u003d\n  Platform::Current()-\u003eCurrentThread()-\u003eThreadId()) { ... }\nThen IsValid() passes, but I get this error from AcceleratedStaticBitmapImage::CreateImageFromMailboxIfNeeded():\n\nSTDERR: [1:5:1127/113115.355720:FATAL:thread_restrictions.cc(105)] Check failed: \n   !g_base_sync_primitives_disallowed.Get().Get(). Waiting on a base sync primitive is not allowed on this thread to prevent jank and deadlock. If waiting on a base sync primitive is unavoidable, do it within the scope of a ScopedAllowBaseSyncPrimitives. If in a test, use ScopedAllowBaseSyncPrimitivesForTesting.",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 79
+      },
+      "revId": "995b38d9fdbaf273fc92cf0df5a43006dd060a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
