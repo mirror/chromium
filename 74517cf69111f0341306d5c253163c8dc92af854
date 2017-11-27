@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52ebbde3_c1e2633e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3078,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:14:31Z",
+      "side": 0,
+      "message": "Why do we need to remove this?",
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

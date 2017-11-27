@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08d29eda_0a6d1005",
+        "filename": "chrome/browser/media/media_engagement_autoplay_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:14:31Z",
+      "side": 1,
+      "message": "I think we need another test that checks that an origin with enough visits and in the list will not be allowed to autoplay.",
+      "revId": "9d364af73ca72bdc356a32e79a8692ed8f502777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ad0bc7_7b26b5f9",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:14:31Z",
+      "side": 1,
+      "message": "If it doesn\u0027t have high engagement, shouldn\u0027t we check the number of visits as we only want to do this while the number of visits is below the threshold?",
+      "revId": "9d364af73ca72bdc356a32e79a8692ed8f502777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610919d8_22d6ddfc",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:14:31Z",
+      "side": 1,
+      "message": "Maybe this should be in the parent CL with some unit tests? (GetInstance() doesn\u0027t matter)",
+      "revId": "9d364af73ca72bdc356a32e79a8692ed8f502777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c21187e_bc22f0fc",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5168,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:14:31Z",
+      "side": 1,
+      "message": "I assumed that we needed to clear only when the origin was used. I\u0027m not sure I\u0027m following the intent of the change. Maybe with a test? :)",
+      "revId": "9d364af73ca72bdc356a32e79a8692ed8f502777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
