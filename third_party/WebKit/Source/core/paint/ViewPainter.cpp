@@ -90,9 +90,9 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
       PaintChunkProperties properties(layout_view_.FirstFragment()
                                           .GetRarePaintData()
                                           ->ContentsProperties());
-      scoped_scroll_property.emplace(
-          paint_info.context.GetPaintController(), *display_item_client,
-          DisplayItem::kDocumentBackground, properties);
+      scoped_scroll_property.emplace(paint_info.context.GetPaintController(),
+                                     properties, *display_item_client,
+                                     DisplayItem::kDocumentBackground);
     }
   }
 
