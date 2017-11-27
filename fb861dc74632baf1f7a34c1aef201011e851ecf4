@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b78c98f5_40f001ba",
+        "filename": "ui/wm/core/shadow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-27T18:23:36Z",
+      "side": 1,
+      "message": "the adjective \"effective\" here is being used in opposition to \"desired\" in that it\u0027s a permuted version of the passed-in elevation, but you seem to be reusing it to mean something like \"current/former\".\n\nPerhaps the more generic way to make sure this problem doesn\u0027t crop up is to hold onto the last |details| and compare the new |details| against that?",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 34
+      },
+      "revId": "fb861dc74632baf1f7a34c1aef201011e851ecf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
