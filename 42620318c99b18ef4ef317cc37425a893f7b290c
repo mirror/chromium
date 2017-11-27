@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2e90898d_a284490d",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/touch-pointer-event-properties.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-11-27T16:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9435ede0_aaa09b8f",
+      "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7272d4_2f1efca9",
         "filename": "third_party/WebKit/LayoutTests/fast/events/touch/touch-browser-zoom-scales-radius.html",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bcb9df_3e0c56da",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/touch/touch-browser-zoom-scales-radius.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-11-27T16:55:59Z",
+      "side": 1,
+      "message": "Resolved by modifying |adjusted_radius| in CreateDomTouch().",
+      "parentUuid": "7a7272d4_2f1efca9",
+      "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +158,24 @@
       "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff8c2e6_de0f5981",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/touch/touch-fractional-coordinates.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-11-27T16:55:59Z",
+      "side": 1,
+      "message": "Solved by modifying |adjusted_radius| in CreateDomTouch().",
+      "parentUuid": "fd62c2dc_e84e8173",
+      "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
