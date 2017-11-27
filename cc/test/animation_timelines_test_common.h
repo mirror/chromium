@@ -257,7 +257,8 @@ class AnimationTimelinesTest : public testing::Test {
 
   int NextTestLayerId();
 
-  bool CheckTickerTimelineNeedsPushProperties(bool needs_push_properties) const;
+  bool CheckTickerTimelineNeedsPushProperties(bool needs_push_properties,
+                                              int ticker_id) const;
 
   void PushProperties();
 

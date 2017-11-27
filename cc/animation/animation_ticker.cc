@@ -16,8 +16,9 @@
 
 namespace cc {
 
-AnimationTicker::AnimationTicker(AnimationPlayer* animation_player)
+AnimationTicker::AnimationTicker(AnimationPlayer* animation_player, int id)
     : animation_player_(animation_player),
+      id_(id),
       element_animations_(),
       needs_to_start_animations_(false),
       scroll_offset_animation_was_interrupted_(false),
@@ -28,6 +29,16 @@ AnimationTicker::AnimationTicker(AnimationPlayer* animation_player)
 
 AnimationTicker::~AnimationTicker() {
   DCHECK(!has_bound_element_animations());
+}
+
+std::unique_ptr<AnimationTicker> AnimationTicker::Create(
+    AnimationPlayer* animation_player,
+    int id) {
+  return base::MakeUnique<AnimationTicker>(animation_player, id);
+}
+
+std::unique_ptr<AnimationTicker> AnimationTicker::CreateImplInstance() const {
+  return AnimationTicker::Create(animation_player_, id());
 }
 
 void AnimationTicker::SetNeedsPushProperties() {
@@ -709,7 +720,8 @@ void AnimationTicker::PushPropertiesTo(AnimationTicker* animation_ticker_impl) {
     if (animation_ticker_impl->has_attached_element())
       animation_ticker_impl->animation_player_->DetachElement();
     if (element_id_)
-      animation_ticker_impl->animation_player_->AttachElement(element_id_);
+      animation_ticker_impl->animation_player_->AttachElementWithTicker(
+          element_id_, id_);
   }
 
   // If neither main nor impl have any animations, there is nothing further to
@@ -741,6 +753,10 @@ void AnimationTicker::PushPropertiesTo(AnimationTicker* animation_ticker_impl) {
   scroll_offset_animation_was_interrupted_ = false;
 
   animation_ticker_impl->UpdateTickingState(UpdateTickingType::NORMAL);
+}
+
+void AnimationTicker::SetAnimationPlayer(AnimationPlayer* animation_player) {
+  animation_player_ = animation_player;
 }
 
 std::string AnimationTicker::AnimationsToString() const {
