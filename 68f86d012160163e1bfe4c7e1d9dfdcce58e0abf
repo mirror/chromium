@@ -16,6 +16,24 @@
       "revId": "68f86d012160163e1bfe4c7e1d9dfdcce58e0abf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f1f7a8_b38e92f9",
+        "filename": "third_party/WebKit/Source/core/paint/AdjustPaintOffsetScope.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-27T02:25:08Z",
+      "side": 1,
+      "message": "Yeah, it looks like LayoutTableCell has offset to the LayoutTableSection it belongs to, while NG fragment offset is always relative to its parent. I\u0027ll need to consult with Ian, David, and a few others. Filed crbug.com/788590 to get their attention.\n\nNote, this issue adds these two lines only. Other differences come from that, in NG, AdjustPaintOffsetScope handles LayoutInline too. I can adjust caller code not to use AdjustPaintOffsetScope for LayoutInline if that is preferred.",
+      "parentUuid": "7b46b98a_0f4621b1",
+      "revId": "68f86d012160163e1bfe4c7e1d9dfdcce58e0abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
