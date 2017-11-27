@@ -444,6 +444,12 @@ static PositionTemplate<Strategy> NextBoundaryAlgorithm(
           start.AnchorNode(), start.OffsetInContainerNode());
   const PositionTemplate<Strategy> search_end =
       PositionTemplate<Strategy>::LastPositionInNode(*boundary);
+  if (search_start > search_end) {
+    // Reached by
+    // VisibleUnitsTest.NextBoundaryOfEditableTableWithLeadingSpaceInOutput
+    return search_end;
+  }
+
   // Treat bullets used in the text security mode as regular characters when
   // looking for boundaries
   TextIteratorAlgorithm<Strategy> it(
