@@ -45,6 +45,30 @@
       "revId": "03886db678ee18b3165b3b2ff2caead661b612e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9abd642_1fb9007b",
+        "filename": "media/capture/video_capture_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-27T17:42:26Z",
+      "side": 1,
+      "message": "Yes, I agree.\nWe do want to eventually get back to supporting video buffers other than CPU, but I am not sure if/when/how and whether or not this will involve an enum like this one.",
+      "parentUuid": "ea455297_c7f72f4a",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "03886db678ee18b3165b3b2ff2caead661b612e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
