@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34b66c98_e0a83c63",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-27T21:12:54Z",
+      "side": 1,
+      "message": "The latency depends a lot on how long the user\u0027s have Chrome open for until they enter VR. If they enter VR immediately after launching Chrome and the component is not installed the expectation is at least 6mins. However, it could be much longer depending on the component update queuing and data connection. I think it can be even longer than 1h. But if it is that long we have a problem and we don\u0027t get much out of more precise numbers. I picked this upper bound to get more granularity for the lower values. If the component is installed it takes a very short amount of time until the component infrastructure becomes aware of it and report the readiness. That\u0027s why I picked the lower bound. Everything below that should be fine for us.",
+      "parentUuid": "b78807b0_c24b8f7e",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 62
+      },
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf972f9c_5c1662b6",
         "filename": "chrome/browser/vr/metrics_helper.cc",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-27T20:47:48Z",
       "side": 1,
       "message": "If you don\u0027t have a need for the extra granularity, I\u0027d prefer you use 50 buckets instead.",
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c003a570_27c51761",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-27T21:12:54Z",
+      "side": 1,
+      "message": "I chose 100 since that gives us about minute granularity at the 6min mark IIUC. 50 buckets would be around 1.5min granularity. We could properly work with that. Are you concerned about the memory impact?",
+      "parentUuid": "bf972f9c_5c1662b6",
       "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
