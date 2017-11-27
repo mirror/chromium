@@ -22,6 +22,30 @@
       "revId": "8e7bc905a5d787745bc1f165cc107934498fe51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1f4ea5_05a408d0",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-27T15:04:50Z",
+      "side": 1,
+      "message": "This is when the pointer down occurs. So yes you can\u0027t create a context in between when the pointer down goes down and you get pointer moves. Are you thinking that you might create the context during the pointerdown?\n\nie; it isn\u0027t when the listener is bound.",
+      "parentUuid": "2597d02c_18534614",
+      "range": {
+        "startLine": 172,
+        "startChar": 35,
+        "endLine": 172,
+        "endChar": 61
+      },
+      "revId": "8e7bc905a5d787745bc1f165cc107934498fe51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
