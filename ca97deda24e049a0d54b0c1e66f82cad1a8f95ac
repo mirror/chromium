@@ -22,6 +22,30 @@
       "revId": "ca97deda24e049a0d54b0c1e66f82cad1a8f95ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb66ec0_b281b903",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-27T17:11:17Z",
+      "side": 1,
+      "message": "This seems to be no problem with enabling the feature after all. The failure reproduces on my release build (before I only tried Debug), and from the flashing screen I could tell that the UI was correct, with the feature enabled. I will dig into what is the problem with release tests, but likely won\u0027t fix that today any more.",
+      "parentUuid": "31c71702_c4b45329",
+      "range": {
+        "startLine": 165,
+        "startChar": 5,
+        "endLine": 165,
+        "endChar": 19
+      },
+      "revId": "ca97deda24e049a0d54b0c1e66f82cad1a8f95ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
