@@ -443,6 +443,30 @@
     },
     {
       "key": {
+        "uuid": "5a18139b_5cce7790",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-27T23:49:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e218f823_403a8624",
+      "range": {
+        "startLine": 301,
+        "startChar": 24,
+        "endLine": 301,
+        "endChar": 41
+      },
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18d4fd9c_53b3b61a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 21
