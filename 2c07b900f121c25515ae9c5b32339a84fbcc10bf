@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af9df406_a7600ed0",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T06:57:20Z",
+      "side": 1,
+      "message": "One caveat of just calling tryImportScanEntries_ is, it\u0027s possible that sync of a very small file triggers a retry in vain and aborts the backup even if succeeding syncs could spare enough space for it to finish.\n\nIdea: how about counting the number of successfully imported files and wait until this amount of events are received? It\u0027s still not the best effort considering the situation that two or more imports are in progress, but I\u0027d say it a reasonable compromise.",
+      "range": {
+        "startLine": 388,
+        "startChar": 17,
+        "endLine": 388,
+        "endChar": 38
+      },
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508f5df3_af8591b5",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T06:57:20Z",
+      "side": 1,
+      "message": "I think addEventListener should be done at the very end of the execution of this function, or the same tryImportScanEntries_ can be executed simultaneously (ignore this comment if you adopt the above idea)",
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f4b6a66_def51f9e",
+        "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T06:57:20Z",
+      "side": 1,
+      "message": "nit: Remove only handler.",
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b90763_1bebff25",
+        "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T06:57:20Z",
+      "side": 1,
+      "message": "Let\u0027s avoid using timeout in tests. It could introduce timing issues.\nHow about adding dispatchEvent(type) function, and call it from the test?",
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

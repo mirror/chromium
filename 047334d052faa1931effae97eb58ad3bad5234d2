@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e903f9a8_b3964cb5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T06:57:20Z",
+      "side": 1,
+      "message": "Add\nTest: \u003ctests you performed\u003e",
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c952b19_45baaf16",
         "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_strings.cc",
         "patchSetId": 5
@@ -93,6 +110,29 @@
       "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c9dc0b4_9700a55b",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T06:57:20Z",
+      "side": 1,
+      "message": "It resolving the TODO necessary for infini-backup? If not why don\u0027t you split CLs to minimize UI changes this CL introduces?",
+      "range": {
+        "startLine": 103,
+        "startChar": 33,
+        "endLine": 103,
+        "endChar": 39
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -517,6 +557,23 @@
       "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b59a81a_5965e2c8",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-27T06:57:20Z",
+      "side": 1,
+      "message": "Is it possible to detect the failure reason and push the entry only when the error is retryable?\nYou may leave TODO if not.",
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
