@@ -170,4 +170,7 @@ interface FrameHost {
   // Sent by the renderer when a navigation commits in the frame.
   DidCommitProvisionalLoad(
       DidCommitProvisionalLoadParams params);
+
+  DidCommitSameDocumentNavigation(
+      DidCommitProvisionalLoadParams params);
 };

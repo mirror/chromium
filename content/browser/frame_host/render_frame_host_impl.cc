@@ -1532,12 +1532,7 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
     OnBeforeUnloadACK(true, approx_renderer_start_time, base::TimeTicks::Now());
   }
 
-  // If we're waiting for an unload ack from this renderer and we receive a
-  // Navigate message, then the renderer was navigating before it received the
-  // unload request.  It will either respond to the unload request soon or our
-  // timer will expire.  Either way, we should ignore this message, because we
-  // have already committed to closing this renderer.
-  if (IsWaitingForUnloadACK())
+  if (!GoThroughWithRendererCommit(validated_params.get()))
     return;
 
   if (validated_params->report_type ==
@@ -1554,67 +1549,6 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
         base::TimeTicks::Now() - validated_params->ui_timestamp,
         base::TimeDelta::FromMilliseconds(10), base::TimeDelta::FromMinutes(10),
         100);
-  }
-
-  // Attempts to commit certain off-limits URL should be caught more strictly
-  // than our FilterURL checks below.  If a renderer violates this policy, it
-  // should be killed.
-  if (!CanCommitURL(validated_params->url)) {
-    VLOG(1) << "Blocked URL " << validated_params->url.spec();
-    // Kills the process.
-    bad_message::ReceivedBadMessage(process,
-                                    bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
-    return;
-  }
-
-  // Verify that the origin passed from the renderer process is valid and can
-  // be allowed to commit in this RenderFrameHost.
-  if (!CanCommitOrigin(validated_params->origin, validated_params->url)) {
-    bad_message::ReceivedBadMessage(GetProcess(),
-                                    bad_message::RFH_INVALID_ORIGIN_ON_COMMIT);
-    return;
-  }
-
-  // Without this check, an evil renderer can trick the browser into creating
-  // a navigation entry for a banned URL.  If the user clicks the back button
-  // followed by the forward button (or clicks reload, or round-trips through
-  // session restore, etc), we'll think that the browser commanded the
-  // renderer to load the URL and grant the renderer the privileges to request
-  // the URL.  To prevent this attack, we block the renderer from inserting
-  // banned URLs into the navigation controller in the first place.
-  //
-  // TODO(crbug.com/172694): Currently, when FilterURL detects a bad URL coming
-  // from the renderer, it overwrites that URL to about:blank, which requires
-  // |validated_params| to be mutable. Once we kill the renderer instead, the
-  // signature of RenderFrameHostImpl::DidCommitProvisionalLoad can be modified
-  // to take |validated_params| by const reference.
-  process->FilterURL(false, &validated_params->url);
-  process->FilterURL(true, &validated_params->referrer.url);
-  for (std::vector<GURL>::iterator it(validated_params->redirects.begin());
-       it != validated_params->redirects.end(); ++it) {
-    process->FilterURL(false, &(*it));
-  }
-  process->FilterURL(true, &validated_params->searchable_form_url);
-
-  // Without this check, the renderer can trick the browser into using
-  // filenames it can't access in a future session restore.
-  if (!CanAccessFilesOfPageState(validated_params->page_state)) {
-    bad_message::ReceivedBadMessage(
-        GetProcess(), bad_message::RFH_CAN_ACCESS_FILES_OF_PAGE_STATE);
-    return;
-  }
-
-  // PlzNavigate
-  if (!navigation_handle_ && IsBrowserSideNavigationEnabled()) {
-    // PlzNavigate: the browser has not been notified about the start of the
-    // load in this renderer yet (e.g., for same-document navigations that start
-    // in the renderer). Do it now.
-    if (!is_loading()) {
-      bool was_loading = frame_tree_node()->frame_tree()->IsLoading();
-      is_loading_ = true;
-      frame_tree_node()->DidStartLoading(true, was_loading);
-    }
-    pending_commit_ = false;
   }
 
   // Find the appropriate NavigationHandle for this navigation.
@@ -2967,6 +2901,10 @@ void RenderFrameHostImpl::IssueKeepAliveHandle(
   }
   keep_alive_handle_factory_->Create(std::move(request));
 }
+
+void RenderFrameHostImpl::DidCommitSameDocumentNavigation(
+    std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+        validated_params) {}
 
 namespace {
 
@@ -4530,6 +4468,69 @@ mojom::FrameNavigationControl* RenderFrameHostImpl::GetNavigationControl() {
   if (!navigation_control_)
     GetRemoteAssociatedInterfaces()->GetInterface(&navigation_control_);
   return navigation_control_.get();
+}
+
+bool RenderFrameHostImpl::GoThroughWithRendererCommit(
+    FrameHostMsg_DidCommitProvisionalLoad_Params* validated_params) {
+  RenderProcessHost* process = GetProcess();
+
+  // If we're waiting for an unload ack from this renderer and we receive a
+  // Navigate message, then the renderer was navigating before it received the
+  // unload request.  It will either respond to the unload request soon or our
+  // timer will expire.  Either way, we should ignore this message, because we
+  // have already committed to closing this renderer.
+  if (IsWaitingForUnloadACK())
+    return false;
+
+  // Attempts to commit certain off-limits URL should be caught more strictly
+  // than our FilterURL checks.  If a renderer violates this policy, it
+  // should be killed.
+  if (!CanCommitURL(validated_params->url)) {
+    VLOG(1) << "Blocked URL " << validated_params->url.spec();
+    // Kills the process.
+    bad_message::ReceivedBadMessage(process,
+                                    bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
+    return false;
+  }
+
+  // Verify that the origin passed from the renderer process is valid and can
+  // be allowed to commit in this RenderFrameHost.
+  if (!CanCommitOrigin(validated_params->origin, validated_params->url)) {
+    bad_message::ReceivedBadMessage(process,
+                                    bad_message::RFH_INVALID_ORIGIN_ON_COMMIT);
+    return false;
+  }
+
+  // Without this check, an evil renderer can trick the browser into creating
+  // a navigation entry for a banned URL.  If the user clicks the back button
+  // followed by the forward button (or clicks reload, or round-trips through
+  // session restore, etc), we'll think that the browser commanded the
+  // renderer to load the URL and grant the renderer the privileges to request
+  // the URL.  To prevent this attack, we block the renderer from inserting
+  // banned URLs into the navigation controller in the first place.
+  //
+  // TODO(crbug.com/172694): Currently, when FilterURL detects a bad URL coming
+  // from the renderer, it overwrites that URL to about:blank, which requires
+  // |validated_params| to be mutable. Once we kill the renderer instead, the
+  // signature of RenderFrameHostImpl::DidCommitProvisionalLoad can be modified
+  // to take |validated_params| by const reference.
+  process->FilterURL(false, &validated_params->url);
+  process->FilterURL(true, &validated_params->referrer.url);
+  for (std::vector<GURL>::iterator it(validated_params->redirects.begin());
+       it != validated_params->redirects.end(); ++it) {
+    process->FilterURL(false, &(*it));
+  }
+  process->FilterURL(true, &validated_params->searchable_form_url);
+
+  // Without this check, the renderer can trick the browser into using
+  // filenames it can't access in a future session restore.
+  if (!CanAccessFilesOfPageState(validated_params->page_state)) {
+    bad_message::ReceivedBadMessage(
+        process, bad_message::RFH_CAN_ACCESS_FILES_OF_PAGE_STATE);
+    return false;
+  }
+
+  return true;
 }
 
 }  // namespace content
