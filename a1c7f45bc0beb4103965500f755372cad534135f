@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd445ad6_3698881c",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T22:53:03Z",
+      "side": 1,
+      "message": "Agreed, done.",
+      "parentUuid": "336a264e_08286270",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 11
+      },
+      "revId": "a1c7f45bc0beb4103965500f755372cad534135f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29db9da9_d7c120af",
         "filename": "chrome/browser/ui/tabs/tab_activity_watcher.h",
         "patchSetId": 20
