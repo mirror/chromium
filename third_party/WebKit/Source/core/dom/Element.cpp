@@ -1835,6 +1835,7 @@ void Element::AttachLayoutTree(AttachContext& context) {
   }
 
   if (!IsActiveSlotOrActiveV0InsertionPoint()) {
+    context.resolved_style = GetNonAttachedStyle();
     LayoutTreeBuilderForElement builder(*this, context.resolved_style);
     builder.CreateLayoutObjectIfNeeded();
 
@@ -1843,8 +1844,6 @@ void Element::AttachLayoutTree(AttachContext& context) {
         StoreNonLayoutObjectComputedStyle(style);
     }
   }
-
-  AddCallbackSelectors();
 
   if (HasRareData() && !GetLayoutObject() &&
       !GetElementRareData()->GetComputedStyle()) {
@@ -1865,6 +1864,9 @@ void Element::AttachLayoutTree(AttachContext& context) {
     children_context.previous_in_flow = nullptr;
   children_context.use_previous_in_flow = true;
 
+  ClearNeedsReattachLayoutTree();
+  SetNonAttachedStyle(nullptr);
+  AddCallbackSelectors();
   CreateAndAttachPseudoElementIfNeeded(kPseudoIdBefore, children_context);
 
   // When a shadow root exists, it does the work of attaching the children.
@@ -2136,8 +2138,12 @@ StyleRecalcChange Element::RecalcOwnStyle(StyleRecalcChange change) {
   }
 
   if (local_change == kReattach) {
-    SetNonAttachedStyle(std::move(new_style));
+    SetNonAttachedStyle(new_style);
     SetNeedsReattachLayoutTree();
+    if (LayoutObjectIsNeeded(*new_style) ||
+        ShouldStoreNonLayoutObjectComputedStyle(*new_style)) {
+      RecalcShadowIncludingDescendantStylesForReattach();
+    }
     return kReattach;
   }
 
@@ -2186,6 +2192,33 @@ StyleRecalcChange Element::RecalcOwnStyle(StyleRecalcChange change) {
   return local_change;
 }
 
+void Element::RecalcStyleForReattach() {
+  scoped_refptr<ComputedStyle> non_attached_style = StyleForLayoutObject();
+  SetNonAttachedStyle(non_attached_style);
+  SetNeedsReattachLayoutTree();
+  if (LayoutObjectIsNeeded(*non_attached_style) ||
+      ShouldStoreNonLayoutObjectComputedStyle(*non_attached_style)) {
+    RecalcShadowIncludingDescendantStylesForReattach();
+  }
+}
+
+void Element::RecalcShadowIncludingDescendantStylesForReattach() {
+  if (!ChildrenCanHaveStyle())
+    return;
+  if (HasCustomStyleCallbacks())
+    return;
+  SelectorFilterParentScope filterScope(*this);
+  RecalcShadowRootStylesForReattach();
+  RecalcDescendantStylesForReattach();
+}
+
+void Element::RecalcShadowRootStylesForReattach() {
+  for (ShadowRoot* root = YoungestShadowRoot(); root;
+       root = root->OlderShadowRoot()) {
+    root->RecalcStylesForReattach();
+  }
+}
+
 void Element::RebuildLayoutTree(WhitespaceAttacher& whitespace_attacher) {
   DCHECK(InActiveDocument());
   DCHECK(parentNode());
@@ -2194,7 +2227,6 @@ void Element::RebuildLayoutTree(WhitespaceAttacher& whitespace_attacher) {
     AttachContext reattach_context;
     reattach_context.resolved_style = GetNonAttachedStyle();
     ReattachLayoutTree(reattach_context);
-    SetNonAttachedStyle(nullptr);
     whitespace_attacher.DidReattachElement(this,
                                            reattach_context.previous_in_flow);
   } else {
@@ -3502,7 +3534,7 @@ bool Element::HasDisplayContentsStyle() const {
 bool Element::ShouldStoreNonLayoutObjectComputedStyle(
     const ComputedStyle& style) const {
 #if DCHECK_IS_ON()
-  if (style.Display() == EDisplay::kContents)
+  if (style.Display() == EDisplay::kContents && !NeedsReattachLayoutTree())
     DCHECK(!GetLayoutObject() || IsPseudoElement());
 #endif
 
