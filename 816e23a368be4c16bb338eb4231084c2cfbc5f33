@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d32874c_4ea062c7",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-27T06:18:37Z",
+      "side": 1,
+      "message": "Nit: Would you mind renaming this to something like `SerializesAsNull`? I\u0027d like to avoid the \"null\" vs \"empty\" vs \"unique\" that we might end up with otherwise (e.g. `String::IsEmpty` vs `String::IsNull`).",
+      "revId": "816e23a368be4c16bb338eb4231084c2cfbc5f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
