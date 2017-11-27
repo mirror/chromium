@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "319e67d8_9357dfce",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "This change\u0027s unrelated?",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c9d3f3_16b7ca9d",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "nit: prefer adding \u0027_for_test\u0027 for testing-only variables (though it\u0027ll make this super long)",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7fef8d_79142e72",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "nit: Probably it\u0027s good to document this check (e.g. \u0027It is not expected that this is called with non-null callback when another overriding callback is already set.\u0027)",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0995635_ef5f4add",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "a null pointer -\u003e a null callback",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce807a0_af8111c5",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "nit: using\n\nCreateFactoryCallback -\u003e CreateNetworkFactoryCallback ?",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4fdc7c_b4557fcd",
+        "filename": "content/browser/loader/resource_message_filter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "} -\u003e |\n\n\u0027When the testing pointer is being called\u0027 -\u003e \u0027When the testing pointer\u0027s CreateLoaderAndStart() is being called\u0027",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ab6c54_3ceeafa8",
+        "filename": "content/browser/loader/resource_message_filter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "This is tricky... could we rephrase this a bit?\n\u0027Also, the testing pointer won\u0027t be used for nested CreateLoaderAndStart\u0027s.\u0027",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98296b29_06f0a465",
+        "filename": "content/browser/url_loader_factory_getter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "original_network_factory_for_testing() ?  (otherwise if this returns test_factory or network_factory is not too clear)",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869c1937_1db40d12",
+        "filename": "content/public/test/url_loader_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "nit: using",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b668912_fdaa4259",
+        "filename": "content/public/test/url_loader_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "nit: for a bit of readability could this be wrapped in a method like parent_-\u003eIntercept(...)",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d110db_bbec4d09",
+        "filename": "content/public/test/url_loader_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "nit: return 0; /* browser process */",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4821fe0_dc88f5ba",
+        "filename": "content/public/test/url_loader_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "This returns RMF, not a factory.",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f74b72_cf79da75",
+        "filename": "content/public/test/url_loader_interceptor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "nit: double the",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e724346_3a75980a",
+        "filename": "content/public/test/url_loader_interceptor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "nit: using InterceptCallback \u003d",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f22f5b4_c220a41c",
+        "filename": "content/public/test/url_loader_interceptor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "nit: I prefer making this a bit more specific, e.g. CreateURLLoaderFactoryForSubresources",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57ebd51_85f5b356",
+        "filename": "content/public/test/url_loader_interceptor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T07:35:43Z",
+      "side": 1,
+      "message": "What rmf stands for?\n\nOh ok, resource_message_filter... maybe add some comment like \"(intercepting) ... at ResourceMessageFilter.\"",
+      "revId": "7c34fe41cb16a26f419f1ab89f8bca20e3f9674c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
