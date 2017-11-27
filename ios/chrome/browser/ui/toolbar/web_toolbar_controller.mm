@@ -877,12 +877,8 @@ using ios::material::TimingFunction;
 
 - (void)locationBarHasBecomeFirstResponder {
   [self.delegate locationBarDidBecomeFirstResponder];
-  if (@available(iOS 10, *)) {
-    if (base::FeatureList::IsEnabled(kPropertyAnimationsToolbar)) {
-      [self expandOmnibox];
-    } else {
-      [self animateMaterialOmnibox];
-    }
+  if (base::FeatureList::IsEnabled(kPropertyAnimationsToolbar)) {
+    [self expandOmnibox];
   } else {
     [self animateMaterialOmnibox];
   }
@@ -890,12 +886,8 @@ using ios::material::TimingFunction;
 
 - (void)locationBarHasResignedFirstResponder {
   [self.delegate locationBarDidResignFirstResponder];
-  if (@available(iOS 10, *)) {
-    if (base::FeatureList::IsEnabled(kPropertyAnimationsToolbar)) {
-      [self contractOmnibox];
-    } else {
-      [self animateMaterialOmnibox];
-    }
+  if (base::FeatureList::IsEnabled(kPropertyAnimationsToolbar)) {
+    [self contractOmnibox];
   } else {
     [self animateMaterialOmnibox];
   }

@@ -14,19 +14,7 @@
 
 void OpenUrlWithCompletionHandler(NSURL* url,
                                   void (^completion_handler)(BOOL success)) {
-  if (@available(iOS 10, *)) {
-    [[UIApplication sharedApplication] openURL:url
-                                       options:@{}
-                             completionHandler:completion_handler];
-  }
-#if !defined(__IPHONE_10_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0
-  else {
-    BOOL result = [[UIApplication sharedApplication] openURL:url];
-    if (!completion_handler)
-      return;
-    dispatch_async(dispatch_get_main_queue(), ^{
-      completion_handler(result);
-    });
-  }
-#endif
+  [[UIApplication sharedApplication] openURL:url
+                                     options:@{}
+                           completionHandler:completion_handler];
 }
