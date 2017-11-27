@@ -1841,6 +1841,12 @@ ServerRedirectRequestHandler(const net::test_server::HttpRequest& request) {
   return std::move(response);
 }
 
+#if defined(OS_WIN)
+// https://crbug.com/788160
+#define MAYBE_DownloadHistoryCheck DISABLED_DownloadHistoryCheck
+#else
+#define MAYBE_DownloadHistoryCheck DownloadHistoryCheck
+#endif
 IN_PROC_BROWSER_TEST_F(DownloadTest, DownloadHistoryCheck) {
   // Rediret to the actual download URL.
   embedded_test_server()->RegisterRequestHandler(
