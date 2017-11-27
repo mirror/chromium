@@ -621,7 +621,7 @@ scoped_refptr<net::HttpResponseHeaders> URLDataManagerBackend::GetHeaders(
     headers->AddHeader(kChromeURLXFrameOptionsHeader);
 
   if (!source->AllowCaching())
-    headers->AddHeader("Cache-Control: no-cache");
+    headers->AddHeader("Cache-Control: no-store");
 
   std::string mime_type = source->GetMimeType(path);
   if (source->ShouldServeMimeTypeAsContentTypeHeader() && !mime_type.empty()) {
