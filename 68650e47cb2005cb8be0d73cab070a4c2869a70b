@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b08de19_fb97d04d",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-11-27T21:29:56Z",
+      "side": 1,
+      "message": "Good point, thanks!",
+      "parentUuid": "ecfbb112_52617f50",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "68650e47cb2005cb8be0d73cab070a4c2869a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "835c62fb_0494b395",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-24T12:37:42Z",
       "side": 1,
       "message": "Is it a good idea to make a distinction of URL vs domain here? Could it be that we will want to use a URL as a webauthn RP ID in the future?\n\n(The alternative would probably be a json-based policy which actually has two separate arrays in it).",
+      "range": {
+        "startLine": 4723,
+        "startChar": 6,
+        "endLine": 4723,
+        "endChar": 136
+      },
+      "revId": "68650e47cb2005cb8be0d73cab070a4c2869a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1024877_78cd3326",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 4723,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-11-27T21:29:56Z",
+      "side": 1,
+      "message": "I defer to your judgement about how best to handle this, but the situation is thus:\n\nAn RP ID (https://www.w3.org/TR/webauthn/#rp-id) is a domain string and this\u0027ll get embedded into key handles, making it impossible to change without invalidating all existing keys. So I don\u0027t think they\u0027ll ever be URLs.\n\nAt the moment we have two different APIs for Security Keys: U2F and webauthn. The U2F API is Chrome-only and we hope to eliminate it in a few years. Google itself is probably the only entity in the world that would want set this policy for U2F. So my current plan is to allow both U2F and webauthn in a single array and, over time, when U2F is dropped we can simplify this policy to just be a list of RP IDs.",
+      "parentUuid": "835c62fb_0494b395",
       "range": {
         "startLine": 4723,
         "startChar": 6,
