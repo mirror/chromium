@@ -7,6 +7,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/language_item"
     android:layout_marginStart="0dp"
+    android:paddingStart="@dimen/pref_languages_padding"
+    android:paddingEnd="@dimen/pref_languages_padding"
     style="@style/ListItemContainer">
 
     <include layout="@layout/modern_list_item_view" />
