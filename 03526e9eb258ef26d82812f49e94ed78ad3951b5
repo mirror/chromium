@@ -16,6 +16,24 @@
       "revId": "03526e9eb258ef26d82812f49e94ed78ad3951b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a88653_447aa783",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-27T04:16:28Z",
+      "side": 1,
+      "message": "I considered adding this (and I think the constexpr can be made to work :) but I wasn\u0027t convinced that it\u0027s actually a principle that we want to enforce. What I mean is that in the past we\u0027ve considered adding providers that aren\u0027t user-controllable that have a lower-precedence than user-controllable ones. So for example, you could imagine enterprise policy setting a recommended value for a setting which can be overridden by the user. \n\nI think the assumption that the providers have a precedence ordering is something that is assumed in many places in the file so perhaps it\u0027s not something we need to explicitly check?\n\nI think what we do want to ensure, though, is that kFirstUserModifiableProvider is actually the highest precedence user modifiable provider i.e. that GetUserModifiableContentSetting will always return the highest precedence user-controllable setting and is never overriden by a non-user modifiable provider. I added a check for that but alternatively we could resolve that value directly at compile time and have it automatically update when people change it. \n\nI\u0027m going to land this but happy to iterate on the check in a followup if you don\u0027t agree. So please let me know! :)",
+      "parentUuid": "bba6cf41_db7e786c",
+      "revId": "03526e9eb258ef26d82812f49e94ed78ad3951b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
