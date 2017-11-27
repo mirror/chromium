@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "965126fc_56556206",
+        "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-27T17:33:15Z",
+      "side": 1,
+      "message": "Good point, done. Left a comment that it\u0027s already included in saml_handler.js.",
+      "parentUuid": "40b7aed5_0a90bb8d",
+      "revId": "38c1779c8dffd6f7a9afe33596a3bb286204a8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d49e2f9_f4469649",
         "filename": "chrome/browser/resources/gaia_auth_host/saml_handler.js",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "38c1779c8dffd6f7a9afe33596a3bb286204a8dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23836eee_6dad9190",
+        "filename": "chrome/browser/resources/gaia_auth_host/saml_handler.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-27T17:33:15Z",
+      "side": 1,
+      "message": "Done, also moved the \u0027samlInjected\u0027 name to a constant.",
+      "parentUuid": "1d49e2f9_f4469649",
+      "revId": "38c1779c8dffd6f7a9afe33596a3bb286204a8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
