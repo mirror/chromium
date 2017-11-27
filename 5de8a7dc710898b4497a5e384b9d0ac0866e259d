@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b521b6b6_141fba9a",
+        "filename": "DEPS",
+        "patchSetId": 28
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-27T05:18:37Z",
+      "side": 1,
+      "message": "Done\n\nYes, its no longer required.",
+      "parentUuid": "2ea31ee1_af9ae010",
+      "revId": "5de8a7dc710898b4497a5e384b9d0ac0866e259d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5de4623a_8f1b2071",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
         "patchSetId": 28
@@ -33,6 +51,24 @@
       "revId": "5de8a7dc710898b4497a5e384b9d0ac0866e259d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9d86cd_19dfefb5",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-27T05:18:37Z",
+      "side": 1,
+      "message": "Done\n\nVK_NO_PROTOTYPES has been defined inside Skia as part of its recent changes. So i could not use vkGetInstanceProcAddr APIs directly. \nFor testing the change, may be we should avoid defining VK_NO_PROTOTYPES in Skia.",
+      "parentUuid": "5de4623a_8f1b2071",
+      "revId": "5de8a7dc710898b4497a5e384b9d0ac0866e259d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3f8de2de_59f0db2f",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-27T05:18:37Z",
+      "side": 1,
+      "message": "Done\n\nDue to the new changes in direct_renderer, RenderPass looks forcefully made to use. So I have added this way.\nI have correct it based on the new changes.\nShould this be Ok ?",
+      "parentUuid": "76220f5b_ae8c4885",
+      "revId": "5de8a7dc710898b4497a5e384b9d0ac0866e259d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb6f3e00_92384fb7",
         "filename": "gpu/vulkan/BUILD.gn",
         "patchSetId": 28
@@ -67,6 +121,24 @@
       "revId": "5de8a7dc710898b4497a5e384b9d0ac0866e259d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d55958_ad41be76",
+        "filename": "gpu/vulkan/BUILD.gn",
+        "patchSetId": 28
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-27T05:18:37Z",
+      "side": 1,
+      "message": "Done.\nThe changes are no longer needed.",
+      "parentUuid": "eb6f3e00_92384fb7",
+      "revId": "5de8a7dc710898b4497a5e384b9d0ac0866e259d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
