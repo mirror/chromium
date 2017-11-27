@@ -8,10 +8,12 @@
 #include "core/CoreExport.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Member.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy.h"
 
 namespace blink {
 
 class Document;
+class SecurityOrigin;
 
 class CORE_EXPORT Policy final : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
@@ -19,6 +21,12 @@ class CORE_EXPORT Policy final : public ScriptWrappable {
  public:
   ~Policy() {}
   static Policy* Create(Document*);
+  static Policy* Create(Document*,
+                        const ParsedFeaturePolicy&,
+                        const scoped_refptr<SecurityOrigin>);
+  void UpdateContainerPolicy(const ParsedFeaturePolicy&,
+                             const scoped_refptr<SecurityOrigin>);
+
   // Returns whether or not the given feature is allowed on the origin of the
   // document that owns the policy.
   bool allowsFeature(const String& feature) const;
@@ -38,7 +46,12 @@ class CORE_EXPORT Policy final : public ScriptWrappable {
   void AddWarningForUnrecognizedFeature(const String& message) const;
 
   explicit Policy(Document*);
+  explicit Policy(Document*,
+                  const ParsedFeaturePolicy&,
+                  const scoped_refptr<SecurityOrigin>);
   Member<Document> document_;
+  FeaturePolicy* policy_;
+  std::unique_ptr<FeaturePolicy> container_policy_;
 };
 
 }  // namespace blink
