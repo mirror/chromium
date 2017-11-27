@@ -204,3 +204,6 @@ QUIC_FLAG(bool,
 // If true, truncates QUIC error strings to 256 characters before writing them
 // to the wire.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_truncate_long_details, true)
+
+// If true, use deframer from net/quic/http instead of net/http2.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_hq_deframer, true)
