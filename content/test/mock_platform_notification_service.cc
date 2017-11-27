@@ -33,6 +33,7 @@ void MockPlatformNotificationService::DisplayNotification(
     const PlatformNotificationData& notification_data,
     const NotificationResources& notification_resources) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
 
   ReplaceNotificationIfNeeded(notification_id);
   non_persistent_notifications_.insert(notification_id);

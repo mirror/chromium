@@ -187,11 +187,16 @@ void Notification::PrepareShow() {
 void Notification::DidLoadResources(NotificationResourcesLoader* loader) {
   DCHECK_EQ(loader, loader_.Get());
 
-  SecurityOrigin* origin = GetExecutionContext()->GetSecurityOrigin();
+  ExecutionContext* execution_context = GetExecutionContext();
+  SecurityOrigin* origin = execution_context->GetSecurityOrigin();
   DCHECK(origin);
 
-  GetWebNotificationManager()->Show(WebSecurityOrigin(origin), data_,
-                                    loader->GetResources(), this);
+  if (RuntimeEnabledFeatures::NotificationsWithMojoEnabled()) {
+    NotificationManager::From(execution_context)->Show(execution_context);
+  } else {
+    GetWebNotificationManager()->Show(WebSecurityOrigin(origin), data_,
+                                      loader->GetResources(), this);
+  }
   loader_.Clear();
 
   state_ = State::kShowing;

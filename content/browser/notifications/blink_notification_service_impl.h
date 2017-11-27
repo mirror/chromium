@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_NOTIFICATIONS_BLINK_NOTIFICATION_SERVICE_IMPL_H_
 
 #include "base/macros.h"
+#include "content/public/browser/browser_context.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom.h"
@@ -22,6 +23,7 @@ class BlinkNotificationServiceImpl : public blink::mojom::NotificationService {
  public:
   BlinkNotificationServiceImpl(
       PlatformNotificationContextImpl* notification_context,
+      BrowserContext* browser_context,
       ResourceContext* resource_context,
       int render_process_id,
       mojo::InterfaceRequest<blink::mojom::NotificationService> request);
@@ -30,13 +32,18 @@ class BlinkNotificationServiceImpl : public blink::mojom::NotificationService {
   // blink::mojom::NotificationService implementation.
   void GetPermissionStatus(const std::string& origin,
                            GetPermissionStatusCallback callback) override;
+  void Show(const std::string& origin) override;
 
  private:
   // Called when an error is detected on binding_.
   void OnConnectionError();
 
+  void ShowOnUIThread(const std::string& origin);
+
   // The notification context that owns this service instance.
   PlatformNotificationContextImpl* notification_context_;
+
+  BrowserContext* browser_context_;
 
   ResourceContext* resource_context_;
 

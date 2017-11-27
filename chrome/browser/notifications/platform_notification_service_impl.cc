@@ -344,6 +344,7 @@ void PlatformNotificationServiceImpl::DisplayNotification(
     const content::PlatformNotificationData& notification_data,
     const content::NotificationResources& notification_resources) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
 
   // Posted tasks can request notifications to be added, which would cause a
   // crash (see |ScopedKeepAlive|). We just do nothing here, the user would not

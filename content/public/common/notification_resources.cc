@@ -4,9 +4,13 @@
 
 #include "content/public/common/notification_resources.h"
 
+#include "base/logging.h"
+
 namespace content {
 
-NotificationResources::NotificationResources() {}
+NotificationResources::NotificationResources() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
+}
 
 NotificationResources::NotificationResources(
     const NotificationResources& other) = default;

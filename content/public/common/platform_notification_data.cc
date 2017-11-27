@@ -4,6 +4,8 @@
 
 #include "content/public/common/platform_notification_data.h"
 
+#include "base/logging.h"
+
 namespace content {
 
 PlatformNotificationAction::PlatformNotificationAction() {}
@@ -13,7 +15,9 @@ PlatformNotificationAction::PlatformNotificationAction(
 
 PlatformNotificationAction::~PlatformNotificationAction() {}
 
-PlatformNotificationData::PlatformNotificationData() {}
+PlatformNotificationData::PlatformNotificationData() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
+}
 
 PlatformNotificationData::PlatformNotificationData(
     const PlatformNotificationData& other) = default;
