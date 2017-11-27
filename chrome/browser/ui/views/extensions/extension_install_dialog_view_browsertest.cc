@@ -24,12 +24,14 @@
 #include "chrome/browser/ui/webui/extensions/extension_settings_handler.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/extensions/extension_test_util.h"
+#include "chrome/grit/generated_resources.h"
 #include "components/constrained_window/constrained_window_views.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/permissions/permission_message_provider.h"
 #include "extensions/common/permissions/permissions_data.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/views/controls/scroll_view.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
@@ -41,28 +43,26 @@ using extensions::PermissionMessages;
 
 class ExtensionInstallDialogViewTestBase : public ExtensionBrowserTest {
  protected:
-  explicit ExtensionInstallDialogViewTestBase(
-      ExtensionInstallPrompt::PromptType prompt_type);
+  ExtensionInstallDialogViewTestBase();
   ~ExtensionInstallDialogViewTestBase() override {}
 
   void SetUpOnMainThread() override;
 
-  // Creates and returns an install prompt of |prompt_type_|.
-  std::unique_ptr<ExtensionInstallPrompt::Prompt> CreatePrompt();
+  // Creates and returns an install prompt of |prompt_type|.
+  std::unique_ptr<ExtensionInstallPrompt::Prompt> CreatePrompt(
+      ExtensionInstallPrompt::PromptType prompt_type);
 
   content::WebContents* web_contents() { return web_contents_; }
 
  private:
   const extensions::Extension* extension_;
-  ExtensionInstallPrompt::PromptType prompt_type_;
   content::WebContents* web_contents_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionInstallDialogViewTestBase);
 };
 
-ExtensionInstallDialogViewTestBase::ExtensionInstallDialogViewTestBase(
-    ExtensionInstallPrompt::PromptType prompt_type)
-    : extension_(nullptr), prompt_type_(prompt_type), web_contents_(nullptr) {}
+ExtensionInstallDialogViewTestBase::ExtensionInstallDialogViewTestBase()
+    : extension_(nullptr), web_contents_(nullptr) {}
 
 void ExtensionInstallDialogViewTestBase::SetUpOnMainThread() {
   ExtensionBrowserTest::SetUpOnMainThread();
@@ -74,9 +74,10 @@ void ExtensionInstallDialogViewTestBase::SetUpOnMainThread() {
 }
 
 std::unique_ptr<ExtensionInstallPrompt::Prompt>
-ExtensionInstallDialogViewTestBase::CreatePrompt() {
+ExtensionInstallDialogViewTestBase::CreatePrompt(
+    ExtensionInstallPrompt::PromptType prompt_type) {
   std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt(
-      new ExtensionInstallPrompt::Prompt(prompt_type_));
+      new ExtensionInstallPrompt::Prompt(prompt_type));
   prompt->set_extension(extension_);
 
   std::unique_ptr<ExtensionIconManager> icon_manager(
@@ -88,7 +89,7 @@ ExtensionInstallDialogViewTestBase::CreatePrompt() {
 
 class ScrollbarTest : public ExtensionInstallDialogViewTestBase {
  protected:
-  ScrollbarTest();
+  ScrollbarTest() {}
   ~ScrollbarTest() override {}
 
   bool IsScrollbarVisible(
@@ -97,11 +98,6 @@ class ScrollbarTest : public ExtensionInstallDialogViewTestBase {
  private:
   DISALLOW_COPY_AND_ASSIGN(ScrollbarTest);
 };
-
-ScrollbarTest::ScrollbarTest()
-    : ExtensionInstallDialogViewTestBase(
-          ExtensionInstallPrompt::PERMISSIONS_PROMPT) {
-}
 
 bool ScrollbarTest::IsScrollbarVisible(
     std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt) {
@@ -128,7 +124,8 @@ IN_PROC_BROWSER_TEST_F(ScrollbarTest, LongPromptScrollbar) {
     permissions.push_back(PermissionMessage(permission_string,
                                             PermissionIDSet()));
   }
-  std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt = CreatePrompt();
+  std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt =
+      CreatePrompt(ExtensionInstallPrompt::PERMISSIONS_PROMPT);
   prompt->AddPermissions(permissions,
                          ExtensionInstallPrompt::REGULAR_PERMISSIONS);
   ASSERT_TRUE(IsScrollbarVisible(std::move(prompt)))
@@ -143,7 +140,8 @@ IN_PROC_BROWSER_TEST_F(ScrollbarTest, ScrollbarRegression) {
   PermissionMessages permissions;
   permissions.push_back(PermissionMessage(permission_string,
                                           PermissionIDSet()));
-  std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt = CreatePrompt();
+  std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt =
+      CreatePrompt(ExtensionInstallPrompt::PERMISSIONS_PROMPT);
   prompt->AddPermissions(permissions,
                          ExtensionInstallPrompt::REGULAR_PERMISSIONS);
   ASSERT_FALSE(IsScrollbarVisible(std::move(prompt))) << "Scrollbar is visible";
@@ -152,16 +150,15 @@ IN_PROC_BROWSER_TEST_F(ScrollbarTest, ScrollbarRegression) {
 class ExtensionInstallDialogViewTest
     : public ExtensionInstallDialogViewTestBase {
  protected:
-  ExtensionInstallDialogViewTest()
-      : ExtensionInstallDialogViewTestBase(
-            ExtensionInstallPrompt::INSTALL_PROMPT) {}
+  ExtensionInstallDialogViewTest() {}
   ~ExtensionInstallDialogViewTest() override {}
 
   views::DialogDelegateView* CreateAndShowPrompt(
       ExtensionInstallPromptTestHelper* helper) {
     std::unique_ptr<ExtensionInstallDialogView> dialog(
-        new ExtensionInstallDialogView(profile(), web_contents(),
-                                       helper->GetCallback(), CreatePrompt()));
+        new ExtensionInstallDialogView(
+            profile(), web_contents(), helper->GetCallback(),
+            CreatePrompt(ExtensionInstallPrompt::INSTALL_PROMPT)));
     views::DialogDelegateView* delegate_view = dialog.get();
 
     views::Widget* modal_dialog = views::DialogDelegate::CreateDialogWidget(
@@ -342,4 +339,74 @@ IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
                             base::ASCIIToUTF16("Detailed permission 2"),
                             base::ASCIIToUTF16("Detailed permission 3")});
   RunDialog();
+}
+
+class ExtensionInstallDialogRatingsSectionTest
+    : public ExtensionInstallDialogViewTest {
+ public:
+  ExtensionInstallDialogRatingsSectionTest() {}
+  ~ExtensionInstallDialogRatingsSectionTest() override {}
+
+  void TestRatingsSectionA11y(int num_ratings,
+                              double average_rating,
+                              const std::string& expected_text);
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ExtensionInstallDialogRatingsSectionTest);
+};
+
+void ExtensionInstallDialogRatingsSectionTest::TestRatingsSectionA11y(
+    int num_ratings,
+    double average_rating,
+    const std::string& expected_text) {
+  std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt =
+      CreatePrompt(ExtensionInstallPrompt::INLINE_INSTALL_PROMPT);
+  prompt->SetWebstoreData("1,234", true, average_rating, num_ratings);
+
+  ExtensionInstallDialogView* dialog = new ExtensionInstallDialogView(
+      profile(), web_contents(), ExtensionInstallPrompt::DoneCallback(),
+      std::move(prompt));
+
+  views::Widget* modal_dialog = views::DialogDelegate::CreateDialogWidget(
+      dialog, nullptr,
+      platform_util::GetViewForWindow(browser()->window()->GetNativeWindow()));
+  modal_dialog->Show();
+
+  views::View* rating_view =
+      dialog->GetViewByID(ExtensionInstallDialogView::kRatingsViewId);
+  ASSERT_TRUE(rating_view);
+  {
+    ui::AXNodeData node_data;
+    rating_view->GetAccessibleNodeData(&node_data);
+    EXPECT_EQ(ui::AX_ROLE_STATIC_TEXT, node_data.role);
+    EXPECT_EQ(expected_text, node_data.GetStringAttribute(ui::AX_ATTR_NAME));
+  }
+
+  for (int i = 0; i < rating_view->child_count(); ++i) {
+    views::View* child = rating_view->child_at(i);
+    ui::AXNodeData node_data;
+    child->GetAccessibleNodeData(&node_data);
+    EXPECT_EQ(ui::AX_ROLE_IGNORED, node_data.role);
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogRatingsSectionTest,
+                       RatingsSectionA11y) {
+  // An extension with 3.2 / 5 average rating and 400 ratings.
+  const int kNumRatings = 400;
+  const double kAverageRating = 3.297;
+  std::string expected_text = l10n_util::GetStringFUTF8(
+      IDS_EXTENSION_PROMPT_RATING_ACCESSIBLE_TEXT, base::ASCIIToUTF16("3.3"),
+      base::ASCIIToUTF16("400"));
+  TestRatingsSectionA11y(kNumRatings, kAverageRating, expected_text);
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogRatingsSectionTest,
+                       RatingsSectionA11yWithNoRatings) {
+  // An extension with no ratings yet.
+  const int kNumRatings = 0;
+  const double kAverageRating = 0.0;
+  std::string expected_text =
+      l10n_util::GetStringUTF8(IDS_EXTENSION_PROMPT_NO_RATINGS_ACCESSIBLE_TEXT);
+  TestRatingsSectionA11y(kNumRatings, kAverageRating, expected_text);
 }
