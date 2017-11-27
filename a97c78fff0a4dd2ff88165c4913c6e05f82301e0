@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77ae8121_ea636a50",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-27T19:28:31Z",
+      "side": 1,
+      "message": "I think calling this |parent_document| might be make its use clearer. Or, perhaps this constructor could take an HTMLFrameOwnerElement instead of a Document. (I\u0027m not certain whether that would work, but it might make sense)",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54ee13e_210d21fb",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-27T19:28:31Z",
+      "side": 1,
+      "message": "You could also call UpdateContainerPolicy() here to avoid repeating the code.",
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe12b6ac_16fdd805",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-27T19:28:31Z",
+      "side": 1,
+      "message": "We should have a comment here to distinguish between the two: One uses the policy from the document itself; the other constructs a synthetic feature policy for a frame contained within that document.",
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acca9345_701d09b7",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-27T19:28:31Z",
+      "side": 1,
+      "message": "Nit: blank line above, and maybe a comment: \"Inform the policy object that the container policy on its frame element has changed\", or something like that.",
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81fb81af_21d505fd",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-27T19:28:31Z",
+      "side": 1,
+      "message": "Is this just used to retain the policy for a frame so that we control its lifetime? If we don\u0027t mind creating a copy of the policy in the Document.policy case, we could probably merge these two into a single FeaturePolicy object, and just store that.",
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
