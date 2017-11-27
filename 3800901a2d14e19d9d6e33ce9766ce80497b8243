@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cd6320c_3e0ad133",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-11-27T21:22:53Z",
+      "side": 1,
+      "message": "Hmm... AwAutofillProvider#onTextFieldDidChange() does almost the same work, so I was trying to use it, but I realized that there are some differences as follows:\n1) onTextFieldDidChange calls notifyVirtualValueChanged(), while scrolling shouldn\u0027t.\n2) scrolling does not have to call AwAutofillProvider#onFocusChanged().\n\nIt may make sense to merge the two code paths (value change and scrolling) with a flag, but I cannot think of a good name when they are merged.",
+      "parentUuid": "2878764d_9ce6e214",
+      "range": {
+        "startLine": 230,
+        "startChar": 27,
+        "endLine": 230,
+        "endChar": 45
+      },
+      "revId": "3800901a2d14e19d9d6e33ce9766ce80497b8243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ff71641_ba6ed771",
         "filename": "components/autofill/content/renderer/page_click_tracker.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-17T17:08:50Z",
       "side": 1,
       "message": "document why this is needed.",
+      "range": {
+        "startLine": 57,
+        "startChar": 30,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "3800901a2d14e19d9d6e33ce9766ce80497b8243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c856eb5e_3ea68419",
+        "filename": "components/autofill/content/renderer/page_click_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-11-27T21:22:53Z",
+      "side": 1,
+      "message": "This file has been merged to autofill_agent. I\u0027ve left a comment there.",
+      "parentUuid": "4ff71641_ba6ed771",
       "range": {
         "startLine": 57,
         "startChar": 30,
