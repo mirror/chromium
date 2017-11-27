@@ -70,6 +70,24 @@
       "revId": "d8a93a0d1a19baba9b25fd3893840a7548bdcbe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406311e2_53ec93f3",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-27T12:37:05Z",
+      "side": 1,
+      "message": "Actually, we can\u0027t distinguish in a more specific scenario: a child account whose ID token fetch/decode failed from a regular account. \n\nMy point here is that:\n(1) We should first discuss with PMs how to deal with this situation. It\u0027s not something required for teamfood, and it should be very rare.\n(2) It does not help to know that is_child_account is missing, since we still don\u0027t know how to handle it. If we decided to do something about this case, and perform this handling in the consumers receiving this value (we could handle in the fetching/decoding process instead, which would not require such pointer), then we could make this a pointer to a boolean.\n\nIn summary, it makes much sense to raise this concern, we should definitely discuss about it. However, let\u0027s not try to solve all the problems at once without discussing the solution first. I know it\u0027s a simple change, but this is something that is *not* required right now, and it would make the API more complex unnecessarily. Do you agree on continuing discussing this?",
+      "parentUuid": "2c821d4e_308a7db8",
+      "revId": "d8a93a0d1a19baba9b25fd3893840a7548bdcbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
