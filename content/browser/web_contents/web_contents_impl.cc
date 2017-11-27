@@ -104,7 +104,6 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_widget_host_iterator.h"
-#include "content/public/browser/resource_request_details.h"
 #include "content/public/browser/restore_type.h"
 #include "content/public/browser/security_style_explanations.h"
 #include "content/public/browser/ssl_status.h"
@@ -3414,16 +3413,6 @@ void WebContentsImpl::LoadStateChanged(
     NotifyNavigationStateChanged(static_cast<InvalidateTypes>(
         INVALIDATE_TYPE_LOAD | INVALIDATE_TYPE_TAB));
   }
-}
-
-void WebContentsImpl::DidGetResourceResponseStart(
-  const ResourceRequestDetails& details) {
-  SetNotWaitingForResponse();
-  controller_.ssl_manager()->DidStartResourceResponse(
-      details.url, details.has_certificate, details.ssl_cert_status);
-
-  for (auto& observer : observers_)
-    observer.DidGetResourceResponseStart(details);
 }
 
 void WebContentsImpl::NotifyWebContentsFocused(
