@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83289195_05b3c9db",
+        "filename": "chrome/browser/ui/webui/extensions/extension_settings_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-27T22:06:29Z",
+      "side": 1,
+      "message": "FYI, I am getting a test failure on the bots [1], which I am not able to repro locally. Suspecting that I need to update some BUILD.gn file to ensure that chrome/test/data/extensions/options_page_in_view is available during testing. Investigating...\n\n\n[1] https://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_rel_ng%2F595852%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests__with_patch_%2F0%2Flogs%2FCrExtensionsOptionsDialogTest.Layout%2F0",
+      "revId": "79077037ec7f2e6e9307542d91a0d3e1c4f218e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
