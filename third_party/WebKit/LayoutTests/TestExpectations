@@ -2228,7 +2228,6 @@ crbug.com/626703 external/wpt/webauthn/makecredential-badargs-accountinformation
 crbug.com/626703 external/wpt/webauthn/makecredential-badargs-attestationchallenge.https.html [ Timeout ]
 crbug.com/626703 external/wpt/webauthn/makecredential-badargs-cryptoparameters.https.html [ Timeout ]
 crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-setLocalDescription-rollback.html [ Timeout ]
-crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription.html [ Timeout ]
 crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-rollback.html [ Timeout ]
 crbug.com/626703 external/wpt/websockets/Create-Secure-extensions-empty.htm [ Timeout ]
 crbug.com/626703 external/wpt/webvtt/rendering/cues-with-video/processing-model/2_cues_overlapping_completely_move_up.html [ Failure ]
@@ -3952,6 +3951,13 @@ crbug.com/771492 [ Win Linux Mac ] external/wpt/css/css-tables/table-model-fixup
 # Suspended WebRTC tests
 # Test fails, and output changes for each run.
 crbug.com/771540 external/wpt/webrtc/RTCPeerConnection-setLocalDescription-answer.html [ Failure ]
+crbug.com/788737 external/wpt/webrtc/RTCDataChannel-id.html [ Failure Crash ]
+crbug.com/788737 external/wpt/webrtc/RTCIceTransport.html [ Failure Crash ]
+crbug.com/788737 external/wpt/webrtc/RTCPeerConnection-onnegotiationneeded.html [ Failure Crash ]
+crbug.com/788737 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-pranswer.html [ Failure Crash ]
+crbug.com/788737 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https.html [ Failure Crash ]
+crbug.com/788737 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription.html [ Failure Crash ]
+crbug.com/788737 external/wpt/webrtc/interfaces.https.html [ Failure Crash ]
 # Timeout due to events not firing
 crbug.com/781935 fast/mediastream/MediaStreamTrack-observer-iterate-no-crash.html [ Timeout ]
 crbug.com/781935 fast/mediastream/MediaStreamTrack.html [ Timeout ]
