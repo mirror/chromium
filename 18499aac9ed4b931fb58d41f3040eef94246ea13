@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "720b7f8e_91b4af8e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/servers/apache_http.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-27T18:01:30Z",
+      "side": 1,
+      "message": "I think this line might actually be unnecessary now, since I couldn\u0027t find any http tests that use /w3c/resources/WebIDLParser.js; do any http tests fail if this line is removed?",
+      "revId": "18499aac9ed4b931fb58d41f3040eef94246ea13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
