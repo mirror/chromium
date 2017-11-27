@@ -52,6 +52,24 @@
       "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6145635_35185f1f",
+        "filename": "chromeos/dbus/auth_policy_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-27T09:08:09Z",
+      "side": 1,
+      "message": "OK, testability is a good argument. I looked around a bit and most similar examples I found used protos as input args. However, for output args it seems common to translate the args in the client and not pass them to observers (random example: PowerManagerClientImpl::PeripheralBatteryStatusReceived). Would it make sense to clarify in the docs that proto (de-)serialization shouldn\u0027t be part of clients? Right now it says \"client classes should ... serialize and deserialize D-Bus message arguments\", so you could argue that proto serialization is part of that.\n\nNote that password_fd isn\u0027t part of the proto since a D-Bus file descriptor can\u0027t be represented in proto, so it should probably remain a separate input argument.",
+      "parentUuid": "54606753_6fcfb66c",
+      "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
