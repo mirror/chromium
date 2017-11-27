@@ -22,6 +22,30 @@
       "revId": "7d2451905b763a58ca252561a434a2ba53efdf72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d6e9e4_98ca476b",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-27T09:43:18Z",
+      "side": 1,
+      "message": "It wouldn\u0027t make sense to have a tab count of 0 for now. And as the TODO is indicating, the |if(webStateList)| would become |DCHECK(webStateList)| at some point.",
+      "parentUuid": "a50331a1_7f9d120d",
+      "range": {
+        "startLine": 172,
+        "startChar": 7,
+        "endLine": 172,
+        "endChar": 15
+      },
+      "revId": "7d2451905b763a58ca252561a434a2ba53efdf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
