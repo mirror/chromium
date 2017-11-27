@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c386056_8a8fe34a",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-27T04:28:25Z",
+      "side": 1,
+      "message": "Can any of these just be generated in ComputedStyleBase now that they\u0027re public? nainar and shend can probably help you determine that if you\u0027re not sure.",
+      "revId": "4e7e9ebc2ff6da23b9b7edf18b501b806f432a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
