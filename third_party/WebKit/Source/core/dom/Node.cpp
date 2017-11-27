@@ -81,6 +81,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
+#include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLDialogElement.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLSlotElement.h"
@@ -913,10 +914,16 @@ bool Node::IsInert() const {
 
   DCHECK(!ChildNeedsDistributionRecalc());
 
-  const HTMLDialogElement* dialog = GetDocument().ActiveModalDialog();
-  if (dialog && this != GetDocument() &&
-      !FlatTreeTraversal::ContainsIncludingPseudoElement(*dialog, *this)) {
-    return true;
+  if (this != GetDocument()) {
+    // TODO(foolip): When fullscreen uses top layer, this can be simplified to
+    // just look at the topmost element in top layer. https://crbug.com/240576.
+    const Element* modalElement = GetDocument().ActiveModalDialog();
+    if (!modalElement)
+      modalElement = Fullscreen::FullscreenElementFrom(GetDocument());
+    if (modalElement && !FlatTreeTraversal::ContainsIncludingPseudoElement(
+                            *modalElement, *this)) {
+      return true;
+    }
   }
 
   if (RuntimeEnabledFeatures::InertAttributeEnabled()) {
