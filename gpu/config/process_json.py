@@ -618,8 +618,13 @@ def process_json_file(json_filepath, list_tag,
     entry_id = entry['id']
     assert entry_id not in ids
     ids.append(entry_id)
-    if os_filter != None and 'os' in entry and entry['os']['type'] != os_filter:
-      continue
+    if 'os' in entry:
+      os_type = entry['os']['type']
+      # Check for typos in the .json data
+      if not os_type in ['android', 'win', 'macosx', 'chromeos', 'linux']:
+        raise Exception('Unknown OS type "%s"' % os_type)
+      if os_filter != None and os_type != os_filter:
+        continue
     entry_count += 1
     write_entry(entry, total_features, feature_tag,
                 data_file, data_helper_file, data_exception_file)
