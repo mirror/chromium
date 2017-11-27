@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7e6d5aa_8d8cfb4e",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-27T20:35:39Z",
+      "side": 1,
+      "message": "`PartitionBucketNumSystemPages` and `PartitionBucketPartitionPages`, below: These are no longer the right names, right?",
+      "revId": "a7d911a442d416abcfd61549097de7c46b405e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
