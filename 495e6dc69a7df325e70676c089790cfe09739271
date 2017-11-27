@@ -63,6 +63,24 @@
       "revId": "495e6dc69a7df325e70676c089790cfe09739271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1556d8_bc4a97c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-27T18:30:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acf77ba5_f9cb0161",
+      "revId": "495e6dc69a7df325e70676c089790cfe09739271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
