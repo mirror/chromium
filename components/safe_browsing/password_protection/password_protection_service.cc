@@ -806,7 +806,7 @@ PasswordProtectionService::MaybeCreateNavigationThrottle(
         request->matches_sync_password()) {
       std::unique_ptr<PasswordProtectionNavigationThrottle> throttle =
           base::MakeUnique<PasswordProtectionNavigationThrottle>(
-              navigation_handle, /*is_warning_showing=*/false);
+              navigation_handle, request, /*is_warning_showing=*/false);
       request->AddThrottle(throttle.get());
       return throttle;
     }
@@ -815,7 +815,7 @@ PasswordProtectionService::MaybeCreateNavigationThrottle(
   for (scoped_refptr<PasswordProtectionRequest> request : warning_requests_) {
     if (request->web_contents() == web_contents) {
       return base::MakeUnique<PasswordProtectionNavigationThrottle>(
-          navigation_handle, /*is_warning_showing=*/true);
+          navigation_handle, request, /*is_warning_showing=*/true);
     }
   }
   return nullptr;

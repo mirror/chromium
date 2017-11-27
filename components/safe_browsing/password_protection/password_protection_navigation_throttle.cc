@@ -4,16 +4,22 @@
 
 #include "components/safe_browsing/password_protection/password_protection_navigation_throttle.h"
 
+#include "components/safe_browsing/password_protection/password_protection_request.h"
 #include "content/public/browser/navigation_handle.h"
 
 namespace safe_browsing {
 PasswordProtectionNavigationThrottle::PasswordProtectionNavigationThrottle(
     content::NavigationHandle* navigation_handle,
+    scoped_refptr<PasswordProtectionRequest> request,
     bool is_warning_showing)
     : content::NavigationThrottle(navigation_handle),
+      request_(request),
       is_warning_showing_(is_warning_showing) {}
 
-PasswordProtectionNavigationThrottle::~PasswordProtectionNavigationThrottle() {}
+PasswordProtectionNavigationThrottle::~PasswordProtectionNavigationThrottle() {
+  if (request_)
+    request_->RemoveThrottle(this);
+}
 
 content::NavigationThrottle::ThrottleCheckResult
 PasswordProtectionNavigationThrottle::WillStartRequest() {

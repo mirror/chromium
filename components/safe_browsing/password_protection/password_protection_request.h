@@ -102,6 +102,8 @@ class PasswordProtectionRequest : public base::RefCountedThreadSafe<
     throttles_.insert(throttle);
   }
 
+  void RemoveThrottle(PasswordProtectionNavigationThrottle* throttle);
+
   // Cancels navigation if there is modal warning showing, resumes it otherwise.
   void HandleDeferredNavigations();
 
@@ -112,6 +114,7 @@ class PasswordProtectionRequest : public base::RefCountedThreadSafe<
   friend struct content::BrowserThread::DeleteOnThread<
       content::BrowserThread::UI>;
   friend class base::DeleteHelper<PasswordProtectionRequest>;
+  friend class ChromePasswordProtectionServiceTest;
   ~PasswordProtectionRequest() override;
 
   // Start checking the whitelist.

@@ -382,6 +382,11 @@ void PasswordProtectionRequest::Cancel(bool timed_out) {
          nullptr);
 }
 
+void PasswordProtectionRequest::RemoveThrottle(
+    PasswordProtectionNavigationThrottle* throttle) {
+  throttles_.erase(throttle);
+}
+
 void PasswordProtectionRequest::HandleDeferredNavigations() {
   for (auto* throttle : throttles_) {
     if (is_modal_warning_showing_)
