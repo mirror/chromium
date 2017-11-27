@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8cd03207_4387f64c",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/Variable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-27T05:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2998243_f73e346a",
+      "revId": "2e115580ee2413518f781fb367cffffc56de0873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d3ad27e_c1758372",
         "filename": "third_party/WebKit/Source/core/css/properties/longhands/Variable.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "2e115580ee2413518f781fb367cffffc56de0873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d396d924_930425e8",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/Variable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-27T05:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d3ad27e_c1758372",
+      "revId": "2e115580ee2413518f781fb367cffffc56de0873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
