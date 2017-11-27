@@ -82,7 +82,7 @@ InputRouterImpl::InputRouterImpl(InputRouterImplClient* client,
       wheel_scroll_latching_enabled_(base::FeatureList::IsEnabled(
           features::kTouchpadAndWheelScrollLatching)),
       wheel_event_queue_(this, wheel_scroll_latching_enabled_),
-      gesture_event_queue_(this, this, config.gesture_config),
+      gesture_event_queue_(this, this, this, config.gesture_config),
       device_scale_factor_(1.f),
       host_binding_(this),
       frame_host_binding_(this),
@@ -342,6 +342,11 @@ void InputRouterImpl::OnGestureEventAck(
     InputEventAckState ack_result) {
   touch_event_queue_->OnGestureEventAck(event, ack_result);
   disposition_handler_->OnGestureEventAck(event, ack_source, ack_result);
+}
+
+void InputRouterImpl::SendGeneratedWheelEvent(
+    const MouseWheelEventWithLatencyInfo& wheel_event) {
+  client_->SendGeneratedWheelEvent(wheel_event);
 }
 
 void InputRouterImpl::SendMouseWheelEventImmediately(

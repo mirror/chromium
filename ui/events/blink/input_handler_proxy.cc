@@ -662,8 +662,29 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::FlingScrollByMouseWheel(
 
   DCHECK(!wheel_event.scroll_by_page);
   DCHECK(wheel_event.has_precise_scrolling_deltas);
-  if (touchpad_and_wheel_scroll_latching_enabled_) {
-    if (gesture_scroll_on_impl_thread_) {
+  // When wheel scroll latching is enabled, touchpad fling is handled on
+  // browser.
+  DCHECK(!touchpad_and_wheel_scroll_latching_enabled_);
+  cc::ScrollStateData scroll_state_begin_data;
+  scroll_state_begin_data.position_x = wheel_event.PositionInWidget().x;
+  scroll_state_begin_data.position_y = wheel_event.PositionInWidget().y;
+  scroll_state_begin_data.is_beginning = true;
+  cc::ScrollState scroll_state_begin(scroll_state_begin_data);
+  cc::InputHandler::ScrollStatus scroll_status =
+      input_handler_->ScrollBegin(&scroll_state_begin, cc::InputHandler::WHEEL);
+
+  RecordMainThreadScrollingReasons(blink::kWebGestureDeviceTouchpad,
+                                   scroll_status.main_thread_scrolling_reasons);
+
+  mouse_wheel_result_ =
+      (listener_properties == cc::EventListenerProperties::kPassive)
+          ? DID_HANDLE_NON_BLOCKING
+          : DROP_EVENT;
+  RecordScrollingThreadStatus(blink::kWebGestureDeviceTouchpad,
+                              scroll_status.main_thread_scrolling_reasons);
+
+  switch (scroll_status.thread) {
+    case cc::InputHandler::SCROLL_ON_IMPL_THREAD: {
       TRACE_EVENT_INSTANT2("input",
                            "InputHandlerProxy::handle_input wheel scroll",
                            TRACE_EVENT_SCOPE_THREAD, "deltaX", scroll_delta.x(),
@@ -678,92 +699,35 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::FlingScrollByMouseWheel(
 
       cc::InputHandlerScrollResult scroll_result =
           input_handler_->ScrollBy(&scroll_state_update);
-
-      if (!scroll_result.did_scroll &&
-          input_handler_->ScrollingShouldSwitchtoMainThread()) {
-        gesture_scroll_on_impl_thread_ = false;
-        return DID_NOT_HANDLE;
-      }
-
       HandleOverscroll(gfx::Point(wheel_event.PositionInWidget().x,
                                   wheel_event.PositionInWidget().y),
                        scroll_result, false);
+
+      cc::ScrollStateData scroll_state_end_data;
+      scroll_state_end_data.is_ending = true;
+      cc::ScrollState scroll_state_end(scroll_state_end_data);
+      input_handler_->ScrollEnd(&scroll_state_end);
+
       if (scroll_result.did_scroll) {
         return listener_properties == cc::EventListenerProperties::kPassive
                    ? DID_HANDLE_NON_BLOCKING
                    : DID_HANDLE;
       }
-
       return DROP_EVENT;
-    } else {
+    }
+    case cc::InputHandler::SCROLL_IGNORED:
+      // TODO(jamesr): This should be DROP_EVENT, but in cases where we fail
+      // to properly sync scrollability it's safer to send the event to the
+      // main thread. Change back to DROP_EVENT once we have synchronization
+      // bugs sorted out.
+      return DID_NOT_HANDLE;
+    case cc::InputHandler::SCROLL_UNKNOWN:
+    case cc::InputHandler::SCROLL_ON_MAIN_THREAD:
+      return DID_NOT_HANDLE;
+    default:
+      NOTREACHED();
       return DID_NOT_HANDLE;
     }
-  } else {  // !touchpad_and_wheel_scroll_latching_enabled_
-    cc::ScrollStateData scroll_state_begin_data;
-    scroll_state_begin_data.position_x = wheel_event.PositionInWidget().x;
-    scroll_state_begin_data.position_y = wheel_event.PositionInWidget().y;
-    scroll_state_begin_data.is_beginning = true;
-    cc::ScrollState scroll_state_begin(scroll_state_begin_data);
-    cc::InputHandler::ScrollStatus scroll_status = input_handler_->ScrollBegin(
-        &scroll_state_begin, cc::InputHandler::WHEEL);
-
-    RecordMainThreadScrollingReasons(
-        blink::kWebGestureDeviceTouchpad,
-        scroll_status.main_thread_scrolling_reasons);
-
-    mouse_wheel_result_ =
-        (listener_properties == cc::EventListenerProperties::kPassive)
-            ? DID_HANDLE_NON_BLOCKING
-            : DROP_EVENT;
-    RecordScrollingThreadStatus(blink::kWebGestureDeviceTouchpad,
-                                scroll_status.main_thread_scrolling_reasons);
-
-    switch (scroll_status.thread) {
-      case cc::InputHandler::SCROLL_ON_IMPL_THREAD: {
-        TRACE_EVENT_INSTANT2("input",
-                             "InputHandlerProxy::handle_input wheel scroll",
-                             TRACE_EVENT_SCOPE_THREAD, "deltaX",
-                             scroll_delta.x(), "deltaY", scroll_delta.y());
-
-        cc::ScrollStateData scroll_state_update_data;
-        scroll_state_update_data.delta_x = scroll_delta.x();
-        scroll_state_update_data.delta_y = scroll_delta.y();
-        scroll_state_update_data.position_x = wheel_event.PositionInWidget().x;
-        scroll_state_update_data.position_y = wheel_event.PositionInWidget().y;
-        cc::ScrollState scroll_state_update(scroll_state_update_data);
-
-        cc::InputHandlerScrollResult scroll_result =
-            input_handler_->ScrollBy(&scroll_state_update);
-        HandleOverscroll(gfx::Point(wheel_event.PositionInWidget().x,
-                                    wheel_event.PositionInWidget().y),
-                         scroll_result, false);
-
-        cc::ScrollStateData scroll_state_end_data;
-        scroll_state_end_data.is_ending = true;
-        cc::ScrollState scroll_state_end(scroll_state_end_data);
-        input_handler_->ScrollEnd(&scroll_state_end);
-
-        if (scroll_result.did_scroll) {
-          return listener_properties == cc::EventListenerProperties::kPassive
-                     ? DID_HANDLE_NON_BLOCKING
-                     : DID_HANDLE;
-        }
-        return DROP_EVENT;
-      }
-      case cc::InputHandler::SCROLL_IGNORED:
-        // TODO(jamesr): This should be DROP_EVENT, but in cases where we fail
-        // to properly sync scrollability it's safer to send the event to the
-        // main thread. Change back to DROP_EVENT once we have synchronization
-        // bugs sorted out.
-        return DID_NOT_HANDLE;
-      case cc::InputHandler::SCROLL_UNKNOWN:
-      case cc::InputHandler::SCROLL_ON_MAIN_THREAD:
-        return DID_NOT_HANDLE;
-      default:
-        NOTREACHED();
-        return DID_NOT_HANDLE;
-    }
-  }
 }
 
 InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureScrollBegin(
@@ -921,6 +885,10 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureScrollEnd(
 
 InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
     const WebGestureEvent& gesture_event) {
+  // When wheel scroll latching is enabled touchpad flings are handled on
+  // browser.
+  DCHECK(!(gesture_event.source_device == blink::kWebGestureDeviceTouchpad) ||
+         !touchpad_and_wheel_scroll_latching_enabled_);
 #ifndef NDEBUG
   expect_scroll_update_end_ = false;
 #endif
@@ -960,8 +928,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
 
   switch (scroll_status.thread) {
     case cc::InputHandler::SCROLL_ON_IMPL_THREAD: {
-      if (!touchpad_and_wheel_scroll_latching_enabled_ &&
-          gesture_event.source_device == blink::kWebGestureDeviceTouchpad) {
+      if (gesture_event.source_device == blink::kWebGestureDeviceTouchpad) {
         scroll_state.set_is_ending(true);
         input_handler_->ScrollEnd(&scroll_state);
       }
@@ -1308,9 +1275,7 @@ bool InputHandlerProxy::CancelCurrentFling() {
 bool InputHandlerProxy::CancelCurrentFlingWithoutNotifyingClient() {
   bool had_fling_animation = !!fling_curve_;
   if (had_fling_animation &&
-      (fling_parameters_.source_device == blink::kWebGestureDeviceTouchscreen ||
-       (touchpad_and_wheel_scroll_latching_enabled_ &&
-        fling_parameters_.source_device == blink::kWebGestureDeviceTouchpad))) {
+      fling_parameters_.source_device == blink::kWebGestureDeviceTouchscreen) {
     cc::ScrollStateData scroll_state_data;
     scroll_state_data.is_ending = true;
     cc::ScrollState scroll_state(scroll_state_data);
@@ -1365,6 +1330,8 @@ void InputHandlerProxy::RequestAnimation() {
 
 bool InputHandlerProxy::TouchpadFlingScroll(
     const WebFloatSize& increment) {
+  // When wheel scroll latching is enabled touchpad fling is handled on browser.
+  DCHECK(!touchpad_and_wheel_scroll_latching_enabled_);
   InputHandlerProxy::EventDisposition disposition;
   cc::EventListenerProperties properties =
       input_handler_->GetEventListenerProperties(
@@ -1409,25 +1376,6 @@ bool InputHandlerProxy::TouchpadFlingScroll(
     case DROP_EVENT:
       break;
     case DID_NOT_HANDLE: {
-      if (touchpad_and_wheel_scroll_latching_enabled_) {
-        // Send a GSB to the main thread before transfering the curve. This
-        // may cause scrolling a different target which will be a non-issue
-        // once fling is handled on browser side. https://crbug.com/249063
-        WebGestureEvent synthetic_begin(WebInputEvent::kGestureScrollBegin,
-                                        fling_parameters_.modifiers,
-                                        InSecondsF(base::TimeTicks::Now()));
-        synthetic_begin.x = fling_parameters_.point.x;
-        synthetic_begin.y = fling_parameters_.point.y;
-        synthetic_begin.global_x = fling_parameters_.global_point.x;
-        synthetic_begin.global_y = fling_parameters_.global_point.y;
-        synthetic_begin.source_device = blink::kWebGestureDeviceTouchpad;
-        synthetic_begin.data.scroll_begin.delta_x_hint =
-            fling_parameters_.delta.x;
-        synthetic_begin.data.scroll_begin.delta_y_hint =
-            fling_parameters_.delta.y;
-        client_->DispatchNonBlockingEventToMainThread(
-            ui::WebInputEventTraits::Clone(synthetic_begin), ui::LatencyInfo());
-      }
       TRACE_EVENT_INSTANT0("input",
                            "InputHandlerProxy::scrollBy::AbortFling",
                            TRACE_EVENT_SCOPE_THREAD);
@@ -1547,6 +1495,10 @@ void InputHandlerProxy::UpdateCurrentFlingState(
     const WebGestureEvent& fling_start_event,
     const gfx::Vector2dF& velocity) {
   DCHECK_EQ(WebInputEvent::kGestureFlingStart, fling_start_event.GetType());
+  // When wheel scroll latching is enabled touchpad flings are handled on
+  // browser.
+  DCHECK(fling_start_event.source_device != blink::kWebGestureDeviceTouchpad ||
+         !touchpad_and_wheel_scroll_latching_enabled_);
   current_fling_velocity_ = velocity;
   fling_curve_ = client_->CreateFlingAnimationCurve(
       fling_start_event.source_device,

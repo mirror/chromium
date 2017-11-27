@@ -36,7 +36,8 @@ namespace content {
 
 class GestureEventQueueTest : public testing::Test,
                               public GestureEventQueueClient,
-                              public TouchpadTapSuppressionControllerClient {
+                              public TouchpadTapSuppressionControllerClient,
+                              public FlingControllerClient {
  public:
   GestureEventQueueTest() : GestureEventQueueTest(false) {}
 
@@ -55,7 +56,7 @@ class GestureEventQueueTest : public testing::Test,
 
   // testing::Test
   void SetUp() override {
-    queue_.reset(new GestureEventQueue(this, this, DefaultConfig()));
+    queue_.reset(new GestureEventQueue(this, this, this, DefaultConfig()));
   }
 
   void TearDown() override {
@@ -75,7 +76,7 @@ class GestureEventQueueTest : public testing::Test,
     gesture_config.fling_config.touchscreen_tap_suppression_config
         .max_tap_gap_time =
         base::TimeDelta::FromMilliseconds(max_tap_gap_time_ms);
-    queue_.reset(new GestureEventQueue(this, this, gesture_config));
+    queue_.reset(new GestureEventQueue(this, this, this, gesture_config));
   }
 
   // GestureEventQueueClient
@@ -103,6 +104,10 @@ class GestureEventQueueTest : public testing::Test,
   // TouchpadTapSuppressionControllerClient
   void SendMouseEventImmediately(
       const MouseEventWithLatencyInfo& event) override {}
+
+  // FlingControllerClient
+  void SendGeneratedWheelEvent(
+      const MouseWheelEventWithLatencyInfo& wheel_event) override {}
 
  protected:
   static GestureEventQueue::Config DefaultConfig() {

@@ -73,6 +73,9 @@ void MockInputRouterClient::ForwardGestureEventWithLatencyInfo(
         GestureEventWithLatencyInfo(gesture_event, latency_info));
 }
 
+void MockInputRouterClient::SendGeneratedWheelEvent(
+    const MouseWheelEventWithLatencyInfo& wheel_event) {}
+
 bool MockInputRouterClient::GetAndResetFilterEventCalled() {
   bool filter_input_event_called = filter_input_event_called_;
   filter_input_event_called_ = false;

@@ -272,8 +272,6 @@ void MouseWheelEventQueue::OnGestureScrollEvent(
               gesture_event.event.GetType() ==
                   blink::WebInputEvent::kGestureFlingStart)) {
     scrolling_device_ = blink::kWebGestureDeviceUninitialized;
-    if (enable_scroll_latching_)
-      scroll_in_progress_ = false;
   }
 }
 

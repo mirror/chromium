@@ -99,6 +99,8 @@ class NullInputRouterClient : public InputRouterClient {
   void OnSetWhiteListedTouchAction(
       cc::TouchAction white_listed_touch_action) override {}
   void DidStopFlinging() override {}
+  void SendGeneratedWheelEvent(
+      const MouseWheelEventWithLatencyInfo& wheel_event) override {}
   void ForwardGestureEventWithLatencyInfo(
       const blink::WebGestureEvent& event,
       const ui::LatencyInfo& latency_info) override {}
