@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e8f3617_570115e8",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T20:10:06Z",
+      "side": 1,
+      "message": "Doesn\u0027t this remove *all* spaces in the input?  What happens if the input is multiple words?  Also, generally, it feels like an input string should be cleaned up before being passed into this method.",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c943e87c_4d460bad",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T20:10:06Z",
+      "side": 1,
+      "message": "How did you arrive at this set of match types?  Is this the same as Clank?",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7949a1cb_6e1e0c9e",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T20:10:06Z",
+      "side": 1,
+      "message": "No else needed if the if() returns.",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1774751_dade4ca2",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T20:10:06Z",
+      "side": 1,
+      "message": "Intermediate url variable isn\u0027t needed - can just return via \"return GURL(...);\"",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdfd48ad_c08da091",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T20:10:06Z",
+      "side": 1,
+      "message": "s/return/returns/",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842afce1_df6a418f",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T20:10:06Z",
+      "side": 1,
+      "message": "Can you comment that this method runs independently of any currently-running autocomplete session?  Presumably it won\u0027t interfere, even if it were to be used between Start() and Stop() calls.",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7aedc2_c70404ec",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T20:10:06Z",
+      "side": 1,
+      "message": "- The method isn\u0027t voice-specific.  Lets call it \"ClassifyStringAsUrl\", or even just \"StringToUrl\".\n- It\u0027s argument should not be \"result\" - result always refers to the thing being returned or provided.  I\u0027d call it input.",
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd4235e_70bda047",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T20:10:06Z",
+      "side": 1,
+      "message": "This makes it look like we\u0027re using the component\u0027s AutocompleteController.  Why not keep the namespace for clarity, whether vr:: or vr_shell::?",
+      "range": {
+        "startLine": 255,
+        "startChar": 18,
+        "endLine": 255,
+        "endChar": 40
+      },
+      "revId": "67f39b6f61c8383ef57772f576a9967459948e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
