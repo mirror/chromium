@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db4f4503_7d91acd6",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:23:47Z",
+      "side": 1,
+      "message": "Can we add a similar test for the termination of the renderer process if we receive a navigation to an error page? (which has a kChromeErrorScheme).",
+      "revId": "319aed2c565a810d962c72c7ab7f65c4be44f827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f559253_e483ba70",
+        "filename": "content/browser/frame_host/navigator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:23:47Z",
+      "side": 1,
+      "message": "Duplicate include from the header.",
+      "revId": "319aed2c565a810d962c72c7ab7f65c4be44f827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1bfcf6b_a73f003c",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:23:47Z",
+      "side": 1,
+      "message": "nit: false /* has_user_gesture */",
+      "revId": "319aed2c565a810d962c72c7ab7f65c4be44f827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1b92fe_bc9ca6cc",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:23:47Z",
+      "side": 1,
+      "message": "Duplicate include from the header.",
+      "revId": "319aed2c565a810d962c72c7ab7f65c4be44f827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9afd4465_e35a8a4e",
+        "filename": "content/common/navigation_params.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:23:47Z",
+      "side": 1,
+      "message": "nit: can you spell out the suggestion? This avoids having to look up the review when reading the code :).",
+      "revId": "319aed2c565a810d962c72c7ab7f65c4be44f827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbafaa6b_193fd617",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:23:47Z",
+      "side": 1,
+      "message": "Can this include be put in the .cc file instead?",
+      "revId": "319aed2c565a810d962c72c7ab7f65c4be44f827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfc078d1_3b2488f8",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:23:47Z",
+      "side": 0,
+      "message": "This is a cleanup of a no longer used struct right?",
+      "revId": "3c8851642614a558b3460dbd6dcf65ab75bf87c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

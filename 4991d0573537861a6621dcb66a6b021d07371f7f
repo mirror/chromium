@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "3805a867_14ed2d15",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2957,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:23:47Z",
+      "side": 1,
+      "message": "@dcheng: I didn\u0027t know about mojo::ReportBadMessage. A few questions about it:\n- does it still kill the renderer process that issued the message?\n- do we get a report of kills from the wild that we can monitor? This has allowed us to find bugs in the past when we saw that the number of a particular bad messages kill were rising.",
+      "parentUuid": "0c3a3554_317db872",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d88844f4_060d0277",
         "filename": "content/common/frame.mojom",
         "patchSetId": 16
@@ -209,6 +227,24 @@
       "side": 1,
       "message": "Ack. Added a TODO linking here.",
       "parentUuid": "add3f089_d02e296d",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e72ec86c_6e595d58",
+        "filename": "content/common/navigation_params.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T13:23:47Z",
+      "side": 1,
+      "message": "Note that BeginNavigation is used to give us parameters needed to form a proper URLRequest. As we move towards using the mojom::URLLoader in PlzNavigate, we could craft the URLRequest earlier (ie in NavigationRequest), so that BeginNavigation is only used in renderer-initiated navigations. In that case, we\u0027ll be able to enforce that this member is non-null.",
+      "parentUuid": "ce519855_5f8f5286",
       "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
