@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "5759d71d_32871826",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-27T19:39:55Z",
+      "side": 1,
+      "message": "Unfortunately, the OnExpiration callback needs this class in the anonymous namespace and I can\u0027t keep it public. Should I just yank it out as a separate class ?",
+      "parentUuid": "5af50793_4cb2a8f8",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "062828f3_a529e5fe",
         "filename": "components/arc/timer/arc_timer.h",
         "patchSetId": 13
@@ -123,6 +141,24 @@
       "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa1863e9_233593e8",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-27T19:39:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd78188a_de54dd22",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
