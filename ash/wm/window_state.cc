@@ -58,6 +58,9 @@ class BoundsSetter : public aura::LayoutManager {
 
   void SetBounds(aura::Window* window, const gfx::Rect& bounds) {
     SetChildBoundsDirect(window, bounds);
+    // Update (including reset) snapped width ratio as it may change along with
+    // window bounds change.
+    GetWindowState(window)->UpdateSnappedWidthRatio();
   }
 
  private:
@@ -316,6 +319,17 @@ std::unique_ptr<WindowState::State> WindowState::SetStateObject(
   return old_object;
 }
 
+void WindowState::UpdateSnappedWidthRatio() {
+  if (!IsSnapped()) {
+    snapped_width_ratio_ = 0.5f;
+  } else {
+    gfx::Rect maximized_bounds =
+        ScreenUtil::GetMaximizedWindowBoundsInParent(window_);
+    snapped_width_ratio_ = static_cast<float>(window_->bounds().width()) /
+                           static_cast<float>(maximized_bounds.width());
+  }
+}
+
 void WindowState::SetPreAutoManageWindowBounds(const gfx::Rect& bounds) {
   pre_auto_manage_window_bounds_.reset(new gfx::Rect(bounds));
 }
@@ -407,6 +421,8 @@ void WindowState::AdjustSnappedBounds(gfx::Rect* bounds) {
     return;
   gfx::Rect maximized_bounds =
       ScreenUtil::GetMaximizedWindowBoundsInParent(window_);
+  bounds->set_width(
+      static_cast<int>(snapped_width_ratio_ * maximized_bounds.width()));
   if (GetStateType() == mojom::WindowStateType::LEFT_SNAPPED)
     bounds->set_x(maximized_bounds.x());
   else if (GetStateType() == mojom::WindowStateType::RIGHT_SNAPPED)
