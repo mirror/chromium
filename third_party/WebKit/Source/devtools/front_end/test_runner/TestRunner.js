@@ -351,14 +351,41 @@ TestRunner._setupTestHelpers = function(target) {
   TestRunner.mainTarget = target;
 };
 
-/** @type {number} */
-TestRunner._evaluateInPageCounter = 0;
+/**
+ * @param {string|!Function} code
+ * @param {!Function} callback
+ */
+TestRunner.evaluateInPageRemoteObject = async function(code, callback) {
+  var response = await TestRunner._evaluateInPage(code);
+  TestRunner.safeWrap(callback)(TestRunner.runtimeModel.createRemoteObject(response.result), response.exceptionDetails);
+};
+
+/**
+ * @param {string|!Function} code
+ * @return {!Promise<!SDK.RemoteObject>}
+ */
+TestRunner.evaluateInPageRemoteObjectPromise = function(code) {
+  return new Promise(success => TestRunner.evaluateInPageRemoteObject(code, success));
+};
 
 /**
  * @param {string|!Function} code
  * @param {!Function} callback
  */
 TestRunner.evaluateInPage = async function(code, callback) {
+  var response = await TestRunner._evaluateInPage(code);
+  TestRunner.safeWrap(callback)(response.result.value, response.exceptionDetails);
+};
+
+/** @type {number} */
+TestRunner._evaluateInPageCounter = 0;
+
+/**
+ * @param {string|!Function} code
+ * @return {!Promise<{response: !SDK.RemoteObject,
+ *   exceptionDetails: (!Protocol.Runtime.ExceptionDetails|undefined)}>}
+ */
+TestRunner._evaluateInPage = async function(code) {
   var lines = new Error().stack.split('at ');
 
   // Handles cases where the function is safe wrapped
@@ -374,10 +401,16 @@ TestRunner.evaluateInPage = async function(code, callback) {
   if (code.indexOf('sourceURL=') === -1)
     code += `//# sourceURL=${sourceURL}`;
   var response = await TestRunner.RuntimeAgent.invoke_evaluate({expression: code, objectGroup: 'console'});
-  if (!response[Protocol.Error]) {
-    TestRunner.safeWrap(callback)(
-        TestRunner.runtimeModel.createRemoteObject(response.result), response.exceptionDetails);
+  var error = response[Protocol.Error];
+  if (error) {
+    TestRunner.addResult(
+        'Error: ' +
+        (error || response.exceptionDetails && response.exceptionDetails.text ||
+         'exception while evaluation in page.'));
+    TestRunner.completeTest();
+    return;
   }
+  return response;
 };
 
 /**
@@ -414,7 +447,7 @@ TestRunner.evaluateInPageAsync = async function(code) {
 
   var error = response[Protocol.Error];
   if (!error && !response.exceptionDetails)
-    return TestRunner.runtimeModel.createRemoteObject(response.result);
+    return response.result.value;
   TestRunner.addResult(
       'Error: ' +
       (error || response.exceptionDetails && response.exceptionDetails.text || 'exception while evaluation in page.'));
@@ -1277,8 +1310,8 @@ TestRunner._printDevToolsConsole = function() {
  * @param {string} querySelector
  */
 TestRunner.dumpInspectedPageElementText = async function(querySelector) {
-  var remoteObject = await TestRunner.evaluateInPageAsync(`document.querySelector('${querySelector}').innerText`);
-  TestRunner.addResult(remoteObject.value);
+  var value = await TestRunner.evaluateInPageAsync(`document.querySelector('${querySelector}').innerText`);
+  TestRunner.addResult(value);
 };
 
 /** @type {boolean} */

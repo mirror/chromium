@@ -23,7 +23,7 @@
       }
 
       function didEditScriptSource() {
-        TestRunner.evaluateInPage('f()', didEvaluateInPage);
+        TestRunner.evaluateInPageRemoteObject('f()', didEvaluateInPage);
       }
 
       function didEvaluateInPage(result) {
@@ -54,7 +54,7 @@
 
       function didShowScriptSource(sourceFrame) {
         SourcesTestRunner.waitUntilPaused(paused);
-        TestRunner.evaluateInPage('f1()', didEvaluateInPage);
+        TestRunner.evaluateInPageRemoteObject('f1()', didEvaluateInPage);
       }
 
       function paused(callFrames) {
