@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "022a91b4_bef773fa",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Done (for !OS_ANDROID)",
+      "parentUuid": "27b1dd79_ddd243dc",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 48
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b86f0031_b5b52b1d",
         "filename": "chrome/browser/ui/tabs/tab_logger.cc",
         "patchSetId": 16
@@ -56,6 +80,24 @@
       "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a5971e_81a65866",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b86f0031_b5b52b1d",
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +121,30 @@
       "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762ed9f0_04cd30ca",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Privacy review for UKMs requested bucketing this metric.",
+      "parentUuid": "8c9f8c8c_cbcac0be",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +194,30 @@
     },
     {
       "key": {
+        "uuid": "d5fd5523_bed463e2",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bce57f61_537cad51",
+      "range": {
+        "startLine": 85,
+        "startChar": 31,
+        "endLine": 85,
+        "endChar": 72
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cfdc438_2d73e303",
         "filename": "chrome/browser/ui/tabs/tab_logger.h",
         "patchSetId": 16
@@ -145,6 +235,24 @@
     },
     {
       "key": {
+        "uuid": "847fc902_adac9f3f",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cfdc438_2d73e303",
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52f3987a_f047f749",
         "filename": "chrome/browser/ui/tabs/tab_logger.h",
         "patchSetId": 16
@@ -159,6 +267,24 @@
       "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcac7fbd_d8e55c8c",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52f3987a_f047f749",
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +311,30 @@
     },
     {
       "key": {
+        "uuid": "ab796241_e940932a",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7d065a7_1e877356",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8a8037d_a199e7fc",
         "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
         "patchSetId": 16
@@ -196,6 +346,30 @@
       "writtenOn": "2017-11-23T15:46:18Z",
       "side": 1,
       "message": "Explain why.",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 33
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3647474a_3c0c4b05",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "We just do :-P\n\nThe design doc at crbug.com/784639 lays out more detailed plans for the analysis driving these UKMs. I expanded the class comments a little, but we won\u0027t be giving more detailed plans in the source code yet.",
+      "parentUuid": "e8a8037d_a199e7fc",
       "range": {
         "startLine": 91,
         "startChar": 2,
@@ -242,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "86db1304_3ac9de3e",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "\u003e since they\u0027re not being combined... this can probably be a value member as well, rather than unique_ptr\n\nThe pointer enables substituting the logger with a mock in tabs_tracker_unittest.cc.\n\n\u003e \n\u003e Note this is looking more and more like metrics::TabUsageRecorder. I think François missed your question?\n\nI\u0027ll confirm on Monday. TabUsageRecorder might be going away. (But that doesn\u0027t mean we can\u0027t keep it around and repurpose it, then move it into //chrome/browser/ui if we really want to.)",
+      "parentUuid": "8c8484dc_86409541",
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76acd200_eb96d408",
         "filename": "chrome/browser/ui/tabs/tabs_tracker.h",
         "patchSetId": 16
@@ -262,6 +454,30 @@
       "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4b7b4d_bf4e5344",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76acd200_eb96d408",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -288,6 +504,30 @@
     },
     {
       "key": {
+        "uuid": "c6eaf133_ef737811",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e4021de_b3def277",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 16
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be23d69f_102d3c70",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 16
@@ -299,6 +539,30 @@
       "writtenOn": "2017-11-23T15:46:18Z",
       "side": 1,
       "message": "Why is this important?",
+      "range": {
+        "startLine": 1566,
+        "startChar": 51,
+        "endLine": 1567,
+        "endChar": 9
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ceb1f51_34196113",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Added \"to limit granularity\" to summary.",
+      "parentUuid": "be23d69f_102d3c70",
       "range": {
         "startLine": 1566,
         "startChar": 51,

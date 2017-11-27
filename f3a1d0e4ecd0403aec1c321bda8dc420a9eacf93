@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6adc974d_fc6b70e6",
+        "filename": "chrome/browser/browser_process.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dac5c97b_f67ade88",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74fe826b_1d090a55",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 14
@@ -122,6 +140,24 @@
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c52805e_9bbe151c",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 3573,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "OK, used !is_android throughout.",
+      "parentUuid": "027b723e_576a69b4",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -388,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "08a0636a_3f9debbd",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "39e55e7c_679b7eac",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b055805f_1d7c7900",
         "filename": "chrome/browser/ui/tabs/tab_logger.h",
         "patchSetId": 14
@@ -438,6 +492,24 @@
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a184275_400b8706",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "OK, done.",
+      "parentUuid": "c55ab952_25a620d3",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -505,6 +577,24 @@
       "side": 1,
       "message": "Probably. I\u0027d like to run that by someone from chrisha\u0027s team first.",
       "parentUuid": "dbb69187_9fbe975b",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d785f6_891356d6",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:25:49Z",
+      "side": 1,
+      "message": "Merging this with TabUsageRecorder might be a decent idea, depending on long-term plans for that class. Here\u0027s what that would look like (from a slightly older patch) https://crrev.com/c/786898/\n\nWill try to get input from pmonette@ on Monday.",
+      "parentUuid": "8d15e10b_5a893ebc",
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
