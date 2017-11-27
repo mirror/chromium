@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "819613c7_107ddfca",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T15:07:40Z",
+      "side": 1,
+      "message": "nit: even better would be:\nfor p in params.split(\u0027,\u0027):\n  items \u003d p.split()",
+      "revId": "f071917e4afadcd0418dc9694ac8ded82f1a28a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6faae66f_a68fe492",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T15:07:40Z",
+      "side": 1,
+      "message": "nit: Not sure how performance sensitive this is, but I think minimally, it should be appending chars to a list, and then calling \u0027\u0027.join() at the end.",
+      "revId": "f071917e4afadcd0418dc9694ac8ded82f1a28a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
