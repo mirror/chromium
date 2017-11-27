@@ -19,6 +19,109 @@
     },
     {
       "key": {
+        "uuid": "88cdf345_3646c0b1",
+        "filename": "build/secondary/third_party/android_platform/development/scripts/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-27T22:17:49Z",
+      "side": 1,
+      "message": "It isn\u0027t, but if we\u0027re going to use llvm-symbolizer for symbolization in place of the existing tools, we\u0027ll want it at the same times. (i.e., regardless of using_sanitizer\u0027s value)\n\nThat said, until you use this, it\u0027d be best to leave it out of data.",
+      "parentUuid": "94eb2a0d_d9ab3bd1",
+      "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a470cdb_fffac252",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-27T22:17:49Z",
+      "side": 1,
+      "message": "I wouldn\u0027t use this if you\u0027re only doing so for DIR_SOURCE_ROOT. You\u0027re already building up DIR_SOURCE_ROOT in the sys.path modification above.",
+      "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646e5e03_9a3647d3",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-27T22:17:49Z",
+      "side": 1,
+      "message": "octal should be 0-7, right? and does it require starting w/ a 0?",
+      "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0433339_6c06d71c",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-27T22:17:49Z",
+      "side": 1,
+      "message": "This should not be declared at class scope.",
+      "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e5b7dc_bf587cee",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-27T22:17:49Z",
+      "side": 1,
+      "message": "nit: only have one blank line between members or functions in a class.",
+      "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a678ec_3f0313a2",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-27T22:17:49Z",
+      "side": 1,
+      "message": "Is there a reason why Close doesn\u0027t attempt to acquire self._lock before doing these things?",
+      "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77d06af0_bca46f44",
         "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
         "patchSetId": 1
@@ -30,6 +133,24 @@
       "writtenOn": "2017-11-27T18:06:19Z",
       "side": 1,
       "message": "I can\u0027t call logging.error here because I run into this error: \"Exception AttributeError: \"\u0027NoneType\u0027 object has no attribute \u0027error\u0027\" in \u003cbound method LLVMSymbolizerInstance.__del__ of \u003c__main__.LLVMSymbolizerInstance object at 0x7f9bc3d28390\u003e\u003e ignored\". According to the documentation of \"__del__\", it suggests I don\u0027t know the ordering of how python cleans up. Maybe it removes logging first. However that is what I see by just running this file. \u0027logging\u0027 may not be removed if there is another module that needs logging and is not deleted.",
+      "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4775d7_6612ad2e",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-27T22:17:49Z",
+      "side": 1,
+      "message": "We should ideally not be relying on __del__ regardless, though it\u0027s good to ensure that it gets closed in the event that it wasn\u0027t otherwise. We should indicate that we had to rely on __del__ to close out the symbolizer -- maybe just print to stderr?",
+      "parentUuid": "77d06af0_bca46f44",
       "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
