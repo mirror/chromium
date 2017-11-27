@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e1878d4_923d9837",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-27T09:01:59Z",
+      "side": 1,
+      "message": "nit: You can use |draggable_area_.Contains(offset.x(), offset.y())|",
+      "range": {
+        "startLine": 167,
+        "startChar": 9,
+        "endLine": 170,
+        "endChar": 71
+      },
+      "revId": "d8b6736777c70bee6917db4b075283b423abf560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3a5faa_0c9140f7",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-27T09:01:59Z",
+      "side": 1,
+      "message": "nit: Please remove this brace or run `git cl format`",
+      "range": {
+        "startLine": 756,
+        "startChar": 27,
+        "endLine": 756,
+        "endChar": 28
+      },
+      "revId": "d8b6736777c70bee6917db4b075283b423abf560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
