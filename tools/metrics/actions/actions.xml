@@ -16844,6 +16844,15 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="Signin_SigninNewAccount_FromNTPContentSuggestions">
+  <owner>bsazonov@chromium.org</owner>
+  <description>
+    Recorded on sign in start from access point
+    signin_metrics::AccessPoint::ACCESS_POINT_NTP_CONTENT_SUGGESTIONS, with a
+    new account.
+  </description>
+</action>
+
 <action name="Signin_SigninNewAccount_FromRecentTabs">
   <owner>jlebel@chromium.org</owner>
   <description>
@@ -16874,6 +16883,15 @@ should be able to be added at any place in this file.
     Recorded on sign in start from access point
     signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER, using another
     account than the default one.
+  </description>
+</action>
+
+<action name="Signin_SigninNotDefault_FromNTPContentSuggestions">
+  <owner>bsazonov@chromium.org</owner>
+  <description>
+    Recorded on sign in start from access point
+    signin_metrics::AccessPoint::ACCESS_POINT_NTP_CONTENT_SUGGESTIONS, using
+    another account than the default one.
   </description>
 </action>
 
@@ -16919,6 +16937,15 @@ should be able to be added at any place in this file.
   <description>
     Recorded on sign in start from access point
     signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER, using the
+    default account.
+  </description>
+</action>
+
+<action name="Signin_SigninWithDefault_FromNTPContentSuggestions">
+  <owner>bsazonov@chromium.org</owner>
+  <description>
+    Recorded on sign in start from access point
+    signin_metrics::AccessPoint::ACCESS_POINT_NTP_CONTENT_SUGGESTIONS, using the
     default account.
   </description>
 </action>
