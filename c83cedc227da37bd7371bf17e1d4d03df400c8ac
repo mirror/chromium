@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "636791d7_77a24c4e",
+        "filename": "services/network/public/cpp/mutable_partial_network_traffic_annotation_tag_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-27T10:55:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8d82c2c_82d26daa",
+      "revId": "c83cedc227da37bd7371bf17e1d4d03df400c8ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41ae2b46_fdfcd748",
         "filename": "services/network/public/cpp/mutable_partial_network_traffic_annotation_tag_struct_traits.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c83cedc227da37bd7371bf17e1d4d03df400c8ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d2056b_fb9488b9",
+        "filename": "services/network/public/cpp/mutable_partial_network_traffic_annotation_tag_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-27T10:55:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41ae2b46_fdfcd748",
+      "revId": "c83cedc227da37bd7371bf17e1d4d03df400c8ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
