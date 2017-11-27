@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e98f024f_9a9aafd1",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-27T11:00:12Z",
+      "side": 0,
+      "message": "This is intentional, right? You\u0027re changing up the test so that you can remove this flag? If so, LGTM! If not, I\u0027ve misunderstood something!",
+      "revId": "d46581c53fe38948263796aa9472ded99c35c6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
