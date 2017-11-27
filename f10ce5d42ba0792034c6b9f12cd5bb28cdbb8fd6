@@ -87,6 +87,24 @@
       "revId": "f10ce5d42ba0792034c6b9f12cd5bb28cdbb8fd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0101c907_a5eb4531",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-27T01:15:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4a0d4be_99c5d12b",
+      "revId": "f10ce5d42ba0792034c6b9f12cd5bb28cdbb8fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
