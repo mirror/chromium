@@ -105,6 +105,12 @@
 @synthesize tabSwitcher = _tabSwitcher;
 @synthesize bvcContainer = _bvcContainer;
 
+- (void)loadView {
+  // Create a UIView with a white background color.
+  self.view = [[UIView alloc] init];
+  self.view.backgroundColor = [UIColor whiteColor];
+}
+
 - (UIViewController*)activeViewController {
   if (self.bvcContainer) {
     DCHECK_EQ(self.bvcContainer, self.presentedViewController);
