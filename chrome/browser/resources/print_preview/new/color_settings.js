@@ -4,4 +4,6 @@
 
 Polymer({
   is: 'print-preview-color-settings',
+
+  behaviors: [SettingsBehavior],
 });

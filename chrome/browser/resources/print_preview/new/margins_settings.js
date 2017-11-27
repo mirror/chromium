@@ -4,4 +4,6 @@
 
 Polymer({
   is: 'print-preview-margins-settings',
+
+  behaviors: [SettingsBehavior],
 });

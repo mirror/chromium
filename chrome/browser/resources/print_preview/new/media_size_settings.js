@@ -4,4 +4,6 @@
 
 Polymer({
   is: 'print-preview-media-size-settings',
+
+  behaviors: [SettingsBehavior],
 });

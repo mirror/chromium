@@ -4,4 +4,6 @@
 
 Polymer({
   is: 'print-preview-layout-settings',
+
+  behaviors: [SettingsBehavior],
 });
