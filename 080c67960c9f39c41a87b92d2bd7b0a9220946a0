@@ -22,6 +22,30 @@
       "revId": "080c67960c9f39c41a87b92d2bd7b0a9220946a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c1be92_698158f1",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-27T15:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "764ffd8f_8529116c",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 17
+      },
+      "revId": "080c67960c9f39c41a87b92d2bd7b0a9220946a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
