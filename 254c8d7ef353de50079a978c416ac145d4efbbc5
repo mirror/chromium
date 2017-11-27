@@ -16,6 +16,24 @@
       "revId": "254c8d7ef353de50079a978c416ac145d4efbbc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df6157b_68e6848c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layers/LayerTreeModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-27T19:07:38Z",
+      "side": 1,
+      "message": "Yeah, you\u0027re right, throttler is better here. I was reluctant to use it originally as I vaguely remember having some issues with it, but it seems to be a good fit here. Can\u0027t quite use the code you suggested, though :-)",
+      "parentUuid": "8ad55d41_93eeae53",
+      "revId": "254c8d7ef353de50079a978c416ac145d4efbbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
