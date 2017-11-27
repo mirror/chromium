@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be3908a5_4be2a696",
+        "filename": "extensions/browser/app_window/app_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-27T20:25:07Z",
+      "side": 1,
+      "message": "I looked at tabs_api.cc and discovered:\na) We eliminated panel support in extensions completely here: https://codereview.chromium.org/2886293002\nb) Before that support was in fact limited to the now defunct Hangouts extension.\n\nSo AppWindow is only opened by Apps now.",
+      "parentUuid": "dd37af31_fdf98ca6",
+      "revId": "faf9878c3433b8a9a716c9d4285f2ab329fd5772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5b6cbf3_7e075720",
         "filename": "extensions/browser/app_window/app_window.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "faf9878c3433b8a9a716c9d4285f2ab329fd5772",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e22905_463455a5",
+        "filename": "extensions/browser/app_window/app_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-27T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5b6cbf3_7e075720",
+      "revId": "faf9878c3433b8a9a716c9d4285f2ab329fd5772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
