@@ -16,6 +16,24 @@
       "revId": "3eff30818266cf12aa4bfea9c31c1ae325a23df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8481dc64_c924356d",
+        "filename": "third_party/webrtc_overrides/rtc_base/event.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-11-27T09:44:20Z",
+      "side": 1,
+      "message": "This is intentional while the build file is being updated. During the first stage, the header might be picked up from here and to be sure that there\u0027s no conflict, I decided to keep the same define. This will go away soon.",
+      "parentUuid": "47579ca7_4efd5f3d",
+      "revId": "3eff30818266cf12aa4bfea9c31c1ae325a23df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
