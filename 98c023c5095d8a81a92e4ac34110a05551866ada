@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "584cc026_055f0359",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/ecma_script_types.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-27T08:29:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39d61c50_c409d806",
+      "range": {
+        "startLine": 22,
+        "startChar": 33,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "98c023c5095d8a81a92e4ac34110a05551866ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84b2f532_70b8f297",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_definition_builder.py",
         "patchSetId": 21
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c8d4e8ac_94838ce8",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_definition_builder.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-27T08:29:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84b2f532_70b8f297",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 14
+      },
+      "revId": "98c023c5095d8a81a92e4ac34110a05551866ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0128a35_8d598245",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 21
@@ -62,6 +110,24 @@
       "revId": "98c023c5095d8a81a92e4ac34110a05551866ada",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6d8a11_b9c35bca",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-27T08:29:36Z",
+      "side": 1,
+      "message": "I renamed this class \"TypePlaceHolder\", quoted from our offline chat.\nDone.",
+      "parentUuid": "e0128a35_8d598245",
+      "revId": "98c023c5095d8a81a92e4ac34110a05551866ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
