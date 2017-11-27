@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "32fe1391_1a2e3323",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-27T17:06:43Z",
+      "side": 1,
+      "message": "Tarun, yes, I expect to do that in a follow up CL per the below TODO. I think I will also want to rename the existing DeterminePreviewsState to something like DetermineEnabledPreviewsState and then add something like DetermineCommittedPreviewsState. \n\nMatt, is there anything concrete you can point me too on the \"new\" way vs. this to-be-deprecated delegate?",
+      "parentUuid": "2116d3d8_192299e8",
+      "range": {
+        "startLine": 805,
+        "startChar": 5,
+        "endLine": 805,
+        "endChar": 11
+      },
+      "revId": "14a3c93c51365f9db02f6724a3a815d1ebb316ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aac2addb_7baf42a0",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
         "patchSetId": 6
@@ -60,6 +84,30 @@
       "writtenOn": "2017-11-22T22:53:02Z",
       "side": 1,
       "message": "Should this method also handle the case where the original URL was http, the preview state was LITE_PAGES, and then the page redirects to an https:// webpage. In that case, we need to clear the preview state?",
+      "range": {
+        "startLine": 810,
+        "startChar": 40,
+        "endLine": 810,
+        "endChar": 52
+      },
+      "revId": "14a3c93c51365f9db02f6724a3a815d1ebb316ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6bc3a5_b1a76dba",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-27T17:06:43Z",
+      "side": 1,
+      "message": "Right, I mean to do that for the TODO bug 782922 - move the proxy header check decision here. But I would rather do that change after the branch and just tackle this narrower fix before branch.",
+      "parentUuid": "aac2addb_7baf42a0",
       "range": {
         "startLine": 810,
         "startChar": 40,
