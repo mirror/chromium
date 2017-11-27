@@ -3,6 +3,9 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.h"
+
+#include <math.h>
+
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/net/nqe/ui_network_quality_estimator_service.h"
 #include "chrome/browser/net/nqe/ui_network_quality_estimator_service_factory.h"
@@ -150,6 +153,16 @@ void UkmPageLoadMetricsObserver::OnComplete(
   RecordTimingMetrics(timing, info.source_id);
 }
 
+void UkmPageLoadMetricsObserver::OnLoadedResource(
+    const page_load_metrics::ExtraRequestCompleteInfo&
+        extra_request_complete_info) {
+  if (extra_request_complete_info.was_cached) {
+    cache_bytes_ += extra_request_complete_info.raw_body_bytes;
+  } else {
+    network_bytes_ += extra_request_complete_info.raw_body_bytes;
+  }
+}
+
 void UkmPageLoadMetricsObserver::RecordTimingMetrics(
     const page_load_metrics::mojom::PageLoadTiming& timing,
     ukm::SourceId source_id) {
@@ -179,6 +192,28 @@ void UkmPageLoadMetricsObserver::RecordTimingMetrics(
     builder.SetExperimental_PaintTiming_NavigationToFirstMeaningfulPaint(
         timing.paint_timing->first_meaningful_paint.value().InMilliseconds());
   }
+
+  // The exponential spacing used for buckets when reporting byte usage.
+  static const double exp_base = 1.3;
+  static const double log_base = std::log(exp_base);
+
+  // This is similar to the bucketing methodology used in histograms, but
+  // instead of iteratively calculating each bucket, this calculates the lower
+  // end of the specific bucket for network and cached bytes.
+  int64_t bucketed_network_bytes =
+      network_bytes_ > 0
+          ? std::ceil(std::pow(exp_base,
+                               std::floor(std::log(network_bytes_) / log_base)))
+          : 0;
+  int64_t bucketed_cache_bytes =
+      cache_bytes_ > 0
+          ? std::ceil(std::pow(exp_base,
+                               std::floor(std::log(cache_bytes_) / log_base)))
+          : 0;
+
+  builder.SetNet_CacheBytes(bucketed_cache_bytes);
+  builder.SetNet_NetworkBytes(bucketed_network_bytes);
+
   builder.Record(ukm::UkmRecorder::Get());
 }
 
