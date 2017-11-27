@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a1b1cba_69b212a8",
+        "filename": "chrome/browser/vr/elements/button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T20:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06328ac6_424da436",
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88338c15_2eda9e18",
         "filename": "chrome/browser/vr/elements/button.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fed5220_6bf9bc84",
+        "filename": "chrome/browser/vr/elements/button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T20:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88338c15_2eda9e18",
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +130,48 @@
     },
     {
       "key": {
+        "uuid": "698c3788_1ac8ab8c",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T20:57:07Z",
+      "side": 1,
+      "message": "I\u0027ve created the default, per your suggestion. I set it in the .cc file so I can house the constant definition alongside the other constants. Since the other buttons are not yet under a ScaledDepthAdjuster, they still update the hover offset. This will become unnecessary once they are.\n\nI\u0027ve also added a comment above Button::set_hover_offset to reflect this.",
+      "parentUuid": "e21b4ec2_08368668",
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96b2e202_e7518b66",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T20:57:07Z",
+      "side": 1,
+      "message": "It\u0027s now initialized in the constructor.",
+      "parentUuid": "577fa1f9_4e32d7cf",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 21
+      },
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01cdc995_eb96fe5e",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 4
@@ -105,6 +183,30 @@
       "writtenOn": "2017-11-27T15:54:19Z",
       "side": 1,
       "message": "I\u0027m wondering if this should be camel-case now since it does more then just setting a member variable.",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 30
+      },
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98391f6f_7bbd26cf",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T20:57:07Z",
+      "side": 1,
+      "message": "Yeah, name and type will want to be updated as well. I\u0027d prefer to do this in a follow up CL that\u0027s a straight rename, though, since it will cause a lot of code churn. Are you ok with that?",
+      "parentUuid": "01cdc995_eb96fe5e",
       "range": {
         "startLine": 75,
         "startChar": 16,
@@ -163,6 +265,30 @@
     },
     {
       "key": {
+        "uuid": "333057e1_ecdf3cc4",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T20:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95f41d8b_b7e3f50c",
+      "range": {
+        "startLine": 164,
+        "startChar": 7,
+        "endLine": 164,
+        "endChar": 8
+      },
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cac449d_0c0b369b",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 4
@@ -174,6 +300,24 @@
       "writtenOn": "2017-11-27T15:50:33Z",
       "side": 1,
       "message": "This is getting a tad unwieldy to be a in-line constructor arg.  Optionally consider just splitting out \"base:Callback click_handler\"?  I don\u0027t feel strongly.",
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7b2eb3_72a7c1a4",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T20:57:07Z",
+      "side": 1,
+      "message": "Much better. Done.",
+      "parentUuid": "7cac449d_0c0b369b",
       "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
