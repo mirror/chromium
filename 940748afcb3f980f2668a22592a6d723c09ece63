@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca32f28_65a20258",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1847,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-27T03:47:10Z",
+      "side": 0,
+      "message": "Have moved to this to ContainerNode::AttachLayoutTree() for now. \n\nContainerNode::AttachLayoutTree() calls into Node::AttachLayoutTree() which clears the NonAttachedStyle and the NeedsReattachLayoutTree flag which means we will always get the attached style here.\n\nwdyt?",
+      "revId": "940748afcb3f980f2668a22592a6d723c09ece63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
