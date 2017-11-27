@@ -9,12 +9,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.library_loader.ProcessInitException;
-import org.chromium.chrome.browser.firstrun.FirstRunFlowSequencer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,10 +75,7 @@ class NativeInitializationController {
     public void startBackgroundTasks(final boolean allocateChildConnection) {
         ThreadUtils.assertOnUiThread();
         assert mBackgroundTasksComplete == null;
-        boolean fetchVariationsSeed = FirstRunFlowSequencer.checkIfFirstRunIsNecessary(
-                                              ContextUtils.getApplicationContext(),
-                                              mActivityDelegate.getInitialIntent(), false)
-                != null;
+        boolean fetchVariationsSeed = mActivityDelegate.isFirstRunActivity();
 
         mBackgroundTasksComplete = false;
         new AsyncInitTaskRunner() {
