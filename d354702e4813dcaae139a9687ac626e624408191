@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "55a36eae_fb075a8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-27T00:54:45Z",
+      "side": 1,
+      "message": "Why is this a set?\n\nThe current web share target spec states that there is only one share target in the manifest (https://wicg.github.io/web-share-target/). This might change in the future, but for now we can assume that we\u0027ll only ever get one share target (since it\u0027s a syntax error to list more than one).\n\nThe proto having a repeated field is future proof, but until we know what a multiple share target world looks like spec-wise (each ShareTarget may possibly get more fields, e.g. an identifying name to go with each target), we should stick to a single String for the share template throughout. Having just a set of strings here is almost certainly not going to match what the multiple share target world will be - +mgiuca (spec author) who I chatted with on this.\n\nIs there a case now where this set will (validly) have more than one element in it?",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 15
+      },
+      "revId": "d354702e4813dcaae139a9687ac626e624408191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbc310fd_22a990b0",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
         "patchSetId": 1
@@ -42,6 +65,52 @@
         "startChar": 81,
         "endLine": 132,
         "endChar": 91
+      },
+      "revId": "d354702e4813dcaae139a9687ac626e624408191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ca4e9c_a15bb7d1",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-27T00:54:45Z",
+      "side": 1,
+      "message": "Is this testing a circumstance that can actually happen at the moment (i.e. can WebAPKs have more than 2 activities - the main one and at most a single ShareTarget activity?)",
+      "range": {
+        "startLine": 371,
+        "startChar": 16,
+        "endLine": 371,
+        "endChar": 72
+      },
+      "revId": "d354702e4813dcaae139a9687ac626e624408191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38a17b6_2b7ffed2",
+        "filename": "chrome/browser/android/shortcut_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-27T00:54:45Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be a vector until it is legal under the spec to have multiple share targets (https://wicg.github.io/web-share-target/).",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 29
       },
       "revId": "d354702e4813dcaae139a9687ac626e624408191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
