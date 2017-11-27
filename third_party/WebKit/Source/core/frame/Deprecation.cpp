@@ -99,7 +99,7 @@ double milestoneDate(Milestone milestone) {
 
   switch (milestone) {
     case Unknown:
-      return 0;
+      return -1;
     case M60:
       return 1500955200000;  // July 25, 2017.
     case M61:
@@ -127,7 +127,7 @@ double milestoneDate(Milestone milestone) {
   }
 
   NOTREACHED();
-  return 0;
+  return -1;
 }
 
 struct DeprecationInfo {
@@ -792,8 +792,9 @@ void Deprecation::GenerateReport(const LocalFrame* frame, WebFeature feature) {
   // Send the deprecation report to the Reporting API.
   mojom::blink::ReportingServiceProxyPtr service;
   frame->Client()->GetInterfaceProvider()->GetInterface(&service);
-  service->QueueDeprecationReport(document->Url(), info.message,
-                                  body->sourceFile(), body->lineNumber());
+  service->QueueDeprecationReport(
+      document->Url(), info.id, milestoneDate(info.anticipatedRemoval),
+      info.message, body->sourceFile(), body->lineNumber());
 }
 
 // static
