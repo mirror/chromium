@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa73f303_70b49ffd",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_strings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T05:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c952b19_45baaf16",
+      "range": {
+        "startLine": 341,
+        "startChar": 14,
+        "endLine": 341,
+        "endChar": 37
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8549d553_061f9175",
         "filename": "ui/file_manager/file_manager/background/js/compiled_resources2.gyp",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b941429e_e8433a5b",
+        "filename": "ui/file_manager/file_manager/background/js/compiled_resources2.gyp",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T05:21:28Z",
+      "side": 1,
+      "message": "Sorry, my bad - I must have forgotten the alphabet when adding that line :D",
+      "parentUuid": "8549d553_061f9175",
+      "range": {
+        "startLine": 178,
+        "startChar": 9,
+        "endLine": 178,
+        "endChar": 27
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e52b2140_0da16f47",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T05:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28a33654_8590e689",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43e16baf_35b9f301",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04393a0b_5d7345e5",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T05:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43e16baf_35b9f301",
+      "range": {
+        "startLine": 355,
+        "startChar": 9,
+        "endLine": 355,
+        "endChar": 14
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d4e32de8_8cc92588",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T05:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1d40470_ee96edf1",
+      "range": {
+        "startLine": 363,
+        "startChar": 4,
+        "endLine": 363,
+        "endChar": 9
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fac4384_fc5a8fda",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8aa241_9794d9ea",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T05:21:28Z",
+      "side": 1,
+      "message": "They are added in the completion callback in AsyncUtil :) (so line 388 in this patchset). Removing them is to make sure that as soon as the event is fired, the event handler is removed again to prevent an endless loop.",
+      "parentUuid": "9fac4384_fc5a8fda",
+      "range": {
+        "startLine": 369,
+        "startChar": 2,
+        "endLine": 369,
+        "endChar": 45
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "8d9015df_0cd1d652",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T05:21:28Z",
+      "side": 1,
+      "message": "Only if there is an unlimited amount of files that are scheduled which is technically not possible ;)\nIf everything has been imported (this.importEntries_.length !\u003d\u003d 0), it breaks out of the loop, or if the last try didn\u0027t improve anything (sourceEntries.length \u003e this.importEntries_.length).\nSo as long as at least one entry that failed in the try before that has been successfully imported, with more still failing, it will continue - but that will at the same time reduce the number of entries that need importing, which will either stop decreasing (case: last try didn\u0027t improve anything), or it hits zero (case: everything was imported).",
+      "parentUuid": "c3150b0f_cee6bc50",
+      "range": {
+        "startLine": 386,
+        "startChar": 12,
+        "endLine": 386,
+        "endChar": 73
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c5e3cce_609da349",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
@@ -174,6 +342,30 @@
       "writtenOn": "2017-11-27T01:33:10Z",
       "side": 1,
       "message": "What happens if we\u0027re offline?",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 69
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e15f76c8_0929652d",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T05:21:28Z",
+      "side": 1,
+      "message": "As long as the process (the backend process lives in the Files Chrome extension) is kept alive, it will resume backing up as soon as Drive sync was completed (which will happen at some point when the connection is back). If the process dies, it means that the drive sync handler also dies, because it is also part of the same process (when looking at chrome://inspect, they are both part of Extensions \u003e Files).\n\nOn the other side, another Cl of mine that has been in review since forever because I\u0027m waiting for UX approval of error messages: Cloud Import can only be triggered with internet connection, as that Cl checks the available Drive quota (crbug.com/677104), but loss of internet connection while backing up shouldn\u0027t affect anything except for the speed, as described in the first paragraph.\n\nDo you think this behavior is acceptable?",
+      "parentUuid": "3c5e3cce_609da349",
       "range": {
         "startLine": 389,
         "startChar": 14,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "cb5b8250_f7c0557f",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T05:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59b50ba7_f2f00b7c",
+      "range": {
+        "startLine": 430,
+        "startChar": 11,
+        "endLine": 430,
+        "endChar": 12
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1e99520_606b6113",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler_unittest.js",
         "patchSetId": 5
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "81bbd633_deb0cfff",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler_unittest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T05:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e99520_606b6113",
+      "range": {
+        "startLine": 566,
+        "startChar": 55,
+        "endLine": 566,
+        "endChar": 58
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13dacf71_e5bdf284",
         "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
         "patchSetId": 5
@@ -252,6 +492,30 @@
       "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b388a5f_a300213a",
+        "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T05:21:28Z",
+      "side": 1,
+      "message": "Actually, no - I was distracted by looking at the implementation of cr.EventTarget from which I have identified the necessary parts for this mock :)",
+      "parentUuid": "13dacf71_e5bdf284",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 40
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
