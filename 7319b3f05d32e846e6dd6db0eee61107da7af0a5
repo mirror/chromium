@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c757990d_39d211a4",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-27T21:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85029a92_106d67b6",
+      "revId": "7319b3f05d32e846e6dd6db0eee61107da7af0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d66b2cb_cc61c003",
         "filename": "components/ukm/ukm_recorder_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T19:41:27Z",
       "side": 1,
       "message": "holte will know for sure but I think we might store process ids in the high bits of sources from other process, which means we\u0027d drop those first and retain sources from the browser process if we depend on sort by id.",
+      "revId": "7319b3f05d32e846e6dd6db0eee61107da7af0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f240be92_585c165e",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-27T21:50:49Z",
+      "side": 1,
+      "message": "Good point. That behavior would seem pretty weird, so instead I changed it to record timestamps and keep the last N according to timestamps. Added test coverage, PTAL.",
+      "parentUuid": "8d66b2cb_cc61c003",
       "revId": "7319b3f05d32e846e6dd6db0eee61107da7af0a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
