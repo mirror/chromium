@@ -34,6 +34,24 @@
       "revId": "27ea9402d3b6a87923b3c2e1be59fd19f82189e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d43453_ea4480ab",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrame.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-27T18:46:49Z",
+      "side": 1,
+      "message": "I think it\u0027s reasonable to use IsolatedCopy() here, even though it could be a bit inefficient. That would remove the need for WebMutableSecurityOrigin right?\n\nWe (the site isolation team) are thinking about ways to get rid of this--we are thinking that if the security origin changes, then we should just create a new RemoteSecurityContext. So if this is the only thing that requires introducing WebMutableSecurityOrigin, then I think IsolatedCopy() is better.",
+      "parentUuid": "46e40694_ccd71495",
+      "revId": "27ea9402d3b6a87923b3c2e1be59fd19f82189e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
