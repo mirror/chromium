@@ -34,6 +34,24 @@
       "revId": "9cb09cf894c46a15cb56fa9456ab6f64fc12594a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08ba789_49a4a940",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T16:17:25Z",
+      "side": 0,
+      "message": "Do you mind to create a separate bug for general RTL fixes in that case?",
+      "parentUuid": "79601b63_cd1dd6c2",
+      "revId": "9cb09cf894c46a15cb56fa9456ab6f64fc12594a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
