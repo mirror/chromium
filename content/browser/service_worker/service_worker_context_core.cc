@@ -171,6 +171,7 @@ class RegistrationDeletionListener
   static void WaitForDeletion(
       scoped_refptr<ServiceWorkerRegistration> registration,
       base::OnceClosure callback) {
+    DCHECK(registration);
     DCHECK(!registration->is_deleted());
     registration->AddListener(new RegistrationDeletionListener(
         std::move(registration), std::move(callback)));
@@ -530,8 +531,10 @@ void ServiceWorkerContextCore::DidGetRegistrationsForDeleteForOrigin(
       base::BindOnce(&SuccessReportingCallback, base::Owned(overall_success),
                      std::move(callback)));
   for (const auto& registration : registrations) {
+    DCHECK(registration);
     if (!registration->is_deleted()) {
-      RegistrationDeletionListener::WaitForDeletion(registration, barrier);
+      RegistrationDeletionListener::WaitForDeletion(std::move(registration),
+                                                    barrier);
     } else {
       barrier.Run();
     }
