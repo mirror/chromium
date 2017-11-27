@@ -396,10 +396,31 @@ class JniParams(object):
   @staticmethod
   def Parse(params):
     """Parses the params into a list of Param objects."""
+    def ParamGenerator(params):
+      """Generator that yields parameters with generics stripped."""
+      nest_level = 0  # How deeply we are nested inside the generics.
+      cur_param = ''  # Current parameter we are processing.
+
+      for c in params:
+        if c == '<':
+          nest_level += 1
+        elif c == '>':
+          nest_level -= 1
+        elif nest_level == 0:
+          if c == ',':
+            yield cur_param.strip()
+            cur_param = ''
+          else:
+            cur_param += c
+
+      cur_param = cur_param.strip()
+      if cur_param != '':
+        yield cur_param
+
     if not params:
       return []
     ret = []
-    for p in [p.strip() for p in params.split(',')]:
+    for p in ParamGenerator(params):
       items = p.split(' ')
 
       # Remove @Annotations from parameters.
