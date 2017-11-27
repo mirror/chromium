@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b28e0f2b_90be6a17",
+        "filename": "content/renderer/accessibility/blink_ax_tree_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-27T19:17:17Z",
+      "side": 1,
+      "message": "I don\u0027t think we need the special cases here, I\u0027d have AXObject.cpp\nhandle all of the web-specific special cases, and ax_tree handle\nthe special roles.\n\nFor this file I\u0027d just have:\n\nif (clips_children)\n  dst-\u003eAddBoolAttribute(ui::AX_ATTR_CLIPS_CHILDREN, true);\n\nMaybe move it up closer to when clips_children is computed, too.",
+      "revId": "f09a64f4734ec37b7eea5a89e3db18f96aa292cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92904a1_9baaf5e1",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-27T19:17:17Z",
+      "side": 1,
+      "message": "Can you check if this is already true for a web area\n(if IsWebArea() returns true, like immediately below)?\nIf not, add it as a special case. If so, this is perfect.",
+      "revId": "f09a64f4734ec37b7eea5a89e3db18f96aa292cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48a9ea4_347670aa",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXSpinButton.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-27T19:17:17Z",
+      "side": 1,
+      "message": "I\u0027d pass nullptr here. If some ancestor of the spin button clips\nits children, that doesn\u0027t mean this part clips its children too.",
+      "revId": "f09a64f4734ec37b7eea5a89e3db18f96aa292cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1eefb5_2d96b931",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-27T19:17:17Z",
+      "side": 1,
+      "message": "Get rid of (Native only) - that would mean we only use this\nattribute in Chrome native UI, but we\u0027re going to use it for\nboth native and web.",
+      "revId": "f09a64f4734ec37b7eea5a89e3db18f96aa292cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdbb8de3_b336c2e2",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-27T19:17:17Z",
+      "side": 1,
+      "message": "I\u0027d put the special cases here, if needed. How about a ShouldClipChildren(AXNode*)\nhelper?\n\nAlternatively, if you just modify AXTreeSourceAura::SerializeNode, you could\nput all of the special cases there, like the window, dialog, and desktop roles.",
+      "revId": "f09a64f4734ec37b7eea5a89e3db18f96aa292cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
