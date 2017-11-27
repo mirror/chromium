@@ -1059,17 +1059,50 @@ static void SetChromeHomePersonalizedOmniboxSuggestionsEnabled(
                                is_enabled);
 }
 
-static void GetChromeLanguageList(JNIEnv* env,
-                                  const JavaParamRef<jobject>& obj,
-                                  const JavaParamRef<jobject>& list,
-                                  jboolean is_incognito) {
+static void GetChromeAcceptLanguages(JNIEnv* env,
+                                     const JavaParamRef<jobject>& obj,
+                                     const JavaParamRef<jobject>& list) {
+  std::unique_ptr<translate::TranslatePrefs> translate_prefs =
+      ChromeTranslateClient::CreateTranslatePrefs(GetPrefService());
+
+  std::vector<translate::TranslateLanguageInfo> languages;
+  translate_prefs->GetLanguageInfoList(
+      g_browser_process->GetApplicationLocale(), &languages);
+
+  for (const auto& info : languages) {
+    Java_PrefServiceBridge_addNewLanguageItemToList(
+        env, list, ConvertUTF8ToJavaString(env, info.code),
+        ConvertUTF8ToJavaString(env, info.display_name),
+        ConvertUTF8ToJavaString(env, info.native_display_name),
+        info.supports_translate);
+  }
+}
+
+static void GetUserAcceptLanguages(JNIEnv* env,
+                                   const JavaParamRef<jobject>& obj,
+                                   const JavaParamRef<jobject>& list) {
   std::unique_ptr<translate::TranslatePrefs> translate_prefs =
       ChromeTranslateClient::CreateTranslatePrefs(GetPrefService());
 
   std::vector<std::string> languages;
   translate_prefs->GetLanguageList(&languages);
-  Java_PrefServiceBridge_copyLanguageList(env, list,
-                                          ToJavaArrayOfStrings(env, languages));
+  Java_PrefServiceBridge_copyStringArrayToList(
+      env, list, ToJavaArrayOfStrings(env, languages));
+}
+
+static void UpdateUserAcceptLanguages(JNIEnv* env,
+                                      const JavaParamRef<jobject>& obj,
+                                      const JavaParamRef<jstring>& language,
+                                      jboolean is_add) {
+  std::unique_ptr<translate::TranslatePrefs> translate_prefs =
+      ChromeTranslateClient::CreateTranslatePrefs(GetPrefService());
+  std::string langauge_code(ConvertJavaStringToUTF8(env, language));
+
+  if (is_add) {
+    translate_prefs->AddToLanguageList(langauge_code, false /*force_blocked=*/);
+  } else {
+    translate_prefs->RemoveFromLanguageList(langauge_code);
+  }
 }
 
 const char* PrefServiceBridge::GetPrefNameExposedToJava(int pref_index) {
