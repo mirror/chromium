@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5367b9a3_2b064db1",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-11-27T09:47:44Z",
+      "side": 1,
+      "message": "if (hiddentInCurrentState !\u003d _hiddenInCurrentState) {\n_hiddentInCurrentState \u003d hiddenInCurrentState;\n[self setHiddenForCurrentStateAndSizeClass];\n}\n\nI don\u0027t think the wasHidden variable is needed? Not a big deal though.",
+      "range": {
+        "startLine": 85,
+        "startChar": 1,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "7d2451905b763a58ca252561a434a2ba53efdf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a50331a1_7f9d120d",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.mm",
         "patchSetId": 6
