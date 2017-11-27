@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea65243_52b928a8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-common.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T22:02:11Z",
+      "side": 1,
+      "message": "Isn\u0027t there a global offlineContext var already?  I think it\u0027s better to have a different name here.",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8874626_36e727fb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-common.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T22:02:11Z",
+      "side": 1,
+      "message": "Doesn\u0027t this return when windows.internal \u0026 window.internals.runtimeFlags.audioWorkletEnabled are true, independent of whether offlineContext.audioWorklet is the right instance?",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cac01ee_f8bca65b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T22:02:11Z",
+      "side": 1,
+      "message": "Did or Do?",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc343e4e_87255135",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T22:02:11Z",
+      "side": 1,
+      "message": "Would \"worklet_started_\" be more indicative of what\u0027s happened?",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb148bda_61db6e3d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T22:02:11Z",
+      "side": 1,
+      "message": "\"is udpated\" -\u003e \"has been updated\"?",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
