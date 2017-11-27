@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "9938b261_7c426033",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-27T22:08:30Z",
+      "side": 1,
+      "message": "Please also mention that the enum name is not part of the mojo wire protocol (and therefore the modified .mojom is backward compatible.)",
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0439d3ca_67d94e42",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-27T22:08:30Z",
+      "side": 1,
+      "message": "garbled?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37da02e_2a2655f1",
+        "filename": "components/arc/common/intent_helper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-27T22:08:30Z",
+      "side": 1,
+      "message": "Remove? Please update the comment too.",
+      "range": {
+        "startLine": 85,
+        "startChar": 41,
+        "endLine": 85,
+        "endChar": 49
+      },
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "657bb3b5_de87c9c1",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
         "patchSetId": 4
@@ -19,6 +82,64 @@
         "endLine": 148,
         "endChar": 17
       },
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d225b59_f7b0fb32",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-27T22:08:30Z",
+      "side": 1,
+      "message": "+1, with static_assert() for compile-time table size checks, if possible.",
+      "parentUuid": "657bb3b5_de87c9c1",
+      "range": {
+        "startLine": 148,
+        "startChar": 1,
+        "endLine": 148,
+        "endChar": 17
+      },
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaab31ac_12a061d8",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-27T22:08:30Z",
+      "side": 1,
+      "message": "Please also test about:blank.\n\nMy guess is that the current OnOpenUrl() implementation does allow the URL. I guess that\u0027s fine, but I think we should at least have a test for the URL.",
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40898d0b_b597d495",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-27T22:08:30Z",
+      "side": 1,
+      "message": "Please also test some of the enum values you added, esp ABOUTBLANK.",
       "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
