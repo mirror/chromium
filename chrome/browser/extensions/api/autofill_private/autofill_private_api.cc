@@ -403,6 +403,12 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveCreditCardFunction::Run() {
     credit_card.set_guid(base::GenerateGUID());
     personal_data->AddCreditCard(credit_card);
   } else {
+    // Keep billing address id of the existing card, if any.
+    const auto* existing_credit_card = personal_data->GetCreditCardByGUID(guid);
+    if (existing_credit_card) {
+      credit_card.set_billing_address_id(
+          existing_credit_card->billing_address_id());
+    }
     personal_data->UpdateCreditCard(credit_card);
   }
 
