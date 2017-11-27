@@ -301,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "68836768_ea1d57d5",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-27T23:44:39Z",
+      "side": 1,
+      "message": "It looks like MODAL_TYPE_CHILD is incorrect; see crbug.com/788656.\n\nMODAL_TYPE_CHILD doesn\u0027t seem to behave in any modal way that I can see. I\u0027ll switch back to MODAL_TYPE_WINDOW in a new cl.",
+      "parentUuid": "71575801_379651fe",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "670aecb7_c9e3b565",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
