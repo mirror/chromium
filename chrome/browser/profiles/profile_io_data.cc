@@ -465,6 +465,9 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
   params->proxy_config_service = ProxyServiceFactory::CreateProxyConfigService(
       profile->GetProxyConfigTracker());
 #if defined(OS_CHROMEOS)
+  if (chromeos::ProfileHelper::IsSigninProfile(profile))
+    params->use_cert_filter_signin = true;
+
   user_manager::UserManager* user_manager = user_manager::UserManager::Get();
   if (user_manager) {
     const user_manager::User* user =
@@ -646,6 +649,7 @@ ProfileIOData::AppRequestContext::~AppRequestContext() {
 ProfileIOData::ProfileParams::ProfileParams()
     : io_thread(NULL),
 #if defined(OS_CHROMEOS)
+      use_cert_filter_signin(false),
       use_system_key_slot(false),
 #endif
       profile(NULL) {
@@ -656,6 +660,7 @@ ProfileIOData::ProfileParams::~ProfileParams() {}
 ProfileIOData::ProfileIOData(Profile::ProfileType profile_type)
     : initialized_(false),
 #if defined(OS_CHROMEOS)
+      use_cert_filter_signin_(false),
       use_system_key_slot_(false),
 #endif
       main_request_context_(nullptr),
@@ -976,11 +981,21 @@ std::unique_ptr<net::ClientCertStore> ProfileIOData::CreateClientCertStore() {
   if (!client_cert_store_factory_.is_null())
     return client_cert_store_factory_.Run();
 #if defined(OS_CHROMEOS)
+  std::unique_ptr<chromeos::ClientCertStoreChromeOS::CertFilter>
+      client_cert_filter;
+  if (use_cert_filter_signin_) {
+    client_cert_filter =
+        chromeos::ClientCertFilterChromeOS::CreateForSigninProfile();
+  } else {
+    client_cert_filter =
+        chromeos::ClientCertFilterChromeOS::CreateForUserProfile(
+            use_system_key_slot_, username_hash_);
+  }
+
   return std::unique_ptr<net::ClientCertStore>(
       new chromeos::ClientCertStoreChromeOS(
           certificate_provider_ ? certificate_provider_->Copy() : nullptr,
-          base::MakeUnique<chromeos::ClientCertFilterChromeOS>(
-              use_system_key_slot_, username_hash_),
+          std::move(client_cert_filter),
           base::Bind(&CreateCryptoModuleBlockingPasswordDelegate,
                      chrome::kCryptoModulePasswordClientAuth)));
 #elif defined(USE_NSS_CERTS)
@@ -1125,6 +1140,7 @@ void ProfileIOData::Init(
   }
 
 #if defined(OS_CHROMEOS)
+  use_cert_filter_signin_ = profile_params_->use_cert_filter_signin;
   username_hash_ = profile_params_->username_hash;
   use_system_key_slot_ = profile_params_->use_system_key_slot;
   if (use_system_key_slot_)
