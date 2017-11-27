@@ -306,6 +306,94 @@ TEST_P(ParameterizedLayoutTextTest, IsBeforeAfterNonCollapsedLineWrapSpace) {
   EXPECT_TRUE(GetLayoutTextById("space")->IsAfterNonCollapsedCharacter(1));
 }
 
+TEST_P(ParameterizedLayoutTextTest, GetUpperLeftCorner) {
+  LoadAhem();
+  SetBasicBody(
+      "<style>"
+      "div {"
+      "  font-family:Ahem;"
+      "  font-size: 13px;"
+      "  line-height: 19px;"
+      "  padding: 3px;"
+      "}"
+      "</style>"
+      "<div id=div>"
+      "  012"
+      "  <span id=one>345</span>"
+      "  <br>"
+      "  <span style='padding: 20px'>"
+      "    <span id=two style='padding: 5px'>678</span>"
+      "  </span>"
+      "</div>");
+  // Layout NG Physical Fragment Tree
+  // Box offset:3,3 size:778x44
+  //   LineBox offset:3,3 size:91x19
+  //     Text offset:0,3 size:52x13 start: 0 end: 4
+  //     Box offset:52,3 size:39x13
+  //       Text offset:0,0 size:39x13 start: 4 end: 7
+  //       Text offset:91,3 size:0x13 start: 7 end: 8
+  //   LineBox offset:3,22 size:89x19
+  //     Box offset:0,-17 size:89x53
+  //       Box offset:20,15 size:49x23
+  //         Text offset:5,5 size:39x13 start: 8 end: 11
+  const Element& div = *GetDocument().getElementById("div");
+  const Element& one = *GetDocument().getElementById("one");
+  const Element& two = *GetDocument().getElementById("two");
+  EXPECT_EQ(FloatPoint(3, 6), ToLayoutText(div.firstChild()->GetLayoutObject())
+                                  ->GetUpperLeftCorner()
+                                  .value());
+  EXPECT_EQ(FloatPoint(55, 6), ToLayoutText(one.firstChild()->GetLayoutObject())
+                                   ->GetUpperLeftCorner()
+                                   .value());
+  EXPECT_EQ(FloatPoint(28, 5), ToLayoutText(two.firstChild()->GetLayoutObject())
+                                   ->GetUpperLeftCorner()
+                                   .value());
+}
+
+TEST_P(ParameterizedLayoutTextTest, LinesBoundingBox) {
+  LoadAhem();
+  SetBasicBody(
+      "<style>"
+      "div {"
+      "  font-family:Ahem;"
+      "  font-size: 13px;"
+      "  line-height: 19px;"
+      "  padding: 3px;"
+      "}"
+      "</style>"
+      "<div id=div>"
+      "  012"
+      "  <span id=one>345</span>"
+      "  <br>"
+      "  <span style='padding: 20px'>"
+      "    <span id=two style='padding: 5px'>678</span>"
+      "  </span>"
+      "</div>");
+  // Layout NG Physical Fragment Tree
+  // Box offset:3,3 size:778x44
+  //   LineBox offset:3,3 size:91x19
+  //     Text offset:0,3 size:52x13 start: 0 end: 4
+  //     Box offset:52,3 size:39x13
+  //       Text offset:0,0 size:39x13 start: 4 end: 7
+  //       Text offset:91,3 size:0x13 start: 7 end: 8
+  //   LineBox offset:3,22 size:89x19
+  //     Box offset:0,-17 size:89x53
+  //       Box offset:20,15 size:49x23
+  //         Text offset:5,5 size:39x13 start: 8 end: 11
+  const Element& div = *GetDocument().getElementById("div");
+  const Element& one = *GetDocument().getElementById("one");
+  const Element& two = *GetDocument().getElementById("two");
+  EXPECT_EQ(
+      LayoutRect(LayoutPoint(3, 6), LayoutSize(52, 13)),
+      ToLayoutText(div.firstChild()->GetLayoutObject())->LinesBoundingBox());
+  EXPECT_EQ(
+      LayoutRect(LayoutPoint(55, 6), LayoutSize(39, 13)),
+      ToLayoutText(one.firstChild()->GetLayoutObject())->LinesBoundingBox());
+  EXPECT_EQ(
+      LayoutRect(LayoutPoint(28, 25), LayoutSize(39, 13)),
+      ToLayoutText(two.firstChild()->GetLayoutObject())->LinesBoundingBox());
+}
+
 TEST_P(ParameterizedLayoutTextTest, IsBeforeAfterNonCollapsedCharacterBR) {
   SetBasicBody("<br>");
   EXPECT_TRUE(GetBasicText()->IsBeforeNonCollapsedCharacter(0));
