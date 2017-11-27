@@ -34,9 +34,9 @@ std::unique_ptr<ui::Event> MapEvent(const ui::Event& event) {
 
 namespace aura {
 
-EventInjector::EventInjector() {}
+EventInjector::EventInjector() = default;
 
-EventInjector::~EventInjector() {}
+EventInjector::~EventInjector() = default;
 
 ui::EventDispatchDetails EventInjector::Inject(WindowTreeHost* host,
                                                ui::Event* event) {

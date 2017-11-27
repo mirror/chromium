@@ -24,8 +24,8 @@ namespace {
 class MockTouchAccessibilityEnablerDelegate
     : public ui::TouchAccessibilityEnablerDelegate {
  public:
-  MockTouchAccessibilityEnablerDelegate() {}
-  ~MockTouchAccessibilityEnablerDelegate() override {}
+  MockTouchAccessibilityEnablerDelegate() = default;
+  ~MockTouchAccessibilityEnablerDelegate() override = default;
 
   void OnTwoFingerTouchStart() override { started_ = true; }
 
@@ -54,8 +54,8 @@ class MockTouchAccessibilityEnablerDelegate
 
 class TouchAccessibilityEnablerTest : public aura::test::AuraTestBase {
  public:
-  TouchAccessibilityEnablerTest() {}
-  ~TouchAccessibilityEnablerTest() override {}
+  TouchAccessibilityEnablerTest() = default;
+  ~TouchAccessibilityEnablerTest() override = default;
 
   void SetUp() override {
     aura::test::AuraTestBase::SetUp();

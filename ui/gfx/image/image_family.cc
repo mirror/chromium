@@ -13,7 +13,7 @@
 
 namespace gfx {
 
-ImageFamily::const_iterator::const_iterator() {}
+ImageFamily::const_iterator::const_iterator() = default;
 
 ImageFamily::const_iterator::const_iterator(const const_iterator& other)
     : map_iterator_(other.map_iterator_) {}
@@ -22,11 +22,11 @@ ImageFamily::const_iterator::const_iterator(
     const std::map<MapKey, gfx::Image>::const_iterator& other)
     : map_iterator_(other) {}
 
-ImageFamily::const_iterator::~const_iterator() {}
+ImageFamily::const_iterator::~const_iterator() = default;
 
-ImageFamily::ImageFamily() {}
+ImageFamily::ImageFamily() = default;
 ImageFamily::ImageFamily(ImageFamily&& other) = default;
-ImageFamily::~ImageFamily() {}
+ImageFamily::~ImageFamily() = default;
 
 ImageFamily& ImageFamily::operator=(ImageFamily&& other) = default;
 

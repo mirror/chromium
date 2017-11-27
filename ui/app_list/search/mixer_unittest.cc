@@ -40,7 +40,7 @@ class TestSearchResult : public SearchResult {
     set_title(base::UTF8ToUTF16(id));
     set_relevance(relevance);
   }
-  ~TestSearchResult() override {}
+  ~TestSearchResult() override = default;
 
   using SearchResult::set_voice_result;
 
@@ -74,7 +74,7 @@ class TestSearchProvider : public SearchProvider {
         count_(0),
         bad_relevance_range_(false),
         display_type_(SearchResult::DISPLAY_LIST) {}
-  ~TestSearchProvider() override {}
+  ~TestSearchProvider() override = default;
 
   // SearchProvider overrides:
   void Start(bool is_voice_query, const base::string16& query) override {
@@ -117,7 +117,7 @@ class TestSearchProvider : public SearchProvider {
 class MixerTest : public testing::Test {
  public:
   MixerTest() : is_voice_query_(false) {}
-  ~MixerTest() override {}
+  ~MixerTest() override = default;
 
   // testing::Test overrides:
   void SetUp() override {

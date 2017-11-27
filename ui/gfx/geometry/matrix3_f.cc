@@ -47,11 +47,9 @@ double Determinant3x3(T data[M_END]) {
 
 namespace gfx {
 
-Matrix3F::Matrix3F() {
-}
+Matrix3F::Matrix3F() = default;
 
-Matrix3F::~Matrix3F() {
-}
+Matrix3F::~Matrix3F() = default;
 
 // static
 Matrix3F Matrix3F::Zeros() {

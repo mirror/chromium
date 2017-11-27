@@ -62,9 +62,9 @@ class TestCallbacks {
   DISALLOW_COPY_AND_ASSIGN(TestCallbacks);
 };
 
-TestCallbacks::TestCallbacks() {}
+TestCallbacks::TestCallbacks() = default;
 
-TestCallbacks::~TestCallbacks() {}
+TestCallbacks::~TestCallbacks() = default;
 
 void TestCallbacks::ResetCallbackObservations() {
   next_epoch_ = 0;
@@ -131,7 +131,7 @@ class TestCallbacksThatExplicitlyDeletesObserver : public TestCallbacks {
 };
 
 TestCallbacksThatExplicitlyDeletesObserver::
-    TestCallbacksThatExplicitlyDeletesObserver() {}
+    TestCallbacksThatExplicitlyDeletesObserver() = default;
 
 void TestCallbacksThatExplicitlyDeletesObserver::AnimationsStarted(
     const CallbackLayerAnimationObserver& observer) {

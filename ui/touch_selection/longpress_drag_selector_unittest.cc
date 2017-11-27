@@ -22,7 +22,7 @@ class LongPressDragSelectorTest : public testing::Test,
   LongPressDragSelectorTest()
       : dragging_(false), active_state_changed_(false) {}
 
-  ~LongPressDragSelectorTest() override {}
+  ~LongPressDragSelectorTest() override = default;
 
   void SetSelection(const gfx::PointF& start, const gfx::PointF& end) {
     selection_start_ = start;

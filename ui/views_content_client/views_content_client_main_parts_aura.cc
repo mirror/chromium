@@ -14,8 +14,7 @@ ViewsContentClientMainPartsAura::ViewsContentClientMainPartsAura(
     : ViewsContentClientMainParts(content_params, views_content_client) {
 }
 
-ViewsContentClientMainPartsAura::~ViewsContentClientMainPartsAura() {
-}
+ViewsContentClientMainPartsAura::~ViewsContentClientMainPartsAura() = default;
 
 void ViewsContentClientMainPartsAura::ToolkitInitialized() {
   ViewsContentClientMainParts::ToolkitInitialized();

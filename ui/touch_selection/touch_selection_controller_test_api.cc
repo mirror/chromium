@@ -10,7 +10,7 @@ TouchSelectionControllerTestApi::TouchSelectionControllerTestApi(
     TouchSelectionController* controller)
     : controller_(controller) {}
 
-TouchSelectionControllerTestApi::~TouchSelectionControllerTestApi() {}
+TouchSelectionControllerTestApi::~TouchSelectionControllerTestApi() = default;
 
 bool TouchSelectionControllerTestApi::GetStartVisible() const {
   return controller_->GetStartVisible();

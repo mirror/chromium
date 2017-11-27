@@ -16,7 +16,7 @@ SelectionBound::SelectionBound() : type_(EMPTY), visible_(false) {}
 
 SelectionBound::SelectionBound(const SelectionBound& other) = default;
 
-SelectionBound::~SelectionBound() {}
+SelectionBound::~SelectionBound() = default;
 
 void SelectionBound::SetEdgeTop(const gfx::PointF& value) {
   edge_top_ = value;

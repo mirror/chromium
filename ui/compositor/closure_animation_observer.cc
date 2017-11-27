@@ -11,8 +11,7 @@ ClosureAnimationObserver::ClosureAnimationObserver(const base::Closure& closure)
   DCHECK(!closure_.is_null());
 }
 
-ClosureAnimationObserver::~ClosureAnimationObserver() {
-}
+ClosureAnimationObserver::~ClosureAnimationObserver() = default;
 
 void ClosureAnimationObserver::OnImplicitAnimationsCompleted() {
   closure_.Run();

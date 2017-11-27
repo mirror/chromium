@@ -34,7 +34,7 @@ class CandidateViewTest : public views::ViewsTestBase,
                           public views::ButtonListener {
  public:
   CandidateViewTest() : widget_(NULL), last_pressed_(NULL) {}
-  ~CandidateViewTest() override {}
+  ~CandidateViewTest() override = default;
 
   void SetUp() override {
     views::ViewsTestBase::SetUp();

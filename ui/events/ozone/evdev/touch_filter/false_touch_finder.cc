@@ -32,8 +32,7 @@ FalseTouchFinder::FalseTouchFinder(
   }
 }
 
-FalseTouchFinder::~FalseTouchFinder() {
-}
+FalseTouchFinder::~FalseTouchFinder() = default;
 
 void FalseTouchFinder::HandleTouches(
     const std::vector<InProgressTouchEvdev>& touches,

@@ -40,9 +40,9 @@ CursorDataOzone::~CursorDataOzone() {
   magic_cookie_ = kBadCookie;
 }
 
-CursorDataFactoryOzone::CursorDataFactoryOzone() {}
+CursorDataFactoryOzone::CursorDataFactoryOzone() = default;
 
-CursorDataFactoryOzone::~CursorDataFactoryOzone() {}
+CursorDataFactoryOzone::~CursorDataFactoryOzone() = default;
 
 // static
 const ui::CursorData& CursorDataFactoryOzone::GetCursorData(

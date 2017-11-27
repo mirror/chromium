@@ -13,7 +13,7 @@ GpuMemoryBufferHandle::GpuMemoryBufferHandle() : type(EMPTY_BUFFER), id(0) {}
 GpuMemoryBufferHandle::GpuMemoryBufferHandle(
     const GpuMemoryBufferHandle& other) = default;
 
-GpuMemoryBufferHandle::~GpuMemoryBufferHandle() {}
+GpuMemoryBufferHandle::~GpuMemoryBufferHandle() = default;
 
 void GpuMemoryBuffer::SetColorSpace(const gfx::ColorSpace& color_space) {}
 

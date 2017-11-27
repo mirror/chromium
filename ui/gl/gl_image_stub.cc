@@ -8,9 +8,9 @@
 
 namespace gl {
 
-GLImageStub::GLImageStub() {}
+GLImageStub::GLImageStub() = default;
 
-GLImageStub::~GLImageStub() {}
+GLImageStub::~GLImageStub() = default;
 
 gfx::Size GLImageStub::GetSize() {
   return gfx::Size(1, 1);

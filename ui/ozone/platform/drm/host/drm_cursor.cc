@@ -19,8 +19,8 @@ namespace {
 
 class NullProxy : public DrmCursorProxy {
  public:
-  NullProxy() {}
-  ~NullProxy() override {}
+  NullProxy() = default;
+  ~NullProxy() override = default;
 
   void CursorSet(gfx::AcceleratedWidget window,
                  const std::vector<SkBitmap>& bitmaps,
@@ -42,7 +42,7 @@ DrmCursor::DrmCursor(DrmWindowHostManager* window_manager)
   evdev_thread_checker_.DetachFromThread();
 }
 
-DrmCursor::~DrmCursor() {}
+DrmCursor::~DrmCursor() = default;
 
 void DrmCursor::SetDrmCursorProxy(std::unique_ptr<DrmCursorProxy> proxy) {
   TRACE_EVENT0("drmcursor", "DrmCursor::SetDrmCursorProxy");

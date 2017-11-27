@@ -21,8 +21,8 @@ namespace {
 // struct. This is used to isolate tests from the system's local configuration.
 class TestFontDelegate : public LinuxFontDelegate {
  public:
-  TestFontDelegate() {}
-  ~TestFontDelegate() override {}
+  TestFontDelegate() = default;
+  ~TestFontDelegate() override = default;
 
   void set_params(const FontRenderParams& params) { params_ = params; }
 

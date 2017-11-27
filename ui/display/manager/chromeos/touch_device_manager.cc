@@ -177,8 +177,8 @@ TouchDeviceIdentifier TouchDeviceIdentifier::FromDevice(
 TouchDeviceIdentifier::TouchDeviceIdentifier(uint32_t identifier)
     : id_(identifier) {}
 
-TouchDeviceIdentifier::TouchDeviceIdentifier(const TouchDeviceIdentifier& other)
-    : id_(other.id_) {}
+TouchDeviceIdentifier::TouchDeviceIdentifier(
+    const TouchDeviceIdentifier& other) = default;
 
 TouchDeviceIdentifier& TouchDeviceIdentifier::operator=(
     TouchDeviceIdentifier other) {
@@ -214,7 +214,7 @@ bool TouchCalibrationData::CalibrationPointPairCompare(
              : pair_1.first.x() < pair_2.first.x();
 }
 
-TouchCalibrationData::TouchCalibrationData() {}
+TouchCalibrationData::TouchCalibrationData() = default;
 
 TouchCalibrationData::TouchCalibrationData(
     const TouchCalibrationData::CalibrationPointPairQuad& point_pairs,
@@ -222,9 +222,7 @@ TouchCalibrationData::TouchCalibrationData(
     : point_pairs(point_pairs), bounds(bounds) {}
 
 TouchCalibrationData::TouchCalibrationData(
-    const TouchCalibrationData& calibration_data)
-    : point_pairs(calibration_data.point_pairs),
-      bounds(calibration_data.bounds) {}
+    const TouchCalibrationData& calibration_data) = default;
 
 bool TouchCalibrationData::operator==(const TouchCalibrationData& other) const {
   if (bounds != other.bounds)
@@ -245,9 +243,9 @@ bool TouchCalibrationData::IsEmpty() const {
 
 ////////////////////////////////////////////////////////////////////////////////
 // TouchDeviceManager
-TouchDeviceManager::TouchDeviceManager() {}
+TouchDeviceManager::TouchDeviceManager() = default;
 
-TouchDeviceManager::~TouchDeviceManager() {}
+TouchDeviceManager::~TouchDeviceManager() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // TouchDeviceManager

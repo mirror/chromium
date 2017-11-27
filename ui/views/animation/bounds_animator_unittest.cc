@@ -37,7 +37,7 @@ class TestBoundsAnimator : public BoundsAnimator {
 
 class OwnedDelegate : public gfx::AnimationDelegate {
  public:
-  OwnedDelegate() {}
+  OwnedDelegate() = default;
 
   ~OwnedDelegate() override { deleted_ = true; }
 
@@ -71,7 +71,7 @@ bool OwnedDelegate::canceled_ = false;
 
 class TestView : public View {
  public:
-  TestView() {}
+  TestView() = default;
 
   void SchedulePaintInRect(const gfx::Rect& r) override {
     if (dirty_rect_.IsEmpty())

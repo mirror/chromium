@@ -87,8 +87,7 @@ GestureProvider::Config::Config()
 
 GestureProvider::Config::Config(const Config& other) = default;
 
-GestureProvider::Config::~Config() {
-}
+GestureProvider::Config::~Config() = default;
 
 // GestureProvider::GestureListener
 
@@ -775,8 +774,7 @@ GestureProvider::GestureProvider(const Config& config,
   UpdateDoubleTapDetectionSupport();
 }
 
-GestureProvider::~GestureProvider() {
-}
+GestureProvider::~GestureProvider() = default;
 
 bool GestureProvider::OnTouchEvent(const MotionEvent& event) {
   TRACE_EVENT1("input",

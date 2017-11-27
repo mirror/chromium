@@ -48,7 +48,7 @@ class MouseEnterExitEvent : public ui::MouseEvent {
     SetType(type);
   }
 
-  ~MouseEnterExitEvent() override {}
+  ~MouseEnterExitEvent() override = default;
 };
 
 }  // namespace
@@ -61,7 +61,7 @@ class PreEventDispatchHandler : public ui::EventHandler {
   explicit PreEventDispatchHandler(View* owner)
       : owner_(owner) {
   }
-  ~PreEventDispatchHandler() override {}
+  ~PreEventDispatchHandler() override = default;
 
  private:
   // ui::EventHandler:
@@ -103,7 +103,7 @@ class PostEventDispatchHandler : public ui::EventHandler {
   PostEventDispatchHandler()
       : touch_dnd_enabled_(::switches::IsTouchDragDropEnabled()) {
   }
-  ~PostEventDispatchHandler() override {}
+  ~PostEventDispatchHandler() override = default;
 
  private:
   // Overridden from ui::EventHandler:

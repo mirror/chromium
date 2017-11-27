@@ -25,8 +25,8 @@ namespace wm {
 
 class ShadowControllerTest : public aura::test::AuraTestBase {
  public:
-  ShadowControllerTest() {}
-  ~ShadowControllerTest() override {}
+  ShadowControllerTest() = default;
+  ~ShadowControllerTest() override = default;
 
   void SetUp() override {
     AuraTestBase::SetUp();

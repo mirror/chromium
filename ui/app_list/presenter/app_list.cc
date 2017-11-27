@@ -13,9 +13,9 @@
 
 namespace app_list {
 
-AppList::AppList() {}
+AppList::AppList() = default;
 
-AppList::~AppList() {}
+AppList::~AppList() = default;
 
 void AppList::BindRequest(mojom::AppListRequest request) {
   bindings_.AddBinding(this, std::move(request));

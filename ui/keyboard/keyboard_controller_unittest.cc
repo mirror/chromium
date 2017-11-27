@@ -124,8 +124,8 @@ class TestFocusController : public ui::EventHandler {
 // Keeps a count of all the events a window receives.
 class EventObserver : public ui::EventHandler {
  public:
-  EventObserver() {}
-  ~EventObserver() override {}
+  EventObserver() = default;
+  ~EventObserver() override = default;
 
   int GetEventCount(ui::EventType type) {
     return event_counts_[type];
@@ -165,8 +165,8 @@ class KeyboardContainerObserver : public aura::WindowObserver {
 
 class TestKeyboardLayoutDelegate : public KeyboardLayoutDelegate {
  public:
-  TestKeyboardLayoutDelegate() {}
-  ~TestKeyboardLayoutDelegate() override {}
+  TestKeyboardLayoutDelegate() = default;
+  ~TestKeyboardLayoutDelegate() override = default;
 
   // Overridden from keyboard::KeyboardLayoutDelegate
   void MoveKeyboardToDisplay(int64_t /* display_id */) override {}
@@ -189,7 +189,7 @@ class KeyboardControllerTest : public testing::Test,
         is_available_number_of_calls_(0),
         is_available_(false),
         keyboard_closed_(false) {}
-  ~KeyboardControllerTest() override {}
+  ~KeyboardControllerTest() override = default;
 
   void SetUp() override {
     // The ContextFactory must exist before any Compositors are created.
@@ -575,8 +575,8 @@ TEST_F(KeyboardControllerTest, CloseKeyboard) {
 
 class KeyboardControllerAnimationTest : public KeyboardControllerTest {
  public:
-  KeyboardControllerAnimationTest() {}
-  ~KeyboardControllerAnimationTest() override {}
+  KeyboardControllerAnimationTest() = default;
+  ~KeyboardControllerAnimationTest() override = default;
 
   void SetUp() override {
     // We cannot short-circuit animations for this test.

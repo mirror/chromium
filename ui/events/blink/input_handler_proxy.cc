@@ -173,7 +173,7 @@ InputHandlerProxy::InputHandlerProxy(
           : nullptr;
 }
 
-InputHandlerProxy::~InputHandlerProxy() {}
+InputHandlerProxy::~InputHandlerProxy() = default;
 
 void InputHandlerProxy::WillShutdown() {
   scroll_elasticity_controller_.reset();

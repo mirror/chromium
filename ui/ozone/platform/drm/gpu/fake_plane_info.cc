@@ -20,6 +20,6 @@ FakePlaneInfo::FakePlaneInfo(uint32_t plane_id,
 
 FakePlaneInfo::FakePlaneInfo(const FakePlaneInfo& other) = default;
 
-FakePlaneInfo::~FakePlaneInfo() {}
+FakePlaneInfo::~FakePlaneInfo() = default;
 
 }  // namespace ui

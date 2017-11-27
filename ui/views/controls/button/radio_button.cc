@@ -64,8 +64,7 @@ RadioButton::RadioButton(const base::string16& label, int group_id)
   }
 }
 
-RadioButton::~RadioButton() {
-}
+RadioButton::~RadioButton() = default;
 
 const char* RadioButton::GetClassName() const {
   return kViewClassName;

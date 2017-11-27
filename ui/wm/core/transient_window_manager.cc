@@ -30,8 +30,7 @@ DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(TransientWindowManager, kPropertyKey, NULL);
 
 }  // namespace
 
-TransientWindowManager::~TransientWindowManager() {
-}
+TransientWindowManager::~TransientWindowManager() = default;
 
 // static
 TransientWindowManager* TransientWindowManager::GetOrCreate(Window* window) {

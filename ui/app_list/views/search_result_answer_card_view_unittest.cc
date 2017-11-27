@@ -27,7 +27,7 @@ constexpr double kRelevance = 13.0;
 
 class SearchResultAnswerCardViewTest : public views::ViewsTestBase {
  public:
-  SearchResultAnswerCardViewTest() {}
+  SearchResultAnswerCardViewTest() = default;
 
   // Overridden from testing::Test:
   void SetUp() override {

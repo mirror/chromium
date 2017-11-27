@@ -6,10 +6,8 @@
 
 namespace views {
 
-MenuListener::MenuListener() {
-}
+MenuListener::MenuListener() = default;
 
-MenuListener::~MenuListener() {
-}
+MenuListener::~MenuListener() = default;
 
 }  // namespace views

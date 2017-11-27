@@ -118,9 +118,8 @@ class ClientChangeVerifier {
 
 class InputMethodBaseTest : public testing::Test {
  protected:
-  InputMethodBaseTest() {
-  }
-  ~InputMethodBaseTest() override {}
+  InputMethodBaseTest() = default;
+  ~InputMethodBaseTest() override = default;
 
   void SetUp() override { message_loop_.reset(new base::MessageLoopForUI); }
 
@@ -136,7 +135,7 @@ class MockInputMethodBase : public InputMethodBase {
   // Note: this class does not take the ownership of |verifier|.
   MockInputMethodBase(ClientChangeVerifier* verifier) : verifier_(verifier) {
   }
-  ~MockInputMethodBase() override {}
+  ~MockInputMethodBase() override = default;
 
  private:
   // Overriden from InputMethod.
@@ -176,7 +175,7 @@ class MockInputMethodObserver : public InputMethodObserver {
   explicit MockInputMethodObserver(ClientChangeVerifier* verifier)
       : verifier_(verifier) {
   }
-  ~MockInputMethodObserver() override {}
+  ~MockInputMethodObserver() override = default;
 
  private:
   void OnFocus() override {}

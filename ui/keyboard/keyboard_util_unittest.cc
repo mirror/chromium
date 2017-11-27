@@ -16,8 +16,8 @@ namespace {
 
 class KeyboardUtilTest : public testing::Test {
  public:
-  KeyboardUtilTest() {}
-  ~KeyboardUtilTest() override {}
+  KeyboardUtilTest() = default;
+  ~KeyboardUtilTest() override = default;
 
   // Sets all flags controlling whether the keyboard should be shown to
   // their disabled state.

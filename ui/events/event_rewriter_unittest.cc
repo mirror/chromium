@@ -23,7 +23,7 @@ class TestEvent : public Event {
  public:
   explicit TestEvent(EventType type)
       : Event(type, base::TimeTicks(), 0), unique_id_(next_unique_id_++) {}
-  ~TestEvent() override {}
+  ~TestEvent() override = default;
   int unique_id() const { return unique_id_; }
 
  private:
@@ -38,7 +38,7 @@ int TestEvent::next_unique_id_ = 0;
 // this sequence. These expected event types are consumed on receipt.
 class TestEventRewriteProcessor : public test::TestEventProcessor {
  public:
-  TestEventRewriteProcessor() {}
+  TestEventRewriteProcessor() = default;
   ~TestEventRewriteProcessor() override { CheckAllReceived(); }
 
   void AddExpectedEvent(EventType type) { expected_events_.push_back(type); }

@@ -35,8 +35,8 @@ namespace {
 
 class GbmBufferGenerator : public ScanoutBufferGenerator {
  public:
-  GbmBufferGenerator() {}
-  ~GbmBufferGenerator() override {}
+  GbmBufferGenerator() = default;
+  ~GbmBufferGenerator() override = default;
 
   // ScanoutBufferGenerator:
   scoped_refptr<ScanoutBuffer> Create(const scoped_refptr<DrmDevice>& drm,
@@ -54,7 +54,7 @@ class GbmBufferGenerator : public ScanoutBufferGenerator {
 class GbmDeviceGenerator : public DrmDeviceGenerator {
  public:
   GbmDeviceGenerator(bool use_atomic) : use_atomic_(use_atomic) {}
-  ~GbmDeviceGenerator() override {}
+  ~GbmDeviceGenerator() override = default;
 
   // DrmDeviceGenerator:
   scoped_refptr<DrmDevice> CreateDevice(const base::FilePath& path,

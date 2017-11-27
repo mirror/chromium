@@ -52,8 +52,8 @@ void EnsureCommandLineSwitch(const std::string& name) {
 
 class DefaultService : public service_manager::Service {
  public:
-  DefaultService() {}
-  ~DefaultService() override {}
+  DefaultService() = default;
+  ~DefaultService() override = default;
 
   // service_manager::Service:
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
@@ -241,7 +241,7 @@ class ServiceManagerConnection {
 ViewsMusTestSuite::ViewsMusTestSuite(int argc, char** argv)
     : ViewsTestSuite(argc, argv) {}
 
-ViewsMusTestSuite::~ViewsMusTestSuite() {}
+ViewsMusTestSuite::~ViewsMusTestSuite() = default;
 
 void ViewsMusTestSuite::Initialize() {
   PlatformTestHelper::SetIsMus();

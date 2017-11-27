@@ -10,7 +10,7 @@ namespace ui {
 
 X11WindowManagerOzone::X11WindowManagerOzone() : event_grabber_(None) {}
 
-X11WindowManagerOzone::~X11WindowManagerOzone() {}
+X11WindowManagerOzone::~X11WindowManagerOzone() = default;
 
 void X11WindowManagerOzone::GrabEvents(XID xwindow) {
   if (event_grabber_ != None)

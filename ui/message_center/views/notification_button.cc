@@ -33,8 +33,7 @@ NotificationButton::NotificationButton(views::ButtonListener* listener)
       message_center::kFocusBorderColor, gfx::Insets(1, 2, 2, 2)));
 }
 
-NotificationButton::~NotificationButton() {
-}
+NotificationButton::~NotificationButton() = default;
 
 void NotificationButton::SetIcon(const gfx::ImageSkia& image) {
   if (icon_ != NULL)

@@ -300,8 +300,7 @@ FormatterContainer::FormatterContainer() {
   Initialize();
 }
 
-FormatterContainer::~FormatterContainer() {
-}
+FormatterContainer::~FormatterContainer() = default;
 
 void FormatterContainer::Initialize() {
   formatter_[TimeFormat::FORMAT_ELAPSED][TimeFormat::LENGTH_SHORT].reset(

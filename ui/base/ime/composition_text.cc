@@ -6,12 +6,10 @@
 
 namespace ui {
 
-CompositionText::CompositionText() {
-}
+CompositionText::CompositionText() = default;
 
 CompositionText::CompositionText(const CompositionText& other) = default;
 
-CompositionText::~CompositionText() {
-}
+CompositionText::~CompositionText() = default;
 
 }  // namespace ui

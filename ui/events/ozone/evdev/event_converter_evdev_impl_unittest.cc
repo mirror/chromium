@@ -53,8 +53,8 @@ class MockEventConverterEvdevImpl : public EventConverterEvdevImpl {
 
 class MockCursorEvdev : public CursorDelegateEvdev {
  public:
-  MockCursorEvdev() {}
-  ~MockCursorEvdev() override {}
+  MockCursorEvdev() = default;
+  ~MockCursorEvdev() override = default;
 
   // CursorDelegateEvdev:
   void MoveCursorTo(gfx::AcceleratedWidget widget,
@@ -86,7 +86,7 @@ class MockCursorEvdev : public CursorDelegateEvdev {
 // Test fixture.
 class EventConverterEvdevImplTest : public testing::Test {
  public:
-  EventConverterEvdevImplTest() {}
+  EventConverterEvdevImplTest() = default;
 
   // Overridden from testing::Test:
   void SetUp() override {

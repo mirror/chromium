@@ -100,7 +100,7 @@ DisplaySnapshot::DisplaySnapshot(int64_t display_id,
     edid_[i] = 0;
 }
 
-DisplaySnapshot::~DisplaySnapshot() {}
+DisplaySnapshot::~DisplaySnapshot() = default;
 
 std::unique_ptr<DisplaySnapshot> DisplaySnapshot::Clone() {
   DisplayModeList clone_modes;

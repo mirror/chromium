@@ -54,10 +54,8 @@ const unsigned char kPngScaleChunk[12] = { 0x00, 0x00, 0x00, 0x00,
 // Mock for the ResourceBundle::Delegate class.
 class MockResourceBundleDelegate : public ui::ResourceBundle::Delegate {
  public:
-  MockResourceBundleDelegate() {
-  }
-  ~MockResourceBundleDelegate() override {
-  }
+  MockResourceBundleDelegate() = default;
+  ~MockResourceBundleDelegate() override = default;
 
   MOCK_METHOD2(GetPathForResourcePack, base::FilePath(
       const base::FilePath& pack_path, ui::ScaleFactor scale_factor));
@@ -138,7 +136,7 @@ class ResourceBundleTest : public testing::Test {
   ResourceBundleTest() : resource_bundle_(NULL) {
   }
 
-  ~ResourceBundleTest() override {}
+  ~ResourceBundleTest() override = default;
 
   // Overridden from testing::Test:
   void TearDown() override { delete resource_bundle_; }
@@ -338,9 +336,9 @@ TEST_F(ResourceBundleTest, LocaleDataPakExists) {
 
 class ResourceBundleImageTest : public ResourceBundleTest {
  public:
-  ResourceBundleImageTest() {}
+  ResourceBundleImageTest() = default;
 
-  ~ResourceBundleImageTest() override {}
+  ~ResourceBundleImageTest() override = default;
 
   void SetUp() override {
     // Create a temporary directory to write test resource bundles to.

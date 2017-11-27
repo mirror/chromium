@@ -13,6 +13,6 @@ void OverlayCandidatesOzone::CheckOverlaySupport(
   NOTREACHED();
 }
 
-OverlayCandidatesOzone::~OverlayCandidatesOzone() {}
+OverlayCandidatesOzone::~OverlayCandidatesOzone() = default;
 
 }  // namespace ui

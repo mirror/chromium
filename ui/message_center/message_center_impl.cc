@@ -72,8 +72,7 @@ MessageCenterImpl::MessageCenterImpl()
   notification_change_queue_.reset(new ChangeQueue());
 }
 
-MessageCenterImpl::~MessageCenterImpl() {
-}
+MessageCenterImpl::~MessageCenterImpl() = default;
 
 void MessageCenterImpl::AddObserver(MessageCenterObserver* observer) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);

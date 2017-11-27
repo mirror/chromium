@@ -62,7 +62,7 @@ class TestGamepadObserver : public ui::GamepadObserver {
 namespace ui {
 class GamepadEventConverterEvdevTest : public testing::Test {
  public:
-  GamepadEventConverterEvdevTest() {}
+  GamepadEventConverterEvdevTest() = default;
 
   // Overriden from testing::Test:
   void SetUp() override {

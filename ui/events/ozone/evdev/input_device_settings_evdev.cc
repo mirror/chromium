@@ -6,13 +6,11 @@
 
 namespace ui {
 
-InputDeviceSettingsEvdev::InputDeviceSettingsEvdev() {
-}
+InputDeviceSettingsEvdev::InputDeviceSettingsEvdev() = default;
 
 InputDeviceSettingsEvdev::InputDeviceSettingsEvdev(
     const InputDeviceSettingsEvdev& other) = default;
 
-InputDeviceSettingsEvdev::~InputDeviceSettingsEvdev() {
-}
+InputDeviceSettingsEvdev::~InputDeviceSettingsEvdev() = default;
 
 }  // namespace ui

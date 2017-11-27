@@ -166,7 +166,6 @@ SinglePositionTouchNoiseFilter::SinglePositionTouchNoiseFilter::TrackedTouch::
 }
 
 SinglePositionTouchNoiseFilter::SinglePositionTouchNoiseFilter::TrackedTouch::
-    ~TrackedTouch() {
-}
+    ~TrackedTouch() = default;
 
 }  // namespace ui

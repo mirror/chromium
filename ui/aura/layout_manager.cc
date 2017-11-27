@@ -8,11 +8,9 @@
 
 namespace aura {
 
-LayoutManager::LayoutManager() {
-}
+LayoutManager::LayoutManager() = default;
 
-LayoutManager::~LayoutManager() {
-}
+LayoutManager::~LayoutManager() = default;
 
 void LayoutManager::SetChildBoundsDirect(aura::Window* child,
                                          const gfx::Rect& bounds) {

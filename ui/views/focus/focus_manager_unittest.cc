@@ -470,7 +470,7 @@ class FocusManagerDtorTest : public FocusManagerTest {
    public:
     explicit TestFocusManagerFactory(DtorTrackVector* dtor_tracker)
         : dtor_tracker_(dtor_tracker) {}
-    ~TestFocusManagerFactory() override {}
+    ~TestFocusManagerFactory() override = default;
 
     std::unique_ptr<FocusManager> CreateFocusManager(
         Widget* widget,
@@ -663,7 +663,7 @@ class FocusManagerArrowKeyTraversalTest
       public testing::WithParamInterface<bool> {
  public:
   FocusManagerArrowKeyTraversalTest() = default;
-  ~FocusManagerArrowKeyTraversalTest() override {}
+  ~FocusManagerArrowKeyTraversalTest() override = default;
 
   // FocusManagerTest overrides:
   void SetUp() override {
@@ -842,7 +842,7 @@ class AdvanceFocusWidgetDelegate : public WidgetDelegate {
  public:
   explicit AdvanceFocusWidgetDelegate(Widget* widget)
       : widget_(widget), should_advance_focus_to_parent_(false) {}
-  ~AdvanceFocusWidgetDelegate() override {}
+  ~AdvanceFocusWidgetDelegate() override = default;
 
   void set_should_advance_focus_to_parent(bool value) {
     should_advance_focus_to_parent_ = value;

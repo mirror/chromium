@@ -24,11 +24,9 @@ bool IsXI2Available() {
 
 namespace ui {
 
-DeviceListCacheX11::DeviceListCacheX11() {
-}
+DeviceListCacheX11::DeviceListCacheX11() = default;
 
-DeviceListCacheX11::~DeviceListCacheX11() {
-}
+DeviceListCacheX11::~DeviceListCacheX11() = default;
 
 DeviceListCacheX11* DeviceListCacheX11::GetInstance() {
   return base::Singleton<DeviceListCacheX11>::get();

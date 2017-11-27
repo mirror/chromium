@@ -38,7 +38,7 @@ class FocusNotificationObserver : public ActivationChangeObserver,
         reactivation_count_(0),
         reactivation_requested_window_(NULL),
         reactivation_actual_window_(NULL) {}
-  ~FocusNotificationObserver() override {}
+  ~FocusNotificationObserver() override = default;
 
   void ExpectCounts(int activation_changed_count, int focus_changed_count) {
     EXPECT_EQ(activation_changed_count, activation_changed_count_);
@@ -93,7 +93,7 @@ class WindowDeleter {
   virtual aura::Window* GetDeletedWindow() = 0;
 
  protected:
-  virtual ~WindowDeleter() {}
+  virtual ~WindowDeleter() = default;
 };
 
 // ActivationChangeObserver and FocusChangeObserver that keeps track of whether
@@ -299,8 +299,8 @@ class ScopedTargetFocusNotificationObserver : public FocusNotificationObserver {
 // Used to fake the handling of events in the pre-target phase.
 class SimpleEventHandler : public ui::EventHandler {
  public:
-  SimpleEventHandler() {}
-  ~SimpleEventHandler() override {}
+  SimpleEventHandler() = default;
+  ~SimpleEventHandler() override = default;
 
   // Overridden from ui::EventHandler:
   void OnMouseEvent(ui::MouseEvent* event) override { event->SetHandled(); }
@@ -315,7 +315,7 @@ class FocusShiftingActivationObserver : public ActivationChangeObserver {
   explicit FocusShiftingActivationObserver(aura::Window* activated_window)
       : activated_window_(activated_window),
         shift_focus_to_(NULL) {}
-  ~FocusShiftingActivationObserver() override {}
+  ~FocusShiftingActivationObserver() override = default;
 
   void set_shift_focus_to(aura::Window* shift_focus_to) {
     shift_focus_to_ = shift_focus_to;
@@ -400,7 +400,7 @@ class TestFocusRules : public BaseFocusRules {
 // Common infrastructure shared by all FocusController test types.
 class FocusControllerTestBase : public aura::test::AuraTestBase {
  protected:
-  FocusControllerTestBase() {}
+  FocusControllerTestBase() = default;
 
   // Overridden from aura::test::AuraTestBase:
   void SetUp() override {
@@ -510,7 +510,7 @@ class FocusControllerTestBase : public aura::test::AuraTestBase {
 // Test base for tests where focus is directly set to a target window.
 class FocusControllerDirectTestBase : public FocusControllerTestBase {
  protected:
-  FocusControllerDirectTestBase() {}
+  FocusControllerDirectTestBase() = default;
 
   // Different test types shift focus in different ways.
   virtual void FocusWindowDirect(aura::Window* window) = 0;
@@ -922,7 +922,7 @@ class FocusControllerDirectTestBase : public FocusControllerTestBase {
 // Focus and Activation changes via ActivationClient API.
 class FocusControllerApiTest : public FocusControllerDirectTestBase {
  public:
-  FocusControllerApiTest() {}
+  FocusControllerApiTest() = default;
 
  private:
   // Overridden from FocusControllerTestBase:
@@ -946,7 +946,7 @@ class FocusControllerApiTest : public FocusControllerDirectTestBase {
 // Focus and Activation changes via input events.
 class FocusControllerMouseEventTest : public FocusControllerDirectTestBase {
  public:
-  FocusControllerMouseEventTest() {}
+  FocusControllerMouseEventTest() = default;
 
   // Tests that a handled mouse or gesture event does not trigger a window
   // activation.
@@ -993,7 +993,7 @@ class FocusControllerMouseEventTest : public FocusControllerDirectTestBase {
 
 class FocusControllerGestureEventTest : public FocusControllerDirectTestBase {
  public:
-  FocusControllerGestureEventTest() {}
+  FocusControllerGestureEventTest() = default;
 
  private:
   // Overridden from FocusControllerTestBase:

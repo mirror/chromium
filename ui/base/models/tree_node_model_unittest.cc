@@ -24,7 +24,7 @@ class TreeNodeModelTest : public testing::Test, public TreeModelObserver {
       : added_count_(0),
         removed_count_(0),
         changed_count_(0) {}
-  ~TreeNodeModelTest() override {}
+  ~TreeNodeModelTest() override = default;
 
  protected:
   std::string GetObserverCountStateAndClear() {

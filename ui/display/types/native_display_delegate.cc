@@ -6,6 +6,6 @@
 
 namespace display {
 
-NativeDisplayDelegate::~NativeDisplayDelegate() {}
+NativeDisplayDelegate::~NativeDisplayDelegate() = default;
 
 }  // namespace display

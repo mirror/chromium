@@ -26,9 +26,8 @@ const char kDummyNotificationKey[] = "DUMMY_NOTIFICATION_KEY";
 
 class MockMessageCenter : public message_center::FakeMessageCenter {
  public:
-  MockMessageCenter() {}
-  ~MockMessageCenter() override {
-  }
+  MockMessageCenter() = default;
+  ~MockMessageCenter() override = default;
 
   void AddNotification(
       std::unique_ptr<message_center::Notification> notification) override {
@@ -77,7 +76,7 @@ class NotificationsObserver
 
 class ArcNotificationManagerTest : public testing::Test {
  public:
-  ArcNotificationManagerTest() {}
+  ArcNotificationManagerTest() = default;
   ~ArcNotificationManagerTest() override { base::RunLoop().RunUntilIdle(); }
 
  protected:

@@ -9,17 +9,17 @@
 namespace ui {
 
 EventTestApi::EventTestApi(Event* event) : event_(event) {}
-EventTestApi::~EventTestApi() {}
+EventTestApi::~EventTestApi() = default;
 
 LocatedEventTestApi::LocatedEventTestApi(LocatedEvent* event)
     : EventTestApi(event),
       located_event_(event) {}
-LocatedEventTestApi::~LocatedEventTestApi() {}
+LocatedEventTestApi::~LocatedEventTestApi() = default;
 
 KeyEventTestApi::KeyEventTestApi(KeyEvent* event)
     : EventTestApi(event),
       key_event_(event) {}
-KeyEventTestApi::~KeyEventTestApi() {}
+KeyEventTestApi::~KeyEventTestApi() = default;
 
 EventTargetTestApi::EventTargetTestApi(EventTarget* target)
     : target_(target) {}

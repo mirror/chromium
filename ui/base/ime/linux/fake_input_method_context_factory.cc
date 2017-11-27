@@ -9,7 +9,7 @@
 
 namespace ui {
 
-FakeInputMethodContextFactory::FakeInputMethodContextFactory() {}
+FakeInputMethodContextFactory::FakeInputMethodContextFactory() = default;
 
 std::unique_ptr<LinuxInputMethodContext>
 FakeInputMethodContextFactory::CreateInputMethodContext(

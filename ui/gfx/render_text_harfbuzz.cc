@@ -665,7 +665,7 @@ TextRunHarfBuzz::TextRunHarfBuzz(const Font& template_font)
       strike(false),
       underline(false) {}
 
-TextRunHarfBuzz::~TextRunHarfBuzz() {}
+TextRunHarfBuzz::~TextRunHarfBuzz() = default;
 
 Range TextRunHarfBuzz::CharRangeToGlyphRange(const Range& char_range) const {
   DCHECK(range.Contains(char_range));
@@ -834,7 +834,7 @@ SkScalar TextRunHarfBuzz::GetGlyphWidthForCharRange(
 
 TextRunList::TextRunList() : width_(0.0f) {}
 
-TextRunList::~TextRunList() {}
+TextRunList::~TextRunList() = default;
 
 void TextRunList::Reset() {
   runs_.clear();
@@ -886,7 +886,7 @@ RenderTextHarfBuzz::RenderTextHarfBuzz()
   set_truncate_length(kMaxTextLength);
 }
 
-RenderTextHarfBuzz::~RenderTextHarfBuzz() {}
+RenderTextHarfBuzz::~RenderTextHarfBuzz() = default;
 
 std::unique_ptr<RenderText> RenderTextHarfBuzz::CreateInstanceOfSameType()
     const {

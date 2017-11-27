@@ -85,8 +85,7 @@ DrmDisplay::DrmDisplay(ScreenManager* screen_manager,
     : screen_manager_(screen_manager), drm_(drm) {
 }
 
-DrmDisplay::~DrmDisplay() {
-}
+DrmDisplay::~DrmDisplay() = default;
 
 std::unique_ptr<display::DisplaySnapshot> DrmDisplay::Update(
     HardwareDisplayControllerInfo* info,

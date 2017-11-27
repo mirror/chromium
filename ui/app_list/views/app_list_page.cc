@@ -10,7 +10,7 @@ namespace app_list {
 
 AppListPage::AppListPage() : contents_view_(nullptr) {}
 
-AppListPage::~AppListPage() {}
+AppListPage::~AppListPage() = default;
 
 void AppListPage::OnShown() {}
 

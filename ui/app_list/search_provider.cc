@@ -10,10 +10,8 @@
 
 namespace app_list {
 
-SearchProvider::SearchProvider() {
-}
-SearchProvider::~SearchProvider() {
-}
+SearchProvider::SearchProvider() = default;
+SearchProvider::~SearchProvider() = default;
 
 void SearchProvider::Add(std::unique_ptr<SearchResult> result) {
   results_.emplace_back(std::move(result));

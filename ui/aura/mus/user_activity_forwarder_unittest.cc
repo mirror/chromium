@@ -23,7 +23,7 @@ namespace {
 class FakeUserActivityMonitor : public ui::mojom::UserActivityMonitor {
  public:
   FakeUserActivityMonitor() : binding_(this) {}
-  ~FakeUserActivityMonitor() override {}
+  ~FakeUserActivityMonitor() override = default;
 
   ui::mojom::UserActivityMonitorPtr GetPtr() {
     ui::mojom::UserActivityMonitorPtr ptr;

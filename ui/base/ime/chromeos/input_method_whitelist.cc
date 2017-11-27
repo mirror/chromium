@@ -26,8 +26,7 @@ InputMethodWhitelist::InputMethodWhitelist() {
   }
 }
 
-InputMethodWhitelist::~InputMethodWhitelist() {
-}
+InputMethodWhitelist::~InputMethodWhitelist() = default;
 
 bool InputMethodWhitelist::InputMethodIdIsWhitelisted(
     const std::string& input_method_id) const {

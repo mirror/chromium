@@ -27,7 +27,7 @@ class TouchDispositionGestureFilterTest
  public:
   TouchDispositionGestureFilterTest()
       : cancel_after_next_gesture_(false), sent_gesture_count_(0) {}
-  ~TouchDispositionGestureFilterTest() override {}
+  ~TouchDispositionGestureFilterTest() override = default;
 
   // testing::Test
   void SetUp() override {

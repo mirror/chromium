@@ -139,9 +139,9 @@ bool HandleOptions(FakeDisplaySnapshot::Builder* builder, StringPiece options) {
 
 using Builder = FakeDisplaySnapshot::Builder;
 
-Builder::Builder() {}
+Builder::Builder() = default;
 
-Builder::~Builder() {}
+Builder::~Builder() = default;
 
 std::unique_ptr<FakeDisplaySnapshot> Builder::Build() {
   if (modes_.empty() || id_ == kInvalidDisplayId) {
@@ -311,7 +311,7 @@ FakeDisplaySnapshot::FakeDisplaySnapshot(int64_t display_id,
                       product_id,
                       maximum_cursor_size) {}
 
-FakeDisplaySnapshot::~FakeDisplaySnapshot() {}
+FakeDisplaySnapshot::~FakeDisplaySnapshot() = default;
 
 // static
 std::unique_ptr<DisplaySnapshot> FakeDisplaySnapshot::CreateFromSpec(

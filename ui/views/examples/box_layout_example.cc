@@ -39,8 +39,8 @@ namespace {
 // 25%.
 class FullPanel : public View {
  public:
-  FullPanel() {}
-  ~FullPanel() override {}
+  FullPanel() = default;
+  ~FullPanel() override = default;
 
   // View
   void Layout() override;
@@ -56,7 +56,7 @@ class FullPanel : public View {
 class ChildPanel : public View, public TextfieldController {
  public:
   explicit ChildPanel(BoxLayoutExample* example, gfx::Size preferred_size);
-  ~ChildPanel() override {}
+  ~ChildPanel() override = default;
 
   // View
   gfx::Size CalculatePreferredSize() const override;
@@ -215,7 +215,7 @@ const char* cross_axis_values[4] = {"Stretch", "Start", "Center", "End"};
 
 BoxLayoutExample::BoxLayoutExample() : ExampleBase("Box Layout") {}
 
-BoxLayoutExample::~BoxLayoutExample() {}
+BoxLayoutExample::~BoxLayoutExample() = default;
 
 Combobox* BoxLayoutExample::CreateCombobox(const base::string16& label_text,
                                            const char** items,

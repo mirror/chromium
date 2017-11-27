@@ -61,7 +61,7 @@ class BinaryImageSource : public gfx::ImageSkiaSource {
         second_(second),
         source_name_(source_name) {
   }
-  ~BinaryImageSource() override {}
+  ~BinaryImageSource() override = default;
 
   // gfx::ImageSkiaSource overrides:
   ImageSkiaRep GetImageForScale(float scale) override {
@@ -112,7 +112,7 @@ class BlendingImageSource : public BinaryImageSource {
         alpha_(alpha) {
   }
 
-  ~BlendingImageSource() override {}
+  ~BlendingImageSource() override = default;
 
   // BinaryImageSource overrides:
   ImageSkiaRep CreateImageSkiaRep(
@@ -138,7 +138,7 @@ class SuperimposedImageSource : public gfx::CanvasImageSource {
         second_(second) {
   }
 
-  ~SuperimposedImageSource() override {}
+  ~SuperimposedImageSource() override = default;
 
   // gfx::CanvasImageSource override.
   void Draw(Canvas* canvas) override {
@@ -162,7 +162,7 @@ class TransparentImageSource : public gfx::ImageSkiaSource {
         alpha_(alpha) {
   }
 
-  ~TransparentImageSource() override {}
+  ~TransparentImageSource() override = default;
 
  private:
   // gfx::ImageSkiaSource overrides:
@@ -189,7 +189,7 @@ class MaskedImageSource : public BinaryImageSource {
       : BinaryImageSource(rgb, alpha, "MaskedImageSource") {
   }
 
-  ~MaskedImageSource() override {}
+  ~MaskedImageSource() override = default;
 
   // BinaryImageSource overrides:
   ImageSkiaRep CreateImageSkiaRep(
@@ -216,7 +216,7 @@ class TiledImageSource : public gfx::ImageSkiaSource {
         dst_h_(dst_h) {
   }
 
-  ~TiledImageSource() override {}
+  ~TiledImageSource() override = default;
 
   // gfx::ImageSkiaSource overrides:
   ImageSkiaRep GetImageForScale(float scale) override {
@@ -248,7 +248,7 @@ class HSLImageSource : public gfx::ImageSkiaSource {
         hsl_shift_(hsl_shift) {
   }
 
-  ~HSLImageSource() override {}
+  ~HSLImageSource() override = default;
 
   // gfx::ImageSkiaSource overrides:
   ImageSkiaRep GetImageForScale(float scale) override {
@@ -277,7 +277,7 @@ class ButtonImageSource: public gfx::ImageSkiaSource {
         mask_(mask) {
   }
 
-  ~ButtonImageSource() override {}
+  ~ButtonImageSource() override = default;
 
   // gfx::ImageSkiaSource overrides:
   ImageSkiaRep GetImageForScale(float scale) override {
@@ -311,7 +311,7 @@ class ExtractSubsetImageSource: public gfx::ImageSkiaSource {
         subset_bounds_(subset_bounds) {
   }
 
-  ~ExtractSubsetImageSource() override {}
+  ~ExtractSubsetImageSource() override = default;
 
   // gfx::ImageSkiaSource overrides:
   ImageSkiaRep GetImageForScale(float scale) override {
@@ -343,7 +343,7 @@ class ResizeSource : public ImageSkiaSource {
         resize_method_(method),
         target_dip_size_(target_dip_size) {
   }
-  ~ResizeSource() override {}
+  ~ResizeSource() override = default;
 
   // gfx::ImageSkiaSource overrides:
   ImageSkiaRep GetImageForScale(float scale) override {
@@ -375,7 +375,7 @@ class DropShadowSource : public ImageSkiaSource {
  public:
   DropShadowSource(const ImageSkia& source, const ShadowValues& shadows_in_dip)
       : source_(source), shadows_in_dip_(shadows_in_dip) {}
-  ~DropShadowSource() override {}
+  ~DropShadowSource() override = default;
 
   // gfx::ImageSkiaSource overrides:
   ImageSkiaRep GetImageForScale(float scale) override {
@@ -406,7 +406,7 @@ class HorizontalShadowSource : public CanvasImageSource {
       : CanvasImageSource(Size(1, GetHeightForShadows(shadows)), false),
         shadows_(shadows),
         fades_down_(fades_down) {}
-  ~HorizontalShadowSource() override {}
+  ~HorizontalShadowSource() override = default;
 
   // CanvasImageSource overrides:
   void Draw(Canvas* canvas) override {
@@ -441,7 +441,7 @@ class RotatedSource : public ImageSkiaSource {
     : source_(source),
       rotation_(rotation) {
   }
-  ~RotatedSource() override {}
+  ~RotatedSource() override = default;
 
   // gfx::ImageSkiaSource overrides:
   ImageSkiaRep GetImageForScale(float scale) override {
@@ -465,7 +465,7 @@ class IconWithBadgeSource : public gfx::CanvasImageSource {
         icon_(icon),
         badge_(badge) {}
 
-  ~IconWithBadgeSource() override {}
+  ~IconWithBadgeSource() override = default;
 
   // gfx::CanvasImageSource override.
   void Draw(Canvas* canvas) override {

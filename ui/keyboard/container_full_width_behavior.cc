@@ -25,7 +25,7 @@ ContainerFullWidthBehavior::ContainerFullWidthBehavior(
     KeyboardController* controller) {
   controller_ = controller;
 }
-ContainerFullWidthBehavior::~ContainerFullWidthBehavior() {}
+ContainerFullWidthBehavior::~ContainerFullWidthBehavior() = default;
 
 ContainerType ContainerFullWidthBehavior::GetType() const {
   return ContainerType::FULL_WIDTH;

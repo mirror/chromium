@@ -11,9 +11,9 @@ namespace ui {
 
 AXTree* AXNodePosition::tree_ = nullptr;
 
-AXNodePosition::AXNodePosition() {}
+AXNodePosition::AXNodePosition() = default;
 
-AXNodePosition::~AXNodePosition() {}
+AXNodePosition::~AXNodePosition() = default;
 
 AXNodePosition::AXPositionInstance AXNodePosition::Clone() const {
   return AXPositionInstance(new AXNodePosition(*this));

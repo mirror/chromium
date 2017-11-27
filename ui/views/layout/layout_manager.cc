@@ -8,8 +8,7 @@
 
 namespace views {
 
-LayoutManager::~LayoutManager() {
-}
+LayoutManager::~LayoutManager() = default;
 
 void LayoutManager::Installed(View* host) {
 }

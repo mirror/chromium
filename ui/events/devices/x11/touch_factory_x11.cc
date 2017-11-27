@@ -53,8 +53,7 @@ TouchFactory::TouchFactory()
   UpdateDeviceList(display);
 }
 
-TouchFactory::~TouchFactory() {
-}
+TouchFactory::~TouchFactory() = default;
 
 // static
 TouchFactory* TouchFactory::GetInstance() {

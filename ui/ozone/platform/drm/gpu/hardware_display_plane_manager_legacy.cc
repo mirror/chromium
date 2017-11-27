@@ -13,11 +13,11 @@
 
 namespace ui {
 
-HardwareDisplayPlaneManagerLegacy::HardwareDisplayPlaneManagerLegacy() {
-}
+HardwareDisplayPlaneManagerLegacy::HardwareDisplayPlaneManagerLegacy() =
+    default;
 
-HardwareDisplayPlaneManagerLegacy::~HardwareDisplayPlaneManagerLegacy() {
-}
+HardwareDisplayPlaneManagerLegacy::~HardwareDisplayPlaneManagerLegacy() =
+    default;
 
 bool HardwareDisplayPlaneManagerLegacy::Commit(
     HardwareDisplayPlaneList* plane_list,

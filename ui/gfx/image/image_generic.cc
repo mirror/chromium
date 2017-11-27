@@ -26,8 +26,8 @@ ImageSkia* GetErrorImageSkia() {
 
 class PNGImageSource : public ImageSkiaSource {
  public:
-  PNGImageSource() {}
-  ~PNGImageSource() override {}
+  PNGImageSource() = default;
+  ~PNGImageSource() override = default;
 
   ImageSkiaRep GetImageForScale(float scale) override {
     if (image_skia_reps_.empty())

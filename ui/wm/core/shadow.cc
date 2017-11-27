@@ -29,7 +29,7 @@ Shadow::Shadow()
     : desired_elevation_(ShadowElevation::NONE),
       rounded_corner_radius_(kDefaultRoundedCornerRadius) {}
 
-Shadow::~Shadow() {}
+Shadow::~Shadow() = default;
 
 void Shadow::Init(ShadowElevation elevation) {
   DCHECK_NE(ShadowElevation::DEFAULT, elevation);

@@ -71,11 +71,9 @@ class MouseMoveDetectorHost : public MouseWatcherHost {
   DISALLOW_COPY_AND_ASSIGN(MouseMoveDetectorHost);
 };
 
-MouseMoveDetectorHost::MouseMoveDetectorHost() {
-}
+MouseMoveDetectorHost::MouseMoveDetectorHost() = default;
 
-MouseMoveDetectorHost::~MouseMoveDetectorHost() {
-}
+MouseMoveDetectorHost::~MouseMoveDetectorHost() = default;
 
 bool MouseMoveDetectorHost::Contains(const gfx::Point& screen_point,
                                      MouseEventType type) {
@@ -89,7 +87,7 @@ class BottomAlignedBoxLayout : public BoxLayout {
   explicit BottomAlignedBoxLayout(TrayBubbleView* bubble_view)
       : BoxLayout(BoxLayout::kVertical), bubble_view_(bubble_view) {}
 
-  ~BottomAlignedBoxLayout() override {}
+  ~BottomAlignedBoxLayout() override = default;
 
  private:
   void Layout(View* host) override {
@@ -121,7 +119,7 @@ class BottomAlignedBoxLayout : public BoxLayout {
 
 using internal::BottomAlignedBoxLayout;
 
-TrayBubbleView::Delegate::~Delegate() {}
+TrayBubbleView::Delegate::~Delegate() = default;
 
 void TrayBubbleView::Delegate::BubbleViewDestroyed() {}
 

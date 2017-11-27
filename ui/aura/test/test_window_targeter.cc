@@ -7,9 +7,9 @@
 namespace aura {
 namespace test {
 
-TestWindowTargeter::TestWindowTargeter() {}
+TestWindowTargeter::TestWindowTargeter() = default;
 
-TestWindowTargeter::~TestWindowTargeter() {}
+TestWindowTargeter::~TestWindowTargeter() = default;
 
 ui::EventTarget* TestWindowTargeter::FindTargetForEvent(ui::EventTarget* root,
                                                         ui::Event* event) {

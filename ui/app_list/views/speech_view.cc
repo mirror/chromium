@@ -62,9 +62,9 @@ class SoundLevelIndicator : public views::View {
   DISALLOW_COPY_AND_ASSIGN(SoundLevelIndicator);
 };
 
-SoundLevelIndicator::SoundLevelIndicator() {}
+SoundLevelIndicator::SoundLevelIndicator() = default;
 
-SoundLevelIndicator::~SoundLevelIndicator() {}
+SoundLevelIndicator::~SoundLevelIndicator() = default;
 
 void SoundLevelIndicator::OnPaint(gfx::Canvas* canvas) {
   cc::PaintFlags flags;
@@ -91,7 +91,7 @@ class MicButton : public views::ImageButton,
 MicButton::MicButton(views::ButtonListener* listener)
     : views::ImageButton(listener) {}
 
-MicButton::~MicButton() {}
+MicButton::~MicButton() = default;
 
 bool MicButton::GetHitTestMask(gfx::Path* mask) const {
   DCHECK(mask);

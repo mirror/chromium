@@ -16,8 +16,7 @@ TestClipboard::TestClipboard()
     : default_store_type_(CLIPBOARD_TYPE_COPY_PASTE) {
 }
 
-TestClipboard::~TestClipboard() {
-}
+TestClipboard::~TestClipboard() = default;
 
 Clipboard* TestClipboard::CreateForCurrentThread() {
   base::AutoLock lock(Clipboard::clipboard_map_lock_.Get());
@@ -204,8 +203,7 @@ TestClipboard::DataStore::DataStore() : sequence_number(0) {
 
 TestClipboard::DataStore::DataStore(const DataStore& other) = default;
 
-TestClipboard::DataStore::~DataStore() {
-}
+TestClipboard::DataStore::~DataStore() = default;
 
 void TestClipboard::DataStore::Clear() {
   data.clear();

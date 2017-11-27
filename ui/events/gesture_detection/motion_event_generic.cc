@@ -107,8 +107,7 @@ MotionEventGeneric::MotionEventGeneric(const MotionEventGeneric& other)
     PushHistoricalEvent(other.historical_events_[h]->Clone());
 }
 
-MotionEventGeneric::~MotionEventGeneric() {
-}
+MotionEventGeneric::~MotionEventGeneric() = default;
 
 uint32_t MotionEventGeneric::GetUniqueEventId() const {
   return unique_event_id_;

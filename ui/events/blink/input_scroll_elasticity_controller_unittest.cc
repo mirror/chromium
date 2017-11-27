@@ -36,7 +36,7 @@ class MockScrollElasticityHelper : public cc::ScrollElasticityHelper {
       : is_user_scrollable_(true),
         set_stretch_amount_count_(0),
         request_begin_frame_count_(0) {}
-  ~MockScrollElasticityHelper() override {}
+  ~MockScrollElasticityHelper() override = default;
 
   // cc::ScrollElasticityHelper implementation:
   bool IsUserScrollable() const override { return is_user_scrollable_; }
@@ -85,8 +85,7 @@ class ScrollElasticityControllerTest : public testing::Test {
         input_event_count_(0),
         current_time_(base::TimeTicks() +
                       base::TimeDelta::FromMicroseconds(INT64_C(100000000))) {}
-  ~ScrollElasticityControllerTest() override {}
-
+  ~ScrollElasticityControllerTest() override = default;
 
   void SendGestureScrollBegin(InertialPhaseState inertialPhase) {
     TickCurrentTime();

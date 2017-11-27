@@ -34,7 +34,7 @@ SyncControlVSyncProvider::SyncControlVSyncProvider() : gfx::VSyncProvider() {
 #endif
 }
 
-SyncControlVSyncProvider::~SyncControlVSyncProvider() {}
+SyncControlVSyncProvider::~SyncControlVSyncProvider() = default;
 
 void SyncControlVSyncProvider::GetVSyncParameters(
     const UpdateVSyncCallback& callback) {

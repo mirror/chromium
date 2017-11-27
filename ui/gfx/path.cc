@@ -26,7 +26,6 @@ Path::Path(const PointF* points, size_t count) {
     lineTo(SkFloatToScalar(points[i].x), SkFloatToScalar(points[i].y));
 }
 
-Path::~Path() {
-}
+Path::~Path() = default;
 
 }  // namespace gfx

@@ -92,11 +92,9 @@ class MouseWatcher::Observer : public ui::EventHandler {
   DISALLOW_COPY_AND_ASSIGN(Observer);
 };
 
-MouseWatcherListener::~MouseWatcherListener() {
-}
+MouseWatcherListener::~MouseWatcherListener() = default;
 
-MouseWatcherHost::~MouseWatcherHost() {
-}
+MouseWatcherHost::~MouseWatcherHost() = default;
 
 MouseWatcher::MouseWatcher(MouseWatcherHost* host,
                            MouseWatcherListener* listener)
@@ -106,8 +104,7 @@ MouseWatcher::MouseWatcher(MouseWatcherHost* host,
           kNotifyListenerTimeMs)) {
 }
 
-MouseWatcher::~MouseWatcher() {
-}
+MouseWatcher::~MouseWatcher() = default;
 
 void MouseWatcher::Start() {
   if (!is_observing())

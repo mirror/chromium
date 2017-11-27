@@ -35,7 +35,7 @@ ImageView::ImageView()
       last_paint_scale_(0.f),
       last_painted_bitmap_pixels_(NULL) {}
 
-ImageView::~ImageView() {}
+ImageView::~ImageView() = default;
 
 void ImageView::SetImage(const gfx::ImageSkia& img) {
   if (IsImageEqual(img))

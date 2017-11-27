@@ -83,7 +83,7 @@ ChangeQueue::Change::Change(ChangeType type,
   id_ = notification_ ? notification_->id() : previous_id_;
 }
 
-ChangeQueue::Change::~Change() {}
+ChangeQueue::Change::~Change() = default;
 
 std::unique_ptr<Notification> ChangeQueue::Change::PassNotification() {
   return std::move(notification_);

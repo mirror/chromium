@@ -164,6 +164,6 @@ GLVisualPickerGLX::GLVisualPickerGLX() : display_(gfx::GetXDisplay()) {
   rgba_visual_ = PickBestRgbaVisual(visuals);
 }
 
-GLVisualPickerGLX::~GLVisualPickerGLX() {}
+GLVisualPickerGLX::~GLVisualPickerGLX() = default;
 
 }  // namespace gl

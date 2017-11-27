@@ -36,8 +36,8 @@ namespace {
 // An event filter that consumes all gesture events.
 class ConsumeGestureEventFilter : public ui::EventHandler {
  public:
-  ConsumeGestureEventFilter() {}
-  ~ConsumeGestureEventFilter() override {}
+  ConsumeGestureEventFilter() = default;
+  ~ConsumeGestureEventFilter() override = default;
 
  private:
   // Overridden from ui::EventHandler:

@@ -32,8 +32,7 @@ void ScanDevicesOnWorkerThread(std::vector<base::FilePath>* result) {
 
 DeviceManagerManual::DeviceManagerManual() : weak_ptr_factory_(this) {}
 
-DeviceManagerManual::~DeviceManagerManual() {
-}
+DeviceManagerManual::~DeviceManagerManual() = default;
 
 void DeviceManagerManual::ScanDevices(DeviceEventObserver* observer) {
   if (!is_watching_) {

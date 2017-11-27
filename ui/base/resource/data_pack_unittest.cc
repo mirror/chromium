@@ -25,7 +25,7 @@ namespace ui {
 class DataPackTest
     : public testing::TestWithParam<DataPack::TextEncodingType> {
  public:
-  DataPackTest() {}
+  DataPackTest() = default;
 };
 
 TEST(DataPackTest, LoadFromPath) {

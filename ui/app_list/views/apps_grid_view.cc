@@ -176,7 +176,7 @@ class RowMoveAnimationDelegate : public gfx::AnimationDelegate {
         layer_(layer),
         layer_start_(layer ? layer->bounds() : gfx::Rect()),
         layer_target_(layer_target) {}
-  ~RowMoveAnimationDelegate() override {}
+  ~RowMoveAnimationDelegate() override = default;
 
   // gfx::AnimationDelegate overrides:
   void AnimationProgressed(const gfx::Animation* animation) override {
@@ -217,7 +217,7 @@ class ItemRemoveAnimationDelegate : public gfx::AnimationDelegate {
  public:
   explicit ItemRemoveAnimationDelegate(views::View* view) : view_(view) {}
 
-  ~ItemRemoveAnimationDelegate() override {}
+  ~ItemRemoveAnimationDelegate() override = default;
 
   // gfx::AnimationDelegate overrides:
   void AnimationProgressed(const gfx::Animation* animation) override {

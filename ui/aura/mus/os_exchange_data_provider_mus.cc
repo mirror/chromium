@@ -52,12 +52,12 @@ void AddString16ToVector(const base::string16& str,
 
 }  // namespace
 
-OSExchangeDataProviderMus::OSExchangeDataProviderMus() {}
+OSExchangeDataProviderMus::OSExchangeDataProviderMus() = default;
 
 OSExchangeDataProviderMus::OSExchangeDataProviderMus(Data data)
     : mime_data_(std::move(data)) {}
 
-OSExchangeDataProviderMus::~OSExchangeDataProviderMus() {}
+OSExchangeDataProviderMus::~OSExchangeDataProviderMus() = default;
 
 OSExchangeDataProviderMus::Data OSExchangeDataProviderMus::GetData() const {
   return mime_data_;

@@ -37,7 +37,7 @@ WaylandPointer::WaylandPointer(wl_pointer* pointer,
   cursor_.reset(new WaylandCursor);
 }
 
-WaylandPointer::~WaylandPointer() {}
+WaylandPointer::~WaylandPointer() = default;
 
 // static
 void WaylandPointer::Enter(void* data,

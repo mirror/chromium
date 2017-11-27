@@ -11,8 +11,8 @@ namespace {
 
 class StubClientNativePixmapFactory : public gfx::ClientNativePixmapFactory {
  public:
-  StubClientNativePixmapFactory() {}
-  ~StubClientNativePixmapFactory() override {}
+  StubClientNativePixmapFactory() = default;
+  ~StubClientNativePixmapFactory() override = default;
 
   // ClientNativePixmapFactory:
   bool IsConfigurationSupported(gfx::BufferFormat format,

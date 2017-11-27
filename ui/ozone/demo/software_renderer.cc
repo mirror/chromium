@@ -26,8 +26,7 @@ SoftwareRenderer::SoftwareRenderer(gfx::AcceleratedWidget widget,
       weak_ptr_factory_(this) {
 }
 
-SoftwareRenderer::~SoftwareRenderer() {
-}
+SoftwareRenderer::~SoftwareRenderer() = default;
 
 bool SoftwareRenderer::Initialize() {
   software_surface_ = ui::OzonePlatform::GetInstance()

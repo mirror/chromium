@@ -17,8 +17,7 @@ ViewsContentBrowserClient::ViewsContentBrowserClient(
       views_content_client_(views_content_client) {
 }
 
-ViewsContentBrowserClient::~ViewsContentBrowserClient() {
-}
+ViewsContentBrowserClient::~ViewsContentBrowserClient() = default;
 
 content::BrowserMainParts* ViewsContentBrowserClient::CreateBrowserMainParts(
     const content::MainFunctionParams& parameters) {

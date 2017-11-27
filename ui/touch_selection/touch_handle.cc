@@ -89,8 +89,7 @@ TouchHandle::TouchHandle(TouchHandleClient* client,
   handle_horizontal_padding_ = drawable_->GetDrawableHorizontalPaddingRatio();
 }
 
-TouchHandle::~TouchHandle() {
-}
+TouchHandle::~TouchHandle() = default;
 
 void TouchHandle::SetEnabled(bool enabled) {
   if (enabled_ == enabled)

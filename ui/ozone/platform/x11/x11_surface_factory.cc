@@ -55,7 +55,7 @@ X11SurfaceFactory::X11SurfaceFactory()
       egl_implementation_(std::make_unique<GLOzoneEGLX11>()),
       osmesa_implementation_(std::make_unique<GLOzoneOSMesa>()) {}
 
-X11SurfaceFactory::~X11SurfaceFactory() {}
+X11SurfaceFactory::~X11SurfaceFactory() = default;
 
 std::vector<gl::GLImplementation>
 X11SurfaceFactory::GetAllowedGLImplementations() {

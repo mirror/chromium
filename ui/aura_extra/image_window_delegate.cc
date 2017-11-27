@@ -21,8 +21,7 @@ ImageWindowDelegate::ImageWindowDelegate()
       size_mismatch_(false) {
 }
 
-ImageWindowDelegate::~ImageWindowDelegate() {
-}
+ImageWindowDelegate::~ImageWindowDelegate() = default;
 
 void ImageWindowDelegate::SetImage(const gfx::Image& image) {
   image_ = image;

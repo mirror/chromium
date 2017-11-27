@@ -20,7 +20,7 @@ namespace ui {
 
 class WaylandKeyboardTest : public WaylandTest {
  public:
-  WaylandKeyboardTest() {}
+  WaylandKeyboardTest() = default;
 
   void SetUp() override {
     WaylandTest::SetUp();

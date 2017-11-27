@@ -14,7 +14,7 @@ namespace ui {
 WaylandTest::WaylandTest()
     : window(&delegate, &connection, gfx::Rect(0, 0, 800, 600)) {}
 
-WaylandTest::~WaylandTest() {}
+WaylandTest::~WaylandTest() = default;
 
 void WaylandTest::SetUp() {
   ASSERT_TRUE(server.Start(GetParam()));

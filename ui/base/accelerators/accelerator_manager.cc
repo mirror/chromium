@@ -15,8 +15,7 @@ namespace ui {
 AcceleratorManager::AcceleratorManager(AcceleratorManagerDelegate* delegate)
     : delegate_(delegate) {}
 
-AcceleratorManager::~AcceleratorManager() {
-}
+AcceleratorManager::~AcceleratorManager() = default;
 
 void AcceleratorManager::Register(
     const std::vector<ui::Accelerator>& accelerators,

@@ -144,7 +144,7 @@ X11EventSourceLibevent::X11EventSourceLibevent(XDisplay* display)
   AddEventWatcher();
 }
 
-X11EventSourceLibevent::~X11EventSourceLibevent() {}
+X11EventSourceLibevent::~X11EventSourceLibevent() = default;
 
 // static
 X11EventSourceLibevent* X11EventSourceLibevent::GetInstance() {

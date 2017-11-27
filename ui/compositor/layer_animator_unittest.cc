@@ -194,7 +194,7 @@ class AbortAnimationsOnStartedLayerAnimationObserver
 class LayerAnimatorDestructionObserver {
  public:
   LayerAnimatorDestructionObserver() : animator_deleted_(false) {}
-  virtual ~LayerAnimatorDestructionObserver() {}
+  virtual ~LayerAnimatorDestructionObserver() = default;
 
   void NotifyAnimatorDeleted() {
     animator_deleted_ = true;
@@ -3180,7 +3180,7 @@ TEST(LayerAnimatorTest, TestSetterRespectEnqueueStrategy) {
 class CollectionLayerAnimationDelegate : public TestLayerAnimationDelegate {
  public:
   CollectionLayerAnimationDelegate() : collection(NULL) {}
-  ~CollectionLayerAnimationDelegate() override {}
+  ~CollectionLayerAnimationDelegate() override = default;
 
   // LayerAnimationDelegate:
   LayerAnimatorCollection* GetLayerAnimatorCollection() override {
@@ -3382,7 +3382,7 @@ class LayerOwnerAnimationObserver : public LayerAnimationObserver {
     animator_layer_->SetAnimator(animator);
   }
 
-  ~LayerOwnerAnimationObserver() override {}
+  ~LayerOwnerAnimationObserver() override = default;
 
   void OnLayerAnimationEnded(LayerAnimationSequence* sequence) override {
     ASSERT_TRUE(sequence);

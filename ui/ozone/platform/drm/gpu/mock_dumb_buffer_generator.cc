@@ -9,9 +9,9 @@
 
 namespace ui {
 
-MockDumbBufferGenerator::MockDumbBufferGenerator() {}
+MockDumbBufferGenerator::MockDumbBufferGenerator() = default;
 
-MockDumbBufferGenerator::~MockDumbBufferGenerator() {}
+MockDumbBufferGenerator::~MockDumbBufferGenerator() = default;
 
 scoped_refptr<ScanoutBuffer> MockDumbBufferGenerator::Create(
     const scoped_refptr<DrmDevice>& drm,

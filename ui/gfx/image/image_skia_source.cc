@@ -6,7 +6,7 @@
 
 namespace gfx {
 
-ImageSkiaSource::~ImageSkiaSource() {}
+ImageSkiaSource::~ImageSkiaSource() = default;
 
 bool ImageSkiaSource::HasRepresentationAtAllScales() const { return false; }
 

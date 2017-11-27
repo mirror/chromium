@@ -47,7 +47,7 @@ class TestPaintingWindowDelegate : public aura::test::TestWindowDelegate {
       : window_size_(window_size) {
   }
 
-  ~TestPaintingWindowDelegate() override {}
+  ~TestPaintingWindowDelegate() override = default;
 
   void OnPaint(const ui::PaintContext& context) override {
     ui::PaintRecorder recorder(context, window_size_);
@@ -90,8 +90,8 @@ size_t GetFailedPixelsCount(const gfx::Image& image) {
 
 class SnapshotAuraTest : public testing::Test {
  public:
-  SnapshotAuraTest() {}
-  ~SnapshotAuraTest() override {}
+  SnapshotAuraTest() = default;
+  ~SnapshotAuraTest() override = default;
 
   void SetUp() override {
     testing::Test::SetUp();
@@ -169,7 +169,7 @@ class SnapshotAuraTest : public testing::Test {
    private:
     friend class base::RefCountedThreadSafe<SnapshotHolder>;
 
-    virtual ~SnapshotHolder() {}
+    virtual ~SnapshotHolder() = default;
 
     base::RunLoop run_loop_;
     gfx::Image image_;

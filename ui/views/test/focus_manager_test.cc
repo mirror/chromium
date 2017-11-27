@@ -20,8 +20,7 @@ FocusManagerTest::FocusManagerTest()
       widget_focus_change_listener_(NULL) {
 }
 
-FocusManagerTest::~FocusManagerTest() {
-}
+FocusManagerTest::~FocusManagerTest() = default;
 
 FocusManager* FocusManagerTest::GetFocusManager() {
   return GetWidget()->GetFocusManager();
@@ -103,11 +102,9 @@ void FocusManagerTest::SetAccessiblePanes(const std::vector<View*>& panes) {
 ////////////////////////////////////////////////////////////////////////////////
 // TestFocusChangeListener
 
-TestFocusChangeListener::TestFocusChangeListener() {
-}
+TestFocusChangeListener::TestFocusChangeListener() = default;
 
-TestFocusChangeListener::~TestFocusChangeListener() {
-}
+TestFocusChangeListener::~TestFocusChangeListener() = default;
 
 void TestFocusChangeListener::OnWillChangeFocus(View* focused_before,
                                                 View* focused_now) {
@@ -124,11 +121,9 @@ void TestFocusChangeListener::ClearFocusChanges() {
 ////////////////////////////////////////////////////////////////////////////////
 // TestWidgetFocusChangeListener
 
-TestWidgetFocusChangeListener::TestWidgetFocusChangeListener() {
-}
+TestWidgetFocusChangeListener::TestWidgetFocusChangeListener() = default;
 
-TestWidgetFocusChangeListener::~TestWidgetFocusChangeListener() {
-}
+TestWidgetFocusChangeListener::~TestWidgetFocusChangeListener() = default;
 
 void TestWidgetFocusChangeListener::ClearFocusChanges() {
   focus_changes_.clear();

@@ -38,8 +38,7 @@ EventConverterEvdev::EventConverterEvdev(int fd,
   input_device_.enabled = false;
 }
 
-EventConverterEvdev::~EventConverterEvdev() {
-}
+EventConverterEvdev::~EventConverterEvdev() = default;
 
 void EventConverterEvdev::Start() {
   base::MessageLoopForUI::current()->WatchFileDescriptor(

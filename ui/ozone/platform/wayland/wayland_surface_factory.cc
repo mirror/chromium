@@ -56,7 +56,7 @@ WaylandCanvasSurface::WaylandCanvasSurface(WaylandConnection* connection,
       window_(window),
       size_(window->GetBounds().size()) {}
 
-WaylandCanvasSurface::~WaylandCanvasSurface() {}
+WaylandCanvasSurface::~WaylandCanvasSurface() = default;
 
 sk_sp<SkSurface> WaylandCanvasSurface::GetSurface() {
   if (sk_surface_)
@@ -131,7 +131,7 @@ class GLOzoneEGLWayland : public GLOzoneEGL {
  public:
   explicit GLOzoneEGLWayland(WaylandConnection* connection)
       : connection_(connection) {}
-  ~GLOzoneEGLWayland() override {}
+  ~GLOzoneEGLWayland() override = default;
 
   scoped_refptr<gl::GLSurface> CreateViewGLSurface(
       gfx::AcceleratedWidget widget) override;
@@ -192,7 +192,7 @@ WaylandSurfaceFactory::WaylandSurfaceFactory(WaylandConnection* connection)
     egl_implementation_ = std::make_unique<GLOzoneEGLWayland>(connection_);
 }
 
-WaylandSurfaceFactory::~WaylandSurfaceFactory() {}
+WaylandSurfaceFactory::~WaylandSurfaceFactory() = default;
 
 std::unique_ptr<SurfaceOzoneCanvas>
 WaylandSurfaceFactory::CreateCanvasForWidget(gfx::AcceleratedWidget widget) {

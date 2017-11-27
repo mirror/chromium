@@ -24,7 +24,7 @@ class ViewsContentClientMainPartsChromeOS
   ViewsContentClientMainPartsChromeOS(
       const content::MainFunctionParams& content_params,
       ViewsContentClient* views_content_client);
-  ~ViewsContentClientMainPartsChromeOS() override {}
+  ~ViewsContentClientMainPartsChromeOS() override = default;
 
   // content::BrowserMainParts:
   void PreMainMessageLoopRun() override;

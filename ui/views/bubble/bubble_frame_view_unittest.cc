@@ -52,7 +52,7 @@ class TestBubbleFrameViewWidgetDelegate : public WidgetDelegate {
  public:
   TestBubbleFrameViewWidgetDelegate(Widget* widget) : widget_(widget) {}
 
-  ~TestBubbleFrameViewWidgetDelegate() override {}
+  ~TestBubbleFrameViewWidgetDelegate() override = default;
 
   // WidgetDelegate overrides:
   Widget* GetWidget() override { return widget_; }
@@ -91,7 +91,7 @@ class TestBubbleFrameView : public BubbleFrameView {
     SetBubbleBorder(std::unique_ptr<BubbleBorder>(
         new BubbleBorder(kArrow, BubbleBorder::NO_SHADOW, kColor)));
   }
-  ~TestBubbleFrameView() override {}
+  ~TestBubbleFrameView() override = default;
 
   // View overrides:
   const Widget* GetWidget() const override {
@@ -588,7 +588,7 @@ class TestBubbleDialogDelegateView : public BubbleDialogDelegateView {
     set_shadow(BubbleBorder::NO_ASSETS);
     SetAnchorRect(gfx::Rect());
   }
-  ~TestBubbleDialogDelegateView() override {}
+  ~TestBubbleDialogDelegateView() override = default;
 
   void ChangeTitle(const base::string16& title) {
     title_ = title;

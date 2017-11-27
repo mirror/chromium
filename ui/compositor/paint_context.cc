@@ -50,8 +50,7 @@ PaintContext::PaintContext(const PaintContext& other,
 #endif
 }
 
-PaintContext::~PaintContext() {
-}
+PaintContext::~PaintContext() = default;
 
 gfx::Rect PaintContext::ToLayerSpaceBounds(
     const gfx::Size& size_in_context) const {

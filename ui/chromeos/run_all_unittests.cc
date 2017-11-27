@@ -19,7 +19,7 @@ namespace {
 class UIChromeOSTestSuite : public base::TestSuite {
  public:
   UIChromeOSTestSuite(int argc, char** argv) : base::TestSuite(argc, argv) {}
-  ~UIChromeOSTestSuite() override {}
+  ~UIChromeOSTestSuite() override = default;
 
  protected:
   void Initialize() override {

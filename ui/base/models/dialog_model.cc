@@ -6,7 +6,6 @@
 
 namespace ui {
 
-DialogModel::~DialogModel() {
-}
+DialogModel::~DialogModel() = default;
 
 }  // namespace ui

@@ -59,7 +59,7 @@ class NonClientDelegate : public test::TestWindowDelegate {
         mouse_event_count_(0),
         mouse_event_flags_(0x0) {
   }
-  ~NonClientDelegate() override {}
+  ~NonClientDelegate() override = default;
 
   int non_client_count() const { return non_client_count_; }
   const gfx::Point& non_client_location() const { return non_client_location_; }
@@ -95,8 +95,8 @@ class NonClientDelegate : public test::TestWindowDelegate {
 // A simple event handler that consumes key events.
 class ConsumeKeyHandler : public ui::test::TestEventHandler {
  public:
-  ConsumeKeyHandler() {}
-  ~ConsumeKeyHandler() override {}
+  ConsumeKeyHandler() = default;
+  ~ConsumeKeyHandler() override = default;
 
   // Overridden from ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override {
@@ -959,7 +959,7 @@ class HoldPointerOnScrollHandler : public ui::test::TestEventHandler {
       : dispatcher_(dispatcher),
         filter_(filter),
         holding_moves_(false) {}
-  ~HoldPointerOnScrollHandler() override {}
+  ~HoldPointerOnScrollHandler() override = default;
 
  private:
   // ui::test::TestEventHandler:
@@ -1294,7 +1294,7 @@ class DeletingEventFilter : public ui::EventHandler {
  public:
   DeletingEventFilter()
       : delete_during_pre_handle_(false) {}
-  ~DeletingEventFilter() override {}
+  ~DeletingEventFilter() override = default;
 
   void Reset(bool delete_during_pre_handle) {
     delete_during_pre_handle_ = delete_during_pre_handle;
@@ -1323,7 +1323,7 @@ class DeletingWindowDelegate : public test::TestWindowDelegate {
       : window_(NULL),
         delete_during_handle_(false),
         got_event_(false) {}
-  ~DeletingWindowDelegate() override {}
+  ~DeletingWindowDelegate() override = default;
 
   void Reset(Window* window, bool delete_during_handle) {
     window_ = window;
@@ -1399,8 +1399,8 @@ namespace {
 // it receives a tap event.
 class DetachesParentOnTapDelegate : public test::TestWindowDelegate {
  public:
-  DetachesParentOnTapDelegate() {}
-  ~DetachesParentOnTapDelegate() override {}
+  DetachesParentOnTapDelegate() = default;
+  ~DetachesParentOnTapDelegate() override = default;
 
  private:
   void OnGestureEvent(ui::GestureEvent* event) override {
@@ -1443,7 +1443,7 @@ class NestedGestureDelegate : public test::TestWindowDelegate {
       : generator_(generator),
         tap_location_(tap_location),
         gesture_end_count_(0) {}
-  ~NestedGestureDelegate() override {}
+  ~NestedGestureDelegate() override = default;
 
   int gesture_end_count() const { return gesture_end_count_; }
 
@@ -1532,7 +1532,7 @@ class RepostGestureEventRecorder : public EventFilterRecorder {
         reposted_(false),
         done_cleanup_(false) {}
 
-  ~RepostGestureEventRecorder() override {}
+  ~RepostGestureEventRecorder() override = default;
 
   void OnTouchEvent(ui::TouchEvent* event) override {
     if (reposted_ && event->type() == ui::ET_TOUCH_PRESSED) {
@@ -1639,7 +1639,7 @@ class OnMouseExitDeletingEventFilter : public EventFilterRecorder {
   explicit OnMouseExitDeletingEventFilter(T* object_to_delete)
       : object_to_delete_(object_to_delete) {}
   OnMouseExitDeletingEventFilter() : object_to_delete_(nullptr) {}
-  ~OnMouseExitDeletingEventFilter() override {}
+  ~OnMouseExitDeletingEventFilter() override = default;
 
   void set_object_to_delete(T* object_to_delete) {
     object_to_delete_ = object_to_delete;
@@ -1802,7 +1802,7 @@ class DontResetHeldEventWindowDelegate : public test::TestWindowDelegate {
   explicit DontResetHeldEventWindowDelegate(aura::Window* root)
       : root_(root),
         mouse_event_count_(0) {}
-  ~DontResetHeldEventWindowDelegate() override {}
+  ~DontResetHeldEventWindowDelegate() override = default;
 
   int mouse_event_count() const { return mouse_event_count_; }
 
@@ -1862,7 +1862,7 @@ class DeleteHostFromHeldMouseEventDelegate
         got_mouse_event_(false),
         got_destroy_(false) {
   }
-  ~DeleteHostFromHeldMouseEventDelegate() override {}
+  ~DeleteHostFromHeldMouseEventDelegate() override = default;
 
   bool got_mouse_event() const { return got_mouse_event_; }
   bool got_destroy() const { return got_destroy_; }
@@ -2076,8 +2076,8 @@ namespace {
 // capture is lost. This is the case for the drag and drop capture window.
 class CaptureWindowTracker : public test::TestWindowDelegate {
  public:
-  CaptureWindowTracker() {}
-  ~CaptureWindowTracker() override {}
+  CaptureWindowTracker() = default;
+  ~CaptureWindowTracker() override = default;
 
   void CreateCaptureWindow(aura::Window* root_window) {
     capture_window_.reset(test::CreateTestWindowWithDelegate(
@@ -2124,8 +2124,8 @@ TEST_P(WindowEventDispatcherTest, CaptureWindowDestroyed) {
 
 class ExitMessageLoopOnMousePress : public ui::test::TestEventHandler {
  public:
-  ExitMessageLoopOnMousePress() {}
-  ~ExitMessageLoopOnMousePress() override {}
+  ExitMessageLoopOnMousePress() = default;
+  ~ExitMessageLoopOnMousePress() override = default;
 
  protected:
   void OnMouseEvent(ui::MouseEvent* event) override {
@@ -2141,8 +2141,8 @@ class ExitMessageLoopOnMousePress : public ui::test::TestEventHandler {
 class WindowEventDispatcherTestWithMessageLoop
     : public WindowEventDispatcherTest {
  public:
-  WindowEventDispatcherTestWithMessageLoop() {}
-  ~WindowEventDispatcherTestWithMessageLoop() override {}
+  WindowEventDispatcherTestWithMessageLoop() = default;
+  ~WindowEventDispatcherTestWithMessageLoop() override = default;
 
   void RunTest() {
     // Reset any event the window may have received when bringing up the window
@@ -2211,8 +2211,8 @@ TEST_P(WindowEventDispatcherTestWithMessageLoop, EventRepostedInNonNestedLoop) {
 
 class WindowEventDispatcherTestInHighDPI : public WindowEventDispatcherTest {
  public:
-  WindowEventDispatcherTestInHighDPI() {}
-  ~WindowEventDispatcherTestInHighDPI() override {}
+  WindowEventDispatcherTestInHighDPI() = default;
+  ~WindowEventDispatcherTestInHighDPI() override = default;
 
   void DispatchEvent(ui::Event* event) {
     DispatchEventUsingWindowDispatcher(event);
@@ -2299,7 +2299,7 @@ class TriggerNestedLoopOnRightMousePress : public ui::test::TestEventHandler {
  public:
   explicit TriggerNestedLoopOnRightMousePress(const base::Closure& callback)
       : callback_(callback) {}
-  ~TriggerNestedLoopOnRightMousePress() override {}
+  ~TriggerNestedLoopOnRightMousePress() override = default;
 
   const gfx::Point mouse_move_location() const { return mouse_move_location_; }
 
@@ -2366,8 +2366,8 @@ TEST_P(WindowEventDispatcherTestInHighDPI,
 
 class SelfDestructDelegate : public test::TestWindowDelegate {
  public:
-  SelfDestructDelegate() {}
-  ~SelfDestructDelegate() override {}
+  SelfDestructDelegate() = default;
+  ~SelfDestructDelegate() override = default;
 
   void OnMouseEvent(ui::MouseEvent* event) override { window_.reset(); }
 
@@ -2438,7 +2438,7 @@ class StaticFocusClient : public client::FocusClient {
  public:
   explicit StaticFocusClient(Window* focused)
       : focused_(focused) {}
-  ~StaticFocusClient() override {}
+  ~StaticFocusClient() override = default;
 
  private:
   // client::FocusClient:
@@ -2476,7 +2476,7 @@ class DispatchEventHandler : public ui::EventHandler {
   explicit DispatchEventHandler(Window* target)
       : target_(target),
         dispatched_(false) {}
-  ~DispatchEventHandler() override {}
+  ~DispatchEventHandler() override = default;
 
   bool dispatched() const { return dispatched_; }
  private:
@@ -2508,7 +2508,7 @@ class MoveWindowHandler : public ui::EventHandler {
   MoveWindowHandler(Window* window, Window* root_window)
       : window_to_move_(window),
         root_window_to_move_to_(root_window) {}
-  ~MoveWindowHandler() override {}
+  ~MoveWindowHandler() override = default;
 
  private:
   // ui::EventHandler:
@@ -2575,8 +2575,8 @@ TEST_P(WindowEventDispatcherTest, NestedEventDispatchTargetMoved) {
 
 class AlwaysMouseDownInputStateLookup : public InputStateLookup {
  public:
-  AlwaysMouseDownInputStateLookup() {}
-  ~AlwaysMouseDownInputStateLookup() override {}
+  AlwaysMouseDownInputStateLookup() = default;
+  ~AlwaysMouseDownInputStateLookup() override = default;
 
  private:
   // InputStateLookup:
@@ -2877,8 +2877,8 @@ using WindowEventDispatcherMusTest = test::AuraTestBaseMus;
 
 class LastEventLocationDelegate : public test::TestWindowDelegate {
  public:
-  LastEventLocationDelegate() {}
-  ~LastEventLocationDelegate() override {}
+  LastEventLocationDelegate() = default;
+  ~LastEventLocationDelegate() override = default;
 
   int mouse_event_count() const { return mouse_event_count_; }
   const gfx::Point& last_mouse_location() const { return last_mouse_location_; }
@@ -3085,8 +3085,8 @@ TEST_F(WindowEventDispatcherMusTest, RootLocationDoesntChange) {
 
 class NestedLocationDelegate : public test::TestWindowDelegate {
  public:
-  NestedLocationDelegate() {}
-  ~NestedLocationDelegate() override {}
+  NestedLocationDelegate() = default;
+  ~NestedLocationDelegate() override = default;
 
   int mouse_event_count() const { return mouse_event_count_; }
   int nested_message_loop_count() const { return nested_message_loop_count_; }

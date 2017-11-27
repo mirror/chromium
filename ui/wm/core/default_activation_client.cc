@@ -21,7 +21,7 @@ class DefaultActivationClient::Deleter : public aura::WindowObserver {
   }
 
  private:
-  ~Deleter() override {}
+  ~Deleter() override = default;
 
   // Overridden from WindowObserver:
   void OnWindowDestroyed(aura::Window* window) override {

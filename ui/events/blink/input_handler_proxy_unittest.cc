@@ -161,8 +161,8 @@ void OnTraceDataCollected(base::Closure quit_closure,
 
 class MockInputHandler : public cc::InputHandler {
  public:
-  MockInputHandler() {}
-  ~MockInputHandler() override {}
+  MockInputHandler() = default;
+  ~MockInputHandler() override = default;
 
   MOCK_METHOD0(PinchGestureBegin, void());
   MOCK_METHOD2(PinchGestureUpdate,
@@ -258,7 +258,7 @@ class FakeWebGestureCurve : public blink::WebGestureCurve {
                       const blink::WebFloatSize& cumulative_scroll)
       : velocity_(velocity), cumulative_scroll_(cumulative_scroll) {}
 
-  ~FakeWebGestureCurve() override {}
+  ~FakeWebGestureCurve() override = default;
 
   // Returns false if curve has finished and can no longer be applied.
   bool Apply(double time, blink::WebGestureCurveTarget* target) override {
@@ -283,8 +283,8 @@ class FakeWebGestureCurve : public blink::WebGestureCurve {
 class MockInputHandlerProxyClient
     : public InputHandlerProxyClient {
  public:
-  MockInputHandlerProxyClient() {}
-  ~MockInputHandlerProxyClient() override {}
+  MockInputHandlerProxyClient() = default;
+  ~MockInputHandlerProxyClient() override = default;
 
   void WillShutdown() override {}
 
@@ -334,8 +334,8 @@ class MockInputHandlerProxyClient
 class MockInputHandlerProxyClientWithDidAnimateForInput
     : public MockInputHandlerProxyClient {
  public:
-  MockInputHandlerProxyClientWithDidAnimateForInput() {}
-  ~MockInputHandlerProxyClientWithDidAnimateForInput() override {}
+  MockInputHandlerProxyClientWithDidAnimateForInput() = default;
+  ~MockInputHandlerProxyClientWithDidAnimateForInput() override = default;
 
   MOCK_METHOD0(DidAnimateForInput, void());
 

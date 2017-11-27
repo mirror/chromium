@@ -30,8 +30,7 @@ namespace ui {
 SequentialIDGenerator::SequentialIDGenerator(uint32_t min_id)
     : min_id_(min_id), min_available_id_(min_id) {}
 
-SequentialIDGenerator::~SequentialIDGenerator() {
-}
+SequentialIDGenerator::~SequentialIDGenerator() = default;
 
 uint32_t SequentialIDGenerator::GetGeneratedID(uint32_t number) {
   IDMap::iterator find = number_to_id_.find(number);

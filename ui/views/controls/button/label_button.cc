@@ -76,7 +76,7 @@ LabelButton::LabelButton(ButtonListener* listener,
   SetFocusPainter(Painter::CreateDashedFocusPainterWithInsets(gfx::Insets(3)));
 }
 
-LabelButton::~LabelButton() {}
+LabelButton::~LabelButton() = default;
 
 gfx::ImageSkia LabelButton::GetImage(ButtonState for_state) const {
   if (for_state != STATE_NORMAL && button_state_images_[for_state].isNull())

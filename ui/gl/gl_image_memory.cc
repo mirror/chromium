@@ -377,7 +377,7 @@ GLImageMemory::GLImageMemory(const gfx::Size& size, unsigned internalformat)
       format_(gfx::BufferFormat::RGBA_8888),
       stride_(0) {}
 
-GLImageMemory::~GLImageMemory() {}
+GLImageMemory::~GLImageMemory() = default;
 
 // static
 GLImageMemory* GLImageMemory::FromGLImage(GLImage* image) {

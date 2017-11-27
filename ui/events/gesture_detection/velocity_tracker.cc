@@ -19,7 +19,7 @@ namespace ui {
 // Implements a particular velocity tracker algorithm.
 class VelocityTrackerStrategy {
  public:
-  virtual ~VelocityTrackerStrategy() {}
+  virtual ~VelocityTrackerStrategy() = default;
 
   virtual void Clear() = 0;
   virtual void ClearPointers(BitSet32 id_bits) = 0;
@@ -29,7 +29,7 @@ class VelocityTrackerStrategy {
   virtual bool GetEstimator(uint32_t id, Estimator* out_estimator) const = 0;
 
  protected:
-  VelocityTrackerStrategy() {}
+  VelocityTrackerStrategy() = default;
 };
 
 namespace {
@@ -253,7 +253,7 @@ VelocityTracker::VelocityTracker(Strategy strategy)
       active_pointer_id_(-1),
       strategy_(CreateStrategy(strategy)) {}
 
-VelocityTracker::~VelocityTracker() {}
+VelocityTracker::~VelocityTracker() = default;
 
 void VelocityTracker::Clear() {
   current_pointer_id_bits_.clear();
@@ -422,7 +422,8 @@ LeastSquaresVelocityTrackerStrategy::LeastSquaresVelocityTrackerStrategy(
   Clear();
 }
 
-LeastSquaresVelocityTrackerStrategy::~LeastSquaresVelocityTrackerStrategy() {}
+LeastSquaresVelocityTrackerStrategy::~LeastSquaresVelocityTrackerStrategy() =
+    default;
 
 void LeastSquaresVelocityTrackerStrategy::Clear() {
   index_ = 0;
@@ -741,7 +742,8 @@ IntegratingVelocityTrackerStrategy::IntegratingVelocityTrackerStrategy(
   DCHECK_LT(degree_, static_cast<uint32_t>(Estimator::kMaxDegree));
 }
 
-IntegratingVelocityTrackerStrategy::~IntegratingVelocityTrackerStrategy() {}
+IntegratingVelocityTrackerStrategy::~IntegratingVelocityTrackerStrategy() =
+    default;
 
 void IntegratingVelocityTrackerStrategy::Clear() { pointer_id_bits_.clear(); }
 

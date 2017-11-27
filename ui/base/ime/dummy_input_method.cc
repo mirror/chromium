@@ -7,11 +7,9 @@
 
 namespace ui {
 
-DummyInputMethod::DummyInputMethod() {
-}
+DummyInputMethod::DummyInputMethod() = default;
 
-DummyInputMethod::~DummyInputMethod() {
-}
+DummyInputMethod::~DummyInputMethod() = default;
 
 void DummyInputMethod::SetDelegate(internal::InputMethodDelegate* delegate) {
 }

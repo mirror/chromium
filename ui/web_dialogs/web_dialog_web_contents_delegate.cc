@@ -28,8 +28,7 @@ WebDialogWebContentsDelegate::WebDialogWebContentsDelegate(
   CHECK(handler_.get());
 }
 
-WebDialogWebContentsDelegate::~WebDialogWebContentsDelegate() {
-}
+WebDialogWebContentsDelegate::~WebDialogWebContentsDelegate() = default;
 
 void WebDialogWebContentsDelegate::Detach() {
   browser_context_ = NULL;

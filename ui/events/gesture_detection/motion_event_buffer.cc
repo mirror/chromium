@@ -228,8 +228,7 @@ MotionEventBuffer::MotionEventBuffer(MotionEventBufferClient* client,
     : client_(client), resample_(enable_resampling) {
 }
 
-MotionEventBuffer::~MotionEventBuffer() {
-}
+MotionEventBuffer::~MotionEventBuffer() = default;
 
 void MotionEventBuffer::OnMotionEvent(const MotionEvent& event) {
   DCHECK_EQ(0U, event.GetHistorySize());

@@ -395,7 +395,7 @@ MenuController::State::State()
 
 MenuController::State::State(const State& other) = default;
 
-MenuController::State::~State() {}
+MenuController::State::~State() = default;
 
 // MenuController ------------------------------------------------------------
 

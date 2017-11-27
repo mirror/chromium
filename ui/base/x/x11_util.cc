@@ -242,7 +242,7 @@ class XCustomCursorCache {
     DISALLOW_COPY_AND_ASSIGN(XCustomCursor);
   };
 
-  XCustomCursorCache() {}
+  XCustomCursorCache() = default;
   ~XCustomCursorCache() {
     Clear();
   }
@@ -1224,8 +1224,7 @@ size_t XRefcountedMemory::size() const {
   return length_;
 }
 
-XRefcountedMemory::~XRefcountedMemory() {
-}
+XRefcountedMemory::~XRefcountedMemory() = default;
 
 XScopedCursor::XScopedCursor(::Cursor cursor, XDisplay* display)
     : cursor_(cursor),
@@ -1391,7 +1390,7 @@ XVisualManager::XVisualManager()
     DCHECK(visuals_.find(transparent_visual_id_) != visuals_.end());
 }
 
-XVisualManager::~XVisualManager() {}
+XVisualManager::~XVisualManager() = default;
 
 void XVisualManager::ChooseVisualForWindow(bool want_argb_visual,
                                            Visual** visual,

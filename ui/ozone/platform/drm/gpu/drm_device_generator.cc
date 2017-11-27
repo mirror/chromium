@@ -10,11 +10,9 @@
 
 namespace ui {
 
-DrmDeviceGenerator::DrmDeviceGenerator() {
-}
+DrmDeviceGenerator::DrmDeviceGenerator() = default;
 
-DrmDeviceGenerator::~DrmDeviceGenerator() {
-}
+DrmDeviceGenerator::~DrmDeviceGenerator() = default;
 
 scoped_refptr<DrmDevice> DrmDeviceGenerator::CreateDevice(
     const base::FilePath& device_path,

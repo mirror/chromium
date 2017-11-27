@@ -20,8 +20,7 @@ KeyEventParams::KeyEventParams(int device_id,
 
 KeyEventParams::KeyEventParams(const KeyEventParams& other) = default;
 
-KeyEventParams::~KeyEventParams() {
-}
+KeyEventParams::~KeyEventParams() = default;
 
 MouseMoveEventParams::MouseMoveEventParams(int device_id,
                                            int flags,
@@ -37,8 +36,7 @@ MouseMoveEventParams::MouseMoveEventParams(int device_id,
 MouseMoveEventParams::MouseMoveEventParams(const MouseMoveEventParams& other) =
     default;
 
-MouseMoveEventParams::~MouseMoveEventParams() {
-}
+MouseMoveEventParams::~MouseMoveEventParams() = default;
 
 MouseButtonEventParams::MouseButtonEventParams(int device_id,
                                                int flags,
@@ -60,8 +58,7 @@ MouseButtonEventParams::MouseButtonEventParams(int device_id,
 MouseButtonEventParams::MouseButtonEventParams(
     const MouseButtonEventParams& other) = default;
 
-MouseButtonEventParams::~MouseButtonEventParams() {
-}
+MouseButtonEventParams::~MouseButtonEventParams() = default;
 
 MouseWheelEventParams::MouseWheelEventParams(int device_id,
                                              const gfx::PointF& location,
@@ -76,8 +73,7 @@ MouseWheelEventParams::MouseWheelEventParams(int device_id,
 MouseWheelEventParams::MouseWheelEventParams(
     const MouseWheelEventParams& other) = default;
 
-MouseWheelEventParams::~MouseWheelEventParams() {
-}
+MouseWheelEventParams::~MouseWheelEventParams() = default;
 
 PinchEventParams::PinchEventParams(int device_id,
                                    EventType type,
@@ -92,8 +88,7 @@ PinchEventParams::PinchEventParams(int device_id,
 
 PinchEventParams::PinchEventParams(const PinchEventParams& other) = default;
 
-PinchEventParams::~PinchEventParams() {
-}
+PinchEventParams::~PinchEventParams() = default;
 
 ScrollEventParams::ScrollEventParams(int device_id,
                                      EventType type,
@@ -113,8 +108,7 @@ ScrollEventParams::ScrollEventParams(int device_id,
 
 ScrollEventParams::ScrollEventParams(const ScrollEventParams& other) = default;
 
-ScrollEventParams::~ScrollEventParams() {
-}
+ScrollEventParams::~ScrollEventParams() = default;
 
 TouchEventParams::TouchEventParams(int device_id,
                                    int slot,
@@ -133,7 +127,6 @@ TouchEventParams::TouchEventParams(int device_id,
 
 TouchEventParams::TouchEventParams(const TouchEventParams& other) = default;
 
-TouchEventParams::~TouchEventParams() {
-}
+TouchEventParams::~TouchEventParams() = default;
 
 }  // namspace ui

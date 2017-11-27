@@ -48,8 +48,7 @@ HardwareDisplayPlane::HardwareDisplayPlane(uint32_t plane_id,
     : plane_id_(plane_id), possible_crtcs_(possible_crtcs) {
 }
 
-HardwareDisplayPlane::~HardwareDisplayPlane() {
-}
+HardwareDisplayPlane::~HardwareDisplayPlane() = default;
 
 bool HardwareDisplayPlane::CanUseForCrtc(uint32_t crtc_index) {
   return possible_crtcs_ & (1 << crtc_index);

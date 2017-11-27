@@ -254,8 +254,7 @@ HardwareDisplayControllerInfo::HardwareDisplayControllerInfo(
     size_t index)
     : connector_(std::move(connector)), crtc_(std::move(crtc)), index_(index) {}
 
-HardwareDisplayControllerInfo::~HardwareDisplayControllerInfo() {
-}
+HardwareDisplayControllerInfo::~HardwareDisplayControllerInfo() = default;
 
 std::vector<std::unique_ptr<HardwareDisplayControllerInfo>>
 GetAvailableDisplayControllerInfos(int fd) {

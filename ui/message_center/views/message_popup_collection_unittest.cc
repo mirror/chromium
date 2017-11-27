@@ -53,7 +53,7 @@ class TestPopupAlignmentDelegate
  public:
   explicit TestPopupAlignmentDelegate(gfx::NativeWindow context)
       : context_(context) {}
-  ~TestPopupAlignmentDelegate() override {}
+  ~TestPopupAlignmentDelegate() override = default;
 
   // PopupAlignmentDelegate:
   void ConfigureWidgetInitParamsForContainer(

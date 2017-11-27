@@ -54,8 +54,8 @@ namespace {
 // receives a mouse-release event.
 class ExitLoopOnRelease : public View {
  public:
-  ExitLoopOnRelease() {}
-  ~ExitLoopOnRelease() override {}
+  ExitLoopOnRelease() = default;
+  ~ExitLoopOnRelease() override = default;
 
  private:
   // View:
@@ -70,8 +70,8 @@ class ExitLoopOnRelease : public View {
 // A view that does a capture on ui::ET_GESTURE_TAP_DOWN events.
 class GestureCaptureView : public View {
  public:
-  GestureCaptureView() {}
-  ~GestureCaptureView() override {}
+  GestureCaptureView() = default;
+  ~GestureCaptureView() override = default;
 
  private:
   // View:
@@ -94,7 +94,7 @@ class MouseView : public View {
         exited_(0),
         pressed_(0) {
   }
-  ~MouseView() override {}
+  ~MouseView() override = default;
 
   bool OnMousePressed(const ui::MouseEvent& event) override {
     pressed_++;
@@ -135,7 +135,7 @@ class MouseView : public View {
 class NestedLoopCaptureView : public View {
  public:
   explicit NestedLoopCaptureView(Widget* widget) : widget_(widget) {}
-  ~NestedLoopCaptureView() override {}
+  ~NestedLoopCaptureView() override = default;
 
  private:
   // View:
@@ -269,8 +269,8 @@ class PropertyWaiter {
 
 class WidgetTestInteractive : public WidgetTest {
  public:
-  WidgetTestInteractive() {}
-  ~WidgetTestInteractive() override {}
+  WidgetTestInteractive() = default;
+  ~WidgetTestInteractive() override = default;
 
   void SetUp() override {
     // On mus these tests run as part of views::ViewsTestSuite which already
@@ -1368,10 +1368,9 @@ class CaptureLostTrackingWidget : public Widget {
 
 class WidgetCaptureTest : public ViewsInteractiveUITestBase {
  public:
-  WidgetCaptureTest() {
-  }
+  WidgetCaptureTest() = default;
 
-  ~WidgetCaptureTest() override {}
+  ~WidgetCaptureTest() override = default;
 
   void SetUp() override {
     // On mus these tests run as part of views::ViewsTestSuite which already
@@ -1591,7 +1590,7 @@ namespace {
 class CaptureOnActivationObserver : public WidgetObserver {
  public:
   CaptureOnActivationObserver() : activation_observed_(false) {}
-  ~CaptureOnActivationObserver() override {}
+  ~CaptureOnActivationObserver() override = default;
 
   // WidgetObserver:
   void OnWidgetActivationChanged(Widget* widget, bool active) override {
@@ -1724,7 +1723,7 @@ TEST_F(WidgetCaptureTest, MouseEventDispatchedToRightWindow) {
 
 class WidgetInputMethodInteractiveTest : public WidgetTestInteractive {
  public:
-  WidgetInputMethodInteractiveTest() {}
+  WidgetInputMethodInteractiveTest() = default;
 
   // testing::Test:
   void SetUp() override {

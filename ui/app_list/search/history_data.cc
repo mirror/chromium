@@ -32,11 +32,9 @@ bool EntrySortByTimeAscending(const EntrySortData& entry1,
 
 }  // namespace
 
-HistoryData::Data::Data() {
-}
+HistoryData::Data::Data() = default;
 HistoryData::Data::Data(const Data& other) = default;
-HistoryData::Data::~Data() {
-}
+HistoryData::Data::~Data() = default;
 
 HistoryData::HistoryData(HistoryDataStore* store,
                          size_t max_primary,
@@ -45,8 +43,7 @@ HistoryData::HistoryData(HistoryDataStore* store,
   store_->Load(base::Bind(&HistoryData::OnStoreLoaded, AsWeakPtr()));
 }
 
-HistoryData::~HistoryData() {
-}
+HistoryData::~HistoryData() = default;
 
 void HistoryData::Add(const std::string& query, const std::string& result_id) {
   Associations::iterator assoc_it = associations_.find(query);

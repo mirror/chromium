@@ -234,8 +234,7 @@ FocusTraversalTest::FocusTraversalTest()
       search_border_view_(NULL) {
 }
 
-FocusTraversalTest::~FocusTraversalTest() {
-}
+FocusTraversalTest::~FocusTraversalTest() = default;
 
 void FocusTraversalTest::InitContentView() {
   // Create a complicated view hierarchy with lots of control types for
@@ -811,12 +810,12 @@ TEST_F(FocusTraversalTest, PaneTraversal) {
 
 class FocusTraversalNonFocusableTest : public FocusManagerTest {
  public:
-  ~FocusTraversalNonFocusableTest() override {}
+  ~FocusTraversalNonFocusableTest() override = default;
 
   void InitContentView() override;
 
  protected:
-  FocusTraversalNonFocusableTest() {}
+  FocusTraversalNonFocusableTest() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FocusTraversalNonFocusableTest);

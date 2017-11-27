@@ -231,8 +231,8 @@ class SkiaColorTransform;
 
 class ColorTransformStep {
  public:
-  ColorTransformStep() {}
-  virtual ~ColorTransformStep() {}
+  ColorTransformStep() = default;
+  virtual ~ColorTransformStep() = default;
   virtual ColorTransformFromLinear* GetFromLinear() { return nullptr; }
   virtual ColorTransformToBT2020CL* GetToBT2020CL() { return nullptr; }
   virtual ColorTransformFromBT2020CL* GetFromBT2020CL() { return nullptr; }
@@ -1024,7 +1024,7 @@ bool ColorTransformInternal::CanGetShaderSource() const {
   return true;
 }
 
-ColorTransformInternal::~ColorTransformInternal() {}
+ColorTransformInternal::~ColorTransformInternal() = default;
 
 void ColorTransformInternal::Simplify() {
   for (auto iter = steps_.begin(); iter != steps_.end();) {
@@ -1066,7 +1066,7 @@ std::unique_ptr<ColorTransform> ColorTransform::NewColorTransform(
       new ColorTransformInternal(src, dst, intent));
 }
 
-ColorTransform::ColorTransform() {}
-ColorTransform::~ColorTransform() {}
+ColorTransform::ColorTransform() = default;
+ColorTransform::~ColorTransform() = default;
 
 }  // namespace gfx

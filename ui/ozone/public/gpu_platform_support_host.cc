@@ -27,11 +27,9 @@ class StubGpuPlatformSupportHost : public GpuPlatformSupportHost {
 
 }  // namespace
 
-GpuPlatformSupportHost::GpuPlatformSupportHost() {
-}
+GpuPlatformSupportHost::GpuPlatformSupportHost() = default;
 
-GpuPlatformSupportHost::~GpuPlatformSupportHost() {
-}
+GpuPlatformSupportHost::~GpuPlatformSupportHost() = default;
 
 GpuPlatformSupportHost* CreateStubGpuPlatformSupportHost() {
   return new StubGpuPlatformSupportHost;

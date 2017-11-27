@@ -33,7 +33,7 @@ namespace {
 class DeletingTestViewsDelegate : public views::TestViewsDelegate {
  public:
   DeletingTestViewsDelegate() : menu_runner_(nullptr) {}
-  ~DeletingTestViewsDelegate() override {}
+  ~DeletingTestViewsDelegate() override = default;
 
   void set_menu_runner(views::internal::MenuRunnerImpl* menu_runner) {
     menu_runner_ = menu_runner;
@@ -88,9 +88,9 @@ class MenuRunnerTest : public ViewsTestBase {
   DISALLOW_COPY_AND_ASSIGN(MenuRunnerTest);
 };
 
-MenuRunnerTest::MenuRunnerTest() {}
+MenuRunnerTest::MenuRunnerTest() = default;
 
-MenuRunnerTest::~MenuRunnerTest() {}
+MenuRunnerTest::~MenuRunnerTest() = default;
 
 void MenuRunnerTest::InitMenuRunner(int32_t run_types) {
   menu_runner_.reset(new MenuRunner(menu_item_view_, run_types));
@@ -232,7 +232,7 @@ class MenuLauncherEventHandler : public ui::EventHandler {
  public:
   MenuLauncherEventHandler(MenuRunner* runner, Widget* owner)
       : runner_(runner), owner_(owner) {}
-  ~MenuLauncherEventHandler() override {}
+  ~MenuLauncherEventHandler() override = default;
 
  private:
   // ui::EventHandler:
@@ -255,7 +255,7 @@ class MenuLauncherEventHandler : public ui::EventHandler {
 // Test harness that includes a parent Widget and View invoking the menu.
 class MenuRunnerWidgetTest : public MenuRunnerTest {
  public:
-  MenuRunnerWidgetTest() {}
+  MenuRunnerWidgetTest() = default;
 
   Widget* widget() { return widget_; }
   EventCountView* event_count_view() { return event_count_view_; }
@@ -436,8 +436,8 @@ TEST_F(MenuRunnerImplTest, MenuRunnerDestroyedWithNoActiveController) {
 // during its release.
 class MenuRunnerDestructionTest : public MenuRunnerTest {
  public:
-  MenuRunnerDestructionTest() {}
-  ~MenuRunnerDestructionTest() override {}
+  MenuRunnerDestructionTest() = default;
+  ~MenuRunnerDestructionTest() override = default;
 
   DeletingTestViewsDelegate* views_delegate() { return views_delegate_; }
 

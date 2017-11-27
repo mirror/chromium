@@ -83,7 +83,7 @@ class TooltipAura::TooltipView : public views::View {
     ResetDisplayRect();
   }
 
-  ~TooltipView() override {}
+  ~TooltipView() override = default;
 
   // views:View:
   void OnPaint(gfx::Canvas* canvas) override {

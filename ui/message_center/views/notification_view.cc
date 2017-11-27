@@ -124,8 +124,7 @@ ItemView::ItemView(const NotificationItem& item) {
   SchedulePaint();
 }
 
-ItemView::~ItemView() {
-}
+ItemView::~ItemView() = default;
 
 void ItemView::SetVisible(bool visible) {
   views::View::SetVisible(visible);
@@ -219,8 +218,7 @@ NotificationView::NotificationView(MessageViewDelegate* delegate,
   set_notify_enter_exit_on_child(true);
 }
 
-NotificationView::~NotificationView() {
-}
+NotificationView::~NotificationView() = default;
 
 gfx::Size NotificationView::CalculatePreferredSize() const {
   int top_width = top_view_->GetPreferredSize().width() +

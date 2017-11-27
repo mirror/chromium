@@ -99,7 +99,7 @@ class GPUTimingImpl : public GPUTiming {
 
 class QueryResult : public base::RefCounted<QueryResult> {
  public:
-  QueryResult() {}
+  QueryResult() = default;
 
   bool IsAvailable() const { return available_; }
   int64_t GetDelta() const { return end_value_ - start_value_; }
@@ -111,7 +111,7 @@ class QueryResult : public base::RefCounted<QueryResult> {
 
  private:
   friend class base::RefCounted<QueryResult>;
-  ~QueryResult() {}
+  ~QueryResult() = default;
 
   bool available_ = false;
   int64_t start_value_ = 0;
@@ -147,8 +147,7 @@ TimerQuery::TimerQuery(uint32_t next_id)
     : timer_query_id_(next_id) {
 }
 
-TimerQuery::~TimerQuery() {
-}
+TimerQuery::~TimerQuery() = default;
 
 class TimeElapsedTimerQuery : public TimerQuery {
  public:
@@ -259,7 +258,7 @@ class TimeElapsedTimerQuery : public TimerQuery {
   }
 
  private:
-  ~TimeElapsedTimerQuery() override {}
+  ~TimeElapsedTimerQuery() override = default;
 
   bool first_top_level_query_ = false;
   uint32_t gl_query_id_ = 0;
@@ -310,7 +309,7 @@ class TimeStampTimerQuery : public TimerQuery {
   }
 
  private:
-  ~TimeStampTimerQuery() override {}
+  ~TimeStampTimerQuery() override = default;
   uint32_t gl_query_id_ = 0;
   scoped_refptr<QueryResult> query_result_;
 };
@@ -337,8 +336,7 @@ GPUTimingImpl::GPUTimingImpl(GLContextReal* context) {
   }
 }
 
-GPUTimingImpl::~GPUTimingImpl() {
-}
+GPUTimingImpl::~GPUTimingImpl() = default;
 
 uint32_t GPUTimingImpl::GetDisjointCount() {
   if (timer_type_ == GPUTiming::kTimerTypeDisjoint) {
@@ -495,14 +493,11 @@ GPUTiming* GPUTiming::CreateGPUTiming(GLContextReal* context) {
   return new GPUTimingImpl(context);
 }
 
-GPUTiming::GPUTiming() {
-}
+GPUTiming::GPUTiming() = default;
 
-GPUTiming::~GPUTiming() {
-}
+GPUTiming::~GPUTiming() = default;
 
-GPUTimer::~GPUTimer() {
-}
+GPUTimer::~GPUTimer() = default;
 
 void GPUTimer::Destroy(bool have_context) {
   if (have_context) {
@@ -664,7 +659,6 @@ void GPUTimingClient::ForceTimeElapsedQuery() {
   gpu_timing_->ForceTimeElapsedQuery();
 }
 
-GPUTimingClient::~GPUTimingClient() {
-}
+GPUTimingClient::~GPUTimingClient() = default;
 
 }  // namespace gl

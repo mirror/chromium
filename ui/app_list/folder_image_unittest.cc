@@ -57,7 +57,7 @@ class FolderImageTest : public testing::Test {
  public:
   FolderImageTest() : folder_image_(app_list_model_.top_level_item_list()) {}
 
-  ~FolderImageTest() override {}
+  ~FolderImageTest() override = default;
 
   void SetUp() override {
     // Populate the AppListModel with three items (to test that the FolderImage

@@ -45,8 +45,8 @@ const char* GetStrategyName(VelocityTracker::Strategy strategy) {
 
 class VelocityTrackerTest : public testing::Test {
  public:
-  VelocityTrackerTest() {}
-  ~VelocityTrackerTest() override {}
+  VelocityTrackerTest() = default;
+  ~VelocityTrackerTest() override = default;
 
  protected:
   static MockMotionEvent Sample(MotionEvent::Action action,

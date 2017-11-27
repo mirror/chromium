@@ -15,8 +15,7 @@ EventTarget::EventTarget()
     : target_handler_(NULL) {
 }
 
-EventTarget::~EventTarget() {
-}
+EventTarget::~EventTarget() = default;
 
 void EventTarget::ConvertEventToTarget(EventTarget* target,
                                        LocatedEvent* event) {

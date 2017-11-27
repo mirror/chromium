@@ -29,7 +29,7 @@ class ModeIndicatorFrameView : public views::BubbleFrameView {
  public:
   explicit ModeIndicatorFrameView()
       : views::BubbleFrameView(gfx::Insets(), gfx::Insets()) {}
-  ~ModeIndicatorFrameView() override {}
+  ~ModeIndicatorFrameView() override = default;
 
  private:
   // views::BubbleFrameView overrides:
@@ -57,7 +57,7 @@ ModeIndicatorView::ModeIndicatorView(Delegate* delegate,
   set_arrow(views::BubbleBorder::TOP_CENTER);
 }
 
-ModeIndicatorView::~ModeIndicatorView() {}
+ModeIndicatorView::~ModeIndicatorView() = default;
 
 void ModeIndicatorView::ShowAndFadeOut() {
   wm::SetWindowVisibilityAnimationTransition(

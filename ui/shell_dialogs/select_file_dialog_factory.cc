@@ -6,6 +6,6 @@
 
 namespace ui {
 
-SelectFileDialogFactory::~SelectFileDialogFactory() {}
+SelectFileDialogFactory::~SelectFileDialogFactory() = default;
 
 }  // namespace ui

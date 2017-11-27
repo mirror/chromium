@@ -7,11 +7,9 @@
 
 namespace ui {
 
-NullEventTargeter::NullEventTargeter() {
-}
+NullEventTargeter::NullEventTargeter() = default;
 
-NullEventTargeter::~NullEventTargeter() {
-}
+NullEventTargeter::~NullEventTargeter() = default;
 
 EventTarget* NullEventTargeter::FindTargetForEvent(EventTarget* root,
                                                    Event* event) {

@@ -9,7 +9,7 @@
 namespace chromeos {
 namespace input_method {
 
-MockInputMethodManager::State::State() {}
+MockInputMethodManager::State::State() = default;
 
 scoped_refptr<InputMethodManager::State> MockInputMethodManager::State::Clone()
     const {
@@ -97,12 +97,12 @@ MockInputMethodManager::State::GetAllowedInputMethods() {
   return allowed_input_method_ids_;
 }
 
-MockInputMethodManager::State::~State() {}
+MockInputMethodManager::State::~State() = default;
 
 MockInputMethodManager::MockInputMethodManager()
     : features_enabled_state_(InputMethodManager::FEATURE_ALL) {}
 
-MockInputMethodManager::~MockInputMethodManager() {}
+MockInputMethodManager::~MockInputMethodManager() = default;
 
 InputMethodManager::UISessionState MockInputMethodManager::GetUISessionState() {
   return InputMethodManager::STATE_BROWSER_SCREEN;

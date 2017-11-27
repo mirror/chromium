@@ -1048,7 +1048,7 @@ bool Layer::PrepareTransferableResource(
 class LayerDebugInfo : public base::trace_event::ConvertableToTraceFormat {
  public:
   explicit LayerDebugInfo(const std::string& name) : name_(name) {}
-  ~LayerDebugInfo() override {}
+  ~LayerDebugInfo() override = default;
   void AppendAsTraceFormat(std::string* out) const override {
     base::DictionaryValue dictionary;
     dictionary.SetString("layer_name", name_);

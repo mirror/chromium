@@ -100,7 +100,8 @@ namespace internal {
    public:
     explicit ScopedChildrenLock(const View* view)
         : reset_(&view->iterating_, true) {}
-    ~ScopedChildrenLock() {}
+    ~ScopedChildrenLock() = default;
+
    private:
     base::AutoReset<bool> reset_;
     DISALLOW_COPY_AND_ASSIGN(ScopedChildrenLock);

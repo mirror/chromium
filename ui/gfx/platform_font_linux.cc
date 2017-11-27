@@ -256,7 +256,7 @@ PlatformFontLinux::PlatformFontLinux(sk_sp<SkTypeface> typeface,
       render_params);
 }
 
-PlatformFontLinux::~PlatformFontLinux() {}
+PlatformFontLinux::~PlatformFontLinux() = default;
 
 void PlatformFontLinux::InitFromDetails(
     sk_sp<SkTypeface> typeface,

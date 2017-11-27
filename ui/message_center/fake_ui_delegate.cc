@@ -11,7 +11,7 @@ namespace message_center {
 
 FakeUiDelegate::FakeUiDelegate() : tray_(new UiController(this)) {}
 
-FakeUiDelegate::~FakeUiDelegate() {}
+FakeUiDelegate::~FakeUiDelegate() = default;
 
 void FakeUiDelegate::OnMessageCenterContentsChanged() {}
 

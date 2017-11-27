@@ -32,7 +32,7 @@ SelectFileDialog::FileTypeInfo::FileTypeInfo()
 SelectFileDialog::FileTypeInfo::FileTypeInfo(const FileTypeInfo& other) =
     default;
 
-SelectFileDialog::FileTypeInfo::~FileTypeInfo() {}
+SelectFileDialog::FileTypeInfo::~FileTypeInfo() = default;
 
 void SelectFileDialog::Listener::FileSelectedWithExtraInfo(
     const ui::SelectedFileInfo& file,
@@ -136,7 +136,7 @@ SelectFileDialog::SelectFileDialog(Listener* listener,
   DCHECK(listener_);
 }
 
-SelectFileDialog::~SelectFileDialog() {}
+SelectFileDialog::~SelectFileDialog() = default;
 
 void SelectFileDialog::CancelFileSelection(void* params) {
   if (listener_)

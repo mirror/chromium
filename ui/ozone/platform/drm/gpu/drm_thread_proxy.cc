@@ -13,9 +13,9 @@
 
 namespace ui {
 
-DrmThreadProxy::DrmThreadProxy() {}
+DrmThreadProxy::DrmThreadProxy() = default;
 
-DrmThreadProxy::~DrmThreadProxy() {}
+DrmThreadProxy::~DrmThreadProxy() = default;
 
 void DrmThreadProxy::BindThreadIntoMessagingProxy(
     InterThreadMessagingProxy* messaging_proxy) {

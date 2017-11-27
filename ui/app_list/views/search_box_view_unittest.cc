@@ -28,7 +28,7 @@ namespace test {
 class KeyPressCounterView : public views::View {
  public:
   KeyPressCounterView() : count_(0) {}
-  ~KeyPressCounterView() override {}
+  ~KeyPressCounterView() override = default;
 
   int GetCountAndReset() {
     int count = count_;

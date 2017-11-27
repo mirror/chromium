@@ -54,7 +54,7 @@ ApplyContentProtectionTask::ApplyContentProtectionTask(
       pending_requests_(0),
       weak_ptr_factory_(this) {}
 
-ApplyContentProtectionTask::~ApplyContentProtectionTask() {}
+ApplyContentProtectionTask::~ApplyContentProtectionTask() = default;
 
 void ApplyContentProtectionTask::Run() {
   std::vector<DisplaySnapshot*> hdcp_capable_displays;

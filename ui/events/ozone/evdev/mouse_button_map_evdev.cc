@@ -10,11 +10,9 @@
 
 namespace ui {
 
-MouseButtonMapEvdev::MouseButtonMapEvdev() {
-}
+MouseButtonMapEvdev::MouseButtonMapEvdev() = default;
 
-MouseButtonMapEvdev::~MouseButtonMapEvdev() {
-}
+MouseButtonMapEvdev::~MouseButtonMapEvdev() = default;
 
 void MouseButtonMapEvdev::SetPrimaryButtonRight(bool primary_button_right) {
   primary_button_right_ = primary_button_right;

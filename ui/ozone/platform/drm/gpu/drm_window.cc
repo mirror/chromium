@@ -47,8 +47,7 @@ DrmWindow::DrmWindow(gfx::AcceleratedWidget widget,
       screen_manager_(screen_manager) {
 }
 
-DrmWindow::~DrmWindow() {
-}
+DrmWindow::~DrmWindow() = default;
 
 void DrmWindow::Initialize(ScanoutBufferGenerator* buffer_generator) {
   TRACE_EVENT1("drm", "DrmWindow::Initialize", "widget", widget_);

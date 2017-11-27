@@ -41,9 +41,9 @@ const char kInternalSourceURL[] = "chromium/internal-url";
 
 }  // namespace
 
-ClipboardMus::ClipboardMus() {}
+ClipboardMus::ClipboardMus() = default;
 
-ClipboardMus::~ClipboardMus() {}
+ClipboardMus::~ClipboardMus() = default;
 
 void ClipboardMus::Init(service_manager::Connector* connector) {
   connector->BindInterface(ui::mojom::kServiceName, &clipboard_);

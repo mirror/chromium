@@ -14,7 +14,7 @@ SlideOutController::SlideOutController(ui::EventTarget* target,
                                        Delegate* delegate)
     : target_handling_(target, this), delegate_(delegate) {}
 
-SlideOutController::~SlideOutController() {}
+SlideOutController::~SlideOutController() = default;
 
 void SlideOutController::OnGestureEvent(ui::GestureEvent* event) {
   const float kScrollRatioForClosingNotification = 0.5f;

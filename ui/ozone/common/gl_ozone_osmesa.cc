@@ -18,9 +18,9 @@
 
 namespace ui {
 
-GLOzoneOSMesa::GLOzoneOSMesa() {}
+GLOzoneOSMesa::GLOzoneOSMesa() = default;
 
-GLOzoneOSMesa::~GLOzoneOSMesa() {}
+GLOzoneOSMesa::~GLOzoneOSMesa() = default;
 
 bool GLOzoneOSMesa::InitializeGLOneOffPlatform() {
   return true;

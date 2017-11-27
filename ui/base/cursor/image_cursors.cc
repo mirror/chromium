@@ -63,8 +63,7 @@ const CursorType kAnimatedCursorIds[] = {CursorType::kWait,
 ImageCursors::ImageCursors()
     : cursor_size_(CursorSize::kNormal), weak_ptr_factory_(this) {}
 
-ImageCursors::~ImageCursors() {
-}
+ImageCursors::~ImageCursors() = default;
 
 void ImageCursors::Initialize() {
   if (!cursor_loader_)

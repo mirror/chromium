@@ -62,8 +62,7 @@ Accelerator::Accelerator(const Accelerator& accelerator) {
     platform_accelerator_ = accelerator.platform_accelerator_->CreateCopy();
 }
 
-Accelerator::~Accelerator() {
-}
+Accelerator::~Accelerator() = default;
 
 // static
 int Accelerator::MaskOutKeyEventFlags(int flags) {

@@ -269,8 +269,7 @@ NativeThemeBase::NativeThemeBase()
       scrollbar_button_length_(kDefaultScrollbarButtonLength) {
 }
 
-NativeThemeBase::~NativeThemeBase() {
-}
+NativeThemeBase::~NativeThemeBase() = default;
 
 void NativeThemeBase::PaintArrowButton(cc::PaintCanvas* canvas,
                                        const gfx::Rect& rect,

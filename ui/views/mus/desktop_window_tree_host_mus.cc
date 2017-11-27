@@ -48,7 +48,7 @@ class ClientSideNonClientFrameView : public NonClientFrameView {
  public:
   explicit ClientSideNonClientFrameView(views::Widget* widget)
       : widget_(widget) {}
-  ~ClientSideNonClientFrameView() override {}
+  ~ClientSideNonClientFrameView() override = default;
 
  private:
   // Returns the default values of client area insets from the window manager.
@@ -124,7 +124,7 @@ class ClientSideNonClientFrameView : public NonClientFrameView {
 class NativeCursorManagerMus : public wm::NativeCursorManager {
  public:
   explicit NativeCursorManagerMus(aura::Window* window) : window_(window) {}
-  ~NativeCursorManagerMus() override {}
+  ~NativeCursorManagerMus() override = default;
 
   // wm::NativeCursorManager:
   void SetDisplay(const display::Display& display,

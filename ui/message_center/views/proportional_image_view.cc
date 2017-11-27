@@ -16,7 +16,7 @@ ProportionalImageView::ProportionalImageView(const gfx::Size& view_size) {
   SetPreferredSize(view_size);
 }
 
-ProportionalImageView::~ProportionalImageView() {}
+ProportionalImageView::~ProportionalImageView() = default;
 
 void ProportionalImageView::SetImage(const gfx::ImageSkia& image,
                                      const gfx::Size& max_image_size) {

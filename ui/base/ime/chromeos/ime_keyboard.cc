@@ -64,8 +64,7 @@ ImeKeyboard::ImeKeyboard()
     : caps_lock_is_enabled_(false) {
 }
 
-ImeKeyboard::~ImeKeyboard() {
-}
+ImeKeyboard::~ImeKeyboard() = default;
 
 void ImeKeyboard::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);

@@ -10,8 +10,7 @@ namespace ui {
 
 DrmVSyncProvider::DrmVSyncProvider(DrmWindowProxy* window) : window_(window) {}
 
-DrmVSyncProvider::~DrmVSyncProvider() {
-}
+DrmVSyncProvider::~DrmVSyncProvider() = default;
 
 void DrmVSyncProvider::GetVSyncParameters(const UpdateVSyncCallback& callback) {
   window_->GetVSyncParameters(callback);

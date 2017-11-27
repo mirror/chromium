@@ -85,8 +85,7 @@ InnerBoundedLabel::InnerBoundedLabel(const BoundedLabel& owner)
   set_collapse_when_hidden(true);
 }
 
-InnerBoundedLabel::~InnerBoundedLabel() {
-}
+InnerBoundedLabel::~InnerBoundedLabel() = default;
 
 void InnerBoundedLabel::SetNativeTheme(const ui::NativeTheme* theme) {
   ClearCaches();
@@ -275,8 +274,7 @@ BoundedLabel::BoundedLabel(const base::string16& text)
   label_->SetText(text);
 }
 
-BoundedLabel::~BoundedLabel() {
-}
+BoundedLabel::~BoundedLabel() = default;
 
 void BoundedLabel::SetColors(SkColor textColor, SkColor backgroundColor) {
   label_->SetEnabledColor(textColor);

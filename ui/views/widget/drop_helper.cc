@@ -17,8 +17,7 @@ DropHelper::DropHelper(View* root_view)
       deepest_view_(NULL) {
 }
 
-DropHelper::~DropHelper() {
-}
+DropHelper::~DropHelper() = default;
 
 void DropHelper::ResetTargetViewIfEquals(View* view) {
   if (target_view_ == view)

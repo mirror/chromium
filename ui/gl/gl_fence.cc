@@ -20,11 +20,9 @@
 
 namespace gl {
 
-GLFence::GLFence() {
-}
+GLFence::GLFence() = default;
 
-GLFence::~GLFence() {
-}
+GLFence::~GLFence() = default;
 
 bool GLFence::IsSupported() {
   DCHECK(g_current_gl_version && g_current_gl_driver);

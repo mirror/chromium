@@ -29,7 +29,7 @@ class NotificationDelegateTest : public testing::Test {
 
 NotificationDelegateTest::NotificationDelegateTest() : callback_count_(0) {}
 
-NotificationDelegateTest::~NotificationDelegateTest() {}
+NotificationDelegateTest::~NotificationDelegateTest() = default;
 
 void NotificationDelegateTest::ClickCallback() {
   ++callback_count_;

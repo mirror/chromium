@@ -170,7 +170,7 @@ Display::Display(int64_t id, const gfx::Rect& bounds)
 
 Display::Display(const Display& other) = default;
 
-Display::~Display() {}
+Display::~Display() = default;
 
 int Display::RotationAsDegree() const {
   switch (rotation_) {

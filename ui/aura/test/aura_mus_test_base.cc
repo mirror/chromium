@@ -7,9 +7,9 @@
 namespace aura {
 namespace test {
 
-AuraMusWmTestBase::AuraMusWmTestBase() {}
+AuraMusWmTestBase::AuraMusWmTestBase() = default;
 
-AuraMusWmTestBase::~AuraMusWmTestBase() {}
+AuraMusWmTestBase::~AuraMusWmTestBase() = default;
 
 void AuraMusWmTestBase::SetUp() {
   // Run AuraTestBase::SetUp() first because it puts an InProcessContextFactory
@@ -28,9 +28,9 @@ void AuraMusWmTestBase::TearDown() {
   AuraTestBase::TearDown();
 }
 
-AuraMusClientTestBase::AuraMusClientTestBase() {}
+AuraMusClientTestBase::AuraMusClientTestBase() = default;
 
-AuraMusClientTestBase::~AuraMusClientTestBase() {}
+AuraMusClientTestBase::~AuraMusClientTestBase() = default;
 
 void AuraMusClientTestBase::SetUp() {
   // Run AuraTestBase::SetUp() first because it puts an InProcessContextFactory

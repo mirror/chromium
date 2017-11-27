@@ -33,8 +33,8 @@ void MessageCenter::Shutdown() {
   g_message_center = nullptr;
 }
 
-MessageCenter::MessageCenter() {}
+MessageCenter::MessageCenter() = default;
 
-MessageCenter::~MessageCenter() {}
+MessageCenter::~MessageCenter() = default;
 
 }  // namespace message_center

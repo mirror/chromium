@@ -23,7 +23,7 @@ TestNativeDisplayDelegate::TestNativeDisplayDelegate(ActionLogger* log)
       run_async_(false),
       log_(log) {}
 
-TestNativeDisplayDelegate::~TestNativeDisplayDelegate() {}
+TestNativeDisplayDelegate::~TestNativeDisplayDelegate() = default;
 
 void TestNativeDisplayDelegate::Initialize() {
   log_->AppendAction(kInit);

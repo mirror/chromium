@@ -16,7 +16,7 @@ HostCursorProxy::HostCursorProxy(service_manager::Connector* connector)
   connector->BindInterface(ui::mojom::kServiceName, &main_cursor_ptr_);
 }
 
-HostCursorProxy::~HostCursorProxy() {}
+HostCursorProxy::~HostCursorProxy() = default;
 
 void HostCursorProxy::CursorSet(gfx::AcceleratedWidget widget,
                                 const std::vector<SkBitmap>& bitmaps,

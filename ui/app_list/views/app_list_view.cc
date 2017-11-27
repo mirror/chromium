@@ -107,7 +107,7 @@ class SearchBoxFocusHost : public views::View {
   explicit SearchBoxFocusHost(views::Widget* search_box_widget)
       : search_box_widget_(search_box_widget) {}
 
-  ~SearchBoxFocusHost() override {}
+  ~SearchBoxFocusHost() override = default;
 
   views::FocusTraversable* GetFocusTraversable() override {
     return search_box_widget_;
@@ -130,7 +130,7 @@ class AppListOverlayView : public views::View {
     layer()->SetOpacity(0.0f);
   }
 
-  ~AppListOverlayView() override {}
+  ~AppListOverlayView() override = default;
 
   // Overridden from views::View:
   void OnPaint(gfx::Canvas* canvas) override {
@@ -416,7 +416,7 @@ class AppListView::FullscreenWidgetObserver : views::WidgetObserver {
     view_ = view;
     widget_observer_.Add(view_->GetWidget());
   }
-  ~FullscreenWidgetObserver() override {}
+  ~FullscreenWidgetObserver() override = default;
 
   // Overridden from WidgetObserver:
   void OnWidgetClosing(views::Widget* widget) override {

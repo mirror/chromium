@@ -40,7 +40,7 @@ EventWithCallback::EventWithCallback(
     original_events_.splice(original_events_.end(), *original_events);
 }
 
-EventWithCallback::~EventWithCallback() {}
+EventWithCallback::~EventWithCallback() = default;
 
 bool EventWithCallback::CanCoalesceWith(const EventWithCallback& other) const {
   return CanCoalesce(other.event(), event());
@@ -102,6 +102,7 @@ EventWithCallback::OriginalEventWithCallback::OriginalEventWithCallback(
     InputHandlerProxy::EventDispositionCallback callback)
     : event_(std::move(event)), callback_(std::move(callback)) {}
 
-EventWithCallback::OriginalEventWithCallback::~OriginalEventWithCallback() {}
+EventWithCallback::OriginalEventWithCallback::~OriginalEventWithCallback() =
+    default;
 
 }  // namespace ui

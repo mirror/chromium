@@ -39,28 +39,23 @@ void ClearBindingsOSMESA() {
   g_driver_osmesa.ClearBindings();
 }
 
-OSMESAApi::OSMESAApi() {
-}
+OSMESAApi::OSMESAApi() = default;
 
-OSMESAApi::~OSMESAApi() {
-}
+OSMESAApi::~OSMESAApi() = default;
 
 OSMESAApiBase::OSMESAApiBase()
     : driver_(NULL) {
 }
 
-OSMESAApiBase::~OSMESAApiBase() {
-}
+OSMESAApiBase::~OSMESAApiBase() = default;
 
 void OSMESAApiBase::InitializeBase(DriverOSMESA* driver) {
   driver_ = driver;
 }
 
-RealOSMESAApi::RealOSMESAApi() {
-}
+RealOSMESAApi::RealOSMESAApi() = default;
 
-RealOSMESAApi::~RealOSMESAApi() {
-}
+RealOSMESAApi::~RealOSMESAApi() = default;
 
 void RealOSMESAApi::Initialize(DriverOSMESA* driver) {
   InitializeBase(driver);
@@ -68,9 +63,8 @@ void RealOSMESAApi::Initialize(DriverOSMESA* driver) {
 
 DebugOSMESAApi::DebugOSMESAApi(OSMESAApi* osmesa_api)
     : osmesa_api_(osmesa_api) {}
-DebugOSMESAApi::~DebugOSMESAApi() {}
+DebugOSMESAApi::~DebugOSMESAApi() = default;
 
-TraceOSMESAApi::~TraceOSMESAApi() {
-}
+TraceOSMESAApi::~TraceOSMESAApi() = default;
 
 }  // namespace gl

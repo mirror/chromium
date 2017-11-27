@@ -11,7 +11,7 @@ namespace wm {
 
 class NopDragDropClient : public aura::client::DragDropClient {
  public:
-  ~NopDragDropClient() override {}
+  ~NopDragDropClient() override = default;
   int StartDragAndDrop(const ui::OSExchangeData& data,
                        aura::Window* root_window,
                        aura::Window* source_window,

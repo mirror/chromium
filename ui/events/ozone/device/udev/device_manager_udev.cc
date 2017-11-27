@@ -85,8 +85,7 @@ device::ScopedUdevMonitorPtr UdevCreateMonitor(struct udev* udev) {
 DeviceManagerUdev::DeviceManagerUdev()
     : udev_(UdevCreate()), controller_(FROM_HERE) {}
 
-DeviceManagerUdev::~DeviceManagerUdev() {
-}
+DeviceManagerUdev::~DeviceManagerUdev() = default;
 
 void DeviceManagerUdev::CreateMonitor() {
   if (monitor_)

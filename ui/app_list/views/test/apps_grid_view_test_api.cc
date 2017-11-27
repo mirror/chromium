@@ -16,8 +16,7 @@ AppsGridViewTestApi::AppsGridViewTestApi(AppsGridView* view)
     : view_(view) {
 }
 
-AppsGridViewTestApi::~AppsGridViewTestApi() {
-}
+AppsGridViewTestApi::~AppsGridViewTestApi() = default;
 
 views::View* AppsGridViewTestApi::GetViewAtModelIndex(int index) const {
   return view_->view_model_.view_at(index);

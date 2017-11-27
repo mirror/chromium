@@ -62,29 +62,12 @@ GestureEventDataPacket::GestureEventDataPacket(
 }
 
 GestureEventDataPacket::GestureEventDataPacket(
-    const GestureEventDataPacket& other)
-    : timestamp_(other.timestamp_),
-      gestures_(other.gestures_),
-      touch_location_(other.touch_location_),
-      raw_touch_location_(other.raw_touch_location_),
-      gesture_source_(other.gesture_source_),
-      ack_state_(other.ack_state_),
-      unique_touch_event_id_(other.unique_touch_event_id_) {}
+    const GestureEventDataPacket& other) = default;
 
-GestureEventDataPacket::~GestureEventDataPacket() {
-}
+GestureEventDataPacket::~GestureEventDataPacket() = default;
 
 GestureEventDataPacket& GestureEventDataPacket::operator=(
-    const GestureEventDataPacket& other) {
-  timestamp_ = other.timestamp_;
-  gesture_source_ = other.gesture_source_;
-  touch_location_ = other.touch_location_;
-  raw_touch_location_ = other.raw_touch_location_;
-  gestures_ = other.gestures_;
-  ack_state_ = other.ack_state_;
-  unique_touch_event_id_ = other.unique_touch_event_id_;
-  return *this;
-}
+    const GestureEventDataPacket& other) = default;
 
 void GestureEventDataPacket::Push(const GestureEventData& original_gesture) {
   DCHECK_NE(ET_UNKNOWN, original_gesture.type());

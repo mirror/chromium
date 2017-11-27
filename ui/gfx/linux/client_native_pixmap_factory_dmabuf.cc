@@ -24,8 +24,8 @@ namespace {
 
 class ClientNativePixmapOpaque : public ClientNativePixmap {
  public:
-  ClientNativePixmapOpaque() {}
-  ~ClientNativePixmapOpaque() override {}
+  ClientNativePixmapOpaque() = default;
+  ~ClientNativePixmapOpaque() override = default;
 
   bool Map() override {
     NOTREACHED();
@@ -46,8 +46,8 @@ class ClientNativePixmapOpaque : public ClientNativePixmap {
 
 class ClientNativePixmapFactoryDmabuf : public ClientNativePixmapFactory {
  public:
-  ClientNativePixmapFactoryDmabuf() {}
-  ~ClientNativePixmapFactoryDmabuf() override {}
+  ClientNativePixmapFactoryDmabuf() = default;
+  ~ClientNativePixmapFactoryDmabuf() override = default;
 
   // ClientNativePixmapFactory:
   bool IsConfigurationSupported(gfx::BufferFormat format,

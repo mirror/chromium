@@ -22,7 +22,7 @@ QueryContentProtectionTask::QueryContentProtectionTask(
       pending_requests_(0),
       weak_ptr_factory_(this) {}
 
-QueryContentProtectionTask::~QueryContentProtectionTask() {}
+QueryContentProtectionTask::~QueryContentProtectionTask() = default;
 
 void QueryContentProtectionTask::Run() {
   std::vector<DisplaySnapshot*> hdcp_capable_displays;

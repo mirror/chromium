@@ -24,7 +24,7 @@ BlueButton::BlueButton(ButtonListener* listener, const base::string16& text)
   UpdateThemedBorder();
 }
 
-BlueButton::~BlueButton() {}
+BlueButton::~BlueButton() = default;
 
 void BlueButton::ResetColorsFromNativeTheme() {
   LabelButton::ResetColorsFromNativeTheme();

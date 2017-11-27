@@ -55,11 +55,9 @@ class StubInputController : public InputController {
   DISALLOW_COPY_AND_ASSIGN(StubInputController);
 };
 
-StubInputController::StubInputController() {
-}
+StubInputController::StubInputController() = default;
 
-StubInputController::~StubInputController() {
-}
+StubInputController::~StubInputController() = default;
 
 bool StubInputController::HasMouse() {
   return false;

@@ -37,8 +37,7 @@ ViewsContentMainDelegate::ViewsContentMainDelegate(
     : views_content_client_(views_content_client) {
 }
 
-ViewsContentMainDelegate::~ViewsContentMainDelegate() {
-}
+ViewsContentMainDelegate::~ViewsContentMainDelegate() = default;
 
 bool ViewsContentMainDelegate::BasicStartupComplete(int* exit_code) {
   const base::CommandLine& command_line =

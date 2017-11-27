@@ -18,8 +18,7 @@ MessageViewContextMenuController::MessageViewContextMenuController(
     MessageViewDelegate* controller)
     : controller_(controller) {}
 
-MessageViewContextMenuController::~MessageViewContextMenuController() {
-}
+MessageViewContextMenuController::~MessageViewContextMenuController() = default;
 
 void MessageViewContextMenuController::ShowContextMenuForView(
     views::View* source,

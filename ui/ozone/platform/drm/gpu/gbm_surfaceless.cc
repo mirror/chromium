@@ -193,9 +193,9 @@ GbmSurfaceless::~GbmSurfaceless() {
   surface_factory_->UnregisterSurface(window_->widget());
 }
 
-GbmSurfaceless::PendingFrame::PendingFrame() {}
+GbmSurfaceless::PendingFrame::PendingFrame() = default;
 
-GbmSurfaceless::PendingFrame::~PendingFrame() {}
+GbmSurfaceless::PendingFrame::~PendingFrame() = default;
 
 bool GbmSurfaceless::PendingFrame::ScheduleOverlayPlanes(
     gfx::AcceleratedWidget widget) {

@@ -18,8 +18,8 @@ namespace {
 // A simple View class that will match its height to the available width.
 class SquareView : public views::View {
  public:
-  SquareView() {}
-  ~SquareView() override {}
+  SquareView() = default;
+  ~SquareView() override = default;
 
  private:
   gfx::Size CalculatePreferredSize() const override { return gfx::Size(1, 1); }
@@ -33,7 +33,7 @@ class SquareView : public views::View {
 class TestMenuItemView : public MenuItemView {
  public:
   TestMenuItemView() : MenuItemView(NULL) {}
-  ~TestMenuItemView() override {}
+  ~TestMenuItemView() override = default;
 
   void AddEmptyMenus() { MenuItemView::AddEmptyMenus(); }
 

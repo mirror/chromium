@@ -13,7 +13,7 @@ PlatformEventSourceTestAPI::PlatformEventSourceTestAPI(
     PlatformEventSource* event_source)
     : event_source_(event_source) {}
 
-PlatformEventSourceTestAPI::~PlatformEventSourceTestAPI() {}
+PlatformEventSourceTestAPI::~PlatformEventSourceTestAPI() = default;
 
 void PlatformEventSourceTestAPI::Dispatch(PlatformEvent platform_event) {
   event_source_->DispatchEvent(platform_event);

@@ -29,7 +29,7 @@ const gfx::Size kDefaultBufferSize(2, 2);
 
 class HardwareDisplayPlaneManagerTest : public testing::Test {
  public:
-  HardwareDisplayPlaneManagerTest() {}
+  HardwareDisplayPlaneManagerTest() = default;
 
   void SetUp() override;
 

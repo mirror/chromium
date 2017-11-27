@@ -11,9 +11,9 @@
 
 namespace ui {
 
-DefaultThemeProvider::DefaultThemeProvider() {}
+DefaultThemeProvider::DefaultThemeProvider() = default;
 
-DefaultThemeProvider::~DefaultThemeProvider() {}
+DefaultThemeProvider::~DefaultThemeProvider() = default;
 
 gfx::ImageSkia* DefaultThemeProvider::GetImageSkiaNamed(int id) const {
   return ResourceBundle::GetSharedInstance().GetImageSkiaNamed(id);

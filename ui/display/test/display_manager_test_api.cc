@@ -87,7 +87,7 @@ DisplayManagerTestApi::DisplayManagerTestApi(DisplayManager* display_manager)
   DCHECK(display_manager);
 }
 
-DisplayManagerTestApi::~DisplayManagerTestApi() {}
+DisplayManagerTestApi::~DisplayManagerTestApi() = default;
 
 void DisplayManagerTestApi::UpdateDisplay(const std::string& display_specs) {
   DisplayInfoList display_info_list =

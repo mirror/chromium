@@ -29,8 +29,7 @@ FrameBackground::FrameBackground()
       bottom_right_corner_(nullptr),
       maximized_top_inset_(0) {}
 
-FrameBackground::~FrameBackground() {
-}
+FrameBackground::~FrameBackground() = default;
 
 void FrameBackground::SetSideImages(const gfx::ImageSkia* left,
                                     const gfx::ImageSkia* top,

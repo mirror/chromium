@@ -390,10 +390,9 @@ void OnHotplugFinished() {
 
 }  // namespace
 
-X11HotplugEventHandler::X11HotplugEventHandler() {}
+X11HotplugEventHandler::X11HotplugEventHandler() = default;
 
-X11HotplugEventHandler::~X11HotplugEventHandler() {
-}
+X11HotplugEventHandler::~X11HotplugEventHandler() = default;
 
 void X11HotplugEventHandler::OnHotplugEvent() {
   Display* display = gfx::GetXDisplay();

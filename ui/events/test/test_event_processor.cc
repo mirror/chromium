@@ -17,7 +17,7 @@ TestEventProcessor::TestEventProcessor()
       num_times_processing_finished_(0) {
 }
 
-TestEventProcessor::~TestEventProcessor() {}
+TestEventProcessor::~TestEventProcessor() = default;
 
 EventTarget* TestEventProcessor::GetRoot() {
   return root_.get();

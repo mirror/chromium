@@ -6,10 +6,8 @@
 
 namespace gl {
 
-GLStateRestorer::GLStateRestorer() {
-}
+GLStateRestorer::GLStateRestorer() = default;
 
-GLStateRestorer::~GLStateRestorer() {
-}
+GLStateRestorer::~GLStateRestorer() = default;
 
 }  // namespace gl

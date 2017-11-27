@@ -45,28 +45,23 @@ void ClearBindingsGLX() {
   g_driver_glx.ClearBindings();
 }
 
-GLXApi::GLXApi() {
-}
+GLXApi::GLXApi() = default;
 
-GLXApi::~GLXApi() {
-}
+GLXApi::~GLXApi() = default;
 
 GLXApiBase::GLXApiBase()
     : driver_(NULL) {
 }
 
-GLXApiBase::~GLXApiBase() {
-}
+GLXApiBase::~GLXApiBase() = default;
 
 void GLXApiBase::InitializeBase(DriverGLX* driver) {
   driver_ = driver;
 }
 
-RealGLXApi::RealGLXApi() {
-}
+RealGLXApi::RealGLXApi() = default;
 
-RealGLXApi::~RealGLXApi() {
-}
+RealGLXApi::~RealGLXApi() = default;
 
 void RealGLXApi::Initialize(DriverGLX* driver) {
   InitializeBase(driver);
@@ -101,7 +96,7 @@ const char* RealGLXApi::glXQueryExtensionsStringFn(Display* dpy,
 
 DebugGLXApi::DebugGLXApi(GLXApi* glx_api) : glx_api_(glx_api) {}
 
-DebugGLXApi::~DebugGLXApi() {}
+DebugGLXApi::~DebugGLXApi() = default;
 
 void DebugGLXApi::SetDisabledExtensions(
     const std::string& disabled_extensions) {
@@ -110,8 +105,7 @@ void DebugGLXApi::SetDisabledExtensions(
   }
 }
 
-TraceGLXApi::~TraceGLXApi() {
-}
+TraceGLXApi::~TraceGLXApi() = default;
 
 void TraceGLXApi::SetDisabledExtensions(
     const std::string& disabled_extensions) {

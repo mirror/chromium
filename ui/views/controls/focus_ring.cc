@@ -93,6 +93,6 @@ FocusRing::FocusRing()
   InitFocusRing(this);
 }
 
-FocusRing::~FocusRing() {}
+FocusRing::~FocusRing() = default;
 
 }  // namespace views

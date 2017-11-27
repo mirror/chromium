@@ -14,8 +14,8 @@ class GenericDesktopGestureConfiguration : public GestureConfiguration {
  public:
   // The default GestureConfiguration parameters are already tailored for a
   // desktop environment (Aura).
-  GenericDesktopGestureConfiguration() {}
-  ~GenericDesktopGestureConfiguration() override {}
+  GenericDesktopGestureConfiguration() = default;
+  ~GenericDesktopGestureConfiguration() override = default;
 };
 
 GestureDetector::Config BuildGestureDetectorConfig(

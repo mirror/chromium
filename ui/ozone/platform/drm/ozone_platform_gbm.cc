@@ -84,7 +84,7 @@ class OzonePlatformGbm : public OzonePlatform {
  public:
   OzonePlatformGbm()
       : using_mojo_(false), single_process_(false), weak_factory_(this) {}
-  ~OzonePlatformGbm() override {}
+  ~OzonePlatformGbm() override = default;
 
   // OzonePlatform:
   ui::SurfaceFactoryOzone* GetSurfaceFactoryOzone() override {

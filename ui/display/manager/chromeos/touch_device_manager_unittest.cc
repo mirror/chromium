@@ -44,8 +44,8 @@ using DisplayInfoList = std::vector<ManagedDisplayInfo>;
 
 class TouchAssociationTest : public testing::Test {
  public:
-  TouchAssociationTest() {}
-  ~TouchAssociationTest() override {}
+  TouchAssociationTest() = default;
+  ~TouchAssociationTest() override = default;
 
   DisplayManager* display_manager() { return display_manager_.get(); }
 
@@ -357,8 +357,8 @@ TEST_F(TouchAssociationTest,
 
 class TouchAssociationFromPrefTest : public TouchAssociationTest {
  public:
-  TouchAssociationFromPrefTest() {}
-  ~TouchAssociationFromPrefTest() override {}
+  TouchAssociationFromPrefTest() = default;
+  ~TouchAssociationFromPrefTest() override = default;
 
   void SetUp() override {
     TouchAssociationTest::SetUp();

@@ -42,7 +42,7 @@ namespace aura {
 HitTestDataProviderAura::HitTestDataProviderAura(aura::Window* window)
     : window_(window) {}
 
-HitTestDataProviderAura::~HitTestDataProviderAura() {}
+HitTestDataProviderAura::~HitTestDataProviderAura() = default;
 
 viz::mojom::HitTestRegionListPtr HitTestDataProviderAura::GetHitTestData()
     const {

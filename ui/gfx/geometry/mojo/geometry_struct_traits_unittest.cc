@@ -17,7 +17,7 @@ namespace {
 class GeometryStructTraitsTest : public testing::Test,
                                  public mojom::GeometryTraitsTestService {
  public:
-  GeometryStructTraitsTest() {}
+  GeometryStructTraitsTest() = default;
 
  protected:
   mojom::GeometryTraitsTestServicePtr GetTraitsTestProxy() {

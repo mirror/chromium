@@ -22,7 +22,7 @@ typedef ViewsTestBase RootViewTest;
 class DeleteOnKeyEventView : public View {
  public:
   explicit DeleteOnKeyEventView(bool* set_on_key) : set_on_key_(set_on_key) {}
-  ~DeleteOnKeyEventView() override {}
+  ~DeleteOnKeyEventView() override = default;
 
   bool OnKeyPressed(const ui::KeyEvent& event) override {
     *set_on_key_ = true;
@@ -79,7 +79,7 @@ class TestContextMenuController : public ContextMenuController {
         menu_source_view_(NULL),
         menu_source_type_(ui::MENU_SOURCE_NONE) {
   }
-  ~TestContextMenuController() override {}
+  ~TestContextMenuController() override = default;
 
   int show_context_menu_calls() const { return show_context_menu_calls_; }
   View* menu_source_view() const { return menu_source_view_; }
@@ -163,10 +163,9 @@ TEST_F(RootViewTest, ContextMenuFromKeyEvent) {
 // View which handles all gesture events.
 class GestureHandlingView : public View {
  public:
-  GestureHandlingView() {
-  }
+  GestureHandlingView() = default;
 
-  ~GestureHandlingView() override {}
+  ~GestureHandlingView() override = default;
 
   void OnGestureEvent(ui::GestureEvent* event) override { event->SetHandled(); }
 
@@ -445,7 +444,7 @@ class DeleteWidgetOnMouseExit : public View {
       : widget_(widget) {
   }
 
-  ~DeleteWidgetOnMouseExit() override {}
+  ~DeleteWidgetOnMouseExit() override = default;
 
   void OnMouseExited(const ui::MouseEvent& event) override {
     delete widget_;
@@ -544,7 +543,7 @@ TEST_F(RootViewTest, DeleteWidgetOnMouseExitDispatchFromChild) {
 namespace {
 class RootViewTestDialogDelegate : public DialogDelegateView {
  public:
-  RootViewTestDialogDelegate() {}
+  RootViewTestDialogDelegate() = default;
 
   int layout_count() const { return layout_count_; }
 

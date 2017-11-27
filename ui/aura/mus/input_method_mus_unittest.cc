@@ -19,8 +19,8 @@ namespace {
 // Empty implementation of InputMethodDelegate.
 class TestInputMethodDelegate : public ui::internal::InputMethodDelegate {
  public:
-  TestInputMethodDelegate() {}
-  ~TestInputMethodDelegate() override {}
+  TestInputMethodDelegate() = default;
+  ~TestInputMethodDelegate() override = default;
 
   // ui::internal::InputMethodDelegate:
   ui::EventDispatchDetails DispatchKeyEventPostIME(ui::KeyEvent* key) override {
@@ -39,8 +39,8 @@ using EventResultCallback = base::Callback<void(ui::mojom::EventResult)>;
 // ProcessKeyEvent().
 class TestInputMethod : public ui::mojom::InputMethod {
  public:
-  TestInputMethod() {}
-  ~TestInputMethod() override {}
+  TestInputMethod() = default;
+  ~TestInputMethod() override = default;
 
   ProcessKeyEventCallbacks* process_key_event_callbacks() {
     return &process_key_event_callbacks_;
@@ -144,8 +144,8 @@ TEST_F(InputMethodMusTest, PendingCallbackRunFromOnDidChangeFocusedClient) {
 // See description of ChangeTextInputTypeWhileProcessingCallback for details.
 class TestInputMethodDelegate2 : public ui::internal::InputMethodDelegate {
  public:
-  TestInputMethodDelegate2() {}
-  ~TestInputMethodDelegate2() override {}
+  TestInputMethodDelegate2() = default;
+  ~TestInputMethodDelegate2() override = default;
 
   void SetInputMethodAndClient(InputMethodMus* input_method_mus,
                                ui::TextInputClient* text_input_client) {

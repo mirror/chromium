@@ -6,7 +6,7 @@
 
 namespace display {
 
-DisplayObserver::~DisplayObserver() {}
+DisplayObserver::~DisplayObserver() = default;
 
 void DisplayObserver::OnWillProcessDisplayChanges() {}
 

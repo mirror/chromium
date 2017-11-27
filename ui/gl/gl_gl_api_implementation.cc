@@ -285,28 +285,23 @@ void SetCurrentGL(CurrentGL* current) {
   g_current_gl_context_tls->Set(new_current);
 }
 
-GLApi::GLApi() {
-}
+GLApi::GLApi() = default;
 
-GLApi::~GLApi() {
-}
+GLApi::~GLApi() = default;
 
 GLApiBase::GLApiBase()
     : driver_(NULL) {
 }
 
-GLApiBase::~GLApiBase() {
-}
+GLApiBase::~GLApiBase() = default;
 
 void GLApiBase::InitializeBase(DriverGL* driver) {
   driver_ = driver;
 }
 
-RealGLApi::RealGLApi() {
-}
+RealGLApi::RealGLApi() = default;
 
-RealGLApi::~RealGLApi() {
-}
+RealGLApi::~RealGLApi() = default;
 
 void RealGLApi::Initialize(DriverGL* driver) {
   InitializeBase(driver);
@@ -550,17 +545,14 @@ void RealGLApi::set_version(std::unique_ptr<GLVersionInfo> version) {
   version_ = std::move(version);
 }
 
-TraceGLApi::~TraceGLApi() {
-}
+TraceGLApi::~TraceGLApi() = default;
 
 DebugGLApi::DebugGLApi(GLApi* gl_api) : gl_api_(gl_api) {}
 
-DebugGLApi::~DebugGLApi() {}
+DebugGLApi::~DebugGLApi() = default;
 
-NoContextGLApi::NoContextGLApi() {
-}
+NoContextGLApi::NoContextGLApi() = default;
 
-NoContextGLApi::~NoContextGLApi() {
-}
+NoContextGLApi::~NoContextGLApi() = default;
 
 }  // namespace gl

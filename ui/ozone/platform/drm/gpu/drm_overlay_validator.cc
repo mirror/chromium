@@ -46,7 +46,7 @@ DrmOverlayValidator::DrmOverlayValidator(
     ScanoutBufferGenerator* buffer_generator)
     : window_(window), buffer_generator_(buffer_generator) {}
 
-DrmOverlayValidator::~DrmOverlayValidator() {}
+DrmOverlayValidator::~DrmOverlayValidator() = default;
 
 std::vector<OverlayCheckReturn_Params> DrmOverlayValidator::TestPageFlip(
     const std::vector<OverlayCheck_Params>& params,

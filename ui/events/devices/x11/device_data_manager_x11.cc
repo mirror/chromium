@@ -175,8 +175,7 @@ DeviceDataManagerX11::DeviceDataManagerX11()
   UpdateButtonMap();
 }
 
-DeviceDataManagerX11::~DeviceDataManagerX11() {
-}
+DeviceDataManagerX11::~DeviceDataManagerX11() = default;
 
 bool DeviceDataManagerX11::InitializeXInputInternal() {
   // Check if XInput is available on the system.

@@ -33,7 +33,7 @@ class ShadowNineboxSource : public CanvasImageSource {
         corner_radius_(corner_radius) {
     DCHECK(!shadows.empty());
   }
-  ~ShadowNineboxSource() override {}
+  ~ShadowNineboxSource() override = default;
 
   // CanvasImageSource overrides:
   void Draw(Canvas* canvas) override {
@@ -80,9 +80,9 @@ base::LazyInstance<ShadowDetailsMap>::DestructorAtExit g_shadow_cache =
 
 }  // namespace
 
-ShadowDetails::ShadowDetails() {}
+ShadowDetails::ShadowDetails() = default;
 ShadowDetails::ShadowDetails(const ShadowDetails& other) = default;
-ShadowDetails::~ShadowDetails() {}
+ShadowDetails::~ShadowDetails() = default;
 
 const ShadowDetails& ShadowDetails::Get(int elevation, int corner_radius) {
   auto iter =

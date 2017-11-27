@@ -37,8 +37,7 @@ TransformAnimationCurveAdapter::TransformAnimationCurveAdapter(
 TransformAnimationCurveAdapter::TransformAnimationCurveAdapter(
     const TransformAnimationCurveAdapter& other) = default;
 
-TransformAnimationCurveAdapter::~TransformAnimationCurveAdapter() {
-}
+TransformAnimationCurveAdapter::~TransformAnimationCurveAdapter() = default;
 
 base::TimeDelta TransformAnimationCurveAdapter::Duration() const {
   return duration_;
@@ -109,8 +108,7 @@ InverseTransformCurveAdapter::InverseTransformCurveAdapter(
       base_curve_.GetValue(base::TimeDelta()).Apply() * initial_value_;
 }
 
-InverseTransformCurveAdapter::~InverseTransformCurveAdapter() {
-}
+InverseTransformCurveAdapter::~InverseTransformCurveAdapter() = default;
 
 base::TimeDelta InverseTransformCurveAdapter::Duration() const {
   return duration_;
