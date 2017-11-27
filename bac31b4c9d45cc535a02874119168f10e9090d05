@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "918be30e_343d0170",
+        "filename": "chrome/common/printing/pdf_to_pwg_raster_converter.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-27T18:28:19Z",
+      "side": 1,
+      "message": "nit: can we make this use_color or in_color?  (Members named color ususaly have #ffffff-like values).",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 12
+      },
+      "revId": "bac31b4c9d45cc535a02874119168f10e9090d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
