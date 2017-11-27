@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea1ed4c0_d59c3d9a",
+        "filename": "third_party/WebKit/Source/platform/network/ParsedContentDisposition.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-27T11:15:15Z",
+      "side": 1,
+      "message": "Looks FetchDataLoader has been accepting invalidly formatted parameters. Could you please note that in the description?",
+      "revId": "a9b9891e70f9f5b0c92646f3e98c7dfa23fe3a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca1daad_d287e0cc",
+        "filename": "third_party/WebKit/Source/platform/network/ParsedContentHeaderFieldParameters.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-27T11:15:15Z",
+      "side": 1,
+      "message": "how about emplace_back()?",
+      "revId": "a9b9891e70f9f5b0c92646f3e98c7dfa23fe3a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4547a70_e2698e81",
+        "filename": "third_party/WebKit/Source/platform/network/ParsedContentHeaderFieldParameters.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-27T11:15:15Z",
+      "side": 1,
+      "message": "how about having a local variable to hold the LowerASCII()-ed result?",
+      "revId": "a9b9891e70f9f5b0c92646f3e98c7dfa23fe3a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "557c99de_b98e1915",
+        "filename": "third_party/WebKit/Source/platform/network/ParsedContentType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-27T11:15:15Z",
+      "side": 1,
+      "message": "ditto as ParsedContentDisposition::ParameterValueForName() about Body::formData() and MIMEHeader::ParseHeader()",
+      "revId": "a9b9891e70f9f5b0c92646f3e98c7dfa23fe3a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
