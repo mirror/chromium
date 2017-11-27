@@ -154,6 +154,7 @@ class CC_EXPORT LayerTreeHostImpl
       public MutatorHostClient,
       public base::SupportsWeakPtr<LayerTreeHostImpl> {
  public:
+  bool should_sleep_ = false;
   static std::unique_ptr<LayerTreeHostImpl> Create(
       const LayerTreeSettings& settings,
       LayerTreeHostImplClient* client,

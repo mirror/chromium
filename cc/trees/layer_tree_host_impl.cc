@@ -1864,6 +1864,11 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
     layer_tree_frame_sink_->SetLocalSurfaceId(
         active_tree()->local_surface_id());
   }
+
+  if (should_sleep_) {
+    sleep(25);
+    should_sleep_ = false;
+  }
   layer_tree_frame_sink_->SubmitCompositorFrame(std::move(compositor_frame));
 
   // Clears the list of swap promises after calling DidSwap on each of them to
@@ -2349,6 +2354,8 @@ void LayerTreeHostImpl::SetVisible(bool visible) {
   // If we just became visible, we have to ensure that we draw high res tiles,
   // to prevent checkerboard/low res flashes.
   if (visible_) {
+    if (!task_runner_provider_->HasImplThread())
+      should_sleep_ = true;
     // TODO(crbug.com/469175): Replace with RequiresHighResToDraw.
     SetRequiresHighResToDraw();
     // Prior CompositorFrame may have been discarded and thus we need to ensure
