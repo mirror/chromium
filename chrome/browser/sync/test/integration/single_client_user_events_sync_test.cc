@@ -26,8 +26,20 @@ namespace {
 UserEventSpecifics CreateEvent(int minutes_ago) {
   UserEventSpecifics specifics;
   specifics.set_event_time_usec(
-      (Time::Now() - TimeDelta::FromMinutes(minutes_ago)).ToInternalValue());
+      (Time::Now() - TimeDelta::FromMinutes(minutes_ago))
+          .since_origin()
+          .InMicroseconds());
   specifics.mutable_test_event();
+  return specifics;
+}
+
+UserEventSpecifics CreateUserConsentEvent(int minutes_ago) {
+  UserEventSpecifics specifics;
+  specifics.set_event_time_usec(
+      (Time::Now() - TimeDelta::FromMinutes(minutes_ago))
+          .since_origin()
+          .InMicroseconds());
+  specifics.mutable_user_consent();
   return specifics;
 }
 
@@ -192,19 +204,24 @@ IN_PROC_BROWSER_TEST_F(SingleClientUserEventsSyncTest, NoHistory) {
   const UserEventSpecifics specifics1 = CreateEvent(1);
   const UserEventSpecifics specifics2 = CreateEvent(2);
   const UserEventSpecifics specifics3 = CreateEvent(3);
+  const UserEventSpecifics consent1 = CreateUserConsentEvent(4);
+  const UserEventSpecifics consent2 = CreateUserConsentEvent(5);
+
   ASSERT_TRUE(SetupSync());
   syncer::UserEventService* event_service =
       browser_sync::UserEventServiceFactory::GetForProfile(GetProfile(0));
 
   event_service->RecordUserEvent(specifics1);
+  event_service->RecordUserEvent(consent1);
   ASSERT_TRUE(GetClient(0)->DisableSyncForDatatype(syncer::TYPED_URLS));
   event_service->RecordUserEvent(specifics2);
+  event_service->RecordUserEvent(consent2);
   ASSERT_TRUE(GetClient(0)->EnableSyncForDatatype(syncer::TYPED_URLS));
   event_service->RecordUserEvent(specifics3);
 
   // No |specifics2| because it was recorded while history was disabled.
   UserEventEqualityChecker(GetSyncService(0), GetFakeServer(),
-                           {specifics1, specifics3})
+                           {specifics1, consent1, consent2, specifics3})
       .Wait();
 }
 
@@ -225,16 +242,21 @@ IN_PROC_BROWSER_TEST_F(SingleClientUserEventsSyncTest, NoSessions) {
 IN_PROC_BROWSER_TEST_F(SingleClientUserEventsSyncTest, Encryption) {
   const UserEventSpecifics specifics1 = CreateEvent(1);
   const UserEventSpecifics specifics2 = CreateEvent(2);
+  const UserEventSpecifics consent1 = CreateUserConsentEvent(3);
+  const UserEventSpecifics consent2 = CreateUserConsentEvent(4);
   const GURL url("http://www.one.com/");
 
   ASSERT_TRUE(SetupSync());
   syncer::UserEventService* event_service =
       browser_sync::UserEventServiceFactory::GetForProfile(GetProfile(0));
   event_service->RecordUserEvent(specifics1);
+  event_service->RecordUserEvent(consent1);
   ASSERT_TRUE(EnableEncryption(0));
-  UserEventEqualityChecker(GetSyncService(0), GetFakeServer(), {specifics1})
+  UserEventEqualityChecker(GetSyncService(0), GetFakeServer(),
+                           {specifics1, consent1})
       .Wait();
   event_service->RecordUserEvent(specifics2);
+  event_service->RecordUserEvent(consent2);
 
   // Just checking that we don't see specifics2 isn't very convincing yet,
   // because it may simply not have reached the server yet. So lets send
@@ -242,8 +264,9 @@ IN_PROC_BROWSER_TEST_F(SingleClientUserEventsSyncTest, Encryption) {
   // Tab/SESSIONS data was picked fairly arbitrarily, note that we expect 2
   // entries, one for the window/header and one for the tab.
   sessions_helper::OpenTab(0, url);
-  ServerCountMatchStatusChecker(syncer::SESSIONS, 2);
-  UserEventEqualityChecker(GetSyncService(0), GetFakeServer(), {specifics1})
+  ServerCountMatchStatusChecker(syncer::SESSIONS, 4);
+  UserEventEqualityChecker(GetSyncService(0), GetFakeServer(),
+                           {specifics1, consent1, consent2})
       .Wait();
 }
 
