@@ -29,7 +29,7 @@ function setUp() {
       onChanged: {addListener: function(callback) {}},
       local: {
         get: function(key, callback) {
-          callback({})
+          callback({});
         },
         set: function(value) {}
       }
@@ -63,7 +63,7 @@ function testExecuteEntryTask(callback) {
         getVolumeInfo: function() {
           return {
             volumeType: VolumeManagerCommon.VolumeType.DRIVE
-          }
+          };
         }
       },
       {
@@ -131,7 +131,11 @@ function createTaskController(selectionHandler) {
         fileContextMenu:
             {defaultActionMenuItem: document.createElement('div')}
       },
-      new MockMetadataModel({}), {}, selectionHandler, null);
+      new MockMetadataModel({}), {
+        getCurrentRootType: function() {
+          return null;
+        }
+      }, selectionHandler, null);
 }
 
 // TaskController.getFileTasks should not call fileManagerPrivate.getFileTasks
