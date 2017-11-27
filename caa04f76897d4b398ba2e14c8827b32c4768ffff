@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb93645d_c9920de5",
+        "filename": "ui/aura/mus/input_method_mus.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1251596
+      },
+      "writtenOn": "2017-11-27T19:52:36Z",
+      "side": 1,
+      "message": "Fixed as suggested.",
+      "parentUuid": "f54eeb05_123c1708",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 26
+      },
+      "revId": "caa04f76897d4b398ba2e14c8827b32c4768ffff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb527d15_3128d259",
         "filename": "ui/aura/mus/input_method_mus_unittest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "caa04f76897d4b398ba2e14c8827b32c4768ffff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048eef3b_67c2115c",
+        "filename": "ui/aura/mus/input_method_mus_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1251596
+      },
+      "writtenOn": "2017-11-27T19:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb527d15_3128d259",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 45
+      },
+      "revId": "caa04f76897d4b398ba2e14c8827b32c4768ffff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
