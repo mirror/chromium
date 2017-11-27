@@ -6,10 +6,12 @@
 
 #include "base/logging.h"
 #include "content/browser/notifications/platform_notification_context_impl.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/platform_notification_service.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/notification_resources.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission_status.mojom.h"
 #include "url/gurl.h"
 
@@ -26,20 +28,23 @@ PlatformNotificationService* Service() {
 
 BlinkNotificationServiceImpl::BlinkNotificationServiceImpl(
     PlatformNotificationContextImpl* notification_context,
+    BrowserContext* browser_context,
     ResourceContext* resource_context,
     int render_process_id,
     mojo::InterfaceRequest<blink::mojom::NotificationService> request)
     : notification_context_(notification_context),
+      browser_context_(browser_context),
       resource_context_(resource_context),
       render_process_id_(render_process_id),
       binding_(this, std::move(request)) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(notification_context_);
+  DCHECK(browser_context_);
   DCHECK(resource_context_);
 
   binding_.set_connection_error_handler(base::BindOnce(
       &BlinkNotificationServiceImpl::OnConnectionError,
-      base::Unretained(this) /* the channel is owned by this */));
+      base::Unretained(this) /* the channel is owned by |this| */));
 }
 
 BlinkNotificationServiceImpl::~BlinkNotificationServiceImpl() {
@@ -66,6 +71,25 @@ void BlinkNotificationServiceImpl::GetPermissionStatus(
 void BlinkNotificationServiceImpl::OnConnectionError() {
   notification_context_->RemoveService(this);
   // |this| has now been deleted.
+}
+
+void BlinkNotificationServiceImpl::Show(const std::string& origin) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&BlinkNotificationServiceImpl::ShowOnUIThread,
+                     base::Unretained(this), origin));
+}
+
+void BlinkNotificationServiceImpl::ShowOnUIThread(const std::string& origin) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (!Service())
+    return;
+
+  // TODO(crbug.com/595685): Pass through the real data and resources here.
+  Service()->DisplayNotification(browser_context_, "", GURL(origin),
+                                 PlatformNotificationData(),
+                                 NotificationResources());
 }
 
 }  // namespace content

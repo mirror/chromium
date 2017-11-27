@@ -108,6 +108,16 @@ void NotificationManager::OnPermissionServiceConnectionError() {
   permission_service_.reset();
 }
 
+void NotificationManager::Show(ExecutionContext* execution_context) {
+  if (!notification_service_) {
+    Platform::Current()->GetInterfaceProvider()->GetInterface(
+        mojo::MakeRequest(&notification_service_));
+  }
+  // TODO(crbug.com/595685): Pass the rest of the notification properties here.
+  notification_service_->Show(
+      execution_context->GetSecurityOrigin()->ToString());
+}
+
 void NotificationManager::Trace(blink::Visitor* visitor) {
   Supplement<ExecutionContext>::Trace(visitor);
 }

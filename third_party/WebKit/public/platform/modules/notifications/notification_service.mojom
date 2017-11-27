@@ -12,4 +12,7 @@ interface NotificationService {
   // Synchronously retrieves the permission status for |origin|. Required to
   // be synchronous due to the Notification.permission JavaScript getter.
   [Sync] GetPermissionStatus(string origin) => (PermissionStatus status);
+
+  // Displays a notification.
+  Show(string origin);
 };
