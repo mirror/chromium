@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37512cda_da7d09b5",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-27T17:39:13Z",
+      "side": 1,
+      "message": "Should we push this code down to CRWWebController? This way WebStateImpl does not have to assume that WebController purges web view.",
+      "range": {
+        "startLine": 553,
+        "startChar": 11,
+        "endLine": 553,
+        "endChar": 23
+      },
+      "revId": "d4f30716ed16e703cf049d494df5bbab4c274ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
