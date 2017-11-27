@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a239779f_49b9e676",
+        "filename": "chrome/browser/browsing_data/cookies_tree_model.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-27T13:46:53Z",
+      "side": 1,
+      "message": "From reading this header, I have no idea what the std::string is about. Maybe this could be a struct/class instead of a pair?",
+      "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9957d32_ce189b4b",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
         "patchSetId": 7
@@ -52,6 +69,23 @@
       "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b59df567_1b406c55",
+        "filename": "content/browser/devtools/shared_worker_devtools_agent_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-27T13:46:53Z",
+      "side": 1,
+      "message": "Could TerminateWorkerById(), ConnectToWorker() and DestroyHost() be exposed in SharedWorkerService to avoid having to cast the SharedWorkerService every time it is used?",
+      "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
