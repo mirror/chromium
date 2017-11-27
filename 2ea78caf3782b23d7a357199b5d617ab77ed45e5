@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a5c90148_e848a6e5",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-27T19:01:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "15d20b74_e1960679",
+      "range": {
+        "startLine": 277,
+        "startChar": 48,
+        "endLine": 277,
+        "endChar": 71
+      },
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21ed87f1_f820e945",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 3
@@ -128,6 +152,24 @@
       "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72c04be_775980b0",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-27T19:01:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "faba2fd3_ecdc953e",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +237,24 @@
       "side": 1,
       "message": "If all methods of this class run in same thread, it seems we don\u0027t need to use SequenceTaskRunnerHandle.",
       "parentUuid": "c33423cd_9ae38a61",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02224336_ced2cdbf",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-27T19:01:25Z",
+      "side": 1,
+      "message": "TLDR; sequenced \u003d effectively single threaded, without explicit thread affinity.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/task_scheduler_migration.md\n\nPrefer SequencedTaskRunnerHandle to avoid conflating the requirement for serialized control flow with the code running on a specific OS thread. which is only needed if true thread affinity is required.\n\nBehind the scenes, SequencedTaskRunnerHandle::Get() will generally return the same value as ThreadTaskRunnerHandle::Get(), but there are some (mostly testing) setups where you might have a SequencedTaskRunner but not a ThreadTaskRunner.\n\nI.e., SequenceTaskRunnerHandle::Get() effectively returns ThreadTaskRunnerHandle::Get() whenever ThreadTaskRunnerHandle::Get() returns non-nullptr, which it might.",
+      "parentUuid": "b57112d4_9498651b",
       "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -411,6 +471,24 @@
     },
     {
       "key": {
+        "uuid": "d0798a6c_3f396d7e",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-27T19:01:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "75ddf66c_01d4d715",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46180fef_882a0d22",
         "filename": "components/autofill/content/renderer/interacted_form_tracker.h",
         "patchSetId": 3
@@ -440,6 +518,24 @@
       "side": 1,
       "message": "Is SequenceChecker for multiple thread? All methods of this class should run in same thread, right?",
       "parentUuid": "46180fef_882a0d22",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c5cec2_d249edd7",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-27T19:01:25Z",
+      "side": 1,
+      "message": "SequenceChecker is a slightly more general ThreadChecker; it ensures that the control flow is effectively single threaded without explicitly requiring thread affinity.",
+      "parentUuid": "3af36e9e_16853c82",
       "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -595,6 +691,24 @@
       "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d96ee27_09bb438c",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-27T19:01:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8acc984b_a06ef570",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
