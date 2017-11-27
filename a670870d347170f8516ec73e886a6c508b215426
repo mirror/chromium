@@ -16,6 +16,24 @@
       "revId": "a670870d347170f8516ec73e886a6c508b215426",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26705392_82f4d2bd",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-27T21:47:05Z",
+      "side": 1,
+      "message": "I believe all the scale and translation matrices are invertible. The reason i added this if statement is because GetInverse requires the caller to use the return value. https://cs.chromium.org/chromium/src/ui/gfx/transform.h?type\u003dcs\u0026q\u003dGetInverse\u0026sq\u003dpackage:chromium\u0026l\u003d177\n\nI will change the if statement to a DCHECK statement to make this more clear. I also added a test here as requested.",
+      "parentUuid": "9aba1062_0a44392a",
+      "revId": "a670870d347170f8516ec73e886a6c508b215426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
