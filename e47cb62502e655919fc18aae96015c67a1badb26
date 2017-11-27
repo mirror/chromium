@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba47c2f8_be1da3d0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 101603,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-27T21:19:22Z",
+      "side": 1,
+      "message": "nit: It\u0027s a best practice to provide a brief label for each suffix – something like \"Recorded for dialogs shown via the beforeunload handler.\"",
+      "range": {
+        "startLine": 101603,
+        "startChar": 0,
+        "endLine": 101603,
+        "endChar": 1
+      },
+      "revId": "e47cb62502e655919fc18aae96015c67a1badb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5906d5_a3df4607",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 101603,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-27T21:19:22Z",
+      "side": 1,
+      "message": "nit: Please alphabetize.",
+      "range": {
+        "startLine": 101603,
+        "startChar": 31,
+        "endLine": 101603,
+        "endChar": 0
+      },
+      "revId": "e47cb62502e655919fc18aae96015c67a1badb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
