@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a72737e_f61c7ab5",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-27T07:42:54Z",
+      "side": 1,
+      "message": "Is this line needed?  The 2 URLs look same-site, so I would expect them to end up in the same process even in --site-per-process.  (That seems to be true in practice, anyway.)",
+      "revId": "771aef826464abd0635037f911e96ee2b5e0c294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
