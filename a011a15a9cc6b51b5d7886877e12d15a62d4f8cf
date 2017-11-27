@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4643f273_44ef1786",
+        "filename": "chrome/browser/chromeos/arc/arc_migration_guide_notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:27:14Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 74,
+        "startChar": 56,
+        "endLine": 74,
+        "endChar": 58
+      },
+      "revId": "a011a15a9cc6b51b5d7886877e12d15a62d4f8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a762c985_c200c7e2",
+        "filename": "chrome/browser/chromeos/arc/arc_migration_guide_notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T19:27:14Z",
+      "side": 1,
+      "message": "nit: scoped_refptr{new ...}\n\nSame below.",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 62
+      },
+      "revId": "a011a15a9cc6b51b5d7886877e12d15a62d4f8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
