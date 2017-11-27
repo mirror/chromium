@@ -98,23 +98,35 @@ CSSNumericValue* CSSNumericValue::FromNumberish(const CSSNumberish& value) {
 
 CSSNumericValue* CSSNumericValue::to(const String& unit_string,
                                      ExceptionState& exception_state) {
-  CSSPrimitiveValue::UnitType unit = UnitFromName(unit_string);
-  if (!IsValidUnit(unit)) {
+  CSSPrimitiveValue::UnitType target_unit = UnitFromName(unit_string);
+  if (!IsValidUnit(target_unit)) {
     exception_state.ThrowDOMException(kSyntaxError,
                                       "Invalid unit for conversion");
     return nullptr;
   }
-  if (!IsUnitValue()) {
-    exception_state.ThrowTypeError(
-        "Conversion of CSSCalcValue is not supported yet");
-    return nullptr;
-  }
-  CSSUnitValue* result = ToCSSUnitValue(this)->to(unit);
+
+  CSSNumericValue* result = to(target_unit);
   if (!result) {
-    exception_state.ThrowTypeError("Incompatible units for conversion");
+    exception_state.ThrowTypeError("Cannot convert to " + unit_string);
     return nullptr;
   }
+
   return result;
+}
+
+CSSUnitValue* CSSNumericValue::to(CSSPrimitiveValue::UnitType unit) const {
+  const auto sum = SumValue();
+  if (!sum || sum->terms.size() != 1)
+    return nullptr;
+
+  const auto& term = sum->terms[0];
+  if (term.units.size() == 0)
+    return CSSUnitValue::Create(term.value)->ConvertTo(unit);
+  if (term.units.size() == 1 && term.units.begin()->value == 1) {
+    return CSSUnitValue::Create(term.value, term.units.begin()->key)
+        ->ConvertTo(unit);
+  }
+  return nullptr;
 }
 
 CSSNumericValue* CSSNumericValue::add(
@@ -128,98 +140,98 @@ CSSNumericValue* CSSNumericValue::add(
     return unit_value;
   }
   return CSSMathSum::Create(std::move(values));
-}
-
-CSSNumericValue* CSSNumericValue::sub(
-    const HeapVector<CSSNumberish>& numberishes,
-    ExceptionState& exception_state) {
-  auto values = CSSNumberishesToNumericValues(numberishes);
-  std::transform(values.begin(), values.end(), values.begin(),
-                 [](CSSNumericValue* v) { return v->Negate(); });
-  PrependValueForArithmetic<kSumType>(values, this);
-
-  if (CSSUnitValue* unit_value =
-          MaybeSimplifyAsUnitValue(values, std::plus<double>())) {
-    return unit_value;
   }
-  return CSSMathSum::Create(std::move(values));
-}
 
-CSSNumericValue* CSSNumericValue::mul(
-    const HeapVector<CSSNumberish>& numberishes,
-    ExceptionState& exception_state) {
-  auto values = CSSNumberishesToNumericValues(numberishes);
-  PrependValueForArithmetic<kProductType>(values, this);
+  CSSNumericValue* CSSNumericValue::sub(
+      const HeapVector<CSSNumberish>& numberishes,
+      ExceptionState& exception_state) {
+    auto values = CSSNumberishesToNumericValues(numberishes);
+    std::transform(values.begin(), values.end(), values.begin(),
+                   [](CSSNumericValue* v) { return v->Negate(); });
+    PrependValueForArithmetic<kSumType>(values, this);
 
-  if (CSSUnitValue* unit_value =
-          MaybeSimplifyAsUnitValue(values, std::multiplies<double>())) {
-    return unit_value;
+    if (CSSUnitValue* unit_value =
+            MaybeSimplifyAsUnitValue(values, std::plus<double>())) {
+      return unit_value;
+    }
+    return CSSMathSum::Create(std::move(values));
   }
-  return CSSMathProduct::Create(std::move(values));
-}
 
-CSSNumericValue* CSSNumericValue::div(
-    const HeapVector<CSSNumberish>& numberishes,
-    ExceptionState& exception_state) {
-  auto values = CSSNumberishesToNumericValues(numberishes);
-  std::transform(values.begin(), values.end(), values.begin(),
-                 [](CSSNumericValue* v) { return v->Invert(); });
-  PrependValueForArithmetic<kProductType>(values, this);
+  CSSNumericValue* CSSNumericValue::mul(
+      const HeapVector<CSSNumberish>& numberishes,
+      ExceptionState& exception_state) {
+    auto values = CSSNumberishesToNumericValues(numberishes);
+    PrependValueForArithmetic<kProductType>(values, this);
 
-  if (CSSUnitValue* unit_value =
-          MaybeSimplifyAsUnitValue(values, std::multiplies<double>())) {
-    return unit_value;
+    if (CSSUnitValue* unit_value =
+            MaybeSimplifyAsUnitValue(values, std::multiplies<double>())) {
+      return unit_value;
+    }
+    return CSSMathProduct::Create(std::move(values));
   }
-  return CSSMathProduct::Create(std::move(values));
-}
 
-CSSNumericValue* CSSNumericValue::min(
-    const HeapVector<CSSNumberish>& numberishes,
-    ExceptionState& exception_state) {
-  auto values = CSSNumberishesToNumericValues(numberishes);
-  PrependValueForArithmetic<kMinType>(values, this);
+  CSSNumericValue* CSSNumericValue::div(
+      const HeapVector<CSSNumberish>& numberishes,
+      ExceptionState& exception_state) {
+    auto values = CSSNumberishesToNumericValues(numberishes);
+    std::transform(values.begin(), values.end(), values.begin(),
+                   [](CSSNumericValue* v) { return v->Invert(); });
+    PrependValueForArithmetic<kProductType>(values, this);
 
-  if (CSSUnitValue* unit_value = MaybeSimplifyAsUnitValue(
-          values, [](double a, double b) { return std::min(a, b); })) {
-    return unit_value;
+    if (CSSUnitValue* unit_value =
+            MaybeSimplifyAsUnitValue(values, std::multiplies<double>())) {
+      return unit_value;
+    }
+    return CSSMathProduct::Create(std::move(values));
   }
-  return CSSMathMin::Create(std::move(values));
-}
 
-CSSNumericValue* CSSNumericValue::max(
-    const HeapVector<CSSNumberish>& numberishes,
-    ExceptionState& exception_state) {
-  auto values = CSSNumberishesToNumericValues(numberishes);
-  PrependValueForArithmetic<kMaxType>(values, this);
+  CSSNumericValue* CSSNumericValue::min(
+      const HeapVector<CSSNumberish>& numberishes,
+      ExceptionState& exception_state) {
+    auto values = CSSNumberishesToNumericValues(numberishes);
+    PrependValueForArithmetic<kMinType>(values, this);
 
-  if (CSSUnitValue* unit_value = MaybeSimplifyAsUnitValue(
-          values, [](double a, double b) { return std::max(a, b); })) {
-    return unit_value;
+    if (CSSUnitValue* unit_value = MaybeSimplifyAsUnitValue(
+            values, [](double a, double b) { return std::min(a, b); })) {
+      return unit_value;
+    }
+    return CSSMathMin::Create(std::move(values));
   }
-  return CSSMathMax::Create(std::move(values));
-}
 
-bool CSSNumericValue::equals(const HeapVector<CSSNumberish>& args) {
-  CSSNumericValueVector values = CSSNumberishesToNumericValues(args);
-  return std::all_of(values.begin(), values.end(),
-                     [this](const auto& v) { return this->Equals(*v); });
-}
+  CSSNumericValue* CSSNumericValue::max(
+      const HeapVector<CSSNumberish>& numberishes,
+      ExceptionState& exception_state) {
+    auto values = CSSNumberishesToNumericValues(numberishes);
+    PrependValueForArithmetic<kMaxType>(values, this);
 
-CSSNumericValue* CSSNumericValue::Negate() {
-  return CSSMathNegate::Create(this);
-}
-
-CSSNumericValue* CSSNumericValue::Invert() {
-  return CSSMathInvert::Create(this);
-}
-
-CSSNumericValueVector CSSNumberishesToNumericValues(
-    const HeapVector<CSSNumberish>& values) {
-  CSSNumericValueVector result;
-  for (const CSSNumberish& value : values) {
-    result.push_back(CSSNumericValue::FromNumberish(value));
+    if (CSSUnitValue* unit_value = MaybeSimplifyAsUnitValue(
+            values, [](double a, double b) { return std::max(a, b); })) {
+      return unit_value;
+    }
+    return CSSMathMax::Create(std::move(values));
   }
-  return result;
-}
+
+  bool CSSNumericValue::equals(const HeapVector<CSSNumberish>& args) {
+    CSSNumericValueVector values = CSSNumberishesToNumericValues(args);
+    return std::all_of(values.begin(), values.end(),
+                       [this](const auto& v) { return this->Equals(*v); });
+  }
+
+  CSSNumericValue* CSSNumericValue::Negate() {
+    return CSSMathNegate::Create(this);
+  }
+
+  CSSNumericValue* CSSNumericValue::Invert() {
+    return CSSMathInvert::Create(this);
+  }
+
+  CSSNumericValueVector CSSNumberishesToNumericValues(
+      const HeapVector<CSSNumberish>& values) {
+    CSSNumericValueVector result;
+    for (const CSSNumberish& value : values) {
+      result.push_back(CSSNumericValue::FromNumberish(value));
+    }
+    return result;
+  }
 
 }  // namespace blink
