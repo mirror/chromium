@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69a5d737_b7bea8ba",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 95210,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-27T17:21:35Z",
+      "side": 1,
+      "message": "New?\nIf the value is the same, you don\u0027t log it?\nIf you always log every 10 seconds, then don\u0027t say \"new\".\n\nAlso, what do you log if audio is not playing?  Nothing?  Something?\n\nAlso, is logged every ten seconds if audio is playing per app/process that\u0027s playing audio, or is it a summary statistic over all the different things that might be playing over each other?\n\nDitto below",
+      "range": {
+        "startLine": 95210,
+        "startChar": 43,
+        "endLine": 95210,
+        "endChar": 46
+      },
+      "revId": "792fdf786ee43c0e3cbd66c0225b9126dfb35535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
