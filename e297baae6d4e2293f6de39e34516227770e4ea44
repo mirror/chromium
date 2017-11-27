@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc14ac39_312407ae",
+        "filename": "chrome/renderer/autofill/form_autofill_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4550,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-27T13:50:31Z",
+      "side": 1,
+      "message": "Just to be on the safe side of a regression later, let\u0027s write EXPECT_EQ for every field in |fields| here.",
+      "revId": "e297baae6d4e2293f6de39e34516227770e4ea44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6abbbbe_e8b2716c",
+        "filename": "components/test/data/autofill/heuristics/output/022_checkout_crutchfield.com.out",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-27T13:50:31Z",
+      "side": 1,
+      "message": "Seems like the labels in this file are strictly worse?",
+      "revId": "e297baae6d4e2293f6de39e34516227770e4ea44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f48668_1b6170f9",
+        "filename": "components/test/data/autofill/heuristics/output/063_register_officedepot.com.out",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-27T13:50:31Z",
+      "side": 1,
+      "message": "Why is the new logic often appending more stuff?",
+      "range": {
+        "startLine": 11,
+        "startChar": 62,
+        "endLine": 11,
+        "endChar": 69
+      },
+      "revId": "e297baae6d4e2293f6de39e34516227770e4ea44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
