@@ -293,6 +293,24 @@ public class AwAutofillProvider extends AutofillProvider {
         notifyVirtualValueChanged(index);
     }
 
+    @Override
+    public void onTextFieldDidScroll(int index, float x, float y, float width, float height) {
+        // Check index inside short value?
+        if (mRequest == null) return;
+
+        short sIndex = (short) index;
+        FocusField focusField = mRequest.getFocusField();
+        if (focusField == null || sIndex != focusField.fieldIndex) return;
+
+        int virtualId = mRequest.getVirtualId(sIndex);
+        Rect absBound = transformToWindowBounds(new RectF(x, y, x + width, y + height));
+        // Notify the new position to the Android framework. Note that we do not call
+        // notifyVirtualViewExited() here intentionally to avoid flickering.
+        mAutofillManager.notifyVirtualViewEntered(mContainerView, virtualId, absBound);
+        // Update focus field position.
+        mRequest.setFocusField(new FocusField(focusField.fieldIndex, absBound));
+    }
+
     private void notifyVirtualValueChanged(int index) {
         AutofillValue autofillValue = mRequest.getFieldNewValue(index);
         if (autofillValue == null) return;

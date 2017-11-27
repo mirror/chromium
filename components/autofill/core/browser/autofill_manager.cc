@@ -514,6 +514,12 @@ void AutofillManager::OnTextFieldDidChangeImpl(const FormData& form,
   UpdateInitialInteractionTimestamp(timestamp);
 }
 
+void AutofillManager::OnTextFieldDidScrollImpl(const FormData& form,
+                                               const FormFieldData& field,
+                                               const gfx::RectF& bounding_box) {
+  // no-op.
+}
+
 bool AutofillManager::IsFormNonSecure(const FormData& form) const {
   return !client_->IsContextSecure() ||
          (form.action.is_valid() && form.action.SchemeIs("http"));
