@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "3af3cdb6_ac7cafce",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-27T09:28:02Z",
+      "side": 1,
+      "message": "consumeQuotedString() has a reverting logic at L94 to set this.index to the original value in the case of failure, while this method doesn\u0027t.\n\nI suggested that we have a comment explaining why we have the difference.",
+      "parentUuid": "a9a4ae70_b5f2abe6",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da43089e_0c5c8964",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
         "patchSetId": 5
