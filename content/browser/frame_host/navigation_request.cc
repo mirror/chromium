@@ -678,21 +678,7 @@ void NavigationRequest::OnRequestRedirected(
 
 #if defined(OS_ANDROID)
   base::WeakPtr<NavigationRequest> this_ptr(weak_factory_.GetWeakPtr());
-#endif
-
-  // It's safe to use base::Unretained because this NavigationRequest owns the
-  // NavigationHandle where the callback will be stored.
-  bool is_external_protocol =
-      !GetContentClient()->browser()->IsHandledURL(common_params_.url);
-  navigation_handle_->WillRedirectRequest(
-      common_params_.url, common_params_.method, common_params_.referrer.url,
-      is_external_protocol, response->head.headers,
-      response->head.connection_info, expected_process,
-      base::Bind(&NavigationRequest::OnRedirectChecksComplete,
-                 base::Unretained(this)));
 // |this| may be deleted.
-
-#if defined(OS_ANDROID)
   if (!this_ptr)
     return;
 
@@ -716,6 +702,17 @@ void NavigationRequest::OnRequestRedirected(
     return;
   }
 #endif
+
+  // It's safe to use base::Unretained because this NavigationRequest owns the
+  // NavigationHandle where the callback will be stored.
+  bool is_external_protocol =
+      !GetContentClient()->browser()->IsHandledURL(common_params_.url);
+  navigation_handle_->WillRedirectRequest(
+      common_params_.url, common_params_.method, common_params_.referrer.url,
+      is_external_protocol, response->head.headers,
+      response->head.connection_info, expected_process,
+      base::Bind(&NavigationRequest::OnRedirectChecksComplete,
+                 base::Unretained(this)));
 }
 
 void NavigationRequest::OnResponseStarted(
