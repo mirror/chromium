@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f593849e_d110af06",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T16:16:08Z",
+      "side": 1,
+      "message": "Heh, yeah, that\u0027s precisely the reason for the change.",
+      "parentUuid": "47531c26_7ab85b9f",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5677170_c6a3b3b0",
         "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2d7d4585_a07158f7",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T16:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5677170_c6a3b3b0",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5981744_af15afba",
         "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-27T15:32:52Z",
       "side": 1,
       "message": "Why not DCHECK?  I thought we\u0027ve settled on always using DCHECK, as per its documentation.",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9918bd2_a92b551d",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T16:16:08Z",
+      "side": 1,
+      "message": "GetInverse requires that its output be used, so I need to store and use the return value. If I use a DCHECK, success becomes an unused variable in release.",
+      "parentUuid": "b5981744_af15afba",
       "revId": "61c74f27c966f5700715c847520927e16746a4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "168bb40b_1856da55",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T16:16:08Z",
+      "side": 1,
+      "message": "I\u0027m definitely open to improving our dumping code, but since there are a few options, I\u0027d prefer to discuss on https://bugs.chromium.org/p/chromium/issues/detail?id\u003d788732 rather than adding a comment here that may go out of date.",
+      "parentUuid": "6b4c0cdd_9c65463b",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e873c40a_6ba6ad06",
         "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.h",
         "patchSetId": 5
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "96b120bd_9b628c0f",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T16:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e873c40a_6ba6ad06",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66e7273f_5b4e946f",
         "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "61c74f27c966f5700715c847520927e16746a4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d07aae_10fc2be4",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T16:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e7273f_5b4e946f",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "e56b2717_9b0f5469",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T16:16:08Z",
+      "side": 1,
+      "message": "This gets updated in a later CL once we have owner name. This code will eventually live in UiElement::DebugName.",
+      "parentUuid": "5198db1a_3a651fdb",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "192269a8_b30692a8",
         "filename": "chrome/browser/vr/elements/ui_element.h",
         "patchSetId": 5
@@ -166,6 +292,24 @@
       "writtenOn": "2017-11-27T15:32:52Z",
       "side": 1,
       "message": "Why include this string (here and in the names list).  Seems more like it should not exist, the static assert should lose the \"+1\", and UiElementTypeToString should DCHECK that type is less than kNumUiElementTypes.  Thoughts?",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02f5484_fc5e4731",
+        "filename": "chrome/browser/vr/elements/ui_element_type.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T16:16:08Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "808cc04d_488baf7e",
       "revId": "61c74f27c966f5700715c847520927e16746a4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
