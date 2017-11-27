@@ -130,7 +130,7 @@ class DiceResponseHandlerTest : public testing::Test,
     signin::RegisterAccountConsistencyProfilePrefs(pref_service_.registry());
     auto account_reconcilor_delegate =
         std::make_unique<signin::DiceAccountReconcilorDelegate>(
-            &signin_client_);
+            &signin_client_, signin::AccountConsistencyMethod::kDisabled);
     account_reconcilor_ = std::make_unique<AccountReconcilor>(
         &token_service_, &signin_manager_, &signin_client_, nullptr,
         std::move(account_reconcilor_delegate));

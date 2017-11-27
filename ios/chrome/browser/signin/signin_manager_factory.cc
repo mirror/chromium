@@ -89,7 +89,8 @@ std::unique_ptr<KeyedService> SigninManagerFactory::BuildServiceInstanceFor(
       ios::AccountTrackerServiceFactory::GetForBrowserState(
           chrome_browser_state),
       ios::GaiaCookieManagerServiceFactory::GetForBrowserState(
-          chrome_browser_state)));
+          chrome_browser_state),
+      false /* is_dice_enabled */));
   service->Initialize(GetApplicationContext()->GetLocalState());
   for (auto& observer : observer_list_)
     observer.SigninManagerCreated(service.get());

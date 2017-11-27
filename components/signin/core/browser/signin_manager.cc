@@ -15,7 +15,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/gaia_cookie_manager_service.h"
-#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_client.h"
 #include "components/signin/core/browser/signin_internals_util.h"
 #include "components/signin/core/browser/signin_metrics.h"
@@ -31,13 +30,15 @@ using namespace signin_internals_util;
 SigninManager::SigninManager(SigninClient* client,
                              ProfileOAuth2TokenService* token_service,
                              AccountTrackerService* account_tracker_service,
-                             GaiaCookieManagerService* cookie_manager_service)
+                             GaiaCookieManagerService* cookie_manager_service,
+                             bool is_dice_enabled)
     : SigninManagerBase(client, account_tracker_service),
       prohibit_signout_(false),
       type_(SIGNIN_TYPE_NONE),
       client_(client),
       token_service_(token_service),
       cookie_manager_service_(cookie_manager_service),
+      is_dice_enabled_(is_dice_enabled),
       signin_manager_signed_in_(false),
       user_info_fetched_by_account_tracker_(false),
       weak_pointer_factory_(this) {}
@@ -154,8 +155,7 @@ void SigninManager::HandleAuthError(const GoogleServiceAuthError& error) {
 void SigninManager::SignOut(
     signin_metrics::ProfileSignout signout_source_metric,
     signin_metrics::SignoutDelete signout_delete_metric) {
-  StartSignOut(signout_source_metric, signout_delete_metric,
-               !signin::IsDiceEnabledForProfile(client_->GetPrefs()));
+  StartSignOut(signout_source_metric, signout_delete_metric, !is_dice_enabled_);
 }
 
 void SigninManager::SignOutAndRemoveAllAccounts(

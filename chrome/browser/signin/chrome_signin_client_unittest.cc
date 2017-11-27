@@ -174,7 +174,7 @@ class MockChromeSigninClient : public ChromeSigninClient {
 class MockSigninManager : public SigninManager {
  public:
   explicit MockSigninManager(SigninClient* client)
-      : SigninManager(client, nullptr, &fake_service_, nullptr) {}
+      : SigninManager(client, nullptr, &fake_service_, nullptr, false) {}
 
   MOCK_METHOD3(DoSignOut,
                void(signin_metrics::ProfileSignout,
