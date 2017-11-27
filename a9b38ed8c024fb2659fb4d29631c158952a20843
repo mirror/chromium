@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a605e79_2d01e87b",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T03:27:25Z",
+      "side": 1,
+      "message": "I think this could actually happen if the source includes a file. (Blobs are immutable so I assume it wouldn\u0027t happen otherwise)  For file cases we return net::ERR_UPLOAD_FILE_CHANGED, probably this should follow that?",
+      "revId": "a9b38ed8c024fb2659fb4d29631c158952a20843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e83c32f_3b8835bd",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T03:27:25Z",
+      "side": 1,
+      "message": "Not fully sure what\u0027s the expected behavior here, it looks most implementation just resets it, and the outer stream class that calls these also seem to just reset the callbacks?\n\nhttps://cs.chromium.org/chromium/src/net/base/upload_data_stream.cc?gsn\u003dReset\u0026l\u003d56",
+      "revId": "a9b38ed8c024fb2659fb4d29631c158952a20843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517df5a0_a5b79486",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-27T03:27:25Z",
+      "side": 1,
+      "message": "Nice.",
+      "revId": "a9b38ed8c024fb2659fb4d29631c158952a20843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
