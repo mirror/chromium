@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "5950c72c_4cf8f2e6",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-27T08:05:44Z",
+      "side": 1,
+      "message": "Hi, I did an experimental CL (https://chromium-review.googlesource.com/c/chromium/src/+/789354) to try to make ScopedRenderPassTexture\u0027s Allocate and Free private.\nIn this experimental CL, it seems OK to delete ScopedRenderPassTexture entrely, no need to go through Allocate/Free. \n\nBut there are cases which will change the texture size only. For these cases, call Allocate/Free only will be more efficient. If delete ScopedRenderPassTexture entirely, when texture size changed, it will run extra CreateTexture besides Allocate.\n\nSo I think the original Allocate and Free should be a better implementation.\n\nCases will change texture size only:\nhttps://build.chromium.org/p/tryserver.chromium.linux/builders/linux_chromium_rel_ng/builds/595407\nbrowser_tests (with patch)\nRun on OS: \u0027Ubuntu-14.04\u0027\nMax shard duration: 0:13:49.352550 (shard #2)\nfailures:\nCrSettingsSiteDataTest.All\nSettingsAccessibilityTest.MANAGE_PROFILE_hidden_content\nMaterialHistoryMetricsTest.All",
+      "parentUuid": "fcfa025c_d7b5b9e4",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "541bceb0_39a3a57a",
         "filename": "components/viz/common/resources/scoped_local_resource.cc",
         "patchSetId": 18
