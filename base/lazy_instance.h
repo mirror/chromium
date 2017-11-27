@@ -196,15 +196,13 @@ class LazyInstance {
         Traits::kRegisterOnExit ? OnExit : nullptr, this));
   }
 
-  bool operator==(Type* p) {
-    switch (subtle::NoBarrier_Load(&private_instance_)) {
-      case 0:
-        return p == NULL;
-      case internal::kLazyInstanceStateCreating:
-        return static_cast<void*>(p) == private_buf_;
-      default:
-        return p == instance();
-    }
+  // Returns true if the lazy instance has not been created yet.
+  bool empty() {
+    // Return true (i.e. empty) if |private_instance_| has not yet been created.
+    // Return false (i.e. non-empty) if |private_instance_| is either being
+    // created right now (internal::kLazyInstanceStateCreating) or was already
+    // created (any other non-zero value).
+    return 0 == subtle::NoBarrier_Load(&private_instance_);
   }
 
   // MSVC gives a warning that the alignment expands the size of the
