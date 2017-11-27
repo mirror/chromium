@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edd0d652_7286e4e3",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-27T10:28:18Z",
+      "side": 1,
+      "message": "According to Max, we should DCHECK it in the constructor and later rely on it not being nullptr",
+      "revId": "903b7acd549b1ebddd3e5c5b2cdadce3206832db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0f515d_c2d82546",
+        "filename": "content/browser/renderer_host/media/audio_output_stream_observer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-27T10:28:18Z",
+      "side": 1,
+      "message": "It lives in a strong binding and will be deleted on connection error. So should we track \"stream started\" state here and send StopMonitoringStream() in the destructor if StartMonitoringStream has been sent previously?\n- That is instead of calling DidStopPlaying in AudioOutputDelegateImpl destructor.",
+      "revId": "903b7acd549b1ebddd3e5c5b2cdadce3206832db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
