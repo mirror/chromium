@@ -14,8 +14,7 @@ WebMVideoClient::WebMVideoClient(MediaLog* media_log) : media_log_(media_log) {
   Reset();
 }
 
-WebMVideoClient::~WebMVideoClient() {
-}
+WebMVideoClient::~WebMVideoClient() = default;
 
 void WebMVideoClient::Reset() {
   pixel_width_ = -1;

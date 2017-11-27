@@ -12,7 +12,7 @@ CameraDeviceContext::CameraDeviceContext(
   DCHECK(client_);
 }
 
-CameraDeviceContext::~CameraDeviceContext() {}
+CameraDeviceContext::~CameraDeviceContext() = default;
 
 void CameraDeviceContext::SetState(State state) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
