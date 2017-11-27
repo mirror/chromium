@@ -958,13 +958,12 @@ void StoragePartitionImpl::ClearDataForOrigin(
     uint32_t remove_mask,
     uint32_t quota_storage_remove_mask,
     const GURL& storage_origin,
-    net::URLRequestContextGetter* request_context_getter,
-    const base::Closure& callback) {
+    net::URLRequestContextGetter* request_context_getter) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ClearDataImpl(remove_mask, quota_storage_remove_mask, storage_origin,
                 OriginMatcherFunction(), CookieMatcherFunction(),
                 request_context_getter, base::Time(), base::Time::Max(),
-                callback);
+                base::Bind(&base::DoNothing));
 }
 
 void StoragePartitionImpl::ClearData(
