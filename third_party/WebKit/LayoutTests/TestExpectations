@@ -683,6 +683,7 @@ crbug.com/714962 virtual/layout_ng_paint/fast/inline/long-wrapped-line.html [ Fa
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/nested-top-alignment.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/percentage-margins.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/vertical-align-text-bottom.html [ Failure ]
+crbug.com/714962 virtual/layout_ng_paint/fast/inline/vertical-align-text-inherit.html  [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/vertical-align-with-fallback-fonts.html [ Failure ]
 
 ### Image/text failures also on LayoutNG
