@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7571b973_1aecf288",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1989,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-27T16:45:03Z",
+      "side": 1,
+      "message": "I think \"git cl format\" made the comment less readable, as it\u0027s unclear now that the comment belongs to |![[_navigationStates lastAddedNavigation] isEqual:navigation] |||. WOuld you mind reverting the change?",
+      "range": {
+        "startLine": 1989,
+        "startChar": 58,
+        "endLine": 1989,
+        "endChar": 66
+      },
+      "revId": "c6e0ea97bf3c38b44914394ee6fbc26be0f74350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
