@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1481af0_448cc8a7",
+        "filename": "storage/browser/blob/blob_memory_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T08:49:17Z",
+      "side": 1,
+      "message": "Is this change intentional? It doesn\u0027t seem related to adding the command line flag for perf tests.",
+      "revId": "92d500f0a3a4a47d80f61750ca6e04e0e705b4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99807a59_65c60282",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/blob-build-all-then-read-parallel-11mb.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T08:49:17Z",
+      "side": 1,
+      "message": "How about inlining the test properties object here? (applies to other cases as well)",
+      "revId": "92d500f0a3a4a47d80f61750ca6e04e0e705b4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4868d430_c13912cb",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/blob-build-all-then-read-parallel-1kb.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-27T08:49:17Z",
+      "side": 1,
+      "message": "Consider using suffixes similar to -files, to clarify what the tests are supposed to cover. (-1kb -\u003e -ipc, -11mb -\u003e -shm?)",
+      "revId": "92d500f0a3a4a47d80f61750ca6e04e0e705b4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
