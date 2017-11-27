@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33a5bdf3_e6820f01",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-27T14:27:09Z",
+      "side": 0,
+      "message": "Do you still need to account for this bug? Does your change do the right thing in RTL?",
+      "range": {
+        "startLine": 808,
+        "startChar": 5,
+        "endLine": 808,
+        "endChar": 76
+      },
+      "revId": "226d07bd4a1f3f419f180af9a842a8687f046a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
