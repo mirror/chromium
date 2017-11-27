@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd6e7e0e_71d0d013",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-27T08:37:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf5c532d_94de83c3",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a468840_519ed056",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d07fa399_337e9aa6",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-27T08:37:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a468840_519ed056",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d4a9e6b_5031dfa1",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 15
@@ -50,6 +86,24 @@
       "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "799b3ea6_930f7575",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-27T08:37:45Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ve misread your comment.\nUpdated it as follows:\nNon-S13nSW: registers the abort callback but it\u0027s called only when the worker is shutted down.\nS13nSW: registers it and calls abort, and also the worker should be terminated at the moment (not yet for shutting down).",
+      "parentUuid": "9d4a9e6b_5031dfa1",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "2a383e69_9298b8ca",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-27T08:37:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5acf744c_38ecb957",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a9d843f_7f87ca64",
         "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
         "patchSetId": 15
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "21cb0277_417fa5a6",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-27T08:37:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a9d843f_7f87ca64",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19c4f16a_a22e41d2",
         "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
         "patchSetId": 15
@@ -113,6 +215,24 @@
       "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf0a20f_766f0603",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-27T08:37:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19c4f16a_a22e41d2",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "dec9d1ad_98ca1792",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-27T08:37:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fe36821e_caac465d",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f75f7013_82b8217b",
         "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
         "patchSetId": 15
@@ -147,6 +285,24 @@
       "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2742dc_ea680b05",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-27T08:37:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f75f7013_82b8217b",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
