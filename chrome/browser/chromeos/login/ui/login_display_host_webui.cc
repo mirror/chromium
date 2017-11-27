@@ -332,6 +332,7 @@ class CloseAfterCommit : public ui::CompositorObserver,
 
   // ui::CompositorObserver:
   void OnCompositingDidCommit(ui::Compositor* compositor) override {
+    LOG(ERROR) << "#### CloseAfterCommit OnCompositingDidCommit";
     DCHECK_EQ(widget_->GetCompositor(), compositor);
     widget_->Close();
   }
@@ -345,6 +346,7 @@ class CloseAfterCommit : public ui::CompositorObserver,
 
   // views::WidgetObserver:
   void OnWidgetDestroying(views::Widget* widget) override {
+    LOG(ERROR) << "#### CloseAfterCommit OnWidgetDestroying";
     DCHECK_EQ(widget, widget_);
     delete this;
   }

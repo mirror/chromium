@@ -184,6 +184,8 @@ InterstitialPageImpl::InterstitialPageImpl(
       delegate_(delegate),
       weak_ptr_factory_(this) {
   InitInterstitialPageMap();
+  LOG(ERROR) << "#### InterstitialPageImpl ctor"
+             << ", url=" << url_.spec() << ", this=" << this;
 }
 
 InterstitialPageImpl::~InterstitialPageImpl() {
@@ -192,9 +194,14 @@ InterstitialPageImpl::~InterstitialPageImpl() {
   // will be deleted because std::unique_ptr<InterstitialPageRVHDelegateView> is
   // placed after frame_tree_. See bug http://crbug.com/725594.
   frame_tree_.reset();
+
+  LOG(ERROR) << "#### InterstitialPageImpl dtor"
+             << ", this=" << this;
 }
 
 void InterstitialPageImpl::Show() {
+  LOG(ERROR) << "#### InterstitialPageImpl::Show"
+             << ", this=" << this;
   if (!enabled())
     return;
 
@@ -272,6 +279,9 @@ void InterstitialPageImpl::Hide() {
   // called Disable.
   if (!render_view_host_)
     return;
+
+  LOG(ERROR) << "#### InterstitialPageImpl::Hide"
+             << ", this=" << this;
 
   Disable();
 
@@ -827,6 +837,8 @@ void InterstitialPageImpl::Disable() {
 }
 
 void InterstitialPageImpl::Shutdown() {
+  LOG(ERROR) << "#### InterstitialPageImpl::Shutdown"
+             << ", this=" << this;
   delete this;
 }
 
