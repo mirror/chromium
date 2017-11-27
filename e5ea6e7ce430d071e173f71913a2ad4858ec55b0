@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bceb827_b7a8a844",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-11-27T15:40:51Z",
+      "side": 1,
+      "message": "should the other functions below also be changed to this instead of return?",
+      "range": {
+        "startLine": 97,
+        "startChar": 11,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "e5ea6e7ce430d071e173f71913a2ad4858ec55b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
