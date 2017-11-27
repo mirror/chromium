@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "0c3a3554_317db872",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2957,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-27T09:07:19Z",
+      "side": 1,
+      "message": "Found around 30 usages of it in content so I guess it is fine to go directly with it? Done like this for now anyway.",
+      "parentUuid": "818c4ced_258beddf",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d88844f4_060d0277",
         "filename": "content/common/frame.mojom",
         "patchSetId": 16
@@ -173,6 +191,24 @@
       "side": 1,
       "message": "I think it\u0027s OK to have it this way for now, but we should consider ways to express it so it\u0027s clear in the IPC definitions that it /should/ always be set if sent over IPC.\n\nIn a followup (since I\u0027m worried about potential regressions), can we change this comment to:\n- The renderer must specify an initiator origin.\n- Add a mojo::ReportBadMessage() if it is unset.",
       "parentUuid": "b5e22ae9_2f30967a",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce519855_5f8f5286",
+        "filename": "content/common/navigation_params.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-27T09:07:19Z",
+      "side": 1,
+      "message": "Ack. Added a TODO linking here.",
+      "parentUuid": "add3f089_d02e296d",
       "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
