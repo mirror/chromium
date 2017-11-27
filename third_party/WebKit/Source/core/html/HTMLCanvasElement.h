@@ -314,6 +314,8 @@ class CORE_EXPORT HTMLCanvasElement final
   bool PaintsIntoCanvasBuffer() const;
   CanvasColorParams ColorParams() const;
 
+  scoped_refptr<StaticBitmapImage> ToStaticBitmapImage(SourceDrawingBuffer,
+                                                       SnapshotReason) const;
   ImageData* ToImageData(SourceDrawingBuffer, SnapshotReason) const;
 
   String ToDataURLInternal(const String& mime_type,
