@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88e13002_8e92d554",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunStatus.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-27T21:51:14Z",
+      "side": 1,
+      "message": "Have you verified that the command line is always initialized before anyone calls this method, since it\u0027s a public method I mean.",
+      "revId": "d811e9cbc7fe43812621f77d29d6445a8b195fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c03b0c5_4b9654db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunStatus.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-27T21:51:14Z",
+      "side": 1,
+      "message": "Could you please put this as a constant in org.chromium.chrome.browser.ChromeSwitches instead?",
+      "range": {
+        "startLine": 39,
+        "startChar": 55,
+        "endLine": 39,
+        "endChar": 91
+      },
+      "revId": "d811e9cbc7fe43812621f77d29d6445a8b195fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
