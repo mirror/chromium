@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df59e089_bbccd698",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-27T18:24:02Z",
+      "side": 1,
+      "message": "There\u0027s existing \"observer\" support for calling back with import progress related information. Any reason it was necessary to add a separate callback for \"tries complete\" instead of using the observer? Using the existing observer mechanism will help keep the design simple, or at least simpler.\n\nIt appears the @param {Object\u003d} updateInfo passed to the observer is weakly typed to allow arbitrary information to be returned. Or you could make the observer a little more well defined with different well-typed methods for observing changes to the import task. That would require a little bit of refactoring on your part.",
+      "revId": "7d431e087704800c0831afbf0b794af657e59fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b72c12d_3b0bdeb4",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-27T18:24:02Z",
+      "side": 1,
+      "message": "It\u0027s really smelly to just ignore the COMPLETE and ERROR events here. If they\u0027re not useful anymore remove them. If you leave them, you\u0027ll give future maintainers a reason to think they\u0027re being used.",
+      "revId": "7d431e087704800c0831afbf0b794af657e59fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf29c503_aa64bba0",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-27T18:24:02Z",
+      "side": 1,
+      "message": "Should this be {!Array\u003c!FileEntry\u003e}\n\n?\n\nAlso, \"The entries to be imported....\"",
+      "revId": "7d431e087704800c0831afbf0b794af657e59fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d392482_67c5e2c8",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-27T18:24:02Z",
+      "side": 1,
+      "message": "What does slice with no args do? Maybe just use explicit args to make it clear to the reader?",
+      "revId": "7d431e087704800c0831afbf0b794af657e59fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d101325_f3295f03",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-27T18:24:02Z",
+      "side": 1,
+      "message": "Solid blocks of text with no whitespace are really hard to read.",
+      "revId": "7d431e087704800c0831afbf0b794af657e59fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
