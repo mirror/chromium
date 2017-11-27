@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dce5615_5c67785f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-27T02:04:22Z",
+      "side": 1,
+      "message": "I presume you mean \"its settings\"",
+      "revId": "4cc80076d8e33fdd5f8cfb5165ed3e88e0b5a8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc30ab0_5e41544c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-27T02:04:22Z",
+      "side": 1,
+      "message": "Does this mean that it\u0027s now possible to set/add a billing address to the card? This description describes why it was done the old way, but not why it\u0027s now OK to change. Can you add a sentence about that?",
+      "revId": "4cc80076d8e33fdd5f8cfb5165ed3e88e0b5a8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
