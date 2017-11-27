@@ -70,6 +70,24 @@
       "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e037e5_7682bb5c",
+        "filename": "chromeos/dbus/auth_policy_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-27T09:25:58Z",
+      "side": 1,
+      "message": "Proto serialization (i.e. proto -\u003e bytes) happens in MessageWriter::AppendProtoAsArrayOfBytes() and it\u0027s OK to have both proto \u0026 D-Bus message serialization in the client class.\nNot having proto construction (i.e. parameters -\u003e proto) in the client class makes the C++ interface consistent with that of D-Bus, and makes more code tested.\nI know there are already many bad existing examples as it\u0027s tempting to put more code in this directory, but it\u0027d be appreciated if you could put your business logic in the feature\u0027s own directory which has a more appropriate ownership.\n\nIf you have any ideas to improve the documentation, I and derat@ would be happy to review CLs :)",
+      "parentUuid": "e6145635_35185f1f",
+      "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
