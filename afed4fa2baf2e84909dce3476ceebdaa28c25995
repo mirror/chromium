@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5d3e1e2e_67a4a274",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/web_task_runner_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-27T18:10:53Z",
+      "side": 1,
+      "message": "What happens if we use base::AdoptRef? Will we hit a compile error?",
+      "parentUuid": "1284b259_bd33220f",
+      "revId": "afed4fa2baf2e84909dce3476ceebdaa28c25995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b17b8a8c_7ceda836",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/fake_web_task_runner.cc",
         "patchSetId": 6
