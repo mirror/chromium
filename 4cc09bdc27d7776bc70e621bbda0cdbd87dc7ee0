@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a531a6a6_65ec52b8",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T04:22:59Z",
+      "side": 1,
+      "message": "I\u0027m assuming Read and ReadCallback can\u0027t get called synchronously... otherwise I\u0027ll have to add the calculated_size_ flag again.",
+      "revId": "4cc09bdc27d7776bc70e621bbda0cdbd87dc7ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa8babbb_63b32158",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T04:22:59Z",
+      "side": 1,
+      "message": "Hm I think if it\u0027s really a file we get to the file path, not the data pipe path. You can construct a memory-backed file that gets here but I\u0027m not sure we detect changes to it after it\u0027s been sent out of Blink.\n\nIn any case, I had this DCHECK because the DataPipeGetter impl in web_url_request_utils.cc assumes the size doesn\u0027t change: it just coalesces all the ReadAll callbacks and calls them all at once when it knows the size. I\u0027ve changed the patch to just handle size changes in case they happen, it seems the code is more straightforward that way anyway.\n\nI assume it\u0027s not illegal for a upload data stream element to change size between Init() calls.",
+      "parentUuid": "2a605e79_2d01e87b",
+      "revId": "a9b38ed8c024fb2659fb4d29631c158952a20843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e83c32f_3b8835bd",
         "filename": "content/network/url_loader.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T03:27:25Z",
       "side": 1,
       "message": "Not fully sure what\u0027s the expected behavior here, it looks most implementation just resets it, and the outer stream class that calls these also seem to just reset the callbacks?\n\nhttps://cs.chromium.org/chromium/src/net/base/upload_data_stream.cc?gsn\u003dReset\u0026l\u003d56",
+      "revId": "a9b38ed8c024fb2659fb4d29631c158952a20843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1038dc9e_1b1161e8",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T04:22:59Z",
+      "side": 1,
+      "message": "Yea, I had put this to avoid something deadlocking waiting for a callback but didn\u0027t test this. I changed it to drop the callback.",
+      "parentUuid": "8e83c32f_3b8835bd",
       "revId": "a9b38ed8c024fb2659fb4d29631c158952a20843",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
