@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab29ba7d_05994e25",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "I think this would more naturally be a part of Using Content\u0027s Interface Registries, or immediately following that section, since the advice here is specific only to interfaces defined/implemented at the content layer.",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed151736_5de3818b",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "Can we either remove this line or change TODO to \"Not yet implemented\"?",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ec2769_337bff57",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "We should discourage use of \"Host\" naming for interfaces -- I\u0027ve explicitly avoided it in docs -- because it doesn\u0027t *really* make sense anymore.\n\nMojo interfaces are not intended to prescribe where their endpoints live. Even things which seem naturally privileged (e.g. file access) can sometimes be implemented in an unprivileged context (e.g. without fetching real file contents), and the existence one implementation certainly doesn\u0027t preclude the existence of others.\n\nSo all that\u0027s to say that I\u0027d prefer we call this a Logger instead of a LoggerHost, just like we\u0027d call a file interface File instead of FileHost. I would probably just leave \"Host\" NOTE out of the doc altogether, as I think it may be confusing or redundant in light of the above rationale.\n\n... alternatively, you could leave the note but also add something like the above rationale to explain why we\u0027ve deviated from the \"Host\" convention, but that may be too much information.",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c92895_42129fa3",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "nit: new code should use std::make_unique",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e0164f_718fbb3b",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "nit: preferred usage would be logger_host_ \u003d std::make_unique\u003cLoggerHost\u003e(GetID()), i.e. we try to avoid wrapping \u0027new\u0027 calls in favor of make_unique + assignment.",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7177a204_cce54b3c",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "I think this will be confusing without a definition of LoggerHost.",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845582f6_c79a4b7c",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "nit: We call them \"capabilities\" - should be consistent here",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3d746c_fbe1f8ca",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "They\u0027re more generally \"service manifests\", with capability spec being only part of their concern.",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89438b08_3f543bea",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "Let\u0027s say \"the side which instantiates the implementation\" since there are many ways to bind interfaces and MakeStrongBinding is only one.",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4512e845_2f02e2f2",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "s/call/bind to/ ?",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac632597_0085692c",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "nit: Can we remove this instead of adding a placeholder section?",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a15fae_0d1e4f0d",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "Please do not reference browser or renderer or any content/chrome-specific concepts within the general-purpose mojo documentation. Note that we don\u0027t have any other such references, and this is intentional. Even the concept of a binder \"registry\" is a Service Manager API concept, not a mojo bindings concept.\n\nI think it would be OK to add a section to the end of this file like \"Using Mojo Bindings in Chrome\" where you point to the ipc/README.",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c06e643_10486bfd",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "This isn\u0027t really true, but it\u0027s complicated and doesn\u0027t belong in this doc anyway.\n\nTo clarify as an aside though, content::ServiceManagerConnection::GetForProcess() must be called in the browser process on the main thread, and its connector can only be used on the main thread; but you can clone connectors and move the clones around to other threads. A Connector is only bound to the thread which first calls into it. But Connector too is a service manager API, and not something which belongs in mojo bindings docs.",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd8ed4f_63aaec6c",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-27T18:41:57Z",
+      "side": 1,
+      "message": "What\u0027s this?",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
