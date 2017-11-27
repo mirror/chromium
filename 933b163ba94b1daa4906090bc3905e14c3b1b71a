@@ -258,6 +258,24 @@
       "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32819eb9_ac8bdb37",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T13:27:21Z",
+      "side": 1,
+      "message": "OK, I was thinking that unsuppress would also check if the device supports NR. If the device the stream is connected to supports NR, the counter will increase and decrease respectively. If the device doesn\u0027t both functions are no-ops (except for checking if NR is supported). Wdyt? Did I miss something that prevents from doing like this?",
+      "parentUuid": "b4d66e92_67284e9b",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

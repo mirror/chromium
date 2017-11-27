@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "277dd2c8_02e67106",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T13:27:21Z",
+      "side": 1,
+      "message": "I believe the constraint must be prefixed goog_ if non-standard, so doing that in the naming makes sense too.",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8298e224_c0b0e221",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 7
@@ -13,6 +30,126 @@
       "writtenOn": "2017-11-24T16:11:47Z",
       "side": 1,
       "message": "With this construct, the origin trial will only disable the new constraint from triggering this, but setting echoCancellation to false would still disable the hardware noise suppressor. We should probably think this over - echoCancellation, though it promises to disable \"all\" signal processing if set to false, doesn\u0027t necessarily mean \"even stuff outside of WebRTC\".",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aedec1ed_823ca975",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T13:27:21Z",
+      "side": 1,
+      "message": "Yeah, I think that constraint should only affect WebRTC/Chrome.",
+      "parentUuid": "8298e224_c0b0e221",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1058404d_d86ab6b3",
+        "filename": "content/renderer/media/webrtc/processed_local_audio_source.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T13:27:21Z",
+      "side": 1,
+      "message": "This should be possible to merge with above block to only call SetDevice() once.",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe6de9f_4ff6cf56",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T13:27:21Z",
+      "side": 1,
+      "message": "Optional: would be great to change the reference for the todo while changing code in its proximity. To for example me or you.",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3f4d7b_342afa03",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T13:27:21Z",
+      "side": 1,
+      "message": "Ah, OK, you\u0027re using the effect now. Then the support information is stored for the stream.",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c92036a_3d2ffb79",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T13:27:21Z",
+      "side": 1,
+      "message": "If the caller knows that if the device supports NR through the effect in the params, this shouldn\u0027t be necessary. (DCHECK it.)",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c89798_3b710bde",
+        "filename": "media/audio/mac/audio_manager_mac.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T13:27:21Z",
+      "side": 1,
+      "message": "I you follow my suggestion on making suppress/unsuppress no-ops if NR isn\u0027t supported, one option could be to store that information here. Or can the id perhaps change to mean a different device at some point? Maybe we shouldn\u0027t trust it to not.",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81cfa906_3b89d020",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T13:27:21Z",
+      "side": 1,
+      "message": "*_REDUCTION to be consistent with naming. Here and elsewhere.",
       "revId": "ee0a943887739a59bead4c135a86e6077da11949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
