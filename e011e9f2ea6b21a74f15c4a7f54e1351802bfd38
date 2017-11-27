@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5b714b1_18530143",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-27T17:11:44Z",
+      "side": 1,
+      "message": "nit: \"Support CBOR encoding and decoding of negative integers.\"",
+      "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b099db_342bb8a7",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-27T17:11:44Z",
+      "side": 1,
+      "message": "nit: this could be a fallthrough statement for both types.",
+      "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85044f6a_4ed42d08",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-27T17:11:44Z",
+      "side": 1,
+      "message": "nit: could also be a fallthrough statement.",
+      "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f2c68a_a3d5cda9",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-27T17:11:44Z",
+      "side": 1,
+      "message": "nit: Any reason we shouldn\u0027t call it GetNegative?",
+      "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
