@@ -41,6 +41,14 @@ class AccountReconcilorDelegate {
       const std::string& primary_account,
       bool first_execution) const;
 
+  // Called at the beginning of the reconcilation, once for each Chrome account.
+  // Returns true if the account should be reconciled, and false if it should be
+  // ignored.
+  virtual bool ShouldReconcileAccount(
+      const std::string& chrome_account,
+      const std::vector<gaia::ListedAccount>& gaia_accounts,
+      const std::string& primary_account);
+
   // Called when reconcile is finished.
   virtual void OnReconcileFinished(const std::string& first_account,
                                    bool reconcile_is_noop) {}
