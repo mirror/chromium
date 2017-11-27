@@ -146,6 +146,30 @@
     },
     {
       "key": {
+        "uuid": "de1506c8_97910f52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkServiceClient.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-27T15:45:20Z",
+      "side": 1,
+      "message": "Yes, that helps, thanks.",
+      "parentUuid": "9de475c2_5c059a17",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 54
+      },
+      "revId": "2dc7ee77cec1c4158005b2ab0eb1f3ba9a3c5808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f34b0c9d_a8c0245a",
         "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
         "patchSetId": 9
