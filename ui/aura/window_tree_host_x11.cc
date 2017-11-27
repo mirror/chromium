@@ -447,11 +447,12 @@ void WindowTreeHostX11::SetCursorNative(gfx::NativeCursor cursor) {
   SetCursorInternal(cursor);
 }
 
-void WindowTreeHostX11::MoveCursorToScreenLocationInPixels(
+bool WindowTreeHostX11::MoveCursorToScreenLocationInPixels(
     const gfx::Point& location_in_pixels) {
   XWarpPointer(xdisplay_, x11::None, x_root_window_, 0, 0, 0, 0,
                bounds_.x() + location_in_pixels.x(),
                bounds_.y() + location_in_pixels.y());
+  return 0;
 }
 
 void WindowTreeHostX11::OnCursorVisibilityChangedNative(bool show) {

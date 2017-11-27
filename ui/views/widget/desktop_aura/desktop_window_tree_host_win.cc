@@ -570,11 +570,11 @@ void DesktopWindowTreeHostWin::OnCursorVisibilityChangedNative(bool show) {
   ::ShowCursor(!!show);
 }
 
-void DesktopWindowTreeHostWin::MoveCursorToScreenLocationInPixels(
+bool DesktopWindowTreeHostWin::MoveCursorToScreenLocationInPixels(
     const gfx::Point& location_in_pixels) {
   POINT cursor_location = location_in_pixels.ToPOINT();
   ::ClientToScreen(GetHWND(), &cursor_location);
-  ::SetCursorPos(cursor_location.x, cursor_location.y);
+  return ::SetCursorPos(cursor_location.x, cursor_location.y);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

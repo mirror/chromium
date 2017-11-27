@@ -1287,11 +1287,12 @@ void DesktopWindowTreeHostX11::SetCursorNative(gfx::NativeCursor cursor) {
   XDefineCursor(xdisplay_, xwindow_, cursor.platform());
 }
 
-void DesktopWindowTreeHostX11::MoveCursorToScreenLocationInPixels(
+bool DesktopWindowTreeHostX11::MoveCursorToScreenLocationInPixels(
     const gfx::Point& location_in_pixels) {
   XWarpPointer(xdisplay_, x11::None, x_root_window_, 0, 0, 0, 0,
                bounds_in_pixels_.x() + location_in_pixels.x(),
                bounds_in_pixels_.y() + location_in_pixels.y());
+  return 0;
 }
 
 void DesktopWindowTreeHostX11::OnCursorVisibilityChangedNative(bool show) {

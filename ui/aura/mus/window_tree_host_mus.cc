@@ -212,11 +212,12 @@ void WindowTreeHostMus::OnCloseRequest() {
   OnHostCloseRequested();
 }
 
-void WindowTreeHostMus::MoveCursorToScreenLocationInPixels(
+bool WindowTreeHostMus::MoveCursorToScreenLocationInPixels(
     const gfx::Point& location_in_pixels) {
   // |location_in_pixels| is relative to the display.
   delegate_->OnWindowTreeHostMoveCursorToDisplayLocation(location_in_pixels,
                                                          display_id_);
+  return 0;
 }
 
 gfx::Transform WindowTreeHostMus::GetRootTransformForLocalEventCoordinates()

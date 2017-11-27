@@ -129,7 +129,7 @@ class VIEWS_EXPORT DesktopWindowTreeHostWin
   void ReleaseCapture() override;
   void SetCursorNative(gfx::NativeCursor cursor) override;
   void OnCursorVisibilityChangedNative(bool show) override;
-  void MoveCursorToScreenLocationInPixels(
+  bool MoveCursorToScreenLocationInPixels(
       const gfx::Point& location_in_pixels) override;
 
   // Overridden from aura::client::AnimationHost

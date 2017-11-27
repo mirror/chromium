@@ -38,7 +38,7 @@ class AURA_EXPORT WindowTreeHostPlatform : public WindowTreeHost,
   void SetCapture() override;
   void ReleaseCapture() override;
   void SetCursorNative(gfx::NativeCursor cursor) override;
-  void MoveCursorToScreenLocationInPixels(
+  bool MoveCursorToScreenLocationInPixels(
       const gfx::Point& location_in_pixels) override;
   void OnCursorVisibilityChangedNative(bool show) override;
 

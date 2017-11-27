@@ -477,12 +477,12 @@ void Window::ConvertRectToTarget(const Window* source,
   rect->set_origin(origin);
 }
 
-void Window::MoveCursorTo(const gfx::Point& point_in_window) {
+bool Window::MoveCursorTo(const gfx::Point& point_in_window) {
   Window* root_window = GetRootWindow();
   DCHECK(root_window);
   gfx::Point point_in_root(point_in_window);
   ConvertPointToTarget(this, root_window, &point_in_root);
-  root_window->GetHost()->MoveCursorToLocationInDIP(point_in_root);
+  return root_window->GetHost()->MoveCursorToLocationInDIP(point_in_root);
 }
 
 gfx::NativeCursor Window::GetCursor(const gfx::Point& point) const {
