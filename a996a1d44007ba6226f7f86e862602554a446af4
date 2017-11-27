@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3186890f_88c5d757",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2017-11-27T21:52:40Z",
+      "side": 1,
+      "message": "Local build on tablet crashes here because activity2.getActivityTab() is somehow null. Even more, the tab model selector has no tab and index is -1 here, even though the activity2.areTabModelsInitialized() and activity2.getTabModelSelector().isTabStateInitialized() are true. So I move this get url get to the later part when the tab model is ready.",
+      "range": {
+        "startLine": 525,
+        "startChar": 8,
+        "endLine": 525,
+        "endChar": 72
+      },
+      "revId": "a996a1d44007ba6226f7f86e862602554a446af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
