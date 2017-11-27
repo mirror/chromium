@@ -27,6 +27,11 @@ class WorkletModulatorImpl final : public ModulatorImplBase {
 
  private:
   explicit WorkletModulatorImpl(scoped_refptr<ScriptState>);
+
+  void ResolveDynamically(const String& specifier,
+                          const KURL&,
+                          const ReferrerScriptInfo&,
+                          ScriptPromiseResolver*) final;
 };
 
 }  // namespace blink
