@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a790cf9_f16b6be2",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_struct_traits.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-27T21:40:41Z",
+      "side": 1,
+      "message": "I\u0027ve previously seen functions like this implemented with a static_cast\u003c\u003e, and a set of compile-time checks to ensure the the two enums stay in sync -- is that possible here? It would be faster than a switch which essentially compiles to\n\ncase 0: return 0;\ncase 1: return 1;\ncase 2: return 2;\n...",
+      "revId": "c7671088d1a03425300269406c389dcad05363f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
