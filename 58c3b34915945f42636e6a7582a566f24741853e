@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1fb2687c_fb3e30e2",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-27T21:20:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaac6989_4bb9336f",
+      "revId": "58c3b34915945f42636e6a7582a566f24741853e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afc900a5_630a1dff",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "58c3b34915945f42636e6a7582a566f24741853e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5819ca5_24d5c502",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-27T21:20:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afc900a5_630a1dff",
+      "revId": "58c3b34915945f42636e6a7582a566f24741853e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
