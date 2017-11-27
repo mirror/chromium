@@ -38,7 +38,7 @@ class BookmarkUndoServiceTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(BookmarkUndoServiceTest);
 };
 
-BookmarkUndoServiceTest::BookmarkUndoServiceTest() {}
+BookmarkUndoServiceTest::BookmarkUndoServiceTest() = default;
 
 void BookmarkUndoServiceTest::SetUp() {
   DCHECK(!bookmark_model_);

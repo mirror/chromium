@@ -36,7 +36,7 @@ class TestPreviewsLoggerObserver : public PreviewsLoggerObserver {
         blacklist_ignored_(false),
         last_removed_notified_(false) {}
 
-  ~TestPreviewsLoggerObserver() override {}
+  ~TestPreviewsLoggerObserver() override = default;
 
   // PreviewsLoggerObserver:
   void OnNewMessageLogAdded(
@@ -110,9 +110,9 @@ class TestPreviewsLoggerObserver : public PreviewsLoggerObserver {
 
 class PreviewsLoggerTest : public testing::Test {
  public:
-  PreviewsLoggerTest() {}
+  PreviewsLoggerTest() = default;
 
-  ~PreviewsLoggerTest() override {}
+  ~PreviewsLoggerTest() override = default;
 
   void SetUp() override { logger_ = base::MakeUnique<PreviewsLogger>(); }
 

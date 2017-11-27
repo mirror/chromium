@@ -23,7 +23,7 @@ TestProfileSyncService::TestProfileSyncService(
     ProfileSyncService::InitParams init_params)
     : ProfileSyncService(std::move(init_params)) {}
 
-TestProfileSyncService::~TestProfileSyncService() {}
+TestProfileSyncService::~TestProfileSyncService() = default;
 
 void TestProfileSyncService::OnConfigureDone(
     const syncer::DataTypeManager::ConfigureResult& result) {

@@ -533,7 +533,7 @@ FrameReference::FrameReference() {
   Reset(nullptr);
 }
 
-FrameReference::~FrameReference() {}
+FrameReference::~FrameReference() = default;
 
 void FrameReference::Reset(blink::WebLocalFrame* frame) {
   if (frame) {
@@ -957,7 +957,7 @@ PrintRenderFrameHelper::PrintRenderFrameHelper(
     DisablePreview();
 }
 
-PrintRenderFrameHelper::~PrintRenderFrameHelper() {}
+PrintRenderFrameHelper::~PrintRenderFrameHelper() = default;
 
 // static
 void PrintRenderFrameHelper::DisablePreview() {
@@ -2204,7 +2204,7 @@ PrintRenderFrameHelper::PrintPreviewContext::PrintPreviewContext()
       error_(PREVIEW_ERROR_NONE),
       state_(UNINITIALIZED) {}
 
-PrintRenderFrameHelper::PrintPreviewContext::~PrintPreviewContext() {}
+PrintRenderFrameHelper::PrintPreviewContext::~PrintPreviewContext() = default;
 
 void PrintRenderFrameHelper::PrintPreviewContext::InitWithFrame(
     blink::WebLocalFrame* web_frame) {

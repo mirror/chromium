@@ -31,13 +31,13 @@ class MockThreatDetails : public ThreatDetails {
   MOCK_METHOD2(FinishCollection, void(bool did_proceed, int num_visits));
 
  private:
-  ~MockThreatDetails() override {}
+  ~MockThreatDetails() override = default;
   DISALLOW_COPY_AND_ASSIGN(MockThreatDetails);
 };
 
 class MockThreatDetailsFactory : public ThreatDetailsFactory {
  public:
-  ~MockThreatDetailsFactory() override {}
+  ~MockThreatDetailsFactory() override = default;
 
   ThreatDetails* CreateThreatDetails(
       BaseUIManager* ui_manager,
@@ -60,7 +60,7 @@ class MockTriggerThrottler : public TriggerThrottler {
 class TriggerManagerTest : public ::testing::Test {
  public:
   TriggerManagerTest() : trigger_manager_(/*ui_manager=*/nullptr) {}
-  ~TriggerManagerTest() override {}
+  ~TriggerManagerTest() override = default;
 
   void SetUp() override {
     ThreatDetails::RegisterFactory(&mock_threat_details_factory_);

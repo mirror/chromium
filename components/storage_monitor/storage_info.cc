@@ -67,8 +67,7 @@ StorageInfo::StorageInfo(const std::string& device_id_in,
       model_name_(model),
       total_size_in_bytes_(size_in_bytes) {}
 
-StorageInfo::~StorageInfo() {
-}
+StorageInfo::~StorageInfo() = default;
 
 // static
 std::string StorageInfo::MakeDeviceId(Type type, const std::string& unique_id) {

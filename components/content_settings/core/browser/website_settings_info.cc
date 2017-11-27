@@ -50,7 +50,7 @@ WebsiteSettingsInfo::WebsiteSettingsInfo(
   DCHECK(!initial_default_value_ || initial_default_value_->is_int());
 }
 
-WebsiteSettingsInfo::~WebsiteSettingsInfo() {}
+WebsiteSettingsInfo::~WebsiteSettingsInfo() = default;
 
 uint32_t WebsiteSettingsInfo::GetPrefRegistrationFlags() const {
   uint32_t flags = PrefRegistry::NO_REGISTRATION_FLAGS;

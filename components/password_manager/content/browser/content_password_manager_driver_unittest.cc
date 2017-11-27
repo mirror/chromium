@@ -61,7 +61,7 @@ class FakePasswordAutofillAgent
         logging_state_active_(false),
         binding_(this) {}
 
-  ~FakePasswordAutofillAgent() override {}
+  ~FakePasswordAutofillAgent() override = default;
 
   void BindRequest(mojo::ScopedMessagePipeHandle handle) {
     binding_.Bind(

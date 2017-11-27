@@ -12,7 +12,7 @@
 
 ToolkitDelegateViews::ToolkitDelegateViews() : menu_view_(nullptr) {}
 
-ToolkitDelegateViews::~ToolkitDelegateViews() {}
+ToolkitDelegateViews::~ToolkitDelegateViews() = default;
 
 void ToolkitDelegateViews::RunMenuAt(views::Widget* parent,
                                      const gfx::Point& point,

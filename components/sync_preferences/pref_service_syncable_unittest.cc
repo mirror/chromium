@@ -54,8 +54,8 @@ void Increment(int* num) {
 
 class TestPrefModelAssociatorClient : public PrefModelAssociatorClient {
  public:
-  TestPrefModelAssociatorClient() {}
-  ~TestPrefModelAssociatorClient() override {}
+  TestPrefModelAssociatorClient() = default;
+  ~TestPrefModelAssociatorClient() override = default;
 
   // PrefModelAssociatorClient implementation.
   bool IsMergeableListPreference(const std::string& pref_name) const override {

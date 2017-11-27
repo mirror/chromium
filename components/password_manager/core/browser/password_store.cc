@@ -38,8 +38,7 @@ PasswordStore::GetLoginsRequest::GetLoginsRequest(
   origin_task_runner_ = base::SequencedTaskRunnerHandle::Get();
 }
 
-PasswordStore::GetLoginsRequest::~GetLoginsRequest() {
-}
+PasswordStore::GetLoginsRequest::~GetLoginsRequest() = default;
 
 void PasswordStore::GetLoginsRequest::NotifyConsumerWithResults(
     std::vector<std::unique_ptr<PasswordForm>> results) {
@@ -69,7 +68,7 @@ PasswordStore::CheckReuseRequest::CheckReuseRequest(
     : origin_task_runner_(base::SequencedTaskRunnerHandle::Get()),
       consumer_weak_(consumer->AsWeakPtr()) {}
 
-PasswordStore::CheckReuseRequest::~CheckReuseRequest() {}
+PasswordStore::CheckReuseRequest::~CheckReuseRequest() = default;
 
 void PasswordStore::CheckReuseRequest::OnReuseFound(
     size_t password_length,

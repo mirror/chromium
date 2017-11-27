@@ -125,7 +125,7 @@ BasePingManager::BasePingManager(
   version_ = ProtocolManagerHelper::Version();
 }
 
-BasePingManager::~BasePingManager() {}
+BasePingManager::~BasePingManager() = default;
 
 // net::URLFetcherDelegate implementation ----------------------------------
 

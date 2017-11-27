@@ -8,14 +8,14 @@
 
 namespace syncer {
 
-JsEventDetails::JsEventDetails() {}
+JsEventDetails::JsEventDetails() = default;
 
 JsEventDetails::JsEventDetails(base::DictionaryValue* details)
     : details_(details) {}
 
 JsEventDetails::JsEventDetails(const JsEventDetails& other) = default;
 
-JsEventDetails::~JsEventDetails() {}
+JsEventDetails::~JsEventDetails() = default;
 
 const base::DictionaryValue& JsEventDetails::Get() const {
   return details_.Get();

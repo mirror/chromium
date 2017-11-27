@@ -73,7 +73,7 @@ class MockPageStateActivationThrottle : public content::NavigationThrottle {
     mock_page_activations_[GURL(kTestURLWithNoActivation)] =
         ActivationState(ActivationLevel::DISABLED);
   }
-  ~MockPageStateActivationThrottle() override {}
+  ~MockPageStateActivationThrottle() override = default;
 
   // content::NavigationThrottle:
   content::NavigationThrottle::ThrottleCheckResult WillStartRequest() override {
@@ -118,7 +118,7 @@ class ContentSubresourceFilterThrottleManagerTest
  public:
   ContentSubresourceFilterThrottleManagerTest()
       : ContentSubresourceFilterThrottleManager::Delegate() {}
-  ~ContentSubresourceFilterThrottleManagerTest() override {}
+  ~ContentSubresourceFilterThrottleManagerTest() override = default;
 
   // content::RenderViewHostTestHarness:
   void SetUp() override {

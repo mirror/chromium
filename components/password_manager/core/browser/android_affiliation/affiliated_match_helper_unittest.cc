@@ -32,7 +32,7 @@ class MockAffiliationService : public testing::StrictMock<AffiliationService> {
     testing::DefaultValue<AffiliatedFacets>::Set(AffiliatedFacets());
   }
 
-  ~MockAffiliationService() override {}
+  ~MockAffiliationService() override = default;
 
   MOCK_METHOD2(OnGetAffiliationsAndBrandingCalled,
                AffiliatedFacets(const FacetURI&, StrategyOnCacheMiss));
@@ -174,7 +174,7 @@ class AffiliatedMatchHelperTest : public testing::Test {
  public:
   AffiliatedMatchHelperTest()
       : expecting_result_callback_(false), mock_affiliation_service_(nullptr) {}
-  ~AffiliatedMatchHelperTest() override {}
+  ~AffiliatedMatchHelperTest() override = default;
 
  protected:
   void RunDeferredInitialization() {

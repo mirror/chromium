@@ -61,7 +61,7 @@ SecureChannel::PendingMessage::PendingMessage(const std::string& feature,
                                               int sequence_number)
     : feature(feature), payload(payload), sequence_number(sequence_number) {}
 
-SecureChannel::PendingMessage::~PendingMessage() {}
+SecureChannel::PendingMessage::~PendingMessage() = default;
 
 SecureChannel::SecureChannel(std::unique_ptr<Connection> connection,
                              CryptAuthService* cryptauth_service)

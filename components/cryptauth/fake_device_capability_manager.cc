@@ -6,9 +6,9 @@
 
 namespace cryptauth {
 
-FakeDeviceCapabilityManager::FakeDeviceCapabilityManager() {}
+FakeDeviceCapabilityManager::FakeDeviceCapabilityManager() = default;
 
-FakeDeviceCapabilityManager::~FakeDeviceCapabilityManager() {}
+FakeDeviceCapabilityManager::~FakeDeviceCapabilityManager() = default;
 
 void FakeDeviceCapabilityManager::SetCapabilityEnabled(
     const std::string& public_key,

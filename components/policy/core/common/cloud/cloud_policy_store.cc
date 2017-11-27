@@ -9,7 +9,7 @@
 
 namespace policy {
 
-CloudPolicyStore::Observer::~Observer() {}
+CloudPolicyStore::Observer::~Observer() = default;
 
 CloudPolicyStore::CloudPolicyStore()
     : status_(STATUS_OK),

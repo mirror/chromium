@@ -23,7 +23,7 @@ BookmarkDataTypeController::BookmarkDataTypeController(
       history_service_observer_(this),
       bookmark_model_observer_(this) {}
 
-BookmarkDataTypeController::~BookmarkDataTypeController() {}
+BookmarkDataTypeController::~BookmarkDataTypeController() = default;
 
 bool BookmarkDataTypeController::StartModels() {
   DCHECK(CalledOnValidThread());

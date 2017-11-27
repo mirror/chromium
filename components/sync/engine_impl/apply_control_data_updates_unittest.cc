@@ -41,8 +41,8 @@ using syncable::Id;
 class ApplyControlDataUpdatesTest : public ::testing::Test {
  public:
  protected:
-  ApplyControlDataUpdatesTest() {}
-  ~ApplyControlDataUpdatesTest() override {}
+  ApplyControlDataUpdatesTest() = default;
+  ~ApplyControlDataUpdatesTest() override = default;
 
   void SetUp() override {
     dir_maker_.SetUp();

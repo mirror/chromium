@@ -61,8 +61,8 @@ ScreenlockBridge::UserPodCustomIconOptions::UserPodCustomIconOptions()
       is_trial_run_(false) {
 }
 
-ScreenlockBridge::UserPodCustomIconOptions::~UserPodCustomIconOptions() {
-}
+ScreenlockBridge::UserPodCustomIconOptions::~UserPodCustomIconOptions() =
+    default;
 
 std::unique_ptr<base::DictionaryValue>
 ScreenlockBridge::UserPodCustomIconOptions::ToDictionaryValue() const {
@@ -187,7 +187,6 @@ void ScreenlockBridge::RemoveObserver(Observer* observer) {
 ScreenlockBridge::ScreenlockBridge()
     : lock_handler_(nullptr), focused_account_id_(EmptyAccountId()) {}
 
-ScreenlockBridge::~ScreenlockBridge() {
-}
+ScreenlockBridge::~ScreenlockBridge() = default;
 
 }  // namespace proximity_auth

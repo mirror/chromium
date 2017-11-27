@@ -16,7 +16,7 @@ ContentCredentialManager::ContentCredentialManager(
     PasswordManagerClient* client)
     : impl_(client), binding_(this) {}
 
-ContentCredentialManager::~ContentCredentialManager() {}
+ContentCredentialManager::~ContentCredentialManager() = default;
 
 void ContentCredentialManager::BindRequest(
     mojom::CredentialManagerAssociatedRequest request) {

@@ -13,7 +13,7 @@ using base::TimeTicks;
 
 AutofillHandler::AutofillHandler(AutofillDriver* driver) : driver_(driver) {}
 
-AutofillHandler::~AutofillHandler() {}
+AutofillHandler::~AutofillHandler() = default;
 
 bool AutofillHandler::OnWillSubmitForm(const FormData& form,
                                        const TimeTicks timestamp) {

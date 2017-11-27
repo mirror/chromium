@@ -33,7 +33,7 @@ class MockTimerWithMonitoredReset : public base::MockTimer {
  public:
   MockTimerWithMonitoredReset(bool retain_user_task, bool is_repeating)
       : base::MockTimer(retain_user_task, is_repeating) {}
-  ~MockTimerWithMonitoredReset() override {}
+  ~MockTimerWithMonitoredReset() override = default;
 
   // Instrumentation point for determining how many times Reset() was called.
   MOCK_METHOD0(ResetTriggered, void(void));
@@ -56,8 +56,8 @@ class KeepAliveDelegateTest : public testing::Test {
  public:
   using ChannelError = ::cast_channel::ChannelError;
 
-  KeepAliveDelegateTest() {}
-  ~KeepAliveDelegateTest() override {}
+  KeepAliveDelegateTest() = default;
+  ~KeepAliveDelegateTest() override = default;
 
  protected:
   void SetUp() override {

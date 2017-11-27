@@ -10,7 +10,7 @@ namespace sessions {
 
 // TimeFactory-----------------------------------------------------------------
 
-TabRestoreService::TimeFactory::~TimeFactory() {}
+TabRestoreService::TimeFactory::~TimeFactory() = default;
 
 // Entry ----------------------------------------------------------------------
 
@@ -47,12 +47,11 @@ size_t TabRestoreService::Window::EstimateMemoryUsage() const {
 
 // TabRestoreService ----------------------------------------------------------
 
-TabRestoreService::~TabRestoreService() {
-}
+TabRestoreService::~TabRestoreService() = default;
 
 // PlatformSpecificTabData
 // ------------------------------------------------------
 
-PlatformSpecificTabData::~PlatformSpecificTabData() {}
+PlatformSpecificTabData::~PlatformSpecificTabData() = default;
 
 }  // namespace sessions

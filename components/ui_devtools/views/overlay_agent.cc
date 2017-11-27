@@ -13,7 +13,7 @@ OverlayAgent::OverlayAgent(DOMAgent* dom_agent) : dom_agent_(dom_agent) {
   DCHECK(dom_agent_);
 }
 
-OverlayAgent::~OverlayAgent() {}
+OverlayAgent::~OverlayAgent() = default;
 
 void OverlayAgent::SetPinnedNodeId(int node_id) {
   pinned_id_ = node_id;

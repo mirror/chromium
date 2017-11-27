@@ -248,7 +248,7 @@ GetPagesTask::ReadResult::ReadResult() : success(false) {}
 
 GetPagesTask::ReadResult::ReadResult(const ReadResult& other) = default;
 
-GetPagesTask::ReadResult::~ReadResult() {}
+GetPagesTask::ReadResult::~ReadResult() = default;
 
 // static
 std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingAllPages(
@@ -346,7 +346,7 @@ GetPagesTask::GetPagesTask(OfflinePageMetadataStoreSQL* store,
   DCHECK(!callback_.is_null());
 }
 
-GetPagesTask::~GetPagesTask() {}
+GetPagesTask::~GetPagesTask() = default;
 
 void GetPagesTask::Run() {
   ReadRequests();

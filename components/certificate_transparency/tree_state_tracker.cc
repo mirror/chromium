@@ -52,7 +52,7 @@ TreeStateTracker::TreeStateTracker(
   }
 }
 
-TreeStateTracker::~TreeStateTracker() {}
+TreeStateTracker::~TreeStateTracker() = default;
 
 void TreeStateTracker::OnSCTVerified(X509Certificate* cert,
                                      const SignedCertificateTimestamp* sct) {

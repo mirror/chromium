@@ -60,8 +60,7 @@ CryptAuthEnrollerImpl::CryptAuthEnrollerImpl(
       secure_message_delegate_(std::move(secure_message_delegate)),
       weak_ptr_factory_(this) {}
 
-CryptAuthEnrollerImpl::~CryptAuthEnrollerImpl() {
-}
+CryptAuthEnrollerImpl::~CryptAuthEnrollerImpl() = default;
 
 void CryptAuthEnrollerImpl::Enroll(
     const std::string& user_public_key,

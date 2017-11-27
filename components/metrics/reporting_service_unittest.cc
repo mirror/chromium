@@ -31,8 +31,8 @@ const char kTestMimeType[] = "test_mime_type";
 
 class TestLogStore : public LogStore {
  public:
-  TestLogStore() {}
-  ~TestLogStore() {}
+  TestLogStore() = default;
+  ~TestLogStore() = default;
 
   void AddLog(const std::string& log) { logs_.push_back(log); }
 
@@ -67,7 +67,7 @@ class TestReportingService : public ReportingService {
       : ReportingService(client, local_state, 100) {
     Initialize();
   }
-  ~TestReportingService() override {}
+  ~TestReportingService() override = default;
 
   void AddLog(const std::string& log) { log_store_.AddLog(log); }
 
@@ -94,7 +94,7 @@ class ReportingServiceTest : public testing::Test {
     ReportingService::RegisterPrefs(testing_local_state_.registry());
   }
 
-  ~ReportingServiceTest() override {}
+  ~ReportingServiceTest() override = default;
 
   PrefService* GetLocalState() { return &testing_local_state_; }
 

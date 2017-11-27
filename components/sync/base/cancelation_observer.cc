@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-CancelationObserver::CancelationObserver() {}
+CancelationObserver::CancelationObserver() = default;
 
-CancelationObserver::~CancelationObserver() {}
+CancelationObserver::~CancelationObserver() = default;
 
 }  // namespace syncer

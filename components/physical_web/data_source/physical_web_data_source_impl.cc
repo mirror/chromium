@@ -9,9 +9,9 @@
 
 namespace physical_web {
 
-PhysicalWebDataSourceImpl::PhysicalWebDataSourceImpl() {}
+PhysicalWebDataSourceImpl::PhysicalWebDataSourceImpl() = default;
 
-PhysicalWebDataSourceImpl::~PhysicalWebDataSourceImpl() {}
+PhysicalWebDataSourceImpl::~PhysicalWebDataSourceImpl() = default;
 
 void PhysicalWebDataSourceImpl::RegisterListener(
     PhysicalWebListener* physical_web_listener, ScanMode scan_mode) {

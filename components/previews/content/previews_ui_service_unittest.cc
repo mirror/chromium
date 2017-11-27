@@ -36,7 +36,7 @@ class TestPreviewsUIService : public PreviewsUIService {
                           PreviewsIsEnabledCallback(),
                           std::move(logger)),
         io_data_set_(false) {}
-  ~TestPreviewsUIService() override {}
+  ~TestPreviewsUIService() override = default;
 
   // Set |io_data_set_| to true and use base class functionality.
   void SetIOData(base::WeakPtr<PreviewsIOData> previews_io_data) override {
@@ -166,9 +166,9 @@ class TestPreviewsIOData : public PreviewsIOData {
 
 class PreviewsUIServiceTest : public testing::Test {
  public:
-  PreviewsUIServiceTest() {}
+  PreviewsUIServiceTest() = default;
 
-  ~PreviewsUIServiceTest() override {}
+  ~PreviewsUIServiceTest() override = default;
 
   void SetUp() override {
     std::unique_ptr<TestPreviewsLogger> logger =

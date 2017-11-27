@@ -13,11 +13,9 @@ typedef std::set<const SigninErrorController::AuthStatusProvider*>
 
 }  // namespace
 
-SigninErrorController::AuthStatusProvider::AuthStatusProvider() {
-}
+SigninErrorController::AuthStatusProvider::AuthStatusProvider() = default;
 
-SigninErrorController::AuthStatusProvider::~AuthStatusProvider() {
-}
+SigninErrorController::AuthStatusProvider::~AuthStatusProvider() = default;
 
 SigninErrorController::SigninErrorController()
     : auth_error_(GoogleServiceAuthError::AuthErrorNone()) {

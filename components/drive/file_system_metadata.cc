@@ -12,7 +12,6 @@ FileSystemMetadata::FileSystemMetadata()
       last_update_check_error(FILE_ERROR_OK) {
 }
 
-FileSystemMetadata::~FileSystemMetadata() {
-}
+FileSystemMetadata::~FileSystemMetadata() = default;
 
 }  // namespace drive

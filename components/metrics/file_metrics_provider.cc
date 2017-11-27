@@ -135,7 +135,7 @@ struct FileMetricsProvider::SourceInfo {
         break;
     }
   }
-  ~SourceInfo() {}
+  ~SourceInfo() = default;
 
   // How to access this source (file/dir, atomic/active).
   const SourceType type;
@@ -186,7 +186,7 @@ FileMetricsProvider::Params::Params(const base::FilePath& path,
                                     base::StringPiece prefs_key)
     : path(path), type(type), association(association), prefs_key(prefs_key) {}
 
-FileMetricsProvider::Params::~Params() {}
+FileMetricsProvider::Params::~Params() = default;
 
 FileMetricsProvider::FileMetricsProvider(PrefService* local_state)
     : task_runner_(CreateBackgroundTaskRunner()),
@@ -196,7 +196,7 @@ FileMetricsProvider::FileMetricsProvider(PrefService* local_state)
       weak_factory_.GetWeakPtr());
 }
 
-FileMetricsProvider::~FileMetricsProvider() {}
+FileMetricsProvider::~FileMetricsProvider() = default;
 
 void FileMetricsProvider::RegisterSource(const Params& params) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

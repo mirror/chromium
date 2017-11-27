@@ -39,8 +39,7 @@ AffiliationBackend::AffiliationBackend(
   DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
-AffiliationBackend::~AffiliationBackend() {
-}
+AffiliationBackend::~AffiliationBackend() = default;
 
 void AffiliationBackend::Initialize(const base::FilePath& db_path) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

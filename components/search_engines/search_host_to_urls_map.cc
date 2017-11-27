@@ -12,8 +12,7 @@ SearchHostToURLsMap::SearchHostToURLsMap()
     : initialized_(false) {
 }
 
-SearchHostToURLsMap::~SearchHostToURLsMap() {
-}
+SearchHostToURLsMap::~SearchHostToURLsMap() = default;
 
 void SearchHostToURLsMap::Init(
     const TemplateURLService::OwnedTemplateURLVector& template_urls,

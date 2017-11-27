@@ -6,10 +6,8 @@
 
 namespace syncer {
 
-InvalidationHandler::InvalidationHandler() {
-}
+InvalidationHandler::InvalidationHandler() = default;
 
-InvalidationHandler::~InvalidationHandler() {
-}
+InvalidationHandler::~InvalidationHandler() = default;
 
 }  // namespace syncer

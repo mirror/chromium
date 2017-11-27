@@ -45,7 +45,7 @@ class MockOAuth2TokenService : public FakeOAuth2TokenService {
  public:
   MockOAuth2TokenService() : num_invalidate_token_(0) {}
 
-  ~MockOAuth2TokenService() override {}
+  ~MockOAuth2TokenService() override = default;
 
   void RespondToAccessTokenRequest(GoogleServiceAuthError error);
 

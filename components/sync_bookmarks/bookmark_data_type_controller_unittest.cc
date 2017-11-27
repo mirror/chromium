@@ -47,7 +47,7 @@ class HistoryMock : public history::HistoryService {
   HistoryMock() : history::HistoryService() {}
   MOCK_METHOD0(BackendLoaded, bool(void));
 
-  ~HistoryMock() override {}
+  ~HistoryMock() override = default;
 };
 
 }  // namespace
@@ -55,7 +55,7 @@ class HistoryMock : public history::HistoryService {
 class SyncBookmarkDataTypeControllerTest : public testing::Test,
                                            public syncer::FakeSyncClient {
  public:
-  SyncBookmarkDataTypeControllerTest() {}
+  SyncBookmarkDataTypeControllerTest() = default;
 
   // FakeSyncClient overrides.
   BookmarkModel* GetBookmarkModel() override { return bookmark_model_.get(); }

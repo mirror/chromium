@@ -6,9 +6,9 @@
 
 namespace cryptauth {
 
-RemoteDeviceProvider::RemoteDeviceProvider() {}
+RemoteDeviceProvider::RemoteDeviceProvider() = default;
 
-RemoteDeviceProvider::~RemoteDeviceProvider() {}
+RemoteDeviceProvider::~RemoteDeviceProvider() = default;
 
 void RemoteDeviceProvider::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);

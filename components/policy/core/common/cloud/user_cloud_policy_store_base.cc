@@ -24,8 +24,7 @@ UserCloudPolicyStoreBase::UserCloudPolicyStoreBase(
     scoped_refptr<base::SequencedTaskRunner> background_task_runner)
     : background_task_runner_(background_task_runner) {}
 
-UserCloudPolicyStoreBase::~UserCloudPolicyStoreBase() {
-}
+UserCloudPolicyStoreBase::~UserCloudPolicyStoreBase() = default;
 
 std::unique_ptr<UserCloudPolicyValidator>
 UserCloudPolicyStoreBase::CreateValidator(

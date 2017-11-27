@@ -72,8 +72,8 @@ class TestSyncClient : public FakeSyncClient {
 // callback passed into ConfigureDataTypes.
 class FakeModelTypeConfigurer : public ModelTypeConfigurer {
  public:
-  FakeModelTypeConfigurer() {}
-  ~FakeModelTypeConfigurer() override {}
+  FakeModelTypeConfigurer() = default;
+  ~FakeModelTypeConfigurer() override = default;
 
   void ConfigureDataTypes(ConfigureParams params) override {
     configure_call_count_++;
@@ -197,7 +197,7 @@ class FakeDataTypeEncryptionHandler : public DataTypeEncryptionHandler {
 
 FakeDataTypeEncryptionHandler::FakeDataTypeEncryptionHandler()
     : passphrase_required_(false) {}
-FakeDataTypeEncryptionHandler::~FakeDataTypeEncryptionHandler() {}
+FakeDataTypeEncryptionHandler::~FakeDataTypeEncryptionHandler() = default;
 
 bool FakeDataTypeEncryptionHandler::IsPassphraseRequired() const {
   return passphrase_required_;
@@ -245,9 +245,9 @@ class TestDataTypeManager : public DataTypeManagerImpl {
 // run both configuring with nigori, and configuring without).
 class SyncDataTypeManagerImplTest : public testing::Test {
  public:
-  SyncDataTypeManagerImplTest() {}
+  SyncDataTypeManagerImplTest() = default;
 
-  ~SyncDataTypeManagerImplTest() override {}
+  ~SyncDataTypeManagerImplTest() override = default;
 
  protected:
   void SetUp() override {

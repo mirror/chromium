@@ -66,7 +66,7 @@ gfx::NativePixmapHandle ProtectedBufferHandle::native_pixmap_handle() const {
 
 class ProtectedBufferManager::ProtectedBuffer {
  public:
-  virtual ~ProtectedBuffer() {}
+  virtual ~ProtectedBuffer() = default;
 
   // Downcasting methods to return duplicated handles to the underlying
   // protected buffers for each buffer type, or empty/null handles if not
@@ -118,7 +118,8 @@ ProtectedBufferManager::ProtectedSharedMemory::ProtectedSharedMemory(
     scoped_refptr<gfx::NativePixmap> dummy_handle)
     : ProtectedBuffer(std::move(dummy_handle)) {}
 
-ProtectedBufferManager::ProtectedSharedMemory::~ProtectedSharedMemory() {}
+ProtectedBufferManager::ProtectedSharedMemory::~ProtectedSharedMemory() =
+    default;
 
 // static
 std::unique_ptr<ProtectedBufferManager::ProtectedSharedMemory>
@@ -180,7 +181,8 @@ ProtectedBufferManager::ProtectedNativePixmap::ProtectedNativePixmap(
     scoped_refptr<gfx::NativePixmap> dummy_handle)
     : ProtectedBuffer(std::move(dummy_handle)) {}
 
-ProtectedBufferManager::ProtectedNativePixmap::~ProtectedNativePixmap() {}
+ProtectedBufferManager::ProtectedNativePixmap::~ProtectedNativePixmap() =
+    default;
 
 // static
 std::unique_ptr<ProtectedBufferManager::ProtectedNativePixmap>

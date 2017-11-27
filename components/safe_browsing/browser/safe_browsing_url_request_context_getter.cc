@@ -134,6 +134,7 @@ base::FilePath SafeBrowsingURLRequestContextGetter::ChannelIDFilePath() {
   return base::FilePath(GetBaseFilename().value() + kChannelIDFile);
 }
 
-SafeBrowsingURLRequestContextGetter::~SafeBrowsingURLRequestContextGetter() {}
+SafeBrowsingURLRequestContextGetter::~SafeBrowsingURLRequestContextGetter() =
+    default;
 
 }  // namespace safe_browsing

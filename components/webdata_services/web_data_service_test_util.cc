@@ -8,11 +8,9 @@
 
 using autofill::AutofillWebDataService;
 
-MockWebDataServiceWrapperBase::MockWebDataServiceWrapperBase() {
-}
+MockWebDataServiceWrapperBase::MockWebDataServiceWrapperBase() = default;
 
-MockWebDataServiceWrapperBase::~MockWebDataServiceWrapperBase() {
-}
+MockWebDataServiceWrapperBase::~MockWebDataServiceWrapperBase() = default;
 
 void MockWebDataServiceWrapperBase::Shutdown() {
 }
@@ -26,8 +24,7 @@ MockWebDataServiceWrapper::MockWebDataServiceWrapper(
     : fake_autofill_web_data_(fake_autofill), fake_token_web_data_(fake_token) {
 }
 
-MockWebDataServiceWrapper::~MockWebDataServiceWrapper() {
-}
+MockWebDataServiceWrapper::~MockWebDataServiceWrapper() = default;
 
 scoped_refptr<AutofillWebDataService>
 MockWebDataServiceWrapper::GetAutofillWebData() {

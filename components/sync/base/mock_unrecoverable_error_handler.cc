@@ -9,7 +9,7 @@ namespace syncer {
 MockUnrecoverableErrorHandler::MockUnrecoverableErrorHandler()
     : invocation_count_(0), weak_ptr_factory_(this) {}
 
-MockUnrecoverableErrorHandler::~MockUnrecoverableErrorHandler() {}
+MockUnrecoverableErrorHandler::~MockUnrecoverableErrorHandler() = default;
 
 void MockUnrecoverableErrorHandler::OnUnrecoverableError(
     const base::Location& from_here,

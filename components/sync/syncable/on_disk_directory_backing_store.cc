@@ -28,7 +28,7 @@ OnDiskDirectoryBackingStore::OnDiskDirectoryBackingStore(
   DCHECK(backing_file_path_.IsAbsolute());
 }
 
-OnDiskDirectoryBackingStore::~OnDiskDirectoryBackingStore() {}
+OnDiskDirectoryBackingStore::~OnDiskDirectoryBackingStore() = default;
 
 DirOpenResult OnDiskDirectoryBackingStore::TryLoad(
     Directory::MetahandlesMap* handles_map,

@@ -4,8 +4,8 @@
 
 #include "components/keyed_service/core/keyed_service.h"
 
-KeyedService::KeyedService() {}
+KeyedService::KeyedService() = default;
 
-KeyedService::~KeyedService() {}
+KeyedService::~KeyedService() = default;
 
 void KeyedService::Shutdown() {}

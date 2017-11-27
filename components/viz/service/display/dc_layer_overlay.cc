@@ -83,7 +83,7 @@ DCLayerOverlay::DCLayerOverlay() : filter(GL_LINEAR) {}
 
 DCLayerOverlay::DCLayerOverlay(const DCLayerOverlay& other) = default;
 
-DCLayerOverlay::~DCLayerOverlay() {}
+DCLayerOverlay::~DCLayerOverlay() = default;
 
 DCLayerOverlayProcessor::DCLayerOverlayProcessor() = default;
 

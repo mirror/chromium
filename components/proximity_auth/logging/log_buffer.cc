@@ -26,11 +26,9 @@ LogBuffer::LogMessage::LogMessage(const std::string& text,
     : text(text), time(time), file(file), line(line), severity(severity) {
 }
 
-LogBuffer::LogBuffer() {
-}
+LogBuffer::LogBuffer() = default;
 
-LogBuffer::~LogBuffer() {
-}
+LogBuffer::~LogBuffer() = default;
 
 // static
 LogBuffer* LogBuffer::GetInstance() {

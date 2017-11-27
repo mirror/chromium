@@ -158,7 +158,8 @@ PersistentPagesConsistencyCheckTask::PersistentPagesConsistencyCheckTask(
       archives_dir_(archives_dir),
       weak_ptr_factory_(this) {}
 
-PersistentPagesConsistencyCheckTask::~PersistentPagesConsistencyCheckTask() {}
+PersistentPagesConsistencyCheckTask::~PersistentPagesConsistencyCheckTask() =
+    default;
 
 void PersistentPagesConsistencyCheckTask::Run() {
   std::vector<std::string> namespaces = policy_controller_->GetAllNamespaces();

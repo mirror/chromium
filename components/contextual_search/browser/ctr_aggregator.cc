@@ -35,7 +35,7 @@ CtrAggregator::CtrAggregator(WeeklyActivityStorage& storage, int week_number)
   storage_.AdvanceToWeek(week_number_);
 }
 
-CtrAggregator::~CtrAggregator() {}
+CtrAggregator::~CtrAggregator() = default;
 
 void CtrAggregator::RecordImpression(bool did_click) {
   storage_.WriteImpressions(week_number_,

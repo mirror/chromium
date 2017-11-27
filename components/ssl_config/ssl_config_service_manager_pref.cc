@@ -107,7 +107,7 @@ class SSLConfigServicePref : public net::SSLConfigService {
   // Allow the pref watcher to update our internal state.
   friend class SSLConfigServiceManagerPref;
 
-  ~SSLConfigServicePref() override {}
+  ~SSLConfigServicePref() override = default;
 
   // This method is posted to the IO thread from the browser thread to carry the
   // new config information.
@@ -145,7 +145,7 @@ class SSLConfigServiceManagerPref : public ssl_config::SSLConfigServiceManager {
   SSLConfigServiceManagerPref(
       PrefService* local_state,
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner);
-  ~SSLConfigServiceManagerPref() override {}
+  ~SSLConfigServiceManagerPref() override = default;
 
   // Register local_state SSL preferences.
   static void RegisterPrefs(PrefRegistrySimple* registry);

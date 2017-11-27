@@ -20,8 +20,7 @@ DistilledPagePrefs::DistilledPagePrefs(PrefService* pref_service)
     : pref_service_(pref_service), weak_ptr_factory_(this) {
 }
 
-DistilledPagePrefs::~DistilledPagePrefs() {
-}
+DistilledPagePrefs::~DistilledPagePrefs() = default;
 
 // static
 void DistilledPagePrefs::RegisterProfilePrefs(

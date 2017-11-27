@@ -28,8 +28,7 @@ SpellcheckCharAttribute::SpellcheckCharAttribute()
     : script_code_(USCRIPT_LATIN) {
 }
 
-SpellcheckCharAttribute::~SpellcheckCharAttribute() {
-}
+SpellcheckCharAttribute::~SpellcheckCharAttribute() = default;
 
 void SpellcheckCharAttribute::SetDefaultLanguage(const std::string& language) {
   CreateRuleSets(language);

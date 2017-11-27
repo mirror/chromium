@@ -54,7 +54,7 @@ TestOrderablePendingTask& TestOrderablePendingTask::operator=(
 
 size_t TestOrderablePendingTask::task_id_counter = 0;
 
-TestOrderablePendingTask::~TestOrderablePendingTask() {}
+TestOrderablePendingTask::~TestOrderablePendingTask() = default;
 
 bool TestOrderablePendingTask::operator==(
     const TestOrderablePendingTask& other) const {
@@ -95,7 +95,7 @@ OrderedSimpleTaskRunner::OrderedSimpleTaskRunner(
       max_tasks_(kAbsoluteMaxTasks),
       inside_run_tasks_until_(false) {}
 
-OrderedSimpleTaskRunner::~OrderedSimpleTaskRunner() {}
+OrderedSimpleTaskRunner::~OrderedSimpleTaskRunner() = default;
 
 // base::TestSimpleTaskRunner implementation
 bool OrderedSimpleTaskRunner::PostDelayedTask(const base::Location& from_here,

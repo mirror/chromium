@@ -46,7 +46,7 @@ UpdateContext::UpdateContext(
         std::make_pair(id, base::MakeUnique<Component>(*this, id)));
 }
 
-UpdateContext::~UpdateContext() {}
+UpdateContext::~UpdateContext() = default;
 
 UpdateEngine::UpdateEngine(
     const scoped_refptr<Configurator>& config,

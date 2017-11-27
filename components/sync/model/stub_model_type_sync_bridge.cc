@@ -17,7 +17,7 @@ StubModelTypeSyncBridge::StubModelTypeSyncBridge(
     const ChangeProcessorFactory& change_processor_factory)
     : ModelTypeSyncBridge(change_processor_factory, PREFERENCES) {}
 
-StubModelTypeSyncBridge::~StubModelTypeSyncBridge() {}
+StubModelTypeSyncBridge::~StubModelTypeSyncBridge() = default;
 
 std::unique_ptr<MetadataChangeList>
 StubModelTypeSyncBridge::CreateMetadataChangeList() {

@@ -18,7 +18,7 @@ namespace payments {
 class PaymentRequestSpecTest : public testing::Test,
                                public PaymentRequestSpec::Observer {
  protected:
-  ~PaymentRequestSpecTest() override {}
+  ~PaymentRequestSpecTest() override = default;
 
   void OnSpecUpdated() override { on_spec_updated_called_ = true; }
 

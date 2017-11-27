@@ -68,9 +68,7 @@ base::DictionaryValue* LoadDictionary(const std::string& filename) {
 
 }  // namespace
 
-
-JSONSchemaValidatorTestBase::JSONSchemaValidatorTestBase() {
-}
+JSONSchemaValidatorTestBase::JSONSchemaValidatorTestBase() = default;
 
 void JSONSchemaValidatorTestBase::RunTests() {
   TestComplex();

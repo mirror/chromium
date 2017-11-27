@@ -40,11 +40,9 @@ class FakeTiclSettingsProvider : public TiclSettingsProvider {
   DISALLOW_COPY_AND_ASSIGN(FakeTiclSettingsProvider);
 };
 
-FakeTiclSettingsProvider::FakeTiclSettingsProvider() {
-}
+FakeTiclSettingsProvider::FakeTiclSettingsProvider() = default;
 
-FakeTiclSettingsProvider::~FakeTiclSettingsProvider() {
-}
+FakeTiclSettingsProvider::~FakeTiclSettingsProvider() = default;
 
 bool FakeTiclSettingsProvider::UseGCMChannel() const {
   return false;
@@ -54,10 +52,9 @@ bool FakeTiclSettingsProvider::UseGCMChannel() const {
 
 class TiclInvalidationServiceTestDelegate {
  public:
-  TiclInvalidationServiceTestDelegate() {}
+  TiclInvalidationServiceTestDelegate() = default;
 
-  ~TiclInvalidationServiceTestDelegate() {
-  }
+  ~TiclInvalidationServiceTestDelegate() = default;
 
   void CreateInvalidationService() {
     CreateUninitializedInvalidationService();

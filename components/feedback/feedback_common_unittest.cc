@@ -35,7 +35,7 @@ class FeedbackCommonTest : public testing::Test {
       : feedback_(new FeedbackCommon()) {
   }
 
-  ~FeedbackCommonTest() override {}
+  ~FeedbackCommonTest() override = default;
 
   void CompressLogs() { feedback_->CompressLogs(); }
 

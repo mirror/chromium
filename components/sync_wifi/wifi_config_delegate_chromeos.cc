@@ -36,7 +36,7 @@ WifiConfigDelegateChromeOs::WifiConfigDelegateChromeOs(
   DCHECK(managed_network_configuration_handler_);
 }
 
-WifiConfigDelegateChromeOs::~WifiConfigDelegateChromeOs() {}
+WifiConfigDelegateChromeOs::~WifiConfigDelegateChromeOs() = default;
 
 void WifiConfigDelegateChromeOs::AddToLocalNetworks(
     const WifiCredential& network_credential) {

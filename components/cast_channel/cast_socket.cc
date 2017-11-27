@@ -69,8 +69,8 @@ bool IsTerminalState(ConnectionState state) {
 // Cert verifier which blindly accepts all certificates, regardless of validity.
 class FakeCertVerifier : public net::CertVerifier {
  public:
-  FakeCertVerifier() {}
-  ~FakeCertVerifier() override {}
+  FakeCertVerifier() = default;
+  ~FakeCertVerifier() override = default;
 
   int Verify(const RequestParams& params,
              net::CRLSet*,
@@ -622,7 +622,8 @@ CastSocketImpl::CastSocketMessageDelegate::CastSocketMessageDelegate(
   DCHECK(socket_);
 }
 
-CastSocketImpl::CastSocketMessageDelegate::~CastSocketMessageDelegate() {}
+CastSocketImpl::CastSocketMessageDelegate::~CastSocketMessageDelegate() =
+    default;
 
 // CastTransport::Delegate implementation.
 void CastSocketImpl::CastSocketMessageDelegate::OnError(

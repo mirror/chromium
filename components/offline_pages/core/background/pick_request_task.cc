@@ -51,7 +51,7 @@ PickRequestTask::PickRequestTask(
   device_conditions_.reset(new DeviceConditions(device_conditions));
 }
 
-PickRequestTask::~PickRequestTask() {}
+PickRequestTask::~PickRequestTask() = default;
 
 void PickRequestTask::Run() {
   GetRequests();

@@ -82,15 +82,15 @@ bool CanSendReport(const SBErrorOptions& error_display_options,
 
 }  // namespace
 
-DataCollectorsContainer::DataCollectorsContainer() {}
-DataCollectorsContainer::~DataCollectorsContainer() {}
+DataCollectorsContainer::DataCollectorsContainer() = default;
+DataCollectorsContainer::~DataCollectorsContainer() = default;
 
 TriggerManager::TriggerManager(BaseUIManager* ui_manager)
     : ui_manager_(ui_manager),
       trigger_throttler_(new TriggerThrottler()),
       weak_factory_(this) {}
 
-TriggerManager::~TriggerManager() {}
+TriggerManager::~TriggerManager() = default;
 
 void TriggerManager::set_trigger_throttler(TriggerThrottler* throttler) {
   trigger_throttler_.reset(throttler);
@@ -234,7 +234,7 @@ TriggerManagerWebContentsHelper::TriggerManagerWebContentsHelper(
     : content::WebContentsObserver(web_contents),
       trigger_manager_(trigger_manager) {}
 
-TriggerManagerWebContentsHelper::~TriggerManagerWebContentsHelper() {}
+TriggerManagerWebContentsHelper::~TriggerManagerWebContentsHelper() = default;
 
 void TriggerManagerWebContentsHelper::CreateForWebContents(
     content::WebContents* web_contents,

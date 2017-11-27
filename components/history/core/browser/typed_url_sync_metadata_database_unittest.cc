@@ -32,8 +32,8 @@ std::string IntToStorageKey(int i) {
 class TypedURLSyncMetadataDatabaseTest : public testing::Test,
                                          public TypedURLSyncMetadataDatabase {
  public:
-  TypedURLSyncMetadataDatabaseTest() {}
-  ~TypedURLSyncMetadataDatabaseTest() override {}
+  TypedURLSyncMetadataDatabaseTest() = default;
+  ~TypedURLSyncMetadataDatabaseTest() override = default;
 
  protected:
   sql::Connection& GetDB() override { return db_; }

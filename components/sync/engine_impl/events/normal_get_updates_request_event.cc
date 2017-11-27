@@ -21,7 +21,7 @@ NormalGetUpdatesRequestEvent::NormalGetUpdatesRequestEvent(
       is_retry_(nudge_tracker.IsRetryRequired()),
       request_(request) {}
 
-NormalGetUpdatesRequestEvent::~NormalGetUpdatesRequestEvent() {}
+NormalGetUpdatesRequestEvent::~NormalGetUpdatesRequestEvent() = default;
 
 base::Time NormalGetUpdatesRequestEvent::GetTimestamp() const {
   return timestamp_;

@@ -74,8 +74,7 @@ TypedUrlSyncableService::TypedUrlSyncableService(
   DCHECK(sequence_checker_.CalledOnValidSequence());
 }
 
-TypedUrlSyncableService::~TypedUrlSyncableService() {
-}
+TypedUrlSyncableService::~TypedUrlSyncableService() = default;
 
 syncer::SyncMergeResult TypedUrlSyncableService::MergeDataAndStartSyncing(
     syncer::ModelType type,

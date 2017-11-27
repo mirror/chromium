@@ -37,7 +37,7 @@ void AttachmentId::ImmutableAttachmentIdProtoTraits::Swap(
   t1->Swap(t2);
 }
 
-AttachmentId::~AttachmentId() {}
+AttachmentId::~AttachmentId() = default;
 
 bool AttachmentId::operator==(const AttachmentId& other) const {
   return proto_.Get().unique_id() == other.proto_.Get().unique_id();

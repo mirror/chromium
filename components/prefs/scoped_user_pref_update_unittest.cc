@@ -16,7 +16,7 @@ using testing::Mock;
 class ScopedUserPrefUpdateTest : public testing::Test {
  public:
   ScopedUserPrefUpdateTest() : observer_(&prefs_) {}
-  ~ScopedUserPrefUpdateTest() override {}
+  ~ScopedUserPrefUpdateTest() override = default;
 
  protected:
   void SetUp() override {

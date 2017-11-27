@@ -31,9 +31,11 @@ std::unique_ptr<ModelTypeChangeProcessor> CreateAndAssignProcessor(
 
 }  // namespace
 
-RecordingModelTypeChangeProcessor::RecordingModelTypeChangeProcessor() {}
+RecordingModelTypeChangeProcessor::RecordingModelTypeChangeProcessor() =
+    default;
 
-RecordingModelTypeChangeProcessor::~RecordingModelTypeChangeProcessor() {}
+RecordingModelTypeChangeProcessor::~RecordingModelTypeChangeProcessor() =
+    default;
 
 void RecordingModelTypeChangeProcessor::Put(
     const std::string& storage_key,

@@ -66,7 +66,7 @@ MATCHER_P(MatchProto, expected, "matches protobuf") {
 // A mock class to allow us to set expectations on upload callbacks.
 class MockStatusCallbackObserver {
  public:
-  MockStatusCallbackObserver() {}
+  MockStatusCallbackObserver() = default;
 
   MOCK_METHOD1(OnCallbackComplete, void(bool));
 };
@@ -75,7 +75,7 @@ class MockStatusCallbackObserver {
 // callbacks.
 class MockRemoteCommandsObserver {
  public:
-  MockRemoteCommandsObserver() {}
+  MockRemoteCommandsObserver() = default;
 
   MOCK_METHOD2(OnRemoteCommandsFetched,
                void(DeviceManagementStatus,
@@ -86,7 +86,7 @@ class MockRemoteCommandsObserver {
 // callback
 class MockAvailableLicensesObserver {
  public:
-  MockAvailableLicensesObserver() {}
+  MockAvailableLicensesObserver() = default;
 
   MOCK_METHOD2(OnAvailableLicensesFetched,
                void(bool, const CloudPolicyClient::LicenseMap&));

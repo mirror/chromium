@@ -50,8 +50,7 @@ void LogMachineIdState(MachineIdState state) {
 
 ClonedInstallDetector::ClonedInstallDetector() : weak_ptr_factory_(this) {}
 
-ClonedInstallDetector::~ClonedInstallDetector() {
-}
+ClonedInstallDetector::~ClonedInstallDetector() = default;
 
 void ClonedInstallDetector::CheckForClonedInstall(PrefService* local_state) {
   base::PostTaskWithTraitsAndReplyWithResult(

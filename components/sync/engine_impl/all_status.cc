@@ -18,7 +18,7 @@ AllStatus::AllStatus() {
   status_.crypto_has_pending_keys = false;
 }
 
-AllStatus::~AllStatus() {}
+AllStatus::~AllStatus() = default;
 
 SyncStatus AllStatus::CreateBlankStatus() const {
   // Status is initialized with the previous status value.  Variables

@@ -161,8 +161,8 @@ std::string Str(const std::vector<TrackingEvent>& events) {
 
 class AccountTrackerObserver : public AccountTrackerService::Observer {
  public:
-  AccountTrackerObserver() {}
-  ~AccountTrackerObserver() override {}
+  AccountTrackerObserver() = default;
+  ~AccountTrackerObserver() override = default;
 
   void Clear();
   void SortEventsByUser();
@@ -251,9 +251,9 @@ testing::AssertionResult AccountTrackerObserver::CheckEvents(
 
 class AccountTrackerServiceTest : public testing::Test {
  public:
-  AccountTrackerServiceTest() {}
+  AccountTrackerServiceTest() = default;
 
-  ~AccountTrackerServiceTest() override {}
+  ~AccountTrackerServiceTest() override = default;
 
   void SetUp() override {
     ChildAccountInfoFetcher::InitializeForTests();

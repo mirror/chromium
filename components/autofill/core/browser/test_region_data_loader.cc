@@ -8,9 +8,9 @@
 
 namespace autofill {
 
-TestRegionDataLoader::TestRegionDataLoader() {}
+TestRegionDataLoader::TestRegionDataLoader() = default;
 
-TestRegionDataLoader::~TestRegionDataLoader() {}
+TestRegionDataLoader::~TestRegionDataLoader() = default;
 
 void TestRegionDataLoader::LoadRegionData(
     const std::string& country_code,

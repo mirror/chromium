@@ -43,7 +43,7 @@ CleanupTask::CleanupTask(RequestQueueStore* store,
       event_logger_(event_logger),
       weak_ptr_factory_(this) {}
 
-CleanupTask::~CleanupTask() {}
+CleanupTask::~CleanupTask() = default;
 
 void CleanupTask::Run() {
   GetRequests();

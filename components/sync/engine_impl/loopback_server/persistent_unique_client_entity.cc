@@ -32,7 +32,7 @@ PersistentUniqueClientEntity::PersistentUniqueClientEntity(
   SetSpecifics(specifics);
 }
 
-PersistentUniqueClientEntity::~PersistentUniqueClientEntity() {}
+PersistentUniqueClientEntity::~PersistentUniqueClientEntity() = default;
 
 // static
 std::unique_ptr<LoopbackServerEntity>

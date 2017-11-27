@@ -126,7 +126,8 @@ DataUseMeasurement::DataUseMeasurement(
 #endif
 }
 
-DataUseMeasurement::~DataUseMeasurement(){};
+DataUseMeasurement::~DataUseMeasurement() = default;
+;
 
 void DataUseMeasurement::OnBeforeURLRequest(net::URLRequest* request) {
   DataUseUserData* data_use_user_data = reinterpret_cast<DataUseUserData*>(

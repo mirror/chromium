@@ -20,8 +20,7 @@ InMemoryHistoryBackend::InMemoryHistoryBackend()
     : history_service_observer_(this) {
 }
 
-InMemoryHistoryBackend::~InMemoryHistoryBackend() {
-}
+InMemoryHistoryBackend::~InMemoryHistoryBackend() = default;
 
 bool InMemoryHistoryBackend::Init(const base::FilePath& history_filename) {
   db_.reset(new InMemoryDatabase);

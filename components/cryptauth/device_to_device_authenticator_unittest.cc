@@ -67,7 +67,7 @@ class FakeConnection : public Connection {
  public:
   FakeConnection(const RemoteDevice& remote_device)
       : Connection(remote_device), connection_blocked_(false) {}
-  ~FakeConnection() override {}
+  ~FakeConnection() override = default;
 
   // Connection:
   void Connect() override {
@@ -118,7 +118,7 @@ class DeviceToDeviceAuthenticatorForTest : public DeviceToDeviceAuthenticator {
                                     kAccountId,
                                     std::move(secure_message_delegate)),
         timer_(nullptr) {}
-  ~DeviceToDeviceAuthenticatorForTest() override {}
+  ~DeviceToDeviceAuthenticatorForTest() override = default;
 
   base::MockTimer* timer() { return timer_; }
 
@@ -151,7 +151,7 @@ class CryptAuthDeviceToDeviceAuthenticatorTest : public testing::Test {
         secure_message_delegate_(new FakeSecureMessageDelegate),
         authenticator_(&connection_,
                        base::WrapUnique(secure_message_delegate_)) {}
-  ~CryptAuthDeviceToDeviceAuthenticatorTest() override {}
+  ~CryptAuthDeviceToDeviceAuthenticatorTest() override = default;
 
   void SetUp() override {
     // Set up the session asymmetric keys for both the local and remote devices.

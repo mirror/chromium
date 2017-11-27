@@ -37,7 +37,7 @@ ManagedBookmarksTracker::ManagedBookmarksTracker(
       prefs_(prefs),
       get_management_domain_callback_(callback) {}
 
-ManagedBookmarksTracker::~ManagedBookmarksTracker() {}
+ManagedBookmarksTracker::~ManagedBookmarksTracker() = default;
 
 std::unique_ptr<base::ListValue>
 ManagedBookmarksTracker::GetInitialManagedBookmarks() {

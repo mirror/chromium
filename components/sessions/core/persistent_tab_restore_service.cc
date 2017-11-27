@@ -480,7 +480,7 @@ PersistentTabRestoreService::Delegate::Delegate(TabRestoreServiceClient* client)
       entries_written_(0),
       load_state_(NOT_LOADED) {}
 
-PersistentTabRestoreService::Delegate::~Delegate() {}
+PersistentTabRestoreService::Delegate::~Delegate() = default;
 
 bool PersistentTabRestoreService::Delegate::ShouldUseDelayedSave() {
   return true;
@@ -1092,7 +1092,7 @@ PersistentTabRestoreService::PersistentTabRestoreService(
   delegate_->set_tab_restore_service_helper(&helper_);
 }
 
-PersistentTabRestoreService::~PersistentTabRestoreService() {}
+PersistentTabRestoreService::~PersistentTabRestoreService() = default;
 
 void PersistentTabRestoreService::AddObserver(
     TabRestoreServiceObserver* observer) {

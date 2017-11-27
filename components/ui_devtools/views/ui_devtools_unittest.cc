@@ -46,8 +46,8 @@ class TestView : public views::View {
 
 class FakeFrontendChannel : public FrontendChannel {
  public:
-  FakeFrontendChannel() {}
-  ~FakeFrontendChannel() override {}
+  FakeFrontendChannel() = default;
+  ~FakeFrontendChannel() override = default;
 
   int CountProtocolNotificationMessageStartsWith(const std::string& message) {
     int count = 0;
@@ -184,8 +184,8 @@ std::unique_ptr<Overlay::HighlightConfig> CreateHighlightConfig(
 
 class UIDevToolsTest : public views::ViewsTestBase {
  public:
-  UIDevToolsTest() {}
-  ~UIDevToolsTest() override {}
+  UIDevToolsTest() = default;
+  ~UIDevToolsTest() override = default;
 
   views::internal::NativeWidgetPrivate* CreateTestNativeWidget() {
     views::Widget* widget = new views::Widget;

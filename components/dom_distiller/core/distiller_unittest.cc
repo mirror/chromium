@@ -96,8 +96,8 @@ vector<int> GetPagesInSequence(int start_page_num, int num_pages) {
 
 struct MultipageDistillerData {
  public:
-  MultipageDistillerData() {}
-  ~MultipageDistillerData() {}
+  MultipageDistillerData() = default;
+  ~MultipageDistillerData() = default;
   vector<string> page_urls;
   vector<string> content;
   vector<vector<int> > image_ids;
@@ -258,7 +258,7 @@ class TestDistillerURLFetcherFactory : public DistillerURLFetcherFactory {
  public:
   TestDistillerURLFetcherFactory() : DistillerURLFetcherFactory(nullptr) {}
 
-  ~TestDistillerURLFetcherFactory() override {}
+  ~TestDistillerURLFetcherFactory() override = default;
   DistillerURLFetcher* CreateDistillerURLFetcher() const override {
     return new TestDistillerURLFetcher(false);
   }
@@ -267,14 +267,14 @@ class TestDistillerURLFetcherFactory : public DistillerURLFetcherFactory {
 class MockDistillerURLFetcherFactory : public DistillerURLFetcherFactory {
  public:
   MockDistillerURLFetcherFactory() : DistillerURLFetcherFactory(nullptr) {}
-  virtual ~MockDistillerURLFetcherFactory() {}
+  virtual ~MockDistillerURLFetcherFactory() = default;
 
   MOCK_CONST_METHOD0(CreateDistillerURLFetcher, DistillerURLFetcher*());
 };
 
 class DistillerTest : public testing::Test {
  public:
-  ~DistillerTest() override {}
+  ~DistillerTest() override = default;
 
   void OnDistillArticleDone(std::unique_ptr<DistilledArticleProto> proto) {
     article_proto_ = std::move(proto);

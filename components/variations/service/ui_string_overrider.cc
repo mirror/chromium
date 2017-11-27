@@ -26,7 +26,7 @@ UIStringOverrider::UIStringOverrider(const uint32_t* resource_hashes,
   DCHECK(!num_resources || resource_indices_);
 }
 
-UIStringOverrider::~UIStringOverrider() {}
+UIStringOverrider::~UIStringOverrider() = default;
 
 int UIStringOverrider::GetResourceIndex(uint32_t hash) {
   if (!num_resources_)

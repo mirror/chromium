@@ -9,7 +9,7 @@
 SigninStatusMetricsProviderBase::SigninStatusMetricsProviderBase()
     : signin_status_(UNKNOWN_SIGNIN_STATUS) {}
 
-SigninStatusMetricsProviderBase::~SigninStatusMetricsProviderBase() {}
+SigninStatusMetricsProviderBase::~SigninStatusMetricsProviderBase() = default;
 
 void SigninStatusMetricsProviderBase::RecordSigninStatusHistogram(
     SigninStatus signin_status) {

@@ -76,7 +76,7 @@ class MojoSequentialFile : public leveldb::SequentialFile {
                      base::File f,
                      const UMALogger* uma_logger)
       : filename_(fname), file_(std::move(f)), uma_logger_(uma_logger) {}
-  ~MojoSequentialFile() override {}
+  ~MojoSequentialFile() override = default;
 
   Status Read(size_t n, Slice* result, char* scratch) override {
     int bytes_read = file_.ReadAtCurrentPosNoBestEffort(
@@ -119,7 +119,7 @@ class MojoRandomAccessFile : public leveldb::RandomAccessFile {
                        base::File file,
                        const UMALogger* uma_logger)
       : filename_(fname), file_(std::move(file)), uma_logger_(uma_logger) {}
-  ~MojoRandomAccessFile() override {}
+  ~MojoRandomAccessFile() override = default;
 
   Status Read(uint64_t offset,
               size_t n,
@@ -170,7 +170,7 @@ class MojoWritableFile : public leveldb::WritableFile {
         base::FilePath::FromUTF8Unsafe(fname).DirName().AsUTF8Unsafe();
   }
 
-  ~MojoWritableFile() override {}
+  ~MojoWritableFile() override = default;
 
   leveldb::Status Append(const leveldb::Slice& data) override {
     int bytes_written =
@@ -251,7 +251,7 @@ class Thread : public base::PlatformThread::Delegate {
     bool success = base::PlatformThread::Create(0, this, &handle);
     DCHECK(success);
   }
-  ~Thread() override {}
+  ~Thread() override = default;
   void ThreadMain() override {
     (*function_)(arg_);
     delete this;

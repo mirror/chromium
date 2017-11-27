@@ -46,7 +46,7 @@ Cryptographer::Cryptographer(const Cryptographer& other)
   }
 }
 
-Cryptographer::~Cryptographer() {}
+Cryptographer::~Cryptographer() = default;
 
 void Cryptographer::Bootstrap(const std::string& restored_bootstrap_token) {
   if (is_initialized()) {

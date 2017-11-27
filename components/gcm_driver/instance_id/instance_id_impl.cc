@@ -64,8 +64,7 @@ InstanceIDImpl::InstanceIDImpl(const std::string& app_id,
                          weak_ptr_factory_.GetWeakPtr()));
 }
 
-InstanceIDImpl::~InstanceIDImpl() {
-}
+InstanceIDImpl::~InstanceIDImpl() = default;
 
 void InstanceIDImpl::GetID(const GetIDCallback& callback) {
   RunWhenReady(base::Bind(&InstanceIDImpl::DoGetID,

@@ -39,7 +39,7 @@ namespace {
 class TestClient : public SafeBrowsingDatabaseManager::Client {
  public:
   TestClient() : callback_invoked_(false) {}
-  ~TestClient() override {}
+  ~TestClient() override = default;
 
   void OnCheckApiBlacklistUrlResult(const GURL& url,
                                     const ThreatMetadata& metadata) override {

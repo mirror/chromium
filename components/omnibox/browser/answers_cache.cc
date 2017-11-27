@@ -7,8 +7,7 @@
 #include "base/i18n/case_conversion.h"
 #include "base/strings/string_util.h"
 
-AnswersQueryData::AnswersQueryData() {
-}
+AnswersQueryData::AnswersQueryData() = default;
 AnswersQueryData::AnswersQueryData(const base::string16& text,
                                    const base::string16& type)
     : full_query_text(text), query_type(type) {
@@ -17,8 +16,7 @@ AnswersQueryData::AnswersQueryData(const base::string16& text,
 AnswersCache::AnswersCache(size_t max_entries) : max_entries_(max_entries) {
 }
 
-AnswersCache::~AnswersCache() {
-}
+AnswersCache::~AnswersCache() = default;
 
 AnswersQueryData AnswersCache::GetTopAnswerEntry(const base::string16& query) {
   base::string16 collapsed_query = base::i18n::ToLower(

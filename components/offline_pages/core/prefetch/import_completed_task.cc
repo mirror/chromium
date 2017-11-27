@@ -55,7 +55,7 @@ ImportCompletedTask::ImportCompletedTask(
       success_(success),
       weak_ptr_factory_(this) {}
 
-ImportCompletedTask::~ImportCompletedTask() {}
+ImportCompletedTask::~ImportCompletedTask() = default;
 
 void ImportCompletedTask::Run() {
   prefetch_store_->Execute(

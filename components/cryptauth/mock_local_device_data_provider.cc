@@ -13,7 +13,7 @@ namespace cryptauth {
 MockLocalDeviceDataProvider::MockLocalDeviceDataProvider()
     : LocalDeviceDataProvider(nullptr /* cryptauth_service */) {}
 
-MockLocalDeviceDataProvider::~MockLocalDeviceDataProvider() {}
+MockLocalDeviceDataProvider::~MockLocalDeviceDataProvider() = default;
 
 void MockLocalDeviceDataProvider::SetPublicKey(
     std::unique_ptr<std::string> public_key) {

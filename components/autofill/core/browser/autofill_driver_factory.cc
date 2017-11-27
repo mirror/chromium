@@ -13,7 +13,7 @@ namespace autofill {
 AutofillDriverFactory::AutofillDriverFactory(AutofillClient* client)
     : client_(client) {}
 
-AutofillDriverFactory::~AutofillDriverFactory() {}
+AutofillDriverFactory::~AutofillDriverFactory() = default;
 
 AutofillDriver* AutofillDriverFactory::DriverForKey(void* key) {
   auto mapping = driver_map_.find(key);

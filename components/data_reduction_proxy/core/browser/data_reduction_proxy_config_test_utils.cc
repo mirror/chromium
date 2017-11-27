@@ -52,8 +52,7 @@ TestDataReductionProxyConfig::TestDataReductionProxyConfig(
       is_captive_portal_(false),
       add_default_proxy_bypass_rules_(true) {}
 
-TestDataReductionProxyConfig::~TestDataReductionProxyConfig() {
-}
+TestDataReductionProxyConfig::~TestDataReductionProxyConfig() = default;
 
 void TestDataReductionProxyConfig::ResetParamFlagsForTest() {
   config_values_ = base::MakeUnique<TestDataReductionProxyParams>();
@@ -134,7 +133,6 @@ MockDataReductionProxyConfig::MockDataReductionProxyConfig(
                                    configurator,
                                    event_creator) {}
 
-MockDataReductionProxyConfig::~MockDataReductionProxyConfig() {
-}
+MockDataReductionProxyConfig::~MockDataReductionProxyConfig() = default;
 
 }  // namespace data_reduction_proxy

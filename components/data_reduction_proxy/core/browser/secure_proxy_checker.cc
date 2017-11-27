@@ -96,6 +96,6 @@ void SecureProxyChecker::CheckIfSecureProxyIsAllowed(
   fetcher_->Start();
 }
 
-SecureProxyChecker::~SecureProxyChecker() {}
+SecureProxyChecker::~SecureProxyChecker() = default;
 
 }  // namespace data_reduction_proxy

@@ -66,7 +66,8 @@ void AutofillProfileDataTypeController::OnPersonalDataChanged() {
   }
 }
 
-AutofillProfileDataTypeController::~AutofillProfileDataTypeController() {}
+AutofillProfileDataTypeController::~AutofillProfileDataTypeController() =
+    default;
 
 bool AutofillProfileDataTypeController::StartModels() {
   DCHECK(CalledOnValidThread());

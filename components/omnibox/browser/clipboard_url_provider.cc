@@ -31,7 +31,7 @@ ClipboardURLProvider::ClipboardURLProvider(
   DCHECK(clipboard_content_);
 }
 
-ClipboardURLProvider::~ClipboardURLProvider() {}
+ClipboardURLProvider::~ClipboardURLProvider() = default;
 
 void ClipboardURLProvider::Start(const AutocompleteInput& input,
                                  bool minimal_changes) {

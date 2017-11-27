@@ -60,7 +60,7 @@ class CryptAuthRemoteDeviceLoaderTest : public testing::Test {
         user_private_key_(secure_message_delegate_->GetPrivateKeyForPublicKey(
             kUserPublicKey)) {}
 
-  ~CryptAuthRemoteDeviceLoaderTest() {}
+  ~CryptAuthRemoteDeviceLoaderTest() = default;
 
   void OnRemoteDevicesLoaded(
       const std::vector<cryptauth::RemoteDevice>& remote_devices) {

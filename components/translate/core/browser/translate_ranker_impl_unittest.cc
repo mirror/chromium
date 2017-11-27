@@ -85,7 +85,7 @@ class TranslateRankerImplTest : public ::testing::Test {
   DISALLOW_COPY_AND_ASSIGN(TranslateRankerImplTest);
 };
 
-TranslateRankerImplTest::TranslateRankerImplTest() {}
+TranslateRankerImplTest::TranslateRankerImplTest() = default;
 
 void TranslateRankerImplTest::InitFeatures(
     const std::initializer_list<base::Feature>& enabled,

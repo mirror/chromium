@@ -58,7 +58,7 @@ MetricsLogStore::MetricsLogStore(PrefService* local_state,
                          kStorageByteLimitPerLogType,
                          max_ongoing_log_size) {}
 
-MetricsLogStore::~MetricsLogStore() {}
+MetricsLogStore::~MetricsLogStore() = default;
 
 void MetricsLogStore::LoadPersistedUnsentLogs() {
   initial_log_queue_.LoadPersistedUnsentLogs();

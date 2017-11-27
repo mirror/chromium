@@ -62,7 +62,7 @@ SubstringSetMatcher::SubstringSetMatcher() {
   RebuildAhoCorasickTree(SubstringPatternVector());
 }
 
-SubstringSetMatcher::~SubstringSetMatcher() {}
+SubstringSetMatcher::~SubstringSetMatcher() = default;
 
 void SubstringSetMatcher::RegisterPatterns(
     const std::vector<const StringPattern*>& patterns) {
@@ -236,22 +236,13 @@ const uint32_t SubstringSetMatcher::AhoCorasickNode::kNoSuchEdge = 0xFFFFFFFF;
 SubstringSetMatcher::AhoCorasickNode::AhoCorasickNode()
     : failure_(kNoSuchEdge) {}
 
-SubstringSetMatcher::AhoCorasickNode::~AhoCorasickNode() {}
+SubstringSetMatcher::AhoCorasickNode::~AhoCorasickNode() = default;
 
 SubstringSetMatcher::AhoCorasickNode::AhoCorasickNode(
-    const SubstringSetMatcher::AhoCorasickNode& other)
-    : edges_(other.edges_),
-      failure_(other.failure_),
-      matches_(other.matches_) {}
+    const SubstringSetMatcher::AhoCorasickNode& other) = default;
 
-SubstringSetMatcher::AhoCorasickNode&
-SubstringSetMatcher::AhoCorasickNode::operator=(
-    const SubstringSetMatcher::AhoCorasickNode& other) {
-  edges_ = other.edges_;
-  failure_ = other.failure_;
-  matches_ = other.matches_;
-  return *this;
-}
+SubstringSetMatcher::AhoCorasickNode& SubstringSetMatcher::AhoCorasickNode::
+operator=(const SubstringSetMatcher::AhoCorasickNode& other) = default;
 
 uint32_t SubstringSetMatcher::AhoCorasickNode::GetEdge(char c) const {
   Edges::const_iterator i = edges_.find(c);

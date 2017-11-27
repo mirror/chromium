@@ -96,7 +96,7 @@ PrefetchRequestFetcher::PrefetchRequestFetcher(
   url_fetcher_->Start();
 }
 
-PrefetchRequestFetcher::~PrefetchRequestFetcher() {}
+PrefetchRequestFetcher::~PrefetchRequestFetcher() = default;
 
 void PrefetchRequestFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
   std::string data;

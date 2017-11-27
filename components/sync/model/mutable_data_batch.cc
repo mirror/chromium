@@ -6,9 +6,9 @@
 
 namespace syncer {
 
-MutableDataBatch::MutableDataBatch() {}
+MutableDataBatch::MutableDataBatch() = default;
 
-MutableDataBatch::~MutableDataBatch() {}
+MutableDataBatch::~MutableDataBatch() = default;
 
 void MutableDataBatch::Put(const std::string& storage_key,
                            std::unique_ptr<EntityData> specifics) {

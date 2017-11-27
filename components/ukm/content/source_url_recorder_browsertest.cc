@@ -22,7 +22,7 @@ class SourceUrlRecorderWebContentsObserverBrowserTest
     scoped_feature_list_.InitAndEnableFeature(ukm::kUkmFeature);
   }
 
-  ~SourceUrlRecorderWebContentsObserverBrowserTest() override {}
+  ~SourceUrlRecorderWebContentsObserverBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
     content::ContentBrowserTest::SetUpOnMainThread();

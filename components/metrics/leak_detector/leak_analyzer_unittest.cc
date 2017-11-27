@@ -36,7 +36,7 @@ LeakDetectorValueType Size(uint32_t value) {
 
 class LeakAnalyzerTest : public ::testing::Test {
  public:
-  LeakAnalyzerTest() {}
+  LeakAnalyzerTest() = default;
 
   void SetUp() override { CustomAllocator::Initialize(); }
   void TearDown() override { EXPECT_TRUE(CustomAllocator::Shutdown()); }

@@ -26,7 +26,7 @@ DirectoryDataTypeController::DirectoryDataTypeController(
       sync_client_(sync_client),
       model_safe_group_(model_safe_group) {}
 
-DirectoryDataTypeController::~DirectoryDataTypeController() {}
+DirectoryDataTypeController::~DirectoryDataTypeController() = default;
 
 bool DirectoryDataTypeController::ShouldLoadModelBeforeConfigure() const {
   // Directory datatypes don't require loading models before configure. Their

@@ -24,7 +24,7 @@ struct TestCase {
         expected_amount(expected_amount),
         expected_currency_code(expected_currency_code),
         currency_system(currency_system) {}
-  ~TestCase() {}
+  ~TestCase() = default;
 
   const char* const amount;
   const char* const currency_code;

@@ -65,7 +65,7 @@ FeedbackUploader::FeedbackUploader(
   DCHECK(context_);
 }
 
-FeedbackUploader::~FeedbackUploader() {}
+FeedbackUploader::~FeedbackUploader() = default;
 
 // static
 void FeedbackUploader::SetMinimumRetryDelayForTesting(base::TimeDelta delay) {

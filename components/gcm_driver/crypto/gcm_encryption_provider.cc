@@ -39,8 +39,7 @@ GCMEncryptionProvider::GCMEncryptionProvider()
     : weak_ptr_factory_(this) {
 }
 
-GCMEncryptionProvider::~GCMEncryptionProvider() {
-}
+GCMEncryptionProvider::~GCMEncryptionProvider() = default;
 
 void GCMEncryptionProvider::Init(
     const base::FilePath& store_path,

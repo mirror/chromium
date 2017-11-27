@@ -22,7 +22,7 @@ class PolicyErrorMap::PendingError {
  public:
   explicit PendingError(const std::string& policy_name)
       : policy_name_(policy_name) {}
-  virtual ~PendingError() {}
+  virtual ~PendingError() = default;
 
   const std::string& policy_name() const { return policy_name_; }
 
@@ -44,7 +44,7 @@ class SimplePendingError : public PolicyErrorMap::PendingError {
       : PendingError(policy_name),
         message_id_(message_id),
         replacement_(replacement) {}
-  ~SimplePendingError() override {}
+  ~SimplePendingError() override = default;
 
   base::string16 GetMessage() const override {
     if (message_id_ >= 0) {
@@ -71,7 +71,7 @@ class DictSubkeyPendingError : public SimplePendingError {
                          const std::string& replacement)
       : SimplePendingError(policy_name, message_id, replacement),
         subkey_(subkey) {}
-  ~DictSubkeyPendingError() override {}
+  ~DictSubkeyPendingError() override = default;
 
   base::string16 GetMessage() const override {
     return l10n_util::GetStringFUTF16(IDS_POLICY_SUBKEY_ERROR,
@@ -93,7 +93,7 @@ class ListItemPendingError : public SimplePendingError {
                        const std::string& replacement)
       : SimplePendingError(policy_name, message_id, replacement),
         index_(index) {}
-  ~ListItemPendingError() override {}
+  ~ListItemPendingError() override = default;
 
   base::string16 GetMessage() const override {
     return l10n_util::GetStringFUTF16(IDS_POLICY_LIST_ENTRY_ERROR,
@@ -114,7 +114,7 @@ class SchemaValidatingPendingError : public SimplePendingError {
                                const std::string& replacement)
       : SimplePendingError(policy_name, -1, replacement),
         error_path_(error_path) {}
-  ~SchemaValidatingPendingError() override {}
+  ~SchemaValidatingPendingError() override = default;
 
   base::string16 GetMessage() const override {
     return l10n_util::GetStringFUTF16(IDS_POLICY_SCHEMA_VALIDATION_ERROR,
@@ -130,11 +130,9 @@ class SchemaValidatingPendingError : public SimplePendingError {
 
 }  // namespace
 
-PolicyErrorMap::PolicyErrorMap() {
-}
+PolicyErrorMap::PolicyErrorMap() = default;
 
-PolicyErrorMap::~PolicyErrorMap() {
-}
+PolicyErrorMap::~PolicyErrorMap() = default;
 
 bool PolicyErrorMap::IsReady() const {
   return ui::ResourceBundle::HasSharedInstance();

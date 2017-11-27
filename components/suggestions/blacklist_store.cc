@@ -54,7 +54,7 @@ BlacklistStore::BlacklistStore(PrefService* profile_prefs,
                              blacklist_proto.urls_size());
 }
 
-BlacklistStore::~BlacklistStore() {}
+BlacklistStore::~BlacklistStore() = default;
 
 bool BlacklistStore::BlacklistUrl(const GURL& url) {
   if (!url.is_valid()) return false;
@@ -220,8 +220,7 @@ void BlacklistStore::RegisterProfilePrefs(
 
 
 // Test seam. For simplicity of mock creation.
-BlacklistStore::BlacklistStore() {
-}
+BlacklistStore::BlacklistStore() = default;
 
 bool BlacklistStore::LoadBlacklist(SuggestionsBlacklist* blacklist) {
   DCHECK(blacklist);

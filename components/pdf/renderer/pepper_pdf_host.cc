@@ -51,7 +51,7 @@ PepperPDFHost::PepperPDFHost(content::RendererPpapiHost* host,
   service->SetListener(std::move(listener));
 }
 
-PepperPDFHost::~PepperPDFHost() {}
+PepperPDFHost::~PepperPDFHost() = default;
 
 // static
 bool PepperPDFHost::InvokePrintingForInstance(PP_Instance instance_id) {

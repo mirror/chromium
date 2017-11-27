@@ -14,15 +14,7 @@ Suggestion::Suggestion()
       is_value_bold(false) {
 }
 
-Suggestion::Suggestion(const Suggestion& other)
-    : backend_id(other.backend_id),
-      frontend_id(other.frontend_id),
-      value(other.value),
-      label(other.label),
-      icon(other.icon),
-      match(other.match),
-      is_value_bold(other.is_value_bold) {
-}
+Suggestion::Suggestion(const Suggestion& other) = default;
 
 Suggestion::Suggestion(const base::string16& v)
     : frontend_id(0),
@@ -43,7 +35,6 @@ Suggestion::Suggestion(const std::string& v,
       is_value_bold(false) {
 }
 
-Suggestion::~Suggestion() {
-}
+Suggestion::~Suggestion() = default;
 
 }  // namespace autofill

@@ -30,7 +30,8 @@ SecurityInterstitialControllerClient::SecurityInterstitialControllerClient(
       app_locale_(app_locale),
       default_safe_page_(default_safe_page) {}
 
-SecurityInterstitialControllerClient::~SecurityInterstitialControllerClient() {}
+SecurityInterstitialControllerClient::~SecurityInterstitialControllerClient() =
+    default;
 
 void SecurityInterstitialControllerClient::set_interstitial_page(
     content::InterstitialPage* interstitial_page) {

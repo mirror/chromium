@@ -34,7 +34,7 @@ const char* kSavingBrowserHistoryDisabled = "history_disabled";
 class MockSyncedWindowDelegate : public SyncedWindowDelegate {
  public:
   MockSyncedWindowDelegate() : is_restore_in_progress_(false) {}
-  ~MockSyncedWindowDelegate() override {}
+  ~MockSyncedWindowDelegate() override = default;
 
   bool HasWindow() const override { return false; }
   SessionID::id_type GetSessionId() const override { return 0; }
@@ -103,7 +103,7 @@ class SessionDataTypeControllerTest : public testing::Test,
       : syncer::FakeSyncClient(&profile_sync_factory_),
         load_finished_(false),
         last_type_(syncer::UNSPECIFIED) {}
-  ~SessionDataTypeControllerTest() override {}
+  ~SessionDataTypeControllerTest() override = default;
 
   // FakeSyncClient overrides.
   PrefService* GetPrefService() override { return &prefs_; }

@@ -216,8 +216,7 @@ TemplateURLFetcher::TemplateURLFetcher(
       request_context_(request_context) {
 }
 
-TemplateURLFetcher::~TemplateURLFetcher() {
-}
+TemplateURLFetcher::~TemplateURLFetcher() = default;
 
 void TemplateURLFetcher::ScheduleDownload(
     const base::string16& keyword,

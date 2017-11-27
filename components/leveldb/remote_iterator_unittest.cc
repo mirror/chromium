@@ -42,7 +42,7 @@ base::Callback<void(const base::UnguessableToken&)> CaptureToken(
 class RemoteIteratorTest : public service_manager::test::ServiceTest {
  public:
   RemoteIteratorTest() : ServiceTest("leveldb_service_unittests") {}
-  ~RemoteIteratorTest() override {}
+  ~RemoteIteratorTest() override = default;
 
  protected:
   // Overridden from mojo::test::ApplicationTestBase:

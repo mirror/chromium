@@ -75,7 +75,7 @@ AutofillProfileValidator::AutofillProfileValidator(
     std::unique_ptr<::i18n::addressinput::Storage> storage)
     : address_validator_(std::move(source), std::move(storage), this) {}
 
-AutofillProfileValidator::~AutofillProfileValidator() {}
+AutofillProfileValidator::~AutofillProfileValidator() = default;
 
 void AutofillProfileValidator::StartProfileValidation(
     AutofillProfile* profile,

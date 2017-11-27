@@ -30,8 +30,7 @@ PasswordManagerInternalsServiceFactory::PasswordManagerInternalsServiceFactory()
 }
 
 PasswordManagerInternalsServiceFactory::
-    ~PasswordManagerInternalsServiceFactory() {
-}
+    ~PasswordManagerInternalsServiceFactory() = default;
 
 KeyedService* PasswordManagerInternalsServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* /* context */) const {

@@ -23,8 +23,7 @@ SeededRandGenerator::SeededRandGenerator(uint32_t seed) {
   mersenne_twister_.init_genrand(seed);
 }
 
-SeededRandGenerator::~SeededRandGenerator() {
-}
+SeededRandGenerator::~SeededRandGenerator() = default;
 
 uint32_t SeededRandGenerator::operator()(uint32_t range) {
   // Based on base::RandGenerator().
@@ -74,8 +73,7 @@ SHA1EntropyProvider::SHA1EntropyProvider(const std::string& entropy_source)
     : entropy_source_(entropy_source) {
 }
 
-SHA1EntropyProvider::~SHA1EntropyProvider() {
-}
+SHA1EntropyProvider::~SHA1EntropyProvider() = default;
 
 double SHA1EntropyProvider::GetEntropyForTrial(
     const std::string& trial_name,
@@ -113,8 +111,7 @@ PermutedEntropyProvider::PermutedEntropyProvider(uint16_t low_entropy_source,
   DCHECK_LE(low_entropy_source_max, std::numeric_limits<uint16_t>::max());
 }
 
-PermutedEntropyProvider::~PermutedEntropyProvider() {
-}
+PermutedEntropyProvider::~PermutedEntropyProvider() = default;
 
 double PermutedEntropyProvider::GetEntropyForTrial(
     const std::string& trial_name,

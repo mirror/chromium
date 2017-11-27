@@ -274,11 +274,9 @@ void DatabaseErrorCallback(sql::Connection* db,
 
 }  // namespace
 
-ThumbnailDatabase::IconMappingEnumerator::IconMappingEnumerator() {
-}
+ThumbnailDatabase::IconMappingEnumerator::IconMappingEnumerator() = default;
 
-ThumbnailDatabase::IconMappingEnumerator::~IconMappingEnumerator() {
-}
+ThumbnailDatabase::IconMappingEnumerator::~IconMappingEnumerator() = default;
 
 bool ThumbnailDatabase::IconMappingEnumerator::GetNextIconMapping(
     IconMapping* icon_mapping) {

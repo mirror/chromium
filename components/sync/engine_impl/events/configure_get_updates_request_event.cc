@@ -16,7 +16,7 @@ ConfigureGetUpdatesRequestEvent::ConfigureGetUpdatesRequestEvent(
     const sync_pb::ClientToServerMessage& request)
     : timestamp_(timestamp), origin_(origin), request_(request) {}
 
-ConfigureGetUpdatesRequestEvent::~ConfigureGetUpdatesRequestEvent() {}
+ConfigureGetUpdatesRequestEvent::~ConfigureGetUpdatesRequestEvent() = default;
 
 base::Time ConfigureGetUpdatesRequestEvent::GetTimestamp() const {
   return timestamp_;

@@ -30,7 +30,7 @@ namespace {
 class TestCallback {
  public:
   TestCallback();
-  virtual ~TestCallback() {}
+  virtual ~TestCallback() = default;
   void Set(update_client::UnpackerError error, int extra_code);
 
   update_client::UnpackerError error_;

@@ -42,7 +42,7 @@ class PolicyHeaderServiceTest : public testing::Test {
   PolicyHeaderServiceTest() {
     task_runner_ = base::MakeRefCounted<base::TestSimpleTaskRunner>();
   }
-  ~PolicyHeaderServiceTest() override {}
+  ~PolicyHeaderServiceTest() override = default;
 
   void SetUp() override {
     service_.reset(new PolicyHeaderService(kDMServerURL,

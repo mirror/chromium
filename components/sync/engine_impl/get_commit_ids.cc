@@ -201,7 +201,7 @@ Traversal::Traversal(syncable::BaseTransaction* trans,
                      Directory::Metahandles* out)
     : out_(out), max_entries_(max_entries), trans_(trans) {}
 
-Traversal::~Traversal() {}
+Traversal::~Traversal() = default;
 
 bool Traversal::TryAddUncommittedParents(
     const std::set<int64_t>& ready_unsynced_set,

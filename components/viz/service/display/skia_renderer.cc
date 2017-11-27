@@ -67,7 +67,7 @@ SkiaRenderer::SkiaRenderer(const RendererSettings* settings,
   use_swap_with_bounds_ = context_caps.swap_buffers_with_bounds;
 }
 
-SkiaRenderer::~SkiaRenderer() {}
+SkiaRenderer::~SkiaRenderer() = default;
 
 bool SkiaRenderer::CanPartialSwap() {
   if (use_swap_with_bounds_)

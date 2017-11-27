@@ -37,7 +37,7 @@ BackoffDelayProvider::BackoffDelayProvider(
     : default_initial_backoff_(default_initial_backoff),
       short_initial_backoff_(short_initial_backoff) {}
 
-BackoffDelayProvider::~BackoffDelayProvider() {}
+BackoffDelayProvider::~BackoffDelayProvider() = default;
 
 TimeDelta BackoffDelayProvider::GetDelay(const base::TimeDelta& last_delay) {
   if (last_delay.InSeconds() >= kMaxBackoffSeconds)

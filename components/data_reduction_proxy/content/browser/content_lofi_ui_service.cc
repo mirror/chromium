@@ -25,7 +25,7 @@ ContentLoFiUIService::ContentLoFiUIService(
   DCHECK(!on_lofi_response_received_callback_.is_null());
 }
 
-ContentLoFiUIService::~ContentLoFiUIService() {}
+ContentLoFiUIService::~ContentLoFiUIService() = default;
 
 void ContentLoFiUIService::OnLoFiReponseReceived(
     const net::URLRequest& request) {

@@ -18,7 +18,7 @@ namespace syncer {
 
 class FakeAttachmentDownloaderTest : public testing::Test {
  protected:
-  FakeAttachmentDownloaderTest() {}
+  FakeAttachmentDownloaderTest() = default;
 
   void SetUp() override {}
 

@@ -22,7 +22,7 @@ PageRenovator::PageRenovator(PageRenovationLoader* renovation_loader,
   PrepareScript(request_url);
 }
 
-PageRenovator::~PageRenovator() {}
+PageRenovator::~PageRenovator() = default;
 
 void PageRenovator::RunRenovations(base::Closure callback) {
   // Prepare callback and inject combined script.

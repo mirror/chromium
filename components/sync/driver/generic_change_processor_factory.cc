@@ -11,9 +11,9 @@
 
 namespace syncer {
 
-GenericChangeProcessorFactory::GenericChangeProcessorFactory() {}
+GenericChangeProcessorFactory::GenericChangeProcessorFactory() = default;
 
-GenericChangeProcessorFactory::~GenericChangeProcessorFactory() {}
+GenericChangeProcessorFactory::~GenericChangeProcessorFactory() = default;
 
 std::unique_ptr<GenericChangeProcessor>
 GenericChangeProcessorFactory::CreateGenericChangeProcessor(

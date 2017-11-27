@@ -67,7 +67,7 @@ class FakeWebDataService : public AutofillWebDataService {
   }
 
  private:
-  ~FakeWebDataService() override {}
+  ~FakeWebDataService() override = default;
 
   bool is_database_loaded_;
   base::Callback<void(void)> db_loaded_callback_;
@@ -81,7 +81,7 @@ class AutofillWalletDataTypeControllerTest : public testing::Test,
   AutofillWalletDataTypeControllerTest()
       : syncer::FakeSyncClient(&profile_sync_factory_),
         last_type_(syncer::UNSPECIFIED) {}
-  ~AutofillWalletDataTypeControllerTest() override {}
+  ~AutofillWalletDataTypeControllerTest() override = default;
 
   void SetUp() override {
     prefs_.registry()->RegisterBooleanPref(

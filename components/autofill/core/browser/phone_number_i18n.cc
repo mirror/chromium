@@ -320,9 +320,9 @@ PhoneObject::PhoneObject(const base::string16& number,
 
 PhoneObject::PhoneObject(const PhoneObject& other) { *this = other; }
 
-PhoneObject::PhoneObject() {}
+PhoneObject::PhoneObject() = default;
 
-PhoneObject::~PhoneObject() {}
+PhoneObject::~PhoneObject() = default;
 
 const base::string16& PhoneObject::GetFormattedNumber() const {
   if (i18n_number_ && formatted_number_.empty()) {

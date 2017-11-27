@@ -28,7 +28,7 @@ AttachmentStore::AttachmentStore(
     Component component)
     : frontend_(frontend), component_(component) {}
 
-AttachmentStore::~AttachmentStore() {}
+AttachmentStore::~AttachmentStore() = default;
 
 void AttachmentStore::Read(const AttachmentIdList& ids,
                            const ReadCallback& callback) {
@@ -115,7 +115,7 @@ AttachmentStoreForSync::AttachmentStoreForSync(
     : AttachmentStore(frontend, consumer_component),
       sync_component_(sync_component) {}
 
-AttachmentStoreForSync::~AttachmentStoreForSync() {}
+AttachmentStoreForSync::~AttachmentStoreForSync() = default;
 
 void AttachmentStoreForSync::SetSyncReference(const AttachmentIdList& ids) {
   frontend()->SetReference(sync_component_, ids);

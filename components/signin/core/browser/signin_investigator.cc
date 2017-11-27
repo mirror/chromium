@@ -31,7 +31,7 @@ SigninInvestigator::SigninInvestigator(const std::string& current_email,
   DCHECK(provider);
 }
 
-SigninInvestigator::~SigninInvestigator() {}
+SigninInvestigator::~SigninInvestigator() = default;
 
 bool SigninInvestigator::AreAccountsEqualWithFallback() {
   const std::string last_id =

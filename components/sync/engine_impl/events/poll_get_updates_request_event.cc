@@ -13,7 +13,7 @@ PollGetUpdatesRequestEvent::PollGetUpdatesRequestEvent(
     const sync_pb::ClientToServerMessage& request)
     : timestamp_(timestamp), request_(request) {}
 
-PollGetUpdatesRequestEvent::~PollGetUpdatesRequestEvent() {}
+PollGetUpdatesRequestEvent::~PollGetUpdatesRequestEvent() = default;
 
 base::Time PollGetUpdatesRequestEvent::GetTimestamp() const {
   return timestamp_;

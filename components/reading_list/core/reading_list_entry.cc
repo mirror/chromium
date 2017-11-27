@@ -130,7 +130,7 @@ ReadingListEntry::ReadingListEntry(ReadingListEntry&& entry)
       distillation_size_(std::move(entry.distillation_size_)),
       content_suggestions_extra_(std::move(entry.content_suggestions_extra_)) {}
 
-ReadingListEntry::~ReadingListEntry() {}
+ReadingListEntry::~ReadingListEntry() = default;
 
 const GURL& ReadingListEntry::URL() const {
   return url_;

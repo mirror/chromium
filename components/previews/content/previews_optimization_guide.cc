@@ -39,9 +39,9 @@ class PreviewsOptimizationGuide::Hints {
       whitelist_;
 };
 
-PreviewsOptimizationGuide::Hints::Hints() {}
+PreviewsOptimizationGuide::Hints::Hints() = default;
 
-PreviewsOptimizationGuide::Hints::~Hints() {}
+PreviewsOptimizationGuide::Hints::~Hints() = default;
 
 // static
 std::unique_ptr<PreviewsOptimizationGuide::Hints>

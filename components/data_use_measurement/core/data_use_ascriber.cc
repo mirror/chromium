@@ -14,8 +14,8 @@
 
 namespace data_use_measurement {
 
-DataUseAscriber::DataUseAscriber() {}
-DataUseAscriber::~DataUseAscriber() {}
+DataUseAscriber::DataUseAscriber() = default;
+DataUseAscriber::~DataUseAscriber() = default;
 
 std::unique_ptr<net::NetworkDelegate> DataUseAscriber::CreateNetworkDelegate(
     std::unique_ptr<net::NetworkDelegate> wrapped_network_delegate,

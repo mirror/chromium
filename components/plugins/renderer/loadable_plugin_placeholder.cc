@@ -73,8 +73,7 @@ LoadablePluginPlaceholder::LoadablePluginPlaceholder(
       finished_loading_(false),
       weak_factory_(this) {}
 
-LoadablePluginPlaceholder::~LoadablePluginPlaceholder() {
-}
+LoadablePluginPlaceholder::~LoadablePluginPlaceholder() = default;
 
 void LoadablePluginPlaceholder::MarkPluginEssential(
     PluginInstanceThrottler::PowerSaverUnthrottleMethod method) {

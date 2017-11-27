@@ -228,7 +228,7 @@ class FakeHomePageClient : public MostVisitedSites::HomePageClient {
       : home_page_enabled_(false),
         ntp_is_homepage_(false),
         home_page_url_(kHomePageUrl) {}
-  ~FakeHomePageClient() override {}
+  ~FakeHomePageClient() override = default;
 
   bool IsHomePageEnabled() const override { return home_page_enabled_; }
 

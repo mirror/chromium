@@ -125,7 +125,7 @@ class GpuMemoryBufferFromClient : public gfx::GpuMemoryBuffer {
 
 }  // namespace
 
-TestGpuMemoryBufferManager::TestGpuMemoryBufferManager() {}
+TestGpuMemoryBufferManager::TestGpuMemoryBufferManager() = default;
 
 TestGpuMemoryBufferManager::~TestGpuMemoryBufferManager() {
   {

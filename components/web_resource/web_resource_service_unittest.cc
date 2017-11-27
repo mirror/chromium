@@ -78,7 +78,7 @@ class TestWebResourceService : public WebResourceService {
 
 class WebResourceServiceTest : public testing::Test {
  public:
-  WebResourceServiceTest() {}
+  WebResourceServiceTest() = default;
 
   void SetUp() override {
     request_context_getter_ = new net::TestURLRequestContextGetter(

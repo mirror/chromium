@@ -43,7 +43,7 @@ InitializeStoreTaskTest::InitializeStoreTaskTest()
       task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {}
 
-InitializeStoreTaskTest::~InitializeStoreTaskTest() {}
+InitializeStoreTaskTest::~InitializeStoreTaskTest() = default;
 
 void InitializeStoreTaskTest::PumpLoop() {
   task_runner_->RunUntilIdle();

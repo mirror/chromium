@@ -28,8 +28,8 @@ namespace syncer {
 
 class MockDelegate : public SyncCycle::Delegate {
  public:
-  MockDelegate() {}
-  ~MockDelegate() {}
+  MockDelegate() = default;
+  ~MockDelegate() = default;
 
   MOCK_METHOD1(OnReceivedShortPollIntervalUpdate, void(const base::TimeDelta&));
   MOCK_METHOD1(OnReceivedLongPollIntervalUpdate, void(const base::TimeDelta&));

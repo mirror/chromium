@@ -24,9 +24,9 @@
 
 namespace data_reduction_proxy {
 
-ContentLoFiDecider::ContentLoFiDecider() {}
+ContentLoFiDecider::ContentLoFiDecider() = default;
 
-ContentLoFiDecider::~ContentLoFiDecider() {}
+ContentLoFiDecider::~ContentLoFiDecider() = default;
 
 bool ContentLoFiDecider::IsUsingLoFi(const net::URLRequest& request) const {
   const content::ResourceRequestInfo* request_info =

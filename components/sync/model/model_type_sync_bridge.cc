@@ -18,7 +18,7 @@ ModelTypeSyncBridge::ModelTypeSyncBridge(
       change_processor_factory_(change_processor_factory),
       change_processor_(change_processor_factory_.Run(type_, this)) {}
 
-ModelTypeSyncBridge::~ModelTypeSyncBridge() {}
+ModelTypeSyncBridge::~ModelTypeSyncBridge() = default;
 
 bool ModelTypeSyncBridge::SupportsGetStorageKey() const {
   return true;

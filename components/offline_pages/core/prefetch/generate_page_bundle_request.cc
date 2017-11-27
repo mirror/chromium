@@ -48,7 +48,7 @@ GeneratePageBundleRequest::GeneratePageBundleRequest(
                  base::Unretained(this)));
 }
 
-GeneratePageBundleRequest::~GeneratePageBundleRequest() {}
+GeneratePageBundleRequest::~GeneratePageBundleRequest() = default;
 
 void GeneratePageBundleRequest::OnCompleted(PrefetchRequestStatus status,
                                             const std::string& data) {

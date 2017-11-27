@@ -18,7 +18,7 @@ namespace history {
 class FakeBookmarkDatabase
     : public base::RefCountedThreadSafe<FakeBookmarkDatabase> {
  public:
-  FakeBookmarkDatabase() {}
+  FakeBookmarkDatabase() = default;
 
   void ClearAllBookmarks();
   void AddBookmarkWithTitle(const GURL& url, const base::string16& title);
@@ -30,7 +30,7 @@ class FakeBookmarkDatabase
  private:
   friend class base::RefCountedThreadSafe<FakeBookmarkDatabase>;
 
-  ~FakeBookmarkDatabase() {}
+  ~FakeBookmarkDatabase() = default;
 
   base::Lock lock_;
   std::map<GURL, base::string16> bookmarks_;
@@ -103,8 +103,8 @@ HistoryBackendClientFakeBookmarks::HistoryBackendClientFakeBookmarks(
     : bookmarks_(bookmarks) {
 }
 
-HistoryBackendClientFakeBookmarks::~HistoryBackendClientFakeBookmarks() {
-}
+HistoryBackendClientFakeBookmarks::~HistoryBackendClientFakeBookmarks() =
+    default;
 
 bool HistoryBackendClientFakeBookmarks::IsBookmarked(const GURL& url) {
   return bookmarks_->IsBookmarked(url);
@@ -143,8 +143,7 @@ HistoryClientFakeBookmarks::HistoryClientFakeBookmarks() {
   bookmarks_ = new FakeBookmarkDatabase;
 }
 
-HistoryClientFakeBookmarks::~HistoryClientFakeBookmarks() {
-}
+HistoryClientFakeBookmarks::~HistoryClientFakeBookmarks() = default;
 
 void HistoryClientFakeBookmarks::ClearAllBookmarks() {
   bookmarks_->ClearAllBookmarks();

@@ -28,7 +28,7 @@ ConflictResolution ConflictResolution::UseNew(
 ConflictResolution::ConflictResolution(ConflictResolution&& other)
     : ConflictResolution(other.type(), other.ExtractData()) {}
 
-ConflictResolution::~ConflictResolution() {}
+ConflictResolution::~ConflictResolution() = default;
 
 std::unique_ptr<EntityData> ConflictResolution::ExtractData() {
   // Has data if and only if type is USE_NEW.

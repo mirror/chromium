@@ -20,9 +20,9 @@ namespace tracing {
 
 class FakeSender : public IPC::Sender {
  public:
-  FakeSender() {}
+  FakeSender() = default;
 
-  ~FakeSender() override {}
+  ~FakeSender() override = default;
 
   bool Send(IPC::Message* msg) override {
     last_message_.reset(msg);

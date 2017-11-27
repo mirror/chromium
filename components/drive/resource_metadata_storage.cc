@@ -881,7 +881,7 @@ FileError ResourceMetadataStorage::GetChildren(
 ResourceMetadataStorage::RecoveredCacheInfo::RecoveredCacheInfo()
     : is_dirty(false) {}
 
-ResourceMetadataStorage::RecoveredCacheInfo::~RecoveredCacheInfo() {}
+ResourceMetadataStorage::RecoveredCacheInfo::~RecoveredCacheInfo() = default;
 
 FileError ResourceMetadataStorage::GetIdByResourceId(
     const std::string& resource_id,

@@ -17,7 +17,7 @@ RemoveRequestsTask::RemoveRequestsTask(
       callback_(callback),
       weak_ptr_factory_(this) {}
 
-RemoveRequestsTask::~RemoveRequestsTask() {}
+RemoveRequestsTask::~RemoveRequestsTask() = default;
 
 void RemoveRequestsTask::Run() {
   RemoveRequests();

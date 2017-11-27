@@ -20,7 +20,7 @@ class HasModelTypesMatcher : public ::testing::MatcherInterface<ModelTypeSet> {
   explicit HasModelTypesMatcher(ModelTypeSet expected_types)
       : expected_types_(expected_types) {}
 
-  virtual ~HasModelTypesMatcher() {}
+  virtual ~HasModelTypesMatcher() = default;
 
   virtual bool MatchAndExplain(ModelTypeSet model_types,
                                ::testing::MatchResultListener* listener) const {

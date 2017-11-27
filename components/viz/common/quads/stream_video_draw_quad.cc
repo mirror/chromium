@@ -55,6 +55,6 @@ void StreamVideoDrawQuad::ExtendValue(
   cc::MathUtil::AddToTracedValue("matrix", matrix, value);
 }
 
-StreamVideoDrawQuad::OverlayResources::OverlayResources() {}
+StreamVideoDrawQuad::OverlayResources::OverlayResources() = default;
 
 }  // namespace viz

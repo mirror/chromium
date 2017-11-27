@@ -37,7 +37,7 @@ MetricsReportingService::MetricsReportingService(MetricsServiceClient* client,
     : ReportingService(client, local_state, kUploadLogAvoidRetransmitSize),
       metrics_log_store_(local_state, kUploadLogAvoidRetransmitSize) {}
 
-MetricsReportingService::~MetricsReportingService() {}
+MetricsReportingService::~MetricsReportingService() = default;
 
 LogStore* MetricsReportingService::log_store() {
   return &metrics_log_store_;

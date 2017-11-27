@@ -76,8 +76,7 @@ TranslateHelper::TranslateHelper(content::RenderFrame* render_frame,
       binding_(this),
       weak_method_factory_(this) {}
 
-TranslateHelper::~TranslateHelper() {
-}
+TranslateHelper::~TranslateHelper() = default;
 
 void TranslateHelper::PrepareForUrl(const GURL& url) {
   // Navigated to a new url, reset current page translation.

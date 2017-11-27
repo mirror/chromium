@@ -11,7 +11,7 @@ NonBlockingTypeDebugInfoEmitter::NonBlockingTypeDebugInfoEmitter(
     base::ObserverList<TypeDebugInfoObserver>* observers)
     : DataTypeDebugInfoEmitter(type, observers) {}
 
-NonBlockingTypeDebugInfoEmitter::~NonBlockingTypeDebugInfoEmitter() {}
+NonBlockingTypeDebugInfoEmitter::~NonBlockingTypeDebugInfoEmitter() = default;
 
 void NonBlockingTypeDebugInfoEmitter::EmitStatusCountersUpdate() {
   // TODO(gangwu): Allow driving emission of status counters from here. This is

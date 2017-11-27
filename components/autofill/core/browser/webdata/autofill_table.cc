@@ -396,7 +396,7 @@ AutofillTable::AutofillTable()
   DCHECK(autofill_table_encryptor_);
 }
 
-AutofillTable::~AutofillTable() {}
+AutofillTable::~AutofillTable() = default;
 
 AutofillTable* AutofillTable::FromWebDatabase(WebDatabase* db) {
   return static_cast<AutofillTable*>(db->GetTable(GetKey()));

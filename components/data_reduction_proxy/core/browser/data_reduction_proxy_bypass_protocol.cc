@@ -81,8 +81,7 @@ DataReductionProxyBypassProtocol::DataReductionProxyBypassProtocol(
   DCHECK(config_);
 }
 
-DataReductionProxyBypassProtocol::~DataReductionProxyBypassProtocol() {
-}
+DataReductionProxyBypassProtocol::~DataReductionProxyBypassProtocol() = default;
 
 bool DataReductionProxyBypassProtocol::MaybeBypassProxyAndPrepareToRetry(
     net::URLRequest* request,

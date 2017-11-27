@@ -80,7 +80,7 @@ class TestPreviewsBlackList : public PreviewsBlackList {
                           base::MakeUnique<base::DefaultClock>(),
                           blacklist_delegate),
         status_(status) {}
-  ~TestPreviewsBlackList() override {}
+  ~TestPreviewsBlackList() override = default;
 
   // PreviewsBlackList:
   PreviewsEligibilityReason IsLoadedAndAllowed(
@@ -101,7 +101,7 @@ class TestPreviewsOptimizationGuide : public PreviewsOptimizationGuide {
       optimization_guide::OptimizationGuideService* optimization_guide_service,
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
       : PreviewsOptimizationGuide(optimization_guide_service, io_task_runner) {}
-  ~TestPreviewsOptimizationGuide() override {}
+  ~TestPreviewsOptimizationGuide() override = default;
 
   // PreviewsOptimizationGuide:
   bool IsWhitelisted(const net::URLRequest& request,
@@ -228,7 +228,7 @@ class TestPreviewsIOData : public PreviewsIOData {
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
       const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner)
       : PreviewsIOData(io_task_runner, ui_task_runner), initialized_(false) {}
-  ~TestPreviewsIOData() override {}
+  ~TestPreviewsIOData() override = default;
 
   // Whether Initialize was called.
   bool initialized() { return initialized_; }
@@ -261,8 +261,8 @@ void RunLoadCallback(
 
 class TestPreviewsOptOutStore : public PreviewsOptOutStore {
  public:
-  TestPreviewsOptOutStore() {}
-  ~TestPreviewsOptOutStore() override {}
+  TestPreviewsOptOutStore() = default;
+  ~TestPreviewsOptOutStore() override = default;
 
  private:
   // PreviewsOptOutStore implementation:

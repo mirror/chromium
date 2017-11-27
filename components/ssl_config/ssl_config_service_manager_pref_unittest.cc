@@ -28,7 +28,7 @@ using ssl_config::SSLConfigServiceManager;
 
 class SSLConfigServiceManagerPrefTest : public testing::Test {
  public:
-  SSLConfigServiceManagerPrefTest() {}
+  SSLConfigServiceManagerPrefTest() = default;
 
  protected:
   base::MessageLoop message_loop_;

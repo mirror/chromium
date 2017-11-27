@@ -41,8 +41,7 @@ GCMAccountTracker::AccountInfo::AccountInfo(const std::string& email,
     : email(email), state(state) {
 }
 
-GCMAccountTracker::AccountInfo::~AccountInfo() {
-}
+GCMAccountTracker::AccountInfo::~AccountInfo() = default;
 
 GCMAccountTracker::GCMAccountTracker(
     std::unique_ptr<gaia::AccountTracker> account_tracker,

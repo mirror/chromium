@@ -27,7 +27,7 @@ namespace {
 class TestPlatformWindowDelegate : public ui::PlatformWindowDelegate {
  public:
   TestPlatformWindowDelegate() : widget_(gfx::kNullAcceleratedWidget) {}
-  ~TestPlatformWindowDelegate() override {}
+  ~TestPlatformWindowDelegate() override = default;
 
   gfx::AcceleratedWidget GetAcceleratedWidget() const { return widget_; }
 
@@ -73,8 +73,8 @@ class SoftwareOutputDeviceOzoneTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(SoftwareOutputDeviceOzoneTest);
 };
 
-SoftwareOutputDeviceOzoneTest::SoftwareOutputDeviceOzoneTest() {}
-SoftwareOutputDeviceOzoneTest::~SoftwareOutputDeviceOzoneTest() {}
+SoftwareOutputDeviceOzoneTest::SoftwareOutputDeviceOzoneTest() = default;
+SoftwareOutputDeviceOzoneTest::~SoftwareOutputDeviceOzoneTest() = default;
 
 void SoftwareOutputDeviceOzoneTest::SetUp() {
   ui::ContextFactory* context_factory = nullptr;

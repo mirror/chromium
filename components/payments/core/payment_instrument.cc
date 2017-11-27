@@ -9,7 +9,7 @@ namespace payments {
 PaymentInstrument::PaymentInstrument(int icon_resource_id, Type type)
     : icon_resource_id_(icon_resource_id), type_(type) {}
 
-PaymentInstrument::~PaymentInstrument() {}
+PaymentInstrument::~PaymentInstrument() = default;
 
 const gfx::ImageSkia* PaymentInstrument::icon_image_skia() const {
   return nullptr;

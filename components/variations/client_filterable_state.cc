@@ -31,7 +31,7 @@ Study::Platform ClientFilterableState::GetCurrentPlatform() {
 #endif
 }
 
-ClientFilterableState::ClientFilterableState() {}
-ClientFilterableState::~ClientFilterableState() {}
+ClientFilterableState::ClientFilterableState() = default;
+ClientFilterableState::~ClientFilterableState() = default;
 
 }  // namespace variations

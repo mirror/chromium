@@ -33,7 +33,7 @@ OfflinePageMetadataStoreTestUtil::OfflinePageMetadataStoreTestUtil(
     scoped_refptr<base::TestSimpleTaskRunner> task_runner)
     : task_runner_(task_runner), store_ptr_(nullptr) {}
 
-OfflinePageMetadataStoreTestUtil::~OfflinePageMetadataStoreTestUtil() {}
+OfflinePageMetadataStoreTestUtil::~OfflinePageMetadataStoreTestUtil() = default;
 
 void OfflinePageMetadataStoreTestUtil::BuildStore() {
   if (!temp_directory_.CreateUniqueTempDir()) {

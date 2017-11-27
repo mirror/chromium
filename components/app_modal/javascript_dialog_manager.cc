@@ -35,8 +35,8 @@ const int kUrlElideWidth = 350;
 
 class DefaultExtensionsClient : public JavaScriptDialogExtensionsClient {
  public:
-  DefaultExtensionsClient() {}
-  ~DefaultExtensionsClient() override {}
+  DefaultExtensionsClient() = default;
+  ~DefaultExtensionsClient() override = default;
 
  private:
   // JavaScriptDialogExtensionsClient:
@@ -88,8 +88,7 @@ JavaScriptDialogManager::JavaScriptDialogManager()
     : extensions_client_(new DefaultExtensionsClient) {
 }
 
-JavaScriptDialogManager::~JavaScriptDialogManager() {
-}
+JavaScriptDialogManager::~JavaScriptDialogManager() = default;
 
 base::string16 JavaScriptDialogManager::GetTitle(
     content::WebContents* web_contents,

@@ -11,11 +11,9 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 
-PrefRegistrySimple::PrefRegistrySimple() {
-}
+PrefRegistrySimple::PrefRegistrySimple() = default;
 
-PrefRegistrySimple::~PrefRegistrySimple() {
-}
+PrefRegistrySimple::~PrefRegistrySimple() = default;
 
 void PrefRegistrySimple::RegisterBooleanPref(const std::string& path,
                                              bool default_value) {

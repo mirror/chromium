@@ -181,7 +181,7 @@ class MockLogDnsTraffic::MockSocketData {
                         kNoMoreData},
         socket_data_(expected_reads_, 2, &expected_write_, 1) {}
 
-  ~MockSocketData() {}
+  ~MockSocketData() = default;
 
   void SetWriteMode(net::IoMode mode) { expected_write_.mode = mode; }
   void SetReadMode(net::IoMode mode) { expected_reads_[0].mode = mode; }
@@ -212,7 +212,7 @@ class MockLogDnsTraffic::MockSocketData {
 
 MockLogDnsTraffic::MockLogDnsTraffic() : socket_read_mode_(net::ASYNC) {}
 
-MockLogDnsTraffic::~MockLogDnsTraffic() {}
+MockLogDnsTraffic::~MockLogDnsTraffic() = default;
 
 bool MockLogDnsTraffic::ExpectRequestAndErrorResponse(base::StringPiece qname,
                                                       uint8_t rcode) {

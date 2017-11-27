@@ -74,8 +74,8 @@ BuildEncryptionKeyProto(const std::string& encryption_key) {
 
 class SyncEncryptionHandlerImplTest : public ::testing::Test {
  public:
-  SyncEncryptionHandlerImplTest() {}
-  virtual ~SyncEncryptionHandlerImplTest() {}
+  SyncEncryptionHandlerImplTest() = default;
+  virtual ~SyncEncryptionHandlerImplTest() = default;
 
   virtual void SetUp() {
     test_user_share_.SetUp();

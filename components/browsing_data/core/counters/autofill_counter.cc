@@ -191,6 +191,6 @@ AutofillCounter::AutofillResult::AutofillResult(const AutofillCounter* source,
       num_credit_cards_(num_credit_cards),
       num_addresses_(num_addresses) {}
 
-AutofillCounter::AutofillResult::~AutofillResult() {}
+AutofillCounter::AutofillResult::~AutofillResult() = default;
 
 }  // namespace browsing_data

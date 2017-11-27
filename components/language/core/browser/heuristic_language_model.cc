@@ -242,7 +242,7 @@ HeuristicLanguageModel::HeuristicLanguageModel(
   DCHECK(pref_service->FindPreference(ulp_pref));
 }
 
-HeuristicLanguageModel::~HeuristicLanguageModel() {}
+HeuristicLanguageModel::~HeuristicLanguageModel() = default;
 
 std::vector<LanguageModel::LanguageDetails>
 HeuristicLanguageModel::GetLanguages() {

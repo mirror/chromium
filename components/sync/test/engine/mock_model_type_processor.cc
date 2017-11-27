@@ -15,7 +15,7 @@ namespace syncer {
 
 MockModelTypeProcessor::MockModelTypeProcessor() : is_synchronous_(true) {}
 
-MockModelTypeProcessor::~MockModelTypeProcessor() {}
+MockModelTypeProcessor::~MockModelTypeProcessor() = default;
 
 void MockModelTypeProcessor::ConnectSync(
     std::unique_ptr<CommitQueue> commit_queue) {

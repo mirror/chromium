@@ -63,9 +63,9 @@ std::string GetDCIMDeviceId(const std::string& unique_id) {
 // A test version of StorageMonitorCros that exposes protected methods to tests.
 class TestStorageMonitorCros : public StorageMonitorCros {
  public:
-  TestStorageMonitorCros() {}
+  TestStorageMonitorCros() = default;
 
-  ~TestStorageMonitorCros() override {}
+  ~TestStorageMonitorCros() override = default;
 
   void Init() override {
     SetMediaTransferProtocolManagerForTest(
@@ -159,8 +159,7 @@ StorageMonitorCrosTest::StorageMonitorCrosTest()
       scoped_task_environment_(
           base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
 
-StorageMonitorCrosTest::~StorageMonitorCrosTest() {
-}
+StorageMonitorCrosTest::~StorageMonitorCrosTest() = default;
 
 void StorageMonitorCrosTest::SetUp() {
   ASSERT_TRUE(scoped_temp_dir_.CreateUniqueTempDir());

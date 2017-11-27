@@ -11,7 +11,7 @@ namespace multidevice {
 
 MultiDeviceService::MultiDeviceService() : weak_ptr_factory_(this) {}
 
-MultiDeviceService::~MultiDeviceService() {}
+MultiDeviceService::~MultiDeviceService() = default;
 
 void MultiDeviceService::OnStart() {
   ref_factory_ = base::MakeUnique<service_manager::ServiceContextRefFactory>(

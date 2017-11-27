@@ -51,8 +51,7 @@ WebDatabaseService::WebDatabaseService(
   DCHECK(db_task_runner_.get());
 }
 
-WebDatabaseService::~WebDatabaseService() {
-}
+WebDatabaseService::~WebDatabaseService() = default;
 
 void WebDatabaseService::AddTable(std::unique_ptr<WebDatabaseTable> table) {
   if (!web_db_backend_.get()) {

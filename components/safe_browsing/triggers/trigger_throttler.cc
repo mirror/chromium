@@ -102,7 +102,7 @@ TriggerThrottler::TriggerThrottler() : clock_(new base::DefaultClock()) {
   ParseTriggerTypeAndQuotaParam(&trigger_type_and_quota_list_);
 }
 
-TriggerThrottler::~TriggerThrottler() {}
+TriggerThrottler::~TriggerThrottler() = default;
 
 void TriggerThrottler::SetClockForTesting(
     std::unique_ptr<base::Clock> test_clock) {

@@ -18,7 +18,7 @@ DeleteJournal::DeleteJournal(std::unique_ptr<JournalIndex> initial_journal) {
   delete_journals_.swap(*initial_journal);
 }
 
-DeleteJournal::~DeleteJournal() {}
+DeleteJournal::~DeleteJournal() = default;
 
 size_t DeleteJournal::GetDeleteJournalSize(BaseTransaction* trans) const {
   DCHECK(trans);

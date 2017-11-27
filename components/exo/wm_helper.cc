@@ -34,7 +34,7 @@ WMHelper::WMHelper()
     : vsync_manager_(
           GetPrimaryRoot()->layer()->GetCompositor()->vsync_manager()) {}
 
-WMHelper::~WMHelper() {}
+WMHelper::~WMHelper() = default;
 
 // static
 void WMHelper::SetInstance(WMHelper* helper) {

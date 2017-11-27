@@ -55,7 +55,8 @@ void ScopedSubresourceFilterConfigurator::ResetConfiguration(
 
 // ScopedSubresourceFilterFeatureToggle ---------------------------------------
 
-ScopedSubresourceFilterFeatureToggle::ScopedSubresourceFilterFeatureToggle() {}
+ScopedSubresourceFilterFeatureToggle::ScopedSubresourceFilterFeatureToggle() =
+    default;
 ScopedSubresourceFilterFeatureToggle::ScopedSubresourceFilterFeatureToggle(
     base::FeatureList::OverrideState feature_state,
     const std::string& additional_features_to_enable) {
@@ -86,7 +87,8 @@ void ScopedSubresourceFilterFeatureToggle::ResetSubresourceFilterState(
                                             disabled_features);
 }
 
-ScopedSubresourceFilterFeatureToggle::~ScopedSubresourceFilterFeatureToggle() {}
+ScopedSubresourceFilterFeatureToggle::~ScopedSubresourceFilterFeatureToggle() =
+    default;
 
 std::ostream& operator<<(std::ostream& os, const Configuration& config) {
   std::unique_ptr<base::Value> value = config.ToTracedValue()->ToBaseValue();

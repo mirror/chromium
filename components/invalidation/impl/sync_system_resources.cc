@@ -28,8 +28,8 @@
 
 namespace syncer {
 
-SyncLogger::SyncLogger() {}
-SyncLogger::~SyncLogger() {}
+SyncLogger::SyncLogger() = default;
+SyncLogger::~SyncLogger() = default;
 
 void SyncLogger::Log(LogLevel level, const char* file, int line,
                      const char* format, ...) {
@@ -142,8 +142,7 @@ SyncNetworkChannel::SyncNetworkChannel()
     : last_network_status_(false),
       received_messages_count_(0) {}
 
-SyncNetworkChannel::~SyncNetworkChannel() {
-}
+SyncNetworkChannel::~SyncNetworkChannel() = default;
 
 void SyncNetworkChannel::SetMessageReceiver(
     invalidation::MessageCallback* incoming_receiver) {
@@ -221,7 +220,7 @@ SyncStorage::SyncStorage(StateWriter* state_writer,
   DCHECK(scheduler_);
 }
 
-SyncStorage::~SyncStorage() {}
+SyncStorage::~SyncStorage() = default;
 
 void SyncStorage::WriteKey(const std::string& key, const std::string& value,
                            invalidation::WriteKeyCallback* done) {

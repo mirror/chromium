@@ -72,8 +72,8 @@ enum UserMode { USER_MODE_NORMAL, USER_MODE_INCOGNITO };
 
 class PersonalDataLoadedObserverMock : public PersonalDataManagerObserver {
  public:
-  PersonalDataLoadedObserverMock() {}
-  virtual ~PersonalDataLoadedObserverMock() {}
+  PersonalDataLoadedObserverMock() = default;
+  virtual ~PersonalDataLoadedObserverMock() = default;
 
   MOCK_METHOD0(OnPersonalDataChanged, void());
 };

@@ -149,7 +149,8 @@ PasswordGenerationAgent::AccountCreationFormData::AccountCreationFormData(
 PasswordGenerationAgent::AccountCreationFormData::AccountCreationFormData(
     const AccountCreationFormData& other) = default;
 
-PasswordGenerationAgent::AccountCreationFormData::~AccountCreationFormData() {}
+PasswordGenerationAgent::AccountCreationFormData::~AccountCreationFormData() =
+    default;
 
 PasswordGenerationAgent::PasswordGenerationAgent(
     content::RenderFrame* render_frame,
@@ -170,7 +171,7 @@ PasswordGenerationAgent::PasswordGenerationAgent(
                                     base::Unretained(this)));
   password_agent_->SetPasswordGenerationAgent(this);
 }
-PasswordGenerationAgent::~PasswordGenerationAgent() {}
+PasswordGenerationAgent::~PasswordGenerationAgent() = default;
 
 void PasswordGenerationAgent::BindRequest(
     mojom::PasswordGenerationAgentRequest request) {

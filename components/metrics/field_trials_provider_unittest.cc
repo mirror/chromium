@@ -20,7 +20,7 @@ class TestProvider : public FieldTrialsProvider {
  public:
   TestProvider(SyntheticTrialRegistry* registry, base::StringPiece suffix)
       : FieldTrialsProvider(registry, suffix) {}
-  ~TestProvider() override {}
+  ~TestProvider() override = default;
 
   void GetFieldTrialIds(
       std::vector<ActiveGroupId>* field_trial_ids) const override {
@@ -55,8 +55,8 @@ void CheckSystemProfile(const metrics::SystemProfileProto& system_profile) {
 
 class FieldTrialsProviderTest : public ::testing::Test {
  public:
-  FieldTrialsProviderTest() {}
-  ~FieldTrialsProviderTest() override {}
+  FieldTrialsProviderTest() = default;
+  ~FieldTrialsProviderTest() override = default;
 
  protected:
   // Register trials which should get recorded.

@@ -33,7 +33,7 @@ ComponentInfo::ComponentInfo(const base::Version& hints_version,
                              const base::FilePath& hints_path)
     : hints_version(hints_version), hints_path(hints_path) {}
 
-ComponentInfo::~ComponentInfo() {}
+ComponentInfo::~ComponentInfo() = default;
 
 OptimizationGuideService::OptimizationGuideService(
     const scoped_refptr<base::SingleThreadTaskRunner>& io_thread_task_runner)
@@ -44,7 +44,7 @@ OptimizationGuideService::OptimizationGuideService(
   DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
-OptimizationGuideService::~OptimizationGuideService() {}
+OptimizationGuideService::~OptimizationGuideService() = default;
 
 void OptimizationGuideService::SetLatestProcessedVersionForTesting(
     const base::Version& version) {

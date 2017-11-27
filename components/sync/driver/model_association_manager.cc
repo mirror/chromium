@@ -105,7 +105,7 @@ ModelAssociationManager::ModelAssociationManager(
   }
 }
 
-ModelAssociationManager::~ModelAssociationManager() {}
+ModelAssociationManager::~ModelAssociationManager() = default;
 
 void ModelAssociationManager::Initialize(ModelTypeSet desired_types) {
   // state_ can be INITIALIZED if types are reconfigured when

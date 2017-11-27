@@ -22,7 +22,7 @@ DownloadNotifyingObserver::DownloadNotifyingObserver(
     ClientPolicyController* policy_controller)
     : notifier_(std::move(notifier)), policy_controller_(policy_controller) {}
 
-DownloadNotifyingObserver::~DownloadNotifyingObserver() {}
+DownloadNotifyingObserver::~DownloadNotifyingObserver() = default;
 
 // static
 DownloadNotifyingObserver* DownloadNotifyingObserver::GetFromRequestCoordinator(

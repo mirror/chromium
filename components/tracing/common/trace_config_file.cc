@@ -93,7 +93,7 @@ TraceConfigFile::TraceConfigFile()
     DLOG(WARNING) << "Cannot parse the trace config file correctly.";
 }
 
-TraceConfigFile::~TraceConfigFile() {}
+TraceConfigFile::~TraceConfigFile() = default;
 
 bool TraceConfigFile::ParseTraceConfigFileContent(const std::string& content) {
   std::unique_ptr<base::Value> value(base::JSONReader::Read(content));

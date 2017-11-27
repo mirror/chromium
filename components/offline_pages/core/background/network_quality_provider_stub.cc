@@ -12,7 +12,7 @@ NetworkQualityProviderStub::NetworkQualityProviderStub()
     : connection_type_(
           net::EffectiveConnectionType::EFFECTIVE_CONNECTION_TYPE_3G) {}
 
-NetworkQualityProviderStub::~NetworkQualityProviderStub() {}
+NetworkQualityProviderStub::~NetworkQualityProviderStub() = default;
 
 // static
 NetworkQualityProviderStub* NetworkQualityProviderStub::GetUserData(

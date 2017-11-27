@@ -22,8 +22,8 @@ namespace {
 // TestFieldTrialObserver to listen to be notified by the child process syncer.
 class TestFieldTrialObserver : public base::FieldTrialList::Observer {
  public:
-  TestFieldTrialObserver() {}
-  ~TestFieldTrialObserver() override {}
+  TestFieldTrialObserver() = default;
+  ~TestFieldTrialObserver() override = default;
 
   // base::FieldTrial::Observer:
   void OnFieldTrialGroupFinalized(const std::string& trial_name,

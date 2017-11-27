@@ -43,8 +43,7 @@ FeedbackData::FeedbackData(feedback::FeedbackUploader* uploader)
   CHECK(uploader_);
 }
 
-FeedbackData::~FeedbackData() {
-}
+FeedbackData::~FeedbackData() = default;
 
 void FeedbackData::OnFeedbackPageDataComplete() {
   pending_op_count_--;

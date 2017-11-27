@@ -46,7 +46,7 @@ RemoteDeviceLifeCycleImpl::RemoteDeviceLifeCycleImpl(
       state_(RemoteDeviceLifeCycle::State::STOPPED),
       weak_ptr_factory_(this) {}
 
-RemoteDeviceLifeCycleImpl::~RemoteDeviceLifeCycleImpl() {}
+RemoteDeviceLifeCycleImpl::~RemoteDeviceLifeCycleImpl() = default;
 
 void RemoteDeviceLifeCycleImpl::Start() {
   PA_LOG(INFO) << "Life cycle for " << remote_device_.bluetooth_address

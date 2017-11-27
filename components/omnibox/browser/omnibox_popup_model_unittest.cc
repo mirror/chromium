@@ -24,7 +24,7 @@ namespace {
 
 class TestOmniboxPopupView : public OmniboxPopupView {
  public:
-  ~TestOmniboxPopupView() override {}
+  ~TestOmniboxPopupView() override = default;
   bool IsOpen() const override { return false; }
   void InvalidateLine(size_t line) override {}
   void OnLineSelected(size_t line) override {}

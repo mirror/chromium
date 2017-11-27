@@ -34,7 +34,7 @@ std::string GetName(ukm::builders::DecodeMap& decode_map, uint64_t hash) {
 DebugPage::DebugPage(ServiceGetter service_getter)
     : service_getter_(service_getter) {}
 
-DebugPage::~DebugPage() {}
+DebugPage::~DebugPage() = default;
 
 std::string DebugPage::GetSource() const {
   return "ukm";

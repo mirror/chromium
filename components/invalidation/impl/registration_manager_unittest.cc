@@ -30,7 +30,7 @@ class FakeRegistrationManager : public RegistrationManager {
       : RegistrationManager(invalidation_client),
         jitter_(0.0) {}
 
-  ~FakeRegistrationManager() override {}
+  ~FakeRegistrationManager() override = default;
 
   void SetJitter(double jitter) {
     jitter_ = jitter;
@@ -49,9 +49,9 @@ class FakeRegistrationManager : public RegistrationManager {
 // object IDs.
 class FakeInvalidationClient : public invalidation::InvalidationClient {
  public:
-  FakeInvalidationClient() {}
+  FakeInvalidationClient() = default;
 
-  ~FakeInvalidationClient() override {}
+  ~FakeInvalidationClient() override = default;
 
   void LoseRegistration(const invalidation::ObjectId& oid) {
     EXPECT_TRUE(base::ContainsKey(registered_ids_, oid));
@@ -151,7 +151,7 @@ class RegistrationManagerTest : public testing::Test {
   RegistrationManagerTest()
       : fake_registration_manager_(&fake_invalidation_client_) {}
 
-  ~RegistrationManagerTest() override {}
+  ~RegistrationManagerTest() override = default;
 
   void LoseRegistrations(const ObjectIdSet& oids) {
     for (ObjectIdSet::const_iterator it = oids.begin(); it != oids.end();

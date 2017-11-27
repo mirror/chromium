@@ -53,7 +53,7 @@ MarkPageAccessedTaskTest::MarkPageAccessedTaskTest()
       store_test_util_(task_runner_),
       runner_(task_runner_) {}
 
-MarkPageAccessedTaskTest::~MarkPageAccessedTaskTest() {}
+MarkPageAccessedTaskTest::~MarkPageAccessedTaskTest() = default;
 
 void MarkPageAccessedTaskTest::SetUp() {
   store_test_util_.BuildStoreInMemory();

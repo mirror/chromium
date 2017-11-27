@@ -410,7 +410,7 @@ JsonManifest::JsonManifest(const std::string& manifest_base_url,
       nonsfi_enabled_(nonsfi_enabled),
       pnacl_debug_(pnacl_debug) { }
 
-JsonManifest::~JsonManifest() {}
+JsonManifest::~JsonManifest() = default;
 
 bool JsonManifest::Init(const std::string& manifest_json_data,
                         ErrorInfo* error_info) {

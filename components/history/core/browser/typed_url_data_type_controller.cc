@@ -40,7 +40,7 @@ class RunTaskOnHistoryThread : public history::HistoryDBTask {
   void DoneRunOnMainThread() override {}
 
  protected:
-  ~RunTaskOnHistoryThread() override {}
+  ~RunTaskOnHistoryThread() override = default;
 
   std::unique_ptr<base::Closure> task_;
 };
@@ -107,6 +107,6 @@ bool TypedUrlDataTypeController::PostTaskOnModelThread(
   }
 }
 
-TypedUrlDataTypeController::~TypedUrlDataTypeController() {}
+TypedUrlDataTypeController::~TypedUrlDataTypeController() = default;
 
 }  // namespace browser_sync

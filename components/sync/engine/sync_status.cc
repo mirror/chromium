@@ -32,6 +32,6 @@ SyncStatus::SyncStatus()
 
 SyncStatus::SyncStatus(const SyncStatus& other) = default;
 
-SyncStatus::~SyncStatus() {}
+SyncStatus::~SyncStatus() = default;
 
 }  // namespace syncer

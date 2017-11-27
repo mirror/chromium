@@ -172,7 +172,7 @@ SessionsSyncManager::SessionsSyncManager(
       datatype_refresh_callback_(datatype_refresh_callback),
       task_tracker_(std::make_unique<TaskTracker>()) {}
 
-SessionsSyncManager::~SessionsSyncManager() {}
+SessionsSyncManager::~SessionsSyncManager() = default;
 
 // Returns the GUID-based string that should be used for
 // |SessionsSyncManager::current_machine_tag_|.

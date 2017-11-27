@@ -26,8 +26,7 @@ BookmarkExpandedStateTracker::BookmarkExpandedStateTracker(
   bookmark_model->AddObserver(this);
 }
 
-BookmarkExpandedStateTracker::~BookmarkExpandedStateTracker() {
-}
+BookmarkExpandedStateTracker::~BookmarkExpandedStateTracker() = default;
 
 void BookmarkExpandedStateTracker::SetExpandedNodes(const Nodes& nodes) {
   UpdatePrefs(nodes);

@@ -30,7 +30,7 @@ void ProxyGetOrDownloadCallback(
 
 }  // namespace
 
-AttachmentServiceProxy::AttachmentServiceProxy() {}
+AttachmentServiceProxy::AttachmentServiceProxy() = default;
 
 AttachmentServiceProxy::AttachmentServiceProxy(
     const scoped_refptr<base::SequencedTaskRunner>& wrapped_task_runner,
@@ -50,7 +50,7 @@ AttachmentServiceProxy::AttachmentServiceProxy(
 AttachmentServiceProxy::AttachmentServiceProxy(
     const AttachmentServiceProxy& other) = default;
 
-AttachmentServiceProxy::~AttachmentServiceProxy() {}
+AttachmentServiceProxy::~AttachmentServiceProxy() = default;
 
 void AttachmentServiceProxy::GetOrDownloadAttachments(
     const AttachmentIdList& attachment_ids,
@@ -76,7 +76,7 @@ AttachmentServiceProxy::Core::Core(
     const base::WeakPtr<AttachmentService>& wrapped)
     : wrapped_(wrapped) {}
 
-AttachmentServiceProxy::Core::~Core() {}
+AttachmentServiceProxy::Core::~Core() = default;
 
 void AttachmentServiceProxy::Core::GetOrDownloadAttachments(
     const AttachmentIdList& attachment_ids,

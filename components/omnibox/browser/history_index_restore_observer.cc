@@ -10,7 +10,7 @@ HistoryIndexRestoreObserver::HistoryIndexRestoreObserver(
       succeeded_(false) {
 }
 
-HistoryIndexRestoreObserver::~HistoryIndexRestoreObserver() {}
+HistoryIndexRestoreObserver::~HistoryIndexRestoreObserver() = default;
 
 void HistoryIndexRestoreObserver::OnCacheRestoreFinished(bool success) {
   succeeded_ = success;

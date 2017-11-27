@@ -6,9 +6,9 @@
 
 namespace syncer {
 
-FakeSyncScheduler::FakeSyncScheduler() {}
+FakeSyncScheduler::FakeSyncScheduler() = default;
 
-FakeSyncScheduler::~FakeSyncScheduler() {}
+FakeSyncScheduler::~FakeSyncScheduler() = default;
 
 void FakeSyncScheduler::Start(Mode mode, base::Time last_poll_time) {}
 

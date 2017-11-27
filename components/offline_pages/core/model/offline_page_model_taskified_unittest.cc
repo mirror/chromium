@@ -157,7 +157,7 @@ OfflinePageModelTaskifiedTest::OfflinePageModelTaskifiedTest()
       task_runner_handle_(task_runner_),
       store_test_util_(task_runner_) {}
 
-OfflinePageModelTaskifiedTest::~OfflinePageModelTaskifiedTest() {}
+OfflinePageModelTaskifiedTest::~OfflinePageModelTaskifiedTest() = default;
 
 void OfflinePageModelTaskifiedTest::SetUp() {
   store_test_util()->BuildStoreInMemory();

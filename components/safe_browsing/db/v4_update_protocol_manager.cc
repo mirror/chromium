@@ -97,8 +97,8 @@ ChromeClientInfo::SafeBrowsingReportingPopulation GetReportingLevelProtoValue(
 class V4UpdateProtocolManagerFactoryImpl
     : public V4UpdateProtocolManagerFactory {
  public:
-  V4UpdateProtocolManagerFactoryImpl() {}
-  ~V4UpdateProtocolManagerFactoryImpl() override {}
+  V4UpdateProtocolManagerFactoryImpl() = default;
+  ~V4UpdateProtocolManagerFactoryImpl() override = default;
   std::unique_ptr<V4UpdateProtocolManager> CreateProtocolManager(
       net::URLRequestContextGetter* request_context_getter,
       const V4ProtocolConfig& config,

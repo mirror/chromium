@@ -219,7 +219,7 @@ CredentialManagerClient::CredentialManagerClient(
   render_view->GetWebView()->SetCredentialManagerClient(this);
 }
 
-CredentialManagerClient::~CredentialManagerClient() {}
+CredentialManagerClient::~CredentialManagerClient() = default;
 
 // -----------------------------------------------------------------------------
 // Access mojo CredentialManagerService.

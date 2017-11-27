@@ -38,7 +38,7 @@ void BleAdvertisementGenerator::SetInstanceForTesting(
 BleAdvertisementGenerator::BleAdvertisementGenerator()
     : eid_generator_(base::MakeUnique<cryptauth::ForegroundEidGenerator>()) {}
 
-BleAdvertisementGenerator::~BleAdvertisementGenerator() {}
+BleAdvertisementGenerator::~BleAdvertisementGenerator() = default;
 
 std::unique_ptr<DataWithTimestamp>
 BleAdvertisementGenerator::GenerateBleAdvertisementInternal(

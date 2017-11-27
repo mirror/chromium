@@ -78,8 +78,7 @@ SetPropertyOperation::SetPropertyOperation(
       weak_ptr_factory_(this) {
 }
 
-SetPropertyOperation::~SetPropertyOperation() {
-}
+SetPropertyOperation::~SetPropertyOperation() = default;
 
 void SetPropertyOperation::SetProperty(
     const base::FilePath& file_path,

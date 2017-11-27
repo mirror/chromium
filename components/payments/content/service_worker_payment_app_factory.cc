@@ -87,8 +87,8 @@ void RemovePortNumbersFromScopesForTest(
 
 class SelfDeletingServiceWorkerPaymentAppFactory {
  public:
-  SelfDeletingServiceWorkerPaymentAppFactory() {}
-  ~SelfDeletingServiceWorkerPaymentAppFactory() {}
+  SelfDeletingServiceWorkerPaymentAppFactory() = default;
+  ~SelfDeletingServiceWorkerPaymentAppFactory() = default;
 
   // After |callback| has fired, the factory refreshes its own cache in the
   // background. Once the cache has been refreshed, the factory invokes the
@@ -201,7 +201,7 @@ void ServiceWorkerPaymentAppFactory::GetAllPaymentApps(
 ServiceWorkerPaymentAppFactory::ServiceWorkerPaymentAppFactory()
     : test_downloader_(nullptr) {}
 
-ServiceWorkerPaymentAppFactory::~ServiceWorkerPaymentAppFactory() {}
+ServiceWorkerPaymentAppFactory::~ServiceWorkerPaymentAppFactory() = default;
 
 // static
 void ServiceWorkerPaymentAppFactory::RemoveAppsWithoutMatchingMethodData(

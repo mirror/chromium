@@ -4,9 +4,9 @@
 
 #include "components/bubble/bubble_delegate.h"
 
-BubbleDelegate::BubbleDelegate() {}
+BubbleDelegate::BubbleDelegate() = default;
 
-BubbleDelegate::~BubbleDelegate() {}
+BubbleDelegate::~BubbleDelegate() = default;
 
 bool BubbleDelegate::ShouldClose(BubbleCloseReason reason) const {
   return true;

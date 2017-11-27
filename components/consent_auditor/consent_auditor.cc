@@ -37,7 +37,7 @@ ConsentAuditor::ConsentAuditor(PrefService* pref_service,
   DCHECK(user_event_service_);
 }
 
-ConsentAuditor::~ConsentAuditor() {}
+ConsentAuditor::~ConsentAuditor() = default;
 
 void ConsentAuditor::Shutdown() {
   user_event_service_ = nullptr;

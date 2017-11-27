@@ -49,9 +49,9 @@ std::unique_ptr<net::test_server::HttpResponse> GoodTimeResponseHandler(
   return std::unique_ptr<net::test_server::HttpResponse>(response);
 }
 
-FieldTrialTest::FieldTrialTest() {}
+FieldTrialTest::FieldTrialTest() = default;
 
-FieldTrialTest::~FieldTrialTest() {}
+FieldTrialTest::~FieldTrialTest() = default;
 
 void FieldTrialTest::SetNetworkQueriesWithVariationsService(
     bool enable,

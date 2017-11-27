@@ -26,7 +26,7 @@ class TestObserver : public OptimizationGuideServiceObserver {
  public:
   TestObserver() : received_notification_(false) {}
 
-  ~TestObserver() override {}
+  ~TestObserver() override = default;
 
   void OnHintsProcessed(const proto::Configuration& config) override {
     received_notification_ = true;
@@ -46,9 +46,9 @@ class TestObserver : public OptimizationGuideServiceObserver {
 
 class OptimizationGuideServiceTest : public testing::Test {
  public:
-  OptimizationGuideServiceTest() {}
+  OptimizationGuideServiceTest() = default;
 
-  ~OptimizationGuideServiceTest() override {}
+  ~OptimizationGuideServiceTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());

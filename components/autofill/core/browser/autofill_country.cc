@@ -37,8 +37,7 @@ AutofillCountry::AutofillCountry(const std::string& country_code,
   address_required_fields_ = data.address_required_fields;
 }
 
-AutofillCountry::~AutofillCountry() {
-}
+AutofillCountry::~AutofillCountry() = default;
 
 // static
 const std::string AutofillCountry::CountryCodeForLocale(

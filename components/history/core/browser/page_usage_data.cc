@@ -9,7 +9,6 @@ namespace history {
 PageUsageData::PageUsageData(SegmentID id) : id_(id), score_(0.0) {
 }
 
-PageUsageData::~PageUsageData() {
-}
+PageUsageData::~PageUsageData() = default;
 
 }  // namespace history

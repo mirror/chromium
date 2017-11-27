@@ -38,8 +38,8 @@ namespace {
 // A mock that keeps track of attachments passed to UploadAttachments.
 class MockAttachmentService : public AttachmentService {
  public:
-  MockAttachmentService() {}
-  ~MockAttachmentService() override {}
+  MockAttachmentService() = default;
+  ~MockAttachmentService() override = default;
 
   void GetOrDownloadAttachments(
       const AttachmentIdList& attachment_ids,
@@ -61,7 +61,7 @@ class MockAttachmentService : public AttachmentService {
 // pass MockAttachmentService to it.
 class MockSyncApiComponentFactory : public SyncApiComponentFactory {
  public:
-  MockSyncApiComponentFactory() {}
+  MockSyncApiComponentFactory() = default;
 
   // SyncApiComponentFactory implementation.
   void RegisterDataTypes(

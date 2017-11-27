@@ -16,7 +16,7 @@
 
 namespace syncer {
 
-SyncPrefObserver::~SyncPrefObserver() {}
+SyncPrefObserver::~SyncPrefObserver() = default;
 
 SyncPrefs::SyncPrefs(PrefService* pref_service) : pref_service_(pref_service) {
   DCHECK(pref_service);

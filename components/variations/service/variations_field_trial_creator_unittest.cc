@@ -34,8 +34,8 @@ std::unique_ptr<metrics::ClientInfo> StubLoadClientInfo() {
 
 class TestVariationsServiceClient : public VariationsServiceClient {
  public:
-  TestVariationsServiceClient() {}
-  ~TestVariationsServiceClient() override {}
+  TestVariationsServiceClient() = default;
+  ~TestVariationsServiceClient() override = default;
 
   // VariationsServiceClient:
   std::string GetApplicationLocale() override { return std::string(); }
@@ -130,7 +130,7 @@ class TestVariationsService : public VariationsService {
                           state_manager,
                           UIStringOverrider()) {}
 
-  ~TestVariationsService() override {}
+  ~TestVariationsService() override = default;
 };
 
 // Constants used to create the test seed.

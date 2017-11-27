@@ -259,9 +259,9 @@ bool PersistentSystemProfile::RecordAllocator::ReadData(
   return !continued;
 }
 
-PersistentSystemProfile::PersistentSystemProfile() {}
+PersistentSystemProfile::PersistentSystemProfile() = default;
 
-PersistentSystemProfile::~PersistentSystemProfile() {}
+PersistentSystemProfile::~PersistentSystemProfile() = default;
 
 void PersistentSystemProfile::RegisterPersistentAllocator(
     base::PersistentMemoryAllocator* memory_allocator) {

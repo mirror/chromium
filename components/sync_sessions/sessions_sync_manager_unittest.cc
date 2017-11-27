@@ -153,8 +153,8 @@ class SessionNotificationObserver {
 // a WebContents, see PlaceholderTabDelegate below.
 class TestSyncedTabDelegate : public SyncedTabDelegate {
  public:
-  TestSyncedTabDelegate() {}
-  ~TestSyncedTabDelegate() override {}
+  TestSyncedTabDelegate() = default;
+  ~TestSyncedTabDelegate() override = default;
 
   // SyncedTabDelegate overrides.
   bool IsInitialBlankNavigation() const override {
@@ -259,7 +259,7 @@ class PlaceholderTabDelegate : public SyncedTabDelegate {
  public:
   PlaceholderTabDelegate(SessionID::id_type session_id, int sync_id)
       : session_id_(session_id), sync_id_(sync_id) {}
-  ~PlaceholderTabDelegate() override {}
+  ~PlaceholderTabDelegate() override = default;
 
   // SyncedTabDelegate overrides.
   SessionID::id_type GetSessionId() const override { return session_id_; }
@@ -332,8 +332,8 @@ class PlaceholderTabDelegate : public SyncedTabDelegate {
 
 class TestSyncedWindowDelegate : public SyncedWindowDelegate {
  public:
-  TestSyncedWindowDelegate() {}
-  ~TestSyncedWindowDelegate() override {}
+  TestSyncedWindowDelegate() = default;
+  ~TestSyncedWindowDelegate() override = default;
 
   bool HasWindow() const override { return true; }
 
@@ -396,8 +396,8 @@ class TestSyncedWindowDelegate : public SyncedWindowDelegate {
 
 class TestSyncedWindowDelegatesGetter : public SyncedWindowDelegatesGetter {
  public:
-  TestSyncedWindowDelegatesGetter() {}
-  ~TestSyncedWindowDelegatesGetter() override {}
+  TestSyncedWindowDelegatesGetter() = default;
+  ~TestSyncedWindowDelegatesGetter() override = default;
 
   SyncedWindowDelegateMap GetSyncedWindowDelegates() override {
     return delegates_;
@@ -472,7 +472,7 @@ class TestSyncChangeProcessor : public syncer::SyncChangeProcessor {
 
 class DummyRouter : public LocalSessionEventRouter {
  public:
-  ~DummyRouter() override {}
+  ~DummyRouter() override = default;
   void StartRoutingTo(LocalSessionEventHandler* handler) override {
     handler_ = handler;
   }
@@ -494,7 +494,7 @@ class SyncSessionsClientShim : public FakeSyncSessionsClient {
   explicit SyncSessionsClientShim(
       SyncedWindowDelegatesGetter* synced_window_getter)
       : synced_window_getter_(synced_window_getter) {}
-  ~SyncSessionsClientShim() override {}
+  ~SyncSessionsClientShim() override = default;
 
   SyncedWindowDelegatesGetter* GetSyncedWindowDelegatesGetter() override {
     // The idea here is to allow the test code override the default
@@ -512,7 +512,7 @@ class SyncSessionsClientShim : public FakeSyncSessionsClient {
 
 class SessionsSyncManagerTest : public testing::Test {
  protected:
-  SessionsSyncManagerTest() {}
+  SessionsSyncManagerTest() = default;
 
   void SetUp() override {
     local_device_ = std::make_unique<LocalDeviceInfoProviderMock>(

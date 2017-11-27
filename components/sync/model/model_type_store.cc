@@ -23,7 +23,7 @@ void ModelTypeStore::CreateStore(const std::string& path,
   ModelTypeStoreImpl::CreateStore(type, path, callback);
 }
 
-ModelTypeStore::~ModelTypeStore() {}
+ModelTypeStore::~ModelTypeStore() = default;
 
 // static
 std::unique_ptr<MetadataChangeList>
@@ -33,7 +33,7 @@ ModelTypeStore::WriteBatch::CreateMetadataChangeList() {
 
 ModelTypeStore::WriteBatch::WriteBatch(ModelTypeStore* store) : store_(store) {}
 
-ModelTypeStore::WriteBatch::~WriteBatch() {}
+ModelTypeStore::WriteBatch::~WriteBatch() = default;
 
 void ModelTypeStore::WriteBatch::WriteData(const std::string& id,
                                            const std::string& value) {

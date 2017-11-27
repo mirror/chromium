@@ -105,7 +105,7 @@ DeviceInfoSyncBridge::DeviceInfoSyncBridge(
       base::Bind(&DeviceInfoSyncBridge::OnStoreCreated, base::AsWeakPtr(this)));
 }
 
-DeviceInfoSyncBridge::~DeviceInfoSyncBridge() {}
+DeviceInfoSyncBridge::~DeviceInfoSyncBridge() = default;
 
 std::unique_ptr<MetadataChangeList>
 DeviceInfoSyncBridge::CreateMetadataChangeList() {

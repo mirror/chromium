@@ -24,6 +24,6 @@ DataTypeAssociationStats::DataTypeAssociationStats()
 DataTypeAssociationStats::DataTypeAssociationStats(
     const DataTypeAssociationStats& other) = default;
 
-DataTypeAssociationStats::~DataTypeAssociationStats() {}
+DataTypeAssociationStats::~DataTypeAssociationStats() = default;
 
 }  // namespace syncer

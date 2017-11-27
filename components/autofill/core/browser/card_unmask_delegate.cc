@@ -12,6 +12,6 @@ CardUnmaskDelegate::UnmaskResponse::UnmaskResponse()
 CardUnmaskDelegate::UnmaskResponse::UnmaskResponse(
     const UnmaskResponse& other) = default;
 
-CardUnmaskDelegate::UnmaskResponse::~UnmaskResponse() {}
+CardUnmaskDelegate::UnmaskResponse::~UnmaskResponse() = default;
 
 }  // namespace autofill

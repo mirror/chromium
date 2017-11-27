@@ -22,7 +22,7 @@ AttachmentServiceProxyForTest::OwningCore::OwningCore(
   DCHECK(wrapped_);
 }
 
-AttachmentServiceProxyForTest::OwningCore::~OwningCore() {}
+AttachmentServiceProxyForTest::OwningCore::~OwningCore() = default;
 
 // Static.
 AttachmentServiceProxy AttachmentServiceProxyForTest::Create() {
@@ -54,7 +54,7 @@ AttachmentServiceProxy AttachmentServiceProxyForTest::Create() {
   return AttachmentServiceProxyForTest(runner, core_for_test);
 }
 
-AttachmentServiceProxyForTest::~AttachmentServiceProxyForTest() {}
+AttachmentServiceProxyForTest::~AttachmentServiceProxyForTest() = default;
 
 AttachmentServiceProxyForTest::AttachmentServiceProxyForTest(
     const scoped_refptr<base::SequencedTaskRunner>& wrapped_task_runner,

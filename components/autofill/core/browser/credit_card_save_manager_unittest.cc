@@ -70,9 +70,9 @@ const base::Time kMuchLaterTime = base::Time::FromDoubleT(5000);
 
 class MockAutofillClient : public TestAutofillClient {
  public:
-  MockAutofillClient() {}
+  MockAutofillClient() = default;
 
-  ~MockAutofillClient() override {}
+  ~MockAutofillClient() override = default;
 
   MOCK_METHOD2(ConfirmSaveCreditCardLocally,
                void(const CreditCard& card, const base::Closure& callback));
@@ -95,7 +95,7 @@ class TestPaymentsClient : public payments::PaymentsClient {
                        save_delegate),
         save_delegate_(save_delegate) {}
 
-  ~TestPaymentsClient() override {}
+  ~TestPaymentsClient() override = default;
 
   void GetUploadDetails(const std::vector<AutofillProfile>& addresses,
                         const std::vector<const char*>& active_experiments,
@@ -365,7 +365,7 @@ class TestAutofillManager : public AutofillManager {
     set_payments_client(payments_client);
     set_form_data_importer(test_form_data_importer_);
   }
-  ~TestAutofillManager() override {}
+  ~TestAutofillManager() override = default;
 
   bool IsAutofillEnabled() const override { return autofill_enabled_; }
 
@@ -533,7 +533,7 @@ class TestCreditCardSaveManager : public CreditCardSaveManager {
       test_payments_client_->SetSaveDelegate(this);
     }
   }
-  ~TestCreditCardSaveManager() override {}
+  ~TestCreditCardSaveManager() override = default;
 
   bool IsCreditCardUploadEnabled() override {
     return credit_card_upload_enabled_;
