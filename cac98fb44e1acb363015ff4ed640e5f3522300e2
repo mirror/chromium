@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "3a53b1f3_dd3fb207",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-11-27T19:17:35Z",
+      "side": 1,
+      "message": "It looks like we just need top save a bitset of fingers here in order to implement cancellation.\n\nI don\u0027t think we should save the entire ui::Event - that type is really meant for dispatch, and has a bunch of special behaviors associated with it. I would avoid using it for storage. If we need to save more than just the finger bit set then let\u0027s put that state directly in TouchPoint.",
+      "parentUuid": "ba936aea_a82e373b",
+      "range": {
+        "startLine": 71,
+        "startChar": 30,
+        "endLine": 71,
+        "endChar": 35
+      },
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89b567b9_a65b282b",
         "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
         "patchSetId": 1

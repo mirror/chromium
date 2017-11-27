@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aef027e7_aed006e4",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-11-27T19:17:35Z",
+      "side": 1,
+      "message": "Please add\n\nDISALLOW_COPY_AND_ASSIGN(WaylandTouch)",
+      "range": {
+        "startLine": 76,
+        "startChar": 14,
+        "endLine": 76,
+        "endChar": 29
+      },
+      "revId": "74565c60ac689bea15a9ef75e3f65e653bf6c120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
