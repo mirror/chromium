@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d3afa0c_4ea5c9b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-27T23:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9938b261_7c426033",
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0439d3ca_67d94e42",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-27T22:08:30Z",
       "side": 1,
       "message": "garbled?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580d1cce_bf8711ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-27T23:44:45Z",
+      "side": 1,
+      "message": "I don\u0027t know why it does this, when I do multi-line Test: entries anything can happen :P will fix the comment manually here.",
+      "parentUuid": "0439d3ca_67d94e42",
       "range": {
         "startLine": 17,
         "startChar": 0,
@@ -62,6 +104,30 @@
       "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dcbde9_57dd3016",
+        "filename": "components/arc/common/intent_helper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-27T23:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f37da02e_2a2655f1",
+      "range": {
+        "startLine": 85,
+        "startChar": 41,
+        "endLine": 85,
+        "endChar": 49
+      },
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "baa8a670_fcf3fd34",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-27T23:44:45Z",
+      "side": 1,
+      "message": "I Am not sure what kind of structure would be better here, maybe a map?",
+      "parentUuid": "9d225b59_f7b0fb32",
+      "range": {
+        "startLine": 148,
+        "startChar": 1,
+        "endLine": 148,
+        "endChar": 17
+      },
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaab31ac_12a061d8",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
         "patchSetId": 4
@@ -123,6 +213,24 @@
       "writtenOn": "2017-11-27T22:08:30Z",
       "side": 1,
       "message": "Please also test about:blank.\n\nMy guess is that the current OnOpenUrl() implementation does allow the URL. I guess that\u0027s fine, but I think we should at least have a test for the URL.",
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c4e7c0_9dfe0c50",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-27T23:44:45Z",
+      "side": 1,
+      "message": "I think the \"about:\" scheme should be banned in the same fashion as \"settings:\" in OnOpenUrl(), let me know if this is correct.",
+      "parentUuid": "aaab31ac_12a061d8",
       "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -143,6 +251,24 @@
       "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3176e8da_00b0cd7a",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-27T23:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40898d0b_b597d495",
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
