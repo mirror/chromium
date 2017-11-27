@@ -36,6 +36,98 @@
     },
     {
       "key": {
+        "uuid": "577fa1f9_4e32d7cf",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-27T15:54:19Z",
+      "side": 1,
+      "message": "We should initialize this here since it is not set in the constructor anymore.",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 21
+      },
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01cdc995_eb96fe5e",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-27T15:54:19Z",
+      "side": 1,
+      "message": "I\u0027m wondering if this should be camel-case now since it does more then just setting a member variable.",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 30
+      },
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad3668a_92587c30",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-27T15:54:19Z",
+      "side": 1,
+      "message": "Nice! C++11 \\o/",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 78
+      },
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95f41d8b_b7e3f50c",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-27T15:54:19Z",
+      "side": 1,
+      "message": "nit: element?",
+      "range": {
+        "startLine": 164,
+        "startChar": 7,
+        "endLine": 164,
+        "endChar": 8
+      },
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cac449d_0c0b369b",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 4
