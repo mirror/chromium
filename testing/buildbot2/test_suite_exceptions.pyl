@@ -1,0 +1,629 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# This is a .pyl, or "Python Literal", file. You can treat it just like a
+# .json file, with the following exceptions:
+# * all keys must be quoted (use single quotes, please);
+# * comments are allowed, using '#' syntax; and
+# * trailing commas are allowed.
+
+# Exceptions to the common test suites can only include removal from
+# particular bots, and modifications on particular bots. By design,
+# it's not possible to add one-off tests to bots. Instead they have to
+# be added to one of the test suites in test_suites.pyl.
+#
+# The goal is to drive the number of exceptions to zero, to make all
+# the bots behave similarly.
+{
+  'browser_tests': {
+    'modifications': {
+      'Win7 Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 20,
+        },
+      },
+      'Linux Tests': {
+        'swarming': {
+          'shards': 5,
+        },
+      },
+    },
+  },
+  'blink_heap_unittests': {
+    'remove_from': [
+      # On chromium.linux, unclear why these only run on "Linux Tests".
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+      # On chromium.mac, unclear why these only run on "Mac10.9 Tests".
+      'Mac10.10 Tests',
+      'Mac10.11 Tests',
+      'Mac10.12 Tests',
+      'Mac10.9 Tests (dbg)',
+      # On chromium.win, unclear why these only run on "Win7 Tests (1)".
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'blink_platform_unittests': {
+    'remove_from': [
+      # On chromium.linux, unclear why these only run on "Linux Tests".
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+      # On chromium.mac, unclear why these only run on "Mac10.9 Tests".
+      'Mac10.10 Tests',
+      'Mac10.11 Tests',
+      'Mac10.12 Tests',
+      'Mac10.9 Tests (dbg)',
+      # On chromium.win, unclear why these only run on "Win7 Tests (1)".
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'boringssl_crypto_tests': {
+    'remove_from': [
+      # On chromium.mac, unclear why these aren't run on "Mac10.12 Tests".
+      'Mac10.12 Tests',
+    ],
+  },
+  'boringssl_ssl_tests': {
+    'remove_from': [
+      # On chromium.mac, unclear why these aren't run on "Mac10.12 Tests".
+      'Mac10.12 Tests',
+    ],
+  },
+  'components_browsertests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'content_browsertests': {
+    'modifications': {
+      'Win7 Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+    },
+  },
+  'content_shell_crash_test': {
+    'remove_from': [
+      # On chromium.linux, unclear why these only run on "Linux Tests".
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+      # On chromium.mac, unclear why these only run on "Mac10.9 Tests".
+      'Mac10.10 Tests',
+      'Mac10.11 Tests',
+      'Mac10.12 Tests',
+      'Mac10.9 Tests (dbg)',
+      # On chromium.win, unclear why these only run on "Win7 Tests (1)".
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'dbus_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'device_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'devtools_closure_compile': {
+    'remove_from': [
+      # On chromium.linux, unclear why these only run on "Linux Tests".
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'devtools_eslint': {
+    'remove_from': [
+      # On chromium.linux, unclear why these only run on "Linux Tests".
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'display_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'dbus_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'filesystem_service_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'gfx_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'gin_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+      # Unclear why these aren't run on any Mac testers.
+      'Mac10.10 Tests',
+      'Mac10.11 Tests',
+      'Mac10.12 Tests',
+      'Mac10.9 Tests',
+      'Mac10.9 Tests (dbg)',
+      # On chromium.win, unclear why these only run on "Win7 Tests (1)".
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'google_apis_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'gpu_ipc_service_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'headless_browsertests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+      # On chromium.mac, unclear why these aren't run on "Mac10.11 Tests".
+      'Mac10.11 Tests',
+    ],
+  },
+  'headless_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+      # On chromium.mac, unclear why these aren't run on "Mac10.11 Tests".
+      'Mac10.11 Tests',
+    ],
+  },
+  'interactive_ui_tests': {
+    'modifications': {
+      # Unclear why this isn't sharded.
+      'Linux Tests': {
+        'swarming': {
+          'shards': 1,
+        },
+      },
+      'Linux Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 3,
+        },
+      },
+      'Linux Tests (dbg)(1)(32)': {
+        'swarming': {
+          'shards': 3,
+        },
+      },
+      # Unclear why this isn't swarmed.
+      'Mac10.10 Tests': {
+        'swarming': {
+          'can_use_on_swarming_builders': False,
+        },
+      },
+      # Unclear why this isn't sharded.
+      'Mac10.11 Tests': {
+        'swarming': {
+          'shards': 1,
+        },
+      },
+      # Unclear why this isn't sharded.
+      'Mac10.12 Tests': {
+        'swarming': {
+          'shards': 1,
+        },
+      },
+      'Win7 Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 4,
+        },
+      },
+    },
+  },
+  'keyboard_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+      # On chromium.linux, unclear why these aren't run.
+      'Linux Tests',
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'latency_unittests': {
+    'remove_from': [
+      # On chromium.linux, unclear why these aren't run.
+      'Linux Tests',
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'media_service_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'message_center_unittests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+      # On chromium.mac, unclear why these aren't run.
+      'Mac10.10 Tests',
+      'Mac10.11 Tests',
+      'Mac10.12 Tests',
+      'Mac10.9 Tests',
+      'Mac10.9 Tests (dbg)',
+      # On chromium.linux, unclear why these aren't run.
+      'Linux Tests',
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'metrics_python_tests': {
+    'remove_from': [
+      'Win7 Tests (dbg)(1)',
+      # On chromium.mac, unclear why these only run on "Mac10.9 Tests".
+      'Mac10.10 Tests',
+      'Mac10.11 Tests',
+      'Mac10.12 Tests',
+      'Mac10.9 Tests (dbg)',
+    ],
+  },
+  'mojo_js_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'native_theme_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'remoting_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'renderer_side_navigation_content_browsertests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'renderer_side_navigation_content_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'sandbox_linux_unittests': {
+    'modifications': {
+      'Linux Tests (dbg)(1)': {
+        'args': [
+          '--test-launcher-print-test-stdio=always',
+        ],
+      },
+      'Linux Tests (dbg)(1)(32)': {
+        'args': [
+          '--test-launcher-print-test-stdio=always',
+        ],
+      },
+    },
+  },
+  'service_manager_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+      # On chromium.mac, unclear why these aren't run.
+      'Mac10.10 Tests',
+      'Mac10.11 Tests',
+      'Mac10.12 Tests',
+      'Mac10.9 Tests',
+      'Mac10.9 Tests (dbg)',
+      'Win7 Tests (dbg)(1)',
+      'Win10 Tests x64',
+    ],
+  },
+  'services_unittests': {
+    'modifications': {
+      'Win10 Tests x64': {
+        'args': [
+          '--test-launcher-filter-file=../../testing/buildbot/filters/win10.services_unittests.filter'
+        ],
+      },
+    },
+  },
+  'site_per_process_browser_tests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+    'modifications': {
+      'Linux Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 10,
+        },
+      },
+    },
+  },
+  'site_per_process_content_browsertests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'site_per_process_content_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'site_per_process_unit_tests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'snapshot_unittests': {
+    'remove_from': [
+      # On chromium.win, unclear why these aren't run.
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 (32) Tests',
+      'Win7 Tests (1)',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'sync_integration_tests': {
+    'modifications': {
+      'Win7 Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+    },
+  },
+  'telemetry_perf_unittests': {
+    'modifications': {
+      'Linux Tests': {
+        'args': [
+          '--xvfb',
+        ],
+      },
+      # Disable parallelism on all Mac bots.
+      'Mac10.10 Tests': {
+        'args': [
+          '--jobs=1',
+        ],
+      },
+      'Mac10.11 Tests': {
+        'args': [
+          '--jobs=1',
+        ],
+      },
+      'Mac10.12 Tests': {
+        'args': [
+          '--jobs=1',
+        ],
+      },
+    },
+    'remove_from': [
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+      'Mac10.9 Tests',
+      'Mac10.9 Tests (dbg)',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'telemetry_unittests': {
+    'modifications': {
+      'Linux Tests': {
+        'args': [
+          '--jobs=1',
+        ],
+        'swarming': {
+          'shards': 4,
+        },
+      },
+      'Linux Tests (dbg)(1)': {
+        'args': [
+          '--jobs=1',
+        ],
+        'swarming': {
+          'shards': 4,
+        },
+      },
+      'Linux Tests (dbg)(1)(32)': {
+        'args': [
+          '--jobs=1',
+        ],
+        'swarming': {
+          'shards': 4,
+        },
+      },
+      # TODO(kbr): this looks like an accident while removing parallelism from
+      # telemetry_perf_unittests.
+      'Mac10.12 Tests': {
+        'args': [
+          '--jobs=1',
+        ],
+      },
+    },
+  },
+  'traffic_annotation_auditor_unittests': {
+    'modifications': {
+      'Linux Tests': {
+        # Unclear why this isn't swarmed.
+        'swarming': {
+          'can_use_on_swarming_builders': False,
+        },
+      },
+    },
+    'remove_from': [
+      # On chromium.linux, unclear why these only run on "Linux Tests".
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'views_unittests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'viz_content_browsertests': {
+    'remove_from': [
+      # On chromium.linux, unclear why these only run on "Linux Tests".
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'viz_unittests': {
+    'remove_from': [
+      'Win10 Tests x64',
+    ],
+  },
+  'vr_common_unittests': {
+    'remove_from': [
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+    ],
+  },
+  'webkit_layout_tests': {
+    'remove_from': [
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+      'Mac10.9 Tests',
+      'Mac10.9 Tests (dbg)',
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (1)',
+    ],
+    'key_removals': {
+      'Win7 Tests (dbg)(1)': [
+        'results_handler',
+      ],
+    },
+    'modifications': {
+      'Linux Tests': {
+        'swarming': {
+          'dimension_sets': [
+            {
+              # TODO(kbr): this is essentially redundant.
+              'os': 'Ubuntu-14.04',
+            },
+          ],
+          'shards': 6,
+        },
+      },
+      'Mac10.10 Tests': {
+        # TODO(kbr): this is essentially redundant.
+        'swarming': {
+          'dimension_sets': [
+            {
+              'gpu': 'none',
+              'os': 'Mac-10.10.5',
+            },
+          ],
+        },
+      },
+      'Mac10.11 Tests': {
+        # TODO(kbr): this is essentially redundant.
+        'swarming': {
+          'dimension_sets': [
+            {
+              'gpu': 'none',
+              'os': 'Mac-10.11.6',
+            },
+          ],
+        },
+      },
+      'Mac10.12 Tests': {
+        # TODO(kbr): if the Swarming dimensions were explicitly specified for
+        # all jobs then this wouldn't be needed. However, note that this bot
+        # implicitly specifies gpu:none rather than gpu:8086:0a2e.
+        'swarming': {
+          'dimension_sets': [
+            {
+              'gpu': '8086:0a2e',
+              'hidpi': '0',
+              'os': 'Mac-10.12.6',
+            },
+          ],
+          'shards': 12,
+        },
+      },
+      'Win7 Tests (dbg)(1)': {
+        'args': [
+          '--debug',
+          '--time-out-ms',
+          '60000'
+        ],
+        # TODO(kbr): the "Windows-7-SP1" Swarming dimension set is implicit,
+        # from prefered_os_dimension in
+        # tools/build/scripts/slave/recipe_modules/swarming/api.py. Ideally,
+        # Swarming dimensions would be either specified for all testers on the
+        # waterfall (and therefore, explicitly specified for all tests in the
+        # generated JSON), or this would be removed, and the implicit one used.
+        'swarming': {
+          'dimension_sets': [
+            {
+              'os': 'Windows-7-SP1',
+            }
+          ],
+        },
+      },
+    },
+  },
+  'webkit_python_tests': {
+    'remove_from': [
+      # On chromium.linux, unclear why these only run on "Linux Tests".
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+      # On chromium.mac, unclear why these only run on "Mac10.9 Tests".
+      'Mac10.10 Tests',
+      'Mac10.11 Tests',
+      'Mac10.12 Tests',
+      'Mac10.9 Tests (dbg)',
+      'Win 7 Tests x64 (1)',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'webkit_unit_tests': {
+    'remove_from': [
+      # On chromium.linux, unclear why these only run on "Linux Tests".
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+      # On chromium.mac, unclear why these only run on "Mac10.9 Tests".
+      'Mac10.10 Tests',
+      'Mac10.11 Tests',
+      'Mac10.12 Tests',
+      'Mac10.9 Tests (dbg)',
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'wtf_unittests': {
+    'remove_from': [
+      # On chromium.linux, unclear why these only run on "Linux Tests".
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+      # On chromium.mac, unclear why these only run on "Mac10.9 Tests".
+      'Mac10.10 Tests',
+      'Mac10.11 Tests',
+      'Mac10.12 Tests',
+      'Mac10.9 Tests (dbg)',
+      # On chromium.win, unclear why these only run on "Win7 Tests (1)".
+      'Win 7 Tests x64 (1)',
+      'Win10 Tests x64',
+      'Win7 Tests (dbg)(1)',
+    ],
+  },
+  'zucchini_unittests': {
+    'remove_from': [
+      'Win10 Tests x64',
+    ],
+  },
+}
