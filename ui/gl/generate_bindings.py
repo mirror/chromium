@@ -2591,7 +2591,8 @@ def GenerateMockHeader(file, functions, set_name):
     # For now gmock supports at most 10 args.
     if arg_count <= 10:
       file.write('  MOCK_METHOD%d(%s, %s(%s));\n' %
-          (arg_count, func['known_as'][2:], func['return_type'], args))
+          (arg_count, func['known_as'][len(set_name):], func['return_type'],
+           args))
     else:
       file.write('  // TODO(zmo): crbug.com/456340\n')
       file.write('  // %s cannot be mocked because it has %d args.\n' %
@@ -3021,7 +3022,7 @@ def GenerateMockBindingsHeader(file, functions):
         (func['return_type'], func['name'], func['arguments']))
 
 
-def GenerateMockBindingsSource(file, functions):
+def GenerateMockBindingsSource(file, functions, set_name):
   """Generates functions that invoke MockGLInterface members and a
   GetGLProcAddress function that returns addresses to those functions."""
 
@@ -3030,18 +3031,20 @@ def GenerateMockBindingsSource(file, functions):
 
 #include <string.h>
 
-#include "ui/gl/gl_mock.h"
+#include "ui/gl/%s_mock.h"
 
-namespace gl {
-
+namespace {
 // This is called mainly to prevent the compiler combining the code of mock
 // functions with identical contents, so that their function pointers will be
 // different.
 void MakeFunctionUnique(const char *func_name) {
     VLOG(2) << "Calling mock " << func_name;
 }
+}  // namespace
 
-""")
+namespace gl {
+""" % (set_name,))
+
   # Write functions that trampoline into the set MockGLInterface instance.
   uniquely_named_functions = GetUniquelyNamedFunctions(functions)
   sorted_function_names = sorted(uniquely_named_functions.iterkeys())
@@ -3049,14 +3052,15 @@ void MakeFunctionUnique(const char *func_name) {
   for key in sorted_function_names:
     func = uniquely_named_functions[key]
     file.write('\n')
-    file.write('%s GL_BINDING_CALL MockGLInterface::Mock_%s(%s) {\n' %
-        (func['return_type'], func['name'], func['arguments']))
+    file.write('%s GL_BINDING_CALL Mock%sInterface::Mock_%s(%s) {\n' %
+        (func['return_type'], set_name.upper(), func['name'],
+         func['arguments']))
     file.write('  MakeFunctionUnique("%s");\n' % func['name'])
-    arg_re = r'(const )?[a-zA-Z0-9]+((\s*const\s*)?\*)* ([a-zA-Z0-9]+)'
+    arg_re = r'(const |struct )*[a-zA-Z0-9]+((\s*const\s*)?\*)* ([a-zA-Z0-9]+)'
     argument_names = re.sub(arg_re, r'\4', func['arguments'])
     if argument_names == 'void':
       argument_names = ''
-    function_name = func['known_as'][2:]
+    function_name = func['known_as'][len(set_name):]
     if func['return_type'] == 'void':
       file.write('  interface_->%s(%s);\n' %
           (function_name, argument_names))
@@ -3076,7 +3080,8 @@ void MakeFunctionUnique(const char *func_name) {
   # Write a function to lookup a mock GL function based on its name.
   file.write('\n')
   file.write('GLFunctionPointerType GL_BINDING_CALL ' +
-      'MockGLInterface::GetGLProcAddress(const char* name) {\n')
+             'Mock%sInterface::GetGLProcAddress(const char* name) {\n' % (
+                 set_name.upper(),))
   for key in sorted_function_names:
     name = uniquely_named_functions[key]['name']
     file.write('  if (strcmp(name, "%s") == 0)\n' % name)
@@ -3471,7 +3476,25 @@ def main(argv):
 
     source_file = open(os.path.join(directory, 'gl_bindings_autogen_mock.cc'),
                        'wb')
-    GenerateMockBindingsSource(source_file, GL_FUNCTIONS)
+    GenerateMockBindingsSource(source_file, GL_FUNCTIONS, 'gl')
+    source_file.close()
+    ClangFormat(source_file.name)
+
+    header_file = open(
+        os.path.join(directory, 'gl_mock_autogen_egl.h'), 'wb')
+    GenerateMockHeader(header_file, EGL_FUNCTIONS, 'egl')
+    header_file.close()
+    ClangFormat(header_file.name)
+
+    header_file = open(os.path.join(directory, 'egl_bindings_autogen_mock.h'),
+                       'wb')
+    GenerateMockBindingsHeader(header_file, EGL_FUNCTIONS)
+    header_file.close()
+    ClangFormat(header_file.name)
+
+    source_file = open(os.path.join(directory, 'egl_bindings_autogen_mock.cc'),
+                       'wb')
+    GenerateMockBindingsSource(source_file, EGL_FUNCTIONS, 'egl')
     source_file.close()
     ClangFormat(source_file.name)
 
