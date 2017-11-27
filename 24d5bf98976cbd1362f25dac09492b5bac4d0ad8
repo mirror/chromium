@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeb1363e_9ddc79bc",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T21:02:06Z",
+      "side": 1,
+      "message": "nit: reticle",
+      "revId": "24d5bf98976cbd1362f25dac09492b5bac4d0ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92dc4f79_b0b85197",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T21:02:06Z",
+      "side": 1,
+      "message": "Might be worth adding a comment explaining that since we iterate in pre-order, that there\u0027s no chance that the reticled_element_id will correspond to an element before target (since we\u0027re limiting this to our subtree).",
+      "revId": "24d5bf98976cbd1362f25dac09492b5bac4d0ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
