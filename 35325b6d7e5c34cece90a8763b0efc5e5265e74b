@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa819675_671bff86",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-27T10:13:31Z",
+      "side": 1,
+      "message": "Sorry for the bad diff. What I do here is move + promise-ify this function. It creates one promise per video element and waits for all of them are done before proceeding, so it works just like the old function.",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 6
+      },
+      "revId": "35325b6d7e5c34cece90a8763b0efc5e5265e74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38e5c472_9481e53c",
+        "filename": "content/test/data/media/peerconnection-call-data.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-27T10:13:31Z",
+      "side": 1,
+      "message": "The data channel promise resolves in parallel with the video-playing promises. This is how the old function worked (add 3 expected events, and the eventOccured happen whenever they are ready).",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "35325b6d7e5c34cece90a8763b0efc5e5265e74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "915e96aa_dc968772",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-27T10:13:31Z",
+      "side": 1,
+      "message": "I\u0027ve generally not added .catch to pure video-playing promise chains since I feel it\u0027s relatively unlikely they will fail with exceptions.",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "35325b6d7e5c34cece90a8763b0efc5e5265e74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa03fdf2_a6bdbde3",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-27T10:13:31Z",
+      "side": 0,
+      "message": ".catch will catch more errors than just getUserMedia, so I got rid of the gUM-specific error callbacks. They were more necessary in the old days when you had to supply an error callback.",
+      "range": {
+        "startLine": 332,
+        "startChar": 2,
+        "endLine": 334,
+        "endChar": 3
+      },
+      "revId": "ed0bff9c8e369ecb48409278d09204d4d29ab3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3623f8a_ddf39cbd",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-27T10:13:31Z",
+      "side": 0,
+      "message": "Turns out this isn\u0027t needed after I moved to just call reportTestSuccess. There is no global state to maintain, so we don\u0027t need to do this rigging.",
+      "range": {
+        "startLine": 442,
+        "startChar": 6,
+        "endLine": 443,
+        "endChar": 43
+      },
+      "revId": "ed0bff9c8e369ecb48409278d09204d4d29ab3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
