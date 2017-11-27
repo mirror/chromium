@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "cda6f75c_a161ba77",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:10:20Z",
+      "side": 1,
+      "message": "nit: control",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907d3e50_93fdb5a1",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:10:20Z",
+      "side": 1,
+      "message": "Not for this CL: It would be nice to get rid of this. It would be nicer if there was a separate code path to show an a11y notification, so code that wanted to show one could toggle spoken feedback then explicitly show (or not show) a notification. I think this was added for braille device support, and it seems messy.",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954c5322_0c78bcf6",
+        "filename": "ash/accessibility/accessibility_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:10:20Z",
+      "side": 1,
+      "message": "Please add a test for the preference here.",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bcd80c1_589e00d2",
+        "filename": "ash/accessibility/accessibility_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:10:20Z",
+      "side": 1,
+      "message": "Thanks for adding a test!",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bad2bd_89b7de0b",
+        "filename": "ash/system/tray_accessibility_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:10:20Z",
+      "side": 1,
+      "message": "Thanks for adding test coverage for this!",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3c246e5_c637275a",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
         "patchSetId": 4
@@ -13,6 +98,23 @@
       "writtenOn": "2017-11-18T01:43:49Z",
       "side": 1,
       "message": "This is needed to update ash::AccessibilityController::IsSpokenFeedbackEnabled.",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b202d2f4_a4c81383",
+        "filename": "chrome/browser/chromeos/system/tray_accessibility_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:10:20Z",
+      "side": 1,
+      "message": "I think this comment is backwards -- you\u0027re waiting for chrome to see the prefs change from ash. Ditto below.",
       "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
