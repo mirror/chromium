@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf5c532d_94de83c3",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T07:53:06Z",
+      "side": 1,
+      "message": "may have been aborted",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a468840_519ed056",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T07:53:06Z",
+      "side": 1,
+      "message": "Non-S13nServiceWorker:",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4a9e6b_5031dfa1",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T07:53:06Z",
+      "side": 1,
+      "message": "As discussed offline, I\u0027m not sure this is right: the current non-S13nServiceWorker code aborts the callbacks when the service worker is destroyed. I think this patch should keep the current non-S13nSW behavior when S13nSW is disabled, and it can incrementally change the S13nSW behavior when S13nSW is enabled.\n\nMy question was about the \"kill on timeout\" flag in ServiceWorkerVersion. This patch isn\u0027t implementing \"kill on timeout\" for S13nSW which is fine (we can do it in a later patch). But we should try to not change the non-S13nSW behavior.",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acf744c_38ecb957",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T07:53:06Z",
+      "side": 1,
+      "message": "\"all of the |abort_callbacks|s\" or just \"all |abort_callbacks|s\"",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9d843f_7f87ca64",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T07:53:06Z",
+      "side": 1,
+      "message": "See the class comment",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c4f16a_a22e41d2",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T07:53:06Z",
+      "side": 1,
+      "message": "For event timeouts. (for consistency with above).\n\n\"all of the timeout times\" or just \"all timeout times\". But this is a bit hard to understand, since the reader doesn\u0027t know \"all\" is meaning \"both inflight events and settled events.\". Suggest:\n\nContains both inflight and settled events. If an |event_id| does not exist in |abort_callbacks_|, the event already finished successfully.",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe36821e_caac465d",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T07:53:06Z",
+      "side": 1,
+      "message": "\"timed out event id\" -\u003e \"event id\"",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75f7013_82b8217b",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T07:53:06Z",
+      "side": 1,
+      "message": "Mention that this is the time the service worker started being idle:\n\nFor idle timeoust. The time the service worker started having no inflight events, or null if there are inflight events.",
+      "revId": "d2f0f97b68519f66514c127c00b07e11916c3bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
