@@ -8,6 +8,7 @@
 #include "base/callback_helpers.h"
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
+#include "base/run_loop.h"
 #include "base/test/mock_callback.h"
 #include "base/values.h"
 #include "extensions/common/event_filtering_info.h"
@@ -1044,6 +1045,151 @@ TEST_F(APIEventHandlerTest, TestEventsWithoutLazyListeners) {
   }
 
   DisposeContext(context);
+}
+
+TEST_F(APIEventHandlerTest, TestDispatchingEventsWhileScriptSuspended) {
+  const char kEventName[] = "alpha";
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context = MainContext();
+
+  v8::Local<v8::Object> event = handler()->CreateEventInstance(
+      kEventName, false, true, binding::kNoListenerMax, true, context);
+
+  const char kListenerFunction[] = "(function() { this.eventFired = true; });";
+  v8::Local<v8::Function> listener =
+      FunctionFromString(context, kListenerFunction);
+
+  {
+    v8::Local<v8::Function> add_listener_function =
+        FunctionFromString(context, kAddListenerFunction);
+    v8::Local<v8::Value> argv[] = {event, listener};
+    RunFunction(add_listener_function, context, arraysize(argv), argv);
+  }
+
+  {
+    TestJSRunner::Suspension script_suspension;
+    handler()->FireEventInContext(kEventName, context, base::ListValue(),
+                                  nullptr);
+    base::RunLoop().RunUntilIdle();
+    EXPECT_EQ("undefined", GetStringPropertyFromObject(context->Global(),
+                                                       context, "eventFired"));
+  }
+
+  EXPECT_EQ("true", GetStringPropertyFromObject(context->Global(), context,
+                                                "eventFired"));
+}
+
+TEST_F(APIEventHandlerTest,
+       TestListenersThrowingExceptionsAfterScriptSuspension) {
+  auto log_error =
+      [](std::vector<std::string>* errors_out, v8::Local<v8::Context> context,
+         const std::string& error) { errors_out->push_back(error); };
+
+  std::vector<std::string> logged_errors;
+  ExceptionHandler exception_handler(base::Bind(log_error, &logged_errors));
+  SetHandler(std::make_unique<APIEventHandler>(
+      base::Bind(&DoNothingOnEventListenersChanged), &exception_handler));
+
+  const char kEventName[] = "alpha";
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context = MainContext();
+
+  v8::Local<v8::Object> event = handler()->CreateEventInstance(
+      kEventName, false, true, binding::kNoListenerMax, true, context);
+
+  const char kListenerFunction[] =
+      "(function() {\n"
+      "  this.eventFired = true;\n"
+      "  throw new Error('hahaha');\n"
+      "});";
+  v8::Local<v8::Function> listener =
+      FunctionFromString(context, kListenerFunction);
+
+  {
+    v8::Local<v8::Function> add_listener_function =
+        FunctionFromString(context, kAddListenerFunction);
+    v8::Local<v8::Value> argv[] = {event, listener};
+    RunFunction(add_listener_function, context, arraysize(argv), argv);
+  }
+
+  TestJSRunner::AllowErrors allow_errors;
+  {
+    TestJSRunner::Suspension script_suspension;
+    handler()->FireEventInContext(kEventName, context, base::ListValue(),
+                                  nullptr);
+    base::RunLoop().RunUntilIdle();
+    EXPECT_EQ("undefined", GetStringPropertyFromObject(context->Global(),
+                                                       context, "eventFired"));
+    EXPECT_TRUE(logged_errors.empty());
+  }
+
+  EXPECT_EQ("true", GetStringPropertyFromObject(context->Global(), context,
+                                                "eventFired"));
+
+  ASSERT_EQ(1u, logged_errors.size());
+  EXPECT_THAT(logged_errors[0],
+              testing::StartsWith("Error in event handler: Error: hahaha"));
+}
+
+TEST_F(APIEventHandlerTest,
+       TestDispatchingEventAfterListenersRemovedAfterScriptSuspension) {
+  const char kEventName[] = "alpha";
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context = MainContext();
+
+  v8::Local<v8::Object> event = handler()->CreateEventInstance(
+      kEventName, false, true, binding::kNoListenerMax, true, context);
+
+  const char kListenerFunction1[] =
+      "(function() { this.eventFired1 = true; });";
+  const char kListenerFunction2[] =
+      "(function() { this.eventFired2 = true; });";
+  v8::Local<v8::Function> listener1 =
+      FunctionFromString(context, kListenerFunction1);
+  v8::Local<v8::Function> listener2 =
+      FunctionFromString(context, kListenerFunction2);
+
+  {
+    v8::Local<v8::Function> add_listener_function =
+        FunctionFromString(context, kAddListenerFunction);
+    {
+      v8::Local<v8::Value> argv[] = {event, listener1};
+      RunFunction(add_listener_function, context, arraysize(argv), argv);
+    }
+    {
+      v8::Local<v8::Value> argv[] = {event, listener2};
+      RunFunction(add_listener_function, context, arraysize(argv), argv);
+    }
+  }
+
+  EXPECT_EQ(2u, handler()->GetNumEventListenersForTesting(kEventName, context));
+
+  {
+    TestJSRunner::Suspension script_suspension;
+    v8::Local<v8::Function> remove_listener_function =
+        FunctionFromString(context, kRemoveListenerFunction);
+    {
+      v8::Local<v8::Value> argv[] = {event, listener1};
+      JSRunner::Get(context)->RunJSFunction(remove_listener_function, context,
+                                            arraysize(argv), argv);
+    }
+
+    EXPECT_EQ(2u,
+              handler()->GetNumEventListenersForTesting(kEventName, context));
+    handler()->FireEventInContext(kEventName, context, base::ListValue(),
+                                  nullptr);
+    base::RunLoop().RunUntilIdle();
+    EXPECT_EQ("undefined", GetStringPropertyFromObject(context->Global(),
+                                                       context, "eventFired1"));
+    EXPECT_EQ("undefined", GetStringPropertyFromObject(context->Global(),
+                                                       context, "eventFired2"));
+  }
+
+  EXPECT_EQ(1u, handler()->GetNumEventListenersForTesting(kEventName, context));
+  EXPECT_EQ("undefined", GetStringPropertyFromObject(context->Global(), context,
+                                                     "eventFired1"));
+  EXPECT_EQ("true", GetStringPropertyFromObject(context->Global(), context,
+                                                "eventFired2"));
 }
 
 }  // namespace extensions

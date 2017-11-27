@@ -55,6 +55,15 @@ class TestJSRunner : public JSRunner {
     DISALLOW_COPY_AND_ASSIGN(AllowErrors);
   };
 
+  class Suspension {
+   public:
+    Suspension();
+    ~Suspension();
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(Suspension);
+  };
+
   TestJSRunner();
   // Provides a callback to be called just before JS will be executed.
   explicit TestJSRunner(const base::Closure& will_call_js);
@@ -71,7 +80,23 @@ class TestJSRunner : public JSRunner {
                                           v8::Local<v8::Value> argv[]) override;
 
  private:
+  friend class Suspension;
+
+  struct PendingCall {
+    PendingCall();
+    ~PendingCall();
+    PendingCall(PendingCall&& other);
+
+    v8::Isolate* isolate;
+    v8::Global<v8::Function> function;
+    v8::Global<v8::Context> context;
+    std::vector<v8::Global<v8::Value>> arguments;
+  };
+
+  void Flush();
+
   base::Closure will_call_js_;
+  std::vector<PendingCall> pending_calls_;
 
   DISALLOW_COPY_AND_ASSIGN(TestJSRunner);
 };
