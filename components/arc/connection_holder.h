@@ -35,6 +35,56 @@ namespace arc {
 
 namespace internal {
 
+// Templates to count the number of arguments in a function. This is used to
+// distinguish between interfaces that do not declare an Init() method, a
+// one-argument (single-duplex) Init() and the two-argument (full-duplex)
+// Init().
+// TODO(crbug.com/750563): Simplify the templates once InitDeprecated() is
+// removed.
+template <typename Signature>
+struct CountInitArgsImpl;
+
+template <typename R, typename Receiver, typename... Args>
+struct CountInitArgsImpl<R (Receiver::*)(Args...)> {
+  static constexpr size_t value = sizeof...(Args);
+};
+
+template <class T>
+struct Void {
+  typedef void type;
+};
+
+template <typename T, typename U = void>
+struct CountInitArgs {
+  static constexpr size_t value = 0;
+};
+
+template <typename T>
+struct CountInitArgs<T, typename Void<decltype(&T::Init)>::type> {
+  static constexpr size_t value = CountInitArgsImpl<decltype(&T::Init)>::value;
+};
+
+// Small helper to implement HasInitDeprecated<> trait below.
+// Note that only Check() declaration is needed.
+// - If InstanceType::InitDeprecated exists, Check(InstanceType()) would return
+//   std::true_type, because 1) the template param is successfully substituted,
+//   and 2) Check(...) is weaker than the template's so there is no overload
+//   conflict.
+// - If not, Check(InstanceType()) would return std::false_type, because
+//   template param substitution is failed, but it won't be compile error
+//   thanks to SFINAE, thus Check(...) is the only candidate.
+struct HasInitDeprecatedImpl {
+  template <typename InstanceType>
+  static auto Check(InstanceType* v)
+      -> decltype(&InstanceType::InitDeprecated, std::true_type());
+  static std::false_type Check(...);
+};
+
+// Type trait to return whether InstanceType has InitDeprecated() or not.
+template <typename InstanceType>
+using HasInitDeprecated =
+    decltype(HasInitDeprecatedImpl::Check(static_cast<InstanceType*>(nullptr)));
+
 // Full duplex Mojo connection holder implementation.
 // InstanceType and HostType are Mojo interface types (arc::mojom::XxxInstance,
 // and arc::mojom::XxxHost respectively).
@@ -42,7 +92,7 @@ template <typename InstanceType, typename HostType>
 class ConnectionHolderImpl {
  public:
   explicit ConnectionHolderImpl(ConnectionNotifier* connection_notifier)
-      : connection_notifier_(connection_notifier) {}
+      : connection_notifier_(connection_notifier), weak_ptr_factory_(this) {}
 
   InstanceType* instance() { return instance_; }
   uint32_t instance_version() const { return instance_version_; }
@@ -85,13 +135,13 @@ class ConnectionHolderImpl {
   void OnChanged() {
     if (instance_ && host_) {
       // When both get ready, start connection.
-      // TODO(crbug.com/750563): Fix the race issue. Check Init() signature.
+      // TODO(crbug.com/750563): Fix the race issue.
       binding_ = std::make_unique<mojo::Binding<HostType>>(host_);
       mojo::InterfacePtr<HostType> host_proxy;
       binding_->Bind(mojo::MakeRequest(&host_proxy));
-      instance_->Init(std::move(host_proxy));
-
-      connection_notifier_->NotifyConnectionReady();
+      // Call the appropriate version of Init().
+      CallInstanceInit<InstanceType>(std::move(host_proxy),
+                                     HasInitDeprecated<InstanceType>());
     } else if (binding_.get()) {
       // Otherwise, the connection is closed. If it was connected,
       // reset the host binding and notify.
@@ -100,16 +150,70 @@ class ConnectionHolderImpl {
     }
   }
 
-  ConnectionNotifier* const connection_notifier_;
+  // Dispatches the correct version of Init(). The template type is needed
+  // because std::enable_if<> needs to depend on a template parameter in order
+  // for SFINAE to work. The second parameter (std::true_type or
+  // std::false_type) refers to whether InstanceType::DeprecatedInit() exists.
+  template <class T>
+  typename std::enable_if<CountInitArgs<T>::value == 2, void>::type
+  CallInstanceInit(mojo::InterfacePtr<HostType> host_proxy, std::true_type) {
+    if (instance_version_ < InstanceType::kInitMinVersion) {
+      // The instance is too old to know about the new Init() version. For now,
+      // call the deprecated version for backwards-compatibility.
+      // TODO(crbug.com/750563): Deprecate this version.
+      CallInstanceInitDeprecated(std::move(host_proxy),
+                                 HasInitDeprecated<InstanceType>());
+      return;
+    }
+
+    instance_->Init(std::move(host_proxy),
+                    base::BindOnce(&ConnectionHolderImpl::OnConnectionReady,
+                                   weak_ptr_factory_.GetWeakPtr()));
+  }
+
+  template <class T>
+  typename std::enable_if<CountInitArgs<T>::value == 2, void>::type
+  CallInstanceInit(mojo::InterfacePtr<HostType> host_proxy, std::false_type) {
+    instance_->Init(std::move(host_proxy),
+                    base::BindOnce(&ConnectionHolderImpl::OnConnectionReady,
+                                   weak_ptr_factory_.GetWeakPtr()));
+  }
+
+  // TODO(crbug.com/750563): Deprecate this version.
+  template <class T>
+  typename std::enable_if<CountInitArgs<T>::value == 1, void>::type
+  CallInstanceInit(mojo::InterfacePtr<HostType> host_proxy, ...) {
+    instance_->Init(std::move(host_proxy));
+    OnConnectionReady();
+  }
+
+  void CallInstanceInitDeprecated(mojo::InterfacePtr<HostType> host_proxy,
+                                  std::true_type) {
+    instance_->InitDeprecated(std::move(host_proxy));
+    OnConnectionReady();
+  }
+
+  void CallInstanceInitDeprecated(mojo::InterfacePtr<HostType> host_proxy,
+                                  std::false_type) {
+    // If InitDeprecated does not exists, ARC container must support
+    // Init() with callback, already. Thus, this should not be called.
+    NOTREACHED();
+  }
+
+  // Notifies all the observers that the connection is ready.
+  void OnConnectionReady() { connection_notifier_->NotifyConnectionReady(); }
 
   // This class does not have ownership. The pointers should be managed by the
   // caller.
+  ConnectionNotifier* const connection_notifier_;
   InstanceType* instance_ = nullptr;
   uint32_t instance_version_ = 0;
   HostType* host_ = nullptr;
 
   // Created when both |instance_| and |host_| ptr are set.
   std::unique_ptr<mojo::Binding<HostType>> binding_;
+
+  base::WeakPtrFactory<ConnectionHolderImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ConnectionHolderImpl);
 };
@@ -120,7 +224,8 @@ class ConnectionHolderImpl {
 template <typename InstanceType>
 class ConnectionHolderImpl<InstanceType, void> {
  public:
-  // TODO(hidehiko): Check if InstanceType does not have Init() method.
+  static_assert(CountInitArgs<InstanceType>::value != 2,
+                "Full duplex ConnectionHolderImpl should be used instead");
 
   explicit ConnectionHolderImpl(ConnectionNotifier* connection_notifier)
       : connection_notifier_(connection_notifier) {}
