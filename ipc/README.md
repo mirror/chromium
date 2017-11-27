@@ -213,6 +213,138 @@ instance has direct access to a `Connector`. If you're writing code at or above
 the content layer, the answer is slightly more interesting and is explained in
 the [Using Content's Connectors](#Using-Content_s-Connectors) section below.
 
+### Deciding Which Registry to Use
+
+Once you have an implementation of a Mojo interface, the next thing to decide is
+which registry and service to register it on.
+
+Depending on what resources you need access to, the main classes are:
+
+| Renderer Class  | Corresponding Browser Class |  Explanation                                                                                                      |
+|-----------------|-----------------------------|-------------------------------------------------------------------------------------------------------------------|
+| `RenderFrame`   | `RenderFrameHost`           |  A single frame. Use this for frame-to-frame messages.                                                            |
+| `RenderView`    | `RenderViewHost`            | A view (conceptually a 'tab'). You cannot send Mojo messages to a `RenderView` directly, since frames in a tab can
+                                                  be in multiple processes (and the classes are deprecated). Migrate these to `RenderFrame` instead, or see section
+                                                  [Migrating IPC calls to `RenderView` or `RenderViewHost`](#UMigrating-IPC-calls-to-RenderView-or-RenderViewHost). |
+| `RenderProcess` | `RenderProcessHost`         | A process, containing multiple frames (probably from the same origin, but not always).                            |
+| `RenderWidget`  | `RenderWidgetHost`          | TODO                                                                                                              |
+
+**NOTE:** As a general rule, classes that end with `Host` are implemented on the
+browser side; the equivalent classes on the renderer side have the same name
+without the `Host` suffix.
+
+Of course, any combination of the above is possible, e.g. `RenderProcessHost`
+can register a Mojo interface that can be called by a `RenderFrame` (this would
+be a way of the browser communicating with multiple frames at once).
+
+Once you know which class you want the implementation to be registered in, find
+the corresponding `Impl` class (e.g. `RenderProcessImpl`). There should be a
+`RegisterMojoInterfaces()` method where you can add calls to `AddInterface`,
+e.g. For a strong binding:
+
+```cpp
+  registry->AddInterface(base::Bind(&LoggerHost::Create, GetID()));
+```
+
+Then in `LoggerHost` we add a static `Create()` method that takes the
+`LoggerHostRequest` object:
+
+```cpp
+// static
+void LoggerHost::Create(int render_process_id,
+                        mojom::LoggerHostRequest request) {
+  mojo::MakeStrongBinding(base::MakeUnique<LoggerHost>(render_process_id),
+                          std::move(request));
+}
+```
+
+For a `BindingSet`, we can store a `std::unique_ptr<LoggerHost>` on the
+`RenderProcessHost` instead, e.g.:
+
+```cpp
+// render_process_host_impl.h:
+std::unique_ptr<LoggerHost> logger_host_;
+
+// render_process_host_impl.cc:
+logger_host_.reset(new LoggerHost(GetID()));
+registry->AddInterface(base::Bind(&LoggerHost::BindRequest,
+                       base::Unretained(logger_host_.get())));
+```
+
+Then in `LoggerHost` we define the `BindRequest` method:
+
+```cpp
+void LoggerHost::BindRequest(mojom::LoggerHostRequest request) {
+  // bindings_ is a mojo::BindingSet<mojom::LoggerHost>;
+  bindings_.AddBinding(this, std::move(request));
+}
+```
+
+#### Setting up Permissions
+
+Once you've registered your interface, you need to add permission (read at
+runtime) to the corresponding permissions manifest json file.
+
+The permission manifest files are located in
+[/content/public/app/mojo/](/content/public/app/mojo/). As a general rule, the
+file you want to edit is the service which *provides* the interface (i.e. the
+side you call `MakeBinding` on), and the part of the file you want to add the
+name of the interface to is the service which *calls* the interface (i.e. the
+side containing `LoggerHostPtr`).
+
+You can usually just run your Mojo code and look at the error messages. The
+errors look like:
+
+```sh
+[ERROR:service_manager.cc(158)] Connection InterfaceProviderSpec prevented
+service: content_renderer from binding interface: content::mojom::LoggerHost
+exposed by: content_browser
+```
+
+This means something in the renderer process (called "content_renderer") was
+trying to call `content::mojom::LoggerHost` in the browser process (called
+"content_browser"). To add permission for this, we need to find the json file
+with the permissions for "content_browser", and add our new interface with name
+`content::mojom::LoggerHost` to the "renderer" section.
+
+In this example, the permissions for "content_browser" are implemented in
+[content_browser_manifest.json](/content/public/app/mojo/content_browser_manifest.json).
+It should look like:
+
+```json
+{
+  "name": "content_browser",
+  "display_name": "Content (browser process)",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        // ...
+        "renderer": [
+          //...
+```
+
+To add permission for `content::mojom::LoggerHost`, add the string
+`"content::mojom::LoggerHost"` to the "renderer" list.
+
+Similarly, if the error was:
+
+```sh
+[ERROR:service_manager.cc(158)] Connection InterfaceProviderSpec prevented
+service: content_browser from binding interface: content::mojom::Logger exposed
+by: content_renderer
+```
+
+We would want the
+`interface_provider_specs.service_manager:connector.provides.browser` section in
+[content_renderer_manifest.json](/content/public/app/mojo/content_renderer_manifest.json)
+(which defines the permissions for `content_renderer`).
+
+TODO: Add more details on permission manifests here
+
+#### Migrating IPC calls to `RenderView` or `RenderViewHost`
+
+TODO
+
 ## Using Content's Connectors
 
 As explained earlier in this document, all content processes are modeled as
@@ -237,11 +369,17 @@ For example, any interfaces registered in
 can be acquired by a renderer as follows:
 
 ``` cpp
-mojom::FooPtr foo;
+mojom::LoggerHostPtr logger_host;
 content::RenderThread::Get()->GetConnector()->BindInterface(
-    content::mojom::kBrowserServiceName, &foo);
-foo->DoSomePrettyCoolIPC();
+    content::mojom::kBrowserServiceName, &logger_host);
+logger_host->Log("Message to log here");
 ```
+
+Usually `logger_host` will be saved in a field at construction time, so the
+connection is only created once. There may be situations where you want to
+create one connection per request, e.g. a new instance of the Mojo
+implementation is created with some information about the request, and any
+responses for this request go straight to that instance.
 
 ### On Other Threads
 
@@ -255,20 +393,21 @@ which may be used immediately and retained on that thread -- and asynchronously
 associate it with the main-thread `Connector` like so:
 
 ``` cpp
-class Thinger {
+class LoggerHost {
  public:
-  explicit Thinger(scoped_refptr<base::TaskRunner> main_thread_task_runner) {
+  explicit LoggerHost(scoped_refptr<base::TaskRunner> main_thread_task_runner) {
     service_manager::mojom::ConnectorRequest request;
 
     // Of course we could also retain |connector| if we intend to use it again.
     auto connector = service_manager::Connector::Create(&request);
-    connector->BindInterface("best_service_ever", &thinger_);
-    thinger_->DoTheThing();
+    // Replace service_name with the name of the service to bind on, e.g.
+    // content::mojom::kBrowserServiceName.
+    connector->BindInterface("service_name", &logger_host_);
+    logger_host_->Log("Test Message.");
 
-    // Doesn't really matter when this happens, as long as it eventually
-    // happens.
+    // Doesn't matter when this happens, as long as it happens eventually.
     main_thread_task_runner->PostTask(
-        FROM_HERE, base::BindOnce(&Thinger::BindConnectorOnMainThread,
+        FROM_HERE, base::BindOnce(&LoggerHost::BindConnectorOnMainThread,
                                   std::move(request)));
   }
 
@@ -280,9 +419,9 @@ class Thinger {
         std::move(request));
   }
 
-  mojom::ThingerPtr thinger_;
+  mojom::LoggerHostPtr logger_host_;
 
-  DISALLOW_COPY_AND_ASSIGN(Thinger);
+  DISALLOW_COPY_AND_ASSIGN(LoggerHost);
 };
 ```
 

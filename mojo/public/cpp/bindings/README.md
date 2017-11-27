@@ -471,6 +471,23 @@ pipe, but the impl-side won't notice this until it receives the sent `Log`
 message. Thus the `impl` above will first log our message and *then* see a
 connection error and break out of the run loop.
 
+### Registering an Interface on the Browser or Renderer
+
+For browser/renderer communication, you can register your Mojo interface
+implementation in either the Browser or Renderer process (whichever side the
+interface was implemented on). Usually, this involves calling `AddInterface()`
+on the correct registry, passing a method that takes the Mojo Request object
+(e.g. `sample::mojom::LoggerRequest`) and binding it (e.g.
+`mojo::MakeStrongBinding()`, `bindings_.AddBinding()`, etc). Then the class that
+needs this API can call `BindInterface()` on the connector for that process,
+e.g.
+`RenderThread::Get()->GetConnector()->BindInterface(mojom::kBrowserServiceName, std::move(&mojo_interface_))`.
+In the browser process, this must always be called on the main thread.
+
+For more details, see [Converting Legacy Chrome IPC To Mojo](/ipc).
+
+## Types
+
 ### Enums
 
 [Mojom enums](/mojo/public/tools/bindings#Enumeration-Types) translate directly
