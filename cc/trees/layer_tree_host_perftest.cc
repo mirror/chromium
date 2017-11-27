@@ -168,7 +168,7 @@ class LayerTreeHostPerfTestJsonReader : public LayerTreeHostPerfTest {
 TEST_F(LayerTreeHostPerfTestJsonReader, MAYBE_TenTenSingleThread) {
   SetTestName("10_10_single_thread");
   ReadTestFile("10_10_layer_tree");
-  RunTest(CompositorMode::SINGLE_THREADED);
+  RunTest(CompositorMode::SINGLE_THREADED, false);
 }
 
 // Timed out on Android: http://crbug.com/723821
@@ -180,7 +180,7 @@ TEST_F(LayerTreeHostPerfTestJsonReader, MAYBE_TenTenSingleThread) {
 TEST_F(LayerTreeHostPerfTestJsonReader, MAYBE_TenTenThreaded) {
   SetTestName("10_10_threaded_impl_side");
   ReadTestFile("10_10_layer_tree");
-  RunTest(CompositorMode::THREADED);
+  RunTest(CompositorMode::THREADED, false);
 }
 
 // Simulates a tab switcher scene with two stacks of 10 tabs each.
@@ -189,14 +189,14 @@ TEST_F(LayerTreeHostPerfTestJsonReader,
   full_damage_each_frame_ = true;
   SetTestName("10_10_single_thread_full_damage_each_frame");
   ReadTestFile("10_10_layer_tree");
-  RunTest(CompositorMode::SINGLE_THREADED);
+  RunTest(CompositorMode::SINGLE_THREADED, false);
 }
 
 TEST_F(LayerTreeHostPerfTestJsonReader, TenTenThreaded_FullDamageEachFrame) {
   full_damage_each_frame_ = true;
   SetTestName("10_10_threaded_impl_side_full_damage_each_frame");
   ReadTestFile("10_10_layer_tree");
-  RunTest(CompositorMode::THREADED);
+  RunTest(CompositorMode::THREADED, false);
 }
 
 // Invalidates a leaf layer in the tree on the main thread after every commit.
@@ -230,14 +230,14 @@ class LayerTreeHostPerfTestLeafInvalidates
 TEST_F(LayerTreeHostPerfTestLeafInvalidates, TenTenSingleThread) {
   SetTestName("10_10_single_thread_leaf_invalidates");
   ReadTestFile("10_10_layer_tree");
-  RunTest(CompositorMode::SINGLE_THREADED);
+  RunTest(CompositorMode::SINGLE_THREADED, false);
 }
 
 // Timed out on Android: http://crbug.com/723821
 TEST_F(LayerTreeHostPerfTestLeafInvalidates, MAYBE_TenTenThreaded) {
   SetTestName("10_10_threaded_impl_side_leaf_invalidates");
   ReadTestFile("10_10_layer_tree");
-  RunTest(CompositorMode::THREADED);
+  RunTest(CompositorMode::THREADED, false);
 }
 
 // Simulates main-thread scrolling on each frame.
@@ -275,7 +275,7 @@ class ScrollingLayerTreePerfTest : public LayerTreeHostPerfTestJsonReader {
 TEST_F(ScrollingLayerTreePerfTest, MAYBE_LongScrollablePageSingleThread) {
   SetTestName("long_scrollable_page");
   ReadTestFile("long_scrollable_page");
-  RunTest(CompositorMode::SINGLE_THREADED);
+  RunTest(CompositorMode::SINGLE_THREADED, false);
 }
 
 // Timed out on Android: http://crbug.com/723821
@@ -287,7 +287,7 @@ TEST_F(ScrollingLayerTreePerfTest, MAYBE_LongScrollablePageSingleThread) {
 TEST_F(ScrollingLayerTreePerfTest, MAYBE_LongScrollablePageThreaded) {
   SetTestName("long_scrollable_page_threaded_impl_side");
   ReadTestFile("long_scrollable_page");
-  RunTest(CompositorMode::THREADED);
+  RunTest(CompositorMode::THREADED, false);
 }
 
 // Simulates main-thread scrolling on each frame.
@@ -376,7 +376,7 @@ TEST_F(BrowserCompositorInvalidateLayerTreePerfTest, DenseBrowserUIThreaded) {
   measure_commit_cost_ = true;
   SetTestName("dense_layer_tree");
   ReadTestFile("dense_layer_tree");
-  RunTest(CompositorMode::THREADED);
+  RunTest(CompositorMode::THREADED, false);
 }
 
 // Simulates a page with several large, transformed and animated layers.
@@ -391,7 +391,7 @@ TEST_F(LayerTreeHostPerfTestJsonReader, MAYBE_HeavyPageThreaded) {
   measure_commit_cost_ = true;
   SetTestName("heavy_page");
   ReadTestFile("heavy_layer_tree");
-  RunTest(CompositorMode::THREADED);
+  RunTest(CompositorMode::THREADED, false);
 }
 
 }  // namespace
