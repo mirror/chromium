@@ -61,7 +61,10 @@ Widget* CreateBubbleWidget(BubbleDialogDelegateView* bubble) {
                                   ? Widget::InitParams::ACTIVATABLE_YES
                                   : Widget::InitParams::ACTIVATABLE_NO;
   bubble->OnBeforeBubbleWidgetInit(&bubble_params, bubble_widget);
+  DLOG(INFO) << bubble->GetContentsView() << " BEFORE pref size is " << bubble->GetContentsView()->GetPreferredSize().ToString();
   bubble_widget->Init(bubble_params);
+  DLOG(INFO) << bubble->GetContentsView() << " AFTER pref size is " << bubble->GetContentsView()->GetPreferredSize().ToString();
+  DLOG(INFO) << bubble_widget->client_view() << " client size = " << bubble_widget->client_view()->GetPreferredSize().ToString();
   if (bubble_params.parent)
     bubble_widget->StackAbove(bubble_params.parent);
   return bubble_widget;
@@ -247,6 +250,7 @@ gfx::Rect BubbleDialogDelegateView::GetBubbleBounds() {
   // The argument rect has its origin at the bubble's arrow anchor point;
   // its size is the preferred size of the bubble's client view (this view).
   bool anchor_minimized = anchor_widget() && anchor_widget()->IsMinimized();
+  DLOG(INFO) << "Client size = " << GetWidget()->client_view()->GetPreferredSize().ToString();
   return GetBubbleFrameView()->GetUpdatedWindowBounds(
       GetAnchorRect(), GetWidget()->client_view()->GetPreferredSize(),
       adjust_if_offscreen_ && !anchor_minimized);

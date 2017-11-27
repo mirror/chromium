@@ -243,6 +243,7 @@ gfx::Rect BubbleBorder::GetBounds(const gfx::Rect& anchor_rect,
     // |arrow_offset_| is used to adjust bubbles that would normally be
     // partially offscreen.
     contents_bounds += gfx::Vector2d(-arrow_offset_, 0);
+    DLOG(FATAL) << " MD Bubble: " << contents_bounds.size().ToString() << " for " << contents_size.ToString();
     return contents_bounds;
   }
 
@@ -295,6 +296,7 @@ gfx::Rect BubbleBorder::GetBounds(const gfx::Rect& anchor_rect,
     y += (arrow_ == NONE) ? h : (h - size.height()) / 2;
   }
 
+  DLOG(FATAL) << " NONMD! Bubble: " << size.ToString() << " for " << contents_size.ToString();
   return gfx::Rect(x, y, size.width(), size.height());
 }
 

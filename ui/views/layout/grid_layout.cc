@@ -630,6 +630,7 @@ void ColumnSet::CalculateSize(SizeCalculationType type) {
           size.set_height(view_state->height);
       } else {
         size = view_state->view->GetPreferredSize();
+        DLOG(INFO) << view_state->view->GetClassName() << " " << view_state->view << " " << size.ToString();
       }
       if (!view_state->pref_width_fixed)
         view_state->width = size.width();

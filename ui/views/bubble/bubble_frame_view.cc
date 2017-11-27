@@ -175,7 +175,9 @@ gfx::Rect BubbleFrameView::GetBoundsForClientView() const {
 gfx::Rect BubbleFrameView::GetWindowBoundsForClientBounds(
     const gfx::Rect& client_bounds) const {
   gfx::Size size(GetFrameSizeForClientSize(client_bounds.size()));
-  return bubble_border_->GetBounds(gfx::Rect(), size);
+  gfx::Rect r = bubble_border_->GetBounds(gfx::Rect(), size);
+  DLOG(INFO) << " window bounds is " << r.ToString() << " for client bounds " << size.ToString();
+  return r;
 }
 
 bool BubbleFrameView::GetClientMask(const gfx::Size& size,
@@ -301,6 +303,7 @@ gfx::Insets BubbleFrameView::GetInsets() const {
 gfx::Size BubbleFrameView::CalculatePreferredSize() const {
   // Get the preferred size of the client area.
   gfx::Size client_size = GetWidget()->client_view()->GetPreferredSize();
+  DLOG(INFO) << "Client size = " << GetWidget()->client_view()->GetPreferredSize().ToString();
   // Expand it to include the bubble border and space for the arrow.
   return GetWindowBoundsForClientBounds(gfx::Rect(client_size)).size();
 }
