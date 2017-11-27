@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cc23fb37_427db2b7",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/compiled_resources2.gyp",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "Thanks for the response Demetrios, I didn\u0027t actually know we were trying to move off gn for closure compiler :)",
+      "parentUuid": "00a3c407_26e276bd",
+      "range": {
+        "startLine": 4,
+        "startChar": 1,
+        "endLine": 4,
+        "endChar": 0
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63bd307d_a175b9c8",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation.js",
         "patchSetId": 11
@@ -69,6 +93,30 @@
       "revId": "096060260a37cc697b41a9a07380b1d081558697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf52367_fc078de6",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "Ack, will try to do this as a follow-up CL.",
+      "parentUuid": "63bd307d_a175b9c8",
+      "range": {
+        "startLine": 25,
+        "startChar": 59,
+        "endLine": 25,
+        "endChar": 60
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "005ea457_ff69ad67",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "nope, removing.",
+      "parentUuid": "e10dfe9c_1b73f4f8",
+      "range": {
+        "startLine": 7,
+        "startChar": 63,
+        "endLine": 7,
+        "endChar": 70
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3ac591e_00fbe18f",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
         "patchSetId": 11
@@ -112,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "3b0b0e69_ce79851e",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "Oops, placed it at the wrong place - moved it.\n\nThough I\u0027m kind of surprised that both works, and now that I know it works the same, I\u0027m curious why we chose to put it within \u003ctemplate\u003e instead of outside (since it\u0027s not really a \"structural\" element, as I think the word \"template\" implies).\n\nRemoving is\u003dcustom-style, it was remnant of copy-paste from the main file.",
+      "parentUuid": "f3ac591e_00fbe18f",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4fffaac_12a375b0",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
         "patchSetId": 11
@@ -123,6 +213,30 @@
       "writtenOn": "2017-11-17T19:05:51Z",
       "side": 1,
       "message": "Can you break line after the parentheses?",
+      "range": {
+        "startLine": 71,
+        "startChar": 41,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88fd1d6_b9c11df0",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "Unfortunately the url itself is already around 70 characters so no matter how I break it, it\u0027ll go past 80col. I reformatted it to something I think looks less confusing (under the assumption that it\u0027ll always break 80), PTAL and let me know if you think its a bit better.",
+      "parentUuid": "b4fffaac_12a375b0",
       "range": {
         "startLine": 71,
         "startChar": 41,
@@ -152,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "ac83af78_3df938e3",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "Moved it. The margin\u0027s still necessary because the \"undo\" and \"confirm\" button could switch places and this ensures there\u0027s spacing between the two button if the undo button is on the right.",
+      "parentUuid": "966315ce_c61265c7",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36bc302e_8c791d3b",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
         "patchSetId": 11
@@ -166,6 +298,24 @@
       "revId": "096060260a37cc697b41a9a07380b1d081558697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c86218_28a633b8",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "The $18nRaw{} is here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/768876/11/chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html#117",
+      "parentUuid": "36bc302e_8c791d3b",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "57fda1e3_d4f66eb5",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02117234_a0ff731a",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc41049b_810a33e6",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
         "patchSetId": 11
@@ -203,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "ea1fa822_ef082041",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc41049b_810a33e6",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fc28455_1318a77e",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
         "patchSetId": 11
@@ -217,6 +403,24 @@
       "revId": "096060260a37cc697b41a9a07380b1d081558697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42ae957_f51c3e39",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "I tested with \"this\", and I believe it doesn\u0027t work because when the dialog window freshly opens, the focus level is not within \u003csync-confirmation-app\u003e so the keydown event won\u0027t be detected by \"this\". I\u0027ll write this reasoning in a comment.",
+      "parentUuid": "9fc28455_1318a77e",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "2da0d31c_3b23ee1a",
+        "filename": "chrome/browser/ui/cocoa/profiles/signin_view_controller_delegate_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7627de6_1bf059b0",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab1b1fda_ee4cfde2",
         "filename": "chrome/browser/ui/cocoa/profiles/signin_view_controller_delegate_mac.mm",
         "patchSetId": 11
@@ -266,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "44e8ad46_f153e9ba",
+        "filename": "chrome/browser/ui/cocoa/profiles/signin_view_controller_delegate_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "Same response as another comment, copied here.\n----\nCurrently there\u0027s still a dialog, it just has less content (it\u0027ll say something like \"your admin disabled sync functionality\"). So in that case we still want to show the original dialog (not the dice one) with the original width.\n\nSee: https://cs.chromium.org/chromium/src/chrome/browser/resources/signin/sync_confirmation/sync_confirmation.html?q\u003dsync_confirmation.html\u0026sq\u003dpackage:chromium\u0026l\u003d81",
+      "parentUuid": "ab1b1fda_ee4cfde2",
+      "range": {
+        "startLine": 54,
+        "startChar": 26,
+        "endLine": 54,
+        "endChar": 39
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85be1208_ccd8cbe1",
         "filename": "chrome/browser/ui/views/profiles/signin_view_controller_delegate_views.cc",
         "patchSetId": 11
@@ -277,6 +529,30 @@
       "writtenOn": "2017-11-17T15:37:43Z",
       "side": 1,
       "message": "Why this check (I think we should not get to a point where we try to present the sync confirmation dialog if sync is not allowed)?",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f3efa9_2d1e75db",
+        "filename": "chrome/browser/ui/views/profiles/signin_view_controller_delegate_views.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-27T13:44:28Z",
+      "side": 1,
+      "message": "Currently there\u0027s still a dialog, it just has less content (it\u0027ll say something like \"your admin disabled sync functionality\"). So in that case we still want to show the original dialog (not the dice one) with the original width.\n\nSee: https://cs.chromium.org/chromium/src/chrome/browser/resources/signin/sync_confirmation/sync_confirmation.html?q\u003dsync_confirmation.html\u0026sq\u003dpackage:chromium\u0026l\u003d81",
+      "parentUuid": "85be1208_ccd8cbe1",
       "range": {
         "startLine": 43,
         "startChar": 26,
