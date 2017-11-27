@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfdada28_6b84617b",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-27T23:39:43Z",
+      "side": 1,
+      "message": "do you do this on each SubmitCompositorFrame? Or does this happen once per vblank per display?",
+      "revId": "608b832c6a7065c45cb0dda18c9452c545fa22b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cdbf498_c081c1ec",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-27T23:39:43Z",
+      "side": 1,
+      "message": "Can this end up recursing?",
+      "revId": "608b832c6a7065c45cb0dda18c9452c545fa22b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
