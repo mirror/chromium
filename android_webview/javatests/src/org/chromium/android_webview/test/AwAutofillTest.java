@@ -982,7 +982,12 @@ public class AwAutofillTest {
     }
 
     private void invokeAutofill(SparseArray<AutofillValue> values) {
-        mAwContents.autofill(values);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mAwContents.autofill(values);
+            }
+        });
     }
 
     private int getCallbackCount() {
