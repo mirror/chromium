@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1c0581c_351854e2",
+        "filename": "base/android/java/src/org/chromium/base/metrics/StatisticsRecorderAndroid.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-27T21:47:00Z",
+      "side": 1,
+      "message": "You should be able to use @JSONVerbosityLevel int verbosityLevel (see comment in C++ header file).\n\nI\u0027m not sure where you\u0027d want to expose it though. I.e. you could keep the boolean for this API, but pass down the enum value. Or this class itself could check the sysutils, etc.",
+      "revId": "41f9c1ab04f1cb100345cac8bfb15cbd3cace077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c6510f_fde40ffa",
+        "filename": "base/android/java/src/org/chromium/base/metrics/StatisticsRecorderAndroid.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-27T21:47:00Z",
+      "side": 1,
+      "message": "You should be able to use @JSONVerbosityLevel int verbosityLevel here too.",
+      "range": {
+        "startLine": 27,
+        "startChar": 46,
+        "endLine": 27,
+        "endChar": 65
+      },
+      "revId": "41f9c1ab04f1cb100345cac8bfb15cbd3cace077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2f680c_e83047df",
+        "filename": "base/metrics/histogram_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-27T21:47:00Z",
+      "side": 1,
+      "message": "Add a line above this:\nGENERATED_JAVA_ENUM_PACKAGE: org.chromium.base.metrics\nand add this file to the java_cpp_enum(\"base_android_java_enums_srcjar\") target.",
+      "revId": "41f9c1ab04f1cb100345cac8bfb15cbd3cace077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
