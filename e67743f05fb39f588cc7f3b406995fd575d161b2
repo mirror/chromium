@@ -52,6 +52,24 @@
       "revId": "e67743f05fb39f588cc7f3b406995fd575d161b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca25d452_5d8a613b",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-27T22:14:21Z",
+      "side": 1,
+      "message": "I have new patch uploaded which records the bounds OnWillRemoveWindowFromLayout, for the reason that when a window is newly created, it has empty bounds recorded in my old approach. This issue should deal with the problem in a better way, we are keeping the window bounds when moving a window from a workspace to another workspace.\n\n\"Otherwise it will remember the after automanaged, not pre-automanaged.\"\n--\u003e In my old patch, WM_EVENT_ADDED_TO_WORKSPACE happens before window rearrangement. So it could not record after-automanged window bounds.\n\nIn my new patch, it could. However, it doesn\u0027t interference with auto window management since it should handled by pre_auto_manage_window_bounds(). For example, it is handled here when moving to another display and there is no window there, thus this window is the single window: [1]\n\n[1] https://cs.chromium.org/chromium/src/ash/wm/window_positioner.cc?sq\u003dpackage:chromium\u0026l\u003d151\n\nWhy we would worry about this in this bug? Is there a specific bug case about this?\n\nProbably we need an offline chat.",
+      "parentUuid": "b35370d8_4b42adb0",
+      "revId": "e67743f05fb39f588cc7f3b406995fd575d161b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
