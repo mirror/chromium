@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86592cec_b33695ed",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:56:14Z",
+      "side": 1,
+      "message": "Can this be made a non-exposed function in an unnamed namespace instead?",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca4ae56_9c4c3d7e",
+        "filename": "content/browser/download/resource_downloader.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:56:14Z",
+      "side": 1,
+      "message": "Do they really need the ThrottlingURLloader client, or is just there because it was more convenient to do the transfer? If the latter, let\u0027s remove the ThrottlingURLloader client and replace it by transfering the URLLoader + URLLoaderClient. This will avoid having two ways to start the ThrottlingURLLoader.",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "208e2fa1_84d82319",
+        "filename": "content/browser/file_url_loader_factory.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:56:14Z",
+      "side": 1,
+      "message": "Why do we need this? Same below.",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6fa5e5_e77afda4",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:56:14Z",
+      "side": 1,
+      "message": "Why do we need the ResourceRequest here when we didn\u0027t need it before? Also, if needed, consider manufacturing it in NavigationRequest at the beginning of navigation, and then passing to the NavigationURLLoader instead of creating it in NavigationURLLoaderNetworkService.",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc02f54f_931c4edf",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:56:14Z",
+      "side": 1,
+      "message": "I would rephrase this as:\nHolds objects received from OnResponseStarted while the WillProcessResponse checks are performed by the NavigationHandle. Once the checks have been processed, these objects will be used to continue the navigation.",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dfb06b3_f2d53445",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:56:14Z",
+      "side": 1,
+      "message": "nit: s/In the other cases/Otherwise",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d28efa_390cf4d9",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:56:14Z",
+      "side": 1,
+      "message": "This is already included in the header file.",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92dbd536_39b4b44d",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:56:14Z",
+      "side": 1,
+      "message": "Could you add a TODO that in NavigationResponseOverMojo this is false and we need to use the info provided by the network stack, where it is computed by the MimeSniffingResourceHandler.",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345785cf_8fc2ba6b",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:56:14Z",
+      "side": 1,
+      "message": "Could we make this a more general type, define it in URLLoader, and have this type moved everywhere instead of converting it from URLLoader + URLloaderClient in the middle of the navigation code path?",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca69f6b_083d2272",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:56:14Z",
+      "side": 1,
+      "message": "In which cases is this used?",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f80cc3a_51197459",
+        "filename": "content/renderer/loader/url_loader_client_impl.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-27T14:56:14Z",
+      "side": 1,
+      "message": "nit: s/PlzNavigateOverMojo/Used in NavigationResponseOverMojo.\n\nAlso, where do you put the URLLoader and URLLoaderClient in subresource loads?",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
