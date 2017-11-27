@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9bcbda_acdedf3f",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-27T05:22:06Z",
+      "side": 0,
+      "message": "Since we assign selection with granularity which already has updated start/end following\ngranularity, |FS.ComputeVS().AsSelection()| \u003d\u003d |FS.GetSelectionInDOMTree()| is always true?\nIf so, could you DCHECK() in FS.ComputeVS() and comment it?",
+      "revId": "8085bb1d7bb78c7a9689c19af2b76ac53d07763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
