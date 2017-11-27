@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "959ceba2_43fcf106",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-27T22:41:10Z",
+      "side": 1,
+      "message": "Is this safe to do on the IO thread? 2 specific questions:\n1- is it ok to call into the JVM on this thread?\n2- can this block? blocking the IO thread is even more of a no-no than the UI thread.",
+      "revId": "586449a7857394fb6b54dfbc7b9a14bcc0bd1da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
