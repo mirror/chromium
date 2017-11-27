@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b13c848_9fcbd4e3",
+        "filename": "content/browser/webrtc/webrtc_image_capture_browsertest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "enum class Camera? Otherwise FAKE, DEFAULT are names\nthat might be confusing in isolation.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b2bded_7681d748",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "This class should go in an anonymous namespace\n(inside namespace media).",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8fc026_7a2e6cee",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "if (riid \u003d\u003d IID_IUnknown || riid \u003d\u003d IID_IMFCaptureEngineOnSampleCallback) {\n  AddRef();\n  *object \u003d static_cast\u003cIMFCaptureEngineOnSampleCallback*\u003e(this);\n  return S_OK;\n}\nreturn E_NOINTERFACE;",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2decf969_9479be1c",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "Fits in one line?",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 32
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b9bb0e_7d04d2ee",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "if (!buffer.Get())\n    continue;",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1612f46a_dc72253a",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "One definition per line, please.",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 41
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e592825_4c7f33e8",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 63,
+        "startChar": 21,
+        "endLine": 63,
+        "endChar": 25
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06352fa_effebf57",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "I think we can make this member const.",
+      "range": {
+        "startLine": 85,
+        "startChar": 21,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c978176_b65a1e1e",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "No C-style comments, use C++ //",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 2
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25f50f0_1637983c",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "Use C++ static_cast\u003c\u003e please.",
+      "range": {
+        "startLine": 289,
+        "startChar": 23,
+        "endLine": 289,
+        "endChar": 30
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff41d57_5022b9f8",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "nit: consider inlining this?",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 394,
+        "endChar": 30
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b18472_bad3ee77",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "if (!SUCCEEDED(hr))\n  return false;\n\nOr\nif (FAILED(hr))\n  return false;\n\nPrefer early returns ISO deeply nested scopes.",
+      "range": {
+        "startLine": 89,
+        "startChar": 1,
+        "endLine": 89,
+        "endChar": 22
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627fd5c9_83072ee3",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "nit: Use C++ comment style.",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 5
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89bc10b_b6717731",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "This format looks off. Try using clang format before\nuploading plz.",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 6
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb74073_ce884057",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "ConvertToPhotoJpegMediaType() uses internally S_OK and E_FAIL\nbut you convert them to true/false before returning; change\nthis whole chain to using HRESULT.",
+      "range": {
+        "startLine": 473,
+        "startChar": 9,
+        "endLine": 473,
+        "endChar": 36
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70101c1c_298f6926",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T23:54:52Z",
+      "side": 1,
+      "message": "height \u003d std::max(min_height, std::min(height, max_height)); ?\n\nSame below with |width|.",
+      "range": {
+        "startLine": 569,
+        "startChar": 6,
+        "endLine": 573,
+        "endChar": 28
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
