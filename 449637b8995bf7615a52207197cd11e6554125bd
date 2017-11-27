@@ -89,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "a98f13a5_ff2c819e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T21:00:20Z",
+      "side": 1,
+      "message": "I still think it\u0027d be helpful to list out the use cases that this CL is trying to support and the ones it\u0027s explicitly not supporting. Particularly, it would be good to capture what\u0027s expected to happen when the tab is loading, not interactable, interactability changes, tab changes, etc. The crbug would be a good place to capture this (at least for now).",
+      "parentUuid": "aeb736b2_9c6f788c",
+      "range": {
+        "startLine": 155,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 61
+      },
+      "revId": "449637b8995bf7615a52207197cd11e6554125bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46fba957_7732db13",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 19

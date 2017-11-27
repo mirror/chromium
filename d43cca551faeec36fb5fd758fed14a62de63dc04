@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1d65eb1_23d4b04d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T21:00:20Z",
+      "side": 1,
+      "message": "mSurveyInfoBarTab gets set in showSurveyInfoBar() so we shouldn\u0027t need to set it here",
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5547a60d_7d57d273",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T21:00:20Z",
+      "side": 1,
+      "message": "style nit: add a blank line before and after this one",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 66
+      },
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ed0c1f_6ef94027",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T21:00:20Z",
+      "side": 1,
+      "message": "nit: Since this is only called once and the observer code is small, let\u0027s just in-line the observer here, e.g.\n\nmTabModelObserver \u003d new EmptyTabModelSelectorObserver() {\n    @Override\n    public void onChange() {\n        ...\n    }\n};",
+      "range": {
+        "startLine": 126,
+        "startChar": 28,
+        "endLine": 126,
+        "endChar": 55
+      },
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ec92d4_e157600c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T21:00:20Z",
+      "side": 1,
+      "message": "style nit: break up these blocks with some blank lines",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 39
+      },
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f081a3_b606cc93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T21:00:20Z",
+      "side": 1,
+      "message": "mTabModelObserver may be null here if the call to #attemptToShowOnTab() on line 125 succeeds",
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52aab34_cc3c1ce9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T21:00:20Z",
+      "side": 1,
+      "message": "nit: make this one line, e.g.\n\nif (!isInteractable) return;",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 181,
+        "endChar": 17
+      },
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4df324f_3994b71b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T21:00:20Z",
+      "side": 1,
+      "message": "showSurveyInfoBar() removes the tab model selector observer so this shouldn\u0027t be needed.",
+      "range": {
+        "startLine": 198,
+        "startChar": 16,
+        "endLine": 198,
+        "endChar": 33
+      },
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eeba4f5_8c451827",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T21:00:20Z",
+      "side": 1,
+      "message": "Is it possible for frontInfoBar \u003d\u003d null after a we\u0027ve posted the runnable to mLoggingHandler? If so, let\u0027s swap the order of mLoggingHandler.removeCallbackAndMessages() and the early return.",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 263,
+        "endChar": 0
+      },
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc035347_ffff06e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T21:00:20Z",
+      "side": 1,
+      "message": "Could onSurveyTriggered() take the tab the infobar is attached to? I think that would be nice, so that ChromeHomeSurveyController doesn\u0027t need to separately track the tab it thinks the infobar was displayed on.",
+      "range": {
+        "startLine": 301,
+        "startChar": 24,
+        "endLine": 301,
+        "endChar": 41
+      },
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d4fd9c_53b3b61a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T21:00:20Z",
+      "side": 1,
+      "message": "Is this still needed now that the runnable is canceled when the tab is no longer interactable?",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 317,
+        "endChar": 60
+      },
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
