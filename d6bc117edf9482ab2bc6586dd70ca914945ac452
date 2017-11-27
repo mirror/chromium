@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9b6b225_0f8232b6",
+        "filename": "chrome/browser/resource_coordinator/lifecycle_unit.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-27T20:35:52Z",
+      "side": 1,
+      "message": "Initialize to zero?",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "d6bc117edf9482ab2bc6586dd70ca914945ac452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
