@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "6dd6094d_cfb4ac60",
+        "filename": "chrome/browser/resources/print_preview/new/document_info.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-27T20:47:51Z",
+      "side": 1,
+      "message": "Pretty sure custom margins at least depends on these, so moved to their own HTML files.",
+      "parentUuid": "f6c3964e_3447e131",
+      "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97663cca_c8fa9cfa",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 4
@@ -56,6 +74,24 @@
       "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2dc5a3f_b5a54b2b",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-27T20:47:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97663cca_c8fa9cfa",
+      "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "c4c3cbb1_c0b98414",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-27T20:47:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "462573f7_d8872690",
+      "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "917964ed_8569bc73",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 4
@@ -87,6 +141,24 @@
       "writtenOn": "2017-11-22T01:28:18Z",
       "side": 1,
       "message": "Is the code here temporary? Otherwise, you could just inline this at line 158 as follows:\n\ndocumentInfo: {\n  type: Object,\n  notify: true,\n  value: function() {\n     const info \u003d new print_preview.DocumentInfo();\n     ...\n     return info;\n  },\n},",
+      "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786879cb_56df81be",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-27T20:47:51Z",
+      "side": 1,
+      "message": "Eventually this will be filled in by messages received by NativeLayer, but have inlined for now.",
+      "parentUuid": "917964ed_8569bc73",
       "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
