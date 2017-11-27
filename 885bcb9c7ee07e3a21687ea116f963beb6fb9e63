@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "01997f57_548cd496",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-27T13:30:45Z",
+      "side": 1,
+      "message": "An update: message_loop_-\u003etask_runner()-\u003eBelongsToCurrentThread() does not work due to the possibility of message_loop_ being deleted already. Did I tell you that I love nested message loops?",
+      "parentUuid": "f870c28b_039afcc7",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 52
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "282a78c9_d72c3d1b",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
         "patchSetId": 12
