@@ -229,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "70f60338_e89a9dc0",
+        "filename": "media/audio/mac/audio_manager_mac.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T14:55:21Z",
+      "side": 1,
+      "message": "Sure, the CA query should be light.",
+      "parentUuid": "da1097dd_5a832b60",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81cfa906_3b89d020",
         "filename": "media/base/audio_parameters.h",
         "patchSetId": 7
@@ -258,6 +276,24 @@
       "side": 1,
       "message": "The pre-existing constraints we have for audio both use the term noise suppression - Apple uses Ambient Noise Reduction. We have a constraint for noise reduction but that one affects video.\nIdeally we\u0027d use the same term throughout Chrome. Naming is hard. :(",
       "parentUuid": "81cfa906_3b89d020",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe4a14c_8b35d136",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-27T14:55:21Z",
+      "side": 1,
+      "message": "Right. OK, probably best to try to be consistent with the Chrome naming. But other places in this CL uses reduction. Should that perhaps change then?",
+      "parentUuid": "71619c73_641798fb",
       "revId": "ee0a943887739a59bead4c135a86e6077da11949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
