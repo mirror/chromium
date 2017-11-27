@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "46551b43_fa87ddc0",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-27T09:27:53Z",
+      "side": 1,
+      "message": "\u003e DriveSyncHandler.COMPLETED_EVENT only trigger after a complete try\nDo you mean, COMPLETE_EVENT is dispatched only when all copied files are uploaded?\nIIUC, it is dispatched every time uploading a file is done and dismiss the progress notification only when the event for the last file is dispatched.\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/background/js/drive_sync_handler.js?type\u003dcs\u0026l\u003d147\nCould you double check the actual behavior?",
+      "parentUuid": "88f7ec44_6d1f2057",
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9305df1e_47e13637",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 7
