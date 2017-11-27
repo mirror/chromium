@@ -399,7 +399,7 @@ class JniParams(object):
     if not params:
       return []
     ret = []
-    for p in [p.strip() for p in params.split(',')]:
+    for p in (p.strip() for p in params.split(',')):
       items = p.split(' ')
 
       # Remove @Annotations from parameters.
@@ -655,6 +655,22 @@ def RemoveComments(contents):
   return _COMMENT_REMOVER_REGEX.sub(replacer, contents)
 
 
+def RemoveGenerics(value):
+  """Removes Java generics from a string."""
+  nest_level = 0  # How deeply we are nested inside the generics.
+  out = ''
+
+  for c in value:
+    if c == '<':
+      nest_level += 1
+    elif c == '>':
+      nest_level -= 1
+    elif nest_level == 0:
+      out += c
+
+  return out
+
+
 class JNIFromJavaP(object):
   """Uses 'javap' to parse a .class file and generate the JNI header file."""
 
@@ -752,6 +768,7 @@ class JNIFromJavaSource(object):
 
   def __init__(self, contents, fully_qualified_class, options):
     contents = RemoveComments(contents)
+    contents = RemoveGenerics(contents)
     self.jni_params = JniParams(fully_qualified_class)
     self.jni_params.ExtractImportsAndInnerClasses(contents)
     jni_namespace = ExtractJNINamespace(contents) or options.namespace
