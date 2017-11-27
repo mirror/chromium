@@ -70,4 +70,8 @@ void SavePageRequest::MarkAttemptPaused() {
   state_ = RequestState::PAUSED;
 }
 
+void SavePageRequest::MarkAttemptThrottled() {
+  state_ = RequestState::THROTTLED;
+}
+
 }  // namespace offline_pages

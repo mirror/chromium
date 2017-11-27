@@ -21,6 +21,7 @@ class SavePageRequest {
     AVAILABLE = 0,  // Request can be scheduled when preconditions are met.
     PAUSED = 1,     // Request is not available until it is unpaused.
     OFFLINING = 2,  // Request is actively offlining.
+    THROTTLED = 3,  // Request has been throttled/taken over by downloads.
   };
 
   SavePageRequest(int64_t request_id,
@@ -46,6 +47,10 @@ class SavePageRequest {
   // Mark the attempt as paused.  It is not available for future background
   // loading until it has been explicitly unpaused.
   void MarkAttemptPaused();
+
+  // Marks the attempt as throttled. It will be removed from the queue and
+  // notifications.
+  void MarkAttemptThrottled();
 
   int64_t request_id() const { return request_id_; }
 

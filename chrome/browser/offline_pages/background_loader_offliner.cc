@@ -283,6 +283,20 @@ bool BackgroundLoaderOffliner::HandleTimeout(int64_t request_id) {
   return false;
 }
 
+void BackgroundLoaderOffliner::CanDownload(
+    const base::Callback<void(bool)>& callback) {
+  if (!pending_request_.get()) {
+    callback.Run(false);  // Shouldn't happen though...
+  }
+  callback.Run(true);
+  SavePageRequest request(*pending_request_.get());
+  completion_callback_.Run(request,
+                           Offliner::RequestStatus::DOWNLOAD_THROTTLED);
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&BackgroundLoaderOffliner::ResetState,
+                            weak_ptr_factory_.GetWeakPtr()));
+}
+
 void BackgroundLoaderOffliner::MarkLoadStartTime() {
   load_start_time_ = base::TimeTicks::Now();
 }
@@ -567,6 +581,7 @@ void BackgroundLoaderOffliner::ResetState() {
 void BackgroundLoaderOffliner::ResetLoader() {
   loader_.reset(
       new background_loader::BackgroundLoaderContents(browser_context_));
+  loader_->SetDelegate(this);
 }
 
 void BackgroundLoaderOffliner::AttachObservers() {
