@@ -90,6 +90,7 @@ component("gamepad") {
     libs = [
       "CoreFoundation.framework",
       "Foundation.framework",
+      "ForceFeedback.framework",
       "GameController.framework",
       "IOKit.framework",
     ]
