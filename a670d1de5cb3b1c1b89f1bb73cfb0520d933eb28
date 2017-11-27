@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "f0462252_33b46f45",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-27T19:48:29Z",
+      "side": 1,
+      "message": "you should be able to do\n\nManagedDisplayInfo* FindInfoById(...) {\n\nconst auto* info \u003d FindInfoById()\nreturn cost_cast\u003cManagedDisplayInfo*\u003e(info);\n}",
+      "parentUuid": "27ef4232_dd26d324",
+      "revId": "a670d1de5cb3b1c1b89f1bb73cfb0520d933eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f85db134_dff2bd0f",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 6
