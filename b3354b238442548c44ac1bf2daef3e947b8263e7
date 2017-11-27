@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b19907f_250cf17d",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:13:33Z",
+      "side": 1,
+      "message": "nit: trait",
+      "range": {
+        "startLine": 38,
+        "startChar": 39,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "b3354b238442548c44ac1bf2daef3e947b8263e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4ed241_831c4fce",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:13:33Z",
+      "side": 1,
+      "message": "nit: trait",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "b3354b238442548c44ac1bf2daef3e947b8263e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d89cce_0258e355",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:13:33Z",
+      "side": 1,
+      "message": "Please mention that base::Unretained is safe because |binding_| is owned by this class, so the callback will be destroyed together with |binding_|.",
+      "range": {
+        "startLine": 114,
+        "startChar": 49,
+        "endLine": 114,
+        "endChar": 59
+      },
+      "revId": "b3354b238442548c44ac1bf2daef3e947b8263e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
