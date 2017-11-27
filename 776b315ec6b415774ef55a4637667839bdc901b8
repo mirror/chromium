@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecfc92e5_b523b125",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 9
+      },
+      "lineNbr": 7488,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T14:27:58Z",
+      "side": 1,
+      "message": "Indent this 8 spaces.",
+      "range": {
+        "startLine": 7488,
+        "startChar": 0,
+        "endLine": 7488,
+        "endChar": 6
+      },
+      "revId": "776b315ec6b415774ef55a4637667839bdc901b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
