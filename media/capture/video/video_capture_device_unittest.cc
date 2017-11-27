@@ -28,9 +28,11 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(OS_WIN)
+#include <mfcaptureengine.h>
 #include "base/win/scoped_com_initializer.h"
 #include "base/win/windows_version.h"  // For fine-grained suppression.
 #include "media/capture/video/win/video_capture_device_factory_win.h"
+#include "media/capture/video/win/video_capture_device_mf_win.h"
 #endif
 
 #if defined(OS_MACOSX)
@@ -86,9 +88,16 @@
 #define MAYBE_GetPhotoState DISABLED_GetPhotoState
 #endif
 
+// Wrap the TEST_P macro into another one to allow to preprocess test_name
+// macros
+#define WRAPPED_TEST_P(test_case_name, test_name) \
+  TEST_P(test_case_name, test_name)
+
 using ::testing::_;
 using ::testing::Invoke;
 using ::testing::SaveArg;
+using ::testing::Return;
+using ::testing::ByMove;
 
 namespace media {
 namespace {
@@ -111,6 +120,52 @@ static bool IsDeviceUsableForTesting(
   return !VideoCaptureDeviceFactoryAndroid::IsLegacyOrDeprecatedDevice(
              descriptor.device_id) &&
          descriptor.capture_api != VideoCaptureApi::ANDROID_TANGO;
+};
+#endif
+
+enum VideoCaptureImplementationTweak {
+  NONE,
+#if defined(OS_WIN)
+  WIN_MEDIA_FOUNDATION
+#endif
+};
+
+#if defined(OS_WIN)
+class MockMFPhotoCallback final : public IMFCaptureEngineOnSampleCallback {
+ public:
+  ~MockMFPhotoCallback() {}
+
+  MOCK_METHOD2(DoQueryInterface, HRESULT(REFIID, void**));
+  MOCK_METHOD0(DoAddRef, ULONG(void));
+  MOCK_METHOD0(DoRelease, ULONG(void));
+  MOCK_METHOD1(DoOnSample, HRESULT(IMFSample*));
+
+  STDMETHOD(QueryInterface)(REFIID riid, void** object) override {
+    return DoQueryInterface(riid, object);
+  }
+
+  STDMETHOD_(ULONG, AddRef)() override { return DoAddRef(); }
+
+  STDMETHOD_(ULONG, Release)() override { return DoRelease(); }
+
+  STDMETHOD(OnSample)(IMFSample* sample) override { return DoOnSample(sample); }
+};
+
+class MockMFPhotoCallbackFactory : public MFPhotoCallbackFactory {
+ public:
+  MockMFPhotoCallbackFactory(
+      std::unique_ptr<IMFCaptureEngineOnSampleCallback> callback)
+      : callback_(std::move(callback)) {}
+  ~MockMFPhotoCallbackFactory() {}
+
+  std::unique_ptr<IMFCaptureEngineOnSampleCallback> build(
+      media::VideoCaptureDevice::TakePhotoCallback callback,
+      VideoCaptureFormat format) {
+    return std::move(callback_);
+  }
+
+ private:
+  std::unique_ptr<IMFCaptureEngineOnSampleCallback> callback_;
 };
 #endif
 
@@ -259,7 +314,9 @@ testing::Environment* const mojo_test_env =
 
 }  // namespace
 
-class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
+class VideoCaptureDeviceTest
+    : public testing::TestWithParam<
+          std::tuple<gfx::Size, VideoCaptureImplementationTweak>> {
  protected:
   typedef VideoCaptureDevice::Client Client;
 
@@ -288,10 +345,23 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
         video_capture_device_factory_.get())
         ->ConfigureForTesting();
 #endif
+#if defined(OS_WIN)
+    static_cast<VideoCaptureDeviceFactoryWin*>(
+        video_capture_device_factory_.get())
+        ->set_use_media_foundation_for_testing(IsWinMediaFoundation());
+#endif
     EXPECT_CALL(*video_capture_client_, DoReserveOutputBuffer()).Times(0);
     EXPECT_CALL(*video_capture_client_, DoOnIncomingCapturedBuffer()).Times(0);
     EXPECT_CALL(*video_capture_client_, DoOnIncomingCapturedVideoFrame())
         .Times(0);
+  }
+
+  bool IsWinMediaFoundation() {
+#if defined(OS_WIN)
+    return std::get<1>(GetParam()) == WIN_MEDIA_FOUNDATION;
+#else
+    return false;
+#endif
   }
 
   void ResetWithNewClient() {
@@ -399,7 +469,7 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
 #define MAYBE_OpenInvalidDevice OpenInvalidDevice
 #endif
 // Tries to allocate an invalid device and verifies it doesn't work.
-TEST_F(VideoCaptureDeviceTest, MAYBE_OpenInvalidDevice) {
+WRAPPED_TEST_P(VideoCaptureDeviceTest, MAYBE_OpenInvalidDevice) {
   VideoCaptureDeviceDescriptor invalid_descriptor;
   invalid_descriptor.device_id = "jibberish";
   invalid_descriptor.display_name = "jibberish";
@@ -431,12 +501,12 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_OpenInvalidDevice) {
 }
 
 // Allocates the first enumerated device, and expects a frame.
-TEST_P(VideoCaptureDeviceTest, CaptureWithSize) {
+WRAPPED_TEST_P(VideoCaptureDeviceTest, CaptureWithSize) {
   const auto descriptor = FindUsableDeviceDescriptor();
   if (!descriptor)
     return;
 
-  const gfx::Size& size = GetParam();
+  const gfx::Size& size = std::get<0>(GetParam());
   if (!IsCaptureSizeSupported(*descriptor, size))
     return;
   const int width = size.width();
@@ -466,14 +536,22 @@ TEST_P(VideoCaptureDeviceTest, CaptureWithSize) {
 }
 
 const gfx::Size kCaptureSizes[] = {gfx::Size(640, 480), gfx::Size(1280, 720)};
+const VideoCaptureImplementationTweak kCaptureImplementationTweaks[] = {
+    NONE,
+#if defined(OS_WIN)
+    WIN_MEDIA_FOUNDATION
+#endif
+};
 
-INSTANTIATE_TEST_CASE_P(VideoCaptureDeviceTests,
-                        VideoCaptureDeviceTest,
-                        testing::ValuesIn(kCaptureSizes));
+INSTANTIATE_TEST_CASE_P(
+    VideoCaptureDeviceTests,
+    VideoCaptureDeviceTest,
+    testing::Combine(testing::ValuesIn(kCaptureSizes),
+                     testing::ValuesIn(kCaptureImplementationTweaks)));
 
 // Allocates a device with an uncommon resolution and verifies frames are
 // captured in a close, much more typical one.
-TEST_F(VideoCaptureDeviceTest, MAYBE_AllocateBadSize) {
+WRAPPED_TEST_P(VideoCaptureDeviceTest, MAYBE_AllocateBadSize) {
   const auto descriptor = FindUsableDeviceDescriptor();
   if (!descriptor)
     return;
@@ -500,7 +578,7 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_AllocateBadSize) {
 }
 
 // Cause hangs on Windows, Linux. Fails Android. https://crbug.com/417824
-TEST_F(VideoCaptureDeviceTest, DISABLED_ReAllocateCamera) {
+WRAPPED_TEST_P(VideoCaptureDeviceTest, DISABLED_ReAllocateCamera) {
   const auto descriptor = FindUsableDeviceDescriptor();
   if (!descriptor)
     return;
@@ -544,7 +622,7 @@ TEST_F(VideoCaptureDeviceTest, DISABLED_ReAllocateCamera) {
 }
 
 // Starts the camera in 720p to try and capture MJPEG format.
-TEST_F(VideoCaptureDeviceTest, MAYBE_CaptureMjpeg) {
+WRAPPED_TEST_P(VideoCaptureDeviceTest, MAYBE_CaptureMjpeg) {
   std::unique_ptr<VideoCaptureDeviceDescriptor> device_descriptor =
       GetFirstDeviceDescriptorSupportingPixelFormat(PIXEL_FORMAT_MJPEG);
   if (!device_descriptor) {
@@ -581,7 +659,7 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_CaptureMjpeg) {
   device->StopAndDeAllocate();
 }
 
-TEST_F(VideoCaptureDeviceTest, NoCameraSupportsPixelFormatMax) {
+WRAPPED_TEST_P(VideoCaptureDeviceTest, NoCameraSupportsPixelFormatMax) {
   // Use PIXEL_FORMAT_MAX to iterate all device names for testing
   // GetDeviceSupportedFormats().
   std::unique_ptr<VideoCaptureDeviceDescriptor> device_descriptor =
@@ -593,7 +671,7 @@ TEST_F(VideoCaptureDeviceTest, NoCameraSupportsPixelFormatMax) {
 
 // Starts the camera and verifies that a photo can be taken. The correctness of
 // the photo is enforced by MockImageCaptureClient.
-TEST_F(VideoCaptureDeviceTest, MAYBE_TakePhoto) {
+WRAPPED_TEST_P(VideoCaptureDeviceTest, MAYBE_TakePhoto) {
   const auto descriptor = FindUsableDeviceDescriptor();
   if (!descriptor)
     return;
@@ -642,7 +720,7 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_TakePhoto) {
 }
 
 // Starts the camera and verifies that the photo capabilities can be retrieved.
-TEST_F(VideoCaptureDeviceTest, MAYBE_GetPhotoState) {
+WRAPPED_TEST_P(VideoCaptureDeviceTest, MAYBE_GetPhotoState) {
   const auto descriptor = FindUsableDeviceDescriptor();
   if (!descriptor)
     return;
@@ -692,5 +770,57 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_GetPhotoState) {
 
   device->StopAndDeAllocate();
 }
+
+#if defined(OS_WIN)
+/* Verifies that the photo callback is correctly released by MediaFoundation */
+WRAPPED_TEST_P(VideoCaptureDeviceTest, CheckPhotoCallbackRelease) {
+  if (!IsWinMediaFoundation()) {
+    return;
+  }
+  std::unique_ptr<VideoCaptureDeviceDescriptor> descriptor =
+      GetFirstDeviceDescriptorSupportingPixelFormat(PIXEL_FORMAT_MJPEG);
+  if (!descriptor) {
+    DVLOG(1) << "No usable media foundation device descriptor. Exiting test.";
+    return;
+  }
+
+  std::unique_ptr<MockMFPhotoCallback> callback(new MockMFPhotoCallback());
+  EXPECT_CALL(*callback, DoQueryInterface(_, _)).WillRepeatedly(Return(S_OK));
+  EXPECT_CALL(*callback, DoAddRef()).Times(1).WillOnce(Return(1U));
+  EXPECT_CALL(*callback, DoRelease()).Times(1).WillOnce(Return(1U));
+  EXPECT_CALL(*callback, DoOnSample(_)).Times(1).WillOnce(Return(S_OK));
+  std::unique_ptr<MockMFPhotoCallbackFactory> callback_factory(
+      new MockMFPhotoCallbackFactory(std::move(callback)));
+
+  EXPECT_CALL(*video_capture_client_, OnError(_, _)).Times(0);
+  EXPECT_CALL(*video_capture_client_, OnStarted());
+
+  std::unique_ptr<VideoCaptureDevice> device(
+      video_capture_device_factory_->CreateDevice(*descriptor));
+  ASSERT_TRUE(device);
+  static_cast<VideoCaptureDeviceMFWin*>(device.get())
+      ->set_photo_callback_factory_for_testing(std::move(callback_factory));
+
+  VideoCaptureParams capture_params;
+  capture_params.requested_format.frame_size.SetSize(320, 240);
+  capture_params.requested_format.frame_rate = 30;
+  capture_params.requested_format.pixel_format = PIXEL_FORMAT_MJPEG;
+  device->AllocateAndStart(capture_params, std::move(video_capture_client_));
+
+  VideoCaptureDevice::TakePhotoCallback scoped_callback = base::BindOnce(
+      &MockImageCaptureClient::DoOnPhotoTaken, image_capture_client_);
+
+  base::RunLoop run_loop;
+  base::Closure quit_closure = media::BindToCurrentLoop(run_loop.QuitClosure());
+  EXPECT_CALL(*image_capture_client_.get(), OnCorrectPhotoTaken())
+      .Times(1)
+      .WillOnce(RunClosure(quit_closure));
+
+  device->TakePhoto(std::move(scoped_callback));
+  run_loop.Run();
+
+  device->StopAndDeAllocate();
+}
+#endif
 
 };  // namespace media
