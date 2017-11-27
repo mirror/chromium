@@ -32,6 +32,7 @@
 #include "core/layout/LayoutText.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/ng/inline/ng_offset_mapping.h"
 #include "core/paint/PaintLayer.h"
 
 namespace blink {
@@ -201,6 +202,13 @@ class NewPaintRangeAndSelectedLayoutObjects {
       NewPaintRangeAndSelectedLayoutObjects&& other) {
     paint_range_ = other.paint_range_;
     selected_objects_ = std::move(other.selected_objects_);
+  }
+
+  NewPaintRangeAndSelectedLayoutObjects& NewPaintRangeAndSelectedLayoutObjects::
+  operator=(NewPaintRangeAndSelectedLayoutObjects&& other) {
+    paint_range_ = other.paint_range_;
+    selected_objects_ = std::move(other.selected_objects_);
+    return *this;
   }
 
   SelectionPaintRange PaintRange() const { return paint_range_; }
@@ -411,6 +419,27 @@ static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInOneNode(
   DCHECK_GE(end_offset.value(), start_offset.value());
   if (start_offset.value() == end_offset.value())
     return {};
+
+  /*if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
+    const Position& start = {layout_object->GetNode(), start_offset.value()};
+    const NGOffsetMapping* const start_mapping = NGOffsetMapping::GetFor(start);
+    const WTF::Optional<unsigned int>& ng_start_offset =
+        start_mapping->GetTextContentOffset(start);
+    DCHECK(ng_start_offset.has_value());
+    const Position& end = {layout_object->GetNode(), end_offset.value()};
+    const NGOffsetMapping* const end_mapping = NGOffsetMapping::GetFor(end);
+    const WTF::Optional<unsigned int>& ng_end_offset =
+        end_mapping->GetTextContentOffset(end);
+    DCHECK(ng_end_offset.has_value());
+
+    layout_object->LayoutObject::SetSelectionState(
+        SelectionState::kStartAndEnd);
+    selected_objects.insert(layout_object);
+    return {{layout_object, (int)ng_start_offset.value(), layout_object,
+             (int)ng_end_offset.value()},
+            std::move(selected_objects)};
+  }*/
+
   LayoutTextFragment* const first_letter_part =
       FirstLetterPartFor(layout_object);
   if (!first_letter_part) {
@@ -599,14 +628,48 @@ CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
   const WTF::Optional<int> end_offset = ComputeEndOffset(
       *end_layout_object, selection.EndPosition().ToOffsetInAnchor());
 
+  NewPaintRangeAndSelectedLayoutObjects new_range;
   if (start_layout_object == end_layout_object) {
-    return MarkStartAndEndInOneNode(std::move(selected_objects),
-                                    start_layout_object, start_offset,
-                                    end_offset);
+    new_range =
+        MarkStartAndEndInOneNode(std::move(selected_objects),
+                                 start_layout_object, start_offset, end_offset);
   }
-  return MarkStartAndEndInTwoNodes(std::move(selected_objects),
-                                   start_layout_object, start_offset,
-                                   end_layout_object, end_offset);
+  new_range = MarkStartAndEndInTwoNodes(std::move(selected_objects),
+                                        start_layout_object, start_offset,
+                                        end_layout_object, end_offset);
+
+  if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
+    return new_range;
+
+  LayoutObject* start = new_range.PaintRange().StartLayoutObject();
+  WTF::Optional<int> st_offset = new_range.PaintRange().StartOffset();
+  if (LayoutBlockFlow* const start_block_flow = start->EnclosingNGBlockFlow()) {
+    if (start->IsText()) {
+      const Position& start_pos =
+          ToPositionInDOMTree(selection.StartPosition());
+      const NGOffsetMapping* const start_mapping =
+          NGOffsetMapping::GetFor(start_pos);
+      const WTF::Optional<unsigned int>& ng_start_offset =
+          start_mapping->GetTextContentOffset(start_pos);
+      DCHECK(ng_start_offset.has_value());
+      st_offset = static_cast<int>(ng_start_offset.value());
+    }
+  }
+  LayoutObject* end = new_range.PaintRange().StartLayoutObject();
+  WTF::Optional<int> ed_offset = new_range.PaintRange().StartOffset();
+  if (LayoutBlockFlow* const start_block_flow = end->EnclosingNGBlockFlow()) {
+    if (end->IsText()) {
+      const Position& end_pos = ToPositionInDOMTree(selection.EndPosition());
+      const NGOffsetMapping* const end_mapping =
+          NGOffsetMapping::GetFor(end_pos);
+      const WTF::Optional<unsigned int>& ng_end_offset =
+          end_mapping->GetTextContentOffset(end_pos);
+      DCHECK(ng_end_offset.has_value());
+      ed_offset = static_cast<int>(ng_end_offset.value());
+    }
+  }
+  return {{start, st_offset, end, ed_offset},
+          std::move(new_range.LayoutObjects())};
 }
 
 void LayoutSelection::SetHasPendingSelection() {
