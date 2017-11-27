@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fcb564b_50fe136b",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-27T19:39:50Z",
+      "side": 1,
+      "message": "Can you explain a little why this is changing?\n\nRegisterChild() happens in response to a message on the GpuHost pipe, and DoSetParentOnChild() happens locally (maybe in response to a message on FrameSinkManagerClient pipe?). Why does this order change with viz?",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
