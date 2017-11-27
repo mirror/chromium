@@ -1981,6 +1981,44 @@ LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPointInTouchHandlerRegion(
   return state.closest_match;
 }
 
+static bool LayerHasWheelEventHandlersAt(const gfx::PointF& screen_space_point,
+                                         LayerImpl* layer_impl) {
+  if (layer_impl->wheel_event_handler_region().IsEmpty())
+    return false;
+
+  if (!PointHitsRegion(screen_space_point, layer_impl->ScreenSpaceTransform(),
+                       layer_impl->wheel_event_handler_region()))
+    return false;
+
+  // At this point, we think the point does hit the touch event handler region
+  // on the layer, but we need to walk up the parents to ensure that the layer
+  // was not clipped in such a way that the hit point actually should not hit
+  // the layer.
+  if (PointIsClippedBySurfaceOrClipRect(screen_space_point, layer_impl))
+    return false;
+
+  return true;
+}
+
+struct FindWheelEventHandlerLayerFunctor {
+  bool operator()(LayerImpl* layer) const {
+    return LayerHasWheelEventHandlersAt(screen_space_point, layer);
+  }
+  const gfx::PointF screen_space_point;
+};
+
+LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPointInWheelEventHandlerRegion(
+    const gfx::PointF& screen_space_point) {
+  if (layer_list_.empty())
+    return nullptr;
+  if (!UpdateDrawProperties())
+    return nullptr;
+  FindWheelEventHandlerLayerFunctor func = {screen_space_point};
+  FindClosestMatchingLayerState state;
+  FindClosestMatchingLayer(screen_space_point, layer_list_[0], func, &state);
+  return state.closest_match;
+}
+
 void LayerTreeImpl::RegisterSelection(const LayerSelection& selection) {
   if (selection_ == selection)
     return;

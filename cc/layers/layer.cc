@@ -910,6 +910,17 @@ void Layer::SetTouchActionRegion(TouchActionRegion touch_action_region) {
   SetNeedsCommit();
 }
 
+void Layer::SetWheelEventHandlerRegion(
+    const Region& wheel_event_handler_region) {
+  DCHECK(IsPropertyChangeAllowed());
+  if (inputs_.wheel_event_handler_region == wheel_event_handler_region)
+    return;
+
+  inputs_.wheel_event_handler_region = wheel_event_handler_region;
+  SetPropertyTreesNeedRebuild();
+  SetNeedsCommit();
+}
+
 void Layer::SetCacheRenderSurface(bool cache) {
   DCHECK(IsPropertyChangeAllowed());
   if (cache_render_surface_ == cache)
@@ -1184,6 +1195,7 @@ void Layer::PushPropertiesTo(LayerImpl* layer) {
       inputs_.main_thread_scrolling_reasons);
   layer->SetNonFastScrollableRegion(inputs_.non_fast_scrollable_region);
   layer->SetTouchActionRegion(inputs_.touch_action_region);
+  layer->SetWheelEventHandlerRegion(inputs_.wheel_event_handler_region);
   layer->SetContentsOpaque(inputs_.contents_opaque);
   layer->SetPosition(inputs_.position);
   layer->set_should_flatten_transform_from_property_tree(

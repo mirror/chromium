@@ -94,6 +94,7 @@ ScrollingCoordinator::ScrollingCoordinator(Page* page)
     : page_(page),
       scroll_gesture_region_is_dirty_(false),
       touch_event_target_rects_are_dirty_(false),
+      wheel_event_target_rects_are_dirty_(false),
       should_scroll_on_main_thread_dirty_(false),
       was_frame_scrollable_(false),
       last_main_thread_scrolling_reasons_(0) {}
@@ -128,6 +129,7 @@ void ScrollingCoordinator::SetShouldHandleScrollGestureOnMainThreadRegion(
 void ScrollingCoordinator::NotifyGeometryChanged() {
   scroll_gesture_region_is_dirty_ = true;
   touch_event_target_rects_are_dirty_ = true;
+  wheel_event_target_rects_are_dirty_ = true;
   should_scroll_on_main_thread_dirty_ = true;
 }
 
@@ -142,10 +144,13 @@ void ScrollingCoordinator::NotifyTransformChanged(const LayoutBox& box) {
 
   for (PaintLayer* layer = box.EnclosingLayer(); layer;
        layer = layer->Parent()) {
-    if (layers_with_touch_rects_.Contains(layer)) {
+    if (layers_with_touch_rects_.Contains(layer))
       touch_event_target_rects_are_dirty_ = true;
+    if (layers_with_wheel_rects_.Contains(layer))
+      wheel_event_target_rects_are_dirty_ = true;
+    if (touch_event_target_rects_are_dirty_ &&
+        wheel_event_target_rects_are_dirty_)
       return;
-    }
   }
 }
 void ScrollingCoordinator::NotifyOverflowUpdated() {
@@ -227,6 +232,11 @@ void ScrollingCoordinator::UpdateAfterCompositingChangeIfNeeded() {
   if (touch_event_target_rects_are_dirty_) {
     UpdateTouchEventTargetRectsIfNeeded();
     touch_event_target_rects_are_dirty_ = false;
+  }
+
+  if (wheel_event_target_rects_are_dirty_) {
+    UpdateWheelEventTargetRectsIfNeeded();
+    wheel_event_target_rects_are_dirty_ = false;
   }
 
   LocalFrameView* frame_view = ToLocalFrame(page_->MainFrame())->View();
@@ -554,7 +564,7 @@ bool ScrollingCoordinator::ScrollableAreaScrollLayerDidChange(
 }
 
 using GraphicsLayerHitTestRects =
-    WTF::HashMap<const GraphicsLayer*, Vector<TouchActionRect>>;
+    WTF::HashMap<const GraphicsLayer*, Vector<HitTestRect>>;
 
 // In order to do a DFS cross-frame walk of the Layer tree, we need to know
 // which Layers have child frames inside of them. This computes a mapping for
@@ -606,18 +616,17 @@ static void ProjectRectsToGraphicsLayerSpaceRecursive(
 
     GraphicsLayerHitTestRects::iterator gl_iter =
         graphics_rects.find(graphics_layer);
-    Vector<TouchActionRect>* gl_rects;
+    Vector<HitTestRect>* gl_rects;
     if (gl_iter == graphics_rects.end()) {
-      gl_rects =
-          &graphics_rects.insert(graphics_layer, Vector<TouchActionRect>())
-               .stored_value->value;
+      gl_rects = &graphics_rects.insert(graphics_layer, Vector<HitTestRect>())
+                      .stored_value->value;
     } else {
       gl_rects = &gl_iter->value;
     }
 
     // Transform each rect to the co-ordinate space of the graphicsLayer.
     for (size_t i = 0; i < layer_iter->value.size(); ++i) {
-      TouchActionRect rect = layer_iter->value[i];
+      HitTestRect rect = layer_iter->value[i];
       if (composited_layer != cur_layer) {
         FloatQuad compositor_quad = geometry_map.MapToAncestor(
             FloatRect(rect.rect), &composited_layer->GetLayoutObject());
@@ -738,6 +747,15 @@ void ScrollingCoordinator::UpdateTouchEventTargetRectsIfNeeded() {
   SetTouchEventTargetRects(touch_event_target_rects);
 }
 
+void ScrollingCoordinator::UpdateWheelEventTargetRectsIfNeeded() {
+  TRACE_EVENT0("input",
+               "ScrollingCoordinator::UpdateWheelEventTargetRectIfNeeded");
+
+  LayerHitTestRects wheel_event_target_rects;
+  ComputeWheelEventTargetRects(wheel_event_target_rects);
+  SetWheelEventTargetRects(wheel_event_target_rects);
+}
+
 void ScrollingCoordinator::UpdateUserInputScrollable(
     ScrollableArea* scrollable_area) {
   WebLayer* web_layer = toWebLayer(scrollable_area->LayerForScrolling());
@@ -759,6 +777,7 @@ void ScrollingCoordinator::Reset() {
   horizontal_scrollbars_.clear();
   vertical_scrollbars_.clear();
   layers_with_touch_rects_.clear();
+  layers_with_wheel_rects_.clear();
   was_frame_scrollable_ = false;
 
   last_main_thread_scrolling_reasons_ = 0;
@@ -786,14 +805,13 @@ void ScrollingCoordinator::SetTouchEventTargetRects(
     GraphicsLayer* main_graphics_layer =
         layer->GraphicsLayerBacking(&layer->GetLayoutObject());
     if (main_graphics_layer) {
-      graphics_layer_rects.insert(main_graphics_layer,
-                                  Vector<TouchActionRect>());
+      graphics_layer_rects.insert(main_graphics_layer, Vector<HitTestRect>());
     }
     GraphicsLayer* scrolling_contents_layer = layer->GraphicsLayerBacking();
     if (scrolling_contents_layer &&
         scrolling_contents_layer != main_graphics_layer) {
       graphics_layer_rects.insert(scrolling_contents_layer,
-                                  Vector<TouchActionRect>());
+                                  Vector<HitTestRect>());
     }
   }
 
@@ -824,6 +842,55 @@ void ScrollingCoordinator::SetTouchEventTargetRects(
   }
 }
 
+void ScrollingCoordinator::SetWheelEventTargetRects(
+    LayerHitTestRects& layer_rects) {
+  TRACE_EVENT0("input", "ScrollingCoordinator::setWheelEventTargetRects");
+
+  GraphicsLayerHitTestRects graphics_layer_rects;
+  for (const PaintLayer* layer : layers_with_wheel_rects_) {
+    if (layer->GetLayoutObject().GetFrameView() &&
+        layer->GetLayoutObject().GetFrameView()->ShouldThrottleRendering()) {
+      continue;
+    }
+    GraphicsLayer* main_graphics_layer =
+        layer->GraphicsLayerBacking(&layer->GetLayoutObject());
+    if (main_graphics_layer) {
+      graphics_layer_rects.insert(main_graphics_layer, Vector<HitTestRect>());
+    }
+    GraphicsLayer* scrolling_contents_layer = layer->GraphicsLayerBacking();
+    if (scrolling_contents_layer &&
+        scrolling_contents_layer != main_graphics_layer) {
+      graphics_layer_rects.insert(scrolling_contents_layer,
+                                  Vector<HitTestRect>());
+    }
+  }
+
+  layers_with_wheel_rects_.clear();
+  for (const auto& layer_rect : layer_rects) {
+    if (!layer_rect.value.IsEmpty()) {
+      DCHECK(layer_rect.key->IsRootLayer() || layer_rect.key->Parent());
+      const PaintLayer* composited_layer =
+          layer_rect.key
+              ->EnclosingLayerForPaintInvalidationCrossingFrameBoundaries();
+      if (!composited_layer)
+        continue;
+      layers_with_wheel_rects_.insert(composited_layer);
+    }
+  }
+
+  ProjectRectsToGraphicsLayerSpace(page_->DeprecatedLocalMainFrame(),
+                                   layer_rects, graphics_layer_rects);
+
+  for (const auto& layer_rect : graphics_layer_rects) {
+    const GraphicsLayer* graphics_layer = layer_rect.key;
+    WebVector<WebRect> wheel(layer_rect.value.size());
+    for (size_t i = 0; i < layer_rect.value.size(); ++i) {
+      wheel[i] = EnclosingIntRect(layer_rect.value[i].rect);
+    }
+    graphics_layer->PlatformLayer()->SetWheelEventHandlerRegion(wheel);
+  }
+}
+
 void ScrollingCoordinator::TouchEventTargetRectsDidChange() {
   DCHECK(page_);
   if (!page_->MainFrame()->IsLocalFrame() ||
@@ -844,6 +911,10 @@ void ScrollingCoordinator::TouchEventTargetRectsDidChange() {
     page_->DeprecatedLocalMainFrame()->View()->ScheduleAnimation();
 
   touch_event_target_rects_are_dirty_ = true;
+}
+
+void ScrollingCoordinator::WheelEventTargetRectsDidChange() {
+  wheel_event_target_rects_are_dirty_ = true;
 }
 
 void ScrollingCoordinator::UpdateScrollParentForGraphicsLayer(
@@ -870,6 +941,7 @@ void ScrollingCoordinator::UpdateClipParentForGraphicsLayer(
 
 void ScrollingCoordinator::WillDestroyLayer(PaintLayer* layer) {
   layers_with_touch_rects_.erase(layer);
+  layers_with_wheel_rects_.erase(layer);
 }
 
 void ScrollingCoordinator::SetShouldUpdateScrollLayerPositionOnMainThread(
@@ -1173,6 +1245,22 @@ void ScrollingCoordinator::ComputeTouchEventTargetRects(
   AccumulateDocumentTouchEventTargetRects(
       rects, EventHandlerRegistry::kTouchStartOrMoveEventBlockingLowLatency,
       document, TouchAction::kTouchActionNone);
+}
+
+void ScrollingCoordinator::ComputeWheelEventTargetRects(
+    LayerHitTestRects& rects) {
+  TRACE_EVENT0("input", "ScrollingCoordinator::ComputeWheelEventTargetRects");
+
+  Document* document = page_->DeprecatedLocalMainFrame()->GetDocument();
+  if (!document || !document->View())
+    return;
+
+  AccumulateDocumentTouchEventTargetRects(
+      rects, EventHandlerRegistry::kWheelEventBlocking, document,
+      TouchAction::kTouchActionAuto);
+  AccumulateDocumentTouchEventTargetRects(
+      rects, EventHandlerRegistry::kWheelEventPassive, document,
+      TouchAction::kTouchActionAuto);
 }
 
 void ScrollingCoordinator::

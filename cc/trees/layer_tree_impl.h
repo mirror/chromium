@@ -471,6 +471,9 @@ class CC_EXPORT LayerTreeImpl {
   LayerImpl* FindLayerThatIsHitByPointInTouchHandlerRegion(
       const gfx::PointF& screen_space_point);
 
+  LayerImpl* FindLayerThatIsHitByPointInWheelEventHandlerRegion(
+      const gfx::PointF& screen_space_point);
+
   void RegisterSelection(const LayerSelection& selection);
 
   bool GetAndResetHandleVisibilityChanged();
