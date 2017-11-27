@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46772a8f_dde666d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-27T23:06:39Z",
+      "side": 1,
+      "message": "nit: Change to \"Remove unused callbacks from DataDeleter, StoragePartition.\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 44,
+        "endLine": 7,
+        "endChar": 62
+      },
+      "revId": "93c32ae425c8b3fdf431d0801e113a0d1adb6bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85165d90_7d683da6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-27T23:06:39Z",
+      "side": 1,
+      "message": "nit: mention that this is a follow-up to https://chromium-review.googlesource.com/c/chromium/src/+/778040",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "93c32ae425c8b3fdf431d0801e113a0d1adb6bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
