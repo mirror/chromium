@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d37e2c95_d855f85b",
+        "filename": "testing/libfuzzer/fuzzers/icu_collator_compare_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-27T22:44:29Z",
+      "side": 1,
+      "message": "Most of the above code is not necessary. They\u0027re just the result of writing this fuzzer as if it\ns a part of v8. \n\nSee other fuzzers in third_party/icu.",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 41,
+        "endChar": 3
+      },
+      "revId": "0b5a8280762de886b29925d0d11495cbff5fb5f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
