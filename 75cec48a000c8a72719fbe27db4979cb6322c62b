@@ -46,6 +46,30 @@
       "revId": "75cec48a000c8a72719fbe27db4979cb6322c62b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15701cad_ba05f267",
+        "filename": "components/metrics_services_manager/metrics_services_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-27T00:37:23Z",
+      "side": 0,
+      "message": "Just discovered another Code Search blind spot: CS doesn\u0027t \"see\" IOSChromeMetricsServicesManagerClient.",
+      "parentUuid": "6b59e1a3_30c12f9b",
+      "range": {
+        "startLine": 62,
+        "startChar": 73,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "75cec48a000c8a72719fbe27db4979cb6322c62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
