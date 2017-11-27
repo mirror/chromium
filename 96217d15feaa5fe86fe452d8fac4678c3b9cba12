@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd643283_46c03d2e",
+        "filename": "content/common/service_worker/service_worker_types.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-27T09:35:05Z",
+      "side": 1,
+      "message": "Btw, do we still need this, or can we remove the _LAST enum?\n\n(Also, with mojo, all enums are scoped by default, so it would be more standard to call these kUnknown, kForWindow, kForSharedWorker, kForServiceWorker and shorten the amount of typing needed to refer to these enumerator values)",
+      "revId": "96217d15feaa5fe86fe452d8fac4678c3b9cba12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
