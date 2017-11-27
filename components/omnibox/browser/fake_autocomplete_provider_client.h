@@ -26,7 +26,7 @@ class InMemoryURLIndex;
 // Fully operational AutocompleteProviderClient for usage in tests.
 class FakeAutocompleteProviderClient : public MockAutocompleteProviderClient {
  public:
-  FakeAutocompleteProviderClient();
+  explicit FakeAutocompleteProviderClient(bool create_history_db = true);
   ~FakeAutocompleteProviderClient() override;
 
   const AutocompleteSchemeClassifier& GetSchemeClassifier() const override;
@@ -44,6 +44,9 @@ class FakeAutocompleteProviderClient : public MockAutocompleteProviderClient {
     is_tab_open_with_url_ = is_open;
   }
 
+  scoped_refptr<ShortcutsBackend> GetShortcutsBackend() override;
+  scoped_refptr<ShortcutsBackend> GetShortcutsBackendIfExists() override;
+
  private:
   base::ScopedTempDir history_dir_;
   std::unique_ptr<bookmarks::BookmarkModel> bookmark_model_;
@@ -52,6 +55,7 @@ class FakeAutocompleteProviderClient : public MockAutocompleteProviderClient {
   std::unique_ptr<InMemoryURLIndex> in_memory_url_index_;
   std::unique_ptr<history::HistoryService> history_service_;
   bool is_tab_open_with_url_;
+  scoped_refptr<ShortcutsBackend> shortcuts_backend_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeAutocompleteProviderClient);
 };
