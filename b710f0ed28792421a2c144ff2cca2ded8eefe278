@@ -46,6 +46,30 @@
       "revId": "b710f0ed28792421a2c144ff2cca2ded8eefe278",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65fcb340_5b0a3cdc",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-27T23:35:22Z",
+      "side": 1,
+      "message": "Ack. Thanks for the explanation! Now I understand what \"unsafe\" means :)",
+      "parentUuid": "583182a4_f828fda3",
+      "range": {
+        "startLine": 359,
+        "startChar": 25,
+        "endLine": 359,
+        "endChar": 39
+      },
+      "revId": "b710f0ed28792421a2c144ff2cca2ded8eefe278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
