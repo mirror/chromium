@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abcbcaba_a3dbc2ac",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-27T22:05:18Z",
+      "side": 1,
+      "message": "const base::string16\u0026",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 20
+      },
+      "revId": "d590da14f13bbb9c40e22f90f6d2f8caac3b01f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
