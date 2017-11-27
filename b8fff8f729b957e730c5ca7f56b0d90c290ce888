@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaa493e4_3191e65d",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-27T19:28:45Z",
+      "side": 1,
+      "message": "We should be able to remove this entire if clause. Both lld and the gold plugin enable function sections and data sections by default now.",
+      "revId": "b8fff8f729b957e730c5ca7f56b0d90c290ce888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
