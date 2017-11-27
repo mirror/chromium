@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c844739_b78a0ede",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-27T19:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba4b328d_fb10e83f",
+      "range": {
+        "startLine": 408,
+        "startChar": 65,
+        "endLine": 408,
+        "endChar": 72
+      },
+      "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e44c890_8fb2b237",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e039617f_53942db5",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-27T19:03:09Z",
+      "side": 1,
+      "message": "Change the comment.",
+      "parentUuid": "8e44c890_8fb2b237",
+      "range": {
+        "startLine": 409,
+        "startChar": 60,
+        "endLine": 410,
+        "endChar": 55
+      },
+      "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "998746bd_e5386f17",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0183e889_861b0632",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-27T19:03:09Z",
+      "side": 1,
+      "message": "See reply to roger\u0027s comment.",
+      "parentUuid": "998746bd_e5386f17",
+      "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -109,6 +175,30 @@
       "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "343b72c0_70d478bf",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-27T19:03:09Z",
+      "side": 1,
+      "message": "Agreed, and added a separate histogram.\n\nI did it slightly different though, with 3 categries: GOOD/OK/BAD. \n\nGOOD means rationalization helped, user did leave the field empty.\nOK means rationalization did not do any harm at least, either the prediction is wrong anyways or\nit is right but the actual value is not part of the profile.\nBAD means we could have got it filled automatically should there have been no rationalization.",
+      "parentUuid": "86b56afa_a542aa45",
+      "range": {
+        "startLine": 290,
+        "startChar": 4,
+        "endLine": 290,
+        "endChar": 32
+      },
+      "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
