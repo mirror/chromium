@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "694f5a8a_2f85c290",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-27T18:11:32Z",
+      "side": 1,
+      "message": "Improved the explanation and fixed a bug.\nCould not add a unit test for the case where two real devices have the same group ID as the default device because we currently do not have that flexibility with fake devices. We should change the approach to media::AudioSystem anyway.",
+      "parentUuid": "267aa693_e94512b5",
+      "revId": "30a8f3c2a658d864e99f7b4b8240b989df2ec280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "837a562e_805ccde7",
         "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "da3abbc0_fc8c095e",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-27T18:11:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "837a562e_805ccde7",
+      "revId": "30a8f3c2a658d864e99f7b4b8240b989df2ec280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a514214a_5271e290",
         "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "30a8f3c2a658d864e99f7b4b8240b989df2ec280",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad124d4_2f469e78",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-27T18:11:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a514214a_5271e290",
+      "revId": "30a8f3c2a658d864e99f7b4b8240b989df2ec280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
