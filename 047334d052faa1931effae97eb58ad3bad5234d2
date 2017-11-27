@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "be62b43f_dc7a7216",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T06:32:11Z",
+      "side": 1,
+      "message": "Ah, got it. Can we add to the comment \"added in the previous try\" or something like this?",
+      "parentUuid": "ef8aa241_9794d9ea",
+      "range": {
+        "startLine": 369,
+        "startChar": 2,
+        "endLine": 369,
+        "endChar": 45
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3150b0f_cee6bc50",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
@@ -331,6 +355,53 @@
     },
     {
       "key": {
+        "uuid": "4d761195_4ec9162c",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T06:32:11Z",
+      "side": 1,
+      "message": "Got it. Thanks for the explanation.",
+      "parentUuid": "8d9015df_0cd1d652",
+      "range": {
+        "startLine": 386,
+        "startChar": 12,
+        "endLine": 386,
+        "endChar": 73
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0304cddd_010327a0",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T06:32:11Z",
+      "side": 1,
+      "message": "Can it happen that the sync completed before we rich this code path? It\u0027s all asynchronous so I think it\u0027s theoretically possible. WDYT?\n\nIf yes, then maybe we could add a check here:\n\nthis.driveSyncHandler_.addEventListener(...);\nif (!this.driveSyncHandler_.syncing) {\n  // Already finished (or nothing started), call driveListener_ now.\n}",
+      "range": {
+        "startLine": 388,
+        "startChar": 10,
+        "endLine": 388,
+        "endChar": 50
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c5e3cce_609da349",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
@@ -366,6 +437,30 @@
       "side": 1,
       "message": "As long as the process (the backend process lives in the Files Chrome extension) is kept alive, it will resume backing up as soon as Drive sync was completed (which will happen at some point when the connection is back). If the process dies, it means that the drive sync handler also dies, because it is also part of the same process (when looking at chrome://inspect, they are both part of Extensions \u003e Files).\n\nOn the other side, another Cl of mine that has been in review since forever because I\u0027m waiting for UX approval of error messages: Cloud Import can only be triggered with internet connection, as that Cl checks the available Drive quota (crbug.com/677104), but loss of internet connection while backing up shouldn\u0027t affect anything except for the speed, as described in the first paragraph.\n\nDo you think this behavior is acceptable?",
       "parentUuid": "3c5e3cce_609da349",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 69
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a249d6_94993d6c",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T06:32:11Z",
+      "side": 1,
+      "message": "So, when we\u0027re offline how does the UI look like? Is it showing importing progress bar in the progress center until either we reboot or go online? Is the operation cancellable? My concern was of progress bar hanging forever if a user happens to go offline.\n\nI agree this would be less of a problem if we allow to trigger CI only online. Did UX agree to do this change?",
+      "parentUuid": "e15f76c8_0929652d",
       "range": {
         "startLine": 389,
         "startChar": 14,
