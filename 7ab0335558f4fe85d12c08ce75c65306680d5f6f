@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0997a039_eb4f3f87",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-27T22:54:18Z",
+      "side": 0,
+      "message": "I\u0027m ok with this change, but using the index of the view is going to give a different result than you have here. I\u0027m +1 assuming you are ok with that.",
+      "range": {
+        "startLine": 1049,
+        "startChar": 29,
+        "endLine": 1049,
+        "endChar": 76
+      },
+      "revId": "7ab0335558f4fe85d12c08ce75c65306680d5f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
