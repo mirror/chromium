@@ -81,6 +81,13 @@ bool IsValidEmailAddress(const base::string16& text);
 // insensitive.  Valid for US states only.
 bool IsValidState(const base::string16& text);
 
+// Returns whether the number contained in |text| is a possible number, either
+// in international format, or in the national format associated with
+// |country_code|. Callers should cache the result as the parsing is expensive.
+// This method provides a more lenient check than IsValidPhoneNumber().
+bool IsPossiblePhoneNumber(const base::string16& text,
+                           const std::string& country_code);
+
 // Returns whether the number contained in |text| is valid, either in
 // international format, or in the national format associated with
 // |country_code|. Callers should cache the result as the parsing is expensive.
