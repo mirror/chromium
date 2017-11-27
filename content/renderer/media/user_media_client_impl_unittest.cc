@@ -15,7 +15,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_task_environment.h"
 #include "content/child/child_process.h"
-#include "content/common/media/media_devices.h"
+#include "content/public/common/media/media_devices.h"
 #include "content/renderer/media/media_stream_audio_processor_options.h"
 #include "content/renderer/media/media_stream_audio_source.h"
 #include "content/renderer/media/media_stream_constraints_util.h"

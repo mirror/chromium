@@ -5,7 +5,7 @@
 // Multiply-included IPC traits file, hence no include guard.
 
 #include "content/common/content_export.h"
-#include "content/common/media/media_devices.h"
+#include "content/public/common/media/media_devices.h"
 #include "ipc/ipc_message_macros.h"
 
 #undef IPC_MESSAGE_EXPORT
