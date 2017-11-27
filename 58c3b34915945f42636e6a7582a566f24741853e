@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaac6989_4bb9336f",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-27T20:10:12Z",
+      "side": 1,
+      "message": "this should just be:\n\n.then(() \u003d\u003e device.gatt.connect())\n.then(gattServer...",
+      "revId": "58c3b34915945f42636e6a7582a566f24741853e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc900a5_630a1dff",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-27T20:10:12Z",
+      "side": 1,
+      "message": "remove indent",
+      "revId": "58c3b34915945f42636e6a7582a566f24741853e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
