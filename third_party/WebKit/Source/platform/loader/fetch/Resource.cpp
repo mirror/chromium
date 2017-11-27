@@ -372,13 +372,16 @@ void Resource::AppendData(const char* data, size_t length) {
   TRACE_EVENT0("blink", "Resource::appendData");
   DCHECK(!is_revalidating_);
   DCHECK(!ErrorOccurred());
-  if (options_.data_buffering_policy == kDoNotBufferData)
-    return;
-  if (data_)
-    data_->Append(data, length);
-  else
-    data_ = SharedBuffer::Create(data, length);
-  SetEncodedSize(data_->size());
+  if (options_.data_buffering_policy == kBufferData) {
+    if (data_)
+      data_->Append(data, length);
+    else
+      data_ = SharedBuffer::Create(data, length);
+    SetEncodedSize(data_->size());
+  }
+  ResourceClientWalker<ResourceClient> w(Clients());
+  while (ResourceClient* c = w.Next())
+    c->DataReceived(this, data, length);
 }
 
 void Resource::SetResourceBuffer(scoped_refptr<SharedBuffer> resource_buffer) {
@@ -573,7 +576,15 @@ void Resource::SetResponse(const ResourceResponse& response) {
 }
 
 void Resource::ResponseReceived(const ResourceResponse& response,
-                                std::unique_ptr<WebDataConsumerHandle>) {
+                                std::unique_ptr<WebDataConsumerHandle> handle) {
+  if (response.WasFallbackRequiredByServiceWorker()) {
+    // The ServiceWorker asked us to re-fetch the request. This resource must
+    // not be reused.
+    // Note: This logic is needed here because DocumentThreadableLoader handles
+    // CORS independently from ResourceLoader. Fix it.
+    GetMemoryCache()->Remove(this);
+  }
+
   response_timestamp_ = CurrentTime();
   if (preload_discovery_time_) {
     int time_since_discovery = static_cast<int>(
@@ -586,7 +597,7 @@ void Resource::ResponseReceived(const ResourceResponse& response,
 
   if (is_revalidating_) {
     if (response.HttpStatusCode() == 304) {
-      RevalidationSucceeded(response);
+      RevalidationSucceeded(response, std::move(handle));
       return;
     }
     RevalidationFailed();
@@ -595,6 +606,7 @@ void Resource::ResponseReceived(const ResourceResponse& response,
   String encoding = response.TextEncodingName();
   if (!encoding.IsNull())
     SetEncoding(encoding);
+  NotifyResponseReceived(std::move(handle));
 }
 
 void Resource::SetSerializedCachedMetadata(const char* data, size_t size) {
@@ -637,6 +649,17 @@ String Resource::ReasonNotDeletable() const {
 }
 
 void Resource::DidAddClient(ResourceClient* c) {
+  if (scoped_refptr<SharedBuffer> data = Data()) {
+    data->ForEachSegment([this, &c](const char* segment, size_t segment_size,
+                                    size_t segment_offset) -> bool {
+      c->DataReceived(this, segment, segment_size);
+
+      // Stop pushing data if the client removed itself.
+      return HasClient(c);
+    });
+  }
+  if (!HasClient(c))
+    return;
   if (IsLoaded()) {
     c->NotifyFinished(this);
     if (clients_.Contains(c)) {
@@ -1027,7 +1050,8 @@ void Resource::ClearRangeRequestHeader() {
 }
 
 void Resource::RevalidationSucceeded(
-    const ResourceResponse& validating_response) {
+    const ResourceResponse& validating_response,
+    std::unique_ptr<WebDataConsumerHandle> handle) {
   SECURITY_CHECK(redirect_chain_.IsEmpty());
   SECURITY_CHECK(EqualIgnoringFragmentIdentifier(validating_response.Url(),
                                                  GetResponse().Url()));
@@ -1048,6 +1072,16 @@ void Resource::RevalidationSucceeded(
   }
 
   is_revalidating_ = false;
+  NotifyResponseReceived(std::move(handle));
+
+  // If we successfully revalidated, we won't get appendData() calls. Forward
+  // the data to clients now instead. Note: |m_data| can be null when no data is
+  // appended to the original resource.
+  if (Data()) {
+    ResourceClientWalker<ResourceClient> w(Clients());
+    while (ResourceClient* c = w.Next())
+      c->DataReceived(this, Data()->Data(), Data()->size());
+  }
 }
 
 void Resource::RevalidationFailed() {

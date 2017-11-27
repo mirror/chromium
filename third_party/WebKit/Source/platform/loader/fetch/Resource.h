@@ -219,6 +219,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
                                 std::unique_ptr<WebDataConsumerHandle>);
   void SetResponse(const ResourceResponse&);
   const ResourceResponse& GetResponse() const { return response_; }
+  virtual void NotifyResponseReceived(std::unique_ptr<WebDataConsumerHandle>) {}
 
   virtual void ReportResourceTimingToClients(const ResourceTimingInfo&) {}
 
@@ -419,7 +420,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   class CachedMetadataHandlerImpl;
   class ServiceWorkerResponseCachedMetadataHandler;
 
-  void RevalidationSucceeded(const ResourceResponse&);
+  void RevalidationSucceeded(const ResourceResponse&,
+                             std::unique_ptr<WebDataConsumerHandle>);
   void RevalidationFailed();
 
   size_t CalculateOverheadSize() const;
