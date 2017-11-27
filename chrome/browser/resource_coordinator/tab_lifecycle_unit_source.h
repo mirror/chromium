@@ -25,6 +25,7 @@ namespace resource_coordinator {
 class LifecycleUnitSourceObserver;
 class TabLifecycleObserver;
 class TabLifecycleUnit;
+class TabLifecycleUnitExternal;
 
 // Creates / destroys TabLifecycleUnits and notifies observers as tabs are
 // created / destroyed.
@@ -33,6 +34,13 @@ class TabLifecycleUnitSource : public TabStripModelObserver,
  public:
   TabLifecycleUnitSource();
   ~TabLifecycleUnitSource() override;
+
+  static TabLifecycleUnitSource* GetInstance();
+
+  // Returns the TabLifecycleUnitExternal instance associated with
+  // |web_contents|, or nullptr if |web_contents| isn't associated with a tab.
+  TabLifecycleUnitExternal* GetTabLifecycleUnitExternal(
+      content::WebContents* web_contents) const;
 
   // Adds / removes an observer that is notified when a TabLifecycleUnit is
   // created or destroyed.
