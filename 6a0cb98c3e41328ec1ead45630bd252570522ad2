@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02ee82d0_2bfb9790",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-27T20:48:29Z",
+      "side": 1,
+      "message": "Ahh... okay. So you have Add/Remove observer on this class, and the entire list is passed in to each individual LifecycleUnit.\n\nDo we need to talk about the threading model to make sure that the collection of observers doesn\u0027t get modified while it\u0027s simultaneously being iterated elsewhere?",
+      "range": {
+        "startLine": 93,
+        "startChar": 23,
+        "endLine": 93,
+        "endChar": 47
+      },
+      "revId": "6a0cb98c3e41328ec1ead45630bd252570522ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97530b0d_00e59729",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-27T20:48:29Z",
+      "side": 1,
+      "message": "Where is this defined?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "6a0cb98c3e41328ec1ead45630bd252570522ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
