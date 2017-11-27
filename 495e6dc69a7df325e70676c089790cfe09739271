@@ -46,6 +46,23 @@
       "revId": "495e6dc69a7df325e70676c089790cfe09739271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acf77ba5_f9cb0161",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-27T18:24:36Z",
+      "side": 1,
+      "message": "Nit: Initialize the parameters in the same order as the function arguments.\n\nThus, store |mActivityType|, then |mParentView|",
+      "revId": "495e6dc69a7df325e70676c089790cfe09739271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
