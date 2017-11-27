@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2de3a3c0_c684b32e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-11-27T01:53:39Z",
+      "side": 1,
+      "message": "Does this CL resolve https://crbug.com/777921 (screenshot in #3)? If so, I wonder if you would add BUG\u003d777921 .",
+      "revId": "9e70582da0399420f688bc9f50f55cc7b50ee073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
