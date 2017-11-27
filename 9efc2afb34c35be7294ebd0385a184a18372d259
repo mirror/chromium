@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daafb8a4_59d5e2d5",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-27T18:07:31Z",
+      "side": 1,
+      "message": "I\u0027d put this on the same line as the previous",
+      "revId": "9efc2afb34c35be7294ebd0385a184a18372d259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e068c2bb_98b5300b",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-27T18:07:31Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to request the device at this point...you should already have it (it\u0027s in the resolution of getHealthThermometer)",
+      "revId": "9efc2afb34c35be7294ebd0385a184a18372d259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d56475_eb5ac08d",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-27T18:07:31Z",
+      "side": 1,
+      "message": "I\u0027d put this on the next line",
+      "range": {
+        "startLine": 22,
+        "startChar": 38,
+        "endLine": 22,
+        "endChar": 59
+      },
+      "revId": "9efc2afb34c35be7294ebd0385a184a18372d259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58ea5fc_db125a39",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/disconnect-twice-in-a-row.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-27T18:07:31Z",
+      "side": 1,
+      "message": "Just get the device from the previous call.",
+      "revId": "9efc2afb34c35be7294ebd0385a184a18372d259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
