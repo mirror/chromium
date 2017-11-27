@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb1e55d4_efadcfb3",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/touch-pointer-event-properties.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-11-27T10:25:31Z",
+      "side": 1,
+      "message": "I do not understand well.\nIf do pp[\"width\"] * 2 at the eventSender.addTouchPoint, event[i] is quadrupled.",
+      "parentUuid": "eb958298_bb4e6de9",
+      "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a7272d4_2f1efca9",
         "filename": "third_party/WebKit/LayoutTests/fast/events/touch/touch-browser-zoom-scales-radius.html",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2017-11-24T17:45:20Z",
       "side": 1,
       "message": "ditto.",
+      "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88de2c2e_cf8a878f",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/touch/touch-fractional-coordinates.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-11-27T10:25:31Z",
+      "side": 1,
+      "message": "I checked this part, this part is returned as the width/height value of the WebPointerEvent.\nso it is return doubled. is this right?",
+      "parentUuid": "73f7da55_d0552fc0",
       "revId": "42620318c99b18ef4ef317cc37425a893f7b290c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
