@@ -920,6 +920,10 @@
 #define TRACE_TASK_EXECUTION(run_function, task) \
   INTERNAL_TRACE_TASK_EXECUTION(run_function, task)
 
+// Same but to a separate trace category
+#define TRACE_TASK_EXECUTION_BENCHMARK(run_function, task) \
+  INTERNAL_TRACE_TASK_EXECUTION_BENCHMARK(run_function, task)
+
 // TRACE_EVENT_METADATA* events are information related to other
 // injected events, not events in their own right.
 #define TRACE_EVENT_METADATA1(category_group, name, arg1_name, arg1_val) \

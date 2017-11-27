@@ -457,6 +457,15 @@
 
 #endif
 
+// This implementation is for when location sources are available.
+#define INTERNAL_TRACE_TASK_EXECUTION_BENCHMARK(run_function, task)       \
+  TRACE_EVENT0("benchmark", run_function);                                \
+  TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION INTERNAL_TRACE_EVENT_UID( \
+      task_event)((task).posted_from.file_name());                        \
+  TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER                     \
+  INTERNAL_TRACE_EVENT_UID(task_pc_event)((task).posted_from.program_counter());
+
+
 namespace trace_event_internal {
 
 // Specify these values when the corresponding argument of AddTraceEvent is not
