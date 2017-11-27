@@ -22,6 +22,30 @@
       "revId": "382b00ab2bf4b28743ad8b5c5836416bb611ea80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b04761_9dd44521",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7080,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-27T22:34:42Z",
+      "side": 1,
+      "message": "Actually, I don\u0027t even think this happens when the context is lost any more, but when either we lost connection to the browser (i.e. we\u0027re closing, most likely scenario), or we failed to allocate or map (OOM/fragmentation), and we\u0027re probably doomed anyway. In either case I don\u0027t even think setting an error is going to do much.\n\nIn other places where allocating a transfer buffer fails, we typically just silently fail (except maybe at creation time). I think that\u0027s fine here.",
+      "parentUuid": "1f681a1b_49616229",
+      "range": {
+        "startLine": 7080,
+        "startChar": 4,
+        "endLine": 7080,
+        "endChar": 10
+      },
+      "revId": "382b00ab2bf4b28743ad8b5c5836416bb611ea80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
