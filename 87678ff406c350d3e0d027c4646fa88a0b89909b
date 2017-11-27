@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27c48ef4_0f46890e",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-27T19:19:30Z",
+      "side": 1,
+      "message": "Since the class name is not descriptive enough to convey what this class does, please add a brief description comment.",
+      "revId": "87678ff406c350d3e0d027c4646fa88a0b89909b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb736fed_f2b933a5",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-27T19:19:30Z",
+      "side": 1,
+      "message": "style: Method name should start with capital letter.\n\nnaming nit: I like factory methods that start with \"Create...\". My suggestions would be \"CreateFactory\".",
+      "revId": "87678ff406c350d3e0d027c4646fa88a0b89909b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2434c979_efd75819",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-27T19:19:30Z",
+      "side": 1,
+      "message": "The unit test case you added convinces me (as a reader) that AddRef and Release are both called once, which is good.\n\nHowever, the part that I am still not convinced about (without having to go read the implementation of base::RefCountedThreadSafe\u003c\u003e) is whether or not |photo_callback| actually gets destroyed at the end or if it leaks. That is because I don\u0027t know if the |photo_callback| created by build() comes with a refcount of 0 or 1. If it comes out with 1, it would leak.\n\nHaving a refcounted object wrapped in a std::unique_ptr\u003c\u003e seems like a confusing and dangerous mix of lifetime management patterns. I guess the reason why refcounted classes typically get a private destructor in Chromium is to explicitly prevent this kind of usage. Unless you can find a better solution, I recommend having build() return a scoped_refptr\u003c\u003e instead of a std::unique_ptr\u003c\u003e. This would indicate to the reader that the returned instance is expected to come out with a refcount of 1, and then it should become clear what to do with it.",
+      "revId": "87678ff406c350d3e0d027c4646fa88a0b89909b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
