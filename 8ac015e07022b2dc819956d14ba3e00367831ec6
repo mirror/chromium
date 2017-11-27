@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a507777_5ff052ee",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-27T23:57:01Z",
+      "side": 1,
+      "message": "This is kind of awkward. It seems impler to have PasswordManagerPorter instantiate PasswordManagerExporter?",
+      "revId": "8ac015e07022b2dc819956d14ba3e00367831ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad82c9f_bb452a7e",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-27T23:57:01Z",
+      "side": 1,
+      "message": "Forward declare instead",
+      "revId": "8ac015e07022b2dc819956d14ba3e00367831ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050493cf_03888a96",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-27T23:57:01Z",
+      "side": 1,
+      "message": "This is forward declared below, we shouldn\u0027t need to include this.",
+      "revId": "8ac015e07022b2dc819956d14ba3e00367831ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7263085_9c1932dd",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-27T23:57:01Z",
+      "side": 1,
+      "message": "Why are these methods virtual?",
+      "revId": "8ac015e07022b2dc819956d14ba3e00367831ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
