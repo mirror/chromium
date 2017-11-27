@@ -16,6 +16,24 @@
       "revId": "89a2e76585360707dd6586db43c0ecc48059f95d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789e4ee0_5583e477",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-11-27T17:50:04Z",
+      "side": 1,
+      "message": "moved! thanks for catching this :)",
+      "parentUuid": "e892c956_630723bb",
+      "revId": "89a2e76585360707dd6586db43c0ecc48059f95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
