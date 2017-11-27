@@ -34,6 +34,24 @@
       "revId": "4ed895f18898e80f2d3ce4e7cd41ae4ace320123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23615a27_b25e46c9",
+        "filename": "content/browser/accessibility/browser_accessibility_auralinux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-27T16:35:43Z",
+      "side": 1,
+      "message": "That\u0027s exactly what this patch does. If node_ has been created, then it calls DataChanged. DataChanged is the method that will end up checking if the role has changed, and adjust the ATK object accordingly.\n\n\u003e And, in case node_ has not been created yet, then it creates it (and that will eventually go through the atk object creation).\n\nThis is the part that seems unusual to me, we don\u0027t create the platform\ninstance in OnDataChanged in any other BrowserAccessibility subclass.\nLet\u0027s just create it in the constructor and destroy it in the destructor,\nthere\u0027s no scenario where we should ever need to clear or recreate\nthe AXPlatformNode.\n\nIn fact I think it\u0027d be reasonable to just assume |node_| is always\nvalid, aside from any code that could be triggered in the destructor.\nJust DCHECK(node_) everywhere else.\n\nAn interesting further refactoring would be just creating a common path in BrowserAccessibility or BrowserAccessibilityManager, that would notify the AXPlatformNode directly on OnDataChanged. Right now this signalling is specific to each port. On AuraLinux I added the DataChanged call for this purpose. On Windows, the behavior is based on AXEventGenerator.\n\nAgreed! We should just refactor Mac and Android to use AXPlatformNode too.\nDoesn\u0027t have to be complete, as long as we have a skeleton we could start\nrefactoring things from there.\n\n\u003e The interesting thing of using AXEventGenerator is that it gives more accurate events (i.e. there is an specific event for ROLE_CHANGED).\n\nYes, that\u0027s the hope. There are several reasons we\u0027re moving to that approach.\nActually probably the biggest one is that at the time most changes are happening\nin Blink (i.e. a role is changing), the DOM is often in a bad state, i.e. it\nmight be in the middle of a big update, we don\u0027t have style or layout, stuff\nlike that - so basically at the point that things are changing it\u0027s hard to know\nfor sure if a particular property really changed or not - but if we wait until\nlater, we\u0027ve lost the context to know its previous state, and saving all of the\nprevious state would waste a lot of memory.\n\nBut here in the browser process we have the full context - the complete tree\nbefore, and an atomic update applied to the tree - so we can infer nearly\nall events to fire. Just a tiny number of events actually need to come\nfrom Blink, those that don\u0027t mutate the tree, like \"click\" and \"hover\".\n\n\u003e But it looks like, right now, the expectations are for BrowserAccessibilityManager to provide lower detail events (i.e. sending OnDataChanged for almost any change).\n\u003e\n\u003e What are the right expectations for future development? Something like in Windows? Where OnDataChanged is not used at all, and FireGeneratedEvent is the one doing more detailed event processing? Anything else? Moving somehow more processing to ui/accessibility?\n\nI think it\u0027d make sense for the event generation to be moved to ui/accessibility/platform\nalso. The main reason we\u0027re not already moving it there now is that views doesn\u0027t really work the same way - for views, we\u0027re not caching a full AXTree and applying atomic tree updates, we\u0027re just walking the view hierarchy on-demand and explicitly firing events.\n\nShort-term, I think this design works fine. We can duplicate a bit of code\nto fire native events for views, since the UI there is much simpler and more\npredictable (for example I don\u0027t see why we\u0027d ever need to fire role_changed).\n\nLonger-term, we\u0027ll take the AXAuraTreeCache code written for Chrome OS and\nuse that on Windows and Linux too - that generates a full AXTree from views and\nis a good candidate for using AXEventGenerator to send events. Then we can\ncreate AXPlatformTree that replaces much of what BrowserAccessibilityManager\ndoes now, like sending events.\n\nFinally at that point, content/browser/accessibility would be nothing more than\nglue code that handles where the web accessibility tree is embedded in the\nWebContentsView, managing iframes, and relaying actions to the RenderFrameHost.",
+      "parentUuid": "58ffcbbc_1c4d0327",
+      "revId": "4ed895f18898e80f2d3ce4e7cd41ae4ace320123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
