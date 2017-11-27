@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07a875e7_3e322c97",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:54:20Z",
+      "side": 1,
+      "message": "As I mentioned in that review, I\u0027d like to have support for this first, to unblock the people that want to add new interfaces without the old Init. Overall I prefer your approach in https://chromium-review.googlesource.com/c/chromium/src/+/785750, so you can think of this as temporary scaffolding to allow us to land stuff whenever.",
+      "parentUuid": "0da19222_2e380d98",
+      "revId": "a73eb7fadd96cb95b67707d88df21cd5708e7716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34432895_c291a1ff",
         "filename": "components/arc/connection_holder.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T04:32:09Z",
       "side": 1,
       "message": "I found that this won\u0027t work for XxxInstance case, because the class has pure-virtual methods. (sorry for my broken suggestion).\n\ncf) Here\u0027s the fix I found.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/782479/2..3/components/arc/connection_holder.h",
+      "revId": "a73eb7fadd96cb95b67707d88df21cd5708e7716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278fe3d8_fec2156e",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-27T16:54:20Z",
+      "side": 1,
+      "message": "Gotcha, copied most of your impl to make the merge later easier.",
+      "parentUuid": "34432895_c291a1ff",
       "revId": "a73eb7fadd96cb95b67707d88df21cd5708e7716",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
