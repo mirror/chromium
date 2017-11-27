@@ -300,7 +300,7 @@ TEST_F(VectorMathTest, Vmul) {
 }
 
 // Fails on macOS, http://crbug.com/778262
-TEST_F(VectorMathTest, DISABLED_Vsma) {
+TEST_F(VectorMathTest, Vsma) {
   for (const auto& source : GetPrimaryVectors(GetSource(0u))) {
     const float scale = *GetSource(1u);
     const TestVector<const float> dest_source(GetSource(2u), source);
@@ -362,7 +362,7 @@ TEST_F(VectorMathTest, Vsvesq) {
 }
 
 // Fails on macOS, http://crbug.com/778262
-TEST_F(VectorMathTest, DISABLED_Zvmul) {
+TEST_F(VectorMathTest, Zvmul) {
   constexpr float kMax = std::numeric_limits<float>::max();
   std::vector<std::array<float, kFloatArraySize + 1u>> sources(4u);
   for (size_t i = 0u; i < sources.size(); ++i) {
