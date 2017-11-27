@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6251a16_53aa3fea",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-27T14:08:58Z",
+      "side": 1,
+      "message": "Yeah, this can\u0027t be here. I\u0027m surprised that it builds on Android.\n\nSince the browsertests run in _views land anyway, you can do static_cast\u003cSaveCardBubbleViews*\u003e(controller()-\u003eview()) when you need it in the test.",
+      "parentUuid": "0a880715_7e81e1c7",
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a5aecb6_e5b301a4",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_view_ids.h",
         "patchSetId": 2
@@ -33,6 +51,69 @@
       "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f71db6b8_b31ae80b",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_view_ids.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-27T14:08:58Z",
+      "side": 1,
+      "message": "you can just put \u003d 0 here. I had used the autofill field type trick in Payment Request for something that doesn\u0027t apply here (address editor)",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8a48ae_50ff3a03",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-27T14:08:58Z",
+      "side": 1,
+      "message": "Can you explain why this is needed?",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 34
+      },
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82a3ff6_6c0b1488",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-27T14:08:58Z",
+      "side": 1,
+      "message": "Bring this just below private:",
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -194,6 +275,40 @@
       "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b9fa584_2bcc9c65",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-27T14:08:58Z",
+      "side": 1,
+      "message": "Is there a better way of doing this?",
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4114513d_691c48a1",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-27T14:08:58Z",
+      "side": 1,
+      "message": "Yes, if it\u0027s exactly the same, please move it to a common location (perhaps chrome/browser/ui/views/autofill) in a previous small change.",
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
