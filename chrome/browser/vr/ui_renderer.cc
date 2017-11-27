@@ -88,7 +88,6 @@ void UiRenderer::DrawWebVrOverlayForeground(const RenderInfo& render_info) {
 void UiRenderer::DrawUiView(const RenderInfo& render_info,
                             const std::vector<const UiElement*>& elements) {
   TRACE_EVENT0("gpu", "UiRenderer::DrawUiView");
-
   auto sorted_elements = GetElementsInDrawOrder(elements);
 
   for (auto& camera_model :
@@ -107,7 +106,12 @@ void UiRenderer::DrawElements(const CameraModel& camera_model,
     return;
   }
   for (const auto* element : elements) {
+    LOG(INFO) << __FUNCTION__ << ";;; drawing element " << element->DebugName();
+#if 0
     DrawElement(camera_model, *element);
+#else
+    (void)element;
+#endif
   }
   ui_element_renderer_->Flush();
 }

@@ -1206,8 +1206,10 @@ void GpuCommandBufferStub::OnCreateImage(
     return;
   }
 
+  TRACE_EVENT_BEGIN0("gpu", "CreateImageForGpuMemoryBuffer");
   scoped_refptr<gl::GLImage> image = channel()->CreateImageForGpuMemoryBuffer(
       handle, size, format, internalformat, surface_handle_);
+  TRACE_EVENT_END0("gpu", "CreateImageForGpuMemoryBuffer");
   if (!image.get())
     return;
 

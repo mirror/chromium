@@ -34,14 +34,23 @@
 
 namespace gl {
 class GLContext;
+class GLFence;
 class GLFenceEGL;
+class GLImageEGL;
 class GLSurface;
 class ScopedJavaSurface;
 class SurfaceTexture;
 }  // namespace gl
 
+namespace gfx {
+struct GpuFenceHandle;
+struct GpuMemoryBufferHandle;
+}  // namespace gfx
+
 namespace gpu {
 struct MailboxHolder;
+struct SyncToken;
+class GpuMemoryBufferImplAndroidHardwareBuffer;
 }  // namespace gpu
 
 namespace vr {
@@ -97,6 +106,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   void SetWebVrMode(bool enabled);
   void CreateOrResizeWebVRSurface(const gfx::Size& size);
+  void SetWebVrSharedBufferSize(const gfx::Size& size);
   void CreateContentSurface();
   void ContentBoundsChanged(int width, int height);
   void ContentPhysicalBoundsChanged(int width, int height);
@@ -126,14 +136,16 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
                       int viewport_offset,
                       const gfx::Size& render_size,
                       vr::RenderInfo* out_render_info);
+  bool PrepareFrame(int16_t frame_index);
   void DrawFrame(int16_t frame_index, base::TimeTicks current_time);
+  bool AcquireFrame();
   void DrawIntoAcquiredFrame(int16_t frame_index, base::TimeTicks current_time);
   void DrawFrameSubmitWhenReady(int16_t frame_index,
                                 const gfx::Transform& head_pose,
                                 std::unique_ptr<gl::GLFenceEGL> fence);
   void DrawFrameSubmitNow(int16_t frame_index, const gfx::Transform& head_pose);
   bool ShouldDrawWebVr();
-  void DrawWebVr();
+  void DrawWebVr(int16_t frame_index);
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
   void UpdateController(const gfx::Transform& head_pose,
@@ -162,6 +174,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
                    const gpu::MailboxHolder& mailbox) override;
   void SubmitFrameWithTextureHandle(int16_t frame_index,
                                     mojo::ScopedHandle texture_handle) override;
+  void SubmitFrameZeroCopy3(int16_t frame_index,
+                            const gpu::SyncToken&) override;
   void UpdateLayerBounds(int16_t frame_index,
                          const gfx::RectF& left_bounds,
                          const gfx::RectF& right_bounds,
@@ -215,9 +229,26 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   // webvr_experimental_rendering_ or other flags in individual code paths
   // directly, that can easily lead to inconsistent logic.
   bool webvr_use_pre_submit_client_wait_ = true;
+  bool webvr_use_shared_buffer_draw_ = false;
+  bool webvr_use_zero_copy_path_ = false;
   bool WebVrUsePreSubmitClientWait() {
     return webvr_use_pre_submit_client_wait_;
   }
+  bool WebVrUseSharedBufferDraw() { return webvr_use_shared_buffer_draw_; }
+  bool WebVrUseZeroCopyPath() { return webvr_use_zero_copy_path_; }
+
+  std::vector<std::unique_ptr<gl::GLFence>> webvr_frame_presubmit_fence_;
+  void WebVrWaitForServerFence(int16_t frame_index);
+  void OnWebVRTokenSignaled(int16_t frame_index, const gfx::GpuFenceHandle&);
+  bool webvr_block_vsync_until_sync_token_draw_done_ = false;
+  std::vector<std::unique_ptr<gpu::MailboxHolder>>
+      webvr_sharedbuffer_mailbox_holders_;
+  std::vector<std::unique_ptr<gpu::GpuMemoryBufferImplAndroidHardwareBuffer>> webvr_sharedbuffers_;
+  uint32_t webvr_image_;
+  uint32_t webvr_texture_;
+
+  int webvr_submitted_incomplete_frames_ = 0;
+  std::vector<scoped_refptr<gl::GLImageEGL>> webvr_bufferimages_;
 
   base::TimeDelta last_acquire_time_;
   base::TimeDelta last_submit_time_;
@@ -228,6 +259,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   gfx::Size content_tex_physical_size_ = {0, 0};
   gfx::Size webvr_surface_size_ = {0, 0};
+  gfx::Size webvr_sharedbuffer_size_ = {0, 0};
 
   std::vector<base::TimeTicks> webvr_time_pose_;
   std::vector<base::TimeTicks> webvr_time_js_submit_;

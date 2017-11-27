@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_ANDROID_VR_SHELL_MAILBOX_TO_SURFACE_BRIDGE_H_
 
 #include "base/memory/weak_ptr.h"
+#include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/gpu_fence.h"
 
 namespace gl {
@@ -13,8 +14,13 @@ class ScopedJavaSurface;
 class SurfaceTexture;
 }
 
+namespace gfx {
+struct GpuMemoryBufferHandle;
+}
+
 namespace gpu {
 class ContextSupport;
+struct Mailbox;
 struct MailboxHolder;
 struct SyncToken;
 namespace gles2 {
@@ -45,6 +51,17 @@ class MailboxToSurfaceBridge {
   void InsertGpuFence(const gpu::SyncToken& sync_token,
                       base::OnceCallback<void(const gfx::GpuFenceHandle&)> callback);
   void InsertClientGpuFence(ClientGpuFence source);
+
+  void GenerateMailbox(gpu::Mailbox& out_mailbox);
+  void DestroySharedBuffer(uint32_t image_id, uint32_t texture_id);
+  void ProduceSharedBuffer(const gpu::Mailbox&,
+                           gpu::SyncToken& sync_token,
+                           const gfx::GpuMemoryBufferHandle&,
+                           const gfx::Size& size,
+                           gfx::BufferFormat format,
+                           gfx::BufferUsage usage,
+                           uint32_t* image_id,
+                           uint32_t* texture_id);
 
  private:
   void OnContextAvailable(std::unique_ptr<gl::ScopedJavaSurface> surface,
