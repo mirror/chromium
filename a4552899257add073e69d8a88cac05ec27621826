@@ -34,6 +34,24 @@
       "revId": "a4552899257add073e69d8a88cac05ec27621826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e58700_3e2ffb10",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-27T18:37:29Z",
+      "side": 1,
+      "message": "Maybe we should first check if the active window is either left or right, and if not, then fallback to the default logic?\n\n+xdai@ WDYT?",
+      "parentUuid": "9bba4780_93a4b4c7",
+      "revId": "a4552899257add073e69d8a88cac05ec27621826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
