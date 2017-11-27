@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ddf3a7db_ee99ec0e",
+        "filename": "third_party/WebKit/Source/platform/loader/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-27T08:22:40Z",
+      "side": 1,
+      "message": "\u003e Actually \"//third_party/WebKit/public:mojo_bindings_blink\" was added for a similar reason, but I would be better to have it instead of mojo_blindings_blink. Also, it was missed in test_support target. So adding it to test_support was one possible fix for the build flake.\n\u003e \n\u003e But, since loader/fetch code has a direct #include of cpp/cors_error_status.h, and interfaces/{cors|fetch_api}.mojom-blink.h, we should keep having these dependencies too? If we had only indirect includes, I completed agreed to replace them.\n\nAh, agreed! Yes, let\u0027s keep them. IWYU!",
+      "parentUuid": "7f924fe8_e14ea1f6",
+      "revId": "056cac49423c1fe4ef1a5f2888e6a24236e51851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8054a163_95bc75fb",
         "filename": "third_party/WebKit/Source/platform/loader/BUILD.gn",
         "patchSetId": 2
