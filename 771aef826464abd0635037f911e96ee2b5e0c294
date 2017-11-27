@@ -34,6 +34,24 @@
       "revId": "771aef826464abd0635037f911e96ee2b5e0c294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d2fdce0_ca97a5dc",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-27T17:45:39Z",
+      "side": 1,
+      "message": "\u003e Yes - this line is needed - the tabs end up in separate processes when running the test with --site-per-process.  I am guessing that process reuse is disabled when a process is locked to an origin (even if the reuse candidate hosts the same site).\n\nNo, process reuse for same-site URLs is supposed to work in --site-per-process.  It works for me when I paste the same URL into two different tabs, at least.\n\nMaybe you\u0027ve found another way to repro https://crbug.com/774723?",
+      "parentUuid": "7e57c98f_66148357",
+      "revId": "771aef826464abd0635037f911e96ee2b5e0c294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
