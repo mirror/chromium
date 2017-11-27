@@ -59,7 +59,7 @@ class DataDevice : public WMHelper::DragDropObserver,
   // Sets selection data to the clipboard.
   // |source| represents data comes from the client. |serial| is the unique
   // number comes from input events which triggers the drag and drop operation.
-  void SetSelection(const DataSource* source, uint32_t serial);
+  void SetSelection(DataSource* source, uint32_t serial);
 
   // Overridden from WMHelper::DragDropObserver:
   void OnDragEntered(const ui::DropTargetEvent& event) override;
