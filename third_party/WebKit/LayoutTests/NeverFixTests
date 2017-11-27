@@ -1805,10 +1805,28 @@ external/wpt/css/css-transforms/translateY/svg-translatey-relative-002.html [ Wo
 external/wpt/css/css-transforms/ttwf-transform-skewx-001.html [ WontFix ]
 external/wpt/css/css-transforms/ttwf-transform-skewy-001.html [ WontFix ]
 external/wpt/css/css-transforms/ttwf-transform-translatex-001.html [ WontFix ]
+
+# the ic unit isn't supported. https://crbug.com/778495
 external/wpt/css/css-values/ic-unit-001.html [ WontFix ]
 external/wpt/css/css-values/ic-unit-002.html [ WontFix ]
 external/wpt/css/css-values/ic-unit-003.html [ WontFix ]
 external/wpt/css/css-values/ic-unit-004.html [ WontFix ]
+
+# lab() and lch() aren't supported.
+external/wpt/css/css-color/lab-001.html [ WontFix ]
+external/wpt/css/css-color/lab-002.html [ WontFix ]
+external/wpt/css/css-color/lab-003.html [ WontFix ]
+external/wpt/css/css-color/lab-004.html [ WontFix ]
+external/wpt/css/css-color/lab-005.html [ WontFix ]
+external/wpt/css/css-color/lab-006.html [ WontFix ]
+external/wpt/css/css-color/lab-007.html [ WontFix ]
+external/wpt/css/css-color/lch-001.html [ WontFix ]
+external/wpt/css/css-color/lch-002.html [ WontFix ]
+external/wpt/css/css-color/lch-003.html [ WontFix ]
+external/wpt/css/css-color/lch-004.html [ WontFix ]
+external/wpt/css/css-color/lch-005.html [ WontFix ]
+external/wpt/css/css-color/lch-006.html [ WontFix ]
+external/wpt/css/css-color/lch-007.html [ WontFix ]
 
 # Requires --use-fake-ui-for-media-stream to run.
 external/wpt/mediacapture-streams/MediaStream-default-feature-policy.https.html [ WontFix ]
