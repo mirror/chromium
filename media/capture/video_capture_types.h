@@ -23,7 +23,7 @@ typedef int VideoCaptureSessionId;
 // Storage type for the pixels.
 // TODO(mcasas): http://crbug.com/504160 Consider making this an enum class.
 // TODO(chfremer): Extend or remove this enum.
-enum VideoPixelStorage {
+enum class VideoPixelStorage {
   PIXEL_STORAGE_CPU,
   PIXEL_STORAGE_MAX = PIXEL_STORAGE_CPU,
 };

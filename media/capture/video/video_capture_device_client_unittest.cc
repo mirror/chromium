@@ -72,7 +72,7 @@ TEST_F(VideoCaptureDeviceClientTest, Minimal) {
   unsigned char data[kScratchpadSizeInBytes] = {};
   const media::VideoCaptureFormat kFrameFormat(
       gfx::Size(10, 10), 30.0f /*frame_rate*/, media::PIXEL_FORMAT_I420,
-      media::PIXEL_STORAGE_CPU);
+      media::VideoPixelStorage::PIXEL_STORAGE_CPU);
   DCHECK(device_client_.get());
   {
     InSequence s;
@@ -115,7 +115,7 @@ TEST_F(VideoCaptureDeviceClientTest, DropsFrameIfNoBuffer) {
   unsigned char data[kScratchpadSizeInBytes] = {};
   const media::VideoCaptureFormat kFrameFormat(
       gfx::Size(10, 10), 30.0f /*frame_rate*/, media::PIXEL_FORMAT_I420,
-      media::PIXEL_STORAGE_CPU);
+      media::VideoPixelStorage::PIXEL_STORAGE_CPU);
   EXPECT_CALL(*receiver_, OnLog(_)).Times(1);
   // Simulate that receiver still holds |buffer_read_permission| for the first
   // buffer when the second call to OnIncomingCapturedData comes in.
