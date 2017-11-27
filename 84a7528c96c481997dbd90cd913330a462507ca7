@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c7ba72a_dc70c241",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-27T08:56:39Z",
+      "side": 1,
+      "message": "Alexander might want to have this but I\u0027d object to introducing yet another task runner for internal tasks.\n\nMy concern is that if we have multiple task runners for internal tasks, it will confuse developers (because it is not speced).\n\nbase::TaskType would not be a right abstraction to attribute task execution time. For example, a lot of task execution time will go to kJavaScriptTimer. To understand what scripts are taking a lot of time, we anyway need to break down kJavaScriptTimer to more types. However, that is not allowed because kJavaScriptTimer is a speced task. In other words, for the purpose of the task attribution, we need a different abstraction from base::TaskType.",
+      "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
