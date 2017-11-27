@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47531c26_7ab85b9f",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:32:52Z",
+      "side": 1,
+      "message": "Ha, I like that \"class\" became \"type\".  That\u0027s one way to work around the C++ keyword problem. :)",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5677170_c6a3b3b0",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:32:52Z",
+      "side": 1,
+      "message": "This isn\u0027t obvious relative to typical OnBeginFrame work.  Comment that we compute the transform only once, when first needed?",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5981744_af15afba",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:32:52Z",
+      "side": 1,
+      "message": "Why not DCHECK?  I thought we\u0027ve settled on always using DCHECK, as per its documentation.",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4c0cdd_9c65463b",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:32:52Z",
+      "side": 1,
+      "message": "Discussed offline:  My first instinct would be to not let elements touch the stream directly, as it makes formatting and coloring a bit gross (eg. what if you change the \u0027tz\u0027 convention).  An alternate approach is to return or populate a struct with geometry-related goodies, and let the root Dump method pick out what it needs and format/print/style/describe.",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e873c40a_6ba6ad06",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:32:52Z",
+      "side": 1,
+      "message": "Please document that delta_z is specified relative to a parent ScaledDepthAdjuster, and the class automatically produces the correct transformation (that\u0027s the key behaviour of this class).",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e7273f_5b4e946f",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:32:52Z",
+      "side": 1,
+      "message": "This doesn\u0027t look used.  Leftovers?",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108321b1_e9ef5d13",
+        "filename": "chrome/browser/vr/elements/scaled_depth_adjuster_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:32:52Z",
+      "side": 1,
+      "message": "This is a really cool and compact test.  Nice!",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5198db1a_3a651fdb",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:32:52Z",
+      "side": 1,
+      "message": "You\u0027re intending that the colon when there\u0027s no name right?  ie. \" :kTypeCat\"",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192269a8_b30692a8",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:32:52Z",
+      "side": 1,
+      "message": "Sounds like the whole swath gets the identifier (ie. kTypeOmniboxSuggestionPart).  nitty, but maybe \"An optional identifier to categorize a reusable element, such as a button background.\"",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808cc04d_488baf7e",
+        "filename": "chrome/browser/vr/elements/ui_element_type.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:32:52Z",
+      "side": 1,
+      "message": "Why include this string (here and in the names list).  Seems more like it should not exist, the static assert should lose the \"+1\", and UiElementTypeToString should DCHECK that type is less than kNumUiElementTypes.  Thoughts?",
+      "revId": "61c74f27c966f5700715c847520927e16746a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
