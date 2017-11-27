@@ -99,11 +99,11 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   // more vertical spacing.
   constexpr int kLargeIconHeight = 20;
   const int icon_height = icon_view->GetPreferredSize().height();
+  const bool is_small_icon = icon_height > kLargeIconHeight;
   int remaining_vert_spacing =
-      icon_height <= kLargeIconHeight
+      is_small_icon
           ? layout_provider->GetDistanceMetric(DISTANCE_CONTROL_LIST_VERTICAL)
-          : layout_provider->GetDistanceMetric(
-                views::DISTANCE_CONTROL_VERTICAL_TEXT_PADDING);
+          : 12;
   const int total_height = icon_height + remaining_vert_spacing * 2;
 
   // If the padding given to the top and bottom of the HoverButton (i.e., on
@@ -121,8 +121,13 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   SetBorder(CreateBorderWithVerticalSpacing(remaining_vert_spacing));
 
   views::GridLayout* grid_layout = views::GridLayout::CreateAndInstall(this);
+  // If the |icon_view| is not badged it should be a square and therefore
+  // badge spacing is 0. Otherwise we have to adjust the spacing between
+  // the icon and the label(s).
+  const int kBadgeSpacing = icon_view->GetPreferredSize().width() - icon_height;
   const int icon_label_spacing = layout_provider->GetDistanceMetric(
-      views::DISTANCE_RELATED_LABEL_HORIZONTAL);
+                                     views::DISTANCE_RELATED_LABEL_HORIZONTAL) -
+                                 kBadgeSpacing;
 
   constexpr float kFixed = 0.f;
   constexpr float kStretchy = 1.f;
@@ -267,3 +272,19 @@ void HoverButton::OnBoundsChanged(const gfx::Rect& previous_bounds) {
                                 taken_width_);
   }
 }
+
+void HoverButton::SetTitleStyle(bool bold, SkColor color) {
+  title_->set_auto_color_readability_enabled(false);
+  views::StyledLabel::RangeStyleInfo title_style;
+  title_style.override_color = color;
+  if (bold) {
+    title_style.custom_font =
+        title_->GetDefaultFontList().DeriveWithWeight(gfx::Font::Weight::BOLD);
+  }
+  title_->AddStyleRange(gfx::Range(0, title_->text().size()), title_style);
+}
+
+void HoverButton::SetSubtitleColor(SkColor color) {
+  subtitle_->SetEnabledColor(color);
+}
+// TODO: explain to Trent why not a textcolor and makebold
