@@ -89,9 +89,8 @@ WebTouchPoint CreateWebTouchPointFromWebPointerEvent(
   WebTouchPoint web_touch_point(web_pointer_event);
   web_touch_point.state =
       TouchPointStateFromPointerEventType(web_pointer_event.GetType(), stale);
-  // TODO(crbug.com/731725): This mapping needs a division by 2.
-  web_touch_point.radius_x = web_pointer_event.width;
-  web_touch_point.radius_y = web_pointer_event.height;
+  web_touch_point.radius_x = web_pointer_event.width / 2.f;
+  web_touch_point.radius_y = web_pointer_event.height / 2.f;
   web_touch_point.rotation_angle = web_pointer_event.rotation_angle;
   return web_touch_point;
 }
@@ -198,8 +197,9 @@ Touch* TouchEventManager::CreateDomTouch(
   float scale_factor = 1.0f / target_frame->PageZoomFactor();
 
   content_point = page_point.ScaledBy(scale_factor);
-  adjusted_radius = FloatSize(transformed_event.width, transformed_event.height)
-                        .ScaledBy(scale_factor);
+  adjusted_radius =
+      FloatSize(transformed_event.width / 2.f, transformed_event.height / 2.f)
+          .ScaledBy(scale_factor);
 
   return Touch::Create(target_frame, touch_node, point_attr->event_.id,
                        transformed_event.PositionInScreen(), content_point,
