@@ -218,7 +218,7 @@ LoadV8FileResult MapOpenedFile(const OpenedFileMap::mapped_type& file_region,
   return V8_LOAD_SUCCESS;
 }
 
-#endif  // defined(V8_USE_EXTERNAL_STATUP_DATA)
+#endif  // V8_USE_EXTERNAL_STATUP_DATA
 
 }  // namespace
 
@@ -282,8 +282,28 @@ void V8Initializer::GetV8ExternalSnapshotData(const char** natives_data_out,
 }
 
 // static
-void V8Initializer::GetV8ContextSnapshotData(v8::StartupData* snapshot) {
-  GetMappedFileData(g_mapped_v8_context_snapshot, snapshot);
+IsolateHolder::SnapshotType V8Initializer::GetV8ContextSnapshotData(
+    v8::StartupData* snapshot) {
+  CHECK(snapshot);
+
+  // Try to get the blob data of v8_context_snapshot.bin, but if it fails, get
+  // the blob data of snapshot_blob.bin as a fallback.
+  static struct {
+    base::MemoryMappedFile* mapped_file;
+    IsolateHolder::SnapshotType type;
+  } file_types[] = {
+      {g_mapped_v8_context_snapshot,
+       IsolateHolder::SnapshotType::kV8ContextSnapshot},
+      {g_mapped_snapshot, IsolateHolder::SnapshotType::kV8Snapshot},
+  };
+
+  for (const auto& file_type : file_types) {
+    GetMappedFileData(file_type.mapped_file, snapshot);
+    if (snapshot->data) {
+      return file_type.type;
+    }
+  }
+  return IsolateHolder::SnapshotType::kNone;
 }
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
