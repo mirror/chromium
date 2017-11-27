@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8a3a54f_bc83541c",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-27T19:23:26Z",
+      "side": 1,
+      "message": "Remove + other debug entries.",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 43
+      },
+      "revId": "5c090164cf06e6267d3cd11a0930a9f952218db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4655cc3_e33b5a80",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-27T19:23:26Z",
+      "side": 1,
+      "message": "I think we should sanitize/early out in the case that the size is unexpected (e.g. less than 0 or greater than the max size we\u0027d ever expect).",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "5c090164cf06e6267d3cd11a0930a9f952218db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a23d67e_f4c21340",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-27T19:23:26Z",
+      "side": 1,
+      "message": "Read() returns -1 on failure, which bypass this I think?  Do we want if (entries_file.Read(...) \u003c\u003d 0)?",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 51
+      },
+      "revId": "5c090164cf06e6267d3cd11a0930a9f952218db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aeeb842_ba7724f2",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-27T19:23:26Z",
+      "side": 1,
+      "message": "Hm?",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "5c090164cf06e6267d3cd11a0930a9f952218db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5154e120_91672dad",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-27T19:23:26Z",
+      "side": 1,
+      "message": "Add a NOTREACHED() here also if we never expect to be called with these?",
+      "range": {
+        "startLine": 847,
+        "startChar": 11,
+        "endLine": 847,
+        "endChar": 12
+      },
+      "revId": "5c090164cf06e6267d3cd11a0930a9f952218db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
