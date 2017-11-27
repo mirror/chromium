@@ -28,6 +28,7 @@
 
 #include <math.h>
 #include <algorithm>
+#include "base/debug/stack_trace.h"
 #include "core/dom/Document.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/frame/LocalFrame.h"
