@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae10365b_62a358f2",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T09:24:38Z",
+      "side": 1,
+      "message": "I prefer ResetOldSelectedLayoutObjects().",
+      "range": {
+        "startLine": 334,
+        "startChar": 32,
+        "endLine": 334,
+        "endChar": 66
+      },
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532e64a5_7be1a5cc",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T09:24:38Z",
+      "side": 1,
+      "message": "Please get rid of this if-statement since this condition is always false.\n|SelectionPaintRange| doesn\u0027t have same layout object more than once.",
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bf7863_834f17bf",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T09:24:38Z",
+      "side": 1,
+      "message": "s/tribial/trivial/",
+      "range": {
+        "startLine": 345,
+        "startChar": 69,
+        "endLine": 345,
+        "endChar": 76
+      },
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1602ba9_f4b4a993",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T09:24:38Z",
+      "side": 1,
+      "message": "Please get rid of this if-statement since old_selected_objects contains leaf objects only, hence this condition is always false.",
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c73972_a697534c",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T09:24:38Z",
+      "side": 1,
+      "message": "We should exit from this loop when containing_block-\u003eSetelectionState() !\u003d kContain.",
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58764bae_7325abe4",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T09:24:38Z",
+      "side": 1,
+      "message": "Could you call SetShouldInvalidateIfNeeds() in CollectOldLayoutObjectsMarkingNone() and make it not to return\nOldSelectedLayoutObject?",
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
