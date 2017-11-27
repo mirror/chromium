@@ -124,20 +124,12 @@ void SVGPaintContext::ApplyPaintPropertyState() {
   if (object_.IsSVGRoot())
     return;
 
-  const auto& fragment = object_.FirstFragment();
-  const auto* paint_properties = fragment.PaintProperties();
-  const EffectPaintPropertyNode* effect =
-      paint_properties ? paint_properties->Effect() : nullptr;
-  if (!effect)
-    return;
-
-  auto& paint_controller = GetPaintInfo().context.GetPaintController();
-  PaintChunkProperties properties(
-      paint_controller.CurrentPaintChunkProperties());
-  properties.property_tree_state.SetEffect(effect);
-  if (const ClipPaintPropertyNode* mask_clip = paint_properties->MaskClip())
-    properties.property_tree_state.SetClip(mask_clip);
-  scoped_paint_chunk_properties_.emplace(paint_controller, object_, properties);
+  if (const auto* properties = object_.FirstFragment().PaintProperties()) {
+    if (const auto* effect = properties->Effect()) {
+      scoped_paint_chunk_properties_.emplace(
+          GetPaintInfo().context.GetPaintController(), effect, object_);
+    }
+  }
 }
 
 void SVGPaintContext::ApplyCompositingIfNecessary() {
