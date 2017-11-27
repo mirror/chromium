@@ -12,20 +12,6 @@
 namespace blink {
 namespace scheduler {
 
-class TestTimeSource : public base::TickClock {
- public:
-  explicit TestTimeSource(base::SimpleTestTickClock* time_source);
-  ~TestTimeSource() override;
-
-  base::TimeTicks NowTicks() override;
-
- private:
-  // Not owned.
-  base::SimpleTestTickClock* time_source_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestTimeSource);
-};
-
 }  // namespace scheduler
 }  // namespace blink
 

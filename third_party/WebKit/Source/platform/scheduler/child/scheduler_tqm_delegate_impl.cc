@@ -14,17 +14,17 @@ namespace scheduler {
 // static
 scoped_refptr<SchedulerTqmDelegateImpl> SchedulerTqmDelegateImpl::Create(
     base::MessageLoop* message_loop,
-    std::unique_ptr<base::TickClock> time_source) {
+    base::TickClock* time_source) {
   return base::WrapRefCounted(
-      new SchedulerTqmDelegateImpl(message_loop, std::move(time_source)));
+      new SchedulerTqmDelegateImpl(message_loop, time_source));
 }
 
 SchedulerTqmDelegateImpl::SchedulerTqmDelegateImpl(
     base::MessageLoop* message_loop,
-    std::unique_ptr<base::TickClock> time_source)
+    base::TickClock* time_source)
     : message_loop_(message_loop),
       message_loop_task_runner_(message_loop->task_runner()),
-      time_source_(std::move(time_source)) {}
+      time_source_(time_source) {}
 
 SchedulerTqmDelegateImpl::~SchedulerTqmDelegateImpl() {
   RestoreDefaultTaskRunner();

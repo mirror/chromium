@@ -63,7 +63,7 @@ void WebThreadImplForWorkerScheduler::InitOnThread(
   // TODO(alexclarke): Do we need to unify virtual time for workers and the
   // main thread?
   task_runner_delegate_ = SchedulerTqmDelegateImpl::Create(
-      thread_->message_loop(), std::make_unique<base::DefaultTickClock>());
+      thread_->message_loop(), base::DefaultTickClock::GetInstance());
   worker_scheduler_ = CreateWorkerScheduler();
   worker_scheduler_->Init();
   task_queue_ = worker_scheduler_->DefaultTaskQueue();

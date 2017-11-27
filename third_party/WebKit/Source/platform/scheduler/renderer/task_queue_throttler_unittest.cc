@@ -80,8 +80,8 @@ class TaskQueueThrottlerTest : public ::testing::Test {
     clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
     mock_task_runner_ =
         base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(clock_.get(), true);
-    delegate_ = SchedulerTqmDelegateForTest::Create(
-        mock_task_runner_, std::make_unique<TestTimeSource>(clock_.get()));
+    delegate_ =
+        SchedulerTqmDelegateForTest::Create(mock_task_runner_, clock_.get());
     scheduler_.reset(new RendererSchedulerImpl(delegate_));
     task_queue_throttler_ = scheduler_->task_queue_throttler();
     timer_queue_ = scheduler_->NewTimerTaskQueue(

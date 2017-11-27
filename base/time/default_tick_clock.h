@@ -18,6 +18,11 @@ class BASE_EXPORT DefaultTickClock : public TickClock {
 
   // Simply returns TimeTicks::Now().
   TimeTicks NowTicks() override;
+
+  static DefaultTickClock* GetInstance();
+
+ private:
+  DefaultTickClock();
 };
 
 }  // namespace base

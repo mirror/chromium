@@ -12,4 +12,12 @@ Time DefaultClock::Now() {
   return Time::Now();
 }
 
+// static
+DefaultClock* DefaultClock::GetInstance() {
+  CR_DEFINE_STATIC_LOCAL(DefaultClock, instance, ());
+  return &instance;
+}
+
+DefaultClock::DefaultClock() {}
+
 }  // namespace base
