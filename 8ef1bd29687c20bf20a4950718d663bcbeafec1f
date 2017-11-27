@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "a4a685eb_d4311c65",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-27T10:34:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7cdfcd0c_2e021bd2",
+      "range": {
+        "startLine": 315,
+        "startChar": 43,
+        "endLine": 315,
+        "endChar": 69
+      },
+      "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ce1e4fa_7fcf9ef0",
         "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
         "patchSetId": 1
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "90fce904_ca69c0e6",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-27T10:34:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0ce1e4fa_7fcf9ef0",
+      "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38e310bd_9b54194f",
         "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
         "patchSetId": 1
@@ -70,6 +112,24 @@
       "writtenOn": "2017-11-24T10:08:47Z",
       "side": 1,
       "message": "Is there some plan or timeline for this? I don\u0027t particularly like the split right now.",
+      "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d82cdb_edc15233",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-27T10:34:40Z",
+      "side": 1,
+      "message": "The timeline basically depends on what we do with the use counters that code is currently gathering. If the numbers stay as high as they currently look, then we\u0027re probably not going to be able to get rid of most of them anytime soon, which would be frustrating. If we can stop counting them, then the code becomes trivial to inline here.",
+      "parentUuid": "38e310bd_9b54194f",
       "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +165,24 @@
       "side": 1,
       "message": "Not sure. Since it\u0027s the CheckResponseNosniff that decides what to check, and the TODO there indicates that it should check more stuff in the future, wouldn\u0027t that be the place for additional comments/TODOs?",
       "parentUuid": "b093595b_762c0517",
+      "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a119a5d7_dab95a0e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-27T10:34:40Z",
+      "side": 1,
+      "message": "Fixed by removing the comment, which doesn\u0027t add any value above and beyond the method name. :)",
+      "parentUuid": "625fa6a9_3feb9f94",
       "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
