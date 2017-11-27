@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "835ea001_b3c82deb",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-27T22:16:16Z",
+      "side": 1,
+      "message": "This disconnect doesn\u0027t do anything in this case. getHealthThermometerDevice already returns a connected device and adds all the GATT Attributes which are unused here. Use getDiscoveredHealthThermometerDevice and setNextGATTConnectionResponse instead.",
+      "revId": "caa6d3c4b19c3aa7edc1f3c8fd9b84a8acfbe9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2935bc5c_a4cefbff",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/connect-disconnect-twice.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-27T22:16:16Z",
+      "side": 1,
+      "message": "I kept delaying converting these tests because I wanted to first add a function to make sure the disconnect signal was actually sent to the device. If we decide to go ahead and convert these tests, which I think is OK, then we should add a TODO to indicate that the test is not complete e.g.\n\nTODO([#bug number]): Test that the disconnect signal was sent to the device.",
+      "revId": "caa6d3c4b19c3aa7edc1f3c8fd9b84a8acfbe9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910f58bf_285ddfa5",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/disconnect-twice-in-a-row.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-27T22:16:16Z",
+      "side": 1,
+      "message": "Same here, use getDiscoveredHealthThermometerDevice and setNextGATTConnectionResponse.",
+      "revId": "caa6d3c4b19c3aa7edc1f3c8fd9b84a8acfbe9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
