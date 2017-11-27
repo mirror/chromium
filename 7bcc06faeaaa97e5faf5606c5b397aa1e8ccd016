@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c601d5e_41d3eeaf",
+        "filename": "content/renderer/media/webrtc/video_codec_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-27T19:50:49Z",
+      "side": 1,
+      "message": "There is no problem with this patch but we might be missing a case. \nSuppose H264 MAIN is reported as supported from HW encoder. If we have multiple sessions going on, InitEncode() would fail. Although we send |external_encoder| instance from here, it would be useless. Would it preferable to send nullptr and detect it in this level? \nDifferently, for decode we have RTCVideoDecoder::Create() that does init. However, we don\u0027t have enough params for encoder init here.",
+      "revId": "7bcc06faeaaa97e5faf5606c5b397aa1e8ccd016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

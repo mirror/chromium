@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "e2e2d8ee_e75ea40f",
+        "filename": "content/renderer/media/gpu/rtc_video_encoder_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-27T19:50:49Z",
+      "side": 1,
+      "message": "I have seen it everywhere but never actually searched for why. This is the closest thing I could find tbh.\nhttps://google.github.io/styleguide/cppguide.html#Class_Comments",
+      "parentUuid": "faaa09d6_a7dc1845",
+      "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "930d8d7c_48666a9a",
         "filename": "content/renderer/media/webrtc/video_codec_factory.cc",
         "patchSetId": 1
@@ -213,6 +231,30 @@
     },
     {
       "key": {
+        "uuid": "954327f4_f7a0b4a7",
+        "filename": "content/renderer/media/webrtc/video_codec_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-27T19:50:49Z",
+      "side": 1,
+      "message": "I see now, CreateEncoder was also MaybeWrapSimulcastProxy. I think writing explicitly helps with readability here.",
+      "parentUuid": "d2cecdfb_d919177d",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 48
+      },
+      "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf0ac30_844e823e",
         "filename": "content/renderer/media/webrtc/video_codec_factory.cc",
         "patchSetId": 1
@@ -248,6 +290,30 @@
       "side": 1,
       "message": "libvpx VP8 has built-in support for Simulcast, unless it happens to be screensharing. This is the logic that VP8EncoderSimulcastProxy implements. That\u0027s why it\u0027s more efficient to do the SW fallback wrapper afterwards.",
       "parentUuid": "7cf0ac30_844e823e",
+      "range": {
+        "startLine": 109,
+        "startChar": 3,
+        "endLine": 111,
+        "endChar": 53
+      },
+      "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27e1f5b3_b3d4389d",
+        "filename": "content/renderer/media/webrtc/video_codec_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-27T19:50:49Z",
+      "side": 1,
+      "message": "Sounds good then. \nI actually read through a bit to verify that. We currently have a lot of code duplication between Simulcast and VP8EncoderImpl because simulcast is built-in to VP8EncoderImpl. i.e., rate allocation logic in SimulcastEncoderAdapter::SetRateAllocation() and VP8EncoderImpl::SetRateAllocation() is rewritten. Wouldn\u0027t it make more sense to strip out the simulcast logic from VP8EncoderImpl and change the order of wrapping here? Would it make sense to make a bug for it?",
+      "parentUuid": "3ddcf728_dbcd24bc",
       "range": {
         "startLine": 109,
         "startChar": 3,
