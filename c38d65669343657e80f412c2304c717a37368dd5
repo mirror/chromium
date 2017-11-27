@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "904266fa_6d0c262c",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-27T23:55:19Z",
+      "side": 0,
+      "message": "SetReplicatedSandboxFlags() can set a new unique SecurityOrigin, and thus\nSetReplicatedPotentiallyTrustworthyUniqueOrigin() might modify the newly set SecurityOrigin\n(not the SecurityOrigin originated from |state.origin|).\nHowever, this doesn\u0027t seem to occur (not so sure though), because:\n- |state.origin| and |state.has_potentially_trustworthy_unique_origin| seem to be set consistently, and\n- If so, |state.origin| is unique if |state.has_potentially_trustworthy_unique_origin| is true,\n- And when |state.origin| is unique, SetReplicatedSandboxFlags() doesn\u0027t set a new unique origin.",
+      "range": {
+        "startLine": 274,
+        "startChar": 14,
+        "endLine": 274,
+        "endChar": 39
+      },
+      "revId": "c38d65669343657e80f412c2304c717a37368dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
