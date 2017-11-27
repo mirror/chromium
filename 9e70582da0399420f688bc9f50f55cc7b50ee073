@@ -16,6 +16,24 @@
       "revId": "9e70582da0399420f688bc9f50f55cc7b50ee073",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635f137c_c3c33f54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T14:39:21Z",
+      "side": 1,
+      "message": "That seems unlikely: the typography provider is process global, whereas layout of all notifications is done in the same process. In addition, I *think* Chrome OS only uses the DefaultTypographyProvider.",
+      "parentUuid": "2de3a3c0_c684b32e",
+      "revId": "9e70582da0399420f688bc9f50f55cc7b50ee073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
