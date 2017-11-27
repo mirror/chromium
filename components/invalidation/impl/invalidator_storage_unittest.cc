@@ -14,7 +14,7 @@ namespace invalidation {
 
 class InvalidatorStorageTest : public testing::Test {
  public:
-  InvalidatorStorageTest() {}
+  InvalidatorStorageTest() = default;
 
   void SetUp() override {
     InvalidatorStorage::RegisterProfilePrefs(pref_service_.registry());

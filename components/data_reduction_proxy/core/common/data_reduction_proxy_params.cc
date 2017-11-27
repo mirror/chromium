@@ -425,7 +425,7 @@ DataReductionProxyTypeInfo::DataReductionProxyTypeInfo() : proxy_index(0) {}
 DataReductionProxyTypeInfo::DataReductionProxyTypeInfo(
     const DataReductionProxyTypeInfo& other) = default;
 
-DataReductionProxyTypeInfo::~DataReductionProxyTypeInfo() {}
+DataReductionProxyTypeInfo::~DataReductionProxyTypeInfo() = default;
 
 DataReductionProxyParams::DataReductionProxyParams() {
   bool use_override_proxies_for_http =
@@ -444,7 +444,7 @@ DataReductionProxyParams::DataReductionProxyParams() {
   }
 }
 
-DataReductionProxyParams::~DataReductionProxyParams() {}
+DataReductionProxyParams::~DataReductionProxyParams() = default;
 
 void DataReductionProxyParams::SetProxiesForHttpForTesting(
     const std::vector<DataReductionProxyServer>& proxies_for_http) {

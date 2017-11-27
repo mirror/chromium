@@ -150,11 +150,9 @@ class HistoryBackendHelper : public base::SupportsUserData {
   ~HistoryBackendHelper() override;
 };
 
-HistoryBackendHelper::HistoryBackendHelper() {
-}
+HistoryBackendHelper::HistoryBackendHelper() = default;
 
-HistoryBackendHelper::~HistoryBackendHelper() {
-}
+HistoryBackendHelper::~HistoryBackendHelper() = default;
 
 // HistoryBackend --------------------------------------------------------------
 

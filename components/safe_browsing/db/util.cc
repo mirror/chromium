@@ -45,7 +45,7 @@ ThreatMetadata::ThreatMetadata()
 
 ThreatMetadata::ThreatMetadata(const ThreatMetadata& other) = default;
 
-ThreatMetadata::~ThreatMetadata() {}
+ThreatMetadata::~ThreatMetadata() = default;
 
 bool ThreatMetadata::operator==(const ThreatMetadata& other) const {
   return threat_pattern_type == other.threat_pattern_type &&
@@ -60,7 +60,7 @@ bool ThreatMetadata::operator!=(const ThreatMetadata& other) const {
 
 // SBCachedFullHashResult ------------------------------------------------------
 
-SBCachedFullHashResult::SBCachedFullHashResult() {}
+SBCachedFullHashResult::SBCachedFullHashResult() = default;
 
 SBCachedFullHashResult::SBCachedFullHashResult(
     const base::Time& in_expire_after)
@@ -69,7 +69,7 @@ SBCachedFullHashResult::SBCachedFullHashResult(
 SBCachedFullHashResult::SBCachedFullHashResult(
     const SBCachedFullHashResult& other) = default;
 
-SBCachedFullHashResult::~SBCachedFullHashResult() {}
+SBCachedFullHashResult::~SBCachedFullHashResult() = default;
 
 // Listnames that browser can process.
 const char kMalwareList[] = "goog-malware-shavar";
@@ -213,7 +213,7 @@ SafeBrowsingProtocolConfig::SafeBrowsingProtocolConfig()
 SafeBrowsingProtocolConfig::SafeBrowsingProtocolConfig(
     const SafeBrowsingProtocolConfig& other) = default;
 
-SafeBrowsingProtocolConfig::~SafeBrowsingProtocolConfig() {}
+SafeBrowsingProtocolConfig::~SafeBrowsingProtocolConfig() = default;
 
 namespace ProtocolManagerHelper {
 

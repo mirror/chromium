@@ -111,8 +111,7 @@ ShortcutsDatabase::Shortcut::MatchCore::MatchCore(
 ShortcutsDatabase::Shortcut::MatchCore::MatchCore(const MatchCore& other) =
     default;
 
-ShortcutsDatabase::Shortcut::MatchCore::~MatchCore() {
-}
+ShortcutsDatabase::Shortcut::MatchCore::~MatchCore() = default;
 
 // ShortcutsDatabase::Shortcut ------------------------------------------------
 
@@ -138,9 +137,7 @@ ShortcutsDatabase::Shortcut::Shortcut()
 
 ShortcutsDatabase::Shortcut::Shortcut(const Shortcut& other) = default;
 
-ShortcutsDatabase::Shortcut::~Shortcut() {
-}
-
+ShortcutsDatabase::Shortcut::~Shortcut() = default;
 
 // ShortcutsDatabase ----------------------------------------------------------
 
@@ -248,8 +245,7 @@ void ShortcutsDatabase::LoadShortcuts(GuidToShortcutMap* shortcuts) {
   }
 }
 
-ShortcutsDatabase::~ShortcutsDatabase() {
-}
+ShortcutsDatabase::~ShortcutsDatabase() = default;
 
 bool ShortcutsDatabase::EnsureTable() {
   if (!db_.DoesTableExist("omni_box_shortcuts")) {

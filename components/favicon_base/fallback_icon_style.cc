@@ -29,8 +29,7 @@ FallbackIconStyle::FallbackIconStyle()
       is_default_background_color(true),
       text_color(kDefaultTextColor) {}
 
-FallbackIconStyle::~FallbackIconStyle() {
-}
+FallbackIconStyle::~FallbackIconStyle() = default;
 
 bool FallbackIconStyle::operator==(const FallbackIconStyle& other) const {
   return background_color == other.background_color &&

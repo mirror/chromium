@@ -286,7 +286,7 @@ ClientBase::InitParams::InitParams() {
 #endif
 }
 
-ClientBase::InitParams::~InitParams() {}
+ClientBase::InitParams::~InitParams() = default;
 
 bool ClientBase::InitParams::FromCommandLine(
     const base::CommandLine& command_line) {
@@ -335,16 +335,16 @@ bool ClientBase::InitParams::FromCommandLine(
 ////////////////////////////////////////////////////////////////////////////////
 // ClientBase::Globals, public:
 
-ClientBase::Globals::Globals() {}
+ClientBase::Globals::Globals() = default;
 
-ClientBase::Globals::~Globals() {}
+ClientBase::Globals::~Globals() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // ClientBase::Buffer, public:
 
-ClientBase::Buffer::Buffer() {}
+ClientBase::Buffer::Buffer() = default;
 
-ClientBase::Buffer::~Buffer() {}
+ClientBase::Buffer::~Buffer() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // ClientBase, public:
@@ -561,9 +561,9 @@ bool ClientBase::Init(const InitParams& params) {
 ////////////////////////////////////////////////////////////////////////////////
 // ClientBase, protected:
 
-ClientBase::ClientBase() {}
+ClientBase::ClientBase() = default;
 
-ClientBase::~ClientBase() {}
+ClientBase::~ClientBase() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // ClientBase, private:

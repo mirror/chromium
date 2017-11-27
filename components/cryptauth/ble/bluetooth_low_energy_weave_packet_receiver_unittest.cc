@@ -40,7 +40,7 @@ const uint8_t kControlResponseHeader = 0x81;
 class CryptAuthBluetoothLowEnergyWeavePacketReceiverTest
     : public testing::Test {
  protected:
-  CryptAuthBluetoothLowEnergyWeavePacketReceiverTest() {}
+  CryptAuthBluetoothLowEnergyWeavePacketReceiverTest() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(

@@ -21,7 +21,7 @@ namespace autofill {
 
 class NameFieldTest : public testing::Test {
  public:
-  NameFieldTest() {}
+  NameFieldTest() = default;
 
  protected:
   std::vector<std::unique_ptr<AutofillField>> list_;

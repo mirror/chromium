@@ -4184,7 +4184,8 @@ OnDiskDirectoryBackingStoreForTest::OnDiskDirectoryBackingStoreForTest(
   OnDiskDirectoryBackingStore(dir_name, backing_filepath),
   first_open_failed_(false) { }
 
-OnDiskDirectoryBackingStoreForTest::~OnDiskDirectoryBackingStoreForTest() { }
+OnDiskDirectoryBackingStoreForTest::~OnDiskDirectoryBackingStoreForTest() =
+    default;
 
 void OnDiskDirectoryBackingStoreForTest::ReportFirstTryOpenFailure() {
   // Do nothing, just like we would in release-mode.  In debug mode, we DCHECK.

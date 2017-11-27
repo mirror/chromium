@@ -417,6 +417,6 @@ ModelTypeStoreImpl::WriteBatchImpl::WriteBatchImpl(ModelTypeStore* store)
   leveldb_write_batch_ = std::make_unique<leveldb::WriteBatch>();
 }
 
-ModelTypeStoreImpl::WriteBatchImpl::~WriteBatchImpl() {}
+ModelTypeStoreImpl::WriteBatchImpl::~WriteBatchImpl() = default;
 
 }  // namespace syncer

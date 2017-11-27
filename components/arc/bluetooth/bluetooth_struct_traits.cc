@@ -33,14 +33,14 @@ std::string StripNonHex(const std::string& str) {
 
 // BluetoothAdvertisement helpers.
 struct AdvertisementEntry {
-  virtual ~AdvertisementEntry() {}
+  virtual ~AdvertisementEntry() = default;
   virtual void AddTo(device::BluetoothAdvertisement::Data* data) {}
 };
 
 struct ServiceUUIDEntry : public AdvertisementEntry {
   std::vector<device::BluetoothUUID> service_uuids;
 
-  ~ServiceUUIDEntry() override {}
+  ~ServiceUUIDEntry() override = default;
 
   void AddTo(device::BluetoothAdvertisement::Data* data) override {
     auto string_uuids = std::make_unique<std::vector<std::string>>();
@@ -55,7 +55,7 @@ struct ServiceDataEntry : public AdvertisementEntry {
   uint16_t service_uuid;
   std::vector<uint8_t> service_data;
 
-  ~ServiceDataEntry() override {}
+  ~ServiceDataEntry() override = default;
 
   void AddTo(device::BluetoothAdvertisement::Data* data) override {
     std::string string_uuid = base::StringPrintf("%04x", service_uuid);
@@ -70,7 +70,7 @@ struct ManufacturerDataEntry : public AdvertisementEntry {
   uint16_t company_id_code;
   std::vector<uint8_t> blob;
 
-  ~ManufacturerDataEntry() override {}
+  ~ManufacturerDataEntry() override = default;
 
   void AddTo(device::BluetoothAdvertisement::Data* data) override {
     using MapType = std::map<uint16_t, std::vector<uint8_t>>;

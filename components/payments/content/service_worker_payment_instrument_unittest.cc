@@ -15,8 +15,8 @@ namespace payments {
 class ServiceWorkerPaymentInstrumentTest : public testing::Test,
                                            public PaymentRequestSpec::Observer {
  public:
-  ServiceWorkerPaymentInstrumentTest() {}
-  ~ServiceWorkerPaymentInstrumentTest() override {}
+  ServiceWorkerPaymentInstrumentTest() = default;
+  ~ServiceWorkerPaymentInstrumentTest() override = default;
 
  protected:
   void OnSpecUpdated() override {}

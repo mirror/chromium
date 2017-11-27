@@ -28,7 +28,7 @@ GetOperationRequest::GetOperationRequest(
                  base::Unretained(this), name));
 }
 
-GetOperationRequest::~GetOperationRequest() {}
+GetOperationRequest::~GetOperationRequest() = default;
 
 void GetOperationRequest::OnCompleted(
     const std::string& assigned_operation_name,

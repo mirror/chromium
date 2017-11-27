@@ -36,8 +36,7 @@ ContextMenuContentType::ContextMenuContentType(
           base::Bind(&DefaultIsInternalResourcesURL)) {
 }
 
-ContextMenuContentType::~ContextMenuContentType() {
-}
+ContextMenuContentType::~ContextMenuContentType() = default;
 
 bool ContextMenuContentType::SupportsGroup(int group) {
   const bool has_selection = !params_.selection_text.empty();

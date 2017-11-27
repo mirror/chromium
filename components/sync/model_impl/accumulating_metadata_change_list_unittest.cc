@@ -42,7 +42,7 @@ void RecordGlobalMetadataDelete(bool* was_delete_called, WriteBatch* batch) {
 
 class AccumulatingMetadataChangeListTest : public testing::Test {
  protected:
-  AccumulatingMetadataChangeListTest() {}
+  AccumulatingMetadataChangeListTest() = default;
 
   MockModelTypeStore* store() { return &store_; }
 

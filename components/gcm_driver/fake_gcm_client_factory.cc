@@ -18,8 +18,7 @@ FakeGCMClientFactory::FakeGCMClientFactory(
       io_thread_(io_thread) {
 }
 
-FakeGCMClientFactory::~FakeGCMClientFactory() {
-}
+FakeGCMClientFactory::~FakeGCMClientFactory() = default;
 
 std::unique_ptr<GCMClient> FakeGCMClientFactory::BuildInstance() {
   return std::unique_ptr<GCMClient>(new FakeGCMClient(ui_thread_, io_thread_));

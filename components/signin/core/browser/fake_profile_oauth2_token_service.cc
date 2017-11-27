@@ -11,12 +11,12 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "google_apis/gaia/fake_oauth2_token_service_delegate.h"
 
-FakeProfileOAuth2TokenService::PendingRequest::PendingRequest() {}
+FakeProfileOAuth2TokenService::PendingRequest::PendingRequest() = default;
 
 FakeProfileOAuth2TokenService::PendingRequest::PendingRequest(
     const PendingRequest& other) = default;
 
-FakeProfileOAuth2TokenService::PendingRequest::~PendingRequest() {}
+FakeProfileOAuth2TokenService::PendingRequest::~PendingRequest() = default;
 
 FakeProfileOAuth2TokenService::FakeProfileOAuth2TokenService()
     : FakeProfileOAuth2TokenService(
@@ -28,7 +28,7 @@ FakeProfileOAuth2TokenService::FakeProfileOAuth2TokenService(
       auto_post_fetch_response_on_message_loop_(false),
       weak_ptr_factory_(this) {}
 
-FakeProfileOAuth2TokenService::~FakeProfileOAuth2TokenService() {}
+FakeProfileOAuth2TokenService::~FakeProfileOAuth2TokenService() = default;
 
 void FakeProfileOAuth2TokenService::IssueAllTokensForAccount(
     const std::string& account_id,

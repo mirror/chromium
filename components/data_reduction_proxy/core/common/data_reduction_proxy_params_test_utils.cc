@@ -19,7 +19,7 @@ TestDataReductionProxyParams::TestDataReductionProxyParams()
       ProxyServer::CORE));
   }
 
-  TestDataReductionProxyParams::~TestDataReductionProxyParams() {}
+  TestDataReductionProxyParams::~TestDataReductionProxyParams() = default;
 
   void TestDataReductionProxyParams::SetProxiesForHttp(
       const std::vector<DataReductionProxyServer>& proxies) {

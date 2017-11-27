@@ -24,8 +24,7 @@ TrustedPluginChannel::TrustedPluginChannel(
       &TrustedPluginChannel::OnChannelError, base::Unretained(this)));
 }
 
-TrustedPluginChannel::~TrustedPluginChannel() {
-}
+TrustedPluginChannel::~TrustedPluginChannel() = default;
 
 void TrustedPluginChannel::OnChannelError() {
   if (!is_helper_nexe_)

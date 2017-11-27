@@ -43,7 +43,7 @@ static int64_t IdToMetahandle(syncable::BaseTransaction* trans,
 
 BaseNode::BaseNode() : password_data_(new sync_pb::PasswordSpecificsData) {}
 
-BaseNode::~BaseNode() {}
+BaseNode::~BaseNode() = default;
 
 bool BaseNode::DecryptIfNecessary() {
   if (GetIsPermanentFolder())

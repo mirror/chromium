@@ -264,7 +264,7 @@ class GLHelper::CopyTextureToImpl
   // the callbacks when it goes out of scope.
   class FinishRequestHelper {
    public:
-    FinishRequestHelper() {}
+    FinishRequestHelper() = default;
     ~FinishRequestHelper() {
       while (!requests_.empty()) {
         Request* request = requests_.front();
@@ -725,7 +725,7 @@ FormatSupport GLHelper::CopyTextureToImpl::GetReadbackConfig(
 GLHelper::GLHelper(GLES2Interface* gl, gpu::ContextSupport* context_support)
     : gl_(gl), context_support_(context_support) {}
 
-GLHelper::~GLHelper() {}
+GLHelper::~GLHelper() = default;
 
 void GLHelper::CropScaleReadbackAndCleanTexture(
     GLuint src_texture,

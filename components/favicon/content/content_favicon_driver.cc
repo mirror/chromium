@@ -119,8 +119,7 @@ ContentFaviconDriver::ContentFaviconDriver(
       FaviconDriverImpl(favicon_service, history_service),
       document_on_load_completed_(false) {}
 
-ContentFaviconDriver::~ContentFaviconDriver() {
-}
+ContentFaviconDriver::~ContentFaviconDriver() = default;
 
 int ContentFaviconDriver::DownloadImage(const GURL& url,
                                         int max_image_size,

@@ -52,8 +52,7 @@ CaseInsensitiveCompare::CaseInsensitiveCompare(const icu::Locale& locale)
     collator_->setStrength(icu::Collator::PRIMARY);
 }
 
-CaseInsensitiveCompare::~CaseInsensitiveCompare() {
-}
+CaseInsensitiveCompare::~CaseInsensitiveCompare() = default;
 
 bool CaseInsensitiveCompare::StringsEqual(const base::string16& lhs,
                                           const base::string16& rhs) const {

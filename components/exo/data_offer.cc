@@ -37,7 +37,7 @@ class RefCountedString16 : public base::RefCountedMemory {
   size_t size() const override { return data_.size() * sizeof(base::char16); }
 
  protected:
-  ~RefCountedString16() override {}
+  ~RefCountedString16() override = default;
 
  private:
   base::string16 data_;

@@ -25,7 +25,7 @@ namespace {
 
 class DataReductionProxyDataTest : public testing::Test {
  public:
-  DataReductionProxyDataTest() {}
+  DataReductionProxyDataTest() = default;
 
  private:
   base::MessageLoopForIO message_loop_;

@@ -55,7 +55,7 @@ class NaClBPFSandboxPolicy : public sandbox::bpf_dsl::Policy {
     // whenever kEnableNaClDebug is passed.
     enable_nacl_debug_ = command_line->HasSwitch(switches::kEnableNaClDebug);
   }
-  ~NaClBPFSandboxPolicy() override {}
+  ~NaClBPFSandboxPolicy() override = default;
 
   ResultExpr EvaluateSyscall(int system_call_number) const override;
   ResultExpr InvalidSyscall() const override {

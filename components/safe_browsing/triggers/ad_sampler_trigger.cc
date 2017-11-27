@@ -104,7 +104,7 @@ AdSamplerTrigger::AdSamplerTrigger(
       request_context_(request_context),
       history_service_(history_service) {}
 
-AdSamplerTrigger::~AdSamplerTrigger() {}
+AdSamplerTrigger::~AdSamplerTrigger() = default;
 
 // static
 void AdSamplerTrigger::CreateForWebContents(

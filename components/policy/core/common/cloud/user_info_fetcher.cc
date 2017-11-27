@@ -38,8 +38,7 @@ UserInfoFetcher::UserInfoFetcher(Delegate* delegate,
   DCHECK(delegate);
 }
 
-UserInfoFetcher::~UserInfoFetcher() {
-}
+UserInfoFetcher::~UserInfoFetcher() = default;
 
 void UserInfoFetcher::Start(const std::string& access_token) {
   net::NetworkTrafficAnnotationTag traffic_annotation =

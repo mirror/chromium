@@ -10,8 +10,7 @@ MockRemovableStorageObserver::MockRemovableStorageObserver()
     : attach_calls_(0), detach_calls_(0) {
 }
 
-MockRemovableStorageObserver::~MockRemovableStorageObserver() {
-}
+MockRemovableStorageObserver::~MockRemovableStorageObserver() = default;
 
 void MockRemovableStorageObserver::OnRemovableStorageAttached(
     const StorageInfo& info) {

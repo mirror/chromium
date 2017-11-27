@@ -21,8 +21,8 @@ namespace contextual_search {
 
 class CtrAggregatorTest : public testing::Test {
  public:
-  CtrAggregatorTest() {}
-  ~CtrAggregatorTest() override {}
+  CtrAggregatorTest() = default;
+  ~CtrAggregatorTest() override = default;
 
   class WeeklyActivityStorageStub : public WeeklyActivityStorage {
    public:

@@ -54,8 +54,8 @@ const char kAllowInsecureConnectionSwitch[] = "allow-insecure-connection";
 // Class to print received notifications events.
 class NotificationPrinter : public InvalidationHandler {
  public:
-  NotificationPrinter() {}
-  ~NotificationPrinter() override {}
+  NotificationPrinter() = default;
+  ~NotificationPrinter() override = default;
 
   void OnInvalidatorStateChange(InvalidatorState state) override {
     LOG(INFO) << "Invalidator state changed to "
@@ -87,7 +87,7 @@ class MyTestURLRequestContext : public net::TestURLRequestContext {
     Init();
   }
 
-  ~MyTestURLRequestContext() override {}
+  ~MyTestURLRequestContext() override = default;
 };
 
 class MyTestURLRequestContextGetter : public net::TestURLRequestContextGetter {
@@ -105,7 +105,7 @@ class MyTestURLRequestContextGetter : public net::TestURLRequestContextGetter {
   }
 
  private:
-  ~MyTestURLRequestContextGetter() override {}
+  ~MyTestURLRequestContextGetter() override = default;
 
   std::unique_ptr<MyTestURLRequestContext> context_;
 };

@@ -21,7 +21,7 @@ const char kChannelBindingData[] = "channel binding data";
 FakeSecureContext::FakeSecureContext()
     : protocol_version_(SecureContext::PROTOCOL_VERSION_THREE_ONE) {}
 
-FakeSecureContext::~FakeSecureContext() {}
+FakeSecureContext::~FakeSecureContext() = default;
 
 std::string FakeSecureContext::GetChannelBindingData() const {
   return kChannelBindingData;

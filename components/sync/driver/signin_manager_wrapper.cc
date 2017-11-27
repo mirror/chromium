@@ -10,7 +10,7 @@
 SigninManagerWrapper::SigninManagerWrapper(SigninManagerBase* original)
     : original_(original) {}
 
-SigninManagerWrapper::~SigninManagerWrapper() {}
+SigninManagerWrapper::~SigninManagerWrapper() = default;
 
 SigninManagerBase* SigninManagerWrapper::GetOriginal() {
   return original_;

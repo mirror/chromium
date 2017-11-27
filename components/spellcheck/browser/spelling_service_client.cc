@@ -47,9 +47,9 @@ const char* const kValidLanguages[] = {"en", "es", "fi", "da"};
 
 }  // namespace
 
-SpellingServiceClient::SpellingServiceClient() {}
+SpellingServiceClient::SpellingServiceClient() = default;
 
-SpellingServiceClient::~SpellingServiceClient() {}
+SpellingServiceClient::~SpellingServiceClient() = default;
 
 bool SpellingServiceClient::RequestTextCheck(
     content::BrowserContext* context,
@@ -283,7 +283,8 @@ SpellingServiceClient::TextCheckCallbackData::TextCheckCallbackData(
     base::string16 text)
     : fetcher(std::move(fetcher)), callback(callback), text(text) {}
 
-SpellingServiceClient::TextCheckCallbackData::~TextCheckCallbackData() {}
+SpellingServiceClient::TextCheckCallbackData::~TextCheckCallbackData() =
+    default;
 
 void SpellingServiceClient::OnURLFetchComplete(const net::URLFetcher* source) {
   DCHECK(base::ContainsKey(spellcheck_fetchers_, source));

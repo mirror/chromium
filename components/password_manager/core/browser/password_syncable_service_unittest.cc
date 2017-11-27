@@ -163,7 +163,7 @@ SyncChange CreateSyncChange(const autofill::PasswordForm& password,
 // Mock implementation of SyncChangeProcessor.
 class MockSyncChangeProcessor : public syncer::SyncChangeProcessor {
  public:
-  MockSyncChangeProcessor() {}
+  MockSyncChangeProcessor() = default;
 
   MOCK_METHOD2(ProcessSyncChanges,
                SyncError(const base::Location&, const SyncChangeList& list));

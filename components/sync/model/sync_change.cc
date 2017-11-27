@@ -17,7 +17,7 @@ SyncChange::SyncChange(const base::Location& from_here,
   DCHECK(IsValid());
 }
 
-SyncChange::~SyncChange() {}
+SyncChange::~SyncChange() = default;
 
 bool SyncChange::IsValid() const {
   if (change_type_ == ACTION_INVALID || !sync_data_.IsValid())

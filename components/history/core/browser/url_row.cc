@@ -8,8 +8,7 @@
 
 namespace history {
 
-URLRow::URLRow() {
-}
+URLRow::URLRow() = default;
 
 URLRow::URLRow(const GURL& url) : url_(url) {
 }
@@ -29,8 +28,7 @@ URLRow::URLRow(URLRow&& other) noexcept
       last_visit_(other.last_visit_),
       hidden_(other.hidden_) {}
 
-URLRow::~URLRow() {
-}
+URLRow::~URLRow() = default;
 
 URLRow& URLRow::operator=(const URLRow& other) = default;
 
@@ -44,7 +42,7 @@ void URLRow::Swap(URLRow* other) {
   std::swap(hidden_, other->hidden_);
 }
 
-URLResult::URLResult() {}
+URLResult::URLResult() = default;
 
 URLResult::URLResult(const GURL& url, base::Time visit_time)
     : URLRow(url), visit_time_(visit_time) {}
@@ -62,8 +60,7 @@ URLResult::URLResult(URLResult&& other) noexcept
       title_match_positions_(std::move(other.title_match_positions_)),
       blocked_visit_(other.blocked_visit_) {}
 
-URLResult::~URLResult() {
-}
+URLResult::~URLResult() = default;
 
 URLResult& URLResult::operator=(const URLResult&) = default;
 

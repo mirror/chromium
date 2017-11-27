@@ -46,8 +46,8 @@ void AddEntry(const ImageData& d, EntryMap* map) { (*map)[d.url()] = d; }
 
 class MockImageFetcher : public ImageFetcher {
  public:
-  MockImageFetcher() {}
-  virtual ~MockImageFetcher() {}
+  MockImageFetcher() = default;
+  virtual ~MockImageFetcher() = default;
   MOCK_METHOD4(StartOrQueueNetworkRequest,
                void(const std::string&,
                     const GURL&,

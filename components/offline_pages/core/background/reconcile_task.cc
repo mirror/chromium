@@ -18,7 +18,7 @@ ReconcileTask::ReconcileTask(RequestQueueStore* store,
                              const RequestQueueStore::UpdateCallback& callback)
     : store_(store), callback_(callback), weak_ptr_factory_(this) {}
 
-ReconcileTask::~ReconcileTask() {}
+ReconcileTask::~ReconcileTask() = default;
 
 void ReconcileTask::Run() {
   GetRequests();

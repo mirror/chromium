@@ -115,7 +115,7 @@ DenialTimeUpdate::DenialTimeUpdate(PrefService* prefs,
       max_denial_count_(max_denial_count),
       time_list_(nullptr) {}
 
-DenialTimeUpdate::~DenialTimeUpdate() {}
+DenialTimeUpdate::~DenialTimeUpdate() = default;
 
 // Gets the list of timestamps when translation was denied.
 base::ListValue* DenialTimeUpdate::GetDenialTimes() {

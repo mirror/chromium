@@ -15,8 +15,7 @@ TestHistoryDatabase::TestHistoryDatabase()
                       kTestDownloadInterruptReasonCrash) {
 }
 
-TestHistoryDatabase::~TestHistoryDatabase() {
-}
+TestHistoryDatabase::~TestHistoryDatabase() = default;
 
 HistoryDatabaseParams TestHistoryDatabaseParamsForPath(
     const base::FilePath& history_dir) {

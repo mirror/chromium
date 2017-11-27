@@ -83,8 +83,8 @@ class TestModelTypeProcessor : public FakeModelTypeChangeProcessor,
 // A ModelTypeConfigurer that just connects USS types.
 class TestModelTypeConfigurer : public ModelTypeConfigurer {
  public:
-  TestModelTypeConfigurer() {}
-  ~TestModelTypeConfigurer() override {}
+  TestModelTypeConfigurer() = default;
+  ~TestModelTypeConfigurer() override = default;
 
   void ConfigureDataTypes(ConfigureParams params) override {
     NOTREACHED() << "Not implemented.";

@@ -18,7 +18,7 @@ ChangeRecord::ChangeRecord() : id(kInvalidId), action(ACTION_ADD) {}
 
 ChangeRecord::ChangeRecord(const ChangeRecord& other) = default;
 
-ChangeRecord::~ChangeRecord() {}
+ChangeRecord::~ChangeRecord() = default;
 
 std::unique_ptr<base::DictionaryValue> ChangeRecord::ToValue() const {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
@@ -49,13 +49,13 @@ std::unique_ptr<base::DictionaryValue> ChangeRecord::ToValue() const {
   return value;
 }
 
-ExtraPasswordChangeRecordData::ExtraPasswordChangeRecordData() {}
+ExtraPasswordChangeRecordData::ExtraPasswordChangeRecordData() = default;
 
 ExtraPasswordChangeRecordData::ExtraPasswordChangeRecordData(
     const sync_pb::PasswordSpecificsData& data)
     : unencrypted_(data) {}
 
-ExtraPasswordChangeRecordData::~ExtraPasswordChangeRecordData() {}
+ExtraPasswordChangeRecordData::~ExtraPasswordChangeRecordData() = default;
 
 std::unique_ptr<base::DictionaryValue> ExtraPasswordChangeRecordData::ToValue()
     const {

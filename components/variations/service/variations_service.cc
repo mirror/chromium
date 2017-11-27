@@ -268,8 +268,7 @@ VariationsService::VariationsService(
       std::min(std::max(num_failures_to_fetch, 0), 100));
 }
 
-VariationsService::~VariationsService() {
-}
+VariationsService::~VariationsService() = default;
 
 void VariationsService::PerformPreMainMessageLoopStartup() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

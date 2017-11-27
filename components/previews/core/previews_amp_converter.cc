@@ -45,7 +45,7 @@ struct AMPConverterEntry {
         suffix(suffix),
         suffix_html(suffix_html) {}
 
-  ~AMPConverterEntry() {}
+  ~AMPConverterEntry() = default;
 
   // URL scheme to match.
   const MatchingScheme matching_scheme;
@@ -124,7 +124,7 @@ PreviewsAMPConverter::PreviewsAMPConverter() {
   }
 }
 
-PreviewsAMPConverter::~PreviewsAMPConverter() {}
+PreviewsAMPConverter::~PreviewsAMPConverter() = default;
 
 bool PreviewsAMPConverter::GetAMPURL(const GURL& url, GURL* new_amp_url) const {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);

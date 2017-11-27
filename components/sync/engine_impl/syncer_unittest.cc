@@ -113,9 +113,9 @@ class TypeDebugInfoCache : public TypeDebugInfoObserver {
   std::map<ModelType, StatusCounters> status_counters_map_;
 };
 
-TypeDebugInfoCache::TypeDebugInfoCache() {}
+TypeDebugInfoCache::TypeDebugInfoCache() = default;
 
-TypeDebugInfoCache::~TypeDebugInfoCache() {}
+TypeDebugInfoCache::~TypeDebugInfoCache() = default;
 
 CommitCounters TypeDebugInfoCache::GetLatestCommitCounters(
     ModelType type) const {

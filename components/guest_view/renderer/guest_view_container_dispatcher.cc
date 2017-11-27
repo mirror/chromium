@@ -10,11 +10,9 @@
 
 namespace guest_view {
 
-GuestViewContainerDispatcher::GuestViewContainerDispatcher() {
-}
+GuestViewContainerDispatcher::GuestViewContainerDispatcher() = default;
 
-GuestViewContainerDispatcher::~GuestViewContainerDispatcher() {
-}
+GuestViewContainerDispatcher::~GuestViewContainerDispatcher() = default;
 
 bool GuestViewContainerDispatcher::HandlesMessage(const IPC::Message& message) {
   return IPC_MESSAGE_CLASS(message) == GuestViewMsgStart;

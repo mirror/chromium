@@ -26,7 +26,7 @@ PasswordDataTypeController::PasswordDataTypeController(
       state_changed_callback_(state_changed_callback),
       password_store_(password_store) {}
 
-PasswordDataTypeController::~PasswordDataTypeController() {}
+PasswordDataTypeController::~PasswordDataTypeController() = default;
 
 bool PasswordDataTypeController::PostTaskOnModelThread(
     const base::Location& from_here,

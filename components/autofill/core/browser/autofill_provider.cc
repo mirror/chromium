@@ -8,9 +8,9 @@
 
 namespace autofill {
 
-AutofillProvider::AutofillProvider() {}
+AutofillProvider::AutofillProvider() = default;
 
-AutofillProvider::~AutofillProvider() {}
+AutofillProvider::~AutofillProvider() = default;
 
 void AutofillProvider::SendFormDataToRenderer(AutofillHandlerProxy* handler,
                                               int requestId,

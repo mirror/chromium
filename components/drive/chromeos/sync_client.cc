@@ -136,7 +136,7 @@ FileError GetParentResourceEntry(ResourceMetadata* metadata,
 SyncClient::SyncTask::SyncTask()
     : state(SUSPENDED), context(BACKGROUND), should_run_again(false) {}
 SyncClient::SyncTask::SyncTask(const SyncTask& other) = default;
-SyncClient::SyncTask::~SyncTask() {}
+SyncClient::SyncTask::~SyncTask() = default;
 
 SyncClient::SyncClient(base::SequencedTaskRunner* blocking_task_runner,
                        file_system::OperationDelegate* delegate,

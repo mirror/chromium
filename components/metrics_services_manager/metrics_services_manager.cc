@@ -28,7 +28,7 @@ MetricsServicesManager::MetricsServicesManager(
   DCHECK(client_);
 }
 
-MetricsServicesManager::~MetricsServicesManager() {}
+MetricsServicesManager::~MetricsServicesManager() = default;
 
 std::unique_ptr<const base::FieldTrial::EntropyProvider>
 MetricsServicesManager::CreateEntropyProvider() {

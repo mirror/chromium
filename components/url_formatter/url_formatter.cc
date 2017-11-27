@@ -38,8 +38,8 @@ bool IDNToUnicodeOneComponent(const base::char16* comp,
 
 class AppendComponentTransform {
  public:
-  AppendComponentTransform() {}
-  virtual ~AppendComponentTransform() {}
+  AppendComponentTransform() = default;
+  virtual ~AppendComponentTransform() = default;
 
   virtual base::string16 Execute(
       const std::string& component_text,

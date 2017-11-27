@@ -49,7 +49,7 @@ class MockPrefNotifier : public PrefNotifierImpl {
  public:
   explicit MockPrefNotifier(PrefService* pref_service)
       : PrefNotifierImpl(pref_service) {}
-  virtual ~MockPrefNotifier() {}
+  virtual ~MockPrefNotifier() = default;
 
   MOCK_METHOD1(FireObservers, void(const std::string& path));
 
@@ -75,8 +75,8 @@ class MockPrefNotifier : public PrefNotifierImpl {
 
 class PrefObserverMock : public PrefObserver {
  public:
-  PrefObserverMock() {}
-  virtual ~PrefObserverMock() {}
+  PrefObserverMock() = default;
+  virtual ~PrefObserverMock() = default;
 
   MOCK_METHOD2(OnPreferenceChanged, void(PrefService*, const std::string&));
 };

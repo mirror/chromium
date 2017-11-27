@@ -94,7 +94,7 @@ class TestPreviewsBlacklistDelegate : public PreviewsBlacklistDelegate {
 class TestPreviewsOptOutStore : public PreviewsOptOutStore {
  public:
   TestPreviewsOptOutStore() : clear_blacklist_count_(0) {}
-  ~TestPreviewsOptOutStore() override {}
+  ~TestPreviewsOptOutStore() override = default;
 
   int clear_blacklist_count() { return clear_blacklist_count_; }
 
@@ -145,7 +145,7 @@ class TestPreviewsOptOutStore : public PreviewsOptOutStore {
 class PreviewsBlackListTest : public testing::Test {
  public:
   PreviewsBlackListTest() : field_trial_list_(nullptr) {}
-  ~PreviewsBlackListTest() override {}
+  ~PreviewsBlackListTest() override = default;
 
   void TearDown() override { variations::testing::ClearAllVariationParams(); }
 

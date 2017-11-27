@@ -55,7 +55,7 @@ bool PolicyMap::Entry::Equals(const PolicyMap::Entry& other) const {
                                      other.external_data_fetcher.get());
 }
 
-PolicyMap::PolicyMap() {}
+PolicyMap::PolicyMap() = default;
 
 PolicyMap::~PolicyMap() {
   Clear();

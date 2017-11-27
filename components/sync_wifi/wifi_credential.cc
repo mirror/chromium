@@ -16,7 +16,7 @@ namespace sync_wifi {
 
 WifiCredential::WifiCredential(const WifiCredential& other) = default;
 
-WifiCredential::~WifiCredential() {}
+WifiCredential::~WifiCredential() = default;
 
 // static
 std::unique_ptr<WifiCredential> WifiCredential::Create(

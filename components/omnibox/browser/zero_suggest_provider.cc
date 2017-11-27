@@ -279,8 +279,7 @@ ZeroSuggestProvider::ZeroSuggestProvider(
   }
 }
 
-ZeroSuggestProvider::~ZeroSuggestProvider() {
-}
+ZeroSuggestProvider::~ZeroSuggestProvider() = default;
 
 const TemplateURL* ZeroSuggestProvider::GetTemplateURL(bool is_keyword) const {
   // Zero suggest provider should not receive keyword results.

@@ -9,10 +9,8 @@ namespace network_hints {
 const size_t kMaxDnsHostnamesPerRequest = 30;
 const size_t kMaxDnsHostnameLength = 255;
 
-LookupRequest::LookupRequest() {
-}
+LookupRequest::LookupRequest() = default;
 
-LookupRequest::~LookupRequest() {
-}
+LookupRequest::~LookupRequest() = default;
 
 }  // namespace network_hints

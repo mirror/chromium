@@ -93,8 +93,7 @@ SearchOperation::SearchOperation(
       weak_ptr_factory_(this) {
 }
 
-SearchOperation::~SearchOperation() {
-}
+SearchOperation::~SearchOperation() = default;
 
 void SearchOperation::Search(const std::string& search_query,
                              const GURL& next_link,

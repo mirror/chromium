@@ -15,7 +15,7 @@ GetUpdatesResponseEvent::GetUpdatesResponseEvent(
     SyncerError error)
     : timestamp_(timestamp), response_(response), error_(error) {}
 
-GetUpdatesResponseEvent::~GetUpdatesResponseEvent() {}
+GetUpdatesResponseEvent::~GetUpdatesResponseEvent() = default;
 
 base::Time GetUpdatesResponseEvent::GetTimestamp() const {
   return timestamp_;

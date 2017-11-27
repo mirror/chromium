@@ -14,7 +14,7 @@ namespace {
 
 class MockSyncService : public syncer::FakeSyncService {
  public:
-  MockSyncService() {}
+  MockSyncService() = default;
   ~MockSyncService() override { Shutdown(); }
 
   void SetStatus(bool has_passphrase, bool enabled) {
@@ -61,7 +61,7 @@ class MockSyncService : public syncer::FakeSyncService {
 class TestSyncDisableObserver : public SyncDisableObserver {
  public:
   TestSyncDisableObserver() : purged_(false), notified_(false) {}
-  ~TestSyncDisableObserver() override {}
+  ~TestSyncDisableObserver() override = default;
 
   bool ResetPurged() {
     bool was_purged = purged_;
@@ -88,7 +88,7 @@ class TestSyncDisableObserver : public SyncDisableObserver {
 
 class SyncDisableObserverTest : public testing::Test {
  public:
-  SyncDisableObserverTest() {}
+  SyncDisableObserverTest() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SyncDisableObserverTest);

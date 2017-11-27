@@ -13,7 +13,7 @@ namespace sync_sessions {
 LostNavigationsRecorder::LostNavigationsRecorder()
     : recorder_state_(RECORDER_STATE_NOT_SYNCING) {}
 
-LostNavigationsRecorder::~LostNavigationsRecorder() {}
+LostNavigationsRecorder::~LostNavigationsRecorder() = default;
 
 void LostNavigationsRecorder::OnLocalChange(
     const syncer::syncable::Entry* current_entry,

@@ -71,7 +71,8 @@ WifiCredentialSyncableServiceFactory::WifiCredentialSyncableServiceFactory()
           "WifiCredentialSyncableService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-WifiCredentialSyncableServiceFactory::~WifiCredentialSyncableServiceFactory() {}
+WifiCredentialSyncableServiceFactory::~WifiCredentialSyncableServiceFactory() =
+    default;
 
 KeyedService* WifiCredentialSyncableServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

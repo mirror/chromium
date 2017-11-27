@@ -71,7 +71,7 @@ ModelTypeController::ModelTypeController(
       state_(NOT_RUNNING) {
 }
 
-ModelTypeController::~ModelTypeController() {}
+ModelTypeController::~ModelTypeController() = default;
 
 bool ModelTypeController::ShouldLoadModelBeforeConfigure() const {
   // USS datatypes require loading models because model controls storage where

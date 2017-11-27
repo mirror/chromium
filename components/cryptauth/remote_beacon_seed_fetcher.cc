@@ -12,7 +12,7 @@ RemoteBeaconSeedFetcher::RemoteBeaconSeedFetcher(
     const CryptAuthDeviceManager* device_manager)
     : device_manager_(device_manager) {}
 
-RemoteBeaconSeedFetcher::~RemoteBeaconSeedFetcher() {}
+RemoteBeaconSeedFetcher::~RemoteBeaconSeedFetcher() = default;
 
 bool RemoteBeaconSeedFetcher::FetchSeedsForDevice(
     const RemoteDevice& remote_device,
