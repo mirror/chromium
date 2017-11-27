@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "31761cc6_5ca901d0",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-27T18:45:20Z",
+      "side": 1,
+      "message": "execution_context-\u003eGetFrame()-\u003eGetInterfaceProvider() will give you a per-frame InterfaceProvider.\n\nPlatform::Current()-\u003eGetInterfaceProvider() (the default interface provider) is not encouraged.",
+      "parentUuid": "15a4d121_561287cc",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f77cbe4_20031ace",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
         "patchSetId": 8
