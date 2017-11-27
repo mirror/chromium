@@ -98,7 +98,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
-#include "content/public/common/content_switches.h"
 #include "content/public/common/frame_navigate_params.h"
 #include "content/public/common/renderer_preferences.h"
 #include "content/public/common/url_constants.h"
@@ -2000,13 +1999,40 @@ IN_PROC_BROWSER_TEST_F(BrowserTest2, NoTabsInPopups) {
 }
 #endif
 
-IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose) {
+IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose1) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kDisablePopupBlocking);
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kDisableBackgroundTimerThrottling);
   GURL url = ui_test_utils::GetTestUrl(
-      base::FilePath(), base::FilePath().AppendASCII("window.close.html"));
+      base::FilePath(),
+      base::FilePath().AppendASCII("window.close.html?test1"));
+
+  base::string16 title = ASCIIToUTF16("Title Of Awesomeness");
+  content::TitleWatcher title_watcher(
+      browser()->tab_strip_model()->GetActiveWebContents(), title);
+  ui_test_utils::NavigateToURLBlockUntilNavigationsComplete(browser(), url, 2);
+  EXPECT_EQ(title, title_watcher.WaitAndGetTitle());
+}
+
+IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose2) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kDisablePopupBlocking);
+  GURL url = ui_test_utils::GetTestUrl(
+      base::FilePath(),
+      base::FilePath().AppendASCII("window.close.html?test2"));
+
+  base::string16 title = ASCIIToUTF16("Title Of Awesomeness");
+  content::TitleWatcher title_watcher(
+      browser()->tab_strip_model()->GetActiveWebContents(), title);
+  ui_test_utils::NavigateToURLBlockUntilNavigationsComplete(browser(), url, 2);
+  EXPECT_EQ(title, title_watcher.WaitAndGetTitle());
+}
+
+IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose3) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kDisablePopupBlocking);
+  GURL url = ui_test_utils::GetTestUrl(
+      base::FilePath(),
+      base::FilePath().AppendASCII("window.close.html?test3"));
 
   base::string16 title = ASCIIToUTF16("Title Of Awesomeness");
   content::TitleWatcher title_watcher(
