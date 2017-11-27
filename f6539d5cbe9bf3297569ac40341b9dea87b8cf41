@@ -34,6 +34,24 @@
       "revId": "f6539d5cbe9bf3297569ac40341b9dea87b8cf41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3916dd_385efb96",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-27T06:34:49Z",
+      "side": 1,
+      "message": "For haraken@\u0027s question,\n\nWindowProxy is so so special.  I\u0027m not 100% sure, but I think that the bindings code generator does not handle \"WindowProxy\" as a (kind of) interface name because there is no such definition in IDL files (i.e. Blink has Window.idl that defines Window interface, but nothing about WindowProxy).  That\u0027s why Blink doesn\u0027t use \"WindowProxy\".\n\nCurrently ToV8(DOMWindow*) is responsible to automagically convert a DOMWindow into a *WindowProxy*, but it\u0027s implemented as ToV8(Window) rather than ToV8(WindowProxy), and ... anyway, it\u0027s not that simple.\n\nI understand that it\u0027s better to support \"WindowProxy\" type in IDL files, but it shouldn\u0027t be urgent, and it requires understanding of a lot of hacks in the code generator.  I\u0027d rather wait for the coming refreshed code generator.\n\n\nTo Bhagirathi,\n\nI\u0027d suggest that it\u0027s not worth doing for the time being.  However, if you\u0027re (or someone is) really interested in it, I wouldn\u0027t stop it.",
+      "parentUuid": "37982c24_2960861d",
+      "revId": "f6539d5cbe9bf3297569ac40341b9dea87b8cf41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
