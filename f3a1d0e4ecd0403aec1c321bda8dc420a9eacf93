@@ -601,6 +601,24 @@
     },
     {
       "key": {
+        "uuid": "a4129e3c_22c8545b",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-27T21:32:34Z",
+      "side": 1,
+      "message": "Sounds like TabUsageRecorder is indeed not being used anymore and will be removed. I\u0027d rather move forward with a new class in c/b/ui/tabs than repurpose the one in c/b/metrics.",
+      "parentUuid": "b1d785f6_891356d6",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faa44778_f0e4d431",
         "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
         "patchSetId": 14
