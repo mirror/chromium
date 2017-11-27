@@ -16,6 +16,24 @@
       "revId": "ce4e943777f0be3cb6501d43f8b485219f9a7671",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cece1c_01e07bdf",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-27T18:47:03Z",
+      "side": 1,
+      "message": "We want to return status of whether the request was accepted or not. The internals page is expected to show a status line, so it makes sense that we won\u0027t reject the callback, instead let the page handle?",
+      "parentUuid": "102cb48f_6842d23b",
+      "revId": "ce4e943777f0be3cb6501d43f8b485219f9a7671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
