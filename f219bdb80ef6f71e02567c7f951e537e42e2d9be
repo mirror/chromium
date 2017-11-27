@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aae3ba11_8f549b67",
+        "filename": "components/arc/test/test_browser_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-27T06:33:51Z",
+      "side": 1,
+      "message": "Sure, let me talk to relevant folks separately. Will file a bug to track.",
+      "parentUuid": "cc1ca14c_0425500d",
+      "revId": "f219bdb80ef6f71e02567c7f951e537e42e2d9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd622ac5_71ef94c5",
         "filename": "components/arc/test/test_browser_context.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T04:16:30Z",
       "side": 1,
       "message": "nit: You can just declare\n\nTestingPrefServiceSimple prefs_;\n\n?",
+      "revId": "f219bdb80ef6f71e02567c7f951e537e42e2d9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4d39ef_6888f82e",
+        "filename": "components/arc/test/test_browser_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-27T06:33:51Z",
+      "side": 1,
+      "message": "yes, done.",
+      "parentUuid": "dd622ac5_71ef94c5",
       "revId": "f219bdb80ef6f71e02567c7f951e537e42e2d9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
