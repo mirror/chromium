@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbd9f51d_9e72d89c",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-27T22:24:32Z",
+      "side": 1,
+      "message": "maybe use type alias?",
+      "revId": "898f9af772f98572970c84adc8360e36661bf369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
