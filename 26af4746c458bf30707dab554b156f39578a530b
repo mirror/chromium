@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef668461_16b032d5",
+        "filename": "chromecast/browser/url_request_context_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-27T19:10:02Z",
+      "side": 1,
+      "message": "We can drop \u0027Cert\u0027 from this method entirely - DoesConformToPolicy (or something better if you have preferences - like CheckCompliance ?) - although it does mean more mechanical changes.",
+      "revId": "26af4746c458bf30707dab554b156f39578a530b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
