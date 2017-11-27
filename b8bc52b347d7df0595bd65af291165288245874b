@@ -34,6 +34,40 @@
       "revId": "b8bc52b347d7df0595bd65af291165288245874b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15e19c7_590eebd8",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommandTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T02:30:07Z",
+      "side": 1,
+      "message": "Let\u0027s use InsertParagraphSeparatorCommand::Create() and DoApply() instead\nof Document::execCommand() to independent this test from execCommand()\nimplementation.\n\nAnd let\u0027s have InsertParagraphSeparatorCommandTest.cpp",
+      "revId": "b8bc52b347d7df0595bd65af291165288245874b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb452b51_24afc367",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommandTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-27T02:30:07Z",
+      "side": 1,
+      "message": "Ditto as L84.",
+      "revId": "b8bc52b347d7df0595bd65af291165288245874b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
