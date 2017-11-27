@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75a7b851_e7a48ecd",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/detach-gc.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-27T22:40:48Z",
+      "side": 1,
+      "message": "Could we avoid discovering and connecting to the device in the main frame? Retrieving devices and connecting to them means creating more references to the connection and device. This makes it harder to know if we are actually GC\u0027ing what we want. In this case, the iframe doesn\u0027t end up calling disconnect on the device because the main frame connected to the device and is keeping the connection alive.\n\nMight be better to use getHealthThermometerDeviceWithServicesDiscovered or add a similar method that only connects, since there is no need to discover the services.",
+      "revId": "cad3200b266bf11673e2a0155dc9b9d0bd37b975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5342548_5b5d1011",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-27T22:40:48Z",
+      "side": 1,
+      "message": "Can we remove this TODO now or are there any other tests that still use the old adapter?",
+      "revId": "cad3200b266bf11673e2a0155dc9b9d0bd37b975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
