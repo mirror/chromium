@@ -101,22 +101,13 @@ void FramePainter::Paint(GraphicsContext& context,
 
     Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-      if (const PropertyTreeState* contents_state =
-              frame_view_->TotalPropertyTreeStateForContents()) {
-        // The scrollbar's property nodes are similar to the frame view's
-        // contents state but we want to exclude the content-specific
-        // properties. This prevents the scrollbars from scrolling, for example.
-        PaintChunkProperties properties(
-            context.GetPaintController().CurrentPaintChunkProperties());
-        properties.property_tree_state.SetTransform(
-            frame_view_->PreTranslation());
-        properties.property_tree_state.SetClip(
-            frame_view_->ContentClip()->Parent());
-        properties.property_tree_state.SetEffect(contents_state->Effect());
-        scoped_paint_chunk_properties.emplace(context.GetPaintController(),
-                                              *GetFrameView().GetLayoutView(),
-                                              properties);
-      }
+      PaintChunkProperties properties(
+          context.GetPaintController().CurrentPaintChunkProperties());
+      properties.property_tree_state =
+          GetFrameView().PreContentClipProperties();
+      scoped_paint_chunk_properties.emplace(context.GetPaintController(),
+                                            *GetFrameView().GetLayoutView(),
+                                            properties);
     }
 
     TransformRecorder transform_recorder(
