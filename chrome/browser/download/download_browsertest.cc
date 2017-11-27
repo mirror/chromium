@@ -379,6 +379,8 @@ class HistoryObserver : public DownloadHistory::Observer {
     if (!callback_.is_null() && (!callback_.Run(info)))
         return;
 
+    LOG(ERROR) << "@@@ " << __func__
+               << ", received bytes = " << info.received_bytes;
     seen_stored_ = true;
     if (waiting_)
       base::RunLoop::QuitCurrentWhenIdleDeprecated();
@@ -1904,6 +1906,8 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, DownloadHistoryCheck) {
             row.total_bytes);
   EXPECT_EQ(history::DownloadState::IN_PROGRESS, row.state);
   EXPECT_FALSE(row.opened);
+
+  LOG(ERROR) << "@@@ first check done.";
 
   // Finish the download.  We're ok relying on the history to be flushed
   // at this point as our queries will be behind the history updates
