@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc1ca14c_0425500d",
+        "filename": "components/arc/test/test_browser_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T04:16:30Z",
+      "side": 1,
+      "message": "(off-topic): So the main goal of this class is to support Prefs, right?\nThen, does it make sense to move this to content::TestBrowserContext, instead of to implement it here for ARC specific thing, so that all the chromium code can use it? WDYT?\nI\u0027m ok to land this as is for now, though.",
+      "revId": "f219bdb80ef6f71e02567c7f951e537e42e2d9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd622ac5_71ef94c5",
+        "filename": "components/arc/test/test_browser_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T04:16:30Z",
+      "side": 1,
+      "message": "nit: You can just declare\n\nTestingPrefServiceSimple prefs_;\n\n?",
+      "revId": "f219bdb80ef6f71e02567c7f951e537e42e2d9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
