@@ -16,6 +16,23 @@
       "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d06af0_bca46f44",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-27T18:06:19Z",
+      "side": 1,
+      "message": "I can\u0027t call logging.error here because I run into this error: \"Exception AttributeError: \"\u0027NoneType\u0027 object has no attribute \u0027error\u0027\" in \u003cbound method LLVMSymbolizerInstance.__del__ of \u003c__main__.LLVMSymbolizerInstance object at 0x7f9bc3d28390\u003e\u003e ignored\". According to the documentation of \"__del__\", it suggests I don\u0027t know the ordering of how python cleans up. Maybe it removes logging first. However that is what I see by just running this file. \u0027logging\u0027 may not be removed if there is another module that needs logging and is not deleted.",
+      "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
