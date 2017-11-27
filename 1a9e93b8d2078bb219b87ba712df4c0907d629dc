@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b78807b0_c24b8f7e",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-27T20:47:48Z",
+      "side": 1,
+      "message": "Are you sure about this value range? Do you really expect the VR assets component to take an hour to be ready? And is sub 500ms not possible? A histogram allocates an array of size \u003d num buckets, so if you don\u0027t expect or care about latencies above 1 minute, you\u0027re basically wasting half that array and costing yourself granularity. You can look at https://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#count-histograms for more detail (talks about counts histograms, but it also aplies to times)",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 62
+      },
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf972f9c_5c1662b6",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-27T20:47:48Z",
+      "side": 1,
+      "message": "If you don\u0027t have a need for the extra granularity, I\u0027d prefer you use 50 buckets instead.",
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
