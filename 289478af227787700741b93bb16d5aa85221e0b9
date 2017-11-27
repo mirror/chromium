@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce5974ef_b07eb539",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T19:16:57Z",
+      "side": 1,
+      "message": "Does this actually navigate to the live example.org? If so, that seems potentially flaky -- could it use an internal page, or a local test web server?\n\nAlso, the header docs for ui_test_utils::NavigateToURL() says that it blocks until done, but you\u0027re using an observer. Are the docs wrong? If so, could you update them in a separate CL?",
+      "revId": "289478af227787700741b93bb16d5aa85221e0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97be114_b49d45fb",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T19:16:57Z",
+      "side": 1,
+      "message": "nit: DCHECK(browser_view_) below since you\u0027re going to access it later",
+      "revId": "289478af227787700741b93bb16d5aa85221e0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0622e69_34952eb0",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T19:16:57Z",
+      "side": 1,
+      "message": "nit: DCHECK(delegate_) below",
+      "revId": "289478af227787700741b93bb16d5aa85221e0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
