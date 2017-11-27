@@ -1961,6 +1961,7 @@ bool PaintLayerScrollableArea::UsesCompositedScrolling() const {
   // See https://codereview.chromium.org/176633003/ for the tests that fail
   // without this disabler.
   DisableCompositingQueryAsserts disabler;
+
   return Layer()->HasCompositedLayerMapping() &&
          Layer()->GetCompositedLayerMapping()->ScrollingLayer();
 }
