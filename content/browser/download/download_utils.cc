@@ -175,7 +175,6 @@ std::unique_ptr<ResourceRequest> CreateResourceRequest(
   request->is_main_frame = true;
 
   if (params->render_process_host_id() >= 0) {
-    request->origin_pid = params->render_process_host_id();
     request->render_frame_id = params->render_frame_host_routing_id();
   }
 
