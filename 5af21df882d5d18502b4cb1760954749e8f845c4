@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "88338c15_2eda9e18",
+        "filename": "chrome/browser/vr/elements/button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T17:28:54Z",
+      "side": 1,
+      "message": "Do you mind to add a unit test to make sure that background, foreground and hit_plane have expected draw phase and size after we call button-\u003eset_draw_phase and button-\u003eSetSize.",
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6e463f3_ae4ae547",
         "filename": "chrome/browser/vr/elements/button.h",
         "patchSetId": 4
@@ -53,6 +70,24 @@
         "endLine": 61,
         "endChar": 21
       },
+      "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21b4ec2_08368668",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-27T17:28:54Z",
+      "side": 1,
+      "message": "If we add ScaledDepthAdjuster to all buttons (3 now I think). This can probably be replaced with a kButtonHoverOffsetDMM in .cc file.",
+      "parentUuid": "b6e463f3_ae4ae547",
       "revId": "5af21df882d5d18502b4cb1760954749e8f845c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
