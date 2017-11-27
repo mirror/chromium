@@ -16,6 +16,24 @@
       "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e699815_e4b045e0",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-27T03:41:14Z",
+      "side": 1,
+      "message": "I expect it\u0027s not needed. It was needed in the service worker case because a SW can be spawned without any JavaScript triggering it, e.g., a push notification or a navigation. But a Shared Worker requires a JavaScript context calling `new SharedWorker()`, so I believe if JavaScript is disabled then it\u0027s impossible to try to spawn the shared worker and get to AllowSharedWorker().\n\nIt\u0027s probably worth adding comments to ChromeContentBrowserClient::AllowServiceWorker and AllowSharedWorker explaining why only the Service Worker case needs to check for JavaScript.",
+      "parentUuid": "a9957d32_ce189b4b",
+      "revId": "83c37044bbe694125fcd6480e3ef3b9089dbe54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
