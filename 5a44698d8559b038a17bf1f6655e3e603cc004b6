@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24a84733_bbca8d13",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion/animation/offset-path-interpolation-003.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-27T05:08:19Z",
+      "side": 1,
+      "message": "nit: add blank line? If intentional (to group related tests), then maybe do the same for 002.html to be consistent?",
+      "revId": "5a44698d8559b038a17bf1f6655e3e603cc004b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
