@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01463a30_120f7877",
+        "filename": "media/gpu/format_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-27T21:45:16Z",
+      "side": 1,
+      "message": "Please add a comment explaining why these are the right mappings. (I\u0027m losing track of exactly what these all mean on each platform.)",
+      "range": {
+        "startLine": 13,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "d5d0243138611ce521463307d1e4e2fb0edbdf12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
