@@ -32,7 +32,7 @@ class ScopedPaintChunkProperties {
         PaintChunk::Id(client, type), properties);
   }
 
-  // Use new PropertyTreeState, and the current backface_visibility.
+  // Use new PropertyTreeState, and keep the current backface_hidden.
   ScopedPaintChunkProperties(
       PaintController& paint_controller,
       const PropertyTreeState& state,
@@ -46,7 +46,7 @@ class ScopedPaintChunkProperties {
         PaintChunk::Id(client, type), properties);
   }
 
-  // Use the current PaintChunkProperties except the new transform state.
+  // Use new transform state, and keep the current other properties.
   ScopedPaintChunkProperties(
       PaintController& paint_controller,
       scoped_refptr<const TransformPaintPropertyNode> transform,
@@ -60,7 +60,7 @@ class ScopedPaintChunkProperties {
         PaintChunk::Id(client, type), properties);
   }
 
-  // Use the current PaintChunkProperties except the new clip state.
+  // Use new clip state, and keep the current other properties.
   ScopedPaintChunkProperties(
       PaintController& paint_controller,
       scoped_refptr<const ClipPaintPropertyNode> clip,
@@ -74,7 +74,7 @@ class ScopedPaintChunkProperties {
         PaintChunk::Id(client, type), properties);
   }
 
-  // Use the current PaintChunkProperties except the new effect state.
+  // Use new effect state, and keep the current other properties.
   ScopedPaintChunkProperties(
       PaintController& paint_controller,
       scoped_refptr<const EffectPaintPropertyNode> effect,
