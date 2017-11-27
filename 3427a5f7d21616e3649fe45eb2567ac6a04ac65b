@@ -16,6 +16,24 @@
       "revId": "3427a5f7d21616e3649fe45eb2567ac6a04ac65b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8639d883_e02fad00",
+        "filename": "content/browser/plugin_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-27T03:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f23aa448_d399a1d3",
+      "revId": "3427a5f7d21616e3649fe45eb2567ac6a04ac65b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
