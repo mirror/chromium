@@ -295,6 +295,10 @@ class OmniboxEditModel {
   // necessary.
   void OnControlKeyChanged(bool pressed);
 
+  // Called when the user presses or releases the shift key. Used to refine
+  // suggestion selection.
+  void OnShiftKeyChanged(bool pressed);
+
   // Called when the user pastes in text.
   void OnPaste();
 
@@ -535,6 +539,10 @@ class OmniboxEditModel {
   // UpdatePopup() repeatedly if the user holds down the key, and to know
   // whether to trigger "ctrl-enter" behavior.
   ControlKeyState control_key_state_;
+
+  // Whether the shift key is pressed. We track this to know whether to
+  // trigger "shift-enter" or "shift-click" behavior.
+  bool shift_key_pressed_;
 
   // The keyword associated with the current match.  The user may have an actual
   // selected keyword, or just some input text that looks like a keyword (so we

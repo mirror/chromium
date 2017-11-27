@@ -133,6 +133,7 @@ OmniboxEditModel::OmniboxEditModel(OmniboxView* view,
       has_temporary_text_(false),
       paste_state_(NONE),
       control_key_state_(UP),
+      shift_key_pressed_(false),
       is_keyword_hint_(false),
       in_revert_(false),
       allow_exact_keyword_match_(false) {
@@ -692,7 +693,10 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
     base::RecordAction(
         base::UserMetricsAction("OmniboxDestinationURLIsSearchOnDSP"));
   }
-  if (match.type == AutocompleteMatchType::TAB_SEARCH) {
+  // Shift-selection forces navigation.
+  if (match.type == AutocompleteMatchType::TAB_SEARCH &&
+      disposition == WindowOpenDisposition::CURRENT_TAB &&
+      !shift_key_pressed_) {
     // Only close the current tab if it's the new tab page.  Look at
     // |permanent_text_| to do this identification.  If this fails (the
     // previously found tab may have closed or navigated since) fall through and
@@ -931,6 +935,7 @@ void OmniboxEditModel::OnKillFocus() {
   last_omnibox_focus_ = base::TimeTicks();
   paste_state_ = NONE;
   control_key_state_ = UP;
+  shift_key_pressed_ = false;
 #if defined(OS_WIN)
   ui::OnScreenKeyboardDisplayManager::GetInstance()->DismissVirtualKeyboard();
 #endif
@@ -983,6 +988,10 @@ bool OmniboxEditModel::OnEscapeKeyPressed() {
 void OmniboxEditModel::OnControlKeyChanged(bool pressed) {
   if (pressed == (control_key_state_ == UP))
     control_key_state_ = pressed ? DOWN_WITHOUT_CHANGE : UP;
+}
+
+void OmniboxEditModel::OnShiftKeyChanged(bool pressed) {
+  shift_key_pressed_ = pressed;
 }
 
 void OmniboxEditModel::OnPaste() {
