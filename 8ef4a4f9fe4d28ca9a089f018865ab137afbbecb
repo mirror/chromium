@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ba22d5f_622ff7b5",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-27T21:31:20Z",
+      "side": 1,
+      "message": "Note: In practice, this will mean that it\u0027ll probably never trigger during unit tests. Same below.\nIt\u0027s fine, I just figured I\u0027d mention it :-)",
+      "range": {
+        "startLine": 81,
+        "startChar": 41,
+        "endLine": 81,
+        "endChar": 44
+      },
+      "revId": "8ef4a4f9fe4d28ca9a089f018865ab137afbbecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2cf891e9_8c9f5bd6",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-27T21:31:20Z",
+      "side": 1,
+      "message": "Nit: This makes this never trigger, since the rate will never be negative. Intentional? Maybe you\u0027d want something like \u003d\u003d0?",
+      "range": {
+        "startLine": 86,
+        "startChar": 41,
+        "endLine": 86,
+        "endChar": 43
+      },
+      "revId": "8ef4a4f9fe4d28ca9a089f018865ab137afbbecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8107925f_70ea5c75",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-27T21:31:20Z",
+      "side": 1,
+      "message": "Nit: If you prefix this with \"x_\", you won\u0027t get any histogram results that we found an unknown field, which makes that check more helpful. Nothing goes wrong with keeping it as is though.",
+      "range": {
+        "startLine": 134,
+        "startChar": 25,
+        "endLine": 134,
+        "endChar": 48
+      },
+      "revId": "8ef4a4f9fe4d28ca9a089f018865ab137afbbecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
