@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9fb4a64_9a21747f",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-27T16:55:33Z",
+      "side": 1,
+      "message": "The reconcilor is already revoking credentials for secondary accounts in a special case (this is done in the reconcilor, not in the delegate). Because of that, I think the following code would be better for 3 reasons: a) keeps all removal of secondary accounts in the reconcilor  b) it removes tokens that are invalid and and c) it is easier to remove later as it is clear this only affects the secondary accounts cases.\n\nif (delegate-\u003eShouldRevokeAllSecondaryTokensBeforeReconcile(\n    verified_gaia_accounts, primary_account_id_)) {\n  RevokeAllSecondaryTokens();\n}\nauto chrome_accounts \u003d LoadValidAccountsFromTokenService(primary_account_);\n\nTo reuse the RevokeAllSecondayTokens we can pass a boolean indicating if it should be removed or only marked as removed.",
+      "range": {
+        "startLine": 349,
+        "startChar": 24,
+        "endLine": 349,
+        "endChar": 31
+      },
+      "revId": "65a6ff7ff80d2db451f562334ae7470439eae58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
