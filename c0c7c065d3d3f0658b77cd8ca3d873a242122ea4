@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86e514b4_b4f92072",
+        "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-11-27T18:23:35Z",
+      "side": 1,
+      "message": "Why not use the same 12 second timeout as we have for normal advertisements?",
+      "range": {
+        "startLine": 22,
+        "startChar": 49,
+        "endLine": 22,
+        "endChar": 51
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c514467_2f4df011",
+        "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-11-27T18:23:35Z",
+      "side": 1,
+      "message": "Is there any reason not to just inline:\n\nif (device_id_to_advertisement_with_timer_map.count(device_id) \u003d\u003d 0)",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 77
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f464c9e5_0c499658",
+        "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-11-27T18:23:35Z",
+      "side": 1,
+      "message": "Is there any reason not to just inline:\n\nif (device_id_to_advertisement_with_timer_map.count(device_id) !\u003d 0) {\n\n...\n}",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 78
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b37b293f_cbe4ecad",
+        "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-11-27T18:23:35Z",
+      "side": 1,
+      "message": "Is this callback always guaranteed to fire, even in error cases?",
+      "range": {
+        "startLine": 106,
+        "startChar": 42,
+        "endLine": 106,
+        "endChar": 64
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee97fb5c_03fed221",
+        "filename": "chromeos/components/tether/asynchronous_shutdown_object_container_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-11-27T18:23:35Z",
+      "side": 1,
+      "message": "nit: name",
+      "range": {
+        "startLine": 229,
+        "startChar": 19,
+        "endLine": 229,
+        "endChar": 43
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
