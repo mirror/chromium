@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64a5c578_3537bcb9",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:43:11Z",
+      "side": 1,
+      "message": "nit: kUserWallpaperInfo (or kUserWallpaperInfos) since the pref is user_wallpaper_info",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a458b414_3627a02a",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:43:11Z",
+      "side": 1,
+      "message": "Is this needed? It seems like a problem if SetUserWallpaperInfo() is being called during startup and being skipped. If this is needed for tests, comment that. If it\u0027s temporary during the refactor, cite a bug. Otherwise, remove it.\n\nIf this is the issue you mentioned in the CL comment, I think it\u0027s reasonable to delay the InitializeWallpaper() call in ash::Shell until after local state is initialized.\n\nAlso, if you have to keep it, no {}",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96714778_c92ee815",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:43:11Z",
+      "side": 1,
+      "message": "optional: Cache PrefService* local_state \u003d Shell::Get()-\u003eGetLocalStatePrefService(). Also, no ash:: needed here.",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88136fb9_2abcef06",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:43:11Z",
+      "side": 1,
+      "message": "std::make_unique\u003c\u003e",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9740d0b_991451c6",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:43:11Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d46c14_96504e16",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:43:11Z",
+      "side": 1,
+      "message": "Can you use it-\u003esecond.second ?",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da529a19_39b2ee0c",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:43:11Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e2c8cf_f8ba4c41",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:43:11Z",
+      "side": 1,
+      "message": "nit: \"using CustomWallpaperElement \u003d ...\", also below\n\nAlso, #includes for FilePath and ImageSkia",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43505c29_bfbc6500",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:43:11Z",
+      "side": 1,
+      "message": "I think this will construct a WallpaperInfo, then copy all the fields into info. I\u0027m not sure if the compiler is smart enough to avoid the copy. It might be more efficient to set each field individually.\n\n(I\u0027m OK with the copy below, I\u0027d just prefer not to make two copies.)",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf64fe81_54c6521f",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2321,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:43:11Z",
+      "side": 1,
+      "message": "nit: else not needed",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9176857_af9c17a7",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2331,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-27T17:43:11Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "030d21d1df4508668d90ed90b58b25c83579d43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
