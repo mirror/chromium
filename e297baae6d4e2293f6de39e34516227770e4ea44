@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f4c50b0d_8db5212e",
+        "filename": "components/test/data/autofill/heuristics/output/022_checkout_crutchfield.com.out",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-27T14:59:22Z",
+      "side": 1,
+      "message": "I will check why. Note that no type deduction change.",
+      "parentUuid": "e6abbbbe_e8b2716c",
+      "revId": "e297baae6d4e2293f6de39e34516227770e4ea44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6f48668_1b6170f9",
         "filename": "components/test/data/autofill/heuristics/output/063_register_officedepot.com.out",
         "patchSetId": 6
@@ -47,6 +65,30 @@
       "writtenOn": "2017-11-27T13:50:31Z",
       "side": 1,
       "message": "Why is the new logic often appending more stuff?",
+      "range": {
+        "startLine": 11,
+        "startChar": 62,
+        "endLine": 11,
+        "endChar": 69
+      },
+      "revId": "e297baae6d4e2293f6de39e34516227770e4ea44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df0cd18_f210d408",
+        "filename": "components/test/data/autofill/heuristics/output/063_register_officedepot.com.out",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-27T14:59:22Z",
+      "side": 1,
+      "message": "This is often the pattern\n\u003cdiv\u003e\n*Phone Number:\n\u003cinput/\u003e\n-- ext.\n\u003c/div\u003e\n\nThe previous behavior was to abort text extraction on input.\n\nNote that \n\u003cdiv\u003e\n*Phone Number:\n\u003cspan\u003e\u003cinput/\u003e\u003c/span\u003e\n-- ext.\n\u003c/div\u003e\nwould have produced the same text.",
+      "parentUuid": "d6f48668_1b6170f9",
       "range": {
         "startLine": 11,
         "startChar": 62,
