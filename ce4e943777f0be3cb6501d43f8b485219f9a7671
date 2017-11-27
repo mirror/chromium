@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "102cb48f_6842d23b",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-27T18:29:49Z",
+      "side": 1,
+      "message": "In the case where\nresult !\u003d offline_pages::AddReqkkuestResult::SUCCESS\nshould the Promise be rejected, with RejectJavascriptCallback() instead?",
+      "revId": "ce4e943777f0be3cb6501d43f8b485219f9a7671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
