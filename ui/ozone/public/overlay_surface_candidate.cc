@@ -13,7 +13,7 @@ OverlaySurfaceCandidate::OverlaySurfaceCandidate() : is_clipped(false) {}
 OverlaySurfaceCandidate::OverlaySurfaceCandidate(
     const OverlaySurfaceCandidate& other) = default;
 
-OverlaySurfaceCandidate::~OverlaySurfaceCandidate() {}
+OverlaySurfaceCandidate::~OverlaySurfaceCandidate() = default;
 
 bool OverlaySurfaceCandidate::operator<(
     const OverlaySurfaceCandidate& param) const {

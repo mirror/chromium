@@ -23,8 +23,7 @@ InputControllerEvdev::InputControllerEvdev(KeyboardEvdev* keyboard,
     : keyboard_(keyboard), button_map_(button_map), weak_ptr_factory_(this) {
 }
 
-InputControllerEvdev::~InputControllerEvdev() {
-}
+InputControllerEvdev::~InputControllerEvdev() = default;
 
 void InputControllerEvdev::SetInputDeviceFactory(
     InputDeviceFactoryEvdevProxy* input_device_factory) {

@@ -33,7 +33,7 @@ ContainerFloatingBehavior::ContainerFloatingBehavior(
     KeyboardController* controller) {
   controller_ = controller;
 }
-ContainerFloatingBehavior::~ContainerFloatingBehavior() {}
+ContainerFloatingBehavior::~ContainerFloatingBehavior() = default;
 
 ContainerType ContainerFloatingBehavior::GetType() const {
   return ContainerType::FLOATING;

@@ -22,7 +22,7 @@ class TestTarget : public EventTarget,
   TestTarget() : parent_(NULL), valid_(true) {
     SetTargetHandler(this);
   }
-  ~TestTarget() override {}
+  ~TestTarget() override = default;
 
   void set_parent(TestTarget* parent) { parent_ = parent; }
 
@@ -69,7 +69,7 @@ class TestEventHandler : public EventHandler {
         received_pre_target_(false) {
   }
 
-  ~TestEventHandler() override {}
+  ~TestEventHandler() override = default;
 
   virtual void ReceivedEvent(Event* event) {
     static_cast<TestTarget*>(event->target())->AddHandlerId(id_);
@@ -125,7 +125,7 @@ class EventHandlerDestroyDispatcherDelegate : public TestEventHandler {
         dispatcher_delegate_(delegate) {
   }
 
-  ~EventHandlerDestroyDispatcherDelegate() override {}
+  ~EventHandlerDestroyDispatcherDelegate() override = default;
 
  private:
   void ReceivedEvent(Event* event) override {
@@ -142,7 +142,7 @@ class EventHandlerDestroyDispatcherDelegate : public TestEventHandler {
 class InvalidateTargetEventHandler : public TestEventHandler {
  public:
   explicit InvalidateTargetEventHandler(int id) : TestEventHandler(id) {}
-  ~InvalidateTargetEventHandler() override {}
+  ~InvalidateTargetEventHandler() override = default;
 
  private:
   void ReceivedEvent(Event* event) override {
@@ -190,9 +190,9 @@ class EventHandlerDestroyer : public TestEventHandler {
 
 class TestEventDispatcher : public EventDispatcherDelegate {
  public:
-  TestEventDispatcher() {}
+  TestEventDispatcher() = default;
 
-  ~TestEventDispatcher() override {}
+  ~TestEventDispatcher() override = default;
 
   EventDispatchDetails ProcessEvent(EventTarget* target, Event* event) {
     return DispatchEvent(target, event);

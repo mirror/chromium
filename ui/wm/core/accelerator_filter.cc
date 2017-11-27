@@ -25,8 +25,7 @@ AcceleratorFilter::AcceleratorFilter(
   DCHECK(accelerator_history);
 }
 
-AcceleratorFilter::~AcceleratorFilter() {
-}
+AcceleratorFilter::~AcceleratorFilter() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // AcceleratorFilter, EventFilter implementation:

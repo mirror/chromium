@@ -48,8 +48,7 @@ ButtonMenuItemModel::ButtonMenuItemModel(
       delegate_(delegate) {
 }
 
-ButtonMenuItemModel::~ButtonMenuItemModel() {
-}
+ButtonMenuItemModel::~ButtonMenuItemModel() = default;
 
 void ButtonMenuItemModel::AddGroupItemWithStringId(
     int command_id, int string_id) {

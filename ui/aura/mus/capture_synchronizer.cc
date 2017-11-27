@@ -17,7 +17,7 @@ CaptureSynchronizer::CaptureSynchronizer(CaptureSynchronizerDelegate* delegate,
                                          ui::mojom::WindowTree* window_tree)
     : delegate_(delegate), window_tree_(window_tree) {}
 
-CaptureSynchronizer::~CaptureSynchronizer() {}
+CaptureSynchronizer::~CaptureSynchronizer() = default;
 
 void CaptureSynchronizer::SetCaptureFromServer(WindowMus* window) {
   if (window == capture_window_)

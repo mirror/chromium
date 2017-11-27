@@ -83,8 +83,7 @@ CursorManager::CursorManager(std::unique_ptr<NativeCursorManager> delegate)
   current_state_->SetVisible(last_cursor_visibility_state_);
 }
 
-CursorManager::~CursorManager() {
-}
+CursorManager::~CursorManager() = default;
 
 // static
 void CursorManager::ResetCursorVisibilityStateForTest() {

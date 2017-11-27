@@ -16,13 +16,9 @@ namespace gfx {
 Font::Font() : platform_font_(PlatformFont::CreateDefault()) {
 }
 
-Font::Font(const Font& other) : platform_font_(other.platform_font_) {
-}
+Font::Font(const Font& other) = default;
 
-Font& Font::operator=(const Font& other) {
-  platform_font_ = other.platform_font_;
-  return *this;
-}
+Font& Font::operator=(const Font& other) = default;
 
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_IOS)
 Font::Font(NativeFont native_font)
@@ -38,8 +34,7 @@ Font::Font(const std::string& font_name, int font_size)
                                                          font_size)) {
 }
 
-Font::~Font() {
-}
+Font::~Font() = default;
 
 Font Font::Derive(int size_delta, int style, Font::Weight weight) const {
   return platform_font_->DeriveFont(size_delta, style, weight);

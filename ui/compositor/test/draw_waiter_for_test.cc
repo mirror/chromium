@@ -29,7 +29,7 @@ DrawWaiterForTest::DrawWaiterForTest(WaitEvent wait_event)
     : wait_event_(wait_event) {
 }
 
-DrawWaiterForTest::~DrawWaiterForTest() {}
+DrawWaiterForTest::~DrawWaiterForTest() = default;
 
 void DrawWaiterForTest::WaitImpl(Compositor* compositor) {
   compositor->AddObserver(this);

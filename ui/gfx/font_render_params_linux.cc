@@ -79,7 +79,7 @@ struct QueryResult {
       : params(params),
         family(family) {
   }
-  ~QueryResult() {}
+  ~QueryResult() = default;
 
   FontRenderParams params;
   std::string family;

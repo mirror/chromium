@@ -62,8 +62,7 @@ TabletEventConverterEvdev::TabletEventConverterEvdev(
     one_side_btn_pen_ = true;
 }
 
-TabletEventConverterEvdev::~TabletEventConverterEvdev() {
-}
+TabletEventConverterEvdev::~TabletEventConverterEvdev() = default;
 
 void TabletEventConverterEvdev::OnFileCanReadWithoutBlocking(int fd) {
   TRACE_EVENT1("evdev",

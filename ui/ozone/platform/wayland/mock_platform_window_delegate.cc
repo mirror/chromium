@@ -6,8 +6,8 @@
 
 namespace ui {
 
-MockPlatformWindowDelegate::MockPlatformWindowDelegate() {}
+MockPlatformWindowDelegate::MockPlatformWindowDelegate() = default;
 
-MockPlatformWindowDelegate::~MockPlatformWindowDelegate() {}
+MockPlatformWindowDelegate::~MockPlatformWindowDelegate() = default;
 
 }  // namespace ui

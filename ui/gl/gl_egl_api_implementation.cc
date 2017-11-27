@@ -45,28 +45,23 @@ void ClearBindingsEGL() {
   g_driver_egl.ClearBindings();
 }
 
-EGLApi::EGLApi() {
-}
+EGLApi::EGLApi() = default;
 
-EGLApi::~EGLApi() {
-}
+EGLApi::~EGLApi() = default;
 
 EGLApiBase::EGLApiBase()
     : driver_(NULL) {
 }
 
-EGLApiBase::~EGLApiBase() {
-}
+EGLApiBase::~EGLApiBase() = default;
 
 void EGLApiBase::InitializeBase(DriverEGL* driver) {
   driver_ = driver;
 }
 
-RealEGLApi::RealEGLApi() {
-}
+RealEGLApi::RealEGLApi() = default;
 
-RealEGLApi::~RealEGLApi() {
-}
+RealEGLApi::~RealEGLApi() = default;
 
 void RealEGLApi::Initialize(DriverEGL* driver) {
   InitializeBase(driver);
@@ -106,7 +101,7 @@ const char* RealEGLApi::eglQueryStringFn(EGLDisplay dpy, EGLint name) {
 
 DebugEGLApi::DebugEGLApi(EGLApi* egl_api) : egl_api_(egl_api) {}
 
-DebugEGLApi::~DebugEGLApi() {}
+DebugEGLApi::~DebugEGLApi() = default;
 
 void DebugEGLApi::SetDisabledExtensions(
     const std::string& disabled_extensions) {
@@ -115,8 +110,7 @@ void DebugEGLApi::SetDisabledExtensions(
   }
 }
 
-TraceEGLApi::~TraceEGLApi() {
-}
+TraceEGLApi::~TraceEGLApi() = default;
 
 void TraceEGLApi::SetDisabledExtensions(
     const std::string& disabled_extensions) {

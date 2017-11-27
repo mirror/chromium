@@ -11,8 +11,7 @@ namespace gfx {
 ImageSkiaRep::ImageSkiaRep() : scale_(0.0f) {
 }
 
-ImageSkiaRep::~ImageSkiaRep() {
-}
+ImageSkiaRep::~ImageSkiaRep() = default;
 
 ImageSkiaRep::ImageSkiaRep(const gfx::Size& size, float scale) : scale_(scale) {
   bitmap_.allocN32Pixels(static_cast<int>(size.width() * this->scale()),

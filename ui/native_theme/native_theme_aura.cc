@@ -82,7 +82,7 @@ NativeThemeAura::NativeThemeAura(bool use_overlay_scrollbars)
   static_assert(kPressed == 3, "states unexpectedly changed");
 }
 
-NativeThemeAura::~NativeThemeAura() {}
+NativeThemeAura::~NativeThemeAura() = default;
 
 // static
 NativeThemeAura* NativeThemeAura::instance() {

@@ -11,8 +11,7 @@ namespace ui {
 ////////////////////////////////////////////////////////////////////////////////
 // LayerAnimationObserver
 
-LayerAnimationObserver::LayerAnimationObserver() {
-}
+LayerAnimationObserver::LayerAnimationObserver() = default;
 
 LayerAnimationObserver::~LayerAnimationObserver() {
   StopObserving();

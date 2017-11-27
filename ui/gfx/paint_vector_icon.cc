@@ -44,7 +44,7 @@ class PathParser {
  public:
   PathParser(const PathElement* path_elements)
       : path_elements_(path_elements) {}
-  ~PathParser() {}
+  ~PathParser() = default;
 
   void Advance() { command_index_ += GetArgumentCount() + 1; }
 
@@ -467,7 +467,7 @@ class VectorIconSource : public CanvasImageSource {
         data_(kNoneIcon, dip_size, color, base::TimeDelta(), kNoneIcon),
         path_(PathFromSource(definition)) {}
 
-  ~VectorIconSource() override {}
+  ~VectorIconSource() override = default;
 
   // CanvasImageSource:
   bool HasRepresentationAtAllScales() const override {
@@ -498,8 +498,8 @@ class VectorIconSource : public CanvasImageSource {
 // by CreateVectorIcon will persist in memory until program termination.
 class VectorIconCache {
  public:
-  VectorIconCache() {}
-  ~VectorIconCache() {}
+  VectorIconCache() = default;
+  ~VectorIconCache() = default;
 
   ImageSkia GetOrCreateIcon(const IconDescription& description) {
     auto iter = images_.find(description);
@@ -544,7 +544,7 @@ IconDescription::IconDescription(const VectorIcon& icon,
     DCHECK_EQ(this->dip_size, GetDefaultSizeOfVectorIcon(icon));
 }
 
-IconDescription::~IconDescription() {}
+IconDescription::~IconDescription() = default;
 
 const VectorIcon kNoneIcon = {};
 

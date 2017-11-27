@@ -13,11 +13,9 @@
 namespace views {
 namespace examples {
 
-ComboboxModelExample::ComboboxModelExample() {
-}
+ComboboxModelExample::ComboboxModelExample() = default;
 
-ComboboxModelExample::~ComboboxModelExample() {
-}
+ComboboxModelExample::~ComboboxModelExample() = default;
 
 int ComboboxModelExample::GetItemCount() const {
   return 10;

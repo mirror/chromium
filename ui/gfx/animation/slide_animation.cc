@@ -22,7 +22,7 @@ SlideAnimation::SlideAnimation(AnimationDelegate* target)
       slide_duration_(kDefaultDurationMs),
       dampening_value_(1.0) {}
 
-SlideAnimation::~SlideAnimation() {}
+SlideAnimation::~SlideAnimation() = default;
 
 void SlideAnimation::Reset() {
   Reset(0);

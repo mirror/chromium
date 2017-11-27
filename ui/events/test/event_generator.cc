@@ -44,7 +44,7 @@ void DummyCallback(EventType, const gfx::Vector2dF&) {
 class TestTickClock : public base::TickClock {
  public:
   // Starts off with a clock set to TimeTicks().
-  TestTickClock() {}
+  TestTickClock() = default;
 
   base::TimeTicks NowTicks() override {
     return base::TimeTicks() +

@@ -42,7 +42,7 @@ class FakeGpuProcess : public IPC::Channel {
   FakeGpuProcess(
       const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner)
       : ui_task_runner_(ui_task_runner) {}
-  ~FakeGpuProcess() override {}
+  ~FakeGpuProcess() override = default;
 
   void InitOnIO() {
     IPC::MessageFilter* filter =
@@ -77,7 +77,7 @@ class FakeGpuProcessHost {
       const scoped_refptr<base::SingleThreadTaskRunner>& gpu_io_task_runner)
       : ui_task_runner_(ui_task_runner),
         gpu_io_task_runner_(gpu_io_task_runner) {}
-  ~FakeGpuProcessHost() {}
+  ~FakeGpuProcessHost() = default;
 
   void InitOnIO() {
     base::Callback<void(IPC::Message*)> sender =
@@ -94,11 +94,9 @@ class FakeGpuProcessHost {
   scoped_refptr<base::SingleThreadTaskRunner> gpu_io_task_runner_;
 };
 
-OzoneGpuTestHelper::OzoneGpuTestHelper() {
-}
+OzoneGpuTestHelper::OzoneGpuTestHelper() = default;
 
-OzoneGpuTestHelper::~OzoneGpuTestHelper() {
-}
+OzoneGpuTestHelper::~OzoneGpuTestHelper() = default;
 
 bool OzoneGpuTestHelper::Initialize(
     const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner) {

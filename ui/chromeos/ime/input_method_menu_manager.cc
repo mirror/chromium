@@ -15,7 +15,7 @@ namespace ime {
 InputMethodMenuManager::InputMethodMenuManager()
     : menu_list_(), observers_() {}
 
-InputMethodMenuManager::~InputMethodMenuManager() {}
+InputMethodMenuManager::~InputMethodMenuManager() = default;
 
 void InputMethodMenuManager::AddObserver(
     InputMethodMenuManager::Observer* observer) {

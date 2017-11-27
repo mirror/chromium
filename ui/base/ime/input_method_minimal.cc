@@ -17,7 +17,7 @@ InputMethodMinimal::InputMethodMinimal(
   SetDelegate(delegate);
 }
 
-InputMethodMinimal::~InputMethodMinimal() {}
+InputMethodMinimal::~InputMethodMinimal() = default;
 
 bool InputMethodMinimal::OnUntranslatedIMEMessage(
     const base::NativeEvent& event,

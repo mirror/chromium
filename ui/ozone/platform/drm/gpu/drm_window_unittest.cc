@@ -63,7 +63,7 @@ SkBitmap AllocateBitmap(const gfx::Size& size) {
 
 class DrmWindowTest : public testing::Test {
  public:
-  DrmWindowTest() {}
+  DrmWindowTest() = default;
 
   void SetUp() override;
   void TearDown() override;

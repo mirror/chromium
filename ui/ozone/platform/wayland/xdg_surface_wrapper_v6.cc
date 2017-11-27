@@ -15,7 +15,7 @@ namespace ui {
 XDGSurfaceWrapperV6::XDGSurfaceWrapperV6(WaylandWindow* wayland_window)
     : wayland_window_(wayland_window) {}
 
-XDGSurfaceWrapperV6::~XDGSurfaceWrapperV6() {}
+XDGSurfaceWrapperV6::~XDGSurfaceWrapperV6() = default;
 
 bool XDGSurfaceWrapperV6::Initialize(WaylandConnection* connection,
                                      wl_surface* surface) {

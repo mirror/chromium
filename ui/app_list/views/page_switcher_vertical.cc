@@ -56,7 +56,7 @@ class PageSwitcherButton : public views::Button {
     SetInkDropMode(InkDropMode::ON);
   }
 
-  ~PageSwitcherButton() override {}
+  ~PageSwitcherButton() override = default;
 
   void SetSelected(bool selected) {
     if (selected == selected_)

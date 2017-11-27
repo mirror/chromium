@@ -128,7 +128,7 @@ class DemoWindow : public ui::PlatformWindowDelegate {
         ui::OzonePlatform::GetInstance()->CreatePlatformWindow(this, bounds);
     platform_window_->Show();
   }
-  ~DemoWindow() override {}
+  ~DemoWindow() override = default;
 
   gfx::AcceleratedWidget GetAcceleratedWidget() {
     // TODO(spang): We should start rendering asynchronously.
@@ -196,11 +196,9 @@ class DemoWindow : public ui::PlatformWindowDelegate {
 ///////////////////////////////////////////////////////////////////////////////
 // RendererFactory implementation:
 
-RendererFactory::RendererFactory() {
-}
+RendererFactory::RendererFactory() = default;
 
-RendererFactory::~RendererFactory() {
-}
+RendererFactory::~RendererFactory() = default;
 
 bool RendererFactory::Initialize() {
   ui::OzonePlatform::InitParams params;

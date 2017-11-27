@@ -29,7 +29,7 @@ namespace {
 class TestDialog : public DialogDelegateView {
  public:
   TestDialog() : input_(new views::Textfield()) { AddChildView(input_); }
-  ~TestDialog() override {}
+  ~TestDialog() override = default;
 
   void Init() {
     // Add the accelerator before being added to the widget hierarchy (before
@@ -117,7 +117,7 @@ class TestDialog : public DialogDelegateView {
 class DialogTest : public ViewsTestBase {
  public:
   DialogTest() : dialog_(nullptr) {}
-  ~DialogTest() override {}
+  ~DialogTest() override = default;
 
   void SetUp() override {
     ViewsTestBase::SetUp();
@@ -359,8 +359,8 @@ TEST_F(DialogTest, InitialFocus) {
 // A dialog for testing initial focus with only an OK button.
 class InitialFocusTestDialog : public DialogDelegateView {
  public:
-  InitialFocusTestDialog() {}
-  ~InitialFocusTestDialog() override {}
+  InitialFocusTestDialog() = default;
+  ~InitialFocusTestDialog() override = default;
 
   views::View* OkButton() { return GetDialogClientView()->ok_button(); }
 

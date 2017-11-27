@@ -26,7 +26,7 @@ base::LazyInstance<base::ThreadLocalPointer<GLSurface>>::Leaky
     current_surface_ = LAZY_INSTANCE_INITIALIZER;
 }  // namespace
 
-GLSurface::GLSurface() {}
+GLSurface::GLSurface() = default;
 
 bool GLSurface::Initialize() {
   return Initialize(GLSurfaceFormat());
@@ -433,7 +433,7 @@ void GLSurfaceAdapter::SetEnableSwapTimestamps() {
   return surface_->SetEnableSwapTimestamps();
 }
 
-GLSurfaceAdapter::~GLSurfaceAdapter() {}
+GLSurfaceAdapter::~GLSurfaceAdapter() = default;
 
 scoped_refptr<GLSurface> InitializeGLSurfaceWithFormat(
     scoped_refptr<GLSurface> surface, GLSurfaceFormat format) {

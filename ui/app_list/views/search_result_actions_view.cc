@@ -27,7 +27,7 @@ SearchResultActionsView::SearchResultActionsView(
                                         gfx::Insets(10, 0), 0));
 }
 
-SearchResultActionsView::~SearchResultActionsView() {}
+SearchResultActionsView::~SearchResultActionsView() = default;
 
 void SearchResultActionsView::SetActions(const SearchResult::Actions& actions) {
   RemoveAllChildViews(true);

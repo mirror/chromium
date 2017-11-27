@@ -40,7 +40,7 @@ class GridViewVisibleWaiter {
  public:
   explicit GridViewVisibleWaiter(AppsGridView* grid_view)
       : grid_view_(grid_view) {}
-  ~GridViewVisibleWaiter() {}
+  ~GridViewVisibleWaiter() = default;
 
   void Wait() {
     if (grid_view_->visible())
@@ -75,7 +75,7 @@ class AppListMainViewTest : public views::ViewsTestBase {
         search_box_widget_(nullptr),
         search_box_view_(nullptr) {}
 
-  ~AppListMainViewTest() override {}
+  ~AppListMainViewTest() override = default;
 
   // testing::Test overrides:
   void SetUp() override {

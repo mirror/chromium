@@ -67,8 +67,7 @@ NineImagePainter::NineImagePainter(const ImageSkia& image,
     images_[i] = ImageSkiaOperations::ExtractSubset(image, regions[i]);
 }
 
-NineImagePainter::~NineImagePainter() {
-}
+NineImagePainter::~NineImagePainter() = default;
 
 bool NineImagePainter::IsEmpty() const {
   return images_[0].isNull();

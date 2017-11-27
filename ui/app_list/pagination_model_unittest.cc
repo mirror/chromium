@@ -27,7 +27,7 @@ class TestPaginationModelObserver : public PaginationModelObserver {
         transition_page_(-1) {
     Reset();
   }
-  ~TestPaginationModelObserver() override {}
+  ~TestPaginationModelObserver() override = default;
 
   void Reset() {
     selection_count_ = 0;
@@ -117,7 +117,7 @@ class PaginationModelTest : public testing::Test {
   PaginationModelTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
-  ~PaginationModelTest() override {}
+  ~PaginationModelTest() override = default;
 
   // testing::Test overrides:
   void SetUp() override {

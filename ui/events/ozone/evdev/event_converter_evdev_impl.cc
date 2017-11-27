@@ -51,8 +51,7 @@ EventConverterEvdevImpl::EventConverterEvdevImpl(
       cursor_(cursor),
       dispatcher_(dispatcher) {}
 
-EventConverterEvdevImpl::~EventConverterEvdevImpl() {
-}
+EventConverterEvdevImpl::~EventConverterEvdevImpl() = default;
 
 void EventConverterEvdevImpl::OnFileCanReadWithoutBlocking(int fd) {
   TRACE_EVENT1("evdev", "EventConverterEvdevImpl::OnFileCanReadWithoutBlocking",

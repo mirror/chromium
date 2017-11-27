@@ -7,11 +7,9 @@
 namespace ui {
 namespace test {
 
-TestWebContentsHandler::TestWebContentsHandler() {
-}
+TestWebContentsHandler::TestWebContentsHandler() = default;
 
-TestWebContentsHandler::~TestWebContentsHandler() {
-}
+TestWebContentsHandler::~TestWebContentsHandler() = default;
 
 content::WebContents* TestWebContentsHandler::OpenURLFromTab(
       content::BrowserContext* context,

@@ -16,7 +16,7 @@ namespace {
 class RangeStructTraitsTest : public testing::Test,
                               public mojom::RangeTraitsTestService {
  public:
-  RangeStructTraitsTest() {}
+  RangeStructTraitsTest() = default;
 
  protected:
   mojom::RangeTraitsTestServicePtr GetTraitsTestProxy() {

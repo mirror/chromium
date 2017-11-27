@@ -143,7 +143,7 @@ class OMLSyncControlVSyncProvider : public SyncControlVSyncProvider {
   explicit OMLSyncControlVSyncProvider(GLXWindow glx_window)
       : SyncControlVSyncProvider(), glx_window_(glx_window) {}
 
-  ~OMLSyncControlVSyncProvider() override {}
+  ~OMLSyncControlVSyncProvider() override = default;
 
  protected:
   bool GetSyncValues(int64_t* system_time,
@@ -391,7 +391,7 @@ GLXContext SGIVideoSyncProviderThreadShim::context_ = 0;
 
 bool GLSurfaceGLX::initialized_ = false;
 
-GLSurfaceGLX::GLSurfaceGLX() {}
+GLSurfaceGLX::GLSurfaceGLX() = default;
 
 bool GLSurfaceGLX::InitializeOneOff() {
   if (initialized_)
@@ -551,7 +551,7 @@ void* GLSurfaceGLX::GetDisplay() {
   return g_display;
 }
 
-GLSurfaceGLX::~GLSurfaceGLX() {}
+GLSurfaceGLX::~GLSurfaceGLX() = default;
 
 NativeViewGLSurfaceGLX::NativeViewGLSurfaceGLX(gfx::AcceleratedWidget window)
     : parent_window_(window),

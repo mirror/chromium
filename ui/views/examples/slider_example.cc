@@ -21,8 +21,7 @@ SliderExample::SliderExample()
       label_(NULL) {
 }
 
-SliderExample::~SliderExample() {
-}
+SliderExample::~SliderExample() = default;
 
 void SliderExample::CreateExampleView(View* container) {
   label_ = new Label();

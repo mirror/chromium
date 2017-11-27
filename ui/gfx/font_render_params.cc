@@ -19,7 +19,7 @@ FontRenderParams::FontRenderParams()
 
 FontRenderParams::FontRenderParams(const FontRenderParams& other) = default;
 
-FontRenderParams::~FontRenderParams() {}
+FontRenderParams::~FontRenderParams() = default;
 
 // static
 SkFontLCDConfig::LCDOrder FontRenderParams::SubpixelRenderingToSkiaLCDOrder(
@@ -66,6 +66,6 @@ FontRenderParamsQuery::FontRenderParamsQuery()
 FontRenderParamsQuery::FontRenderParamsQuery(
     const FontRenderParamsQuery& other) = default;
 
-FontRenderParamsQuery::~FontRenderParamsQuery() {}
+FontRenderParamsQuery::~FontRenderParamsQuery() = default;
 
 }  // namespace gfx

@@ -18,7 +18,7 @@ OSExchangeData::DownloadFileInfo::DownloadFileInfo(
       downloader(downloader) {
 }
 
-OSExchangeData::DownloadFileInfo::~DownloadFileInfo() {}
+OSExchangeData::DownloadFileInfo::~DownloadFileInfo() = default;
 
 OSExchangeData::OSExchangeData()
     : provider_(OSExchangeDataProviderFactory::CreateProvider()) {
@@ -28,8 +28,7 @@ OSExchangeData::OSExchangeData(std::unique_ptr<Provider> provider)
     : provider_(std::move(provider)) {
 }
 
-OSExchangeData::~OSExchangeData() {
-}
+OSExchangeData::~OSExchangeData() = default;
 
 void OSExchangeData::MarkOriginatedFromRenderer() {
   provider_->MarkOriginatedFromRenderer();

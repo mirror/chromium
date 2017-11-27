@@ -104,7 +104,7 @@ class TestObserver : public DisplayConfigurator::Observer {
 class TestStateController : public DisplayConfigurator::StateController {
  public:
   TestStateController() : state_(MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED) {}
-  ~TestStateController() override {}
+  ~TestStateController() override = default;
 
   void set_state(MultipleDisplayState state) { state_ = state; }
 
@@ -128,7 +128,7 @@ class TestMirroringController
     : public DisplayConfigurator::SoftwareMirroringController {
  public:
   TestMirroringController() : software_mirroring_enabled_(false) {}
-  ~TestMirroringController() override {}
+  ~TestMirroringController() override = default;
 
   void SetSoftwareMirroring(bool enabled) override {
     software_mirroring_enabled_ = enabled;
@@ -213,7 +213,7 @@ class DisplayConfiguratorTest : public testing::Test {
         query_content_protection_response_protection_mask_(0),
         query_content_protection_call_count_(0),
         display_control_result_(CALLBACK_NOT_CALLED) {}
-  ~DisplayConfiguratorTest() override {}
+  ~DisplayConfiguratorTest() override = default;
 
   void SetUp() override {
     log_.reset(new ActionLogger());

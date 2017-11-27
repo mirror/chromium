@@ -106,7 +106,7 @@ class GestureEventConsumeDelegate : public TestWindowDelegate {
         flags_(0),
         wait_until_event_(ui::ET_UNKNOWN) {}
 
-  ~GestureEventConsumeDelegate() override {}
+  ~GestureEventConsumeDelegate() override = default;
 
   void Reset() {
     events_.clear();
@@ -342,7 +342,7 @@ class QueueTouchEventDelegate : public GestureEventConsumeDelegate {
         dispatcher_(dispatcher),
         synchronous_ack_for_next_event_(AckState::PENDING) {}
 
-  ~QueueTouchEventDelegate() override {}
+  ~QueueTouchEventDelegate() override = default;
 
   void OnTouchEvent(ui::TouchEvent* event) override {
     event->DisableSynchronousHandling();
@@ -561,7 +561,7 @@ class TestEventHandler : public ui::EventHandler {
         touch_pressed_count_(0),
         touch_moved_count_(0) {}
 
-  ~TestEventHandler() override {}
+  ~TestEventHandler() override = default;
 
   void OnTouchEvent(ui::TouchEvent* event) override {
     switch (event->type()) {
@@ -612,8 +612,8 @@ class TestEventHandler : public ui::EventHandler {
 // event.
 class RemoveOnTouchCancelHandler : public TestEventHandler {
  public:
-  RemoveOnTouchCancelHandler() {}
-  ~RemoveOnTouchCancelHandler() override {}
+  RemoveOnTouchCancelHandler() = default;
+  ~RemoveOnTouchCancelHandler() override = default;
 
  private:
   // ui::EventHandler:
@@ -662,7 +662,7 @@ void SetTouchRadius(ui::TouchEvent* event, float radius_x, float radius_y) {
 
 class GestureRecognizerTest : public AuraTestBase {
  public:
-  GestureRecognizerTest() {}
+  GestureRecognizerTest() = default;
 
   void SetUp() override {
     AuraTestBase::SetUp();
@@ -676,7 +676,7 @@ class GestureRecognizerTest : public AuraTestBase {
 
 class GestureRecognizerWithSwitchTest : public GestureRecognizerTest {
  public:
-  GestureRecognizerWithSwitchTest() {}
+  GestureRecognizerWithSwitchTest() = default;
 
   void SetUp() override {
     GestureRecognizerTest::SetUp();
@@ -3160,7 +3160,7 @@ TEST_F(GestureRecognizerTest, LongPressTimerStopsOnPreventDefaultedTouchMoves) {
 class ConsumesTouchMovesDelegate : public GestureEventConsumeDelegate {
  public:
   ConsumesTouchMovesDelegate() : consume_touch_move_(true) {}
-  ~ConsumesTouchMovesDelegate() override {}
+  ~ConsumesTouchMovesDelegate() override = default;
 
   void set_consume_touch_move(bool consume) { consume_touch_move_ = consume; }
 

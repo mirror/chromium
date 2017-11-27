@@ -8,9 +8,9 @@
 
 namespace aura {
 
-TestWindowTree::TestWindowTree() {}
+TestWindowTree::TestWindowTree() = default;
 
-TestWindowTree::~TestWindowTree() {}
+TestWindowTree::~TestWindowTree() = default;
 
 bool TestWindowTree::WasEventAcked(uint32_t event_id) const {
   for (const AckedEvent& acked_event : acked_events_) {

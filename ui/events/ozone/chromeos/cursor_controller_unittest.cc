@@ -16,8 +16,8 @@ const gfx::AcceleratedWidget kTestWindow = 1;
 
 class CursorControllerTest : public testing::Test {
  public:
-  CursorControllerTest() {}
-  ~CursorControllerTest() override {}
+  CursorControllerTest() = default;
+  ~CursorControllerTest() override = default;
 
   void TearDown() override {
     ui::CursorController::GetInstance()->ClearCursorConfigForWindow(

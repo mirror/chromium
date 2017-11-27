@@ -7,11 +7,9 @@
 
 namespace ui {
 
-StubOverlayManager::StubOverlayManager() {
-}
+StubOverlayManager::StubOverlayManager() = default;
 
-StubOverlayManager::~StubOverlayManager() {
-}
+StubOverlayManager::~StubOverlayManager() = default;
 
 std::unique_ptr<OverlayCandidatesOzone>
 StubOverlayManager::CreateOverlayCandidates(gfx::AcceleratedWidget w) {

@@ -132,8 +132,7 @@ TouchEventConverterEvdev::TouchEventConverterEvdev(
   touch_evdev_debug_buffer_.Initialize(devinfo);
 }
 
-TouchEventConverterEvdev::~TouchEventConverterEvdev() {
-}
+TouchEventConverterEvdev::~TouchEventConverterEvdev() = default;
 
 void TouchEventConverterEvdev::Initialize(const EventDeviceInfo& info) {
   has_mt_ = info.HasMultitouch();

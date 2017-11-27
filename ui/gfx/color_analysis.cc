@@ -171,7 +171,7 @@ class ColorBox {
       : ColorBox(color_space, gfx::Range(0, color_space->size())) {}
   ColorBox(const ColorBox& other) = default;
   ColorBox& operator=(const ColorBox& other) = default;
-  ~ColorBox() {}
+  ~ColorBox() = default;
 
   // Can't split if there's only one color in the box.
   bool CanSplit() const { return color_range_.length() > 1; }
@@ -468,17 +468,14 @@ std::vector<SkColor> CalculateProminentColors(
 
 } // namespace
 
-KMeanImageSampler::KMeanImageSampler() {
-}
+KMeanImageSampler::KMeanImageSampler() = default;
 
-KMeanImageSampler::~KMeanImageSampler() {
-}
+KMeanImageSampler::~KMeanImageSampler() = default;
 
 GridSampler::GridSampler() : calls_(0) {
 }
 
-GridSampler::~GridSampler() {
-}
+GridSampler::~GridSampler() = default;
 
 int GridSampler::GetSample(int width, int height) {
   // Hand-drawn bitmaps often have special outlines or feathering at the edges.

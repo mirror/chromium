@@ -16,8 +16,7 @@ RendererBase::RendererBase(gfx::AcceleratedWidget widget, const gfx::Size& size)
     : widget_(widget), size_(size) {
 }
 
-RendererBase::~RendererBase() {
-}
+RendererBase::~RendererBase() = default;
 
 float RendererBase::NextFraction() {
   float fraction =

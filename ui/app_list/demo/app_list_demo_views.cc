@@ -36,7 +36,7 @@ class DemoAppListViewDelegate : public app_list::test::AppListTestViewDelegate {
  public:
   explicit DemoAppListViewDelegate(content::BrowserContext* browser_context)
       : view_(NULL), browser_context_(browser_context) {}
-  ~DemoAppListViewDelegate() override {}
+  ~DemoAppListViewDelegate() override = default;
 
   app_list::AppListView* InitView(gfx::NativeWindow window_context);
 

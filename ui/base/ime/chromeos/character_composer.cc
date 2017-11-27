@@ -61,8 +61,7 @@ namespace ui {
 CharacterComposer::CharacterComposer() : composition_mode_(KEY_SEQUENCE_MODE) {
 }
 
-CharacterComposer::~CharacterComposer() {
-}
+CharacterComposer::~CharacterComposer() = default;
 
 void CharacterComposer::Reset() {
   compose_buffer_.clear();

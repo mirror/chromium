@@ -128,7 +128,7 @@ EventDeviceInfo::EventDeviceInfo() {
   memset(abs_info_, 0, sizeof(abs_info_));
 }
 
-EventDeviceInfo::~EventDeviceInfo() {}
+EventDeviceInfo::~EventDeviceInfo() = default;
 
 bool EventDeviceInfo::Initialize(int fd, const base::FilePath& path) {
   if (!GetEventBits(fd, path, 0, ev_bits_, sizeof(ev_bits_)))

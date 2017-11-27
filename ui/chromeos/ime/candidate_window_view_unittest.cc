@@ -67,8 +67,8 @@ void InitCandidateWindowWithCandidatesFilled(
 
 class CandidateWindowViewTest : public views::ViewsTestBase {
  public:
-  CandidateWindowViewTest() {}
-  ~CandidateWindowViewTest() override {}
+  CandidateWindowViewTest() = default;
+  ~CandidateWindowViewTest() override = default;
 
  protected:
   void SetUp() override {

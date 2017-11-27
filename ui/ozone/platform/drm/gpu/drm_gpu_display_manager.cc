@@ -69,8 +69,7 @@ DrmGpuDisplayManager::DrmGpuDisplayManager(ScreenManager* screen_manager,
     : screen_manager_(screen_manager), drm_device_manager_(drm_device_manager) {
 }
 
-DrmGpuDisplayManager::~DrmGpuDisplayManager() {
-}
+DrmGpuDisplayManager::~DrmGpuDisplayManager() = default;
 
 MovableDisplaySnapshots DrmGpuDisplayManager::GetDisplays() {
   std::vector<std::unique_ptr<DrmDisplay>> old_displays;

@@ -28,7 +28,7 @@ class TestSoftwareMirroringController
     : public DisplayConfigurator::SoftwareMirroringController {
  public:
   TestSoftwareMirroringController() : is_enabled_(false) {}
-  ~TestSoftwareMirroringController() override {}
+  ~TestSoftwareMirroringController() override = default;
 
   // DisplayConfigurator::SoftwareMirroringController:
   void SetSoftwareMirroring(bool enabled) override { is_enabled_ = enabled; }
@@ -46,7 +46,7 @@ class TestDisplayLayoutManager : public DisplayLayoutManager {
       : should_mirror_(true),
         display_state_(MULTIPLE_DISPLAY_STATE_INVALID),
         power_state_(chromeos::DISPLAY_POWER_ALL_ON) {}
-  ~TestDisplayLayoutManager() override {}
+  ~TestDisplayLayoutManager() override = default;
 
   void set_should_mirror(bool should_mirror) { should_mirror_ = should_mirror; }
 
@@ -163,7 +163,7 @@ class UpdateDisplayConfigurationTaskTest : public testing::Test {
                        .AddMode(small_mode_.Clone())
                        .Build();
   }
-  ~UpdateDisplayConfigurationTaskTest() override {}
+  ~UpdateDisplayConfigurationTaskTest() override = default;
 
   void UpdateDisplays(size_t count) {
     std::vector<DisplaySnapshot*> displays;

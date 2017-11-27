@@ -61,7 +61,7 @@ class ScopedCursorHider {
 WindowPortLocal::WindowPortLocal(Window* window)
     : window_(window), weak_factory_(this) {}
 
-WindowPortLocal::~WindowPortLocal() {}
+WindowPortLocal::~WindowPortLocal() = default;
 
 void WindowPortLocal::OnPreInit(Window* window) {}
 

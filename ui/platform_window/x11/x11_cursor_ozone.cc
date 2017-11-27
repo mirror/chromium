@@ -75,7 +75,7 @@ scoped_refptr<X11CursorOzone> X11CursorOzone::CreateInvisible() {
   return invisible_;
 }
 
-X11CursorOzone::X11CursorOzone() {}
+X11CursorOzone::X11CursorOzone() = default;
 
 X11CursorOzone::~X11CursorOzone() {
   XFreeCursor(gfx::GetXDisplay(), xcursor_);

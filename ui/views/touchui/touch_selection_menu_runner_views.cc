@@ -134,8 +134,7 @@ bool TouchSelectionMenuRunnerViews::Menu::IsMenuAvailable(
   return false;
 }
 
-TouchSelectionMenuRunnerViews::Menu::~Menu() {
-}
+TouchSelectionMenuRunnerViews::Menu::~Menu() = default;
 
 void TouchSelectionMenuRunnerViews::Menu::CreateButtons() {
   for (size_t i = 0; i < arraysize(kMenuCommands); i++) {
@@ -220,7 +219,7 @@ TouchSelectionMenuRunnerViews::TestApi::TestApi(
   DCHECK(menu_runner_);
 }
 
-TouchSelectionMenuRunnerViews::TestApi::~TestApi() {}
+TouchSelectionMenuRunnerViews::TestApi::~TestApi() = default;
 
 gfx::Rect TouchSelectionMenuRunnerViews::TestApi::GetAnchorRect() const {
   TouchSelectionMenuRunnerViews::Menu* menu = menu_runner_->menu_;

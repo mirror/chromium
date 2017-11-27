@@ -40,7 +40,7 @@ TestScreen* TestScreen::Create(const gfx::Size& size,
                         window_tree_client);
 }
 
-TestScreen::~TestScreen() {}
+TestScreen::~TestScreen() = default;
 
 WindowTreeHost* TestScreen::CreateHostForPrimaryDisplay() {
   DCHECK(!host_);

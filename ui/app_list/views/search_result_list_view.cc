@@ -54,7 +54,7 @@ SearchResultListView::SearchResultListView(AppListMainView* main_view,
   AddChildView(auto_launch_indicator_);
 }
 
-SearchResultListView::~SearchResultListView() {}
+SearchResultListView::~SearchResultListView() = default;
 
 bool SearchResultListView::IsResultViewSelected(
     const SearchResultView* result_view) const {

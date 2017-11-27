@@ -32,7 +32,7 @@ MultiAnimation::MultiAnimation(const Parts& parts,
   DCHECK(!parts_.empty());
 }
 
-MultiAnimation::~MultiAnimation() {}
+MultiAnimation::~MultiAnimation() = default;
 
 // static.
 base::TimeDelta MultiAnimation::GetDefaultTimerInterval() {

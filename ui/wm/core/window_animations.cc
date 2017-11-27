@@ -185,7 +185,7 @@ class ImplicitHidingWindowAnimationObserver
   ImplicitHidingWindowAnimationObserver(
       aura::Window* window,
       ui::ScopedLayerAnimationSettings* settings);
-  ~ImplicitHidingWindowAnimationObserver() override {}
+  ~ImplicitHidingWindowAnimationObserver() override = default;
 
   // ui::ImplicitAnimationObserver:
   void OnImplicitAnimationsCompleted() override;
@@ -426,7 +426,7 @@ class RotateHidingWindowAnimationObserver
  public:
   explicit RotateHidingWindowAnimationObserver(aura::Window* window)
       : HidingWindowAnimationObserverBase(window) {}
-  ~RotateHidingWindowAnimationObserver() override {}
+  ~RotateHidingWindowAnimationObserver() override = default;
 
   // Destroys itself after |last_sequence| ends or is aborted. Does not take
   // ownership of |last_sequence|, which should not be NULL.

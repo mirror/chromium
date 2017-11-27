@@ -25,7 +25,7 @@ GLSurfaceOverlay::GLSurfaceOverlay(int z_order,
 
 GLSurfaceOverlay::GLSurfaceOverlay(const GLSurfaceOverlay& other) = default;
 
-GLSurfaceOverlay::~GLSurfaceOverlay() {}
+GLSurfaceOverlay::~GLSurfaceOverlay() = default;
 
 bool GLSurfaceOverlay::ScheduleOverlayPlane(
     gfx::AcceleratedWidget widget) const {

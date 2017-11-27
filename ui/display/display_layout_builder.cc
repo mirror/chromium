@@ -18,7 +18,7 @@ DisplayLayoutBuilder::DisplayLayoutBuilder(int64_t primary_id)
   layout_->primary_id = primary_id;
 }
 
-DisplayLayoutBuilder::~DisplayLayoutBuilder() {}
+DisplayLayoutBuilder::~DisplayLayoutBuilder() = default;
 
 DisplayLayoutBuilder& DisplayLayoutBuilder::SetDefaultUnified(
     bool default_unified) {

@@ -17,7 +17,7 @@ MultiLayerAnimatorTestController::MultiLayerAnimatorTestController(
     MultiLayerAnimatorTestControllerDelegate* delegate)
     : delegate_(delegate) {}
 
-MultiLayerAnimatorTestController::~MultiLayerAnimatorTestController() {}
+MultiLayerAnimatorTestController::~MultiLayerAnimatorTestController() = default;
 
 void MultiLayerAnimatorTestController::SetDisableAnimationTimers(
     bool disable_timers) {

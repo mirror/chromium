@@ -20,7 +20,7 @@ GLImageSharedMemory::GLImageSharedMemory(const gfx::Size& size,
                                          unsigned internalformat)
     : GLImageMemory(size, internalformat) {}
 
-GLImageSharedMemory::~GLImageSharedMemory() {}
+GLImageSharedMemory::~GLImageSharedMemory() = default;
 
 bool GLImageSharedMemory::Initialize(
     const base::SharedMemoryHandle& handle,

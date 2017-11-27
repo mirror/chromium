@@ -11,18 +11,18 @@
 
 namespace ui {
 
-DisplayMode_Params::DisplayMode_Params() {}
+DisplayMode_Params::DisplayMode_Params() = default;
 
-DisplayMode_Params::~DisplayMode_Params() {}
+DisplayMode_Params::~DisplayMode_Params() = default;
 
-DisplaySnapshot_Params::DisplaySnapshot_Params() {}
+DisplaySnapshot_Params::DisplaySnapshot_Params() = default;
 
 DisplaySnapshot_Params::DisplaySnapshot_Params(
     const DisplaySnapshot_Params& other) = default;
 
-DisplaySnapshot_Params::~DisplaySnapshot_Params() {}
+DisplaySnapshot_Params::~DisplaySnapshot_Params() = default;
 
-OverlayCheck_Params::OverlayCheck_Params() {}
+OverlayCheck_Params::OverlayCheck_Params() = default;
 
 OverlayCheck_Params::OverlayCheck_Params(
     const ui::OverlaySurfaceCandidate& candidate)
@@ -37,6 +37,6 @@ OverlayCheck_Params::OverlayCheck_Params(
 OverlayCheck_Params::OverlayCheck_Params(const OverlayCheck_Params& other) =
     default;
 
-OverlayCheck_Params::~OverlayCheck_Params() {}
+OverlayCheck_Params::~OverlayCheck_Params() = default;
 
 }  // namespace ui

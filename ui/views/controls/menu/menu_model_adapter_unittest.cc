@@ -26,7 +26,7 @@ class MenuModelBase : public ui::MenuModel {
         last_activation_(-1) {
   }
 
-  ~MenuModelBase() override {}
+  ~MenuModelBase() override = default;
 
   // ui::MenuModel implementation:
 
@@ -133,7 +133,7 @@ class SubmenuModel : public MenuModelBase {
     items_.push_back(Item(TYPE_COMMAND, "submenu item 1", NULL));
   }
 
-  ~SubmenuModel() override {}
+  ~SubmenuModel() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SubmenuModel);
@@ -151,7 +151,7 @@ class RootModel : public MenuModelBase {
     items_.push_back(Item(TYPE_RADIO, "radio 4", NULL));
   }
 
-  ~RootModel() override {}
+  ~RootModel() override = default;
 
  private:
   std::unique_ptr<MenuModel> submenu_model_;

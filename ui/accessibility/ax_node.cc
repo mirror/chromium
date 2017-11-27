@@ -17,8 +17,7 @@ AXNode::AXNode(AXNode* parent, int32_t id, int32_t index_in_parent)
   data_.id = id;
 }
 
-AXNode::~AXNode() {
-}
+AXNode::~AXNode() = default;
 
 bool AXNode::IsTextNode() const {
   return data().role == AX_ROLE_STATIC_TEXT ||

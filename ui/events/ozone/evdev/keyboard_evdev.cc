@@ -68,8 +68,7 @@ KeyboardEvdev::KeyboardEvdev(EventModifiers* modifiers,
   repeat_interval_ = base::TimeDelta::FromMilliseconds(kRepeatIntervalMs);
 }
 
-KeyboardEvdev::~KeyboardEvdev() {
-}
+KeyboardEvdev::~KeyboardEvdev() = default;
 
 void KeyboardEvdev::OnKeyChange(unsigned int key,
                                 bool down,

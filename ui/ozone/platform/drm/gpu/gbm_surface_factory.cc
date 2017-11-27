@@ -38,7 +38,7 @@ class GLOzoneEGLGbm : public GLOzoneEGL {
                 DrmThreadProxy* drm_thread_proxy)
       : surface_factory_(surface_factory),
         drm_thread_proxy_(drm_thread_proxy) {}
-  ~GLOzoneEGLGbm() override {}
+  ~GLOzoneEGLGbm() override = default;
 
   scoped_refptr<gl::GLSurface> CreateViewGLSurface(
       gfx::AcceleratedWidget window) override {

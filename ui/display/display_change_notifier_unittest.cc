@@ -21,7 +21,7 @@ class MockDisplayObserver : public DisplayObserver {
         display_changed_(0),
         latest_metrics_change_(DisplayObserver::DISPLAY_METRIC_NONE) {}
 
-  ~MockDisplayObserver() override {}
+  ~MockDisplayObserver() override = default;
 
   void OnDisplayAdded(const Display& display) override { display_added_++; }
 

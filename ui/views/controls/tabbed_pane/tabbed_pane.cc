@@ -142,7 +142,7 @@ Tab::Tab(TabbedPane* tabbed_pane, const base::string16& title, View* contents)
   AddChildView(title_);
 }
 
-Tab::~Tab() {}
+Tab::~Tab() = default;
 
 void Tab::SetSelected(bool selected) {
   contents_->SetVisible(selected);
@@ -276,7 +276,7 @@ MdTab::MdTab(TabbedPane* tabbed_pane,
   OnStateChanged();
 }
 
-MdTab::~MdTab() {}
+MdTab::~MdTab() = default;
 
 void MdTab::OnStateChanged() {
   ui::NativeTheme* theme = GetNativeTheme();
@@ -331,7 +331,7 @@ TabStrip::TabStrip() {
   SetLayoutManager(layout);
 }
 
-TabStrip::~TabStrip() {}
+TabStrip::~TabStrip() = default;
 
 void TabStrip::OnSelectedTabChanged(Tab* from_tab, Tab* to_tab) {}
 
@@ -411,7 +411,7 @@ MdTabStrip::MdTabStrip() {
   contract_animation_->SetDuration(base::TimeDelta::FromMilliseconds(180));
 }
 
-MdTabStrip::~MdTabStrip() {}
+MdTabStrip::~MdTabStrip() = default;
 
 void MdTabStrip::OnSelectedTabChanged(Tab* from_tab, Tab* to_tab) {
   DCHECK(!from_tab->selected());
@@ -512,7 +512,7 @@ TabbedPane::TabbedPane()
   AddChildView(contents_);
 }
 
-TabbedPane::~TabbedPane() {}
+TabbedPane::~TabbedPane() = default;
 
 int TabbedPane::GetSelectedTabIndex() const {
   return tab_strip_->GetSelectedTabIndex();

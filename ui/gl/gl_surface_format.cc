@@ -7,13 +7,11 @@
 
 namespace gl {
 
-GLSurfaceFormat::GLSurfaceFormat() {
-}
+GLSurfaceFormat::GLSurfaceFormat() = default;
 
 GLSurfaceFormat::GLSurfaceFormat(const GLSurfaceFormat& other) = default;
 
-GLSurfaceFormat::~GLSurfaceFormat() {
-}
+GLSurfaceFormat::~GLSurfaceFormat() = default;
 
 GLSurfaceFormat::GLSurfaceFormat(SurfacePixelLayout layout) {
   pixel_layout_ = layout;

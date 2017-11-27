@@ -38,8 +38,7 @@ AppListTestModel::AppListTestItem::AppListTestItem(
   SetIcon(CreateImageSkia(kGridIconDimension, kGridIconDimension));
 }
 
-AppListTestModel::AppListTestItem::~AppListTestItem() {
-}
+AppListTestModel::AppListTestItem::~AppListTestItem() = default;
 
 void AppListTestModel::AppListTestItem::Activate(int event_flags) {
   model_->ItemActivated(this);

@@ -16,7 +16,7 @@ ForwardingDisplayDelegate::ForwardingDisplayDelegate(
     mojom::NativeDisplayDelegatePtr delegate)
     : delegate_(std::move(delegate)), binding_(this) {}
 
-ForwardingDisplayDelegate::~ForwardingDisplayDelegate() {}
+ForwardingDisplayDelegate::~ForwardingDisplayDelegate() = default;
 
 void ForwardingDisplayDelegate::Initialize() {
   // TODO(kylechar/sky): Figure out how to make this not synchronous.

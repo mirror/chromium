@@ -6,7 +6,7 @@
 
 namespace ui {
 
-SelectedFileInfo::SelectedFileInfo() {}
+SelectedFileInfo::SelectedFileInfo() = default;
 
 SelectedFileInfo::SelectedFileInfo(const base::FilePath& in_file_path,
                                    const base::FilePath& in_local_path)
@@ -15,6 +15,6 @@ SelectedFileInfo::SelectedFileInfo(const base::FilePath& in_file_path,
   display_name = in_file_path.BaseName().value();
 }
 
-SelectedFileInfo::~SelectedFileInfo() {}
+SelectedFileInfo::~SelectedFileInfo() = default;
 
 }  // namespace ui

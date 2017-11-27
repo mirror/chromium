@@ -80,7 +80,7 @@ TooltipController* GetController(Widget* widget) {
 class TooltipControllerTest : public ViewsTestBase {
  public:
   TooltipControllerTest() : view_(NULL) {}
-  ~TooltipControllerTest() override {}
+  ~TooltipControllerTest() override = default;
 
   void SetUp() override {
     ViewsTestBase::SetUp();
@@ -527,8 +527,8 @@ int IndexInParent(const aura::Window* window) {
 
 class TooltipControllerCaptureTest : public TooltipControllerTest {
  public:
-  TooltipControllerCaptureTest() {}
-  ~TooltipControllerCaptureTest() override {}
+  TooltipControllerCaptureTest() = default;
+  ~TooltipControllerCaptureTest() override = default;
 
   void SetUp() override {
     TooltipControllerTest::SetUp();
@@ -640,7 +640,7 @@ namespace {
 class TestTooltip : public Tooltip {
  public:
   TestTooltip() : is_visible_(false) {}
-  ~TestTooltip() override {}
+  ~TestTooltip() override = default;
 
   const base::string16& tooltip_text() const { return tooltip_text_; }
 
@@ -673,7 +673,7 @@ class TestTooltip : public Tooltip {
 class TooltipControllerTest2 : public aura::test::AuraTestBase {
  public:
   TooltipControllerTest2() : test_tooltip_(new TestTooltip) {}
-  ~TooltipControllerTest2() override {}
+  ~TooltipControllerTest2() override = default;
 
   void SetUp() override {
     aura::test::AuraTestBase::SetUp();
@@ -744,7 +744,7 @@ TEST_F(TooltipControllerTest2, CloseOnCancelMode) {
 class TooltipControllerTest3 : public ViewsTestBase {
  public:
   TooltipControllerTest3() : test_tooltip_(new TestTooltip) {}
-  ~TooltipControllerTest3() override {}
+  ~TooltipControllerTest3() override = default;
 
   void SetUp() override {
     ViewsTestBase::SetUp();

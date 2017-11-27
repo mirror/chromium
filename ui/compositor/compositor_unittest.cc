@@ -28,8 +28,8 @@ namespace {
 
 class CompositorTest : public testing::Test {
  public:
-  CompositorTest() {}
-  ~CompositorTest() override {}
+  CompositorTest() = default;
+  ~CompositorTest() override = default;
 
   void SetUp() override {
     ui::ContextFactory* context_factory = nullptr;

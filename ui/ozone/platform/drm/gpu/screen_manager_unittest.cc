@@ -37,8 +37,8 @@ const uint32_t kSecondaryConnector = 4;
 
 class ScreenManagerTest : public testing::Test {
  public:
-  ScreenManagerTest() {}
-  ~ScreenManagerTest() override {}
+  ScreenManagerTest() = default;
+  ~ScreenManagerTest() override = default;
 
   gfx::Rect GetPrimaryBounds() const {
     return gfx::Rect(0, 0, kDefaultMode.hdisplay, kDefaultMode.vdisplay);

@@ -59,8 +59,7 @@ NotificationList::NotificationList(MessageCenter* message_center)
       quiet_mode_(false) {
 }
 
-NotificationList::~NotificationList() {
-}
+NotificationList::~NotificationList() = default;
 
 void NotificationList::SetNotificationsShown(
     const NotificationBlockers& blockers,

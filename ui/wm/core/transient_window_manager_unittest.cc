@@ -27,7 +27,7 @@ class TestTransientWindowObserver : public TransientWindowObserver {
   TestTransientWindowObserver() : add_count_(0), remove_count_(0) {
   }
 
-  ~TestTransientWindowObserver() override {}
+  ~TestTransientWindowObserver() override = default;
 
   int add_count() const { return add_count_; }
   int remove_count() const { return remove_count_; }
@@ -71,8 +71,8 @@ class WindowVisibilityObserver : public aura::WindowObserver {
 
 class TransientWindowManagerTest : public aura::test::AuraTestBase {
  public:
-  TransientWindowManagerTest() {}
-  ~TransientWindowManagerTest() override {}
+  TransientWindowManagerTest() = default;
+  ~TransientWindowManagerTest() override = default;
 
  protected:
   // Creates a transient window that is transient to |parent|.

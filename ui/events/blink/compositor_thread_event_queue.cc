@@ -11,9 +11,9 @@
 
 namespace ui {
 
-CompositorThreadEventQueue::CompositorThreadEventQueue() {}
+CompositorThreadEventQueue::CompositorThreadEventQueue() = default;
 
-CompositorThreadEventQueue::~CompositorThreadEventQueue() {}
+CompositorThreadEventQueue::~CompositorThreadEventQueue() = default;
 
 void CompositorThreadEventQueue::Queue(
     std::unique_ptr<EventWithCallback> new_event,

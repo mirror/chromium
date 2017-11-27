@@ -84,8 +84,7 @@ MessageView::MessageView(MessageViewDelegate* delegate,
   UpdateWithNotification(notification);
 }
 
-MessageView::~MessageView() {
-}
+MessageView::~MessageView() = default;
 
 void MessageView::UpdateWithNotification(const Notification& notification) {
   pinned_ = notification.pinned();

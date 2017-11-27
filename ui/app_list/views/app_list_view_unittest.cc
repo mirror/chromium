@@ -80,7 +80,7 @@ void CheckView(views::View* subview) {
 class TestStartPageSearchResult : public TestSearchResult {
  public:
   TestStartPageSearchResult() { set_display_type(DISPLAY_RECOMMENDATION); }
-  ~TestStartPageSearchResult() override {}
+  ~TestStartPageSearchResult() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestStartPageSearchResult);

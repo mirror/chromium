@@ -120,7 +120,7 @@ base::string16 ToRTL(const char* ascii) {
 
 class LabelTest : public ViewsTestBase {
  public:
-  LabelTest() {}
+  LabelTest() = default;
 
   // ViewsTestBase:
   void SetUp() override {
@@ -168,7 +168,7 @@ class LabelSelectionTest : public LabelTest {
   // below the label in either visual direction.
   enum { NW, NORTH, NE, SE, SOUTH, SW };
 
-  LabelSelectionTest() {}
+  LabelSelectionTest() = default;
 
   // LabelTest overrides:
   void SetUp() override {
@@ -273,7 +273,7 @@ class LabelSelectionTest : public LabelTest {
 class MDLabelTest : public LabelTest,
                     public ::testing::WithParamInterface<SecondaryUiMode> {
  public:
-  MDLabelTest() {}
+  MDLabelTest() = default;
 
   // LabelTest:
   void SetUp() override {

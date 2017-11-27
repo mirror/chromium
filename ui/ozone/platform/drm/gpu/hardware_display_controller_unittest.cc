@@ -37,7 +37,7 @@ const gfx::SizeF kDefaultModeSizeF(1.0, 1.0);
 class HardwareDisplayControllerTest : public testing::Test {
  public:
   HardwareDisplayControllerTest() : page_flips_(0) {}
-  ~HardwareDisplayControllerTest() override {}
+  ~HardwareDisplayControllerTest() override = default;
 
   void SetUp() override;
   void TearDown() override;

@@ -27,8 +27,7 @@ InputMethodMenuItem::InputMethodMenuItem()
       is_selection_item_checked(false) {
 }
 
-InputMethodMenuItem::~InputMethodMenuItem() {
-}
+InputMethodMenuItem::~InputMethodMenuItem() = default;
 
 bool InputMethodMenuItem::operator==(const InputMethodMenuItem& other) const {
   return key == other.key &&

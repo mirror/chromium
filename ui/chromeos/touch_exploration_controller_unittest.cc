@@ -36,8 +36,8 @@ namespace {
 // Records all mouse, touch, gesture, and key events.
 class EventCapturer : public ui::EventHandler {
  public:
-  EventCapturer() {}
-  ~EventCapturer() override {}
+  EventCapturer() = default;
+  ~EventCapturer() override = default;
 
   void Reset() {
     events_.clear();
@@ -209,7 +209,7 @@ class TouchExplorationControllerTestApi {
 class TouchExplorationTest : public aura::test::AuraTestBase {
  public:
   TouchExplorationTest() : simulated_clock_(nullptr) {}
-  ~TouchExplorationTest() override {}
+  ~TouchExplorationTest() override = default;
 
   void SetUp() override {
     if (gl::GetGLImplementation() == gl::kGLImplementationNone)

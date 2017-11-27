@@ -29,8 +29,7 @@ TestWindowDelegate::TestWindowDelegate()
       can_focus_(true) {
 }
 
-TestWindowDelegate::~TestWindowDelegate() {
-}
+TestWindowDelegate::~TestWindowDelegate() = default;
 
 // static
 TestWindowDelegate* TestWindowDelegate::CreateSelfDestroyingDelegate() {
@@ -105,8 +104,7 @@ ColorTestWindowDelegate::ColorTestWindowDelegate(SkColor color)
       last_key_code_(ui::VKEY_UNKNOWN) {
 }
 
-ColorTestWindowDelegate::~ColorTestWindowDelegate() {
-}
+ColorTestWindowDelegate::~ColorTestWindowDelegate() = default;
 
 void ColorTestWindowDelegate::OnBoundsChanged(const gfx::Rect& old_bounds,
                                               const gfx::Rect& new_bounds) {

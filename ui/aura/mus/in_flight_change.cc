@@ -20,7 +20,7 @@ namespace aura {
 InFlightChange::InFlightChange(WindowMus* window, ChangeType type)
     : window_(window), change_type_(type) {}
 
-InFlightChange::~InFlightChange() {}
+InFlightChange::~InFlightChange() = default;
 
 bool InFlightChange::Matches(const InFlightChange& change) const {
   DCHECK(change.window_ == window_ && change.change_type_ == change_type_);
@@ -41,7 +41,7 @@ InFlightBoundsChange::InFlightBoundsChange(
       revert_bounds_(revert_bounds),
       revert_local_surface_id_(revert_local_surface_id) {}
 
-InFlightBoundsChange::~InFlightBoundsChange() {}
+InFlightBoundsChange::~InFlightBoundsChange() = default;
 
 void InFlightBoundsChange::SetRevertValueFrom(const InFlightChange& change) {
   revert_bounds_ =
@@ -76,7 +76,7 @@ InFlightTransformChange::InFlightTransformChange(
       window_tree_client_(window_tree_client),
       revert_transform_(revert_transform) {}
 
-InFlightTransformChange::~InFlightTransformChange() {}
+InFlightTransformChange::~InFlightTransformChange() = default;
 
 void InFlightTransformChange::SetRevertValueFrom(const InFlightChange& change) {
   revert_transform_ =
@@ -93,7 +93,7 @@ void InFlightTransformChange::Revert() {
 CrashInFlightChange::CrashInFlightChange(WindowMus* window, ChangeType type)
     : InFlightChange(window, type) {}
 
-CrashInFlightChange::~CrashInFlightChange() {}
+CrashInFlightChange::~CrashInFlightChange() = default;
 
 void CrashInFlightChange::SetRevertValueFrom(const InFlightChange& change) {
   CHECK(false);
@@ -151,7 +151,7 @@ InFlightCaptureChange::InFlightCaptureChange(
     : InFlightWindowTreeClientChange(client, revert_value, ChangeType::CAPTURE),
       capture_synchronizer_(capture_synchronizer) {}
 
-InFlightCaptureChange::~InFlightCaptureChange() {}
+InFlightCaptureChange::~InFlightCaptureChange() = default;
 
 void InFlightCaptureChange::Revert() {
   capture_synchronizer_->SetCaptureFromServer(revert_window());
@@ -165,7 +165,7 @@ InFlightFocusChange::InFlightFocusChange(WindowTreeClient* client,
     : InFlightWindowTreeClientChange(client, revert_value, ChangeType::FOCUS),
       focus_synchronizer_(focus_synchronizer) {}
 
-InFlightFocusChange::~InFlightFocusChange() {}
+InFlightFocusChange::~InFlightFocusChange() = default;
 
 void InFlightFocusChange::Revert() {
   focus_synchronizer_->SetFocusFromServer(revert_window());
@@ -181,7 +181,7 @@ InFlightPropertyChange::InFlightPropertyChange(
       property_name_(property_name),
       revert_value_(std::move(revert_value)) {}
 
-InFlightPropertyChange::~InFlightPropertyChange() {}
+InFlightPropertyChange::~InFlightPropertyChange() = default;
 
 bool InFlightPropertyChange::Matches(const InFlightChange& change) const {
   return static_cast<const InFlightPropertyChange&>(change).property_name_ ==
@@ -210,7 +210,7 @@ InFlightCursorChange::InFlightCursorChange(WindowMus* window,
     : InFlightChange(window, ChangeType::CURSOR),
       revert_cursor_(revert_value) {}
 
-InFlightCursorChange::~InFlightCursorChange() {}
+InFlightCursorChange::~InFlightCursorChange() = default;
 
 void InFlightCursorChange::SetRevertValueFrom(const InFlightChange& change) {
   revert_cursor_ =
@@ -230,7 +230,7 @@ InFlightVisibleChange::InFlightVisibleChange(WindowTreeClient* client,
       window_tree_client_(client),
       revert_visible_(revert_value) {}
 
-InFlightVisibleChange::~InFlightVisibleChange() {}
+InFlightVisibleChange::~InFlightVisibleChange() = default;
 
 void InFlightVisibleChange::SetRevertValueFrom(const InFlightChange& change) {
   revert_visible_ =
@@ -248,7 +248,7 @@ InFlightOpacityChange::InFlightOpacityChange(WindowMus* window,
     : InFlightChange(window, ChangeType::OPACITY),
       revert_opacity_(revert_value) {}
 
-InFlightOpacityChange::~InFlightOpacityChange() {}
+InFlightOpacityChange::~InFlightOpacityChange() = default;
 
 void InFlightOpacityChange::SetRevertValueFrom(const InFlightChange& change) {
   revert_opacity_ =
@@ -268,7 +268,7 @@ InFlightSetModalTypeChange::InFlightSetModalTypeChange(
     : InFlightChange(window, ChangeType::SET_MODAL),
       revert_modal_type_(revert_value) {}
 
-InFlightSetModalTypeChange::~InFlightSetModalTypeChange() {}
+InFlightSetModalTypeChange::~InFlightSetModalTypeChange() = default;
 
 void InFlightSetModalTypeChange::SetRevertValueFrom(
     const InFlightChange& change) {

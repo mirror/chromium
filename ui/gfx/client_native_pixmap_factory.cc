@@ -30,8 +30,8 @@ void ClientNativePixmapFactory::SetInstance(
   g_instance = instance;
 }
 
-ClientNativePixmapFactory::ClientNativePixmapFactory() {}
+ClientNativePixmapFactory::ClientNativePixmapFactory() = default;
 
-ClientNativePixmapFactory::~ClientNativePixmapFactory() {}
+ClientNativePixmapFactory::~ClientNativePixmapFactory() = default;
 
 }  // namespace gfx

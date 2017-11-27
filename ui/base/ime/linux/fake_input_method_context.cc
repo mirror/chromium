@@ -6,7 +6,7 @@
 
 namespace ui {
 
-FakeInputMethodContext::FakeInputMethodContext() {}
+FakeInputMethodContext::FakeInputMethodContext() = default;
 
 // Overriden from ui::LinuxInputMethodContext
 

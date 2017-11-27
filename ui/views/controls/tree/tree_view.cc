@@ -1122,8 +1122,7 @@ TreeView::InternalNode::InternalNode()
       text_width_(0) {
 }
 
-TreeView::InternalNode::~InternalNode() {
-}
+TreeView::InternalNode::~InternalNode() = default;
 
 void TreeView::InternalNode::Reset(ui::TreeModelNode* node) {
   model_node_ = node;

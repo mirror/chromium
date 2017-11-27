@@ -115,7 +115,7 @@ class MockKMeanImageSampler : public KMeanImageSampler {
         current_result_index_(0) {
   }
 
-  ~MockKMeanImageSampler() override {}
+  ~MockKMeanImageSampler() override = default;
 
   void AddSample(int sample) {
     prebaked_sample_results_.push_back(sample);

@@ -143,8 +143,8 @@ class WindowTreeClientWmTestSurfaceSync
     : public WindowTreeClientWmTest,
       public ::testing::WithParamInterface<bool> {
  public:
-  WindowTreeClientWmTestSurfaceSync() {}
-  ~WindowTreeClientWmTestSurfaceSync() override {}
+  WindowTreeClientWmTestSurfaceSync() = default;
+  ~WindowTreeClientWmTestSurfaceSync() override = default;
 
   // WindowTreeClientWmTest:
   void SetUp() override {
@@ -162,8 +162,8 @@ class WindowTreeClientWmTestSurfaceSync
 // WindowTreeClientWmTest with --force-device-scale-factor=2.
 class WindowTreeClientWmTestHighDPI : public WindowTreeClientWmTest {
  public:
-  WindowTreeClientWmTestHighDPI() {}
-  ~WindowTreeClientWmTestHighDPI() override {}
+  WindowTreeClientWmTestHighDPI() = default;
+  ~WindowTreeClientWmTestHighDPI() override = default;
 
   // WindowTreeClientWmTest:
   void SetUp() override {
@@ -179,8 +179,8 @@ class WindowTreeClientWmTestHighDPI : public WindowTreeClientWmTest {
 // WindowTreeClientClientTest with --force-device-scale-factor=2.
 class WindowTreeClientClientTestHighDPI : public WindowTreeClientClientTest {
  public:
-  WindowTreeClientClientTestHighDPI() {}
-  ~WindowTreeClientClientTestHighDPI() override {}
+  WindowTreeClientClientTestHighDPI() = default;
+  ~WindowTreeClientClientTestHighDPI() override = default;
 
   const ui::PointerEvent* last_event_observed() const {
     return last_event_observed_.get();
@@ -820,7 +820,7 @@ class InputEventBasicTestWindowDelegate : public test::TestWindowDelegate {
  public:
   explicit InputEventBasicTestWindowDelegate(TestWindowTree* test_window_tree)
       : test_window_tree_(test_window_tree) {}
-  ~InputEventBasicTestWindowDelegate() override {}
+  ~InputEventBasicTestWindowDelegate() override = default;
 
   int move_count() const { return move_count_; }
   int press_count() const { return press_count_; }
@@ -898,7 +898,7 @@ class InputEventBasicTestEventHandler : public ui::test::TestEventHandler {
  public:
   explicit InputEventBasicTestEventHandler(Window* target_window)
       : target_window_(target_window) {}
-  ~InputEventBasicTestEventHandler() override {}
+  ~InputEventBasicTestEventHandler() override = default;
 
   int move_count() const { return move_count_; }
   const gfx::Point& last_event_location() const { return last_event_location_; }
@@ -1422,8 +1422,8 @@ TEST_F(WindowTreeClientClientTest, InputTouchEventNoWindow) {
 
 class WindowTreeClientPointerObserverTest : public WindowTreeClientClientTest {
  public:
-  WindowTreeClientPointerObserverTest() {}
-  ~WindowTreeClientPointerObserverTest() override {}
+  WindowTreeClientPointerObserverTest() = default;
+  ~WindowTreeClientPointerObserverTest() override = default;
 
   void DeleteLastEventObserved() { last_event_observed_.reset(); }
   const ui::PointerEvent* last_event_observed() const {
@@ -2080,8 +2080,8 @@ namespace {
 
 class CloseWindowWindowTreeHostObserver : public aura::WindowTreeHostObserver {
  public:
-  CloseWindowWindowTreeHostObserver() {}
-  ~CloseWindowWindowTreeHostObserver() override {}
+  CloseWindowWindowTreeHostObserver() = default;
+  ~CloseWindowWindowTreeHostObserver() override = default;
 
   bool root_destroyed() const { return root_destroyed_; }
 

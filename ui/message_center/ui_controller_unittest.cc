@@ -31,8 +31,8 @@ class TestNotificationDelegate : public message_center::NotificationDelegate {
 
 class MockDelegate : public UiDelegate {
  public:
-  MockDelegate() {}
-  ~MockDelegate() override {}
+  MockDelegate() = default;
+  ~MockDelegate() override = default;
   void OnMessageCenterContentsChanged() override {}
   bool ShowPopups() override { return show_message_center_success_; }
   void HidePopups() override {}
@@ -53,8 +53,8 @@ class MockDelegate : public UiDelegate {
 
 class UiControllerTest : public testing::Test {
  public:
-  UiControllerTest() {}
-  ~UiControllerTest() override {}
+  UiControllerTest() = default;
+  ~UiControllerTest() override = default;
 
   void SetUp() override {
     MessageCenter::Initialize();

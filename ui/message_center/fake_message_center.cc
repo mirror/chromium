@@ -8,11 +8,9 @@
 
 namespace message_center {
 
-FakeMessageCenter::FakeMessageCenter() {
-}
+FakeMessageCenter::FakeMessageCenter() = default;
 
-FakeMessageCenter::~FakeMessageCenter() {
-}
+FakeMessageCenter::~FakeMessageCenter() = default;
 
 void FakeMessageCenter::AddObserver(MessageCenterObserver* observer) {
 }

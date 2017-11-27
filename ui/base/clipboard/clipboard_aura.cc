@@ -48,7 +48,7 @@ class ClipboardData {
       : web_smart_paste_(false),
         format_(0) {}
 
-  virtual ~ClipboardData() {}
+  virtual ~ClipboardData() = default;
 
   // Bitmask of AuraClipboardFormat types.
   int format() const { return format_; }
@@ -160,7 +160,7 @@ class AuraClipboard {
   AuraClipboard() : sequence_number_(0) {
   }
 
-  ~AuraClipboard() {}
+  ~AuraClipboard() = default;
 
   void Clear() {
     sequence_number_++;
@@ -416,15 +416,13 @@ ClipboardData* ClipboardDataBuilder::current_data_ = nullptr;
 }  // namespace
 
 // Clipboard::FormatType implementation.
-Clipboard::FormatType::FormatType() {
-}
+Clipboard::FormatType::FormatType() = default;
 
 Clipboard::FormatType::FormatType(const std::string& native_format)
     : data_(native_format) {
 }
 
-Clipboard::FormatType::~FormatType() {
-}
+Clipboard::FormatType::~FormatType() = default;
 
 std::string Clipboard::FormatType::Serialize() const {
   return data_;

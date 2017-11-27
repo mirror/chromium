@@ -9,7 +9,7 @@
 
 namespace ui {
 
-ClipboardMonitor::ClipboardMonitor() {}
+ClipboardMonitor::ClipboardMonitor() = default;
 
 ClipboardMonitor::~ClipboardMonitor() {
   DCHECK(CalledOnValidThread());

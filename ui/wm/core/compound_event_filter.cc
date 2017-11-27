@@ -39,8 +39,7 @@ bool ShouldHideCursorOnTouch(const ui::TouchEvent& event) {
 ////////////////////////////////////////////////////////////////////////////////
 // CompoundEventFilter, public:
 
-CompoundEventFilter::CompoundEventFilter() {
-}
+CompoundEventFilter::CompoundEventFilter() = default;
 
 CompoundEventFilter::~CompoundEventFilter() {
   // Additional filters are not owned by CompoundEventFilter and they

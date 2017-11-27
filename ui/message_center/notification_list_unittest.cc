@@ -26,8 +26,8 @@ namespace message_center {
 
 class NotificationListTest : public testing::Test {
  public:
-  NotificationListTest() {}
-  ~NotificationListTest() override {}
+  NotificationListTest() = default;
+  ~NotificationListTest() override = default;
 
   void SetUp() override {
     message_center_.reset(new FakeMessageCenter());

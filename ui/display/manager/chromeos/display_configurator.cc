@@ -127,7 +127,8 @@ DisplayConfigurator::DisplayLayoutManagerImpl::DisplayLayoutManagerImpl(
     DisplayConfigurator* configurator)
     : configurator_(configurator) {}
 
-DisplayConfigurator::DisplayLayoutManagerImpl::~DisplayLayoutManagerImpl() {}
+DisplayConfigurator::DisplayLayoutManagerImpl::~DisplayLayoutManagerImpl() =
+    default;
 
 DisplayConfigurator::SoftwareMirroringController*
 DisplayConfigurator::DisplayLayoutManagerImpl::GetSoftwareMirroringController()

@@ -23,7 +23,7 @@ MockScanoutBuffer::MockScanoutBuffer(const gfx::Size& size,
       id_(g_current_framebuffer_id++),
       drm_(drm) {}
 
-MockScanoutBuffer::~MockScanoutBuffer() {}
+MockScanoutBuffer::~MockScanoutBuffer() = default;
 
 uint32_t MockScanoutBuffer::GetFramebufferId() const {
   return id_;

@@ -79,6 +79,6 @@ AXTreeIDRegistry::AXTreeIDRegistry() : ax_tree_id_counter_(-1) {
   GetOrCreateAXTreeID(0, 0);
 }
 
-AXTreeIDRegistry::~AXTreeIDRegistry() {}
+AXTreeIDRegistry::~AXTreeIDRegistry() = default;
 
 }  // namespace ui

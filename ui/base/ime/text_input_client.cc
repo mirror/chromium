@@ -6,7 +6,6 @@
 
 namespace ui {
 
-TextInputClient::~TextInputClient() {
-}
+TextInputClient::~TextInputClient() = default;
 
 }  // namespace ui

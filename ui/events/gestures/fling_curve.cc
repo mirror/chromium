@@ -53,8 +53,7 @@ FlingCurve::FlingCurve(const gfx::Vector2dF& velocity,
   position_offset_ = GetPositionAtTime(time_offset_);
 }
 
-FlingCurve::~FlingCurve() {
-}
+FlingCurve::~FlingCurve() = default;
 
 bool FlingCurve::ComputeScrollOffset(base::TimeTicks time,
                                      gfx::Vector2dF* offset,

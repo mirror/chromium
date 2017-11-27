@@ -87,8 +87,7 @@ PulsingBlockView::PulsingBlockView(const gfx::Size& size, bool start_delay) {
       this, &PulsingBlockView::OnStartDelayTimer);
 }
 
-PulsingBlockView::~PulsingBlockView() {
-}
+PulsingBlockView::~PulsingBlockView() = default;
 
 void PulsingBlockView::OnStartDelayTimer() {
   SchedulePulsingAnimation(layer());

@@ -24,8 +24,7 @@ TestLayerAnimationObserver::TestLayerAnimationObserver()
       last_detached_sequence_epoch_(-1),
       requires_notification_when_animator_destroyed_(false) {}
 
-TestLayerAnimationObserver::~TestLayerAnimationObserver() {
-}
+TestLayerAnimationObserver::~TestLayerAnimationObserver() = default;
 
 void TestLayerAnimationObserver::ResetLayerAnimationObserverations() {
   next_epoch_ = 0;

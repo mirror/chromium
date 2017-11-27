@@ -24,7 +24,7 @@ class TestObserver : public AppListItemListObserver {
  public:
   TestObserver() : items_added_(0), items_removed_(0), items_moved_(0) {}
 
-  ~TestObserver() override {}
+  ~TestObserver() override = default;
 
   // AppListItemListObserver overriden:
   void OnListItemAdded(size_t index, AppListItem* item) override {
@@ -67,8 +67,8 @@ std::string GetItemId(int id) {
 
 class AppListItemListTest : public testing::Test {
  public:
-  AppListItemListTest() {}
-  ~AppListItemListTest() override {}
+  AppListItemListTest() = default;
+  ~AppListItemListTest() override = default;
 
   // testing::Test overrides:
   void SetUp() override { item_list_.AddObserver(&observer_); }

@@ -15,7 +15,7 @@ void GenHelper(GLsizei count, GLuint* objects) {
 
 }  // anonymous namespace
 
-GLStubApi::GLStubApi() {}
+GLStubApi::GLStubApi() = default;
 
 GLStubApi::~GLStubApi() = default;
 

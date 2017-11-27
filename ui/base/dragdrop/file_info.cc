@@ -6,12 +6,12 @@
 
 namespace ui {
 
-FileInfo::FileInfo() {}
+FileInfo::FileInfo() = default;
 
 FileInfo::FileInfo(const base::FilePath& path,
                    const base::FilePath& display_name)
     : path(path), display_name(display_name) {}
 
-FileInfo::~FileInfo() {}
+FileInfo::~FileInfo() = default;
 
 }  // namespace ui

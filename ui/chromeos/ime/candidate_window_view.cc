@@ -47,7 +47,7 @@ class CandidateWindowBorder : public views::BubbleBorder {
     set_paint_arrow(views::BubbleBorder::PAINT_NONE);
     set_use_theme_background_color(true);
   }
-  ~CandidateWindowBorder() override {}
+  ~CandidateWindowBorder() override = default;
 
   void set_offset(int offset) { offset_ = offset; }
 
@@ -192,8 +192,7 @@ CandidateWindowView::CandidateWindowView(gfx::NativeView parent,
   }
 }
 
-CandidateWindowView::~CandidateWindowView() {
-}
+CandidateWindowView::~CandidateWindowView() = default;
 
 views::Widget* CandidateWindowView::InitWidget() {
   views::Widget* widget = BubbleDialogDelegateView::CreateBubble(this);

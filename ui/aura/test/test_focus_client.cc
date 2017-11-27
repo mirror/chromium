@@ -18,8 +18,7 @@ TestFocusClient::TestFocusClient()
       observer_manager_(this) {
 }
 
-TestFocusClient::~TestFocusClient() {
-}
+TestFocusClient::~TestFocusClient() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // TestFocusClient, client::FocusClient implementation:

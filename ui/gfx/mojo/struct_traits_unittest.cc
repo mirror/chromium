@@ -27,7 +27,7 @@ gfx::AcceleratedWidget castToAcceleratedWidget(int i) {
 
 class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
  public:
-  StructTraitsTest() {}
+  StructTraitsTest() = default;
 
  protected:
   mojom::TraitsTestServicePtr GetTraitsTestProxy() {

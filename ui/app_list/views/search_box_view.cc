@@ -93,7 +93,7 @@ class SearchBoxBackground : public views::Background {
  public:
   explicit SearchBoxBackground(SkColor color)
       : corner_radius_(kSearchBoxBorderCornerRadius), color_(color) {}
-  ~SearchBoxBackground() override {}
+  ~SearchBoxBackground() override = default;
 
   void set_corner_radius(int corner_radius) { corner_radius_ = corner_radius; }
   void set_color(SkColor color) { color_ = color; }
@@ -124,7 +124,7 @@ class SearchBoxImageButton : public views::ImageButton {
     if (features::IsAppListFocusEnabled())
       SetFocusBehavior(FocusBehavior::ALWAYS);
   }
-  ~SearchBoxImageButton() override {}
+  ~SearchBoxImageButton() override = default;
 
   bool selected() { return selected_; }
   void SetSelected(bool selected) {

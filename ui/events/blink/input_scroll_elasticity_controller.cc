@@ -96,8 +96,7 @@ InputScrollElasticityController::InputScrollElasticityController(
       weak_factory_(this) {
 }
 
-InputScrollElasticityController::~InputScrollElasticityController() {
-}
+InputScrollElasticityController::~InputScrollElasticityController() = default;
 
 base::WeakPtr<InputScrollElasticityController>
 InputScrollElasticityController::GetWeakPtr() {

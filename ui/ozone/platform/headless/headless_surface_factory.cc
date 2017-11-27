@@ -40,7 +40,7 @@ void WriteDataToFile(const base::FilePath& location, const SkBitmap& bitmap) {
 class FileSurface : public SurfaceOzoneCanvas {
  public:
   explicit FileSurface(const base::FilePath& location) : base_path_(location) {}
-  ~FileSurface() override {}
+  ~FileSurface() override = default;
 
   // SurfaceOzoneCanvas overrides:
   void ResizeCanvas(const gfx::Size& viewport_size) override {
@@ -98,7 +98,7 @@ class TestPixmap : public gfx::NativePixmap {
   }
 
  private:
-  ~TestPixmap() override {}
+  ~TestPixmap() override = default;
 
   gfx::BufferFormat format_;
 

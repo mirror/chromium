@@ -64,8 +64,8 @@ enum class DeletionOrder {
 
 class DeletionTracker {
  public:
-  DeletionTracker() {}
-  ~DeletionTracker() {}
+  DeletionTracker() = default;
+  ~DeletionTracker() = default;
 
   DeletionOrder order() const { return order_; }
   bool property_deleted() const { return property_deleted_; }
@@ -262,7 +262,7 @@ class CaptureWindowDelegateImpl : public TestWindowDelegate {
 // Keeps track of the location of the gesture.
 class GestureTrackPositionDelegate : public TestWindowDelegate {
  public:
-  GestureTrackPositionDelegate() {}
+  GestureTrackPositionDelegate() = default;
 
   void OnGestureEvent(ui::GestureEvent* event) override {
     position_ = event->location();
@@ -283,7 +283,7 @@ base::TimeTicks getTime() {
 
 class SelfEventHandlingWindowDelegate : public TestWindowDelegate {
  public:
-  SelfEventHandlingWindowDelegate() {}
+  SelfEventHandlingWindowDelegate() = default;
 
   bool ShouldDescendIntoChildForEventHandling(
       Window* child,
@@ -298,10 +298,10 @@ class SelfEventHandlingWindowDelegate : public TestWindowDelegate {
 // The delegate deletes itself when the window is being destroyed.
 class DestroyWindowDelegate : public TestWindowDelegate {
  public:
-  DestroyWindowDelegate() {}
+  DestroyWindowDelegate() = default;
 
  private:
-  ~DestroyWindowDelegate() override {}
+  ~DestroyWindowDelegate() override = default;
 
   // Overridden from WindowDelegate.
   void OnWindowDestroyed(Window* window) override { delete this; }
@@ -2337,7 +2337,7 @@ class TestVisibilityClient : public client::VisibilityClient {
       : ignore_visibility_changes_(false) {
     client::SetVisibilityClient(root_window, this);
   }
-  ~TestVisibilityClient() override {}
+  ~TestVisibilityClient() override = default;
 
   void set_ignore_visibility_changes(bool ignore_visibility_changes) {
     ignore_visibility_changes_ = ignore_visibility_changes;
@@ -2514,7 +2514,7 @@ TEST_P(WindowTest, MouseEventsOnNonLeafWindowDelete) {
 class RootWindowAttachmentObserver : public WindowObserver {
  public:
   RootWindowAttachmentObserver() : added_count_(0), removed_count_(0) {}
-  ~RootWindowAttachmentObserver() override {}
+  ~RootWindowAttachmentObserver() override = default;
 
   int added_count() const { return added_count_; }
   int removed_count() const { return removed_count_; }
@@ -2683,7 +2683,7 @@ namespace {
 // OnWindowDestroyed().
 class OwningWindowDelegate : public TestWindowDelegate {
  public:
-  OwningWindowDelegate() {}
+  OwningWindowDelegate() = default;
 
   void SetOwnedWindow(Window* window) {
     owned_window_.reset(window);
@@ -3082,7 +3082,7 @@ class TestLayerAnimationObserver : public ui::LayerAnimationObserver {
   TestLayerAnimationObserver()
       : animation_completed_(false),
         animation_aborted_(false) {}
-  ~TestLayerAnimationObserver() override {}
+  ~TestLayerAnimationObserver() override = default;
 
   bool animation_completed() const { return animation_completed_; }
   bool animation_aborted() const { return animation_aborted_; }

@@ -20,8 +20,7 @@ TouchEventLogEvdev::TouchEventLogEvdev()
     : logged_events_(new TouchEvent[kDebugBufferSize]) {
 }
 
-TouchEventLogEvdev::~TouchEventLogEvdev() {
-}
+TouchEventLogEvdev::~TouchEventLogEvdev() = default;
 
 void TouchEventLogEvdev::Initialize(const EventDeviceInfo& devinfo) {
   device_name_ = devinfo.name();
@@ -77,7 +76,6 @@ TouchEventLogEvdev::AbsAxisData::AbsAxisData(int code,
 TouchEventLogEvdev::AbsAxisData::AbsAxisData(const AbsAxisData& other) =
     default;
 
-TouchEventLogEvdev::AbsAxisData::~AbsAxisData() {
-}
+TouchEventLogEvdev::AbsAxisData::~AbsAxisData() = default;
 
 }  // namespace ui

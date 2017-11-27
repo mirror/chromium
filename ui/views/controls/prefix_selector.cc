@@ -24,8 +24,7 @@ PrefixSelector::PrefixSelector(PrefixDelegate* delegate, View* host_view)
     : prefix_delegate_(delegate), host_view_(host_view) {
 }
 
-PrefixSelector::~PrefixSelector() {
-}
+PrefixSelector::~PrefixSelector() = default;
 
 void PrefixSelector::OnViewBlur() {
   ClearText();
