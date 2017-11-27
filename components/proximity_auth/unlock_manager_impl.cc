@@ -334,7 +334,7 @@ std::unique_ptr<ProximityMonitor> UnlockManagerImpl::CreateProximityMonitor(
     cryptauth::Connection* connection,
     ProximityAuthPrefManager* pref_manager) {
   return base::MakeUnique<ProximityMonitorImpl>(
-      connection, base::WrapUnique(new base::DefaultTickClock()), pref_manager);
+      connection, base::DefaultTickClock::GetInstance(), pref_manager);
 }
 
 void UnlockManagerImpl::SendSignInChallenge() {

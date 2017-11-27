@@ -16,17 +16,16 @@ namespace scheduler {
 // static
 scoped_refptr<SchedulerTqmDelegateForTest> SchedulerTqmDelegateForTest::Create(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    std::unique_ptr<base::TickClock> time_source) {
+    base::TickClock* time_source) {
   return base::WrapRefCounted(
-      new SchedulerTqmDelegateForTest(task_runner, std::move(time_source)));
+      new SchedulerTqmDelegateForTest(task_runner, time_source));
 }
 
 SchedulerTqmDelegateForTest::SchedulerTqmDelegateForTest(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    std::unique_ptr<base::TickClock> time_source)
+    base::TickClock* time_source)
     : task_runner_(
-          TaskQueueManagerDelegateForTest::Create(task_runner,
-                                                  std::move(time_source))) {}
+          TaskQueueManagerDelegateForTest::Create(task_runner, time_source)) {}
 
 SchedulerTqmDelegateForTest::~SchedulerTqmDelegateForTest() {}
 

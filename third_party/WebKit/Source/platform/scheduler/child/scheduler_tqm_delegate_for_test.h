@@ -23,7 +23,7 @@ class SchedulerTqmDelegateForTest : public SchedulerTqmDelegate {
  public:
   static scoped_refptr<SchedulerTqmDelegateForTest> Create(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-      std::unique_ptr<base::TickClock> time_source);
+      base::TickClock* time_source);
 
   // SchedulerTqmDelegate implementation
   void SetDefaultTaskRunner(
@@ -51,7 +51,7 @@ class SchedulerTqmDelegateForTest : public SchedulerTqmDelegate {
  private:
   SchedulerTqmDelegateForTest(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-      std::unique_ptr<base::TickClock> time_source);
+      base::TickClock* time_source);
 
   scoped_refptr<base::SingleThreadTaskRunner> default_task_runner_;
 

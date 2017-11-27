@@ -23,7 +23,9 @@ namespace net {
 HttpServerPropertiesImpl::HttpServerPropertiesImpl(base::TickClock* clock)
     : spdy_servers_map_(SpdyServersMap::NO_AUTO_EVICT),
       alternative_service_map_(AlternativeServiceMap::NO_AUTO_EVICT),
-      broken_alternative_services_(this, clock ? clock : &default_clock_),
+      broken_alternative_services_(
+          this,
+          clock ? clock : base::DefaultTickClock::GetInstance()),
       server_network_stats_map_(ServerNetworkStatsMap::NO_AUTO_EVICT),
       quic_server_info_map_(QuicServerInfoMap::NO_AUTO_EVICT),
       max_server_configs_stored_in_properties_(kMaxQuicServersToPersist) {

@@ -61,7 +61,7 @@ class LazySchedulerMessageLoopDelegateForTests : public SchedulerTqmDelegate {
   // A task runner which hasn't yet been overridden in the message loop.
   mutable scoped_refptr<base::SingleThreadTaskRunner> pending_task_runner_;
   mutable scoped_refptr<base::SingleThreadTaskRunner> original_task_runner_;
-  std::unique_ptr<base::TickClock> time_source_;
+  base::TickClock* time_source_;
 
   base::RunLoop::NestingObserver* pending_observer_;
 
