@@ -101,10 +101,10 @@ AXSpinButtonPart* AXSpinButtonPart::Create(AXObjectCacheImpl& ax_object_cache) {
   return new AXSpinButtonPart(ax_object_cache);
 }
 
-void AXSpinButtonPart::GetRelativeBounds(
-    AXObject** out_container,
-    FloatRect& out_bounds_in_container,
-    SkMatrix44& out_container_transform) const {
+void AXSpinButtonPart::GetRelativeBounds(AXObject** out_container,
+                                         FloatRect& out_bounds_in_container,
+                                         SkMatrix44& out_container_transform,
+                                         bool* clips_children) const {
   *out_container = nullptr;
   out_bounds_in_container = FloatRect();
   out_container_transform.setIdentity();
@@ -115,7 +115,7 @@ void AXSpinButtonPart::GetRelativeBounds(
   // FIXME: This logic should exist in the layout tree or elsewhere, but there
   // is no relationship that exists that can be queried.
   ParentObject()->GetRelativeBounds(out_container, out_bounds_in_container,
-                                    out_container_transform);
+                                    out_container_transform, clips_children);
   out_bounds_in_container = FloatRect(0, 0, out_bounds_in_container.Width(),
                                       out_bounds_in_container.Height());
   if (is_incrementor_) {
