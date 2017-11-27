@@ -195,6 +195,30 @@
     },
     {
       "key": {
+        "uuid": "43392ec4_18bfbb56",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-27T21:56:18Z",
+      "side": 1,
+      "message": "You would still have an entry for every \"logged\" background tab in the 10 past seconds, and you would have an O(n) cleanup function. Why not just store a |last_log_| TimeTicks on TabsTracker::WebContentsData, and keep a condition here?",
+      "parentUuid": "1d973991_741b2a01",
+      "range": {
+        "startLine": 75,
+        "startChar": 39,
+        "endLine": 75,
+        "endChar": 70
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bce57f61_537cad51",
         "filename": "chrome/browser/ui/tabs/tab_logger.cc",
         "patchSetId": 16

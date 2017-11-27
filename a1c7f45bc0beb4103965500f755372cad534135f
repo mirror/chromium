@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "336a264e_08286270",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-27T21:56:18Z",
+      "side": 1,
+      "message": "Why check |ukm_source_id| here but not in OnWasHidden()?\n\nI would remove the check here and let LogBackgroundTab() decide what to do when no |ukm_source_id| is available (avoid code duplication).",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 11
+      },
+      "revId": "a1c7f45bc0beb4103965500f755372cad534135f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29db9da9_d7c120af",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-27T21:56:18Z",
+      "side": 1,
+      "message": "private:\n\nSince you\u0027re not supposed to call this manually on a TabActivityWatcher.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 49
+      },
+      "revId": "a1c7f45bc0beb4103965500f755372cad534135f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50c1fe0_4aa6fe59",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-27T21:56:18Z",
+      "side": 1,
+      "message": "The fact that you create a WebContentsData is an implementation detail. This could be WatchWebContents().",
+      "range": {
+        "startLine": 40,
+        "startChar": 14,
+        "endLine": 40,
+        "endChar": 53
+      },
+      "revId": "a1c7f45bc0beb4103965500f755372cad534135f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a4b15d_492bbd96",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-27T21:56:18Z",
+      "side": 1,
+      "message": "This can be protected.",
+      "range": {
+        "startLine": 45,
+        "startChar": 1,
+        "endLine": 45,
+        "endChar": 8
+      },
+      "revId": "a1c7f45bc0beb4103965500f755372cad534135f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
