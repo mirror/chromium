@@ -55,6 +55,7 @@ inline HTMLLinkElement::HTMLLinkElement(Document& document,
       referrer_policy_(kReferrerPolicyDefault),
       sizes_(DOMTokenList::Create(*this, HTMLNames::sizesAttr)),
       rel_list_(RelList::Create(this)),
+      update_via_cache_(mojom::ServiceWorkerUpdateViaCache::kImports),
       created_by_parser_(created_by_parser) {}
 
 HTMLLinkElement* HTMLLinkElement::Create(Document& document,

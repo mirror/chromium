@@ -81,6 +81,9 @@ void ServiceWorkerLinkResource::Process() {
     scope_url = document.CompleteURL(scope);
   scope_url.RemoveFragmentIdentifier();
 
+  mojom::ServiceWorkerUpdateViaCache update_via_cache =
+      owner_->UpdateViaCache();
+
   String error_message;
   ServiceWorkerContainer* container = NavigatorServiceWorker::serviceWorker(
       ToScriptStateForMainWorld(owner_->GetDocument().GetFrame()),
@@ -98,8 +101,7 @@ void ServiceWorkerLinkResource::Process() {
   }
 
   container->RegisterServiceWorkerImpl(
-      &document, script_url, scope_url,
-      mojom::ServiceWorkerUpdateViaCache::kImports,
+      &document, script_url, scope_url, update_via_cache,
       std::make_unique<RegistrationCallback>(owner_));
 }
 

@@ -38,44 +38,44 @@ PASS ServiceWorkerGlobalScope interface: self must inherit property "onactivate"
 PASS ServiceWorkerGlobalScope interface: self must inherit property "onfetch" with the proper type
 PASS ServiceWorkerGlobalScope interface: self must inherit property "onmessage" with the proper type
 FAIL ServiceWorkerGlobalScope interface: self must inherit property "onmessageerror" with the proper type assert_own_property: expected property "onmessageerror" missing
-PASS Client interface: existence and properties of interface object
-PASS Client interface object length
-PASS Client interface object name
-PASS Client interface: existence and properties of interface prototype object
-PASS Client interface: existence and properties of interface prototype object's "constructor" property
-PASS Client interface: attribute url
-PASS Client interface: attribute id
-PASS Client interface: attribute type
+PASS Client interface: existence and properties of interface object 
+PASS Client interface object length 
+PASS Client interface object name 
+PASS Client interface: existence and properties of interface prototype object 
+PASS Client interface: existence and properties of interface prototype object's "constructor" property 
+PASS Client interface: attribute url 
+PASS Client interface: attribute id 
+PASS Client interface: attribute type 
 FAIL Client interface: attribute reserved assert_true: The prototype object must have a property "reserved" expected true got false
-PASS Client interface: operation postMessage(any, [object Object])
-PASS WindowClient interface: existence and properties of interface object
-PASS WindowClient interface object length
-PASS WindowClient interface object name
-PASS WindowClient interface: existence and properties of interface prototype object
-PASS WindowClient interface: existence and properties of interface prototype object's "constructor" property
-PASS WindowClient interface: attribute visibilityState
-PASS WindowClient interface: attribute focused
+PASS Client interface: operation postMessage(any, [object Object]) 
+PASS WindowClient interface: existence and properties of interface object 
+PASS WindowClient interface object length 
+PASS WindowClient interface object name 
+PASS WindowClient interface: existence and properties of interface prototype object 
+PASS WindowClient interface: existence and properties of interface prototype object's "constructor" property 
+PASS WindowClient interface: attribute visibilityState 
+PASS WindowClient interface: attribute focused 
 FAIL WindowClient interface: attribute ancestorOrigins assert_true: The prototype object must have a property "ancestorOrigins" expected true got false
-PASS WindowClient interface: operation focus()
-PASS WindowClient interface: operation navigate(USVString)
-PASS Clients interface: existence and properties of interface object
-PASS Clients interface object length
-PASS Clients interface object name
-PASS Clients interface: existence and properties of interface prototype object
-PASS Clients interface: existence and properties of interface prototype object's "constructor" property
-PASS Clients interface: operation get(DOMString)
-PASS Clients interface: operation matchAll(ClientQueryOptions)
-PASS Clients interface: operation openWindow(USVString)
-PASS Clients interface: operation claim()
-PASS Clients must be primary interface of self.clients
-PASS Stringification of self.clients
-PASS Clients interface: self.clients must inherit property "get(DOMString)" with the proper type
-PASS Clients interface: calling get(DOMString) on self.clients with too few arguments must throw TypeError
-PASS Clients interface: self.clients must inherit property "matchAll(ClientQueryOptions)" with the proper type
-PASS Clients interface: calling matchAll(ClientQueryOptions) on self.clients with too few arguments must throw TypeError
-PASS Clients interface: self.clients must inherit property "openWindow(USVString)" with the proper type
-PASS Clients interface: calling openWindow(USVString) on self.clients with too few arguments must throw TypeError
-PASS Clients interface: self.clients must inherit property "claim()" with the proper type
+PASS WindowClient interface: operation focus() 
+PASS WindowClient interface: operation navigate(USVString) 
+PASS Clients interface: existence and properties of interface object 
+PASS Clients interface object length 
+PASS Clients interface object name 
+PASS Clients interface: existence and properties of interface prototype object 
+PASS Clients interface: existence and properties of interface prototype object's "constructor" property 
+PASS Clients interface: operation get(DOMString) 
+PASS Clients interface: operation matchAll(ClientQueryOptions) 
+PASS Clients interface: operation openWindow(USVString) 
+PASS Clients interface: operation claim() 
+PASS Clients must be primary interface of self.clients 
+PASS Stringification of self.clients 
+PASS Clients interface: self.clients must inherit property "get(DOMString)" with the proper type 
+PASS Clients interface: calling get(DOMString) on self.clients with too few arguments must throw TypeError 
+PASS Clients interface: self.clients must inherit property "matchAll(ClientQueryOptions)" with the proper type 
+PASS Clients interface: calling matchAll(ClientQueryOptions) on self.clients with too few arguments must throw TypeError 
+PASS Clients interface: self.clients must inherit property "openWindow(USVString)" with the proper type 
+PASS Clients interface: calling openWindow(USVString) on self.clients with too few arguments must throw TypeError 
+PASS Clients interface: self.clients must inherit property "claim()" with the proper type 
 FAIL ServiceWorker interface: existence and properties of interface object assert_own_property: self does not have own property "ServiceWorker" expected property "ServiceWorker" missing
 FAIL ServiceWorker interface object length assert_own_property: self does not have own property "ServiceWorker" expected property "ServiceWorker" missing
 FAIL ServiceWorker interface object name assert_own_property: self does not have own property "ServiceWorker" expected property "ServiceWorker" missing

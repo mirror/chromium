@@ -262,12 +262,14 @@ void ServiceWorkerContextWrapper::RemoveObserver(
 void ServiceWorkerContextWrapper::RegisterServiceWorker(
     const GURL& pattern,
     const GURL& script_url,
+    blink::mojom::ServiceWorkerUpdateViaCache update_via_cache,
     ResultCallback callback) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&ServiceWorkerContextWrapper::RegisterServiceWorker,
-                       this, pattern, script_url, std::move(callback)));
+                       this, pattern, script_url, update_via_cache,
+                       std::move(callback)));
     return;
   }
   if (!context_core_) {
@@ -276,7 +278,7 @@ void ServiceWorkerContextWrapper::RegisterServiceWorker(
     return;
   }
   blink::mojom::ServiceWorkerRegistrationOptions options(
-      net::SimplifyUrlForRequest(pattern));
+      net::SimplifyUrlForRequest(pattern), update_via_cache);
   context()->RegisterServiceWorker(
       net::SimplifyUrlForRequest(script_url), options,
       nullptr /* provider_host */,

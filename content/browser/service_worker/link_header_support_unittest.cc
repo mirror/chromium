@@ -107,11 +107,10 @@ class LinkHeaderServiceWorkerTest : public ::testing::Test {
   }
 
   void CreateServiceWorkerProviderHost() {
+    blink::mojom::ServiceWorkerRegistrationOptions options;
+    options.scope = GURL("https://host/scope");
     scoped_refptr<ServiceWorkerRegistration> registration =
-        new ServiceWorkerRegistration(
-            blink::mojom::ServiceWorkerRegistrationOptions(
-                GURL("https://host/scope")),
-            1L, context()->AsWeakPtr());
+        new ServiceWorkerRegistration(options, 1L, context()->AsWeakPtr());
     scoped_refptr<ServiceWorkerVersion> version = new ServiceWorkerVersion(
         registration.get(), GURL("https://host/script.js"), 1L,
         context()->AsWeakPtr());
@@ -195,6 +194,8 @@ TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_Basic) {
   EXPECT_EQ(GURL("https://example.com/foo/"), registrations[0].pattern);
   EXPECT_EQ(GURL("https://example.com/foo/foo.js"),
             registrations[0].active_version.script_url);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kImports,
+            registrations[0].update_via_cache);
 }
 
 TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_ScopeWithFragment) {
@@ -212,6 +213,8 @@ TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_ScopeWithFragment) {
             registrations[0].pattern);
   EXPECT_EQ(GURL("https://example.com/foo/bar.js"),
             registrations[0].active_version.script_url);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kImports,
+            registrations[0].update_via_cache);
 }
 
 TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_ScopeAbsoluteUrl) {
@@ -231,6 +234,8 @@ TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_ScopeAbsoluteUrl) {
             registrations[0].pattern);
   EXPECT_EQ(GURL("https://example.com/foo/bar/bar.js"),
             registrations[0].active_version.script_url);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kImports,
+            registrations[0].update_via_cache);
 }
 
 TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_ScopeDifferentOrigin) {
@@ -289,6 +294,8 @@ TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_ScriptAbsoluteUrl) {
   EXPECT_EQ(GURL("https://example.com/foobar/foo"), registrations[0].pattern);
   EXPECT_EQ(GURL("https://example.com/bar.js"),
             registrations[0].active_version.script_url);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kImports,
+            registrations[0].update_via_cache);
 }
 
 TEST_F(LinkHeaderServiceWorkerTest,
@@ -306,14 +313,88 @@ TEST_F(LinkHeaderServiceWorkerTest,
   ASSERT_EQ(0u, registrations.size());
 }
 
+TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_CacheNone) {
+  CreateDocumentProviderHost();
+  ProcessLinkHeaderForRequest(
+      CreateSubresourceRequest(GURL("https://example.com/foo/bar/"),
+                               provider_host()->provider_id())
+          .get(),
+      "<../foo.js>; rel=serviceworker; updateviacache=none", context_wrapper());
+  base::RunLoop().RunUntilIdle();
+
+  std::vector<ServiceWorkerRegistrationInfo> registrations = GetRegistrations();
+  ASSERT_EQ(1u, registrations.size());
+  EXPECT_EQ(GURL("https://example.com/foo/"), registrations[0].pattern);
+  EXPECT_EQ(GURL("https://example.com/foo/foo.js"),
+            registrations[0].active_version.script_url);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kNone,
+            registrations[0].update_via_cache);
+}
+
+TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_CacheImports) {
+  CreateDocumentProviderHost();
+  ProcessLinkHeaderForRequest(
+      CreateSubresourceRequest(GURL("https://example.com/foo/bar/"),
+                               provider_host()->provider_id())
+          .get(),
+      "<../foo.js>; rel=serviceworker; updateviacache=imports",
+      context_wrapper());
+  base::RunLoop().RunUntilIdle();
+
+  std::vector<ServiceWorkerRegistrationInfo> registrations = GetRegistrations();
+  ASSERT_EQ(1u, registrations.size());
+  EXPECT_EQ(GURL("https://example.com/foo/"), registrations[0].pattern);
+  EXPECT_EQ(GURL("https://example.com/foo/foo.js"),
+            registrations[0].active_version.script_url);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kImports,
+            registrations[0].update_via_cache);
+}
+
+TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_CacheAll) {
+  CreateDocumentProviderHost();
+  ProcessLinkHeaderForRequest(
+      CreateSubresourceRequest(GURL("https://example.com/foo/bar/"),
+                               provider_host()->provider_id())
+          .get(),
+      "<../foo.js>; rel=serviceworker; updateviacache=all", context_wrapper());
+  base::RunLoop().RunUntilIdle();
+
+  std::vector<ServiceWorkerRegistrationInfo> registrations = GetRegistrations();
+  ASSERT_EQ(1u, registrations.size());
+  EXPECT_EQ(GURL("https://example.com/foo/"), registrations[0].pattern);
+  EXPECT_EQ(GURL("https://example.com/foo/foo.js"),
+            registrations[0].active_version.script_url);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kAll,
+            registrations[0].update_via_cache);
+}
+
+TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_CacheInvalidValue) {
+  CreateDocumentProviderHost();
+  ProcessLinkHeaderForRequest(
+      CreateSubresourceRequest(GURL("https://example.com/foo/bar/"),
+                               provider_host()->provider_id())
+          .get(),
+      "<../foo.js>; rel=serviceworker; updateviacache=invalidvalue",
+      context_wrapper());
+  base::RunLoop().RunUntilIdle();
+
+  std::vector<ServiceWorkerRegistrationInfo> registrations = GetRegistrations();
+  ASSERT_EQ(1u, registrations.size());
+  EXPECT_EQ(GURL("https://example.com/foo/"), registrations[0].pattern);
+  EXPECT_EQ(GURL("https://example.com/foo/foo.js"),
+            registrations[0].active_version.script_url);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kImports,
+            registrations[0].update_via_cache);
+}
+
 TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_MultipleWorkers) {
   CreateDocumentProviderHost();
   ProcessLinkHeaderForRequest(
       CreateSubresourceRequest(GURL("https://example.com/foobar/"),
                                provider_host()->provider_id())
           .get(),
-      "<bar.js>; rel=serviceworker; scope=foo, <baz.js>; "
-      "rel=serviceworker; scope=scope",
+      "<bar.js>; rel=serviceworker; updateviacache=none; scope=foo, <baz.js>; "
+      "rel=serviceworker; scope=scope; updateviacache=all",
       context_wrapper());
   base::RunLoop().RunUntilIdle();
 
@@ -322,9 +403,13 @@ TEST_F(LinkHeaderServiceWorkerTest, InstallServiceWorker_MultipleWorkers) {
   EXPECT_EQ(GURL("https://example.com/foobar/foo"), registrations[0].pattern);
   EXPECT_EQ(GURL("https://example.com/foobar/bar.js"),
             registrations[0].active_version.script_url);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kNone,
+            registrations[0].update_via_cache);
   EXPECT_EQ(GURL("https://example.com/foobar/scope"), registrations[1].pattern);
   EXPECT_EQ(GURL("https://example.com/foobar/baz.js"),
             registrations[1].active_version.script_url);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kAll,
+            registrations[1].update_via_cache);
 }
 
 TEST_F(LinkHeaderServiceWorkerTest,
@@ -380,6 +465,8 @@ TEST_F(LinkHeaderServiceWorkerTest,
   EXPECT_EQ(GURL("https://example.com/foo/"), registrations[0].pattern);
   EXPECT_EQ(GURL("https://example.com/foo/foo.js"),
             registrations[0].active_version.script_url);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kImports,
+            registrations[0].update_via_cache);
 }
 
 TEST_F(LinkHeaderServiceWorkerTest,

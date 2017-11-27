@@ -2977,6 +2977,7 @@ interface HTMLLinkElement : HTMLElement
     getter sizes
     getter target
     getter type
+    getter updateViaCache
     method constructor
     setter as
     setter charset
@@ -2994,6 +2995,7 @@ interface HTMLLinkElement : HTMLElement
     setter sizes
     setter target
     setter type
+    setter updateViaCache
 interface HTMLMapElement : HTMLElement
     attribute @@toStringTag
     getter areas
