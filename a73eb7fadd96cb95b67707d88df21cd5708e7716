@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dd7cb475_2c97d50e",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-27T18:12:02Z",
+      "side": 1,
+      "message": "SGTM. Thank you for sharing the plan.",
+      "parentUuid": "07a875e7_3e322c97",
+      "revId": "a73eb7fadd96cb95b67707d88df21cd5708e7716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34432895_c291a1ff",
         "filename": "components/arc/connection_holder.h",
         "patchSetId": 2
