@@ -16,13 +16,21 @@ cr.define('extensions', function() {
                                                                           0);
     },
 
-    /** @private */
-    onExtensionsTap_: function() {
+    /**
+     * @param {Event} e
+     * @private
+     */
+    onExtensionsTap_: function(e) {
+      e.preventDefault();
       extensions.navigation.navigateTo({page: Page.LIST});
     },
 
-    /** @private */
-    onKeyboardShortcutsTap_: function() {
+    /**
+     * @param {Event} e
+     * @private
+     */
+    onKeyboardShortcutsTap_: function(e) {
+      e.preventDefault();
       extensions.navigation.navigateTo({page: Page.SHORTCUTS});
     },
   });
