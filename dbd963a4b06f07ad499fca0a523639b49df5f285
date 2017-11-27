@@ -34,6 +34,24 @@
       "revId": "dbd963a4b06f07ad499fca0a523639b49df5f285",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0622af7_f7d2043b",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-27T22:25:25Z",
+      "side": 1,
+      "message": "Oh, sorry, I missed that.",
+      "parentUuid": "c0b34183_e5e9904f",
+      "revId": "dbd963a4b06f07ad499fca0a523639b49df5f285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
