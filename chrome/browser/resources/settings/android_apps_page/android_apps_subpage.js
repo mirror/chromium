@@ -74,7 +74,6 @@ Polymer({
   onConfirmDisableDialogConfirm_: function() {
     this.setPrefValue('arc.enabled', false);
     this.$.confirmDisableDialog.close();
-    settings.navigateToPreviousRoute();
   },
 
   /**
