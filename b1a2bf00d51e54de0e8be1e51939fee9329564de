@@ -16,6 +16,24 @@
       "revId": "b1a2bf00d51e54de0e8be1e51939fee9329564de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea308371_066e5311",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/executive.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-27T17:22:51Z",
+      "side": 1,
+      "message": "Though I hate to say this, I\u0027m putting the documentation work off...",
+      "parentUuid": "0d137a9e_52227424",
+      "revId": "b1a2bf00d51e54de0e8be1e51939fee9329564de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
