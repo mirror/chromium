@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e3adfec_13fb4bcc",
+        "filename": "ui/android/java/src/org/chromium/ui/display/PhysicalDisplayAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-27T17:20:21Z",
+      "side": 1,
+      "message": "static",
+      "revId": "4189a41a95c375ea922345e8a03406fb7f1b3f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ed2549_b877df4b",
+        "filename": "ui/android/java/src/org/chromium/ui/display/PhysicalDisplayAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-27T17:20:21Z",
+      "side": 1,
+      "message": "indent?",
+      "revId": "4189a41a95c375ea922345e8a03406fb7f1b3f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
