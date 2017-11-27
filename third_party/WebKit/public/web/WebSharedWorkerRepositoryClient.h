@@ -38,6 +38,7 @@
 namespace blink {
 
 class MessagePortChannel;
+class WebSecurityOrigin;
 class WebSharedWorkerConnectListener;
 class WebString;
 class WebURL;
@@ -53,6 +54,7 @@ class WebSharedWorkerRepositoryClient {
       const WebURL&,
       const WebString& name,
       DocumentID,
+      const WebSecurityOrigin&,
       const WebString& content_security_policy,
       WebContentSecurityPolicyType,
       WebAddressSpace,
