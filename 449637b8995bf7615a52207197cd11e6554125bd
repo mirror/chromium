@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "aeb736b2_9c6f788c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-27T17:50:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ef6d49d_8788d38c",
+      "range": {
+        "startLine": 155,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 61
+      },
+      "revId": "449637b8995bf7615a52207197cd11e6554125bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46fba957_7732db13",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 19
@@ -85,6 +109,30 @@
       "revId": "449637b8995bf7615a52207197cd11e6554125bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf9d8ad_517d6bab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-27T17:50:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46fba957_7732db13",
+      "range": {
+        "startLine": 168,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 48
+      },
+      "revId": "449637b8995bf7615a52207197cd11e6554125bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "be9f42d8_ff67341a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-27T17:50:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9da5baa_7a102668",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 172,
+        "endChar": 17
+      },
+      "revId": "449637b8995bf7615a52207197cd11e6554125bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cd3d8bd_fdc17dd4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 19
@@ -131,6 +203,30 @@
       "revId": "449637b8995bf7615a52207197cd11e6554125bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca89bdb9_634dac08",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-27T17:50:20Z",
+      "side": 1,
+      "message": "Done.\n\nI added a check to see if mTabModelSelector \u003d\u003d null before starting the survey process.",
+      "parentUuid": "4cd3d8bd_fdc17dd4",
+      "range": {
+        "startLine": 176,
+        "startChar": 20,
+        "endLine": 176,
+        "endChar": 72
+      },
+      "revId": "449637b8995bf7615a52207197cd11e6554125bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
