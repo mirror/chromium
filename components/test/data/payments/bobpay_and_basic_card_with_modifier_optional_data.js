@@ -5,14 +5,27 @@
  */
 
 /**
- * Launches the PaymentRequest UI with Bob Pay as payment method.
+ * Launches the PaymentRequest UI with Bob Pay as payment method and
+ * Bob Pay modifier.
  */
  function buy() {  // eslint-disable-line no-unused-vars
   try {
     new PaymentRequest(
-        [{supportedMethods: ['https://bobpay.com']}],
+        [{supportedMethods: ['https://bobpay.com', 'basic-card']}],
         {
           total: {label: 'Total', amount: {currency: 'USD', value: '5.00'}},
+          modifiers: [{
+            supportedMethods: ['https://bobpay.com'],
+            total: {
+              label: 'Total',
+              amount: {currency: 'USD', value: '4.00'},
+            },
+            additionalDisplayItems: [{
+              label: 'BobPay discount',
+              amount: {currency: 'USD', value: '-1.00'},
+            }],
+            data: {discountProgramParticipantId: '86328764873265'},
+          }],
         })
         .show()
         .then(function(resp) {
@@ -33,14 +46,27 @@
 }
 
 /**
- * Launches the PaymentRequest UI with all cards as payment methods.
+ * Launches the PaymentRequest UI with all cards as payment methods and
+ * all cards modifier.
  */
- function buyWithAllCards() {  // eslint-disable-line no-unused-vars
+ function buyWithAllCardsModifier() {  // eslint-disable-line no-unused-vars
   try {
     new PaymentRequest(
         [{supportedMethods: ['basic-card']}],
         {
           total: {label: 'Total', amount: {currency: 'USD', value: '5.00'}},
+          modifiers: [{
+            supportedMethods: ['basic-card'],
+            total: {
+              label: 'Total',
+              amount: {currency: 'USD', value: '4.00'},
+            },
+            additionalDisplayItems: [{
+              label: 'basic-card discount',
+              amount: {currency: 'USD', value: '-1.00'},
+            }],
+            data: {discountProgramParticipantId: '86328764873265'},
+          }],
         })
         .show()
         .then(function(resp) {
@@ -61,20 +87,33 @@
 }
 
 /**
- * Launches the PaymentRequest UI with visa credit card as payment method.
+ * Launches the PaymentRequest UI with visa credit card as payment method and
+ * visa credit card modifier.
  */
- function buyWithVisaCredit() {  // eslint-disable-line no-unused-vars
+ function buyWithVisaCreditModifier() {  // eslint-disable-line no-unused-vars
   try {
     new PaymentRequest(
         [{
           supportedMethods: ['basic-card'],
-          data: {
-            supportedTypes: ['credit'],
-            supportedNetworks: ['visa'],
-          },
         }],
         {
           total: {label: 'Total', amount: {currency: 'USD', value: '5.00'}},
+          modifiers: [{
+            supportedMethods: ['basic-card'],
+            total: {
+              label: 'Total',
+              amount: {currency: 'USD', value: '4.00'},
+            },
+            additionalDisplayItems: [{
+              label: 'Visa credit discount',
+              amount: {currency: 'USD', value: '-1.00'},
+            }],
+            data: {
+              discountProgramParticipantId: '86328764873265',
+              supportedTypes: ['credit'],
+              supportedNetworks: ['visa'],
+            },
+          }],
         })
       .show()
       .then(function(resp) {
@@ -95,20 +134,33 @@
   }
 
 /**
- * Launches the PaymentRequest UI with visa debit card as payment method.
+ * Launches the PaymentRequest UI with visa debit card as payment method and
+ * visa debit card modifier.
  */
- function buyWithVisaDebit() {  // eslint-disable-line no-unused-vars
+ function buyWithVisaDebitModifier() {  // eslint-disable-line no-unused-vars
   try {
     new PaymentRequest(
         [{
           supportedMethods: ['basic-card'],
-          data: {
-            supportedTypes: ['debit'],
-            supportedNetworks: ['visa'],
-          },
         }],
         {
           total: {label: 'Total', amount: {currency: 'USD', value: '5.00'}},
+          modifiers: [{
+            supportedMethods: ['basic-card'],
+            total: {
+              label: 'Total',
+              amount: {currency: 'USD', value: '4.00'},
+            },
+            additionalDisplayItems: [{
+              label: 'Visa debit discount',
+              amount: {currency: 'USD', value: '-1.00'},
+            }],
+            data: {
+              discountProgramParticipantId: '86328764873265',
+              supportedTypes: ['debit'],
+              supportedNetworks: ['visa'],
+            },
+          }],
         })
       .show()
       .then(function(resp) {
@@ -129,19 +181,32 @@
  }
 
 /**
- * Launches the PaymentRequest UI with credit card as payment method.
+ * Launches the PaymentRequest UI with credit card as payment method and
+ * credit card modifier.
  */
- function buyWithCredit() {  // eslint-disable-line no-unused-vars
+ function buyWithCreditModifier() {  // eslint-disable-line no-unused-vars
   try {
     new PaymentRequest(
       [{
         supportedMethods: ['basic-card'],
-        data: {
-          supportedTypes: ['credit'],
-        },
       }],
       {
         total: {label: 'Total', amount: {currency: 'USD', value: '5.00'}},
+        modifiers: [{
+          supportedMethods: ['basic-card'],
+          total: {
+            label: 'Total',
+            amount: {currency: 'USD', value: '4.00'},
+          },
+          additionalDisplayItems: [{
+            label: 'Credit card discount',
+            amount: {currency: 'USD', value: '-1.00'},
+          }],
+          data: {
+            discountProgramParticipantId: '86328764873265',
+            supportedTypes: ['credit'],
+          },
+        }],
       })
       .show()
       .then(function(resp) {
@@ -162,19 +227,32 @@
  }
 
 /**
- * Launches the PaymentRequest UI with visa card as payment method.
+ * Launches the PaymentRequest UI with visa card as payment method and
+ * visa card modifier.
  */
- function buyWithVisa() {  // eslint-disable-line no-unused-vars
+ function buyWithVisaModifier() {  // eslint-disable-line no-unused-vars
   try {
     new PaymentRequest(
         [{
           supportedMethods: ['basic-card'],
-          data: {
-            supportedNetworks: ['visa'],
-          },
         }],
         {
           total: {label: 'Total', amount: {currency: 'USD', value: '5.00'}},
+          modifiers: [{
+            supportedMethods: ['basic-card'],
+            total: {
+              label: 'Total',
+              amount: {currency: 'USD', value: '4.00'},
+            },
+            additionalDisplayItems: [{
+              label: 'Visa discount',
+              amount: {currency: 'USD', value: '-1.00'},
+            }],
+            data: {
+              discountProgramParticipantId: '86328764873265',
+              supportedNetworks: ['visa'],
+            },
+          }],
         })
       .show()
       .then(function(resp) {
@@ -195,19 +273,32 @@
  }
 
  /**
- * Launches the PaymentRequest UI with Bob Pay and visa card as payment methods.
+ * Launches the PaymentRequest UI with Bob Pay and visa card as payment methods,
+ * and visa card modifier.
  */
- function buyWithBobPayAndVisa() {  // eslint-disable-line no-unused-vars
+ function buyWithBobPayAndVisaModifier() { // eslint-disable-line no-unused-vars
   try {
     new PaymentRequest(
         [{
           supportedMethods: ['https://bobpay.com', 'basic-card'],
-          data: {
-            supportedNetworks: ['visa'],
-          },
         }],
         {
           total: {label: 'Total', amount: {currency: 'USD', value: '5.00'}},
+          modifiers: [{
+            supportedMethods: ['https://bobpay.com', 'basic-card'],
+            total: {
+              label: 'Total',
+              amount: {currency: 'USD', value: '4.00'},
+            },
+            additionalDisplayItems: [{
+              label: 'Visa discount',
+              amount: {currency: 'USD', value: '-1.00'},
+            }],
+            data: {
+              discountProgramParticipantId: '86328764873265',
+              supportedNetworks: ['visa'],
+            },
+          }],
         })
       .show()
       .then(function(resp) {
