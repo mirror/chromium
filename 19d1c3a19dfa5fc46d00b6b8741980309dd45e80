@@ -22,6 +22,30 @@
       "revId": "19d1c3a19dfa5fc46d00b6b8741980309dd45e80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7535d4e0_e0b4811f",
+        "filename": "components/cronet/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-27T17:45:40Z",
+      "side": 1,
+      "message": "//build/config/android/config.gni: https://chromium.googlesource.com/chromium/src/+/8883564afcf037c6970d501005c293697706e8d5/build/config/android/config.gni#240",
+      "parentUuid": "20adb1fa_002815e0",
+      "range": {
+        "startLine": 1199,
+        "startChar": 16,
+        "endLine": 1199,
+        "endChar": 31
+      },
+      "revId": "19d1c3a19dfa5fc46d00b6b8741980309dd45e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
