@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13e5e4b7_6ef3916b",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-27T01:03:23Z",
+      "side": 1,
+      "message": "The mojom file is the right place for this, since the ? modifier makes it base::Optional.\n\nReworded to be clearer it\u0027s mojo-specific.",
+      "parentUuid": "afacc5f7_cadce9ae",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9905be3_cd93bb88",
         "filename": "content/common/quota_dispatcher_host.mojom",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-22T09:34:25Z",
       "side": 1,
       "message": "Why can\u0027t we do this now?",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16edc55_876d76e6",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-27T01:03:23Z",
+      "side": 1,
+      "message": "This change might be quite large, and have unintended side effects on correctness. Best to do in a follow-up patch, I think :)",
+      "parentUuid": "e9905be3_cd93bb88",
       "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "67da7d5e_f55d25fd",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-27T01:03:23Z",
+      "side": 1,
+      "message": "Thanks! Fixed.",
+      "parentUuid": "e87f3373_0ab843b2",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6c3ba6f_2904251b",
         "filename": "content/common/quota_dispatcher_host.mojom",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67b46ee_42703bb7",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-27T01:03:23Z",
+      "side": 1,
+      "message": "Yup, clarified in the origin_url todo.",
+      "parentUuid": "e6c3ba6f_2904251b",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "296a87a7_33870c45",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-27T01:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aebf8463_85897885",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "587ed246_5ee6fa30",
         "filename": "content/renderer/quota_dispatcher.h",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd556724_d3fca6ba",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-27T01:03:23Z",
+      "side": 1,
+      "message": "Nice, thanks. Renamed to quota_host_.",
+      "parentUuid": "587ed246_5ee6fa30",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
