@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dbf6e44_559fec08",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-27T22:34:28Z",
+      "side": 1,
+      "message": "make_unique",
+      "revId": "53debfc52fe9c1a5e3cc68c045ebaf398b36e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d81d129_9d858f1e",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-27T22:34:28Z",
+      "side": 1,
+      "message": "this looks like it could just be a direct member?",
+      "revId": "53debfc52fe9c1a5e3cc68c045ebaf398b36e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d925f4_88dc9d5e",
+        "filename": "components/autofill/content/renderer/form_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-27T22:34:28Z",
+      "side": 1,
+      "message": "DCHECK_CALLED_ON_VALID_SEQUENCE in the other methods as well?",
+      "revId": "53debfc52fe9c1a5e3cc68c045ebaf398b36e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
