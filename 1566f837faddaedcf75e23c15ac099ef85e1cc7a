@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73c33f20_c378ea9c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/android.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-27T17:03:18Z",
+      "side": 1,
+      "message": "Previously there were a few private helper functions with names like _push_executable, _push_font_files, etc. -- do you think it would be more readable if such functions were split out again, possibly nested inside of _check_devices, or if it was kept this way, possibly with short comments added above blocks of code?",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 469,
+        "endChar": 55
+      },
+      "revId": "1566f837faddaedcf75e23c15ac099ef85e1cc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1864881_0c7aae86",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/android.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-27T17:03:18Z",
+      "side": 1,
+      "message": "Note, as far as I understand, this is the line that replaces the ThreadPool logic previously used.\n\nThe reason for this change is that it might solve some current problems that we see on android_blink_rel. Right?",
+      "revId": "1566f837faddaedcf75e23c15ac099ef85e1cc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
