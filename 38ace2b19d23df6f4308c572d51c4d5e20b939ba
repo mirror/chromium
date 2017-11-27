@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cf7c091_1a1ed78c",
+        "filename": "content/browser/webui/url_data_manager_backend.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-27T19:31:36Z",
+      "side": 1,
+      "message": "Can you explain the side-effects of this change a bit? By reading the bug description it seems that the browser will fetch the same resource (like a background image) multiple times, if that resource is reused across the page. Is that better?",
+      "revId": "38ace2b19d23df6f4308c572d51c4d5e20b939ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
