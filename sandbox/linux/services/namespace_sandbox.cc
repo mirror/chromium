@@ -46,7 +46,7 @@ class WriteUidGidMapDelegate : public base::LaunchOptions::PreExecDelegate {
         supports_deny_setgroups_(
             NamespaceUtils::KernelSupportsDenySetgroups()) {}
 
-  ~WriteUidGidMapDelegate() override {}
+  ~WriteUidGidMapDelegate() override = default;
 
   void RunAsyncSafe() override {
     if (supports_deny_setgroups_) {
@@ -139,7 +139,7 @@ NamespaceSandbox::Options::Options()
     : ns_types(CLONE_NEWUSER | CLONE_NEWPID | CLONE_NEWNET),
       fail_on_unsupported_ns_type(false) {}
 
-NamespaceSandbox::Options::~Options() {}
+NamespaceSandbox::Options::~Options() = default;
 
 // static
 base::Process NamespaceSandbox::LaunchProcess(

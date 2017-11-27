@@ -33,8 +33,7 @@ BrokerPolicy::BrokerPolicy(int denied_errno,
   }
 }
 
-BrokerPolicy::~BrokerPolicy() {
-}
+BrokerPolicy::~BrokerPolicy() = default;
 
 // Check if calling access() should be allowed on |requested_filename| with
 // mode |requested_mode|.

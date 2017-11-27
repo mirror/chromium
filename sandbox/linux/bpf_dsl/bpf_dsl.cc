@@ -23,7 +23,7 @@ namespace {
 class ReturnResultExprImpl : public internal::ResultExprImpl {
  public:
   explicit ReturnResultExprImpl(uint32_t ret) : ret_(ret) {}
-  ~ReturnResultExprImpl() override {}
+  ~ReturnResultExprImpl() override = default;
 
   CodeGen::Node Compile(PolicyCompiler* pc) const override {
     return pc->Return(ret_);
@@ -51,7 +51,7 @@ class TrapResultExprImpl : public internal::ResultExprImpl {
       : func_(func), arg_(arg), safe_(safe) {
     DCHECK(func_);
   }
-  ~TrapResultExprImpl() override {}
+  ~TrapResultExprImpl() override = default;
 
   CodeGen::Node Compile(PolicyCompiler* pc) const override {
     return pc->Trap(func_, arg_, safe_);
@@ -77,7 +77,7 @@ class IfThenResultExprImpl : public internal::ResultExprImpl {
       : cond_(std::move(cond)),
         then_result_(std::move(then_result)),
         else_result_(std::move(else_result)) {}
-  ~IfThenResultExprImpl() override {}
+  ~IfThenResultExprImpl() override = default;
 
   CodeGen::Node Compile(PolicyCompiler* pc) const override {
     // We compile the "then" and "else" expressions in separate statements so
@@ -102,7 +102,7 @@ class IfThenResultExprImpl : public internal::ResultExprImpl {
 class ConstBoolExprImpl : public internal::BoolExprImpl {
  public:
   ConstBoolExprImpl(bool value) : value_(value) {}
-  ~ConstBoolExprImpl() override {}
+  ~ConstBoolExprImpl() override = default;
 
   CodeGen::Node Compile(PolicyCompiler* pc,
                         CodeGen::Node then_node,
@@ -123,7 +123,7 @@ class MaskedEqualBoolExprImpl : public internal::BoolExprImpl {
                           uint64_t mask,
                           uint64_t value)
       : argno_(argno), width_(width), mask_(mask), value_(value) {}
-  ~MaskedEqualBoolExprImpl() override {}
+  ~MaskedEqualBoolExprImpl() override = default;
 
   CodeGen::Node Compile(PolicyCompiler* pc,
                         CodeGen::Node then_node,
@@ -143,7 +143,7 @@ class MaskedEqualBoolExprImpl : public internal::BoolExprImpl {
 class NegateBoolExprImpl : public internal::BoolExprImpl {
  public:
   explicit NegateBoolExprImpl(BoolExpr cond) : cond_(std::move(cond)) {}
-  ~NegateBoolExprImpl() override {}
+  ~NegateBoolExprImpl() override = default;
 
   CodeGen::Node Compile(PolicyCompiler* pc,
                         CodeGen::Node then_node,
@@ -161,7 +161,7 @@ class AndBoolExprImpl : public internal::BoolExprImpl {
  public:
   AndBoolExprImpl(BoolExpr lhs, BoolExpr rhs)
       : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
-  ~AndBoolExprImpl() override {}
+  ~AndBoolExprImpl() override = default;
 
   CodeGen::Node Compile(PolicyCompiler* pc,
                         CodeGen::Node then_node,
@@ -181,7 +181,7 @@ class OrBoolExprImpl : public internal::BoolExprImpl {
  public:
   OrBoolExprImpl(BoolExpr lhs, BoolExpr rhs)
       : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
-  ~OrBoolExprImpl() override {}
+  ~OrBoolExprImpl() override = default;
 
   CodeGen::Node Compile(PolicyCompiler* pc,
                         CodeGen::Node then_node,
@@ -292,11 +292,9 @@ Elser If(BoolExpr cond, ResultExpr then_result) {
 Elser::Elser(cons::List<Clause> clause_list) : clause_list_(clause_list) {
 }
 
-Elser::Elser(const Elser& elser) : clause_list_(elser.clause_list_) {
-}
+Elser::Elser(const Elser& elser) = default;
 
-Elser::~Elser() {
-}
+Elser::~Elser() = default;
 
 Elser Elser::ElseIf(BoolExpr cond, ResultExpr then_result) const {
   return Elser(Cons(std::make_pair(std::move(cond), std::move(then_result)),
