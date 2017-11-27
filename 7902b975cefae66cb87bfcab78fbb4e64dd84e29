@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60c30aa0_4803a043",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 5077,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-27T17:51:20Z",
+      "side": 1,
+      "message": "nit: Even no-op methods should have a newline in between each one. Maybe a comment like this in each method body:\n\n// no-op -- required by BookmarkModelBridgeObserver but not used.",
+      "range": {
+        "startLine": 5077,
+        "startChar": 8,
+        "endLine": 5077,
+        "endChar": 27
+      },
+      "revId": "7902b975cefae66cb87bfcab78fbb4e64dd84e29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d49b9a_d0909f28",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-27T17:51:20Z",
+      "side": 1,
+      "message": "Maybe just make these (or all?) observer methods optional.",
+      "range": {
+        "startLine": 258,
+        "startChar": 26,
+        "endLine": 258,
+        "endChar": 33
+      },
+      "revId": "7902b975cefae66cb87bfcab78fbb4e64dd84e29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
