@@ -16,6 +16,24 @@
       "revId": "6a3201b116a9170cd1fd47c44ade6c1f1bb4491f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4843ee5_54d1d494",
+        "filename": "third_party/breakpad/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-27T20:08:08Z",
+      "side": 1,
+      "message": "You’re right, “.” is bogus in an rpath. Like any relative path, it creates a dependency on the working directory that the executable is run from.\n\n$ORIGIN is correct here.",
+      "parentUuid": "c4988edb_8d9c54e5",
+      "revId": "6a3201b116a9170cd1fd47c44ade6c1f1bb4491f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
