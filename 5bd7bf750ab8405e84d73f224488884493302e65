@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e0a5072_fc21d1fc",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T15:39:39Z",
+      "side": 1,
+      "message": "Done. I reused a lot of your phrasing.",
+      "parentUuid": "df712b3b_3380997f",
+      "revId": "5bd7bf750ab8405e84d73f224488884493302e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2ed4752_bbba0bc1",
         "filename": "chrome/browser/vr/ui_input_manager.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "5bd7bf750ab8405e84d73f224488884493302e65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4f6fa5_72019448",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T15:39:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2ed4752_bbba0bc1",
+      "revId": "5bd7bf750ab8405e84d73f224488884493302e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "98e758ba_a290c62c",
+        "filename": "chrome/browser/vr/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T15:39:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f442dddc_7ec4524c",
+      "revId": "5bd7bf750ab8405e84d73f224488884493302e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fa8eaa0_4488bcae",
         "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-27T15:09:40Z",
       "side": 1,
       "message": "Are these EXPECT_CALL functions part of the test, or just keeping the mock happy?  They don\u0027t seem to be adding value, and I\u0027m wondering why you\u0027re using a mock element at all, over a plain old element.",
+      "revId": "5bd7bf750ab8405e84d73f224488884493302e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc59334_9c2739ca",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-27T15:39:39Z",
+      "side": 1,
+      "message": "True. I\u0027ve switched to a regular element and nixed these expectations.",
+      "parentUuid": "9fa8eaa0_4488bcae",
       "revId": "5bd7bf750ab8405e84d73f224488884493302e65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
