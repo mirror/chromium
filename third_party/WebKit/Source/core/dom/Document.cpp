@@ -6245,12 +6245,10 @@ bool Document::AllowInlineEventHandler(Node* node,
 
 void Document::EnforceSandboxFlags(SandboxFlags mask) {
   scoped_refptr<SecurityOrigin> stand_in_origin = GetSecurityOrigin();
-  ApplySandboxFlags(mask);
-  // Send a notification if the origin has been updated.
-  if (stand_in_origin && !stand_in_origin->IsUnique() &&
-      GetSecurityOrigin()->IsUnique()) {
-    GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(
-        stand_in_origin->IsPotentiallyTrustworthy());
+  bool is_potentially_trustworthy =
+      stand_in_origin && stand_in_origin->IsPotentiallyTrustworthy();
+  if (ApplySandboxFlags(mask, is_potentially_trustworthy)) {
+    // Send a notification if the origin has been updated.
     if (GetFrame())
       GetFrame()->Client()->DidUpdateToUniqueOrigin();
   }
