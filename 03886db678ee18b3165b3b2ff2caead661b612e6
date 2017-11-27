@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1de57fe8_04be5748",
+        "filename": "media/capture/video_capture_types.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T17:38:58Z",
+      "side": 1,
+      "message": "Since we have to prefix the enum class name, there\u0027s no\nneed to be so verbose, hence please:\ns/VideoPixelStorage::PIXEL_STORAGE_CPU/ VideoPixelStorage::CPU/\n\netc",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 56
+      },
+      "revId": "03886db678ee18b3165b3b2ff2caead661b612e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea455297_c7f72f4a",
+        "filename": "media/capture/video_capture_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-27T17:38:58Z",
+      "side": 1,
+      "message": "It\u0027s kind of silly to have an enum for a single entry.\nVideoPixelStorage is there as a remnant of a project\nto support capturing onto GpuMemoryBuffers, but if we\u0027re\nnot planning to follow up on that, it might be better to\nremove this enum and its uses altogether; \n\n+ chfremer WDYT?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "03886db678ee18b3165b3b2ff2caead661b612e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
