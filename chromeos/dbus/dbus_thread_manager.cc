@@ -322,9 +322,9 @@ DBusThreadManager* DBusThreadManager::Get() {
   return g_dbus_thread_manager;
 }
 
-DBusThreadManagerSetter::DBusThreadManagerSetter() {}
+DBusThreadManagerSetter::DBusThreadManagerSetter() = default;
 
-DBusThreadManagerSetter::~DBusThreadManagerSetter() {}
+DBusThreadManagerSetter::~DBusThreadManagerSetter() = default;
 
 void DBusThreadManagerSetter::SetAuthPolicyClient(
     std::unique_ptr<AuthPolicyClient> client) {
