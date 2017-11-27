@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4ffeac0_eadd28d2",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-27T22:49:24Z",
+      "side": 1,
+      "message": "thestig: I don\u0027t like the \"Unsafe\" part because I know it\u0027s safe. But I couldn\u0027t find any better API to use (e.g. something like FilePath::FromASCII). Any suggestions?",
+      "range": {
+        "startLine": 359,
+        "startChar": 25,
+        "endLine": 359,
+        "endChar": 39
+      },
+      "revId": "b710f0ed28792421a2c144ff2cca2ded8eefe278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
