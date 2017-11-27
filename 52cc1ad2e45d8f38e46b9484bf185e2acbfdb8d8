@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e70513bd_497f438c",
+        "filename": "chrome/browser/prefs/session_startup_pref.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-27T23:04:25Z",
+      "side": 1,
+      "message": "Match the order with the decl in the header (move just below TypeIsManaged)",
+      "revId": "52cc1ad2e45d8f38e46b9484bf185e2acbfdb8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cddb7630_5569cae1",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1312,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-27T23:04:25Z",
+      "side": 1,
+      "message": "nit: use a base::Optional\u003cpolicy::PolicyLevel\u003e to avoid adding a parallel enum",
+      "revId": "52cc1ad2e45d8f38e46b9484bf185e2acbfdb8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02b9370_dd7e28b5",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-27T23:04:25Z",
+      "side": 1,
+      "message": "optional passive voice one-liner nit:\n  // Both mandatory and recommended startup policies should skip promo pages.",
+      "revId": "52cc1ad2e45d8f38e46b9484bf185e2acbfdb8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
