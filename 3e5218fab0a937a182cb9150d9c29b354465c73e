@@ -34,6 +34,24 @@
       "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54606753_6fcfb66c",
+        "filename": "chromeos/dbus/auth_policy_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-27T08:39:04Z",
+      "side": 1,
+      "message": "Generally speaking, D-Bus client classes should contain minimal code which is needed to pass arguments to the service process crossing the process boundary for better test coverage, and this also applies to proto packing code.\nhttps://chromium.git.corp.google.com/chromiumos/docs/+/master/dbus_in_chrome.md#Keep-your-class-minimal\n\nThe only user of JoinAdDomain() and AuthenticateUser() is chromeos/login/auth/authpolicy_login_helper.cc, and I think moving proto packing code to there wouldn\u0027t affect the readability.",
+      "parentUuid": "6f53f1db_786eff4f",
+      "revId": "3e5218fab0a937a182cb9150d9c29b354465c73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
