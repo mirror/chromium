@@ -62,7 +62,7 @@ std::unique_ptr<ResourceDownloader> ResourceDownloader::BeginDownload(
     scoped_refptr<storage::FileSystemContext> file_system_context,
     uint32_t download_id,
     bool is_parallel_request) {
-  mojom::URLLoaderFactoryPtr* factory =
+  mojom::URLLoaderFactory* factory =
       params->url().SchemeIs(url::kBlobScheme)
           ? url_loader_factory_getter->GetBlobFactory()
           : url_loader_factory_getter->GetNetworkFactory();
@@ -122,7 +122,7 @@ ResourceDownloader::ResourceDownloader(
 ResourceDownloader::~ResourceDownloader() = default;
 
 void ResourceDownloader::Start(
-    mojom::URLLoaderFactoryPtr* factory,
+    mojom::URLLoaderFactory* factory,
     scoped_refptr<storage::FileSystemContext> file_system_context,
     std::unique_ptr<DownloadUrlParameters> download_url_parameters) {
   callback_ = download_url_parameters->callback();
@@ -136,7 +136,7 @@ void ResourceDownloader::Start(
         file_system_context.get());
   } else {
     url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
-        factory->get(), std::vector<std::unique_ptr<URLLoaderThrottle>>(),
+        factory, std::vector<std::unique_ptr<URLLoaderThrottle>>(),
         0,  // routing_id
         0,  // request_id
         mojom::kURLLoadOptionSendSSLInfoWithResponse |
