@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22053bbf_2b866024",
+        "filename": "third_party/WebKit/Source/core/dom/SecurityContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-27T21:57:54Z",
+      "side": 1,
+      "message": "The Line 69 checks that the original SecurityOrigin is not unique, so if the SecurityContext inherited an opaque security origin from an ancestor, then this if-block is not executed.\nIn that case potentially-trustworthy flag is not set, but this is the existing behavior.",
+      "parentUuid": "42e7dba8_1d2ec87c",
+      "revId": "4af9358e61a2daea7f760fc7a7e5d770fe4aab59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01c6438f_bc1681a3",
         "filename": "third_party/WebKit/Source/core/dom/SecurityContext.h",
         "patchSetId": 4
