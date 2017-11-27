@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52fa07b9_b84a9599",
+        "filename": "net/spdy/chromium/header_coalescer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-27T19:11:47Z",
+      "side": 1,
+      "message": "It\u0027s not obvious to my from reading 3.2 why empty values are prohibited here, but I\u0027m probably not reading it right. Can you shed some light?",
+      "range": {
+        "startLine": 116,
+        "startChar": 22,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "0702e9e2e7feeb63409ab931521dbc3450ce3065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
