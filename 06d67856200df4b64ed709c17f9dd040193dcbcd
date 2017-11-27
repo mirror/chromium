@@ -52,6 +52,24 @@
       "revId": "06d67856200df4b64ed709c17f9dd040193dcbcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44425bab_23cb49e3",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-27T15:12:21Z",
+      "side": 1,
+      "message": "There\u0027s a proposal in https://docs.google.com/document/d/1TnDvvcemJml2Y06fV73H9PCgxlSVuQcGzIvGielZpiw/edit that could potentially require sending sources even if they have no events. Let\u0027s wait for discussion on that doc to settle \u0026 then we can figure out how to proceed with this change.",
+      "parentUuid": "531828fe_222a726f",
+      "revId": "06d67856200df4b64ed709c17f9dd040193dcbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
