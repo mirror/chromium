@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ac4d500_19099d37",
+        "filename": "chromeos/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T21:05:34Z",
+      "side": 1,
+      "message": "not your fault, but a random thought: it seems really weird that we have a zillion different proto_library targets for all of these .proto files that all live together in system_api. i wonder if it\u0027d be possible to move them all into a single target. maybe that won\u0027t work since we want them to end up in different output subdirectories that mirror their paths within system_api, though.",
+      "revId": "d6ab1ffa8825f5088bc84ac5f15bc419bde8ef67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9de007_9cc6c861",
+        "filename": "chromeos/dbus/fake_smb_provider_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T21:05:34Z",
+      "side": 1,
+      "message": "nit: omit blank lines between overridden methods from a single interface",
+      "revId": "d6ab1ffa8825f5088bc84ac5f15bc419bde8ef67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c53957b_60cf2c19",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T21:05:34Z",
+      "side": 1,
+      "message": "nit: D-Bus",
+      "range": {
+        "startLine": 71,
+        "startChar": 13,
+        "endLine": 71,
+        "endChar": 17
+      },
+      "revId": "d6ab1ffa8825f5088bc84ac5f15bc419bde8ef67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812e91e6_efd6a194",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T21:05:34Z",
+      "side": 1,
+      "message": "nit: D-Bus",
+      "range": {
+        "startLine": 93,
+        "startChar": 13,
+        "endLine": 93,
+        "endChar": 17
+      },
+      "revId": "d6ab1ffa8825f5088bc84ac5f15bc419bde8ef67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a8b0d6_da169f48",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T21:05:34Z",
+      "side": 1,
+      "message": "nit: add blank line after this one to set it apart from the comment",
+      "revId": "d6ab1ffa8825f5088bc84ac5f15bc419bde8ef67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
