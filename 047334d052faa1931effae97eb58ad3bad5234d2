@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4c952b19_45baaf16",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_strings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-27T01:26:40Z",
+      "side": 1,
+      "message": "nit: Is it for cloud import only? IF so, then can we prefix with CLOUD for consistency with other strings in this method?",
+      "range": {
+        "startLine": 341,
+        "startChar": 14,
+        "endLine": 341,
+        "endChar": 37
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8549d553_061f9175",
         "filename": "ui/file_manager/file_manager/background/js/compiled_resources2.gyp",
         "patchSetId": 5
