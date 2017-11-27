@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "2f77cbe4_20031ace",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-27T18:07:53Z",
+      "side": 1,
+      "message": "This is apparently not a new thing, given the non-mojo implementation, but it seems like it would be better for us to avoid trusting the renderer\u0027s assertion about the origin for which it\u0027s empowered to deliver notifications. Can you look at the frame tree from the browser side to determine what origin the notification should be associated with? Or at least reject origins that couldn\u0027t possible be represented by the process that delivered the notification as bad messages?",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f39378af_b5ea6153",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
         "patchSetId": 8
