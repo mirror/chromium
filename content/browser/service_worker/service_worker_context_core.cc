@@ -171,6 +171,7 @@ class RegistrationDeletionListener
   static void WaitForDeletion(
       scoped_refptr<ServiceWorkerRegistration> registration,
       base::OnceClosure callback) {
+    DCHECK(registration);
     DCHECK(!registration->is_deleted());
     registration->AddListener(new RegistrationDeletionListener(
         std::move(registration), std::move(callback)));
