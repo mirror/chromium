@@ -15,6 +15,7 @@
 #include "core/paint/AdjustPaintOffsetScope.h"
 #include "core/paint/BackgroundImageGeometry.h"
 #include "core/paint/BoxDecorationData.h"
+#include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintPhase.h"
@@ -58,6 +59,8 @@ void NGBoxFragmentPainter::Paint(const PaintInfo& paint_info,
   if (!IntersectsPaintRect(info, adjusted_paint_offset))
     return;
 
+  // A box fragment is either a block box or an inline box.
+  // Inline boxes have different paint order.
   if (box_fragment_.PhysicalFragment().IsInlineBlock())
     return PaintInlineBlock(info, adjusted_paint_offset);
 
@@ -329,6 +332,20 @@ void NGBoxFragmentPainter::PaintAllPhasesAtomically(
   PaintObject(info, paint_offset);
 }
 
+void NGBoxFragmentPainter::PaintLegacyFallbackChild(
+    const NGPhysicalFragment& fragment,
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) {
+  DCHECK(fragment.GetLayoutObject());
+  LayoutObject& layout_object = *fragment.GetLayoutObject();
+  if (layout_object.IsInline()) {
+    ObjectPainter(layout_object)
+        .PaintAllPhasesAtomically(paint_info, paint_offset);
+  } else {
+    layout_object.Paint(paint_info, paint_offset);
+  }
+}
+
 void NGBoxFragmentPainter::PaintChildren(
     const Vector<std::unique_ptr<NGPaintFragment>>& children,
     const PaintInfo& paint_info,
@@ -339,7 +356,7 @@ void NGBoxFragmentPainter::PaintChildren(
       if (child->HasSelfPaintingLayer())
         continue;
       if (RequiresLegacyFallback(fragment))
-        fragment.GetLayoutObject()->Paint(paint_info, paint_offset);
+        PaintLegacyFallbackChild(fragment, paint_info, paint_offset);
       else
         NGBoxFragmentPainter(*child).Paint(paint_info, paint_offset);
     } else if (fragment.Type() == NGPhysicalFragment::kFragmentLineBox) {
