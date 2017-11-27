@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "ac2875c0_f9c740b1",
+        "filename": "content/renderer/input/main_thread_event_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-27T16:17:19Z",
+      "side": 1,
+      "message": "If you prefer having kPointerCancel here even though we don\u0027t expect the event here yet, I would also add kPointerUp for consistency.",
+      "revId": "8e7bc905a5d787745bc1f165cc107934498fe51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe6d976_dbe975b2",
+        "filename": "content/renderer/input/main_thread_event_queue_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-27T16:17:19Z",
+      "side": 1,
+      "message": "Nit: split into two TEST_Ps for touch vs mouse event?",
+      "revId": "8e7bc905a5d787745bc1f165cc107934498fe51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70cc3cc7_406e0b67",
+        "filename": "third_party/WebKit/Source/core/input/EventHandlerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-27T16:17:19Z",
+      "side": 1,
+      "message": "Nit: since |needs_unbuffered_| just tracks the notification from EH to ChromeClient, I think something like \"ReceivedRequestForUnbufferedInput\" makes more sense here.  Same for the local state here: it is not necessarily tied to the \"effective unbuffered state\" but a tracker for notification.",
+      "revId": "8e7bc905a5d787745bc1f165cc107934498fe51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2597d02c_18534614",
         "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
         "patchSetId": 2
