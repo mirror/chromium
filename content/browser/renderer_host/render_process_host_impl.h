@@ -87,6 +87,7 @@ class RenderWidgetHostImpl;
 class ResourceMessageFilter;
 class SiteInstance;
 class SiteInstanceImpl;
+class SpeechRecognitionDispatcherHost;
 class StoragePartition;
 class StoragePartitionImpl;
 
@@ -758,6 +759,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
   std::unique_ptr<GpuClient, BrowserThread::DeleteOnIOThread> gpu_client_;
   std::unique_ptr<PushMessagingManager, BrowserThread::DeleteOnIOThread>
       push_messaging_manager_;
+  scoped_refptr<SpeechRecognitionDispatcherHost>
+      speech_recognition_dispatcher_host_;
 
   std::unique_ptr<OffscreenCanvasProviderImpl> offscreen_canvas_provider_;
 

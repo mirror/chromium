@@ -1350,6 +1350,10 @@ RenderProcessHostImpl::RenderProcessHostImpl(
   push_messaging_manager_.reset(new PushMessagingManager(
       GetID(), storage_partition_impl_->GetServiceWorkerContext()));
 
+  speech_recognition_dispatcher_host_ =
+      base::MakeRefCounted<SpeechRecognitionDispatcherHost>(
+          GetID(), storage_partition_impl_->GetURLRequestContext());
+
   AddObserver(indexed_db_factory_.get());
 
   InitializeChannelProxy();
@@ -1740,8 +1744,6 @@ void RenderProcessHostImpl::CreateMessageFilters() {
 #if BUILDFLAG(ENABLE_PLUGINS)
   AddFilter(new PepperRendererConnection(GetID()));
 #endif
-  AddFilter(new SpeechRecognitionDispatcherHost(
-      GetID(), storage_partition_impl_->GetURLRequestContext()));
   AddFilter(new FileAPIMessageFilter(
       GetID(), storage_partition_impl_->GetURLRequestContext(),
       storage_partition_impl_->GetFileSystemContext(),
@@ -1928,6 +1930,10 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 
   registry->AddInterface(
       base::Bind(&CreateReportingServiceProxy, storage_partition_impl_));
+
+  registry->AddInterface(
+      base::Bind(&SpeechRecognitionDispatcherHost::BindRequest,
+                 base::Unretained(speech_recognition_dispatcher_host_.get())));
 
   AddUIThreadInterface(registry.get(), base::Bind(&FieldTrialRecorder::Create));
 

@@ -10,11 +10,11 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
+#include "content/common/speech_recognition_host.mojom.h"
 #include "content/public/browser/browser_message_filter.h"
 #include "content/public/browser/speech_recognition_event_listener.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "net/url_request/url_request_context_getter.h"
-
-struct SpeechRecognitionHostMsg_StartRequest_Params;
 
 namespace content {
 
@@ -26,11 +26,14 @@ class SpeechRecognitionManager;
 // It's the complement of SpeechRecognitionDispatcher (owned by RenderView).
 class CONTENT_EXPORT SpeechRecognitionDispatcherHost
     : public BrowserMessageFilter,
-      public SpeechRecognitionEventListener {
+      public SpeechRecognitionEventListener,
+      public mojom::SpeechRecognitionHost {
  public:
   SpeechRecognitionDispatcherHost(
       int render_process_id,
       net::URLRequestContextGetter* context_getter);
+
+  void BindRequest(mojom::SpeechRecognitionHostRequest request);
 
   base::WeakPtr<SpeechRecognitionDispatcherHost> AsWeakPtr();
 
@@ -53,8 +56,13 @@ class CONTENT_EXPORT SpeechRecognitionDispatcherHost
   // BrowserMessageFilter implementation.
   void OnDestruct() const override;
   bool OnMessageReceived(const IPC::Message& message) override;
-  void OverrideThreadForMessage(const IPC::Message& message,
-                                BrowserThread::ID* thread) override;
+
+  // mojom::SpeechRecognitionHost:
+  void StartRequest(
+      mojom::StartSpeechRecognitionRequestParamsPtr params) override;
+  void AbortRequest(int64_t render_view_id, int64_t request_id) override;
+  void AbortAllRequests(int64_t render_view_id) override;
+  void StopCaptureRequest(int64_t render_view_id, int64_t request_id) override;
 
   void OnChannelClosing() override;
 
@@ -64,20 +72,18 @@ class CONTENT_EXPORT SpeechRecognitionDispatcherHost
 
   ~SpeechRecognitionDispatcherHost() override;
 
-  void OnStartRequest(
-      const SpeechRecognitionHostMsg_StartRequest_Params& params);
-  void OnStartRequestOnIO(
-      int embedder_render_process_id,
-      int embedder_render_view_id,
-      const SpeechRecognitionHostMsg_StartRequest_Params& params,
-      int params_render_frame_id,
-      bool filter_profanities);
-  void OnAbortRequest(int render_view_id, int request_id);
-  void OnStopCaptureRequest(int render_view_id, int request_id);
-  void OnAbortAllRequests(int render_view_id);
+  void StartRequestOnUI(mojom::StartSpeechRecognitionRequestParamsPtr params);
+
+  void StartRequestOnIO(int embedder_render_process_id,
+                        int embedder_render_view_id,
+                        mojom::StartSpeechRecognitionRequestParamsPtr params,
+                        int params_render_frame_id,
+                        bool filter_profanities);
 
   int render_process_id_;
   scoped_refptr<net::URLRequestContextGetter> context_getter_;
+
+  mojo::BindingSet<mojom::SpeechRecognitionHost> bindings_;
 
   // Used for posting asynchronous tasks (on the IO thread) without worrying
   // about this class being destroyed in the meanwhile (due to browser shutdown)
