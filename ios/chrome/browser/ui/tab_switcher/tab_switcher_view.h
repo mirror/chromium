@@ -46,6 +46,10 @@ enum class NewTabButtonStyle { UNINITIALIZED, BLUE, GRAY, HIDDEN };
 // Overlay buttons are the top right dismiss button and the bottom right new tab
 // button.
 - (void)updateOverlayButtonState;
+// Called when the tab is shown.
+- (void)wasShown;
+// Called when the tab is hidden.
+- (void)wasHidden;
 
 @end
 
