@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "3c64d37f_232541c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-27T21:51:55Z",
+      "side": 1,
+      "message": "What\u0027s this?",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 25
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2803cbc_11044a1b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
         "patchSetId": 7
@@ -64,6 +87,29 @@
         "startChar": 10,
         "endLine": 79,
         "endChar": 14
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33698e6_6923439b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-27T21:51:55Z",
+      "side": 1,
+      "message": "No need to change the type here?",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 29
       },
       "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -117,6 +163,29 @@
     },
     {
       "key": {
+        "uuid": "41f89c2f_dae17951",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-27T21:51:55Z",
+      "side": 1,
+      "message": "Magic numbers. What are we doing here?",
+      "range": {
+        "startLine": 73,
+        "startChar": 46,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8384aac5_f786ff0c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShell.java",
         "patchSetId": 7
@@ -156,6 +225,75 @@
         "startChar": 23,
         "endLine": 290,
         "endChar": 36
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf069da9_09aeda4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-27T21:51:55Z",
+      "side": 1,
+      "message": "I don\u0027t think we should have a native vr shell delegate pointer here. I think you should make the jni calls part of VrShellDelegate.java.",
+      "range": {
+        "startLine": 32,
+        "startChar": 17,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f9eb8a_5e8ec4d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-27T21:51:55Z",
+      "side": 1,
+      "message": "Why are we not reusing the AndroidUiGestureTarget?",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 27
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae58b6b_471bda36",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-27T21:51:55Z",
+      "side": 1,
+      "message": "It looks like for these bindings you\u0027re implementing a lot of the functionality in the binding itself. Can this instead call a single function which does all of the necessary work? Same fore the binding below.",
+      "range": {
+        "startLine": 371,
+        "startChar": 12,
+        "endLine": 373,
+        "endChar": 46
       },
       "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
