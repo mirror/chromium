@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29efb76f_0acf6dd9",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-27T10:28:15Z",
+      "side": 1,
+      "message": "|event_timeout_times_| keeps the all even_ids until 5 minutes passed even if the event has already settled.\nIs this intended?\nIf a web site heavily uses postMessage() or fetch() from the page to communicate with the service worker, the memory usage will be bloated.",
+      "range": {
+        "startLine": 74,
+        "startChar": 66,
+        "endLine": 74,
+        "endChar": 73
+      },
+      "revId": "49ef240fe1c6dc63e53aa0ddd396527d2dac2be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
