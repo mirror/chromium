@@ -38,11 +38,9 @@ namespace extensions {
 
 using api::extension_types::InjectDetails;
 
-ExecuteCodeFunction::ExecuteCodeFunction() {
-}
+ExecuteCodeFunction::ExecuteCodeFunction() = default;
 
-ExecuteCodeFunction::~ExecuteCodeFunction() {
-}
+ExecuteCodeFunction::~ExecuteCodeFunction() = default;
 
 void ExecuteCodeFunction::GetFileURLAndMaybeLocalizeInBackground(
     const std::string& extension_id,

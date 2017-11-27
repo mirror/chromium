@@ -32,7 +32,7 @@ DisplaySourceConnectionDelegateFactory::DisplaySourceConnectionDelegateFactory()
           BrowserContextDependencyManager::GetInstance()) {}
 
 DisplaySourceConnectionDelegateFactory::
-    ~DisplaySourceConnectionDelegateFactory() {}
+    ~DisplaySourceConnectionDelegateFactory() = default;
 
 KeyedService* DisplaySourceConnectionDelegateFactory::BuildServiceInstanceFor(
     BrowserContext* browser_context) const {

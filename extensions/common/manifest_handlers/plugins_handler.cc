@@ -53,7 +53,7 @@ struct PluginManifestData : Extension::ManifestData {
 PluginInfo::PluginInfo(const base::FilePath& plugin_path, bool plugin_is_public)
     : path(plugin_path), is_public(plugin_is_public) {}
 
-PluginInfo::~PluginInfo() {}
+PluginInfo::~PluginInfo() = default;
 
 // static
 const PluginInfo::PluginVector* PluginInfo::GetPlugins(
@@ -72,9 +72,9 @@ bool PluginInfo::HasPlugins(const Extension* extension) {
 
 }  // namespace
 
-PluginsHandler::PluginsHandler() {}
+PluginsHandler::PluginsHandler() = default;
 
-PluginsHandler::~PluginsHandler() {}
+PluginsHandler::~PluginsHandler() = default;
 
 const std::vector<std::string> PluginsHandler::Keys() const {
   return SingleKey(keys::kPlugins);

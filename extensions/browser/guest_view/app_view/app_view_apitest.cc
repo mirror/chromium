@@ -74,7 +74,7 @@ MockShellAppDelegate* MockShellAppDelegate::instance_ = nullptr;
 class MockShellAppViewGuestDelegate
     : public extensions::ShellAppViewGuestDelegate {
  public:
-  MockShellAppViewGuestDelegate() {}
+  MockShellAppViewGuestDelegate() = default;
 
   extensions::AppDelegate* CreateAppDelegate() override {
     return new MockShellAppDelegate();
@@ -83,7 +83,7 @@ class MockShellAppViewGuestDelegate
 
 class MockExtensionsAPIClient : public extensions::ShellExtensionsAPIClient {
  public:
-  MockExtensionsAPIClient() {}
+  MockExtensionsAPIClient() = default;
 
   extensions::AppViewGuestDelegate* CreateAppViewGuestDelegate()
       const override {

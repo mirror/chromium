@@ -122,11 +122,9 @@ base::FilePath GetResourcesPakFilePath() {
 
 namespace extensions {
 
-ShellMainDelegate::ShellMainDelegate() {
-}
+ShellMainDelegate::ShellMainDelegate() = default;
 
-ShellMainDelegate::~ShellMainDelegate() {
-}
+ShellMainDelegate::~ShellMainDelegate() = default;
 
 bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
   InitLogging();

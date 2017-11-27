@@ -22,8 +22,7 @@ EventMatcher::EventMatcher(std::unique_ptr<base::DictionaryValue> filter,
                            int routing_id)
     : filter_(std::move(filter)), routing_id_(routing_id) {}
 
-EventMatcher::~EventMatcher() {
-}
+EventMatcher::~EventMatcher() = default;
 
 bool EventMatcher::MatchNonURLCriteria(
     const EventFilteringInfo& event_info) const {

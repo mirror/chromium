@@ -6,9 +6,9 @@
 
 namespace extensions {
 
-EventFilteringInfo::EventFilteringInfo() {}
+EventFilteringInfo::EventFilteringInfo() = default;
 EventFilteringInfo::EventFilteringInfo(const EventFilteringInfo& other) =
     default;
-EventFilteringInfo::~EventFilteringInfo() {}
+EventFilteringInfo::~EventFilteringInfo() = default;
 
 }  // namespace extensions

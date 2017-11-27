@@ -11,7 +11,7 @@ using api::system_cpu::CpuInfo;
 
 class MockCpuInfoProviderImpl : public CpuInfoProvider {
  public:
-  MockCpuInfoProviderImpl() {}
+  MockCpuInfoProviderImpl() = default;
 
   bool QueryInfo() override {
     info_.num_of_processors = 4;
@@ -36,13 +36,13 @@ class MockCpuInfoProviderImpl : public CpuInfoProvider {
   }
 
  private:
-  ~MockCpuInfoProviderImpl() override {}
+  ~MockCpuInfoProviderImpl() override = default;
 };
 
 class SystemCpuApiTest : public ShellApiTest {
  public:
-  SystemCpuApiTest() {}
-  ~SystemCpuApiTest() override {}
+  SystemCpuApiTest() = default;
+  ~SystemCpuApiTest() override = default;
 
   void SetUpInProcessBrowserTestFixture() override {
     ShellApiTest::SetUpInProcessBrowserTestFixture();

@@ -22,7 +22,7 @@ namespace {
 class MockWebContentsDelegate : public content::WebContentsDelegate {
  public:
   MockWebContentsDelegate() : requested_(false), checked_(false) {}
-  ~MockWebContentsDelegate() override {}
+  ~MockWebContentsDelegate() override = default;
 
   void RequestMediaAccessPermission(
       content::WebContents* web_contents,
@@ -71,7 +71,7 @@ namespace extensions {
 
 class WebViewMediaAccessAPITest : public WebViewAPITest {
  protected:
-  WebViewMediaAccessAPITest() {}
+  WebViewMediaAccessAPITest() = default;
 
   // Runs media_access tests.
   void RunTest(const std::string& test_name) {

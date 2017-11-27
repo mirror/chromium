@@ -22,7 +22,7 @@ class MockShellOAuth2TokenService : public ShellOAuth2TokenService {
  public:
   // The service starts with no account id or refresh token.
   MockShellOAuth2TokenService() : ShellOAuth2TokenService(nullptr, "", "") {}
-  ~MockShellOAuth2TokenService() override {}
+  ~MockShellOAuth2TokenService() override = default;
 
   // OAuth2TokenService:
   std::unique_ptr<Request> StartRequest(const std::string& account_id,
@@ -39,7 +39,7 @@ class MockOAuth2MintTokenFlow : public OAuth2MintTokenFlow {
  public:
   explicit MockOAuth2MintTokenFlow(Delegate* delegate)
       : OAuth2MintTokenFlow(delegate, Parameters()), delegate_(delegate) {}
-  ~MockOAuth2MintTokenFlow() override {}
+  ~MockOAuth2MintTokenFlow() override = default;
 
   // OAuth2ApiCallFlow:
   void Start(net::URLRequestContextGetter* context,
@@ -55,8 +55,8 @@ class MockOAuth2MintTokenFlow : public OAuth2MintTokenFlow {
 
 class IdentityApiTest : public ApiUnitTest {
  public:
-  IdentityApiTest() {}
-  ~IdentityApiTest() override {}
+  IdentityApiTest() = default;
+  ~IdentityApiTest() override = default;
 
   // testing::Test:
   void SetUp() override {

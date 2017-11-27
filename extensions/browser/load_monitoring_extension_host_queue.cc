@@ -40,8 +40,7 @@ LoadMonitoringExtensionHostQueue::LoadMonitoringExtensionHostQueue(
                                        base::TimeDelta::FromMinutes(1),
                                        FinishedCallback()) {}
 
-LoadMonitoringExtensionHostQueue::~LoadMonitoringExtensionHostQueue() {
-}
+LoadMonitoringExtensionHostQueue::~LoadMonitoringExtensionHostQueue() = default;
 
 void LoadMonitoringExtensionHostQueue::StartMonitoring() {
   if (started_) {

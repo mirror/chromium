@@ -36,7 +36,7 @@ SocketPermissionEntrySet ExtractSocketEntries(
 SocketPermission::SocketPermission(const APIPermissionInfo* info)
     : SetDisjunctionPermission<SocketPermissionData, SocketPermission>(info) {}
 
-SocketPermission::~SocketPermission() {}
+SocketPermission::~SocketPermission() = default;
 
 bool SocketPermission::FromValue(
     const base::Value* value,

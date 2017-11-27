@@ -75,7 +75,7 @@ NativeRendererMessagingService::NativeRendererMessagingService(
     : RendererMessagingService(bindings_system),
       bindings_system_(bindings_system),
       one_time_message_handler_(bindings_system) {}
-NativeRendererMessagingService::~NativeRendererMessagingService() {}
+NativeRendererMessagingService::~NativeRendererMessagingService() = default;
 
 gin::Handle<GinPort> NativeRendererMessagingService::Connect(
     ScriptContext* script_context,

@@ -373,8 +373,8 @@ ExtensionFunction::ResponseAction WebViewInternalNavigateFunction::Run() {
 WebViewInternalExecuteCodeFunction::WebViewInternalExecuteCodeFunction()
     : guest_instance_id_(0) {}
 
-WebViewInternalExecuteCodeFunction::~WebViewInternalExecuteCodeFunction() {
-}
+WebViewInternalExecuteCodeFunction::~WebViewInternalExecuteCodeFunction() =
+    default;
 
 ExecuteCodeFunction::InitResult WebViewInternalExecuteCodeFunction::Init() {
   if (init_result_)
@@ -480,8 +480,8 @@ bool WebViewInternalExecuteCodeFunction::LoadFile(const std::string& file) {
   return ExecuteCodeFunction::LoadFile(file);
 }
 
-WebViewInternalExecuteScriptFunction::WebViewInternalExecuteScriptFunction() {
-}
+WebViewInternalExecuteScriptFunction::WebViewInternalExecuteScriptFunction() =
+    default;
 
 void WebViewInternalExecuteScriptFunction::OnExecuteCodeFinished(
     const std::string& error,
@@ -493,20 +493,17 @@ void WebViewInternalExecuteScriptFunction::OnExecuteCodeFinished(
       error, on_url, result);
 }
 
-WebViewInternalInsertCSSFunction::WebViewInternalInsertCSSFunction() {
-}
+WebViewInternalInsertCSSFunction::WebViewInternalInsertCSSFunction() = default;
 
 bool WebViewInternalInsertCSSFunction::ShouldInsertCSS() const {
   return true;
 }
 
 WebViewInternalAddContentScriptsFunction::
-    WebViewInternalAddContentScriptsFunction() {
-}
+    WebViewInternalAddContentScriptsFunction() = default;
 
 WebViewInternalAddContentScriptsFunction::
-    ~WebViewInternalAddContentScriptsFunction() {
-}
+    ~WebViewInternalAddContentScriptsFunction() = default;
 
 ExecuteCodeFunction::ResponseAction
 WebViewInternalAddContentScriptsFunction::Run() {
@@ -542,12 +539,10 @@ WebViewInternalAddContentScriptsFunction::Run() {
 }
 
 WebViewInternalRemoveContentScriptsFunction::
-    WebViewInternalRemoveContentScriptsFunction() {
-}
+    WebViewInternalRemoveContentScriptsFunction() = default;
 
 WebViewInternalRemoveContentScriptsFunction::
-    ~WebViewInternalRemoveContentScriptsFunction() {
-}
+    ~WebViewInternalRemoveContentScriptsFunction() = default;
 
 ExecuteCodeFunction::ResponseAction
 WebViewInternalRemoveContentScriptsFunction::Run() {
@@ -574,11 +569,9 @@ WebViewInternalRemoveContentScriptsFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-WebViewInternalSetNameFunction::WebViewInternalSetNameFunction() {
-}
+WebViewInternalSetNameFunction::WebViewInternalSetNameFunction() = default;
 
-WebViewInternalSetNameFunction::~WebViewInternalSetNameFunction() {
-}
+WebViewInternalSetNameFunction::~WebViewInternalSetNameFunction() = default;
 
 ExtensionFunction::ResponseAction WebViewInternalSetNameFunction::Run() {
   std::unique_ptr<web_view_internal::SetName::Params> params(
@@ -589,12 +582,10 @@ ExtensionFunction::ResponseAction WebViewInternalSetNameFunction::Run() {
 }
 
 WebViewInternalSetAllowTransparencyFunction::
-WebViewInternalSetAllowTransparencyFunction() {
-}
+    WebViewInternalSetAllowTransparencyFunction() = default;
 
 WebViewInternalSetAllowTransparencyFunction::
-~WebViewInternalSetAllowTransparencyFunction() {
-}
+    ~WebViewInternalSetAllowTransparencyFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebViewInternalSetAllowTransparencyFunction::Run() {
@@ -606,12 +597,10 @@ WebViewInternalSetAllowTransparencyFunction::Run() {
 }
 
 WebViewInternalSetAllowScalingFunction::
-    WebViewInternalSetAllowScalingFunction() {
-}
+    WebViewInternalSetAllowScalingFunction() = default;
 
 WebViewInternalSetAllowScalingFunction::
-    ~WebViewInternalSetAllowScalingFunction() {
-}
+    ~WebViewInternalSetAllowScalingFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebViewInternalSetAllowScalingFunction::Run() {
@@ -622,11 +611,9 @@ WebViewInternalSetAllowScalingFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-WebViewInternalSetZoomFunction::WebViewInternalSetZoomFunction() {
-}
+WebViewInternalSetZoomFunction::WebViewInternalSetZoomFunction() = default;
 
-WebViewInternalSetZoomFunction::~WebViewInternalSetZoomFunction() {
-}
+WebViewInternalSetZoomFunction::~WebViewInternalSetZoomFunction() = default;
 
 ExtensionFunction::ResponseAction WebViewInternalSetZoomFunction::Run() {
   std::unique_ptr<web_view_internal::SetZoom::Params> params(
@@ -636,11 +623,9 @@ ExtensionFunction::ResponseAction WebViewInternalSetZoomFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-WebViewInternalGetZoomFunction::WebViewInternalGetZoomFunction() {
-}
+WebViewInternalGetZoomFunction::WebViewInternalGetZoomFunction() = default;
 
-WebViewInternalGetZoomFunction::~WebViewInternalGetZoomFunction() {
-}
+WebViewInternalGetZoomFunction::~WebViewInternalGetZoomFunction() = default;
 
 ExtensionFunction::ResponseAction WebViewInternalGetZoomFunction::Run() {
   std::unique_ptr<web_view_internal::GetZoom::Params> params(
@@ -651,11 +636,11 @@ ExtensionFunction::ResponseAction WebViewInternalGetZoomFunction::Run() {
   return RespondNow(OneArgument(std::make_unique<base::Value>(zoom_factor)));
 }
 
-WebViewInternalSetZoomModeFunction::WebViewInternalSetZoomModeFunction() {
-}
+WebViewInternalSetZoomModeFunction::WebViewInternalSetZoomModeFunction() =
+    default;
 
-WebViewInternalSetZoomModeFunction::~WebViewInternalSetZoomModeFunction() {
-}
+WebViewInternalSetZoomModeFunction::~WebViewInternalSetZoomModeFunction() =
+    default;
 
 ExtensionFunction::ResponseAction WebViewInternalSetZoomModeFunction::Run() {
   std::unique_ptr<web_view_internal::SetZoomMode::Params> params(
@@ -681,11 +666,11 @@ ExtensionFunction::ResponseAction WebViewInternalSetZoomModeFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-WebViewInternalGetZoomModeFunction::WebViewInternalGetZoomModeFunction() {
-}
+WebViewInternalGetZoomModeFunction::WebViewInternalGetZoomModeFunction() =
+    default;
 
-WebViewInternalGetZoomModeFunction::~WebViewInternalGetZoomModeFunction() {
-}
+WebViewInternalGetZoomModeFunction::~WebViewInternalGetZoomModeFunction() =
+    default;
 
 ExtensionFunction::ResponseAction WebViewInternalGetZoomModeFunction::Run() {
   std::unique_ptr<web_view_internal::GetZoomMode::Params> params(
@@ -711,11 +696,9 @@ ExtensionFunction::ResponseAction WebViewInternalGetZoomModeFunction::Run() {
       std::make_unique<base::Value>(web_view_internal::ToString(zoom_mode))));
 }
 
-WebViewInternalFindFunction::WebViewInternalFindFunction() {
-}
+WebViewInternalFindFunction::WebViewInternalFindFunction() = default;
 
-WebViewInternalFindFunction::~WebViewInternalFindFunction() {
-}
+WebViewInternalFindFunction::~WebViewInternalFindFunction() = default;
 
 bool WebViewInternalFindFunction::RunAsyncSafe(WebViewGuest* guest) {
   std::unique_ptr<web_view_internal::Find::Params> params(
@@ -740,11 +723,11 @@ bool WebViewInternalFindFunction::RunAsyncSafe(WebViewGuest* guest) {
   return true;
 }
 
-WebViewInternalStopFindingFunction::WebViewInternalStopFindingFunction() {
-}
+WebViewInternalStopFindingFunction::WebViewInternalStopFindingFunction() =
+    default;
 
-WebViewInternalStopFindingFunction::~WebViewInternalStopFindingFunction() {
-}
+WebViewInternalStopFindingFunction::~WebViewInternalStopFindingFunction() =
+    default;
 
 ExtensionFunction::ResponseAction WebViewInternalStopFindingFunction::Run() {
   std::unique_ptr<web_view_internal::StopFinding::Params> params(
@@ -772,12 +755,10 @@ ExtensionFunction::ResponseAction WebViewInternalStopFindingFunction::Run() {
 }
 
 WebViewInternalLoadDataWithBaseUrlFunction::
-    WebViewInternalLoadDataWithBaseUrlFunction() {
-}
+    WebViewInternalLoadDataWithBaseUrlFunction() = default;
 
 WebViewInternalLoadDataWithBaseUrlFunction::
-    ~WebViewInternalLoadDataWithBaseUrlFunction() {
-}
+    ~WebViewInternalLoadDataWithBaseUrlFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebViewInternalLoadDataWithBaseUrlFunction::Run() {
@@ -798,11 +779,9 @@ WebViewInternalLoadDataWithBaseUrlFunction::Run() {
   return RespondNow(Error(error));
 }
 
-WebViewInternalGoFunction::WebViewInternalGoFunction() {
-}
+WebViewInternalGoFunction::WebViewInternalGoFunction() = default;
 
-WebViewInternalGoFunction::~WebViewInternalGoFunction() {
-}
+WebViewInternalGoFunction::~WebViewInternalGoFunction() = default;
 
 ExtensionFunction::ResponseAction WebViewInternalGoFunction::Run() {
   std::unique_ptr<web_view_internal::Go::Params> params(
@@ -813,22 +792,20 @@ ExtensionFunction::ResponseAction WebViewInternalGoFunction::Run() {
   return RespondNow(OneArgument(std::make_unique<base::Value>(successful)));
 }
 
-WebViewInternalReloadFunction::WebViewInternalReloadFunction() {
-}
+WebViewInternalReloadFunction::WebViewInternalReloadFunction() = default;
 
-WebViewInternalReloadFunction::~WebViewInternalReloadFunction() {
-}
+WebViewInternalReloadFunction::~WebViewInternalReloadFunction() = default;
 
 ExtensionFunction::ResponseAction WebViewInternalReloadFunction::Run() {
   guest_->Reload();
   return RespondNow(NoArguments());
 }
 
-WebViewInternalSetPermissionFunction::WebViewInternalSetPermissionFunction() {
-}
+WebViewInternalSetPermissionFunction::WebViewInternalSetPermissionFunction() =
+    default;
 
-WebViewInternalSetPermissionFunction::~WebViewInternalSetPermissionFunction() {
-}
+WebViewInternalSetPermissionFunction::~WebViewInternalSetPermissionFunction() =
+    default;
 
 ExtensionFunction::ResponseAction WebViewInternalSetPermissionFunction::Run() {
   std::unique_ptr<web_view_internal::SetPermission::Params> params(
@@ -869,12 +846,10 @@ ExtensionFunction::ResponseAction WebViewInternalSetPermissionFunction::Run() {
 }
 
 WebViewInternalOverrideUserAgentFunction::
-    WebViewInternalOverrideUserAgentFunction() {
-}
+    WebViewInternalOverrideUserAgentFunction() = default;
 
 WebViewInternalOverrideUserAgentFunction::
-    ~WebViewInternalOverrideUserAgentFunction() {
-}
+    ~WebViewInternalOverrideUserAgentFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebViewInternalOverrideUserAgentFunction::Run() {
@@ -886,20 +861,20 @@ WebViewInternalOverrideUserAgentFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-WebViewInternalStopFunction::WebViewInternalStopFunction() {
-}
+WebViewInternalStopFunction::WebViewInternalStopFunction() = default;
 
-WebViewInternalStopFunction::~WebViewInternalStopFunction() {
-}
+WebViewInternalStopFunction::~WebViewInternalStopFunction() = default;
 
 ExtensionFunction::ResponseAction WebViewInternalStopFunction::Run() {
   guest_->Stop();
   return RespondNow(NoArguments());
 }
 
-WebViewInternalSetAudioMutedFunction::WebViewInternalSetAudioMutedFunction() {}
+WebViewInternalSetAudioMutedFunction::WebViewInternalSetAudioMutedFunction() =
+    default;
 
-WebViewInternalSetAudioMutedFunction::~WebViewInternalSetAudioMutedFunction() {}
+WebViewInternalSetAudioMutedFunction::~WebViewInternalSetAudioMutedFunction() =
+    default;
 
 ExtensionFunction::ResponseAction WebViewInternalSetAudioMutedFunction::Run() {
   std::unique_ptr<web_view_internal::SetAudioMuted::Params> params(
@@ -910,9 +885,11 @@ ExtensionFunction::ResponseAction WebViewInternalSetAudioMutedFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-WebViewInternalIsAudioMutedFunction::WebViewInternalIsAudioMutedFunction() {}
+WebViewInternalIsAudioMutedFunction::WebViewInternalIsAudioMutedFunction() =
+    default;
 
-WebViewInternalIsAudioMutedFunction::~WebViewInternalIsAudioMutedFunction() {}
+WebViewInternalIsAudioMutedFunction::~WebViewInternalIsAudioMutedFunction() =
+    default;
 
 ExtensionFunction::ResponseAction WebViewInternalIsAudioMutedFunction::Run() {
   std::unique_ptr<web_view_internal::IsAudioMuted::Params> params(
@@ -924,9 +901,11 @@ ExtensionFunction::ResponseAction WebViewInternalIsAudioMutedFunction::Run() {
       OneArgument(std::make_unique<base::Value>(web_contents->IsAudioMuted())));
 }
 
-WebViewInternalGetAudioStateFunction::WebViewInternalGetAudioStateFunction() {}
+WebViewInternalGetAudioStateFunction::WebViewInternalGetAudioStateFunction() =
+    default;
 
-WebViewInternalGetAudioStateFunction::~WebViewInternalGetAudioStateFunction() {}
+WebViewInternalGetAudioStateFunction::~WebViewInternalGetAudioStateFunction() =
+    default;
 
 ExtensionFunction::ResponseAction WebViewInternalGetAudioStateFunction::Run() {
   std::unique_ptr<web_view_internal::GetAudioState::Params> params(
@@ -938,11 +917,9 @@ ExtensionFunction::ResponseAction WebViewInternalGetAudioStateFunction::Run() {
       std::make_unique<base::Value>(web_contents->IsCurrentlyAudible())));
 }
 
-WebViewInternalTerminateFunction::WebViewInternalTerminateFunction() {
-}
+WebViewInternalTerminateFunction::WebViewInternalTerminateFunction() = default;
 
-WebViewInternalTerminateFunction::~WebViewInternalTerminateFunction() {
-}
+WebViewInternalTerminateFunction::~WebViewInternalTerminateFunction() = default;
 
 ExtensionFunction::ResponseAction WebViewInternalTerminateFunction::Run() {
   guest_->Terminate();
@@ -953,8 +930,7 @@ WebViewInternalClearDataFunction::WebViewInternalClearDataFunction()
     : remove_mask_(0), bad_message_(false) {
 }
 
-WebViewInternalClearDataFunction::~WebViewInternalClearDataFunction() {
-}
+WebViewInternalClearDataFunction::~WebViewInternalClearDataFunction() = default;
 
 // Parses the |dataToRemove| argument to generate the remove mask. Sets
 // |bad_message_| (like EXTENSION_FUNCTION_VALIDATE would if this were a bool

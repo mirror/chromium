@@ -27,8 +27,7 @@ ImageLoaderFactory::ImageLoaderFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-ImageLoaderFactory::~ImageLoaderFactory() {
-}
+ImageLoaderFactory::~ImageLoaderFactory() = default;
 
 KeyedService* ImageLoaderFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

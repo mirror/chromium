@@ -27,7 +27,7 @@ using v8_helpers::ToV8String;
 JSRendererMessagingService::JSRendererMessagingService(
     ExtensionBindingsSystem* bindings_system)
     : RendererMessagingService(bindings_system) {}
-JSRendererMessagingService::~JSRendererMessagingService() {}
+JSRendererMessagingService::~JSRendererMessagingService() = default;
 
 bool JSRendererMessagingService::ContextHasMessagePort(
     ScriptContext* script_context,

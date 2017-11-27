@@ -27,7 +27,7 @@ EventEmitter::EventEmitter(bool supports_filters,
       run_js_sync_(run_js_sync),
       exception_handler_(exception_handler) {}
 
-EventEmitter::~EventEmitter() {}
+EventEmitter::~EventEmitter() = default;
 
 gin::ObjectTemplateBuilder EventEmitter::GetObjectTemplateBuilder(
     v8::Isolate* isolate) {

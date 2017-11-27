@@ -36,7 +36,7 @@ namespace {
 
 class BluetoothSocketApiTest : public extensions::ShellApiTest {
  public:
-  BluetoothSocketApiTest() {}
+  BluetoothSocketApiTest() = default;
 
   void SetUpOnMainThread() override {
     ShellApiTest::SetUpOnMainThread();

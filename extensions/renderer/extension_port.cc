@@ -17,7 +17,7 @@ ExtensionPort::ExtensionPort(ScriptContext* script_context,
                              int js_id)
     : script_context_(script_context), id_(id), js_id_(js_id) {}
 
-ExtensionPort::~ExtensionPort() {}
+ExtensionPort::~ExtensionPort() = default;
 
 void ExtensionPort::PostExtensionMessage(std::unique_ptr<Message> message) {
   content::RenderFrame* render_frame = script_context_->GetRenderFrame();

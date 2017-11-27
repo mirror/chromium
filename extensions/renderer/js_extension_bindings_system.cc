@@ -146,7 +146,7 @@ JsExtensionBindingsSystem::JsExtensionBindingsSystem(
           std::make_unique<RequestSender>(ipc_message_sender_.get())),
       messaging_service_(this) {}
 
-JsExtensionBindingsSystem::~JsExtensionBindingsSystem() {}
+JsExtensionBindingsSystem::~JsExtensionBindingsSystem() = default;
 
 void JsExtensionBindingsSystem::DidCreateScriptContext(ScriptContext* context) {
   MaybeCreateEventBindings(context);

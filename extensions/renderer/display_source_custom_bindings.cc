@@ -39,8 +39,7 @@ DisplaySourceCustomBindings::DisplaySourceCustomBindings(
                            weak_factory_.GetWeakPtr()));
 }
 
-DisplaySourceCustomBindings::~DisplaySourceCustomBindings() {
-}
+DisplaySourceCustomBindings::~DisplaySourceCustomBindings() = default;
 
 void DisplaySourceCustomBindings::Invalidate() {
   session_map_.clear();

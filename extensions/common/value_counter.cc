@@ -21,11 +21,9 @@ struct ValueCounter::Entry {
   int count;
 };
 
-ValueCounter::ValueCounter() {
-}
+ValueCounter::ValueCounter() = default;
 
-ValueCounter::~ValueCounter() {
-}
+ValueCounter::~ValueCounter() = default;
 
 bool ValueCounter::Add(const base::Value& value) {
   for (const auto& entry : entries_) {

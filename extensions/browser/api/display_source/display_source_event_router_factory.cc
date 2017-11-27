@@ -34,7 +34,7 @@ DisplaySourceEventRouterFactory::DisplaySourceEventRouterFactory()
   DependsOn(DisplaySourceConnectionDelegateFactory::GetInstance());
 }
 
-DisplaySourceEventRouterFactory::~DisplaySourceEventRouterFactory() {}
+DisplaySourceEventRouterFactory::~DisplaySourceEventRouterFactory() = default;
 
 KeyedService* DisplaySourceEventRouterFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

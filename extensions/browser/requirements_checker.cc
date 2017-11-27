@@ -22,7 +22,7 @@ RequirementsChecker::RequirementsChecker(
     scoped_refptr<const Extension> extension)
     : PreloadCheck(extension), weak_ptr_factory_(this) {}
 
-RequirementsChecker::~RequirementsChecker() {}
+RequirementsChecker::~RequirementsChecker() = default;
 
 void RequirementsChecker::Start(ResultCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

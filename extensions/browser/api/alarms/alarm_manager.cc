@@ -45,7 +45,7 @@ class DefaultAlarmDelegate : public AlarmManager::Delegate {
  public:
   explicit DefaultAlarmDelegate(content::BrowserContext* context)
       : browser_context_(context) {}
-  ~DefaultAlarmDelegate() override {}
+  ~DefaultAlarmDelegate() override = default;
 
   void OnAlarm(const std::string& extension_id, const Alarm& alarm) override {
     std::unique_ptr<base::ListValue> args(new base::ListValue());
@@ -119,8 +119,7 @@ AlarmManager::AlarmManager(content::BrowserContext* context)
     storage->RegisterKey(kRegisteredAlarms);
 }
 
-AlarmManager::~AlarmManager() {
-}
+AlarmManager::~AlarmManager() = default;
 
 void AlarmManager::AddAlarm(const std::string& extension_id,
                             std::unique_ptr<Alarm> alarm,
@@ -483,7 +482,6 @@ Alarm::Alarm(const std::string& name,
   }
 }
 
-Alarm::~Alarm() {
-}
+Alarm::~Alarm() = default;
 
 }  // namespace extensions

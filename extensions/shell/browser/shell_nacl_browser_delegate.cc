@@ -36,8 +36,7 @@ ShellNaClBrowserDelegate::ShellNaClBrowserDelegate(BrowserContext* context)
   DCHECK(browser_context_);
 }
 
-ShellNaClBrowserDelegate::~ShellNaClBrowserDelegate() {
-}
+ShellNaClBrowserDelegate::~ShellNaClBrowserDelegate() = default;
 
 void ShellNaClBrowserDelegate::ShowMissingArchInfobar(int render_process_id,
                                                       int render_view_id) {

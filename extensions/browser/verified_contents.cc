@@ -69,8 +69,7 @@ VerifiedContents::VerifiedContents(const uint8_t* public_key,
       valid_signature_(false),  // Guilty until proven innocent.
       block_size_(0) {}
 
-VerifiedContents::~VerifiedContents() {
-}
+VerifiedContents::~VerifiedContents() = default;
 
 // The format of the payload json is:
 // {

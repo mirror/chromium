@@ -39,8 +39,7 @@ ShellExtensionSystem::ShellExtensionSystem(BrowserContext* browser_context)
       store_factory_(new ValueStoreFactoryImpl(browser_context->GetPath())),
       weak_factory_(this) {}
 
-ShellExtensionSystem::~ShellExtensionSystem() {
-}
+ShellExtensionSystem::~ShellExtensionSystem() = default;
 
 const Extension* ShellExtensionSystem::LoadExtension(
     const base::FilePath& extension_dir) {

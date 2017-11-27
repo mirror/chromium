@@ -26,11 +26,9 @@ namespace errors = manifest_errors;
 
 using api::extensions_manifest_types::ContentCapabilities;
 
-ContentCapabilitiesInfo::ContentCapabilitiesInfo() {
-}
+ContentCapabilitiesInfo::ContentCapabilitiesInfo() = default;
 
-ContentCapabilitiesInfo::~ContentCapabilitiesInfo() {
-}
+ContentCapabilitiesInfo::~ContentCapabilitiesInfo() = default;
 
 static base::LazyInstance<ContentCapabilitiesInfo>::DestructorAtExit
     g_empty_content_capabilities_info = LAZY_INSTANCE_INITIALIZER;
@@ -43,11 +41,9 @@ const ContentCapabilitiesInfo& ContentCapabilitiesInfo::Get(
   return info ? *info : g_empty_content_capabilities_info.Get();
 }
 
-ContentCapabilitiesHandler::ContentCapabilitiesHandler() {
-}
+ContentCapabilitiesHandler::ContentCapabilitiesHandler() = default;
 
-ContentCapabilitiesHandler::~ContentCapabilitiesHandler() {
-}
+ContentCapabilitiesHandler::~ContentCapabilitiesHandler() = default;
 
 bool ContentCapabilitiesHandler::Parse(Extension* extension,
                                        base::string16* error) {

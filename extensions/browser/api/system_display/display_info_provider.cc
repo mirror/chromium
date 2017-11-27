@@ -33,7 +33,7 @@ int RotationToDegrees(display::Display::Rotation rotation) {
 
 }  // namespace
 
-DisplayInfoProvider::~DisplayInfoProvider() {}
+DisplayInfoProvider::~DisplayInfoProvider() = default;
 
 // static
 DisplayInfoProvider* DisplayInfoProvider::Get() {
@@ -158,7 +158,6 @@ bool DisplayInfoProvider::IsNativeTouchCalibrationActive(std::string* error) {
   return true;
 }
 
-DisplayInfoProvider::DisplayInfoProvider() {
-}
+DisplayInfoProvider::DisplayInfoProvider() = default;
 
 }  // namespace extensions

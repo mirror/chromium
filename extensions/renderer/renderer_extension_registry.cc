@@ -17,9 +17,9 @@ base::LazyInstance<RendererExtensionRegistry>::DestructorAtExit
 
 }  // namespace
 
-RendererExtensionRegistry::RendererExtensionRegistry() {}
+RendererExtensionRegistry::RendererExtensionRegistry() = default;
 
-RendererExtensionRegistry::~RendererExtensionRegistry() {}
+RendererExtensionRegistry::~RendererExtensionRegistry() = default;
 
 // static
 RendererExtensionRegistry* RendererExtensionRegistry::Get() {

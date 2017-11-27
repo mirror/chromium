@@ -37,8 +37,7 @@ AppShellTest::AppShellTest()
 #endif
 }
 
-AppShellTest::~AppShellTest() {
-}
+AppShellTest::~AppShellTest() = default;
 
 void AppShellTest::SetUp() {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();

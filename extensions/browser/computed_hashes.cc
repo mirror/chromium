@@ -29,11 +29,9 @@ const int kVersion = 2;
 
 namespace extensions {
 
-ComputedHashes::Reader::Reader() {
-}
+ComputedHashes::Reader::Reader() = default;
 
-ComputedHashes::Reader::~Reader() {
-}
+ComputedHashes::Reader::~Reader() = default;
 
 bool ComputedHashes::Reader::InitFromFile(const base::FilePath& path) {
   std::string contents;
@@ -130,8 +128,7 @@ bool ComputedHashes::Reader::GetHashes(const base::FilePath& relative_path,
 ComputedHashes::Writer::Writer() : file_list_(new base::ListValue) {
 }
 
-ComputedHashes::Writer::~Writer() {
-}
+ComputedHashes::Writer::~Writer() = default;
 
 void ComputedHashes::Writer::AddHashes(const base::FilePath& relative_path,
                                        int block_size,

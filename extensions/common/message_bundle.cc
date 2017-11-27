@@ -154,8 +154,7 @@ bool MessageBundle::GetMessageValue(const std::string& key,
   return true;
 }
 
-MessageBundle::MessageBundle() {
-}
+MessageBundle::MessageBundle() = default;
 
 bool MessageBundle::GetPlaceholders(const base::DictionaryValue& name_tree,
                                     const std::string& name_key,
@@ -210,8 +209,7 @@ bool MessageBundle::ReplaceMessages(std::string* text,
   return ReplaceMessagesWithExternalDictionary(dictionary_, text, error);
 }
 
-MessageBundle::~MessageBundle() {
-}
+MessageBundle::~MessageBundle() = default;
 
 // static
 bool MessageBundle::ReplaceMessagesWithExternalDictionary(
@@ -321,9 +319,9 @@ struct ExtensionToMessagesMap {
 static base::LazyInstance<ExtensionToMessagesMap>::DestructorAtExit
     g_extension_to_messages_map = LAZY_INSTANCE_INITIALIZER;
 
-ExtensionToMessagesMap::ExtensionToMessagesMap() {}
+ExtensionToMessagesMap::ExtensionToMessagesMap() = default;
 
-ExtensionToMessagesMap::~ExtensionToMessagesMap() {}
+ExtensionToMessagesMap::~ExtensionToMessagesMap() = default;
 
 ExtensionToL10nMessagesMap* GetExtensionToL10nMessagesMap() {
   return &g_extension_to_messages_map.Get().messages_map;

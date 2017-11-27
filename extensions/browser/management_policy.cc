@@ -18,11 +18,9 @@ void GetExtensionNameAndId(const Extension* extension,
 
 }  // namespace
 
-ManagementPolicy::ManagementPolicy() {
-}
+ManagementPolicy::ManagementPolicy() = default;
 
-ManagementPolicy::~ManagementPolicy() {
-}
+ManagementPolicy::~ManagementPolicy() = default;
 
 bool ManagementPolicy::Provider::UserMayLoad(const Extension* extension,
                                              base::string16* error) const {

@@ -15,7 +15,6 @@ WebViewPermissionHelperDelegate::WebViewPermissionHelperDelegate(
       web_view_permission_helper_(web_view_permission_helper) {
 }
 
-WebViewPermissionHelperDelegate::~WebViewPermissionHelperDelegate() {
-}
+WebViewPermissionHelperDelegate::~WebViewPermissionHelperDelegate() = default;
 
 }  // namespace extensions

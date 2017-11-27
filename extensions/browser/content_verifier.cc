@@ -84,8 +84,7 @@ ContentVerifier::ContentVerifier(
       observer_(this),
       io_data_(new ContentVerifierIOData) {}
 
-ContentVerifier::~ContentVerifier() {
-}
+ContentVerifier::~ContentVerifier() = default;
 
 void ContentVerifier::Start() {
   ExtensionRegistry* registry = ExtensionRegistry::Get(context_);

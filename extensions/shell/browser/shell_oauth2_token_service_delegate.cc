@@ -19,8 +19,7 @@ ShellOAuth2TokenServiceDelegate::ShellOAuth2TokenServiceDelegate(
       refresh_token_(refresh_token) {
 }
 
-ShellOAuth2TokenServiceDelegate::~ShellOAuth2TokenServiceDelegate() {
-}
+ShellOAuth2TokenServiceDelegate::~ShellOAuth2TokenServiceDelegate() = default;
 
 bool ShellOAuth2TokenServiceDelegate::RefreshTokenIsAvailable(
     const std::string& account_id) const {

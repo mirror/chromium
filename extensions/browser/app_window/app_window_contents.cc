@@ -24,7 +24,7 @@ namespace extensions {
 AppWindowContentsImpl::AppWindowContentsImpl(AppWindow* host)
     : host_(host), is_blocking_requests_(false), is_window_ready_(false) {}
 
-AppWindowContentsImpl::~AppWindowContentsImpl() {}
+AppWindowContentsImpl::~AppWindowContentsImpl() = default;
 
 void AppWindowContentsImpl::Initialize(content::BrowserContext* context,
                                        content::RenderFrameHost* creator_frame,

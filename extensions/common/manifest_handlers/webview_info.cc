@@ -31,8 +31,7 @@ class PartitionItem {
       : partition_pattern_(partition_pattern) {
   }
 
-  virtual ~PartitionItem() {
-  }
+  virtual ~PartitionItem() = default;
 
   bool Matches(const std::string& partition_id) const {
     return base::MatchPattern(partition_id, partition_pattern_);
@@ -59,8 +58,7 @@ WebviewInfo::WebviewInfo(const std::string& extension_id)
     : extension_id_(extension_id) {
 }
 
-WebviewInfo::~WebviewInfo() {
-}
+WebviewInfo::~WebviewInfo() = default;
 
 // static
 bool WebviewInfo::IsResourceWebviewAccessible(
@@ -106,11 +104,9 @@ void WebviewInfo::AddPartitionItem(std::unique_ptr<PartitionItem> item) {
   partition_items_.push_back(std::move(item));
 }
 
-WebviewHandler::WebviewHandler() {
-}
+WebviewHandler::WebviewHandler() = default;
 
-WebviewHandler::~WebviewHandler() {
-}
+WebviewHandler::~WebviewHandler() = default;
 
 bool WebviewHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<WebviewInfo> info(new WebviewInfo(extension->id()));
