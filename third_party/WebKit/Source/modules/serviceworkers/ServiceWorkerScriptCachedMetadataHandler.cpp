@@ -64,4 +64,8 @@ String ServiceWorkerScriptCachedMetadataHandler::Encoding() const {
   return g_empty_string;
 }
 
+String ServiceWorkerScriptCachedMetadataHandler::CacheStorageCacheName() const {
+  return String();
+}
+
 }  // namespace blink

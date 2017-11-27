@@ -84,7 +84,7 @@ void ScriptController::UpdateSecurityOrigin(SecurityOrigin* security_origin) {
 
 namespace {
 
-V8CacheOptions CacheOptions(const ScriptResource* resource,
+V8CacheOptions CacheOptions(const CachedMetadataHandler* cache_handler,
                             const Settings* settings) {
   V8CacheOptions v8_cache_options(kV8CacheOptionsDefault);
   if (settings) {
@@ -94,7 +94,7 @@ V8CacheOptions CacheOptions(const ScriptResource* resource,
   }
   // If the resource is served from CacheStorage, generate the V8 code cache in
   // the first load.
-  if (resource && !resource->GetResponse().CacheStorageCacheName().IsNull())
+  if (cache_handler && !cache_handler->CacheStorageCacheName().IsNull())
     return kV8CacheOptionsCodeWithoutHeatCheck;
   return v8_cache_options;
 }
@@ -112,8 +112,11 @@ v8::Local<v8::Value> ScriptController::ExecuteScriptAndReturnValue(
                                          source.StartPosition()));
   v8::Local<v8::Value> result;
   {
+    CachedMetadataHandler* cache_handler =
+        source.GetResource() ? source.GetResource()->CacheHandler() : nullptr;
+
     V8CacheOptions v8_cache_options =
-        CacheOptions(source.GetResource(), GetFrame()->GetSettings());
+        CacheOptions(cache_handler, GetFrame()->GetSettings());
 
     // Isolate exceptions that occur when compiling and executing
     // the code. These exceptions should not interfere with
@@ -121,9 +124,6 @@ v8::Local<v8::Value> ScriptController::ExecuteScriptAndReturnValue(
     // from here.
     v8::TryCatch try_catch(GetIsolate());
     try_catch.SetVerbose(true);
-
-    CachedMetadataHandler* cache_handler =
-        source.GetResource() ? source.GetResource()->CacheHandler() : nullptr;
 
     const ReferrerScriptInfo referrer_info(fetch_options.CredentialsMode(),
                                            fetch_options.Nonce(),
