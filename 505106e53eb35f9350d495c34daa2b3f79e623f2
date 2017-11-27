@@ -22,6 +22,30 @@
       "revId": "505106e53eb35f9350d495c34daa2b3f79e623f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6571b7_d0705521",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1128941
+      },
+      "writtenOn": "2017-11-27T07:05:45Z",
+      "side": 1,
+      "message": "Yes, the redirects are just regex replacements of build.chromium.org URLs for now.",
+      "parentUuid": "f50cae9c_a40cb490",
+      "range": {
+        "startLine": 124,
+        "startChar": 26,
+        "endLine": 124,
+        "endChar": 35
+      },
+      "revId": "505106e53eb35f9350d495c34daa2b3f79e623f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
