@@ -1,0 +1,12 @@
+<!DOCTYPE HTML>
+<title>document.open test for USVString url</title>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<body>
+<script>
+test(function() {
+    w = document.open("http://www.domain.com/\ud801/b", "", "");;
+    assert_equals(typeof(w), 'object', 'w should be a window object');
+});
+</script>
+</body>
