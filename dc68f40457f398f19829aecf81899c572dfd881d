@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32b93187_6cb5aba3",
+        "filename": "printing/backend/win_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-27T20:01:03Z",
+      "side": 1,
+      "message": "It would save a line to do:\nwchar_t* device_name_ptr \u003d const_cast\u003cwchar_t*\u003e(L\"\");\nDo we need the kEmptyDeviceName?",
+      "range": {
+        "startLine": 483,
+        "startChar": 2,
+        "endLine": 484,
+        "endChar": 68
+      },
+      "revId": "dc68f40457f398f19829aecf81899c572dfd881d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
