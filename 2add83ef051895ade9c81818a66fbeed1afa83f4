@@ -408,6 +408,24 @@
     },
     {
       "key": {
+        "uuid": "f78768d1_fc3d6bc7",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-27T20:29:29Z",
+      "side": 1,
+      "message": "For animation of the change to night light mode (like, right after a user enables the setting), I\u0027m not opposed to doing the animation in the night light controller.\n\nIn particular, if the animation is only 1-2 seconds long and is very rare, then just doing a post-task in in the controller to update the displays\u0027 temperatures every 1/30th of a second may not be worst thing.",
+      "parentUuid": "69aea78b_ca00678a",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c8d96a9_09d401af",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 1
