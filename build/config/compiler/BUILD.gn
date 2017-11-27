@@ -551,7 +551,7 @@ config("compiler") {
 
     # Disable optimization for now because they increase binary size by too
     # much.
-    if (is_linux && use_lld) {
+    if (use_lld && (is_android || is_linux)) {
       ldflags += [ "-Wl,--lto-O0" ]
     }
 
@@ -569,7 +569,7 @@ config("compiler") {
     # Also, when targeting ARM, without this flag, LTO produces a .text section
     # that is larger than the maximum call displacement, preventing the linker
     # from relocating calls (http://llvm.org/PR22999).
-    if (is_linux) {
+    if (is_android || is_linux) {
       if (use_lld) {
         ldflags += [
           "-Wl,-mllvm,-function-sections",
