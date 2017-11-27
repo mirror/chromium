@@ -23,6 +23,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "base/time/time.h"
+#include "cc/base/region.h"
 #include "cc/benchmarks/micro_benchmark.h"
 #include "cc/benchmarks/micro_benchmark_controller.h"
 #include "cc/cc_export.h"
@@ -288,6 +289,11 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   EventListenerProperties event_listener_properties(
       EventListenerClass event_class) const {
     return event_listener_properties_[static_cast<size_t>(event_class)];
+  }
+
+  void SetWheelEventListenerRects(const std::vector<gfx::Rect>&);
+  Region wheel_event_listener_region() const {
+    return wheel_event_listener_region_;
   }
 
   void SetViewportSize(
@@ -637,6 +643,7 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   bool have_scroll_event_handlers_ = false;
   EventListenerProperties event_listener_properties_[static_cast<size_t>(
       EventListenerClass::kNumClasses)];
+  Region wheel_event_listener_region_;
 
   std::unique_ptr<PendingPageScaleAnimation> pending_page_scale_animation_;
 

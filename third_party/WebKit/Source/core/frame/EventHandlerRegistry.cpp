@@ -288,6 +288,11 @@ void EventHandlerRegistry::NotifyDidAddOrRemoveEventHandlerTarget(
        handler_class == kTouchStartOrMoveEventBlockingLowLatency)) {
     scrolling_coordinator->TouchEventTargetRectsDidChange();
   }
+
+  if (scrolling_coordinator && (handler_class == kWheelEventBlocking ||
+                                handler_class == kWheelEventPassive)) {
+    scrolling_coordinator->WheelEventTargetRectsDidChange();
+  }
 }
 
 void EventHandlerRegistry::Trace(blink::Visitor* visitor) {

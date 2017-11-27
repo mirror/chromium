@@ -61,6 +61,8 @@ class CC_BASE_EXPORT Region {
     return gfx::SkIRectToRect(skregion_.getBounds());
   }
 
+  std::vector<gfx::Rect> rects() const;
+
   std::string ToString() const;
   std::unique_ptr<base::Value> AsValue() const;
   void AsValueInto(base::trace_event::TracedValue* array) const;

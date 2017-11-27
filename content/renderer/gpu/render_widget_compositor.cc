@@ -948,6 +948,14 @@ void RenderWidgetCompositor::SetEventListenerProperties(
       static_cast<cc::EventListenerProperties>(properties));
 }
 
+void RenderWidgetCompositor::SetWheelEventListenerRects(
+    const blink::WebVector<blink::WebRect>& rects) {
+  std::vector<gfx::Rect> cc_rects;
+  for (const auto& rect : rects)
+    cc_rects.push_back(gfx::Rect(rect));
+  layer_tree_host_->SetWheelEventListenerRects(cc_rects);
+}
+
 void RenderWidgetCompositor::UpdateEventRectsForSubframeIfNecessary() {
   if (!is_for_oopif_)
     return;

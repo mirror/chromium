@@ -96,6 +96,7 @@ LayerTreeImpl::LayerTreeImpl(
       handle_visibility_changed_(false),
       have_scroll_event_handlers_(false),
       event_listener_properties_(),
+      wheel_event_listener_region_(),
       browser_controls_shrink_blink_size_(false),
       top_controls_height_(0),
       bottom_controls_height_(0),
@@ -464,6 +465,7 @@ void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
   target_tree->set_event_listener_properties(
       EventListenerClass::kTouchEndOrCancel,
       event_listener_properties(EventListenerClass::kTouchEndOrCancel));
+  target_tree->set_wheel_event_listener_region(wheel_event_listener_region());
 
   if (ViewportSizeInvalid())
     target_tree->SetViewportSizeInvalid();
@@ -1976,6 +1978,44 @@ LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPointInTouchHandlerRegion(
   if (!UpdateDrawProperties())
     return nullptr;
   FindTouchEventLayerFunctor func = {screen_space_point};
+  FindClosestMatchingLayerState state;
+  FindClosestMatchingLayer(screen_space_point, layer_list_[0], func, &state);
+  return state.closest_match;
+}
+
+static bool LayerHasWheelEventHandlersAt(const gfx::PointF& screen_space_point,
+                                         LayerImpl* layer_impl) {
+  if (layer_impl->wheel_event_listener_region().IsEmpty())
+    return false;
+
+  if (!PointHitsRegion(screen_space_point, layer_impl->ScreenSpaceTransform(),
+                       layer_impl->wheel_event_listener_region()))
+    return false;
+
+  // At this point, we think the point does hit the touch event handler region
+  // on the layer, but we need to walk up the parents to ensure that the layer
+  // was not clipped in such a way that the hit point actually should not hit
+  // the layer.
+  if (PointIsClippedBySurfaceOrClipRect(screen_space_point, layer_impl))
+    return false;
+
+  return true;
+}
+
+struct FindWheelEventListenerLayerFunctor {
+  bool operator()(LayerImpl* layer) const {
+    return LayerHasWheelEventHandlersAt(screen_space_point, layer);
+  }
+  const gfx::PointF screen_space_point;
+};
+
+LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPointInWheelEventListenerRegion(
+    const gfx::PointF& screen_space_point) {
+  if (layer_list_.empty())
+    return nullptr;
+  if (!UpdateDrawProperties())
+    return nullptr;
+  FindWheelEventListenerLayerFunctor func = {screen_space_point};
   FindClosestMatchingLayerState state;
   FindClosestMatchingLayer(screen_space_point, layer_list_[0], func, &state);
   return state.closest_match;

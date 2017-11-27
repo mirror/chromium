@@ -471,6 +471,9 @@ class CC_EXPORT LayerTreeImpl {
   LayerImpl* FindLayerThatIsHitByPointInTouchHandlerRegion(
       const gfx::PointF& screen_space_point);
 
+  LayerImpl* FindLayerThatIsHitByPointInWheelEventListenerRegion(
+      const gfx::PointF& screen_space_point);
+
   void RegisterSelection(const LayerSelection& selection);
 
   bool GetAndResetHandleVisibilityChanged();
@@ -536,6 +539,13 @@ class CC_EXPORT LayerTreeImpl {
                                      EventListenerProperties event_properties) {
     event_listener_properties_[static_cast<size_t>(event_class)] =
         event_properties;
+  }
+
+  Region wheel_event_listener_region() const {
+    return wheel_event_listener_region_;
+  }
+  void set_wheel_event_listener_region(const Region& region) {
+    wheel_event_listener_region_ = region;
   }
 
   void ResetAllChangeTracking();
@@ -655,6 +665,7 @@ class CC_EXPORT LayerTreeImpl {
   bool have_scroll_event_handlers_;
   EventListenerProperties event_listener_properties_[static_cast<size_t>(
       EventListenerClass::kNumClasses)];
+  Region wheel_event_listener_region_;
 
   // Whether or not Blink's viewport size was shrunk by the height of the top
   // controls at the time of the last layout.
