@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88f7ec44_6d1f2057",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T09:11:32Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/ui/file_manager/file_manager/common/js/async_util.js?l\u003d21\u0026rcl\u003d29b4eb1337618fba084123e89444875775206244\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/background/js/drive_sync_handler.js?l\u003d145\u0026rcl\u003d29b4eb1337618fba084123e89444875775206244\n\nBoth this function and DriveSyncHandler.COMPLETED_EVENT only trigger after a complete try and not per file. So in the current scenario, as long as their is at least 512MB of space available (that Drive magical number), they will all be backed up, then this check will happen, realize it is done, and resolve the try.",
+      "parentUuid": "abdde188_97a4f466",
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9305df1e_47e13637",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4f91f8_a399a827",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T09:11:32Z",
+      "side": 1,
+      "message": "closure_compiler complains about both approaches.\n1. The signature that AsyncUtil.forEach requires: https://cs.chromium.org/chromium/src/ui/file_manager/file_manager/common/js/async_util.js?l\u003d18\u0026rcl\u003d29b4eb1337618fba084123e89444875775206244\n2. I have tried having just one assert at the beginning, and closure_compiler complained, so I put one into each function call.",
+      "parentUuid": "9305df1e_47e13637",
+      "range": {
+        "startLine": 430,
+        "startChar": 49,
+        "endLine": 431,
+        "endChar": 71
+      },
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a4cfd0a5_c7a8d5a2",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T09:11:32Z",
+      "side": 1,
+      "message": "Again, it is closure_compiler that made me add them: it was something about that @param comment not being attached to a function and whether some paranthesis are missing..",
+      "parentUuid": "8e09a165_cfef96de",
+      "range": {
+        "startLine": 462,
+        "startChar": 13,
+        "endLine": 462,
+        "endChar": 14
+      },
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a891fc57_c7eaf132",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 7
@@ -76,6 +142,24 @@
       "writtenOn": "2017-11-27T08:53:02Z",
       "side": 1,
       "message": "We should retry copy operations only when it is due to insufficient disk space.\nIf passing the reason from backend to frontend is done separately, could you leave a TODO comment and/or file a bug?",
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3aa03a6_d5c4c74f",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T09:11:32Z",
+      "side": 1,
+      "message": "Yep - see my comment discussion with oka@ on PS 5 (I think). Who should I assign it to? Since this is my last week.",
+      "parentUuid": "a891fc57_c7eaf132",
       "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "13f08222_d02e59a5",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler_unittest.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T09:11:32Z",
+      "side": 1,
+      "message": "Yes, because of DriveSyncHandler.COMPLETED_EVENT.",
+      "parentUuid": "0a66f227_34311cb8",
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9223692f_bdb3a812",
         "filename": "ui/file_manager/file_manager/common/js/progress_center_common.js",
         "patchSetId": 7
@@ -119,6 +221,30 @@
       "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a66915_040c6fd1",
+        "filename": "ui/file_manager/file_manager/common/js/progress_center_common.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-27T09:11:32Z",
+      "side": 1,
+      "message": "Actually, it was decided to remove it for now (see comments in PS 5) - I think I forgot this occurrence, let me fix it!",
+      "parentUuid": "9223692f_bdb3a812",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 8
+      },
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
