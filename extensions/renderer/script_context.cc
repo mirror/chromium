@@ -23,6 +23,7 @@
 #include "extensions/common/manifest_handlers/sandboxed_page_info.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "extensions/renderer/renderer_extension_registry.h"
+#include "extensions/renderer/script_injection_callback.h"
 #include "extensions/renderer/v8_helpers.h"
 #include "gin/per_context_data.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
@@ -107,7 +108,8 @@ ScriptContext::ScriptContext(const v8::Local<v8::Context>& v8_context,
       context_id_(base::UnguessableToken::Create()),
       safe_builtins_(this),
       isolate_(v8_context->GetIsolate()),
-      runner_(new Runner(this)) {
+      runner_(new Runner(this)),
+      weak_factory_(this) {
   VLOG(1) << "Created context:\n" << GetDebugString();
   gin::PerContextData* gin_data = gin::PerContextData::From(v8_context);
   CHECK(gin_data);
@@ -142,6 +144,8 @@ void ScriptContext::Invalidate() {
   DCHECK(thread_checker_.CalledOnValidThread());
   CHECK(is_valid_);
   is_valid_ = false;
+
+  weak_factory_.InvalidateWeakPtrs();
 
   // TODO(kalman): Make ModuleSystem use AddInvalidationObserver.
   // Ownership graph is a bit weird here.
@@ -182,15 +186,13 @@ content::RenderFrame* ScriptContext::GetRenderFrame() const {
 void ScriptContext::SafeCallFunction(const v8::Local<v8::Function>& function,
                                      int argc,
                                      v8::Local<v8::Value> argv[]) {
-  SafeCallFunction(function, argc, argv,
-                   ScriptInjectionCallback::CompleteCallback());
+  SafeCallFunction(function, argc, argv, JSRunner::ResultCallback());
 }
 
-void ScriptContext::SafeCallFunction(
-    const v8::Local<v8::Function>& function,
-    int argc,
-    v8::Local<v8::Value> argv[],
-    const ScriptInjectionCallback::CompleteCallback& callback) {
+void ScriptContext::SafeCallFunction(const v8::Local<v8::Function>& function,
+                                     int argc,
+                                     v8::Local<v8::Value> argv[],
+                                     JSRunner::ResultCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   v8::HandleScope handle_scope(isolate());
   v8::Context::Scope scope(v8_context());
@@ -201,17 +203,17 @@ void ScriptContext::SafeCallFunction(
     ScriptInjectionCallback* wrapper_callback = nullptr;
     if (!callback.is_null()) {
       // ScriptInjectionCallback manages its own lifetime.
-      wrapper_callback = new ScriptInjectionCallback(callback);
+      wrapper_callback = new ScriptInjectionCallback(base::Bind(
+          &ScriptContext::OnFunctionComplete, weak_factory_.GetWeakPtr(),
+          base::Passed(std::move(callback))));
     }
     web_frame_->RequestExecuteV8Function(v8_context(), function, global, argc,
                                          argv, wrapper_callback);
   } else {
     // TODO(devlin): This probably isn't safe.
     v8::Local<v8::Value> result = function->Call(global, argc, argv);
-    if (!callback.is_null()) {
-      std::vector<v8::Local<v8::Value>> results(1, result);
-      callback.Run(results);
-    }
+    if (!callback.is_null())
+      std::move(callback).Run(v8_context(), result);
   }
 }
 
@@ -542,6 +544,16 @@ v8::Local<v8::Value> ScriptContext::CallFunction(
   return handle_scope.Escape(
       v8::Local<v8::Value>(web_frame_->CallFunctionEvenIfScriptDisabled(
           function, global, argc, argv)));
+}
+
+void ScriptContext::OnFunctionComplete(
+    JSRunner::ResultCallback callback,
+    const std::vector<v8::Local<v8::Value>>& results) {
+  DCHECK(is_valid_);
+  v8::Local<v8::Value> result;
+  if (!results.empty() && !results[0].IsEmpty())
+    result = results[0];
+  std::move(callback).Run(v8_context(), result);
 }
 
 }  // namespace extensions

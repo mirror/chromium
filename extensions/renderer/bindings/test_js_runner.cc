@@ -49,13 +49,27 @@ void TestJSRunner::RunJSFunction(v8::Local<v8::Function> function,
                                  v8::Local<v8::Context> context,
                                  int argc,
                                  v8::Local<v8::Value> argv[]) {
+  RunJSFunction(function, context, argc, argv, ResultCallback());
+}
+
+void TestJSRunner::RunJSFunction(v8::Local<v8::Function> function,
+                                 v8::Local<v8::Context> context,
+                                 int argc,
+                                 v8::Local<v8::Value> argv[],
+                                 ResultCallback callback) {
   if (will_call_js_)
     will_call_js_.Run();
 
-  if (g_allow_errors)
-    ignore_result(function->Call(context, context->Global(), argc, argv));
-  else
-    RunFunctionOnGlobal(function, context, argc, argv);
+  v8::Local<v8::Value> result;
+  if (g_allow_errors) {
+    ignore_result(function->Call(context, context->Global(), argc, argv)
+                      .ToLocal(&result));
+  } else {
+    result = RunFunctionOnGlobal(function, context, argc, argv);
+  }
+
+  if (callback)
+    std::move(callback).Run(context, result);
 }
 
 v8::Global<v8::Value> TestJSRunner::RunJSFunctionSync(
