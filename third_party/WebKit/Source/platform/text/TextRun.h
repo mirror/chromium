@@ -41,6 +41,8 @@
 
 namespace blink {
 
+enum class OnlyWhitespace : unsigned { kUnknown = 0, kNo = 1, kYes = 2 };
+
 class PLATFORM_EXPORT TextRun final {
   DISALLOW_NEW();
 
@@ -70,6 +72,8 @@ class PLATFORM_EXPORT TextRun final {
         horizontal_glyph_stretch_(1),
         expansion_(expansion),
         expansion_behavior_(expansion_behavior),
+        contains_only_whitespace_(
+            static_cast<unsigned>(OnlyWhitespace::kUnknown)),
         is8_bit_(true),
         allow_tabs_(false),
         direction_(static_cast<unsigned>(direction)),
@@ -95,6 +99,8 @@ class PLATFORM_EXPORT TextRun final {
         horizontal_glyph_stretch_(1),
         expansion_(expansion),
         expansion_behavior_(expansion_behavior),
+        contains_only_whitespace_(
+            static_cast<unsigned>(OnlyWhitespace::kUnknown)),
         is8_bit_(false),
         allow_tabs_(false),
         direction_(static_cast<unsigned>(direction)),
@@ -119,6 +125,8 @@ class PLATFORM_EXPORT TextRun final {
         horizontal_glyph_stretch_(1),
         expansion_(expansion),
         expansion_behavior_(expansion_behavior),
+        contains_only_whitespace_(
+            static_cast<unsigned>(OnlyWhitespace::kUnknown)),
         allow_tabs_(false),
         direction_(static_cast<unsigned>(direction)),
         directional_override_(directional_override),
@@ -238,6 +246,12 @@ class PLATFORM_EXPORT TextRun final {
   float XPos() const { return xpos_; }
   void SetXPos(float x_pos) { xpos_ = x_pos; }
   float Expansion() const { return expansion_; }
+  OnlyWhitespace ContainsOnlyWhitespace() const {
+    return static_cast<OnlyWhitespace>(contains_only_whitespace_);
+  }
+  void SetContainsOnlyWhitespace(OnlyWhitespace contains_only_whitespace) {
+    contains_only_whitespace_ = static_cast<unsigned>(contains_only_whitespace);
+  }
   void SetExpansion(float expansion) { expansion_ = expansion; }
   bool AllowsLeadingExpansion() const {
     return expansion_behavior_ & kAllowLeadingExpansion;
@@ -292,6 +306,11 @@ class PLATFORM_EXPORT TextRun final {
 
   float expansion_;
   ExpansionBehavior expansion_behavior_ : 2;
+
+  // TODO(npm): Maybe we also need to set |contains_only_whitespace| in callers
+  // other than InlineTextBox::ConstructTextRun. See crbug.com/788444.
+  unsigned contains_only_whitespace_ : 2;
+
   unsigned is8_bit_ : 1;
   unsigned allow_tabs_ : 1;
   unsigned direction_ : 1;

@@ -53,6 +53,10 @@ class LineLayoutText : public LineLayoutItem {
     return ToText()->IsAllCollapsibleWhitespace();
   }
 
+  OnlyWhitespace ContainsOnlyWhitespaceOrNbsp() const {
+    return ToText()->ContainsOnlyWhitespaceOrNbsp();
+  }
+
   UChar CharacterAt(unsigned offset) const {
     return ToText()->CharacterAt(offset);
   }
