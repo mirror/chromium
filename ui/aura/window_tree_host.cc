@@ -179,18 +179,18 @@ void WindowTreeHost::OnCursorVisibilityChanged(bool show) {
   OnCursorVisibilityChangedNative(show);
 }
 
-void WindowTreeHost::MoveCursorToLocationInDIP(
+bool WindowTreeHost::MoveCursorToLocationInDIP(
     const gfx::Point& location_in_dip) {
   gfx::Point host_location(location_in_dip);
   ConvertDIPToPixels(&host_location);
-  MoveCursorToInternal(location_in_dip, host_location);
+  return MoveCursorToInternal(location_in_dip, host_location);
 }
 
-void WindowTreeHost::MoveCursorToLocationInPixels(
+bool WindowTreeHost::MoveCursorToLocationInPixels(
     const gfx::Point& location_in_pixels) {
   gfx::Point root_location(location_in_pixels);
   ConvertPixelsToDIP(&root_location);
-  MoveCursorToInternal(root_location, location_in_pixels);
+  return MoveCursorToInternal(root_location, location_in_pixels);
 }
 
 ui::InputMethod* WindowTreeHost::GetInputMethod() {
@@ -403,10 +403,10 @@ void WindowTreeHost::OnDisplayMetricsChanged(const display::Display& display,
 ////////////////////////////////////////////////////////////////////////////////
 // WindowTreeHost, private:
 
-void WindowTreeHost::MoveCursorToInternal(const gfx::Point& root_location,
+bool WindowTreeHost::MoveCursorToInternal(const gfx::Point& root_location,
                                           const gfx::Point& host_location) {
   last_cursor_request_position_in_host_ = host_location;
-  MoveCursorToScreenLocationInPixels(host_location);
+  bool result = MoveCursorToScreenLocationInPixels(host_location);
   client::CursorClient* cursor_client = client::GetCursorClient(window());
   if (cursor_client) {
     const display::Display& display =
@@ -414,6 +414,7 @@ void WindowTreeHost::MoveCursorToInternal(const gfx::Point& root_location,
     cursor_client->SetDisplay(display);
   }
   dispatcher()->OnCursorMovedToRootLocation(root_location);
+  return result;
 }
 
 void WindowTreeHost::OnCompositingDidCommit(ui::Compositor* compositor) {}

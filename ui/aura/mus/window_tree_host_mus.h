@@ -102,7 +102,7 @@ class AURA_EXPORT WindowTreeHostMus : public aura::WindowTreeHostPlatform {
   void OnClosed() override;
   void OnActivationChanged(bool active) override;
   void OnCloseRequest() override;
-  void MoveCursorToScreenLocationInPixels(
+  bool MoveCursorToScreenLocationInPixels(
       const gfx::Point& location_in_pixels) override;
   gfx::Transform GetRootTransformForLocalEventCoordinates() const override;
 

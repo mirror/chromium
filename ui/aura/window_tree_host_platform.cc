@@ -122,9 +122,10 @@ void WindowTreeHostPlatform::SetCursorNative(gfx::NativeCursor cursor) {
   platform_window_->SetCursor(cursor.platform());
 }
 
-void WindowTreeHostPlatform::MoveCursorToScreenLocationInPixels(
+bool WindowTreeHostPlatform::MoveCursorToScreenLocationInPixels(
     const gfx::Point& location_in_pixels) {
   platform_window_->MoveCursorTo(location_in_pixels);
+  return 0;
 }
 
 void WindowTreeHostPlatform::OnCursorVisibilityChangedNative(bool show) {

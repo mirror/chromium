@@ -77,8 +77,10 @@ void HeadlessWindowTreeHost::ReleaseCapture() {}
 
 void HeadlessWindowTreeHost::SetCursorNative(gfx::NativeCursor cursor_type) {}
 
-void HeadlessWindowTreeHost::MoveCursorToScreenLocationInPixels(
-    const gfx::Point& location) {}
+bool HeadlessWindowTreeHost::MoveCursorToScreenLocationInPixels(
+    const gfx::Point& location) {
+  return 0;
+}
 
 void HeadlessWindowTreeHost::OnCursorVisibilityChangedNative(bool show) {}
 

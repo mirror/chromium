@@ -739,14 +739,15 @@ void RenderWidgetHostViewEventHandler::HandleMouseEventWhileLocked(
   }
 
   gfx::Point center(gfx::Rect(window_->bounds().size()).CenterPoint());
-
+  gfx::PointF center_in_screen(window_->GetBoundsInScreen().CenterPoint());
   // If we receive non client mouse messages while we are in the locked state
   // it probably means that the mouse left the borders of our window and
   // needs to be moved back to the center.
   if (event->flags() & ui::EF_IS_NON_CLIENT) {
     // TODO(jonross): ideally this would not be done for mus (crbug.com/621412)
     synthetic_move_sent_ = true;
-    window_->MoveCursorTo(center);
+    if (window_->MoveCursorTo(center))
+      global_mouse_position_ = center_in_screen;
     return;
   }
 
@@ -787,7 +788,8 @@ void RenderWidgetHostViewEventHandler::HandleMouseEventWhileLocked(
     // Check if the mouse has reached the border and needs to be centered.
     if (ShouldMoveToCenter()) {
       synthetic_move_sent_ = true;
-      window_->MoveCursorTo(center);
+      if (window_->MoveCursorTo(center))
+        global_mouse_position_ = center_in_screen;
     }
     bool is_selection_popup = NeedsInputGrab(popup_child_host_view_);
     // Forward event to renderer.

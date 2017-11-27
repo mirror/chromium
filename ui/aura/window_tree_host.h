@@ -134,10 +134,10 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   void OnCursorVisibilityChanged(bool visible);
 
   // Moves the cursor to the specified location relative to the root window.
-  void MoveCursorToLocationInDIP(const gfx::Point& location_in_dip);
+  bool MoveCursorToLocationInDIP(const gfx::Point& location_in_dip);
 
   // Moves the cursor to the |location_in_pixels| given in host coordinates.
-  void MoveCursorToLocationInPixels(const gfx::Point& location_in_pixels);
+  bool MoveCursorToLocationInPixels(const gfx::Point& location_in_pixels);
 
   gfx::NativeCursor last_cursor() const { return last_cursor_; }
 
@@ -226,7 +226,9 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   virtual void SetCursorNative(gfx::NativeCursor cursor) = 0;
 
   // Moves the cursor to the specified location relative to the root window.
-  virtual void MoveCursorToScreenLocationInPixels(
+  // Returning true means it's success, false means it's failed or API
+  // doesn't have a return value.
+  virtual bool MoveCursorToScreenLocationInPixels(
       const gfx::Point& location_in_pixels) = 0;
 
   // Called when the cursor visibility has changed.
@@ -252,7 +254,7 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
 
   // Moves the cursor to the specified location. This method is internally used
   // by MoveCursorToLocationInDIP() and MoveCursorToLocationInPixels().
-  void MoveCursorToInternal(const gfx::Point& root_location,
+  bool MoveCursorToInternal(const gfx::Point& root_location,
                             const gfx::Point& host_location);
 
   // Overrided from CompositorObserver:
