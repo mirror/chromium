@@ -208,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "2db92bc4_b4ceb7b5",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-27T16:27:11Z",
+      "side": 1,
+      "message": "The test is trying to mimic the scenario in the linked bug, essentially triggering a \u003cstop\u003e recalc with pending sheets.\n\nSounds like kNeedsReattachStyleChange is a bigger hammer than needed, but for whatever reason all other things I tried don\u0027t seem to tickle the bug (or even leave \u003cstop\u003e without a non-layout style).\n\nSo I suspect there are more dragons looming with non-layout style, and I will keep investigating.  I\u0027m inclined to land this as is though, because it fixes a regression and the question marks are just around the test/repro.",
+      "parentUuid": "5a42c47b_3fd0dee8",
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "feb348b6_36a1cb08",
         "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
         "patchSetId": 4
