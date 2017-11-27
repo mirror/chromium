@@ -366,7 +366,7 @@ bool GraphicsLayer::PaintWithoutCommit(
 
   GraphicsContext context(GetPaintController(), disabled_mode, nullptr);
   if (layer_state_) {
-    GetPaintController().UpdateCurrentPaintChunkProperties(nullptr,
+    GetPaintController().UpdateCurrentPaintChunkProperties(WTF::nullopt,
                                                            layer_state_->state);
   }
 
