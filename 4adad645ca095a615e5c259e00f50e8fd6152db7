@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ada3401c_463b8a1e",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-27T21:44:40Z",
+      "side": 1,
+      "message": "Agreed! Thanks for the nudge!",
+      "parentUuid": "ef1ff20c_8afa4278",
+      "revId": "4adad645ca095a615e5c259e00f50e8fd6152db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88def388_f99cb1da",
         "filename": "components/viz/service/surfaces/surface.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "4adad645ca095a615e5c259e00f50e8fd6152db7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ecd7e44_18818b75",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-27T21:44:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88def388_f99cb1da",
+      "revId": "4adad645ca095a615e5c259e00f50e8fd6152db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f17e3a93_c227ac28",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-27T21:44:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c3e611a_7be7d223",
+      "revId": "4adad645ca095a615e5c259e00f50e8fd6152db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d4197a_1bcf8e21",
         "filename": "components/viz/service/surfaces/surface.h",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-27T18:22:11Z",
       "side": 1,
       "message": "Does this have a relation to |activation_dependencies| or |late_activation_dependencies_|?",
+      "revId": "4adad645ca095a615e5c259e00f50e8fd6152db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b5bfe7_5c52ddb7",
+        "filename": "components/viz/service/surfaces/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-27T21:44:40Z",
+      "side": 1,
+      "message": "Yes, this is just used for deciding when to observe activations for a given FrameSinkId. The activation_dependencies_ are individual dependencies. I elaborated with more comments on what this map is used for.",
+      "parentUuid": "f1d4197a_1bcf8e21",
       "revId": "4adad645ca095a615e5c259e00f50e8fd6152db7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c4983a10_c2309954",
+        "filename": "components/viz/service/surfaces/surface_dependency_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-27T21:44:40Z",
+      "side": 1,
+      "message": "Yes. That\u0027s what |activation_dependencies_| is.",
+      "parentUuid": "f22736b2_7b2e2915",
+      "revId": "4adad645ca095a615e5c259e00f50e8fd6152db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7aedea19_e188bf56",
         "filename": "components/viz/service/surfaces/surface_dependency_tracker.h",
         "patchSetId": 6
@@ -98,6 +188,30 @@
       "writtenOn": "2017-11-27T18:22:11Z",
       "side": 1,
       "message": "This is hard enough to parse that I\u0027m not sure I understand exactly what this map is.",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "4adad645ca095a615e5c259e00f50e8fd6152db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01e2681_2d969d46",
+        "filename": "components/viz/service/surfaces/surface_dependency_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-27T21:44:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I can make it much more readable. I added a couple of words. I do need to think more about terminology though.",
+      "parentUuid": "7aedea19_e188bf56",
       "range": {
         "startLine": 65,
         "startChar": 18,
