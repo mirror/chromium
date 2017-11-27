@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1b5b4f0_3ce9dda0",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-27T22:04:35Z",
+      "side": 1,
+      "message": "nit: you don\u0027t really need this DCHECK here, because you\u0027re already checking the same thing in the c\u0027tor",
+      "revId": "8707a1514b33561cf36f760ffcd634386b1c3bf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
