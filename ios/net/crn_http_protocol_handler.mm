@@ -51,6 +51,9 @@ class HttpProtocolHandlerCore;
 
 namespace {
 
+static std::map<NSURLSessionTask*, net::Metrics> g_task_metrics_map
+    NS_AVAILABLE_IOS(10.0);
+
 // Minimum size of the buffer used to read the net::URLRequest.
 const int kIOBufferMinSize = 64 * 1024;
 
@@ -59,6 +62,9 @@ const int kIOBufferMaxSize = 16 * kIOBufferMinSize;  // 1MB
 
 // Global instance of the HTTPProtocolHandlerDelegate.
 net::HTTPProtocolHandlerDelegate* g_protocol_handler_delegate = nullptr;
+
+// Global instance of the MetricsDelegate.
+net::MetricsDelegate* g_metrics_delegate = nullptr;
 
 // Empty callback.
 void DoNothing(bool flag) {}
@@ -87,6 +93,11 @@ namespace net {
 void HTTPProtocolHandlerDelegate::SetInstance(
     HTTPProtocolHandlerDelegate* delegate) {
   g_protocol_handler_delegate = delegate;
+}
+
+// static
+void MetricsDelegate::SetInstance(MetricsDelegate* delegate) {
+  g_metrics_delegate = delegate;
 }
 
 // The HttpProtocolHandlerCore class is the bridge between the URLRequest
@@ -138,7 +149,7 @@ class HttpProtocolHandlerCore
                                         HttpProtocolHandlerCore>,
       public URLRequest::Delegate {
  public:
-  HttpProtocolHandlerCore(NSURLRequest* request);
+  HttpProtocolHandlerCore(NSURLSessionTask* task);
   // Starts the network request, and forwards the data downloaded from the
   // network to |base_client|.
   void Start(id<CRNNetworkClientProtocol> base_client);
@@ -199,6 +210,7 @@ class HttpProtocolHandlerCore
   int read_buffer_size_;
   scoped_refptr<WrappedIOBuffer> read_buffer_wrapper_;
   base::scoped_nsobject<NSMutableURLRequest> request_;
+  base::scoped_nsobject<NSURLSessionTask> task_;
   // Stream delegate to read the HTTPBodyStream.
   base::scoped_nsobject<CRWHTTPStreamDelegate> stream_delegate_;
   // Vector of readers used to accumulate a POST data stream.
@@ -213,7 +225,7 @@ class HttpProtocolHandlerCore
   DISALLOW_COPY_AND_ASSIGN(HttpProtocolHandlerCore);
 };
 
-HttpProtocolHandlerCore::HttpProtocolHandlerCore(NSURLRequest* request)
+HttpProtocolHandlerCore::HttpProtocolHandlerCore(NSURLSessionTask* task)
     : client_(nil),
       read_buffer_size_(kIOBufferMinSize),
       read_buffer_wrapper_(nullptr),
@@ -225,12 +237,13 @@ HttpProtocolHandlerCore::HttpProtocolHandlerCore(NSURLRequest* request)
   // from the absoluteString of the original URL, because mutableCopy only
   // shallowly copies the request, and just retains the non-threadsafe NSURL.
   thread_checker_.DetachFromThread();
-  request_.reset([request mutableCopy]);
+  task_.reset(task);
+  request_.reset([[task currentRequest] mutableCopy]);
   // Will allocate read buffer with size |kIOBufferMinSize|.
   AllocateReadBuffer(0);
-  [request_ setURL:[NSURL URLWithString:[[request URL] absoluteString]]];
+  [request_ setURL:[NSURL URLWithString:[[[task currentRequest] URL]
+                                            absoluteString]]];
 }
-
 void HttpProtocolHandlerCore::HandleStreamEvent(NSStream* stream,
                                                 NSStreamEvent event) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -724,6 +737,22 @@ void HttpProtocolHandlerCore::StopNetRequest() {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (tracker_)
     tracker_->StopRequest(net_request_);
+
+  if (g_metrics_delegate) {
+    LoadTimingInfo load_timing_info;
+    net_request_->GetLoadTimingInfo(&load_timing_info);
+    g_metrics_delegate->DidFinishCollectingMetrics(net::Metrics{
+        task_.get(), load_timing_info, net_request_->response_info()});
+  }
+
+  if (@available(iOS 10, *)) {
+    LoadTimingInfo load_timing_info;
+    net_request_->GetLoadTimingInfo(&load_timing_info);
+
+    g_task_metrics_map[task_.get()] = net::Metrics{task_.get(), load_timing_info,
+                                             net_request_->response_info()};
+  }
+
   delete net_request_;
   net_request_ = nullptr;
   if (stream_delegate_.get())
@@ -891,6 +920,10 @@ void HttpProtocolHandlerCore::StripPostSpecificHeaders(
 
 #pragma mark NSURLProtocol methods
 
++ (void)initialize NS_AVAILABLE_IOS(10.0) {
+  // g_task_metrics_map = [[NSMutableDictionary alloc] init];
+}
+
 + (BOOL)canInitWithRequest:(NSURLRequest*)request {
   DVLOG(5) << "canInitWithRequest " << net::FormatUrlRequestForLogging(request);
   return g_protocol_handler_delegate->CanHandleRequest(request);
@@ -903,16 +936,15 @@ void HttpProtocolHandlerCore::StripPostSpecificHeaders(
   return request;
 }
 
-- (instancetype)initWithRequest:(NSURLRequest*)request
-                 cachedResponse:(NSCachedURLResponse*)cachedResponse
-                         client:(id<NSURLProtocolClient>)client {
+- (instancetype)initWithTask:(NSURLSessionTask*)task
+              cachedResponse:(NSCachedURLResponse*)cachedResponse
+                      client:(id<NSURLProtocolClient>)client {
   DCHECK(!cachedResponse);
-  self = [super initWithRequest:request
-                 cachedResponse:cachedResponse
-                         client:client];
+  self = [super initWithTask:task cachedResponse:cachedResponse client:client];
   if (self) {
-    _supportedURL = g_protocol_handler_delegate->IsRequestSupported(request);
-    _core = new net::HttpProtocolHandlerCore(request);
+    _supportedURL = g_protocol_handler_delegate->IsRequestSupported(
+        task.currentRequest);
+    _core = new net::HttpProtocolHandlerCore(task);
   }
   return self;
 }
@@ -987,6 +1019,14 @@ void HttpProtocolHandlerCore::StripPostSpecificHeaders(
 - (void)stopLoading {
   [self cancelRequest];
   _protocolProxy.reset();
+}
+
++ (net::Metrics)metricsForTask:(NSURLSessionTask*)task {
+  net::Metrics metrics = g_task_metrics_map[task];
+
+  // Remove the metrics to free memory.
+  g_task_metrics_map.erase(task);
+  return metrics;
 }
 
 @end
