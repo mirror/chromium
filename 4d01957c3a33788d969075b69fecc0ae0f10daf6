@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d210e109_df0bdc2c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/document-user-activation-feature-policy-alternating.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:49:30Z",
+      "side": 1,
+      "message": "Shouldn\u0027t autoplay work by default for same origin frames?",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfedc3f4_3139e9ba",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:49:30Z",
+      "side": 1,
+      "message": "I would recommend checking what the flag was and reverting to it.",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43f28a4_f533a02c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:49:30Z",
+      "side": 1,
+      "message": "Any way we could W3C test harness instead of TestRunner?\n\nedit: I guess I see now why you are using TestRunner as string comparison is easier :)",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1279593_1f7c6ca5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:49:30Z",
+      "side": 1,
+      "message": "We should probably avoid printing this unless we actually need to compare the value -- then why not have an expected list?",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b79801a_1939c153",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:49:30Z",
+      "side": 1,
+      "message": "In the spirit of using text comparison, should a successful play be logged?",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b709c6_aeb5759e",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:49:30Z",
+      "side": 1,
+      "message": "I assume this will check for the parent chain. Could check that if iframe 1b gives allow\u003dautoplay to iframe 2, iframe 2 can\u0027t autoplay?",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40dd23a_5ba40df9",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:49:30Z",
+      "side": 1,
+      "message": "Also, should we test if there is an HTTP header to disable autoplay on a given origin but allow\u003dautoplay is still set?",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333c418d_44c652f5",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-27T17:49:30Z",
+      "side": 1,
+      "message": "Why not \"experimental\"?",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
