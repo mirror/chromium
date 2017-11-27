@@ -22,6 +22,30 @@
       "revId": "a8390aa03c8f47ef9377913a120128c2227a993e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d70fc3_98ba2c37",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-27T16:22:07Z",
+      "side": 1,
+      "message": "This method is barely used at all, so inferring any semantics from it is difficult (and one of the two uses could easily be eliminated I think) \u003d/, but I\u0027ll add:\n\n\"...if the CSSValue can be recreated easily (like for StyleFetchedImage and StyleInvalidImage) and does not contain per-client state (like for StyleGeneratedImage.)\"\n\nto the end here, since that seems to largely match current usage. (I.e (1) to save the pointer, (2) to retain state in the CSSValue.)",
+      "parentUuid": "dc3cc0d3_04fbf256",
+      "range": {
+        "startLine": 55,
+        "startChar": 63,
+        "endLine": 56,
+        "endChar": 71
+      },
+      "revId": "a8390aa03c8f47ef9377913a120128c2227a993e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
