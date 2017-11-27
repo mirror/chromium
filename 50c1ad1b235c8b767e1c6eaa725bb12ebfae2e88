@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3735ed0f_6d44404a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/xmlhttprequest/workers/xmlhttprequest-allowed-with-disabled-web-security.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-27T06:42:33Z",
+      "side": 1,
+      "message": "how about \"childWindow\"?",
+      "revId": "50c1ad1b235c8b767e1c6eaa725bb12ebfae2e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
