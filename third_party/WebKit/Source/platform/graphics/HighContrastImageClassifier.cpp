@@ -31,6 +31,20 @@ void RGBDivide(SkColor4f* sink, int divisor) {
   sink->fB /= divisor;
 }
 
+// Computes difference between two colors
+float ColorDifference(const SkColor& color1, const SkColor& color2) {
+  return sqrt((pow(static_cast<float>(SkColorGetR(color1)) -
+                       static_cast<float>(SkColorGetR(color2)),
+                   2.0) +
+               pow(static_cast<float>(SkColorGetG(color1)) -
+                       static_cast<float>(SkColorGetG(color2)),
+                   2.0) +
+               pow(static_cast<float>(SkColorGetB(color1)) -
+                       static_cast<float>(SkColorGetB(color2)),
+                   2.0)) /
+              3.0);
+}
+
 float ColorDifference(const SkColor& color1, const SkColor4f& color2) {
   return sqrt((pow(static_cast<float>(SkColorGetR(color1)) - color2.fR, 2.0) +
                pow(static_cast<float>(SkColorGetG(color1)) - color2.fG, 2.0) +
@@ -43,15 +57,17 @@ const int kBlocksCount1D = 10;
 const int kMinImageSizeForClassification1D = 24;
 
 // Decision tree lower and upper thresholds for grayscale and color images.
-const float kLowColorCountThreshold[2] = {0.8125, 0.015137};
-const float kHighColorCountThreshold[2] = {1, 0.025635};
+const float kLowColorCountThreshold[2] = {0.8125, 0.046875};
+const float kHighColorCountThreshold[2] = {1, 0.203125};
 
 }  // namespace
 
 namespace blink {
 
 HighContrastImageClassifier::HighContrastImageClassifier()
-    : use_testing_random_generator_(false), testing_random_generator_seed_(0) {}
+    : use_testing_random_generator_(false), testing_random_generator_seed_(0) {
+  CreateClusterCenters();
+}
 
 int HighContrastImageClassifier::GetRandomInt(const int min, const int max) {
   if (use_testing_random_generator_) {
@@ -62,6 +78,87 @@ int HighContrastImageClassifier::GetRandomInt(const int min, const int max) {
   }
 
   return base::RandInt(min, max - 1);
+}
+
+void HighContrastImageClassifier::CreateClusterCenters() {
+  CreateClusterCentersForColorMode(ColorMode::kColor);
+  CreateClusterCentersForColorMode(ColorMode::kGrayscale);
+}
+
+void HighContrastImageClassifier::CreateClusterCentersForColorMode(
+    const HighContrastImageClassifier::ColorMode& color_mode) {
+  ClusterSet& cluster_set = cluster_sets_[static_cast<int>(color_mode)];
+  int cluster_step;
+
+  if (color_mode == ColorMode::kColor) {
+    cluster_step = 32;
+    for (uint32_t r = cluster_step / 2; r < 256; r += cluster_step) {
+      for (uint32_t g = cluster_step / 2; g < 256; g += cluster_step) {
+        for (uint32_t b = cluster_step / 2; b < 256; b += cluster_step) {
+          cluster_set.centers.push_back(SkColorSetARGBInline(0xff, r, g, b));
+        }
+      }
+    }
+  } else {
+    cluster_step = 16;
+    for (uint32_t g = cluster_step / 2; g < 256; g += cluster_step) {
+      cluster_set.centers.push_back(SkColorSetARGBInline(0xff, g, g, g));
+    }
+  }
+
+  cluster_set.normalizer =
+      ColorDifference(SkColorSetARGBInline(0xff, 0, 0, 0),
+                      SkColorSetARGBInline(0xff, cluster_step / 2,
+                                           cluster_step / 2, cluster_step / 2));
+
+  // Find Fast Mappers, slowly!
+  for (uint32_t r = 0; r < 256; r += 4) {
+    for (uint32_t g = 0; g < 256; g += 4) {
+      for (uint32_t b = 0; b < 256; b += 4) {
+        SkColor sample = SkColorSetARGBInline(0xff, r, g, b);
+        int closest = 0;
+        float least_difference = 256;
+
+        for (int cluster = 0;
+             cluster < static_cast<int>(cluster_set.centers.size());
+             cluster++) {
+          float difference =
+              ColorDifference(cluster_set.centers[cluster], sample);
+          if (difference < least_difference) {
+            least_difference = difference;
+            closest = cluster;
+          }
+        }
+
+        uint32_t key = ((b >> 4) << 8) + (g & 0xf0) + (r >> 4);
+        auto slot = cluster_set.mappers.find(key);
+        if (slot == cluster_set.mappers.end()) {
+          std::set<int> new_set = {closest};
+          cluster_set.mappers.insert(std::make_pair(key, new_set));
+        } else {
+          slot->second.insert(closest);
+        }
+      }
+    }
+  }
+}
+
+int HighContrastImageClassifier::FindClosestCluster(
+    const SkColor& sample,
+    const ClusterSet& cluster_set) {
+  uint32_t key = ((SkColorGetB(sample) >> 4) << 8) +
+                 (SkColorGetG(sample) & 0xf0) + (SkColorGetR(sample) >> 4);
+  int closest = 0;
+  float least_difference = 256;
+
+  for (auto cluster : cluster_set.mappers.at(key)) {
+    float difference = ColorDifference(cluster_set.centers[cluster], sample);
+    if (difference < least_difference) {
+      least_difference = difference;
+      closest = cluster;
+    }
+  }
+  return closest;
 }
 
 bool HighContrastImageClassifier::ShouldApplyHighContrastFilterToImage(
@@ -294,31 +391,15 @@ void HighContrastImageClassifier::GetFeatures(
 float HighContrastImageClassifier::ComputeColorBucketsRatio(
     const std::vector<SkColor>& sampled_pixels,
     const ColorMode color_mode) {
-  std::set<unsigned> buckets;
-  // If image is in color, use 4 bits per color channel, otherwise 4 bits for
-  // illumination.
-  if (color_mode == ColorMode::kColor) {
-    for (const SkColor& sample : sampled_pixels) {
-      unsigned bucket = ((SkColorGetR(sample) >> 4) << 8) +
-                        ((SkColorGetG(sample) >> 4) << 4) +
-                        ((SkColorGetB(sample) >> 4));
-      buckets.insert(bucket);
-    }
-  } else {
-    for (const SkColor& sample : sampled_pixels) {
-      unsigned illumination =
-          (SkColorGetR(sample) * 5 + SkColorGetG(sample) * 3 +
-           SkColorGetB(sample) * 2) /
-          10;
-      buckets.insert(illumination / 16);
-    }
-  }
+  const ClusterSet& cluster_set = cluster_sets_[static_cast<int>(color_mode)];
 
-  // Using 4 bit per channel representation of each color bucket, there would be
-  // 2^4 buckets for grayscale images and 2^12 for color images.
-  const float max_buckets[] = {16, 4096};
+  std::set<unsigned> buckets;
+
+  for (const SkColor& sample : sampled_pixels)
+    buckets.insert(FindClosestCluster(sample, cluster_set));
+
   return static_cast<float>(buckets.size()) /
-         max_buckets[color_mode == ColorMode::kColor];
+         static_cast<int>(cluster_set.centers.size());
 }
 
 HighContrastClassification
