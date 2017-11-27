@@ -22,6 +22,30 @@
       "revId": "e5bcf721437e3e497bb49c8d02a7f5b25a7349d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3922814_d623e751",
+        "filename": "ui/strings/translations/app_locale_settings_ar.xtb",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-27T23:22:00Z",
+      "side": 1,
+      "message": "Ooops... You\u0027re right. I meant \u0027Noto Sans Arabic UI\u0027.",
+      "parentUuid": "cf94bd05_bbcbf06b",
+      "range": {
+        "startLine": 7,
+        "startChar": 48,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "e5bcf721437e3e497bb49c8d02a7f5b25a7349d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
