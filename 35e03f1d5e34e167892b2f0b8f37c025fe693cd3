@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6f0f228_9d75b56d",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T15:48:07Z",
+      "side": 1,
+      "message": "Classes that live on multiple threads are usually really hard to reason about. Where do you construct, user and destruct them? We usually prefer keeping *all* methods of a single class on a single thread, and use smaller sub-classes for work that has to be done on other threads.\n\nIn this case, all that ShowOnUIThread() has to do is call through to the PlatformNotificationService. You can just do that directly in the task that you\u0027re posting to it. Look at the following code for an example:\n\nhttps://cs.chromium.org/chromium/src/content/browser/notifications/notification_message_filter.cc?q\u003dnotificationmessagefilter\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d255",
+      "revId": "35e03f1d5e34e167892b2f0b8f37c025fe693cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475562d0_cf350217",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 6
+      },
+      "lineNbr": 2010,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T15:48:07Z",
+      "side": 1,
+      "message": "nit: could we SKIP the click+close tests for now?",
+      "revId": "35e03f1d5e34e167892b2f0b8f37c025fe693cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc67d040_d00ccb58",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T15:48:07Z",
+      "side": 1,
+      "message": "Please don\u0027t take the ExecutionContext* as an argument, and just call GetSupplementable() to get an instance.",
+      "revId": "35e03f1d5e34e167892b2f0b8f37c025fe693cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbe7695_56723006",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T15:48:07Z",
+      "side": 1,
+      "message": "Same re: the docs++ and naming comment earlier on, this won\u0027t be clear enough in the future.",
+      "revId": "35e03f1d5e34e167892b2f0b8f37c025fe693cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fb54aa_7d794bb4",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T15:48:07Z",
+      "side": 1,
+      "message": "1) ++docs. It\u0027s a non-persistent notification, there\u0027s various arguments missing (why? todo+bug?)\n\n2) naming. Let\u0027s try to fix consistency and clarify in our code -- DisplayNonPersistent() might be clearest?\n\n3) title. While the other arguments will be iteratively added, we have the title readily available so may as well include it right now. It\u0027ll pass *some* data through.",
+      "revId": "35e03f1d5e34e167892b2f0b8f37c025fe693cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6db9fa_175b4b5e",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-27T15:48:07Z",
+      "side": 1,
+      "message": "These origins should be using url.mojom.Origin:\nhttps://cs.chromium.org/chromium/src/url/mojo/origin.mojom\n\nIt\u0027s a blink::SecurityOrigin in Blink, and a url::Origin in Chromium. You can look at background_fetch.mojom to see how they handle it.",
+      "revId": "35e03f1d5e34e167892b2f0b8f37c025fe693cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
