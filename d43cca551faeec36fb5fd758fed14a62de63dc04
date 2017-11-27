@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "96e16cc2_271d54b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T23:43:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "64ff7de8_f73cc6e2",
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d52aab34_cc3c1ce9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 21
@@ -389,6 +407,30 @@
       "side": 1,
       "message": "Talked through chat - keeping as is.",
       "parentUuid": "fc035347_ffff06e9",
+      "range": {
+        "startLine": 301,
+        "startChar": 24,
+        "endLine": 301,
+        "endChar": 41
+      },
+      "revId": "d43cca551faeec36fb5fd758fed14a62de63dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e218f823_403a8624",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-27T23:43:42Z",
+      "side": 1,
+      "message": "It\u0027s good to document why a decision was made so that when memories fade/people leave the team we understand why code was written a certain way.\n\nTo elaborate here - onSurveyTriggered() is not the correct method for this. We would need a delegate method that is called after the infobar successfully shows. Since that method doesn\u0027t exist, we opted to leave this code as-is.",
+      "parentUuid": "e5bc0557_861076f0",
       "range": {
         "startLine": 301,
         "startChar": 24,
