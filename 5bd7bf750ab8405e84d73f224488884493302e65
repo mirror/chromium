@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df712b3b_3380997f",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:09:40Z",
+      "side": 1,
+      "message": "Could you add a paragraph ahead of this that explains that:\n\n- We could map mouse position to controller position, and skip this logic, but it will make targeting elements with a mouse feel strange and not mouse-like.\n- We\u0027re instead making the reticle track the mouse position linearly by working from reticle position backwards to compute controller position.\n- For this reason, be cautious when testing controller visuals in the testapp.",
+      "revId": "5bd7bf750ab8405e84d73f224488884493302e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ed4752_bbba0bc1",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:09:40Z",
+      "side": 1,
+      "message": "Comment is no longer accurate; needs a tweak.",
+      "revId": "5bd7bf750ab8405e84d73f224488884493302e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f442dddc_7ec4524c",
+        "filename": "chrome/browser/vr/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:09:40Z",
+      "side": 1,
+      "message": "We should definitely document this, in lieu of calling one of them ..._DEFAULT.  I\u0027d love it to indicate which approach is used in production, which one is used for testing, and possibly why the testing variant comes in handy.  Or, at a very minimum, \"the real one\", \"the test one\".",
+      "revId": "5bd7bf750ab8405e84d73f224488884493302e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa8eaa0_4488bcae",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-27T15:09:40Z",
+      "side": 1,
+      "message": "Are these EXPECT_CALL functions part of the test, or just keeping the mock happy?  They don\u0027t seem to be adding value, and I\u0027m wondering why you\u0027re using a mock element at all, over a plain old element.",
+      "revId": "5bd7bf750ab8405e84d73f224488884493302e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
