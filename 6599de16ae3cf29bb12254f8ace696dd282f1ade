@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d61df59c_99ec9d8e",
+        "filename": "third_party/WebKit/Source/platform/fonts/SimpleFontData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-28T09:31:47Z",
+      "side": 1,
+      "message": "|GlyphData| is only for |GetEmphasisMarkGlyphData| and not stored anywhere else? Maybe we can mark STACK_ALLOCATED() to clarify and ensure this doesn\u0027t add heap memory?",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5842c328_919f2211",
+        "filename": "third_party/WebKit/Source/platform/fonts/SimpleFontData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-28T09:31:47Z",
+      "side": 1,
+      "message": "Left over?",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2c1a2d_f8b60805",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-28T09:31:47Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689c0914_d55814a4",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultInlineHeaders.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-28T09:31:47Z",
+      "side": 1,
+      "message": "This adds 4 bytes to RunInfo, correct? Could we try to compress using bit fields?",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
