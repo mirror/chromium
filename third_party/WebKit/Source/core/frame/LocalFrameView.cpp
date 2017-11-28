@@ -3247,8 +3247,10 @@ void LocalFrameView::UpdateLifecyclePhasesInternal(
 
       if (target_state >= DocumentLifecycle::kPrePaintClean) {
         if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
-          if (view.Compositor()->InCompositingMode())
-            GetScrollingCoordinator()->UpdateAfterCompositingChangeIfNeeded();
+          if (view.Compositor()->InCompositingMode()) {
+            GetScrollingCoordinator()->UpdateAfterCompositingChangeIfNeeded(
+                this);
+          }
         }
 
         // This is needed since, at present, the ScrollingCoordinator doesn't
