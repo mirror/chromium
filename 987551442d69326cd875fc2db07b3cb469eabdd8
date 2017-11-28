@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54baed39_990c6db6",
+        "filename": "chrome/browser/ui/views/frame/browser_frame.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T23:37:13Z",
+      "side": 1,
+      "message": "1. changing the code here effects *all* browsers *all* the time. The bug you refer to mentions web-apps and only full screen.\n\n2. BrowserCommandHandlerLinux is a very generic name, and it would be easy to add functionality to it (meaning new gestures) and not realize the whole close is disabled in this config. Two options for that. Rename the class to reflect it\u0027s only for back/forward, or continue to always create the class but early out in the implementation for back/forward.",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 68
+      },
+      "revId": "987551442d69326cd875fc2db07b3cb469eabdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
