@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/ash/ash_init.h"
 
+#include <utility>
+
 #include "ash/high_contrast/high_contrast_controller.h"
 #include "ash/magnifier/magnification_controller.h"
 #include "ash/public/cpp/accessibility_types.h"
@@ -40,12 +42,12 @@ namespace {
 void CreateClassicShell() {
   ash::ShellInitParams shell_init_params;
   // Shell takes ownership of ChromeShellDelegate.
-  shell_init_params.delegate = new ChromeShellDelegate;
+  shell_init_params.delegate = std::make_unique<ChromeShellDelegate>();
   shell_init_params.context_factory = content::GetContextFactory();
   shell_init_params.context_factory_private =
       content::GetContextFactoryPrivate();
 
-  ash::Shell::CreateInstance(shell_init_params);
+  ash::Shell::CreateInstance(std::move(shell_init_params));
 }
 
 std::unique_ptr<ash::WindowManager> CreateMusShell() {
