@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed31fba3_3acab384",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-28T17:38:15Z",
+      "side": 1,
+      "message": "Is that correct? When ANGLE runs everywhere, say, on top of ES, can we demand this extension existence?",
+      "range": {
+        "startLine": 604,
+        "startChar": 9,
+        "endLine": 604,
+        "endChar": 35
+      },
+      "revId": "eae00211f0b4edb1f9cf2aa114244657b0b39e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
