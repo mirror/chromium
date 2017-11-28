@@ -7,13 +7,18 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
-          "object": "InlineTextBox 'PASS '",
-          "rect": [0, 114, 302, 46],
+          "object": "LayoutSVGRoot (positioned) svg",
+          "rect": [0, 14, 302, 46],
           "reason": "appeared"
         },
         {
-          "object": "LayoutSVGRoot (positioned) svg",
-          "rect": [0, 14, 302, 46],
+          "object": "InlineTextBox 'PASS '",
+          "rect": [0, 114, 193, 46],
+          "reason": "appeared"
+        },
+        {
+          "object": "InlineTextBox 'PASS'",
+          "rect": [0, 114, 193, 46],
           "reason": "appeared"
         },
         {
@@ -24,6 +29,11 @@
         {
           "object": "LayoutSVGViewportContainer svg",
           "rect": [310, 14, 92, 46],
+          "reason": "appeared"
+        },
+        {
+          "object": "InlineTextBox 'PASS'",
+          "rect": [210, 114, 92, 46],
           "reason": "appeared"
         },
         {
