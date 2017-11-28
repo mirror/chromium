@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05fa4727_48b77072",
+        "filename": "components/offline_pages/core/model/add_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-28T18:40:25Z",
+      "side": 1,
+      "message": "So is a null callback something that could actually happen?  This DCHECK is saying \"we promise it will never happen, but in case a bug is present we want to crash\".",
+      "range": {
+        "startLine": 86,
+        "startChar": 20,
+        "endLine": 86,
+        "endChar": 27
+      },
+      "revId": "7db9289c249e6bc51d1f8e2878b1ecd3b4715d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
