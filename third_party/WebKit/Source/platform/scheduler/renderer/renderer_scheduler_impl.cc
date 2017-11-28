@@ -1524,6 +1524,10 @@ base::TimeTicks RendererSchedulerImpl::EnableVirtualTime() {
   return main_thread_only().initial_virtual_time;
 }
 
+bool RendererSchedulerImpl::IsVirualTimeEnabled() const {
+  return main_thread_only().use_virtual_time;
+}
+
 void RendererSchedulerImpl::DisableVirtualTimeForTesting() {
   if (!main_thread_only().use_virtual_time)
     return;
@@ -1592,11 +1596,13 @@ bool RendererSchedulerImpl::VirtualTimeAllowedToAdvance() const {
 
 void RendererSchedulerImpl::IncrementVirtualTimePauseCount() {
   main_thread_only().virtual_time_pause_count++;
+  fprintf(stderr, "RendererSchedulerImpl::IncrementVirtualTimePauseCount %d\n", main_thread_only().virtual_time_pause_count);
   ApplyVirtualTimePolicy();
 }
 
 void RendererSchedulerImpl::DecrementVirtualTimePauseCount() {
   main_thread_only().virtual_time_pause_count--;
+  fprintf(stderr, "RendererSchedulerImpl::DecrementVirtualTimePauseCount %d\n", main_thread_only().virtual_time_pause_count);
   DCHECK_GE(main_thread_only().virtual_time_pause_count, 0);
   ApplyVirtualTimePolicy();
 }
