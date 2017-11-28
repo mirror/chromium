@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8f102a3b_a2cbe6ef",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/web_task_runner_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-28T04:55:41Z",
+      "side": 1,
+      "message": "Yes, if we use base::AdoptRef where it shouldn\u0027t, it hits a static_assert.\nAnd, if we use base::WrapRefCounted where we should use base::AdoptRef, it hits a DCHECK.",
+      "parentUuid": "5d3e1e2e_67a4a274",
+      "revId": "afed4fa2baf2e84909dce3476ceebdaa28c25995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b17b8a8c_7ceda836",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/fake_web_task_runner.cc",
         "patchSetId": 6
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "94a7d8f3_78deec84",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/fake_web_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-28T04:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "decdad09_4df9544c",
+      "revId": "afed4fa2baf2e84909dce3476ceebdaa28c25995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd6ac1c_e7891769",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/fake_web_task_runner.cc",
         "patchSetId": 6
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "bbd6ac1c_e7891769",
+      "revId": "afed4fa2baf2e84909dce3476ceebdaa28c25995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "367c49e8_9c92f034",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/fake_web_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-28T04:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20d65263_08f76e26",
       "revId": "afed4fa2baf2e84909dce3476ceebdaa28c25995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
