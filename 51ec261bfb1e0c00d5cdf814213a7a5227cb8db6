@@ -22,6 +22,30 @@
       "revId": "51ec261bfb1e0c00d5cdf814213a7a5227cb8db6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108705fa_ad486262",
+        "filename": "components/flags_ui/resources/flags.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-11-28T13:01:15Z",
+      "side": 1,
+      "message": "Good point, thanks for the reminder. \n\nI\u0027ve made the changes here an in another place too.",
+      "parentUuid": "9f3bb9e5_1d54373c",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 345,
+        "endChar": 1
+      },
+      "revId": "51ec261bfb1e0c00d5cdf814213a7a5227cb8db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
