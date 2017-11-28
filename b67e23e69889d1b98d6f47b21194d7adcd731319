@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "97fad654_ba91cee0",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-28T02:13:00Z",
+      "side": 1,
+      "message": "got it, thanks!",
+      "parentUuid": "ee0a3ae9_5def618e",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a491084_6cf66def",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
         "patchSetId": 3
