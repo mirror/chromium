@@ -18883,6 +18883,15 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="UI.CompositorResizeLock.CompositorLockTimedOut">
+  <owner>fsamuel@chromium.org</owner>
+  <description>
+    Records when the CompositorResizeLock times out. This indicates that UI was
+    unable to synchronize with the renderer during a resize and gutter will be
+    shown.
+  </description>
+</action>
+
 <action name="Underline">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
@@ -19050,6 +19059,15 @@ should be able to be added at any place in this file.
 <action name="VirtualKeyboardLoaded">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
+</action>
+
+<action name="Viz.Surface.Deadline">
+  <owner>fsamuel@chromium.org</owner>
+  <description>
+    Records when a Surface is forcibly activated due to a deadline. This
+    indicates that Viz was unable to synchronize a surface with its dependencies
+    and gutter will be shown.
+  </description>
 </action>
 
 <action name="VoiceInteraction.MetalayerStarted.Search_Shift_A">

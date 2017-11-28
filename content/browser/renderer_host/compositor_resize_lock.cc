@@ -4,6 +4,8 @@
 
 #include "content/browser/renderer_host/compositor_resize_lock.h"
 
+#include "base/metrics/user_metrics.h"
+#include "base/metrics/user_metrics_action.h"
 #include "base/trace_event/trace_event.h"
 #include "content/public/browser/browser_thread.h"
 #include "ui/compositor/compositor.h"
@@ -41,6 +43,8 @@ void CompositorResizeLock::UnlockCompositor() {
 }
 
 void CompositorResizeLock::CompositorLockTimedOut() {
+  RecordAction(base::UserMetricsAction(
+      "UI.CompositorResizeLock.CompositorLockTimedOut"));
   timed_out_ = true;
   UnlockCompositor();
   if (client_) {

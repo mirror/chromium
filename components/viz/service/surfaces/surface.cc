@@ -9,6 +9,8 @@
 
 #include <algorithm>
 
+#include "base/metrics/user_metrics.h"
+#include "base/metrics/user_metrics_action.h"
 #include "base/stl_util.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/resources/returned_resource.h"
@@ -428,6 +430,7 @@ void Surface::SatisfyDestructionDependencies(
 void Surface::OnDeadline() {
   TRACE_EVENT1("viz", "Surface::OnDeadline", "FrameSinkId",
                surface_id().frame_sink_id().ToString());
+  RecordAction(base::UserMetricsAction("Viz.Surface.Deadline"));
   ActivatePendingFrameForDeadline();
 }
 
