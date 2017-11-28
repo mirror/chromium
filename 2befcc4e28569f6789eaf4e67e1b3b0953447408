@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "98f4e3c6_ff91675c",
+        "filename": "ui/file_manager/file_manager/common/js/util.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-28T14:55:41Z",
+      "side": 1,
+      "message": "I could only find ES6-based standard doc, but I think current codebase of the app hasn\u0027t moved to ES6 yet.\nEvent.call can no longer be called as a function as it\u0027s a DOM constructor.\n\nFor now, removed the redundant line and added annotation.\n(see volume_manager_common.js)\nHere is the other place where we extend the Event class.\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/list_thumbnail_loader.js?q\u003dfile:file_manager++%22@extends+%7BEvent%7D%22\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d328",
+      "parentUuid": "2246a96b_8a16a73a",
+      "range": {
+        "startLine": 1304,
+        "startChar": 0,
+        "endLine": 1304,
+        "endChar": 56
+      },
+      "revId": "2befcc4e28569f6789eaf4e67e1b3b0953447408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b8127a1_d5706aa8",
         "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
         "patchSetId": 6
@@ -235,6 +259,30 @@
       "revId": "2befcc4e28569f6789eaf4e67e1b3b0953447408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16471ae4_4a122b57",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-28T14:55:41Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to propagate event from background to foreground via VolumeManager/VolumeManagerWrapper like in your advice.",
+      "parentUuid": "1d64020a_3f01192f",
+      "range": {
+        "startLine": 543,
+        "startChar": 4,
+        "endLine": 543,
+        "endChar": 24
+      },
+      "revId": "2befcc4e28569f6789eaf4e67e1b3b0953447408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

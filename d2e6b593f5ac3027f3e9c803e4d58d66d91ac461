@@ -16,6 +16,24 @@
       "revId": "d2e6b593f5ac3027f3e9c803e4d58d66d91ac461",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f1684d_0000448d",
+        "filename": "ui/file_manager/file_manager/background/js/launcher.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-28T14:55:41Z",
+      "side": 1,
+      "message": "Moved to VolumeManager.",
+      "parentUuid": "242697a7_ca39d333",
+      "revId": "d2e6b593f5ac3027f3e9c803e4d58d66d91ac461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
