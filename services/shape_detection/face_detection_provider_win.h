@@ -6,6 +6,7 @@
 #define SERVICES_SHAPE_DETECTION_FACE_DETECTION_WIN_PROVIDER_H_
 
 #include <windows.foundation.h>
+#include <windows.graphics.imaging.h>
 
 #include "detection_utils_win.h"
 #include "face_detection_impl_win.h"
@@ -17,10 +18,9 @@ namespace shape_detection {
 class FaceDetectionProviderWin
     : public shape_detection::mojom::FaceDetectionProvider {
  public:
-  using IFaceDetectorStatics =
-      ABI::Windows::Media::FaceAnalysis::IFaceDetectorStatics;
   using FaceDetector = ABI::Windows::Media::FaceAnalysis::FaceDetector;
   using IFaceDetector = ABI::Windows::Media::FaceAnalysis::IFaceDetector;
+  using BitmapPixelFormat = ABI::Windows::Graphics::Imaging::BitmapPixelFormat;
 
   FaceDetectionProviderWin();
   ~FaceDetectionProviderWin() override;
@@ -40,10 +40,11 @@ class FaceDetectionProviderWin
  private:
   void OnFaceDetectorCreated(
       shape_detection::mojom::FaceDetectionRequest request,
-      Microsoft::WRL::ComPtr<IFaceDetectorStatics> factory,
+      BitmapPixelFormat pixel_format,
       AsyncOperation<FaceDetector>::IAsyncOperationPtr async_op);
 
   FRIEND_TEST_ALL_PREFIXES(FaceDetectionImplWinTest, CreateFaceDetector);
+  FRIEND_TEST_ALL_PREFIXES(FaceDetectionImplWinTest, ScanOneFace);
   mojo::StrongBindingPtr<mojom::FaceDetectionProvider> binding_;
   std::unique_ptr<AsyncOperation<FaceDetector>> async_create_detector_ops_;
 
