@@ -42,6 +42,9 @@ message RankerModelMetadata {
 
   // The version of the model. E.g. 20171027.
   optional uint32 model_version = 6;
+
+  // If true, feature names are hex hashes of the original feature names.
+  optional bool input_features_names_are_hex_hashes = 7;
 }
 
 // Defines an envelope/wrapper for general models.
