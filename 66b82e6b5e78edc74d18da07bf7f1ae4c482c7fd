@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "753b735e_71195c6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-28T15:06:34Z",
+      "side": 1,
+      "message": "typo: it\u0027s",
+      "range": {
+        "startLine": 16,
+        "startChar": 51,
+        "endLine": 16,
+        "endChar": 54
+      },
+      "revId": "66b82e6b5e78edc74d18da07bf7f1ae4c482c7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe661d8_cc0066d4",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-28T15:06:34Z",
+      "side": 1,
+      "message": "Not sure whether this should be just before the Wait() call which needs it. Jochen might know.",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 59
+      },
+      "revId": "66b82e6b5e78edc74d18da07bf7f1ae4c482c7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
