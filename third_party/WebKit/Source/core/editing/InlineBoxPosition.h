@@ -32,7 +32,9 @@
 
 #include "core/CoreExport.h"
 #include "core/editing/Forward.h"
+#include "core/editing/PositionWithAffinity.h"
 #include "platform/text/TextDirection.h"
+#include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
 
 namespace blink {
@@ -74,6 +76,36 @@ ComputeInlineBoxPosition(const PositionInFlatTree&,
                          TextAffinity,
                          TextDirection primary_direction);
 CORE_EXPORT InlineBoxPosition ComputeInlineBoxPosition(const VisiblePosition&);
+
+template <typename Strategy>
+struct PositionAndDirectionTemplate {
+  STACK_ALLOCATED();
+
+  PositionWithAffinityTemplate<Strategy> position;
+  TextDirection direction = TextDirection::kLtr;
+};
+
+extern template struct PositionAndDirectionTemplate<EditingStrategy>;
+extern template struct PositionAndDirectionTemplate<EditingInFlatTreeStrategy>;
+
+using PositionAndDirection = PositionAndDirectionTemplate<EditingStrategy>;
+using PositionInFlatTreeAndDirection =
+    PositionAndDirectionTemplate<EditingInFlatTreeStrategy>;
+
+PositionAndDirection ComputeInlineAdjustedPosition(const Position&,
+                                                   TextAffinity);
+PositionAndDirection ComputeInlineAdjustedPosition(
+    const Position&,
+    TextAffinity,
+    TextDirection primary_direction);
+PositionInFlatTreeAndDirection ComputeInlineAdjustedPosition(
+    const PositionInFlatTree&,
+    TextAffinity);
+PositionInFlatTreeAndDirection ComputeInlineAdjustedPosition(
+    const PositionInFlatTree&,
+    TextAffinity,
+    TextDirection primary_direction);
+PositionAndDirection ComputeInlineAdjustedPosition(const VisiblePosition&);
 
 // The print for |InlineBoxPosition| is available only for testing
 // in "webkit_unit_tests", and implemented in

@@ -297,21 +297,13 @@ InlineBoxPosition ComputeInlineBoxPositionForAtomicInline(
 }
 
 template <typename Strategy>
-struct PositionAndDirection {
-  STACK_ALLOCATED();
-
-  PositionWithAffinityTemplate<Strategy> position;
-  TextDirection direction = TextDirection::kLtr;
-};
-
-template <typename Strategy>
-PositionAndDirection<Strategy> ComputeInlineAdjustedPosition(
+PositionAndDirectionTemplate<Strategy> ComputeInlineAdjustedPositionAlgorithm(
     const PositionTemplate<Strategy>&,
     TextAffinity,
     TextDirection);
 
 template <typename Strategy>
-PositionAndDirection<Strategy> AdjustBlockFlowPositionToInline(
+PositionAndDirectionTemplate<Strategy> AdjustBlockFlowPositionToInline(
     const PositionTemplate<Strategy>& position,
     TextDirection primary_direction) {
   // Try a visually equivalent position with possibly opposite editability. This
@@ -321,7 +313,7 @@ PositionAndDirection<Strategy> AdjustBlockFlowPositionToInline(
   const PositionTemplate<Strategy>& downstream_equivalent =
       DownstreamIgnoringEditingBoundaries(position);
   if (downstream_equivalent != position) {
-    return ComputeInlineAdjustedPosition(
+    return ComputeInlineAdjustedPositionAlgorithm(
         downstream_equivalent, TextAffinity::kUpstream, primary_direction);
   }
   const PositionTemplate<Strategy>& upstream_equivalent =
@@ -330,14 +322,14 @@ PositionAndDirection<Strategy> AdjustBlockFlowPositionToInline(
       DownstreamIgnoringEditingBoundaries(upstream_equivalent) == position)
     return {};
 
-  return ComputeInlineAdjustedPosition(
+  return ComputeInlineAdjustedPositionAlgorithm(
       upstream_equivalent, TextAffinity::kUpstream, primary_direction);
 }
 
 // TODO(xiaochengh): Expose this function for current callers of
 // ComputeInlineBoxPosition() for deciding to use legacy or NG implementation.
 template <typename Strategy>
-PositionAndDirection<Strategy> ComputeInlineAdjustedPosition(
+PositionAndDirectionTemplate<Strategy> ComputeInlineAdjustedPositionAlgorithm(
     const PositionTemplate<Strategy>& position,
     TextAffinity affinity,
     TextDirection primary_direction) {
@@ -361,10 +353,9 @@ PositionAndDirection<Strategy> ComputeInlineAdjustedPosition(
   return AdjustBlockFlowPositionToInline(position, primary_direction);
 }
 
-// TODO(xiaochengh): Expose this function for code depending on legacy layout.
 template <typename Strategy>
 InlineBoxPosition ComputeInlineBoxPositionForInlineAdjustedPosition(
-    const PositionAndDirection<Strategy>& adjusted) {
+    const PositionAndDirectionTemplate<Strategy>& adjusted) {
   const PositionTemplate<Strategy>& position = adjusted.position.GetPosition();
   const LayoutObject& layout_object =
       GetLayoutObjectSkippingShadowRoot(position);
@@ -383,11 +374,19 @@ InlineBoxPosition ComputeInlineBoxPositionForInlineAdjustedPosition(
 }
 
 template <typename Strategy>
+PositionAndDirectionTemplate<Strategy> ComputeInlineAdjustedPositionAlgorithm(
+    const PositionTemplate<Strategy>& position,
+    TextAffinity affinity) {
+  return ComputeInlineAdjustedPositionAlgorithm<Strategy>(
+      position, affinity, PrimaryDirectionOf(*position.AnchorNode()));
+}
+
+template <typename Strategy>
 InlineBoxPosition ComputeInlineBoxPositionTemplate(
     const PositionTemplate<Strategy>& position,
     TextAffinity affinity,
     TextDirection primary_direction) {
-  const PositionAndDirection<Strategy> adjusted =
+  const PositionAndDirectionTemplate<Strategy> adjusted =
       ComputeInlineAdjustedPosition(position, affinity, primary_direction);
   if (adjusted.position.IsNull())
     return InlineBoxPosition();
@@ -435,6 +434,37 @@ InlineBoxPosition ComputeInlineBoxPosition(const PositionInFlatTree& position,
                                            TextAffinity affinity,
                                            TextDirection primary_direction) {
   return ComputeInlineBoxPositionTemplate<EditingInFlatTreeStrategy>(
+      position, affinity, primary_direction);
+}
+
+PositionAndDirection ComputeInlineAdjustedPosition(const Position& position,
+                                           TextAffinity affinity) {
+  return ComputeInlineAdjustedPositionAlgorithm<EditingStrategy>(position, affinity);
+}
+
+PositionInFlatTreeAndDirection ComputeInlineAdjustedPosition(const PositionInFlatTree& position,
+                                           TextAffinity affinity) {
+  return ComputeInlineAdjustedPositionAlgorithm<EditingInFlatTreeStrategy>(position,
+                                                                     affinity);
+}
+
+PositionAndDirection ComputeInlineAdjustedPosition(const VisiblePosition& position) {
+  DCHECK(position.IsValid()) << position;
+  return ComputeInlineAdjustedPosition(position.DeepEquivalent(),
+                                  position.Affinity());
+}
+
+PositionAndDirection ComputeInlineAdjustedPosition(const Position& position,
+                                           TextAffinity affinity,
+                                           TextDirection primary_direction) {
+  return ComputeInlineAdjustedPositionAlgorithm<EditingStrategy>(position, affinity,
+                                                           primary_direction);
+}
+
+PositionInFlatTreeAndDirection ComputeInlineAdjustedPosition(const PositionInFlatTree& position,
+                                           TextAffinity affinity,
+                                           TextDirection primary_direction) {
+  return ComputeInlineAdjustedPositionAlgorithm<EditingInFlatTreeStrategy>(
       position, affinity, primary_direction);
 }
 
