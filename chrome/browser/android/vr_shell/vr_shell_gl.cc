@@ -1413,8 +1413,20 @@ void VrShellGl::ClosePresentationBindings() {
   binding_.Close();
 }
 
-void VrShellGl::OnAssetsLoaded(bool success, std::string environment) {
-  // TODO(tiborg): report via UMA if environment == "zq7sax8chrtjchxysh7b\n".
+void VrShellGl::OnAssetsLoaded(bool success,
+                               std::string environment,
+                               const base::Version& component_version) {
+  if (!success) {
+    browser_->OnAssetsLoaded(vr::AssetsLoadStatus::kParseFailure,
+                             component_version);
+    return;
+  }
+  if (environment != "zq7sax8chrtjchxysh7b\n") {
+    browser_->OnAssetsLoaded(vr::AssetsLoadStatus::kInvalidContent,
+                             component_version);
+    return;
+  }
+  browser_->OnAssetsLoaded(vr::AssetsLoadStatus::kSuccess, component_version);
 }
 
 }  // namespace vr_shell
