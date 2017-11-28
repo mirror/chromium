@@ -21,10 +21,10 @@ const CSSValue* StopColor::ParseSingleValue(
 const blink::Color StopColor::ColorIncludingFallback(
     bool visited_link,
     const ComputedStyle& style) const {
-  StyleColor result = style.StopColor();
+  StyleColor result = style.StopColorIgnoringVisited();
   if (!result.IsCurrentColor())
     return result.GetColor();
-  return visited_link ? style.VisitedLinkColor() : style.GetColor();
+  return visited_link ? style.VisitedLinkColor() : style.ColorIgnoringVisited();
 }
 
 const CSSValue* StopColor::CSSValueFromComputedStyle(
@@ -32,7 +32,8 @@ const CSSValue* StopColor::CSSValueFromComputedStyle(
     const LayoutObject* layout_object,
     Node* styled_node,
     bool allow_visited_style) const {
-  return ComputedStyleUtils::CurrentColorOrValidColor(style, style.StopColor());
+  return ComputedStyleUtils::CurrentColorOrValidColor(
+      style, style.StopColorIgnoringVisited());
 }
 
 }  // namespace CSSLonghand

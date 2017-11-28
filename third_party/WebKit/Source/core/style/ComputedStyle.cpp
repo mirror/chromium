@@ -1771,26 +1771,6 @@ void ComputedStyle::ClearMultiCol() {
   ResetColumnSpan();
 }
 
-StyleColor ComputedStyle::DecorationColorIncludingFallback(
-    bool visited_link) const {
-  StyleColor style_color =
-      visited_link ? VisitedLinkTextDecorationColor() : TextDecorationColor();
-
-  if (!style_color.IsCurrentColor())
-    return style_color;
-
-  if (TextStrokeWidth()) {
-    // Prefer stroke color if possible, but not if it's fully transparent.
-    StyleColor text_stroke_style_color =
-        visited_link ? VisitedLinkTextStrokeColor() : TextStrokeColor();
-    if (!text_stroke_style_color.IsCurrentColor() &&
-        text_stroke_style_color.GetColor().Alpha())
-      return text_stroke_style_color;
-  }
-
-  return visited_link ? VisitedLinkTextFillColor() : TextFillColor();
-}
-
 Color ComputedStyle::VisitedDependentColor(
     const CSSProperty& color_property) const {
   Color unvisited_color =

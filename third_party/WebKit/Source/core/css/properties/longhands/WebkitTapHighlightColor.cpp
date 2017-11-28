@@ -27,7 +27,7 @@ const blink::Color WebkitTapHighlightColor::ColorIncludingFallback(
   StyleColor result = style.TapHighlightColor();
   if (!result.IsCurrentColor())
     return result.GetColor();
-  return visited_link ? style.VisitedLinkColor() : style.GetColor();
+  return visited_link ? style.VisitedLinkColor() : style.ColorIgnoringVisited();
 }
 
 const CSSValue* WebkitTapHighlightColor::CSSValueFromComputedStyle(

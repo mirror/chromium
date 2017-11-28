@@ -16,7 +16,8 @@ const CSSValue* ComputedStyleUtils::CurrentColorOrValidColor(
     const StyleColor& color) {
   // This function does NOT look at visited information, so that computed style
   // doesn't expose that.
-  return cssvalue::CSSColorValue::Create(color.Resolve(style.GetColor()).Rgb());
+  return cssvalue::CSSColorValue::Create(
+      color.Resolve(style.ColorIgnoringVisited()).Rgb());
 }
 
 }  // namespace blink
