@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1a037a3_14937fa2",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-28T18:00:19Z",
+      "side": 1,
+      "message": "We are possibly requesting expiration, on line 179+.",
+      "revId": "0188b6d744b216448fd3b05cfe0345cca839d276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
