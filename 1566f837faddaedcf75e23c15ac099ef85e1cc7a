@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c2cc8fc_8d0ad1f5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/android.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-28T03:37:31Z",
+      "side": 1,
+      "message": "My opinion (obviously, I suppose, given this patch) is that those helper functions made the execution harder to trace, particularly when they included both data dependency pushing and APK installation. They also meant three separate executions of PushChangedFiles, which I believe will usually be slower than a single execution.\n\nAdded comments in the newest patchset.",
+      "parentUuid": "73c33f20_c378ea9c",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 469,
+        "endChar": 55
+      },
+      "revId": "1566f837faddaedcf75e23c15ac099ef85e1cc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1864881_0c7aae86",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/android.py",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-27T17:03:18Z",
       "side": 1,
       "message": "Note, as far as I understand, this is the line that replaces the ThreadPool logic previously used.\n\nThe reason for this change is that it might solve some current problems that we see on android_blink_rel. Right?",
+      "revId": "1566f837faddaedcf75e23c15ac099ef85e1cc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b4ea5c5_ff421526",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/android.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-28T03:37:31Z",
+      "side": 1,
+      "message": "I don\u0027t think this will; rather, I think https://chromium-review.googlesource.com/c/catapult/+/790430 will do (has done?) that. That change was also moving away from multiprocessing, though.\n\nMy main reason for switching was because multiprocessing left a lot of threads lying around, and I wanted to eliminate that as a possible cause of the android_blink_rel issues. In retrospect, calling ThreadPool.close() and ThreadPool.join() after finishing setup may have accomplished that too (though it\u0027s hard to say w/o doing it since ThreadPool is completely undocumented).",
+      "parentUuid": "e1864881_0c7aae86",
       "revId": "1566f837faddaedcf75e23c15ac099ef85e1cc7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
