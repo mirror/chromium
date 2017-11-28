@@ -217,6 +217,7 @@ CONTENT_EXPORT extern const char kRendererProcess[];
 CONTENT_EXPORT extern const char kRendererProcessLimit[];
 CONTENT_EXPORT extern const char kRendererStartupDialog[];
 CONTENT_EXPORT extern const char kRootLayerScrolls[];
+CONTENT_EXPORT extern const char kRunLayoutTest[];
 extern const char kSandboxIPCProcess[];
 CONTENT_EXPORT extern const char kSavePreviousDocumentResources[];
 extern const char kShowPaintRects[];
