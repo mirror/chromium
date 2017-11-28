@@ -16,6 +16,24 @@
       "revId": "aec3b0cbf494b8b2b0e65259ffc5c7dd31dc1f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b5a13c_7e4208dd",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-11-28T18:43:23Z",
+      "side": 1,
+      "message": "Yeah, let\u0027s do that. The config names can be changed without updating the bot names.",
+      "parentUuid": "16577204_aee04808",
+      "revId": "aec3b0cbf494b8b2b0e65259ffc5c7dd31dc1f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
