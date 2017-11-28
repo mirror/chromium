@@ -16,6 +16,24 @@
       "revId": "89028ae379078c5b0ca17627be73fd98e7abd87d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "804183c0_45d31757",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridgeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-28T17:59:44Z",
+      "side": 1,
+      "message": "Just helps the diagnosis. Ideally the test won\u0027t fail since almost nobody is adding user counters anymore.",
+      "parentUuid": "0a80401c_0c673822",
+      "revId": "89028ae379078c5b0ca17627be73fd98e7abd87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
