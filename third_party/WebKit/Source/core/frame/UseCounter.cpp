@@ -1160,6 +1160,10 @@ UseCounter::UseCounter(Context context)
       css_recorded_(numCSSPropertyIDs),
       animated_css_recorded_(numCSSPropertyIDs) {}
 
+void UseCounter::SetUseCounterContext(Context context) {
+  context_ = context;
+}
+
 void UseCounter::MuteForInspector() {
   mute_count_++;
 }
@@ -1172,6 +1176,13 @@ void UseCounter::RecordMeasurement(WebFeature feature,
                                    const LocalFrame& source_frame) {
   if (mute_count_)
     return;
+
+  // Drop measurement on view-source pages. This matches the policy of
+  // page_load_metrics.
+  if (source_frame.GetDocument()->IsViewSource()) {
+    context_ = kDisabledContext;
+    return;
+  }
 
   // PageDestruction is reserved as a scaling factor.
   DCHECK_NE(WebFeature::kOBSOLETE_PageDestruction, feature);

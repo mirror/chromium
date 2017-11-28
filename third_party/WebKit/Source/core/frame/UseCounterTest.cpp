@@ -49,6 +49,7 @@ class UseCounterTest : public ::testing::Test {
 
  protected:
   LocalFrame* GetFrame() { return &dummy_->GetFrame(); }
+  void SetIsViewSource() { return dummy_->GetDocument().SetIsViewSource(true); }
   template <typename T>
   void HistogramBasicTest(const std::string& histogram,
                           T item,
@@ -284,6 +285,16 @@ TEST_F(UseCounterTest, InspectorDisablesMeasurement) {
   histogram_tester_.ExpectUniqueSample(
       kCSSHistogramName,
       UseCounter::MapCSSPropertyIdToCSSSampleIdForHistogram(property), 1);
+}
+
+TEST_F(UseCounterTest, DropMeasurementOnViewSourcePages) {
+  UseCounter use_counter;
+
+  WebFeature feature = WebFeature::kViewSourceDocument;
+  EXPECT_FALSE(use_counter.HasRecordedMeasurement(feature));
+  SetIsViewSource();
+  use_counter.RecordMeasurement(feature, *GetFrame());
+  EXPECT_FALSE(use_counter.HasRecordedMeasurement(feature));
 }
 
 void ExpectHistograms(const HistogramTester& histogram_tester,
