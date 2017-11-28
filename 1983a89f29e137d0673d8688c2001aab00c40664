@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9181b590_6965f0aa",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 40370,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-28T20:18:44Z",
+      "side": 1,
+      "message": "Since you never log the these non-suffixed histograms, can you add an attribute base\u003d\"true\" to them? I only found out it was a thing while reviewing code yesterday!",
+      "revId": "1983a89f29e137d0673d8688c2001aab00c40664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3f8cf1_fcc4fec0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 40376,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-28T20:18:44Z",
+      "side": 1,
+      "message": "nit: update the summaries to not mention the specific protocol. If you add a label to the suffixes, they\u0027ll be appended to the summaries in the tool, though the expanded name in this case will probably be informative enough?",
+      "range": {
+        "startLine": 40376,
+        "startChar": 27,
+        "endLine": 40376,
+        "endChar": 31
+      },
+      "revId": "1983a89f29e137d0673d8688c2001aab00c40664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
