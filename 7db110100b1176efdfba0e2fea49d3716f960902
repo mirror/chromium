@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac437da5_b8ab92f4",
+        "filename": "services/ui/ws/display.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-28T18:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2906986_cb757c0c",
+      "revId": "7db110100b1176efdfba0e2fea49d3716f960902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60cd6b81_fb4712e4",
         "filename": "services/ui/ws/display_manager.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a7d34e83_fefac986",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-28T18:51:57Z",
+      "side": 1,
+      "message": "Hmm, I could add an intermediary helper in ws::Display for this one line, but I\u0027d need to do something else here for the DisplayManager::mirrors_ PlatformDisplay objects. WDYT?",
+      "parentUuid": "60cd6b81_fb4712e4",
+      "revId": "7db110100b1176efdfba0e2fea49d3716f960902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d478b133_c18a14e4",
         "filename": "services/ui/ws/display_manager.h",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2017-11-21T19:11:47Z",
       "side": 1,
       "message": "This should probably be named something like OnWMSurfaceActivation(). Although WM is kind of specific to Chrome OS case so maybe something more general?",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 31
+      },
+      "revId": "7db110100b1176efdfba0e2fea49d3716f960902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce38a60_2b7958ac",
+        "filename": "services/ui/ws/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-28T18:51:57Z",
+      "side": 1,
+      "message": "I\u0027m really not sure what would be better, but I\u0027ll rename this as you wish.",
+      "parentUuid": "d478b133_c18a14e4",
       "range": {
         "startLine": 116,
         "startChar": 7,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "48e4c846_832c63ff",
+        "filename": "services/ui/ws/frame_generator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-28T18:51:57Z",
+      "side": 1,
+      "message": "Done (but maybe SetWindowManagerSurfaceInfo would be appropriate?)",
+      "parentUuid": "1d34eab5_4b5c7fb8",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "7db110100b1176efdfba0e2fea49d3716f960902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2858a4f4_2a362d6e",
         "filename": "services/ui/ws/platform_display.h",
         "patchSetId": 4
@@ -93,6 +177,24 @@
       "writtenOn": "2017-11-21T19:11:47Z",
       "side": 1,
       "message": "It\u0027s probably worth thinking about what this API will look like for unified mode too. I think the Create() was mostly to inject test instances, and we also need to think (and possible rewrite) a lot of WS tests surrounding display management stuff.",
+      "revId": "7db110100b1176efdfba0e2fea49d3716f960902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2b6e00_b0f74763",
+        "filename": "services/ui/ws/platform_display.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-28T18:51:57Z",
+      "side": 1,
+      "message": "Yeah, unified may need to pass the sub-bounds of the unified display that this display would be mirroring here. I\u0027m not sure exactly how that will affect testing, I haven\u0027t looked closely enough there. What tests are you thinking that will need to be rewritten?",
+      "parentUuid": "2858a4f4_2a362d6e",
       "revId": "7db110100b1176efdfba0e2fea49d3716f960902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
