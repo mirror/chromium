@@ -69,6 +69,7 @@ ChromeSigninClient::ChromeSigninClient(
     : OAuth2TokenService::Consumer("chrome_signin_client"),
       profile_(profile),
       signin_error_controller_(signin_error_controller),
+      account_consistency_mode_manager_(profile),
       weak_ptr_factory_(this) {
   signin_error_controller_->AddObserver(this);
 #if !defined(OS_CHROMEOS)
@@ -461,6 +462,10 @@ void ChromeSigninClient::AfterCredentialsCopied() {
     // the new profile soon.
     should_display_user_manager_ = false;
   }
+}
+
+void ChromeSigninClient::SetReadyForDiceMigration(bool is_ready) {
+  account_consistency_mode_manager_.SetReadyForDiceMigration(is_ready);
 }
 
 void ChromeSigninClient::OnCloseBrowsersSuccess(
