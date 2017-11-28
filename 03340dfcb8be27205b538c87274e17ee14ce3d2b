@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f8abb2f_db1ca2be",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf320c87_ebf7e2bf",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57737de2_b5895921",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10edb2e_46790ed0",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57737de2_b5895921",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7142e20d_8624efc3",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ce7c01e_22a71e47",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb38549c_8edeff31",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-28T01:59:08Z",
       "side": 1,
       "message": "nit: prefix with _ (same with other helpers below that are missing it)",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be3a7a9_2c0af01c",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "What functions do you consider helpers? everything but main?",
+      "parentUuid": "eb38549c_8edeff31",
       "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "61044003_0c4bb9ca",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f404cac6_cdc495d8",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9867dd87_68c2f448",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cd5adf_880c1873",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9867dd87_68c2f448",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ee535cd3_8e655472",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8a7178f_c2bafc36",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "328bf74b_ccf9c281",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20122cbc_26f52919",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "328bf74b_ccf9c281",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "996b24f7_f4858dfe",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "Where is this order, being referred to?",
+      "parentUuid": "ed33d571_66d2d81e",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d08ae4a4_3e902498",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 5
@@ -169,6 +331,24 @@
       "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f47c0c1_31419beb",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "I dont think it would matter either way since the variable parts of the args only change when apk path is set. But I guarded it anyways.",
+      "parentUuid": "d08ae4a4_3e902498",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "23eefc57_50c8becd",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59573bbe_b608ab07",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f209db70_e44b5e06",
         "filename": "build/config/android/internal_rules.gni",
         "patchSetId": 5
@@ -203,6 +401,24 @@
       "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e4773f_99d61b09",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T15:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f209db70_e44b5e06",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
