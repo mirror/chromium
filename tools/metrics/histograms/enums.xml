@@ -24423,7 +24423,6 @@ from previous Chrome versions.
       label="disable-infobar-for-protected-media-identifier"/>
   <int value="-1875383510" label="UseGoogleLocalNtp:disabled"/>
   <int value="-1874908826" label="enable-instant-search-clicks"/>
-  <int value="-1874141108" label="NewOmniboxAnswerTypes:enabled"/>
   <int value="-1872989945" label="enable-webview-based-signin"/>
   <int value="-1872867546" label="EnumerateAudioDevices:disabled"/>
   <int value="-1871185948" label="VrLaunchIntents:disabled"/>
@@ -24505,7 +24504,6 @@ from previous Chrome versions.
   <int value="-1654344175" label="disable-extension-info-dialog"/>
   <int value="-1653838003" label="PauseBackgroundTabs:enabled"/>
   <int value="-1649778035" label="disable-clear-browsing-data-counters"/>
-  <int value="-1648216169" label="NewOmniboxAnswerTypes:disabled"/>
   <int value="-1634878515" label="ChromeHomeModernLayout:enabled"/>
   <int value="-1634154256" label="ZeroSuggestRedirectToChrome:enabled"/>
   <int value="-1633586675" label="TabModalJsDialog:enabled"/>
