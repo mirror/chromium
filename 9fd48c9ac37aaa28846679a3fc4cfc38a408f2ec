@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "421ac237_efbe4625",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-28T20:53:07Z",
+      "side": 1,
+      "message": "Yeah, you can totally just declare it here and define it in the .cc:\n\n  class RefCountedScopedFd;\n  scoped_refptr\u003cRefCountedScopedFd\u003e expiration_fd_;\n\nThe requirement for fully defining a class in the .h is only so that you can know the size of the structure. In this case, since you\u0027re only storing a scoped_refptr, it only needs to store a pointer to RefCountedScopedFd, which is sizeof(void*), regardless of the class.",
+      "parentUuid": "5759d71d_32871826",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "062828f3_a529e5fe",
         "filename": "components/arc/timer/arc_timer.h",
         "patchSetId": 13
