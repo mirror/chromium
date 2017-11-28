@@ -19,6 +19,7 @@ import static org.chromium.chrome.browser.download.DownloadNotificationService2.
 import static org.chromium.chrome.browser.download.DownloadNotificationService2.EXTRA_NOTIFICATION_BUNDLE_ICON_ID;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
@@ -102,8 +103,13 @@ public final class DownloadNotificationFactory {
                 Intent cancelIntent = buildActionIntent(context, ACTION_DOWNLOAD_CANCEL,
                         downloadUpdate.getContentId(), downloadUpdate.getIsOffTheRecord());
 
+                @SuppressWarnings("deprecation")
+                int priority = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                        ? NotificationManager.IMPORTANCE_HIGH
+                        : Notification.PRIORITY_HIGH;
+
                 builder.setOngoing(true)
-                        .setPriority(Notification.PRIORITY_HIGH)
+                        .setPriority(priority)
                         .setAutoCancel(false)
                         .setLargeIcon(downloadUpdate.getIcon())
                         .addAction(R.drawable.ic_pause_white_24dp,
