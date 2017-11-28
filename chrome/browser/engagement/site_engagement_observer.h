@@ -32,7 +32,7 @@ class SiteEngagementObserver {
 
   SiteEngagementObserver();
 
-  ~SiteEngagementObserver();
+  virtual ~SiteEngagementObserver();
 
   // Returns the site engagement service which this object is observing.
   SiteEngagementService* GetSiteEngagementService() const;
