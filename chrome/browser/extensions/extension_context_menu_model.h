@@ -117,11 +117,11 @@ class ExtensionContextMenuModel : public ui::SimpleMenuModel,
   // it has one, otherwise NULL).
   ExtensionAction* extension_action_;
 
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
 
-  Profile* profile_;
+  Profile* const profile_;  // Never nullptr.
 
-  // The delegate which handles the 'inspect popup' menu command (or NULL).
+  // The delegate that handles the 'inspect popup' menu command (never nullptr).
   PopupDelegate* delegate_;
 
   // The type of extension action to which this context menu is attached.

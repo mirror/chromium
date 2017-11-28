@@ -47,7 +47,7 @@ bool HaveAllExtensionRenderFrameHostsFinishedLoading(ProcessManager* manager) {
 
 ChromeExtensionTestNotificationObserver::
     ChromeExtensionTestNotificationObserver(Browser* browser)
-    : ExtensionTestNotificationObserver(browser ? browser->profile() : nullptr),
+    : ExtensionTestNotificationObserver(browser->profile()),
       browser_(browser) {}
 
 ChromeExtensionTestNotificationObserver::
@@ -59,12 +59,7 @@ ChromeExtensionTestNotificationObserver::
 
 content::BrowserContext*
 ChromeExtensionTestNotificationObserver::GetBrowserContext() {
-  if (!context_) {
-    if (browser_)
-      context_ = browser_->profile();
-    else
-      context_ = ProfileManager::GetActiveUserProfile();
-  }
+  DCHECK(context_);
   return context_;
 }
 
