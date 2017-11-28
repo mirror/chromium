@@ -169,6 +169,24 @@
       "revId": "50d14eb1c07355577da639af64ac077f78254314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1d6eac_e707a8d4",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-11-28T20:26:09Z",
+      "side": 1,
+      "message": "L544 is not reached when InZeroSuggestPersonalizedFieldTrial returns true. Note the `!` in front of InZeroSuggestPersonalizedFieldTrial on L542.",
+      "parentUuid": "22d5dee5_72f49622",
+      "revId": "50d14eb1c07355577da639af64ac077f78254314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
