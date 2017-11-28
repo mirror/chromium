@@ -24,6 +24,8 @@ struct BLINK_COMMON_EXPORT
     return blink::MessagePortChannel::ReleaseHandles(input.ports);
   }
 
+  static base::span<const uint8_t> stack_id(blink::TransferableMessage& input);
+
   static bool Read(blink::mojom::TransferableMessage::DataView data,
                    blink::TransferableMessage* out);
 };

@@ -24,6 +24,8 @@ struct BLINK_COMMON_EXPORT TransferableMessage : public CloneableMessage {
 
   // Any ports being transfered as part of this message.
   std::vector<MessagePortChannel> ports;
+
+  std::vector<uint8_t> stack_id;
 };
 
 }  // namespace blink

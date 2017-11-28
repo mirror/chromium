@@ -9,6 +9,7 @@
 #include "core/CoreExport.h"
 #include "core/dom/BlinkCloneableMessage.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "v8/include/v8-inspector.h"
 
 namespace blink {
 
@@ -21,6 +22,8 @@ struct CORE_EXPORT BlinkTransferableMessage : BlinkCloneableMessage {
   ~BlinkTransferableMessage();
 
   Vector<MessagePortChannel> ports;
+
+  v8_inspector::V8StackTraceId stack_id;
 };
 
 }  // namespace blink
