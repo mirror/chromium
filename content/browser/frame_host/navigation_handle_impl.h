@@ -148,7 +148,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   const net::HttpResponseHeaders* GetResponseHeaders() override;
   net::HttpResponseInfo::ConnectionInfo GetConnectionInfo() override;
   const base::Optional<net::SSLInfo>& GetSSLInfo() override;
-  bool ShouldSSLErrorsBeFatal() override;
   void RegisterThrottleForTesting(
       std::unique_ptr<NavigationThrottle> navigation_throttle) override;
   NavigationThrottle::ThrottleCheckResult CallWillStartRequestForTesting(
@@ -313,7 +312,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // cancel the navigation (with a custom error code and/or custom error page
   // HTML) or let the failure proceed as normal.
   void WillFailRequest(base::Optional<net::SSLInfo> ssl_info,
-                       bool should_ssl_errors_be_fatal,
                        const ThrottleChecksFinishedCallback& callback);
 
   // Called when the URLRequest has delivered response headers and metadata.
@@ -497,7 +495,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   scoped_refptr<net::HttpResponseHeaders> response_headers_;
   net::HttpResponseInfo::ConnectionInfo connection_info_;
   base::Optional<net::SSLInfo> ssl_info_;
-  bool should_ssl_errors_be_fatal_;
 
   // The original url of the navigation. This may differ from |url_| if the
   // navigation encounters redirects.

@@ -78,11 +78,9 @@ void TestNavigationURLLoaderDelegate::OnResponseStarted(
 void TestNavigationURLLoaderDelegate::OnRequestFailed(
     bool in_cache,
     int net_error,
-    const base::Optional<net::SSLInfo>& ssl_info,
-    bool should_ssl_errors_be_fatal) {
+    const base::Optional<net::SSLInfo>& ssl_info) {
   net_error_ = net_error;
   ssl_info_ = ssl_info;
-  should_ssl_errors_be_fatal_ = should_ssl_errors_be_fatal;
   if (request_failed_)
     request_failed_->Quit();
 }

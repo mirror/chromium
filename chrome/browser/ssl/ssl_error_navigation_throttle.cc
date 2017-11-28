@@ -52,8 +52,7 @@ SSLErrorNavigationThrottle::WillFailRequest() {
       base::BindOnce(
           std::move(handle_ssl_error_callback_), handle->GetWebContents(),
           net::MapCertStatusToNetError(cert_status),
-          handle->GetSSLInfo().value(), handle->GetURL(),
-          handle->ShouldSSLErrorsBeFatal(), false,
+          handle->GetSSLInfo().value(), handle->GetURL(), false,
           std::move(ssl_cert_reporter_),
           base::Callback<void(content::CertificateRequestResultType)>(),
           base::BindOnce(&SSLErrorNavigationThrottle::ShowInterstitial,
