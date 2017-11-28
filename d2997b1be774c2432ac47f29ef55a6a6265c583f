@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "56b95cf5_93b0eef3",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T09:03:05Z",
+      "side": 1,
+      "message": "The running kernel actually doesn\u0027t matter. It\u0027s the sysroot or system headers used in the build environment that matters. I\u0027ll mention it on the bug.",
+      "parentUuid": "5fb2ee64_8baa5d49",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98d3baa5_6d98e1b9",
         "filename": "base/memory/shared_memory_posix.cc",
         "patchSetId": 18

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b21eaa2_15e87527",
+        "filename": "base/memory/shared_memory_helper.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T09:03:05Z",
+      "side": 1,
+      "message": "Comment is out of date now.",
+      "revId": "918d345a4e297816fe35aa64ca1fce3418ea4c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1552da6_7bc2103c",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T09:03:05Z",
+      "side": 1,
+      "message": "The braces can go now, like lines 149 and 152.",
+      "revId": "918d345a4e297816fe35aa64ca1fce3418ea4c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433602c6_d8ef96a6",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T09:03:05Z",
+      "side": 1,
+      "message": "Thanks, but on a second reading, I realized the comments in this file for memfd_create are still not 100% correct. \"__NR_memfd_create\" availability on the machine that builds the test makes no guarantees about the availability of the memfd_create syscall on the machine that runs the test. \n\nMaybe just change \"is available\" to \"is most likely available\" ?",
+      "revId": "918d345a4e297816fe35aa64ca1fce3418ea4c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
