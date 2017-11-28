@@ -1,8 +1,8 @@
-layer at (0,0) size 980x735
-  LayoutView at (0,0) size 980x735
-layer at (0,0) size 980x735
-  LayoutBlockFlow {HTML} at (0,0) size 980x735
-    LayoutBlockFlow {BODY} at (8,8) size 964x719
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  LayoutBlockFlow {HTML} at (0,0) size 800x600
+    LayoutBlockFlow {BODY} at (8,8) size 784x584
       LayoutText {#text} at (0,0) size 242x19
         text run at (0,0) width 242: "Could not load the requested resource."
       LayoutBR {BR} at (242,15) size 0x0

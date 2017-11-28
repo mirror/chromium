@@ -5,7 +5,7 @@
 #import "content/shell/browser/renderer_host/shell_render_widget_host_view_mac_delegate.h"
 
 #include "base/command_line.h"
-#include "content/shell/common/layout_test/layout_test_switches.h"
+#include "content/public/common/content_switches.h"
 
 @interface ShellRenderWidgetHostViewMacDelegate () {
   BOOL drop_events_;

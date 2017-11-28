@@ -779,6 +779,10 @@ const char kReducedReferrerGranularity[] =
 // Handles frame scrolls via the root RenderLayer instead of the FrameView.
 const char kRootLayerScrolls[]              = "root-layer-scrolls";
 
+// Request the render trees of pages to be dumped as text once they have
+// finished loading.
+const char kRunLayoutTest[] = "run-layout-test";
+
 // Causes the process to run as a sandbox IPC subprocess.
 const char kSandboxIPCProcess[]             = "sandbox-ipc";
 
