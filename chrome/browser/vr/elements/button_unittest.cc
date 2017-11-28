@@ -18,7 +18,7 @@
 namespace vr {
 
 TEST(Button, HoverTest) {
-  Button button(base::Callback<void()>(), vector_icons::kMicrophoneIcon);
+  Button button(base::Callback<void()>(), vector_icons::kMicIcon);
   button.SetSize(1.0f, 1.0f);
   button.set_hover_offset(0.5f);
 
