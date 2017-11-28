@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "39d5fc0c_99b2bef6",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T14:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11de8d59_fc3cca60",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1058404d_d86ab6b3",
         "filename": "content/renderer/media/webrtc/processed_local_audio_source.cc",
         "patchSetId": 7
@@ -122,6 +140,24 @@
       "revId": "ee0a943887739a59bead4c135a86e6077da11949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c3faab_196a1d5c",
+        "filename": "content/renderer/media/webrtc/processed_local_audio_source.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T14:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3997607f_ae1a299f",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +227,24 @@
       "revId": "ee0a943887739a59bead4c135a86e6077da11949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75073444_06f59503",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T14:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c92036a_3d2ffb79",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -294,6 +348,24 @@
       "side": 1,
       "message": "Right. OK, probably best to try to be consistent with the Chrome naming. But other places in this CL uses reduction. Should that perhaps change then?",
       "parentUuid": "71619c73_641798fb",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb370750_430b825f",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T14:13:04Z",
+      "side": 1,
+      "message": "Hmm, although... There _is_ a point at which we go from talking about Noise Suppression (in general) to the \"Ambient noise reduction\" flag on macOS. I think keeping the latter name on stuff specifically in AudioManagerMac is alright. I shouldn\u0027t conflate those two things here by talking about AMBIENT_NOISE_SUPPRESSION, though (rather just NOISE_SUPPRESSION).",
+      "parentUuid": "cbe4a14c_8b35d136",
       "revId": "ee0a943887739a59bead4c135a86e6077da11949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
