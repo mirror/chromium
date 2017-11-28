@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca8eabde_7e483944",
+        "filename": "ui/gfx/gpu_fence_passthrough.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T16:19:35Z",
+      "side": 1,
+      "message": "I think what you describe as Passthrough here should just be the standard fence implementation (GpuFenceImpl). A local GL context is not something that typically exist in chromium and having it is an exception to the normal use-case.\n\nThe use of a local context is IMO basically the same as passing the GpuFence to a different process with access to GL. That can be done using GetGpuFenceHandle()+sendmsg+GLFence::CreateFromGpuFenceHandle() so I was expecting the same for local GL except no sendmsg of course.",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "d5e35b77dad3970ca0804fd653cea335ad909ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
