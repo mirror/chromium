@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74e4292f_35f6d86e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-28T07:32:29Z",
+      "side": 1,
+      "message": "Yep, I think we want this to move back.\n\nCould you briefly list up all the remaining TODOs here, so that the list\u0027s also tracked in the issue after submitted?\n\n(Some TODOs could also be linked to crbug.com/788604)",
+      "revId": "931885146b9b86e8597a32d940e16b4d66b563f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4dce43b_801b0da7",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-28T07:32:29Z",
+      "side": 1,
+      "message": "(could this line fit into the previous line?)",
+      "revId": "931885146b9b86e8597a32d940e16b4d66b563f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6878e83c_e6feee04",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-28T07:32:29Z",
+      "side": 1,
+      "message": "Yeah we can likely remove this.",
+      "revId": "931885146b9b86e8597a32d940e16b4d66b563f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
