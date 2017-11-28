@@ -478,7 +478,7 @@ public class VrShellImpl
 
             @Override
             public void onDenied() {}
-        }, UiUnsupportedMode.ANDROID_PERMISSION_NEEDED);
+        }, UiUnsupportedMode.VOICE_INPUT_NEEDS_ANDROID_PERMISSION);
     }
 
     // Exits CCT, returning to the app that opened it.

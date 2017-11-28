@@ -12,8 +12,8 @@ UiUnsupportedMode GetReasonForPrompt(ModalPromptType prompt) {
   switch (prompt) {
     case kModalPromptTypeExitVRForSiteInfo:
       return UiUnsupportedMode::kUnhandledPageInfo;
-    case kModalPromptTypeExitVRForAudioPermission:
-      return UiUnsupportedMode::kAndroidPermissionNeeded;
+    case kModalPromptTypeExitVRForVoiceInputAudioPermission:
+      return UiUnsupportedMode::kVoiceInputNeedsAndroidPermission;
     case kModalPromptTypeNone:
       return UiUnsupportedMode::kCount;
   }
