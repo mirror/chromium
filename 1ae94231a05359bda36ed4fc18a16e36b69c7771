@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "bc773c1d_7732852c",
+        "filename": "chrome/common/crash_keys.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-28T00:01:36Z",
+      "side": 1,
+      "message": "Does this need to be added in either of these two locations also?",
+      "revId": "1ae94231a05359bda36ed4fc18a16e36b69c7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e63d6222_73af27df",
         "filename": "media/cdm/cdm_module.cc",
         "patchSetId": 1
