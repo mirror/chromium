@@ -1355,7 +1355,118 @@ UI.CheckboxLabel = class extends HTMLLabelElement {
   }
 };
 
+/**
+ * @extends {HTMLElement}
+ */
+UI.Link = class extends HTMLElement {
+  constructor() {
+    super();
+
+    this.style.setProperty('display', 'inline');
+    UI.ARIAUtils.markAsLink(this);
+    this.tabIndex = 0;
+    this.setAttribute('target', '_blank');
+    this._clickable = true;
+
+    this._onClick = event => {
+      event.consume(true);
+      InspectorFrontendHost.openInNewTab(/** @type {string} */ (this._href));
+    };
+    this._onKeyDown = event => {
+      if (event.key !== ' ' && !isEnterKey(event))
+        return;
+      event.consume(true);
+      InspectorFrontendHost.openInNewTab(/** @type {string} */ (this._href));
+    };
+  }
+
+  /**
+   * @return {!Array<string>}
+   */
+  static get observedAttributes() {
+    return ['href', 'no-click'];
+  }
+
+  /**
+   * @param {string} attr
+   * @param {string} oldValue
+   * @param {string} newValue
+   */
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if (attr === 'no-click') {
+      this._clickable = !newValue;
+      this._updateClick();
+      return;
+    }
+
+    var href = newValue;
+    if (newValue.trim().toLowerCase().startsWith('javascript:'))
+      href = null;
+    if (Common.ParsedURL.isRelativeURL(newValue))
+      href = null;
+    this.classList.toggle('valid-link', href !== null);
+
+    this._href = href;
+    this.title = newValue;
+    this._updateClick();
+  }
+
+  _updateClick() {
+    if (this._href !== null && this._clickable) {
+      this.addEventListener('click', this._onClick, false);
+      this.addEventListener('keydown', this._onKeyDown, false);
+      this[UI._externalLinkSymbol] = true;
+      this.style.setProperty('cursor', 'pointer');
+    } else {
+      this.removeEventListener('click', this._onClick, false);
+      this.removeEventListener('keydown', this._onKeyDown, false);
+      delete this[UI._externalLinkSymbol];
+      this.style.removeProperty('cursor');
+    }
+  }
+};
+
+
 (function() {
+  /**
+   * @param {string} alignItems
+   * @param {string} justifyContent
+   * @param {string} direciton
+   * @return {function(new: !HTMLElement)}
+   */
+  function box(alignItems, justifyContent, direction) {
+    /**
+     * @extends {HTMLElement}
+     */
+    return class extends HTMLElement {
+      constructor() {
+        super();
+        this.style.setProperty('align-items', alignItems);
+        this.style.setProperty('justify-content', justifyContent);
+        this.style.setProperty('flex-direction', direction);
+        this.style.setProperty('display', 'flex');
+      }
+
+      static get observedAttributes() {
+        return ['flex', 'padding', 'padding-top', 'padding-bottom', 'padding-left', 'padding-right',
+                'margin', 'margin-top', 'margin-bottom', 'margin-left', 'margin-right', 'overflow'];
+      }
+
+      attributeChangedCallback(attr, oldValue, newValue) {
+        this.style.setProperty(attr, newValue);
+      }
+    };
+  }
+
+  window.customElements.define('vbox-start', box('flex-start', 'flex-start', 'column'));
+  window.customElements.define('vbox-stretch', box('stretch', 'flex-start', 'column'));
+  window.customElements.define('vbox-center', box('center', 'flex-start', 'column'));
+  window.customElements.define('center-box', box('center', 'center', 'column'));
+  window.customElements.define('hbox-start', box('flex-start', 'flex-start', 'row'));
+  window.customElements.define('hbox-stretch', box('stretch', 'flex-start', 'row'));
+  window.customElements.define('hbox-center', box('center', 'flex-start', 'row'));
+  window.customElements.define('dt-link', UI.Link);
+  
   UI.registerCustomElement('button', 'text-button', {
     /**
      * @this {Element}
@@ -1933,41 +2044,7 @@ UI.ThemeSupport.ColorUsage = {
 UI.createExternalLink = function(url, linkText, className, preventClick) {
   if (!linkText)
     linkText = url;
-
-  var a = createElementWithClass('span', className);
-  UI.ARIAUtils.markAsLink(a);
-  a.tabIndex = 0;
-
-  var href = url;
-  if (url.trim().toLowerCase().startsWith('javascript:'))
-    href = null;
-  if (Common.ParsedURL.isRelativeURL(url))
-    href = null;
-  if (href !== null) {
-    a.href = href;
-    a.classList.add('devtools-link');
-    if (!preventClick) {
-      a.addEventListener('click', event => {
-        event.consume(true);
-        InspectorFrontendHost.openInNewTab(/** @type {string} */ (href));
-      }, false);
-      a.addEventListener('keydown', event => {
-        if (event.key !== ' ' && !isEnterKey(event))
-          return;
-        event.consume(true);
-        InspectorFrontendHost.openInNewTab(/** @type {string} */ (href));
-      }, false);
-    } else {
-      a.classList.add('devtools-link-prevent-click');
-    }
-    a[UI._externalLinkSymbol] = true;
-  }
-  if (linkText !== url)
-    a.title = url;
-  a.textContent = linkText.trimMiddle(UI.MaxLengthForDisplayedURLs);
-  a.setAttribute('target', '_blank');
-
-  return a;
+  return UI.cachedHtml`<dt-link href='${url}' ${preventClick ? 'no-click' : ''} class='${className || ''}'>${linkText.trimMiddle(UI.MaxLengthForDisplayedURLs)}</dt-link>`;
 };
 
 UI._externalLinkSymbol = Symbol('UI._externalLink');
@@ -1987,12 +2064,12 @@ UI.ExternaLinkContextMenuProvider = class {
     var targetNode = /** @type {!Node} */ (target);
     while (targetNode && !targetNode[UI._externalLinkSymbol])
       targetNode = targetNode.parentNodeOrShadowHost();
-    if (!targetNode || !targetNode.href)
+    if (!targetNode || !targetNode._href)
       return;
     contextMenu.revealSection().appendItem(
-        UI.openLinkExternallyLabel(), () => InspectorFrontendHost.openInNewTab(targetNode.href));
+        UI.openLinkExternallyLabel(), () => InspectorFrontendHost.openInNewTab(targetNode._href));
     contextMenu.revealSection().appendItem(
-        UI.copyLinkAddressLabel(), () => InspectorFrontendHost.copyText(targetNode.href));
+        UI.copyLinkAddressLabel(), () => InspectorFrontendHost.copyText(targetNode._href));
   }
 };
 
