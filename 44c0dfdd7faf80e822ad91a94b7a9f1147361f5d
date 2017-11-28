@@ -22,6 +22,30 @@
       "revId": "44c0dfdd7faf80e822ad91a94b7a9f1147361f5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818b44b2_3e68ea86",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-28T17:28:37Z",
+      "side": 1,
+      "message": "The closest thing I know of is this:\nhttps://material.io/guidelines/components/buttons.html#buttons-flat-buttons\n\nI interpret this to be:\ndefault: black with transparent background\nhover: black with 12% #999999 background\nactive: black with 40% #999999 background\n\nBut that change seems more extreme.",
+      "parentUuid": "f83450b4_7e5c07c2",
+      "range": {
+        "startLine": 91,
+        "startChar": 15,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "44c0dfdd7faf80e822ad91a94b7a9f1147361f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
