@@ -22,6 +22,30 @@
       "revId": "e3f85dd7ca307de9b54f413793101e88134a26f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e79461_758e9538",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-28T23:17:24Z",
+      "side": 1,
+      "message": "For main frames - yes.  The LocalFrame is created as part of calling InitializeCoreFrame() on the WebLocalFrameImpl, and this (ChromeContentRendererClient::RenderFrameCreated()) is called from RenderFrameImpl::Initialize().\n\nMain frames can be created in one of two ways:\n1) Together with a new RenderViewImpl in its constructor.  That calls RenderFrameImpl::CreateMainFrame(), which does WebLocalFrameImpl::CreateMainFrame(), which calls InitializeCoreFrame() and creates the LocalFrame().  After calling CreateMainFrame(), RenderViewImpl::RenderViewImpl() does main_render_frame_-\u003eInitialize() which dispatches the RenderFrameCreated(), so this case is ok.\n\n2) As a provisional frame for a remote-to-local navigation (that\u0027s the case this CL is fixing), from RenderFrameImpl::CreateFrame().  That first calls WebLocalFrame::CreateProvisional(), which calls InitializeCoreFrame(), and then it calls render_frame-\u003eInitialize() which will dispatch RenderFrameCreated(), so that should be ok as well.",
+      "parentUuid": "a0d23e9b_36c04610",
+      "range": {
+        "startLine": 635,
+        "startChar": 6,
+        "endLine": 635,
+        "endChar": 33
+      },
+      "revId": "e3f85dd7ca307de9b54f413793101e88134a26f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
