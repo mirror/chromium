@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad02199_d725090e",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-11-28T21:58:06Z",
+      "side": 1,
+      "message": "Update the corresponding string here as well:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/667961/11/chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc#1483",
+      "revId": "8fadbefd6c19f2de3725e2ef4cc6d12d2605aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
