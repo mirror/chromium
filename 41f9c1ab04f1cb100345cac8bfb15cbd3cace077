@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "02c95a4b_59fd1830",
+        "filename": "base/android/java/src/org/chromium/base/metrics/StatisticsRecorderAndroid.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T23:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1c0581c_351854e2",
+      "revId": "41f9c1ab04f1cb100345cac8bfb15cbd3cace077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65c6510f_fde40ffa",
         "filename": "base/android/java/src/org/chromium/base/metrics/StatisticsRecorderAndroid.java",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6d045836_e2e7563d",
+        "filename": "base/android/java/src/org/chromium/base/metrics/StatisticsRecorderAndroid.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T23:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65c6510f_fde40ffa",
+      "range": {
+        "startLine": 27,
+        "startChar": 46,
+        "endLine": 27,
+        "endChar": 65
+      },
+      "revId": "41f9c1ab04f1cb100345cac8bfb15cbd3cace077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f2f680c_e83047df",
         "filename": "base/metrics/histogram_base.h",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "41f9c1ab04f1cb100345cac8bfb15cbd3cace077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8129f53_26f4918d",
+        "filename": "base/metrics/histogram_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T23:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f2f680c_e83047df",
+      "revId": "41f9c1ab04f1cb100345cac8bfb15cbd3cace077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
