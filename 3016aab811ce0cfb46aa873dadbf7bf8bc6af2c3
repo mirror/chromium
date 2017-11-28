@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "319bc0a6_f0739043",
+        "filename": "base/process/process_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T19:28:03Z",
+      "side": 1,
+      "message": "A question that occurred to me (after I clicked send of course): why DebugBreak() rather than CHECK(false)? I guess the idea is to try to trigger a crash as quickly as possible?",
+      "revId": "3016aab811ce0cfb46aa873dadbf7bf8bc6af2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
