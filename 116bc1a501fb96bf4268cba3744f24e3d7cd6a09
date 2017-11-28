@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "3394d598_f2f84c88",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-28T10:36:43Z",
+      "side": 1,
+      "message": "Out of scope for this CL, but the ViewController should not have access to the mediator.\nThe coordinator should be the one having reference to the mediators and pass them as protocol to the VC (or the VC should communicate with the coordinator and the coordinator forwards to the mediator).",
+      "range": {
+        "startLine": 835,
+        "startChar": 7,
+        "endLine": 835,
+        "endChar": 31
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce35ac6e_f808939a",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.h",
         "patchSetId": 20
