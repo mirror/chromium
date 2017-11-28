@@ -140,6 +140,23 @@
       "revId": "c415b97637c6706b8ded95f2bca73df6cd4313a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427ddbe7_a6a5a9bf",
+        "filename": "chrome/browser/vr/ui_unsupported_mode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-28T15:06:26Z",
+      "side": 1,
+      "message": "Thanks for making this change. Do you mind replace VoiceInput with VoiceSearch in this CL to be more accurate? We don\u0027t provide general voice input through this feature.",
+      "revId": "c415b97637c6706b8ded95f2bca73df6cd4313a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
