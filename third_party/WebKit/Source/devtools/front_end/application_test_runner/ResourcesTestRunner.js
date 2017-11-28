@@ -7,6 +7,20 @@
  * @suppress {accessControls}
  */
 
+/**
+ * In theory, the browser should reset its state between tests, but in practice
+ * application panel tests suffer a lot of flakiness because it resources such as
+ * IndexedDB don't get properly cleared between tests.
+ *
+ * This is a temporary solution to fix flakiness by resetting all storages at
+ * the start of application panel tests. The better solution would be to clear these
+ * storages between every test in the back-end.
+ */
+(function resetState() {
+  var clearStorageView = new Resources.ClearStorageView();
+  clearStorageView._clear();
+})();
+
 ApplicationTestRunner.createWebSQLDatabase = function(name) {
   return TestRunner.evaluateInPageAsync(`_openWebSQLDatabase("${name}")`);
 };
