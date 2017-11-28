@@ -78,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "bf51d1b3_3fea589a",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-28T15:32:39Z",
+      "side": 1,
+      "message": "At the moment we have a lot of MEI specific tweaks that would make it hard to abstract. If we change that in the future then yes I would try and pull out the trie walking code.",
+      "parentUuid": "346a353a_489a879b",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf6dc5e5_64127319",
         "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
         "patchSetId": 12
@@ -95,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "d8fee63a_8efc5c65",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-28T15:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf6dc5e5_64127319",
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba999159_518fd970",
         "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
         "patchSetId": 12
@@ -109,6 +151,24 @@
       "revId": "74517cf69111f0341306d5c253163c8dc92af854",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08548c26_19226eb5",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-28T15:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba999159_518fd970",
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -132,6 +192,30 @@
       "revId": "74517cf69111f0341306d5c253163c8dc92af854",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036c03cc_0587329c",
+        "filename": "net/base/huffman_decoder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-28T15:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f26bf3fc_5a5c86f3",
+      "range": {
+        "startLine": 23,
+        "startChar": 40,
+        "endLine": 23,
+        "endChar": 41
+      },
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +262,54 @@
       "revId": "74517cf69111f0341306d5c253163c8dc92af854",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c78f74_67e6a3af",
+        "filename": "net/base/huffman_decoder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-28T15:32:39Z",
+      "side": 1,
+      "message": "I have added some documentation. I would like to pull out the trie-walking logic into this file and when I do that will add a lot more context to what these classes are used for.",
+      "parentUuid": "8b255493_fb38d1d2",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2637e1ed_d2405a5b",
+        "filename": "net/base/huffman_decoder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-28T15:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c451dae0_bb1d0b4c",
+      "range": {
+        "startLine": 24,
+        "startChar": 33,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
