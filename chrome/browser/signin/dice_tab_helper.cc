@@ -6,6 +6,7 @@
 
 #include "base/logging.h"
 #include "chrome/browser/signin/dice_tab_helper.h"
+#include "chrome/browser/signin/signin_util.h"
 #include "content/public/browser/navigation_handle.h"
 #include "google_apis/gaia/gaia_urls.h"
 
@@ -16,7 +17,7 @@ DiceTabHelper::DiceTabHelper(content::WebContents* web_contents)
       signin_access_point_(signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN),
       signin_reason_(signin_metrics::Reason::REASON_UNKNOWN_REASON),
       should_start_sync_after_web_signin_(true) {
-  DCHECK_EQ(GaiaUrls::GetInstance()->add_account_url(),
+  DCHECK_EQ(signin_util::GetGaiaAddAccountUrlForDice(),
             content::WebContentsObserver::web_contents()->GetVisibleURL());
 }
 

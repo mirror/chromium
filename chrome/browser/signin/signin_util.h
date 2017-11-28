@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_SIGNIN_SIGNIN_UTIL_H_
 #define CHROME_BROWSER_SIGNIN_SIGNIN_UTIL_H_
 
+#include "url/gurl.h"
+
 namespace signin_util {
 
 // Return whether the force sign in policy is enabled or not.
@@ -16,6 +18,9 @@ void SetForceSigninForTesting(bool enable);
 
 // Reset force sign in to uninitialized state for testing.
 void ResetForceSigninForTesting();
+
+// Returns the URL to be used to add an account when DICE is enabled.
+GURL GetGaiaAddAccountUrlForDice();
 
 }  // namespace signin_util
 
