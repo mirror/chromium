@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "4496b632_06d27bc1",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-28T18:02:32Z",
+      "side": 1,
+      "message": "Thank you for explaining the reason. Unfortunately I don\u0027t have suggestions. What are the alternative options? Maybe swizzling?",
+      "parentUuid": "905c4e6b_e07f41c3",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef7b1334_1a8bbf0f",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 18
