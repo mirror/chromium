@@ -22,6 +22,30 @@
       "revId": "a599a458d66a0fbe729e7cf946be0090af303d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b66be80_d137373f",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-28T23:26:13Z",
+      "side": 0,
+      "message": "I see, I mistakenly thought it referred to the hardcoded true. Added it back in.",
+      "parentUuid": "f0bef2a8_62397d1c",
+      "range": {
+        "startLine": 701,
+        "startChar": 2,
+        "endLine": 702,
+        "endChar": 12
+      },
+      "revId": "a599a458d66a0fbe729e7cf946be0090af303d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
