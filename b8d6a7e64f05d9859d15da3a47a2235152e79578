@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd6b9eea_8d0b6723",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-28T05:16:17Z",
+      "side": 1,
+      "message": "BTW, why do we have kNone in |old_range|?",
+      "revId": "b8d6a7e64f05d9859d15da3a47a2235152e79578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

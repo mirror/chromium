@@ -233,6 +233,24 @@
       "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc3ccd8_3997e305",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-28T05:16:17Z",
+      "side": 1,
+      "message": "Please upload all-in-one patch for reference. It is hard to judge the\nreason of returning HashSet\u003cLayoutObject*\u003e.",
+      "parentUuid": "4759a177_7358f5c8",
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
