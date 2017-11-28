@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "382cee6d_e861f5d2",
+        "filename": "components/autofill/content/renderer/form_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-28T23:09:22Z",
+      "side": 1,
+      "message": "My feeling that \"Successful submission\" in the function name is a little bit misleading, since it\u0027s not exactly what Password Manager considers to be successful submission (and there is additional check IsFormVisible in PasswordAutofillAgent that checks more than CanInferFormSubmitted). What do you think about naming observer event: OnFormDisappeared or something similar, it looks it covers all cases when FireSuccessfulFormSubmission is called. WDYT?",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 208,
+        "endChar": 32
+      },
+      "revId": "a9d82b53bb10c4c3a4f38704aad238a1f8b37bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8489d8eb_725d9432",
+        "filename": "components/autofill/content/renderer/form_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-28T23:09:22Z",
+      "side": 1,
+      "message": "This method is called in:\n1.Same navigation\n2.AJAX succeeded\n The current name is not correct (for legacy reasons method name had OnSameDocumentNavigation in name, but it was also incorrect). That\u0027s the good question what name should be. For example: FireSubmissionIfFormDisappear. WDYT?",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 40
+      },
+      "revId": "a9d82b53bb10c4c3a4f38704aad238a1f8b37bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

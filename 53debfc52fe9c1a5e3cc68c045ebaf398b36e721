@@ -50,6 +50,52 @@
       "revId": "53debfc52fe9c1a5e3cc68c045ebaf398b36e721",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d290e5b7_7a210e12",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-28T23:09:22Z",
+      "side": 1,
+      "message": "Nit: for (const auto\u0026 form_element : forms)",
+      "range": {
+        "startLine": 1348,
+        "startChar": 4,
+        "endLine": 1348,
+        "endChar": 45
+      },
+      "revId": "53debfc52fe9c1a5e3cc68c045ebaf398b36e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6feecbab_e25fbf91",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1877,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-28T23:09:22Z",
+      "side": 1,
+      "message": "Nit: Use DCHECK_EQ(ElementChangeSource::WILL_SEND_SUBMIT_EVENT, source)\nNow there are only 2 values possible values to ElementChnageSource, so in principle it doesn\u0027t make sense to have this if, but since it could be changed in future, it seems that DCHECK is better",
+      "range": {
+        "startLine": 1876,
+        "startChar": 2,
+        "endLine": 1877,
+        "endChar": 11
+      },
+      "revId": "53debfc52fe9c1a5e3cc68c045ebaf398b36e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
