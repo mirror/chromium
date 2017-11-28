@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7833d54d_95f663b1",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_background_auth_code_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-28T17:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8587c286_c51e82bd",
+      "range": {
+        "startLine": 121,
+        "startChar": 10,
+        "endLine": 121,
+        "endChar": 30
+      },
+      "revId": "5cd21df770b6a12330b494058c34e073ee030d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a216902_ffd81ccc",
         "filename": "chrome/browser/chromeos/arc/auth/arc_background_auth_code_fetcher.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-28T01:53:32Z",
       "side": 1,
       "message": "nit: missing \u0027\"\u0027 at the EoL.",
+      "revId": "5cd21df770b6a12330b494058c34e073ee030d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d00f5ac_5877e1c0",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_background_auth_code_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-28T17:27:49Z",
+      "side": 1,
+      "message": "Good catch!!",
+      "parentUuid": "2a216902_ffd81ccc",
       "revId": "5cd21df770b6a12330b494058c34e073ee030d31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
