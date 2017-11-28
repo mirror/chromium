@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82d5373b_15be6635",
+        "filename": "ui/wm/core/shadow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T00:30:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a4a8d1a_edada7ee",
+      "revId": "0e61c21c874c0a8a3071be2678d895326b700fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7109d96_7dba023e",
         "filename": "ui/wm/core/shadow.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "0e61c21c874c0a8a3071be2678d895326b700fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a069649_4b4a51be",
+        "filename": "ui/wm/core/shadow.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T00:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7109d96_7dba023e",
+      "revId": "0e61c21c874c0a8a3071be2678d895326b700fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
