@@ -34,6 +34,24 @@
       "revId": "b8d6a7e64f05d9859d15da3a47a2235152e79578",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583a18c1_5a7a34be",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-28T08:29:34Z",
+      "side": 1,
+      "message": "Thanks for explanation.",
+      "parentUuid": "0b7fb41f_43fe72f9",
+      "revId": "b8d6a7e64f05d9859d15da3a47a2235152e79578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

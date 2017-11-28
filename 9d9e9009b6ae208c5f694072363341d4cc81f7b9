@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17965a8d_c367c589",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-28T08:29:34Z",
+      "side": 1,
+      "message": "nit: s/ResetOldSelectedLayoutObjects/ResetOldSelectedLayoutObjects/",
+      "range": {
+        "startLine": 13,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 50
+      },
+      "revId": "9d9e9009b6ae208c5f694072363341d4cc81f7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
