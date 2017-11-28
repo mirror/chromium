@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b32d2ab_6f76f6d0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-28T19:39:29Z",
+      "side": 1,
+      "message": "function(*, exceptionDetails)",
+      "range": {
+        "startLine": 365,
+        "startChar": 12,
+        "endLine": 365,
+        "endChar": 20
+      },
+      "revId": "55f6adbeef407a0857594aaf66ca1e59b3f713a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fe23ce_674ddf6b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-28T19:39:29Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 510,
+        "startChar": 22,
+        "endLine": 510,
+        "endChar": 27
+      },
+      "revId": "55f6adbeef407a0857594aaf66ca1e59b3f713a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
