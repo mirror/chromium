@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68551907_e230b3a5",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T01:45:42Z",
+      "side": 1,
+      "message": "Mathieu: What\u0027s the Chrome-approved way to do this?  I assume it\u0027s not including a .cc file.",
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
