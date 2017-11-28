@@ -3425,8 +3425,6 @@ void WebContentsImpl::LoadStateChanged(
 void WebContentsImpl::DidGetResourceResponseStart(
   const ResourceRequestDetails& details) {
   SetNotWaitingForResponse();
-  controller_.ssl_manager()->DidStartResourceResponse(
-      details.url, details.has_certificate, details.ssl_cert_status);
 
   for (auto& observer : observers_)
     observer.DidGetResourceResponseStart(details);
@@ -3695,6 +3693,12 @@ void WebContentsImpl::DidRedirectNavigation(
 
 void WebContentsImpl::ReadyToCommitNavigation(
     NavigationHandle* navigation_handle) {
+  NavigationHandleImpl* nh_impl =
+      static_cast<NavigationHandleImpl*>(navigation_handle);
+  controller_.ssl_manager()->DidStartResourceResponse(
+      nh_impl->GetURL(), !!nh_impl->ssl_status().certificate,
+      nh_impl->ssl_status().cert_status);
+
   for (auto& observer : observers_)
     observer.ReadyToCommitNavigation(navigation_handle);
 }
