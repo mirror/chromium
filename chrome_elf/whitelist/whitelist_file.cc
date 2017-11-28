@@ -19,27 +19,27 @@
 namespace whitelist {
 namespace {
 
-// TODO(pennymac): update subdir and filename with final shared defines.
-constexpr wchar_t kFileSubdir[] =
-    L"\\ThirdPartyModuleList"
-#if defined(_WIN64)
-    L"64";
-#else
-    L"32";
-#endif
-constexpr wchar_t kFileName[] = L"\\dbfile";
-
 // No concern about concurrency control in chrome_elf.
 bool g_initialized = false;
 
 // This will hold a packed whitelist module array, read directly from a
-// component-update file during InitComponent().
-PackedWhitelistModule* g_module_array = nullptr;
-size_t g_module_array_size = 0;
+// data file during InitComponent().
+PackedWhitelistModule* g_wl_module_array = nullptr;
+size_t g_wl_module_array_size = 0;
 
-// NOTE: this "global" is only initialized once during InitComponent().
-// NOTE: this is wrapped in a function to prevent exit-time dtors.
-std::wstring& GetFilePath() {
+// This will hold a packed blacklist module array, read directly from a
+// data file during InitComponent().
+PackedWhitelistModule* g_bl_module_array = nullptr;
+size_t g_bl_module_array_size = 0;
+
+// NOTE: these "globals" are only initialized once during InitComponent().
+// NOTE: they are wrapped in a function to prevent exit-time dtors.
+std::wstring& GetWlFilePath() {
+  static std::wstring* const file_path = new std::wstring();
+  return *file_path;
+}
+
+std::wstring& GetBlFilePath() {
   static std::wstring* const file_path = new std::wstring();
   return *file_path;
 }
@@ -71,10 +71,12 @@ bool HashBinaryPredicate(const PackedWhitelistModule& lhs,
   return CompareHashes(lhs.basename_hash, rhs.basename_hash) < 0;
 }
 
-// Given a file opened for read, pull in the packed whitelist.
+// Given a file opened for read, pull in the packed list.
 //
 // - Returns kSuccess or kArraySizeZero on success.
-FileStatus ReadInArray(HANDLE file) {
+FileStatus ReadInArray(HANDLE file,
+                       size_t* array_size,
+                       PackedWhitelistModule** array_ptr) {
   PackedWhitelistMetadata metadata;
   DWORD bytes_read = 0;
 
@@ -88,41 +90,68 @@ FileStatus ReadInArray(HANDLE file) {
   if (metadata.version != PackedWhitelistVersion::kCurrent)
     return FileStatus::kInvalidFormatVersion;
 
-  g_module_array_size = metadata.module_count;
+  *array_size = metadata.module_count;
   // Check for size 0.
-  if (!g_module_array_size)
+  if (!*array_size)
     return FileStatus::kArraySizeZero;
 
   // Sanity check the array fits in a DWORD.
-  if (g_module_array_size >
+  if (*array_size >
       (std::numeric_limits<DWORD>::max() / sizeof(PackedWhitelistModule))) {
     assert(false);
     return FileStatus::kArrayTooBig;
   }
 
   DWORD buffer_size =
-      static_cast<DWORD>(g_module_array_size * sizeof(PackedWhitelistModule));
-  g_module_array =
+      static_cast<DWORD>(*array_size * sizeof(PackedWhitelistModule));
+  *array_ptr =
       reinterpret_cast<PackedWhitelistModule*>(new uint8_t[buffer_size]);
 
   // Read in the array.
   // NOTE: Ignore the rest of the file - other data could be stored at the end.
-  if (!::ReadFile(file, g_module_array, buffer_size, &bytes_read, FALSE) ||
+  if (!::ReadFile(file, *array_ptr, buffer_size, &bytes_read, FALSE) ||
       bytes_read != buffer_size) {
-    delete[] g_module_array;
-    g_module_array = nullptr;
-    g_module_array_size = 0;
+    delete[] * array_ptr;
+    *array_ptr = nullptr;
+    *array_size = 0;
     return FileStatus::kArrayReadFail;
   }
-  // TODO(pennymac): calculate cost of is_sorted() call against real database
-  // array. Is it too expensive for startup?  Maybe do a delayed check?
-  if (!std::is_sorted(g_module_array, g_module_array + g_module_array_size,
+
+  // Ensure array is sorted (as expected).
+  if (!std::is_sorted(*array_ptr, *array_ptr + *array_size,
                       HashBinaryPredicate)) {
-    delete[] g_module_array;
-    g_module_array = nullptr;
-    g_module_array_size = 0;
+    delete[] * array_ptr;
+    *array_ptr = nullptr;
+    *array_size = 0;
     return FileStatus::kArrayNotSorted;
   }
+
+  return FileStatus::kSuccess;
+}
+
+// Open a packed whitelist or blacklist data file.
+//
+// - |whitelist| == true to open the whitelist data file, false for blacklist.
+// - Returns kSuccess or kFileNotFound on success.
+FileStatus OpenDataFile(bool whitelist, HANDLE* fhandle) {
+  *fhandle = INVALID_HANDLE_VALUE;
+  std::wstring& file_path = (whitelist) ? GetWlFilePath() : GetBlFilePath();
+
+  // The path may have been overridden for testing.
+  if (file_path.empty()) {
+    if (!install_static::GetUserDataDirectory(&file_path, nullptr))
+      return FileStatus::kUserDataDirFail;
+    file_path.append(kFileSubdir);
+    file_path.append((whitelist) ? kWlFileName : kBlFileName);
+  }
+
+  // See if file exists.  INVALID_HANDLE_VALUE alert!
+  *fhandle =
+      ::CreateFileW(file_path.c_str(), FILE_READ_DATA,
+                    FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                    nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+  if (*fhandle == INVALID_HANDLE_VALUE)
+    return FileStatus::kFileNotFound;
 
   return FileStatus::kSuccess;
 }
@@ -130,30 +159,48 @@ FileStatus ReadInArray(HANDLE file) {
 // Example file location, relative to user data dir.
 // %localappdata% / Google / Chrome SxS / User Data / ThirdPartyModuleList64 /
 //
-// TODO(pennymac): Missing or malformed component file shouldn't happen.
-//                 Possible UMA log in future.
+// - NOTE: kFileNotFound and kArraySizeZero are treated as kSuccess.
 FileStatus InitInternal() {
-  std::wstring& file_path = GetFilePath();
-  // The path may have been overridden for testing.
-  if (file_path.empty()) {
-    if (!install_static::GetUserDataDirectory(&file_path, nullptr))
-      return FileStatus::kUserDataDirFail;
-    file_path.append(kFileSubdir);
-    file_path.append(kFileName);
+  // whitelist
+  // ---------
+  HANDLE handle = INVALID_HANDLE_VALUE;
+  FileStatus status = OpenDataFile(true, &handle);
+  if (status != FileStatus::kSuccess && status != FileStatus::kFileNotFound)
+    return status;
+  if (status == FileStatus::kSuccess) {
+    status = ReadInArray(handle, &g_wl_module_array_size, &g_wl_module_array);
+    ::CloseHandle(handle);
+    if (status != FileStatus::kSuccess && status != FileStatus::kArraySizeZero)
+      return status;
   }
 
-  // See if file exists.  INVALID_HANDLE_VALUE alert!
-  HANDLE file =
-      ::CreateFileW(file_path.c_str(), FILE_READ_DATA,
-                    FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-                    nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-  if (file == INVALID_HANDLE_VALUE)
-    return FileStatus::kFileNotFound;
+  // blacklist
+  // ---------
+  status = OpenDataFile(false, &handle);
+  if (status != FileStatus::kSuccess && status != FileStatus::kFileNotFound) {
+    // Bail out.  Clean up anything already initialized.
+    if (g_wl_module_array_size) {
+      delete[] g_wl_module_array;
+      g_wl_module_array_size = 0;
+    }
+    return status;
+  }
+  if (status == FileStatus::kSuccess) {
+    status = ReadInArray(handle, &g_bl_module_array_size, &g_bl_module_array);
+    ::CloseHandle(handle);
+    if (status != FileStatus::kSuccess &&
+        status != FileStatus::kArraySizeZero) {
+      // Bail out.  Clean up anything already initialized.
+      if (g_wl_module_array_size) {
+        delete[] g_wl_module_array;
+        g_wl_module_array_size = 0;
+      }
+      return status;
+    }
+  }
 
-  FileStatus status = ReadInArray(file);
-  ::CloseHandle(file);
-
-  return status;
+  // Consuming kFileNotFound or kArraySizeZero.
+  return FileStatus::kSuccess;
 }
 
 }  // namespace
@@ -162,11 +209,14 @@ FileStatus InitInternal() {
 // Public defines & functions
 //------------------------------------------------------------------------------
 
-bool IsModuleWhitelisted(const std::string& basename,
-                         DWORD image_size,
-                         DWORD time_date_stamp) {
+bool IsModuleListed(bool whitelist,
+                    const std::string& basename,
+                    DWORD image_size,
+                    DWORD time_date_stamp) {
   assert(g_initialized);
-  if (!g_module_array_size)
+  size_t array_size =
+      (whitelist) ? g_wl_module_array_size : g_bl_module_array_size;
+  if (!array_size)
     return false;
 
   // Max hex 32-bit value is 8 characters long.  2*8+1.
@@ -179,11 +229,12 @@ bool IsModuleWhitelisted(const std::string& basename,
   ::memcpy(target.basename_hash, basename_hash.data(), elf_sha1::kSHA1Length);
   ::memcpy(target.code_id_hash, code_id.data(), elf_sha1::kSHA1Length);
 
+  PackedWhitelistModule* array_ptr =
+      (whitelist) ? g_wl_module_array : g_bl_module_array;
   // Binary search for primary hash (basename).  There can be more than one
   // match.
-  auto pair =
-      std::equal_range(g_module_array, g_module_array + g_module_array_size,
-                       target, HashBinaryPredicate);
+  auto pair = std::equal_range(array_ptr, array_ptr + array_size, target,
+                               HashBinaryPredicate);
 
   // Search for secondary hash.
   for (PackedWhitelistModule* i = pair.first; i != pair.second; ++i) {
@@ -195,16 +246,20 @@ bool IsModuleWhitelisted(const std::string& basename,
   return false;
 }
 
-std::wstring GetFilePathUsed() {
-  return GetFilePath();
+std::wstring GetWlFilePathUsed() {
+  return GetWlFilePath();
 }
 
-// Grab the latest whitelist file.
+std::wstring GetBlFilePathUsed() {
+  return GetBlFilePath();
+}
+
+// Grab the latest whitelist and blacklist.
 FileStatus InitFromFile() {
   // Debug check: InitFromFile should not be called more than once.
   assert(!g_initialized);
 
-  // TODO(pennymac): Should kArraySizeZero be a failure?  Or just UMA?
+  // TODO(pennymac): Possible UMA log for unexpected failures.
   FileStatus status = InitInternal();
 
   if (status == FileStatus::kSuccess)
@@ -213,8 +268,10 @@ FileStatus InitFromFile() {
   return status;
 }
 
-void OverrideFilePathForTesting(const std::wstring& new_path) {
-  GetFilePath().assign(new_path);
+void OverrideFilePathsForTesting(const std::wstring& new_wl_path,
+                                 const std::wstring& new_bl_path) {
+  GetWlFilePath().assign(new_wl_path);
+  GetBlFilePath().assign(new_bl_path);
 }
 
 }  // namespace whitelist

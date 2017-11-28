@@ -23,7 +23,7 @@
 namespace whitelist {
 namespace {
 
-constexpr wchar_t kFileName[] = L"dbfile";
+constexpr wchar_t kTestFileName[] = L"dbfile";
 constexpr DWORD kPageSize = 4096;
 
 struct TestModule {
@@ -87,7 +87,7 @@ bool GetTestModules(std::vector<TestModule>* test_modules,
 }
 
 //------------------------------------------------------------------------------
-// WhitelistComponentTest class
+// WhitelistFileTest class
 //------------------------------------------------------------------------------
 
 class WhitelistFileTest : public testing::Test {
@@ -104,7 +104,7 @@ class WhitelistFileTest : public testing::Test {
 
     // Create the component file.  It will be cleaned up with
     // |scoped_temp_dir_|.
-    path = path.Append(kFileName);
+    path = path.Append(kTestFileName);
     base::File file(path, base::File::FLAG_CREATE_ALWAYS |
                               base::File::FLAG_WRITE |
                               base::File::FLAG_SHARE_DELETE |
@@ -112,7 +112,7 @@ class WhitelistFileTest : public testing::Test {
     ASSERT_TRUE(file.IsValid());
 
     // Store the path for tests to use.
-    test_file_path_ = std::move(path.value());
+    wl_test_file_path_ = std::move(path.value());
 
     // Write content {metadata}{array_of_modules}.
     PackedWhitelistMetadata meta = {
@@ -130,14 +130,17 @@ class WhitelistFileTest : public testing::Test {
     file_ = std::move(file);
   }
 
-  const base::string16& GetTestFilePath() { return test_file_path_; }
+  const base::string16& GetWlTestFilePath() { return wl_test_file_path_; }
+
+  const base::string16& GetBlTestFilePath() { return bl_test_file_path_; }
 
   const std::vector<TestModule>& GetTestArray() { return test_array_; }
 
  private:
   base::ScopedTempDir scoped_temp_dir_;
   base::File file_;
-  base::string16 test_file_path_;
+  base::string16 wl_test_file_path_;
+  base::string16 bl_test_file_path_;
   std::vector<TestModule> test_array_;
 
   DISALLOW_COPY_AND_ASSIGN(WhitelistFileTest);
@@ -150,19 +153,20 @@ class WhitelistFileTest : public testing::Test {
 // Test initialization of the whitelist from file.
 TEST_F(WhitelistFileTest, Init) {
   // Override the component file path for testing.
-  OverrideFilePathForTesting(GetTestFilePath());
+  OverrideFilePathsForTesting(GetWlTestFilePath(), GetBlTestFilePath());
 
   // Init component whitelist!
   ASSERT_EQ(InitFromFile(), FileStatus::kSuccess);
 
   // Test matching.
   for (const auto& test_module : GetTestArray()) {
-    ASSERT_TRUE(IsModuleWhitelisted(test_module.basename, test_module.imagesize,
-                                    test_module.timedatestamp));
+    ASSERT_TRUE(IsModuleListed(true, test_module.basename,
+                               test_module.imagesize,
+                               test_module.timedatestamp));
   }
 
   // Test a failure to match.
-  ASSERT_FALSE(IsModuleWhitelisted("booya.dll", 1337, 0x12345678));
+  ASSERT_FALSE(IsModuleListed(true, "booya.dll", 1337, 0x12345678));
 }
 
 }  // namespace
