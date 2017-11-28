@@ -1815,11 +1815,7 @@ public class Tab
 
             mDownloadDelegate = new ChromeDownloadDelegate(mThemedApplicationContext, this);
 
-            assert mNativeTabAndroid != 0;
-            nativeInitWebContents(mNativeTabAndroid, mIncognito, mIsDetached,
-                    mContentViewCore.getWebContents(), mWebContentsDelegate,
-                    new TabContextMenuPopulator(
-                            mDelegateFactory.createContextMenuPopulator(this), this));
+            initWebContents();
 
             // In the case where restoring a Tab or showing a prerendered one we already have a
             // valid infobar container, no need to recreate one.
@@ -1869,14 +1865,23 @@ public class Tab
                     this));
 
             getAppBannerManager().setIsEnabledForTab(mDelegateFactory.canShowAppBanners(this));
-
-            if (mGestureStateListener == null) {
-                mGestureStateListener = createGestureStateListener();
-            }
-            cvc.addGestureStateListener(mGestureStateListener);
         } finally {
             TraceEvent.end("ChromeTab.setContentViewCore");
         }
+    }
+
+    private void initWebContents() {
+        WebContents webContents = mContentViewCore.getWebContents();
+        assert mNativeTabAndroid != 0;
+        nativeInitWebContents(mNativeTabAndroid, mIncognito, mIsDetached, webContents,
+                mWebContentsDelegate,
+                new TabContextMenuPopulator(
+                        mDelegateFactory.createContextMenuPopulator(this), this));
+
+        if (mGestureStateListener == null) {
+            mGestureStateListener = createGestureStateListener();
+        }
+        webContents.getGestureListenerManager().addListener(mGestureStateListener);
     }
 
     /**
@@ -2408,9 +2413,6 @@ public class Tab
 
         mContentViewCore.getContainerView().setOnHierarchyChangeListener(null);
         mContentViewCore.getContainerView().setOnSystemUiVisibilityChangeListener(null);
-        if (mGestureStateListener != null) {
-            mContentViewCore.removeGestureStateListener(mGestureStateListener);
-        }
 
         if (mInfoBarContainer != null && mInfoBarContainer.getParent() != null) {
             mInfoBarContainer.removeFromParentView();
@@ -2423,6 +2425,9 @@ public class Tab
         mContentView.removeOnAttachStateChangeListener(mAttachStateChangeListener);
         mContentView = null;
         updateInteractableState();
+
+        destroyWebContents(deleteNativeWebContents);
+
         mContentViewCore.destroy();
         mContentViewCore = null;
 
@@ -2432,7 +2437,13 @@ public class Tab
             mWebContentsObserver.destroy();
             mWebContentsObserver = null;
         }
+    }
 
+    private void destroyWebContents(boolean deleteNativeWebContents) {
+        if (mGestureStateListener != null) {
+            WebContents webContents = mContentViewCore.getWebContents();
+            webContents.getGestureListenerManager().removeListener(mGestureStateListener);
+        }
         assert mNativeTabAndroid != 0;
         nativeDestroyWebContents(mNativeTabAndroid, deleteNativeWebContents);
     }

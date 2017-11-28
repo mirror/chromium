@@ -23,6 +23,7 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
 import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
 import org.chromium.content_public.browser.ContentBitmapCallback;
+import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.ImageDownloadCallback;
 import org.chromium.content_public.browser.JavaScriptCallback;
 import org.chromium.content_public.browser.MessagePort;
@@ -179,6 +180,11 @@ public class ShareMenuActionHandlerTest {
 
         @Override
         public NavigationController getNavigationController() {
+            return null;
+        }
+
+        @Override
+        public GestureListenerManager getGestureListenerManager() {
             return null;
         }
 
