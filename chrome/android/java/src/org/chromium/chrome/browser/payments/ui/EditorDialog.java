@@ -97,6 +97,7 @@ public class EditorDialog
     private Animator mDialogInOutAnimator;
     @Nullable
     private Runnable mDeleteRunnable;
+    private boolean mIsDismissed;
     /**
      * Builds the editor dialog.
      *
@@ -112,6 +113,7 @@ public class EditorDialog
         mContext = activity;
         mObserverForTest = observerForTest;
         mHandler = new Handler();
+        mIsDismissed = false;
         mEditorActionListener = new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -311,6 +313,7 @@ public class EditorDialog
 
     @Override
     public void onDismiss(DialogInterface dialog) {
+        mIsDismissed = true;
         if (mEditorModel != null) mEditorModel.cancel();
         removeTextChangedListenersAndInputFilters();
     }
@@ -485,6 +488,7 @@ public class EditorDialog
      * @param editorModel The description of the editor user interface to display.
      */
     public void show(EditorModel editorModel) {
+        if (mIsDismissed) return;
         setOnShowListener(this);
         setOnDismissListener(this);
         mEditorModel = editorModel;
