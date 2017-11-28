@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee7004a3_72cd680c",
+        "filename": "third_party/WebKit/Source/core/frame/csp/SourceListDirective.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-28T16:59:44Z",
+      "side": 1,
+      "message": "(Since we\u0027re coming up against the branch point, I\u0027ll go ahead and LGTM this so you can get the rest of the stamps you\u0027ll need to land it. I would like to see this changed before the branch point, but I don\u0027t need to look at it again once you\u0027ve got the check in place.)",
+      "parentUuid": "ec462741_0248cafd",
+      "revId": "1e8c6e44f8ffa59b5a7f31e90c51a05ba6cd7ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80b3f7af_30428022",
         "filename": "third_party/WebKit/Source/platform/weborigin/SchemeRegistry.cpp",
         "patchSetId": 18
