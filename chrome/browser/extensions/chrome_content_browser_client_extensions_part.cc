@@ -64,6 +64,7 @@
 #include "extensions/common/manifest_handlers/web_accessible_resources_info.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "extensions/common/switches.h"
+#include "url/origin.h"
 
 #if defined(OS_CHROMEOS)
 #include "extensions/browser/api/vpn_provider/vpn_service.h"
@@ -366,6 +367,12 @@ bool ChromeContentBrowserClientExtensionsPart::ShouldLockToOrigin(
       return false;
   }
   return true;
+}
+
+bool ChromeContentBrowserClientExtensionsPart::ShouldBypassDocumentBlocking(
+    const url::Origin& initiator,
+    const GURL& url) {
+  return initiator.scheme() == extensions::kExtensionScheme;
 }
 
 // static
