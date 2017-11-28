@@ -8,6 +8,7 @@
 #include "base/numerics/safe_conversions.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/vector_icons/vector_icons.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -17,43 +18,36 @@
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/resources/grit/ui_resources.h"
+#include "ui/views/controls/button/image_button.h"
+#include "ui/views/controls/button/image_button_factory.h"
+#include "ui/views/controls/button/label_button.h"
+#include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/controls/styled_label.h"
 #include "ui/views/controls/table/table_view.h"
 #include "ui/views/controls/throbber.h"
+#include "ui/views/layout/box_layout.h"
 #include "ui/views/widget/widget.h"
 
 namespace {
 
-const int kThrobberDiameter = 24;
+constexpr int kThrobberDiameter = 24;
 
-const int kAdapterOffHelpLinkPadding = 5;
+constexpr int kAdapterOffHelpLinkPadding = 5;
 
 // The lookup table for signal strength level image.
-const int kSignalStrengthLevelImageIds[5] = {IDR_SIGNAL_0_BAR, IDR_SIGNAL_1_BAR,
-                                             IDR_SIGNAL_2_BAR, IDR_SIGNAL_3_BAR,
-                                             IDR_SIGNAL_4_BAR};
+constexpr int kSignalStrengthLevelImageIds[5] = {
+    IDR_SIGNAL_0_BAR, IDR_SIGNAL_1_BAR, IDR_SIGNAL_2_BAR, IDR_SIGNAL_3_BAR,
+    IDR_SIGNAL_4_BAR};
+
+constexpr int kHelpButtonTag = 1;
+constexpr int kReScanButtonTag = 2;
 
 }  // namespace
 
 DeviceChooserContentView::DeviceChooserContentView(
     views::TableViewObserver* table_view_observer,
     std::unique_ptr<ChooserController> chooser_controller)
-    : chooser_controller_(std::move(chooser_controller)),
-      help_text_(l10n_util::GetStringFUTF16(
-          IDS_DEVICE_CHOOSER_GET_HELP_LINK_WITH_SCANNING_STATUS,
-          base::string16())),
-      help_and_scanning_text_(l10n_util::GetStringFUTF16(
-          IDS_DEVICE_CHOOSER_GET_HELP_LINK_WITH_SCANNING_STATUS,
-          l10n_util::GetStringUTF16(IDS_BLUETOOTH_DEVICE_CHOOSER_SCANNING))) {
-  base::string16 re_scan_text =
-      l10n_util::GetStringUTF16(IDS_BLUETOOTH_DEVICE_CHOOSER_RE_SCAN);
-  std::vector<size_t> offsets;
-  help_and_re_scan_text_ = l10n_util::GetStringFUTF16(
-      IDS_DEVICE_CHOOSER_GET_HELP_LINK_WITH_RE_SCAN_LINK, help_text_,
-      re_scan_text, &offsets);
-  help_text_range_ = gfx::Range(offsets[0], offsets[0] + help_text_.size());
-  re_scan_text_range_ =
-      gfx::Range(offsets[1], offsets[1] + re_scan_text.size());
+    : chooser_controller_(std::move(chooser_controller)) {
   chooser_controller_->set_view(this);
   std::vector<ui::TableColumn> table_columns;
   table_columns.push_back(ui::TableColumn());
@@ -84,13 +78,6 @@ DeviceChooserContentView::DeviceChooserContentView(
       views::StyledLabel::RangeStyleInfo::CreateForLink());
   turn_adapter_off_help_->SetVisible(false);
   AddChildView(turn_adapter_off_help_);
-
-  if (chooser_controller_->ShouldShowFootnoteView()) {
-    footnote_link_ = base::MakeUnique<views::StyledLabel>(help_text_, this);
-    footnote_link_->set_owned_by_client();
-    footnote_link_->AddStyleRange(
-        help_text_range_, views::StyledLabel::RangeStyleInfo::CreateForLink());
-  }
 }
 
 DeviceChooserContentView::~DeviceChooserContentView() {
@@ -216,17 +203,7 @@ void DeviceChooserContentView::OnAdapterEnabledChanged(bool enabled) {
   throbber_->Stop();
   throbber_->SetVisible(false);
 
-  if (enabled) {
-    SetGetHelpAndReScanLink();
-  } else {
-    DCHECK(footnote_link_);
-    footnote_link_->SetText(help_text_);
-    footnote_link_->AddStyleRange(
-        help_text_range_, views::StyledLabel::RangeStyleInfo::CreateForLink());
-  }
-
-  if (GetWidget() && GetWidget()->GetRootView())
-    GetWidget()->GetRootView()->Layout();
+  SetReScanButtonEnabled(enabled);
 }
 
 void DeviceChooserContentView::OnRefreshStateChanged(bool refreshing) {
@@ -240,7 +217,7 @@ void DeviceChooserContentView::OnRefreshStateChanged(bool refreshing) {
 
   // When refreshing and no option available yet, hide |table_view_| and show
   // |throbber_|. Otherwise show |table_view_| and hide |throbber_|.
-  bool throbber_visible =
+  const bool throbber_visible =
       refreshing && (chooser_controller_->NumOptions() == 0);
   table_view_->SetVisible(!throbber_visible);
   throbber_->SetVisible(throbber_visible);
@@ -249,31 +226,22 @@ void DeviceChooserContentView::OnRefreshStateChanged(bool refreshing) {
   else
     throbber_->Stop();
 
-  if (refreshing) {
-    DCHECK(footnote_link_);
-    footnote_link_->SetText(help_and_scanning_text_);
-    footnote_link_->AddStyleRange(
-        help_text_range_, views::StyledLabel::RangeStyleInfo::CreateForLink());
-  } else {
-    SetGetHelpAndReScanLink();
-  }
-
-  if (GetWidget() && GetWidget()->GetRootView())
-    GetWidget()->GetRootView()->Layout();
+  SetReScanButtonEnabled(!refreshing);
 }
 
 void DeviceChooserContentView::StyledLabelLinkClicked(views::StyledLabel* label,
                                                       const gfx::Range& range,
                                                       int event_flags) {
-  if (label == turn_adapter_off_help_) {
-    chooser_controller_->OpenAdapterOffHelpUrl();
-  } else if (label == footnote_link_.get()) {
-    if (range == help_text_range_)
-      chooser_controller_->OpenHelpCenterUrl();
-    else if (range == re_scan_text_range_)
-      chooser_controller_->RefreshOptions();
-    else
-      NOTREACHED();
+  DCHECK_EQ(turn_adapter_off_help_, label);
+  chooser_controller_->OpenAdapterOffHelpUrl();
+}
+
+void DeviceChooserContentView::ButtonPressed(views::Button* sender,
+                                             const ui::Event& event) {
+  if (sender->tag() == kHelpButtonTag) {
+    chooser_controller_->OpenHelpCenterUrl();
+  } else if (sender->tag() == kReScanButtonTag) {
+    chooser_controller_->RefreshOptions();
   } else {
     NOTREACHED();
   }
@@ -281,6 +249,41 @@ void DeviceChooserContentView::StyledLabelLinkClicked(views::StyledLabel* label,
 
 base::string16 DeviceChooserContentView::GetWindowTitle() const {
   return chooser_controller_->GetTitle();
+}
+
+std::unique_ptr<views::View> DeviceChooserContentView::CreateExtraView() {
+  std::vector<views::View*> views;
+  if (chooser_controller_->ShouldShowHelpButton()) {
+    views::ImageButton* help_button = views::CreateVectorImageButton(this);
+    views::SetImageFromVectorIcon(help_button, vector_icons::kHelpOutlineIcon);
+    help_button->SetFocusForPlatform();
+    help_button->SetTooltipText(l10n_util::GetStringUTF16(IDS_LEARN_MORE));
+    help_button->set_tag(kHelpButtonTag);
+    views.push_back(help_button);
+  }
+  if (chooser_controller_->ShouldShowReScanButton()) {
+    re_scan_button_ = views::MdTextButton::CreateSecondaryUiButton(
+        this, l10n_util::GetStringUTF16(IDS_BLUETOOTH_DEVICE_CHOOSER_RE_SCAN));
+    re_scan_button_->SetFocusForPlatform();
+    re_scan_button_->SetTooltipText(l10n_util::GetStringUTF16(
+        IDS_BLUETOOTH_DEVICE_CHOOSER_RE_SCAN_TOOLTIP));
+    re_scan_button_->set_tag(kReScanButtonTag);
+    // Ensures that the focus will always cycle to the cancel button. Otherwise
+    // if the table is selected it will cycle to the help button, which isn't
+    // very useful.
+    re_scan_button_->set_request_focus_on_press(true);
+    views.push_back(re_scan_button_);
+  }
+  if (views.size() == 1)
+    return std::unique_ptr<views::View>(views.front());
+  auto container = std::make_unique<views::View>();
+  container->SetLayoutManager(
+      new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(),
+                           ChromeLayoutProvider::Get()->GetDistanceMetric(
+                               views::DISTANCE_RELATED_CONTROL_HORIZONTAL)));
+  for (auto* view : views)
+    container->AddChildView(view);
+  return container;
 }
 
 base::string16 DeviceChooserContentView::GetDialogButtonLabel(
@@ -320,11 +323,7 @@ void DeviceChooserContentView::UpdateTableView() {
   }
 }
 
-void DeviceChooserContentView::SetGetHelpAndReScanLink() {
-  DCHECK(footnote_link_);
-  footnote_link_->SetText(help_and_re_scan_text_);
-  footnote_link_->AddStyleRange(
-      help_text_range_, views::StyledLabel::RangeStyleInfo::CreateForLink());
-  footnote_link_->AddStyleRange(
-      re_scan_text_range_, views::StyledLabel::RangeStyleInfo::CreateForLink());
+void DeviceChooserContentView::SetReScanButtonEnabled(bool enabled) {
+  if (re_scan_button_)
+    re_scan_button_->SetEnabled(enabled);
 }

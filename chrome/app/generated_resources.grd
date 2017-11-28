@@ -10831,8 +10831,11 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
       <message name="IDS_BLUETOOTH_DEVICE_CHOOSER_SCANNING" desc="The label that is used to indicate the chooser is scanning for Bluetooth devices.">
         ''' while scanning for devices...
       </message>
-      <message name="IDS_BLUETOOTH_DEVICE_CHOOSER_RE_SCAN" desc="Text of a link the user can click to start a new scan for Bluetooth devices.">
-        re-scan
+      <message name="IDS_BLUETOOTH_DEVICE_CHOOSER_RE_SCAN" desc="Text of a button the user can click to start a new scan for Bluetooth devices.">
+        Re-scan
+      </message>
+      <message name="IDS_BLUETOOTH_DEVICE_CHOOSER_RE_SCAN_TOOLTIP" desc="Tooltip for the button that lets the user start a new scan for Bluetooth devices.">
+        Scan for Bluetooth devices again
       </message>
       <message name="IDS_BLUETOOTH_DEVICE_CHOOSER_PAIR_BUTTON_TEXT" desc="Label on the button that closes the Bluetooth chooser popup and pairs the selected device.">
         Pair

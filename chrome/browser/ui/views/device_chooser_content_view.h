@@ -12,10 +12,12 @@
 #include "chrome/browser/chooser_controller/chooser_controller.h"
 #include "ui/base/models/table_model.h"
 #include "ui/gfx/range/range.h"
+#include "ui/views/controls/button/button.h"
 #include "ui/views/controls/styled_label_listener.h"
 #include "ui/views/view.h"
 
 namespace views {
+class LabelButton;
 class StyledLabel;
 class TableView;
 class TableViewObserver;
@@ -27,7 +29,8 @@ class Throbber;
 class DeviceChooserContentView : public views::View,
                                  public ui::TableModel,
                                  public ChooserController::View,
-                                 public views::StyledLabelListener {
+                                 public views::StyledLabelListener,
+                                 public views::ButtonListener {
  public:
   DeviceChooserContentView(
       views::TableViewObserver* table_view_observer,
@@ -58,16 +61,17 @@ class DeviceChooserContentView : public views::View,
                               const gfx::Range& range,
                               int event_flags) override;
 
-  views::StyledLabel* footnote_link() { return footnote_link_.get(); }
+  // views::ButtonListener:
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
   base::string16 GetWindowTitle() const;
+  std::unique_ptr<views::View> CreateExtraView();
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const;
   bool IsDialogButtonEnabled(ui::DialogButton button) const;
   void Accept();
   void Cancel();
   void Close();
   void UpdateTableView();
-  void SetGetHelpAndReScanLink();
 
  private:
   friend class ChooserDialogViewTest;
@@ -75,17 +79,14 @@ class DeviceChooserContentView : public views::View,
   FRIEND_TEST_ALL_PREFIXES(DeviceChooserContentViewTest, ClickRescanLink);
   FRIEND_TEST_ALL_PREFIXES(DeviceChooserContentViewTest, ClickGetHelpLink);
 
+  void SetReScanButtonEnabled(bool value);
+
   std::unique_ptr<ChooserController> chooser_controller_;
   views::TableView* table_view_ = nullptr;  // Weak.
   views::View* table_parent_ = nullptr;  // Weak.
   views::StyledLabel* turn_adapter_off_help_ = nullptr;  // Weak.
   views::Throbber* throbber_ = nullptr;  // Weak.
-  std::unique_ptr<views::StyledLabel> footnote_link_;
-  base::string16 help_text_;
-  base::string16 help_and_scanning_text_;
-  base::string16 help_and_re_scan_text_;
-  gfx::Range help_text_range_;
-  gfx::Range re_scan_text_range_;
+  views::LabelButton* re_scan_button_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceChooserContentView);
 };
