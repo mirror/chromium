@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89cf3c2a_585fd787",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T08:39:33Z",
+      "side": 1,
+      "message": "The timer shouldn\u0027t be running in this case, so we can remove .Stop() here.",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 22
+      },
+      "revId": "294a3839b8d7325fcd5cd47edf8e73a472d322b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6706cf0_33459dd4",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T08:39:33Z",
+      "side": 1,
+      "message": "My other cl has removed Optional around these optional times. If it\u0027s unset, it\u0027s value will be base::Time(), please add a TODO here or in your feature extraction cl.",
+      "range": {
+        "startLine": 139,
+        "startChar": 44,
+        "endLine": 139,
+        "endChar": 53
+      },
+      "revId": "294a3839b8d7325fcd5cd47edf8e73a472d322b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401b90f6_dc6be3b7",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T08:39:33Z",
+      "side": 1,
+      "message": "Why do you set default to DISCONNECTED? In reality, it should be set via PowerChanged soon after the logger is created, but I think it\u0027d be safer to use Optional to represent it\u0027s unknown/unset to start with.",
+      "range": {
+        "startLine": 98,
+        "startChar": 44,
+        "endLine": 98,
+        "endChar": 56
+      },
+      "revId": "294a3839b8d7325fcd5cd47edf8e73a472d322b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
