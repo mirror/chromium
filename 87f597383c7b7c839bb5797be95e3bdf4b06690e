@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bde52f57_778c4c75",
+        "filename": "AUTHORS",
+        "patchSetId": 29
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "It seems like some AUTHORS were added wrongly, this\nlist should be alphabetically ordered, please correct.",
+      "range": {
+        "startLine": 903,
+        "startChar": 0,
+        "endLine": 903,
+        "endChar": 41
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51e39aa_8ec07bc8",
+        "filename": "AUTHORS",
+        "patchSetId": 29
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "Unintended change? Please remove (again).",
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d749dabe_718cf287",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "Is this guy really needed? Doesn\u0027t seem like any\nof its uses has any fancy |test_name|.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 35
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ad15a5_478bd6ad",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "The class and the file name should match, so this class\nshould be PhotoCallbackFactoryMFWin.\n\nAlso this file needs guards, see:\nhttps://cs.chromium.org/chromium/src/media/base/win/mf_helpers.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d5",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32db2881_171a4576",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "Why this change? You could have left |kFirstVideoStream|.",
+      "range": {
+        "startLine": 289,
+        "startChar": 23,
+        "endLine": 289,
+        "endChar": 79
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3944b860_85b49b57",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "int requested_height \u003d requested_size.height() \u003e 0 ? requested_size.height()\n                                                     : current_size.height();\n\n?\n\nSame for l.123-125",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 47
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9642407_41979b9c",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "Hmmm assigning and comparing on the same statement is strange.\n\nWhat about making this whole while(){}- return loop e.g.:\n\n  do {\n    hr \u003d source-\u003eGetAvailableDeviceMediaType(stream_index, media_type_index,\n                                             type);\n    retry_count++;\n    if (FAILED(hr))\n      base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(50));\n  } while (hr \u003d\u003d MF_E_INVALIDREQUEST \u0026\u0026 retry_count \u003c 200);\n  return hr;",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 0
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75485820_f6b33d25",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "} else if (riid \u003d\u003d IID_IMFCaptureEngineOnSampleCallback ||\n               riid \u003d\u003d IID_IMFCaptureEngineOnEventCallback) {\n      *object \u003d static_cast\u003cIMFCaptureEngineOnEventCallback*\u003e(this);\n      hr \u003d S_OK;\n    }\n\n? Five lines versus 7, no code duplication.",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 5
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c84187_bbfc597e",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "No need for this guy, just use FROM_HERE everywhere.",
+      "range": {
+        "startLine": 354,
+        "startChar": 0,
+        "endLine": 354,
+        "endChar": 33
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f0e3eb_235a0a05",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "Is it OK to continue with the execution of this method\nafter |engine| has failed?",
+      "range": {
+        "startLine": 356,
+        "startChar": 0,
+        "endLine": 357,
+        "endChar": 16
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5839a1_977082c6",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "Prefer early return throughout this method:\n\nhr \u003d operationX();\nif(FAILED(hr)) {    \n  OnError(FROM_HERE, hr);\n  return;\n}",
+      "range": {
+        "startLine": 370,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 22
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83666eba_618c9ebb",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T21:09:02Z",
+      "side": 1,
+      "message": "if (is_started \u0026\u0026 engine_)\n  engine_-\u003eStopPreview();\nis_started_ \u003d false;\n\n?",
+      "range": {
+        "startLine": 433,
+        "startChar": 0,
+        "endLine": 437,
+        "endChar": 3
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
