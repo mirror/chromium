@@ -33,6 +33,24 @@
       "revId": "fcae31411918488d0de43667402952c77489e870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f9f851_c4469f1b",
+        "filename": "chrome/app/nibs/MainMenu.xib",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:37:38Z",
+      "side": 1,
+      "message": "Changing the name of the variable seems a good thing to do to keep the code clear, wouldn\u0027t it?",
+      "parentUuid": "d3e5b244_a93fdfb5",
+      "revId": "fcae31411918488d0de43667402952c77489e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
