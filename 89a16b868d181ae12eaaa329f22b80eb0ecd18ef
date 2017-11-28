@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43ced55c_b581a8a6",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-cue-rendering-position-align-rtl.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-28T09:44:01Z",
+      "side": 1,
+      "message": "cue styling is not working in firefox so there is already a difference in rendering between firefox and chrome for existing webvtt code. So the behaviour of the some of the existing test cases and the new test case which we have added is different.\nFor ex: test cases like track-cue-rendering-line-doesnt-fit.html, track-cue-rendering-position-auto.html doesn\u0027t render cue style in firefox where as it does in chrome.\n\nFor now we would like to keep the new test case internally and we will try to work on upstreaming those as part of crbug.com/782555",
+      "parentUuid": "08ef426f_88e8cd86",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 29
+      },
+      "revId": "89a16b868d181ae12eaaa329f22b80eb0ecd18ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6299bcc7_843dab0b",
         "filename": "third_party/WebKit/LayoutTests/webexposed/global-interface-listing-expected.txt",
         "patchSetId": 11
