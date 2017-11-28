@@ -9,9 +9,15 @@ mojom("cronet_mojo") {
   ]
 }
 
-# Cronet native API implementation. Currently just generated from cronet.idl.
+# Cronet native API implementation.
 source_set("cronet_native_impl") {
   sources = [
+    "executors.cc",
+    "executors.h",
+    "runnables.cc",
+    "runnables.h",
+
+    # Generated from cronet.idl.
     "generated/cronet.idl_c.h",
     "generated/cronet.idl_impl_interface.cc",
     "generated/cronet.idl_impl_interface.h",
@@ -24,7 +30,7 @@ source_set("cronet_native_impl") {
   ]
 }
 
-# Tests for Cronet native API. Currently just generated from cronet.idl.
+# Tests for Cronet native API.
 source_set("cronet_native_impl_tests") {
   testonly = true
 
@@ -34,6 +40,10 @@ source_set("cronet_native_impl_tests") {
   ]
 
   sources = [
+    "executors_unittest.cc",
+    "runnables_unittest.cc",
+
+    # Generated from cronet.idl.
     "generated/cronet.idl_impl_interface_unittest.cc",
     "generated/cronet.idl_impl_struct_unittest.cc",
   ]
