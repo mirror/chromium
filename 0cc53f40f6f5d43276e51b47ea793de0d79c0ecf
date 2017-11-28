@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de6aac92_756e85ab",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-28T20:58:53Z",
+      "side": 1,
+      "message": "Can you add one last test for the case I mentioned, where with the break it would not have worked?",
+      "range": {
+        "startLine": 336,
+        "startChar": 2,
+        "endLine": 336,
+        "endChar": 51
+      },
+      "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
