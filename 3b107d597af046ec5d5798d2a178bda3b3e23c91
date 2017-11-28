@@ -16,6 +16,24 @@
       "revId": "3b107d597af046ec5d5798d2a178bda3b3e23c91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2452b1ad_784d5766",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12200,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-28T22:38:58Z",
+      "side": 1,
+      "message": "The intent here was to dump the pointers. We confirmed using the uploaded minidumps that the current context pointer is null. An upcoming CL (https://chromium-review.googlesource.com/c/chromium/src/+/780391) is adding a crash key to see where the current context pointer is set to null.",
+      "parentUuid": "15115f3d_e43f99bd",
+      "revId": "3b107d597af046ec5d5798d2a178bda3b3e23c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
