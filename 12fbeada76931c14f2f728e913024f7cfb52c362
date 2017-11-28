@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "463b1c99_c1586085",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-28T22:22:40Z",
+      "side": 1,
+      "message": "If this is likely to significantly change the semantics of any of the affected metrics, then it might be appropriate to deprecate the existing metrics and replace them with new ones (typically the same names, but e.g. suffixed with a \"2\").  My guess, though, is that this is a fairly uncommon edge case, and hence is not worth the churn.",
+      "range": {
+        "startLine": 667,
+        "startChar": 0,
+        "endLine": 668,
+        "endChar": 55
+      },
+      "revId": "12fbeada76931c14f2f728e913024f7cfb52c362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
