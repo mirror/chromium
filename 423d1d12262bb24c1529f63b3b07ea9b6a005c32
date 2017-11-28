@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c1273bd_47066c54",
+        "filename": "chrome/browser/chromeos/system_logs/single_debug_daemon_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-28T19:09:08Z",
+      "side": 1,
+      "message": "To confirm, looking at the code it looks like this is all re2 computation, correct? If so, then the MayBlock() trait is not necessary.\n\nMayBlock() is intended for cases where the thread will be put to sleep due to things like I/O.",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 74
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e89a4346_369e94bf",
+        "filename": "chrome/browser/chromeos/system_logs/single_debug_daemon_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-28T19:09:08Z",
+      "side": 1,
+      "message": "If shutdown happens during this operation, should we block shutdown?\n\nIf not, consider adding a CONTINUE_ON_SHUTDOWN trait here (and in SystemLogsFetcher if applicable).",
+      "range": {
+        "startLine": 81,
+        "startChar": 17,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a63805_3be78348",
+        "filename": "components/feedback/anonymizer_tool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-28T19:09:08Z",
+      "side": 1,
+      "message": "Optional: Since this class is sequence friendly but not thread-safe, consider adding a sequence checker to catch any accidental concurrent use.\n\nhttps://cs.chromium.org/chromium/src/base/sequence_checker.h\n\nA SEQUENCE_CHECKER(sequence_checker_) goes here and then Anonymize can use\nDCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_).\n\nThis class is consumed on a different thread in SystemLogsFetcher, so you\u0027ll need a \nDETACH_FROM_SEQUENCE(sequence_checker_);\n\nAnd then at SystemLogsFetcher destruction, do a \ntask_runner_for_anonymizer-\u003eDeleteSoon(FROM_HERE, std::move(anonymizer_));",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b84568f_d10a828a",
+        "filename": "components/feedback/anonymizer_tool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-28T19:09:08Z",
+      "side": 1,
+      "message": "Would it be useful to\nDCHECK(!::content::BrowserThread::CurrentlyOn(::content::BrowserThread::UI))\n    \u003c\u003c \"This is an expensive operation. Do not execute this on the UI thread.\";\n?",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 12
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98af8bd_f2f3194a",
+        "filename": "components/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-28T19:09:08Z",
+      "side": 1,
+      "message": "It may be useful to comment why this anonymizer has to run at a higher priority than the other instance.",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 44
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a62c223_d68aa4bf",
+        "filename": "components/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-28T19:09:08Z",
+      "side": 1,
+      "message": "Nit: safe",
+      "range": {
+        "startLine": 89,
+        "startChar": 13,
+        "endLine": 89,
+        "endChar": 17
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
