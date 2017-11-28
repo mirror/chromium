@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84b614b4_3f351ed6",
+        "filename": "ios/chrome/browser/web/progress_indicator_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-28T15:42:05Z",
+      "side": 0,
+      "message": "Would it be better to replace this TODO with \"TODO(crbug.com/708307):\"?",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 24
+      },
+      "revId": "902e84f0e4cb6af6e8ea7de2e1862799fdc7686b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
