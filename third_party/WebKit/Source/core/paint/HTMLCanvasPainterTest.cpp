@@ -66,12 +66,13 @@ class HTMLCanvasPainterTestForSPv2 : public PaintControllerPaintTest {
       const IntSize& size) {
     return WTF::WrapUnique(new Canvas2DLayerBridge(
         size, 0, Canvas2DLayerBridge::kForceAccelerationForTesting,
-        CanvasColorParams()));
+        CanvasColorParams(), low_latency_));
   }
 
  private:
   Persistent<StubChromeClientForSPv2> chrome_client_;
   FakeGLES2Interface gl_;
+  const bool low_latency_ = false;
 };
 
 INSTANTIATE_TEST_CASE_P(

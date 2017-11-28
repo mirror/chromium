@@ -80,7 +80,8 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
   Canvas2DLayerBridge(const IntSize&,
                       int msaa_sample_count,
                       AccelerationMode,
-                      const CanvasColorParams&);
+                      const CanvasColorParams&,
+                      bool low_latency);
 
   ~Canvas2DLayerBridge() override;
 
@@ -188,6 +189,7 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
   bool hibernation_scheduled_ = false;
   bool dont_use_idle_scheduling_for_testing_ = false;
   bool context_lost_ = false;
+  bool low_latency_ = false;
 
   friend class Canvas2DLayerBridgeTest;
   friend class CanvasRenderingContext2DTest;
