@@ -65,7 +65,7 @@ LegacyInputRouterImpl::LegacyInputRouterImpl(
       wheel_scroll_latching_enabled_(base::FeatureList::IsEnabled(
           features::kTouchpadAndWheelScrollLatching)),
       wheel_event_queue_(this, wheel_scroll_latching_enabled_),
-      gesture_event_queue_(this, this, config.gesture_config),
+      gesture_event_queue_(this, this, this, config.gesture_config),
       device_scale_factor_(1.f) {
   touch_event_queue_.reset(
       new PassthroughTouchEventQueue(this, config.touch_config));
@@ -273,6 +273,11 @@ void LegacyInputRouterImpl::ForwardGestureEventWithLatencyInfo(
     const blink::WebGestureEvent& event,
     const ui::LatencyInfo& latency_info) {
   client_->ForwardGestureEventWithLatencyInfo(event, latency_info);
+}
+
+void LegacyInputRouterImpl::SendGeneratedWheelEvent(
+    const MouseWheelEventWithLatencyInfo& wheel_event) {
+  client_->SendGeneratedWheelEvent(wheel_event);
 }
 
 void LegacyInputRouterImpl::SendMouseWheelEventImmediately(

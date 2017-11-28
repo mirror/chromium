@@ -47,6 +47,7 @@ struct InputEventAck;
 class CONTENT_EXPORT LegacyInputRouterImpl
     : public InputRouter,
       public GestureEventQueueClient,
+      public FlingControllerClient,
       public MouseWheelEventQueueClient,
       public TouchEventQueueClient,
       public TouchpadTapSuppressionControllerClient {
@@ -114,6 +115,10 @@ class CONTENT_EXPORT LegacyInputRouterImpl
   void OnGestureEventAck(const GestureEventWithLatencyInfo& event,
                          InputEventAckSource ack_source,
                          InputEventAckState ack_result) override;
+
+  // FlingControllerClient
+  void SendGeneratedWheelEvent(
+      const MouseWheelEventWithLatencyInfo& wheel_event) override;
 
   // MouseWheelEventQueueClient
   void SendMouseWheelEventImmediately(
