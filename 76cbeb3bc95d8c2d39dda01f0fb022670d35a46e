@@ -70,6 +70,30 @@
       "revId": "76cbeb3bc95d8c2d39dda01f0fb022670d35a46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f41b69_7f0c2b1b",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T20:29:11Z",
+      "side": 1,
+      "message": "How about in ash/public/cpp/window_properties.h ?",
+      "parentUuid": "7fe459ac_4820a6eb",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 32
+      },
+      "revId": "76cbeb3bc95d8c2d39dda01f0fb022670d35a46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
