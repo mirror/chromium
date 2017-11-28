@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "7a49dafc_6b042d94",
+        "filename": "content/browser/shared_worker/shared_worker_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T00:55:19Z",
+      "side": 1,
+      "message": "nit: not \"WebWorker\", and referring only to step numbers is easy to bit rot. I think you don\u0027t need this comment at all since it\u0027s quoted below in line 63 and the header file already has documentation.",
+      "revId": "34079496fc1ebaf387283d5dd42d0d518befe014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db88e40b_8767880d",
+        "filename": "content/browser/shared_worker/shared_worker_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T00:55:19Z",
+      "side": 1,
+      "message": "nit: There is no \"WebWorkers\" spec, but a section of the HTML spec titled \"Web workers\". It\u0027s also a bit hard to see what part of the spec this is referring to.\n\njust something like \"according to the SharedWorker() constructor steps in the HTML spec\"?",
+      "range": {
+        "startLine": 41,
+        "startChar": 61,
+        "endLine": 41,
+        "endChar": 71
+      },
+      "revId": "34079496fc1ebaf387283d5dd42d0d518befe014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee160ebf_597e17e2",
+        "filename": "content/browser/shared_worker/shared_worker_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T00:55:19Z",
+      "side": 1,
+      "message": "The spec is often more difficult to decipher than code. Can you supplement this link with an informal description of what this origin is and what it\u0027s needed for?",
+      "revId": "34079496fc1ebaf387283d5dd42d0d518befe014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4dde565_1ba0f412",
+        "filename": "content/browser/shared_worker/shared_worker_instance_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T00:55:19Z",
+      "side": 1,
+      "message": "It\u0027s a bit hard to eyeball the differences between the instance[1-5] things. Could you maybe have soft comments or descriptive variable names to help explain them?",
+      "revId": "34079496fc1ebaf387283d5dd42d0d518befe014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe01cb5_e13ae0d4",
         "filename": "content/common/shared_worker/shared_worker_info.mojom",
         "patchSetId": 5
