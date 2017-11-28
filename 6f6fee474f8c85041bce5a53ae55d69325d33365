@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c23e12a3_c8aee506",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/resolve-node-blocked.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-28T19:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72aff191_3f334dad",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 39
+      },
+      "revId": "6f6fee474f8c85041bce5a53ae55d69325d33365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bda3783_b4464578",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.html",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-28T01:51:15Z",
       "side": 1,
       "message": "I wonder how this works with new test runner...",
+      "range": {
+        "startLine": 18,
+        "startChar": 41,
+        "endLine": 18,
+        "endChar": 63
+      },
+      "revId": "6f6fee474f8c85041bce5a53ae55d69325d33365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b144f8b7_9b54b7a3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-28T19:15:03Z",
+      "side": 1,
+      "message": "It will be tricky :S\n\nI think we need to review the startup tests and see if we can actually migrate them to the new test framework. Otherwise, we can try to clean up as much of the old test framework as possible and leave a small footprint for these special tests.",
+      "parentUuid": "3bda3783_b4464578",
       "range": {
         "startLine": 18,
         "startChar": 41,
