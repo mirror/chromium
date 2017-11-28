@@ -906,6 +906,7 @@ class AXPosition {
     AXPositionInstance text_position = AsLeafTextPosition();
     if (text_position->IsNullPosition())
       return text_position;
+    LOG(ERROR) << "start\n" << text_position->ToString();
     if (boundary_behavior == AXBoundaryBehavior::StopIfAlreadyAtBoundary &&
         text_position->AtStartOfLine()) {
       AXPositionInstance clone = Clone();
@@ -922,6 +923,7 @@ class AXPosition {
         return CreatePositionAtEndOfAnchor();
       return text_position;
     }
+    LOG(ERROR) << text_position->ToString();
 
     // If the line boundary is in the same subtree, return a position rooted at
     // the current position.
@@ -935,6 +937,7 @@ class AXPosition {
       return CreatePositionAtEndOfAnchor();
     }
 
+    LOG(ERROR) << text_position->ToString();
     if (was_tree_position)
       text_position = text_position->AsTreePosition();
     return text_position;

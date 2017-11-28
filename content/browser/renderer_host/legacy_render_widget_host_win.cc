@@ -200,7 +200,7 @@ LRESULT LegacyRenderWidgetHostHWND::OnGetObject(UINT message,
                              static_cast<IAccessible*>(root.Detach()));
   }
 
-  if (static_cast<DWORD>(OBJID_CARET) == obj_id && host_->HasFocus()) {
+  if (static_cast<DWORD>(OBJID_CARET) == obj_id) {
     DCHECK(ax_system_caret_);
     Microsoft::WRL::ComPtr<IAccessible> ax_system_caret_accessible =
         ax_system_caret_->GetCaret();
