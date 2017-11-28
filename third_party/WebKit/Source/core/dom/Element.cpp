@@ -1545,7 +1545,7 @@ bool Element::ShouldInvalidateDistributionWhenAttributeChanged(
     const QualifiedName& name,
     const AtomicString& new_value) {
   DCHECK(element_shadow);
-  if (element_shadow->IsV1())
+  if (element_shadow->IsV1() || element_shadow->IsUserAgentV1())
     return false;
   const SelectRuleFeatureSet& feature_set =
       element_shadow->V0().EnsureSelectFeatureSet();
@@ -2519,7 +2519,8 @@ ShadowRoot* Element::AuthorShadowRoot() const {
 ShadowRoot* Element::UserAgentShadowRoot() const {
   if (ElementShadow* element_shadow = Shadow()) {
     ShadowRoot& root = element_shadow->OldestShadowRoot();
-    DCHECK(root.GetType() == ShadowRootType::kUserAgent);
+    DCHECK(root.GetType() == ShadowRootType::kUserAgent ||
+           root.GetType() == ShadowRootType::kUserAgentV1);
     return &root;
   }
 
@@ -2527,10 +2528,23 @@ ShadowRoot* Element::UserAgentShadowRoot() const {
 }
 
 ShadowRoot& Element::EnsureUserAgentShadowRoot() {
-  if (ShadowRoot* shadow_root = UserAgentShadowRoot())
+  if (ShadowRoot* shadow_root = UserAgentShadowRoot()) {
+    DCHECK(shadow_root->GetType() == ShadowRootType::kUserAgent);
     return *shadow_root;
+  }
   ShadowRoot& shadow_root =
       EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
+  DidAddUserAgentShadowRoot(shadow_root);
+  return shadow_root;
+}
+
+ShadowRoot& Element::EnsureUserAgentShadowRootV1() {
+  if (ShadowRoot* shadow_root = UserAgentShadowRoot()) {
+    DCHECK(shadow_root->GetType() == ShadowRootType::kUserAgentV1);
+    return *shadow_root;
+  }
+  ShadowRoot& shadow_root =
+      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgentV1);
   DidAddUserAgentShadowRoot(shadow_root);
   return shadow_root;
 }

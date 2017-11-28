@@ -395,8 +395,7 @@ ShadowRoot* InspectorDOMAgent::UserAgentShadowRoot(Node* node) {
   DCHECK(candidate);
   ShadowRoot* shadow_root = ToShadowRoot(candidate);
 
-  return shadow_root->GetType() == ShadowRootType::kUserAgent ? shadow_root
-                                                              : nullptr;
+  return shadow_root->IsUserAgent() ? shadow_root : nullptr;
 }
 
 Response InspectorDOMAgent::AssertEditableNode(int node_id, Node*& node) {
@@ -1389,6 +1388,7 @@ static protocol::DOM::ShadowRootType GetShadowRootType(
     ShadowRoot* shadow_root) {
   switch (shadow_root->GetType()) {
     case ShadowRootType::kUserAgent:
+    case ShadowRootType::kUserAgentV1:
       return protocol::DOM::ShadowRootTypeEnum::UserAgent;
     case ShadowRootType::V0:
     case ShadowRootType::kOpen:
