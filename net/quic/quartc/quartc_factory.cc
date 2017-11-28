@@ -101,7 +101,7 @@ QuartcFactory::QuartcFactory(const QuartcFactoryConfig& factory_config)
     : task_runner_(factory_config.task_runner),
       clock_(new QuartcClock(factory_config.clock)) {}
 
-QuartcFactory::~QuartcFactory() {}
+QuartcFactory::~QuartcFactory() = default;
 
 std::unique_ptr<QuartcSessionInterface> QuartcFactory::CreateQuartcSession(
     const QuartcSessionConfig& quartc_session_config) {

@@ -33,7 +33,7 @@ class MockQuicSession : public QuicSession {
       : QuicSession(connection, nullptr /*visitor*/, config),
         write_buffer_(write_buffer) {}
 
-  ~MockQuicSession() override {}
+  ~MockQuicSession() override = default;
 
   // Writes outgoing data from QuicStream to a string.
   QuicConsumedData WritevData(QuicStream* stream,
@@ -96,7 +96,7 @@ class MockQuicSession : public QuicSession {
 // isn't used for writing data.
 class DummyPacketWriter : public QuicPacketWriter {
  public:
-  DummyPacketWriter() {}
+  DummyPacketWriter() = default;
 
   // QuicPacketWriter overrides.
   WriteResult WritePacket(const char* buffer,
@@ -180,7 +180,7 @@ class QuartcStreamTest : public ::testing::Test,
     session_->ActivateReliableStream(std::unique_ptr<QuartcStream>(stream_));
   }
 
-  ~QuartcStreamTest() override {}
+  ~QuartcStreamTest() override = default;
 
   const QuicClock* GetClock() const override { return &clock_; }
 

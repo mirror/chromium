@@ -29,9 +29,9 @@ struct CryptoSecretBoxer::State {
   std::vector<bssl::UniquePtr<EVP_AEAD_CTX>> ctxs;
 };
 
-CryptoSecretBoxer::CryptoSecretBoxer() {}
+CryptoSecretBoxer::CryptoSecretBoxer() = default;
 
-CryptoSecretBoxer::~CryptoSecretBoxer() {}
+CryptoSecretBoxer::~CryptoSecretBoxer() = default;
 
 // static
 size_t CryptoSecretBoxer::GetKeySize() {

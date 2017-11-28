@@ -20,7 +20,7 @@ QuicVersionManager::QuicVersionManager(
       filtered_supported_versions_(
           FilterSupportedTransportVersions(supported_versions)) {}
 
-QuicVersionManager::~QuicVersionManager() {}
+QuicVersionManager::~QuicVersionManager() = default;
 
 const QuicTransportVersionVector&
 QuicVersionManager::GetSupportedTransportVersions() {

@@ -61,7 +61,7 @@ class TestTransactionFactory : public HttpTransactionFactory {
       const HttpNetworkSession::Context& session_context)
       : session_(new HttpNetworkSession(session_params, session_context)) {}
 
-  ~TestTransactionFactory() override {}
+  ~TestTransactionFactory() override = default;
 
   // HttpTransactionFactory methods
   int CreateTransaction(RequestPriority priority,

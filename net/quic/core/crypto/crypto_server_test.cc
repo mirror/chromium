@@ -40,8 +40,8 @@ namespace {
 
 class DummyProofVerifierCallback : public ProofVerifierCallback {
  public:
-  DummyProofVerifierCallback() {}
-  ~DummyProofVerifierCallback() override {}
+  DummyProofVerifierCallback() = default;
+  ~DummyProofVerifierCallback() override = default;
 
   void Run(bool ok,
            const std::string& error_details,

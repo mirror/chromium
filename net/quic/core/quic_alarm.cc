@@ -9,7 +9,7 @@ namespace net {
 QuicAlarm::QuicAlarm(QuicArenaScopedPtr<Delegate> delegate)
     : delegate_(std::move(delegate)), deadline_(QuicTime::Zero()) {}
 
-QuicAlarm::~QuicAlarm() {}
+QuicAlarm::~QuicAlarm() = default;
 
 void QuicAlarm::Set(QuicTime new_deadline) {
   DCHECK(!IsSet());

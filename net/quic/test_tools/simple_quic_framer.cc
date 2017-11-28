@@ -21,7 +21,7 @@ class SimpleFramerVisitor : public QuicFramerVisitorInterface {
  public:
   SimpleFramerVisitor() : error_(QUIC_NO_ERROR) {}
 
-  ~SimpleFramerVisitor() override {}
+  ~SimpleFramerVisitor() override = default;
 
   void OnError(QuicFramer* framer) override { error_ = framer->error(); }
 
@@ -172,7 +172,7 @@ SimpleQuicFramer::SimpleQuicFramer(
     Perspective perspective)
     : framer_(supported_versions, QuicTime::Zero(), perspective) {}
 
-SimpleQuicFramer::~SimpleQuicFramer() {}
+SimpleQuicFramer::~SimpleQuicFramer() = default;
 
 bool SimpleQuicFramer::ProcessPacket(const QuicEncryptedPacket& packet) {
   visitor_.reset(new SimpleFramerVisitor);

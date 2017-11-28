@@ -25,7 +25,7 @@ Switch::Switch(Simulator* simulator,
   }
 }
 
-Switch::~Switch() {}
+Switch::~Switch() = default;
 
 Switch::Port::Port(Simulator* simulator,
                    string name,

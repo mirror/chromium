@@ -27,7 +27,7 @@ QuicServerId::QuicServerId(const string& host,
                            PrivacyMode privacy_mode)
     : host_port_pair_(host, port), privacy_mode_(privacy_mode) {}
 
-QuicServerId::~QuicServerId() {}
+QuicServerId::~QuicServerId() = default;
 
 bool QuicServerId::operator<(const QuicServerId& other) const {
   return std::tie(host_port_pair_, privacy_mode_) <

@@ -32,7 +32,7 @@ class QuicUnackedPacketMapTest : public QuicTest {
     unacked_packets_.SetStreamNotifier(&notifier_);
   }
 
-  ~QuicUnackedPacketMapTest() override {}
+  ~QuicUnackedPacketMapTest() override = default;
 
   SerializedPacket CreateRetransmittablePacket(QuicPacketNumber packet_number) {
     return CreateRetransmittablePacketForStream(packet_number,

@@ -43,7 +43,7 @@ TcpCubicSenderBytes::TcpCubicSenderBytes(
                                          kDefaultTCPMSS),
       min_slow_start_exit_window_(min_congestion_window_) {}
 
-TcpCubicSenderBytes::~TcpCubicSenderBytes() {}
+TcpCubicSenderBytes::~TcpCubicSenderBytes() = default;
 
 void TcpCubicSenderBytes::SetFromConfig(const QuicConfig& config,
                                         Perspective perspective) {

@@ -25,7 +25,7 @@ MockQuicDispatcher::MockQuicDispatcher(
                            std::move(alarm_factory),
                            response_cache) {}
 
-MockQuicDispatcher::~MockQuicDispatcher() {}
+MockQuicDispatcher::~MockQuicDispatcher() = default;
 
 }  // namespace test
 }  // namespace net

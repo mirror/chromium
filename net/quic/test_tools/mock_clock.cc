@@ -8,7 +8,7 @@ namespace net {
 
 MockClock::MockClock() : now_(QuicTime::Zero()) {}
 
-MockClock::~MockClock() {}
+MockClock::~MockClock() = default;
 
 void MockClock::AdvanceTime(QuicTime::Delta delta) {
   now_ = now_ + delta;

@@ -87,7 +87,7 @@ class TaggingEncrypter : public QuicEncrypter {
  public:
   explicit TaggingEncrypter(uint8_t tag) : tag_(tag) {}
 
-  ~TaggingEncrypter() override {}
+  ~TaggingEncrypter() override = default;
 
   // QuicEncrypter interface.
   bool SetKey(QuicStringPiece key) override { return true; }
@@ -144,7 +144,7 @@ class TaggingEncrypter : public QuicEncrypter {
 // have the same value and then removes them.
 class TaggingDecrypter : public QuicDecrypter {
  public:
-  ~TaggingDecrypter() override {}
+  ~TaggingDecrypter() override = default;
 
   // QuicDecrypter interface
   bool SetKey(QuicStringPiece key) override { return true; }
@@ -211,7 +211,7 @@ class TaggingDecrypter : public QuicDecrypter {
 class StrictTaggingDecrypter : public TaggingDecrypter {
  public:
   explicit StrictTaggingDecrypter(uint8_t tag) : tag_(tag) {}
-  ~StrictTaggingDecrypter() override {}
+  ~StrictTaggingDecrypter() override = default;
 
   // TaggingQuicDecrypter
   uint8_t GetTag(QuicStringPiece ciphertext) override { return tag_; }
@@ -259,7 +259,7 @@ class TestAlarmFactory : public QuicAlarmFactory {
     using QuicAlarm::Fire;
   };
 
-  TestAlarmFactory() {}
+  TestAlarmFactory() = default;
 
   QuicAlarm* CreateAlarm(QuicAlarm::Delegate* delegate) override {
     return new TestAlarm(QuicArenaScopedPtr<QuicAlarm::Delegate>(delegate));

@@ -37,7 +37,7 @@ class PacingSenderTest : public QuicTest {
     clock_.AdvanceTime(QuicTime::Delta::FromMilliseconds(9));
   }
 
-  ~PacingSenderTest() override {}
+  ~PacingSenderTest() override = default;
 
   void InitPacingRate(QuicPacketCount burst_size, QuicBandwidth bandwidth) {
     mock_sender_.reset(new StrictMock<MockSendAlgorithm>());

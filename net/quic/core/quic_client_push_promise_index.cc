@@ -14,11 +14,11 @@ using std::string;
 
 namespace net {
 
-QuicClientPushPromiseIndex::QuicClientPushPromiseIndex() {}
+QuicClientPushPromiseIndex::QuicClientPushPromiseIndex() = default;
 
-QuicClientPushPromiseIndex::~QuicClientPushPromiseIndex() {}
+QuicClientPushPromiseIndex::~QuicClientPushPromiseIndex() = default;
 
-QuicClientPushPromiseIndex::TryHandle::~TryHandle() {}
+QuicClientPushPromiseIndex::TryHandle::~TryHandle() = default;
 
 QuicClientPromisedInfo* QuicClientPushPromiseIndex::GetPromised(
     const string& url) {

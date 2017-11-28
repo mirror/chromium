@@ -19,7 +19,7 @@ namespace net {
 QuicDataWriter::QuicDataWriter(size_t size, char* buffer, Endianness endianness)
     : buffer_(buffer), capacity_(size), length_(0), endianness_(endianness) {}
 
-QuicDataWriter::~QuicDataWriter() {}
+QuicDataWriter::~QuicDataWriter() = default;
 
 char* QuicDataWriter::data() {
   return buffer_;

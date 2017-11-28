@@ -28,7 +28,7 @@ class Derived : public Base {
   explicit Derived(bool* destroyed) : Base(destroyed) {}
 
  private:
-  ~Derived() override {}
+  ~Derived() override = default;
 };
 
 class QuicReferenceCountedTest : public QuicTest {};

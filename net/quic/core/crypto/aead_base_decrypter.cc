@@ -58,7 +58,7 @@ AeadBaseDecrypter::AeadBaseDecrypter(const EVP_AEAD* aead_alg,
   DCHECK_LE(nonce_size_, sizeof(iv_));
 }
 
-AeadBaseDecrypter::~AeadBaseDecrypter() {}
+AeadBaseDecrypter::~AeadBaseDecrypter() = default;
 
 bool AeadBaseDecrypter::SetKey(QuicStringPiece key) {
   DCHECK_EQ(key.size(), key_size_);

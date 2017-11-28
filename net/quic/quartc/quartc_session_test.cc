@@ -44,7 +44,7 @@ class FakeTaskRunner : public QuartcTaskRunnerInterface {
         }),
         clock_(clock) {}
 
-  ~FakeTaskRunner() override {}
+  ~FakeTaskRunner() override = default;
 
   // Runs all tasks scheduled in the next total_ms milliseconds.  Advances the
   // clock by total_ms.  Runs tasks in time order.  Executes tasks scheduled at
@@ -232,7 +232,7 @@ class FakeProofVerifier : public ProofVerifier {
 // Used by the FakeTransportChannel.
 class FakeTransportChannelObserver {
  public:
-  virtual ~FakeTransportChannelObserver() {}
+  virtual ~FakeTransportChannelObserver() = default;
 
   // Called when the other peer is trying to send message.
   virtual void OnTransportChannelReadPacket(const string& data) = 0;
@@ -403,7 +403,7 @@ class QuartcSessionForTest : public QuartcSession,
 class QuartcSessionTest : public ::testing::Test,
                           public QuicConnectionHelperInterface {
  public:
-  ~QuartcSessionTest() override {}
+  ~QuartcSessionTest() override = default;
 
   void Init() {
     // Quic crashes if packets are sent at time 0, and the clock defaults to 0.

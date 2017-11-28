@@ -50,7 +50,7 @@ const QuicPublicResetNonceProof kNonceProof = UINT64_C(0xABCDEF0123456789);
 
 class TestEncrypter : public QuicEncrypter {
  public:
-  ~TestEncrypter() override {}
+  ~TestEncrypter() override = default;
   bool SetKey(QuicStringPiece key) override { return true; }
   bool SetNoncePrefix(QuicStringPiece nonce_prefix) override { return true; }
   bool SetIV(QuicStringPiece iv) override { return true; }
@@ -88,7 +88,7 @@ class TestEncrypter : public QuicEncrypter {
 
 class TestDecrypter : public QuicDecrypter {
  public:
-  ~TestDecrypter() override {}
+  ~TestDecrypter() override = default;
   bool SetKey(QuicStringPiece key) override { return true; }
   bool SetNoncePrefix(QuicStringPiece nonce_prefix) override { return true; }
   bool SetIV(QuicStringPiece iv) override { return true; }
@@ -135,7 +135,7 @@ class TestQuicVisitor : public QuicFramerVisitorInterface {
         accept_packet_(true),
         accept_public_header_(true) {}
 
-  ~TestQuicVisitor() override {}
+  ~TestQuicVisitor() override = default;
 
   void OnError(QuicFramer* f) override {
     QUIC_DLOG(INFO) << "QuicFramer Error: " << QuicErrorCodeToString(f->error())

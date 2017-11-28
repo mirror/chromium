@@ -22,7 +22,7 @@ QuicHeadersStream::CompressedHeaderInfo::CompressedHeaderInfo(
 QuicHeadersStream::CompressedHeaderInfo::CompressedHeaderInfo(
     const CompressedHeaderInfo& other) = default;
 
-QuicHeadersStream::CompressedHeaderInfo::~CompressedHeaderInfo() {}
+QuicHeadersStream::CompressedHeaderInfo::~CompressedHeaderInfo() = default;
 
 QuicHeadersStream::QuicHeadersStream(QuicSpdySession* session)
     : QuicStream(kHeadersStreamId, session), spdy_session_(session) {
@@ -30,7 +30,7 @@ QuicHeadersStream::QuicHeadersStream(QuicSpdySession* session)
   DisableConnectionFlowControlForThisStream();
 }
 
-QuicHeadersStream::~QuicHeadersStream() {}
+QuicHeadersStream::~QuicHeadersStream() = default;
 
 void QuicHeadersStream::OnDataAvailable() {
   char buffer[1024];

@@ -10,7 +10,7 @@ namespace net {
 
 QuartcStream::QuartcStream(QuicStreamId id, QuicSession* session)
     : QuicStream(id, session) {}
-QuartcStream::~QuartcStream() {}
+QuartcStream::~QuartcStream() = default;
 
 void QuartcStream::OnDataAvailable() {
   struct iovec iov;

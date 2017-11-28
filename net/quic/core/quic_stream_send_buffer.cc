@@ -24,7 +24,7 @@ BufferedSlice::BufferedSlice(BufferedSlice&& other) = default;
 
 BufferedSlice& BufferedSlice::operator=(BufferedSlice&& other) = default;
 
-BufferedSlice::~BufferedSlice() {}
+BufferedSlice::~BufferedSlice() = default;
 
 QuicStreamSendBuffer::QuicStreamSendBuffer(QuicBufferAllocator* allocator,
                                            bool allow_multiple_acks_for_data)
@@ -34,7 +34,7 @@ QuicStreamSendBuffer::QuicStreamSendBuffer(QuicBufferAllocator* allocator,
       stream_bytes_outstanding_(0),
       allow_multiple_acks_for_data_(allow_multiple_acks_for_data) {}
 
-QuicStreamSendBuffer::~QuicStreamSendBuffer() {}
+QuicStreamSendBuffer::~QuicStreamSendBuffer() = default;
 
 void QuicStreamSendBuffer::SaveStreamData(const struct iovec* iov,
                                           int iov_count,

@@ -28,7 +28,7 @@ ChaCha20Poly1305TlsDecrypter::ChaCha20Poly1305TlsDecrypter()
   static_assert(kNonceSize <= kMaxNonceSize, "nonce size too big");
 }
 
-ChaCha20Poly1305TlsDecrypter::~ChaCha20Poly1305TlsDecrypter() {}
+ChaCha20Poly1305TlsDecrypter::~ChaCha20Poly1305TlsDecrypter() = default;
 
 uint32_t ChaCha20Poly1305TlsDecrypter::cipher_id() const {
   return TLS1_CK_CHACHA20_POLY1305_SHA256;

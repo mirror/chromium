@@ -12,7 +12,7 @@ using std::string;
 namespace net {
 namespace simulator {
 
-Queue::ListenerInterface::~ListenerInterface() {}
+Queue::ListenerInterface::~ListenerInterface() = default;
 
 Queue::Queue(Simulator* simulator, string name, QuicByteCount capacity)
     : Actor(simulator, name),
@@ -27,7 +27,7 @@ Queue::Queue(Simulator* simulator, string name, QuicByteCount capacity)
       new AggregationAlarmDelegate(this)));
 }
 
-Queue::~Queue() {}
+Queue::~Queue() = default;
 
 void Queue::set_tx_port(ConstrainedPortInterface* port) {
   tx_port_ = port;

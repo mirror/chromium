@@ -35,8 +35,8 @@ namespace {
 // CertVerifier that will fail the test if it is ever called.
 class FailsTestCertVerifier : public CertVerifier {
  public:
-  FailsTestCertVerifier() {}
-  ~FailsTestCertVerifier() override {}
+  FailsTestCertVerifier() = default;
+  ~FailsTestCertVerifier() override = default;
 
   // CertVerifier implementation
   int Verify(const RequestParams& params,
@@ -69,7 +69,7 @@ class MockRequireCTDelegate : public TransportSecurityState::RequireCTDelegate {
 class SignatureSaver : public ProofSource::Callback {
  public:
   explicit SignatureSaver(std::string* signature) : signature_(signature) {}
-  ~SignatureSaver() override {}
+  ~SignatureSaver() override = default;
 
   void Run(bool /*ok*/,
            const QuicReferenceCountedPointer<ProofSource::Chain>& /*chain*/,
@@ -83,8 +83,8 @@ class SignatureSaver : public ProofSource::Callback {
 
 class DummyProofVerifierCallback : public ProofVerifierCallback {
  public:
-  DummyProofVerifierCallback() {}
-  ~DummyProofVerifierCallback() override {}
+  DummyProofVerifierCallback() = default;
+  ~DummyProofVerifierCallback() override = default;
 
   void Run(bool ok,
            const std::string& error_details,

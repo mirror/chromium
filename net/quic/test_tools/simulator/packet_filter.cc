@@ -14,7 +14,7 @@ PacketFilter::PacketFilter(Simulator* simulator, string name, Endpoint* input)
   input_->SetTxPort(this);
 }
 
-PacketFilter::~PacketFilter() {}
+PacketFilter::~PacketFilter() = default;
 
 void PacketFilter::AcceptPacket(std::unique_ptr<Packet> packet) {
   if (FilterPacket(*packet)) {

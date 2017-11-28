@@ -44,7 +44,7 @@ namespace test {
 
 TestChannelIDKey::TestChannelIDKey(EVP_PKEY* ecdsa_key)
     : ecdsa_key_(ecdsa_key) {}
-TestChannelIDKey::~TestChannelIDKey() {}
+TestChannelIDKey::~TestChannelIDKey() = default;
 
 bool TestChannelIDKey::Sign(QuicStringPiece signed_data,
                             string* out_signature) const {
@@ -109,7 +109,7 @@ string TestChannelIDKey::SerializeKey() const {
   return string(reinterpret_cast<char*>(buf + 1), kExpectedKeyLength - 1);
 }
 
-TestChannelIDSource::~TestChannelIDSource() {}
+TestChannelIDSource::~TestChannelIDSource() = default;
 
 QuicAsyncStatus TestChannelIDSource::GetChannelIDKey(
     const string& hostname,
@@ -213,7 +213,7 @@ class AsyncTestChannelIDSource : public ChannelIDSource, public CallbackSource {
   // Takes ownership of |sync_source|, a synchronous ChannelIDSource.
   explicit AsyncTestChannelIDSource(ChannelIDSource* sync_source)
       : sync_source_(sync_source) {}
-  ~AsyncTestChannelIDSource() override {}
+  ~AsyncTestChannelIDSource() override = default;
 
   // ChannelIDSource implementation.
   QuicAsyncStatus GetChannelIDKey(const string& hostname,
@@ -250,14 +250,14 @@ class AsyncTestChannelIDSource : public ChannelIDSource, public CallbackSource {
 
 }  // anonymous namespace
 
-FakeServerOptions::FakeServerOptions() {}
+FakeServerOptions::FakeServerOptions() = default;
 
-FakeServerOptions::~FakeServerOptions() {}
+FakeServerOptions::~FakeServerOptions() = default;
 
 FakeClientOptions::FakeClientOptions()
     : channel_id_enabled(false), channel_id_source_async(false) {}
 
-FakeClientOptions::~FakeClientOptions() {}
+FakeClientOptions::~FakeClientOptions() = default;
 
 namespace {
 // This class is used by GenerateFullCHLO() to extract SCID and STK from

@@ -19,7 +19,7 @@ QuicCryptoHandshaker::QuicCryptoHandshaker(QuicCryptoStream* stream,
   crypto_framer_.set_visitor(this);
 }
 
-QuicCryptoHandshaker::~QuicCryptoHandshaker() {}
+QuicCryptoHandshaker::~QuicCryptoHandshaker() = default;
 
 void QuicCryptoHandshaker::SendHandshakeMessage(
     const CryptoHandshakeMessage& message) {
