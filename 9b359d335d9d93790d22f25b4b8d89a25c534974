@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d886359e_e265b89d",
+        "filename": "build/install-build-deps.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-28T03:26:24Z",
+      "side": 0,
+      "message": "Doesn\u0027t pulling the install out of this if-block cause them to be installed unconditionally?",
+      "revId": "9b359d335d9d93790d22f25b4b8d89a25c534974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
