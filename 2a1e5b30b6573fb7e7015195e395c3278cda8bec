@@ -34,6 +34,24 @@
       "revId": "2a1e5b30b6573fb7e7015195e395c3278cda8bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de2e493_9d28e029",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T19:41:12Z",
+      "side": 1,
+      "message": "I put it back, except for the auto + std::make_unique() bit, and the fact that IsGoogleChromeAPIKeyUsed() will obviously return false in the else case.\n\nIt\u0027s your code, so if you are pushing back, I\u0027m not going to commit code that you don\u0027t line. It\u0027s not a big deal. I\u0027m just offering suggestions to see what sticks.\n\nDo you have any suggestions on a better name than |authorize_callback|? I was just making something up.\n\nFor |request| vs |file_request|, the request classes in the if/else blocks have a common AuthenticatedRequestInterface ancestor, but AuthenticatedRequestInterface doesn\u0027t have any of the setters. If you look in google_apis/drive/drive_api_requests.h, you can see 5 separate set_file_id() methods for the different classes. Maybe some refactoring there can help, but as is, there\u0027s no way to combine into a single return without the use of 2 unique_ptrs, or 1 unique_ptr, and a raw pointer cast.",
+      "parentUuid": "d16301c5_4c984fc3",
+      "revId": "2a1e5b30b6573fb7e7015195e395c3278cda8bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
