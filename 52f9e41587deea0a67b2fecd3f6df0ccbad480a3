@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bc99672_0b21325d",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T16:55:35Z",
+      "side": 1,
+      "message": "If you put code inside a DCHECK it will be compiled out in release builds without DCHECKs, so this line would no longer appear in our releases.\n\nI tried to see if we know these transforms are invertible but I couldn\u0027t see where we drop transforms that are not invertible along the way, for instance surfaceaggregator checks for invertibility everywhere but doesn\u0027t drop non-invertible things. Can you point where (in the service side) we make this DCHECK be true?",
+      "revId": "52f9e41587deea0a67b2fecd3f6df0ccbad480a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
