@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a327f464_25d1eb2f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-28T20:24:18Z",
+      "side": 1,
+      "message": "General advice: Don\u0027t mix multiple changes together in a single patch unless they\u0027re related somehow or it\u0027s a collection of small fixes.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "08e6ebc622b809b2999e4ec35a21a3acee39a6c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
