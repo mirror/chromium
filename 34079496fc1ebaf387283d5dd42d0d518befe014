@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9090c95_c2fd4ae2",
+        "filename": "content/browser/shared_worker/shared_worker_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-28T06:48:52Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "7a49dafc_6b042d94",
+      "revId": "34079496fc1ebaf387283d5dd42d0d518befe014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db88e40b_8767880d",
         "filename": "content/browser/shared_worker/shared_worker_instance.h",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e982b981_c3d5013e",
+        "filename": "content/browser/shared_worker/shared_worker_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-28T06:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db88e40b_8767880d",
+      "range": {
+        "startLine": 41,
+        "startChar": 61,
+        "endLine": 41,
+        "endChar": 71
+      },
+      "revId": "34079496fc1ebaf387283d5dd42d0d518befe014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee160ebf_597e17e2",
         "filename": "content/browser/shared_worker/shared_worker_instance.h",
         "patchSetId": 5
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "62f0afe1_28b5c744",
+        "filename": "content/browser/shared_worker/shared_worker_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-28T06:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee160ebf_597e17e2",
+      "revId": "34079496fc1ebaf387283d5dd42d0d518befe014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4dde565_1ba0f412",
         "filename": "content/browser/shared_worker/shared_worker_instance_unittest.cc",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-28T00:55:19Z",
       "side": 1,
       "message": "It\u0027s a bit hard to eyeball the differences between the instance[1-5] things. Could you maybe have soft comments or descriptive variable names to help explain them?",
+      "revId": "34079496fc1ebaf387283d5dd42d0d518befe014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7243e1_91368e57",
+        "filename": "content/browser/shared_worker/shared_worker_instance_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-28T06:48:52Z",
+      "side": 1,
+      "message": "Refactored these tests and added more comments.",
+      "parentUuid": "e4dde565_1ba0f412",
       "revId": "34079496fc1ebaf387283d5dd42d0d518befe014",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
