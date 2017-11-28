@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "011cf049_d33e0066",
+        "filename": "chrome/browser/autofill/autofill_interactive_uitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1615,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T13:02:53Z",
+      "side": 0,
+      "message": "It turns out that this one flakes on ChromeOS; https://crbug.com/516052.",
+      "revId": "c27b7317d4d4a457a51d589efcf2f79797071c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
