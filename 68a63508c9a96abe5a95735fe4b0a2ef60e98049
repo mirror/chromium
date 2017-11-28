@@ -16,6 +16,24 @@
       "revId": "68a63508c9a96abe5a95735fe4b0a2ef60e98049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f484aa_4f346068",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-28T21:42:12Z",
+      "side": 0,
+      "message": "Deleted.",
+      "parentUuid": "2426b549_4f76f054",
+      "revId": "68a63508c9a96abe5a95735fe4b0a2ef60e98049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
