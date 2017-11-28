@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b2fa63c_65f32ad6",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-28T04:16:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "630b2c57_d12f0c4b",
+      "range": {
+        "startLine": 174,
+        "startChar": 43,
+        "endLine": 174,
+        "endChar": 44
+      },
+      "revId": "b555f611d6175378833175200eaccf6c026a1342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40a12d9d_05406168",
         "filename": "content/common/throttling_url_loader.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "b555f611d6175378833175200eaccf6c026a1342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a51416c7_689ea14e",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-28T04:16:32Z",
+      "side": 1,
+      "message": "Then I would use std::pair\u003c...\u003e directly.",
+      "parentUuid": "40a12d9d_05406168",
+      "revId": "b555f611d6175378833175200eaccf6c026a1342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
