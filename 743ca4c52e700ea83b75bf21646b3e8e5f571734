@@ -69,6 +69,24 @@
       "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c17f76_7fb67170",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-28T17:36:24Z",
+      "side": 1,
+      "message": "Probably it makes sense to remove L1624-28 to match the logic for all cases.",
+      "parentUuid": "f96fd202_83a5f7e7",
+      "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
