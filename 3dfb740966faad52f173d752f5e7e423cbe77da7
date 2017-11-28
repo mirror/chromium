@@ -46,6 +46,30 @@
       "revId": "3dfb740966faad52f173d752f5e7e423cbe77da7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b786e256_4a5b87d7",
+        "filename": "extensions/common/api/networking_private.idl",
+        "patchSetId": 26
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:02:03Z",
+      "side": 1,
+      "message": "OK, in that case I think the typedef can be added here:\nhttps://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/chromeos/network/cr_onc_types.js\n\n(provided Steven has no objections)",
+      "parentUuid": "0d2dbe75_ef51ba86",
+      "range": {
+        "startLine": 503,
+        "startChar": 13,
+        "endLine": 503,
+        "endChar": 29
+      },
+      "revId": "3dfb740966faad52f173d752f5e7e423cbe77da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
