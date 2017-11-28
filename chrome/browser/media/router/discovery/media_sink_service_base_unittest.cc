@@ -118,7 +118,7 @@ TEST_F(MediaSinkServiceBaseTest, TestFetchCompleted_RemovedOneSink) {
 TEST_F(MediaSinkServiceBaseTest, TestFetchCompleted_UpdatedOneSink) {
   std::vector<MediaSinkInternal> old_sinks = CreateDialMediaSinks();
   std::vector<MediaSinkInternal> new_sinks = CreateDialMediaSinks();
-  new_sinks[0].set_name("sink_name_4");
+  new_sinks[0].sink().set_name("sink_name_4");
   TestFetchCompleted(old_sinks, new_sinks);
 }
 
