@@ -22,6 +22,23 @@
       "revId": "eaf60d8561a7dd2ea4379a1160c13953a150f8f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f24b91_b8d7ba02",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T21:53:29Z",
+      "side": 1,
+      "message": "Please add a comment describing this interface, as well as documenting the expected interaction between SubmitFrame() and OnSubmitFrameTransferred() and OnSubmitFrameRendered(): it seems like there\u0027s a state machine at work here, with some optimizations around not re-creating textures.",
+      "revId": "eaf60d8561a7dd2ea4379a1160c13953a150f8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
