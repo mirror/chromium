@@ -16,6 +16,24 @@
       "revId": "30e268aed75cedc82e32c50e905ba6954f143910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14998f3e_ed56767f",
+        "filename": "content/public/test/test_navigation_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-28T02:33:15Z",
+      "side": 1,
+      "message": "It looks like tests that need to access the NavigationHandle[1], either, have their own classes similar to TestsNavigationObserver that save fields from the NavigationHandle, or, use a NavigationHandleObserver.\n\nI made TestNavigationObserver::OnDidFinishNavigation protected and added a new class in our tests that saves the POST information. This avoids copying the code of TestNavigationObserver and also allows tests to save whatever information they need. What do you think?\n\nAlternatively we could use NavigationHandleObserver[2], but we would need to add members for the post information.\n\n[1] https://cs.chromium.org/search/?q\u003df:browsertest+%22navigationhandle%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n[2] https://cs.chromium.org/chromium/src/content/public/test/navigation_handle_observer.h",
+      "parentUuid": "6683de17_45994299",
+      "revId": "30e268aed75cedc82e32c50e905ba6954f143910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
