@@ -766,11 +766,11 @@ SelectToSpeak.prototype = {
       default:
         if (inForeground) {
           if (this.wordHighlight_ && this.currentNodeWord_ != null) {
-            // Only show the highlight if this is an inline text box or
-            // static text. Otherwise we'd be highlighting entire nodes,
-            // like images. Highlight should be only for text.
-            if (node.role == RoleType.INLINE_TEXT_BOX ||
-                node.role == RoleType.STATIC_TEXT) {
+            // Only show the highlight if this is an inline text box.
+            // Otherwise we'd be highlighting entire nodes, like images.
+            // Highlight should be only for text.
+            // Note that boundsForRange doesn't work on staticText.
+            if (node.role == RoleType.INLINE_TEXT_BOX) {
               chrome.accessibilityPrivate.setHighlights(
                   [node.boundsForRange(
                       this.currentNodeWord_.start, this.currentNodeWord_.end)],
