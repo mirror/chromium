@@ -901,6 +901,7 @@ class CC_EXPORT LayerTreeHostImpl
 
   TaskGraphRunner* task_graph_runner_;
   int id_;
+  const std::string trace_name_;
 
   std::set<SwapPromiseMonitor*> swap_promise_monitor_;
 

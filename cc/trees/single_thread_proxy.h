@@ -157,6 +157,7 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
   // Accessed from both threads.
   std::unique_ptr<Scheduler> scheduler_on_impl_thread_;
 
+  const std::string trace_name_;
   bool next_frame_is_newly_committed_frame_;
 
 #if DCHECK_IS_ON()
