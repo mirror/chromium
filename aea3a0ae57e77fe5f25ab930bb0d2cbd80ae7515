@@ -16,6 +16,24 @@
       "revId": "aea3a0ae57e77fe5f25ab930bb0d2cbd80ae7515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41aef595_47afa5c9",
+        "filename": "chrome/browser/sync/test/integration/bookmarks_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-28T12:34:56Z",
+      "side": 1,
+      "message": "I don\u0027t think this is desired: the runloop quit have quit earlier than WaitForSetFavicon() and that should be fine. I don\u0027t think it\u0027s happening in the current code, but I\u0027d be weird that this class *requires* clients that they guarantee this, which would mean they cannot run nested runloop between the instantiation of the class and WaitForSetFavicon().",
+      "parentUuid": "039e83e5_acf69294",
+      "revId": "aea3a0ae57e77fe5f25ab930bb0d2cbd80ae7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
