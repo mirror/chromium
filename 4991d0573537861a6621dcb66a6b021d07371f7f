@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "bdf7df67_ee59bc30",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2957,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T10:27:23Z",
+      "side": 1,
+      "message": "Yes, it still kills the bad process. I think internally it currently delegates to content::ReceivedBadMessage, though the long-term plans are somewhat up in the air. Given that we\u0027re moving this to Mojo, I feel like using the \"mojo\" way would make sense.",
+      "parentUuid": "3805a867_14ed2d15",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d88844f4_060d0277",
         "filename": "content/common/frame.mojom",
         "patchSetId": 16
