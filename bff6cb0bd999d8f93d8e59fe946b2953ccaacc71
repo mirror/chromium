@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71b72953_5e9211fa",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T19:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d29b0502_4fc689f9",
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a09f185c_cca5ec5c",
         "filename": "ash/wm/client_controlled_state.cc",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-27T17:23:10Z",
       "side": 1,
       "message": "Do we still use |state_type_|? Remove it and change it here to window_state-\u003eGetStateType()?",
+      "range": {
+        "startLine": 49,
+        "startChar": 44,
+        "endLine": 49,
+        "endChar": 55
+      },
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77024f5b_b74be267",
+        "filename": "ash/wm/client_controlled_state.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T19:44:04Z",
+      "side": 1,
+      "message": "WindowStateTypemojom::WindowStateType WindowState::GetStateType() const {\n  return current_state_-\u003eGetType();\n}",
+      "parentUuid": "a09f185c_cca5ec5c",
       "range": {
         "startLine": 49,
         "startChar": 44,
@@ -82,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "dc79af63_757517d7",
+        "filename": "ash/wm/client_controlled_state.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T19:44:04Z",
+      "side": 1,
+      "message": "Oops sorry. Removed.",
+      "parentUuid": "f9bcbcba_28f196c9",
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dee7dccb_e43d6529",
         "filename": "ash/wm/client_controlled_state.h",
         "patchSetId": 8
@@ -93,6 +153,24 @@
       "writtenOn": "2017-11-27T17:23:10Z",
       "side": 1,
       "message": "Why here change to window_state. Do we want to make it mojom?",
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd5add1_2145759f",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T19:44:04Z",
+      "side": 1,
+      "message": "\u003e Why here change to window_state. Do we want to make it mojom?\n\nThis is necessary to implement the client controlled window state management.",
+      "parentUuid": "dee7dccb_e43d6529",
       "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "bfff8654_cb703d10",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T19:44:04Z",
+      "side": 1,
+      "message": "That\u0027s the plan. I\u0027m planning to do it in the CL that moves frame/caption to chrome as it requires more changes (I need to make frame mode change dynamic, for example). Let me know if you want to consolidate now, but I still prefer to keep each CL smaller.\n\nFor aura-shell, I believe it will use this if the aura-shell client sets none , am I wrong?",
+      "parentUuid": "53f2eb35_46837073",
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "790ab8d9_9184f01c",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 8
@@ -127,6 +223,24 @@
       "writtenOn": "2017-11-27T17:23:10Z",
       "side": 1,
       "message": "From the comment in view, SetEnabled false will clear the focus. Not sure how this will affect the exo window. Maybe make it not focusable?",
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d66ae17_d030e645",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T19:44:04Z",
+      "side": 1,
+      "message": "This CL is just to eliminate the CustomFrameViewAshBase. I\u0027ll switch all cases to use this class and enable this.",
+      "parentUuid": "790ab8d9_9184f01c",
       "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
