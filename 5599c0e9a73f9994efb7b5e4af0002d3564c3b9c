@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "496bb548_7abcf03a",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-28T22:51:25Z",
+      "side": 1,
+      "message": "I\u0027m curious, if we explicitly snap width in these three cases then do we need to snap in response to generic bounds change events?",
+      "revId": "5599c0e9a73f9994efb7b5e4af0002d3564c3b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2743ae_9e8c79e9",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-28T22:51:25Z",
+      "side": 1,
+      "message": "nit: No need to DCHECK when the following line will crash if it\u0027s not provided.",
+      "revId": "5599c0e9a73f9994efb7b5e4af0002d3564c3b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

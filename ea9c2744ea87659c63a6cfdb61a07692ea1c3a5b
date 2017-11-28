@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "074b2bb1_ed477233",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-28T22:51:25Z",
+      "side": 1,
+      "message": "I\u0027m in favor of adding a parameter to indicate whether it was an active or passive change.\n\nThe other two sources I was thinking of was programmatic bounds change requests (e.g. chrome apps) and the multi window resizer (since I didn\u0027t think it creates a drag details for both windows).\n\nWe could then say\nif (IsSnapped) {\n  if (active)\n    UpdateSnappedWidthRatio(bounds);\n  else\n    AdjustSnappedBounds(bounds);\n}\n\nAlternately if we handle the specific events that we care about (e.g. display work area change) and only adjust the width explicitly in those cases then we can always update the snapped window width because it will just be the same.",
+      "parentUuid": "36f95770_34210891",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0726d5d1_83898c94",
         "filename": "ash/wm/window_state.cc",
         "patchSetId": 9
@@ -224,6 +242,24 @@
       "side": 1,
       "message": "Yes. It works fine. Should I add test coverage for it?\n\nI just knew the function of multi window resize and how to operate it : / We probably need adding metrics for it to know the metrics of user usage of this.",
       "parentUuid": "1cf5e8c3_12c1b649",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc1f681_3e2518de",
+        "filename": "ash/wm/window_state_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-28T22:51:25Z",
+      "side": 1,
+      "message": "Yes, we should test this. I could see this being common especially if we preserve snapped width proportions across screen area changes to do common splits (50/50, 60/40, etc).",
+      "parentUuid": "0675750d_f5ade3be",
       "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
