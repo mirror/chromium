@@ -62,7 +62,7 @@ class TestNavigationManager : public NavigationManager {
 
   // Adds an item to items_. Affects the return values for, GetItemCount(),
   // GetItemAtIndex(), and GetCurrentItemIndex().
-  void AddItem(const GURL& url, ui::PageTransition transition);
+  NavigationItem* AddItem(const GURL& url, ui::PageTransition transition);
 
   // Sets the index to be returned by GetLastCommittedItemIndex(). |index| must
   // be either -1 or between 0 and GetItemCount()-1, inclusively.

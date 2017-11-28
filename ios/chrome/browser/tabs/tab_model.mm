@@ -176,6 +176,9 @@ void CleanCertificatePolicyCache(
 
   // Used to ensure thread-safety of the certificate policy management code.
   base::CancelableTaskTracker _clearPoliciesTaskTracker;
+
+  // Used for dependency injection to make this class easier to test.
+  std::unique_ptr<web::WebStateCreationFactory> _webStateFactory;
 }
 
 // Session window for the contents of the tab model.
@@ -246,7 +249,20 @@ void CleanCertificatePolicyCache(
 - (instancetype)initWithSessionWindow:(SessionWindowIOS*)window
                        sessionService:(SessionServiceIOS*)service
                          browserState:(ios::ChromeBrowserState*)browserState {
+  return [self initWithSessionWindow:window
+                      sessionService:service
+                        browserState:browserState
+                     webStateFactory:web::WebStateCreationFactory::Create()];
+}
+
+- (instancetype)initWithSessionWindow:(SessionWindowIOS*)window
+                       sessionService:(SessionServiceIOS*)service
+                         browserState:(ios::ChromeBrowserState*)browserState
+                      webStateFactory:
+                          (std::unique_ptr<web::WebStateCreationFactory>)
+                              webStateFactory {
   if ((self = [super init])) {
+    _webStateFactory = std::move(webStateFactory);
     _observers = [TabModelObservers observers];
 
     _webStateListDelegate =
@@ -454,7 +470,8 @@ void CleanCertificatePolicyCache(
   web::WebState::CreateParams createParams(self.browserState);
   createParams.created_with_opener = openedByDOM;
 
-  std::unique_ptr<web::WebState> webState = web::WebState::Create(createParams);
+  std::unique_ptr<web::WebState> webState =
+      _webStateFactory->Create(createParams);
   webState->GetNavigationManager()->LoadURLWithParams(loadParams);
 
   insertionIndex = _webStateList->InsertWebState(
@@ -678,8 +695,9 @@ void CleanCertificatePolicyCache(
   web::WebState::CreateParams createParams(_browserState);
   DeserializeWebStateList(
       _webStateList.get(), window,
-      base::BindRepeating(&web::WebState::CreateWithStorageSession,
-                          createParams));
+      base::BindRepeating(
+          &web::WebStateCreationFactory::CreateWithStorageSession,
+          base::Unretained(_webStateFactory.get()), createParams));
 
   DCHECK_GT(_webStateList->count(), oldCount);
   int restoredCount = _webStateList->count() - oldCount;

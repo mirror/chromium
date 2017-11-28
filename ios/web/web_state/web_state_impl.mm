@@ -68,6 +68,22 @@ std::unique_ptr<WebState> WebState::CreateWithStorageSession(
   return base::WrapUnique(new WebStateImpl(params, session_storage));
 }
 
+/* static */
+std::unique_ptr<WebStateCreationFactory> WebStateCreationFactory::Create() {
+  return base::MakeUnique<WebStateCreationFactoryImpl>();
+}
+
+std::unique_ptr<WebState> WebStateCreationFactoryImpl::CreateWithStorageSession(
+    const WebState::CreateParams& params,
+    CRWSessionStorage* session_storage) {
+  return WebState::CreateWithStorageSession(params, session_storage);
+}
+
+std::unique_ptr<WebState> WebStateCreationFactoryImpl::Create(
+    const WebState::CreateParams& params) {
+  return WebState::Create(params);
+}
+
 WebStateImpl::WebStateImpl(const CreateParams& params)
     : WebStateImpl(params, nullptr) {}
 

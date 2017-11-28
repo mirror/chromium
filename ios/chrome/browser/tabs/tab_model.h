@@ -30,6 +30,7 @@ class ChromeBrowserState;
 namespace web {
 struct Referrer;
 class WebState;
+class WebStateCreationFactory;
 }
 
 // A list of notifications about changes in the model or changes in tab
@@ -126,8 +127,15 @@ NSUInteger const kTabPositionAutomatically = NSNotFound;
 // creation.
 - (instancetype)initWithSessionWindow:(SessionWindowIOS*)window
                        sessionService:(SessionServiceIOS*)service
+                         browserState:(ios::ChromeBrowserState*)browserState;
+
+// Initializes tabs from a restored session using the supplied WebState factory.
+- (instancetype)initWithSessionWindow:(SessionWindowIOS*)window
+                       sessionService:(SessionServiceIOS*)service
                          browserState:(ios::ChromeBrowserState*)browserState
-    NS_DESIGNATED_INITIALIZER;
+                      webStateFactory:
+                          (std::unique_ptr<web::WebStateCreationFactory>)
+                              webStateFactory NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
 

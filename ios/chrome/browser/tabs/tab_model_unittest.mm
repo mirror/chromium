@@ -31,11 +31,13 @@
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/referrer.h"
 #import "ios/web/public/serializable_user_data_manager.h"
+#import "ios/web/public/test/fakes/test_navigation_manager.h"
+#import "ios/web/public/test/fakes/test_web_state.h"
 #include "ios/web/public/test/scoped_testing_web_client.h"
 #include "ios/web/public/test/test_web_thread_bundle.h"
 #include "ios/web/public/web_thread.h"
-#import "ios/web/navigation/navigation_manager_impl.h"
 #import "ios/web/web_state/web_state_impl.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
 #include "testing/platform_test.h"
@@ -45,6 +47,37 @@
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
+
+namespace web {
+
+// A factory class for injecting TestWebState and TestNavigationManager into
+// TabModel in unit tests.
+class TestWebStateCreationFactory : public WebStateCreationFactory {
+ public:
+  ~TestWebStateCreationFactory() override = default;
+
+  std::unique_ptr<WebState> CreateWithStorageSession(
+      const WebState::CreateParams& params,
+      CRWSessionStorage* session_storage) override {
+    return CreateWithTestNavigationManager(params);
+  }
+  std::unique_ptr<WebState> Create(
+      const WebState::CreateParams& params) override {
+    return CreateWithTestNavigationManager(params);
+  }
+
+ private:
+  std::unique_ptr<WebState> CreateWithTestNavigationManager(
+      const WebState::CreateParams& params) {
+    auto web_state = base::MakeUnique<TestWebState>();
+    web_state->SetNavigationManager(base::MakeUnique<TestNavigationManager>());
+    web_state->SetBrowserState(params.browser_state);
+    web_state->SetSessionStorage([[CRWSessionStorage alloc] init]);
+    return web_state;
+  }
+};
+
+}  // namespace web
 
 // Defines a TabModelObserver for use in unittests.  This class can be used to
 // test if an observer method was called or not.
@@ -83,10 +116,9 @@ class TabModelTest : public PlatformTest {
     TestChromeBrowserState::Builder test_cbs_builder;
     chrome_browser_state_ = test_cbs_builder.Build();
 
-    session_window_ = [[SessionWindowIOS alloc] init];
-
-    // Create tab model with just a dummy session service so the async state
-    // saving doesn't trigger unless actually wanted.
+    // Creates tab model with TestWebState, TestNavigationManager and a dummy
+    // session service so the async state saving doesn't trigger unless actually
+    // wanted.
     SetTabModel(CreateTabModel([[TestSessionService alloc] init], nil));
   }
 
@@ -113,10 +145,22 @@ class TabModelTest : public PlatformTest {
     TabModel* tab_model([[TabModel alloc]
         initWithSessionWindow:session_window
                sessionService:session_service
-                 browserState:chrome_browser_state_.get()]);
+                 browserState:chrome_browser_state_.get()
+              webStateFactory:base::MakeUnique<
+                                  web::TestWebStateCreationFactory>()]);
     [tab_model setWebUsageEnabled:NO];
     [tab_model setPrimary:YES];
     return tab_model;
+  }
+
+  web::TestWebState* test_web_state(Tab* tab) {
+    return static_cast<web::TestWebState*>(tab.webState);
+  }
+
+  web::TestNavigationManager* test_navigation_manager(
+      web::WebState* web_state) {
+    return static_cast<web::TestNavigationManager*>(
+        web_state->GetNavigationManager());
   }
 
  protected:
@@ -137,7 +181,6 @@ class TabModelTest : public PlatformTest {
   web::TestWebThreadBundle thread_bundle_;
   IOSChromeScopedTestingChromeBrowserStateManager scoped_browser_state_manager_;
   web::ScopedTestingWebClient web_client_;
-  SessionWindowIOS* session_window_;
   std::unique_ptr<TestChromeBrowserState> chrome_browser_state_;
   TabModel* tab_model_;
 };
@@ -350,8 +393,11 @@ TEST_F(TabModelTest, RestoreSessionOnNTPTest) {
                               openedByDOM:NO
                                   atIndex:0
                              inBackground:NO];
-  web::WebStateImpl* web_state = static_cast<web::WebStateImpl*>(tab.webState);
-  web_state->GetNavigationManagerImpl().CommitPendingItem();
+  web::NavigationItem* item =
+      test_navigation_manager(tab.webState)
+          ->AddItem(GURL(kChromeUINewTabURL), ui::PAGE_TRANSITION_TYPED);
+  test_navigation_manager(tab.webState)->SetVisibleItem(item);
+  test_web_state(tab)->SetCurrentURL(item->GetURL());
 
   SessionWindowIOS* window(CreateSessionWindow());
   [tab_model_ restoreSessionWindow:window];
@@ -371,8 +417,12 @@ TEST_F(TabModelTest, RestoreSessionOn2NtpTest) {
                                openedByDOM:NO
                                    atIndex:0
                               inBackground:NO];
-  web::WebStateImpl* web_state = static_cast<web::WebStateImpl*>(tab0.webState);
-  web_state->GetNavigationManagerImpl().CommitPendingItem();
+  web::NavigationItem* item0 =
+      test_navigation_manager(tab0.webState)
+          ->AddItem(GURL(kChromeUINewTabURL), ui::PAGE_TRANSITION_TYPED);
+  test_navigation_manager(tab0.webState)->SetVisibleItem(item0);
+  test_web_state(tab0)->SetCurrentURL(item0->GetURL());
+
   Tab* tab1 = [tab_model_ insertTabWithURL:GURL(kChromeUINewTabURL)
                                   referrer:web::Referrer()
                                 transition:ui::PAGE_TRANSITION_TYPED
@@ -380,8 +430,11 @@ TEST_F(TabModelTest, RestoreSessionOn2NtpTest) {
                                openedByDOM:NO
                                    atIndex:1
                               inBackground:NO];
-  web_state = static_cast<web::WebStateImpl*>(tab1.webState);
-  web_state->GetNavigationManagerImpl().CommitPendingItem();
+  web::NavigationItem* item1 =
+      test_navigation_manager(tab1.webState)
+          ->AddItem(GURL(kChromeUINewTabURL), ui::PAGE_TRANSITION_TYPED);
+  test_navigation_manager(tab1.webState)->SetVisibleItem(item1);
+  test_web_state(tab0)->SetCurrentURL(item1->GetURL());
 
   SessionWindowIOS* window(CreateSessionWindow());
   [tab_model_ restoreSessionWindow:window];
@@ -406,8 +459,11 @@ TEST_F(TabModelTest, RestoreSessionOnAnyTest) {
                               openedByDOM:NO
                                   atIndex:0
                              inBackground:NO];
-  web::WebStateImpl* web_state = static_cast<web::WebStateImpl*>(tab.webState);
-  web_state->GetNavigationManagerImpl().CommitPendingItem();
+  web::NavigationItem* item =
+      test_navigation_manager(tab.webState)
+          ->AddItem(GURL(kURL1), ui::PAGE_TRANSITION_TYPED);
+  test_navigation_manager(tab.webState)->SetVisibleItem(item);
+  test_web_state(tab)->SetCurrentURL(item->GetURL());
 
   SessionWindowIOS* window(CreateSessionWindow());
   [tab_model_ restoreSessionWindow:window];
@@ -631,9 +687,15 @@ TEST_F(TabModelTest, AddWithOrderControllerAndGrouping) {
                                  openedByDOM:NO
                                      atIndex:[tab_model_ count]
                                 inBackground:NO];
-  // Force the history to update, as it is used to determine grouping.
-  ASSERT_TRUE([parent navigationManagerImpl]);
-  [parent navigationManagerImpl]->CommitPendingItem();
+  // Set up fake history in test navigation manager, as it is used to determine
+  // grouping.
+  web::NavigationItem* item =
+      test_navigation_manager(parent.webState)
+          ->AddItem(GURL(kURL1), ui::PAGE_TRANSITION_TYPED);
+  test_navigation_manager(parent.webState)->SetVisibleItem(item);
+  test_navigation_manager(parent.webState)->SetLastCommittedItem(item);
+  test_web_state(parent)->SetCurrentURL(item->GetURL());
+
   [tab_model_ insertTabWithURL:GURL(kURL1)
                       referrer:web::Referrer()
                     transition:ui::PAGE_TRANSITION_TYPED
@@ -680,8 +742,12 @@ TEST_F(TabModelTest, AddWithOrderControllerAndGrouping) {
       GURL("http://www.espn.com"));
   parent_params.transition_type = ui::PAGE_TRANSITION_TYPED;
   [parent navigationManager]->LoadURLWithParams(parent_params);
-  ASSERT_TRUE([parent navigationManagerImpl]);
-  [parent navigationManagerImpl]->CommitPendingItem();
+  web::NavigationItem* item2 =
+      test_navigation_manager(parent.webState)
+          ->AddItem(GURL(kURL1), ui::PAGE_TRANSITION_TYPED);
+  test_navigation_manager(parent.webState)->SetLastCommittedItem(item2);
+  test_navigation_manager(parent.webState)->SetVisibleItem(item2);
+
   EXPECT_EQ([tab_model_ indexOfTab:parent], 0U);
 
   // Add a new tab. It should be added behind the parent. It should not be added
@@ -732,9 +798,15 @@ TEST_F(TabModelTest, AddWithLinkTransitionAndIndex) {
                                  openedByDOM:NO
                                      atIndex:[tab_model_ count]
                                 inBackground:NO];
-  // Force the history to update, as it is used to determine grouping.
-  ASSERT_TRUE([parent navigationManagerImpl]);
-  [parent navigationManagerImpl]->CommitPendingItem();
+  // Set up fake history in test navigation manager, as it is used to determine
+  // grouping.
+  web::NavigationItem* item =
+      test_navigation_manager(parent.webState)
+          ->AddItem(GURL(kURL1), ui::PAGE_TRANSITION_TYPED);
+  test_navigation_manager(parent.webState)->SetVisibleItem(item);
+  test_navigation_manager(parent.webState)->SetLastCommittedItem(item);
+  test_web_state(parent)->SetCurrentURL(item->GetURL());
+
   [tab_model_ insertTabWithURL:GURL(kURL1)
                       referrer:web::Referrer()
                     transition:ui::PAGE_TRANSITION_TYPED
@@ -903,14 +975,34 @@ TEST_F(TabModelTest, TabCreatedOnInsertion) {
   EXPECT_NSNE(nil, LegacyTabHelper::GetTabForWebState(web_state_ptr));
 }
 
-TEST_F(TabModelTest, PersistSelectionChange) {
+// Text fixture that uses real WebState.
+class TabModelWithWebStateTest : public TabModelTest {
+ public:
+  ~TabModelWithWebStateTest() override = default;
+
+  // Creates a TabModel with a real web::WebState.
+  TabModel* CreateTabModelWithWebState(SessionServiceIOS* session_service,
+                                       SessionWindowIOS* session_window) {
+    TabModel* tab_model([[TabModel alloc]
+        initWithSessionWindow:session_window
+               sessionService:session_service
+                 browserState:chrome_browser_state_.get()]);
+    [tab_model setWebUsageEnabled:NO];
+    [tab_model setPrimary:YES];
+    return tab_model;
+  }
+};
+
+// Tests that current tab index and tab opener relationship are persisted across
+// session save and restore.
+TEST_F(TabModelWithWebStateTest, PersistSelectionChange) {
   NSString* stashPath =
       base::SysUTF8ToNSString(chrome_browser_state_->GetStatePath().value());
 
   // Reset the TabModel with a custom SessionServiceIOS (to control whether
   // data is saved to disk).
   TestSessionService* test_session_service = [[TestSessionService alloc] init];
-  SetTabModel(CreateTabModel(test_session_service, nil));
+  SetTabModel(CreateTabModelWithWebState(test_session_service, nil));
 
   [tab_model_ insertTabWithURL:GURL(kURL1)
                       referrer:web::Referrer()
@@ -957,7 +1049,7 @@ TEST_F(TabModelTest, PersistSelectionChange) {
   SessionWindowIOS* session_window = session.sessionWindows[0];
 
   // Create tab model from saved session.
-  SetTabModel(CreateTabModel(test_session_service, session_window));
+  SetTabModel(CreateTabModelWithWebState(test_session_service, session_window));
 
   ASSERT_EQ(3u, [tab_model_ count]);
 
