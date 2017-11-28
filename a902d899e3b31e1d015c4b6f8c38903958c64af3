@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d37a94c1_4dd6a474",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLDocumentParser.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-28T18:40:55Z",
+      "side": 1,
+      "message": "Background parsing is already not working. The background thread was already removed and the parsing tasks are posted to the main thread (which doesn\u0027t make sense).\n\nInstead of introducing should_use_threading_, can we simply disable threading completely?",
+      "revId": "a902d899e3b31e1d015c4b6f8c38903958c64af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d526bb6b_963beb30",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-28T18:40:55Z",
+      "side": 1,
+      "message": "Add a comment for why we have to use MaybeDeferTask...",
+      "revId": "a902d899e3b31e1d015c4b6f8c38903958c64af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcec764_ce7b4b56",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-28T18:40:55Z",
+      "side": 1,
+      "message": "Add a comment for why we have to use MaybeDeferTask...",
+      "revId": "a902d899e3b31e1d015c4b6f8c38903958c64af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ef6a35_217ab09a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-28T18:40:55Z",
+      "side": 1,
+      "message": "Nit: I\u0027m fine with the following pattern as well.\n\nif (CurrentThread()-\u003eScheduler()-\u003eIsVirtualTimeEnabled) {\n  postDelayedTask(...);\n} else {\n  postTask(...);\n}\n\nwhich will clarify what we\u0027re doing.",
+      "revId": "a902d899e3b31e1d015c4b6f8c38903958c64af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
