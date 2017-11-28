@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d4b5b2c_dede5008",
+        "filename": "base/bind.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-28T10:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c231f391_5fcad413",
+      "range": {
+        "startLine": 242,
+        "startChar": 9,
+        "endLine": 242,
+        "endChar": 15
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e50bb4d_be3ce1c3",
         "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18400892_3a588f65",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-28T10:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e50bb4d_be3ce1c3",
+      "range": {
+        "startLine": 66,
+        "startChar": 27,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "050739e4_394db8dc",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-28T10:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "190ef37a_6f3be5b9",
+      "range": {
+        "startLine": 48,
+        "startChar": 30,
+        "endLine": 48,
+        "endChar": 60
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1299c45_bc121a6e",
         "filename": "services/service_manager/public/cpp/interface_provider.h",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-28T05:30:45Z",
       "side": 1,
       "message": "pass by value?",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 75
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1e506e_31c90de4",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-28T10:38:54Z",
+      "side": 1,
+      "message": "Done, but I didn\u0027t add std::move() to all the use sites, because this function is used in many places, and fixing those would increase the number of required OWNERs even more...",
+      "parentUuid": "e1299c45_bc121a6e",
       "range": {
         "startLine": 32,
         "startChar": 8,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "73ce1f41_fb198335",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-28T10:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb286bb1_4b6d5b25",
+      "range": {
+        "startLine": 126,
+        "startChar": 21,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f54a996_f250a959",
         "filename": "third_party/WebKit/Source/core/dom/ScriptedAnimationControllerTest.cpp",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-28T05:30:45Z",
       "side": 1,
       "message": "I think this should be once.",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4eae18b_32c628b8",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedAnimationControllerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-28T10:38:54Z",
+      "side": 1,
+      "message": "The return value of this function is passed to RunTaskCallback ctor defined below (see line 176), which explicitly takes WTF::RepeatingClosure. So this needs to be Repeating.",
+      "parentUuid": "7f54a996_f250a959",
       "range": {
         "startLine": 47,
         "startChar": 7,
@@ -175,6 +319,24 @@
     },
     {
       "key": {
+        "uuid": "3118a135_cdc58143",
+        "filename": "third_party/WebKit/Source/modules/nfc/NFC.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-28T10:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3791138c_76965356",
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1786fb30_7245068e",
         "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
         "patchSetId": 4
@@ -186,6 +348,30 @@
       "writtenOn": "2017-11-28T05:30:45Z",
       "side": 1,
       "message": "explicit?\n\nCan\u0027t we use OnceCallback here yet? If not, IIUC, can we leave this as base::Callback as this should eventually converted to OnceCallback?.",
+      "range": {
+        "startLine": 293,
+        "startChar": 1,
+        "endLine": 293,
+        "endChar": 2
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b01d4d_3f513ef8",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-28T10:38:54Z",
+      "side": 1,
+      "message": "Re explicit: Removing explicit causes compile errors in a few places where the code does legitimate conversions from RepeatingCB. I could keep explicit here but didn\u0027t because:\n\n(1) It\u0027s very tedious to manually write static_cast\u003cWTF::Function\u003cFUNCTION SIGNATURE\u003e\u003e in every place that does the conversion; and\n(2) Function\u003c\u003e is going to be removed eventually, and after that, we\u0027ll anyway have an implicit conversion from base::RepeatingCB to base::OnceCB (unless you have a plan to remove the implicit conversion in the future).\n\nRe Callback vs RepeatingCallback: I simply wanted to emphasize you could convert a repeating callback to Function, which mostly represents a once callback after this patch. I don\u0027t have a strong opinion, but I want to learn the principle how you choose one of these two names before proceeding to revert this.",
+      "parentUuid": "1786fb30_7245068e",
       "range": {
         "startLine": 293,
         "startChar": 1,
@@ -212,6 +398,24 @@
       "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac5ad7b_6cdd1c8c",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-28T10:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "063b3521_399b6de4",
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
