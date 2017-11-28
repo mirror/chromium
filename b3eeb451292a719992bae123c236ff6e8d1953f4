@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ebbb502_58f92c26",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-28T13:08:54Z",
+      "side": 1,
+      "message": "nit: The definition of \"primary\" might not be clear here.\n\nI\u0027d say a more important piece of information would be which c-tor to use when. Something like:\n// Production code should construct PasswordManagerPorter by passing it a CredentialProviderInterface. The constructor will create an appropriate PasswordManagerExporter based on that.\nexplicit PasswordManagerPorter(password_manager::CredentialProviderInterface*\n                                     credential_provider_interface);\n\n// Test code might wish to bypass the automatic creation and inject a fake PasswordManagerExporter directly.\nexplicit PasswordManagerPorter(\n      std::unique_ptr\u003cpassword_manager::PasswordManagerExporter\u003e exporter);",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "b3eeb451292a719992bae123c236ff6e8d1953f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
