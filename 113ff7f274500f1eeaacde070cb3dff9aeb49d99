@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c61075b4_dfec4958",
+        "filename": "content/browser/service_worker/service_worker_database.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T05:46:45Z",
+      "side": 1,
+      "message": "I assume the reader will just ignore these values going forward? Maybe should have a test...?",
+      "revId": "113ff7f274500f1eeaacde070cb3dff9aeb49d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
