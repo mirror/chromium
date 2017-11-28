@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3bb5e65_bea1f9f3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T00:33:12Z",
+      "side": 0,
+      "message": "This is not used.",
+      "revId": "451ec1354a5cd9030d97324eb89cf00bf282a8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
