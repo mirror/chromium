@@ -22,6 +22,30 @@
       "revId": "13f963b88c503dec45d25e7ca518a7b0fb4609d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550b7047_5a656494",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-28T04:39:40Z",
+      "side": 1,
+      "message": "Intended behavior is as you suggested, and I\u0027m sorry, this change comes from my rudeness and laziness in setting build configurations.\nI\u0027ll update without this fall-back routine, when I fix-up GN settings.",
+      "parentUuid": "bdf854aa_b6510d6a",
+      "range": {
+        "startLine": 301,
+        "startChar": 4,
+        "endLine": 301,
+        "endChar": 21
+      },
+      "revId": "13f963b88c503dec45d25e7ca518a7b0fb4609d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
