@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "237e054e_cb782c14",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-28T14:23:44Z",
+      "side": 1,
+      "message": "Any reason not to just set this in -viewDidLoad instead?",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 111,
+        "endChar": 27
+      },
+      "revId": "fad7019351cdb3a20934a38c7beed526412391c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
