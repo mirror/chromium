@@ -232,6 +232,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
     net_error_code_ = net_error_code;
   }
 
+  void set_url(const GURL& new_url) { url_ = new_url; }
+
   // Returns whether the navigation is currently being transferred from one
   // RenderFrameHost to another. In particular, a DidStartProvisionalLoad IPC
   // for the navigation URL, received in the new RenderFrameHost, should not
