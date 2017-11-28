@@ -118,6 +118,11 @@ PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
         ukm_entry_builder_.SetUser_Action_SelectedDifferentPasswordInBubble(
             action.second);
         break;
+      case DetailedUserAction::kTriggeredManualFallbackForSavingOrUpdating:
+        /*ukm_entry_builder_
+            .SetUser_Action_TriggeredManualFallbackForSavingOrUpdating(
+                action.second);*/
+        break;
       case DetailedUserAction::kCorrectedUsernameInForm:
         ukm_entry_builder_.SetUser_Action_CorrectedUsernameInForm(
             action.second);
@@ -125,6 +130,7 @@ PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
     }
   }
 
+  LOG(ERROR) << "ukm_recorder_ " << ukm_recorder_;
   ukm_entry_builder_.Record(ukm_recorder_);
 
   // Bind |main_frame_url_| to |source_id_| directly before sending the content

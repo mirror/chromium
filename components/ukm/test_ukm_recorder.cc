@@ -75,16 +75,19 @@ bool TestUkmRecorder::ShouldRestrictToWhitelistedSourceIds() const {
 std::set<ukm::SourceId> TestUkmRecorder::GetSourceIds() const {
   std::set<ukm::SourceId> result;
   for (const auto& kv : sources()) {
+    LOG(ERROR) << "source0 " << kv.second->url();
     result.insert(kv.first);
   }
   for (const auto& it : entries()) {
     result.insert(it->source_id);
   }
+  LOG(ERROR) << "#sources " << result.size();
   return result;
 }
 
 const UkmSource* TestUkmRecorder::GetSourceForUrl(const char* url) const {
   for (const auto& kv : sources()) {
+    LOG(ERROR) << "source " << kv.second->url();
     if (kv.second->url() == url)
       return kv.second.get();
   }
