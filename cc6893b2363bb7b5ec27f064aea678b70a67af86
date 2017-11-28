@@ -46,6 +46,30 @@
       "revId": "cc6893b2363bb7b5ec27f064aea678b70a67af86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19945621_cc93cb33",
+        "filename": "components/arc/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-28T23:25:34Z",
+      "side": 1,
+      "message": "Asked the owners in https://chromium-review.googlesource.com/#/c/794879/ .\n\nThe last attempt (for std::make_unique, above) was met with a bit of resistance: https://chromium-review.googlesource.com/c/chromium/src/+/694923",
+      "parentUuid": "a08f9fef_88685dcf",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 51
+      },
+      "revId": "cc6893b2363bb7b5ec27f064aea678b70a67af86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
