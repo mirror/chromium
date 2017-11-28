@@ -6,7 +6,9 @@
 
 #include "base/guid.h"
 #include "base/strings/stringprintf.h"
+#include "chrome/browser/chromeos/login/signin_certs_user_data.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
+#include "chromeos/chromeos_switches.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/storage_partition.h"
@@ -70,13 +72,15 @@ void SigninPartitionManager::StartSigninSession(
   GURL guest_site = GetGuestSiteURL(storage_partition_domain_,
                                     current_storage_partition_name_);
 
-  // Prepare the StoragePartition
+  // Prepare the StoragePartition: Mark that it's allowed to use client
+  // certificate authentication.
   current_storage_partition_ =
       content::BrowserContext::GetStoragePartitionForSite(browser_context_,
                                                           guest_site, true);
-
-  // TODO(pmarko): crbug.com/723849: Set UserData on |current_storage_partition|
-  // to allow client certificates.
+  if (switches::IsSigninFrameClientCertsEnabled()) {
+    SigninCertsUserData::CreateForStoragePartition(current_storage_partition_)
+        ->set_allow_client_certificates(true);
+  }
 }
 
 void SigninPartitionManager::CloseCurrentSigninSession(

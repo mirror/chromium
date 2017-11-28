@@ -19,17 +19,28 @@ namespace chromeos {
 // NSSProfileFilterChromeOS.
 class ClientCertFilterChromeOS : public ClientCertStoreChromeOS::CertFilter {
  public:
+  // Creates a ClientCertFilterChromeOS for |username_hash|. If |use_system| is
+  // true, certificates from the system slot will also be allowed.
+  static std::unique_ptr<ClientCertFilterChromeOS> CreateForUserProfile(
+      bool use_system_,
+      const std::string& username_hash);
+  // Creates a ClientCertFilterChromeOS which only allows certificates from the
+  // system slot.
+  static std::unique_ptr<ClientCertFilterChromeOS> CreateForSigninProfile();
+
+  ~ClientCertFilterChromeOS() override;
+
+  // ClientCertStoreChromeOS::CertFilter:
+  bool Init(const base::Closure& callback) override;
+  bool IsCertAllowed(CERTCertificate* cert) const override;
+
+ protected:
   // The internal NSSProfileFilterChromeOS will be initialized with the public
   // and private slot of the user with |username_hash| and with the system slot
   // if |use_system_slot| is true.
   // If |username_hash| is empty, no public and no private slot will be used.
   ClientCertFilterChromeOS(bool use_system_slot,
                            const std::string& username_hash);
-  ~ClientCertFilterChromeOS() override;
-
-  // ClientCertStoreChromeOS::CertFilter:
-  bool Init(const base::Closure& callback) override;
-  bool IsCertAllowed(CERTCertificate* cert) const override;
 
  private:
   // Called back if the system slot was retrieved asynchronously. Continues the
