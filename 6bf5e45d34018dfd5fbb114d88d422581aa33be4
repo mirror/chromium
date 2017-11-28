@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb9754b8_a020db47",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-28T15:28:41Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "8c4cda94_c596eebb",
+      "revId": "6bf5e45d34018dfd5fbb114d88d422581aa33be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ba994e_73a50f6d",
         "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d129e975_a1e93852",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-28T15:28:41Z",
+      "side": 0,
+      "message": "Done.\n\nJust to make sure I really understand, the previous definition of this counter was added just a few days ago (crrev.com/c/777770). Since we\u0027re before branching point, I assumed no UMA stats have actually been collected on the previous definition. That\u0027s why I changed the enum without the deprecation steps. Is this assumption incorrect?",
+      "parentUuid": "a0ba994e_73a50f6d",
+      "revId": "6bf5e45d34018dfd5fbb114d88d422581aa33be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9d40428_75ec08d1",
         "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.mm",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "6bf5e45d34018dfd5fbb114d88d422581aa33be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cc9516_f667b2b4",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-28T15:28:41Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c9d40428_75ec08d1",
+      "revId": "6bf5e45d34018dfd5fbb114d88d422581aa33be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
