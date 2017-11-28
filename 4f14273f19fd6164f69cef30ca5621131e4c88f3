@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "966b4d94_bfd70876",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-28T08:34:43Z",
+      "side": 1,
+      "message": "Lines 588-590 can be removed. |this_ptr| is guaranteed to be alive, since nothing happened after it has been created.",
+      "range": {
+        "startLine": 590,
+        "startChar": 11,
+        "endLine": 590,
+        "endChar": 0
+      },
+      "revId": "4f14273f19fd6164f69cef30ca5621131e4c88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
