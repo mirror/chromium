@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94a1e38c_d01a060b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-28T10:08:26Z",
+      "side": 1,
+      "message": "Do we need to mention ScriptResource here at all?",
+      "range": {
+        "startLine": 75,
+        "startChar": 50,
+        "endLine": 75,
+        "endChar": 64
+      },
+      "revId": "b52b2cf71c791f879748a876b4f1acb8a332f4a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

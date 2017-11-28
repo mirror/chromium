@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57a4f5d2_4a6b31b3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-28T10:08:26Z",
+      "side": 0,
+      "message": "Would we want to keep this DCHECK, replacing !resource with !streamer, or is it irrelevant?",
+      "range": {
+        "startLine": 433,
+        "startChar": 2,
+        "endLine": 433,
+        "endChar": 8
+      },
+      "revId": "1afe6a5971f2dbb880e6c26d7a7772c3b7007715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
