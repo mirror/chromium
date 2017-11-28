@@ -34,6 +34,24 @@
       "revId": "9cbb9ac8d7bad04249096594a529afc11d55a0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ad9864_cf4ee253",
+        "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-28T19:46:42Z",
+      "side": 1,
+      "message": "Ah, I mistakenly thought that tab-modal dialogs were using BubbleDialogDelegate. Yeah, I\u0027m pretty sure the min size isn\u0027t used for bubbles, but checking would be nice.",
+      "parentUuid": "a6029118_6bdb246b",
+      "revId": "9cbb9ac8d7bad04249096594a529afc11d55a0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
