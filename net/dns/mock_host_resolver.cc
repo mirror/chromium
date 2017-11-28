@@ -159,6 +159,16 @@ HostCache* MockHostResolverBase::GetHostCache() {
   return cache_.get();
 }
 
+bool MockHostResolverBase::HasCached(
+    base::StringPiece hostname,
+    HostCache::Entry::Source* source_out,
+    HostCache::EntryStaleness* stale_out) const {
+  if (cache_ == nullptr)
+    return false;
+
+  return HasCacheEntry(cache_.get(), hostname, source_out, stale_out);
+}
+
 void MockHostResolverBase::ResolveAllPending() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(ondemand_mode_);
