@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3cb50c_6f413863",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAnimationAgent.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-28T19:31:40Z",
+      "side": 1,
+      "message": "Inline this one?",
+      "revId": "7c06a78cf891e51e992808ccb6940c7b27878b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
