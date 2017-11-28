@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14e2b39b_ece7de0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunStatus.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T22:35:46Z",
+      "side": 1,
+      "message": "Yes, this works as expected.",
+      "parentUuid": "88e13002_8e92d554",
+      "revId": "d811e9cbc7fe43812621f77d29d6445a8b195fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c03b0c5_4b9654db",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunStatus.java",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "d811e9cbc7fe43812621f77d29d6445a8b195fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8517bdd_ddd71ed8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunStatus.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T22:35:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c03b0c5_4b9654db",
+      "range": {
+        "startLine": 39,
+        "startChar": 55,
+        "endLine": 39,
+        "endChar": 91
+      },
+      "revId": "d811e9cbc7fe43812621f77d29d6445a8b195fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
