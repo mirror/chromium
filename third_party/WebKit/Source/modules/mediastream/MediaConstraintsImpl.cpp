@@ -36,6 +36,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/UseCounter.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/origin_trials/origin_trials.h"
 #include "modules/mediastream/MediaTrackConstraints.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/Assertions.h"
@@ -102,6 +103,7 @@ const char kGoogArrayGeometry[] = "googArrayGeometry";
 const char kGoogHighpassFilter[] = "googHighpassFilter";
 const char kGoogTypingNoiseDetection[] = "googTypingNoiseDetection";
 const char kGoogAudioMirroring[] = "googAudioMirroring";
+const char kDisableHwNoiseSuppression[] = "disableHwNoiseSuppression";
 
 // From
 // third_party/libjingle/source/talk/app/webrtc/mediaconstraintsinterface.cc
@@ -350,6 +352,11 @@ static void ParseOldStyleNames(
       result.goog_typing_noise_detection.SetExact(ToBoolean(constraint.value_));
     } else if (constraint.name_.Equals(kGoogAudioMirroring)) {
       result.goog_audio_mirroring.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kDisableHwNoiseSuppression)) {
+      if (OriginTrials::disableHwNoiseSuppressionEnabled(context)) {
+        result.disable_hw_noise_suppression.SetExact(
+            ToBoolean(constraint.value_));
+      }
     } else if (constraint.name_.Equals(kDAEchoCancellation)) {
       result.goog_da_echo_cancellation.SetExact(ToBoolean(constraint.value_));
     } else if (constraint.name_.Equals(kNoiseReduction)) {
@@ -669,6 +676,11 @@ void CopyConstraintSet(const MediaTrackConstraintSet& constraints_in,
     CopyBooleanConstraint(constraints_in.echoCancellation(), naked_treatment,
                           constraint_buffer.echo_cancellation);
   }
+  if (constraints_in.hasDisableHwNoiseSuppression()) {
+    CopyBooleanConstraint(constraints_in.disableHwNoiseSuppression(),
+                          naked_treatment,
+                          constraint_buffer.disable_hw_noise_suppression);
+  }
   if (constraints_in.hasLatency()) {
     CopyDoubleConstraint(constraints_in.latency(), naked_treatment,
                          constraint_buffer.latency);
@@ -922,6 +934,10 @@ void ConvertConstraintSet(const WebMediaTrackConstraintSet& input,
   if (!input.echo_cancellation.IsEmpty()) {
     output.setEchoCancellation(
         ConvertBoolean(input.echo_cancellation, naked_treatment));
+  }
+  if (!input.disable_hw_noise_suppression.IsEmpty()) {
+    output.setDisableHwNoiseSuppression(
+        ConvertBoolean(input.disable_hw_noise_suppression, naked_treatment));
   }
   if (!input.latency.IsEmpty())
     output.setLatency(ConvertDouble(input.latency, naked_treatment));

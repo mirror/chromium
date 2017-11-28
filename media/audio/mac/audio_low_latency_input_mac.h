@@ -201,6 +201,9 @@ class MEDIA_EXPORT AUAudioInputStream
   // Note that, this format can differ from the device(=input) format.
   AudioStreamBasicDescription format_;
 
+  // The audio parameters requested when creating the stream.
+  AudioParameters input_params_;
+
   // The special Audio Unit called AUHAL, which allows us to pass audio data
   // directly from a microphone, through the HAL, and to our application.
   // The AUHAL also enables selection of non default devices.
@@ -289,6 +292,8 @@ class MEDIA_EXPORT AUAudioInputStream
   UInt32 total_lost_frames_;
   UInt32 largest_glitch_frames_;
   int glitches_detected_;
+
+  bool noise_reduction_suppressed_;
 
   // Callback to send statistics info.
   AudioManager::LogCallback log_callback_;
