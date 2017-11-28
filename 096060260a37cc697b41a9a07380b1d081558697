@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "93a7e89b_9d041895",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/compiled_resources2.gyp",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-28T10:26:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f13546de_3b554e49",
+      "range": {
+        "startLine": 4,
+        "startChar": 1,
+        "endLine": 4,
+        "endChar": 0
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63bd307d_a175b9c8",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation.js",
         "patchSetId": 11
@@ -238,6 +262,24 @@
       "side": 1,
       "message": "\u003cstyle\u003e tags have to be within \u003ctemplate\u003e for Polymer2 (shadow DOM v1). For Polymer1 (shadow DOM v0), they can appear anywhere, see https://www.polymer-project.org/2.0/docs/upgrade#dom-template, specifically the part that says\n\n\"Make sure your element\u0027s styles are defined inside the template. Defining styles outside the template was deprecated in Polymer 1.x and is no longer supported.\"",
       "parentUuid": "3b0b0e69_ce79851e",
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d51d00e0_c83f3d46",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-28T10:26:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3244145_e9360a66",
       "revId": "096060260a37cc697b41a9a07380b1d081558697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

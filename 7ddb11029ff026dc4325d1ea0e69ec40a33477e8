@@ -16,6 +16,24 @@
       "revId": "7ddb11029ff026dc4325d1ea0e69ec40a33477e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d981fa65_7382f8bf",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-28T10:26:56Z",
+      "side": 1,
+      "message": "Ack, will add this info to the comment.",
+      "parentUuid": "d2fca283_e26fd704",
+      "revId": "7ddb11029ff026dc4325d1ea0e69ec40a33477e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
