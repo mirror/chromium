@@ -1062,17 +1062,9 @@ void HWNDMessageHandler::HandleParentChanged() {
   touch_ids_.clear();
 }
 
-LRESULT HWNDMessageHandler::ApplyDManipTransform(float scale,
-                                                 float scroll_x,
-                                                 float scroll_y) {
+LRESULT HWNDMessageHandler::SendMouseWheel(float scroll_x, float scroll_y) {
   gfx::Vector2d offset{scroll_x, scroll_y};
   int flags = ui::EF_NONE;
-
-  // Pinch zoom event if scale '>' 1.0
-  if (fabs(1.0f - scale) > std::numeric_limits<float>::epsilon()) {
-    offset = scale > 1 ? gfx::Vector2d(120, 120) : gfx::Vector2d(-120, -120);
-    flags = ui::EF_CONTROL_DOWN;
-  }
 
   POINT cursor_pos = {0};
   ::GetCursorPos(&cursor_pos);
@@ -1085,6 +1077,46 @@ LRESULT HWNDMessageHandler::ApplyDManipTransform(float scale,
 
   base::WeakPtr<HWNDMessageHandler> ref(weak_factory_.GetWeakPtr());
   return delegate_->HandleMouseEvent(wheel_event);
+}
+
+void HWNDMessageHandler::SendGesturePinchBegin() {
+  POINT cursor_pos = {0};
+  ::GetCursorPos(&cursor_pos);
+  ScreenToClient(hwnd(), &cursor_pos);
+
+  ui::GestureEventDetails event_details(ui::ET_GESTURE_PINCH_BEGIN);
+  event_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
+
+  ui::GestureEvent event(cursor_pos.x, cursor_pos.y, ui::EF_NONE,
+                         base::TimeTicks::Now(), event_details);
+  delegate_->HandleGestureEvent(event);
+}
+
+LRESULT HWNDMessageHandler::SendGesturePinchUpdate(float scale) {
+  POINT cursor_pos = {0};
+  ::GetCursorPos(&cursor_pos);
+  ScreenToClient(hwnd(), &cursor_pos);
+
+  ui::GestureEventDetails event_details(ui::ET_GESTURE_PINCH_UPDATE);
+  event_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
+  event_details.set_scale(scale);
+
+  ui::GestureEvent event(cursor_pos.x, cursor_pos.y, ui::EF_NONE,
+                         base::TimeTicks::Now(), event_details);
+  return delegate_->HandleGestureEvent(event);
+}
+
+void HWNDMessageHandler::SendGesturePinchEnd() {
+  POINT cursor_pos = {0};
+  ::GetCursorPos(&cursor_pos);
+  ScreenToClient(hwnd(), &cursor_pos);
+
+  ui::GestureEventDetails event_details(ui::ET_GESTURE_PINCH_END);
+  event_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
+
+  ui::GestureEvent event(cursor_pos.x, cursor_pos.y, ui::EF_NONE,
+                         base::TimeTicks::Now(), event_details);
+  delegate_->HandleGestureEvent(event);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

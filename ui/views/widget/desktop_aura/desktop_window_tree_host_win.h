@@ -208,6 +208,7 @@ class VIEWS_EXPORT DesktopWindowTreeHostWin
                     LRESULT* result) override;
   void PostHandleMSG(UINT message, WPARAM w_param, LPARAM l_param) override;
   bool HandleScrollEvent(const ui::ScrollEvent& event) override;
+  bool HandleGestureEvent(const ui::GestureEvent& event) override;
   void HandleWindowSizeChanging() override;
   void HandleWindowSizeUnchanged() override;
   void HandleWindowScaleFactorChanged(float window_scale_factor) override;
