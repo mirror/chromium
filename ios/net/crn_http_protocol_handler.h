@@ -7,6 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
+#include "net/base/load_timing_info.h"
+#include "net/http/http_response_info.h"
+
 namespace net {
 class URLRequestContextGetter;
 
@@ -31,12 +34,30 @@ class HTTPProtocolHandlerDelegate {
   virtual URLRequestContextGetter* GetDefaultURLRequestContext() = 0;
 };
 
+struct Metrics {
+  NSURLSessionTask* task;
+  LoadTimingInfo load_timing_info;
+  HttpResponseInfo response_info;
+};
+
+class MetricsDelegate {
+ public:
+  // Set the global instance of the MetricsDelegate.
+  static void SetInstance(MetricsDelegate* delegate);
+
+  virtual ~MetricsDelegate() = default;
+
+  // This is invoked once the request is finally stopped, with metrics data
+  // collect by net passed in as an argument.
+  virtual void OnStopNetRequest(net::Metrics metrics) = 0;
+};
+
 }  // namespace net
 
 // Custom NSURLProtocol handling HTTP and HTTPS requests.
-// The HttpProtocolHandler is registered as a NSURLProtocol in the iOS system.
-// This protocol is called for each NSURLRequest. This allows handling the
-// requests issued by UIWebView using our own network stack.
+// The HttpProtocolHandler is registered as a NSURLProtocol in the iOS
+// system. This protocol is called for each NSURLRequest. This allows
+// handling the requests issued by UIWebView using our own network stack.
 @interface CRNHTTPProtocolHandler : NSURLProtocol
 @end
 
