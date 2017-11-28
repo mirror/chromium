@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2f1a5c1_6c2b8173",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-28T20:18:58Z",
+      "side": 1,
+      "message": "How many distinct values is this histogram expected to see, across all users?  This approach seems fine as long as that number is not more than a few hundred.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 62
+      },
+      "revId": "4e5f8967cac1ac2616eaec9e0edb0c53c7e734f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57d0d16_42e02cf1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 92552,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-28T20:18:58Z",
+      "side": 1,
+      "message": "If possible, please define an enum in enums.xml that lists out the commonly expected values.  It\u0027s fine if the enum is incomplete; any unmapped values will just show the backing integer value.",
+      "range": {
+        "startLine": 92552,
+        "startChar": 39,
+        "endLine": 92552,
+        "endChar": 76
+      },
+      "revId": "4e5f8967cac1ac2616eaec9e0edb0c53c7e734f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
