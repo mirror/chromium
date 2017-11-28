@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "096e1ff9_c772c6a7",
+        "filename": "components/cast_channel/cast_channel_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-28T18:03:18Z",
+      "side": 1,
+      "message": "Maybe add a version that takes a std::string to reduce duplication elsewhere.",
+      "revId": "419547dcc13cd513acf5d913776afd3ca599397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fee20da_abaaa3cb",
+        "filename": "components/cast_channel/cast_socket_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-28T18:03:18Z",
+      "side": 1,
+      "message": "I wonder if we should just force callers to pass valid IP addresses (i.e. turn this into a CHECK) vs passing a nullptr which seems like a recipe for crashes?  It looks like the callers already do their own validation.",
+      "revId": "419547dcc13cd513acf5d913776afd3ca599397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b1878a_d13d98ec",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-28T18:03:18Z",
+      "side": 1,
+      "message": "I\u0027m assuming the validation in Prepare() will prevent this from firing?",
+      "revId": "419547dcc13cd513acf5d913776afd3ca599397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
