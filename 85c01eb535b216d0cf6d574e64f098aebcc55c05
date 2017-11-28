@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fc7fb41_15be91ff",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-28T19:10:02Z",
+      "side": 1,
+      "message": "I made media_source_helper expose \"auto-join\" and \"cast-session_\". Also added a TODO to move them out of there, since presentation IDs aren\u0027t directly related to MediaSource.",
+      "parentUuid": "a10b0774_9d7c08b2",
+      "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "740f461f_70fb57cd",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "My quick reading of the code finds that a reconnectSession(sessionId) call from Cast SDK translates to a joinRoute(\"cast-session_\" + sessionId) call in MR, which the Cast MRP handles by stripping out the prefix and doing a match with sessionId against its session records.\n\nBecause the route also has presentation id \u003d\u003d sessionId, and we have code in Cast MRP that handles joining by presentation ID (i.e. non-prefixed with \"cast-session_\"), this seems to indicate that join should still continue to work if we stopped adding the prefix in reconectSession, at least in theory.\n\nMaybe this can be part of a future cleanup of route management in Cast MRP as there are other cleanups that would be nice to do as well.",
       "parentUuid": "e4d7d0e8_0d25be67",
+      "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e01df61_2412889c",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-28T19:10:02Z",
+      "side": 1,
+      "message": "Hmm I couldn\u0027t locate the reconnectSession() method that you mentioned.",
+      "parentUuid": "4682ebbf_e7a9b469",
       "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -121,6 +157,24 @@
       "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea512c6_436893d2",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-28T19:10:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b1467e1_6cd2b05a",
+      "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
