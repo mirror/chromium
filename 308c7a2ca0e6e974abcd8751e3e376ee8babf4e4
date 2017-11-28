@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2da97bf_c1b15c38",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_gpu_fence.txt",
+        "patchSetId": 53
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T16:02:10Z",
+      "side": 1,
+      "message": "So this does CreateGpuFenceCHROMIUM + WaitGpuFenceCHROMIUM? Why not have two separate functions? We already have WaitGpuFenceCHROMIUM below and two separate functions would also be more consistent with ANDROID_native_fence_sync..",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 15
+      },
+      "revId": "308c7a2ca0e6e974abcd8751e3e376ee8babf4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a56710_9654a40d",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T16:02:10Z",
+      "side": 1,
+      "message": "can we defer this until client fence is asked for?",
+      "range": {
+        "startLine": 422,
+        "startChar": 2,
+        "endLine": 424,
+        "endChar": 25
+      },
+      "revId": "308c7a2ca0e6e974abcd8751e3e376ee8babf4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e53c9b7_df087d53",
+        "filename": "gpu/command_buffer/cmd_buffer_functions.txt",
+        "patchSetId": 53
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T16:02:10Z",
+      "side": 1,
+      "message": "can we not design this extension such that internal entry points are not needed?",
+      "range": {
+        "startLine": 399,
+        "startChar": 52,
+        "endLine": 399,
+        "endChar": 60
+      },
+      "revId": "308c7a2ca0e6e974abcd8751e3e376ee8babf4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

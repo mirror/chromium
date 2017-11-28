@@ -117,6 +117,30 @@
       "revId": "014001c69f80dd63ee925d45c21ec0a7707cb00d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f962415_f5fb5626",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 43
+      },
+      "lineNbr": 4666,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T16:02:10Z",
+      "side": 1,
+      "message": "CHROMIUM_fence and CHROMIUM_gpu_fence are both fine with me.",
+      "parentUuid": "4f452633_daccfd2d",
+      "range": {
+        "startLine": 4666,
+        "startChar": 18,
+        "endLine": 4666,
+        "endChar": 32
+      },
+      "revId": "014001c69f80dd63ee925d45c21ec0a7707cb00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

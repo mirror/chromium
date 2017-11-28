@@ -1064,6 +1064,29 @@
     },
     {
       "key": {
+        "uuid": "a649a00b_c9df928a",
+        "filename": "ui/gl/gl_fence.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T16:02:10Z",
+      "side": 1,
+      "message": "this inheritance doesn\u0027t make sense to me. why is this needed?",
+      "range": {
+        "startLine": 16,
+        "startChar": 24,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c51b9197_ac094881",
         "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
         "patchSetId": 46
@@ -1099,6 +1122,63 @@
     },
     {
       "key": {
+        "uuid": "0c3cdb82_2e84bfb5",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T16:02:10Z",
+      "side": 1,
+      "message": "this is an unusual pattern. why not make the ctor protected instead?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a227ffa7_a79e006b",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T16:02:10Z",
+      "side": 1,
+      "message": "nit:\n\nif (!fence-\u003eInitialize(type, attribs))\n  return nullptr;\nreturn fence;",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882c984e_f424ad91",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T16:02:10Z",
+      "side": 1,
+      "message": "why do this here? and not just in GetGpuFenceHandle and remove code here and in GetGpuFenceHandle?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8426c30_f0af76f3",
         "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
         "patchSetId": 46
@@ -1131,6 +1211,40 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec6772f8_8e421a20",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T16:02:10Z",
+      "side": 1,
+      "message": "why do we need this when we have a Initialize function for the what seems like the same purpose?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e46a084_3f181823",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T16:02:10Z",
+      "side": 1,
+      "message": "why is this needed here? isn\u0027t it enough with the ownership inside the EGLSync object instance?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
