@@ -19,6 +19,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 #include "components/cast_channel/cast_channel_enum.h"
+#include "components/cast_channel/cast_channel_util.h"
 #include "components/cast_channel/cast_message_util.h"
 #include "components/cast_channel/cast_socket.h"
 #include "components/cast_channel/cast_socket_service.h"
@@ -111,7 +112,8 @@ bool IsValidConnectInfoPort(const ConnectInfo& connect_info) {
 
 bool IsValidConnectInfoIpAddress(const ConnectInfo& connect_info) {
   net::IPAddress ip_address;
-  return ip_address.AssignFromIPLiteral(connect_info.ip_address);
+  return ip_address.AssignFromIPLiteral(connect_info.ip_address) &&
+         cast_channel::IsValidCastIPAddress(ip_address);
 }
 
 }  // namespace
@@ -328,7 +330,7 @@ void CastChannelOpenFunction::OnOpen(CastSocket* socket) {
   // TODO: If we failed to open the CastSocket, we may want to clean up here,
   // rather than relying on the extension to call close(). This can be done by
   // calling RemoveSocket() and api_->GetLogger()->ClearLastError(channel_id).
-  if (socket->error_state() != ChannelError::UNKNOWN) {
+  if (socket && socket->error_state() != ChannelError::UNKNOWN) {
     SetResultFromSocket(*socket);
   } else {
     // The socket is being destroyed.
