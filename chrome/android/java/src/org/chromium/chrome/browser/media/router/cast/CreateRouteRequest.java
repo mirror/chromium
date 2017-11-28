@@ -7,9 +7,7 @@ package org.chromium.chrome.browser.media.router.cast;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-import com.google.android.gms.cast.ApplicationMetadata;
 import com.google.android.gms.cast.Cast;
-import com.google.android.gms.cast.CastStatusCodes;
 import com.google.android.gms.cast.LaunchOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -19,6 +17,7 @@ import com.google.android.gms.common.api.Status;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.chrome.browser.media.router.BaseMediaRouteProvider;
 import org.chromium.chrome.browser.media.router.ChromeMediaRouter;
 import org.chromium.chrome.browser.media.router.MediaRoute;
 
@@ -40,53 +39,6 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
     private static final int STATE_LAUNCH_SUCCEEDED = 4;
     private static final int STATE_TERMINATED = 5;
 
-    private class CastListener extends Cast.Listener {
-        private CastSession mSession;
-
-        CastListener() {}
-
-        void setSession(CastSession session) {
-            mSession = session;
-        }
-
-        @Override
-        public void onApplicationStatusChanged() {
-            if (mSession == null) return;
-
-            mSession.updateSessionStatus();
-        }
-
-        @Override
-        public void onApplicationMetadataChanged(ApplicationMetadata metadata) {
-            if (mSession == null) return;
-
-            mSession.updateSessionStatus();
-        }
-
-        @Override
-        // TODO(crbug.com/635567): Fix this properly.
-        @SuppressLint("DefaultLocale")
-        public void onApplicationDisconnected(int errorCode) {
-            if (errorCode != CastStatusCodes.SUCCESS) {
-                Log.e(TAG, String.format(
-                        "Application disconnected with: %d", errorCode));
-            }
-
-            // This callback can be called more than once if the application is stopped from Chrome.
-            if (mSession == null) return;
-
-            mSession.stopApplication();
-            mSession = null;
-        }
-
-        @Override
-        public void onVolumeChanged() {
-            if (mSession == null) return;
-
-            mSession.onVolumeChanged();
-        }
-    }
-
     private final MediaSource mSource;
     private final MediaSink mSink;
     private final String mPresentationId;
@@ -94,8 +46,8 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
     private final int mTabId;
     private final boolean mIsIncognito;
     private final int mRequestId;
-    private final CastMediaRouteProvider mRouteProvider;
-    private final CastListener mCastListener = new CastListener();
+    private final CastMessageHandler mMessageHandler;
+    private final BaseMediaRouteProvider mRouteProvider;
 
     private GoogleApiClient mApiClient;
     private int mState = STATE_IDLE;
@@ -112,15 +64,9 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
      * {@link ChromeMediaRouter}.
      * @param routeProvider The instance of {@link CastMediaRouteProvider} handling the request.
      */
-    public CreateRouteRequest(
-            MediaSource source,
-            MediaSink sink,
-            String presentationId,
-            String origin,
-            int tabId,
-            boolean isIncognito,
-            int requestId,
-            CastMediaRouteProvider routeProvider) {
+    public CreateRouteRequest(MediaSource source, MediaSink sink, String presentationId,
+            String origin, int tabId, boolean isIncognito, int requestId,
+            BaseMediaRouteProvider routeProvider, CastMessageHandler messageHandler) {
         assert source != null;
         assert sink != null;
 
@@ -132,6 +78,7 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
         mIsIncognito = isIncognito;
         mRequestId = requestId;
         mRouteProvider = routeProvider;
+        mMessageHandler = messageHandler;
     }
 
     public MediaSource getSource() {
@@ -162,13 +109,19 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
         return mRequestId;
     }
 
+    // Returns the object that should be notified of session changes that result
+    // from this route creation request.
+    public ChromeCastSessionManager.ChromeCastSessionObserver getSessionObserver() {
+        return mRouteProvider;
+    }
+
     /**
      * Starts the process of launching the application on the Cast device.
      */
-    public void start() {
+    public void start(Cast.Listener castListener) {
         if (mState != STATE_IDLE) throwInvalidState();
 
-        mApiClient = createApiClient(mCastListener);
+        mApiClient = createApiClient(castListener);
         mApiClient.connect();
         mState = STATE_CONNECTING_TO_API;
     }
@@ -262,19 +215,11 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
     private void reportSuccess(Cast.ApplicationConnectionResult result) {
         if (mState != STATE_LAUNCH_SUCCEEDED) throwInvalidState();
 
-        CastSession session = new CastSessionImpl(
-                mApiClient,
-                result.getSessionId(),
-                result.getApplicationMetadata(),
-                result.getApplicationStatus(),
-                mSink.getDevice(),
-                mOrigin,
-                mTabId,
-                mIsIncognito,
-                mSource,
-                mRouteProvider);
-        mCastListener.setSession(session);
-        mRouteProvider.onSessionCreated(session);
+        CastSession session = new CastSessionImpl(mApiClient, result.getSessionId(),
+                result.getApplicationMetadata(), result.getApplicationStatus(), mSink.getDevice(),
+                mOrigin, mTabId, mIsIncognito, mSource, mMessageHandler);
+
+        ChromeCastSessionManager.get().onSessionCreated(session, mRouteProvider);
 
         terminate();
     }
@@ -282,8 +227,7 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
     private void reportError() {
         if (mState == STATE_TERMINATED) throwInvalidState();
 
-        assert mRouteProvider != null;
-        mRouteProvider.onLaunchError();
+        ChromeCastSessionManager.get().onSessionLaunchError();
 
         terminate();
     }

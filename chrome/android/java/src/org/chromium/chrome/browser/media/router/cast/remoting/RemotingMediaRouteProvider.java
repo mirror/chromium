@@ -10,6 +10,7 @@ import org.chromium.chrome.browser.media.router.BaseMediaRouteProvider;
 import org.chromium.chrome.browser.media.router.ChromeMediaRouter;
 import org.chromium.chrome.browser.media.router.MediaRouteManager;
 import org.chromium.chrome.browser.media.router.MediaRouteProvider;
+import org.chromium.chrome.browser.media.router.cast.CreateRouteRequest;
 import org.chromium.chrome.browser.media.router.cast.MediaSource;
 
 /**
@@ -57,5 +58,15 @@ public class RemotingMediaRouteProvider extends BaseMediaRouteProvider {
     @VisibleForTesting
     RemotingMediaRouteProvider(MediaRouter androidMediaRouter, MediaRouteManager manager) {
         super(androidMediaRouter, manager);
+    }
+
+    @Override
+    public void onSessionClosed() {
+        // TODO
+    }
+
+    @Override
+    public void onSessionLaunching(CreateRouteRequest request) {
+        // TODO
     }
 }
