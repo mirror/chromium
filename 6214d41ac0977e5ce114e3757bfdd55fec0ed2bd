@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a0d0356_3593e33d",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-28T09:23:40Z",
+      "side": 1,
+      "message": "Class comment.",
+      "range": {
+        "startLine": 12,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d12ba4_73cfbf62",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-28T09:23:40Z",
+      "side": 1,
+      "message": "Add comments for these methods.",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199df0aa_3b4956af",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-28T09:23:40Z",
+      "side": 1,
+      "message": "Can you move this earlier in the file, and break up the method groups with pragmas? T\n\n(initializers -- don\u0027t need a pragma)\n#pragma mark - Public properties\n#pragma mark - Public methods\n#pragma mark - Private methods",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 24
+      },
+      "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb980ad_5c3a2f68",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-28T09:23:40Z",
+      "side": 1,
+      "message": "Comments on private methods?",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 22
+      },
+      "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68689dc2_ad46b184",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-28T09:23:40Z",
+      "side": 1,
+      "message": "s/Id/ID in both the method name and the parameter name, here and below.",
+      "range": {
+        "startLine": 268,
+        "startChar": 12,
+        "endLine": 268,
+        "endChar": 34
+      },
+      "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
