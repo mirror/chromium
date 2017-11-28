@@ -566,6 +566,9 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
   // entire screen, then animate the layer up into position. crbug.com/768437
   fullscreen_widget_->GetNativeView()->SetBounds(local_bounds);
 
+  fullscreen_widget_->GetNativeView()->SetProperty(kDisplayMovementDisabledKey,
+                                                   true);
+
   overlay_view_ = new AppListOverlayView(0 /* no corners */);
 
   widget_observer_ = std::unique_ptr<FullscreenWidgetObserver>(

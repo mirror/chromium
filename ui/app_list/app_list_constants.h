@@ -10,6 +10,7 @@
 #include "build/build_config.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/app_list/app_list_export.h"
+#include "ui/aura/window.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/shadow_value.h"
@@ -205,6 +206,14 @@ APP_LIST_EXPORT const gfx::ShadowValues& IconStartShadows();
 APP_LIST_EXPORT const gfx::ShadowValues& IconEndShadows();
 
 APP_LIST_EXPORT const gfx::FontList& AppListAppTitleFont();
+
+// A property key to store whether movement between displays is disabled. The
+// default value is false, which means window is allowed to be moved between
+// displays by Ash accelerators.
+// TODO(warx): move this property to ash/display/display_move_window_util.h once
+// ui/app_list/ is moved to ash/.
+APP_LIST_EXPORT extern const aura::WindowProperty<bool>* const
+    kDisplayMovementDisabledKey;
 
 }  // namespace app_list
 

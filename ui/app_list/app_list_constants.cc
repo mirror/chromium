@@ -289,4 +289,6 @@ const gfx::FontList& AppListAppTitleFont() {
   return kAppListAppTitleFont;
 }
 
+DEFINE_UI_CLASS_PROPERTY_KEY(bool, kDisplayMovementDisabledKey, false);
+
 }  // namespace app_list
