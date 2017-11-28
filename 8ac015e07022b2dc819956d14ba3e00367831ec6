@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4c27978_ad93e59a",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-28T11:48:22Z",
+      "side": 1,
+      "message": "Chiming in -- I believe we need to mock the presenter in the unit test. In that case we can either inject on construction like here or have a post-construction *ForTesting setter.\n\nI like that the exporter is injected on construction, because then in tests we can cleanly inject the mocked version, and have the guarantee that PasswordManagerPorter executes the same codepaths in production and test.\n\nAs for awkwardness, I expect that ultimately PasswordManagerPorter will dissolve into independent classes of Exporter (defined in this CL) and Importer (to be defined when importing is getting built, hopefully in 2018). Then the construction chain will be flatter again.",
+      "parentUuid": "7a507777_5ff052ee",
+      "revId": "8ac015e07022b2dc819956d14ba3e00367831ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ad82c9f_bb452a7e",
         "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
         "patchSetId": 12
