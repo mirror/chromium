@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "8690176e_a5f3f3cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-28T18:32:02Z",
+      "side": 1,
+      "message": "nit: There are no transfers in PlzNavigate to begin with :), we chose the right RFH after the redirects. The term \"transfer\" has a specific meaning in this area of the code.",
+      "range": {
+        "startLine": 11,
+        "startChar": 23,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23feb1a_09043f04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-28T18:32:02Z",
+      "side": 1,
+      "message": "Is there a case where this isn\u0027t true? We always select renderer based on the final destination.",
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a9c174_0352ac2e",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-28T18:32:02Z",
+      "side": 1,
+      "message": "nit: Can we just avoid the redirect in these cases now that swap will happen in regular navigation?",
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6108a4ae_a7445696",
         "filename": "chrome/renderer/extensions/extension_process_policy.cc",
         "patchSetId": 1
@@ -25,6 +82,47 @@
     },
     {
       "key": {
+        "uuid": "1da7f562_dc4f2f94",
+        "filename": "chrome/renderer/extensions/extension_process_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-28T18:32:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6108a4ae_a7445696",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 63
+      },
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "116c4b78_14840499",
+        "filename": "chrome/renderer/extensions/extension_process_policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-28T18:32:02Z",
+      "side": 1,
+      "message": "nit: I wonder if this is also old code that might not be needed anymore.",
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "429e7207_578c12bc",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 1
@@ -42,6 +140,47 @@
         "endLine": 1243,
         "endChar": 76
       },
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff523f4a_7b41f88d",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-28T18:32:02Z",
+      "side": 1,
+      "message": "I don\u0027t think this is true anymore, so it might be good to remove this too. Follow up CL sgtm.",
+      "parentUuid": "429e7207_578c12bc",
+      "range": {
+        "startLine": 1240,
+        "startChar": 0,
+        "endLine": 1243,
+        "endChar": 76
+      },
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688d8736_e1effe25",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-28T18:32:02Z",
+      "side": 1,
+      "message": "If we implement it this way, isn\u0027t it similar to IsolateAllSitesForTesting? If yes, why not just migrate tests to use that?",
       "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

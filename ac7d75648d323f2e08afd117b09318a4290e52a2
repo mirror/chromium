@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c77148b2_93a9416b",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-28T18:32:02Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "4bafa482_8ab42214",
+      "range": {
+        "startLine": 514,
+        "startChar": 9,
+        "endLine": 514,
+        "endChar": 40
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c30a0c2b_06b275ff",
         "filename": "chrome/browser/prerender/prerender_browsertest.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-28T16:10:55Z",
       "side": 0,
       "message": "The scenario tested here can no longer happen:\n\n1. It cannot happen with PlzNavigate\n2. After this CL, it can no longer happen without PlzNavigate\n\n(same for the other test below).",
+      "range": {
+        "startLine": 2890,
+        "startChar": 0,
+        "endLine": 2893,
+        "endChar": 11
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff903cb1_4841fd5b",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2893,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-28T18:32:02Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "c30a0c2b_06b275ff",
       "range": {
         "startLine": 2890,
         "startChar": 0,
