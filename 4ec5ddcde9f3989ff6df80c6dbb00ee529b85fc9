@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad3a28d2_8be65571",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-28T16:00:29Z",
+      "side": 1,
+      "message": "The NEON and MSA routines don\u0027t do this check, so perhaps we also don\u0027t need it for x86?\n\nOr to be consistent, we should do the check in the main routine instead of here.",
+      "revId": "4ec5ddcde9f3989ff6df80c6dbb00ee529b85fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10066d57_10f6fcae",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-28T16:00:29Z",
+      "side": 1,
+      "message": "This is probably best done in the main routine.",
+      "revId": "4ec5ddcde9f3989ff6df80c6dbb00ee529b85fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
