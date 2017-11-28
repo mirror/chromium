@@ -225,6 +225,7 @@ void ExecuteSessionCommandOnSessionThread(
               << FormatValueForDisplay(*params);
     }
   }
+  LOG(WARNING) << "1";
 
   // Notify |session|'s |CommandListener|s of the command.
   // Will mark |session| for deletion if an error is encountered.
@@ -232,6 +233,7 @@ void ExecuteSessionCommandOnSessionThread(
 
   // Only run the command if we were able to notify all listeners successfully.
   // Otherwise, pass error to callback, delete |session|, and do not continue.
+  LOG(WARNING) << "1";
   std::unique_ptr<base::Value> value;
   if (status.IsError()) {
     LOG(ERROR) << status.message();
@@ -263,10 +265,11 @@ void ExecuteSessionCommandOnSessionThread(
       }
       if (status.IsError()) {
         const BrowserInfo* browser_info = session->chrome->GetBrowserInfo();
-        status.AddDetails("Session info: " + browser_info->browser_name + "=" +
+        status.AddDetails("WHY Session info: " + browser_info->browser_name + "=" +
                           browser_info->browser_version);
       }
     }
+    LOG(WARNING) << "AYO";
 
     if (IsVLogOn(0)) {
       std::string result;

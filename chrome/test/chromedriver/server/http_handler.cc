@@ -219,7 +219,7 @@ HttpHandler::HttpHandler(
           WrapToCommand("DeleteCookie", base::Bind(&ExecuteDeleteCookie))),
       CommandMapping(kPost, "session/:sessionId/actions",
                      WrapToCommand("PerformActions",
-                                   base::Bind(&ExecuteUnimplementedCommand))),
+                                   base::Bind(&ExecutePerformActions))),
       CommandMapping(kDelete, "session/:sessionId/actions",
                      WrapToCommand("DeleteActions",
                                    base::Bind(&ExecuteUnimplementedCommand))),
@@ -468,7 +468,6 @@ HttpHandler::HttpHandler(
       CommandMapping(kGet, "session/:sessionId/log/types",
                      WrapToCommand("GetLogTypes",
                                    base::Bind(&ExecuteGetAvailableLogTypes))),
-
       // chromedriver only
       CommandMapping(kPost, "session/:sessionId/chromium/launch_app",
                      WrapToCommand("LaunchApp", base::Bind(&ExecuteLaunchApp))),
@@ -652,6 +651,7 @@ void HttpHandler::HandleCommand(
     params.MergeDictionary(body_params);
   }
 
+  LOG(WARNING) << "WHOA";
   iter->command.Run(params,
                     session_id,
                     base::Bind(&HttpHandler::PrepareResponse,
