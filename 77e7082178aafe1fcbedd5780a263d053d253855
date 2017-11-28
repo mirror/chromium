@@ -209,6 +209,24 @@
       "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4505fc37_a80c2629",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T16:46:06Z",
+      "side": 1,
+      "message": "FWIW, I would prefer that we use an invalid value as default on the C++ side. Since it\u0027s not possible to omit the provider ID on the Mojo side, perhaps we can omit the UNKNOWN value here?",
+      "parentUuid": "9a980061_c2909170",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
