@@ -87,6 +87,24 @@
       "revId": "d7244e535e7f23155a864538bf033b2a87d1a43b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9bfbd0_ae2ac4cb",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-28T02:33:16Z",
+      "side": 1,
+      "message": "The build process would get stuck at some step forever. I didnt see any error message though.",
+      "parentUuid": "bbf0f326_812ef688",
+      "revId": "d7244e535e7f23155a864538bf033b2a87d1a43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
