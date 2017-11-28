@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4a8d1a_edada7ee",
+        "filename": "ui/wm/core/shadow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T00:12:35Z",
+      "side": 1,
+      "message": "unrelated to this change, but this file looks like it should be called shadow_details.h instead",
+      "revId": "0e61c21c874c0a8a3071be2678d895326b700fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7109d96_7dba023e",
+        "filename": "ui/wm/core/shadow.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T00:12:35Z",
+      "side": 1,
+      "message": "nit: mind documenting who owns this object, and when it\u0027s set vs. null (will it always be set?)?",
+      "revId": "0e61c21c874c0a8a3071be2678d895326b700fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
