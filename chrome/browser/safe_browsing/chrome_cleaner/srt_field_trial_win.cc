@@ -22,9 +22,6 @@ const char kSRTPromptSeedParam[] = "Seed";
 const char kSRTElevationTrial[] = "SRTElevation";
 const char kSRTElevationAsNeededGroup[] = "AsNeeded";
 
-const char kSRTReporterTrial[] = "srt_reporter";
-const char kSRTReporterOffGroup[] = "Off";
-
 const char kDownloadRootPath[] =
     "https://dl.google.com/dl/softwareremovaltool/win/";
 
@@ -64,12 +61,6 @@ bool SRTPromptNeedsElevationIcon() {
 
 bool UserInitiatedCleanupsEnabled() {
   return base::FeatureList::IsEnabled(kUserInitiatedChromeCleanupsFeature);
-}
-
-bool IsSwReporterEnabled() {
-  return !base::StartsWith(
-      base::FieldTrialList::FindFullName(kSRTReporterTrial),
-      kSRTReporterOffGroup, base::CompareCase::SENSITIVE);
 }
 
 GURL GetLegacyDownloadURL() {
