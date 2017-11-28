@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8587c286_c51e82bd",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_background_auth_code_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T00:03:19Z",
+      "side": 1,
+      "message": "We probably do not need to send cookies.",
+      "range": {
+        "startLine": 121,
+        "startChar": 10,
+        "endLine": 121,
+        "endChar": 30
+      },
+      "revId": "5cd21df770b6a12330b494058c34e073ee030d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
