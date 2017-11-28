@@ -18,6 +18,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/scoped_refptr.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "net/base/host_port_pair.h"
@@ -521,6 +522,7 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // Allow tests to access our innards for testing purposes.
   FRIEND_TEST_ALL_PREFIXES(SpdySessionTest, ClientPing);
   FRIEND_TEST_ALL_PREFIXES(SpdySessionTest, FailedPing);
+  FRIEND_TEST_ALL_PREFIXES(SpdySessionTest, WaitingForWrongPing);
   FRIEND_TEST_ALL_PREFIXES(SpdySessionTest, DeleteExpiredPushStreams);
   FRIEND_TEST_ALL_PREFIXES(SpdySessionTest, MetricsCollectionOnPushStreams);
   FRIEND_TEST_ALL_PREFIXES(SpdySessionTest, CancelPushBeforeClaimed);
