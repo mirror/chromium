@@ -148,6 +148,7 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/net/nss_context.h"
+#include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/cryptohome_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/settings/cros_settings_names.h"
@@ -465,6 +466,16 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
   params->proxy_config_service = ProxyServiceFactory::CreateProxyConfigService(
       profile->GetProxyConfigTracker());
 #if defined(OS_CHROMEOS)
+  // Use a ClientCertFilter which will allow client certificates from the system
+  // slot for the sign-in profile. Note that we only allow client certificate
+  // authentication for some contexts on the sign-in profile. Specifically, only
+  // for requests associated with a StoragePartition which is marked using
+  // SigninCertsUserData. This way, we can only enable it for the sign-in frame.
+  if (chromeos::switches::IsSigninFrameClientCertsEnabled() &&
+      chromeos::ProfileHelper::IsSigninProfile(profile)) {
+    params->use_system_key_slot_client_certs = true;
+  }
+
   user_manager::UserManager* user_manager = user_manager::UserManager::Get();
   if (user_manager) {
     const user_manager::User* user =
@@ -483,7 +494,8 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
 
       // Use the device-wide system key slot only if the user is affiliated on
       // the device.
-      params->use_system_key_slot = user->IsAffiliated();
+      params->use_system_key_slot_nss_context = user->IsAffiliated();
+      params->use_system_key_slot_client_certs = user->IsAffiliated();
     }
   }
 
@@ -646,7 +658,8 @@ ProfileIOData::AppRequestContext::~AppRequestContext() {
 ProfileIOData::ProfileParams::ProfileParams()
     : io_thread(NULL),
 #if defined(OS_CHROMEOS)
-      use_system_key_slot(false),
+      use_system_key_slot_nss_context(false),
+      use_system_key_slot_client_certs(false),
 #endif
       profile(NULL) {
 }
@@ -656,7 +669,7 @@ ProfileIOData::ProfileParams::~ProfileParams() {}
 ProfileIOData::ProfileIOData(Profile::ProfileType profile_type)
     : initialized_(false),
 #if defined(OS_CHROMEOS)
-      use_system_key_slot_(false),
+      use_system_key_slot_client_certs_(false),
 #endif
       main_request_context_(nullptr),
       resource_context_(new ResourceContext(this)),
@@ -980,7 +993,7 @@ std::unique_ptr<net::ClientCertStore> ProfileIOData::CreateClientCertStore() {
       new chromeos::ClientCertStoreChromeOS(
           certificate_provider_ ? certificate_provider_->Copy() : nullptr,
           base::MakeUnique<chromeos::ClientCertFilterChromeOS>(
-              use_system_key_slot_, username_hash_),
+              use_system_key_slot_client_certs_, username_hash_),
           base::Bind(&CreateCryptoModuleBlockingPasswordDelegate,
                      chrome::kCryptoModulePasswordClientAuth)));
 #elif defined(USE_NSS_CERTS)
@@ -1126,9 +1139,10 @@ void ProfileIOData::Init(
 
 #if defined(OS_CHROMEOS)
   username_hash_ = profile_params_->username_hash;
-  use_system_key_slot_ = profile_params_->use_system_key_slot;
-  if (use_system_key_slot_)
+  if (profile_params_->use_system_key_slot_nss_context)
     EnableNSSSystemKeySlotForResourceContext(resource_context_.get());
+  use_system_key_slot_client_certs_ =
+      profile_params_->use_system_key_slot_client_certs;
 
   certificate_provider_ = std::move(profile_params_->certificate_provider);
 #endif
