@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "ecc64505_82c41aa7",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-28T01:21:47Z",
+      "side": 1,
+      "message": "nit: confusing naming with your new class and this one.  Can/should they be merged, or can we differentiate the names better?",
+      "range": {
+        "startLine": 247,
+        "startChar": 35,
+        "endLine": 247,
+        "endChar": 50
+      },
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d169643_56682881",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-28T01:21:47Z",
+      "side": 1,
+      "message": "Take a look at https://chromium-review.googlesource.com/c/chromium/src/+/784095 - perhaps we can land part of that to avoid merge conflicts?",
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b78807b0_c24b8f7e",
         "filename": "chrome/browser/vr/metrics_helper.cc",
         "patchSetId": 9
