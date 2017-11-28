@@ -22,6 +22,30 @@
       "revId": "7db9289c249e6bc51d1f8e2878b1ecd3b4715d00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4718f5df_8e92e7fc",
+        "filename": "components/offline_pages/core/model/add_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-28T19:08:53Z",
+      "side": 1,
+      "message": "Yes a null callback can actually happen, but in our code path it\u0027s highly unlikely. I\u0027m removing all checks for callback_.",
+      "parentUuid": "05fa4727_48b77072",
+      "range": {
+        "startLine": 86,
+        "startChar": 20,
+        "endLine": 86,
+        "endChar": 27
+      },
+      "revId": "7db9289c249e6bc51d1f8e2878b1ecd3b4715d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
