@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "fe78a3c2_c76e2269",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-28T18:40:44Z",
+      "side": 1,
+      "message": "Update description to match implementation.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 8
+      },
+      "revId": "e92487f4742d053a2d7834ebac21f4c0bd4c15f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3030ee07_5a279b7b",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/show_password_behavior.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-28T18:40:44Z",
+      "side": 1,
+      "message": "Nit: fits on a single line:\n/** @typedef {{ entry: !PasswordManager.PasswordUiEntry, password: string }} */\n\nI\u0027m wondering if we can share the same |UiEntryWithPassword|...\nNeither location seems ideal to share with the other. I\u0027m ok keeping\nas is since it feels like overkill to pull this definition out to its own file.\nWDYT?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 3
+      },
+      "revId": "e92487f4742d053a2d7834ebac21f4c0bd4c15f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133055ea_f5cf8e3f",
+        "filename": "chrome/test/data/webui/settings/settings_passwords_section_browsertest.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-28T18:40:44Z",
+      "side": 1,
+      "message": "Let\u0027s move this up, so it\u0027s right next to the other |splice|.\nComment may not be necessary if both splices are right next to each other.\nWDYT?",
+      "range": {
+        "startLine": 276,
+        "startChar": 6,
+        "endLine": 276,
+        "endChar": 32
+      },
+      "revId": "e92487f4742d053a2d7834ebac21f4c0bd4c15f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5f3525f_cf7832b0",
         "filename": "third_party/closure_compiler/externs/passwords_private.js",
         "patchSetId": 3
@@ -31,6 +100,24 @@
       "side": 1,
       "message": "I have no strong preference; cleaning them up here is fine.",
       "parentUuid": "e5f3525f_cf7832b0",
+      "revId": "e92487f4742d053a2d7834ebac21f4c0bd4c15f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a63ccec_9ccf7ce5",
+        "filename": "third_party/closure_compiler/externs/passwords_private.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-28T18:40:44Z",
+      "side": 1,
+      "message": "Keeping here is fine.",
+      "parentUuid": "12604025_f12b383f",
       "revId": "e92487f4742d053a2d7834ebac21f4c0bd4c15f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
