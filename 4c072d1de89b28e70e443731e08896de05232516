@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "569611cd_a7d07664",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-28T01:59:43Z",
+      "side": 1,
+      "message": "Insert \"on\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 29,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "4c072d1de89b28e70e443731e08896de05232516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e8d072_400c741e",
+        "filename": "ios/web/web_state/crw_pass_kit_downloader.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-28T01:59:43Z",
+      "side": 1,
+      "message": "Documentation should be added to public API to indicate that this class is deprecated/ cannot be used if the new API is active.",
+      "revId": "4c072d1de89b28e70e443731e08896de05232516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95d40b3_a5cc8df1",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-28T01:59:43Z",
+      "side": 1,
+      "message": "Good to add documentation for this property as well.",
+      "revId": "4c072d1de89b28e70e443731e08896de05232516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96bc3fa_8c7b70ac",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2929,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-28T01:59:43Z",
+      "side": 1,
+      "message": "A comment to clarify why these conditions are here, since it is not clear that this is code to trigger the old download manager, and that PassKit MIME type downloads now reach this code with this CL.",
+      "revId": "4c072d1de89b28e70e443731e08896de05232516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
