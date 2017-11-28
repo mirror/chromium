@@ -13,12 +13,12 @@
 #include "content/browser/service_worker/service_worker_url_request_job.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_status_code.h"
-#include "content/public/common/request_context_frame_type.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/service_worker_modes.h"
 #include "net/url_request/url_request_job_factory.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom.h"
 
 namespace net {
 class NetworkDelegate;
@@ -67,7 +67,7 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
       bool keepalive,
       ResourceType resource_type,
       RequestContextType request_context_type,
-      RequestContextFrameType frame_type,
+      blink::mojom::RequestContextFrameType frame_type,
       scoped_refptr<ResourceRequestBody> body,
       bool initiated_in_secure_context);
 
@@ -99,7 +99,7 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
       bool keepalive,
       ResourceType resource_type,
       RequestContextType request_context_type,
-      RequestContextFrameType frame_type,
+      blink::mojom::RequestContextFrameType frame_type,
       scoped_refptr<ResourceRequestBody> body,
       const base::Optional<base::TimeDelta>& timeout);
 
@@ -134,7 +134,7 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
   std::string integrity_;
   const bool keepalive_;
   RequestContextType request_context_type_;
-  RequestContextFrameType frame_type_;
+  blink::mojom::RequestContextFrameType frame_type_;
   scoped_refptr<ResourceRequestBody> body_;
   ResourceContext* resource_context_;
   base::Optional<base::TimeDelta> timeout_;

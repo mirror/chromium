@@ -20,7 +20,7 @@ ForeignFetchRespondWithObserver* ForeignFetchRespondWithObserver::Create(
     const KURL& request_url,
     network::mojom::FetchRequestMode request_mode,
     WebURLRequest::FetchRedirectMode redirect_mode,
-    WebURLRequest::FrameType frame_type,
+    mojom::RequestContextFrameType frame_type,
     WebURLRequest::RequestContext request_context,
     scoped_refptr<SecurityOrigin> request_origin,
     WaitUntilObserver* observer) {
@@ -106,7 +106,7 @@ ForeignFetchRespondWithObserver::ForeignFetchRespondWithObserver(
     const KURL& request_url,
     network::mojom::FetchRequestMode request_mode,
     WebURLRequest::FetchRedirectMode redirect_mode,
-    WebURLRequest::FrameType frame_type,
+    mojom::RequestContextFrameType frame_type,
     WebURLRequest::RequestContext request_context,
     scoped_refptr<SecurityOrigin> request_origin,
     WaitUntilObserver* observer)

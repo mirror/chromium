@@ -8,6 +8,7 @@
 #include "base/bind_helpers.h"
 #include "content/child/image_decoder.h"
 #include "content/public/renderer/associated_resource_fetcher.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebAssociatedURLLoaderOptions.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -48,7 +49,7 @@ MultiResolutionImageResourceFetcher::MultiResolutionImageResourceFetcher(
   fetcher_->Start(
       frame, request_context, network::mojom::FetchRequestMode::kNoCORS,
       network::mojom::FetchCredentialsMode::kInclude,
-      WebURLRequest::kFrameTypeNone,
+      blink::mojom::RequestContextFrameType::kNone,
       base::Bind(&MultiResolutionImageResourceFetcher::OnURLFetchComplete,
                  base::Unretained(this)));
 }

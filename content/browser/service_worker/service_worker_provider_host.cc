@@ -457,7 +457,7 @@ ServiceWorkerProviderHost::CreateRequestHandler(
     bool keepalive,
     ResourceType resource_type,
     RequestContextType request_context_type,
-    RequestContextFrameType frame_type,
+    blink::mojom::RequestContextFrameType frame_type,
     base::WeakPtr<storage::BlobStorageContext> blob_storage_context,
     scoped_refptr<ResourceRequestBody> body,
     bool skip_service_worker) {

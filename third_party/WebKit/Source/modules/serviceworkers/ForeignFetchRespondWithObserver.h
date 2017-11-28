@@ -21,7 +21,7 @@ class MODULES_EXPORT ForeignFetchRespondWithObserver final
       const KURL& request_url,
       network::mojom::FetchRequestMode,
       WebURLRequest::FetchRedirectMode,
-      WebURLRequest::FrameType,
+      mojom::RequestContextFrameType,
       WebURLRequest::RequestContext,
       scoped_refptr<SecurityOrigin>,
       WaitUntilObserver*);
@@ -34,7 +34,7 @@ class MODULES_EXPORT ForeignFetchRespondWithObserver final
                                   const KURL& request_url,
                                   network::mojom::FetchRequestMode,
                                   WebURLRequest::FetchRedirectMode,
-                                  WebURLRequest::FrameType,
+                                  mojom::RequestContextFrameType,
                                   WebURLRequest::RequestContext,
                                   scoped_refptr<SecurityOrigin>,
                                   WaitUntilObserver*);

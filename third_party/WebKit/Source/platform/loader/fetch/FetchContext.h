@@ -48,6 +48,7 @@
 #include "public/platform/WebURLLoader.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom-shared.h"
 
 namespace blink {
 
@@ -133,7 +134,7 @@ class PLATFORM_EXPORT FetchContext
   enum class ResourceResponseType { kNotFromMemoryCache, kFromMemoryCache };
   virtual void DispatchDidReceiveResponse(unsigned long identifier,
                                           const ResourceResponse&,
-                                          WebURLRequest::FrameType,
+                                          mojom::RequestContextFrameType,
                                           WebURLRequest::RequestContext,
                                           Resource*,
                                           ResourceResponseType);

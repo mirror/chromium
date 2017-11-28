@@ -13,10 +13,10 @@
 #include "content/common/download/mhtml_save_status.h"
 #include "content/common/render_widget_surface_properties.h"
 #include "content/public/common/input_event_ack_state.h"
-#include "content/public/common/request_context_frame_type.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/resource_type.h"
 #include "ipc/ipc_message_macros.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/platform/WebAddressSpace.h"
 #include "third_party/WebKit/public/platform/WebContentSecurityPolicy.h"
@@ -34,8 +34,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(content::ResourceType,
                           content::RESOURCE_TYPE_LAST_TYPE - 1)
 IPC_ENUM_TRAITS_MAX_VALUE(content::RequestContextType,
                           content::REQUEST_CONTEXT_TYPE_LAST)
-IPC_ENUM_TRAITS_MAX_VALUE(content::RequestContextFrameType,
-                          content::REQUEST_CONTEXT_FRAME_TYPE_LAST)
+IPC_ENUM_TRAITS_MAX_VALUE(blink::mojom::RequestContextFrameType,
+                          blink::mojom::RequestContextFrameType::kTopLevel)
 IPC_ENUM_TRAITS_MAX_VALUE(content::MhtmlSaveStatus,
                           content::MhtmlSaveStatus::LAST)
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebContentSecurityPolicySource,

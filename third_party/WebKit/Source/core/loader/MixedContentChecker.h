@@ -67,7 +67,7 @@ class CORE_EXPORT MixedContentChecker final {
  public:
   static bool ShouldBlockFetch(LocalFrame*,
                                WebURLRequest::RequestContext,
-                               WebURLRequest::FrameType,
+                               mojom::RequestContextFrameType,
                                ResourceRequest::RedirectStatus,
                                const KURL&,
                                SecurityViolationReportingPolicy =
@@ -76,7 +76,7 @@ class CORE_EXPORT MixedContentChecker final {
   static bool ShouldBlockFetchOnWorker(WorkerOrWorkletGlobalScope*,
                                        WebWorkerFetchContext*,
                                        WebURLRequest::RequestContext,
-                                       WebURLRequest::FrameType,
+                                       mojom::RequestContextFrameType,
                                        ResourceRequest::RedirectStatus,
                                        const KURL&,
                                        SecurityViolationReportingPolicy);
@@ -103,11 +103,11 @@ class CORE_EXPORT MixedContentChecker final {
   // Returns the frame that should be considered the effective frame
   // for a mixed content check for the given frame type.
   static Frame* EffectiveFrameForFrameType(LocalFrame*,
-                                           WebURLRequest::FrameType);
+                                           mojom::RequestContextFrameType);
 
   static void HandleCertificateError(LocalFrame*,
                                      const ResourceResponse&,
-                                     WebURLRequest::FrameType,
+                                     mojom::RequestContextFrameType,
                                      WebURLRequest::RequestContext);
 
   // Receive information about mixed content found externally.
@@ -123,7 +123,7 @@ class CORE_EXPORT MixedContentChecker final {
   FRIEND_TEST_ALL_PREFIXES(MixedContentCheckerTest, HandleCertificateError);
 
   static Frame* InWhichFrameIsContentMixed(Frame*,
-                                           WebURLRequest::FrameType,
+                                           mojom::RequestContextFrameType,
                                            const KURL&,
                                            const LocalFrame*);
 

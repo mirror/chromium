@@ -8,6 +8,7 @@
 #include "base/numerics/safe_conversions.h"
 #include "content/public/common/referrer.h"
 #include "storage/common/blob_storage/blob_handle.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
 
 namespace mojo {
@@ -19,16 +20,6 @@ struct EnumTraits<blink::mojom::FetchRedirectMode, content::FetchRedirectMode> {
 
   static bool FromMojom(blink::mojom::FetchRedirectMode input,
                         content::FetchRedirectMode* out);
-};
-
-template <>
-struct EnumTraits<blink::mojom::RequestContextFrameType,
-                  content::RequestContextFrameType> {
-  static blink::mojom::RequestContextFrameType ToMojom(
-      content::RequestContextFrameType input);
-
-  static bool FromMojom(blink::mojom::RequestContextFrameType input,
-                        content::RequestContextFrameType* out);
 };
 
 template <>
@@ -69,7 +60,7 @@ struct StructTraits<blink::mojom::FetchAPIRequestDataView,
     return request.request_context_type;
   }
 
-  static content::RequestContextFrameType frame_type(
+  static blink::mojom::RequestContextFrameType frame_type(
       const content::ServiceWorkerFetchRequest& request) {
     return request.frame_type;
   }

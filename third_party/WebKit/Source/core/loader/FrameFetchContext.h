@@ -97,7 +97,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
                                               const ResourceResponse&) override;
   void DispatchDidReceiveResponse(unsigned long identifier,
                                   const ResourceResponse&,
-                                  WebURLRequest::FrameType,
+                                  mojom::RequestContextFrameType,
                                   WebURLRequest::RequestContext,
                                   Resource*,
                                   ResourceResponseType) override;
@@ -198,7 +198,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   void CountDeprecation(WebFeature) const override;
   bool ShouldBlockFetchByMixedContentCheck(
       WebURLRequest::RequestContext,
-      WebURLRequest::FrameType,
+      mojom::RequestContextFrameType,
       ResourceRequest::RedirectStatus,
       const KURL&,
       SecurityViolationReportingPolicy) const override;

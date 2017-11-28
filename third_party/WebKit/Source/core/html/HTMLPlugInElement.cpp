@@ -53,6 +53,7 @@
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/plugins/PluginData.h"
 #include "public/platform/WebURLRequest.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom-blink.h"
 
 namespace blink {
 
@@ -658,7 +659,7 @@ bool HTMLPlugInElement::AllowedToLoadObject(const KURL& url,
   return (!mime_type.IsEmpty() && url.IsEmpty()) ||
          !MixedContentChecker::ShouldBlockFetch(
              frame, WebURLRequest::kRequestContextObject,
-             WebURLRequest::kFrameTypeNone,
+             mojom::RequestContextFrameType::kNone,
              ResourceRequest::RedirectStatus::kNoRedirect, url);
 }
 

@@ -7,6 +7,7 @@ module blink.mojom;
 import "services/network/public/interfaces/fetch_api.mojom";
 import "third_party/WebKit/public/platform/referrer.mojom";
 import "third_party/WebKit/common/blob/blob.mojom";
+import "third_party/WebKit/common/fetch/request_context_frame_type.mojom";
 import "url/mojo/url.mojom";
 
 // Type of the context associated with a request.
@@ -45,14 +46,6 @@ enum RequestContextType {
   WORKER,
   XML_HTTP_REQUEST,
   XSLT,
-};
-
-// Frame type of the context associated with a request.
-enum RequestContextFrameType {
-  AUXILIARY,
-  NESTED,
-  NONE,
-  TOP_LEVEL,
 };
 
 // https://fetch.spec.whatwg.org/#concept-request-cache-mode

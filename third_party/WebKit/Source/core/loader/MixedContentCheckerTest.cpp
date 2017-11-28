@@ -17,6 +17,7 @@
 #include "public/platform/WebMixedContentContextType.h"
 #include "testing/gmock/include/gmock/gmock-generated-function-mockers.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom-blink.h"
 
 namespace blink {
 
@@ -75,7 +76,7 @@ TEST(MixedContentCheckerTest, ContextTypeForInspector) {
       SecurityOrigin::CreateFromString("http://example.test"));
 
   ResourceRequest not_mixed_content("https://example.test/foo.jpg");
-  not_mixed_content.SetFrameType(WebURLRequest::kFrameTypeAuxiliary);
+  not_mixed_content.SetFrameType(mojom::RequestContextFrameType::kAuxiliary);
   not_mixed_content.SetRequestContext(WebURLRequest::kRequestContextScript);
   EXPECT_EQ(WebMixedContentContextType::kNotMixedContent,
             MixedContentChecker::ContextTypeForInspector(
@@ -88,7 +89,8 @@ TEST(MixedContentCheckerTest, ContextTypeForInspector) {
                 &dummy_page_holder->GetFrame(), not_mixed_content));
 
   ResourceRequest blockable_mixed_content("http://example.test/foo.jpg");
-  blockable_mixed_content.SetFrameType(WebURLRequest::kFrameTypeAuxiliary);
+  blockable_mixed_content.SetFrameType(
+      mojom::RequestContextFrameType::kAuxiliary);
   blockable_mixed_content.SetRequestContext(
       WebURLRequest::kRequestContextScript);
   EXPECT_EQ(WebMixedContentContextType::kBlockable,
@@ -97,7 +99,8 @@ TEST(MixedContentCheckerTest, ContextTypeForInspector) {
 
   ResourceRequest optionally_blockable_mixed_content(
       "http://example.test/foo.jpg");
-  blockable_mixed_content.SetFrameType(WebURLRequest::kFrameTypeAuxiliary);
+  blockable_mixed_content.SetFrameType(
+      mojom::RequestContextFrameType::kAuxiliary);
   blockable_mixed_content.SetRequestContext(
       WebURLRequest::kRequestContextImage);
   EXPECT_EQ(WebMixedContentContextType::kOptionallyBlockable,
@@ -132,7 +135,8 @@ TEST(MixedContentCheckerTest, HandleCertificateError) {
   response1.SetURL(ran_url);
   EXPECT_CALL(*client, DidRunContentWithCertificateErrors(ran_url));
   MixedContentChecker::HandleCertificateError(
-      &dummy_page_holder->GetFrame(), response1, WebURLRequest::kFrameTypeNone,
+      &dummy_page_holder->GetFrame(), response1,
+      mojom::RequestContextFrameType::kNone,
       WebURLRequest::kRequestContextScript);
 
   ResourceResponse response2;
@@ -147,8 +151,8 @@ TEST(MixedContentCheckerTest, HandleCertificateError) {
   response2.SetURL(displayed_url);
   EXPECT_CALL(*client, DidDisplayContentWithCertificateErrors(displayed_url));
   MixedContentChecker::HandleCertificateError(
-      &dummy_page_holder->GetFrame(), response2, WebURLRequest::kFrameTypeNone,
-      request_context);
+      &dummy_page_holder->GetFrame(), response2,
+      mojom::RequestContextFrameType::kNone, request_context);
 }
 
 TEST(MixedContentCheckerTest, DetectMixedForm) {
