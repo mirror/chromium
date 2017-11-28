@@ -41,11 +41,16 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
     kFontType,
     kStyleSheetType,
     kDocumentType,
-    kRawResourceType,
-    kScriptType
+    kRawResourceType
   };
 
   virtual ~ResourceClient() {}
+  // DataReceived() is called each time a chunk of data is received.
+  // For cache hits, the data is replayed before NotifyFinished() is called.
+  // For 304 responses, the data is NOT replayed.
+  virtual void DataReceived(Resource*,
+                            const char* /* data */,
+                            size_t /* length */) {}
   virtual void NotifyFinished(Resource*) {}
 
   static bool IsExpectedType(ResourceClient*) { return true; }
