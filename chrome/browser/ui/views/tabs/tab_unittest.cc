@@ -446,20 +446,20 @@ TEST_F(TabTest, LayeredThrobber) {
   TabRendererData data;
   data.url = GURL("http://example.com");
   EXPECT_FALSE(throbber->visible());
-  EXPECT_EQ(TabRendererData::NETWORK_STATE_NONE, tab.data().network_state);
+  EXPECT_EQ(TabNetworkState::kNone, tab.data().network_state);
   EXPECT_EQ(throbber->bounds(), GetFaviconBounds(tab));
 
   // Simulate a "normal" tab load: should paint to a layer.
-  data.network_state = TabRendererData::NETWORK_STATE_WAITING;
+  data.network_state = TabNetworkState::kWaiting;
   tab.SetData(data);
   EXPECT_TRUE(tab_controller.CanPaintThrobberToLayer());
   EXPECT_TRUE(throbber->visible());
   EXPECT_TRUE(throbber->layer());
-  data.network_state = TabRendererData::NETWORK_STATE_LOADING;
+  data.network_state = TabNetworkState::kLoading;
   tab.SetData(data);
   EXPECT_TRUE(throbber->visible());
   EXPECT_TRUE(throbber->layer());
-  data.network_state = TabRendererData::NETWORK_STATE_NONE;
+  data.network_state = TabNetworkState::kNone;
   tab.SetData(data);
   EXPECT_FALSE(throbber->visible());
 
@@ -467,44 +467,44 @@ TEST_F(TabTest, LayeredThrobber) {
   data.should_hide_throbber = true;
   tab.SetData(data);
   EXPECT_FALSE(throbber->visible());
-  data.network_state = TabRendererData::NETWORK_STATE_WAITING;
+  data.network_state = TabNetworkState::kWaiting;
   tab.SetData(data);
   EXPECT_FALSE(throbber->visible());
-  data.network_state = TabRendererData::NETWORK_STATE_LOADING;
+  data.network_state = TabNetworkState::kLoading;
   tab.SetData(data);
   EXPECT_FALSE(throbber->visible());
-  data.network_state = TabRendererData::NETWORK_STATE_NONE;
+  data.network_state = TabNetworkState::kNone;
   tab.SetData(data);
   EXPECT_FALSE(throbber->visible());
 
   // Simulate a tab that should not hide throbber. It should paint.
   data.should_hide_throbber = false;
-  data.network_state = TabRendererData::NETWORK_STATE_WAITING;
+  data.network_state = TabNetworkState::kWaiting;
   tab.SetData(data);
   EXPECT_TRUE(tab_controller.CanPaintThrobberToLayer());
   EXPECT_TRUE(throbber->visible());
   EXPECT_TRUE(throbber->layer());
-  data.network_state = TabRendererData::NETWORK_STATE_LOADING;
+  data.network_state = TabNetworkState::kLoading;
   tab.SetData(data);
   EXPECT_TRUE(throbber->visible());
   EXPECT_TRUE(throbber->layer());
-  data.network_state = TabRendererData::NETWORK_STATE_NONE;
+  data.network_state = TabNetworkState::kNone;
   tab.SetData(data);
   EXPECT_FALSE(throbber->visible());
 
   // After loading is done, simulate another resource starting to load.
-  data.network_state = TabRendererData::NETWORK_STATE_WAITING;
+  data.network_state = TabNetworkState::kWaiting;
   tab.SetData(data);
   EXPECT_TRUE(throbber->visible());
 
   // Reset.
-  data.network_state = TabRendererData::NETWORK_STATE_NONE;
+  data.network_state = TabNetworkState::kNone;
   tab.SetData(data);
   EXPECT_FALSE(throbber->visible());
 
   // Simulate a drag started and stopped during a load: layer painting stops
   // temporarily.
-  data.network_state = TabRendererData::NETWORK_STATE_WAITING;
+  data.network_state = TabNetworkState::kWaiting;
   tab.SetData(data);
   EXPECT_TRUE(throbber->visible());
   EXPECT_TRUE(throbber->layer());
@@ -516,18 +516,18 @@ TEST_F(TabTest, LayeredThrobber) {
   tab.StepLoadingAnimation();
   EXPECT_TRUE(throbber->visible());
   EXPECT_TRUE(throbber->layer());
-  data.network_state = TabRendererData::NETWORK_STATE_NONE;
+  data.network_state = TabNetworkState::kNone;
   tab.SetData(data);
   EXPECT_FALSE(throbber->visible());
 
   // Simulate a tab load starting and stopping during tab dragging (or with
   // stacked tabs): no layer painting.
   tab_controller.set_paint_throbber_to_layer(false);
-  data.network_state = TabRendererData::NETWORK_STATE_WAITING;
+  data.network_state = TabNetworkState::kWaiting;
   tab.SetData(data);
   EXPECT_TRUE(throbber->visible());
   EXPECT_FALSE(throbber->layer());
-  data.network_state = TabRendererData::NETWORK_STATE_NONE;
+  data.network_state = TabNetworkState::kNone;
   tab.SetData(data);
   EXPECT_FALSE(throbber->visible());
 }
