@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebce96a2_0532e12d",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T00:12:41Z",
+      "side": 1,
+      "message": "maybe:\n\nstd::make_unique\u003cScopedSurface\u003e last_focused_surface \u003d std::move(focused_surface_);\n\nand below:\n\nif (focused_surface_ \u0026\u0026 !last_focused_surface)\n\nas the static_cast looks a bit awkward. just an optional nit. alternative is to use \"!!\" instead of static cast.",
+      "revId": "2aa167ffc856acd214d3b6d0af9d91adf6196915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
