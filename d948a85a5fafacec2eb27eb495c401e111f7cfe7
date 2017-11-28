@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a7ffcc0_932fdf5c",
+        "filename": "tools/perf/contrib/cluster_telemetry/leak_detection_ct.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-28T19:17:21Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this go to _LeakDetectionBase?",
+      "revId": "d948a85a5fafacec2eb27eb495c401e111f7cfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e315155a_6921a3ec",
+        "filename": "tools/perf/contrib/leak_detection/leak_detection.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-28T19:17:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d948a85a5fafacec2eb27eb495c401e111f7cfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
