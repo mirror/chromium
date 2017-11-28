@@ -16,7 +16,9 @@
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/test/test_window_delegate.h"
 #include "ui/aura/window.h"
+#include "ui/base/hit_test.h"
 #include "ui/display/screen.h"
+#include "ui/events/test/event_generator.h"
 
 using ash::mojom::WindowStateType;
 
@@ -185,14 +187,15 @@ TEST_F(WindowStateTest, TestIgnoreTooBigMinimumSize) {
   EXPECT_EQ(work_area_size.ToString(), window->bounds().size().ToString());
 }
 
-// Test that setting the bounds of a snapped window keeps its snapped.
-TEST_F(WindowStateTest, SnapWindowSetBounds) {
+// Test that dragging the bounds of a snapped window keeps its snapped.
+TEST_F(WindowStateTest, DragToSetSnapWindowBounds) {
   UpdateDisplay("0+0-900x600");
   const gfx::Rect kWorkAreaBounds =
       display::Screen::GetScreen()->GetPrimaryDisplay().work_area();
-
-  std::unique_ptr<aura::Window> window(
-      CreateTestWindowInShellWithBounds(gfx::Rect(100, 100, 100, 100)));
+  aura::test::TestWindowDelegate delegate;
+  std::unique_ptr<aura::Window> window(CreateTestWindowInShellWithDelegate(
+      &delegate, -1, gfx::Rect(100, 100, 100, 100)));
+  delegate.set_window_component(HTRIGHT);
   WindowState* window_state = GetWindowState(window.get());
   const WMEvent snap_left(WM_EVENT_SNAP_LEFT);
   window_state->OnWMEvent(&snap_left);
@@ -200,12 +203,18 @@ TEST_F(WindowStateTest, SnapWindowSetBounds) {
   gfx::Rect expected =
       gfx::Rect(kWorkAreaBounds.x(), kWorkAreaBounds.y(),
                 kWorkAreaBounds.width() / 2, kWorkAreaBounds.height());
-  EXPECT_EQ(expected.ToString(), window->GetBoundsInScreen().ToString());
+  EXPECT_EQ(expected, window->GetBoundsInScreen());
 
-  // Snapped windows can have any width.
-  expected.set_width(500);
-  window->SetBounds(gfx::Rect(10, 10, 500, 300));
-  EXPECT_EQ(expected.ToString(), window->GetBoundsInScreen().ToString());
+  // Drag to change snapped window width.
+  const int kIncreasedWidth = 225;
+  ui::test::EventGenerator& generator = GetEventGenerator();
+  generator.MoveMouseTo(window->bounds().right(), window->bounds().y());
+  generator.PressLeftButton();
+  generator.MoveMouseTo(window->bounds().right() + kIncreasedWidth,
+                        window->bounds().y());
+  generator.ReleaseLeftButton();
+  expected.set_width(expected.width() + kIncreasedWidth);
+  EXPECT_EQ(expected, window->GetBoundsInScreen());
   EXPECT_EQ(mojom::WindowStateType::LEFT_SNAPPED, window_state->GetStateType());
 }
 
