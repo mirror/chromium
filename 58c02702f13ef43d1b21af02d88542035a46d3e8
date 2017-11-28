@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "81139605_0a642583",
+        "filename": "trace_test/trace_708990_c1.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-11-28T03:26:15Z",
+      "side": 1,
+      "message": "Sounds fine to me :-)",
+      "parentUuid": "32f9b853_365273f8",
+      "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cd9959c_2232fdd1",
         "filename": "trace_test/trace_708990_c1.cc",
         "patchSetId": 2
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "This is awesome!\n\nOne minor question ...\nIn struct CategoryEnabledPtrInternal\u003cfalse\u003e, we must not use the static variable and method (as the following code), right?\n\ntemplate \u003c\u003e struct CategoryEnabledPtrInternal\u003cfalse\u003e {\n     TRACE_EVENT_API_ATOMIC_WORD sAtomic \u003d 0;\n     uint8_t* value(const char* category) {\n        auto enabled_ptr \u003d reinterpret_cast\u003cuint8_t*\u003e(TRACE_EVENT_API_ATOMIC_LOAD(sAtomic));\n        if (UNLIKELY(enabled_ptr \u003d\u003d nullptr)) {\n           enabled_ptr \u003d TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(category);\n           TRACE_EVENT_API_ATOMIC_STORE(\n               sAtomic, reinterpret_cast\u003cTRACE_EVENT_API_ATOMIC_WORD\u003e(enabled_ptr));\n        }\n        return enabled_ptr;\n     }\n   }\n\nInstead, we must make its instance in each function static, right?",
       "parentUuid": "583e2067_1187f8d8",
+      "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e6fb10_8ab7be63",
+        "filename": "trace_test/trace_708990_c1.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-11-28T03:26:15Z",
+      "side": 1,
+      "message": "Yes, you are right, each entry must have its own static variable definition. So TEST_INTERNAL_TRACE_EVENT_GET_CATEGORY_INFO would become:\n\n  #define TEST_INTERNAL_TRACE_EVENT_GET_CATEGORY_INFO(category_group) \\\n     static CategoryEnabledPtrInternal\u003cIsKnownCategory(category_group)\u003e \\\n         TRACE_EVENT_API_UUID(enabled_ptr);\n\nIn both cases, the structs are POD types, so this should not generate hidden guard variables and atomic operations (but we should check this at the machine code level, just to be sure :-().\n\nActually, this seems to work after trying it on Goldbot!!\n\nhttps://gcc.godbolt.org/#z:OYLghAFBqd5QCxAYwPYBMCmBRdBLAF1QCcAaPECAKxAEZSBnVAV2OUxAHIBSAJgGY8AO2QAbZlgDU3fgGFkDAviEEZ2bgAYAgn0EjxUmfMXosAMzWad2yZID0dyQBk8iyajOSA1kNQB3IUlkAEMCTGASPEwGADpJAAVg4mCAW0ww4mkAdlkADW4cyRTmNwAjTElgyQAqFODkYlRqyQIEUJbgr2irWwdKyQZhYFEKgtkhVMwxgYJiIcriYGY0lVJJLF8CeaqQsIjiAE9JCbSYnukBc2EKpwBJAGUAFQB9AGkAOQB5AHV359ktI9sABxT4AJVu2HuEFyAEppABWWTnWySXIQPi8MyoVCY%2BHcJEo2zozGlJJ4xHImyotEY3i8IgABxGADdMKIKQSqVoabTMchkJzCdpzrorkIKrd3rcXgCgaCwQBNZ7vLQAWWwEBOmHhx0mpFFl0wZmukilMv%2BgJB4MVWsm%2BKyACE9Wk1mZgqIGKMsgARA0i6loISKTAAD0ZmSDbmQbWIzS8r18AVkoXCkW6CMdBJ90n4OYKWeptjuTzeX1%2Blvl4Mh0PNsqtCuVqo1sKJQmYolEjNmvUc71Qx0wmHQLQHHtEqF2FXekkwKjm0UkCEwxEwZ2pBR9MkL1i0imIzGQBEkKb2JCOBfOUePMaSzSn%2BwO2/OzGEBAAHM9j65nnPgqURnQZ8RV9YDdzFY1TRnWgADYrHOU800OSRgGeB90wYAlHXebNc3zJ0iRLF4Ph%2BP45WtCEoQgOtKwoxVWw3UD%2BB3K9UGDMJw0yUocVESR7lmbAAEdZDYkNOIga8gljZpgjWSTbzjSRSgdHdeUkVcCFYQIIGqKoZC3PNJDAHgkQ0Yz8X4AAxSQdNKPD9JqYJ4RASkiTUqBdKMsAHOqZTc2s91PQqFz%2BOIISRPYsMIwgPTeGdeglIueLYVbZjRVAgMeSCUSOIjSRXxUT8CGaYF0mwCYAOHeJZgisTovk6SglTR81gKgh%2BF4L9JDwPDJA0FSiQ0rTvETfwhEQ/YokwzM8Fw/SHPbTtu2INzURkazFq7WZVtsFyIFC8Kcqi4gJOa881gTJNxrOhdpsdWaER9BisrUml1ouGDUPQ26sIen0Yh/P9KqAotXt2yRSoIcr/0A6riFq3KTu%2Bg41h6vhktS51pEYrdMr6MF0i0hgWgPCp2jQFJGTwEYWjwNJus8MZkemVxJEZJJjw8EaromjD1xe69jqUnizQYUbkxug4JJyqS7yas9Dlat8Oq6tHDP67JVJpIbiG0y6xt5n6ZrmvMFo7LbiGesH/MkQKvR28H9oE4SjvE5GLvF66Fam37syt621qsknmCmUHrZc24xZ5yXToVlHuqSyRaBSsC1t9NbMtRPoeQYRlMGQPAPW6lQVwmXiwkp0RUziABVL0RzfUvxyOUojkNg5oeBuGlPZfx%2Bazxx7jzguPTwAAvUI8FEgYEBYUQRwjVAWTwKQqkUSfkEkFkPRD6X2NluN4TSVoMBaNpVCLPodeDM%2BydMVcGGJrnWlGekgcApTCAGdJMVtkh%2BmAHgNkgQmaS2mOzZIx8Vz91sBXZkqZcyyG4qgXiDwyykVoo2NQMwDxHhPJLTusNZi3BLrrD0YEUR9EeMuFomBK4INzvnQuohx6TzYn/TIPgxryyQlNOI1DWb4FXEeUQRxr6YUvo4F%2BlR77RCfp4aRaBiAP0ZGxZQwBsiyHfsOaYc5ZhHGELfIooQYzzDGF9G6PsciUMcEkZIBwYG0PoWERB2D9yHmPO3QhVViGkLLkYWYIdsGXjDoLTiMwN75TfEVZo29xCYD3tGRqyMBph1sNfCGZUKpEPhq7eqktMZuU3CiYpaUNwbiNCaCUkhHhgi0LIbAzxsAADVsDvBeFoeItxniAk%2BGqW4shnjfHBDmN8y0vyGn4OKCotT6mNJaW0jpXSemPD6QM54ThPhaB9BAUM8Jdn%2BwglUmZdSGlNNae0npyzen9MGU8cEmpQxrDifsg5vUIAvOevBSpppZlnIWZczp3Sa411uDs7U8JZj1EwL%2BYBBBni6F0M8DZUpGkIoELobU8ERQ/OqX8%2BZFylndOBNgesVYlTPGBGCT4Nd4hNNVI6Jw2BwX2lctSYA6Q0KS2eMARozBGS/mycOO0aQvnaDDBkQIbUYkoU5cjHlfKBXaPQIkm80lCmZSOaaGu7w7ivGwE4W0eybJ7OxS9KhNC4FVxcYwkeLCJ5bHYdiTIzAhBcICDwya0R%2BEIFZiURcwRAihFQCkPAm9t5zBhqHc1UiByKBIGTNmqBG6ZCIEYsYyrdHznjlXMe1MDFCEIMw8ew4lJHBCJ2eYL8bE1NOQSxZVziWkswTaSl1LaUQHhGYV1R4p5BuPAeFQdM1woitQgowbjAl4K8UK9AcMSGSvIXIO2Ux%2BDYE1m5fF5yG1ApWWswZwywQ5gYFoIgobN4OQ0KnGk0qvyxJ3gkhqcsUkbrSbYYIzA03KueMtXqq4U0RjlcERQRhb3FTUBALdAKiV7tuRsrZOyT1nrDSnMpL1eR4E8BAHVeqDW2m/b%2B%2BahlNrLRSq%2B9Dr0CM9gclBwljbKXNvIo2NtNK6VtK0Iy5lsckIHA1RRtStGd3XNWXB%2B5YJNQO1ekhkNYa1j/tIYB%2BFIQQNyEE4C4T%2B6hkjIg1Ry2fGwbFLfepQmutZyzp/dtNDvJDMvVKSxSRkgfSQQlMTQNmjdPTAnBWreSRC6VTPuTNz9R2CPyMcqz%2Bx4vQXxjRwzR8reUsEZNMVuTVK1CA0Rm8zy0YhxN3vFxVrYciOK1XiqELwpRAjBKqJwzw1MvBJWSuizwpSWU%2BNxx8CrEv4mFBRmdUa52%2BMXRyOQkdPbt3a%2BeTr/LUrrq5A7Or9GQVgogLpvj3ypnOZmWV5r7TsBVa0DVhbTHW3sc4z6Z4aotD3FeGy/jNkyRehACAKF7BYV6Ke48ZI7B25PdO0y87rWwTPHE7IEZUpgSaNu2DB7HBntfZhZgOFH34c/ZAH95lzxAdNMeN8JpuR4jgkeJDubRmYdPZewjpHIBPvQtR%2BjgH4JMe3CcJV8HYqdACFdeYGp22Kt7eq7Vut27LnHYpfTi7V3XjremTz0sfP9uHaF9BltYuGX/Yl9dyQWQzUlNxVtuXu2FeC7mcLxrzGqWsfpRx/7E3DhTcZN17kvIcO3H1YanSC3d1LZ2atnLD7bcHHt/iXgMEocCd54bgXR2GwnbVxjy7132dvj/qgTt5GaRAgN5VqPSu6MNZV8qFrbXMTYlxPSNboNMM2Uz%2BVyPB3jf/Lo6L5UFvaVW7O3SLEOI8SpLu8ZzSpnaDXtsJuWcQV0%2BvQybwYf2RcY6AyruZPY8cRp5CehmvO3s/14W/n5vO3Wud%2BX2X3gFf0NV8gxHrfiuTfK7363tjcedmYiPz3ifakMlD6s2nHM7IvRv95FPjPjZsAdoJwLCKQKIFwAiJwKQEIFwBoDAagFwMiHFOjAMCwGwK/PwLQDAQQPAWAeAV4CAAACwIgxAIj8AIi0DYECBZDvjvgACcWQMECIEBXAxBMBcBnACBpASBnAMBDAIAGgpAeB3BYBpAcAsASAFMVMIwZAFA0slM1MK4KAVc6WCIGgwhJoogGQghEAyKzwGglA4BpQ%2BBpApQwgSQBwXAOBpAFMKwBAnwQgoiZhWAdQ6WIwrheAwiWwbIghYhpAYY%2Bcn6HAnAthjckBYRMBVAgkIchwXA/AMQvAMQthIw6WrQdApAgGLInwpQVA%2BceB%2BhyKRhEAgwY8Y8IwtAGhCIME74VR74WQDBCIvAlAXOm26AlAIwHKQgHRkArBwhURKUKUEBc4wAGR9A2RuR%2BRR4lABhJRVAAAinEQcB1LQJoRoLQMQQ0VkDsXUQwfSDsRoAwbQLQJQPgLnFXNYfweAWURUZgFURoDUXUQiA0U0S0RAG0cch0RAF0XOL0RAP0aQIMUMSMekUgMnOAbMHTDYeISwqUIIZAOAagN2H2v4QALQmD6SCioFxQnG2BomfC8CSBol1BsAID6QTC%2BGYACEYHsB0DgGRHQGwFmF8GhjvgwRokwTEFBBqEaJkEaAxAaA2S4CED/y6AJQiRKFyEXDYGwi4H4HDFEEaExDEHEHYFbGkHvj8Bqn8AMFsGcAcHMkBF8ECFCEiEKkSEwCIAgAsAECMifrkCUAyHKHECZHDiimunJz6lMlcE8F8HimSB%2BCEAICSBskclck8mBp8mCmCnyliGKkkGCm8C0BZC8AaD8DpnMG1Fqn6mGm%2BmIFcCmnCGiEIHDGRG8CcEsmFnmnxngFsjECDBsQkFAA%3D",
+      "parentUuid": "6d55ec5e_9b43b49a",
       "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
