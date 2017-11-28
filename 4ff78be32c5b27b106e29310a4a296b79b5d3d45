@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea09307e_2a437dc0",
+        "filename": "chrome/browser/signin/account_consistency_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-28T16:36:34Z",
+      "side": 1,
+      "message": "I #ifdef\u0027ed function entirely when Dice is not enabled.",
+      "parentUuid": "fd6e89d6_7ad52ea6",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 93,
+        "endChar": 14
+      },
+      "revId": "4ff78be32c5b27b106e29310a4a296b79b5d3d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e76ac0cb_ec18f8ae",
         "filename": "chrome/browser/signin/account_consistency_manager.h",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-27T17:02:54Z",
       "side": 1,
       "message": "This only managed the account consistency state or flag. Should we rename it to AccountConsistencyStateManager or AccountConsistencyModeManager?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 31
+      },
+      "revId": "4ff78be32c5b27b106e29310a4a296b79b5d3d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b034b563_4bc59bab",
+        "filename": "chrome/browser/signin/account_consistency_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-28T16:36:34Z",
+      "side": 1,
+      "message": "Changed to AccountConsistencyModeManager",
+      "parentUuid": "e76ac0cb_ec18f8ae",
       "range": {
         "startLine": 19,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d510c1f1_f56d20ba",
+        "filename": "chrome/browser/signin/chrome_signin_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-28T16:36:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b577c074_d96be7e5",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 137,
+        "endChar": 56
+      },
+      "revId": "4ff78be32c5b27b106e29310a4a296b79b5d3d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c4d94d6_53b0747b",
         "filename": "components/signin/core/browser/dice_account_reconcilor_delegate.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "4ff78be32c5b27b106e29310a4a296b79b5d3d45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d075ba_2eaac9d4",
+        "filename": "components/signin/core/browser/dice_account_reconcilor_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-28T16:36:34Z",
+      "side": 1,
+      "message": "Done. Not sure why the formatter did this.",
+      "parentUuid": "3c4d94d6_53b0747b",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "4ff78be32c5b27b106e29310a4a296b79b5d3d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
