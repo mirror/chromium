@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "3ddd3348_bbfecfce",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T16:39:11Z",
+      "side": 1,
+      "message": "Yes :). Anything not used outside of this file.",
+      "parentUuid": "4be3a7a9_2c0af01c",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f404cac6_cdc495d8",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 5
@@ -311,6 +329,24 @@
       "side": 1,
       "message": "Where is this order, being referred to?",
       "parentUuid": "ed33d571_66d2d81e",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a177f00_2d48f1c8",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T16:39:11Z",
+      "side": 1,
+      "message": "In GN, the action() for the process_resources has a variable called \"outputs\", and this order should match.\n\nThe only reason this matters if for the depfile that is written. The first input of the depfile must match the first output of the GN array, or else ninja will think the target is always stale.",
+      "parentUuid": "996b24f7_f4858dfe",
       "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
