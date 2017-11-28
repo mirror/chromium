@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae3bd3c1_5b71488a",
+        "filename": "chrome/browser/vr/model/modal_prompt_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-28T13:36:03Z",
+      "side": 1,
+      "message": "If it\u0027s Audio first, I\u0027d say AudioRecording rather than AudioRecord. I\u0027m ambivalent about whether Audio or Record should go first.",
+      "parentUuid": "aeecf191_0989f360",
+      "range": {
+        "startLine": 15,
+        "startChar": 37,
+        "endLine": 15,
+        "endChar": 42
+      },
+      "revId": "c415b97637c6706b8ded95f2bca73df6cd4313a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b3e4e95_7c11ff9e",
         "filename": "chrome/browser/vr/ui_unsupported_mode.h",
         "patchSetId": 2
@@ -59,6 +83,54 @@
       "writtenOn": "2017-11-28T02:21:13Z",
       "side": 1,
       "message": "We probably shouldn\u0027t include these paths on platforms that don\u0027t need it. That\u0027s a larger and separate change.",
+      "range": {
+        "startLine": 19,
+        "startChar": 60,
+        "endLine": 19,
+        "endChar": 72
+      },
+      "revId": "c415b97637c6706b8ded95f2bca73df6cd4313a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b388fe5f_6722c268",
+        "filename": "chrome/browser/vr/ui_unsupported_mode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-28T13:36:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure why we\u0027d want different enumerators for the different platforms. Bailing on voice input for a permission should be counted in the same bucket, I think.",
+      "parentUuid": "4b3e4e95_7c11ff9e",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "c415b97637c6706b8ded95f2bca73df6cd4313a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01757f0_de4b4aab",
+        "filename": "chrome/browser/vr/ui_unsupported_mode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-28T13:36:03Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "1f41686a_6928ade3",
       "range": {
         "startLine": 19,
         "startChar": 60,
