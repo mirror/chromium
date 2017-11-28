@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3997d943_23ff6004",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-28T19:37:42Z",
+      "side": 1,
+      "message": "When we have no compositor_task_runner_, I don\u0027t know if WidgetInputHandlerManager would still need its input_event_queue_.  If no, can\u0027t we instead skip setting WidgetInputHandlerManager::input_event_queue_ and avoid the DCHECK in L132 etc?",
+      "range": {
+        "startLine": 298,
+        "startChar": 6,
+        "endLine": 298,
+        "endChar": 29
+      },
+      "revId": "2286a36ae4a5ae59f92882a0764f6f04f4656270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
