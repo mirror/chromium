@@ -182,6 +182,9 @@ void Frame::DidChangeVisibilityState() {
     child_frames[i]->DidChangeVisibilityState();
 }
 
+// TODO(mustaq): Should be merged with NotifyUserActivation() below but
+// not sure why this one doesn't update frame clients.  Could be related to
+// crbug.com/775930 .
 void Frame::UpdateUserActivationInFrameTree() {
   user_activation_state_.Activate();
   if (Frame* parent = Tree().Parent())
@@ -194,6 +197,25 @@ void Frame::NotifyUserActivation() {
     UpdateUserActivationInFrameTree();
   if (IsLocalFrame())
     ToLocalFrame(this)->Client()->SetHasReceivedUserGesture(had_gesture);
+}
+
+bool Frame::ConsumeTransientUserActivationInFrameTree(bool updateParent,
+                                                      bool updateChildren) {
+  if (updateParent) {
+    if (Frame* parent = Tree().Parent())
+      parent->ConsumeTransientUserActivationInFrameTree(true, false);
+  }
+  if (updateChildren) {
+    for (Frame* child = Tree().FirstChild(); child;
+         child = child->Tree().NextSibling()) {
+      child->ConsumeTransientUserActivationInFrameTree(false, true);
+    }
+  }
+  return user_activation_state_.ConsumeIfActive();
+}
+
+bool Frame::ConsumeTransientUserActivation() {
+  return ConsumeTransientUserActivationInFrameTree(true, true);
 }
 
 // static
@@ -220,11 +242,7 @@ bool Frame::HasTransientUserActivation(Frame* frame, bool checkIfMainThread) {
 bool Frame::ConsumeTransientUserActivation(Frame* frame,
                                            bool checkIfMainThread) {
   if (RuntimeEnabledFeatures::UserActivationV2Enabled()) {
-    // TODO(mustaq): During our first phase of experiments, we will see if
-    // consumption of user activation is really necessary or not.  If it turns
-    // out to be unavoidable, we will replace the following call with
-    // |ConsumeTransientUserActivation()|.
-    return frame ? frame->HasTransientUserActivation() : false;
+    return frame ? frame->ConsumeTransientUserActivation() : false;
   }
 
   return checkIfMainThread
