@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "855bc56e_8894c384",
+        "filename": "third_party/WebKit/Source/platform/fonts/SimpleFontData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-28T12:00:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d61df59c_99ec9d8e",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5842c328_919f2211",
         "filename": "third_party/WebKit/Source/platform/fonts/SimpleFontData.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-28T09:31:47Z",
       "side": 1,
       "message": "Left over?",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282f0b4c_fe501b16",
+        "filename": "third_party/WebKit/Source/platform/fonts/SimpleFontData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-28T12:00:24Z",
+      "side": 1,
+      "message": "Yes, thanks.",
+      "parentUuid": "5842c328_919f2211",
       "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2017-11-28T09:31:47Z",
       "side": 1,
       "message": "This adds 4 bytes to RunInfo, correct? Could we try to compress using bit fields?",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558169cd_db0055eb",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultInlineHeaders.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-28T12:00:24Z",
+      "side": 1,
+      "message": "I\u0027d like to keep it \u0027enum class\u0027 since this actually uncovered a bug where I was comparing an enum value and taking it as a boolean implicitly. But I moved the enum class to type \u0027char\u0027. Sounds okay?",
+      "parentUuid": "689c0914_d55814a4",
       "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
