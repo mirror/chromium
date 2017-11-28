@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "5e745a10_b04906b1",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-28T20:31:26Z",
+      "side": 1,
+      "message": "It seems like it could be useful to log the installed/not-installed cases separately is it possible to distinguish them from the code? Otherwise I think you\u0027ll have trouble making meaningful statements about the metric.",
+      "parentUuid": "34b66c98_e0a83c63",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 62
+      },
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf972f9c_5c1662b6",
         "filename": "chrome/browser/vr/metrics_helper.cc",
         "patchSetId": 9
