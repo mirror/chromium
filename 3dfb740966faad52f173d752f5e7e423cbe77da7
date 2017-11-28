@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "005d8d60_f1666737",
+        "filename": "extensions/common/api/networking_private.idl",
+        "patchSetId": 26
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T22:37:08Z",
+      "side": 1,
+      "message": "Is this really needed (given that the data type is not referenced anywhere in the API)?\n\nIf you plan to add ARC properties to network properties at a later date, I\u0027d wait until then to add this type to the API.",
+      "range": {
+        "startLine": 503,
+        "startChar": 13,
+        "endLine": 503,
+        "endChar": 29
+      },
+      "revId": "3dfb740966faad52f173d752f5e7e423cbe77da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
