@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "612fd56b_e6a9a4e6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T21:16:18Z",
+      "side": 0,
+      "message": "Merged into Url(), as we don\u0027t need to have them separately.",
+      "range": {
+        "startLine": 45,
+        "startChar": 14,
+        "endLine": 45,
+        "endChar": 24
+      },
+      "revId": "63eef50fca7c577c5bf28a89530c6463ee1ce56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ab891b_909425b0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T21:16:18Z",
+      "side": 0,
+      "message": "Url() is used instead after this CL (either taken from ScriptResource::Url() or passed directly in CompileInlineScript()).",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 26
+      },
+      "revId": "63eef50fca7c577c5bf28a89530c6463ee1ce56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac19c751_577049f3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T21:16:18Z",
+      "side": 0,
+      "message": "Actually, in resourcelessShouldPass test this is used for inline scripts, as resource_ is null there. DCHECK() in V8ScriptRunner didn\u0027t catch this, because the DCHECK rejects non-null Resource with non-kExternalFile, not null Resource with kExternalFile.\nAfter this CL such cases are checked in ScriptSourceCode\u0027s constructor, as V8ScriptRunner::CompileScript() now requires constructing ScriptSourceCode always.\n+leszeks@",
+      "range": {
+        "startLine": 65,
+        "startChar": 42,
+        "endLine": 65,
+        "endChar": 55
+      },
+      "revId": "63eef50fca7c577c5bf28a89530c6463ee1ce56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3c4742_a6b44880",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsHost.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T21:16:18Z",
+      "side": 0,
+      "message": "Instead of V8AtomicString() with const char*, this CL creates blink::AtomicString and calls V8String().",
+      "range": {
+        "startLine": 142,
+        "startChar": 6,
+        "endLine": 142,
+        "endChar": 20
+      },
+      "revId": "63eef50fca7c577c5bf28a89530c6463ee1ce56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5ef24f_6e233823",
+        "filename": "third_party/WebKit/Source/core/inspector/ThreadDebugger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T21:16:18Z",
+      "side": 0,
+      "message": "After this CL, ScriptState::From(context)-\u003eGetIsolate() is used instead of |isolate_| to create V8String (in V8ScriptRunner::CompileScript()).\nAre they the same isolate? +maxlg@ as the author of\nhttps://chromium-review.googlesource.com/c/chromium/src/+/583634.",
+      "range": {
+        "startLine": 282,
+        "startChar": 19,
+        "endLine": 282,
+        "endChar": 27
+      },
+      "revId": "63eef50fca7c577c5bf28a89530c6463ee1ce56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

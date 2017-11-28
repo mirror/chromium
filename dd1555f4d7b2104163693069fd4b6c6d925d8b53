@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8ab36e1_70d453d2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T21:16:18Z",
+      "side": 1,
+      "message": "This CL causes this length check to be applied to callers of CompileAndRunInternalScript(), but they are for small internal scripts and thus I think this check doesn\u0027t fail for them.",
+      "revId": "dd1555f4d7b2104163693069fd4b6c6d925d8b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7097ee41_7ca9be2a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T21:16:18Z",
+      "side": 1,
+      "message": "Now the source text is obtained via ScriptSourceCode -\u003e ScriptResource, we set the text to ScriptResource here.",
+      "revId": "dd1555f4d7b2104163693069fd4b6c6d925d8b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
