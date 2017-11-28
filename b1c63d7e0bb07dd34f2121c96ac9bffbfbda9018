@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "63d7f9a6_adb4e5e0",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-28T22:12:01Z",
+      "side": 1,
+      "message": "It\u0027s probably better to change that to a boolean as we are using a std::map rather than multimap, returning a size_t here made me confused of the data structure is a multimap or not.\n\nBut totally feel free to do this in a follow up CL.",
+      "parentUuid": "b34aa4d8_009bcf78",
+      "range": {
+        "startLine": 1746,
+        "startChar": 0,
+        "endLine": 1746,
+        "endChar": 70
+      },
+      "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "348c9c1f_0e98a0ac",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 1
@@ -102,6 +126,24 @@
       "side": 1,
       "message": "You are right about O(n) lookup not being efficient.\n\nSince I need to grab an |active_it| anyway, I can just use that to lookup the URL, so no need for (arguably redundant) multiple arguments.  What do you think?\n\nIf you prefer, I\u0027m happy to take two arguments instead.",
       "parentUuid": "348c9c1f_0e98a0ac",
+      "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e43b911e_e3e99303",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2592,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-28T22:12:01Z",
+      "side": 1,
+      "message": "LGTM!",
+      "parentUuid": "014d20b9_4f36e4e9",
       "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
