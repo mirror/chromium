@@ -284,6 +284,17 @@ void V8Window::openMethodCustom(
 
   TOSTRING_VOID(V8StringResource<kTreatNullAndUndefinedAsNullString>,
                 url_string, info[0]);
+
+  if (!static_cast<String>(url_string).IsEmpty()) {
+    KURL url(KURL(), url_string);
+    if (url.ProtocolIsJavaScript()) {
+      if (!BindingSecurity::ShouldAllowAccessTo(
+              EnteredDOMWindow(info.GetIsolate()), impl, exception_state)) {
+        return;
+      }
+    }
+  }
+
   AtomicString frame_name;
   if (info[1]->IsUndefined() || info[1]->IsNull()) {
     frame_name = "_blank";
