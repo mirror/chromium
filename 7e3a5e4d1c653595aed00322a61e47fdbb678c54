@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96113422_7722abaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-28T16:17:00Z",
+      "side": 1,
+      "message": "Have you checked the behavior for tab reparenting?\n\nOn a related note, this comment is a bit confusing, since for tab reparenting we wouldn\u0027t go through this path, unless we add normal tab -\u003e custom tab one day.",
+      "revId": "7e3a5e4d1c653595aed00322a61e47fdbb678c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
