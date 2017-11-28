@@ -471,7 +471,8 @@ TEST_F(BackgroundSyncManagerTest, RegisterWithoutLiveSWRegistration) {
   ASSERT_TRUE(provider_host);
 
   // Remove the registration object host.
-  provider_host->registration_object_hosts_.clear();
+  delete provider_host->registration_object_hosts_[sw_registration_1_->id()];
+  provider_host->registration_object_hosts_.erase(sw_registration_1_->id());
 
   // Ensure |sw_registration_1_| is the last reference to the registration.
   ASSERT_TRUE(sw_registration_1_->HasOneRef());
