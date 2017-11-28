@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15f5347a_ae7dea1b",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:30:22Z",
+      "side": 1,
+      "message": "Have you considered passing |should_compare_effective_urls| into HasWrongProcessForURL (and then into GetSiteForURL which makes a call to GetEffectiveURL)?",
+      "range": {
+        "startLine": 1572,
+        "startChar": 0,
+        "endLine": 1574,
+        "endChar": 17
+      },
+      "revId": "c4c0a5be12cd4cb57ea997d6fdb84c5c489b9351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7935ac_27ef168e",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:30:22Z",
+      "side": 1,
+      "message": "Should we also consider opener chains?\n\nBTW: This reminds me of renderer-side ScriptContext::GetEffectiveDocumentURL...",
+      "range": {
+        "startLine": 1588,
+        "startChar": 30,
+        "endLine": 1588,
+        "endChar": 38
+      },
+      "revId": "c4c0a5be12cd4cb57ea997d6fdb84c5c489b9351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fded061_cf994a49",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:30:22Z",
+      "side": 1,
+      "message": "RenderFrameHostManager::IsCurrentlySameSite returns an answers for |**candidate**| \u003c-\u003e |dest_url| relationship.  When looking at parent\u0027s last_successful_url, aren\u0027t we answering the question for a different process (one associated with the parent, not with the |candidate|)?",
+      "range": {
+        "startLine": 1591,
+        "startChar": 32,
+        "endLine": 1591,
+        "endChar": 77
+      },
+      "revId": "c4c0a5be12cd4cb57ea997d6fdb84c5c489b9351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
