@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6512c53_17561337",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-28T04:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae10365b_62a358f2",
+      "range": {
+        "startLine": 334,
+        "startChar": 32,
+        "endLine": 334,
+        "endChar": 66
+      },
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "532e64a5_7be1a5cc",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1edbeaa_79c6e79f",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-28T04:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "532e64a5_7be1a5cc",
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "875467ab_78b16934",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-28T04:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31bf7863_834f17bf",
+      "range": {
+        "startLine": 345,
+        "startChar": 69,
+        "endLine": 345,
+        "endChar": 76
+      },
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1602ba9_f4b4a993",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8feadd_7d06e8ac",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-28T04:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1602ba9_f4b4a993",
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "fedf8301_03bbc9cc",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-28T04:55:38Z",
+      "side": 1,
+      "message": "I introduced new local |HashSet\u003cLayoutObject*\u003e containing_block_set| to\ntraverse containing blocks exactly once.",
+      "parentUuid": "32c73972_a697534c",
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58764bae_7325abe4",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 3
@@ -110,6 +212,24 @@
       "writtenOn": "2017-11-27T09:24:38Z",
       "side": 1,
       "message": "Could you call SetShouldInvalidateIfNeeds() in CollectOldLayoutObjectsMarkingNone() and make it not to return\nOldSelectedLayoutObject?",
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4759a177_7358f5c8",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-28T04:55:38Z",
+      "side": 1,
+      "message": "I plan to reuse ResetOldSelectedLayoutObjects() in the xor invalidation\nso that I don\u0027t want to invalidate in the function immediately.\n|static OldSelectedLayoutObjects ResetOldSelectedLayoutObjects(\n const SelectionPaintRange\u0026, bool invalidate_now)| is better?",
+      "parentUuid": "58764bae_7325abe4",
       "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
