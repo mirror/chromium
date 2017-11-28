@@ -1783,7 +1783,7 @@ AXObject::AXRange AXLayoutObject::Selection() const {
   Position end = visible_end.ToParentAnchoredPosition();
   TextAffinity end_affinity = visible_end.Affinity();
 
-  Node* anchor_node = start.AnchorNode();
+  Node* anchor_node = start.AnchorNodeMutable();
   DCHECK(anchor_node);
 
   AXLayoutObject* anchor_object = nullptr;
@@ -1801,7 +1801,7 @@ AXObject::AXRange AXLayoutObject::Selection() const {
       anchor_node = anchor_node->parentNode();
   }
 
-  Node* focus_node = end.AnchorNode();
+  Node* focus_node = end.AnchorNodeMutable();
   DCHECK(focus_node);
 
   AXLayoutObject* focus_object = nullptr;

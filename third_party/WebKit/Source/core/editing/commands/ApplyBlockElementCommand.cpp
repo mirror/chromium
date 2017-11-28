@@ -130,7 +130,7 @@ void ApplyBlockElementCommand::DoApply(EditingState* editing_state) {
 }
 
 static bool IsAtUnsplittableElement(const Position& pos) {
-  Node* node = pos.AnchorNode();
+  const Node* node = pos.AnchorNode();
   return node == RootEditableElementOf(pos) ||
          node == EnclosingNodeOfType(pos, &IsTableCell);
 }

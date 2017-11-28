@@ -272,11 +272,11 @@ bool SpellChecker::IsSpellCheckingEnabledInFocusedNode() const {
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       GetFrame().GetDocument()->Lifecycle());
 
-  Node* focused_node = GetFrame()
-                           .Selection()
-                           .GetSelectionInDOMTree()
-                           .ComputeStartPosition()
-                           .AnchorNode();
+  const Node* focused_node = GetFrame()
+                                 .Selection()
+                                 .GetSelectionInDOMTree()
+                                 .ComputeStartPosition()
+                                 .AnchorNode();
   if (!focused_node)
     return false;
   const Element* focused_element = focused_node->IsElementNode()
@@ -590,7 +590,7 @@ void SpellChecker::RemoveSpellingMarkersUnderWords(
   marker_controller.RepaintMarkers();
 }
 
-static Node* FindFirstMarkable(Node* node) {
+static const Node* FindFirstMarkable(const Node* node) {
   while (node) {
     if (!node->GetLayoutObject())
       return nullptr;
@@ -615,11 +615,11 @@ bool SpellChecker::SelectionStartHasMarkerFor(
     DocumentMarker::MarkerType marker_type,
     int from,
     int length) const {
-  Node* node = FindFirstMarkable(GetFrame()
-                                     .Selection()
-                                     .ComputeVisibleSelectionInDOMTree()
-                                     .Start()
-                                     .AnchorNode());
+  const Node* node = FindFirstMarkable(GetFrame()
+                                           .Selection()
+                                           .ComputeVisibleSelectionInDOMTree()
+                                           .Start()
+                                           .AnchorNode());
   if (!node)
     return false;
 
@@ -844,7 +844,7 @@ bool SpellChecker::IsSpellCheckingEnabledAt(const Position& position) {
         return false;
     }
   }
-  HTMLElement* element =
+  const HTMLElement* element =
       Traversal<HTMLElement>::FirstAncestorOrSelf(*position.AnchorNode());
   return element && element->IsSpellCheckingEnabled();
 }

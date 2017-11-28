@@ -666,7 +666,7 @@ void FrameSelection::SelectFrameElementInParentIfFullySelected() {
 // ShadowRoot node for new shadow trees, or 0 for non-shadow trees.
 static Node* NonBoundaryShadowTreeRootNode(const Position& position) {
   return position.AnchorNode() && !position.AnchorNode()->IsShadowRoot()
-             ? position.AnchorNode()->NonBoundaryShadowTreeRootNode()
+             ? position.AnchorNodeMutable()->NonBoundaryShadowTreeRootNode()
              : nullptr;
 }
 

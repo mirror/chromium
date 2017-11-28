@@ -367,9 +367,9 @@ int ComparePositions(const PositionInFlatTree& position_a,
   DCHECK(position_a.IsNotNull());
   DCHECK(position_b.IsNotNull());
 
-  position_a.AnchorNode()->UpdateDistribution();
+  position_a.AnchorNodeMutable()->UpdateDistribution();
   Node* container_a = position_a.ComputeContainerNode();
-  position_b.AnchorNode()->UpdateDistribution();
+  position_b.AnchorNodeMutable()->UpdateDistribution();
   Node* container_b = position_b.ComputeContainerNode();
   int offset_a = position_a.ComputeOffsetInContainerNode();
   int offset_b = position_b.ComputeOffsetInContainerNode();
@@ -557,7 +557,7 @@ PositionInFlatTree ToPositionInFlatTree(const Position& pos) {
   if (pos.IsNull())
     return PositionInFlatTree();
 
-  Node* const anchor = pos.AnchorNode();
+  const Node* const anchor = pos.AnchorNode();
   if (pos.IsOffsetInAnchor()) {
     if (anchor->IsCharacterDataNode())
       return PositionInFlatTree(anchor, pos.ComputeOffsetInContainerNode());
@@ -614,7 +614,7 @@ Position ToPositionInDOMTree(const PositionInFlatTree& position) {
   if (position.IsNull())
     return Position();
 
-  Node* anchor_node = position.AnchorNode();
+  const Node* anchor_node = position.AnchorNode();
 
   switch (position.AnchorType()) {
     case PositionAnchorType::kAfterChildren:

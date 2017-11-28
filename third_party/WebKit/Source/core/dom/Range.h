@@ -78,6 +78,7 @@ class CORE_EXPORT Range final : public ScriptWrappable {
   Node* commonAncestorContainer() const;
   static Node* commonAncestorContainer(const Node* container_a,
                                        const Node* container_b);
+  // Could set{Start,End} functions take a |const Node*|?
   void setStart(Node* container,
                 unsigned offset,
                 ExceptionState& = ASSERT_NO_EXCEPTION);

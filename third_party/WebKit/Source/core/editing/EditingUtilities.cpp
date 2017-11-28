@@ -660,15 +660,17 @@ PositionTemplate<Strategy> FirstEditablePositionAfterPositionInRootAlgorithm(
   PositionTemplate<Strategy> editable_position = position;
 
   if (position.AnchorNode()->GetTreeScope() != highest_root.GetTreeScope()) {
-    Node* shadow_ancestor = highest_root.GetTreeScope().AncestorInThisScope(
-        editable_position.AnchorNode());
+    // TODO(editing-dev): Get rid of this const_cast.
+    const Node* shadow_ancestor =
+        highest_root.GetTreeScope().AncestorInThisScope(
+            const_cast<Node*>(editable_position.AnchorNode()));
     if (!shadow_ancestor)
       return PositionTemplate<Strategy>();
 
     editable_position = PositionTemplate<Strategy>::AfterNode(*shadow_ancestor);
   }
 
-  Node* non_editable_node = nullptr;
+  const Node* non_editable_node = nullptr;
   while (editable_position.AnchorNode() &&
          !IsEditablePosition(editable_position) &&
          editable_position.AnchorNode()->IsDescendantOf(&highest_root)) {
@@ -736,8 +738,9 @@ PositionTemplate<Strategy> LastEditablePositionBeforePositionInRootAlgorithm(
   PositionTemplate<Strategy> editable_position = position;
 
   if (position.AnchorNode()->GetTreeScope() != highest_root.GetTreeScope()) {
+    // TODO(editing-dev): Get rid of this const_cast.
     Node* shadow_ancestor = highest_root.GetTreeScope().AncestorInThisScope(
-        editable_position.AnchorNode());
+        const_cast<Node*>(editable_position.AnchorNode()));
     if (!shadow_ancestor)
       return PositionTemplate<Strategy>();
 
@@ -840,7 +843,7 @@ template <typename Strategy>
 PositionTemplate<Strategy> PreviousPositionOfAlgorithm(
     const PositionTemplate<Strategy>& position,
     PositionMoveType move_type) {
-  Node* const node = position.AnchorNode();
+  const Node* const node = position.AnchorNode();
   if (!node)
     return position;
 
@@ -901,7 +904,7 @@ PositionTemplate<Strategy> NextPositionOfAlgorithm(
   // TODO(yosin): We should have printer for PositionMoveType.
   DCHECK(move_type != PositionMoveType::kBackwardDeletion);
 
-  Node* node = position.AnchorNode();
+  const Node* node = position.AnchorNode();
   if (!node)
     return position;
 
@@ -1204,8 +1207,10 @@ static Element* TableElementJustBeforeAlgorithm(
   const PositionTemplate<Strategy> upstream(
       MostBackwardCaretPosition(visible_position.DeepEquivalent()));
   if (IsDisplayInsideTable(upstream.AnchorNode()) &&
-      upstream.AtLastEditingPositionForNode())
-    return ToElement(upstream.AnchorNode());
+      upstream.AtLastEditingPositionForNode()) {
+    // TODO(editing-dev): Get rid of this const_cast somehow.
+    return ToElement(const_cast<Node*>(upstream.AnchorNode()));
+  }
 
   return nullptr;
 }
@@ -1225,7 +1230,7 @@ Element* TableElementJustAfter(const VisiblePosition& visible_position) {
       MostForwardCaretPosition(visible_position.DeepEquivalent()));
   if (IsDisplayInsideTable(downstream.AnchorNode()) &&
       downstream.AtFirstEditingPositionForNode())
-    return ToElement(downstream.AnchorNode());
+    return ToElement(downstream.AnchorNodeMutable());
 
   return nullptr;
 }
@@ -1271,7 +1276,7 @@ bool IsPresentationalHTMLElement(const Node* node) {
 }
 
 Element* AssociatedElementOf(const Position& position) {
-  Node* node = position.AnchorNode();
+  Node* node = position.AnchorNodeMutable();
   if (!node || node->IsElementNode())
     return ToElement(node);
   ContainerNode* parent = NodeTraversal::Parent(*node);
@@ -1285,7 +1290,7 @@ Element* EnclosingElementWithTag(const Position& p,
 
   ContainerNode* root = HighestEditableRoot(p);
   Element* ancestor = p.AnchorNode()->IsElementNode()
-                          ? ToElement(p.AnchorNode())
+                          ? ToElement(p.AnchorNodeMutable())
                           : p.AnchorNode()->parentElement();
   for (; ancestor; ancestor = ancestor->parentElement()) {
     if (root && !HasEditableStyle(*ancestor))
@@ -1312,7 +1317,9 @@ static Node* EnclosingNodeOfTypeAlgorithm(const PositionTemplate<Strategy>& p,
 
   ContainerNode* const root =
       rule == kCannotCrossEditingBoundary ? HighestEditableRoot(p) : nullptr;
-  for (Node* n = p.AnchorNode(); n; n = Strategy::Parent(*n)) {
+  // TODO(editing-dev): Get rid of this const_cast.
+  for (Node* n = const_cast<Node*>(p.AnchorNode()); n;
+       n = Strategy::Parent(*n)) {
     // Don't return a non-editable node if the input position was editable,
     // since the callers from editing will no doubt want to perform editing
     // inside the returned node.
@@ -1399,7 +1406,7 @@ Element* EnclosingAnchorElement(const Position& p) {
     return nullptr;
 
   for (Element* ancestor =
-           ElementTraversal::FirstAncestorOrSelf(*p.AnchorNode());
+           ElementTraversal::FirstAncestorOrSelf(*p.AnchorNodeMutable());
        ancestor; ancestor = ElementTraversal::FirstAncestor(*ancestor)) {
     if (ancestor->IsLink())
       return ancestor;

@@ -61,7 +61,7 @@ class CORE_TEMPLATE_CLASS_EXPORT PositionIteratorAlgorithm {
   // In the later case, it takes time of O(<number of childlen>).
   void Decrement();
 
-  Node* GetNode() const { return anchor_node_; }
+  const Node* GetNode() const { return anchor_node_; }
   int OffsetInLeafNode() const { return offset_in_anchor_; }
 
   bool AtStart() const;
@@ -70,17 +70,18 @@ class CORE_TEMPLATE_CLASS_EXPORT PositionIteratorAlgorithm {
   bool AtEndOfNode() const;
 
  private:
-  PositionIteratorAlgorithm(Node* anchor_node, int offset_in_anchoror_node);
+  PositionIteratorAlgorithm(const Node* anchor_node,
+                            int offset_in_anchoror_node);
 
   bool IsValid() const {
     return !anchor_node_ ||
            dom_tree_version_ == anchor_node_->GetDocument().DomTreeVersion();
   }
 
-  Member<Node> anchor_node_;
+  Member<const Node> anchor_node_;
   // If this is non-null, Strategy::parent(*m_nodeAfterPositionInAnchor) ==
   // m_anchorNode;
-  Member<Node> node_after_position_in_anchor_;
+  Member<const Node> node_after_position_in_anchor_;
   int offset_in_anchor_;
   size_t depth_to_anchor_node_;
   // If |m_nodeAfterPositionInAnchor| is not null,

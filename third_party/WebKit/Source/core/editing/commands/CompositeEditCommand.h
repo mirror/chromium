@@ -106,7 +106,7 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
                        bool sanitize_markup = true);
   virtual void DeleteTextFromNode(Text*, unsigned offset, unsigned count);
   bool IsRemovableBlock(const Node*);
-  void InsertNodeAfter(Node*, Node* ref_child, EditingState*);
+  void InsertNodeAfter(Node*, const Node* ref_child, EditingState*);
   void InsertNodeAt(Node*, const Position&, EditingState*);
   void InsertNodeAtTabSpanPosition(Node*, const Position&, EditingState*);
   void InsertNodeBefore(Node*,
@@ -160,7 +160,7 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
   void SetNodeAttribute(Element*,
                         const QualifiedName& attribute,
                         const AtomicString& value);
-  void SplitElement(Element*, Node* at_child);
+  void SplitElement(Element*, const Node* at_child);
   void SplitTextNode(Text*, unsigned offset);
   void SplitTextNodeContainingElement(Text*, unsigned offset);
   void WrapContentsInDummySpan(Element*);

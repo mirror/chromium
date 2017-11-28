@@ -783,7 +783,7 @@ bool Editor::CanDeleteRange(const EphemeralRange& range) const {
 void Editor::RespondToChangedContents(const Position& position) {
   if (GetFrame().GetSettings() &&
       GetFrame().GetSettings()->GetAccessibilityEnabled()) {
-    Node* node = position.AnchorNode();
+    Node* node = position.AnchorNodeMutable();
     if (AXObjectCache* cache =
             GetFrame().GetDocument()->ExistingAXObjectCache())
       cache->HandleEditableTextContentChanged(node);

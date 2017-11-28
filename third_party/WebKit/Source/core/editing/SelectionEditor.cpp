@@ -268,7 +268,7 @@ static Position UpdatePostionAfterAdoptingTextNodesMerged(
     const Text& merged_node,
     const NodeWithIndex& node_to_be_removed_with_index,
     unsigned old_length) {
-  Node* const anchor_node = position.AnchorNode();
+  const Node* const anchor_node = position.AnchorNode();
   const Node& node_to_be_removed = node_to_be_removed_with_index.GetNode();
   switch (position.AnchorType()) {
     case PositionAnchorType::kBeforeChildren:

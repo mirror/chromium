@@ -49,7 +49,7 @@ Node* EnclosingShadowHost(Node* node) {
 
 bool IsEnclosedBy(const PositionInFlatTree& position, const Node& node) {
   DCHECK(position.IsNotNull());
-  Node* anchor_node = position.AnchorNode();
+  const Node* anchor_node = position.AnchorNode();
   if (anchor_node == node)
     return !position.IsAfterAnchor() && !position.IsBeforeAnchor();
 

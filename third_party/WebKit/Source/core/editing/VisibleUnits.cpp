@@ -131,8 +131,8 @@ static PositionType CanonicalPosition(const PositionType& position) {
       position.AnchorNode()->IsDocumentNode())
     return next.IsNotNull() ? next : prev;
 
-  Node* const next_node = next.AnchorNode();
-  Node* const prev_node = prev.AnchorNode();
+  const Node* const next_node = next.AnchorNode();
+  const Node* const prev_node = prev.AnchorNode();
   const bool prev_is_in_same_editable_element =
       prev_node && RootEditableElementOf(prev) == editing_root;
   const bool next_is_in_same_editable_element =
@@ -305,7 +305,7 @@ static ContainerNode* NonShadowBoundaryParentNode(Node* node) {
 
 template <typename Strategy>
 static Node* ParentEditingBoundary(const PositionTemplate<Strategy>& position) {
-  Node* const anchor_node = position.AnchorNode();
+  const Node* const anchor_node = position.AnchorNode();
   if (!anchor_node)
     return nullptr;
 
@@ -583,7 +583,7 @@ template <typename Strategy>
 static VisiblePositionTemplate<Strategy> StartOfDocumentAlgorithm(
     const VisiblePositionTemplate<Strategy>& visible_position) {
   DCHECK(visible_position.IsValid()) << visible_position;
-  Node* node = visible_position.DeepEquivalent().AnchorNode();
+  const Node* node = visible_position.DeepEquivalent().AnchorNode();
   if (!node || !node->GetDocument().documentElement())
     return VisiblePositionTemplate<Strategy>();
 
@@ -603,11 +603,11 @@ template <typename Strategy>
 static VisiblePositionTemplate<Strategy> EndOfDocumentAlgorithm(
     const VisiblePositionTemplate<Strategy>& visible_position) {
   DCHECK(visible_position.IsValid()) << visible_position;
-  Node* node = visible_position.DeepEquivalent().AnchorNode();
+  const Node* node = visible_position.DeepEquivalent().AnchorNode();
   if (!node || !node->GetDocument().documentElement())
     return VisiblePositionTemplate<Strategy>();
 
-  Element* doc = node->GetDocument().documentElement();
+  const Element* doc = node->GetDocument().documentElement();
   return CreateVisiblePosition(
       PositionTemplate<Strategy>::LastPositionInNode(*doc));
 }
@@ -690,7 +690,7 @@ LocalCaretRect LocalCaretRectOfPositionTemplate(
     const PositionWithAffinityTemplate<Strategy>& position) {
   if (position.IsNull())
     return LocalCaretRect();
-  Node* const node = position.AnchorNode();
+  const Node* const node = position.AnchorNode();
   LayoutObject* const layout_object = node->GetLayoutObject();
   if (!layout_object)
     return LocalCaretRect();
@@ -718,7 +718,7 @@ LocalCaretRect LocalSelectionRectOfPositionTemplate(
     const PositionWithAffinityTemplate<Strategy>& position) {
   if (position.IsNull())
     return LocalCaretRect();
-  Node* const node = position.AnchorNode();
+  const Node* const node = position.AnchorNode();
   if (!node->GetLayoutObject())
     return LocalCaretRect();
 
@@ -823,7 +823,7 @@ int CaretMaxOffset(const Node* n) {
 
 template <typename Strategy>
 static bool InRenderedText(const PositionTemplate<Strategy>& position) {
-  Node* const anchor_node = position.AnchorNode();
+  const Node* const anchor_node = position.AnchorNode();
   if (!anchor_node || !anchor_node->IsTextNode())
     return false;
 
@@ -895,7 +895,7 @@ bool EndsOfNodeAreVisuallyDistinctPositions(const Node* node) {
 }
 
 template <typename Strategy>
-static Node* EnclosingVisualBoundary(Node* node) {
+static const Node* EnclosingVisualBoundary(const Node* node) {
   while (node && !EndsOfNodeAreVisuallyDistinctPositions(node))
     node = Strategy::Parent(*node);
 
@@ -934,21 +934,21 @@ static PositionTemplate<Strategy> MostBackwardCaretPosition(
   DCHECK(!NeedsLayoutTreeUpdate(position)) << position;
   TRACE_EVENT0("input", "VisibleUnits::mostBackwardCaretPosition");
 
-  Node* const start_node = position.AnchorNode();
+  const Node* const start_node = position.AnchorNode();
   if (!start_node)
     return PositionTemplate<Strategy>();
 
   // iterate backward from there, looking for a qualified position
-  Node* const boundary = EnclosingVisualBoundary<Strategy>(start_node);
+  const Node* const boundary = EnclosingVisualBoundary<Strategy>(start_node);
   // FIXME: PositionIterator should respect Before and After positions.
   PositionIteratorAlgorithm<Strategy> last_visible(
       AdjustPositionForBackwardIteration<Strategy>(position));
   const bool start_editable = HasEditableStyle(*start_node);
-  Node* last_node = start_node;
+  const Node* last_node = start_node;
   bool boundary_crossed = false;
   for (PositionIteratorAlgorithm<Strategy> current_pos = last_visible;
        !current_pos.AtStart(); current_pos.Decrement()) {
-    Node* current_node = current_pos.GetNode();
+    const Node* current_node = current_pos.GetNode();
     // Don't check for an editability change if we haven't moved to a different
     // node, to avoid the expense of computing hasEditableStyle().
     if (current_node != last_node) {
@@ -1047,12 +1047,12 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
   DCHECK(!NeedsLayoutTreeUpdate(position)) << position;
   TRACE_EVENT0("input", "VisibleUnits::mostForwardCaretPosition");
 
-  Node* const start_node = position.AnchorNode();
+  const Node* const start_node = position.AnchorNode();
   if (!start_node)
     return PositionTemplate<Strategy>();
 
   // iterate forward from there, looking for a qualified position
-  Node* const boundary = EnclosingVisualBoundary<Strategy>(start_node);
+  const Node* const boundary = EnclosingVisualBoundary<Strategy>(start_node);
   // FIXME: PositionIterator should respect Before and After positions.
   PositionIteratorAlgorithm<Strategy> last_visible(
       position.IsAfterAnchor()
@@ -1061,11 +1061,11 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
                 Strategy::CaretMaxOffset(*position.AnchorNode()))
           : position);
   const bool start_editable = HasEditableStyle(*start_node);
-  Node* last_node = start_node;
+  const Node* last_node = start_node;
   bool boundary_crossed = false;
   for (PositionIteratorAlgorithm<Strategy> current_pos = last_visible;
        !current_pos.AtEnd(); current_pos.Increment()) {
-    Node* current_node = current_pos.GetNode();
+    const Node* current_node = current_pos.GetNode();
     // Don't check for an editability change if we haven't moved to a different
     // node, to avoid the expense of computing hasEditableStyle().
     if (current_node != last_node) {
@@ -1185,7 +1185,7 @@ static bool AtEditingBoundary(const PositionTemplate<Strategy> positions) {
 template <typename Strategy>
 static bool IsVisuallyEquivalentCandidateAlgorithm(
     const PositionTemplate<Strategy>& position) {
-  Node* const anchor_node = position.AnchorNode();
+  const Node* const anchor_node = position.AnchorNode();
   if (!anchor_node)
     return false;
 

@@ -64,7 +64,7 @@ class StyledMarkupSerializer final {
   const EAnnotateForInterchange should_annotate_;
   const Member<Node> highest_node_to_be_serialized_;
   const ConvertBlocksToInlines convert_blocks_to_inlines_;
-  Member<Node> last_closed_;
+  Member<const Node> last_closed_;
   Member<EditingStyle> wrapping_style_;
 };
 

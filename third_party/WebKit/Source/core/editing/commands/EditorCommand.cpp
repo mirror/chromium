@@ -493,7 +493,7 @@ static WritingDirection TextDirectionForSelection(
 
   Position position = MostForwardCaretPosition(selection.Start());
 
-  Node* node = position.AnchorNode();
+  const Node* node = position.AnchorNode();
   if (!node)
     return NaturalWritingDirection;
 

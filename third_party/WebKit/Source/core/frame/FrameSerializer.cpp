@@ -85,14 +85,14 @@ class SerializerMarkupAccumulator : public MarkupAccumulator {
  public:
   SerializerMarkupAccumulator(FrameSerializer::Delegate&,
                               const Document&,
-                              HeapVector<Member<Node>>&);
+                              HeapVector<Member<const Node>>&);
   ~SerializerMarkupAccumulator() override;
 
  protected:
   void AppendCustomAttributes(StringBuilder&,
                               const Element&,
                               Namespaces*) override;
-  void AppendText(StringBuilder& out, Text&) override;
+  void AppendText(StringBuilder& out, const Text&) override;
   bool ShouldIgnoreAttribute(const Element&, const Attribute&) const override;
   bool ShouldIgnoreElement(const Element&) const override;
   void AppendElement(StringBuilder& out, const Element&, Namespaces*) override;
@@ -100,7 +100,7 @@ class SerializerMarkupAccumulator : public MarkupAccumulator {
                        const Element&,
                        const Attribute&,
                        Namespaces*) override;
-  void AppendStartTag(Node&, Namespaces* = nullptr) override;
+  void AppendStartTag(const Node&, Namespaces* = nullptr) override;
   void AppendEndTag(const Element&) override;
   std::pair<Node*, Element*> GetAuxiliaryDOMTree(const Element&) const override;
 
@@ -118,7 +118,7 @@ class SerializerMarkupAccumulator : public MarkupAccumulator {
   // included into serialized text then extracts image, object, etc. The size
   // of this vector isn't small for large document. It is better to use
   // callback like functionality.
-  HeapVector<Member<Node>>& nodes_;
+  HeapVector<Member<const Node>>& nodes_;
 
   // Elements with links rewritten via appendAttribute method.
   HeapHashSet<Member<const Element>> elements_with_rewritten_links_;
@@ -127,7 +127,7 @@ class SerializerMarkupAccumulator : public MarkupAccumulator {
 SerializerMarkupAccumulator::SerializerMarkupAccumulator(
     FrameSerializer::Delegate& delegate,
     const Document& document,
-    HeapVector<Member<Node>>& nodes)
+    HeapVector<Member<const Node>>& nodes)
     : MarkupAccumulator(kResolveAllURLs),
       delegate_(delegate),
       document_(&document),
@@ -145,7 +145,7 @@ void SerializerMarkupAccumulator::AppendCustomAttributes(
 }
 
 void SerializerMarkupAccumulator::AppendText(StringBuilder& result,
-                                             Text& text) {
+                                             const Text& text) {
   MarkupAccumulator::AppendText(result, text);
 }
 
@@ -223,7 +223,7 @@ void SerializerMarkupAccumulator::AppendAttribute(StringBuilder& out,
   MarkupAccumulator::AppendAttribute(out, element, attribute, namespaces);
 }
 
-void SerializerMarkupAccumulator::AppendStartTag(Node& node,
+void SerializerMarkupAccumulator::AppendStartTag(const Node& node,
                                                  Namespaces* namespaces) {
   MarkupAccumulator::AppendStartTag(node, namespaces);
   nodes_.push_back(&node);
@@ -295,7 +295,7 @@ void FrameSerializer::SerializeFrame(const LocalFrame& frame) {
     return;
   }
 
-  HeapVector<Member<Node>> serialized_nodes;
+  HeapVector<Member<const Node>> serialized_nodes;
   {
     TRACE_EVENT0("page-serialization", "FrameSerializer::serializeFrame HTML");
     SCOPED_BLINK_UMA_HISTOGRAM_TIMER(
@@ -314,12 +314,13 @@ void FrameSerializer::SerializeFrame(const LocalFrame& frame) {
 
   should_collect_problem_metric_ =
       delegate_.ShouldCollectProblemMetric() && frame.IsMainFrame();
-  for (Node* node : serialized_nodes) {
+  for (const Node* node : serialized_nodes) {
     DCHECK(node);
     if (!node->IsElementNode())
       continue;
 
-    Element& element = ToElement(*node);
+    // TODO(editing-dev): Get rid of this const_cast somehow.
+    Element& element = const_cast<Element&>(ToElement(*node));
     // We have to process in-line style as it might contain some resources
     // (typically background images).
     if (element.IsStyledElement()) {

@@ -46,7 +46,7 @@ template <typename Strategy>
 static inline LayoutObject* LayoutObjectFromPosition(
     const PositionTemplate<Strategy>& position) {
   DCHECK(position.IsNotNull());
-  Node* layout_object_node = nullptr;
+  const Node* layout_object_node = nullptr;
   switch (position.AnchorType()) {
     case PositionAnchorType::kOffsetInAnchor:
       layout_object_node = position.ComputeNodeAfterPosition();

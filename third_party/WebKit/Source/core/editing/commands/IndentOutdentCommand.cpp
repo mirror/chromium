@@ -69,7 +69,7 @@ bool IndentOutdentCommand::TryIndentingAsListItem(const Position& start,
                                                   const Position& end,
                                                   EditingState* editing_state) {
   // If our selection is not inside a list, bail out.
-  Node* last_node_in_selected_paragraph = start.AnchorNode();
+  const Node* last_node_in_selected_paragraph = start.AnchorNode();
   HTMLElement* list_element = EnclosingList(last_node_in_selected_paragraph);
   if (!list_element)
     return false;
@@ -296,7 +296,7 @@ void IndentOutdentCommand::OutdentParagraph(EditingState* editing_state) {
           SplitTreeToNode(enclosing_block_flow, enclosing_element, true);
     } else {
       // We split the blockquote at where we start outdenting.
-      Node* highest_inline_node = HighestEnclosingNodeOfType(
+      const Node* highest_inline_node = HighestEnclosingNodeOfType(
           visible_start_of_paragraph.DeepEquivalent(), IsInline,
           kCannotCrossEditingBoundary, enclosing_block_flow);
       SplitElement(

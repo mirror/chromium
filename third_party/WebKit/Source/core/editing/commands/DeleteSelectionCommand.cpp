@@ -599,7 +599,7 @@ void DeleteSelectionCommand::HandleGeneralDelete(EditingState* editing_state) {
     return;
 
   int start_offset = upstream_start_.ComputeEditingOffset();
-  Node* start_node = upstream_start_.AnchorNode();
+  Node* start_node = upstream_start_.AnchorNodeMutable();
   DCHECK(start_node);
 
   MakeStylingElementsDirectChildrenOfEditableRootToPreventStyleLoss(
@@ -678,7 +678,7 @@ void DeleteSelectionCommand::HandleGeneralDelete(EditingState* editing_state) {
       }
     } else if (start_node == upstream_end_.AnchorNode() &&
                start_node->IsTextNode()) {
-      Text* text = ToText(upstream_end_.AnchorNode());
+      Text* text = ToText(upstream_end_.AnchorNodeMutable());
       DeleteTextFromNode(text, 0, upstream_end_.ComputeOffsetInContainerNode());
     }
 
@@ -726,11 +726,11 @@ void DeleteSelectionCommand::HandleGeneralDelete(EditingState* editing_state) {
       if (downstream_end_.AtLastEditingPositionForNode() &&
           !CanHaveChildrenForEditing(downstream_end_.AnchorNode())) {
         // The node itself is fully selected, not just its contents.  Delete it.
-        RemoveNode(downstream_end_.AnchorNode(), editing_state);
+        RemoveNode(downstream_end_.AnchorNodeMutable(), editing_state);
       } else {
         if (downstream_end_.AnchorNode()->IsTextNode()) {
           // in a text node that needs to be trimmed
-          Text* text = ToText(downstream_end_.AnchorNode());
+          Text* text = ToText(downstream_end_.AnchorNodeMutable());
           if (downstream_end_.ComputeEditingOffset() > 0) {
             DeleteTextFromNode(text, 0, downstream_end_.ComputeEditingOffset());
           }
@@ -746,13 +746,13 @@ void DeleteSelectionCommand::HandleGeneralDelete(EditingState* editing_state) {
           int offset = 0;
           if (upstream_start_.AnchorNode()->IsDescendantOf(
                   downstream_end_.AnchorNode())) {
-            Node* n = upstream_start_.AnchorNode();
+            const Node* n = upstream_start_.AnchorNode();
             while (n && n->parentNode() != downstream_end_.AnchorNode())
               n = n->parentNode();
             if (n)
               offset = n->NodeIndex() + 1;
           }
-          RemoveChildrenInRange(downstream_end_.AnchorNode(), offset,
+          RemoveChildrenInRange(downstream_end_.AnchorNodeMutable(), offset,
                                 downstream_end_.ComputeEditingOffset(),
                                 editing_state);
           if (editing_state->IsAborted())
@@ -770,7 +770,7 @@ void DeleteSelectionCommand::FixupWhitespace() {
   if (leading_whitespace_.IsNotNull() &&
       !IsRenderedCharacter(leading_whitespace_) &&
       leading_whitespace_.AnchorNode()->IsTextNode()) {
-    Text* text_node = ToText(leading_whitespace_.AnchorNode());
+    Text* text_node = ToText(leading_whitespace_.AnchorNodeMutable());
     DCHECK(!text_node->GetLayoutObject() ||
            text_node->GetLayoutObject()->Style()->CollapseWhiteSpace())
         << text_node;
@@ -781,7 +781,7 @@ void DeleteSelectionCommand::FixupWhitespace() {
   if (trailing_whitespace_.IsNotNull() &&
       !IsRenderedCharacter(trailing_whitespace_) &&
       trailing_whitespace_.AnchorNode()->IsTextNode()) {
-    Text* text_node = ToText(trailing_whitespace_.AnchorNode());
+    Text* text_node = ToText(trailing_whitespace_.AnchorNodeMutable());
     DCHECK(!text_node->GetLayoutObject() ||
            text_node->GetLayoutObject()->Style()->CollapseWhiteSpace())
         << text_node;
@@ -905,7 +905,7 @@ void DeleteSelectionCommand::MergeParagraphs(EditingState* editing_state) {
                  .AnchorNode())) {
       RemoveNodeAndPruneAncestors(
           MostForwardCaretPosition(merge_destination.DeepEquivalent())
-              .AnchorNode(),
+              .AnchorNodeMutable(),
           editing_state);
       if (editing_state->IsAborted())
         return;
@@ -1058,7 +1058,7 @@ void DeleteSelectionCommand::RemoveRedundantBlocks(
       CompositeEditCommand::RemoveNodePreservingChildren(node, editing_state);
       if (editing_state->IsAborted())
         return;
-      node = ending_position_.AnchorNode();
+      node = ending_position_.AnchorNodeMutable();
     } else {
       node = node->parentNode();
     }

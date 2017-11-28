@@ -25,7 +25,7 @@ class CORE_TEMPLATE_CLASS_EXPORT EditingAlgorithm : public Traversal {
   // Positions. Be sure to call |parentAnchoredEquivalent()| on a Position
   // before using it to create a DOM Range, or an exception will be thrown.
   static int LastOffsetForEditing(const Node*);
-  static Node* RootUserSelectAllForNode(Node*);
+  static const Node* RootUserSelectAllForNode(const Node*);
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT

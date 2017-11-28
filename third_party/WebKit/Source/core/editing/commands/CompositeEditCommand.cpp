@@ -296,7 +296,7 @@ void CompositeEditCommand::InsertNodeBefore(
 }
 
 void CompositeEditCommand::InsertNodeAfter(Node* insert_child,
-                                           Node* ref_child,
+                                           const Node* ref_child,
                                            EditingState* editing_state) {
   DCHECK(insert_child);
   DCHECK(ref_child);
@@ -320,7 +320,7 @@ void CompositeEditCommand::InsertNodeAt(Node* insert_child,
   // For editing positions like [table, 0], insert before the table,
   // likewise for replaced elements, brs, etc.
   Position p = editing_position.ParentAnchoredEquivalent();
-  Node* ref_child = p.AnchorNode();
+  Node* ref_child = p.AnchorNodeMutable();
   int offset = p.OffsetInContainerNode();
 
   if (CanHaveChildrenForEditing(ref_child)) {
@@ -482,7 +482,8 @@ void CompositeEditCommand::SplitTextNode(Text* node, unsigned offset) {
                           ASSERT_NO_EDITING_ABORT);
 }
 
-void CompositeEditCommand::SplitElement(Element* element, Node* at_child) {
+void CompositeEditCommand::SplitElement(Element* element,
+                                        const Node* at_child) {
   // SplitElementCommand is never aborted.
   ApplyCommandToComposite(SplitElementCommand::Create(element, at_child),
                           ASSERT_NO_EDITING_ABORT);
@@ -749,10 +750,10 @@ void CompositeEditCommand::PrepareWhitespaceAtPositionForSplit(
     Position& position) {
   if (!IsRichlyEditablePosition(position))
     return;
-  Node* node = position.AnchorNode();
+  const Node* node = position.AnchorNode();
   if (!node || !node->IsTextNode())
     return;
-  Text* text_node = ToText(node);
+  const Text* text_node = ToText(node);
 
   if (text_node->length() == 0)
     return;
@@ -987,11 +988,12 @@ void CompositeEditCommand::RemovePlaceholderAt(const Position& p) {
   // a preserved newline.
   if (IsHTMLBRElement(*p.AnchorNode())) {
     // Removing a BR element won't dispatch synchronous events.
-    RemoveNode(p.AnchorNode(), ASSERT_NO_EDITING_ABORT);
+    RemoveNode(p.AnchorNodeMutable(), ASSERT_NO_EDITING_ABORT);
     return;
   }
 
-  DeleteTextFromNode(ToText(p.AnchorNode()), p.OffsetInContainerNode(), 1);
+  DeleteTextFromNode(ToText(p.AnchorNodeMutable()), p.OffsetInContainerNode(),
+                     1);
 }
 
 HTMLElement* CompositeEditCommand::InsertNewDefaultParagraphElementAt(
@@ -1194,7 +1196,7 @@ void CompositeEditCommand::CloneParagraphUnderNewElement(
     if (!outer_node)
       return;
 
-    Node* start_node = start.AnchorNode();
+    Node* start_node = start.AnchorNodeMutable();
     for (Node* node =
              NodeTraversal::NextSkippingChildren(*start_node, outer_node);
          node; node = NodeTraversal::NextSkippingChildren(*node, outer_node)) {
@@ -1236,14 +1238,14 @@ void CompositeEditCommand::CleanupAfterDeletion(EditingState* editing_state,
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   VisiblePosition caret_after_delete = EndingVisibleSelection().VisibleStart();
-  Node* destination_node = destination.DeepEquivalent().AnchorNode();
+  Node* destination_node = destination.DeepEquivalent().AnchorNodeMutable();
   if (caret_after_delete.DeepEquivalent() != destination.DeepEquivalent() &&
       IsStartOfParagraph(caret_after_delete) &&
       IsEndOfParagraph(caret_after_delete)) {
     // Note: We want the rightmost candidate.
     Position position =
         MostForwardCaretPosition(caret_after_delete.DeepEquivalent());
-    Node* node = position.AnchorNode();
+    Node* node = position.AnchorNodeMutable();
 
     // Bail if we'd remove an ancestor of our destination.
     if (destination_node && destination_node->IsDescendantOf(node))
@@ -1792,12 +1794,12 @@ bool CompositeEditCommand::BreakOutOfEmptyMailBlockquotedParagraph(
       << caret_pos;
 
   if (IsHTMLBRElement(*caret_pos.AnchorNode())) {
-    RemoveNodeAndPruneAncestors(caret_pos.AnchorNode(), editing_state);
+    RemoveNodeAndPruneAncestors(caret_pos.AnchorNodeMutable(), editing_state);
     if (editing_state->IsAborted())
       return false;
   } else if (caret_pos.AnchorNode()->IsTextNode()) {
     DCHECK_EQ(caret_pos.ComputeOffsetInContainerNode(), 0);
-    Text* text_node = ToText(caret_pos.AnchorNode());
+    Text* text_node = ToText(caret_pos.AnchorNodeMutable());
     ContainerNode* parent_node = text_node->parentNode();
     // The preserved newline must be the first thing in the node, since
     // otherwise the previous paragraph would be quoted, and we verified that it

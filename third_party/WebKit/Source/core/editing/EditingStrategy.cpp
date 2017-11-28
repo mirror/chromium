@@ -76,14 +76,15 @@ int EditingAlgorithm<Traversal>::LastOffsetForEditing(const Node* node) {
 }
 
 template <typename Strategy>
-Node* EditingAlgorithm<Strategy>::RootUserSelectAllForNode(Node* node) {
+const Node* EditingAlgorithm<Strategy>::RootUserSelectAllForNode(
+    const Node* node) {
   if (!node || UsedValueOfUserSelect(*node) != EUserSelect::kAll)
     return nullptr;
-  Node* parent = Strategy::Parent(*node);
+  const Node* parent = Strategy::Parent(*node);
   if (!parent)
     return node;
 
-  Node* candidate_root = node;
+  const Node* candidate_root = node;
   while (parent) {
     if (!parent->GetLayoutObject()) {
       parent = Strategy::Parent(*parent);

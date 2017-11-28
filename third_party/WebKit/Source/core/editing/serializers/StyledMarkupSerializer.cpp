@@ -94,16 +94,16 @@ class StyledMarkupTraverser {
   StyledMarkupTraverser();
   StyledMarkupTraverser(StyledMarkupAccumulator*, Node*);
 
-  Node* Traverse(Node*, Node*);
-  void WrapWithNode(ContainerNode&, EditingStyle*);
+  const Node* Traverse(const Node*, const Node*);
+  void WrapWithNode(const ContainerNode&, EditingStyle*);
   EditingStyle* CreateInlineStyleIfNeeded(Node&);
 
  private:
   bool ShouldAnnotate() const;
   bool ShouldConvertBlocksToInlines() const;
-  void AppendStartMarkup(Node&);
-  void AppendEndMarkup(Node&);
-  EditingStyle* CreateInlineStyle(Element&);
+  void AppendStartMarkup(const Node&);
+  void AppendEndMarkup(const Node&);
+  EditingStyle* CreateInlineStyle(const Element&);
   bool NeedsInlineStyle(const Element&);
   bool ShouldApplyWrappingStyle(const Node&) const;
 
@@ -143,9 +143,9 @@ template <typename Strategy>
 static bool NeedInterchangeNewlineAfter(
     const VisiblePositionTemplate<Strategy>& v) {
   const VisiblePositionTemplate<Strategy> next = NextPositionOf(v);
-  Node* upstream_node =
+  const Node* upstream_node =
       MostBackwardCaretPosition(next.DeepEquivalent()).AnchorNode();
-  Node* downstream_node =
+  const Node* downstream_node =
       MostForwardCaretPosition(v.DeepEquivalent()).AnchorNode();
   // Add an interchange newline if a paragraph break is selected and a br won't
   // already be added to the markup to represent it.
@@ -190,7 +190,7 @@ String StyledMarkupSerializer<Strategy>::CreateMarkup() {
 
   Node* past_end = end_.NodeAsRangePastLastNode();
 
-  Node* first_node = start_.NodeAsRangeFirstNode();
+  const Node* first_node = start_.NodeAsRangeFirstNode();
   const VisiblePositionTemplate<Strategy> visible_start =
       CreateVisiblePosition(start_);
   const VisiblePositionTemplate<Strategy> visible_end =
@@ -226,8 +226,10 @@ String StyledMarkupSerializer<Strategy>::CreateMarkup() {
     }
   }
 
-  StyledMarkupTraverser<Strategy> traverser(&markup_accumulator, last_closed_);
-  Node* last_closed = traverser.Traverse(first_node, past_end);
+  // TODO(editing-dev): Get rid of this const_cast somehow.
+  StyledMarkupTraverser<Strategy> traverser(
+      &markup_accumulator, const_cast<Node*>(last_closed_.Get()));
+  const Node* last_closed = traverser.Traverse(first_node, past_end);
 
   if (highest_node_to_be_serialized_ && last_closed) {
     // TODO(hajimehoshi): This is calculated at createMarkupInternal too.
@@ -299,7 +301,9 @@ String StyledMarkupSerializer<Strategy>::CreateMarkup() {
         break;
     }
   } else if (should_append_parent_tag) {
-    EditingStyle* style = traverser.CreateInlineStyleIfNeeded(*last_closed_);
+    // TODO(editing-dev): Get rid of this const_cast somehow.
+    EditingStyle* style = traverser.CreateInlineStyleIfNeeded(
+        *const_cast<Node*>(last_closed_.Get()));
     traverser.WrapWithNode(*ToContainerNode(last_closed_), style);
   }
 
@@ -342,12 +346,12 @@ StyledMarkupTraverser<Strategy>::StyledMarkupTraverser(
 }
 
 template <typename Strategy>
-Node* StyledMarkupTraverser<Strategy>::Traverse(Node* start_node,
-                                                Node* past_end) {
-  HeapVector<Member<ContainerNode>> ancestors_to_close;
-  Node* next;
-  Node* last_closed = nullptr;
-  for (Node* n = start_node; n && n != past_end; n = next) {
+const Node* StyledMarkupTraverser<Strategy>::Traverse(const Node* start_node,
+                                                      const Node* past_end) {
+  HeapVector<Member<const ContainerNode>> ancestors_to_close;
+  const Node* next;
+  const Node* last_closed = nullptr;
+  for (const Node* n = start_node; n && n != past_end; n = next) {
     // If |n| is a selection boundary such as <input>, traverse the child
     // nodes in the DOM tree instead of the flat tree.
     if (HandleSelectionBoundary<Strategy>(*n)) {
@@ -392,7 +396,7 @@ Node* StyledMarkupTraverser<Strategy>::Traverse(Node* start_node,
 
     // Close up the ancestors.
     while (!ancestors_to_close.IsEmpty()) {
-      ContainerNode* ancestor = ancestors_to_close.back();
+      const ContainerNode* ancestor = ancestors_to_close.back();
       DCHECK(ancestor);
       if (next && next != past_end &&
           Strategy::IsDescendantOf(*next, *ancestor))
@@ -406,12 +410,12 @@ Node* StyledMarkupTraverser<Strategy>::Traverse(Node* start_node,
 
     // Surround the currently accumulated markup with markup for ancestors we
     // never opened as we leave the subtree(s) rooted at those ancestors.
-    ContainerNode* next_parent = next ? Strategy::Parent(*next) : nullptr;
+    const ContainerNode* next_parent = next ? Strategy::Parent(*next) : nullptr;
     if (next == past_end || n == next_parent)
       continue;
 
     DCHECK(n);
-    Node* last_ancestor_closed_or_self =
+    const Node* last_ancestor_closed_or_self =
         (last_closed && Strategy::IsDescendantOf(*n, *last_closed))
             ? last_closed
             : n;
@@ -445,7 +449,7 @@ bool StyledMarkupTraverser<Strategy>::NeedsInlineStyle(const Element& element) {
 }
 
 template <typename Strategy>
-void StyledMarkupTraverser<Strategy>::WrapWithNode(ContainerNode& node,
+void StyledMarkupTraverser<Strategy>::WrapWithNode(const ContainerNode& node,
                                                    EditingStyle* style) {
   if (!accumulator_)
     return;
@@ -457,7 +461,7 @@ void StyledMarkupTraverser<Strategy>::WrapWithNode(ContainerNode& node,
   }
   if (!node.IsElementNode())
     return;
-  Element& element = ToElement(node);
+  const Element& element = ToElement(node);
   if (ShouldApplyWrappingStyle(element) || NeedsInlineStyle(element))
     accumulator_->AppendElementWithInlineStyle(markup, element, style);
   else
@@ -480,12 +484,12 @@ EditingStyle* StyledMarkupTraverser<Strategy>::CreateInlineStyleIfNeeded(
 }
 
 template <typename Strategy>
-void StyledMarkupTraverser<Strategy>::AppendStartMarkup(Node& node) {
+void StyledMarkupTraverser<Strategy>::AppendStartMarkup(const Node& node) {
   if (!accumulator_)
     return;
   switch (node.getNodeType()) {
     case Node::kTextNode: {
-      Text& text = ToText(node);
+      const Text& text = ToText(node);
       if (text.parentElement() && IsHTMLTextAreaElement(text.parentElement())) {
         accumulator_->AppendText(text);
         break;
@@ -505,7 +509,7 @@ void StyledMarkupTraverser<Strategy>::AppendStartMarkup(Node& node) {
       break;
     }
     case Node::kElementNode: {
-      Element& element = ToElement(node);
+      const Element& element = ToElement(node);
       if ((element.IsHTMLElement() && ShouldAnnotate()) ||
           ShouldApplyWrappingStyle(element)) {
         EditingStyle* inline_style = CreateInlineStyle(element);
@@ -522,7 +526,7 @@ void StyledMarkupTraverser<Strategy>::AppendStartMarkup(Node& node) {
 }
 
 template <typename Strategy>
-void StyledMarkupTraverser<Strategy>::AppendEndMarkup(Node& node) {
+void StyledMarkupTraverser<Strategy>::AppendEndMarkup(const Node& node) {
   if (!accumulator_ || !node.IsElementNode())
     return;
   accumulator_->AppendEndTag(ToElement(node));
@@ -538,7 +542,9 @@ bool StyledMarkupTraverser<Strategy>::ShouldApplyWrappingStyle(
 
 template <typename Strategy>
 EditingStyle* StyledMarkupTraverser<Strategy>::CreateInlineStyle(
-    Element& element) {
+    const Element& const_element) {
+  // TODO(editing-dev): Get rid of this const_cast.
+  Element& element = const_cast<Element&>(const_element);
   EditingStyle* inline_style = nullptr;
 
   if (ShouldApplyWrappingStyle(element)) {

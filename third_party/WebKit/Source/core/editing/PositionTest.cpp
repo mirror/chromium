@@ -238,7 +238,7 @@ TEST_F(PositionTest, IsConnectedBasic) {
   EXPECT_TRUE(position.IsConnected());
   EXPECT_TRUE(ToPositionInFlatTree(position).IsConnected());
 
-  position.AnchorNode()->remove();
+  position.AnchorNodeMutable()->remove();
   EXPECT_FALSE(position.IsConnected());
   EXPECT_FALSE(ToPositionInFlatTree(position).IsConnected());
 }

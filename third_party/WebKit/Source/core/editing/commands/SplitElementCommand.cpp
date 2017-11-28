@@ -33,7 +33,7 @@
 
 namespace blink {
 
-SplitElementCommand::SplitElementCommand(Element* element, Node* at_child)
+SplitElementCommand::SplitElementCommand(Element* element, const Node* at_child)
     : SimpleEditCommand(element->GetDocument()),
       element2_(element),
       at_child_(at_child) {

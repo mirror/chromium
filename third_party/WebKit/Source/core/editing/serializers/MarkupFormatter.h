@@ -99,7 +99,7 @@ class MarkupFormatter final {
 
   bool SerializeAsHTMLDocument(const Node&) const;
 
-  void AppendText(StringBuilder&, Text&);
+  void AppendText(StringBuilder&, const Text&);
   void AppendOpenTag(StringBuilder&, const Element&, Namespaces*);
   void AppendCloseTag(StringBuilder&, const Element&);
   void AppendAttribute(StringBuilder&,

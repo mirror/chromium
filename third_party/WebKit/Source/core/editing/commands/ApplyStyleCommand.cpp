@@ -432,7 +432,7 @@ void ApplyStyleCommand::ApplyRelativeFontStyleChange(
   const Node* const beyond_end = end.NodeAsRangePastLastNode();
   // Move upstream to ensure we do not add redundant spans.
   start = MostBackwardCaretPosition(start);
-  Node* start_node = start.AnchorNode();
+  Node* start_node = start.AnchorNodeMutable();
   DCHECK(start_node);
 
   // Make sure we're not already at the end or the next NodeTraversal::next()
@@ -658,12 +658,15 @@ void ApplyStyleCommand::RemoveEmbeddingUpToEnclosingBlock(
   }
 }
 
-static HTMLElement* HighestEmbeddingAncestor(Node* start_node,
-                                             Node* enclosing_node) {
-  for (Node* n = start_node; n && n != enclosing_node; n = n->parentNode()) {
+static const HTMLElement* HighestEmbeddingAncestor(const Node* start_node,
+                                                   const Node* enclosing_node) {
+  for (const Node* n = start_node; n && n != enclosing_node;
+       n = n->parentNode()) {
+    // TODO(editing-dev): Get rid of this const_cast somehow.
     if (n->IsHTMLElement() &&
         EditingStyleUtilities::IsEmbedOrIsolate(GetIdentifierValue(
-            CSSComputedStyleDeclaration::Create(n), CSSPropertyUnicodeBidi))) {
+            CSSComputedStyleDeclaration::Create(const_cast<Node*>(n)),
+            CSSPropertyUnicodeBidi))) {
       return ToHTMLElement(n);
     }
   }
@@ -737,16 +740,16 @@ void ApplyStyleCommand::ApplyInlineStyle(EditingStyle* style,
   if (has_text_direction) {
     // Leave alone an ancestor that provides the desired single level embedding,
     // if there is one.
-    HTMLElement* start_unsplit_ancestor =
-        SplitAncestorsWithUnicodeBidi(start.AnchorNode(), true, text_direction);
-    HTMLElement* end_unsplit_ancestor =
-        SplitAncestorsWithUnicodeBidi(end.AnchorNode(), false, text_direction);
-    RemoveEmbeddingUpToEnclosingBlock(start.AnchorNode(),
+    HTMLElement* start_unsplit_ancestor = SplitAncestorsWithUnicodeBidi(
+        start.AnchorNodeMutable(), true, text_direction);
+    HTMLElement* end_unsplit_ancestor = SplitAncestorsWithUnicodeBidi(
+        end.AnchorNodeMutable(), false, text_direction);
+    RemoveEmbeddingUpToEnclosingBlock(start.AnchorNodeMutable(),
                                       start_unsplit_ancestor, editing_state);
     if (editing_state->IsAborted())
       return;
-    RemoveEmbeddingUpToEnclosingBlock(end.AnchorNode(), end_unsplit_ancestor,
-                                      editing_state);
+    RemoveEmbeddingUpToEnclosingBlock(end.AnchorNodeMutable(),
+                                      end_unsplit_ancestor, editing_state);
     if (editing_state->IsAborted())
       return;
 
@@ -815,9 +818,9 @@ void ApplyStyleCommand::ApplyInlineStyle(EditingStyle* style,
   if (has_text_direction) {
     // Avoid applying the unicode-bidi and direction properties beneath
     // ancestors that already have them.
-    HTMLElement* embedding_start_element = HighestEmbeddingAncestor(
+    const HTMLElement* embedding_start_element = HighestEmbeddingAncestor(
         start.AnchorNode(), EnclosingBlock(start.AnchorNode()));
-    HTMLElement* embedding_end_element = HighestEmbeddingAncestor(
+    const HTMLElement* embedding_end_element = HighestEmbeddingAncestor(
         end.AnchorNode(), EnclosingBlock(end.AnchorNode()));
 
     if (embedding_start_element || embedding_end_element) {
@@ -865,7 +868,7 @@ void ApplyStyleCommand::FixRangeAndApplyInlineStyle(
     const Position& start,
     const Position& end,
     EditingState* editing_state) {
-  Node* start_node = start.AnchorNode();
+  Node* start_node = start.AnchorNodeMutable();
   DCHECK(start_node);
 
   if (start.ComputeEditingOffset() >= CaretMaxOffset(start.AnchorNode())) {
@@ -875,7 +878,7 @@ void ApplyStyleCommand::FixRangeAndApplyInlineStyle(
       return;
   }
 
-  Node* past_end_node = end.AnchorNode();
+  Node* past_end_node = end.AnchorNodeMutable();
   if (end.ComputeEditingOffset() >= CaretMaxOffset(end.AnchorNode()))
     past_end_node = NodeTraversal::NextSkippingChildren(*end.AnchorNode());
 
@@ -906,12 +909,12 @@ void ApplyStyleCommand::FixRangeAndApplyInlineStyle(
   ApplyInlineStyleToNodeRange(style, start_node, past_end_node, editing_state);
 }
 
-static bool ContainsNonEditableRegion(Node& node) {
+static bool ContainsNonEditableRegion(const Node& node) {
   if (!HasEditableStyle(node))
     return true;
 
-  Node* sibling = NodeTraversal::NextSkippingChildren(node);
-  for (Node* descendent = node.firstChild();
+  const Node* sibling = NodeTraversal::NextSkippingChildren(node);
+  for (const Node* descendent = node.firstChild();
        descendent && descendent != sibling;
        descendent = NodeTraversal::Next(*descendent)) {
     if (!HasEditableStyle(*descendent))
@@ -975,7 +978,7 @@ void ApplyStyleCommand::ApplyInlineStyleToNodeRange(
       continue;
 
     if (!HasRichlyEditableStyle(*node) && node->IsHTMLElement()) {
-      HTMLElement* element = ToHTMLElement(node);
+      const HTMLElement* element = ToHTMLElement(node);
       // This is a plaintext-only region. Only proceed if it's fully selected.
       // pastEndNode is the node after the last fully selected node, so if it's
       // inside node then node isn't fully selected.
@@ -988,7 +991,8 @@ void ApplyStyleCommand::ApplyInlineStyleToNodeRange(
       MutableCSSPropertyValueSet* inline_style =
           CopyStyleOrCreateEmpty(element->InlineStyle());
       inline_style->MergeAndOverrideOnConflict(style->Style());
-      SetNodeAttribute(element, styleAttr,
+      // TODO(editing-dev): Get rid of this const_cast somehow.
+      SetNodeAttribute(const_cast<HTMLElement*>(element), styleAttr,
                        AtomicString(inline_style->AsText()));
       continue;
     }
@@ -1451,11 +1455,11 @@ void ApplyStyleCommand::RemoveInlineStyle(EditingStyle* style,
       !push_down_end.ComputeOffsetInContainerNode())
     push_down_end = PreviousVisuallyDistinctCandidate(push_down_end);
 
-  PushDownInlineStyleAroundNode(style, push_down_start.AnchorNode(),
+  PushDownInlineStyleAroundNode(style, push_down_start.AnchorNodeMutable(),
                                 editing_state);
   if (editing_state->IsAborted())
     return;
-  PushDownInlineStyleAroundNode(style, push_down_end.AnchorNode(),
+  PushDownInlineStyleAroundNode(style, push_down_end.AnchorNodeMutable(),
                                 editing_state);
   if (editing_state->IsAborted())
     return;
@@ -1475,7 +1479,7 @@ void ApplyStyleCommand::RemoveInlineStyle(EditingStyle* style,
   if (!Position::CommonAncestorTreeScope(start, end))
     return;
 
-  Node* node = start.AnchorNode();
+  Node* node = start.AnchorNodeMutable();
   while (node) {
     Node* next = nullptr;
     if (EditingIgnoresContent(*node)) {
@@ -1577,7 +1581,7 @@ void ApplyStyleCommand::SplitTextAtEnd(const Position& start,
   bool should_update_start =
       start.IsOffsetInAnchor() &&
       start.ComputeContainerNode() == end.ComputeContainerNode();
-  Text* text = ToText(end.AnchorNode());
+  Text* text = ToText(end.AnchorNodeMutable());
   SplitTextNode(text, end.OffsetInContainerNode());
 
   Node* prev_node = text->previousSibling();

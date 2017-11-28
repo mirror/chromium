@@ -49,9 +49,9 @@ class MarkupAccumulator {
   virtual ~MarkupAccumulator();
 
   void AppendString(const String&);
-  virtual void AppendStartTag(Node&, Namespaces* = nullptr);
+  virtual void AppendStartTag(const Node&, Namespaces* = nullptr);
   virtual void AppendEndTag(const Element&);
-  void AppendStartMarkup(StringBuilder&, Node&, Namespaces*);
+  void AppendStartMarkup(StringBuilder&, const Node&, Namespaces*);
   void AppendEndMarkup(StringBuilder&, const Element&);
 
   bool SerializeAsHTMLDocument(const Node&) const;
@@ -61,7 +61,7 @@ class MarkupAccumulator {
                                       const Element&,
                                       Namespaces*);
 
-  virtual void AppendText(StringBuilder&, Text&);
+  virtual void AppendText(StringBuilder&, const Text&);
   virtual bool ShouldIgnoreAttribute(const Element&, const Attribute&) const;
   virtual bool ShouldIgnoreElement(const Element&) const;
   virtual void AppendElement(StringBuilder&, const Element&, Namespaces*);

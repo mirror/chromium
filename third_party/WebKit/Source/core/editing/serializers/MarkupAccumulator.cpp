@@ -56,7 +56,8 @@ void MarkupAccumulator::AppendString(const String& string) {
   markup_.Append(string);
 }
 
-void MarkupAccumulator::AppendStartTag(Node& node, Namespaces* namespaces) {
+void MarkupAccumulator::AppendStartTag(const Node& node,
+                                       Namespaces* namespaces) {
   AppendStartMarkup(markup_, node, namespaces);
 }
 
@@ -65,7 +66,7 @@ void MarkupAccumulator::AppendEndTag(const Element& element) {
 }
 
 void MarkupAccumulator::AppendStartMarkup(StringBuilder& result,
-                                          Node& node,
+                                          const Node& node,
                                           Namespaces* namespaces) {
   switch (node.getNodeType()) {
     case Node::kTextNode:
@@ -94,7 +95,7 @@ void MarkupAccumulator::AppendCustomAttributes(StringBuilder&,
                                                const Element&,
                                                Namespaces*) {}
 
-void MarkupAccumulator::AppendText(StringBuilder& result, Text& text) {
+void MarkupAccumulator::AppendText(StringBuilder& result, const Text& text) {
   formatter_.AppendText(result, text);
 }
 

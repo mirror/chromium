@@ -51,7 +51,7 @@ BackwardsCharacterIteratorAlgorithm<Strategy>::EndPosition() const {
     if (text_iterator_.length() > 1) {
       const Node* n = text_iterator_.StartContainer();
       return PositionTemplate<Strategy>::EditingPositionOf(
-          n, text_iterator_.EndOffset() - run_offset_);
+          const_cast<Node*>(n), text_iterator_.EndOffset() - run_offset_);
     }
     DCHECK(!run_offset_);
   }

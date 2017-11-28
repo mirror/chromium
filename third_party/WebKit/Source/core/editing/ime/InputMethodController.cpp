@@ -735,22 +735,18 @@ void InputMethodController::SetComposition(
   // Find out what node has the composition now.
   Position base = MostForwardCaretPosition(
       GetFrame().Selection().ComputeVisibleSelectionInDOMTree().Base());
-  Node* base_node = base.AnchorNode();
+  const Node* base_node = base.AnchorNode();
   if (!base_node || !base_node->IsTextNode())
     return;
 
   Position extent =
       GetFrame().Selection().ComputeVisibleSelectionInDOMTree().Extent();
-  Node* extent_node = extent.AnchorNode();
-
-  unsigned extent_offset = extent.ComputeOffsetInContainerNode();
-  unsigned base_offset = base.ComputeOffsetInContainerNode();
 
   has_composition_ = true;
   if (!composition_range_)
     composition_range_ = Range::Create(GetDocument());
-  composition_range_->setStart(base_node, base_offset);
-  composition_range_->setEnd(extent_node, extent_offset);
+  composition_range_->setStart(base);
+  composition_range_->setEnd(extent);
 
   if (base_node->GetLayoutObject())
     base_node->GetLayoutObject()->SetShouldDoFullPaintInvalidation();

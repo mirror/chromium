@@ -53,7 +53,7 @@ static const int kInvalidOffset = -1;
 
 template <typename Strategy>
 PositionIteratorAlgorithm<Strategy>::PositionIteratorAlgorithm(
-    Node* anchor_node,
+    const Node* anchor_node,
     int offset_in_anchor)
     : anchor_node_(anchor_node),
       node_after_position_in_anchor_(

@@ -33,14 +33,14 @@ namespace blink {
 class SplitElementCommand final : public SimpleEditCommand {
  public:
   static SplitElementCommand* Create(Element* element,
-                                     Node* split_point_child) {
+                                     const Node* split_point_child) {
     return new SplitElementCommand(element, split_point_child);
   }
 
   virtual void Trace(blink::Visitor*);
 
  private:
-  SplitElementCommand(Element*, Node* split_point_child);
+  SplitElementCommand(Element*, const Node* split_point_child);
 
   void DoApply(EditingState*) override;
   void DoUnapply() override;
@@ -49,7 +49,7 @@ class SplitElementCommand final : public SimpleEditCommand {
 
   Member<Element> element1_;
   Member<Element> element2_;
-  Member<Node> at_child_;
+  Member<const Node> at_child_;
 };
 
 }  // namespace blink

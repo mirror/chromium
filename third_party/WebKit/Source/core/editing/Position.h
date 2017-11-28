@@ -148,7 +148,10 @@ class CORE_TEMPLATE_CLASS_EXPORT PositionTemplate {
 
   Node* CommonAncestorContainer(const PositionTemplate<Strategy>&) const;
 
-  Node* AnchorNode() const { return anchor_node_.Get(); }
+  const Node* AnchorNode() const { return anchor_node_.Get(); }
+  Node* AnchorNodeMutable() const {
+    return const_cast<Node*>(anchor_node_.Get());
+  }
 
   Document* GetDocument() const {
     return anchor_node_ ? &anchor_node_->GetDocument() : nullptr;
