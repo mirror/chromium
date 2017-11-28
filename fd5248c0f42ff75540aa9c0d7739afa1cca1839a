@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dbaa998_6ca7a249",
+        "filename": "components/exo/data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T13:27:24Z",
+      "side": 1,
+      "message": "why is having ScopedDataSource not enough?",
+      "revId": "fd5248c0f42ff75540aa9c0d7739afa1cca1839a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f46b03_5b2e5e55",
+        "filename": "components/exo/data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T13:27:24Z",
+      "side": 1,
+      "message": "Can you add a CreatePipe helper function for this?",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 3
+      },
+      "revId": "fd5248c0f42ff75540aa9c0d7739afa1cca1839a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b3dd4a_f1889397",
+        "filename": "components/exo/data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T13:27:24Z",
+      "side": 1,
+      "message": "please add helper functions for lambdas below to make the code easier to read",
+      "revId": "fd5248c0f42ff75540aa9c0d7739afa1cca1839a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e03b61e_935f70fe",
+        "filename": "components/exo/data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T13:27:24Z",
+      "side": 1,
+      "message": "nit: !bytes_read and no need for {}",
+      "range": {
+        "startLine": 107,
+        "startChar": 14,
+        "endLine": 109,
+        "endChar": 15
+      },
+      "revId": "fd5248c0f42ff75540aa9c0d7739afa1cca1839a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
