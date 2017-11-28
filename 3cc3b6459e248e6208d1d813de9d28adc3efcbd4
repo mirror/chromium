@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40c83027_59dc6f4b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-28T18:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "003d5585_957b1418",
+      "range": {
+        "startLine": 179,
+        "startChar": 7,
+        "endLine": 179,
+        "endChar": 8
+      },
+      "revId": "3cc3b6459e248e6208d1d813de9d28adc3efcbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33b17650_bb8b85be",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "3cc3b6459e248e6208d1d813de9d28adc3efcbd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8eb31f2_af8a6311",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-28T18:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33b17650_bb8b85be",
+      "range": {
+        "startLine": 207,
+        "startChar": 12,
+        "endLine": 207,
+        "endChar": 18
+      },
+      "revId": "3cc3b6459e248e6208d1d813de9d28adc3efcbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d5c7d7d8_7cac11c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-28T18:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7d62910_d9fe9419",
+      "range": {
+        "startLine": 208,
+        "startChar": 15,
+        "endLine": 208,
+        "endChar": 22
+      },
+      "revId": "3cc3b6459e248e6208d1d813de9d28adc3efcbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0cf902b_bce964e7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "3cc3b6459e248e6208d1d813de9d28adc3efcbd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99460347_484b8455",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-28T18:21:53Z",
+      "side": 1,
+      "message": "Done. \n\nI repeated the CommandLine check in #doesUserQualifyForSurvey because the check to see if chrome home was enabled for 1 week is impractical for testing.",
+      "parentUuid": "a0cf902b_bce964e7",
+      "range": {
+        "startLine": 262,
+        "startChar": 35,
+        "endLine": 262,
+        "endChar": 59
+      },
+      "revId": "3cc3b6459e248e6208d1d813de9d28adc3efcbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
