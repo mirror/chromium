@@ -21,6 +21,9 @@ struct OpenURLParams;
 class WebContents;
 }  // namespace content
 
+namespace user_prefs {
+class PrefRegistrySyncable;
+}
 
 extern const base::Feature kAbusiveExperienceEnforce;
 
@@ -65,6 +68,8 @@ class SafeBrowsingTriggeredPopupBlocker
     // Add new entries before this one
     kCount
   };
+
+  static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
   static std::unique_ptr<SafeBrowsingTriggeredPopupBlocker> MaybeCreate(
       content::WebContents* web_contents);

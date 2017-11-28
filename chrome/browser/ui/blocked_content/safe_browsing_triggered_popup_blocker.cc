@@ -9,6 +9,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
+#include "chrome/common/pref_names.h"
+#include "components/pref_registry/pref_registry_syncable.h"
 #include "components/safe_browsing/db/util.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "content/public/browser/navigation_handle.h"
@@ -42,6 +44,12 @@ SafeBrowsingTriggeredPopupBlocker::PageData::~PageData() {
     UMA_HISTOGRAM_COUNTS_100("ContentSettings.Popups.StrongBlocker.NumBlocked",
                              num_popups_blocked_);
   }
+}
+
+// static
+void SafeBrowsingTriggeredPopupBlocker::RegisterProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry) {
+  registry->RegisterBooleanPref(prefs::kAbusiveExperienceEnforce, true);
 }
 
 // static
