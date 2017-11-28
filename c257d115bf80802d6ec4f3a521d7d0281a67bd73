@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f25923d_573e1b16",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-28T08:31:48Z",
+      "side": 1,
+      "message": "Should be TODO(grunell): ... https://crbug.com/696930",
+      "revId": "c257d115bf80802d6ec4f3a521d7d0281a67bd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f249dc11_22a86a17",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-28T08:31:48Z",
+      "side": 1,
+      "message": "can you add comments what the parameters mean, like bool /* enabled */, string /* whatever */",
+      "revId": "c257d115bf80802d6ec4f3a521d7d0281a67bd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
