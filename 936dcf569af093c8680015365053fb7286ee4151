@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fabedc6d_874922d0",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Technically, since we sizzle outside of [NSURLSession load], the swizzleSessionWithConfiguration() method doesn\u0027t need to be in the NSURLSession category. For convenience, you can keep it there but don\u0027t expose it in any of the headers.",
+      "range": {
+        "startLine": 346,
+        "startChar": 4,
+        "endLine": 346,
+        "endChar": 50
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd52d321_782d5195",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "period.",
+      "range": {
+        "startLine": 16,
+        "startChar": 73,
+        "endLine": 16,
+        "endChar": 74
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb54f74_aeb29778",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Why do we need it here? In the future, if we decide to add some extra cronet specific fields to CronetTransactionMetrics, this header may become public. I would move all swizzling logic into Cronet class implementation (Cronet.mm).",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 4
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d406f67_1534bba8",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Are these two imports used?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d100c099_87d45b26",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Do you need it if you synthesize the property below?",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 68
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6c9302_5fc5661d",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Can you use \"const base::TimeTicks\u0026\" here to avoid copying?",
+      "range": {
+        "startLine": 76,
+        "startChar": 20,
+        "endLine": 76,
+        "endChar": 41
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5219618d_be8f96ec",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Maybe we don\u0027t need this method.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 1
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66910bae_48de4f29",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "The proxyConnection field is of type \"BOOL\"; however, the NSURLString instance is assigned to it. There should be a unit test that detects this type of errors.",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 37
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c52c47b_33402cdd",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Is it always true for QUIC and HTTP/2?",
+      "range": {
+        "startLine": 138,
+        "startChar": 25,
+        "endLine": 138,
+        "endChar": 44
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c038b9_f8933fb6",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Maybe we can get that info from CacheEntryStatus in the cache_entry_status field?",
+      "range": {
+        "startLine": 139,
+        "startChar": 25,
+        "endLine": 139,
+        "endChar": 45
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f120b41e_c6b14cf9",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Please comment that the method returns a Metrics object with task equals to nullptr if there is no metrics for a given key (task).",
+      "range": {
+        "startLine": 149,
+        "startChar": 13,
+        "endLine": 149,
+        "endChar": 50
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1defde_48d57a49",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be better to use std::map::find() instead of the [] operator? The [] operator is going to create an entry even if it doesn\u0027t exist and add it to the map.",
+      "range": {
+        "startLine": 150,
+        "startChar": 25,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396ebae1_c27f15b9",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Could we move this \"if\" up just below MetricsForTask? If the delegate doesn\u0027t respond to \"didFinishCollectingMetrics\", we don\u0027t need to do anything.",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 64
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c655ef4d_2211921d",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "Please add a comment that this method doesn\u0027t call itself recursively but instead it forwards the call to the original sessionWithConfiguration() method.",
+      "range": {
+        "startLine": 243,
+        "startChar": 15,
+        "endLine": 243,
+        "endChar": 43
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6a9d90_15ff48fb",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-28T22:24:21Z",
+      "side": 1,
+      "message": "We should figure it out or add TODO with a new bug number.",
+      "range": {
+        "startLine": 167,
+        "startChar": 4,
+        "endLine": 167,
+        "endChar": 11
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
