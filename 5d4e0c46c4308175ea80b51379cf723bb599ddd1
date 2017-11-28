@@ -354,6 +354,24 @@
     },
     {
       "key": {
+        "uuid": "16a2b1c9_3dc0aa66",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T23:15:58Z",
+      "side": 1,
+      "message": "\u003e It\u0027s a std::unique_ptr\u003cBrowser\u003e :-)\n\nah, neat.",
+      "parentUuid": "404b8e2f_7438a80c",
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b02cc62_d2c8df42",
         "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
         "patchSetId": 23

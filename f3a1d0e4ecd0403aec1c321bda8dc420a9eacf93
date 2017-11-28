@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "88af7c49_a7404b7f",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T23:15:58Z",
+      "side": 1,
+      "message": "\u003e So this is possible, but is ui/views the best place for this? The includes in that file seem to actually be views-specific.\n\nWhere you have it is probably ok. I suppose we really want an extra_parts_desktop or something. (The devtools stuff in extra_parts_views.cc probably belongs in extra_parts_desktop.cc too..).",
+      "parentUuid": "6375dc8b_0714100f",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e77dac3_dd1a1733",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 14
