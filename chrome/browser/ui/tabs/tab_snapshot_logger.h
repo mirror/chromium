@@ -17,7 +17,6 @@ class WebContents;
 // Logs TabManager.Tab UKM for a tab when requested. Includes information
 // relevant to the tab and its WebContents.
 // Must be used on the UI thread.
-// TODO(michaelpg): Unit test for UKMs.
 class TabSnapshotLogger {
  public:
   TabSnapshotLogger();
