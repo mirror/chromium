@@ -7,9 +7,26 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "crypto/nss_util_internal.h"
 
 namespace chromeos {
+
+// static
+std::unique_ptr<ClientCertFilterChromeOS>
+ClientCertFilterChromeOS::CreateForUserProfile(
+    bool use_system_slot,
+    const std::string& username_hash) {
+  return base::WrapUnique<ClientCertFilterChromeOS>(
+      new ClientCertFilterChromeOS(use_system_slot, username_hash));
+}
+
+// static
+std::unique_ptr<ClientCertFilterChromeOS>
+ClientCertFilterChromeOS::CreateForSigninProfile() {
+  return base::WrapUnique<ClientCertFilterChromeOS>(
+      new ClientCertFilterChromeOS(true, std::string()));
+}
 
 ClientCertFilterChromeOS::ClientCertFilterChromeOS(
     bool use_system_slot,
