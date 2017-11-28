@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3ad2609_187ff0e5",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-28T20:37:14Z",
+      "side": 1,
+      "message": "I tagged the most ugly changes with a TODO, but it would be great if we can fix this.\nDo you have any ideas, what can we do with AncestorInThisScope?\nCan we make a copy of this function that takes and returns a |const Node*|?",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1898fa37_e3acf1fd",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-28T20:37:14Z",
+      "side": 1,
+      "message": "The contract for functions like AssociatedElementOf require us to return non-const Element from the given Position.\nWhat will be a good solution here? Should we change interface of AssociatedElementOf function to return const Element?",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00481fb4_f204441f",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-28T20:37:14Z",
+      "side": 1,
+      "message": "The same question - how can we return a non-const Node for the given Position object?",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d202716f_35c44d3b",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-28T20:37:14Z",
+      "side": 1,
+      "message": "Here we do not change the DOM structure, but we need a non-const Node to change its internal data.\nWhat will be a good solution for getting that in case of const Position?",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33a5ed5_28a41fda",
+        "filename": "third_party/WebKit/Source/core/editing/Position.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-28T20:37:14Z",
+      "side": 1,
+      "message": "At it was said at [1], we haven\u0027t good solution for case when we need to modify the node within position. I made this method only to be able to compile the code without tons of const_casts.\nWe have to do something with this.\nMaybe we can have special class like EditingPosition and convert Position to it?\n\n[1] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d735327#c7",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b414136_75012fbf",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-28T20:37:14Z",
+      "side": 1,
+      "message": "Across all code in editing/commands/ I used my method AnchorNodeMutable to get a non-const Node for Position object.\nWe should get rid of this.",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a16bfe8_e2cb2254",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-28T20:37:14Z",
+      "side": 1,
+      "message": "I wonder if we can use |const Node| for CSSComputedStyleDeclaration and the like.",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
