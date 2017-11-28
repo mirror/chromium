@@ -148,6 +148,8 @@ class PLATFORM_EXPORT SchemeRegistry {
       const String& scheme);
   static bool SchemeShouldBypassSecureContextCheck(const String& scheme);
 
+  static bool SchemeSupportsWasmEvalCSP(const String& scheme);
+
  private:
   static const URLSchemesSet& LocalSchemes();
 };
