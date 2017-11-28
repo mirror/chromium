@@ -40,7 +40,7 @@ const CSSValue* FilteredComputedStylePropertyMap::GetCustomProperty(
 Vector<String> FilteredComputedStylePropertyMap::getProperties() {
   Vector<String> result;
   for (const auto& native_property : native_properties_) {
-    result.push_back(getPropertyNameString(native_property));
+    result.push_back(CSSProperty::Get(native_property).GetPropertyNameString());
   }
 
   for (const auto& custom_property : custom_properties_) {

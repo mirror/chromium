@@ -487,7 +487,8 @@ String InspectorAnimationAgent::CreateCSSId(blink::Animation& animation) {
     if (!style || !style->ParentStyleSheet() || !style->parentRule() ||
         style->parentRule()->type() != CSSRule::kStyleRule)
       continue;
-    AddStringToDigestor(digestor.get(), getPropertyNameString(property));
+    AddStringToDigestor(digestor.get(),
+                        CSSProperty::Get(property).GetPropertyNameString());
     AddStringToDigestor(digestor.get(),
                         css_agent_->StyleSheetId(style->ParentStyleSheet()));
     AddStringToDigestor(digestor.get(),

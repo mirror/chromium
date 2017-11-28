@@ -70,7 +70,7 @@ Vector<String> ComputedStylePropertyMap::getProperties() {
   Vector<String> result;
   for (const CSSProperty* property :
        CSSComputedStyleDeclaration::ComputableProperties()) {
-    result.push_back(getPropertyNameString(property->PropertyID()));
+    result.push_back(property->GetPropertyNameString());
   }
   return result;
 }

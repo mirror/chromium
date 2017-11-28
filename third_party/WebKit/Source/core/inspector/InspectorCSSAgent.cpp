@@ -1107,7 +1107,7 @@ Response InspectorCSSAgent::getComputedStyleForNode(
       continue;
     (*style)->addItem(
         protocol::CSS::CSSComputedStyleProperty::create()
-            .setName(getPropertyNameString(property_id))
+            .setName(property_class.GetPropertyNameString())
             .setValue(computed_style_info->GetPropertyValue(property_id))
             .build());
   }
@@ -2119,7 +2119,7 @@ CSSStyleDeclaration* InspectorCSSAgent::FindEffectiveDeclaration(
   if (!styles.size())
     return nullptr;
 
-  String longhand = getPropertyNameString(property_id);
+  String longhand = CSSProperty::Get(property_id).GetPropertyNameString();
   CSSStyleDeclaration* found_style = nullptr;
 
   for (unsigned i = 0; i < styles.size(); ++i) {
@@ -2182,10 +2182,11 @@ Response InspectorCSSAgent::setEffectivePropertyValueForNode(
   Vector<StylePropertyShorthand, 4> shorthands;
   getMatchingShorthandsForLonghand(property_id, &shorthands);
 
-  String shorthand = shorthands.size() > 0
-                         ? getPropertyNameString(shorthands[0].id())
-                         : String();
-  String longhand = getPropertyNameString(property_id);
+  String shorthand =
+      shorthands.size() > 0
+          ? CSSProperty::Get(shorthands[0].id()).GetPropertyNameString()
+          : String();
+  String longhand = CSSProperty::Get(property_id).GetPropertyNameString();
 
   int found_index = -1;
   Vector<CSSPropertySourceData>& properties = source_data->property_data;

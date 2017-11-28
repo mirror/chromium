@@ -292,8 +292,7 @@ CompositorAnimations::CheckCanStartEffectOnCompositor(
           if (property.IsCSSCustomProperty()) {
             builder.Append(property.CustomPropertyName());
           } else {
-            builder.Append(
-                getPropertyName(property.GetCSSProperty().PropertyID()));
+            builder.Append(property.GetCSSProperty().GetPropertyName());
           }
           return FailureCode::Actionable(builder.ToString());
       }
