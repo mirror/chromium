@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b3a5d7_3480a08d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T19:23:46Z",
+      "side": 1,
+      "message": "i\u0027m not sure that this is correct. from my reading of the std::upper_bound docs, i think the 100 bucket may never be used. i could be wrong, though. can you add unit tests for this?",
+      "revId": "597aef6d2a39520595bd31b77da9355078304be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e2f1d7_88d0c73d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T19:23:46Z",
+      "side": 1,
+      "message": "why not just call source_ids_.clear() instead?",
+      "revId": "597aef6d2a39520595bd31b77da9355078304be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61426d98_dc091844",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T19:23:46Z",
+      "side": 1,
+      "message": "i would omit this comment",
+      "revId": "597aef6d2a39520595bd31b77da9355078304be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1886d8f1_8878b368",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T19:23:46Z",
+      "side": 1,
+      "message": "this feels like it should just happen in the Update method",
+      "revId": "597aef6d2a39520595bd31b77da9355078304be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
