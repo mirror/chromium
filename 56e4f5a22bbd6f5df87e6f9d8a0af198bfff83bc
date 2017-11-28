@@ -134,6 +134,24 @@
       "revId": "56e4f5a22bbd6f5df87e6f9d8a0af198bfff83bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cdee4f9_b146d853",
+        "filename": "third_party/WebKit/Source/core/svg/graphics/SVGImage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-11-28T08:00:42Z",
+      "side": 1,
+      "message": "Adding DCHECK here, fails below tests\nUnexpected Failures:\n* fast/media/media-svg-crash.html\n* svg/as-image/svg-as-image-actually-containing-xhtml-with-media.html\n* svg/as-image/svg-invalid-image-1.html\nSo I ignored this DCHECK.",
+      "parentUuid": "8f189cca_a3938f43",
+      "revId": "56e4f5a22bbd6f5df87e6f9d8a0af198bfff83bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
