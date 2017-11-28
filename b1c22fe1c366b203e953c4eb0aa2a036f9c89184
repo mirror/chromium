@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2805b19f_f4cd5d4f",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T00:47:44Z",
+      "side": 1,
+      "message": "Bike shed #1: Should this be Empty() or IsEmpty(), like Get() and Pointer()?\nBike shed #2: Should this return the inverse? i.e. Created(). There are a bunch of places that either ends up calling !lazy_instance.empty(), or could be written that way and still be just as clear or clearer.",
+      "revId": "b1c22fe1c366b203e953c4eb0aa2a036f9c89184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb7cd3c_04afe5af",
+        "filename": "content/test/layouttest_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T00:47:44Z",
+      "side": 1,
+      "message": "If empty() became Created(), this and the line 143 block can be written as:\n\nif (g_foo.Created())\n  g_foo.Get().Bar();\nreturn same_var_either_way;",
+      "revId": "b1c22fe1c366b203e953c4eb0aa2a036f9c89184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
