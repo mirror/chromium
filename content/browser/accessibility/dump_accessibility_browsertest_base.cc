@@ -25,6 +25,7 @@
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
 #include "content/browser/web_contents/web_contents_impl.h"
+#include "content/public/browser/native_web_keyboard_event.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_paths.h"
 #include "content/public/common/content_switches.h"
@@ -38,6 +39,8 @@
 #include "content/test/content_browser_test_utils_internal.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "ui/events/event.h"
+#include "ui/events/event_utils.h"
 
 namespace content {
 
@@ -308,6 +311,10 @@ void DumpAccessibilityTestBase::RunTestForPlatform(
   // accessibility tree, either.
   for (;;) {
     VLOG(1) << "Top of loop";
+    ui::KeyEvent event(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, ui::DomCode::ENTER,
+                       0, ui::DomKey::ENTER, ui::EventTimeForNow());
+    web_contents->HandleKeyboardEvent(NativeWebKeyboardEvent(event));
+
     RenderFrameHostImpl* main_frame = static_cast<RenderFrameHostImpl*>(
         web_contents->GetMainFrame());
     BrowserAccessibilityManager* manager =
