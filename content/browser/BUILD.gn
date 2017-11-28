@@ -192,6 +192,7 @@ jumbo_source_set("browser") {
 
   public_deps = [
     ":accessibility_flags",
+    "//content/common:media_devices",
     "//ipc",
     "//media/mojo/interfaces:remoting",
     "//third_party/WebKit/public:offscreen_canvas_mojo_bindings",
