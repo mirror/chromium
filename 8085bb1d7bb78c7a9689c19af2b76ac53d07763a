@@ -34,6 +34,24 @@
       "revId": "8085bb1d7bb78c7a9689c19af2b76ac53d07763a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a616dc17_959b55be",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-28T01:51:56Z",
+      "side": 0,
+      "message": "This patch changes behavior from:\nif(frame-\u003eSelection().Granularity() \u003d\u003d kChar)\n return IndexForPositin(FS.GEtSelectionInDOM());\nreturn IndexForPosition(FS.ComputeVSInDOM());\n\nto:\nif(frame-\u003eSelection().Granularity() \u003d\u003d kChar)\n return IndexForPosition(FS.GEtSelectionInDOM());\nreturn IndexForPosition(FS.GEtSelectionInDOM());\n\nThus you need to proof\n|IndexForPosition(FS.ComputeVSInDOM()) \u003d\u003d IndexForPosition(FS.GEtSelectionInDOM())|\nRight? Could you comment the proof in description?",
+      "parentUuid": "04215156_1e4f499b",
+      "revId": "8085bb1d7bb78c7a9689c19af2b76ac53d07763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
