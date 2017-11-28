@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cebcc936_d795e5a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-28T04:16:19Z",
+      "side": 1,
+      "message": "Can we instead change the API to take a string or WebURL?",
+      "revId": "036dd7ccb00a48bf3950529d6ce98e0ee7ed7e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
