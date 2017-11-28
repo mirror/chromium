@@ -16,6 +16,24 @@
       "revId": "c2a9a7d7abf88bd8660b5eb06bd5eb25546fd9df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717db46a_81117484",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-28T16:53:48Z",
+      "side": 1,
+      "message": "We have all sorts of assumptions about the action index at this point, and cannot verify their validity. This matches what other platforms do.\n\nRegarding if-statement vs. ternary: base::nullopt is the default value, so I really prefer the current way..",
+      "parentUuid": "15cb5f4f_e86f1f99",
+      "revId": "c2a9a7d7abf88bd8660b5eb06bd5eb25546fd9df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
