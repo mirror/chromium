@@ -323,6 +323,30 @@
       "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acf31212_19c95da1",
+        "filename": "content/renderer/media/webrtc/video_codec_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1229425
+      },
+      "writtenOn": "2017-11-28T12:02:35Z",
+      "side": 1,
+      "message": "Hmm, yes you\u0027re right, it looks like a lot of the logic is duplicated. I don\u0027t know the details of this, but I filed https://bugs.chromium.org/p/webrtc/issues/detail?id\u003d8581 and CC:ed some people that might know the reason for this.",
+      "parentUuid": "27e1f5b3_b3d4389d",
+      "range": {
+        "startLine": 109,
+        "startChar": 3,
+        "endLine": 111,
+        "endChar": 53
+      },
+      "revId": "721c9c68c8e1040bf2dabf2d0d45cc58db13a903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
