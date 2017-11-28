@@ -18,6 +18,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/time/time.h"
 #include "build/build_config.h"
 #include "content/shell/test_runner/mock_spell_check.h"
 #include "content/shell/test_runner/test_interfaces.h"
@@ -373,7 +374,7 @@ WebMouseWheelEvent::Phase GetMouseWheelEventPhaseFromV8(
 
 // Maximum distance (in space and time) for a mouse click to register as a
 // double or triple click.
-const double kMultipleClickTimeSec = 1;
+constexpr base::TimeDelta kMultipleClickTime = base::TimeDelta::FromSeconds(1);
 const int kMultipleClickRadiusPixels = 5;
 const char kSubMenuDepthIdentifier[] = "_";
 const char kSubMenuIdentifier[] = " >";
@@ -922,7 +923,7 @@ void EventSenderBindings::LeapForward(int milliseconds) {
 
 double EventSenderBindings::LastEventTimestamp() {
   if (sender_)
-    return sender_->last_event_timestamp();
+    return sender_->last_event_timestamp().since_origin().InSecondsF();
   return 0;
 }
 
@@ -1325,7 +1326,7 @@ void EventSender::Reset() {
   wm_sys_dead_char_ = WM_SYSDEADCHAR;
 #endif
 
-  last_click_time_sec_ = 0;
+  last_click_time_ = base::TimeTicks();
   last_click_pos_ = WebPoint(0, 0);
   last_button_type_ = WebMouseEvent::Button::kNoButton;
   touch_points_.clear();
@@ -1334,7 +1335,7 @@ void EventSender::Reset() {
   current_gesture_location_ = WebPoint(0, 0);
   mouse_event_queue_.clear();
 
-  time_offset_ms_ = 0;
+  time_offset_ = base::TimeDelta();
   click_count_ = 0;
 
   touch_modifiers_ = 0;
@@ -1360,7 +1361,7 @@ void EventSender::DoDragDrop(const WebDragData& drag_data,
                              WebDragOperationsMask mask) {
   WebMouseEvent raw_event(WebInputEvent::kMouseDown,
                           ModifiersForPointer(kRawMousePointerId),
-                          GetCurrentEventTimeSec());
+                          GetCurrentEventTime());
   InitMouseEvent(current_pointer_state_[kRawMousePointerId].pressed_button_,
                  current_pointer_state_[kRawMousePointerId].current_buttons_,
                  current_pointer_state_[kRawMousePointerId].last_pos_,
@@ -1422,7 +1423,7 @@ void EventSender::PointerDown(int button_number,
     click_count = click_count_;
   }
   WebMouseEvent event(WebInputEvent::kMouseDown, ModifiersForPointer(pointerId),
-                      GetCurrentEventTimeSec());
+                      GetCurrentEventTime());
   InitMouseEventGeneric(current_pointer_state_[pointerId].pressed_button_,
                         current_pointer_state_[pointerId].current_buttons_,
                         current_pointer_state_[pointerId].last_pos_,
@@ -1463,7 +1464,7 @@ void EventSender::PointerUp(int button_number,
         WebMouseEvent::Button::kNoButton;
 
     WebMouseEvent event(WebInputEvent::kMouseUp, ModifiersForPointer(pointerId),
-                        GetCurrentEventTimeSec());
+                        GetCurrentEventTime());
     int click_count = pointerType == WebPointerProperties::PointerType::kMouse
                           ? click_count_
                           : 0;
@@ -1686,7 +1687,7 @@ void EventSender::KeyDown(const std::string& code_str,
   // Windows event flow; on other platforms we create a merged event and test
   // the event flow that that platform provides.
   WebKeyboardEvent event_down(WebInputEvent::kRawKeyDown, modifiers,
-                              GetCurrentEventTimeSec());
+                              GetCurrentEventTime());
   event_down.windows_key_code = code;
   event_down.dom_key =
       static_cast<int>(ui::KeycodeConverter::KeyStringToDomKey(domKeyString));
@@ -1722,7 +1723,7 @@ void EventSender::KeyDown(const std::string& code_str,
   if (code == ui::VKEY_ESCAPE && !current_drag_data_.IsNull()) {
     WebMouseEvent event(WebInputEvent::kMouseDown,
                         ModifiersForPointer(kRawMousePointerId),
-                        GetCurrentEventTimeSec());
+                        GetCurrentEventTime());
     InitMouseEvent(current_pointer_state_[kRawMousePointerId].pressed_button_,
                    current_pointer_state_[kRawMousePointerId].current_buttons_,
                    current_pointer_state_[kRawMousePointerId].last_pos_,
@@ -1773,7 +1774,7 @@ std::vector<std::string> EventSender::ContextClick() {
   }
   WebMouseEvent event(WebInputEvent::kMouseDown,
                       ModifiersForPointer(kRawMousePointerId),
-                      GetCurrentEventTimeSec());
+                      GetCurrentEventTime());
   InitMouseEvent(WebMouseEvent::Button::kRight,
                  current_pointer_state_[kRawMousePointerId].current_buttons_,
                  current_pointer_state_[kRawMousePointerId].last_pos_,
@@ -1788,7 +1789,7 @@ std::vector<std::string> EventSender::ContextClick() {
 
   WebMouseEvent mouseUpEvent(WebInputEvent::kMouseUp,
                              ModifiersForPointer(kRawMousePointerId),
-                             GetCurrentEventTimeSec());
+                             GetCurrentEventTime());
   InitMouseEvent(WebMouseEvent::Button::kRight,
                  current_pointer_state_[kRawMousePointerId].current_buttons_,
                  current_pointer_state_[kRawMousePointerId].last_pos_,
@@ -1931,7 +1932,7 @@ void EventSender::DumpFilenameBeingDragged() {
 
 void EventSender::GestureFlingCancel() {
   WebGestureEvent event(WebInputEvent::kGestureFlingCancel,
-                        WebInputEvent::kNoModifiers, GetCurrentEventTimeSec());
+                        WebInputEvent::kNoModifiers, GetCurrentEventTime());
   // Generally it won't matter what device we use here, and since it might
   // be cumbersome to expect all callers to specify a device, we'll just
   // choose Touchpad here.
@@ -1949,7 +1950,7 @@ void EventSender::GestureFlingStart(float x,
                                     float velocity_y,
                                     gin::Arguments* args) {
   WebGestureEvent event(WebInputEvent::kGestureFlingStart,
-                        WebInputEvent::kNoModifiers, GetCurrentEventTimeSec());
+                        WebInputEvent::kNoModifiers, GetCurrentEventTime());
 
   std::string device_string;
   if (!args->PeekNext().IsEmpty() && args->PeekNext()->IsString())
@@ -2012,7 +2013,7 @@ void EventSender::TouchEnd(gin::Arguments* args) {
 
 void EventSender::NotifyStartOfTouchScroll() {
   WebTouchEvent event(WebInputEvent::kTouchScrollStarted,
-                      WebInputEvent::kNoModifiers, GetCurrentEventTimeSec());
+                      WebInputEvent::kNoModifiers, GetCurrentEventTime());
   HandleInputEventOnViewOrPopup(event);
 }
 
@@ -2211,8 +2212,7 @@ void EventSender::MouseMoveTo(gin::Arguments* args) {
     current_pointer_state_[pointerId].last_pos_ = mouse_pos;
     current_pointer_state_[pointerId].modifiers_ = modifiers;
     WebMouseEvent event(WebInputEvent::kMouseMove,
-                        ModifiersForPointer(pointerId),
-                        GetCurrentEventTimeSec());
+                        ModifiersForPointer(pointerId), GetCurrentEventTime());
     int click_count = pointerType == WebPointerProperties::PointerType::kMouse
                           ? click_count_
                           : 0;
@@ -2233,7 +2233,7 @@ void EventSender::MouseLeave(
     widget()->UpdateAllLifecyclePhases();
 
   WebMouseEvent event(WebInputEvent::kMouseLeave,
-                      ModifiersForPointer(pointerId), GetCurrentEventTimeSec());
+                      ModifiersForPointer(pointerId), GetCurrentEventTime());
   InitMouseEventGeneric(WebMouseEvent::Button::kNoButton, 0,
                         current_pointer_state_[kRawMousePointerId].last_pos_,
                         click_count_, pointerType, pointerId, 0.0, 0, 0,
@@ -2258,13 +2258,12 @@ void EventSender::ScheduleAsynchronousKeyDown(const std::string& code_str,
                                   modifiers, location));
 }
 
-double EventSender::GetCurrentEventTimeSec() {
-  return (base::TimeTicks::Now() - base::TimeTicks()).InSecondsF() +
-         time_offset_ms_ / 1000.0;
+base::TimeTicks EventSender::GetCurrentEventTime() {
+  return base::TimeTicks::Now() + time_offset_;
 }
 
 void EventSender::DoLeapForward(int milliseconds) {
-  time_offset_ms_ += milliseconds;
+  time_offset_ += base::TimeDelta::FromMilliseconds(milliseconds);
 }
 
 uint32_t EventSender::GetUniqueTouchEventId(gin::Arguments* args) {
@@ -2284,7 +2283,7 @@ void EventSender::SendCurrentTouchEvent(WebInputEvent::Type type,
   if (force_layout_on_events_)
     widget()->UpdateAllLifecyclePhases();
 
-  WebTouchEvent touch_event(type, touch_modifiers_, GetCurrentEventTimeSec());
+  WebTouchEvent touch_event(type, touch_modifiers_, GetCurrentEventTime());
   touch_event.dispatch_type = touch_cancelable_
                                   ? WebInputEvent::kBlocking
                                   : WebInputEvent::kEventNonBlocking;
@@ -2309,7 +2308,7 @@ void EventSender::SendCurrentTouchEvent(WebInputEvent::Type type,
 
 void EventSender::GestureEvent(WebInputEvent::Type type, gin::Arguments* args) {
   WebGestureEvent event(type, WebInputEvent::kNoModifiers,
-                        GetCurrentEventTimeSec());
+                        GetCurrentEventTime());
 
   // If the first argument is a string, it is to specify the device, otherwise
   // the device is assumed to be a touchscreen (since most tests were written
@@ -2534,7 +2533,7 @@ void EventSender::GestureEvent(WebInputEvent::Type type, gin::Arguments* args) {
       !current_drag_data_.IsNull()) {
     WebMouseEvent mouse_event(WebInputEvent::kMouseDown,
                               ModifiersForPointer(kRawMousePointerId),
-                              GetCurrentEventTimeSec());
+                              GetCurrentEventTime());
 
     InitMouseEvent(current_pointer_state_[kRawMousePointerId].pressed_button_,
                    current_pointer_state_[kRawMousePointerId].current_buttons_,
@@ -2546,8 +2545,7 @@ void EventSender::GestureEvent(WebInputEvent::Type type, gin::Arguments* args) {
 }
 
 void EventSender::UpdateClickCountForButton(WebMouseEvent::Button button_type) {
-  if ((GetCurrentEventTimeSec() - last_click_time_sec_ <
-       kMultipleClickTimeSec) &&
+  if ((GetCurrentEventTime() - last_click_time_ < kMultipleClickTime) &&
       (!OutsideMultiClickRadius(
           current_pointer_state_[kRawMousePointerId].last_pos_,
           last_click_pos_)) &&
@@ -2602,7 +2600,7 @@ WebMouseWheelEvent EventSender::GetMouseWheelEvent(gin::Arguments* args,
   current_pointer_state_[kRawMousePointerId].modifiers_ = modifiers;
   WebMouseWheelEvent event(WebInputEvent::kMouseWheel,
                            ModifiersForPointer(kRawMousePointerId),
-                           GetCurrentEventTimeSec());
+                           GetCurrentEventTime());
   InitMouseEvent(current_pointer_state_[kRawMousePointerId].pressed_button_,
                  current_pointer_state_[kRawMousePointerId].current_buttons_,
                  current_pointer_state_[kRawMousePointerId].last_pos_,
@@ -2706,7 +2704,7 @@ void EventSender::DoDragAfterMouseUp(const WebMouseEvent& raw_event) {
       widget_event.get() ? static_cast<WebMouseEvent*>(widget_event.get())
                          : &raw_event;
 
-  last_click_time_sec_ = event->TimeStampSeconds();
+  last_click_time_ = event->TimeStamp();
   last_click_pos_ = current_pointer_state_[kRawMousePointerId].last_pos_;
 
   // If we're in a drag operation, complete it.
@@ -2753,7 +2751,7 @@ void EventSender::ReplaySavedEvents() {
         current_pointer_state_[kRawMousePointerId].modifiers_ = e.modifiers;
         WebMouseEvent event(WebInputEvent::kMouseMove,
                             ModifiersForPointer(kRawMousePointerId),
-                            GetCurrentEventTimeSec());
+                            GetCurrentEventTime());
         InitMouseEvent(
             current_pointer_state_[kRawMousePointerId].pressed_button_,
             current_pointer_state_[kRawMousePointerId].current_buttons_, e.pos,
@@ -2776,7 +2774,7 @@ void EventSender::ReplaySavedEvents() {
 
         WebMouseEvent event(WebInputEvent::kMouseUp,
                             ModifiersForPointer(kRawMousePointerId),
-                            GetCurrentEventTimeSec());
+                            GetCurrentEventTime());
         InitMouseEvent(
             e.button_type,
             current_pointer_state_[kRawMousePointerId].current_buttons_,
@@ -2796,7 +2794,7 @@ void EventSender::ReplaySavedEvents() {
 
 WebInputEventResult EventSender::HandleInputEventOnViewOrPopup(
     const WebInputEvent& raw_event) {
-  last_event_timestamp_ = raw_event.TimeStampSeconds();
+  last_event_timestamp_ = raw_event.TimeStamp();
 
   WebPagePopup* popup = widget()->GetPagePopup();
   if (popup && !WebInputEvent::IsKeyboardEventType(raw_event.GetType())) {
@@ -2822,7 +2820,7 @@ void EventSender::SendGesturesForMouseWheelEvent(
     const WebMouseWheelEvent wheel_event) {
   WebGestureEvent begin_event(WebInputEvent::kGestureScrollBegin,
                               wheel_event.GetModifiers(),
-                              GetCurrentEventTimeSec());
+                              GetCurrentEventTime());
   InitGestureEventFromMouseWheel(wheel_event, &begin_event);
   begin_event.data.scroll_begin.delta_x_hint = wheel_event.delta_x;
   begin_event.data.scroll_begin.delta_y_hint = wheel_event.delta_y;
@@ -2851,7 +2849,7 @@ void EventSender::SendGesturesForMouseWheelEvent(
 
   WebGestureEvent update_event(WebInputEvent::kGestureScrollUpdate,
                                wheel_event.GetModifiers(),
-                               GetCurrentEventTimeSec());
+                               GetCurrentEventTime());
   InitGestureEventFromMouseWheel(wheel_event, &update_event);
   update_event.data.scroll_update.delta_x =
       begin_event.data.scroll_begin.delta_x_hint;
@@ -2865,8 +2863,7 @@ void EventSender::SendGesturesForMouseWheelEvent(
   HandleInputEventOnViewOrPopup(update_event);
 
   WebGestureEvent end_event(WebInputEvent::kGestureScrollEnd,
-                            wheel_event.GetModifiers(),
-                            GetCurrentEventTimeSec());
+                            wheel_event.GetModifiers(), GetCurrentEventTime());
   InitGestureEventFromMouseWheel(wheel_event, &end_event);
   end_event.data.scroll_end.delta_units =
       begin_event.data.scroll_begin.delta_hint_units;

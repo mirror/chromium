@@ -31,10 +31,4 @@ std::unique_ptr<SyntheticPointerDriver> SyntheticPointerDriver::Create(
   return std::unique_ptr<SyntheticPointerDriver>();
 }
 
-// static
-double SyntheticPointerDriver::ConvertTimestampToSeconds(
-    const base::TimeTicks& timestamp) {
-  return (timestamp - base::TimeTicks()).InSecondsF();
-}
-
 }  // namespace content

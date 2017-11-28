@@ -14,14 +14,7 @@ namespace content {
 NativeWebKeyboardEvent::NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
                                                int modifiers,
                                                base::TimeTicks timestamp)
-    : NativeWebKeyboardEvent(type,
-                             modifiers,
-                             ui::EventTimeStampToSeconds(timestamp)) {}
-
-NativeWebKeyboardEvent::NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
-                                               int modifiers,
-                                               double timestampSeconds)
-    : WebKeyboardEvent(type, modifiers, timestampSeconds),
+    : WebKeyboardEvent(type, modifiers, timestamp),
       os_event(nullptr),
       skip_in_browser(false) {}
 

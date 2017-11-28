@@ -32,7 +32,11 @@ WebInputEvent::Type PointerEventTypeForTouchPointState(
 
 WebPointerEvent::WebPointerEvent(const WebTouchEvent& touch_event,
                                  const WebTouchPoint& touch_point)
-    : WebInputEvent(sizeof(WebPointerEvent)),
+    : WebInputEvent(sizeof(WebPointerEvent),
+                    PointerEventTypeForTouchPointState(touch_point.state),
+                    touch_event.GetModifiers(),
+                    touch_event.TimeStamp()),
+
       WebPointerProperties(touch_point),
       // TODO(crbug.com/731725): This mapping needs a times by 2.
       width(touch_point.radius_x),
@@ -40,9 +44,6 @@ WebPointerEvent::WebPointerEvent(const WebTouchEvent& touch_event,
   // WebInutEvent attributes
   SetFrameScale(touch_event.FrameScale());
   SetFrameTranslate(touch_event.FrameTranslate());
-  SetTimeStampSeconds(touch_event.TimeStampSeconds());
-  SetType(PointerEventTypeForTouchPointState(touch_point.state));
-  SetModifiers(touch_event.GetModifiers());
   // WebTouchEvent attributes
   dispatch_type = touch_event.dispatch_type;
   moved_beyond_slop_region = touch_event.moved_beyond_slop_region;
@@ -54,7 +55,10 @@ WebPointerEvent::WebPointerEvent(const WebTouchEvent& touch_event,
 
 WebPointerEvent::WebPointerEvent(WebInputEvent::Type type,
                                  const WebMouseEvent& mouse_event)
-    : WebInputEvent(sizeof(WebPointerEvent)),
+    : WebInputEvent(sizeof(WebPointerEvent),
+                    type,
+                    mouse_event.GetModifiers(),
+                    mouse_event.TimeStamp()),
       WebPointerProperties(mouse_event),
       width(1),
       height(1) {
@@ -62,9 +66,6 @@ WebPointerEvent::WebPointerEvent(WebInputEvent::Type type,
   DCHECK_LE(type, WebInputEvent::kPointerTypeLast);
   SetFrameScale(mouse_event.FrameScale());
   SetFrameTranslate(mouse_event.FrameTranslate());
-  SetTimeStampSeconds(mouse_event.TimeStampSeconds());
-  SetType(type);
-  SetModifiers(mouse_event.GetModifiers());
 }
 
 WebPointerEvent WebPointerEvent::WebPointerEventInRootFrame() const {
