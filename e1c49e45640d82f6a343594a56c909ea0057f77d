@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "681d1d7e_1c04e34e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-28T01:48:23Z",
+      "side": 1,
+      "message": "In PrefService and PrefServiceSyncable.",
+      "parentUuid": "c26959c5_0ba332e4",
+      "revId": "e1c49e45640d82f6a343594a56c909ea0057f77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53a955cf_1b0806ba",
         "filename": "services/preferences/public/cpp/in_process_service_factory.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e1c49e45640d82f6a343594a56c909ea0057f77d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59f87a1_b85a4499",
+        "filename": "services/preferences/public/cpp/in_process_service_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-28T01:48:23Z",
+      "side": 1,
+      "message": "If I see a named parameter, then I\u0027m assuming it is used and I\u0027m looking for where it is used. If it isn\u0027t used, then I don\u0027t know if it\u0027s a mistake or if I missed something or if it is deliberate.\n\nIf a parameter is unnamed, then I know straightaway it is unused, I won\u0027t look for where it is used and it is a clear indication that it is deliberate and not a mistake.\n\nSo the real question is: is it normal for pref_notifier to be unused here or is it highlighting a problem?",
+      "parentUuid": "53a955cf_1b0806ba",
+      "revId": "e1c49e45640d82f6a343594a56c909ea0057f77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
