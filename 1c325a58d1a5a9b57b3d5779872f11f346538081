@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3118f154_1655975d",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T21:52:08Z",
+      "side": 0,
+      "message": "This is now included in SiteIsolationPolicy::GetIsolatedOrigins()",
+      "range": {
+        "startLine": 914,
+        "startChar": 0,
+        "endLine": 915,
+        "endChar": 76
+      },
+      "revId": "1c325a58d1a5a9b57b3d5779872f11f346538081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e331abea_cff386b8",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T21:52:08Z",
+      "side": 0,
+      "message": "Most files that included site_isolation_policy.h did not seem to use it (no hits when searching the files for \"SiteIsolationPolicy\").",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "1c325a58d1a5a9b57b3d5779872f11f346538081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

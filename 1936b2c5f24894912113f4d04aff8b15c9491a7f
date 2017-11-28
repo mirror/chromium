@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5efc7a10_43fa8972",
+        "filename": "content/browser/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T21:52:08Z",
+      "side": 1,
+      "message": "url::Origin is movable - let\u0027s take advantage of that...",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 11
+      },
+      "revId": "1936b2c5f24894912113f4d04aff8b15c9491a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
