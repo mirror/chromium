@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "227dc799_0179bf46",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-28T08:10:37Z",
+      "side": 1,
+      "message": "Tried to clarify, LMK.",
+      "parentUuid": "b8568d84_96cd598d",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 56
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95f35bf3_8a3cd2a9",
         "filename": "chrome/browser/prerender/prerender_browsertest.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-27T19:03:15Z",
       "side": 1,
       "message": "Is there a way we can hit this CHECK? I thought timing out during Wait() would timeout first.\n\nAfter writing the above I found that it is a simplified copy of the PageLoadMetricsWaiter. Thank you for not reusing it as a whole. Still would like to ask to simplify a little more.",
+      "range": {
+        "startLine": 234,
+        "startChar": 40,
+        "endLine": 234,
+        "endChar": 74
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca7d23f_0eb3e99e",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-28T08:10:37Z",
+      "side": 1,
+      "message": "That\u0027s true, if we want this observer to make assumptions on the behavior of the testing framework.\n\npage_load_metrics::PageLoadMetricsWaiter, which I cribbed from, makes this check and it seems like good defensive programming.",
+      "parentUuid": "95f35bf3_8a3cd2a9",
       "range": {
         "startLine": 234,
         "startChar": 40,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "684c6e18_6b60e1ea",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-28T08:10:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09d457e8_06ef6703",
+      "range": {
+        "startLine": 236,
+        "startChar": 2,
+        "endLine": 236,
+        "endChar": 23
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea5fc3d_6ef580b7",
         "filename": "chrome/browser/prerender/prerender_browsertest.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-27T19:03:15Z",
       "side": 1,
       "message": "It obviously Quit()s from RunLoop only after marking saw_metrics_ as true. I would not object too much to this, but it looks a bit too defensive to me, increasing precious line count. Up to you.",
+      "range": {
+        "startLine": 248,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 30
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf5f598_a563849e",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-28T08:10:37Z",
+      "side": 1,
+      "message": "In tests I err on the side of being defensive. This also serves double-duty as documenting how Wait() works, which might be useful for future editors of the test.",
+      "parentUuid": "3ea5fc3d_6ef580b7",
       "range": {
         "startLine": 248,
         "startChar": 4,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "101857bb_819c68aa",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-28T08:10:37Z",
+      "side": 1,
+      "message": "That also adds more constraints on how many times MarkMetricsSeen() can be called, and/or would add more logic around what happens if the metrics are seen before Wait() is called? This seems simple by comparison already.",
+      "parentUuid": "ed030a7d_db70d901",
+      "range": {
+        "startLine": 253,
+        "startChar": 4,
+        "endLine": 253,
+        "endChar": 18
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c83b2204_70f6eba8",
         "filename": "chrome/browser/prerender/prerender_browsertest.cc",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-27T19:03:15Z",
       "side": 1,
       "message": "nit: prerender_loader.html",
+      "range": {
+        "startLine": 1166,
+        "startChar": 33,
+        "endLine": 1166,
+        "endChar": 53
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8f7478_8aeea950",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-28T08:10:37Z",
+      "side": 1,
+      "message": "D\u0027oh! Thanks.",
+      "parentUuid": "c83b2204_70f6eba8",
       "range": {
         "startLine": 1166,
         "startChar": 33,
