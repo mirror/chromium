@@ -8,6 +8,16 @@ const properties = {
   'RelativeOrientationSensor' : ['timestamp', 'quaternion']
 };
 
+const feature_policies = {
+  'AmbientLightSensor' : ['ambient-light-sensor'],
+  'Accelerometer' : ['accelerometer'],
+  'LinearAccelerationSensor' : ['accelerometer'],
+  'Gyroscope' : ['gyroscope'],
+  'Magnetometer' : ['magnetometer'],
+  'AbsoluteOrientationSensor' : ['accelerometer', 'gyroscope', 'magnetometer'],
+  'RelativeOrientationSensor' : ['accelerometer', 'gyroscope']
+};
+
 function assert_reading_not_null(sensor) {
   for (let property in properties[sensor.constructor.name]) {
     let propertyName = properties[sensor.constructor.name][property];
@@ -140,6 +150,7 @@ function runGenericSensorTests(sensorType) {
 
   promise_test(async t => {
     const iframe = document.createElement('iframe');
+    iframe.allow = feature_policies[sensorType.name].join(' \'none\';') + ' \'none\';';
     iframe.srcdoc = '<script>' +
                     '  window.onmessage = message => {' +
                     '    if (message.data === "LOADED") {' +
@@ -157,7 +168,29 @@ function runGenericSensorTests(sensorType) {
     const sensorWatcher = new EventWatcher(t, window, "message");
     const message = await sensorWatcher.wait_for("message");
     assert_equals(message.data, 'SecurityError');
-  }, `${sensorType.name}: throw a 'SecurityError' when constructing sensor object within iframe`);
+  }, `${sensorType.name}: throw a 'SecurityError' when constructing sensor object within iframe disallowed to use feature policy`);
+
+  promise_test(async t => {
+    const iframe = document.createElement('iframe');
+    iframe.allow = feature_policies[sensorType.name].join(';') + ';';
+    iframe.srcdoc = '<script>' +
+                    '  window.onmessage = message => {' +
+                    '    if (message.data === "LOADED") {' +
+                    '      try {' +
+                    '        new ' + sensorType.name + '();' +
+                    '        parent.postMessage("PASS", "*");' +
+                    '      } catch (e) {' +
+                    '        parent.postMessage("FAIL", "*");' +
+                    '      }' +
+                    '    }' +
+                    '   };' +
+                    '<\/script>';
+    iframe.onload = () => iframe.contentWindow.postMessage('LOADED', '*');
+    document.body.appendChild(iframe);
+    const sensorWatcher = new EventWatcher(t, window, "message");
+    const message = await sensorWatcher.wait_for("message");
+    assert_equals(message.data, 'PASS');
+  }, `${sensorType.name}: no exception is thrown when constructing sensor object within iframe allowed to use feature policy`);
 
   promise_test(async t => {
     const sensor = new sensorType();

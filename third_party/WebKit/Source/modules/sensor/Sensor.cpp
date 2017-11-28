@@ -12,6 +12,7 @@
 #include "modules/sensor/SensorErrorEvent.h"
 #include "modules/sensor/SensorProviderProxy.h"
 #include "platform/LayoutTestSupport.h"
+#include "platform/feature_policy/FeaturePolicy.h"
 #include "public/platform/TaskType.h"
 #include "services/device/public/cpp/generic_sensor/sensor_traits.h"
 #include "services/device/public/interfaces/sensor.mojom-blink.h"
@@ -20,12 +21,27 @@ namespace blink {
 
 namespace {
 const double kWaitingIntervalThreshold = 0.01;
+
+bool AreSupportedInFeaturePolicy(const Vector<FeaturePolicyFeature>& features) {
+  return std::all_of(features.begin(), features.end(),
+                     IsSupportedInFeaturePolicy);
+}
+
+bool AreFeaturesEnabled(LocalFrame* frame,
+                        const Vector<FeaturePolicyFeature>& features) {
+  return std::all_of(features.begin(), features.end(),
+                     [frame](FeaturePolicyFeature feature) {
+                       return frame->IsFeatureEnabled(feature);
+                     });
+}
+
 }  // namespace
 
 Sensor::Sensor(ExecutionContext* execution_context,
                const SensorOptions& sensor_options,
                ExceptionState& exception_state,
-               device::mojom::blink::SensorType type)
+               device::mojom::blink::SensorType type,
+               const Vector<FeaturePolicyFeature>& features)
     : ContextLifecycleObserver(execution_context),
       sensor_options_(sensor_options),
       type_(type),
@@ -33,13 +49,21 @@ Sensor::Sensor(ExecutionContext* execution_context,
       last_reported_timestamp_(0.0) {
   // [SecureContext] in idl.
   DCHECK(execution_context->IsSecureContext());
+  LocalFrame* frame = ToDocument(execution_context)->GetFrame();
 
-  // Check top-level browsing context.
-  if (!ToDocument(execution_context)->domWindow()->GetFrame() ||
-      !ToDocument(execution_context)->GetFrame()->IsMainFrame()) {
-    exception_state.ThrowSecurityError(
-        "Must be in a top-level browsing context");
-    return;
+  // Check that all required feature policies are enabled.
+  if (AreSupportedInFeaturePolicy(features)) {
+    if (!frame || !AreFeaturesEnabled(frame, features)) {
+      exception_state.ThrowSecurityError(
+          "Access to sensor features is disallowed by feature policy");
+      return;
+    }
+  } else {  // Check top-level browsing context otherwise.
+    if (!frame || !frame->IsMainFrame()) {
+      exception_state.ThrowSecurityError(
+          "Must be in a top-level browsing context");
+      return;
+    }
   }
 
   // Check the given frequency value.
