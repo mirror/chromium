@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "003d5585_957b1418",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T01:16:22Z",
+      "side": 1,
+      "message": "you\u0027ve got one too many *\u0027s here",
+      "range": {
+        "startLine": 179,
+        "startChar": 7,
+        "endLine": 179,
+        "endChar": 8
+      },
+      "revId": "3cc3b6459e248e6208d1d813de9d28adc3efcbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b17650_bb8b85be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T01:16:22Z",
+      "side": 1,
+      "message": "You can use TextUtils.isEmpty(number) here",
+      "range": {
+        "startLine": 207,
+        "startChar": 12,
+        "endLine": 207,
+        "endChar": 18
+      },
+      "revId": "3cc3b6459e248e6208d1d813de9d28adc3efcbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d62910_d9fe9419",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T01:16:22Z",
+      "side": 1,
+      "message": "we could consider catching NumberFormatException here if we want to be extra paranoid",
+      "range": {
+        "startLine": 208,
+        "startChar": 15,
+        "endLine": 208,
+        "endChar": 22
+      },
+      "revId": "3cc3b6459e248e6208d1d813de9d28adc3efcbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cf902b_bce964e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T01:16:22Z",
+      "side": 1,
+      "message": "Should we put this at the top above the command line check?  Then the command line only overrides the random rolling?",
+      "range": {
+        "startLine": 262,
+        "startChar": 35,
+        "endLine": 262,
+        "endChar": 59
+      },
+      "revId": "3cc3b6459e248e6208d1d813de9d28adc3efcbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
