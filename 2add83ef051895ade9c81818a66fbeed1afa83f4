@@ -462,6 +462,24 @@
     },
     {
       "key": {
+        "uuid": "d4d0f12e_f868cdc3",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T18:57:49Z",
+      "side": 1,
+      "message": "\u003e In particular, if the animation is only 1-2 seconds long and is very rare, then just doing a post-task in in the controller to update the displays\u0027 temperatures every 1/30th of a second may not be worst thing.\n\nI had the same thought TBH.",
+      "parentUuid": "80f8554b_d14fd043",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c8d96a9_09d401af",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 1
