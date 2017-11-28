@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eee1869_b81f5b01",
+        "filename": "third_party/libwebp/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2017-11-28T06:40:54Z",
+      "side": 0,
+      "message": "dropped this one as it\u0027s just a local BUILD.gn change, nothing to do with the source itself.",
+      "revId": "8a160ce4f8b9ce52103f4e08d6a8a538bab96dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9803b486_dd14b53a",
+        "filename": "third_party/libwebp/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2017-11-28T06:40:54Z",
+      "side": 0,
+      "message": "replaced by the WEBP_EXTERN define, the ability to set this got simpler in this release",
+      "revId": "8a160ce4f8b9ce52103f4e08d6a8a538bab96dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

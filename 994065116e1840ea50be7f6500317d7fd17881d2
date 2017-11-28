@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "477debd3_7221b55c",
+        "filename": "third_party/libwebp/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2017-11-28T06:40:54Z",
+      "side": 1,
+      "message": "I split this out now as there will be some followups that add some defines for library size reduction.",
+      "revId": "994065116e1840ea50be7f6500317d7fd17881d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
