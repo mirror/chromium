@@ -16,6 +16,24 @@
       "revId": "6744f0ba0cba68db5d8e8b2212378ed6e8c6aff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f95c84_26491f75",
+        "filename": "ui/views/controls/slider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-11-28T22:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1cf17df_8fac520d",
+      "revId": "6744f0ba0cba68db5d8e8b2212378ed6e8c6aff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
