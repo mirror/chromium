@@ -16,6 +16,24 @@
       "revId": "9eb2885525d6e8bd6eae2c3a21a61567692b7c52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079f11cc_51bda77e",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-28T17:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f597c048_6277e454",
+      "revId": "9eb2885525d6e8bd6eae2c3a21a61567692b7c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
