@@ -54,19 +54,23 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
 
   using InsecureNavigationsSet = HashSet<unsigned, WTF::AlreadyHashed>;
 
-  SecurityOrigin* GetSecurityOrigin() const { return security_origin_.get(); }
+  const SecurityOrigin* GetSecurityOrigin() const {
+    return security_origin_.get();
+  }
   ContentSecurityPolicy* GetContentSecurityPolicy() const {
     return content_security_policy_.Get();
   }
 
   // Do not use except for BlobRegistry::RegisterPublicBlobURL() and its
   // related methods.
-  SecurityOrigin* GetMutableSecurityOrigin() { return security_origin_.get(); }
+  const SecurityOrigin* GetMutableSecurityOrigin() {
+    return security_origin_.get();
+  }
 
   // Explicitly override the security origin for this security context.
   // Note: It is dangerous to change the security origin of a script context
   //       that already contains content.
-  void SetSecurityOrigin(scoped_refptr<SecurityOrigin>);
+  void SetSecurityOrigin(scoped_refptr<const SecurityOrigin>);
   virtual void DidUpdateSecurityOrigin() = 0;
 
   SandboxFlags GetSandboxFlags() const { return sandbox_flags_; }
@@ -117,7 +121,7 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
   SandboxFlags sandbox_flags_;
 
  private:
-  scoped_refptr<SecurityOrigin> security_origin_;
+  scoped_refptr<const SecurityOrigin> security_origin_;
   Member<ContentSecurityPolicy> content_security_policy_;
   std::unique_ptr<FeaturePolicy> feature_policy_;
 
