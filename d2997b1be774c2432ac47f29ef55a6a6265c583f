@@ -93,6 +93,24 @@
     },
     {
       "key": {
+        "uuid": "1816946b_50319617",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T04:54:26Z",
+      "side": 1,
+      "message": "Do we have a limit for how old the kernel can be on desktop Linux? I think we still have some cros devices with older kernels but most recent devices are on 3.18 and up I think.",
+      "parentUuid": "e1a75c93_90260fad",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98d3baa5_6d98e1b9",
         "filename": "base/memory/shared_memory_posix.cc",
         "patchSetId": 18
