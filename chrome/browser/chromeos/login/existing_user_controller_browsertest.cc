@@ -37,6 +37,7 @@
 #include "chrome/test/base/testing_browser_process.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/fake_session_manager_client.h"
+#include "chromeos/login/auth/authpolicy_test_helper.h"
 #include "chromeos/login/auth/key.h"
 #include "chromeos/login/auth/mock_url_fetchers.h"
 #include "chromeos/login/auth/user_context.h"
@@ -761,14 +762,14 @@ class ExistingUserControllerActiveDirectoryTest
 
   // Overriden from DevicePolicyCrosBrowserTest:
   void MarkOwnership() override {
-    policy::DevicePolicyCrosTestHelper::MarkAsActiveDirectoryEnterpriseOwned(
-        kActiveDirectoryRealm);
   }
 
   // Overriden from ExistingUserControllerTest:
   void SetUpInProcessBrowserTestFixture() override {
-    RefreshDevicePolicy();
     ExistingUserControllerTest::SetUpInProcessBrowserTestFixture();
+    EXPECT_TRUE(authpolicy_test_helper::LockDeviceActiveDirectory(
+        kActiveDirectoryRealm));
+    RefreshDevicePolicy();
   }
 
   void TearDownOnMainThread() override {

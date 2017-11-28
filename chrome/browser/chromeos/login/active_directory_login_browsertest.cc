@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/location.h"
+#include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
@@ -20,13 +21,15 @@
 #include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/settings/stub_install_attributes.h"
 #include "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h"
+#include "chrome/common/chrome_paths.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/interactive_test_utils.h"
+#include "chromeos/chromeos_paths.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_auth_policy_client.h"
-#include "chromeos/login/auth/authpolicy_login_helper.h"
+#include "chromeos/login/auth/authpolicy_test_helper.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user_names.h"
 #include "content/public/test/browser_test_utils.h"
@@ -43,8 +46,6 @@ const char kPassword[] = "password";
 
 constexpr char kAdOfflineAuthId[] = "offline-ad-auth";
 
-constexpr char kDeviceId[] = "device_id";
-constexpr char kAdMachineName[] = "machine_name";
 constexpr char kTestActiveDirectoryUser[] = "test-user";
 constexpr char kAdMachineInput[] = "machineNameInput";
 constexpr char kAdUserInput[] = "userInput";
@@ -62,11 +63,6 @@ constexpr char kNewPassword[] = "new_password";
 constexpr char kDifferentNewPassword[] = "different_new_password";
 
 constexpr char kCloseButtonId[] = "closeButton";
-
-// Used for the callback from FakeAuthPolicy::JoinAdDomain.
-void OnJoinedDomain(authpolicy::ErrorType error) {
-  EXPECT_EQ(authpolicy::ERROR_NONE, error);
-}
 
 // Used for the callback from FakeAuthPolicy::RefreshDevicePolicy.
 void OnRefreshedPolicy(const base::Closure& closure, bool status) {
@@ -105,17 +101,21 @@ class ActiveDirectoryLoginTest : public LoginManagerTest {
       : LoginManagerTest(true),
         // Using the same realm as supervised user domain. Should be treated as
         // normal realm.
-        test_realm_(user_manager::kSupervisedUserDomain),
-        install_attributes_(
-            ScopedStubInstallAttributes::CreateActiveDirectoryManaged(
-                test_realm_,
-                kDeviceId)) {}
+        test_realm_(user_manager::kSupervisedUserDomain) {}
 
   ~ActiveDirectoryLoginTest() override = default;
 
   void SetUp() override {
     SetupTestAuthPolicyClient();
     LoginManagerTest::SetUp();
+  }
+
+  void SetUpInProcessBrowserTestFixture() override {
+    LoginManagerTest::SetUpInProcessBrowserTestFixture();
+    base::FilePath user_data_dir;
+    ASSERT_TRUE(PathService::Get(chrome::DIR_USER_DATA, &user_data_dir));
+    chromeos::RegisterStubPathOverrides(user_data_dir);
+    EXPECT_TRUE(authpolicy_test_helper::LockDeviceActiveDirectory(test_realm_));
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -138,10 +138,6 @@ class ActiveDirectoryLoginTest : public LoginManagerTest {
   void MarkAsActiveDirectoryEnterprise() {
     StartupUtils::MarkOobeCompleted();
     base::RunLoop loop;
-    AuthPolicyLoginHelper().JoinAdDomain(
-        kAdMachineName, kTestActiveDirectoryUser + ("@" + test_realm_),
-        "" /* password */, base::BindOnce(&OnJoinedDomain));
-
     fake_auth_policy_client()->RefreshDevicePolicy(
         base::BindOnce(&OnRefreshedPolicy, loop.QuitClosure()));
     loop.Run();
@@ -318,7 +314,6 @@ class ActiveDirectoryLoginTest : public LoginManagerTest {
   const std::string test_realm_;
 
  private:
-  ScopedStubInstallAttributes install_attributes_;
   TestAuthPolicyClient* fake_auth_policy_client_;
 
   DISALLOW_COPY_AND_ASSIGN(ActiveDirectoryLoginTest);
