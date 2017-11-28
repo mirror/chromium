@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7001818_6712782a",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-11-28T23:49:06Z",
+      "side": 1,
+      "message": "We can remove the Mojo here now since we don\u0027t have any Chrome IPC-based JDA service anymore.",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 36
+      },
+      "revId": "ce74b998b1895c7737bae59932ea58c3629226a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7bc146f_4ad92a42",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-11-28T23:49:06Z",
+      "side": 1,
+      "message": "Same here. We can remove the Mojo.",
+      "range": {
+        "startLine": 50,
+        "startChar": 34,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "ce74b998b1895c7737bae59932ea58c3629226a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
