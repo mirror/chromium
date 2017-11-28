@@ -234,8 +234,10 @@ struct AutocompleteMatch {
   //
   // |preserve_scheme|, |preserve_subdomain|, and |preserve_after_host| indicate
   // that these URL components are important (part of the match), and should
-  // not be trimmed or elided.
-  static url_formatter::FormatUrlTypes GetFormatTypes(bool preserve_scheme,
+  // not be trimmed or elided. |has_scheme| says if the user input specified
+  // a scheme.
+  static url_formatter::FormatUrlTypes GetFormatTypes(bool has_scheme,
+                                                      bool preserve_scheme,
                                                       bool preserve_subdomain,
                                                       bool preserve_after_host);
 
