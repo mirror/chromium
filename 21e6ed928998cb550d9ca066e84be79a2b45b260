@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c27c98f_9f419372",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-28T07:20:24Z",
+      "side": 1,
+      "message": "nit: should be in-class member initialization in the header file?",
+      "range": {
+        "startLine": 351,
+        "startChar": 25,
+        "endLine": 351,
+        "endChar": 36
+      },
+      "revId": "21e6ed928998cb550d9ca066e84be79a2b45b260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961bead3_cc3572c1",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-28T07:20:24Z",
+      "side": 1,
+      "message": "nit: Add braces for multi-line body of if-block.",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 402,
+        "endChar": 42
+      },
+      "revId": "21e6ed928998cb550d9ca066e84be79a2b45b260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8a88ce_b7a1da8f",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-28T07:20:24Z",
+      "side": 1,
+      "message": "nit: make them const if you don\u0027t have a plan to change.",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 30
+      },
+      "revId": "21e6ed928998cb550d9ca066e84be79a2b45b260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1bc7e75_9610da09",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-28T07:20:24Z",
+      "side": 1,
+      "message": "nit: please make them const and add a brief document for |index_|.",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 16
+      },
+      "revId": "21e6ed928998cb550d9ca066e84be79a2b45b260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
