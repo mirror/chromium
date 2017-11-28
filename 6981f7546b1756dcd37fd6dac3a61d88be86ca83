@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d60150ad_e281027f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T17:06:09Z",
+      "side": 1,
+      "message": "No the flags will forward to the viz process, and the authoritative mode decision will be made there, and passed down. But these flags shortcut since we already know.",
+      "parentUuid": "159ea4ef_ac02e79e",
+      "revId": "6981f7546b1756dcd37fd6dac3a61d88be86ca83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fdeae94_0a4ffe61",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T19:01:25Z",
       "side": 1,
       "message": "Is there a reason these are two separate TODOs/things?",
+      "revId": "6981f7546b1756dcd37fd6dac3a61d88be86ca83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f83ecc_4d39a8fc",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T17:06:09Z",
+      "side": 1,
+      "message": "shrug, I think they might be separate CLs.",
+      "parentUuid": "1fdeae94_0a4ffe61",
       "revId": "6981f7546b1756dcd37fd6dac3a61d88be86ca83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
