@@ -6,6 +6,7 @@
 
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/accessibility/test_accessibility_controller_client.h"
+#include "ash/public/cpp/window_properties.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/window_util.h"
@@ -246,6 +247,35 @@ TEST_F(DisplayMoveWindowUtilTest, A11yAlert) {
   controller->FlushMojoForTest();
   EXPECT_EQ(mojom::AccessibilityAlert::WINDOW_MOVED_TO_RIGHT_DISPLAY,
             client.last_a11y_alert());
+}
+
+// Tests that on window property kDisplayMovementDisabledKey true, window
+// movement is disabled.
+TEST_F(DisplayMoveWindowUtilTest, DisplayMovementDisabledKey) {
+  display::Screen* screen = display::Screen::GetScreen();
+  int64_t primary_id = screen->GetPrimaryDisplay().id();
+  display::DisplayIdList list =
+      display::test::CreateDisplayIdList2(primary_id, primary_id + 1);
+  // Layout: [p][1]
+  display::DisplayLayoutBuilder builder(primary_id);
+  builder.AddDisplayPlacement(list[1], primary_id,
+                              display::DisplayPlacement::RIGHT, 0);
+  display_manager()->layout_store()->RegisterLayoutForDisplayIdList(
+      list, builder.Build());
+  UpdateDisplay("400x300,400x300");
+  EXPECT_EQ(2U, display_manager()->GetNumDisplays());
+  EXPECT_EQ(gfx::Rect(0, 0, 400, 300),
+            display_manager()->GetDisplayAt(0).bounds());
+  EXPECT_EQ(gfx::Rect(400, 0, 400, 300),
+            display_manager()->GetDisplayAt(1).bounds());
+
+  aura::Window* window =
+      CreateTestWindowInShellWithBounds(gfx::Rect(10, 20, 200, 100));
+  window->SetProperty(kDisplayMovementDisabledKey, true);
+  wm::ActivateWindow(window);
+  EXPECT_EQ(list[0], screen->GetDisplayNearestWindow(window).id());
+  HandleMoveWindowToDisplay(DisplayMoveWindowDirection::kRight);
+  EXPECT_EQ(list[0], screen->GetDisplayNearestWindow(window).id());
 }
 
 }  // namespace ash

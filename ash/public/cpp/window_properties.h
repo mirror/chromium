@@ -31,6 +31,12 @@ enum class WindowStateType;
 ASH_PUBLIC_EXPORT extern const aura::WindowProperty<bool>* const
     kCanConsumeSystemKeysKey;
 
+// A property key to store whether movement between displays is disabled. The
+// default value is false, which means window is allowed to be moved between
+// displays by Ash accelerators.
+ASH_PUBLIC_EXPORT extern const aura::WindowProperty<bool>* const
+    kDisplayMovementDisabledKey;
+
 // If true (and the window is a panel), it's attached to its shelf item.
 ASH_PUBLIC_EXPORT extern const aura::WindowProperty<bool>* const
     kPanelAttachedKey;
