@@ -224,9 +224,24 @@ jumbo_source_set("generated") {
   ]
 }
 
+action("pdl") {
+  script = "ConvertProtocolToJSON.py"
+  inputs = [
+    "ConvertProtocolToJSON.py",
+    "browser_protocol.pdl"
+  ]
+  _stamp = "$blink_core_output_dir/inspector/browser_protocol_json.stamp"
+  outputs = [
+    _stamp,
+  ]
+  args = [
+    rebase_path(_stamp, root_build_dir),
+    rebase_path("browser_protocol.pdl", root_build_dir),
+  ]
+}
+
 action("protocol_compatibility_check") {
   script = _inspector_protocol_dir + "/CheckProtocolCompatibility.py"
-
   inputs = [
     "browser_protocol.json",
     "browser_protocol-1.3.json",
