@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d3aa1a3_27e29348",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-28T15:21:35Z",
+      "side": 1,
+      "message": "Sorry, I guess I missed this one!  Apologies.",
+      "revId": "aa9891510a6da58382aaa6b506a5c6a1b777ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
