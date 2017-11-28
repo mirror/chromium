@@ -321,11 +321,6 @@ void RawResource::NotifyFinished() {
   Resource::NotifyFinished();
 }
 
-void RawResource::SetDefersLoading(bool defers) {
-  if (Loader())
-    Loader()->SetDefersLoading(defers);
-}
-
 static bool ShouldIgnoreHeaderForCacheReuse(AtomicString header_name) {
   // FIXME: This list of headers that don't affect cache policy almost certainly
   // isn't complete.

@@ -33,7 +33,6 @@
 #include "core/loader/resource/CSSStyleSheetResource.h"
 #include "core/loader/resource/StyleSheetResourceClient.h"
 #include "platform/heap/Handle.h"
-#include "platform/loader/fetch/ResourceOwner.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -135,7 +134,6 @@ class CORE_EXPORT CSSPreloaderResourceClient
 
   const PreloadPolicy policy_;
   WeakMember<HTMLResourcePreloader> preloader_;
-  WeakMember<CSSStyleSheetResource> resource_;
 };
 
 }  // namespace blink

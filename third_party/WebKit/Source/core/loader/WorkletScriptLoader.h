@@ -8,7 +8,6 @@
 #include "core/CoreExport.h"
 #include "core/loader/resource/ScriptResource.h"
 #include "platform/loader/fetch/ResourceClient.h"
-#include "platform/loader/fetch/ResourceOwner.h"
 
 namespace blink {
 
@@ -21,7 +20,7 @@ class ScriptSourceCode;
 // TODO(nhiroki): Switch to module script loading (https://crbug.com/627945)
 class CORE_EXPORT WorkletScriptLoader final
     : public GarbageCollectedFinalized<WorkletScriptLoader>,
-      public ResourceOwner<ScriptResource, ScriptResourceClient> {
+      public ScriptResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(WorkletScriptLoader);
   WTF_MAKE_NONCOPYABLE(WorkletScriptLoader);
 
