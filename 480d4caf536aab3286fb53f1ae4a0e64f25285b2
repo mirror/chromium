@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e6c2672_ca911c86",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-28T12:27:37Z",
+      "side": 1,
+      "message": "nit: {} is required as the content is more than one line.",
+      "revId": "480d4caf536aab3286fb53f1ae4a0e64f25285b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58894f91_42308415",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-28T12:27:37Z",
+      "side": 1,
+      "message": "Maybe we should forget the file system when options.persistent is false?\nIf it\u0027s already remembered and the user doesn\u0027t unmount the archive explicitly, the archive will be mounted after reboot even after the FSP\u0027s persistent flag becomes false.",
+      "revId": "480d4caf536aab3286fb53f1ae4a0e64f25285b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
