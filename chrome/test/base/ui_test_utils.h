@@ -307,7 +307,7 @@ class BrowserActivationWaiter : public chrome::BrowserListObserver {
   // chrome::BrowserListObserver override:
   void OnBrowserSetLastActive(Browser* browser) override;
 
-  const Browser* const browser_;
+  const Browser* const browser_;  // Never nullptr.
   bool observed_;
   scoped_refptr<content::MessageLoopRunner> message_loop_runner_;
 

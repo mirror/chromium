@@ -15,6 +15,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/scoped_observer.h"
+#include "build/build_config.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_bar_bubble_delegate.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_model.h"
@@ -87,7 +88,14 @@ class ToolbarActionsBar : public ToolbarActionsModel::Observer,
   static int IconWidth(bool include_padding);
 
   // Returns the height of a browser action icon.
-  static int IconHeight();
+  static constexpr int IconHeight() {
+#if defined(OS_MACOSX)
+    // On the Mac, the spec is a 24x24 button in a 28x28 space.
+    return 24;
+#else
+    return 28;
+#endif
+  }
 
   // Registers profile preferences.
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
@@ -289,18 +297,19 @@ class ToolbarActionsBar : public ToolbarActionsModel::Observer,
   // Shows an extension message bubble, if any should be shown.
   void MaybeShowExtensionBubble();
 
-  // The delegate for this object (in a real build, this is the view).
-  ToolbarActionsBarDelegate* delegate_;
+  // The delegate for this object (in a real build, this is the view). Never
+  // nullptr.
+  ToolbarActionsBarDelegate* const delegate_;
 
-  // The associated browser.
+  // The associated browser. Never nullptr.
   Browser* const browser_;
 
-  // The observed toolbar model.
-  ToolbarActionsModel* model_;
+  // The observed toolbar model. May be nullptr in unit tests.
+  ToolbarActionsModel* const model_;
 
   // The controller for the main toolbar actions bar. This will be null if this
   // is the main bar.
-  ToolbarActionsBar* main_bar_;
+  ToolbarActionsBar* const main_bar_;
 
   // Platform-specific settings for dimensions.
   PlatformSettings platform_settings_;
@@ -309,7 +318,7 @@ class ToolbarActionsBar : public ToolbarActionsModel::Observer,
   ToolbarActions toolbar_actions_;
 
   // The action that triggered the current popup (just a reference to an action
-  // from toolbar_actions_).
+  // from |toolbar_actions_|).
   ToolbarActionViewController* popup_owner_;
 
   ScopedObserver<ToolbarActionsModel, ToolbarActionsModel::Observer>
