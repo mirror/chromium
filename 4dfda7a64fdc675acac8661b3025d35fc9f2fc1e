@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b7b5892d_733934c5",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-28T14:57:16Z",
+      "side": 1,
+      "message": "I\u0027d be interested in chatting about the terminology with you, but my concern was a bit more about readability than using precise terms. When I read \"Planar\" my first - incorrect - impression was that the function was trying to figure out \"are these two things planes and not meshes or something?\" How would you feel about something clear-but-verbose like AreInTheSamePlane?",
+      "parentUuid": "ad42aa71_41fc75c2",
+      "revId": "4dfda7a64fdc675acac8661b3025d35fc9f2fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2783363_434bf1f1",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 2

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d8fb6154_e9f5fe7e",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-28T14:57:16Z",
+      "side": 1,
+      "message": "Gotcha. If it\u0027s intentional, I have no objections.",
+      "parentUuid": "bad377de_872b8884",
+      "revId": "24d5bf98976cbd1362f25dac09492b5bac4d0ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92dc4f79_b0b85197",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 3
