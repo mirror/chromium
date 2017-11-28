@@ -1,0 +1,15 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x221
+  LayoutBlockFlow {HTML} at (0,0) size 800x221
+    LayoutBlockFlow {BODY} at (8,8) size 784x205
+      LayoutText {#text} at (200,185) size 4x19
+        text run at (200,185) width 4: " "
+      LayoutSVGRoot {svg} at (204,200) size 300x0
+        LayoutSVGResourceFilter {filter} [id="filter"] [filterUnits=objectBoundingBox] [primitiveUnits=userSpaceOnUse]
+          [feDisplacementMap scale="100.00" xChannelSelector="RED" yChannelSelector="GREEN"]
+            [feFlood flood-color="#000000" flood-opacity="1.00"]
+            [SourceGraphic]
+      LayoutText {#text} at (0,0) size 0x0
+layer at (8,8) size 200x200
+  LayoutHTMLCanvas {CANVAS} at (0,0) size 200x200

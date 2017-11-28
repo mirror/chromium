@@ -129,4 +129,8 @@ FilterEffect* SVGFEDisplacementMapElement::Build(
   return effect;
 }
 
+bool SVGFEDisplacementMapElement::TaintsOrigin(bool inputs_taint_origin) const {
+  return inputs_taint_origin;
+}
+
 }  // namespace blink

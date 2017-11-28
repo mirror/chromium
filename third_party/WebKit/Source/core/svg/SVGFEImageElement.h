@@ -68,6 +68,8 @@ class SVGFEImageElement final : public SVGFilterPrimitiveStandardAttributes,
   InsertionNotificationRequest InsertedInto(ContainerNode*) override;
   void RemovedFrom(ContainerNode*) override;
 
+  bool TaintsOrigin(bool inputs_taint_origin) const override;
+
   Member<SVGAnimatedPreserveAspectRatio> preserve_aspect_ratio_;
 
   Member<ImageResourceContent> cached_image_;
