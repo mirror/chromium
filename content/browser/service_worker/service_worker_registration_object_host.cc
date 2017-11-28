@@ -41,7 +41,7 @@ blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
 ServiceWorkerRegistrationObjectHost::CreateObjectInfo() {
   auto info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
   info->options = blink::mojom::ServiceWorkerRegistrationOptions::New(
-      registration_->pattern());
+      registration_->pattern(), registration_->update_via_cache());
   info->registration_id = registration_->id();
   bindings_.AddBinding(this, mojo::MakeRequest(&info->host_ptr_info));
   if (!remote_registration_)

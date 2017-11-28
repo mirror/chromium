@@ -52,9 +52,7 @@ class WebServiceWorkerRegistration {
   virtual void ProxyStopped() {}
 
   virtual WebURL Scope() const { return WebURL(); }
-  virtual mojom::ServiceWorkerUpdateViaCache UpdateViaCache() const {
-    return mojom::ServiceWorkerUpdateViaCache::kImports;
-  }
+  virtual mojom::ServiceWorkerUpdateViaCache UpdateViaCache() const = 0;
   virtual int64_t RegistrationId() const = 0;
   virtual void Update(std::unique_ptr<WebServiceWorkerUpdateCallbacks>) {}
   virtual void Unregister(

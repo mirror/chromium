@@ -104,9 +104,11 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   // ServiceWorkerContext implementation:
   void AddObserver(ServiceWorkerContextObserver* observer) override;
   void RemoveObserver(ServiceWorkerContextObserver* observer) override;
-  void RegisterServiceWorker(const GURL& scope,
-                             const GURL& script_url,
-                             ResultCallback callback) override;
+  void RegisterServiceWorker(
+      const GURL& scope,
+      const GURL& script_url,
+      blink::mojom::ServiceWorkerUpdateViaCache update_via_cache,
+      ResultCallback callback) override;
   void UnregisterServiceWorker(const GURL& scope,
                                ResultCallback callback) override;
   bool StartingExternalRequest(int64_t service_worker_version_id,

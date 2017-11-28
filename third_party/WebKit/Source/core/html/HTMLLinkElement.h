@@ -37,6 +37,7 @@
 #include "core/loader/LinkLoaderClient.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/TraceWrapperMember.h"
+#include "public/platform/modules/serviceworker/service_worker_registration.mojom-blink.h"
 
 namespace blink {
 
