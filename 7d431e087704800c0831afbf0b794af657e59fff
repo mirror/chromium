@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8fb61837_be54b1b2",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T08:09:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90c6603b_0f3b8a4f",
+      "revId": "7d431e087704800c0831afbf0b794af657e59fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b72c12d_3b0bdeb4",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 9
