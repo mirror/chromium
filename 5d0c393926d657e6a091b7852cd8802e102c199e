@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4e7fe93_c7cfca67",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T02:43:26Z",
+      "side": 1,
+      "message": "this should describe the previous behavior and the newly introduced differences -- see https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions",
+      "revId": "5d0c393926d657e6a091b7852cd8802e102c199e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21635c02_fef4c54b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T02:43:26Z",
+      "side": 1,
+      "message": "can you link up a feature/launch/tracking bug to this at http://crbug.com/788982 (e.g. as blocking issue)",
+      "revId": "5d0c393926d657e6a091b7852cd8802e102c199e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510a57cd_957bc98c",
+        "filename": "chrome/browser/ui/cocoa/browser_window_command_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T02:43:26Z",
+      "side": 1,
+      "message": "scattering checks on features::kSoundContentSetting throughout the codebase is not great for code health.\n\nSeems this really should be coupled with the logic in MuteTab() from browser_commands.cc.\n\nE.g.\n\nstatic TabStripModel::ContextMenuCommand TabStripModel::MuteTabCommand() {\n  return base::FeatureList::IsEnabled(features::kSoundContentSetting)\n          ? ContextMenuCommand::CommandToggleSiteMuted\n          : ContextMenuCommand::CommandToggleTabAudioMuted;\n}\n\nbool TabStripModel::WillMuteTabCommandMute(TabStripModel::ContextMenuCommand command, int context_index) {\n .. \n}\n\n\nor \n\nbool TabStripModel::GetCommandToggleState(TabStripModel::ContextMenuCommand command, int index) {}\n\n\nBut if CommandToggleTabAudioMuted is going to be deleted (i.e. all this code is temporary) I guess this is ok :/",
+      "revId": "5d0c393926d657e6a091b7852cd8802e102c199e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
