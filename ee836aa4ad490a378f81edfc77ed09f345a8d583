@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4440fda9_9e31afe2",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-28T04:09:10Z",
+      "side": 1,
+      "message": "TL:DR; Get rid of primary_direction parameter from ComputeInlineBoxPosition().\n\n- We can compute primary_direction from LayoutObject::EnclosingBlockFlow()-\u003eStyle()-\u003eDirection()\n * I\u0027m not sure diff of EnclosingBox() and EnclosingBlockFlow()\n- primary_direction is used only once[1]\n- Computation of primary_direction isn\u0027t slow. Traversing ancestors of LayoutObject.\n- A position for InlineBox can be different from passed position due by\nComputeInlineBoxPositionForBlockFlow()\n\n\n[1] Actual usage of |primary_direciton| is \n\nAdjustInlineBoxPositionForTextDirection(...) {\n if (inline_box-\u003eDirection() \u003d\u003d primary_direction)\n    return AdjustInlineBoxPositionForPrimaryDirection(inline_box, caret_offset);\n...",
+      "revId": "ee836aa4ad490a378f81edfc77ed09f345a8d583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
