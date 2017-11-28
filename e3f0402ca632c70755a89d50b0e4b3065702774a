@@ -1,0 +1,829 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dfc4cb0_ab24015f",
+        "filename": "services/shape_detection/detection_utils_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \"base/numerics/checked_math.h\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef2e32d_f224d2aa",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a9a4c4_6ff9eb08",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "nit: blank line before this",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "decfd5fe_ddfe0d2f",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "nit: please document, for example:\n// Runs |callback| with an empty array of results.\nor something like that",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772ea1d7_d7ff4a0d",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01829f06_35e82ce8",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "globals of non-POD type are banned. you\u0027ll need to use some other pattern here. one such is to make this a pointer to a callback and expose an explicit setter along the lines of:\n\nnamespace {\n\nbase::OnceCallback\u003cvoid(bool)\u003e* g_callback_for_testing \u003d nullptr;\n\n}\n\n// Sets a callback to be run when FaceDetection::Detect is called. The\n// callback is automatically cleared when used.\nvoid SetCallbackForTesting(base::OnceCallback\u003cvoid(bool)\u003e callback) {\n  delete g_callback_for_testing;\n  g_callback_for_testing \u003d nullptr;\n  if (callback) {\n    g_callback_for_testing \u003d\n        new base::OnceCallback\u003cvoid(bool)\u003e(std::move(callback));\n  }\n}\n\nand then you may want a helper in the unnamed namespace for running it:\n\nbool RunCallbackForTestingIfProvided() {\n  if (!g_callback_for_testing)\n    return false;\n  std::move(*g_callback_for_testing).Run();\n  delete g_callback_for_testing;\n  g_callback_for_testing \u003d nullptr;\n  return true;\n}",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8555a53b_cc7c999e",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \"base/callback.h\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2eb05f_2de9675b",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 8
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4097c09_6203bb6d",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "nit: is this intermediate local necessary? assign to async_detect_face_ops_ directly?",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f7c7c4_05883f1c",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "no \"return\" at the end of a void function",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac742c36_e1e0f807",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "isn\u0027t face_detector_ guaranteed to be non-null?",
+      "range": {
+        "startLine": 54,
+        "startChar": 42,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "958a4e85_084f2741",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \"base/bind.h\"",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd237c5_ecb770da",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "please don\u0027t return a void function\u0027s result from a void function.",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf53d15_c4eda5cb",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \u003cvector\u003e",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 13
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d77deb_7fb9c26c",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "results.reserve(count) just before this",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09f45c8_3be550f9",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e",
+      "range": {
+        "startLine": 54,
+        "startChar": 15,
+        "endLine": 54,
+        "endChar": 24
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8185ff_9ae83211",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 17
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3450081_e3837c4b",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "this could be static, no?",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb41ae42_58ed0b18",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \"base/callback.h\"",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460efcb8_5758278e",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "nit: std::move(quit_closure)",
+      "range": {
+        "startLine": 36,
+        "startChar": 20,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d1125a_9e24911b",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5da89a_33eecb1a",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN(FaceDetectionImplWinTest);",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aedc4d2_4fdae103",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 52,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 38
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd252d5_e2a76f11",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e",
+      "range": {
+        "startLine": 56,
+        "startChar": 30,
+        "endLine": 56,
+        "endChar": 39
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610fef43_2f3eafd8",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "please add a doc comment explaining what this does -- it seems to short-circuit detection so that the detection callback is run with an empty result set.",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b76e5f_c966c8b2",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \"base/bind.h\"",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b9a520_325276fb",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "nit: initialize this to something other than 0",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3eaef64_a0a86ad5",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "nit: faces -\u003e num_faces here and on line 32",
+      "range": {
+        "startLine": 74,
+        "startChar": 11,
+        "endLine": 74,
+        "endChar": 16
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d6d1bf_2a3b5b0c",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 88,
+        "startChar": 22,
+        "endLine": 88,
+        "endChar": 38
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe42a24_f1a42930",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \u003cstring\u003e",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 13
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3627c5f_6c9f5ed3",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "initialize to 0",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7b2901_dbf5b172",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "num_faces here, too",
+      "range": {
+        "startLine": 121,
+        "startChar": 11,
+        "endLine": 121,
+        "endChar": 16
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746f3b8c_20a962da",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "nit: blank line before this",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ce6032_86f14c9f",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 8
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225b4908_ef0777d6",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \"base/bind.h\"",
+      "range": {
+        "startLine": 99,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 20
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ad09b3_209e2d31",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "is it possible for GetResults to return S_OK (or some other success result) but not stuff a valid interface pointer into |face_detector|? in other words, is it possible to hit line 132 with a null |face_detector|?",
+      "range": {
+        "startLine": 125,
+        "startChar": 27,
+        "endLine": 125,
+        "endChar": 37
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5745b7_0b00345a",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 142,
+        "startChar": 14,
+        "endLine": 142,
+        "endChar": 30
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e12682c_eb5c4deb",
+        "filename": "services/shape_detection/face_detection_provider_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e\nstd::make_unique",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92894d9_7b62a5f8",
+        "filename": "services/shape_detection/face_detection_provider_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

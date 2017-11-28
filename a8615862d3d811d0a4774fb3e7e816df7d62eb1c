@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "bf6e3abb_7a5ffb8e",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-28T09:48:04Z",
+      "side": 1,
+      "message": "codesearch tells me that DIR_TEST_DATA seems to be the proper way for a test to find its data files (https://cs.chromium.org/search/?q\u003dDIR_TEST_DATA+file:%5C.h$\u0026sq\u003dpackage:chromium\u0026type\u003dcs). is it possible to do that here? it seems like services/ should have its own PathProvider that is registered in services_unittests somehow (see, for example, https://cs.chromium.org/chromium/src/chrome/test/base/chrome_unit_test_suite.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d117). if other services tests also use DIR_SOURCE_ROOT, i\u0027m okay with you filing a bug to migrate to DIR_TEST_DATA so long as you or someone working on services/ takes care of it. thanks.",
+      "parentUuid": "4d571463_d7096247",
+      "range": {
+        "startLine": 103,
+        "startChar": 37,
+        "endLine": 103,
+        "endChar": 52
+      },
+      "revId": "a8615862d3d811d0a4774fb3e7e816df7d62eb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25e8bd66_84c28e51",
         "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
         "patchSetId": 3
