@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "653d1162_8c5babef",
+        "filename": "gpu/ipc/in_process_command_buffer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T19:33:33Z",
+      "side": 1,
+      "message": "Could we pass in the GpuChannelManagerDelegate directly, rather than the GpuChannelManager, since that\u0027s all you need?\nIt would be fairly odd to talk to the GpuChannelManager from here. Doubly so in the Android WebView case where it lives on a different thread.\n\nIt does make sense to call the GpuChannelManagerDelegate (though we may want to rename it) from here, in particular we may consider doing other things such as StoreShaderToDisk",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fcb564b_50fe136b",
         "filename": "ui/gfx/win/rendering_window_manager.cc",
         "patchSetId": 16
@@ -67,6 +84,24 @@
       "side": 1,
       "message": "Thanks for the heads up John! PostTask\u0027ing back to the UI thread to call SetParent would be straight forward, do you think that is worth doing just to be safe?",
       "parentUuid": "a8f92476_f62e7bf6",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "964a87a6_e0390e75",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T19:33:33Z",
+      "side": 1,
+      "message": "I\u0027m not a windows expert, but I would expect to only do UI calls on the UI thread - I don\u0027t know all the implications if we do not. I think the deadlock concerns are real.",
+      "parentUuid": "a2c18e73_5b8e0b5f",
       "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
