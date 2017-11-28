@@ -88,6 +88,23 @@
       "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a231c230_1930af84",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8282,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T23:20:56Z",
+      "side": 1,
+      "message": "Remove the fix in draw_property_utils.cc, then what you\u0027re suggesting changes if the test DCHECKs or not, cuz it changes the behaviour of CanHaveTilings().\n\nset_fill_with_non_solid_color does not actually work, and it does not DCHECK cuz CanHaveTilings says it has solid color.\n\nYou don\u0027t see this with only the change you suggested because we\u0027re not updating the raster source, so it still has 10x10 and not resized to 0x0, which was a bug.",
+      "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
