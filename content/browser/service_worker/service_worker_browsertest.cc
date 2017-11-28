@@ -2578,7 +2578,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerBrowserTest, MAYBE_CrossSiteTransfer) {
   ASSERT_EQ(kOKTitle1, title_watcher1.WaitAndGetTitle());
 
   // Force process swapping behavior.
-  ShellContentBrowserClient::SetSwapProcessesForRedirect(true);
+  ShellContentBrowserClient::RequireDedicatedProcessForAllSitesForTesting();
 
   // The second pages loads via the serviceworker including a subresource.
   const char kConfirmPageUrl[] =

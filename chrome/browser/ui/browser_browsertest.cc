@@ -200,15 +200,14 @@ class MockTabStripModelObserver : public TabStripModelObserver {
   DISALLOW_COPY_AND_ASSIGN(MockTabStripModelObserver);
 };
 
-// Causes the browser to swap processes on a redirect to an HTTPS URL.
-class TransferHttpsRedirectsContentBrowserClient
+// Causes the browser to ask for dedicated processes for HTTPS URL.
+class TransferHttpsSitesContentBrowserClient
     : public ChromeContentBrowserClient {
  public:
-  bool ShouldSwapProcessesForRedirect(
+  bool DoesSiteRequireDedicatedProcess(
       content::BrowserContext* browser_context,
-      const GURL& current_url,
-      const GURL& new_url) override {
-    return new_url.SchemeIs(url::kHttpsScheme);
+      const GURL& effective_site_url) override {
+    return effective_site_url.SchemeIs(url::kHttpsScheme);
   }
 };
 
@@ -766,8 +765,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NoStopDuringTransferUntilCommit) {
   ASSERT_TRUE(https_test_server.Start());
 
   // Temporarily replace ContentBrowserClient with one that will cause a
-  // process swap on all redirects to HTTPS URLs.
-  TransferHttpsRedirectsContentBrowserClient new_client;
+  // process swap for all HTTPS URLs.
+  TransferHttpsSitesContentBrowserClient new_client;
   content::ContentBrowserClient* old_client =
       SetBrowserClientForTesting(&new_client);
 
@@ -817,8 +816,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, SingleBeforeUnloadAfterRedirect) {
   ASSERT_TRUE(https_test_server.Start());
 
   // Temporarily replace ContentBrowserClient with one that will cause a
-  // process swap on all redirects to HTTPS URLs.
-  TransferHttpsRedirectsContentBrowserClient new_client;
+  // process swap for all HTTPS URLs.
+  TransferHttpsSitesContentBrowserClient new_client;
   content::ContentBrowserClient* old_client =
       SetBrowserClientForTesting(&new_client);
 
