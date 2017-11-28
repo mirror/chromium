@@ -46,6 +46,30 @@
       "revId": "92af896a1c8d443a364a86f666eb2bccb4f40957",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88c596dd_7aa2c4f1",
+        "filename": "headless/test/headless_render_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-28T09:00:41Z",
+      "side": 1,
+      "message": "I guess pfeldman@ he\u0027s the TL of DevTools.  TBH I\u0027d recommend doing some of the leg work to debug this, it may prove interesting and it\u0027s much more likely to get fixed in a reasonable time frame that way.",
+      "parentUuid": "973f3749_b7d75771",
+      "range": {
+        "startLine": 473,
+        "startChar": 5,
+        "endLine": 473,
+        "endChar": 12
+      },
+      "revId": "92af896a1c8d443a364a86f666eb2bccb4f40957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
