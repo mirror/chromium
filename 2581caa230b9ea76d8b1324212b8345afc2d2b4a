@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e05b12f8_eb242830",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-28T21:16:09Z",
+      "side": 1,
+      "message": "Please file a bug to remove this method, mentioning my CL that removed it, and reference the bug here. https://chromium-review.googlesource.com/c/chromium/src/+/761409\n\nWe really should not need to do this. We should not have to inject pref services from code in //chrome into //ash. Fixing the problem may require rewriting parts of AccessibilityManagerTest, specifically those that deal with prefs being copied from the login screen profile to the active session.\n\nI\u0027m a little sad, since it took a surprisingly large amount of work to get rid of this method in my CL, but I\u0027d rather you land this CL than do more work fixing tests.",
+      "revId": "2581caa230b9ea76d8b1324212b8345afc2d2b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
