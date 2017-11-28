@@ -846,11 +846,9 @@ TEST_P(SurfaceTest, RemoveSubSurface) {
   surface->Commit();
   RunAllPendingInMessageLoop();
 
-  // Remove the subsurface by destroying it. This should not damage |surface|.
-  // TODO(penghuang): Make the damage more precise for sub surface changes.
-  // https://crbug.com/779704
+  // Remove the subsurface by destroying it. This should damage |surface|.
   sub_surface.reset();
-  EXPECT_FALSE(surface->HasPendingDamageForTesting(gfx::Rect(20, 10, 64, 128)));
+  EXPECT_TRUE(surface->HasPendingDamageForTesting(gfx::Rect(20, 10, 64, 128)));
 }
 
 TEST_P(SurfaceTest, DestroyAttachedBuffer) {
