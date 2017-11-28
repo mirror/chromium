@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "3f2d0310_434d7211",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-28T23:08:23Z",
+      "side": 1,
+      "message": "Why can\u0027t we make passing the test require sticky positioning? I think this is a very useful wpt test to have for sticky interoperability on nested table parts.",
+      "parentUuid": "c82a8db8_eb44301a",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62fde487_1d7e7dbd",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
         "patchSetId": 2
