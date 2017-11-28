@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "39f0d7c4_ba1ae962",
+        "filename": "components/sync/mojo/syncer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T18:32:09Z",
+      "side": 1,
+      "message": "Sounds reasonable to me. The StructTraits \u0027getter\u0027 can return a base::span\u003cuint8_t\u003e to avoid copying the data.",
+      "parentUuid": "dbdb9522_ebfe4719",
+      "revId": "6eb6aaf4cab6602975975003dfd352210d559696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3418d4f_f9c4d167",
         "filename": "components/sync/mojo/syncer_struct_traits.h",
         "patchSetId": 3
