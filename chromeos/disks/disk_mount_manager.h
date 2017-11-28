@@ -182,7 +182,11 @@ class CHROMEOS_EXPORT DiskMountManager {
 
     void SetMountPath(const std::string& mount_path);
 
-    bool IsAutoMountable() const { return !on_boot_device_; };
+    bool IsAutoMountable() const { return !on_boot_device_; }
+
+    bool IsStatefulPartition() const {
+      return mount_path_ == "/mnt/stateful_partition";
+    }
 
    private:
     std::string device_path_;
