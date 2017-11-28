@@ -52,6 +52,24 @@
       "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c18e73_5b8e0b5f",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T01:18:39Z",
+      "side": 1,
+      "message": "Thanks for the heads up John! PostTask\u0027ing back to the UI thread to call SetParent would be straight forward, do you think that is worth doing just to be safe?",
+      "parentUuid": "a8f92476_f62e7bf6",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
