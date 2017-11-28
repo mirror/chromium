@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e07a3cab_2ddbd71a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-28T09:44:20Z",
+      "side": 1,
+      "message": "see the attached bug. There current realm is cross origin, and entered realm is same origin.\n\nThe security check below should already throw.\n\nOr are you suggesting to always do this check, also for non-Javascript URLs?",
+      "parentUuid": "f0196b71_64b0928b",
+      "revId": "47b6da6a679bd70443b8153f517fecec7c5d8604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f975f506_b45accef",
         "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
         "patchSetId": 1
@@ -68,6 +86,24 @@
       "revId": "47b6da6a679bd70443b8153f517fecec7c5d8604",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95d1337_58828c54",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-28T09:44:20Z",
+      "side": 1,
+      "message": "I\u0027d rather not crash, we don\u0027t crash in any of the other places as well.\n\nIf somebody gets the security checks somewhere else wrong, I\u0027ll just get all the crash bugs assigned to me :/",
+      "parentUuid": "f975f506_b45accef",
+      "revId": "47b6da6a679bd70443b8153f517fecec7c5d8604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
