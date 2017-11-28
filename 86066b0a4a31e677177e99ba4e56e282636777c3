@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c1ef63ca_c73afa6f",
+        "filename": "chrome/browser/chromeos/policy/variations_service_policy_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-28T02:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ac174a8_ea96e26f",
+      "range": {
+        "startLine": 53,
+        "startChar": 59,
+        "endLine": 53,
+        "endChar": 63
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d12470a_a6585905",
         "filename": "components/variations/service/variations_service.cc",
         "patchSetId": 3
@@ -69,6 +93,30 @@
       "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16a0e6a_1e8f0e25",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-28T02:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d12470a_a6585905",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 4
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "6c706d6f_7bdad80b",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-28T02:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10e46a06_2e071e48",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67765c76_bc1c9d85",
         "filename": "components/variations/service/variations_service.cc",
         "patchSetId": 3
@@ -106,6 +178,30 @@
       "writtenOn": "2017-11-23T22:30:01Z",
       "side": 1,
       "message": "Do we really need two command line flags?\n\nHow about just having logic to replace https:// prefix with http:// on the existing one?",
+      "range": {
+        "startLine": 363,
+        "startChar": 60,
+        "endLine": 363,
+        "endChar": 0
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37caa45a_6971fe38",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-28T02:12:59Z",
+      "side": 1,
+      "message": "The reason I added two separate flags was that when running locally for testing, I would often have two servers running on different ports (one with decryption enabled and one without, to simulate one being HTTP and one being HTTPS), and this allowed me to pass the different URLs in (say, localhost:1234 and localhost:4321). What do you think about leaving both in for that use case?",
+      "parentUuid": "67765c76_bc1c9d85",
       "range": {
         "startLine": 363,
         "startChar": 60,
@@ -138,6 +234,54 @@
       "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80146a91_28f9d734",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-28T02:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "429e2457_de56335c",
+      "range": {
+        "startLine": 640,
+        "startChar": 30,
+        "endLine": 640,
+        "endChar": 34
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c08828ec_e4d4e4d2",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-28T02:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "429e2457_de56335c",
+      "range": {
+        "startLine": 640,
+        "startChar": 30,
+        "endLine": 640,
+        "endChar": 34
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
