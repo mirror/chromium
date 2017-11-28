@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ee0a3ae9_5def618e",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T01:33:59Z",
+      "side": 1,
+      "message": "well, there could be other reasons why, since this code doesn\u0027t match powerd\u0027s code exactly (and since other logic could be added to powerd at any point). for example, powerd treats tablet mode changes as user activity now (https://crbug.com/787768).",
+      "parentUuid": "6bde24ad_aff965e2",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a491084_6cf66def",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
         "patchSetId": 3
