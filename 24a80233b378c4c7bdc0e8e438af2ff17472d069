@@ -39,6 +39,24 @@
       "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3791138c_76965356",
+        "filename": "third_party/WebKit/Source/modules/nfc/NFC.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-28T01:18:18Z",
+      "side": 1,
+      "message": "In short, the answers are: by compile error, and yes.\n\nThis started to fail to compile because ConvertToBaseCallback now returns base::OnceCallback instead of base::Callback (which is a synonym of base::RepeatingCallback). base::OnceCallback is move-only, and must be passed with move. (This compiled previously because there\u0027s an implicit convertion from base::RepeatingCB to base::OnceCB.)",
+      "parentUuid": "8c3c9dbe_2975d301",
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
