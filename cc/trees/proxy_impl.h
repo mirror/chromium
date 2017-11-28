@@ -100,7 +100,7 @@ class CC_EXPORT ProxyImpl : public LayerTreeHostImplClient,
   void NotifyImageDecodeRequestFinished() override;
 
   // SchedulerClient implementation
-  void WillBeginImplFrame(const viz::BeginFrameArgs& args) override;
+  bool WillBeginImplFrame(const viz::BeginFrameArgs& args) override;
   void DidFinishImplFrame() override;
   void DidNotProduceFrame(const viz::BeginFrameAck& ack) override;
   void ScheduledActionSendBeginMainFrame(
