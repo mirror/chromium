@@ -32,6 +32,9 @@ class TestContextSupport : public gpu::ContextSupport {
                        base::OnceClosure callback) override;
   bool IsSyncTokenSignaled(const gpu::SyncToken& sync_token) override;
   void SignalQuery(uint32_t query, base::OnceClosure callback) override;
+  void GetGpuFenceHandle(
+      uint32_t gpu_fence_id,
+      base::OnceCallback<void(const gfx::GpuFenceHandle&)> callback) override;
   void SetAggressivelyFreeResources(bool aggressively_free_resources) override;
   void Swap() override;
   void SwapWithBounds(const std::vector<gfx::Rect>& rects) override;
