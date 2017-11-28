@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3934b20a_7f047a06",
+        "filename": "components/viz/common/resources/buffer_to_texture_target_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T04:49:57Z",
+      "side": 1,
+      "message": "\"Set \u003d base::flat_set\" instead?",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "b8dc6fce03017d4e639d72151546bea5e1cb48ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719eca0a_ef45e8e8",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T04:49:57Z",
+      "side": 1,
+      "message": "||",
+      "range": {
+        "startLine": 172,
+        "startChar": 25,
+        "endLine": 174,
+        "endChar": 6
+      },
+      "revId": "b8dc6fce03017d4e639d72151546bea5e1cb48ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
