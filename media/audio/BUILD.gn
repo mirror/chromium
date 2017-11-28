@@ -134,6 +134,8 @@ source_set("audio") {
     "fake_audio_manager.h",
     "fake_audio_output_stream.cc",
     "fake_audio_output_stream.h",
+    "fake_audio_system.cc",
+    "fake_audio_system.h",
     "null_audio_sink.cc",
     "null_audio_sink.h",
     "power_observer_helper.cc",
