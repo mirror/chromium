@@ -106,15 +106,22 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   bool mark_quic_broken_when_network_blackholes = data_provider.ConsumeBool();
   bool connect_using_default_network = data_provider.ConsumeBool();
   bool migrate_sessions_on_network_change = data_provider.ConsumeBool();
+  bool migrate_sessions_early = data_provider.ConsumeBool();
   // TODO(zhongyi): fuzz with connection migration v2 on when v2 is online.
   bool migrate_sessions_on_network_change_v2 = false;
-  bool migrate_sessions_early = data_provider.ConsumeBool();
+  bool migrate_sessions_early_v2 = false;
   bool allow_server_migration = data_provider.ConsumeBool();
   bool race_cert_verification = data_provider.ConsumeBool();
   bool estimate_initial_rtt = data_provider.ConsumeBool();
   bool enable_token_binding = data_provider.ConsumeBool();
 
   env->crypto_client_stream_factory.AddProofVerifyDetails(&env->verify_details);
+
+  if (migrate_sessions_early_v2) {
+    migrate_sessions_on_network_change_v2 = true;
+    migrate_sessions_early = false;
+    migrate_sessions_on_network_change = false;
+  }
 
   if (migrate_sessions_early)
     migrate_sessions_on_network_change = true;
@@ -132,10 +139,10 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
           kIdleConnectionTimeoutSeconds, kPingTimeoutSecs,
           kMaxTimeForCryptoHandshakeSecs, kInitialIdleTimeoutSecs,
           connect_using_default_network, migrate_sessions_on_network_change,
-          migrate_sessions_on_network_change_v2, migrate_sessions_early,
-          allow_server_migration, race_cert_verification, estimate_initial_rtt,
-          env->connection_options, env->client_connection_options,
-          enable_token_binding);
+          migrate_sessions_early, migrate_sessions_on_network_change_v2,
+          migrate_sessions_early_v2, allow_server_migration,
+          race_cert_verification, estimate_initial_rtt, env->connection_options,
+          env->client_connection_options, enable_token_binding);
 
   QuicStreamRequest request(factory.get());
   TestCompletionCallback callback;
