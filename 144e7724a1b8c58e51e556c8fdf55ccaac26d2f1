@@ -16,6 +16,24 @@
       "revId": "144e7724a1b8c58e51e556c8fdf55ccaac26d2f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5853d3fe_a72153f8",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T19:01:47Z",
+      "side": 0,
+      "message": "Woops. I\u0027ve restored the comment in the appropriate place (now web_request_info.cc in the NetLogLogger impl).",
+      "parentUuid": "025ecf97_610dc4d7",
+      "revId": "144e7724a1b8c58e51e556c8fdf55ccaac26d2f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

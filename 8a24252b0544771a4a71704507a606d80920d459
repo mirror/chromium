@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "226f52e1_5a189508",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T19:01:47Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s any legitimate reason to worry about this at all. A map lookup is so marginal compared to all the other work being doing for a web request.\n\nThere also isn\u0027t a good alternative that doesn\u0027t involve attaching arbitrary user data to net::URLRequest, which I\u0027m fairly certain we don\u0027t want to do.",
+      "parentUuid": "cf177d51_a3dd3aec",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6785c1da_e6b83935",
         "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T22:07:30Z",
       "side": 1,
       "message": "Are there times we would not call OnBeforeURLRequest() (which creates a WebRequestInfo object) first?  When?",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f0d2f4_eac87bca",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T19:01:47Z",
+      "side": 1,
+      "message": "Yes, in quite a few unit testing scenarios. I didn\u0027t think it was worthwhile to rewrite a bunch of tests to avoid this.",
+      "parentUuid": "6785c1da_e6b83935",
       "revId": "8a24252b0544771a4a71704507a606d80920d459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4f2d8878_b9fa6b45",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T19:01:47Z",
+      "side": 1,
+      "message": "Only response info isn\u0027t available at that time. Requests do not change any of these initial properties over the course of their lifetime (in fact events which require these things to change ultimately result in the old URLRequest being destroyed and a new one beginning the event lifecycle with the new data. e.g. redirection)\n\nResponse info is however only available when receiving a response - there are different -- mutually exclusive -- response events, which are all covered below.",
+      "parentUuid": "c7846014_ca5789fb",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f907be7_e5135d2e",
         "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-27T22:07:30Z",
       "side": 1,
       "message": "Are we sure this is called for 100% of net::URLRequests?",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1894ef7d_c7324e4e",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T19:01:47Z",
+      "side": 1,
+      "message": "Yes, it\u0027s called in the URLRequest destructor.\n\nhttps://cs.chromium.org/chromium/src/net/url_request/url_request.cc?rcl\u003db7397ad0b246ce38e03a94081452534c279dd4da\u0026l\u003d185",
+      "parentUuid": "3f907be7_e5135d2e",
       "revId": "8a24252b0544771a4a71704507a606d80920d459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "cba02d0e_d39cf8b8",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T19:01:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3526c6a_a5f58e4b",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2552a5cf_e3adb2ed",
         "filename": "extensions/browser/api/web_request/web_request_api.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "8a24252b0544771a4a71704507a606d80920d459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ed415f_05b7e6a6",
+        "filename": "extensions/browser/api/web_request/web_request_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T19:01:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2552a5cf_e3adb2ed",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a9616e57_027b1beb",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T19:01:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "048743f8_9ba486af",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51d3b639_94776939",
         "filename": "extensions/browser/api/web_request/web_request_info.h",
         "patchSetId": 5
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "b930a0f1_05411804",
+        "filename": "extensions/browser/api/web_request/web_request_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T19:01:47Z",
+      "side": 1,
+      "message": "Sure - I was torn since it should be RP ID but it\u0027s child id in quite a few other places. Guess there\u0027s no good reason not to start moving in the right direction though. Done.",
+      "parentUuid": "51d3b639_94776939",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d162da63_cfe04fac",
         "filename": "extensions/browser/api/web_request/web_request_info.h",
         "patchSetId": 5
@@ -152,6 +296,24 @@
       "revId": "8a24252b0544771a4a71704507a606d80920d459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605a9aaf_cb158367",
+        "filename": "extensions/browser/api/web_request/web_request_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T19:01:47Z",
+      "side": 1,
+      "message": "Very good question.\n\nEssentially the answer is PlzNavigate: navigation requests no longer necessarily have a render process ID associated with them, even if requested on behalf of a webview.\n\nI\u0027ve updated the comments to be more accurate.",
+      "parentUuid": "d162da63_cfe04fac",
+      "revId": "8a24252b0544771a4a71704507a606d80920d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
