@@ -967,6 +967,14 @@ TestRunner.runWhenPageLoads = function(callback) {
 };
 
 /**
+ * @param {function():void} callback
+ */
+TestRunner.expectPageReload = function(callback) {
+  TestRunner.runWhenPageLoads(callback);
+  TestRunner.resourceTreeModel.addEventListener(SDK.ResourceTreeModel.Events.Load, TestRunner.pageLoaded);
+};
+
+/**
  * @param {!Array<function(function():void)>} testSuite
  */
 TestRunner.runTestSuite = function(testSuite) {

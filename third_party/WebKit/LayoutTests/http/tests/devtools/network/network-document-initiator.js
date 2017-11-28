@@ -1,17 +1,16 @@
-<html>
-<head>
-<link href="resources/initiator.css" rel="stylesheet" type="text/css">
-<script src="../../inspector/inspector-test.js"></script>
-<script src="../../inspector/network-test.js"></script>
-<script>
-function navigateFromScript()
-{
-    window.location.href = "?foo";
-}
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-var test = function() {
-  TestRunner.evaluateInPage('navigateFromScript()');
-  TestRunner.runWhenPageLoads(step1);
+(async function() {
+  // setTimeout(() => TestRunner.completeTest(), 5000);
+
+  TestRunner.addResult(`Tests that page navigation initiated by JS is correctly reported.\n`);
+  await TestRunner.loadModule('network_test_runner');
+  await TestRunner.showPanel('network');
+  await TestRunner.navigatePromise('resources/initiator.html');
+  TestRunner.expectPageReload(step1);
+  await TestRunner.evaluateInPage('navigateFromScript()');
 
   function dumpInitiator(request) {
     var initiator = request.initiator();
@@ -32,15 +31,8 @@ var test = function() {
 
   function step1() {
     var results = NetworkTestRunner.findRequestsByURLPattern(/\?foo/);
-    TestRunner.assertTrue(results.length !== 0);
+    TestRunner.assertEquals(1, results.length);
     dumpInitiator(results[0]);
     TestRunner.completeTest();
   }
-};
-
-</script>
-</head>
-<body onload="runTest()">
-<p>Tests that page navigation initiated by JS is correctly reported.</p>
-</body>
-</html>
+})();
