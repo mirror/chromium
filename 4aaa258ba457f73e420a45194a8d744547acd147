@@ -22,6 +22,30 @@
       "revId": "4aaa258ba457f73e420a45194a8d744547acd147",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b4ec09_d9484ace",
+        "filename": "components/password_manager/core/browser/password_syncable_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-28T21:01:52Z",
+      "side": 1,
+      "message": "Yes, |val| encodes a sequence of two \"letters\" over a binary alphabet. The total number of such sequences is 4, but putting it as the product of the sizes of the alphabet for each letter makes it more explicit.\n\nThe other examples in this file are 3*3*3 and 4*4*4*4, which are encoding sequences of three letters over a ternary alphabet and four letters over a four-element alphabet.",
+      "parentUuid": "179e395d_4f6b3fcf",
+      "range": {
+        "startLine": 1006,
+        "startChar": 33,
+        "endLine": 1006,
+        "endChar": 38
+      },
+      "revId": "4aaa258ba457f73e420a45194a8d744547acd147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
