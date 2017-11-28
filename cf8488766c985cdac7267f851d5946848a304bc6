@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64dd60de_9f4a493f",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8282,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-28T22:09:54Z",
+      "side": 1,
+      "message": "I think you are looking for mask_client_.set_fill_with_nonsolid_color(true), maybe?",
+      "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
