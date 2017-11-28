@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c8d8f371_5c06d520",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-28T20:15:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you have in mind - can you elaborate?",
+      "parentUuid": "8e0ab558_c4f82670",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 50
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f6f42a7_d63a07b0",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
         "patchSetId": 11
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-28T03:45:20Z",
       "side": 1,
       "message": "This seems to be very duplicative of work done in the parent class, marked as [1].",
+      "range": {
+        "startLine": 198,
+        "startChar": 2,
+        "endLine": 234,
+        "endChar": 55
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d674b8ce_a5a82614",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-28T20:15:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure but I will take a look. The tab_spinner creates an animation that is different from the regular spinner animation in several respects.",
+      "parentUuid": "4f6f42a7_d63a07b0",
       "range": {
         "startLine": 198,
         "startChar": 2,
