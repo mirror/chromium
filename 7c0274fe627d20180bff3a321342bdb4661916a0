@@ -22,6 +22,30 @@
       "revId": "7c0274fe627d20180bff3a321342bdb4661916a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e9a68a_6ef65054",
+        "filename": "third_party/WebKit/Source/modules/vr/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-28T21:17:05Z",
+      "side": 1,
+      "message": "Not blink as a whole, but the vr code in blink specifically - I\u0027m quite familiar with the code, and the conventions are converging with Chrome as a whole.\n\nThat said, this was the one I was a bit on the fence on.  I can hold off for a bit here, as long as reviews aren\u0027t getting backlogged.",
+      "parentUuid": "a7b9212e_6c4aa449",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 20
+      },
+      "revId": "7c0274fe627d20180bff3a321342bdb4661916a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
