@@ -436,6 +436,12 @@ bool IsArcOobeOptInActive() {
           chromeos::switches::kEnableArcOOBEOptIn)) {
     return false;
   }
+
+  // No OOBE is expected in case ARC should always start.
+  if (ShouldArcAlwaysStart()) {
+    return false;
+  }
+
   return true;
 }
 
