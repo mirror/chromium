@@ -691,6 +691,7 @@ jumbo_component("platform") {
     "fonts/FontGlobalContext.h",
     "fonts/FontMetrics.cpp",
     "fonts/FontMetrics.h",
+    "fonts/FontObjectsCount.h",
     "fonts/FontOrientation.cpp",
     "fonts/FontOrientation.h",
     "fonts/FontPlatformData.cpp",
