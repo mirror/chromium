@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a378269_975e27be",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T18:17:38Z",
+      "side": 1,
+      "message": "Note that these ASSERTS are still equivalent to\n\nADD_FAILURE()\nreturn\n\n\nSee https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#checking-for-failures-in-the-current-test for how to handle this scenario in your actual test",
+      "range": {
+        "startLine": 402,
+        "startChar": 4,
+        "endLine": 402,
+        "endChar": 15
+      },
+      "revId": "524e3f407bca68fa88faf4bc85a9cfaf8b80c42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

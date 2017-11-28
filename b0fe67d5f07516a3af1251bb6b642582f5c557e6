@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "877f2078_ede791ab",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T18:17:38Z",
+      "side": 1,
+      "message": "I suppose a different way of putting it:\n- Do you want to simulate that the request was OK, but no client certs matched, or do you want to simulate that the user clicked cancel?\n\nIf you want to simulate that it was OK to send that request, but no client certs matched/were available and try to continue anyways, then this code is correct.\n\nIf you want to simulate that the user clicked cancel, to reject that a request was made, then you want to let the object be deleted.\n\n\n\nThat\u0027s what wasn\u0027t clear to me - whether you were trying to reject (\"Go away\") or simply say \"Nah, I don\u0027t care that you requested but I\u0027m not going to send you anything\"",
+      "parentUuid": "991cc4ab_48750a2e",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31f2de84_22a69a1a",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 6
