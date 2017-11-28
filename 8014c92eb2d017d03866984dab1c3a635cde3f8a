@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1f03789_e9dc5f08",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T13:57:36Z",
+      "side": 1,
+      "message": "Oversaw this when c\u0026p due to the refactoring. Thanks for pointing out!",
+      "parentUuid": "f94d37b9_bda0effb",
+      "revId": "8014c92eb2d017d03866984dab1c3a635cde3f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55472649_60d81150",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "8014c92eb2d017d03866984dab1c3a635cde3f8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1afd29_c1bd0f49",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T13:57:36Z",
+      "side": 1,
+      "message": "Fair point.\n\nOn second thought, I moved all handling here - because the old implementation was buggy in that the signals would have been sent once for each entry because AsyncUtil.forEach doesn\u0027t let you break out of the cycle, and none of these things should be sent more than once.",
+      "parentUuid": "55472649_60d81150",
+      "revId": "8014c92eb2d017d03866984dab1c3a635cde3f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8306654c_cc21686f",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T13:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7c08729_789569f9",
+      "range": {
+        "startLine": 461,
+        "startChar": 35,
+        "endLine": 461,
+        "endChar": 48
+      },
+      "revId": "8014c92eb2d017d03866984dab1c3a635cde3f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e56d038_72efcc4f",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 14
@@ -73,6 +133,24 @@
       "revId": "8014c92eb2d017d03866984dab1c3a635cde3f8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890e1a3f_e0320e31",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T13:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e56d038_72efcc4f",
+      "revId": "8014c92eb2d017d03866984dab1c3a635cde3f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
