@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2192ee50_6044b847",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adbb927e_30470df9",
+      "range": {
+        "startLine": 479,
+        "startChar": 2,
+        "endLine": 486,
+        "endChar": 64
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed04caab_e8285d05",
         "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
         "patchSetId": 19
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c9b559a1_cdf129af",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed04caab_e8285d05",
+      "range": {
+        "startLine": 489,
+        "startChar": 24,
+        "endLine": 489,
+        "endChar": 39
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc15b30f_d842d68d",
         "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
         "patchSetId": 19
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-24T19:08:55Z",
       "side": 1,
       "message": "Should this always be smooth? Wouldn\u0027t it make sense to use Auto?",
+      "range": {
+        "startLine": 492,
+        "startChar": 42,
+        "endLine": 492,
+        "endChar": 63
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3452f389_789f9819",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "ScrollableArea::SetScrollOffset() is after LayoutBox::ScrollRectToVisible(), where we decide the behavior by the box\u0027s scroll-behavior if Auto is passed in. So it does not make sense to set Auto here.\n\nGenerally, we would like this snapping action animated, as we don\u0027t want users see a sudden change in scrollOffset just after they ended their scrolling at a specific position. Both Safari and Firefox have implemented it with animation.\n\nWe originally thought it would be complicated and planned to do it in a later CL. But with smooth-scroll implemented, we can animate it with just one parameter :)",
+      "parentUuid": "dc15b30f_d842d68d",
       "range": {
         "startLine": 492,
         "startChar": 42,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "727a1072_13adc7ea",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce3a630b_88244c11",
+      "range": {
+        "startLine": 151,
+        "startChar": 29,
+        "endLine": 151,
+        "endChar": 34
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c11e380_9711b647",
         "filename": "third_party/WebKit/Source/core/input/ScrollSnapTest.cpp",
         "patchSetId": 19
@@ -114,6 +210,30 @@
       "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a788d6_4cafb862",
+        "filename": "third_party/WebKit/Source/core/input/ScrollSnapTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c11e380_9711b647",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "594cb806_64b4503c",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "592b2a90_dd15116b",
+      "range": {
+        "startLine": 78,
+        "startChar": 52,
+        "endLine": 78,
+        "endChar": 62
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5c5d531_26461a93",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 19
@@ -160,6 +304,30 @@
       "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198ece2b_90618cec",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5c5d531_26461a93",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 20
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "b42eae74_e7db4dfd",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "194a0f5f_d89e132b",
+      "range": {
+        "startLine": 356,
+        "startChar": 12,
+        "endLine": 356,
+        "endChar": 18
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4113854_27d5701c",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 19
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "05bd65a9_01ca9fbb",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4113854_27d5701c",
+      "range": {
+        "startLine": 380,
+        "startChar": 15,
+        "endLine": 380,
+        "endChar": 36
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38f0438f_366e3859",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 19
@@ -220,6 +436,30 @@
       "writtenOn": "2017-11-24T19:08:55Z",
       "side": 1,
       "message": "I think for the LayoutView you\u0027ll need to use the FrameView::LayoutViewportScrollableArea.",
+      "range": {
+        "startLine": 381,
+        "startChar": 6,
+        "endLine": 381,
+        "endChar": 38
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38828a65_a2522d8d",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Thanks! I\u0027m not an expert on it, but seems FrameView::GetScrollableArea is more general than FrameView::LayoutViewportScrollableArea()? https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/LocalFrameView.cpp?gsn\u003dGetScrollableArea\u0026l\u003d5124",
+      "parentUuid": "38f0438f_366e3859",
       "range": {
         "startLine": 381,
         "startChar": 6,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "6401cdd2_ee0f71f5",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "411abaa7_4a336992",
+      "range": {
+        "startLine": 426,
+        "startChar": 35,
+        "endLine": 426,
+        "endChar": 44
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9acc58f_52fa6e17",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 19
@@ -275,6 +539,30 @@
       "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa58cad_de2a204b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9acc58f_52fa6e17",
+      "range": {
+        "startLine": 451,
+        "startChar": 22,
+        "endLine": 451,
+        "endChar": 37
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "9f5b9709_46e9728d",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6216fdef_382afab4",
+      "range": {
+        "startLine": 103,
+        "startChar": 14,
+        "endLine": 103,
+        "endChar": 15
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdfd30eb_6b631cfb",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
         "patchSetId": 19
@@ -321,6 +633,30 @@
       "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92986e6_548fe126",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdfd30eb_6b631cfb",
+      "range": {
+        "startLine": 9,
+        "startChar": 26,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "d4a95438_a93b74e0",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecbe1dcd_a2b03b48",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0072459e_5394a4f9",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
         "patchSetId": 19
@@ -367,6 +727,30 @@
       "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf13717_03e89447",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0072459e_5394a4f9",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "33c5e2ef_68ed569c",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "385cffaa_64056907",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b989efa7_fd81fcd6",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
         "patchSetId": 19
@@ -416,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "cb2a12bb_e07e1793",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b989efa7_fd81fcd6",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 17
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23dd0976_39067705",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollTypes.h",
         "patchSetId": 19
@@ -436,6 +868,30 @@
       "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3dc317_b50aeb44",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollTypes.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-28T19:05:27Z",
+      "side": 1,
+      "message": "As we\u0027re handling did_scroll_x and did_scroll_y in SnapCoordinator, there is no need to expand the ScrollOrientation class.",
+      "parentUuid": "23dd0976_39067705",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 11
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
