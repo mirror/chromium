@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "607cb512_cf30223b",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T06:22:02Z",
+      "side": 1,
+      "message": "add function comment",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "47b92b1dc04dcea8e08a6f408de4adddcc405371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527077ee_f3a8ec52",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T06:22:02Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "range": {
+        "startLine": 43,
+        "startChar": 64,
+        "endLine": 43,
+        "endChar": 66
+      },
+      "revId": "47b92b1dc04dcea8e08a6f408de4adddcc405371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1153086_b93fa901",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T06:22:02Z",
+      "side": 1,
+      "message": "DCHECK(contents);",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "47b92b1dc04dcea8e08a6f408de4adddcc405371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "701b497c_cb1c3f52",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T06:22:02Z",
+      "side": 1,
+      "message": "nit, throughout: capitalize IDs, like dan said elsewhere :-)",
+      "range": {
+        "startLine": 23,
+        "startChar": 62,
+        "endLine": 23,
+        "endChar": 65
+      },
+      "revId": "47b92b1dc04dcea8e08a6f408de4adddcc405371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ae6049_d11741fb",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T06:22:02Z",
+      "side": 1,
+      "message": "#include \u003cvector\u003e",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 13
+      },
+      "revId": "47b92b1dc04dcea8e08a6f408de4adddcc405371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
