@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4e35584d_07fccbaf",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-28T12:42:51Z",
+      "side": 1,
+      "message": "So now we are at the millennial debate: what is better, KISS programming or good defensive programming? I don\u0027t know, KISS programming can turn out really bad ... even worse than good defensive programming in a test framework of a deprecated feature :)\n\nFeel free to leave it as is if there is a justification to have run_loop_ as a unique_ptr (spoiler: I don\u0027t see the reason other than potential flexibility to allow features that are unlikely to be ever needed).",
+      "parentUuid": "3ca7d23f_0eb3e99e",
+      "range": {
+        "startLine": 234,
+        "startChar": 40,
+        "endLine": 234,
+        "endChar": 74
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09d457e8_06ef6703",
         "filename": "chrome/browser/prerender/prerender_browsertest.cc",
         "patchSetId": 1
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "93ccbbcd_0ecabfaf",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-28T12:42:51Z",
+      "side": 1,
+      "message": "Not having to care about this bit of state makes the code more robust and more future proof. Walls of defense make it harder to read and easier to make mistakes.",
+      "parentUuid": "ccf5f598_a563849e",
+      "range": {
+        "startLine": 248,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 30
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed030a7d_db70d901",
         "filename": "chrome/browser/prerender/prerender_browsertest.cc",
         "patchSetId": 1
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "That also adds more constraints on how many times MarkMetricsSeen() can be called, and/or would add more logic around what happens if the metrics are seen before Wait() is called? This seems simple by comparison already.",
       "parentUuid": "ed030a7d_db70d901",
+      "range": {
+        "startLine": 253,
+        "startChar": 4,
+        "endLine": 253,
+        "endChar": 18
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c392dfd_00e79bc1",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-28T12:42:51Z",
+      "side": 1,
+      "message": "What constraints in particular? The RunLoop API allows calling Quit() multiple times, why having extra defensive logic for not doing it?\n\nI am sure you would not vote for implementing an AddressSanitizer fork with a unique feature set just for this test to be extra defensive. So why adding these 4 lines of extra checks?\n\nConsistency argument: another class in this file does not go into such defenses, and we seem to agree that they are not worth introducing for that class.",
+      "parentUuid": "101857bb_819c68aa",
       "range": {
         "startLine": 253,
         "startChar": 4,
