@@ -70,6 +70,24 @@
       "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b383fea_3b16e0d4",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8282,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-28T23:08:22Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m still confused.  Your test passes for me with the above change on Linux debug at the revision your patch is at and at ToT.  What am I missing?",
+      "parentUuid": "377b7574_8a8ca3b3",
+      "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
