@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95375b74_6b366978",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 36
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-28T01:57:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c558882e_6262bcd7",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1317f91f_22fd8836",
         "filename": "/COMMIT_MSG",
         "patchSetId": 36
@@ -33,6 +51,24 @@
       "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317ba57b_a1f6c843",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 36
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-28T01:57:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1317f91f_22fd8836",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b33f45dc_9b5cf924",
+        "filename": "components/viz/service/display/output_surface_client.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-28T01:57:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3816c161_cb13104d",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81fd2b4a_dacd705d",
         "filename": "ui/gfx/presentation_feedback.h",
         "patchSetId": 36
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8b7d4e35_872b7436",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-28T01:57:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81fd2b4a_dacd705d",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91ae5ed9_b1194162",
         "filename": "ui/gfx/presentation_feedback.h",
         "patchSetId": 36
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-28T00:49:04Z",
       "side": 1,
       "message": "this should be of type PresentationFlags",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0191b832_2d546e46",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-28T01:57:03Z",
+      "side": 1,
+      "message": "I tried using the enum type PresentationFlags, but it doesn\u0027t compile. \nFor example you can not assign PresentationFlags::kVSync | PresentationFlags::kHWClock to a variable with type enum PresentationFlags, because that value is not defined in the enum.",
+      "parentUuid": "91ae5ed9_b1194162",
       "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -132,6 +222,24 @@
       "writtenOn": "2017-11-28T00:49:04Z",
       "side": 1,
       "message": "why not print something out concerning the timing info?",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d082e2c_b917bfdc",
+        "filename": "ui/ozone/demo/gl_renderer.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-28T01:57:03Z",
+      "side": 1,
+      "message": "Sorry. I don\u0027t understand. print what kind of timing info?",
+      "parentUuid": "cebaaec7_001ac0da",
       "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
