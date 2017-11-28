@@ -46,12 +46,13 @@ class DirectManipulationHandler
   HRESULT STDMETHODCALLTYPE
   OnContentUpdated(_In_ IDirectManipulationViewport* viewport,
                    _In_ IDirectManipulationContent* content) override;
-  void SetDirectManipulationHelper(DirectManipulationHelper* helper);
-  void SetWindowEventTarget(WindowEventTarget* event_target);
+  void Initialize(DirectManipulationHelper* helper,
+                  WindowEventTarget* event_target);
 
  private:
   DirectManipulationHelper* helper_;
   WindowEventTarget* event_target_;
+  bool pinch_begin_sent_;
   float last_scale_;
   float last_x_offset_;
   float last_y_offset_;

@@ -90,9 +90,10 @@ class UI_BASE_EXPORT WindowEventTarget {
   virtual void HandleParentChanged() = 0;
 
   // Apply the transform from Direct Manipulation API.
-  virtual LRESULT ApplyDManipTransform(float scale,
-                                       float scroll_x,
-                                       float scroll_y) = 0;
+  virtual LRESULT SendMouseWheel(float scroll_x, float scroll_y) = 0;
+  virtual void SendGesturePinchBegin() = 0;
+  virtual LRESULT SendGesturePinchUpdate(float scale) = 0;
+  virtual void SendGesturePinchEnd() = 0;
 
  protected:
   WindowEventTarget();

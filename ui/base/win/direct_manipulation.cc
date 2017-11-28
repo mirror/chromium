@@ -5,7 +5,9 @@
 #include "ui/base/win/direct_manipulation.h"
 
 #include <objbase.h>
+#include <cmath>
 #include <iomanip>
+#include <limits>
 #include <string>
 
 #include "base/memory/ptr_util.h"
@@ -82,9 +84,8 @@ void DirectManipulationHelper::Initialize(HWND window,
   DCHECK(SUCCEEDED(hr));
 
   event_handler_ = Microsoft::WRL::Make<DirectManipulationHandler>();
-  event_handler_->SetDirectManipulationHelper(this);
-  event_handler_->SetWindowEventTarget(event_target);
   DCHECK(event_handler_);
+  event_handler_->Initialize(this, event_target);
 
   // We got Direct Manipulation transform from
   // IDirectManipulationViewportEventHandler.
@@ -163,6 +164,18 @@ void DirectManipulationHelper::StopTimer() {
   delay_update_.Cancel();
 }
 
+void DirectManipulationHandler::Initialize(DirectManipulationHelper* helper,
+                                           WindowEventTarget* event_target) {
+  DCHECK(helper);
+  DCHECK(event_target);
+  helper_ = helper;
+  event_target_ = event_target;
+  pinch_begin_sent_ = false;
+  last_scale_ = 1.0f;
+  last_x_offset_ = 0.0f;
+  last_y_offset_ = 0.0f;
+}
+
 HRESULT DirectManipulationHandler::OnViewportStatusChanged(
     IDirectManipulationViewport* viewport,
     DIRECTMANIPULATION_STATUS current,
@@ -181,6 +194,11 @@ HRESULT DirectManipulationHandler::OnViewportStatusChanged(
     last_scale_ = 1.0f;
     last_x_offset_ = 0.0f;
     last_y_offset_ = 0.0f;
+
+    if (pinch_begin_sent_) {
+      pinch_begin_sent_ = false;
+      event_target_->SendGesturePinchEnd();
+    }
   }
 
   return S_OK;
@@ -192,6 +210,10 @@ HRESULT DirectManipulationHandler::OnViewportUpdated(
   return S_OK;
 }
 
+bool FloatEquals(float a, float b) {
+  return fabs(a - b) < std::numeric_limits<float>::epsilon();
+}
+
 HRESULT DirectManipulationHandler::OnContentUpdated(
     IDirectManipulationViewport* viewport,
     IDirectManipulationContent* content) {
@@ -199,26 +221,34 @@ HRESULT DirectManipulationHandler::OnContentUpdated(
   HRESULT hr = content->GetContentTransform(xform, ARRAYSIZE(xform));
   DCHECK(SUCCEEDED(hr));
 
-  hr = event_target_->ApplyDManipTransform(xform[0] / last_scale_,
-                                           xform[4] - last_x_offset_,
-                                           xform[5] - last_y_offset_);
-  last_scale_ = xform[0];
-  last_x_offset_ = xform[4];
-  last_y_offset_ = xform[5];
+  float scale = xform[0];
+  float x_offset = xform[4];
+  float y_offset = xform[5];
+
+  // Ignore the change less than float point rounding error.
+  if (FloatEquals(scale, last_scale_) &&
+      FloatEquals(x_offset, last_x_offset_) &&
+      FloatEquals(y_offset, last_y_offset_)) {
+    return true;
+  }
+
+  // Consider this is a Scroll when scale factor equals 1.0
+  if (FloatEquals(scale, 1.0)) {
+    hr = event_target_->SendMouseWheel(x_offset - last_x_offset_,
+                                       y_offset - last_y_offset_);
+  } else {  // Pinch zoom
+    if (!pinch_begin_sent_) {
+      event_target_->SendGesturePinchBegin();
+      pinch_begin_sent_ = true;
+    }
+    event_target_->SendGesturePinchUpdate(scale / last_scale_);
+  }
+
+  last_scale_ = scale;
+  last_x_offset_ = x_offset;
+  last_y_offset_ = y_offset;
 
   return hr;
-}
-
-void DirectManipulationHandler::SetDirectManipulationHelper(
-    DirectManipulationHelper* helper) {
-  DCHECK(helper);
-  helper_ = helper;
-}
-
-void DirectManipulationHandler::SetWindowEventTarget(
-    WindowEventTarget* event_target) {
-  DCHECK(event_target);
-  event_target_ = event_target;
 }
 
 }  // namespace ui.
