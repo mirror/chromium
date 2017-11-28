@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd82122f_ece3c10e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30419,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T01:20:46Z",
+      "side": 1,
+      "message": "units\u003d\"number\"\nmakes more sense to me.\n\nOr omit it altogether.",
+      "revId": "90163c7bbc3199d983dc4317de1d32787fe0cb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c004ab87_428c1096",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30421,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T01:20:46Z",
+      "side": 1,
+      "message": "This is a boolean histogram.  The description should explain what \"true\" and \"false\" mean, or at least say that \"false\" will never been seen.",
+      "revId": "90163c7bbc3199d983dc4317de1d32787fe0cb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

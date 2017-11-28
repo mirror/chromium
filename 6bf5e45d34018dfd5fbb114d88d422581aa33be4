@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c4cda94_c596eebb",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T01:20:46Z",
+      "side": 0,
+      "message": "Please put start warning label here.https://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "revId": "6bf5e45d34018dfd5fbb114d88d422581aa33be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ba994e_73a50f6d",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T01:20:46Z",
+      "side": 0,
+      "message": "In the past, you were emitting this number to UMA.  This means that number can never be reused.  Please keep the code / value on the right side reserving this unused value.",
+      "revId": "6bf5e45d34018dfd5fbb114d88d422581aa33be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d40428_75ec08d1",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T01:20:46Z",
+      "side": 0,
+      "message": "This histogram was previously used.  Please make it is in histograms.xml (so no one tries to use one with the same name again) and mark it as obsolete.",
+      "revId": "6bf5e45d34018dfd5fbb114d88d422581aa33be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
