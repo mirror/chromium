@@ -45,6 +45,54 @@
       "revId": "e47cb62502e655919fc18aae96015c67a1badb26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0309f928_a69429e8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 101603,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-28T16:03:39Z",
+      "side": 1,
+      "message": "alert/confirm/prompt are similar, but different from beforeunload. It makes sense to me to keep this in the order it is in.",
+      "parentUuid": "7c5906d5_a3df4607",
+      "range": {
+        "startLine": 101603,
+        "startChar": 31,
+        "endLine": 101603,
+        "endChar": 0
+      },
+      "revId": "e47cb62502e655919fc18aae96015c67a1badb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "284fe482_232a8336",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 101603,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-28T16:03:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba47c2f8_be1da3d0",
+      "range": {
+        "startLine": 101603,
+        "startChar": 0,
+        "endLine": 101603,
+        "endChar": 1
+      },
+      "revId": "e47cb62502e655919fc18aae96015c67a1badb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
