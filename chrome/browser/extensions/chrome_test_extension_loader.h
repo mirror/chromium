@@ -100,11 +100,11 @@ class ChromeTestExtensionLoader {
   // Waits for the extension to finish setting up.
   bool WaitForExtensionReady();
 
-  // The associated context and services.
-  content::BrowserContext* browser_context_ = nullptr;
-  ExtensionSystem* extension_system_ = nullptr;
-  ExtensionService* extension_service_ = nullptr;
-  ExtensionRegistry* extension_registry_ = nullptr;
+  // The associated context and services. Never nullptr.
+  content::BrowserContext* const browser_context_;
+  ExtensionSystem* const extension_system_;
+  ExtensionService* const extension_service_;
+  ExtensionRegistry* const extension_registry_;
 
   // A temporary directory for packing extensions.
   base::ScopedTempDir temp_dir_;

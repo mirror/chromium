@@ -30,6 +30,7 @@ class ChromeExtensionTestNotificationObserver
   ~ChromeExtensionTestNotificationObserver() override;
 
   // Waits for the number of visible page actions to change to |count|.
+  // Can only be used with the Browser* ctor.
   bool WaitForPageActionVisibilityChangeTo(int count);
 
   // Waits for all extension views to load.
@@ -47,7 +48,9 @@ class ChromeExtensionTestNotificationObserver
   // ExtensionActionAPI::Observer:
   void OnPageActionsUpdated(content::WebContents* contents) override;
 
-  Browser* browser_;
+  // Never nullptr with the Browser* ctor. Always nullptr with the
+  // BrowserContext* ctor.
+  Browser* const browser_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeExtensionTestNotificationObserver);
 };
