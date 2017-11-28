@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5454b4f_4df643c0",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-28T15:52:42Z",
+      "side": 1,
+      "message": "Only signin_promo_view_consumer.h",
+      "parentUuid": "ed601431_577040d0",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 75
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0d5422b_c64b5db7",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.h",
         "patchSetId": 20
@@ -45,6 +69,30 @@
       "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b7281b_0d078733",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-28T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0d5422b_c64b5db7",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "953379ac_e32b59ab",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-28T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51ba9504_1ee7513a",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3394d598_f2f84c88",
         "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller.mm",
         "patchSetId": 20
@@ -91,6 +163,30 @@
       "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5bbdde_b4588811",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-28T15:52:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3394d598_f2f84c88",
+      "range": {
+        "startLine": 835,
+        "startChar": 7,
+        "endLine": 835,
+        "endChar": 31
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f2be5d3d_02039c94",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-28T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce35ac6e_f808939a",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2f60b2c_fc76504c",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.mm",
         "patchSetId": 20
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-28T00:07:48Z",
       "side": 1,
       "message": "You should use base::mac::ObjCCastStrict, so that\n1) it DCHECKS on the type of object, and\n2) you don\u0027t need to use -respondsToSelector:. \nI also noticed that -wasHidden/-wasShown is not on the public API for the TabSwitcherPanelView class. Could you make it part of the public API?",
+      "range": {
+        "startLine": 340,
+        "startChar": 2,
+        "endLine": 341,
+        "endChar": 54
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26fb793_90e4130b",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-28T15:52:42Z",
+      "side": 1,
+      "message": "_panels is either TabSwitcherPanelView or TabSwitcherPanelOverlayView. Only TabSwitcherPanelOverlayView implements -wasHidden/-wasShown. I could use ObjCCastStrict, but it will be bit annoying to understand why -[TabSwitcherPanelView wasShown/wasHidden] is not called when somebody will implement those function.",
+      "parentUuid": "d2f60b2c_fc76504c",
       "range": {
         "startLine": 340,
         "startChar": 2,
