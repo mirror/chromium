@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c67c1031_f611c593",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-28T14:19:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be0722d9_7ee7312d",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d2c1a2d_f8b60805",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.cpp",
         "patchSetId": 4
@@ -141,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bbe02655_07f206db",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-28T14:19:46Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "2d81fafe_8831c9e9",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47f16ab6_54361cc4",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.h",
         "patchSetId": 4
@@ -155,6 +191,24 @@
       "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335e6656_3e79848e",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-28T14:19:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47f16ab6_54361cc4",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
