@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52180cd8_35334f1b",
+        "filename": "chrome/browser/browsing_data/sync_aware_counter_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-28T14:35:14Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here, can you please rename it so that it doesn\u0027t confuse people who are code-searching for base::Callback?\n\n(Yes, I know this is my code)",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "e51b20b002bb5538fbd5f3212192450c6bed0b3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16da4fad_524daed5",
+        "filename": "chrome/browser/browsing_data/sync_aware_counter_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-28T14:35:14Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 18
+      },
+      "revId": "e51b20b002bb5538fbd5f3212192450c6bed0b3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4600b520_f9eb7573",
+        "filename": "chrome/browser/browsing_data/sync_aware_counter_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-28T14:35:14Z",
+      "side": 1,
+      "message": "This is a tautology now.\n\nYour current code only uses the value of |finished_| inside the Callback to retrieve the result. Then it immediately resets it to false.\n\nSo regardless of whether the counting has finished or not, outside of the Callback method, this condition is always going to be satisfied.",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 49
+      },
+      "revId": "e51b20b002bb5538fbd5f3212192450c6bed0b3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
