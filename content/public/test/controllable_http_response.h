@@ -25,6 +25,7 @@ namespace content {
 // handle only **one** request with the matching |relative_url|. In the case of
 // multiple ControllableHttpResponses for the same path, they're used in the
 // order they were created.
+// Note: |relative_url| must not be the URL of one of the test data files.
 class ControllableHttpResponse {
  public:
   ControllableHttpResponse(
