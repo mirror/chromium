@@ -16,6 +16,24 @@
       "revId": "23c1bfdc55e6be1d543b37ba73ed1376ca637332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77117c78_45c24f35",
+        "filename": "components/ukm/ukm_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T16:30:52Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "c25c5534_5e65e88c",
+      "revId": "23c1bfdc55e6be1d543b37ba73ed1376ca637332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
