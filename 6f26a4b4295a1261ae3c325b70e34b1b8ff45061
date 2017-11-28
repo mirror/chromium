@@ -16,6 +16,24 @@
       "revId": "6f26a4b4295a1261ae3c325b70e34b1b8ff45061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3caf0485_f7ac3519",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T16:16:54Z",
+      "side": 1,
+      "message": "Yeah, the compositor flag is used for individual compositors even tho we\u0027re using GPU compositing in general. It\u0027s used for example for tooltips, but I think also for some other small UI windows on Windows. It can\u0027t be used on a compositor that embeds any surfaces cuz that just wouldn\u0027t work as they won\u0027t agree.",
+      "parentUuid": "61320afb_1f30bdd6",
+      "revId": "6f26a4b4295a1261ae3c325b70e34b1b8ff45061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
