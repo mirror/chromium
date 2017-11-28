@@ -32,3 +32,6 @@ class MemoryLeakDetectionBenchmark(_LeakDetectionBase):
   @classmethod
   def Name(cls):
     return 'memory.leak_detection'
+
+  def CustomizeBrowserOptions(self, options):
+    options.AppendExtraBrowserArgs('--js-flags=--expose-gc')

@@ -35,3 +35,6 @@ class LeakDetectionClusterTelemetry(ld._LeakDetectionBase):
   @classmethod
   def Name(cls):
     return 'leak_detection.cluster_telemetry'
+
+  def CustomizeBrowserOptions(self, options):
+    options.AppendExtraBrowserArgs('--js-flags=--expose-gc')
