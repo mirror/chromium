@@ -60421,6 +60421,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Result of a detachable base pair operation.</summary>
 </histogram>
 
+<histogram name="Platform.DetachableBase.PendingRWUpdate"
+    enum="DetachableBasePendingRWUpdate">
+  <owner>kitching@google.com</owner>
+  <summary>
+    Pending firmware updates are logged in the case that an update is currently
+    not allowed or possible for a detachable base.  (For example, if an update
+    may only be performed on boot.)  Either there is (1) no update available,
+    (2) a critical update available, or (3) a non-critical update available. The
+    definition of &quot;critical&quot; is up to the software performing updates,
+    and would typically be used in the case of a security issue, or broken
+    functionality in a previous firmware version.
+  </summary>
+</histogram>
+
 <histogram name="Platform.DetachableBase.ROUpdateResult"
     enum="DetachableBaseROUpdateResult">
   <owner>kitching@google.com</owner>
