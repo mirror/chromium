@@ -45,6 +45,8 @@ struct CORE_EXPORT NGInlineNodeData {
   // The DOM to text content offset mapping of this inline node.
   std::unique_ptr<NGOffsetMapping> offset_mapping_;
 
+  unsigned can_use_new_layout_ : 1;
+
   unsigned is_bidi_enabled_ : 1;
   unsigned base_direction_ : 1;  // TextDirection
 
