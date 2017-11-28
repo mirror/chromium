@@ -6259,8 +6259,6 @@ void Document::EnforceSandboxFlags(SandboxFlags mask) {
       GetSecurityOrigin()->IsUnique()) {
     GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(
         stand_in_origin->IsPotentiallyTrustworthy());
-    if (GetFrame())
-      GetFrame()->Client()->DidUpdateToUniqueOrigin();
   }
 }
 
