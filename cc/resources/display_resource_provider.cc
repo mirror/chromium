@@ -55,8 +55,12 @@ void DisplayResourceProvider::SendPromotionHints(
     const viz::internal::Resource* resource = LockForRead(id);
     DCHECK(resource->wants_promotion_hint);
 
-    // Insist that this is backed by a GPU texture.
-    if (resource->is_gpu_resource_type()) {
+    // Insist that this is backed by a GPU texture, and has been waited on.  If
+    // it hasn't been waited on, then it hasn't been used by any quad.  We could
+    // wait and send it "no", but it's just a hint anyway.
+    if (resource->is_gpu_resource_type() &&
+        resource->synchronization_state() !=
+            viz::internal::Resource::NEEDS_WAIT) {
       DCHECK(resource->gl_id);
       auto iter = promotion_hints.find(id);
       bool promotable = iter != promotion_hints.end();
