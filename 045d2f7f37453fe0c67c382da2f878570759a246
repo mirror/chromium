@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "3e236aab_0f1ec0d6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-28T18:52:12Z",
+      "side": 1,
+      "message": "The new names (here and elsewhere) are much better.  Thanks!\n\nBut NotifyGlobalScopeUpdate seems odd.  Maybe just NotifyGlobalScope?",
+      "parentUuid": "6061abca_9663c737",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc343e4e_87255135",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
         "patchSetId": 10
