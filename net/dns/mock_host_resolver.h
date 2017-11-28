@@ -92,6 +92,9 @@ class MockHostResolverBase
                        AddressList* addresses,
                        const NetLogWithSource& net_log) override;
   HostCache* GetHostCache() override;
+  bool HasCached(base::StringPiece hostname,
+                 HostCache::Entry::Source* source_out,
+                 HostCache::EntryStaleness* stale_out) const override;
 
   // Detach cancelled request.
   void DetachRequest(size_t id);
