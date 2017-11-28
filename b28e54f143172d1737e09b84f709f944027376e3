@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9045fb5c_9ecccf3f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22195,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-28T07:03:57Z",
+      "side": 1,
+      "message": "nit: Please add a comma between \"launched\" and \"grouped\".",
+      "range": {
+        "startLine": 22195,
+        "startChar": 42,
+        "endLine": 22195,
+        "endChar": 58
+      },
+      "revId": "b28e54f143172d1737e09b84f709f944027376e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f146a7_8b7d0859",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22196,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-28T07:03:57Z",
+      "side": 1,
+      "message": "nit: \"The equivalent histogram...\"",
+      "range": {
+        "startLine": 22196,
+        "startChar": 33,
+        "endLine": 22196,
+        "endChar": 43
+      },
+      "revId": "b28e54f143172d1737e09b84f709f944027376e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
