@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba9433ea_351b7052",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-28T16:55:06Z",
+      "side": 0,
+      "message": "Unrelated: This was only used in a single place, and it\u0027s actually much lighter than var(--grey), so I renamed it.",
+      "range": {
+        "startLine": 27,
+        "startChar": 23,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "cc9fb2297c61ac6127949c17e3d0414aebfc0c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
