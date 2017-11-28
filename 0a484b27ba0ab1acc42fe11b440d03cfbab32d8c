@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b8b20dd_084f9a0c",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-28T21:40:50Z",
+      "side": 1,
+      "message": "seems a bit confusing having a member providers_initialized_ and a method ProvidersInititialized that returns different state.\n\nmaybe AreAllProvidersInitialized()?",
+      "range": {
+        "startLine": 153,
+        "startChar": 22,
+        "endLine": 153,
+        "endChar": 42
+      },
+      "revId": "0a484b27ba0ab1acc42fe11b440d03cfbab32d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a5fcc5_47baf8a5",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-28T21:40:50Z",
+      "side": 1,
+      "message": "(num/count)_initialized_providers_?",
+      "range": {
+        "startLine": 155,
+        "startChar": 9,
+        "endLine": 155,
+        "endChar": 32
+      },
+      "revId": "0a484b27ba0ab1acc42fe11b440d03cfbab32d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab26461f_c32e4a47",
+        "filename": "chrome/browser/vr/service/vr_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-28T21:40:50Z",
+      "side": 1,
+      "message": "nit: callback_ is a very general name - \"on_initialization_complete_callback_\" maybe?  Kind of a long name though...",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 12
+      },
+      "revId": "0a484b27ba0ab1acc42fe11b440d03cfbab32d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc722adb_db9094e3",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-28T21:40:50Z",
+      "side": 1,
+      "message": "We\u0027ll need to keep this around if we will remove devices later.",
+      "range": {
+        "startLine": 38,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "0a484b27ba0ab1acc42fe11b440d03cfbab32d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
