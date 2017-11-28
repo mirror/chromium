@@ -22,6 +22,30 @@
       "revId": "99dbe7fceba6249a2bc811e4ee50a45ec61309e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b30147_fe32e66f",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T18:50:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99c998fa_c5c8c904",
+      "range": {
+        "startLine": 168,
+        "startChar": 13,
+        "endLine": 168,
+        "endChar": 33
+      },
+      "revId": "99dbe7fceba6249a2bc811e4ee50a45ec61309e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
