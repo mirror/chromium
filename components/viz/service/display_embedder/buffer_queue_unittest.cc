@@ -265,7 +265,7 @@ std::unique_ptr<BufferQueue> CreateBufferQueue(
     gpu::gles2::GLES2Interface* gl,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager) {
   std::unique_ptr<BufferQueue> buffer_queue(new BufferQueue(
-      gl, target, GL_RGB, display::DisplaySnapshot::PrimaryFormat(), nullptr,
+      gl, target, GL_RGBA, display::DisplaySnapshot::PrimaryFormat(), nullptr,
       gpu_memory_buffer_manager, kFakeSurfaceHandle));
   buffer_queue->Initialize();
   return buffer_queue;
