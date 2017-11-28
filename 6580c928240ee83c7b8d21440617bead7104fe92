@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "483cf2f5_5b02eca2",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T22:21:17Z",
+      "side": 1,
+      "message": "Is there ever a time when callback_ is expected to be null? (same question below)",
+      "revId": "6580c928240ee83c7b8d21440617bead7104fe92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24939112_11a2607c",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T22:21:17Z",
+      "side": 1,
+      "message": "I found this comment slightly confusing because the function is called \"Read()\" but then the function references Write().\n\nAlso, any particular reason this passes the producer handle rather than returning a consumer handle? I guess it\u0027s so we can set up the Read() callback and the handle watcher at the same time?",
+      "revId": "6580c928240ee83c7b8d21440617bead7104fe92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16477172_6e79ecfd",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T22:21:17Z",
+      "side": 1,
+      "message": "Out of curiosity, is there any foreseeable future where this becomes an actual enum?",
+      "range": {
+        "startLine": 13,
+        "startChar": 44,
+        "endLine": 13,
+        "endChar": 49
+      },
+      "revId": "6580c928240ee83c7b8d21440617bead7104fe92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
