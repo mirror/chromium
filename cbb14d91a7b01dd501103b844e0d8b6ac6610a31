@@ -22,6 +22,30 @@
       "revId": "cbb14d91a7b01dd501103b844e0d8b6ac6610a31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6f104a_2ada7e2b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T00:09:12Z",
+      "side": 1,
+      "message": "Thanks, removed. (It was copy/pasted from another histogram, missed removing it).",
+      "parentUuid": "39b51faf_f8284259",
+      "range": {
+        "startLine": 2313,
+        "startChar": 11,
+        "endLine": 2313,
+        "endChar": 23
+      },
+      "revId": "cbb14d91a7b01dd501103b844e0d8b6ac6610a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
