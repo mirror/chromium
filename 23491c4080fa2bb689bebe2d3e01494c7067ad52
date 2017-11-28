@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfc70adf_0154a426",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-28T03:41:33Z",
+      "side": 1,
+      "message": "For safety, can you add CQ-DEPEND tags referencing the CLs this one depends on?",
+      "revId": "23491c4080fa2bb689bebe2d3e01494c7067ad52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85135550_247595de",
+        "filename": "ui/gfx/linux/native_pixmap_dmabuf_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-28T03:41:33Z",
+      "side": 1,
+      "message": "The stride and offset here are not typical of what we  would see on an actual pixmap. I now understand it is done on purpose to make the test catch more errors, but I was trying to figure the meaning of these values for a while. :) Could you add a short comment explaining that these values are arbitrarily chosen to be different from each other?",
+      "revId": "23491c4080fa2bb689bebe2d3e01494c7067ad52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
