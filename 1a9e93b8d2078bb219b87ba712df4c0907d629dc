@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "6751a1f9_048a1c0a",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-28T21:18:23Z",
+      "side": 1,
+      "message": "I don\u0027t know a good signal whether the component is installed already. It requires a check of the disk, which happens asynchronously. It\u0027s probably possible to dig into the component updater code more and plumb something through. However, I\u0027m worried this will not make it in for M-64. We discussed this in the team and we feel a single histogram would give us enough information. Why do you think the metric could not meaningful?",
+      "parentUuid": "5e745a10_b04906b1",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 62
+      },
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf972f9c_5c1662b6",
         "filename": "chrome/browser/vr/metrics_helper.cc",
         "patchSetId": 9
