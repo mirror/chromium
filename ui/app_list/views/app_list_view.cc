@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "ash/app_list/model/app_list_model.h"
+#include "ash/public/cpp/window_properties.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
@@ -565,6 +566,9 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
   // TODO(mash): Redesign this animation to position the widget to cover the
   // entire screen, then animate the layer up into position. crbug.com/768437
   fullscreen_widget_->GetNativeView()->SetBounds(local_bounds);
+
+  fullscreen_widget_->GetNativeView()->SetProperty(
+      ash::kDisplayMovementDisabledKey, true);
 
   overlay_view_ = new AppListOverlayView(0 /* no corners */);
 
