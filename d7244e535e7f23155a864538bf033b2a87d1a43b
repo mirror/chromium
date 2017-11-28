@@ -123,6 +123,24 @@
       "revId": "d7244e535e7f23155a864538bf033b2a87d1a43b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c6e1d3_c1883a31",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-28T06:42:14Z",
+      "side": 1,
+      "message": "I use this command to build:\nninja -C out/Default -j640 -l 10 chrome extensions_unittests\n\nBut it got stuck at the following step:\nninja: Entering directory `out/Default\u0027\n[1/1] Regenerating ninja files\n[3851/38208] ACTION //extensions/browser/api:api_registration_bundle_generator_registration(//build/toolchain/linux:clang_x64)",
+      "parentUuid": "4e178a0c_6174f184",
+      "revId": "d7244e535e7f23155a864538bf033b2a87d1a43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
