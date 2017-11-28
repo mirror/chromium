@@ -123,6 +123,7 @@ void HandleServiceWorkerLink(
       ++trace_id, "Pattern", scope_url.spec(), "Script URL", script_url.spec());
   service_worker_context->RegisterServiceWorker(
       scope_url, script_url,
+      blink::mojom::ServiceWorkerUpdateViaCache::kImports,
       base::Bind(&RegisterServiceWorkerFinished, trace_id));
 }
 

@@ -52,6 +52,7 @@ class WebServiceWorkerRegistration {
   virtual void ProxyStopped() {}
 
   virtual WebURL Scope() const { return WebURL(); }
+  // TODO(yuryu): Make this pure virtual once implemented in derived classes
   virtual mojom::ServiceWorkerUpdateViaCache UpdateViaCache() const {
     return mojom::ServiceWorkerUpdateViaCache::kImports;
   }

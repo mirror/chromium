@@ -118,6 +118,7 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerTest,
   GetServiceWorkerContext()->RegisterServiceWorker(
       embedded_test_server()->GetURL("/"),
       embedded_test_server()->GetURL("/service_worker.js"),
+      blink::mojom::ServiceWorkerUpdateViaCache::kImports,
       base::Bind(&ExpectResultAndRun<bool>, true, run_loop.QuitClosure()));
   run_loop.Run();
 
@@ -142,6 +143,7 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerTest,
   GetServiceWorkerContext()->RegisterServiceWorker(
       embedded_test_server()->GetURL("/"),
       embedded_test_server()->GetURL("/service_worker.js"),
+      blink::mojom::ServiceWorkerUpdateViaCache::kImports,
       base::Bind(&ExpectResultAndRun<bool>, true, run_loop.QuitClosure()));
   run_loop.Run();
 
@@ -169,6 +171,7 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerTest,
   GetServiceWorkerContext()->RegisterServiceWorker(
       embedded_test_server()->GetURL("/"),
       embedded_test_server()->GetURL("/service_worker.js"),
+      blink::mojom::ServiceWorkerUpdateViaCache::kImports,
       base::Bind(&ExpectResultAndRun<bool>, false, run_loop.QuitClosure()));
   run_loop.Run();
 }
@@ -690,6 +693,7 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerNavigationHintTest,
   GetServiceWorkerContext()->RegisterServiceWorker(
       embedded_test_server()->GetURL("/scope/"),
       embedded_test_server()->GetURL("/sw.js"),
+      blink::mojom::ServiceWorkerUpdateViaCache::kImports,
       base::Bind(&ExpectResultAndRun<bool>, true, run_loop.QuitClosure()));
   run_loop.Run();
   RunNavigationHintTest("/scope/",
