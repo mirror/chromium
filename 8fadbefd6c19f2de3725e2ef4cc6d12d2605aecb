@@ -16,6 +16,24 @@
       "revId": "8fadbefd6c19f2de3725e2ef4cc6d12d2605aecb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eea899b_63bc1396",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-28T22:00:58Z",
+      "side": 1,
+      "message": "It\u0027s already there (line 1475)",
+      "parentUuid": "3ad02199_d725090e",
+      "revId": "8fadbefd6c19f2de3725e2ef4cc6d12d2605aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
