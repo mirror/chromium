@@ -461,8 +461,10 @@ void PPBNaClPrivate::LaunchSelLdr(
   IPC::PlatformFileForTransit nexe_for_transit =
       IPC::InvalidPlatformFileForTransit();
 #if defined(OS_POSIX)
-  if (nexe_file_info->handle != PP_kInvalidFileHandle)
-    nexe_for_transit = base::FileDescriptor(nexe_file_info->handle, true);
+  if (nexe_file_info->handle != PP_kInvalidFileHandle) {
+    nexe_for_transit = IPC::PlatformFileForTransit(
+        base::FileDescriptor(nexe_file_info->handle, true));
+  }
 #elif defined(OS_WIN)
   nexe_for_transit = IPC::PlatformFileForTransit(nexe_file_info->handle);
 #else
