@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86dd2a4c_ab75e86b",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-28T03:45:20Z",
+      "side": 1,
+      "message": "Reference [1].",
+      "range": {
+        "startLine": 316,
+        "startChar": 28,
+        "endLine": 316,
+        "endChar": 45
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e0ab558_c4f82670",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-28T03:45:20Z",
+      "side": 1,
+      "message": "Can we dedup some of this code?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 50
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6f42a7_d63a07b0",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-28T03:45:20Z",
+      "side": 1,
+      "message": "This seems to be very duplicative of work done in the parent class, marked as [1].",
+      "range": {
+        "startLine": 198,
+        "startChar": 2,
+        "endLine": 234,
+        "endChar": 55
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
