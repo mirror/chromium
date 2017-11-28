@@ -72,7 +72,6 @@
 #include "content/common/gpu_stream_constants.h"
 #include "content/common/render_process_messages.h"
 #include "content/common/resource_messages.h"
-#include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/common/content_features.h"
@@ -455,7 +454,7 @@ class RendererLocalSurfaceIdProvider : public viz::LocalSurfaceIdProvider {
 // thread.
 class UkmRecorderFactoryImpl : public cc::UkmRecorderFactory {
  public:
-  UkmRecorderFactoryImpl(ukm::mojom::UkmRecorderInterfacePtrInfo info)
+  explicit UkmRecorderFactoryImpl(ukm::mojom::UkmRecorderInterfacePtrInfo info)
       : info_(std::move(info)) {
     DCHECK(info_.is_valid());
   }
