@@ -22,6 +22,30 @@
       "revId": "3dfb740966faad52f173d752f5e7e423cbe77da7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2dbe75_ef51ba86",
+        "filename": "extensions/common/api/networking_private.idl",
+        "patchSetId": 26
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-28T22:55:23Z",
+      "side": 1,
+      "message": "This is not part of network properties. List of VPN providers are sent from internet_handler.cc to js.\nI think this is needed for closure_compilation for type checking which is introduced in this cl.\nIf it should not be added here, what would be best practice to satisfy the type checking?",
+      "parentUuid": "005d8d60_f1666737",
+      "range": {
+        "startLine": 503,
+        "startChar": 13,
+        "endLine": 503,
+        "endChar": 29
+      },
+      "revId": "3dfb740966faad52f173d752f5e7e423cbe77da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
