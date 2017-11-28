@@ -134,6 +134,30 @@
     },
     {
       "key": {
+        "uuid": "d177b656_4e238d08",
+        "filename": "third_party/WebKit/Source/core/svg/SVGFEImageElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T14:11:34Z",
+      "side": 1,
+      "message": "Actually, considering that a (local) referenced fragment can contain \u0027currentColor\u0027, and \u003cimage\u003e et.c, !cached_image_ should probably taint...",
+      "parentUuid": "e2b3c4b3_8f784b16",
+      "range": {
+        "startLine": 168,
+        "startChar": 41,
+        "endLine": 168,
+        "endChar": 74
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e3701c5_3a13dc7e",
         "filename": "third_party/WebKit/Source/core/svg/SVGFEImageElement.h",
         "patchSetId": 5
