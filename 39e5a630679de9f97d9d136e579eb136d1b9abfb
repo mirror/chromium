@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57ab5781_5580eca1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-28T17:38:26Z",
+      "side": 1,
+      "message": "DCHECK(initialized()); ?",
+      "range": {
+        "startLine": 730,
+        "startChar": 72,
+        "endLine": 730,
+        "endChar": 0
+      },
+      "revId": "39e5a630679de9f97d9d136e579eb136d1b9abfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c2cfbb_6d3f1c78",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-28T17:38:26Z",
+      "side": 1,
+      "message": "This seems to be the only call site for NukeSuggestions, maybe inline it here since there\u0027s really no reason to call it from anywhere else? It\u0027d save looking up the CategoryContent again.",
+      "range": {
+        "startLine": 1378,
+        "startChar": 30,
+        "endLine": 1378,
+        "endChar": 0
+      },
+      "revId": "39e5a630679de9f97d9d136e579eb136d1b9abfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd58407d_7a276e05",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-28T17:38:26Z",
+      "side": 1,
+      "message": "This seems redundant, since we unconditionally call ClearCachedSuggestions below anyway?",
+      "range": {
+        "startLine": 1554,
+        "startChar": 33,
+        "endLine": 1554,
+        "endChar": 0
+      },
+      "revId": "39e5a630679de9f97d9d136e579eb136d1b9abfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
