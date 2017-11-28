@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bececad_424200ae",
+        "filename": "content/browser/renderer_host/media/audio_input_stream_handle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-28T11:45:22Z",
+      "side": 1,
+      "message": "DCHECK that |deleter_callback_| has not been called? (In this case we need base::ResetAndReturn() in CallDeleter() )",
+      "revId": "c8b11b04060d1e1d313e907b774742de07a73cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5555b6_112f9cc9",
+        "filename": "content/browser/renderer_host/media/audio_input_stream_handle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-28T11:45:22Z",
+      "side": 1,
+      "message": "Could you describe the contract re: deleter_callback?",
+      "revId": "c8b11b04060d1e1d313e907b774742de07a73cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c0c941_2cab3410",
+        "filename": "content/browser/renderer_host/media/audio_input_stream_handle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-28T11:45:22Z",
+      "side": 1,
+      "message": "Alternatively you can use MockCallback [https://cs.chromium.org/chromium/src/base/test/mock_callback.h?q\u003dMockCallback\u0026dr\u003dCSs\u0026l\u003d17]",
+      "revId": "c8b11b04060d1e1d313e907b774742de07a73cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ee6db6_d7c7f539",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-28T11:45:22Z",
+      "side": 1,
+      "message": "And it must be deleted on IO thread as well?",
+      "revId": "c8b11b04060d1e1d313e907b774742de07a73cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a7afcd_506a1129",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-28T11:45:22Z",
+      "side": 1,
+      "message": "#include \"build/build_config.h\"",
+      "revId": "c8b11b04060d1e1d313e907b774742de07a73cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0beea66d_f9a96bd6",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-28T11:45:22Z",
+      "side": 1,
+      "message": "Maybe StrongBinding instead?",
+      "revId": "c8b11b04060d1e1d313e907b774742de07a73cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb3200a_32bd17c7",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-28T11:45:22Z",
+      "side": 1,
+      "message": "It looks like it would make sense to have a base fixture to initialize all these objects for both tests.",
+      "revId": "c8b11b04060d1e1d313e907b774742de07a73cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7420d80_f8e573cb",
+        "filename": "content/common/media/renderer_audio_input_stream_factory.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-28T11:45:22Z",
+      "side": 1,
+      "message": "nit: missing space in \"stream,media\".\nAlso, could you format it?",
+      "revId": "c8b11b04060d1e1d313e907b774742de07a73cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a427b074_74a1f06f",
+        "filename": "media/audio/fake_audio_system.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-28T11:45:22Z",
+      "side": 1,
+      "message": "Use AudioSystemImpl with MockAudioManager instead?",
+      "revId": "c8b11b04060d1e1d313e907b774742de07a73cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
