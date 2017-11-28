@@ -218,7 +218,7 @@ LoadV8FileResult MapOpenedFile(const OpenedFileMap::mapped_type& file_region,
   return V8_LOAD_SUCCESS;
 }
 
-#endif  // defined(V8_USE_EXTERNAL_STATUP_DATA)
+#endif  // V8_USE_EXTERNAL_STATUP_DATA
 
 }  // namespace
 
@@ -283,6 +283,7 @@ void V8Initializer::GetV8ExternalSnapshotData(const char** natives_data_out,
 
 // static
 void V8Initializer::GetV8ContextSnapshotData(v8::StartupData* snapshot) {
+  CHECK(snapshot);
   GetMappedFileData(g_mapped_v8_context_snapshot, snapshot);
 }
 
