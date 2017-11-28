@@ -356,8 +356,6 @@ struct ServiceWorkerContextClient::WorkerContextData {
       base::IDMap<std::unique_ptr<DispatchExtendableMessageEventCallback>>;
   using NavigationPreloadRequestsMap =
       base::IDMap<std::unique_ptr<NavigationPreloadRequest>>;
-  using InstallEventMethodsMap =
-      std::map<int, mojom::ServiceWorkerInstallEventMethodsAssociatedPtr>;
 
   explicit WorkerContextData(ServiceWorkerContextClient* owner)
       : event_dispatcher_binding(owner),
@@ -473,10 +471,6 @@ struct ServiceWorkerContextClient::WorkerContextData {
 
   // Pending navigation preload requests.
   NavigationPreloadRequestsMap preload_requests;
-
-  // Maps every install event id with its corresponding
-  // mojom::ServiceWorkerInstallEventMethodsAssociatedPt.
-  InstallEventMethodsMap install_methods_map;
 
   // S13nServiceWorker
   std::unique_ptr<ControllerServiceWorkerImpl> controller_impl;
@@ -716,10 +710,6 @@ void ServiceWorkerContextClient::OnMessageReceived(
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   DCHECK(handled);
-}
-
-blink::WebURL ServiceWorkerContextClient::Scope() const {
-  return service_worker_scope_;
 }
 
 void ServiceWorkerContextClient::GetClient(
@@ -1054,7 +1044,6 @@ void ServiceWorkerContextClient::DidHandleInstallEvent(
   std::move(*callback).Run(status, proxy_->HasFetchEventHandler(),
                            base::Time::FromDoubleT(event_dispatch_time));
   context_->install_event_callbacks.Remove(event_id);
-  context_->install_methods_map.erase(event_id);
   context_->event_timer->EndEvent();
 }
 
@@ -1346,16 +1335,6 @@ void ServiceWorkerContextClient::Claim(
   Send(new ServiceWorkerHostMsg_ClaimClients(GetRoutingID(), request_id));
 }
 
-void ServiceWorkerContextClient::RegisterForeignFetchScopes(
-    int install_event_id,
-    const blink::WebVector<blink::WebURL>& sub_scopes,
-    const blink::WebVector<blink::WebSecurityOrigin>& origins) {
-  DCHECK(context_->install_methods_map[install_event_id].is_bound());
-  context_->install_methods_map[install_event_id]->RegisterForeignFetchScopes(
-      std::vector<GURL>(sub_scopes.begin(), sub_scopes.end()),
-      std::vector<url::Origin>(origins.begin(), origins.end()));
-}
-
 void ServiceWorkerContextClient::DispatchSyncEvent(
     const std::string& tag,
     blink::mojom::BackgroundSyncEventLastChance last_chance,
@@ -1537,18 +1516,12 @@ void ServiceWorkerContextClient::DispatchBackgroundFetchedEvent(
 }
 
 void ServiceWorkerContextClient::DispatchInstallEvent(
-    mojom::ServiceWorkerInstallEventMethodsAssociatedPtrInfo client,
     DispatchInstallEventCallback callback) {
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerContextClient::DispatchInstallEvent");
 
   int event_id = context_->install_event_callbacks.Add(
       std::make_unique<DispatchInstallEventCallback>(std::move(callback)));
-
-  DCHECK(!context_->install_methods_map.count(event_id));
-  mojom::ServiceWorkerInstallEventMethodsAssociatedPtr install_methods;
-  install_methods.Bind(std::move(client));
-  context_->install_methods_map[event_id] = std::move(install_methods);
 
   context_->event_timer->StartEvent();
   proxy_->DispatchInstallEvent(event_id);
@@ -1623,18 +1596,11 @@ void ServiceWorkerContextClient::DispatchLegacyFetchEvent(
   }
 
   // Dispatch the event to the service worker execution context.
-  const bool foreign_fetch =
-      request.fetch_type == ServiceWorkerFetchType::FOREIGN_FETCH;
   blink::WebServiceWorkerRequest web_request;
   ToWebServiceWorkerRequest(request, &web_request);
-
   context_->event_timer->StartEvent();
-  if (foreign_fetch) {
-    proxy_->DispatchForeignFetchEvent(fetch_event_id, web_request);
-  } else {
-    proxy_->DispatchFetchEvent(fetch_event_id, web_request,
-                               navigation_preload_sent);
-  }
+  proxy_->DispatchFetchEvent(fetch_event_id, web_request,
+                             navigation_preload_sent);
 }
 
 // S13nServiceWorker
