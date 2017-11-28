@@ -25,6 +25,121 @@
     },
     {
       "key": {
+        "uuid": "0e50bb4d_be3ce1c3",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-28T05:30:45Z",
+      "side": 1,
+      "message": "move?",
+      "range": {
+        "startLine": 66,
+        "startChar": 27,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190ef37a_6f3be5b9",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-28T05:30:45Z",
+      "side": 1,
+      "message": "pass by value?",
+      "range": {
+        "startLine": 48,
+        "startChar": 30,
+        "endLine": 48,
+        "endChar": 60
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1299c45_bc121a6e",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-28T05:30:45Z",
+      "side": 1,
+      "message": "pass by value?",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 75
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb286bb1_4b6d5b25",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-28T05:30:45Z",
+      "side": 1,
+      "message": "move?",
+      "range": {
+        "startLine": 126,
+        "startChar": 21,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f54a996_f250a959",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedAnimationControllerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-28T05:30:45Z",
+      "side": 1,
+      "message": "I think this should be once.",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c3c9dbe_2975d301",
         "filename": "third_party/WebKit/Source/modules/nfc/NFC.cpp",
         "patchSetId": 4
@@ -54,6 +169,29 @@
       "side": 1,
       "message": "In short, the answers are: by compile error, and yes.\n\nThis started to fail to compile because ConvertToBaseCallback now returns base::OnceCallback instead of base::Callback (which is a synonym of base::RepeatingCallback). base::OnceCallback is move-only, and must be passed with move. (This compiled previously because there\u0027s an implicit convertion from base::RepeatingCB to base::OnceCB.)",
       "parentUuid": "8c3c9dbe_2975d301",
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1786fb30_7245068e",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-28T05:30:45Z",
+      "side": 1,
+      "message": "explicit?\n\nCan\u0027t we use OnceCallback here yet? If not, IIUC, can we leave this as base::Callback as this should eventually converted to OnceCallback?.",
+      "range": {
+        "startLine": 293,
+        "startChar": 1,
+        "endLine": 293,
+        "endChar": 2
+      },
       "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
