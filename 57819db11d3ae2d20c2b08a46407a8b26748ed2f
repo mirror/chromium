@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b563160a_8f89e431",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-28T23:42:41Z",
+      "side": 1,
+      "message": "Cool! But! Can we have something shorter?.. I\u0027d love \u003chbox\u003e!",
+      "range": {
+        "startLine": 12,
+        "startChar": 7,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "57819db11d3ae2d20c2b08a46407a8b26748ed2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
