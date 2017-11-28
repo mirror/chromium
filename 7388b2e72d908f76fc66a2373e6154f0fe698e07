@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ad70e42d_4be2a468",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1842,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-28T17:50:10Z",
+      "side": 1,
+      "message": "IIUC this function probably takes less than a ms to run and there\u0027s so much thread hopping/other code running before we get here this isn\u0027t necessarily an accurate time of when the download is interrupted.  It\u0027s probably cleaner to make the variable near where we use it.  If my understanding of the method is wrong just leave this here :).",
+      "parentUuid": "6c27d143_71da3c08",
+      "range": {
+        "startLine": 1842,
+        "startChar": 2,
+        "endLine": 1842,
+        "endChar": 72
+      },
+      "revId": "7388b2e72d908f76fc66a2373e6154f0fe698e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ecdf4f6_86eb5048",
         "filename": "content/browser/download/download_item_impl.cc",
         "patchSetId": 10
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "It looks like there\u0027s a TestUkmRecorder (https://cs.chromium.org/chromium/src/components/ukm/test_ukm_recorder.h?dr\u003dC\u0026l\u003d179)--seems like that would be sufficient!",
       "parentUuid": "4ae2e931_b1aa8b23",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "7388b2e72d908f76fc66a2373e6154f0fe698e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af68d3c6_e2e4e150",
+        "filename": "content/browser/download/download_ukm.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-28T17:50:10Z",
+      "side": 1,
+      "message": "Awesome!",
+      "parentUuid": "22039c4d_445490c9",
       "range": {
         "startLine": 18,
         "startChar": 6,
