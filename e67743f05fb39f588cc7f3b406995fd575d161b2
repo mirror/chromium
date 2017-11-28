@@ -70,6 +70,24 @@
       "revId": "e67743f05fb39f588cc7f3b406995fd575d161b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285a4d6f_c85fc257",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T17:02:16Z",
+      "side": 1,
+      "message": "I think you misunderstood my comment. The latest patch still record the after-auto-managed bounds, but it looks working because auto managed kicks in.\n\nLet\u0027s talk offline.",
+      "parentUuid": "ca25d452_5d8a613b",
+      "revId": "e67743f05fb39f588cc7f3b406995fd575d161b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
