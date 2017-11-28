@@ -34,6 +34,24 @@
       "revId": "d2315dd100178915b54411fd6502c648447f579f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9af7e0_286dc315",
+        "filename": "chrome/browser/signin/signin_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T23:44:53Z",
+      "side": 1,
+      "message": "\u003e \u003e Should this use UIThreadSearchTermsData(profile()).GoogleBaseURLValue() ? (or .. at worst, there is GoogleURLTracker::kDefaultGoogleHomepage )\n\u003e \n\u003e ping?\n\noops - gerrit took me to the wrong patchset. - this looks good! thanks.",
+      "parentUuid": "d53c5fff_047c8f42",
+      "revId": "d2315dd100178915b54411fd6502c648447f579f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
