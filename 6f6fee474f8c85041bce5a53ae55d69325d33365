@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72aff191_3f334dad",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/resolve-node-blocked.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-28T01:51:15Z",
+      "side": 1,
+      "message": "Since we are doing manual migration here, let\u0027s only leave the promise version and update callsites.",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 39
+      },
+      "revId": "6f6fee474f8c85041bce5a53ae55d69325d33365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bda3783_b4464578",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-28T01:51:15Z",
+      "side": 1,
+      "message": "I wonder how this works with new test runner...",
+      "range": {
+        "startLine": 18,
+        "startChar": 41,
+        "endLine": 18,
+        "endChar": 63
+      },
+      "revId": "6f6fee474f8c85041bce5a53ae55d69325d33365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
