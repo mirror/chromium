@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c834c8cf_796fe976",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/overrides/change-inspected-page-while-enabled.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-28T03:05:35Z",
+      "side": 1,
+      "message": "this test terminates too early; it doesn\u0027t test anything!",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 31
+      },
+      "revId": "c204408396da172f8f3767500600507b4c3bc6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5cbb7b_7745b9f3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/overrides/change-inspected-page-while-enabled.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-28T03:05:35Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "c204408396da172f8f3767500600507b4c3bc6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa256eb2_28f4e9b8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings_test_runner/OverridesTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-28T03:05:35Z",
+      "side": 1,
+      "message": "\"var\" is missing",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "c204408396da172f8f3767500600507b4c3bc6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd292a2_bd09794a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesNavigator.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-28T03:05:35Z",
+      "side": 1,
+      "message": "you\u0027ll be able to revert this is the test goes away",
+      "range": {
+        "startLine": 237,
+        "startChar": 9,
+        "endLine": 237,
+        "endChar": 36
+      },
+      "revId": "c204408396da172f8f3767500600507b4c3bc6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
