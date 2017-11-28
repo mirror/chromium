@@ -16,6 +16,24 @@
       "revId": "087066c41bcfc30d62824cd81c03f0fddc8a04df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f089c9_21099d1c",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-28T22:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46925ebb_c154ce56",
+      "revId": "087066c41bcfc30d62824cd81c03f0fddc8a04df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
