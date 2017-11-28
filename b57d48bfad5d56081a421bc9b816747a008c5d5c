@@ -123,6 +123,24 @@
       "revId": "b57d48bfad5d56081a421bc9b816747a008c5d5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d872ee19_5ecb80aa",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-28T22:52:30Z",
+      "side": 1,
+      "message": "Forgot to update this comment when separating the new CL. This will be handled in the new CL. It seems not easy to handle it in this CL.",
+      "parentUuid": "538d4ce9_44888140",
+      "revId": "b57d48bfad5d56081a421bc9b816747a008c5d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
