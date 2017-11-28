@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7a7d964_9b042506",
+        "filename": "chrome/browser/ui/webui/extensions/extension_settings_browsertest.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T01:48:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0d38cee_a522b50f",
+      "revId": "0d2b1017d08d02fccc1f32137d762ef942c48765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4837e62_c6d5d21a",
         "filename": "chrome/test/data/webui/extensions/extension_options_dialog_test.js",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T22:13:31Z",
       "side": 1,
       "message": "const?",
+      "revId": "0d2b1017d08d02fccc1f32137d762ef942c48765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174f27b8_2c413109",
+        "filename": "chrome/test/data/webui/extensions/extension_options_dialog_test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T01:48:20Z",
+      "side": 1,
+      "message": "Planning to convert all of chrome/test/data/webui/extensions to use let/const instead of var in a separate CL. I prefer not to mix \u0027var\u0027 and \u0027const\u0027 in the same file.",
+      "parentUuid": "b4837e62_c6d5d21a",
       "revId": "0d2b1017d08d02fccc1f32137d762ef942c48765",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

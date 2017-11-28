@@ -16,6 +16,24 @@
       "revId": "b547f51ef97353cccb06eebcda71133909f61295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b10e04_7fdd972f",
+        "filename": "chrome/test/data/webui/extensions/extension_options_dialog_test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T01:48:20Z",
+      "side": 0,
+      "message": "The case of a long name is now handled with CSS by using width: fit-content. The test here was testing JS logic that was trying to achieve the same thing, so I don\u0027t find it useful anymore.\n\nHaving said that, if you think it\u0027s worth guarding the case where one removes \u0027fit-content\u0027, without fully understanding the consequences, I could probably tweak this test to catch this. Having said that, it\u0027s not common to test layout so tightly, for example AFAIK no automated test would break if one were to remove \"display: flex\" in various WebUI elements (both within and outside of MD Extensions).",
+      "parentUuid": "21f20daa_3d8c4bbb",
+      "revId": "b547f51ef97353cccb06eebcda71133909f61295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

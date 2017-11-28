@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20c9be70_33cd70a8",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T01:48:20Z",
+      "side": 1,
+      "message": "I addressed the concerned without introducing a new boolean, by removing the \u0027preferredsizechanged\u0027 listener once the dialog is closed.",
+      "parentUuid": "9071379e_fb6c721c",
+      "revId": "79077037ec7f2e6e9307542d91a0d3e1c4f218e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83289195_05b3c9db",
         "filename": "chrome/browser/ui/webui/extensions/extension_settings_browsertest.cc",
         "patchSetId": 11
