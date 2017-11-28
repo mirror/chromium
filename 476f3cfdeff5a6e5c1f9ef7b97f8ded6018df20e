@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5e669858_122691b3",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 46
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "\u003e Thank you for the explanation! I\u0027ve updated and expanded the text. Can you sanity check that I got it right?\n\nThanks! Looks mostly right, added a couple of nits below.\n\n\u003e (FWIW, one reason for me to write this was that I couldn\u0027t find a clear explanation in existing docs and was unclear on it myself.)\n\nThanks a ton for writing this up!",
+      "parentUuid": "b6656588_060cd1fb",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d786a00f_4c944926",
         "filename": "docs/design/gpu_synchronization.md",
         "patchSetId": 46
@@ -259,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "b2c273df_756aaef1",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "A good rule-of-thumb to decide if it\u0027s enough is imagining the worst case of a browser submitting frames continuously for the duration of a full stable release (i.e. up to 8 weeks). How many fences do you expect to create per frame? If more than 15, then it could wrap (15*60*86400*56 \u003e 2^32). Otherwise, that seems fine, in which case we should add a CHECK that we don\u0027t wrap (explicitly crashing is better than random corruption).",
+      "parentUuid": "d5611231_74df620a",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1e294e_b870ce42",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 46
@@ -288,6 +324,24 @@
       "side": 1,
       "message": "What do you think of the new approach which avoids recycling? I\u0027d prefer to avoid adding extra flushes to reduce the IPCs needed. A shallow flush wouldn\u0027t remove the need for service side tracking since the callback can only be run after the actual fence got created, and that would only happen on a full flush.",
       "parentUuid": "5b1e294e_b870ce42",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed7f5b3b_6dd03cf7",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "ShallowFlush would be enough to create the fence. Otherwise you\u0027d have an issue anyway because you run the callbacks on the glInsert(Client)GpuFenceCHROMIUM command execution (which is what calls GpuFenceManager::CreateNewGpuFence), not on the next glFlush command.\nSince the GLFence creation explicitly calls glFlush, there\u0027s no need for a full flush.\n\nEither way, avoiding extra IPCs seems fine if we want to pay for the complexity (and assuming it\u0027s safe, see above), but I would recommend documenting on GpuControl that this happens out-of-order wrt commands, because it is the exception rather than the rule, as well as documenting the interaction with the reuse avoidance, and maybe writing a test, because this could break on a refactor.",
+      "parentUuid": "f9c6c4d1_12ed70e7",
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -656,6 +710,24 @@
     },
     {
       "key": {
+        "uuid": "3ad80863_04ba375a",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "I don\u0027t see it :)\nYou can do \u0027return gpu_fence_entries_.erase(client_id) \u003d\u003d 1u;\u0027 to return success.",
+      "parentUuid": "ccf775e5_d8c424eb",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b068400c_ae551e45",
         "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
         "patchSetId": 46
@@ -755,6 +827,24 @@
       "side": 1,
       "message": "If I understand it right, flat_map is most efficient if it contains simple data types. While GpuFenceEntry has just two elements, one of them is itself a vector, and having those moved around as part of map insert/delete sounds inefficient, though it may not matter much in practice. I\u0027d prefer to keep the pointer indirection unless you feel strongly about it.",
       "parentUuid": "10fed049_582ce43c",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2a6d623_943a4ee9",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "I suppose it depends if you do more insert/erase operations or lookups. Moving GpuFenceEntry is just copying 4 pointers instead of 1 with the indirection, but you gain the allocation costs (time \u0026 memory overhead) and the cache effects of the indirection.",
+      "parentUuid": "e63871f5_eeb7473c",
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

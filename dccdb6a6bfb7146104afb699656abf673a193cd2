@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "537e1ed9_28c0c51d",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 50
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "nit: actually, verification has a side effect of forcing a flush, i.e. the following sequence is valid:\n\nRender1(glX);\nuint64 fence \u003d glX-\u003eInsertFenceSyncCHROMIUM();\nglX-\u003eOrderingBarrierCHROMIUM();\nglX-\u003eGenSyncTokenCHROMIUM(fence, out_sync_token);",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29987573_d934452c",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 50
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "nit: an OrderingBarrierCHROMIUM is needed here",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8771f06a_eca75464",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 50
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "And here.",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d91ac35_74f0b6d1",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 5147,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "By making these functions Custom, you lost the auto-generation of the extension_flag check.\nYou can either add it manually here, or if it makes sense, go back to regular functions but change the error path to raise GL_INVALID_OPERATION rather than losing the context.",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d8d50a_13e51574",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 2810,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "Ditto for the extension_flag check.",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd7db52_cae31302",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "This is not safe, because this will be called from the client thread, not the GPU thread, and the decoder (and its dependencies) should only be called from the GPU thread.\n\nTypically, you\u0027d want to implement all this in an equivalent SendGpuFenceOnGpuThread function, and has SendGpuThread just do a QueueTask to post to the GPU thread",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea0d6e6_9b39b8e4",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "nit: OnGetGpuFenceHandleCompleteOnGpuThread to indicate the thread?",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdabd812_534ec3d0",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "Ditto, need to QueueTask",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7edc80f6_68645298",
+        "filename": "ui/gl/gl_fence_egl.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:05:08Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to do this, or even should - even though the context may be lost or not current, the destructor only makes an EGL call, which doesn\u0027t require a current context. At the same time, not destroying the EGL object will cause a leak (destroying the GL context will not destroy it, since it\u0027s an EGL object, not a GL one).",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
