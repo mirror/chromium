@@ -1,0 +1,1447 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+syntax = "proto2";
+
+package filter_proto_converter;
+
+// Used for testcase
+message Filter {
+  required ImageFilterChild image_filter = 1;
+  // Seed for RNG that replaces nan with a valid number.
+  required uint64 nan_substitor_seed = 2;
+}
+
+// No content when flattened.
+message LumaColorFilter {}
+
+message OverdrawColorFilter {
+  // Autovisit:
+  required uint32 val1 = 1;
+  required uint32 val2 = 2;
+  required uint32 val3 = 3;
+  required uint32 val4 = 4;
+  required uint32 val5 = 5;
+  required uint32 val6 = 6;
+}
+
+message ColorFilterChild {
+  oneof children {
+    ModeColorFilter mode_color_filter = 1;
+    ColorMatrixFilterRowMajor255 color_matrix_filter_row_major_255 = 2;
+    ComposeColorFilter compose_color_filter = 3;
+    SRGBGammaColorFilter srgb_gamma_color_filter = 4;
+    // GaussianColorFilter gaussian_color_filter = 5;
+    HighContrast_Filter high_contrast__filter = 6;
+    LumaColorFilter luma_color_filter = 7;
+    OverdrawColorFilter overdraw_color_filter = 8;
+    Table_ColorFilter table__color_filter = 9;
+    ToSRGBColorFilter to_srgb_color_filter = 10;
+  }
+}
+
+enum GammaNamed {
+  kLinear_SkGammaNamed = 0;
+  kSRGB_SkGammaNamed = 1;
+  k2Dot2Curve_SkGammaNamed = 2;
+  kNonStandard_SkGammaNamed = 3;
+}
+
+message ThreeByFour {
+  required float val1 = 1;
+  required float val2 = 2;
+  required float val3 = 3;
+  required float val4 = 4;
+  required float val5 = 5;
+  required float val6 = 6;
+  required float val7 = 7;
+  required float val8 = 8;
+  required float val9 = 9;
+  required float val10 = 10;
+  required float val11 = 11;
+  required float val12 = 12;
+}
+
+message ICC {
+  enum Profile {
+    Display_Profile = 0;
+    Input_Profile = 1;
+    Output_Profile = 2;
+    ColorSpace_Profile = 3;
+  }
+
+  enum InputColorSpace {
+    RGB_ColorSpace = 0;
+    CMYK_ColorSpace = 1;
+    Gray_ColorSpace = 2;
+  }
+  enum PCS {
+    kXYZ_PCSSpace = 0;
+    kLAB_PCSSpace = 1;
+  }
+  enum RenderingIntent {
+    kPerceptual = 0;
+    kRelative = 1;
+    kSaturation = 2;
+    kAbsolute = 3;
+  }
+  enum Tag {
+    kTAG_rXYZ = 0;
+    kTAG_gXYZ = 1;
+    kTAG_bXYZ = 2;
+    kTAG_rTRC = 3;
+    kTAG_gTRC = 4;
+    kTAG_bTRC = 5;
+    kTAG_kTRC = 6;
+    kTAG_A2B0 = 7;
+    kTAG_CurveType = 8;
+    kTAG_ParaCurveType = 9;
+    kTAG_TextType = 10;
+  }
+  required Named named = 34;
+  // required uint32 size = 1; // Always 132.
+  // required uint32 cmm_type_ignored = 2;
+  required uint32 version = 3;
+  required Profile profile_class = 4;
+  required InputColorSpace input_color_space = 5;
+  required PCS pcs = 6;
+  // required uint32 datetime_ignored_1 = 7;
+  // required uint32 datetime_ignored_2 = 8;
+  // required uint32 datetime_ignored_3 = 9;
+  // Always SkSetFourByteTag('a', 'c', 's', 'p')
+  // required uint32 signature = 10;
+  // required uint32 platform_target_ignored = 11;
+  // required uint32 flags_ignored = 12;
+  // required uint32 device_manufacturer_ignored = 13;
+  // required uint32 device_model_ignored = 14;
+  // required uint32 device_attributes_ignored_1 = 15;
+  // required uint32 device_attributes_ignored_2 = 16;
+  required RenderingIntent rendering_intent = 17;
+  required int32 illuminant_x = 18;
+  required int32 illuminant_y = 19;
+  required int32 illuminant_z = 20;
+
+  // required uint32 creator_ignored = 21;
+  // required uint32 profileid_ignored_1 = 22;
+  // required uint32 profileid_ignored_2 = 23;
+  // required uint32 profileid_ignored_3 = 24;
+  // required uint32 profileid_ignored_4 = 25;
+  // required uint32 reserved_ignored_1 = 26;
+  // required uint32 reserved_ignored_2 = 27;
+  // required uint32 reserved_ignored_3 = 28;
+  // required uint32 reserved_ignored_4 = 29;
+  // required uint32 reserved_ignored_5 = 30;
+  // required uint32 reserved_ignored_6 = 31;
+  // required uint32 reserved_ignored_7 = 32;
+  repeated Tag tags = 33;
+}
+
+message TransferFn {
+  required Named named = 1;
+  required float a = 2;
+  required float b = 3;
+  required float c = 4;
+  required float d = 5;
+  required float e = 6;
+  required float f = 7;
+  required float g = 8;
+  required ThreeByFour three_by_four = 9;
+}
+
+enum Named {
+  kSRGB_Named = 0;
+  kAdobeRGB_Named = 1;
+  kSRGBLinear_Named = 2;
+  kSRGB_NonLinearBlending_Named = 3;
+}
+
+message ColorSpace_XYZ {
+  enum GammaNamed {
+    kLinear_SkGammaNamed = 0;
+    kSRGB_SkGammaNamed = 1;
+    k2Dot2Curve_SkGammaNamed = 2;
+  }
+  required GammaNamed gamma_named = 1;
+  required ThreeByFour three_by_four = 2;
+}
+
+message ColorSpaceNamed {
+  required Named named = 1;
+  required GammaNamed gamma_named = 2;
+}
+
+message ColorSpace {
+  oneof data {
+    ICC icc = 1;
+    TransferFn transfer_fn = 2;
+    ColorSpace_XYZ color_space__xyz = 3;
+  }
+  required ColorSpaceNamed named = 4;
+}
+
+message ToSRGBColorFilter {
+  required ColorSpace color_space = 1;
+}
+
+message ColorTable {
+  required float val1 = 1;
+  required float val2 = 2;
+  required float val3 = 3;
+  required float val4 = 4;
+  required float val5 = 5;
+  required float val6 = 6;
+  required float val7 = 7;
+  required float val8 = 8;
+  required float val9 = 9;
+  required float val10 = 10;
+  required float val11 = 11;
+  required float val12 = 12;
+  required float val13 = 13;
+  required float val14 = 14;
+  required float val15 = 15;
+  required float val16 = 16;
+  required float val17 = 17;
+  required float val18 = 18;
+  required float val19 = 19;
+  required float val20 = 20;
+  required float val21 = 21;
+  required float val22 = 22;
+  required float val23 = 23;
+  required float val24 = 24;
+  required float val25 = 25;
+  required float val26 = 26;
+  required float val27 = 27;
+  required float val28 = 28;
+  required float val29 = 29;
+  required float val30 = 30;
+  required float val31 = 31;
+  required float val32 = 32;
+  required float val33 = 33;
+  required float val34 = 34;
+  required float val35 = 35;
+  required float val36 = 36;
+  required float val37 = 37;
+  required float val38 = 38;
+  required float val39 = 39;
+  required float val40 = 40;
+  required float val41 = 41;
+  required float val42 = 42;
+  required float val43 = 43;
+  required float val44 = 44;
+  required float val45 = 45;
+  required float val46 = 46;
+  required float val47 = 47;
+  required float val48 = 48;
+  required float val49 = 49;
+  required float val50 = 50;
+  required float val51 = 51;
+  required float val52 = 52;
+  required float val53 = 53;
+  required float val54 = 54;
+  required float val55 = 55;
+  required float val56 = 56;
+  required float val57 = 57;
+  required float val58 = 58;
+  required float val59 = 59;
+  required float val60 = 60;
+  required float val61 = 61;
+  required float val62 = 62;
+  required float val63 = 63;
+  required float val64 = 64;
+}
+
+message Table_ColorFilter {
+  optional ColorTable table_a = 1;
+  optional ColorTable table_r = 2;
+  optional ColorTable table_g = 3;
+  optional ColorTable table_b = 4;
+}
+
+// See SkHighContrastFilter.cpp
+// Autovisit:
+message HighContrast_Filter {
+  enum InvertStyle {
+    kNoInvert = 0;
+    kInvertBrightness = 1;
+    kInvertLightness = 2;
+  }
+
+  required bool grayscale = 1;
+  required InvertStyle invert_style = 2;
+  required float contrast = 3;
+}
+
+// Autovisit:
+message GaussianColorFilter {}
+
+// Autovisit:
+message SRGBGammaColorFilter {
+  enum Direction {
+    kLinearToSRGB = 0;
+    kSRGBToLinear = 1;
+  }
+  required Direction direction = 1;
+}
+
+message ComposeColorFilter {
+  required ColorFilterChild outer = 1;
+  required ColorFilterChild inner = 2;
+}
+
+message ColorFilterMatrix {
+  // Autovisit:
+  required float val1 = 1;
+  required float val2 = 2;
+  required float val3 = 3;
+  required float val4 = 4;
+  required float val5 = 5;
+  required float val6 = 6;
+  required float val7 = 7;
+  required float val8 = 8;
+  required float val9 = 9;
+  required float val10 = 10;
+  required float val11 = 11;
+  required float val12 = 12;
+  required float val13 = 13;
+  required float val14 = 14;
+  required float val15 = 15;
+  required float val16 = 16;
+  required float val17 = 17;
+  required float val18 = 18;
+  required float val19 = 19;
+  required float val20 = 20;
+}
+
+// See SkColorMatrixFilterRowMajor255.cpp:69
+message ColorMatrixFilterRowMajor255 {
+  // Autovisit:
+  required ColorFilterMatrix color_filter_matrix = 1;
+}
+
+message ModeColorFilter {
+  required uint32 color = 1;
+  required SkBlendMode mode = 2;
+}
+
+message Rectangle {
+  required float left = 1;
+  required float top = 2;
+  required float right = 3;
+  required float bottom = 4;
+}
+
+message CropRectangle {
+  required Rectangle rectangle = 1;
+  required uint32 flags = 2;
+}
+
+// Autovisit:
+message PictureHeader {
+  // TODO(metzman): What do I do about this changing on me?
+  // Obviously, BELOW_MIN and ABOVE_MAX aren't technically allowed
+  enum Version {
+    BELOW_MIN = 50;
+    V0 = 51;
+    V1 = 52;
+    V2 = 53;
+    V3 = 54;
+    V4 = 55;
+    V5 = 56;
+    V6 = 57;
+    V7 = 58;
+    ABOVE_MAX = 59;
+  }
+
+  required Version version = 1;
+  required Rectangle rectangle = 2;
+  required bool is_ptr_64_bit = 3;
+}
+
+message PictureData {
+  // SkPictureData.cpp:335
+  required uint32 op_data_size = 1;
+  repeated uint32 bytes = 2;
+  // TODO(metzman): Pictures and Drawables (fPictureCount SkPictureData.cpp:336)
+  required RecordingData recording_data = 3;
+}
+
+enum SkBlendMode {
+  kClear = 0;
+  kSrc = 1;
+  kDst = 2;
+  // TODO(metzman): Uncomment when NULL deref is fixed.
+  // kSrcOver = 3;
+  kDstOver = 4;
+  kSrcIn = 5;
+  kDstIn = 6;
+  kSrcOut = 7;
+  kDstOut = 8;
+  kSrcATop = 9;
+  kDstATop = 10;
+  kXor = 11;
+  kPlus = 12;
+  kModulate = 13;
+  kScreenAndLastCoeffMode = 14;
+  kOverlay = 15;
+  kDarken = 16;
+  kLighten = 17;
+  kColorDodge = 18;
+  kColorBurn = 19;
+  kHardLight = 20;
+  kSoftLight = 21;
+  kDifference = 22;
+  kExclusion = 23;
+  kLastSeparableModeAndMultiply = 24;
+  kHue = 25;
+  kSaturation = 26;
+  kColor = 27;
+  kLuminosity = 28;
+}
+
+message Paint {
+  // TODO(metzman): Support Typefaces.
+  required float text_size = 1;
+  required float text_scale_x = 2;
+  required float text_skew_x = 3;
+  required float stroke_width = 4;
+  required float stroke_miter = 5;
+  required uint32 color = 6;
+  // /Autovisit
+  enum TextEncoding {
+    kUTF8_TextEncoding = 0;
+    kUTF16_TextEncoding = 1;
+    kUTF32_TextEncoding = 2;
+    kGlyphID_TextEncoding = 3;
+  }
+
+  enum Style {
+    kFill_Style = 0;
+    kStroke_Style = 1;
+    kStrokeAndFill_Style = 2;
+  }
+
+  enum StrokeCap {
+    kButt_Cap = 0;
+    kRound_Cap = 1;
+    kSquare_Cap = 2;
+  }
+
+  enum StrokeJoin {
+    kMiter_Join = 0;
+    kRound_Join = 1;
+    kBevel_Join = 2;
+  }
+
+  // TODO: Maybe I should just have a uin32_t instead of these five, setSkewX
+  // might be buggy.
+  required StrokeCap stroke_cap = 7;
+  required StrokeJoin stroke_join = 8;
+  required Style style = 9;
+  required TextEncoding text_encoding = 10;
+  required SkBlendMode blend_mode = 11;
+
+  // optional Typeface typeface = 12;
+  optional PaintEffects effects = 13;
+
+  enum PaintFlags {
+    kAntiAlias_Flag = 0x01;
+    kDither_Flag = 0x04;
+    kFakeBoldText_Flag = 0x20;
+    kLinearText_Flag = 0x40;
+    kSubpixelText_Flag = 0x80;
+    kDevKernText_Flag = 0x100;
+    kLCDRenderText_Flag = 0x200;
+    kEmbeddedBitmapText_Flag = 0x400;
+    kAutoHinting_Flag = 0x800;
+    kVerticalText_Flag = 0x1000;
+    kGenA8FromLCD_Flag = 0x2000;
+    kAllFlags = 0xFFFF;
+  }
+
+  enum Hinting {
+    kNo_Hinting = 0;
+    kSlight_Hinting = 1;
+    kNormal_Hinting = 2;
+    kFull_Hinting = 3;
+  }
+
+  enum Align {
+    kLeft_Align = 0;
+    kCenter_Align = 1;
+    kRight_Align = 2;
+  }
+
+  // Stuff that gets packed into flags.
+  required PaintFlags flags = 14;
+  required Hinting hinting = 15;
+  required Align align = 16;
+  required FilterQuality filter_quality = 17;
+}
+
+message RasterizerChild {
+  required LayerRasterizer layer_rasterizer = 1;
+}
+
+message LayerRasterizer {
+  repeated Layer layers = 1;
+}
+
+message Layer {
+  required Paint paint = 1;
+  required Point point = 2;
+}
+
+message Point {
+  required float x = 1;
+  required float y = 2;
+}
+
+message Typeface {}
+
+message PathEffectChild {
+  oneof children {
+    PairPathEffect pair_path_effect = 1;
+    Path2DPathEffect path_2d_path_effect = 2;
+    Line2DPathEffect line_2d_path_effect = 3;
+    CornerPathEffect corner_path_effect = 4;
+    DashImpl dash_impl = 5;
+    DiscretePathEffect discrete_path_effect = 6;
+    // TODO(metzman): make this the default.
+    Path1DPathEffect path_1d_path_effect = 7;
+  }
+}
+
+// Autovisit:
+message CornerPathEffect {
+  required float radius = 1;
+}
+
+message Path2DPathEffect {
+  required Matrix matrix = 1;
+  required Path path = 2;
+}
+
+message Line2DPathEffect {
+  required Matrix matrix = 1;
+  required float width = 2;
+}
+
+message DashImpl {
+  required float phase = 1;
+  repeated float intervals = 2;
+}
+
+// Autovisit:
+message DiscretePathEffect {
+  required float seg_length = 1;
+  required float perterb = 2;
+  required uint32 seed_assist = 3;
+}
+
+message Path1DPathEffect {
+  enum Style {
+    kTranslate_Style = 0;
+    kRotate_Style = 1;
+    kMorph_Style = 2;
+  }
+  required float advance = 1;
+  required Path path = 2;
+  required float initial_offset = 3;
+  required Style style = 4;
+}
+
+message Path {
+  enum Convexity {
+    kUnknown_Convexity = 0;
+    kConvex_Convexity = 1;
+    kConcave_Convexity = 2;
+  }
+  enum FirstDirection {
+    kCW_FirstDirection = 0;
+    kCCW_FirstDirection = 1;
+    kUnknown_FirstDirection = 2;
+  }
+  enum SerializationVersion {
+    kPathPrivFirstDirection_Version = 1;
+    kPathPrivLastMoveToIndex_Version = 2;
+    kPathPrivTypeEnumVersion = 3;
+  }
+
+  required Convexity convexity = 1;
+  required uint32 fill_type = 2;  // Should be 8 bytes
+  required FirstDirection first_direction = 3;
+  required bool is_volatile = 4;
+  required SerializationVersion serialized_version = 5;
+  required int32 last_move_to_index = 6;
+  required PathRef path_ref = 7;
+}
+
+message ValidVerb {
+  enum Value {
+    kMove_Verb = 0;
+    kLine_Verb = 1;
+    kQuad_Verb = 2;
+    kConic_Verb = 3;
+    kCubic_Verb = 4;
+    kClose_Verb = 5;
+    // We don't actualy want kDone_Verb.
+  }
+  required Value value = 1;
+  required Point point1 = 2;
+  required Point point2 = 3;
+  required Point point3 = 4;
+  required float conic_weight = 5;
+}
+
+message PathRef {
+  repeated ValidVerb verbs = 1;
+  required bool is_finite = 2;
+  required Rectangle bounds = 3;
+  required uint32 segment_mask = 4;
+  required ValidVerb first_verb = 5;
+}
+
+message PairPathEffect {
+  enum Type {
+    SUM = 1;
+    COMPOSE = 2;
+  }
+  required Type type = 1;
+  required PathEffectChild path_effect_1 = 2;
+  required PathEffectChild path_effect_2 = 3;
+}
+
+message ShaderChild {
+  oneof children {
+    ColorShader color_shader = 1;
+    Color4Shader color_4_shader = 2;
+    ColorFilterShader color_filter_shader = 3;
+    ComposeShader compose_shader = 4;
+    EmptyShader empty_shader = 5;
+    ImageShader image_shader = 6;
+    PictureShader picture_shader = 7;
+    PerlinNoiseShaderImpl perlin_noise_shader_impl = 8;
+    LocalMatrixShader local_matrix_shader = 9;
+    // _3DShader _3d_shader = 10;
+    LinearGradient linear_gradient = 11;
+    RadialGradient radial_gradient = 12;
+    SweepGradient sweep_gradient = 13;
+    TwoPointConicalGradient two_point_conical_gradient = 14;
+  }
+}
+
+message TwoPointConicalGradient {
+  required GradientParent parent = 1;
+  // Autovisit:
+  required Point center1 = 2;
+  required Point center2 = 3;
+  required float radius1 = 4;
+  required float radius2 = 5;
+  // TODO(metzman): figure out how to use the legacy code.
+  // required bool legacy = 6;
+}
+
+message SweepGradient {
+  required GradientParent parent = 1;
+  // Autovisit:
+  required Point center = 2;
+  // TODO(metzman): handle case when buffer.fVersion >=
+  // kTileInfoInSweepGradient_Version or fVersion != 0.
+  required float bias = 3;
+  required float scale = 4;
+}
+
+message RadialGradient {
+  required GradientParent parent = 1;
+  // Autovisit:
+  required Point center = 2;
+  required float radius = 3;
+}
+
+message Color4f {
+  // Autovisit:
+  required float r = 1;
+  required float g = 2;
+  required float b = 3;
+  required float a = 4;
+}
+
+// Note that this cannot be named "Descriptor" since that name is used by
+// protobuf's reflection methods
+message GradientDescriptor {
+  optional ColorSpace color_space = 1;
+  optional float pos = 2;
+  optional Matrix local_matrix = 3;
+  required TileMode tile_mode = 4;
+  required uint32 grad_flags = 5;  // <= UINT8_MAX
+  repeated Color4f colors = 6;
+}
+
+// Contained by children
+message GradientParent {
+  required GradientDescriptor gradient_descriptor = 1;
+}
+
+message LinearGradient {
+  required GradientParent parent = 1;
+  // Autovisit:
+  required Point start = 2;
+  required Point end = 3;
+}
+
+message _3DShader {
+  required ShaderChild proxy = 1;
+}
+
+message LocalMatrixShader {
+  required Matrix matrix = 1;
+  required ShaderChild proxy_shader = 2;
+}
+
+// Autovisit:
+message PerlinNoiseShaderImpl {
+  enum Type {
+    kFractalNoise_Type = 0;
+    kTurbulence_Type = 1;
+    kImprovedNoise_Type = 2;
+  }
+  required Type type = 1;
+  required float base_frequency_x = 2;
+  required float base_frequency_y = 3;
+  required int32 octaves = 4;
+  required float seed = 5;
+  required int32 height = 6;
+  required int32 width = 7;
+}
+
+// Autovisit:
+message PictureShader {
+  required Matrix matrix = 1;
+  required TileMode tmx = 2;
+  required TileMode tmy = 3;
+  required Rectangle rect = 4;
+}
+
+enum TileMode {
+  kClamp_TileMode = 0;
+  kRepeat_TileMode = 1;
+  kMirror_TileMode = 2;
+  kDecal_TileMode = 3;
+}
+
+// Autovisit:
+message ImageShader {
+  required TileMode tile_mode_x = 1;
+  required TileMode tile_mode_y = 2;
+  required Matrix matrix = 3;
+  required Image image = 4;
+}
+
+message ImageInfo {
+  enum AlphaType {
+    kUnknown_SkAlphaType = 0;
+    kOpaque_SkAlphaType = 1;
+    kPremul_SkAlphaType = 2;
+    kUnpremul_SkAlphaType = 3;
+  }
+
+  enum ColorType {
+    kUnknown_Stored_SkColorType = 0;
+    kAlpha_8_Stored_SkColorType = 1;
+    kRGB_565_Stored_SkColorType = 2;
+    kARGB_4444_Stored_SkColorType = 3;
+    kRGBA_8888_Stored_SkColorType = 4;
+    kBGRA_8888_Stored_SkColorType = 5;
+    kIndex_8_Stored_SkColorType_DEPRECATED = 6;
+    kGray_8_Stored_SkColorType = 7;
+    kRGBA_F16_Stored_SkColorType = 8;
+  }
+
+  required int32 width = 1;
+  required int32 height = 2;
+  required AlphaType alpha_type = 3;
+  required ColorType color_type = 4;
+  required ColorSpace color_space = 5;
+}
+
+message Bitmap {
+  required ImageInfo image_info = 1;
+  required uint64 pixel_seed = 2;
+}
+
+message Pixel {}
+
+message ImageData {
+  repeated uint32 data = 1;
+}
+
+// TODO set gFactory in SkImageGenerator.cpp or else images can't do much.
+message Image {
+  // > 0
+  required int32 width = 1;
+  required int32 height = 2;
+
+  optional Bitmap bitmap = 3;
+  required ImageData data = 4;
+
+  // > 0
+  required int32 origin_x = 5;
+  required int32 origin_y = 6;
+}
+
+// Autovisit:
+message EmptyShader {}
+
+message ComposeShader {
+  required ShaderChild dst = 1;
+  required ShaderChild src = 2;
+  // Autovisit:
+  required SkBlendMode mode = 3;
+  required float lerp_t = 4;
+}
+
+message ColorFilterShader {
+  required ShaderChild shader = 1;
+  required ColorFilterChild filter = 2;
+}
+
+message Color4Shader {
+  required uint32 color = 1;
+}
+
+// Autovisit:
+message ColorShader {
+  required uint32 color = 1;
+}
+
+message LooperChild {
+  required LayerDrawLooper layer_draw_looper = 1;
+}
+
+message LayerDrawLooper {
+  repeated LayerInfo layer_infos = 1;
+}
+
+message LayerInfo {
+  required int32 paint_bits = 1;
+  required SkBlendMode color_mode = 2;
+  required Point point = 3;
+  required bool post_translate = 4;
+  // /Autovisit
+  required Paint paint = 5;
+}
+
+message MaskFilterChild {
+  oneof children {
+    BlurMaskFilter blur_mask_filter_impl = 1;
+    EmbossMaskFilter emboss_mask_filter = 2;
+    RRectsGaussianEdgeMaskFilterImpl r_rects_gaussian_edge_mask_filter_impl = 3;
+    // TableMaskFilter table_mask_filter = 4;
+  }
+}
+
+message TableMaskFilter {
+  required uint32 val1 = 1;
+  required uint32 val2 = 2;
+  required uint32 val3 = 3;
+  required uint32 val4 = 4;
+  required uint32 val5 = 5;
+  required uint32 val6 = 6;
+  required uint32 val7 = 7;
+  required uint32 val8 = 8;
+  required uint32 val9 = 9;
+  required uint32 val10 = 10;
+  required uint32 val11 = 11;
+  required uint32 val12 = 12;
+  required uint32 val13 = 13;
+  required uint32 val14 = 14;
+  required uint32 val15 = 15;
+  required uint32 val16 = 16;
+  required uint32 val17 = 17;
+  required uint32 val18 = 18;
+  required uint32 val19 = 19;
+  required uint32 val20 = 20;
+  required uint32 val21 = 21;
+  required uint32 val22 = 22;
+  required uint32 val23 = 23;
+  required uint32 val24 = 24;
+  required uint32 val25 = 25;
+  required uint32 val26 = 26;
+  required uint32 val27 = 27;
+  required uint32 val28 = 28;
+  required uint32 val29 = 29;
+  required uint32 val30 = 30;
+  required uint32 val31 = 31;
+  required uint32 val32 = 32;
+  required uint32 val33 = 33;
+  required uint32 val34 = 34;
+  required uint32 val35 = 35;
+  required uint32 val36 = 36;
+  required uint32 val37 = 37;
+  required uint32 val38 = 38;
+  required uint32 val39 = 39;
+  required uint32 val40 = 40;
+  required uint32 val41 = 41;
+  required uint32 val42 = 42;
+  required uint32 val43 = 43;
+  required uint32 val44 = 44;
+  required uint32 val45 = 45;
+  required uint32 val46 = 46;
+  required uint32 val47 = 47;
+  required uint32 val48 = 48;
+  required uint32 val49 = 49;
+  required uint32 val50 = 50;
+  required uint32 val51 = 51;
+  required uint32 val52 = 52;
+  required uint32 val53 = 53;
+  required uint32 val54 = 54;
+  required uint32 val55 = 55;
+  required uint32 val56 = 56;
+  required uint32 val57 = 57;
+  required uint32 val58 = 58;
+  required uint32 val59 = 59;
+  required uint32 val60 = 60;
+  required uint32 val61 = 61;
+  required uint32 val62 = 62;
+  required uint32 val63 = 63;
+  required uint32 val64 = 64;
+  required uint32 val65 = 65;
+  required uint32 val66 = 66;
+  required uint32 val67 = 67;
+  required uint32 val68 = 68;
+  required uint32 val69 = 69;
+  required uint32 val70 = 70;
+  required uint32 val71 = 71;
+  required uint32 val72 = 72;
+  required uint32 val73 = 73;
+  required uint32 val74 = 74;
+  required uint32 val75 = 75;
+  required uint32 val76 = 76;
+  required uint32 val77 = 77;
+  required uint32 val78 = 78;
+  required uint32 val79 = 79;
+  required uint32 val80 = 80;
+  required uint32 val81 = 81;
+  required uint32 val82 = 82;
+  required uint32 val83 = 83;
+  required uint32 val84 = 84;
+  required uint32 val85 = 85;
+  required uint32 val86 = 86;
+  required uint32 val87 = 87;
+  required uint32 val88 = 88;
+  required uint32 val89 = 89;
+  required uint32 val90 = 90;
+  required uint32 val91 = 91;
+  required uint32 val92 = 92;
+  required uint32 val93 = 93;
+  required uint32 val94 = 94;
+  required uint32 val95 = 95;
+  required uint32 val96 = 96;
+  required uint32 val97 = 97;
+  required uint32 val98 = 98;
+  required uint32 val99 = 99;
+  required uint32 val100 = 100;
+  required uint32 val101 = 101;
+  required uint32 val102 = 102;
+  required uint32 val103 = 103;
+  required uint32 val104 = 104;
+  required uint32 val105 = 105;
+  required uint32 val106 = 106;
+  required uint32 val107 = 107;
+  required uint32 val108 = 108;
+  required uint32 val109 = 109;
+  required uint32 val110 = 110;
+  required uint32 val111 = 111;
+  required uint32 val112 = 112;
+  required uint32 val113 = 113;
+  required uint32 val114 = 114;
+  required uint32 val115 = 115;
+  required uint32 val116 = 116;
+  required uint32 val117 = 117;
+  required uint32 val118 = 118;
+  required uint32 val119 = 119;
+  required uint32 val120 = 120;
+  required uint32 val121 = 121;
+  required uint32 val122 = 122;
+  required uint32 val123 = 123;
+  required uint32 val124 = 124;
+  required uint32 val125 = 125;
+  required uint32 val126 = 126;
+  required uint32 val127 = 127;
+  required uint32 val128 = 128;
+  required uint32 val129 = 129;
+  required uint32 val130 = 130;
+  required uint32 val131 = 131;
+  required uint32 val132 = 132;
+  required uint32 val133 = 133;
+  required uint32 val134 = 134;
+  required uint32 val135 = 135;
+  required uint32 val136 = 136;
+  required uint32 val137 = 137;
+  required uint32 val138 = 138;
+  required uint32 val139 = 139;
+  required uint32 val140 = 140;
+  required uint32 val141 = 141;
+  required uint32 val142 = 142;
+  required uint32 val143 = 143;
+  required uint32 val144 = 144;
+  required uint32 val145 = 145;
+  required uint32 val146 = 146;
+  required uint32 val147 = 147;
+  required uint32 val148 = 148;
+  required uint32 val149 = 149;
+  required uint32 val150 = 150;
+  required uint32 val151 = 151;
+  required uint32 val152 = 152;
+  required uint32 val153 = 153;
+  required uint32 val154 = 154;
+  required uint32 val155 = 155;
+  required uint32 val156 = 156;
+  required uint32 val157 = 157;
+  required uint32 val158 = 158;
+  required uint32 val159 = 159;
+  required uint32 val160 = 160;
+  required uint32 val161 = 161;
+  required uint32 val162 = 162;
+  required uint32 val163 = 163;
+  required uint32 val164 = 164;
+  required uint32 val165 = 165;
+  required uint32 val166 = 166;
+  required uint32 val167 = 167;
+  required uint32 val168 = 168;
+  required uint32 val169 = 169;
+  required uint32 val170 = 170;
+  required uint32 val171 = 171;
+  required uint32 val172 = 172;
+  required uint32 val173 = 173;
+  required uint32 val174 = 174;
+  required uint32 val175 = 175;
+  required uint32 val176 = 176;
+  required uint32 val177 = 177;
+  required uint32 val178 = 178;
+  required uint32 val179 = 179;
+  required uint32 val180 = 180;
+  required uint32 val181 = 181;
+  required uint32 val182 = 182;
+  required uint32 val183 = 183;
+  required uint32 val184 = 184;
+  required uint32 val185 = 185;
+  required uint32 val186 = 186;
+  required uint32 val187 = 187;
+  required uint32 val188 = 188;
+  required uint32 val189 = 189;
+  required uint32 val190 = 190;
+  required uint32 val191 = 191;
+  required uint32 val192 = 192;
+  required uint32 val193 = 193;
+  required uint32 val194 = 194;
+  required uint32 val195 = 195;
+  required uint32 val196 = 196;
+  required uint32 val197 = 197;
+  required uint32 val198 = 198;
+  required uint32 val199 = 199;
+  required uint32 val200 = 200;
+  required uint32 val201 = 201;
+  required uint32 val202 = 202;
+  required uint32 val203 = 203;
+  required uint32 val204 = 204;
+  required uint32 val205 = 205;
+  required uint32 val206 = 206;
+  required uint32 val207 = 207;
+  required uint32 val208 = 208;
+  required uint32 val209 = 209;
+  required uint32 val210 = 210;
+  required uint32 val211 = 211;
+  required uint32 val212 = 212;
+  required uint32 val213 = 213;
+  required uint32 val214 = 214;
+  required uint32 val215 = 215;
+  required uint32 val216 = 216;
+  required uint32 val217 = 217;
+  required uint32 val218 = 218;
+  required uint32 val219 = 219;
+  required uint32 val220 = 220;
+  required uint32 val221 = 221;
+  required uint32 val222 = 222;
+  required uint32 val223 = 223;
+  required uint32 val224 = 224;
+  required uint32 val225 = 225;
+  required uint32 val226 = 226;
+  required uint32 val227 = 227;
+  required uint32 val228 = 228;
+  required uint32 val229 = 229;
+  required uint32 val230 = 230;
+  required uint32 val231 = 231;
+  required uint32 val232 = 232;
+  required uint32 val233 = 233;
+  required uint32 val234 = 234;
+  required uint32 val235 = 235;
+  required uint32 val236 = 236;
+  required uint32 val237 = 237;
+  required uint32 val238 = 238;
+  required uint32 val239 = 239;
+  required uint32 val240 = 240;
+  required uint32 val241 = 241;
+  required uint32 val242 = 242;
+  required uint32 val243 = 243;
+  required uint32 val244 = 244;
+  required uint32 val245 = 245;
+  required uint32 val246 = 246;
+  required uint32 val247 = 247;
+  required uint32 val248 = 248;
+  required uint32 val249 = 249;
+  required uint32 val250 = 250;
+  required uint32 val251 = 251;
+  required uint32 val252 = 252;
+  required uint32 val253 = 253;
+  required uint32 val254 = 254;
+  required uint32 val255 = 255;
+  required uint32 val256 = 256;
+}
+
+// Autovisit:
+message RRectsGaussianEdgeMaskFilterImpl {
+  required Rectangle rect_1 = 1;
+  required float x_rad_1 = 2;
+  required float y_rad_1 = 3;
+  required Rectangle rect_2 = 4;
+  required float x_rad_2 = 5;
+  required float y_rad_2 = 6;
+  required float radius = 7;
+}
+
+message EmbossMaskFilterLight {
+  required float direction_x = 1;
+  required float direction_y = 2;
+  required float direction_z = 3;
+  required uint32 ambient = 4;
+  required uint32 specular = 5;
+}
+
+message EmbossMaskFilter {
+  required EmbossMaskFilterLight light = 1;
+  required float blur_sigma = 2;
+}
+
+enum BlurStyle {
+  kNormal_SkBlurStyle = 0;
+  kSolid_SkBlurStyle = 1;
+  kOuter_SkBlurStyle = 2;
+  kInner_SkBlurStyle = 3;
+}
+
+// Copied from https://goo.gl/Yy5Euw
+enum BlurFlags {
+  kNone_BlurFlag = 0x00;
+  kIgnoreTransform_BlurFlag = 0x01;
+  kHighQuality_BlurFlag = 0x02;
+  kAll_BlurFlag = 0x03;
+}
+
+message BlurMaskFilter {
+  required float sigma = 1;
+  required BlurStyle style = 2;
+  required BlurFlags flags = 3;
+  required Rectangle occluder = 4;
+}
+
+message PaintEffects {
+  optional PathEffectChild path_effect = 1;
+  optional ShaderChild shader = 2;
+  optional MaskFilterChild mask_filter = 3;
+  optional ColorFilterChild color_filter = 4;
+  optional RasterizerChild rasterizer = 5;
+  optional LooperChild looper = 6;
+  optional ImageFilterChild image_filter = 7;
+}
+
+message RecordingData {
+  repeated Paint paints = 1;
+}
+
+message PaintImageFilter {
+  required ImageFilterParent image_filter_parent = 1;
+  required Paint paint = 2;
+}
+
+message Picture {
+  required PictureHeader header = 1;
+  optional PictureData backport = 2;
+}
+
+// Enums in c++ that don't have set values start at 0.
+enum FilterQuality {
+  // fastest but lowest quality, typically nearest-neighbor
+  kNone_SkFilterQuality = 0;
+  kLow_SkFilterQuality = 1;     // typically bilerp
+  kMedium_SkFilterQuality = 2;  // typically bilerp + mipmaps for down-scaling
+  // slowest but highest quality, typically bicubic or better
+  kHigh_SkFilterQuality = 3;
+}
+
+// TODO(metzman): A lot of this functionality can't be used, figure out how we
+// can use it.
+message PictureImageFilter {
+  // Picture cannot be written, so comment it out. Also it may be broken.
+  // optional Picture picture = 1;
+  required Rectangle crop_rectangle = 2;
+  // Also broken:
+  // required int32 resolution = 3;
+  // optional FilterQuality filter_quality = 4;
+}
+
+message Matrix {
+  required float val1 = 1;
+  required float val2 = 2;
+  required float val3 = 3;
+  required float val4 = 4;
+  required float val5 = 5;
+  required float val6 = 6;
+  required float val7 = 7;
+  required float val8 = 8;
+  required float val9 = 9;
+}
+
+message MatrixImageFilter {
+  required ImageFilterParent image_filter_parent = 1;
+  required Matrix transform = 2;
+  required FilterQuality filter_quality = 3;
+}
+
+message ImageFilterChild {
+  oneof children {
+    PaintImageFilter paint_image_filter = 1;
+    MatrixImageFilter matrix_image_filter = 2;
+    SpecularLightingImageFilter specular_lighting_image_filter = 3;
+    ArithmeticImageFilterImpl arithmetic_image_filter_impl = 4;
+    AlphaThresholdFilter alpha_threshold_filter = 5;
+    BlurImageFilterImpl blur_image_filter_impl = 6;
+    ColorFilterImageFilter color_filter_image_filter = 7;
+    ComposeImageFilter compose_image_filter = 8;
+    DisplacementMapEffect displacement_map_effect = 9;
+    DropShadowImageFilter drop_shadow_image_filter = 10;
+    LocalMatrixImageFilter local_matrix_image_filter = 11;
+    MagnifierImageFilter magnifier_image_filter = 13;
+    MatrixConvolutionImageFilter matrix_convolution_image_filter = 14;
+    MergeImageFilter merge_image_filter = 15;
+    DilateImageFilter dilate_image_filter = 16;
+    ErodeImageFilter erode_image_filter = 17;
+    OffsetImageFilter offset_image_filter = 18;
+    PictureImageFilter picture_image_filter = 19;
+    TileImageFilter tile_image_filter = 20;
+    XfermodeImageFilter_Base xfermode_image_filter__base = 21;
+    XfermodeImageFilter xfermode_image_filter = 22;
+    DiffuseLightingImageFilter diffuse_lighting_image_filter = 23;
+    ImageSource image_source = 24;
+  }
+}
+
+message DiffuseLightingImageFilter {
+  required ImageFilterParent parent = 1;
+  required LightParent light = 2;
+  required float surface_scale = 3;
+  required float kd = 4;
+}
+
+message XfermodeImageFilter {
+  required ImageFilterParent parent = 1;
+  required SkBlendMode mode = 2;
+}
+
+message XfermodeImageFilter_Base {
+  required ImageFilterParent parent = 1;
+  required SkBlendMode mode = 2;
+}
+
+message TileImageFilter {
+  required ImageFilterParent parent = 1;
+  required Rectangle src = 2;
+  required Rectangle dst = 3;
+}
+
+message OffsetImageFilter {
+  required ImageFilterParent parent = 1;
+  required Point offset = 2;
+}
+
+message ErodeImageFilter {
+  required ImageFilterParent parent = 1;
+  required int32 width = 2;
+  required int32 height = 3;
+}
+
+message DilateImageFilter {
+  required ImageFilterParent parent = 1;
+  required int32 width = 2;
+  required int32 height = 3;
+}
+
+message MergeImageFilter {
+  required ImageFilterParent parent = 1;
+}
+
+message MatrixConvolutionImageFilter {
+  required ImageFilterParent parent = 1;
+  required int32 width = 2;
+  required int32 height = 3;
+  required int64 kernel_seed = 4;
+  required float gain = 5;
+  required float bias = 6;
+  required int32 offset_x = 7;
+  required int32 offset_y = 8;
+  required TileMode tile_mode = 9;
+  required bool convolve_alpha = 10;
+}
+
+message MagnifierImageFilter {
+  required ImageFilterParent parent = 1;
+  required Rectangle src = 2;
+}
+
+message LocalMatrixImageFilter {
+  required ImageFilterParent parent = 1;
+  required Matrix matrix = 2;
+}
+
+message ImageSource {
+  required FilterQuality filter_quality = 1;
+  required Rectangle src = 2;
+  required Rectangle dst = 3;
+  // / Autovisit
+  required Image image = 4;
+}
+
+message DropShadowImageFilter {
+  enum ShadowMode {
+    kDrawShadowAndForeground_ShadowMode = 0;
+    kDrawShadowOnly_ShadowMode = 1;
+    kDrawShadowOnly_ShadowMod = 2;
+  }
+  required ImageFilterParent parent = 1;
+  // Autovisit:
+  required float dx = 2;
+  required float dy = 3;
+  required float sigma_x = 4;
+  required float sigma_y = 5;
+  required uint32 color = 6;
+  required ShadowMode shadow_mode = 7;
+}
+
+message DisplacementMapEffect {
+  enum ChannelSelectorType {
+    kUnknown_ChannelSelectorType = 0;
+    kR_ChannelSelectorType = 1;
+    kG_ChannelSelectorType = 2;
+    kB_ChannelSelectorType = 3;
+    kA_ChannelSelectorTyp = 4;
+  }
+
+  required ImageFilterParent parent = 1;
+  // Autovisit:
+  required ChannelSelectorType xsel = 2;
+  required ChannelSelectorType ysel = 3;
+  required float scale = 4;
+}
+
+message ComposeImageFilter {
+  required ImageFilterParent parent = 1;
+}
+
+message ColorFilterImageFilter {
+  required ImageFilterParent parent = 1;
+  required ColorFilterChild color_filter = 2;
+}
+
+message BlurImageFilterImpl {
+  required ImageFilterParent parent = 1;
+  required float sigma_x = 2;
+  required float sigma_y = 3;
+}
+
+message AlphaThresholdFilter {
+  required ImageFilterParent parent = 1;
+  required float inner = 2;
+  required float outer = 3;
+  required Region rgn = 4;
+}
+
+message Region {
+  required bool is_rect = 1;
+  required Rectangle bounds = 2;
+  optional RegionComplex region_complex = 3;
+}
+
+message RegionComplex {
+  required int32 y_span_count = 1;
+  required int32 interval_count = 2;
+  required int32 first_run = 3;
+  repeated int32 runs = 4;
+}
+
+message ArithmeticImageFilterImpl {
+  required ImageFilterParent parent = 1;
+  // Autovisit:
+  required float val1 = 2;
+  required float val2 = 3;
+  required float val3 = 4;
+  required float val4 = 5;
+  required bool enforce_pm_color = 6;
+}
+
+// Contained by children
+message ImageFilterParent {
+  required ImageFilterChild default_input = 1;
+  repeated ImageFilterChild inputs = 2;
+  required CropRectangle crop_rectangle = 3;
+}
+
+// Autovisit:
+message Point3 {
+  required float x = 1;
+  required float y = 2;
+  required float z = 3;
+}
+
+// Contains children
+message LightParent {
+  required LightChild light_child = 1;
+}
+
+// Autovisit:
+message DistantLight {
+  required Point3 direction = 1;
+}
+
+// Autovisit:
+message PointLight {
+  required Point3 location = 1;
+}
+
+// See SkLightingImageFilter.cpp
+// Autovisit:
+message SpotLight {
+  required Point3 location = 1;
+  required Point3 target = 2;
+  required float specular_exponent = 3;
+  required float cos_outer_cone_angle = 4;
+  required float cos_inner_cone_angle = 5;
+  required float cone_scale = 6;
+  required Point3 s = 7;
+}
+
+message LightChild {
+  oneof children {
+    PointLight point_light = 1;
+    SpotLight spot_light = 2;
+  }
+  required DistantLight distant_light = 3;
+}
+
+message SpecularLightingImageFilter {
+  required ImageFilterParent image_filter_parent = 1;
+  required LightParent light = 2;
+  required float surface_scale = 3;
+  required float ks = 4;
+  required float shininess = 5;
+}
