@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15cb5f4f_e86f1f99",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-28T15:36:16Z",
+      "side": 1,
+      "message": "why not just \n\n  if (java_action_index \u003e\u003d 0) \n\n?\n\n(And how do you feel about \n\n  base::Optional\u003cint\u003e action_index \u003d java_action_index \u003e\u003d 0 ? java_action_index : base::nullopt;\n\n? personally i find this marginally clearer what\u0027s going on, not that your way\u0027s unclear, but I\u0027m bikeshedding)",
+      "revId": "c2a9a7d7abf88bd8660b5eb06bd5eb25546fd9df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
