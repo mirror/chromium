@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe3819c4_78bf2106",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T04:00:24Z",
+      "side": 1,
+      "message": "When checking if there\u0027s any activity, we should check if power source has changed (not whether it\u0027s on battery or not).",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "0aa5d7dba63001fe393b9e52c96fd32f25db3509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
