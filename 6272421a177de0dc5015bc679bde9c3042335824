@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e36f0fa_f76b0c01",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-28T23:50:01Z",
+      "side": 1,
+      "message": "Mike, is there any way a CSP header could also force a change to the SecurityOrigin via AddPolicyFromHeaderValue(), which this calls?",
+      "range": {
+        "startLine": 283,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 30
+      },
+      "revId": "6272421a177de0dc5015bc679bde9c3042335824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

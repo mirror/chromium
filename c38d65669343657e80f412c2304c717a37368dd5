@@ -46,6 +46,30 @@
       "revId": "c38d65669343657e80f412c2304c717a37368dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6dd65b_ce75432d",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-28T23:50:01Z",
+      "side": 0,
+      "message": "+1, this sounds reasonable to me (SecurityContext::ApplySandboxFlags() explicitly checks for !IsUnique(), so there\u0027s no danger of misapplying the potentially trustworthy bit to the wrong unique origin), but it\u0027d be nice to have a DCHECK (and a comment) that the web_frame_\u0027s origin won\u0027t change after the SetReplicatedSandboxFlags() call if has_potentially_trustworthy_unique_origin was true.",
+      "parentUuid": "b6a2d9d6_4a287445",
+      "range": {
+        "startLine": 274,
+        "startChar": 14,
+        "endLine": 274,
+        "endChar": 39
+      },
+      "revId": "c38d65669343657e80f412c2304c717a37368dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
