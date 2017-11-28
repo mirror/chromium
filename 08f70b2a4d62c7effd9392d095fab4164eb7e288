@@ -548,6 +548,24 @@
     },
     {
       "key": {
+        "uuid": "2baa3f65_6ce5adc3",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-28T01:22:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a841a25f_9af9da43",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15309faa_05fddc43",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 8

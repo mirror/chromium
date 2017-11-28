@@ -67,6 +67,40 @@
       "revId": "a0f2f6b2e32eac88b6b66a0e88ff7636632e045b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e1f923_4bf03c4c",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-28T01:22:19Z",
+      "side": 1,
+      "message": "This is repeated in media_sink_service.h",
+      "revId": "a0f2f6b2e32eac88b6b66a0e88ff7636632e045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5259504_1f41fa8c",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-28T01:22:19Z",
+      "side": 1,
+      "message": "This declaration doesn\u0027t seem to fit in with the rest of this file (which seems to be structs for media sinks).  Maybe it should go into media_sink_service.h?",
+      "revId": "a0f2f6b2e32eac88b6b66a0e88ff7636632e045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
