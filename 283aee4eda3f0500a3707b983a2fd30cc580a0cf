@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "4ad7ff57_45b358b5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/regions-lines.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-28T14:27:47Z",
+      "side": 0,
+      "message": "returning INT_MAX, if it crosses the integer boundary. Updated these values as INT_MAX values",
+      "parentUuid": "dfd2abca_6d74bfd4",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "283aee4eda3f0500a3707b983a2fd30cc580a0cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b09c3a46_fcead13f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/support/regions-lines.vtt",
         "patchSetId": 3

@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "efd493b5_27720048",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-28T14:27:47Z",
+      "side": 1,
+      "message": "removed this code",
+      "parentUuid": "0dbf75b7_0229c422",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 156,
+        "endChar": 16
+      },
+      "revId": "127b17fd33fd666b7684e9dc5c7ecf20d8a44658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bfbc4e5_3fcb29d8",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 5
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-24T15:49:45Z",
       "side": 1,
       "message": "There doesn\u0027t appear to be any reason to call this in the kHeader state anymore (REGION\u0027s can\u0027t appear there AFAICT.), so this should probably be renamed (and presumably no longer called in the kHeader state - unless the spec model is adapted.)",
+      "range": {
+        "startLine": 220,
+        "startChar": 16,
+        "endLine": 220,
+        "endChar": 37
+      },
+      "revId": "127b17fd33fd666b7684e9dc5c7ecf20d8a44658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2c86a4_5f01e668",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-28T14:27:47Z",
+      "side": 1,
+      "message": "modified it as CollectWebVTTBlock and added logic based on collect a WebVTT block algorithm",
+      "parentUuid": "8bfbc4e5_3fcb29d8",
       "range": {
         "startLine": 220,
         "startChar": 16,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a00b5d2e_9885782b",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-28T14:27:47Z",
+      "side": 1,
+      "message": "modified based on spec",
+      "parentUuid": "200bde81_4094de0a",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 234,
+        "endChar": 32
+      },
+      "revId": "127b17fd33fd666b7684e9dc5c7ecf20d8a44658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97f4f643_1fc3abe0",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 5
@@ -105,6 +177,30 @@
       "writtenOn": "2017-11-24T15:49:45Z",
       "side": 1,
       "message": "How will this handle buffer boundaries? Looks like will result in a corrupted region.",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 235,
+        "endChar": 31
+      },
+      "revId": "127b17fd33fd666b7684e9dc5c7ecf20d8a44658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2499ed0_861ad455",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-28T14:27:47Z",
+      "side": 1,
+      "message": "modified based on spec",
+      "parentUuid": "97f4f643_1fc3abe0",
       "range": {
         "startLine": 235,
         "startChar": 4,
