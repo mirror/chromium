@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6057e15b_c7428b54",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19067,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T17:51:22Z",
+      "side": 1,
+      "message": "The things you\u0027re adding do not look like user initiated actions. Actions carry timestamps and do not get aggregated. Unless you\u0027re actually planning to do custom analysis of these timestamps, it would be better to use histograms.",
+      "range": {
+        "startLine": 19067,
+        "startChar": 72,
+        "endLine": 19067,
+        "endChar": 0
+      },
+      "revId": "92d642f7cf810da59e814bde33f41c115299210c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
