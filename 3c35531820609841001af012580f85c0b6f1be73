@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0caeb679_bf2381ff",
+        "filename": "base/android/library_loader/anchor_functions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T00:00:06Z",
+      "side": 1,
+      "message": "Not sure how important the x86 case is. If it\u0027s something that should be done, maybe add a TODO(bug_number) so readers understand where this is going.",
+      "revId": "3c35531820609841001af012580f85c0b6f1be73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "814dd353_7de158b8",
+        "filename": "base/android/library_loader/library_prefetcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T00:00:06Z",
+      "side": 1,
+      "message": "Should the comments for these mention they can only be used on ARM?",
+      "revId": "3c35531820609841001af012580f85c0b6f1be73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
