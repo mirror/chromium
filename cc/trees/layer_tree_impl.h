@@ -551,6 +551,7 @@ class CC_EXPORT LayerTreeImpl {
       const PaintImageIdFlatSet& images_to_invalidate);
 
   LayerTreeLifecycle& lifecycle() { return lifecycle_; }
+  void UpdatePictureLayerWithImages(const PictureLayerImpl* layer);
 
  protected:
   float ClampPageScaleFactorToLimits(float page_scale_factor) const;
@@ -619,6 +620,7 @@ class CC_EXPORT LayerTreeImpl {
       element_id_to_scrollbar_layer_ids_;
 
   std::vector<PictureLayerImpl*> picture_layers_;
+  base::flat_set<int> picture_layers_with_images_;
 
   base::flat_set<viz::SurfaceId> surface_layer_ids_;
 
