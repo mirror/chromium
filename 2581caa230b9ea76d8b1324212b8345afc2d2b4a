@@ -16,6 +16,24 @@
       "revId": "2581caa230b9ea76d8b1324212b8345afc2d2b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e085dd_9404c702",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T21:55:47Z",
+      "side": 1,
+      "message": "+1\n\nWe can fix it in a follow up CL but we really should not be doing this. AccessibilityManagerTest simulates user session creation and should have user PrefService connected to ash side automatically.",
+      "parentUuid": "e05b12f8_eb242830",
+      "revId": "2581caa230b9ea76d8b1324212b8345afc2d2b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
