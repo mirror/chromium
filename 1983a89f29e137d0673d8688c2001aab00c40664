@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "42b9d82e_2f6092a3",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-28T21:16:58Z",
+      "side": 1,
+      "message": "Might be better to combine with one of the other tests, so you try with is_issued_by_known_root \u003d false first, verify no histogram, then set to true and verify there was a histogram. That way it\u0027s more obvious that the is_issued_by_known_root was the reason it wasn\u0027t logged, rather than one of the other conditions that might cause it not to be logged. wdyt?",
+      "range": {
+        "startLine": 807,
+        "startChar": 27,
+        "endLine": 807,
+        "endChar": 0
+      },
+      "revId": "1983a89f29e137d0673d8688c2001aab00c40664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9181b590_6965f0aa",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
