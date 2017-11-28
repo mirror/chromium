@@ -255,6 +255,7 @@ struct WebMediaTrackConstraintSet {
   BooleanConstraint goog_beamforming;
   StringConstraint goog_array_geometry;
   BooleanConstraint goog_audio_mirroring;
+  BooleanConstraint disable_hw_noise_suppression;
   BooleanConstraint goog_da_echo_cancellation;
   BooleanConstraint goog_noise_reduction;
   LongConstraint offer_to_receive_audio;
