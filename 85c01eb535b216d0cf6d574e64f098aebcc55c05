@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a10b0774_9d7c08b2",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T17:47:37Z",
+      "side": 1,
+      "message": "Could you dedup with media_source_helper.cc? Or, maybe it would be good to make the logic below a helper method there.",
+      "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "740f461f_70fb57cd",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 4
@@ -87,6 +104,23 @@
       "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b1467e1_6cd2b05a",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T17:47:37Z",
+      "side": 1,
+      "message": "Could you deduplicate this with the one defined in media_source_helper.cc?",
+      "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
