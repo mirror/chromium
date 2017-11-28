@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38355ee3_61dc583a",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-28T23:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0713565_3395b6cd",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbe7ec16_95cc478b",
         "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a6f32c_e3080ea4",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-28T23:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbe7ec16_95cc478b",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "25ca5cbc_e03b79b4",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-28T23:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e6585a4_d3023857",
+      "range": {
+        "startLine": 34,
+        "startChar": 31,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e2349ac_7fc32c3e",
         "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37bc42e4_048a4730",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-28T23:39:57Z",
+      "side": 1,
+      "message": "This seems to cause a compilation error from the ctor in Service.cc",
+      "parentUuid": "5e2349ac_7fc32c3e",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 2
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f1b1dbf4_254ce7a3",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-28T23:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88f341bf_0c40ef29",
+      "range": {
+        "startLine": 53,
+        "startChar": 10,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d15bdc1_4b374741",
         "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9ed74fe2_08f7fd45",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-28T23:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d15bdc1_4b374741",
+      "range": {
+        "startLine": 463,
+        "startChar": 12,
+        "endLine": 463,
+        "endChar": 53
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2f3bf51_9006df3f",
         "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2017-11-24T08:43:47Z",
       "side": 1,
       "message": "Return a raw pointer, as we don\u0027t pass ownership. It\u0027s still owned by Service. Also, please make ProviderInterface not copyable by DISABLE_COPY_AND_ASSIGN macro.",
+      "range": {
+        "startLine": 467,
+        "startChar": 0,
+        "endLine": 467,
+        "endChar": 34
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce603d19_5cad472f",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-28T23:39:57Z",
+      "side": 1,
+      "message": "Adding the macro also causes a compilation error in the service ctor. Is there something else I should change so that the providers can be DISALLOW_COPY_AND_ASSIGN",
+      "parentUuid": "d2f3bf51_9006df3f",
       "range": {
         "startLine": 467,
         "startChar": 0,
@@ -180,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "82cacaf1_2459096a",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-28T23:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31bd1b96_55044a69",
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e12ba54_9fd71e33",
         "filename": "chrome/browser/chromeos/file_system_provider/service.h",
         "patchSetId": 2
@@ -197,6 +383,64 @@
         "endLine": 210,
         "endChar": 34
       },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d06dbc_827615e9",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-28T23:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e12ba54_9fd71e33",
+      "range": {
+        "startLine": 210,
+        "startChar": 15,
+        "endLine": 210,
+        "endChar": 34
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64e589a0_828a01df",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-28T23:39:57Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this is correct. Seems like we would end up with two instances of SmbService but we may only want one?",
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7198607d_0b8cfeef",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-28T23:39:57Z",
+      "side": 1,
+      "message": "Set all 3 to false for now until I have a chance to discuss with zentaro@",
       "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
