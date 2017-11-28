@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "754927ab_175e6d10",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-28T20:46:23Z",
+      "side": 1,
+      "message": "could we add a TODO to figure out how to merge the navigation and document ids together (and open a bug for it)? that way the UKM data for a page load will all be associated with one canonical id.",
+      "revId": "5f76354d7b7b2696701ea0fdceb72bb7d5271c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5147561b_7a19b667",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-28T20:46:23Z",
+      "side": 1,
+      "message": "since we have the navigation handle, let\u0027s use it to get our doc id:\nnavigatoin_handle-\u003eGetRenderFrameHost()-\u003eGetDocumentId()\n\neven though these should be the same, i feel it\u0027s better to use the nav handle since that\u0027s associated directly with the committed navigation that we\u0027re interested in tracking here.",
+      "revId": "5f76354d7b7b2696701ea0fdceb72bb7d5271c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29351046_3225da52",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-28T20:46:23Z",
+      "side": 1,
+      "message": "is \u0027cross-document navigation\u0027 a term we use? I have not seem that before, and it sounds similar to cross-origin which makes me think it might confuse people.\n\nMaybe \u0027This value changes every time a new document is committed, excluding same-document navigations.\u0027?",
+      "revId": "5f76354d7b7b2696701ea0fdceb72bb7d5271c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
