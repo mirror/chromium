@@ -84,7 +84,7 @@ class CORE_EXPORT WorkletGlobalScope
 
   void SetModulator(Modulator*);
 
-  SecurityOrigin* DocumentSecurityOrigin() const {
+  const SecurityOrigin* DocumentSecurityOrigin() const {
     return document_security_origin_.get();
   }
 
@@ -108,7 +108,7 @@ class CORE_EXPORT WorkletGlobalScope
   const String user_agent_;
 
   // Used for module fetch.
-  const scoped_refptr<SecurityOrigin> document_security_origin_;
+  const scoped_refptr<const SecurityOrigin> document_security_origin_;
 
   Member<WorkletModuleResponsesMapProxy> module_responses_map_proxy_;
   // LocalDOMWindow::modulator_ workaround equivalent.
