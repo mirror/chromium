@@ -197,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "0c6a357e_44dfe497",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-28T19:12:33Z",
+      "side": 1,
+      "message": "This function is called by AudioWorkletMessagingProxy, to notify AudioWorklet about the update in the global scope.\n\nPerhaps NotifyGlobalScopeIsUpdated()?",
+      "parentUuid": "3e236aab_0f1ec0d6",
+      "revId": "045d2f7f37453fe0c67c382da2f878570759a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc343e4e_87255135",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
         "patchSetId": 10
