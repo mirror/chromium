@@ -16,6 +16,24 @@
       "revId": "9ff332dbf00ed08938644045aa039860e05f1158",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b8ee31_b4f42c17",
+        "filename": "ui/app_list/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T22:17:47Z",
+      "side": 1,
+      "message": "I imaged that it could be done in BUILD.gn. However yes it could still need deps rule.",
+      "parentUuid": "1c4e5e57_013de502",
+      "revId": "9ff332dbf00ed08938644045aa039860e05f1158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
