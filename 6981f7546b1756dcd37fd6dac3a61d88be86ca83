@@ -55,6 +55,23 @@
     },
     {
       "key": {
+        "uuid": "de75654f_35e7502f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T18:48:47Z",
+      "side": 1,
+      "message": "Right I had that thought too, but it is connected. BindAsWatcher() is still run and passed to the viz process. That connects it as a watcher. What the if/else skips is making |this| a watcher of the forwarding mode reporter. Other children can still make themselves watchers of it thru BrowserMainLoop. It means CompositingModeFallbackToSoftware() won\u0027t be run from the forwarding reporter, which is ok cuz we just ran it directly.",
+      "revId": "6981f7546b1756dcd37fd6dac3a61d88be86ca83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fdeae94_0a4ffe61",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 2
