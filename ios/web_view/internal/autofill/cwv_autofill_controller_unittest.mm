@@ -162,6 +162,10 @@ TEST_F(CWVAutofillControllerTest, FocusCallback) {
                   didFocusOnFieldWithName:kTestFieldName
                                  formName:kTestFormName
                                     value:kTestFieldValue];
+
+    web_state_.OnFormActivity(params);
+
+    [delegate verify];
   }
 }
 
@@ -183,6 +187,10 @@ TEST_F(CWVAutofillControllerTest, InputCallback) {
                   didInputInFieldWithName:kTestFieldName
                                  formName:kTestFormName
                                     value:kTestFieldValue];
+
+    web_state_.OnFormActivity(params);
+
+    [delegate verify];
   }
 }
 
@@ -204,6 +212,10 @@ TEST_F(CWVAutofillControllerTest, BlurCallback) {
                    didBlurOnFieldWithName:kTestFieldName
                                  formName:kTestFormName
                                     value:kTestFieldValue];
+
+    web_state_.OnFormActivity(params);
+
+    [delegate verify];
   }
 }
 
