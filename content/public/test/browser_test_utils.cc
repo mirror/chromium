@@ -690,6 +690,20 @@ void SimulateMouseClickAt(WebContents* web_contents,
       mouse_event);
 }
 
+void SimulateLongPressAt(WebContents* web_contents,
+                         int modifiers,
+                         int x,
+                         int y) {
+  blink::WebGestureEvent gesture_event(
+      blink::WebInputEvent::kGestureLongPress, modifiers,
+      ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
+  gesture_event.x = gesture_event.global_x = x;
+  gesture_event.y = gesture_event.global_y = y;
+  gesture_event.source_device = blink::kWebGestureDeviceTouchscreen;
+  web_contents->GetRenderViewHost()->GetWidget()->ForwardGestureEvent(
+      gesture_event);
+}
+
 void SimulateRoutedMouseClickAt(WebContents* web_contents,
                                 int modifiers,
                                 blink::WebMouseEvent::Button button,
