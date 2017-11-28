@@ -1337,12 +1337,12 @@ void RendererBlinkPlatformImpl::SendFakeDeviceEventDataForTesting(
 
   switch (type) {
     case blink::kWebPlatformEventTypeDeviceMotion:
-      if (!(g_test_device_motion_data == nullptr))
+      if (!g_test_device_motion_data.empty())
         data = &g_test_device_motion_data.Get();
       break;
     case blink::kWebPlatformEventTypeDeviceOrientation:
     case blink::kWebPlatformEventTypeDeviceOrientationAbsolute:
-      if (!(g_test_device_orientation_data == nullptr))
+      if (!g_test_device_orientation_data.empty())
         data = &g_test_device_orientation_data.Get();
       break;
     default:
