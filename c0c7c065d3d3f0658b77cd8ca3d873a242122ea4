@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "75195346_aee96f34",
+        "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-28T01:20:46Z",
+      "side": 1,
+      "message": "Removing from the map is incorrect, since we would lose access to the ErrorTolerantBleAdvertisement object and would never be able to unregister the advertisement.\n\nRetrying already occurs as part of ErrorTolerantBleAdvertisement (hence the name \"error tolerant\" - it retries if there are errors).",
+      "parentUuid": "e9185ee5_79d72ba1",
+      "range": {
+        "startLine": 106,
+        "startChar": 42,
+        "endLine": 106,
+        "endChar": 64
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee97fb5c_03fed221",
         "filename": "chromeos/components/tether/asynchronous_shutdown_object_container_impl.cc",
         "patchSetId": 3
