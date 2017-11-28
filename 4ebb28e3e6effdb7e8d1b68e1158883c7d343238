@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "feec5f91_a83d719e",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-28T19:23:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee71cb9_fbeed5ef",
+      "revId": "4ebb28e3e6effdb7e8d1b68e1158883c7d343238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb5b47f8_70f707cb",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T16:08:28Z",
       "side": 1,
       "message": "nit: indentation (unless there\u0027s a different rule for ternary operators that I don\u0027t know about)",
+      "revId": "4ebb28e3e6effdb7e8d1b68e1158883c7d343238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef75a5e1_d99244fa",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-28T19:23:15Z",
+      "side": 1,
+      "message": "Hmm.. This indentation seems to be enforced with \"git cl format\" :/...",
+      "parentUuid": "eb5b47f8_70f707cb",
       "revId": "4ebb28e3e6effdb7e8d1b68e1158883c7d343238",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
