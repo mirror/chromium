@@ -34,6 +34,24 @@
       "revId": "586449a7857394fb6b54dfbc7b9a14bcc0bd1da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c957ec0_8300827c",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T00:06:41Z",
+      "side": 1,
+      "message": "OK. Assuming nothing else on another thread takes the lock for a long time, this seems reasonable.",
+      "parentUuid": "db571fe4_3bb176bf",
+      "revId": "586449a7857394fb6b54dfbc7b9a14bcc0bd1da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
