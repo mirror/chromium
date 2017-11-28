@@ -94,6 +94,30 @@
       "revId": "76cbeb3bc95d8c2d39dda01f0fb022670d35a46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21e6327_5a719ae1",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T21:53:47Z",
+      "side": 1,
+      "message": "Yes it works there. I also knew that ash/wm indicates ash/wm/window_properties.h?\n\nI left a TODO that once ui/app_list is move to ash/. This property could be moved to ash/wm/window_properties.h",
+      "parentUuid": "28f41b69_7f0c2b1b",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 32
+      },
+      "revId": "76cbeb3bc95d8c2d39dda01f0fb022670d35a46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
