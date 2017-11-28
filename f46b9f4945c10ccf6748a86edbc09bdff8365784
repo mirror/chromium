@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc643233_f29e8e0b",
+        "filename": "ash/system/network/tray_network.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T19:30:10Z",
+      "side": 1,
+      "message": "Rather than add \u0027notify_a11y\u0027 to \u0027UpdateNetworkStateHandlerIcon\u0027, let\u0027s just call  UpdateConnectionStatus() separately in the 2 places this is called.",
+      "revId": "f46b9f4945c10ccf6748a86edbc09bdff8365784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9fa8b8c_0e7e469a",
+        "filename": "ash/system/network/tray_network.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T19:30:10Z",
+      "side": 1,
+      "message": "true /* notify_a11y */",
+      "revId": "f46b9f4945c10ccf6748a86edbc09bdff8365784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2692aad0_67bfe263",
+        "filename": "ash/system/network/tray_network_state_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T19:30:10Z",
+      "side": 1,
+      "message": "false /* notify_a11y */ throughout",
+      "revId": "f46b9f4945c10ccf6748a86edbc09bdff8365784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3445130_c9466f0e",
+        "filename": "ash/system/network/tray_vpn.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T19:30:10Z",
+      "side": 1,
+      "message": "bool /* notify_a11y */",
+      "revId": "f46b9f4945c10ccf6748a86edbc09bdff8365784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
