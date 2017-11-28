@@ -642,6 +642,8 @@ class CC_EXPORT LayerTreeHostImpl
 
   void RenewTreePriorityForTesting() { client_->RenewTreePriority(); }
 
+  void DidUpdateDrawProperties();
+
  protected:
   LayerTreeHostImpl(
       const LayerTreeSettings& settings,
@@ -939,6 +941,7 @@ class CC_EXPORT LayerTreeHostImpl
 
   ImplThreadPhase impl_thread_phase_;
 
+  bool inside_update_sync_tree_after_commit_or_invalidation_ = false;
   base::Optional<ImageAnimationController> image_animation_controller_;
 
   std::unique_ptr<UkmManager> ukm_manager_;
