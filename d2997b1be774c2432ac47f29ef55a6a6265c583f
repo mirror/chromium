@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e19a1c1_c53a7c0c",
+        "filename": "base/memory/shared_memory_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T02:17:09Z",
+      "side": 1,
+      "message": "Please double check, but this is likely redundant, as OS_LINUX includes OS_CHROMEOS.",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d6a185_b2078751",
+        "filename": "base/memory/shared_memory_helper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T02:17:09Z",
+      "side": 1,
+      "message": "Before, it was obvious the fp/readonly_fd out params from CreateAnonymousSharedMemory() maps to the same PrepareMapFile() in params. That\u0027s no longer the case. Can CreateAnonymousSharedMemory()\u0027s ScopedFILE* out param become a ScopedFD* as well?",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3d6f77_6dff79bc",
+        "filename": "base/memory/shared_memory_helper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T02:17:09Z",
+      "side": 1,
+      "message": "nit: You renamed \"fp\" to \"fd\" in the .cc file. Please update here as well.",
+      "range": {
+        "startLine": 28,
+        "startChar": 29,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435241b4_4dd13158",
+        "filename": "base/memory/shared_memory_mac.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T02:17:09Z",
+      "side": 1,
+      "message": "nit: 1 declaration per line please.",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a75c93_90260fad",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T02:17:09Z",
+      "side": 1,
+      "message": "Is it just ChromeOS that\u0027s missing this syscall? We may want to file a bug to remove this check someday when ChromeOS eventually stops using pre 3.17 kernels. Maybe see if the ChromeOS kernel folks are willing to own it?",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d3baa5_6d98e1b9",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T02:17:09Z",
+      "side": 1,
+      "message": "One declaration per line here as well.",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4199efb1_97b0e3b7",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T02:17:09Z",
+      "side": 1,
+      "message": "should this use is_valid() for consistency?",
+      "range": {
+        "startLine": 163,
+        "startChar": 10,
+        "endLine": 163,
+        "endChar": 16
+      },
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9909a403_e7131ef3",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T02:17:09Z",
+      "side": 1,
+      "message": "Here and below, can you say \"When the memfd_create syscall is available, ...\" ? A reader who doesn\u0027t understand what \"__NR_memfd_create\" means and don\u0027t have knowledge of memfd_create won\u0027t be able to easily figure out if it is a variable, function, or something else.",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5af6b35_c124a150",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T02:17:09Z",
+      "side": 1,
+      "message": "\"SharedMemory does not\" to clarify what \"we\" means here.",
+      "range": {
+        "startLine": 576,
+        "startChar": 35,
+        "endLine": 576,
+        "endChar": 43
+      },
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21b7e397_fa17a07f",
+        "filename": "base/memory/shared_memory_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T02:17:09Z",
+      "side": 0,
+      "message": "I liked this newline as a separator. Would you mind putting it back?",
+      "revId": "a46b8b5767c81972d2a1346be1cecba1c99d5119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
