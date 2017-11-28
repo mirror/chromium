@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a841f1f7_73b1701d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T04:00:28Z",
+      "side": 1,
+      "message": "Update cl description :)",
+      "revId": "69a8b69dc7e51a51486f8784ddf46ac9d936f637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09cd7862_a08de96c",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T04:00:28Z",
+      "side": 1,
+      "message": "\\o/ https://i.imgur.com/A6vEorE.gif",
+      "revId": "69a8b69dc7e51a51486f8784ddf46ac9d936f637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
