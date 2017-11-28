@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cdbed920_4e20936b",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/WaveShaper/waveshaper-copy-curve.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-28T22:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1179ecf2_326c9e2c",
+      "range": {
+        "startLine": 68,
+        "startChar": 22,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "a3d63575b8ace1dec5282911a38cd0079c50f9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4572bf_936d65d0",
         "filename": "third_party/WebKit/LayoutTests/webaudio/WaveShaper/waveshaper-simple.html",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "a3d63575b8ace1dec5282911a38cd0079c50f9f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01ba389_3b89062c",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/WaveShaper/waveshaper-simple.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-28T22:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c4572bf_936d65d0",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 86
+      },
+      "revId": "a3d63575b8ace1dec5282911a38cd0079c50f9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
