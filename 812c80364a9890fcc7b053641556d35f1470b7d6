@@ -16,6 +16,24 @@
       "revId": "812c80364a9890fcc7b053641556d35f1470b7d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff63f3a7_25320f9a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-28T23:52:22Z",
+      "side": 1,
+      "message": "A test with [ Pass ] in the expectation won\u0027t show up in the results JSON as {\u0027actual\u0027: \u0027PASS\u0027, \u0027is_unexpected\u0027: True}, so _tests_in_flag_expectations doesn\u0027t bother to check for this.\n\nHowever I have updated the test to verify the behavior when an unexpected pass doesn\u0027t appear in the flag expectations file at all.",
+      "parentUuid": "17c34921_22b555fb",
+      "revId": "812c80364a9890fcc7b053641556d35f1470b7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
