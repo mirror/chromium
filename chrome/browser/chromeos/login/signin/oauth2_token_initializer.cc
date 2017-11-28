@@ -31,6 +31,9 @@ void OAuth2TokenInitializer::OnOAuth2TokensAvailable(
   user_context_.SetAuthCode(std::string());
   user_context_.SetRefreshToken(oauth2_tokens.refresh_token);
   user_context_.SetAccessToken(oauth2_tokens.access_token);
+  if (oauth2_tokens.is_child_account)
+    user_context_.SetUserType(user_manager::UserType::USER_TYPE_CHILD);
+
   callback_.Run(true, user_context_);
 }
 
