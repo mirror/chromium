@@ -156,11 +156,15 @@ void PreviewsIOData::LogPreviewNavigation(const GURL& url,
 void PreviewsIOData::LogPreviewDecisionMade(PreviewsEligibilityReason reason,
                                             const GURL& url,
                                             base::Time time,
-                                            PreviewsType type) const {
-  LogPreviewsEligibilityReason(reason, type);
+                                            PreviewsType type,
+                                            bool checked) const {
+  if (!checked) {
+    LogPreviewsEligibilityReason(reason, type);
+  }
   ui_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&PreviewsUIService::LogPreviewDecisionMade,
-                            previews_ui_service_, reason, url, time, type));
+      FROM_HERE,
+      base::Bind(&PreviewsUIService::LogPreviewDecisionMade,
+                 previews_ui_service_, reason, url, time, type, checked));
 }
 
 void PreviewsIOData::AddPreviewNavigation(const GURL& url,
@@ -204,11 +208,14 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
     // when navigating to files on disk, etc.
     return false;
   }
-  if (is_enabled_callback_.is_null() || !previews_black_list_) {
-    LogPreviewDecisionMade(PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE,
-                           request.url(), base::Time::Now(), type);
+  bool blacklist_availalbe =
+      !is_enabled_callback_.is_null() && previews_black_list_;
+  LogPreviewDecisionMade(PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE,
+                         request.url(), base::Time::Now(), type,
+                         blacklist_availalbe);
+  if (!blacklist_availalbe)
     return false;
-  }
+
   if (!is_enabled_callback_.Run(type))
     return false;
 
@@ -217,8 +224,8 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
     // user's opting out of the preview.
     PreviewsEligibilityReason status =
         previews_black_list_->IsLoadedAndAllowed(request.url(), type);
+    LogBlackListDecision(status, request.url(), base::Time::Now(), type);
     if (status != PreviewsEligibilityReason::ALLOWED) {
-      LogPreviewDecisionMade(status, request.url(), base::Time::Now(), type);
       return false;
     }
   }
@@ -227,68 +234,95 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
       net::EFFECTIVE_CONNECTION_TYPE_LAST) {
     net::NetworkQualityEstimator* network_quality_estimator =
         request.context()->network_quality_estimator();
-    if (!network_quality_estimator ||
-        network_quality_estimator->GetEffectiveConnectionType() <
-            net::EFFECTIVE_CONNECTION_TYPE_OFFLINE) {
-      LogPreviewDecisionMade(
-          PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE, request.url(),
-          base::Time::Now(), type);
+    bool nqe_available =
+        network_quality_estimator &&
+        network_quality_estimator->GetEffectiveConnectionType() >=
+            net::EFFECTIVE_CONNECTION_TYPE_OFFLINE;
+    LogPreviewDecisionMade(
+        PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE, request.url(),
+        base::Time::Now(), type, nqe_available);
+    if (!nqe_available)
       return false;
-    }
 
-    if (network_quality_estimator->GetEffectiveConnectionType() >
-        effective_connection_type_threshold) {
-      LogPreviewDecisionMade(PreviewsEligibilityReason::NETWORK_NOT_SLOW,
-                             request.url(), base::Time::Now(), type);
+    bool network_is_slow =
+        network_quality_estimator->GetEffectiveConnectionType() <=
+        effective_connection_type_threshold;
+    LogPreviewDecisionMade(PreviewsEligibilityReason::NETWORK_NOT_SLOW,
+                           request.url(), base::Time::Now(), type,
+                           network_is_slow);
+    if (!network_is_slow)
       return false;
-    }
   }
 
   // LOAD_VALIDATE_CACHE or LOAD_BYPASS_CACHE mean the user reloaded the page.
   // If this is a query for offline previews, reloads should be disallowed.
-  if (!AllowedOnReload(type) &&
-      request.load_flags() &
-          (net::LOAD_VALIDATE_CACHE | net::LOAD_BYPASS_CACHE)) {
-    LogPreviewDecisionMade(PreviewsEligibilityReason::RELOAD_DISALLOWED,
-                           request.url(), base::Time::Now(), type);
+  bool reload_allowed = AllowedOnReload(type) ||
+                        !(request.load_flags() &
+                          (net::LOAD_VALIDATE_CACHE | net::LOAD_BYPASS_CACHE));
+  LogPreviewDecisionMade(PreviewsEligibilityReason::RELOAD_DISALLOWED,
+                         request.url(), base::Time::Now(), type,
+                         reload_allowed);
+  if (!reload_allowed)
     return false;
-  }
 
   // Check provided blacklist, if any. This type of blacklist was added for
   // Finch provided blacklist for Client LoFi.
-  if (std::find(host_blacklist_from_server.begin(),
-                host_blacklist_from_server.end(), request.url().host_piece()) !=
-      host_blacklist_from_server.end()) {
-    LogPreviewDecisionMade(
-        PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER, request.url(),
-        base::Time::Now(), type);
+  bool host_blacklisted_by_user =
+      std::find(host_blacklist_from_server.begin(),
+                host_blacklist_from_server.end(),
+                request.url().host_piece()) != host_blacklist_from_server.end();
+  LogPreviewDecisionMade(PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER,
+                         request.url(), base::Time::Now(), type,
+                         !host_blacklisted_by_user);
+  if (host_blacklisted_by_user)
     return false;
-  }
 
   // Check whitelist from the server, if provided.
   if (IsServerWhitelistedType(type)) {
     if (params::IsOptimizationHintsEnabled()) {
       // Optimization hints are configured, so require whitelist match.
-      if (!previews_opt_guide_ ||
-          !previews_opt_guide_->IsWhitelisted(request, type)) {
-        LogPreviewDecisionMade(
-            PreviewsEligibilityReason::HOST_NOT_WHITELISTED_BY_SERVER,
-            request.url(), base::Time::Now(), type);
+      bool host_whitelisted_by_server =
+          previews_opt_guide_ &&
+          previews_opt_guide_->IsWhitelisted(request, type);
+      LogPreviewDecisionMade(
+          PreviewsEligibilityReason::HOST_NOT_WHITELISTED_BY_SERVER,
+          request.url(), base::Time::Now(), type, host_whitelisted_by_server);
+      if (!host_whitelisted_by_server)
         return false;
-      }
     } else {
       // Since server optimization guidance not configure, allow the preview
       // but with qualified eligibility reason.
       LogPreviewDecisionMade(
           PreviewsEligibilityReason::ALLOWED_WITHOUT_OPTIMIZATION_HINTS,
-          request.url(), base::Time::Now(), type);
+          request.url(), base::Time::Now(), type, false /* checked */);
       return true;
     }
   }
 
   LogPreviewDecisionMade(PreviewsEligibilityReason::ALLOWED, request.url(),
-                         base::Time::Now(), type);
+                         base::Time::Now(), type, false /* checked */);
   return true;
+}
+
+void PreviewsIOData::LogBlackListDecision(PreviewsEligibilityReason reason,
+                                          const GURL& url,
+                                          base::Time time,
+                                          PreviewsType type) const {
+  // The ordered of decision checked in PreviewBlackList.
+  PreviewsEligibilityReason reasons[] = {
+      PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED,
+      PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT,
+      PreviewsEligibilityReason::USER_BLACKLISTED,
+      PreviewsEligibilityReason::HOST_BLACKLISTED,
+  };
+
+  for (auto current : reasons) {
+    if (current == reason) {
+      LogPreviewDecisionMade(current, url, time, type, false /* checked */);
+      return;
+    }
+    LogPreviewDecisionMade(current, url, time, type, true /* checked */);
+  }
 }
 
 uint64_t PreviewsIOData::GeneratePageId() {

@@ -67,11 +67,13 @@ class PreviewsIOData : public PreviewsDecider,
                             PreviewsType type,
                             base::Time time) const;
 
-  // Adds log message of preview decision made asynchronously.
+  // Adds log message of preview decision made asynchronously. |checked|
+  // indicates whether |reason| is checked or not.
   void LogPreviewDecisionMade(PreviewsEligibilityReason reason,
                               const GURL& url,
                               base::Time time,
-                              PreviewsType type) const;
+                              PreviewsType type,
+                              bool checked) const;
 
   // Adds a navigation to |url| to the black list with result |opt_out|.
   void AddPreviewNavigation(const GURL& url, bool opt_out, PreviewsType type);
@@ -112,6 +114,11 @@ class PreviewsIOData : public PreviewsDecider,
       std::unique_ptr<PreviewsBlackList> previews_back_list);
 
  private:
+  void LogBlackListDecision(PreviewsEligibilityReason reason,
+                            const GURL& url,
+                            base::Time time,
+                            PreviewsType type) const;
+
   // The UI thread portion of the inter-thread communication for previews.
   base::WeakPtr<PreviewsUIService> previews_ui_service_;
 

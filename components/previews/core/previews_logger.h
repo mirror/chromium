@@ -81,11 +81,14 @@ class PreviewsLogger {
                                     base::Time time);
 
   // Add a MessageLog for the a decision that was made about the state of
-  // previews and blacklist. Virtualized in testing.
+  // previews and blacklist. |checked| indicates whether |reason| is checked
+  // or not (i.e. true means the opposite of reason occurs) . Virtualized in
+  // testing.
   virtual void LogPreviewDecisionMade(PreviewsEligibilityReason reason,
                                       const GURL& url,
                                       base::Time time,
-                                      PreviewsType type);
+                                      PreviewsType type,
+                                      bool checked);
 
   // Notify observers that |host| is blacklisted at |time|. Virtualized in
   // testing.

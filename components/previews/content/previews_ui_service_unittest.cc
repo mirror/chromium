@@ -74,11 +74,13 @@ class TestPreviewsLogger : public PreviewsLogger {
   void LogPreviewDecisionMade(PreviewsEligibilityReason reason,
                               const GURL& url,
                               base::Time time,
-                              PreviewsType type) override {
+                              PreviewsType type,
+                              bool checked) override {
     decision_reason_ = reason;
     decision_url_ = GURL(url);
     decision_time_ = time;
     decision_type_ = type;
+    decision_checked_ = checked;
   }
 
   void OnNewBlacklistedHost(const std::string& host, base::Time time) override {
@@ -103,6 +105,7 @@ class TestPreviewsLogger : public PreviewsLogger {
   GURL decision_url() const { return decision_url_; }
   PreviewsType decision_type() const { return decision_type_; }
   base::Time decision_time() const { return decision_time_; }
+  bool decision_checked() const { return decision_checked_; }
 
   // Return the passed in LogPreviewNavigation parameters.
   GURL navigation_url() const { return navigation_url_; }
@@ -125,6 +128,7 @@ class TestPreviewsLogger : public PreviewsLogger {
   GURL decision_url_;
   PreviewsType decision_type_;
   base::Time decision_time_;
+  bool decision_checked_;
 
   // Passed in LogPreviewsNavigation parameters.
   GURL navigation_url_;
@@ -238,8 +242,10 @@ TEST_F(PreviewsUIServiceTest, TestLogPreviewDecisionMadePassesCorrectParams) {
   const GURL url_a("http://www.url_a.com/url_a");
   const base::Time time_a = base::Time::Now();
   PreviewsType type_a = PreviewsType::OFFLINE;
+  bool checked_a = false;
 
-  ui_service()->LogPreviewDecisionMade(reason_a, url_a, time_a, type_a);
+  ui_service()->LogPreviewDecisionMade(reason_a, url_a, time_a, type_a,
+                                       checked_a);
 
   EXPECT_EQ(reason_a, logger_ptr_->decision_reason());
   EXPECT_EQ(url_a, logger_ptr_->decision_url());
@@ -251,8 +257,10 @@ TEST_F(PreviewsUIServiceTest, TestLogPreviewDecisionMadePassesCorrectParams) {
   const GURL url_b("http://www.url_b.com/url_b");
   const base::Time time_b = base::Time::Now();
   PreviewsType type_b = PreviewsType::LOFI;
+  bool checked_b = true;
 
-  ui_service()->LogPreviewDecisionMade(reason_b, url_b, time_b, type_b);
+  ui_service()->LogPreviewDecisionMade(reason_b, url_b, time_b, type_b,
+                                       checked_b);
 
   EXPECT_EQ(reason_b, logger_ptr_->decision_reason());
   EXPECT_EQ(url_b, logger_ptr_->decision_url());
