@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8a16687_7f275ec8",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T01:15:03Z",
+      "side": 1,
+      "message": "nit: no \u0027class\u0027 needed.",
+      "revId": "17e1eb5c8b6ba8c1e844754a3fdab9496b15dc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fba6876_dd3b315a",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T01:15:03Z",
+      "side": 1,
+      "message": "nit: can you add a TODO/comment that this only applies to Vulkan, and that it will disappear as Vulkan gets more complete?",
+      "revId": "17e1eb5c8b6ba8c1e844754a3fdab9496b15dc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a02376_0c553b4d",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T01:15:03Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "revId": "17e1eb5c8b6ba8c1e844754a3fdab9496b15dc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f348deb1_7ec51713",
+        "filename": "components/viz/service/display/skia_renderer.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T01:15:03Z",
+      "side": 1,
+      "message": "nit: all these could go to the .cc file, since there is nothing vulkan-specific in the header.",
+      "revId": "17e1eb5c8b6ba8c1e844754a3fdab9496b15dc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
