@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1d6e0d9_76247931",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T23:22:01Z",
+      "side": 1,
+      "message": "I\u0027m surprised you don\u0027t need to inline all this.",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "f10098d5c3c05265da043aea36bf4b981dda2bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96887bf5_e2cb1be8",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T23:22:01Z",
+      "side": 1,
+      "message": "ASSERT/EXPECT are preferable in test code. Alternatively push the assertions to the call site by making this return a value.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "f10098d5c3c05265da043aea36bf4b981dda2bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c455c7_48d3ff50",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T23:22:01Z",
+      "side": 1,
+      "message": "It\u0027s more common to use Waiter in the name for classes like this. Classes with the name \u0027Observer\u0027 typically are pure virtual and something you add to another class, e.g. TabStripModel::AddObserver(TabStripModelObserver).",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "f10098d5c3c05265da043aea36bf4b981dda2bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd844d5e_8ccaa5fc",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T23:22:01Z",
+      "side": 1,
+      "message": "Observe() is an unusual name here, name OnEvent?",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "f10098d5c3c05265da043aea36bf4b981dda2bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
