@@ -26,9 +26,9 @@ void UkmEntryBuilderBase::AddMetric(uint64_t metric_hash, int64_t value) {
 }
 
 void UkmEntryBuilderBase::Record(UkmRecorder* recorder) {
-  if (recorder)
+  if (recorder) {
     recorder->AddEntry(std::move(entry_));
-  else
+  } else
     entry_.reset();
 }
 
