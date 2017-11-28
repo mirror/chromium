@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1e28b3d_d8359558",
+        "filename": "third_party/WebKit/common/feature_policy/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-28T23:50:43Z",
+      "side": 1,
+      "message": "Can you change this to switch the quote style? I think that it needs to be\nallow\u003d\"vibrate \u0027src\u0027; fullscreen \u0027src\u0027\"",
+      "revId": "2cac65bf2f80ba80496362cfc8d64c259bf6bfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
