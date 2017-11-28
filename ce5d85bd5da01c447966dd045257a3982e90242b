@@ -265,6 +265,30 @@
     },
     {
       "key": {
+        "uuid": "b31bc74b_61827cdd",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-28T19:02:44Z",
+      "side": 1,
+      "message": "The goal is to have it ready on Chrome on desktop by the end of next year (I view the end of the following year as more likely, but this isn\u0027t a universally held opinion).\n\nThe problem with not having integration testing is that it makes it significantly more likely that this will break without anyone noticing when this class is removed.  I have already broken both certificate stuff and caching, with no tests catching them.\n\nAlso, relying on whoever does servicification to do testing seems problematic - they likely won\u0027t understand this code as well as you.  They may not write any integration tests (High chance of breakage!), and if they do, you\u0027re relying on someone else investing a lot of time to write your tests for you, which seems not great.",
+      "parentUuid": "13db8f8a_e0e4a277",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
