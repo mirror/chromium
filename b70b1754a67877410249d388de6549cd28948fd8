@@ -22,6 +22,30 @@
       "revId": "b70b1754a67877410249d388de6549cd28948fd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37148bc1_ac0a2bc2",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-28T17:50:12Z",
+      "side": 1,
+      "message": "Ooops, that was obvious. Done!",
+      "parentUuid": "4321a6eb_3a78136a",
+      "range": {
+        "startLine": 312,
+        "startChar": 8,
+        "endLine": 312,
+        "endChar": 31
+      },
+      "revId": "b70b1754a67877410249d388de6549cd28948fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
