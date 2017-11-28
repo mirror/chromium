@@ -110,6 +110,9 @@ namespace processes {
   // populated in each Process object.
   callback GetProcessInfoCallback = void(object processes);
 
+  // Callback for the getStats function
+  callback GetStatsCallback = void(DOMString stats);
+
   interface Functions {
     // Returns the ID of the renderer process for the specified tab.
     // |tabId|: The ID of the tab for which the renderer process ID is to be
@@ -132,6 +135,9 @@ namespace processes {
     static void getProcessInfo((long or long[]) processIds,
                                boolean includeMemory,
                                GetProcessInfoCallback callback);
+
+    // Gets the UMA stats since the last call.
+    static void getStats(GetStatsCallback callback);
   };
 
   interface Events {
