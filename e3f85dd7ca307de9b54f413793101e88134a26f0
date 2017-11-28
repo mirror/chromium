@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c4fa033_625b061c",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-28T23:54:30Z",
+      "side": 1,
+      "message": "Agreed.  I could rephrase this but I\u0027d like to try and get this into today\u0027s canary, so let\u0027s come back to this TODO in the followup where we fix this for OOPIFs.",
+      "parentUuid": "add30745_8e000ef1",
+      "range": {
+        "startLine": 633,
+        "startChar": 0,
+        "endLine": 634,
+        "endChar": 43
+      },
+      "revId": "e3f85dd7ca307de9b54f413793101e88134a26f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0d23e9b_36c04610",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 1
