@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0826c74d_8dbc3af4",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T18:22:00Z",
+      "side": 0,
+      "message": "The best practice is to add histograms whenever the logging code is submitted, and mark them obsolete when they\u0027re no longer used.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Add-Histogram-and-Documentation-in-the-Same-Changelist\nIf a developer overlooked adding a histogram to histograms.xml and wants to remove it, if there hasn\u0027t been a dev channel push with the code, then we often let it slide (no need to document it and mark it obsolete at the same time).  If there has been a dev channel push, we usually insist on following best practices.",
+      "parentUuid": "d129e975_a1e93852",
+      "revId": "6bf5e45d34018dfd5fbb114d88d422581aa33be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9d40428_75ec08d1",
         "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.mm",
         "patchSetId": 2

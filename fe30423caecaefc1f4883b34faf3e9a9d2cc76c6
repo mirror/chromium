@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c98ae967_1b2845e8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30434,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T18:22:00Z",
+      "side": 1,
+      "message": "I find this hard to parse.  Can you use hyphens to clarify this is meant to be a single term?\npage-load-count-related",
+      "range": {
+        "startLine": 30434,
+        "startChar": 18,
+        "endLine": 30434,
+        "endChar": 41
+      },
+      "revId": "fe30423caecaefc1f4883b34faf3e9a9d2cc76c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
