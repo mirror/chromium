@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65416aa4_e79acf33",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/network-document-initiator.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-28T02:13:48Z",
+      "side": 1,
+      "message": "delete",
+      "revId": "02e09a802c97c57c79476bf58423d8f0307ec4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65de074_4e97197d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-28T02:13:48Z",
+      "side": 1,
+      "message": "Since it\u0027s only used once, let\u0027s just inline this.",
+      "revId": "02e09a802c97c57c79476bf58423d8f0307ec4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
