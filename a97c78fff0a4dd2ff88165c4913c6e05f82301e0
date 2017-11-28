@@ -186,6 +186,24 @@
       "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f82af0_72632cee",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-28T15:00:03Z",
+      "side": 1,
+      "message": "I took a second thought of this. I think it is cleaner and more clear to save a local policy for both document.policy and frame.policy. Please see the new patch.",
+      "parentUuid": "236636c5_6de7c43e",
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
