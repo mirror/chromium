@@ -38,6 +38,15 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
       BrowserContext* browser_context,
       const GURL& url);
 
+  // See SiteInstance::IsSameWebSite.
+  // This version allows comparing URLs without converting them to effective
+  // URLS first, which is useful for avoiding OOPIFs when otherwise same-site
+  // URLS may look cross-site via their effective URLs.
+  static bool IsSameWebSite(content::BrowserContext* browser_context,
+                            const GURL& src_url,
+                            const GURL& dest_url,
+                            bool should_compare_effective_urls);
+
   // SiteInstance interface overrides.
   int32_t GetId() override;
   bool HasProcess() const override;
