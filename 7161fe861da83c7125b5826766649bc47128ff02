@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa87a53c_ce75fe7c",
+        "filename": "tools/grit/pak_util.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-28T21:14:31Z",
+      "side": 1,
+      "message": "nit: it might be nicer to include this on a single line with the total size as a breakdown, e.g.\ntotal_size: 117402 (header: 12, id_table: 16248, alias_table: 1652, data: 99490)\n\nI\u0027m also not sure how valuable the detailed breakdown is for a high level pak file summary compared to just actual data bytes or a percentage. I could imagine the full list of details being a separate command or flag. No objection to landing as is though.",
+      "revId": "7161fe861da83c7125b5826766649bc47128ff02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
