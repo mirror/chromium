@@ -140,6 +140,24 @@
       "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ee9450_6693cb54",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-28T00:16:55Z",
+      "side": 1,
+      "message": "\u003e option 2 was implemented so far. Unfortunately it is too easy for them to get out of sync, leading to the linked bugs in the description.\n\nThis sounds like a bug in the implementation, rather than necessarily in the approach. :)  Note that your current mechanism doesn\u0027t make this foolproof either - we could just as easily forget to set the password in JS on the PasswordUiEntry object when it\u0027s updated.\n\n\u003e I\u0027m not quite sure what you mean with the third point.\nClosure hacks \u003d\u003d somehow just satisfying closure so it doesn\u0027t complain (which, depending on the entry points, might not require anything - that\u0027s what it kind of sounds like from your last question).\n\n\u003e Also the first option looks similar to the second one to me, what exactly is the difference in Polymer\u0027s behavior there? Maybe Hector knows better.\n\nOption 1 was saying doing something like:\n/** @typedef {{\n *    entry: PasswordUiEntry,\n *    password: string\n *  }}\n */\n\nvs option 2:\nlet entry \u003d \u003cpassworduientry\u003e\nlet password \u003d \u003csome password\u003e\n\nSimilar in principle, but bundling them in a \"struct\" (if JS had such a concept) might help keep them in sync more, and avoid these bugs?",
+      "parentUuid": "310f9655_ca0bc053",
+      "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
