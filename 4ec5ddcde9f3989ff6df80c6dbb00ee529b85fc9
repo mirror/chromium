@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5b029dd_e2498494",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-28T16:08:36Z",
+      "side": 0,
+      "message": "Wouldn\u0027t it be easier to read and understand if we called X86:Vsma here (a new function) that then dispatched to the appropriate sse and avx code?\n\nYou\u0027d have to benchmark what, if any, degradation in performance we get by doing this.  I\u0027m assuming it\u0027s very small.",
+      "revId": "4ec5ddcde9f3989ff6df80c6dbb00ee529b85fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
