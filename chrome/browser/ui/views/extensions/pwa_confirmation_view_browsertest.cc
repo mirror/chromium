@@ -46,10 +46,14 @@ class PWAConfirmationViewTest : public DialogBrowserTest {
       web_app_info.title = base::UTF8ToUTF16("דוגמא");
       web_app_info.app_url = GURL("https://דוגמא.דוגמא.דוגמא.אחד.example.com");
     }
-    constrained_window::CreateWebModalDialogViews(
+
+    constrained_window::CreateBrowserModalDialogViews(
         new PWAConfirmationView(web_app_info,
                                 chrome::AppInstallationAcceptanceCallback()),
-        browser()->tab_strip_model()->GetActiveWebContents())
+        browser()
+            ->tab_strip_model()
+            ->GetActiveWebContents()
+            ->GetTopLevelNativeWindow())
         ->Show();
   }
 

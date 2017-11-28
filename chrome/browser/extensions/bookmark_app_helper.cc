@@ -712,12 +712,12 @@ void BookmarkAppHelper::OnIconsDownloaded(
       installable_ == INSTALLABLE_YES) {
     web_app_info_.open_as_window = true;
     chrome::ShowPWAInstallDialog(
-        contents_, web_app_info_,
+        browser->window()->GetNativeWindow(), web_app_info_,
         base::Bind(&BookmarkAppHelper::OnBubbleCompleted,
                    weak_factory_.GetWeakPtr()));
   } else {
     chrome::ShowBookmarkAppDialog(
-        contents_, web_app_info_,
+        browser->window()->GetNativeWindow(), web_app_info_,
         base::Bind(&BookmarkAppHelper::OnBubbleCompleted,
                    weak_factory_.GetWeakPtr()));
   }

@@ -58,7 +58,7 @@ gfx::Size PWAConfirmationView::CalculatePreferredSize() const {
 }
 
 ui::ModalType PWAConfirmationView::GetModalType() const {
-  return ui::MODAL_TYPE_CHILD;
+  return ui::MODAL_TYPE_WINDOW;
 }
 
 base::string16 PWAConfirmationView::GetWindowTitle() const {
@@ -155,11 +155,11 @@ void PWAConfirmationView::InitializeView() {
 
 namespace chrome {
 
-void ShowPWAInstallDialog(content::WebContents* web_contents,
+void ShowPWAInstallDialog(gfx::NativeWindow parent,
                           const WebApplicationInfo& web_app_info,
                           AppInstallationAcceptanceCallback callback) {
-  constrained_window::CreateWebModalDialogViews(
-      new PWAConfirmationView(web_app_info, std::move(callback)), web_contents)
+  constrained_window::CreateBrowserModalDialogViews(
+      new PWAConfirmationView(web_app_info, std::move(callback)), parent)
       ->Show();
 }
 

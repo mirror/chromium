@@ -102,7 +102,7 @@ views::View* BookmarkAppConfirmationView::GetInitiallyFocusedView() {
 }
 
 ui::ModalType BookmarkAppConfirmationView::GetModalType() const {
-  return ui::MODAL_TYPE_CHILD;
+  return ui::MODAL_TYPE_WINDOW;
 }
 
 base::string16 BookmarkAppConfirmationView::GetWindowTitle() const {
@@ -152,12 +152,12 @@ base::string16 BookmarkAppConfirmationView::GetTrimmedTitle() const {
 
 namespace chrome {
 
-void ShowBookmarkAppDialog(content::WebContents* web_contents,
+void ShowBookmarkAppDialog(gfx::NativeWindow parent,
                            const WebApplicationInfo& web_app_info,
                            AppInstallationAcceptanceCallback callback) {
-  constrained_window::CreateWebModalDialogViews(
+  constrained_window::CreateBrowserModalDialogViews(
       new BookmarkAppConfirmationView(web_app_info, std::move(callback)),
-      web_contents)
+      parent)
       ->Show();
 }
 

@@ -120,14 +120,14 @@ using AppInstallationAcceptanceCallback =
 // bookmark apps.
 //
 // |web_app_info| is the WebApplicationInfo being converted into an app.
-void ShowBookmarkAppDialog(content::WebContents* web_contents,
+void ShowBookmarkAppDialog(gfx::NativeWindow parent_window,
                            const WebApplicationInfo& web_app_info,
                            AppInstallationAcceptanceCallback callback);
 
 // Shows the PWA installation confirmation bubble.
 //
 // |web_app_info| is the WebApplicationInfo to be installed.
-void ShowPWAInstallDialog(content::WebContents* web_contents,
+void ShowPWAInstallDialog(gfx::NativeWindow parent_window,
                           const WebApplicationInfo& web_app_info,
                           AppInstallationAcceptanceCallback callback);
 
