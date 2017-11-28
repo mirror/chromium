@@ -1110,6 +1110,10 @@ void UserSessionManager::InitProfilePreferences(
         SigninManagerFactory::GetForProfile(profile);
     signin_manager->SetAuthenticatedAccountInfo(
         gaia_id, user_context.GetAccountId().GetUserEmail());
+    std::string account_id = signin_manager->GetAuthenticatedAccountId();
+    AccountTrackerServiceFactory::GetForProfile(profile)->SetIsChildAccount(
+        account_id,
+        user_context.GetUserType() == user_manager::USER_TYPE_CHILD);
     VLOG(1) << "Seed SigninManagerBase with the authenticated account info"
             << ", success=" << signin_manager->IsAuthenticated();
 
