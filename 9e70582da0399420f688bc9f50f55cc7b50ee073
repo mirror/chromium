@@ -34,6 +34,24 @@
       "revId": "9e70582da0399420f688bc9f50f55cc7b50ee073",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74db0ad9_62f5c855",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-11-28T04:18:48Z",
+      "side": 1,
+      "message": "Sorry for my misunderstanding. I also confirmed it does not fix the bug.",
+      "parentUuid": "635f137c_c3c33f54",
+      "revId": "9e70582da0399420f688bc9f50f55cc7b50ee073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
