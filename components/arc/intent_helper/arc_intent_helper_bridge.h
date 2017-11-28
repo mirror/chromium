@@ -5,8 +5,8 @@
 #ifndef COMPONENTS_ARC_INTENT_HELPER_ARC_INTENT_HELPER_BRIDGE_H_
 #define COMPONENTS_ARC_INTENT_HELPER_ARC_INTENT_HELPER_BRIDGE_H_
 
+#include <map>
 #include <memory>
-#include <set>
 #include <string>
 #include <vector>
 
@@ -61,7 +61,7 @@ class ArcIntentHelperBridge
       std::vector<IntentFilter> intent_filters) override;
   void OnOpenDownloads() override;
   void OnOpenUrl(const std::string& url) override;
-  void OnOpenChromeSettings(mojom::SettingsPage page) override;
+  void OnOpenChromePage(mojom::ChromePage page) override;
   void OpenWallpaperPicker() override;
   void SetWallpaperDeprecated(const std::vector<uint8_t>& jpeg_data) override;
   void OpenVolumeControl() override;
@@ -109,11 +109,6 @@ class ArcIntentHelperBridge
  private:
   THREAD_CHECKER(thread_checker_);
 
-  // Returns true if |url| is whitelisted. This function also returns true when
-  // |url| is neither chrome:// nor about:.
-  // TODO(yusukes): Properly fix b/68953603 and remove the function.
-  bool IsWhitelistedChromeUrl(const GURL& url);
-
   content::BrowserContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
@@ -126,8 +121,7 @@ class ArcIntentHelperBridge
 
   base::ObserverList<ArcIntentHelperObserver> observer_list_;
 
-  // TODO(yusukes): Properly fix b/68953603 and remove the variable.
-  std::set<GURL> whitelisted_urls_;
+  const std::map<mojom::ChromePage, std::string> allowed_chrome_pages_map_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcIntentHelperBridge);
 };
