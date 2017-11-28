@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "371d0d58_c980702a",
+        "filename": "media/gpu/android/codec_wrapper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-28T23:20:34Z",
+      "side": 1,
+      "message": "nope -- turns out that these tests fail without it.  AVDASurfaceBundle uses the current task runner.",
+      "parentUuid": "f464b856_9811bd2d",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 61
+      },
+      "revId": "fc1234670cabdf051c5238eb5df314e03e873617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e19323de_d0de8b45",
         "filename": "media/renderers/default_renderer_factory.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "fc1234670cabdf051c5238eb5df314e03e873617",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7e8fbf_4a650f70",
+        "filename": "media/renderers/default_renderer_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-28T23:20:34Z",
+      "side": 1,
+      "message": "yikes, good catch.",
+      "parentUuid": "e19323de_d0de8b45",
+      "range": {
+        "startLine": 95,
+        "startChar": 31,
+        "endLine": 95,
+        "endChar": 36
+      },
+      "revId": "fc1234670cabdf051c5238eb5df314e03e873617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
