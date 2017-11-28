@@ -11,6 +11,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.SparseIntArray;
 
@@ -184,9 +185,14 @@ public class MediaCaptureNotificationService extends Service {
                     mContext, notificationId, tabIntent, 0);
             builder.setContentIntent(contentIntent);
             if (mediaType == MEDIATYPE_SCREEN_CAPTURE) {
+                @SuppressWarnings("deprecation")
+                int priority = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                        ? NotificationManager.IMPORTANCE_HIGH
+                        : Notification.PRIORITY_HIGH;
+
                 // Add a "Stop" button to the screen capture notification and turn the notification
                 // into a high priority one.
-                builder.setPriority(Notification.PRIORITY_HIGH);
+                builder.setPriority(priority);
                 builder.setVibrate(new long[0]);
                 builder.addAction(R.drawable.ic_stop_white_36dp,
                         mContext.getResources().getString(R.string.accessibility_stop),

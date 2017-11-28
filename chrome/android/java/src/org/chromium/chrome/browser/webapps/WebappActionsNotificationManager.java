@@ -11,6 +11,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.blink_public.platform.WebDisplayMode;
@@ -78,6 +79,11 @@ class WebappActionsNotificationManager {
                 new Intent(mWebappActivity, mWebappActivity.getClass()).setAction(ACTION_SHARE),
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
+        @SuppressWarnings("deprecation")
+        int priority =
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? NotificationManager.IMPORTANCE_MIN
+                                                               : Notification.PRIORITY_MIN;
+
         return NotificationBuilderFactory
                 .createChromeNotificationBuilder(
                         true /* prefer compat */, ChannelDefinitions.CHANNEL_ID_WEBAPP_ACTIONS)
@@ -87,7 +93,7 @@ class WebappActionsNotificationManager {
                 .setShowWhen(false)
                 .setAutoCancel(false)
                 .setOngoing(true)
-                .setPriority(Notification.PRIORITY_MIN)
+                .setPriority(priority)
                 .setContentIntent(focusIntent)
                 .addAction(R.drawable.ic_share_white_24dp,
                         mWebappActivity.getResources().getString(R.string.share), shareIntent)
