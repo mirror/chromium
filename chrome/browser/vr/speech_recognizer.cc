@@ -326,7 +326,7 @@ void SpeechRecognizer::Stop() {
                      base::Unretained(speech_recognizer_on_io_.get())));
   if (ui_) {
     ui_->SetSpeechRecognitionEnabled(false);
-    UMA_HISTOGRAM_ENUMERATION("VRVoiceSearchEndState", VOICE_SEARCH_CANCEL,
+    UMA_HISTOGRAM_ENUMERATION("VR.VoiceSearch.EndState", VOICE_SEARCH_CANCEL,
                               COUNT);
   }
 }
@@ -361,13 +361,13 @@ void SpeechRecognizer::OnSpeechRecognitionStateChanged(
     case SPEECH_RECOGNITION_TRY_AGAIN:
       ui_->SetRecognitionResult(
           l10n_util::GetStringUTF16(IDS_VR_NO_SPEECH_RECOGNITION_RESULT));
-      UMA_HISTOGRAM_ENUMERATION("VRVoiceSearchEndState", VOICE_SEARCH_TRY_AGAIN,
-                                COUNT);
+      UMA_HISTOGRAM_ENUMERATION("VR.VoiceSearch.EndState",
+                                VOICE_SEARCH_TRY_AGAIN, COUNT);
       break;
     case SPEECH_RECOGNITION_END:
       if (!final_result_.empty()) {
         ui_->SetRecognitionResult(final_result_);
-        UMA_HISTOGRAM_ENUMERATION("VRVoiceSearchEndState",
+        UMA_HISTOGRAM_ENUMERATION("VR.VoiceSearch.EndState",
                                   VOICE_SEARCH_OPEN_SEARCH_PAGE, COUNT);
         if (delegate_)
           delegate_->OnVoiceResults(final_result_);
