@@ -19,6 +19,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 #include "components/cast_channel/cast_channel_enum.h"
+#include "components/cast_channel/cast_channel_util.h"
 #include "components/cast_channel/cast_message_util.h"
 #include "components/cast_channel/cast_socket.h"
 #include "components/cast_channel/cast_socket_service.h"
@@ -111,7 +112,8 @@ bool IsValidConnectInfoPort(const ConnectInfo& connect_info) {
 
 bool IsValidConnectInfoIpAddress(const ConnectInfo& connect_info) {
   net::IPAddress ip_address;
-  return ip_address.AssignFromIPLiteral(connect_info.ip_address);
+  return ip_address.AssignFromIPLiteral(connect_info.ip_address) &&
+         cast_channel::IsValidCastIPAddress(ip_address);
 }
 
 }  // namespace

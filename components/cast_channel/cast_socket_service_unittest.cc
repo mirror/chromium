@@ -94,4 +94,12 @@ TEST_F(CastSocketServiceTest, TestOpenChannel) {
   cast_socket_service_->OpenSocket(open_param, mock_on_open_callback_.Get());
 }
 
+TEST_F(CastSocketServiceTest, TestOpenChannelInvalidIPAddress) {
+  net::IPEndPoint invalid_ip_endpoint(net::IPAddress(111, 111, 111, 111), 8009);
+  CastSocketOpenParams open_param(invalid_ip_endpoint, nullptr /* net_log */,
+                                  base::TimeDelta::FromSeconds(20));
+  EXPECT_CALL(mock_on_open_callback_, Run(nullptr));
+  cast_socket_service_->OpenSocket(open_param, mock_on_open_callback_.Get());
+}
+
 }  // namespace cast_channel
