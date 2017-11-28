@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b27fca86_2da101d2",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-28T19:10:41Z",
+      "side": 1,
+      "message": "I cannot think of a case where this is useful. I guess look after the field won\u0027t do any harm, but it does not do any good as well.",
+      "parentUuid": "4070d934_748eb63b",
+      "range": {
+        "startLine": 337,
+        "startChar": 4,
+        "endLine": 338,
+        "endChar": 12
+      },
+      "revId": "85e005fdf853df694d4f22553de42289fcc69022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d64f3ea_4a4a8ce3",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "85e005fdf853df694d4f22553de42289fcc69022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ccc8f8_cb36cb9f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-28T19:10:41Z",
+      "side": 1,
+      "message": "It\u0027s not a instance method of a class, how to mark it private?",
+      "parentUuid": "3d64f3ea_4a4a8ce3",
+      "range": {
+        "startLine": 345,
+        "startChar": 5,
+        "endLine": 345,
+        "endChar": 62
+      },
+      "revId": "85e005fdf853df694d4f22553de42289fcc69022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bab31c5b_3cf3f10f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-28T19:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b8afbde_ecb92c3f",
+      "range": {
+        "startLine": 417,
+        "startChar": 60,
+        "endLine": 417,
+        "endChar": 78
+      },
+      "revId": "85e005fdf853df694d4f22553de42289fcc69022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b52cfded_b4f8a016",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "85e005fdf853df694d4f22553de42289fcc69022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662e724d_aad6224c",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-28T19:10:41Z",
+      "side": 1,
+      "message": "see other similar comment.",
+      "parentUuid": "b52cfded_b4f8a016",
+      "range": {
+        "startLine": 423,
+        "startChar": 5,
+        "endLine": 423,
+        "endChar": 47
+      },
+      "revId": "85e005fdf853df694d4f22553de42289fcc69022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0fc0e94e_cd57a399",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-28T19:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24d86a37_222d7825",
+      "range": {
+        "startLine": 576,
+        "startChar": 38,
+        "endLine": 576,
+        "endChar": 61
+      },
+      "revId": "85e005fdf853df694d4f22553de42289fcc69022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "615715ee_5e5551ca",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "85e005fdf853df694d4f22553de42289fcc69022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf88b8c_18ba2b3b",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-28T19:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "615715ee_5e5551ca",
+      "range": {
+        "startLine": 588,
+        "startChar": 2,
+        "endLine": 588,
+        "endChar": 44
+      },
+      "revId": "85e005fdf853df694d4f22553de42289fcc69022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "bc23c4b2_0744b077",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-28T19:10:41Z",
+      "side": 1,
+      "message": "fixed!",
+      "parentUuid": "d8f1bf9b_c73080b5",
+      "range": {
+        "startLine": 290,
+        "startChar": 23,
+        "endLine": 290,
+        "endChar": 34
+      },
+      "revId": "85e005fdf853df694d4f22553de42289fcc69022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7723cab_10e43848",
         "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "85e005fdf853df694d4f22553de42289fcc69022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493c87aa_29276e3e",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-28T19:10:41Z",
+      "side": 1,
+      "message": "Good suggestion! Done.",
+      "parentUuid": "f7723cab_10e43848",
+      "range": {
+        "startLine": 822,
+        "startChar": 2,
+        "endLine": 832,
+        "endChar": 3
+      },
+      "revId": "85e005fdf853df694d4f22553de42289fcc69022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
