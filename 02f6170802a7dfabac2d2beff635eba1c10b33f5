@@ -22,6 +22,30 @@
       "revId": "02f6170802a7dfabac2d2beff635eba1c10b33f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f72d52ba_93bdb967",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-28T14:53:22Z",
+      "side": 1,
+      "message": "Yeah possibly, while the set of parameters basically follow the parameters of corresponding Mojo methods (therefore we use this pattern a lot) and some of the arguments are expected to go away after more code is mojofied and servicified, so doing so now might not be too useful at least yet. I\u0027ll examine after transient code goes away.",
+      "parentUuid": "1387a08d_21b911c4",
+      "range": {
+        "startLine": 57,
+        "startChar": 46,
+        "endLine": 57,
+        "endChar": 66
+      },
+      "revId": "02f6170802a7dfabac2d2beff635eba1c10b33f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
