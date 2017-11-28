@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0d75eca_2f629c43",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T16:33:13Z",
+      "side": 1,
+      "message": "Just to confirm: Is this correct/expected?\n\nNamely, if a cert is requested in a sign-in profile but the wrong context, you\u0027re attempting to continue without authentication - which is possible to do.\n\nIf you\u0027re trying to \u0027ignore\u0027 the request, then you should just let the ClientCertificateDelegate be destroyed - which will abort the request with ERR_SSL_CLIENT_AUTH_CERT_NEEDED",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f2de84_22a69a1a",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2407,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T16:33:13Z",
+      "side": 1,
+      "message": "Similarly, this code is causing side-effects, of saying \"Try to affirmtively continue without sending a client cert\" versus \"Abort the request\"\n\nIn the //net code, we\u0027ve historically tried to let the request abort (although there\u0027s some hinkiness around that with respect to CORS I\u0027m working on fixing)",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e7e924_2e8afcf6",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T16:33:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you call the base class setup first, rather than last? What members could you (indirectly) be relying on?",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b355a9_598c3887",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T16:33:13Z",
+      "side": 1,
+      "message": "BUG: If this fails, you\u0027ll end up hanging line 389, because you\u0027ll never post the done_callback\n\nThis is because ASSERT_TRUE is, in effect, an early return when the assertion fails.\n\nI think you want this as EXPECT_TRUE and then up at line 390 you want to make sure that there have been no failures.\n\nHowever, because SetUpOnMainThread() is itself a subroutine, in addition to changing this to EXPECT_TRUE, you really want to assert during your actual unittest start that no test failure assertions had fired before you actually run your test.",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d61c83_8d1bf5dd",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T16:33:13Z",
+      "side": 1,
+      "message": "similar remarks - because this is a void method, your ASSERT means nothing here :)",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a1bed4_9d71d58d",
+        "filename": "chrome/browser/chromeos/net/client_cert_filter_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T16:33:13Z",
+      "side": 1,
+      "message": "naming: no trailing underscore",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b5d024_75405b4d",
+        "filename": "chrome/browser/chromeos/net/client_cert_filter_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T16:33:13Z",
+      "side": 1,
+      "message": "newline between 26/27",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921b5cdb_467fb508",
+        "filename": "chrome/browser/chromeos/net/client_cert_filter_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T16:33:13Z",
+      "side": 1,
+      "message": "I\u0027m not sure the intended layering here between ChromeOS components, but it feels a little \u0027weird\u0027 that //chrome/browser/net knows about the notion of the SignIn profile.\n\nIt seems like having the public ctor like it was provides a greater API separation, so I\u0027m curious why the factory methods were chosen.",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d4e1258_bab4cb29",
+        "filename": "chrome/browser/profiles/profile_io_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T16:33:13Z",
+      "side": 1,
+      "message": "Similar to my remarks about the ctor, it seems like given that use_system_key_slot_ and username_hash_ are known, whether or not the sign-in filter is used is really just a property of these two values - that is, no need to add an extra bool, right?\n\nIs there a reason for the explicit member?",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
