@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99029d7b_6202bee8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-28T23:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bc0d54e_bf992e3e",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e99de4c_d189bd28",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f11491_1be9796c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-28T23:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e99de4c_d189bd28",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c82a8db8_eb44301a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-28T23:05:09Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to make the content visible, but it will still pass if the browser doesn\u0027t support sticky position. The test is more about catching a rendering regression in Chrome than testing specific behaviour of the feature. Maybe that means I should keep it in local layout tests instead?",
+      "parentUuid": "ced4b5b1_a7507653",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62fde487_1d7e7dbd",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
         "patchSetId": 2
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "5feda7b4_f8f8812b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-28T23:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62fde487_1d7e7dbd",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6d97a99_986fe94b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
         "patchSetId": 2
@@ -102,6 +174,24 @@
       "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b20327_1664ecce",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-table-parts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-28T23:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d97a99_986fe94b",
+      "revId": "5f8832adb64d0e26ee958b181a23242787729e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
