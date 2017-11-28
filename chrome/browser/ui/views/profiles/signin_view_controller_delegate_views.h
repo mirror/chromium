@@ -78,6 +78,12 @@ class SigninViewControllerDelegateViews : public views::DialogDelegateView,
   static std::unique_ptr<views::WebView> CreateDialogWebView(
       Browser* browser,
       const std::string& url,
+      int dialog_height,
+      int dialog_width);
+
+  static std::unique_ptr<views::WebView> CreateDialogWebView(
+      Browser* browser,
+      const std::string& url,
       int dialog_height);
 
   views::WebView* content_view_;
