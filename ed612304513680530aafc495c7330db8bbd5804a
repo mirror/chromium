@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2195a2f_b1603278",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-28T18:38:19Z",
+      "side": 1,
+      "message": "sg! We already have a helper function to parse the binary paths, I think it\u0027s also reasonable to have a helper to parse build directory.",
+      "parentUuid": "8a2e7641_a3c19f88",
+      "range": {
+        "startLine": 15,
+        "startChar": 37,
+        "endLine": 15,
+        "endChar": 50
+      },
+      "revId": "ed612304513680530aafc495c7330db8bbd5804a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6851e12_7fb5fd9d",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4d7f355d_1406a69a",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-28T18:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6851e12_7fb5fd9d",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 4
+      },
+      "revId": "ed612304513680530aafc495c7330db8bbd5804a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "408468c3_ebbdbc2b",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-22T23:12:35Z",
       "side": 1,
       "message": "We need to think about handling output from the target commands. If there are more than target, the output gets completely mixed up. I tried to run 2 unit tests and 2 fuzzers locally, it looks funny :D",
+      "range": {
+        "startLine": 256,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 77
+      },
+      "revId": "ed612304513680530aafc495c7330db8bbd5804a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c5cd1c_b115c28f",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-28T18:38:19Z",
+      "side": 1,
+      "message": "that\u0027s a great concern! An easy way to get around is to simply silent the output, but I guess that\u0027s not user friendly because a bad checkout may produce strange code coverage report due to test failures and crashes, and in that case, users may want to examine the output to understand what\u0027s going on. I think a good compromise is to redirect the output to a file, WDYT? If it sgty, I\u0027ll implement it.",
+      "parentUuid": "408468c3_ebbdbc2b",
       "range": {
         "startLine": 256,
         "startChar": 4,
