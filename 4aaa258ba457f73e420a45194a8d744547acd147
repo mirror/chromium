@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "179e395d_4f6b3fcf",
+        "filename": "components/password_manager/core/browser/password_syncable_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-28T17:40:16Z",
+      "side": 1,
+      "message": "Just curious: Is there a good reason why this isn\u0027t simply 4? Same applies above (line 999).",
+      "range": {
+        "startLine": 1006,
+        "startChar": 33,
+        "endLine": 1006,
+        "endChar": 38
+      },
+      "revId": "4aaa258ba457f73e420a45194a8d744547acd147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
