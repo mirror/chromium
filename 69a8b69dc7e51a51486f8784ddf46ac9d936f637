@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b06212d1_dc13783d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-28T04:15:55Z",
+      "side": 1,
+      "message": "Done. It\u0027s a bit minimal now, but I\u0027m not sure what else there is to say that\u0027s not already covered in the linked bug.",
+      "parentUuid": "a841f1f7_73b1701d",
+      "revId": "69a8b69dc7e51a51486f8784ddf46ac9d936f637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09cd7862_a08de96c",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 3
