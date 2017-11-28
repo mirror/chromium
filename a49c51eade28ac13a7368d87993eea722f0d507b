@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8da29b4_7813ab70",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57a71fb6_735d4f6f",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44aee1ce_aacc099a",
         "filename": "content/browser/locks/lock_manager.cc",
         "patchSetId": 30
@@ -33,6 +51,24 @@
       "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c31b10_7dae3f4b",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44aee1ce_aacc099a",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "867ef87f_5d14654c",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa68471f_133f0169",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e399b61_f72701e3",
         "filename": "content/browser/locks/lock_manager.h",
         "patchSetId": 30
@@ -67,6 +121,24 @@
       "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709b39f2_0c1b19e0",
+        "filename": "content/browser/locks/lock_manager.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e399b61_f72701e3",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0af45d60_3bbd86d9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8368a8bb_af24d12b",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7277cb13_38ab1742",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
         "patchSetId": 30
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-27T20:02:57Z",
       "side": 1,
       "message": "The tests here and in worker.html are really nice, given the difficulty of the surface being covered!",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcd1e3ab_cddf510b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7277cb13_38ab1742",
       "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "8be737bd_96f730bd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36ce2a86_dd42d5f8",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6508a98_7cc27d88",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
         "patchSetId": 30
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-27T20:02:57Z",
       "side": 1,
       "message": "Could we avoid snoozing by asserting that trying to get the lock with ifAvailable: true returns no lock in the callback?\n\nTo be completely clear, I think got_it checks should remain here and at the end of the file. I just hope that issuing a call with ifAvailable: true would get the same guarantees (that the lock whose callback sets got_it has been requested, and the request has been considered and not granted) as waiting for some time.\n\nPlease consider the same question below and in worker.html.",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c092b8_f01ab7d5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Excellent idea! These tests predate ifAvailable, updating them makes sense.",
+      "parentUuid": "b6508a98_7cc27d88",
       "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "6bd3f993_3744afd8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62eb5383_097610b7",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dec3d462_5c881eaf",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
         "patchSetId": 30
@@ -203,6 +365,24 @@
       "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066e1627_162468f5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dec3d462_5c881eaf",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "ea82ae5d_6bdaf6f0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/lock-attributes.html",
+        "patchSetId": 30
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab5c0fcf_09600b92",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "154b977b_d7de3150",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/resources/worker.js",
         "patchSetId": 30
@@ -240,6 +438,24 @@
     },
     {
       "key": {
+        "uuid": "fa3d1f21_2d60d54f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/resources/worker.js",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Workers and iframes have different postMessage() APIs for communicating with the owner: `parent.postMessage(data, \u0027*\u0027)` vs. `self.postMessage(data)` so that\u0027d need to be context sensitive.\n\nAgreed the current names are really generic, we should revisit later.",
+      "parentUuid": "154b977b_d7de3150",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c018a496_0d086549",
         "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
         "patchSetId": 30
@@ -254,6 +470,24 @@
       "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5847619_3ea76253",
+        "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-28T01:23:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c018a496_0d086549",
+      "revId": "a49c51eade28ac13a7368d87993eea722f0d507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
