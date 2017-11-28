@@ -184,6 +184,27 @@ GrPixelConfig ToGrPixelConfig(ResourceFormat format) {
   return kSkia8888_GrPixelConfig;
 }
 
+gpu::raster::TextureFormat ToRasterTextureFormat(ResourceFormat format) {
+  DCHECK_LE(format, RESOURCE_FORMAT_MAX);
+  static const gpu::raster::TextureFormat format_resource_texture_format[] = {
+      gpu::raster::RGBA_8888,      // RGBA_8888
+      gpu::raster::RGBA_4444,      // RGBA_4444
+      gpu::raster::BGRA_8888,      // BGRA_8888
+      gpu::raster::ALPHA_8,        // ALPHA_8
+      gpu::raster::LUMINANCE_8,    // LUMINANCE_8
+      gpu::raster::RGB_565,        // RGB_565
+      gpu::raster::ETC1,           // ETC1
+      gpu::raster::RED_8,          // RED_8
+      gpu::raster::LUMINANCE_F16,  // LUMINANCE_F16
+      gpu::raster::RGBA_F16,       // RGBA_F16
+      gpu::raster::R16_EXT,        // R16_EXT
+  };
+  static_assert(
+      arraysize(format_resource_texture_format) == (RESOURCE_FORMAT_MAX + 1),
+      "format_resource_texture_format does not handle all cases.");
+  return format_resource_texture_format[format];
+}
+
 bool IsResourceFormatCompressed(ResourceFormat format) {
   return format == ETC1;
 }
