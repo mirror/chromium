@@ -108,8 +108,8 @@ ToolbarActionsBar::ToolbarActionsBar(ToolbarActionsBarDelegate* delegate,
       is_showing_bubble_(false),
       tab_strip_observer_(this),
       weak_ptr_factory_(this) {
-  if (model_)  // |model_| can be null in unittests.
-    model_observer_.Add(model_);
+  DCHECK(model_);
+  model_observer_.Add(model_);
 
   tab_strip_observer_.Add(browser_->tab_strip_model());
 }
@@ -127,16 +127,6 @@ ToolbarActionsBar::~ToolbarActionsBar() {
 int ToolbarActionsBar::IconWidth(bool include_padding) {
   return IconHeight() +
          (include_padding ? GetLayoutConstant(TOOLBAR_STANDARD_SPACING) : 0);
-}
-
-// static
-int ToolbarActionsBar::IconHeight() {
-#if defined(OS_MACOSX)
-  // On the Mac, the spec is a 24x24 button in a 28x28 space.
-  return 24;
-#else
-  return 28;
-#endif
 }
 
 // static
@@ -198,9 +188,6 @@ size_t ToolbarActionsBar::WidthToIconCount(int pixels) const {
 }
 
 size_t ToolbarActionsBar::GetIconCount() const {
-  if (!model_)
-    return 0;
-
   int pop_out_modifier = 0;
   // If there is a popped out action, it could affect the number of visible
   // icons - but only if it wouldn't otherwise be visible.
@@ -316,7 +303,7 @@ ToolbarActionsBar::GetActions() const {
 void ToolbarActionsBar::CreateActions() {
   CHECK(toolbar_actions_.empty());
   // If the model isn't initialized, wait for it.
-  if (!model_ || !model_->actions_initialized())
+  if (!model_->actions_initialized())
     return;
 
   {
@@ -445,7 +432,7 @@ void ToolbarActionsBar::OnAnimationEnded() {
   // message bubble, or to show a popup.
   if (pending_bubble_controller_) {
     ShowToolbarActionBubble(std::move(pending_bubble_controller_));
-  } else if (!popped_out_closure_.is_null()) {
+  } else if (popped_out_closure_) {
     popped_out_closure_.Run();
     popped_out_closure_.Reset();
   }
