@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "34ee407d_88578b4a",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Thanks for the cast suggestion; will do that!",
+      "parentUuid": "d6251a16_53aa3fea",
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a5aecb6_e5b301a4",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_view_ids.h",
         "patchSetId": 2
@@ -77,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "df84cfcc_a931ea03",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_view_ids.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f71db6b8_b31ae80b",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b8a48ae_50ff3a03",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
         "patchSetId": 2
@@ -100,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "431bf81e_7be2ad29",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "I thought updating the buttons deleted the buttons themselves (code link 1), so I\u0027d have to reassign IDs to the newly-created updated buttons.  Upon removing this line, though, it all still works even at the CVC step, so I suppose I was mistaken.  Removed!\n\n[1] https://cs.chromium.org/chromium/src/ui/views/window/dialog_client_view.cc?l\u003d283\u0026rcl\u003d01f5663845957887c093d73bf3edc56705ede310",
+      "parentUuid": "0b8a48ae_50ff3a03",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 34
+      },
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a82a3ff6_6c0b1488",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.h",
         "patchSetId": 2
@@ -114,6 +180,24 @@
       "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85d7fb5_21112a30",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a82a3ff6_6c0b1488",
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +270,30 @@
     },
     {
       "key": {
+        "uuid": "431ab56c_a197e995",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Resolving this, as I turned it into test Logic_ShouldAttemptToOfferToSaveIfEverythingFound, from which branches other tests.",
+      "parentUuid": "ce8fde15_91cc0383",
+      "range": {
+        "startLine": 114,
+        "startChar": 23,
+        "endLine": 114,
+        "endChar": 55
+      },
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a2158f_f7fc05f7",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
         "patchSetId": 2
@@ -206,6 +314,30 @@
       "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5ebb11_bfba80bc",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Resolving this; did it by adding an ObserverForTest to CreditCardSaveManager.",
+      "parentUuid": "b7a2158f_f7fc05f7",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 32
+      },
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +410,30 @@
     },
     {
       "key": {
+        "uuid": "5a58c171_8a8d2537",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63882927_f985d215",
+      "range": {
+        "startLine": 379,
+        "startChar": 0,
+        "endLine": 381,
+        "endChar": 56
+      },
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b9fa584_2bcc9c65",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
         "patchSetId": 2
@@ -289,6 +445,24 @@
       "writtenOn": "2017-11-27T14:08:58Z",
       "side": 1,
       "message": "Is there a better way of doing this?",
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c94324_67eb6792",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "I\u0027m honestly not sure what this even implies; I just took it from the PaymentRequest example [1].  Any suggestions?\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/payments/payment_request_browsertest_base.h?l\u003d44-46\u0026rcl\u003d6779c823ac4a5a2fabd5dd83b75055c274f892f6",
+      "parentUuid": "0b9fa584_2bcc9c65",
       "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -312,6 +486,24 @@
     },
     {
       "key": {
+        "uuid": "5f258ef7_3754e7ba",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Done in https://chromium-review.googlesource.com/c/chromium/src/+/792264.  I\u0027ll need to rebase again once that hits master branch so I can get rid of the changes it\u0027s bringing to this CL.",
+      "parentUuid": "4114513d_691c48a1",
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9090c26_381034d9",
         "filename": "components/test/data/payments/credit_card_upload_form_address_and_cc.html",
         "patchSetId": 2
@@ -323,6 +515,30 @@
       "writtenOn": "2017-11-22T23:25:46Z",
       "side": 1,
       "message": "I essentially copied this file from dump-truck, but it throws 26 HTML style presubmit issues that would essentially require remaking most of the form.  Given that it\u0027s only a test data file, should I care?",
+      "range": {
+        "startLine": 6,
+        "startChar": 3,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "003d9ca98dc088feffa3b168a774060718ddd290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3186a7bb_40b30694",
+        "filename": "components/test/data/payments/credit_card_upload_form_address_and_cc.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Better question--will those presubmit warnings actually block submit?",
+      "parentUuid": "a9090c26_381034d9",
       "range": {
         "startLine": 6,
         "startChar": 3,

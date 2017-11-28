@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64751287_9a9a4503",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Can ignore this file; it\u0027s mirroring the change I\u0027m rebased off of:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/792264",
+      "revId": "e5a7eaec01bdf49d9ccb27cf0dfd32473a330d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe6a042_06cfa8f4",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Can ignore this file; it\u0027s mirroring the change I\u0027m rebased off of:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/792264",
+      "revId": "e5a7eaec01bdf49d9ccb27cf0dfd32473a330d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41965a6f_2a24c4a8",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Can ignore this file; it\u0027s mirroring the change I\u0027m rebased off of:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/792264",
+      "revId": "e5a7eaec01bdf49d9ccb27cf0dfd32473a330d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09c43034_0544ab00",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Can ignore this file; it\u0027s mirroring the change I\u0027m rebased off of:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/792264",
+      "revId": "e5a7eaec01bdf49d9ccb27cf0dfd32473a330d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "500df226_ce5c34b4",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T03:15:29Z",
+      "side": 1,
+      "message": "Can ignore this file; it\u0027s mirroring the change I\u0027m rebased off of:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/792264",
+      "revId": "e5a7eaec01bdf49d9ccb27cf0dfd32473a330d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
