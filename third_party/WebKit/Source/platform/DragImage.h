@@ -53,7 +53,7 @@ class PLATFORM_EXPORT DragImage {
       Image*,
       RespectImageOrientationEnum = kDoNotRespectImageOrientation,
       float device_scale_factor = 1,
-      InterpolationQuality = kInterpolationHigh,
+      InterpolationQuality = kInterpolationDefault,
       float opacity = 1,
       FloatSize image_scale = FloatSize(1, 1));
 
