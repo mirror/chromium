@@ -57,9 +57,10 @@ bool IsImageFormatCompatibleWithGpuMemoryBufferFormat(
     unsigned internalformat,
     gfx::BufferFormat format) {
   switch (format) {
+    case gfx::BufferFormat::BGRA_8888:
+      return internalformat == GL_RGBA || internalformat == GL_BGRA_EXT;
     case gfx::BufferFormat::ATC:
     case gfx::BufferFormat::ATCIA:
-    case gfx::BufferFormat::BGRA_8888:
     case gfx::BufferFormat::BGRX_8888:
     case gfx::BufferFormat::DXT1:
     case gfx::BufferFormat::DXT5:
