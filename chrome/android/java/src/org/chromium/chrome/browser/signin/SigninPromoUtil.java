@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.text.TextUtils;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
@@ -17,7 +18,6 @@ import org.chromium.components.signin.ChromeSigninController;
 import org.chromium.ui.base.WindowAndroid;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,36 +33,60 @@ public class SigninPromoUtil {
      */
     public static boolean launchSigninPromoIfNeeded(final Activity activity) {
         ChromePreferenceManager preferenceManager = ChromePreferenceManager.getInstance();
-        int lastPromoMajorVersion = preferenceManager.getSigninPromoLastShownVersion();
         int currentMajorVersion = ChromeVersionInfo.getProductMajorVersion();
+        boolean wasSignedIn =
+                TextUtils.isEmpty(PrefServiceBridge.getInstance().getSyncLastAccountName());
+        HashSet<String> accountNames =
+                new HashSet<>(AccountManagerFacade.get().tryGetGoogleAccountNames());
+        if (!shouldLaunchSigninPromo(preferenceManager, currentMajorVersion,
+                    ChromeSigninController.get().isSignedIn(), wasSignedIn, accountNames)) {
+            return false;
+        }
+
+        AccountSigninActivity.startIfAllowed(activity, SigninAccessPoint.SIGNIN_PROMO);
+        recordSigninPromoShown(preferenceManager, currentMajorVersion, accountNames);
+        return true;
+    }
+
+    /**
+     * Launches the signin promo if it needs to be displayed.
+     * @param preferenceManager
+     * @param currentMajorVersion
+     * @param isSignedIn
+     * @param wasSignedIn
+     * @param accountNames
+     * @return Whether the signin promo should be shown.
+     */
+    @VisibleForTesting
+    public static boolean shouldLaunchSigninPromo(ChromePreferenceManager preferenceManager,
+            int currentMajorVersion, boolean isSignedIn, boolean wasSignedIn,
+            Set<String> accountNames) {
+        int lastPromoMajorVersion = preferenceManager.getSigninPromoLastShownVersion();
         if (lastPromoMajorVersion == 0) {
             preferenceManager.setSigninPromoLastShownVersion(currentMajorVersion);
             return false;
         }
 
         // Don't show if user is signed in or there are no Google accounts on the device.
-        if (ChromeSigninController.get().isSignedIn()) return false;
-        List<String> accountNames = AccountManagerFacade.get().tryGetGoogleAccountNames();
-        if (accountNames.size() == 0) return false;
+        if (isSignedIn) return false;
+        if (accountNames.isEmpty()) return false;
 
         // Don't show if user has manually signed out.
-        String lastSyncAccountName = PrefServiceBridge.getInstance().getSyncLastAccountName();
-        if (TextUtils.isEmpty(lastSyncAccountName)) return false;
+        if (wasSignedIn) return false;
 
         // Promo can be shown at most once every 2 Chrome major versions.
         if (currentMajorVersion < lastPromoMajorVersion + 2) return false;
 
         // Don't show if account list hasn't changed since the last time promo was shown.
         Set<String> previousAccountNames = preferenceManager.getSigninPromoLastAccountNames();
-        Set<String> currentAccountNames = new HashSet<>(accountNames);
-        if (ApiCompatibilityUtils.objectEquals(previousAccountNames, currentAccountNames)) {
-            return false;
-        }
+        return !ApiCompatibilityUtils.objectEquals(previousAccountNames, accountNames);
+    }
 
-        AccountSigninActivity.startIfAllowed(activity, SigninAccessPoint.SIGNIN_PROMO);
+    @VisibleForTesting
+    public static void recordSigninPromoShown(ChromePreferenceManager preferenceManager,
+            int currentMajorVersion, Set<String> accountNames) {
         preferenceManager.setSigninPromoLastShownVersion(currentMajorVersion);
-        preferenceManager.setSigninPromoLastAccountNames(currentAccountNames);
-        return true;
+        preferenceManager.setSigninPromoLastAccountNames(accountNames);
     }
 
     /**
