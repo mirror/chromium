@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ddf511f_fb3f219c",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/parser/make_atrule_names.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-28T07:12:11Z",
+      "side": 1,
+      "message": "is this number affected by aliases? I noticed that the JSON file didn\u0027t have an entry for the alias.",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23c64c1_2c4c9e44",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-28T07:12:11Z",
+      "side": 1,
+      "message": "lol",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c20afe5_1af63456",
+        "filename": "third_party/WebKit/Source/core/css/parser/AtRuleDescriptorParser.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-28T07:12:11Z",
+      "side": 1,
+      "message": "I assume this was mainly copied from CSSPropertyParser?",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46468e4_82f938a5",
+        "filename": "third_party/WebKit/Source/core/css/parser/AtRuleDescriptorParser.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-28T07:12:11Z",
+      "side": 1,
+      "message": "s/CSSParserImp/CSSParserImpl/",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b841a8_f4af1c12",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-28T07:12:11Z",
+      "side": 1,
+      "message": "nit: maybe there\u0027s a proper name for this part of a declaration?",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3324d0f_60456a18",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-28T07:12:11Z",
+      "side": 1,
+      "message": "nit: const AtRuleDescriptorID ...",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
