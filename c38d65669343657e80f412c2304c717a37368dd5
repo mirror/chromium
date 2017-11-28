@@ -22,6 +22,30 @@
       "revId": "c38d65669343657e80f412c2304c717a37368dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a2d9d6_4a287445",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-28T08:21:51Z",
+      "side": 0,
+      "message": "Can you add DCHECKs for these preconditions? I think they\u0027re reasonable assumptions based on my understanding of the flows, but let\u0027s lock them in and see if things explode.",
+      "parentUuid": "904266fa_6d0c262c",
+      "range": {
+        "startLine": 274,
+        "startChar": 14,
+        "endLine": 274,
+        "endChar": 39
+      },
+      "revId": "c38d65669343657e80f412c2304c717a37368dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
