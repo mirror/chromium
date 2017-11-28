@@ -3,6 +3,7 @@ include_rules = [
 
   "+mojo/common",
   "+mojo/converters",
+  "+mojo/edk/embedder",
   "+mojo/logging",
   "+mojo/public",
 
