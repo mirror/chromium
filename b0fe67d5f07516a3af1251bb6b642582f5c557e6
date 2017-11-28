@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2479e131_f36a361c",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T21:16:26Z",
+      "side": 1,
+      "message": "Personally, I would prefer to reject (\"Go away\").\nBut I also don\u0027t want to regress anything (e.g. captive portal requesting client cert in webview on sign-in screen?). So I wanted to do whatever would happen without this CL in this case.\nIIUC, without this CL, the response is \"I\u0027m not going to send you anything\" due to the SSLClientAuthHandler logic + empty ClientCertStore, so that\u0027s what I was going with.",
+      "parentUuid": "877f2078_ede791ab",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31f2de84_22a69a1a",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 6
@@ -139,6 +157,24 @@
       "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd2017e_859da22c",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T21:16:26Z",
+      "side": 1,
+      "message": "Resolving this, as discussion has moved to the new comment thread.",
+      "parentUuid": "367a2dea_48941fdf",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

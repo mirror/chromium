@@ -22,6 +22,30 @@
       "revId": "524e3f407bca68fa88faf4bc85a9cfaf8b80c42c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5353a0e1_bd2c9fb1",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T21:16:26Z",
+      "side": 1,
+      "message": "Oh, I always assumed BrowserTestBase did checks for failures after each of these \"SetUp\" calls. I was wrong.\n\nI\u0027ve decided to make this an explicit function call in the test body:\nASSERT_NO_FATAL_FAILURE(SetUpClientCertInSystemSlot());\n\nOtherwise, I think I\u0027d have to explicitly check for failures at the beginning of the test body and exit early, and then it\u0027d be far away from the actual EXPECT/ASSERT call, so I think this is cleaner.",
+      "parentUuid": "6a378269_975e27be",
+      "range": {
+        "startLine": 402,
+        "startChar": 4,
+        "endLine": 402,
+        "endChar": 15
+      },
+      "revId": "524e3f407bca68fa88faf4bc85a9cfaf8b80c42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
