@@ -22,6 +22,30 @@
       "revId": "1afe6a5971f2dbb880e6c26d7a7772c3b7007715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed59543_ab1fe6dc",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T18:19:17Z",
+      "side": 0,
+      "message": "I think it is clearer to theck these invariants in ScriptSourceCode, not here.\n\nThis DCHECK() invariant is guaranteed by ScriptSourceCode::ScriptSourceCode() constructor (DCHECK() for the inline-script ctor, and kExternalFile is set in the external-script ctor).\nI can also make this CompileScript() take ScriptSourceCode argument directly later, and after that it would be clearer that this invariant is checked by ScriptSourceCode.",
+      "parentUuid": "57a4f5d2_4a6b31b3",
+      "range": {
+        "startLine": 433,
+        "startChar": 2,
+        "endLine": 433,
+        "endChar": 8
+      },
+      "revId": "1afe6a5971f2dbb880e6c26d7a7772c3b7007715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
