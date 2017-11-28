@@ -34,6 +34,24 @@
       "revId": "ea4186ffd9fddd3386e67f494c191a4550dda935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c53fbc_ef7268a2",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-28T21:40:17Z",
+      "side": 1,
+      "message": "\u003e Then CVC cannot compare the old values with the new values to detect changes, since it gets the old ones from RC. That\u0027s why RC was updated in the later part of java CVC.updateFrameInfo.\n\nOh, then can we move updating RC back to CVC then? This CL is objectively worse because you are duplicating logic that\u0027s normally in RC",
+      "parentUuid": "0b071a37_2aa0d3b1",
+      "revId": "ea4186ffd9fddd3386e67f494c191a4550dda935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
