@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11a66a5e_5e9ecaaa",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-28T18:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6c4fc71_6c2a84a7",
+      "range": {
+        "startLine": 44,
+        "startChar": 41,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54465e52_0e18e049",
         "filename": "services/data_decoder/public/cpp/safe_xml_parser_unittest.cc",
         "patchSetId": 13
@@ -39,6 +63,24 @@
       "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17aa3c27_86567ee9",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-28T18:25:19Z",
+      "side": 1,
+      "message": "They are not supported in this CL. Support for them (and tests) is in a follow up CL:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/773460/15",
+      "parentUuid": "54465e52_0e18e049",
+      "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "40692a56_62b15433",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-28T18:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d22dddd6_d8b74248",
+      "range": {
+        "startLine": 40,
+        "startChar": 1,
+        "endLine": 40,
+        "endChar": 33
+      },
+      "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af42ac29_0389ad2b",
         "filename": "services/data_decoder/public/cpp/safe_xml_parser_unittest.cc",
         "patchSetId": 13
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "4e0b4450_03b19fdb",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-28T18:25:19Z",
+      "side": 1,
+      "message": "These are more test cases for xml_parser_unittest.cc that tests the correctness of the parsing. This is testing the client API convenience methods.\nThere is already a test for CDATA with []\"\u0027\u003c\u003e... in xml_parser_unittest.cc\nI added a test there for malformed CDATA.",
+      "parentUuid": "af42ac29_0389ad2b",
+      "range": {
+        "startLine": 89,
+        "startChar": 32,
+        "endLine": 89,
+        "endChar": 53
+      },
+      "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae60c680_e35387bc",
         "filename": "services/data_decoder/public/cpp/safe_xml_parser_unittest.cc",
         "patchSetId": 13
@@ -102,6 +192,24 @@
       "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8605f884_707fef89",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-28T18:25:19Z",
+      "side": 1,
+      "message": "Added tests in xml_parser_unittest.cc for that as well.",
+      "parentUuid": "ae60c680_e35387bc",
+      "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
