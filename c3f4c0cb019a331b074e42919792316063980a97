@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a8a75df_4a492dab",
+        "filename": "chrome/browser/ui/apps/app_info_dialog.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-28T03:46:18Z",
+      "side": 1,
+      "message": "Can you use base::OnceClosure here, call with std::move and all that fancy stuff? The way it is now is a bit messy with raw pointers and non-Once callbacks.",
+      "revId": "c3f4c0cb019a331b074e42919792316063980a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44060d18_69e3f5a9",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-28T03:46:18Z",
+      "side": 1,
+      "message": "What\u0027s the point of this class?",
+      "revId": "c3f4c0cb019a331b074e42919792316063980a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ca3dd4_e561d27a",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-28T03:46:18Z",
+      "side": 1,
+      "message": "Wow - no need to spin a run loop here?",
+      "range": {
+        "startLine": 470,
+        "startChar": 14,
+        "endLine": 470,
+        "endChar": 28
+      },
+      "revId": "c3f4c0cb019a331b074e42919792316063980a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd28e9c_a7075d6c",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_container.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-28T03:46:18Z",
+      "side": 1,
+      "message": "Why was this added? It seems like this class (BaseSomething) is just a base class and shouldn\u0027t have actual instances?",
+      "revId": "c3f4c0cb019a331b074e42919792316063980a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
