@@ -63,7 +63,6 @@
 #include "chrome/browser/ui/search_engines/keyword_editor_controller.h"
 #include "chrome/browser/ui/tabs/pinned_tab_codec.h"
 #include "chrome/browser/ui/webui/flags_ui.h"
-#include "chrome/browser/ui/webui/instant_ui.h"
 #include "chrome/browser/ui/webui/ntp/new_tab_ui.h"
 #include "chrome/browser/ui/webui/print_preview/sticky_settings.h"
 #include "chrome/common/features.h"
@@ -461,7 +460,6 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   HostContentSettingsMap::RegisterProfilePrefs(registry);
   ImportantSitesUtil::RegisterProfilePrefs(registry);
   IncognitoModePrefs::RegisterProfilePrefs(registry);
-  InstantUI::RegisterProfilePrefs(registry);
   MediaCaptureDevicesDispatcher::RegisterProfilePrefs(registry);
   MediaDeviceIDSalt::RegisterProfilePrefs(registry);
   MediaEngagementService::RegisterProfilePrefs(registry);
