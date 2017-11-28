@@ -124,6 +124,24 @@
       "revId": "37792a9c3a16c0bba397a6241133dca6509a0557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa01e6dc_9a8c4278",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaDrmBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-28T22:50:20Z",
+      "side": 1,
+      "message": "Yeah, ideally we should return NO_KEY here, but since this should not happen in normal cases, and we have no way to differentiate IllegalArgumentException caused by released MediaCryoto and those caused by other reasons, signaling an error sgtm.",
+      "parentUuid": "21f3af60_3f0fe0bc",
+      "revId": "37792a9c3a16c0bba397a6241133dca6509a0557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
