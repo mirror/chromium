@@ -9,6 +9,7 @@
 
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/common/content_export.h"
 #include "content/common/possibly_associated_interface_ptr.h"
@@ -65,6 +66,17 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
       scoped_refptr<base::SingleThreadTaskRunner> task_runner =
           base::ThreadTaskRunnerHandle::Get());
 
+  // Similar to the method above, but uses |loader| instead of a
+  // mojom::URLLoaderFactory to start the loader.
+  static std::unique_ptr<ThrottlingURLLoader> CreateLoaderAndStart(
+      std::pair<mojom::URLLoaderPtr, mojom::URLLoaderClientRequest> loader,
+      std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+      int32_t routing_id,
+      const ResourceRequest& url_request,
+      mojom::URLLoaderClient* client,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+          base::ThreadTaskRunnerHandle::Get());
+
   ~ThrottlingURLLoader() override;
 
   void FollowRedirect();
@@ -81,10 +93,10 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
  private:
   class ForwardingThrottleDelegate;
 
-  ThrottlingURLLoader(
-      std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-      mojom::URLLoaderClient* client,
-      const net::NetworkTrafficAnnotationTag& traffic_annotation);
+  ThrottlingURLLoader(std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+                      mojom::URLLoaderClient* client,
+                      const base::Optional<net::NetworkTrafficAnnotationTag>&
+                          traffic_annotation);
 
   // Either of the two sets of arguments below is valid but not both:
   // - |factory|, |routing_id|, |request_id| and |options|;
@@ -94,6 +106,8 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
              int32_t request_id,
              uint32_t options,
              StartLoaderCallback start_loader_callback,
+             std::pair<mojom::URLLoaderPtr, mojom::URLLoaderClientRequest>
+                 given_loader,
              const ResourceRequest& url_request,
              scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
@@ -102,6 +116,8 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
                 int32_t request_id,
                 uint32_t options,
                 StartLoaderCallback start_loader_callback,
+                std::pair<mojom::URLLoaderPtr, mojom::URLLoaderClientRequest>
+                    given_loader,
                 const ResourceRequest& url_request,
                 scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
@@ -185,6 +201,8 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
               int32_t in_request_id,
               uint32_t in_options,
               StartLoaderCallback in_start_loader_callback,
+              std::pair<mojom::URLLoaderPtr, mojom::URLLoaderClientRequest>
+                  given_loader,
               const ResourceRequest& in_url_request,
               scoped_refptr<base::SingleThreadTaskRunner> in_task_runner);
     ~StartInfo();
@@ -195,6 +213,7 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
     uint32_t options;
 
     StartLoaderCallback start_loader_callback;
+    std::pair<mojom::URLLoaderPtr, mojom::URLLoaderClientRequest> given_loader;
 
     ResourceRequest url_request;
     // |task_runner_| is used to set up |client_binding_|.
@@ -238,7 +257,7 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
   // Set if request is deferred and SetPriority() is called.
   std::unique_ptr<PriorityInfo> priority_info_;
 
-  const net::NetworkTrafficAnnotationTag traffic_annotation_;
+  const base::Optional<net::NetworkTrafficAnnotationTag> traffic_annotation_;
 
   uint32_t inside_delegate_calls_ = 0;
 
