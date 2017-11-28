@@ -52,6 +52,24 @@
       "revId": "f35ff3763bf47780532b4a169e14f747caf0c5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b751e381_fbd80521",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-28T05:15:03Z",
+      "side": 1,
+      "message": "\u003e Thanks for explanation.\n\u003e \n\u003e It seems AfterAnchor(OUTPUT) from EditingPositionOf() is wrong.\n\u003e Because, OUTPUT can have children when it is default value mode.\n\u003e Once we change HTMLOutputElement::CanContainRangeEndPoint() as below,\n\u003e |search_start| will be OUTPUT@1\n\u003e \n\u003e bool HTMLOutputElement::CanContainRangeEndPoint() const { \n\u003e   return is_default_value_mode_; \n\u003e }\n\nSeems reasonable. I\u0027ll try.\n\nThanks for the idea!\n\n\u003e \n\u003e BTW, TextIterator can take arbitrary position, we don\u0027t need to use\n\u003e ParentAnchoredEquivalent() for |start| and |start| is VisiblePosition,\n\u003e we don\u0027t need to use EditingPositionOf().\n\u003e \n\u003e Thus, fix HTMLOutputElement::CanContainRangeEndPoint() fixes this crash and\n\u003e makes EditingPositionOf() works as expected for OUTPUT.\n\u003e \n\u003e Avoiding to use ParentAnchoredEquivalent() and EditingPositionOf() makes\n\u003e NextBoundaryAlgorithm() robust.\n\nIndeed. However, this change seems more tricky than the other one. I\u0027ll try later.",
+      "parentUuid": "c33d54b7_356b8a18",
+      "revId": "f35ff3763bf47780532b4a169e14f747caf0c5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
