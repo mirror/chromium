@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4e764c4_5c6dc6a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-28T04:46:58Z",
+      "side": 1,
+      "message": "\"Add ServiceWorkerUpdateViaCache to mojom::ServiceWorkerRegisterOptions\"\n may be more describing what this CL does?",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "d81178d6cf3f1bf66feaa6a97d6fb42a03468a72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ba7a8b_16444d04",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-28T04:46:58Z",
+      "side": 1,
+      "message": "Would it be better to specify it as follows?\n// TODO(crbug/xxx): Implement |type| attribute.\nProbably the issue is crbug.com/680046. I believe nhiroki knows that:)",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 73
+      },
+      "revId": "d81178d6cf3f1bf66feaa6a97d6fb42a03468a72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
