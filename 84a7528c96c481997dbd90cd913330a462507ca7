@@ -106,6 +106,24 @@
       "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb6f310_2ecbc8b1",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-28T08:07:48Z",
+      "side": 1,
+      "message": "If you don\u0027t know which task type is appropriate, why can you map kInternalInitialization to the timer task runner? If you map it to the timer task runner, doesn\u0027t it mean that you know that it should be kUnspecedTimer?\n\nThat\u0027s exactly why I want to avoid introducing a new task type... it will just confuse developers.\n\nThe current rule is:\n\n- Internal tasks that should not be throttled should go to kUnthrottled.\n- Internal tasks that should be related to loading contents should go to kUnspecedLoader.\n- All other internal tasks should go to kUnspecedTimer.",
+      "parentUuid": "9e2ce25f_dadc09ec",
+      "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
