@@ -22,6 +22,30 @@
       "revId": "65a6ff7ff80d2db451f562334ae7470439eae58e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25021586_2cf21088",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-28T13:00:01Z",
+      "side": 1,
+      "message": "Done, except reusing the function.\n\nThere is also the is_reconcile_noop_ variable, which requires additional handling (either passing another boolean, or resetting it after the call).\nI think at this point, trying to reuse these 3 lines of code is overkill.\n\nAbout the 3 reasons, I\u0027m not sure why a) would be better if we don\u0027t share the RevokeAllSecondaryTokens() function, and c) is not obvious to me. However b) seems like a clear benefit.",
+      "parentUuid": "b9fb4a64_9a21747f",
+      "range": {
+        "startLine": 349,
+        "startChar": 24,
+        "endLine": 349,
+        "endChar": 31
+      },
+      "revId": "65a6ff7ff80d2db451f562334ae7470439eae58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
