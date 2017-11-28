@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e6cac96_de585514",
+        "filename": "ios/chrome/browser/feature_engagement/feature_engagement_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-28T02:16:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2feefdc3_569911b9",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 32,
+        "endChar": 50
+      },
+      "revId": "135354b08fc4df8eef7080949de1577383493452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9337a96_69c3b763",
         "filename": "ios/chrome/browser/feature_engagement/feature_engagement_egtest.mm",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7f38bdb0_590eceba",
+        "filename": "ios/chrome/browser/feature_engagement/feature_engagement_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-28T02:16:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9337a96_69c3b763",
+      "revId": "135354b08fc4df8eef7080949de1577383493452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "206c0049_7c70f77f",
         "filename": "ios/chrome/browser/feature_engagement/feature_engagement_egtest.mm",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-20T18:34:21Z",
       "side": 1,
       "message": "Will this properly synchronize? EG probably doesn\u0027t track this.",
+      "revId": "135354b08fc4df8eef7080949de1577383493452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4402f08b_cb84df4a",
+        "filename": "ios/chrome/browser/feature_engagement/feature_engagement_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-28T02:16:38Z",
+      "side": 1,
+      "message": "Will EG run this code before starting the UI operations below it in the test? If so, then there wouldn\u0027t be a problem since it is non-UI, synchronous code that just increments a count in the feature engagement tracker. This count does not matter until the tools menu is displayed.",
+      "parentUuid": "206c0049_7c70f77f",
       "revId": "135354b08fc4df8eef7080949de1577383493452",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "9a28180b_8da7e5f9",
+        "filename": "ios/chrome/browser/feature_engagement/feature_engagement_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-28T02:16:38Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "dc81c948_d47a8a80",
+      "revId": "135354b08fc4df8eef7080949de1577383493452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b46194a_f853f9d6",
         "filename": "ios/chrome/test/earl_grey/BUILD.gn",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "135354b08fc4df8eef7080949de1577383493452",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ed18ed_d0719f57",
+        "filename": "ios/chrome/test/earl_grey/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-28T02:16:38Z",
+      "side": 1,
+      "message": "huangml@ said to make it a separate target, since the UI test suite is being split out. It does not take a flag.",
+      "parentUuid": "3b46194a_f853f9d6",
+      "revId": "135354b08fc4df8eef7080949de1577383493452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
