@@ -20,6 +20,8 @@
 namespace ui {
 
 enum class CursorSize;
+class PlatformWindow;
+class PlatformWindowDelegate;
 struct TextInputState;
 
 namespace ws {
@@ -39,6 +41,11 @@ class PlatformDisplay : public ui::EventSource {
       ServerWindow* root_window,
       const display::ViewportMetrics& metrics,
       ThreadedImageCursorsFactory* threaded_image_cursors_factory);
+
+  // Create a platform window with the given delegate and bounds.
+  static std::unique_ptr<PlatformWindow> CreatePlatformWindow(
+      PlatformWindowDelegate* delegate,
+      const gfx::Rect& bounds);
 
   virtual void Init(PlatformDisplayDelegate* delegate) = 0;
 
