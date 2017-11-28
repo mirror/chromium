@@ -22,6 +22,30 @@
       "revId": "d6572d3aefee78056bd33a0d889558b5bcaebdca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07399a87_db57b2c1",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T20:06:06Z",
+      "side": 1,
+      "message": "I just moved everything into the switch. It\u0027s not too bad.",
+      "parentUuid": "364307ba_cf1087e8",
+      "range": {
+        "startLine": 545,
+        "startChar": 2,
+        "endLine": 548,
+        "endChar": 12
+      },
+      "revId": "d6572d3aefee78056bd33a0d889558b5bcaebdca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
