@@ -22,6 +22,30 @@
       "revId": "2b36a25bb4f398a0794ab5e57515d2da19fb18f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62505f07_21e0e10f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/EmulationModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-28T23:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57e78eca_47f06373",
+      "range": {
+        "startLine": 228,
+        "startChar": 71,
+        "endLine": 228,
+        "endChar": 76
+      },
+      "revId": "2b36a25bb4f398a0794ab5e57515d2da19fb18f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
