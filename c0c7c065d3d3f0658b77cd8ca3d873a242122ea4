@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "51895d90_5a95674c",
+        "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-11-28T01:21:42Z",
+      "side": 1,
+      "message": "OK, sgtm. I guess this is the best we can do then...",
+      "parentUuid": "75195346_aee96f34",
+      "range": {
+        "startLine": 106,
+        "startChar": 42,
+        "endLine": 106,
+        "endChar": 64
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee97fb5c_03fed221",
         "filename": "chromeos/components/tether/asynchronous_shutdown_object_container_impl.cc",
         "patchSetId": 3
