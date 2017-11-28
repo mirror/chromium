@@ -27,6 +27,7 @@
 
 class CommonNameMismatchHandler;
 class Profile;
+class UrgentInterstitial;
 
 namespace base {
 class Clock;
@@ -102,7 +103,8 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
     virtual void ShowMITMSoftwareInterstitial(
         const std::string& mitm_software_name,
         bool is_enterprise_managed) = 0;
-    virtual void ShowSSLInterstitial() = 0;
+    virtual void ShowSSLInterstitial(bool is_urgent_interstitial,
+                                     const GURL& support_url) = 0;
     virtual void ShowBadClockInterstitial(
         const base::Time& now,
         ssl_errors::ClockState clock_state) = 0;
@@ -169,6 +171,7 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
   void ShowSSLInterstitial();
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state);
+  void ShowUrgentInterstitial(UrgentInterstitial* urgent_interstitial);
 
   // Gets the result of whether the suggested URL is valid. Displays
   // common name mismatch interstitial or ssl interstitial accordingly.
