@@ -8,6 +8,7 @@ import abc
 import distutils.spawn
 import logging
 import os
+import sys
 
 _STATUS_DETECTED = 1
 _STATUS_VERIFIED = 2
@@ -108,9 +109,11 @@ class ToolPrefixFinder(_PathFinder):
         if os.path.isfile(ret + _SAMPLE_TOOL_SUFFIX):
           return ret
         else:
-          logging.warn('Invalid default tool-prefix: %s', ret)
-          # TODO(huangs): For LLD, print more instruction on how to download
-          # or build the required tools.
+          logging.error('tool-prefix not found: %s' % ret)
+          if ret.endswith('llvm-'):
+            logging.error('Probably need to run: '
+                          'tools/clang/scripts/download_objdump.py')
+          sys.exit(1)
     from_path = distutils.spawn.find_executable(_SAMPLE_TOOL_SUFFIX)
     if from_path:
       return from_path[:-7]
