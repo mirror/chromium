@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "043f6d35_bdcdaff0",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T16:58:50Z",
+      "side": 1,
+      "message": "Have you considered reporting different enumeration values for save/update?",
+      "range": {
+        "startLine": 407,
+        "startChar": 12,
+        "endLine": 407,
+        "endChar": 55
+      },
+      "revId": "4e4be6a9699a153a9a8b8dd26d7dadfc38fcd67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0acd929_31e148eb",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T16:58:50Z",
+      "side": 1,
+      "message": "phrasing nit: Need to close the bubble, otherwise the bubble state is retained and navigation, and the PasswordFormManager is not destroyed.\n\nSame below.",
+      "range": {
+        "startLine": 480,
+        "startChar": 30,
+        "endLine": 481,
+        "endChar": 20
+      },
+      "revId": "4e4be6a9699a153a9a8b8dd26d7dadfc38fcd67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd10bd3_42104ff9",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T16:58:50Z",
+      "side": 1,
+      "message": "nit: Do we need this nested scope any longer?",
+      "revId": "4e4be6a9699a153a9a8b8dd26d7dadfc38fcd67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
