@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0627878f_71eb65e1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T23:03:30Z",
+      "side": 1,
+      "message": "nit: i\u0027d make this be a static public method instead; then the test can still call it but it\u0027s scoped within the class",
+      "revId": "5fa65afb3f8f18cab6d9c6540a98e43c00cfb1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57118292_fd155caa",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T23:03:30Z",
+      "side": 1,
+      "message": "nit: also check that 15 results in 15?",
+      "revId": "5fa65afb3f8f18cab6d9c6540a98e43c00cfb1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
