@@ -22,6 +22,30 @@
       "revId": "d5e35b77dad3970ca0804fd653cea335ad909ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c0180b_e4f4f980",
+        "filename": "ui/gfx/gpu_fence_passthrough.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T19:59:58Z",
+      "side": 1,
+      "message": "I still think treating GpuFence as an interface is cleanest. You\u0027re free to just use the GpuFencePassthrough implementation if that fits your use case, but I think it\u0027s useful to have GLFence support the interface as well. See discussion in https://chromium-review.googlesource.com/c/chromium/src/+/680135/46/ui/gl/gl_fence.h#16 , the earlier version where a specially constructed GLFence needed to be used to populate a GpuFence was very confusing.\n\nIs it ok to just use GpuFencePassthrough for your code and ignore the GLFence implementation if you don\u0027t find it useful?",
+      "parentUuid": "ca8eabde_7e483944",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "d5e35b77dad3970ca0804fd653cea335ad909ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
