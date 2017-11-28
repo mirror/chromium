@@ -34,6 +34,23 @@
       "revId": "6f26a4b4295a1261ae3c325b70e34b1b8ff45061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e2d83ef_e134d39d",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T16:20:51Z",
+      "side": 1,
+      "message": "I added a comment about this on the accessor definition since it was bare.",
+      "revId": "6f26a4b4295a1261ae3c325b70e34b1b8ff45061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
