@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06af39fb_2415dd14",
+        "filename": "base/memory/shared_memory_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-28T05:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e19a1c1_c53a7c0c",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1d6a185_b2078751",
         "filename": "base/memory/shared_memory_helper.h",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f371fa_aaa9a715",
+        "filename": "base/memory/shared_memory_helper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-28T05:16:46Z",
+      "side": 1,
+      "message": "Good point! Done.",
+      "parentUuid": "e1d6a185_b2078751",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "a802a7b8_8198c4cd",
+        "filename": "base/memory/shared_memory_helper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-28T05:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb3d6f77_6dff79bc",
+      "range": {
+        "startLine": 28,
+        "startChar": 29,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "435241b4_4dd13158",
         "filename": "base/memory/shared_memory_mac.cc",
         "patchSetId": 18
@@ -73,6 +133,24 @@
       "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c07e080_94c836d3",
+        "filename": "base/memory/shared_memory_mac.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-28T05:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "435241b4_4dd13158",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "5fb2ee64_8baa5d49",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-28T05:16:46Z",
+      "side": 1,
+      "message": "I created the bug. At least the ChromeOS trybots fail to have this, so I guess the run in a less recent version. For linux the define is there, but I\u0027m not sure if we support other older builds.",
+      "parentUuid": "1816946b_50319617",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98d3baa5_6d98e1b9",
         "filename": "base/memory/shared_memory_posix.cc",
         "patchSetId": 18
@@ -125,6 +221,24 @@
       "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82dc18de_49e6fbb0",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-28T05:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98d3baa5_6d98e1b9",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +265,30 @@
     },
     {
       "key": {
+        "uuid": "49ae97f6_0bf67314",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-28T05:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4199efb1_97b0e3b7",
+      "range": {
+        "startLine": 163,
+        "startChar": 10,
+        "endLine": 163,
+        "endChar": 16
+      },
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9909a403_e7131ef3",
         "filename": "base/memory/shared_memory_unittest.cc",
         "patchSetId": 18
@@ -165,6 +303,24 @@
       "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1359047_d3f97e30",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-28T05:16:46Z",
+      "side": 1,
+      "message": "Done. Tried to make it clearer.",
+      "parentUuid": "9909a403_e7131ef3",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +344,30 @@
       "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90e3268_c28b3cd0",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-28T05:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5af6b35_c124a150",
+      "range": {
+        "startLine": 576,
+        "startChar": 35,
+        "endLine": 576,
+        "endChar": 43
+      },
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
