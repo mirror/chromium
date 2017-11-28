@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e5ba065_85503525",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60428,
+      "author": {
+        "id": 1126709
+      },
+      "writtenOn": "2017-11-28T08:05:41Z",
+      "side": 1,
+      "message": "I have rewritten this blurb to hopefully be a bit clearer... could you take another look to see if it makes sense?\n\n(To answer your question -- no update + updates not allowed [without rebooting] is definitely a possible state.  And the metric would be emitted every time the base is connected.)",
+      "parentUuid": "fd36513b_e8f0c9e9",
+      "range": {
+        "startLine": 60428,
+        "startChar": 40,
+        "endLine": 60428,
+        "endChar": 56
+      },
+      "revId": "7acd7382062502fade9cf03b870d61cf31fffa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ee71b22_8eeb6f83",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-28T06:57:23Z",
       "side": 1,
       "message": "nit: I think \"not possible\" would read a bit more clearly",
+      "range": {
+        "startLine": 60429,
+        "startChar": 19,
+        "endLine": 60429,
+        "endChar": 27
+      },
+      "revId": "7acd7382062502fade9cf03b870d61cf31fffa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3bc243_eddb8df4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60429,
+      "author": {
+        "id": 1126709
+      },
+      "writtenOn": "2017-11-28T08:05:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee71b22_8eeb6f83",
       "range": {
         "startLine": 60429,
         "startChar": 19,
