@@ -46,6 +46,30 @@
       "revId": "08e6ebc622b809b2999e4ec35a21a3acee39a6c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2b079f_b3f9e933",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-28T21:37:36Z",
+      "side": 1,
+      "message": "Thank you for the heads up! I\u0027ll avoid that in the future, but I just wanted to quickly address the comments that were made in that CL after I had submitted it.",
+      "parentUuid": "b2fba0ed_1d44f4d2",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "08e6ebc622b809b2999e4ec35a21a3acee39a6c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
