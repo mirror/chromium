@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa894017_9f6e53a9",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 50
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "Done. I added that GenSyncTokenCHROMIUM forces a shallow flush as a side effect if necessary - is that correct, or does it do a full flush?",
+      "parentUuid": "537e1ed9_28c0c51d",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29987573_d934452c",
         "filename": "docs/design/gpu_synchronization.md",
         "patchSetId": 50
@@ -33,6 +51,24 @@
       "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e45a18_9e8df318",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 50
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29987573_d934452c",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c716b37c_87dc11b3",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 50
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8771f06a_eca75464",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d91ac35_74f0b6d1",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 50
@@ -67,6 +121,24 @@
       "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24db12a7_74e3f09d",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 5147,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "I\u0027ve added the extension flag check here, to gles2_cmd_decoder_passthrough_doers, and also to in_process_command_buffer and gpu_command_buffer_stub.\n\nLosing context seems OK if someone is trying to use an unsupported extension, this isn\u0027t going to be happening unexpectedly in the middle of doing something.",
+      "parentUuid": "1d91ac35_74f0b6d1",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "40804352_c790459d",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 2810,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "I added it to passthrough_doers.cc instead where the rest of the error handling is implemented, should be equivalent.",
+      "parentUuid": "04d8d50a_13e51574",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bd7db52_cae31302",
         "filename": "gpu/ipc/in_process_command_buffer.cc",
         "patchSetId": 50
@@ -101,6 +191,24 @@
       "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60bd3d2_69c36504",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "Done - this turned out to be a bit tedious since the InProcessCommandBuffer uses base::(Repeating)Closure, so the base::OnceCallback needed AdaptCallbackForRepeating, and I couldn\u0027t use the existing WrapCallback for thread trampolining since that didn\u0027t handle a 1-argument callback, just a closure. Does this look right now?\n\nI added some basic testing in gpu/ipc/client/gpu_context_tests.h and verified that this ends up calling the InProcessCommandBuffer functions successfully when run on Android.",
+      "parentUuid": "0bd7db52_cae31302",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "cd5d5bb3_60ebaf1b",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ea0d6e6_9b39b8e4",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdabd812_534ec3d0",
         "filename": "gpu/ipc/in_process_command_buffer.cc",
         "patchSetId": 50
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "b189d1bc_18f14220",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdabd812_534ec3d0",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7edc80f6_68645298",
         "filename": "ui/gl/gl_fence_egl.cc",
         "patchSetId": 50
@@ -152,6 +296,24 @@
       "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4374b069_759ef703",
+        "filename": "ui/gl/gl_fence_egl.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "Done, replaced with this comment:\n\n  // Do nothing. We want the destructor to destroy the EGL fence even if the GL                           \n  // context was lost. The EGL context may still be valid, and this helps avoid                           \n  // leaks.         \n\n(I wasn\u0027t aware that the EGL context can remain valid after losing a GL context.)",
+      "parentUuid": "7edc80f6_68645298",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "1f72edf4_27329bb0",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 46
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5e669858_122691b3",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d786a00f_4c944926",
         "filename": "docs/design/gpu_synchronization.md",
         "patchSetId": 46
@@ -242,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "0d732c1c_001810dd",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "FYI, I\u0027ve added a ShallowFlushCHROMIUM here also to help ensure that a GetGpuFenceHandle will (eventually) succeed even if the caller forgets to flush.",
+      "parentUuid": "d2eaa98e_45845198",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "101329cf_053fd5ea",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 46
@@ -295,6 +331,24 @@
     },
     {
       "key": {
+        "uuid": "d520f793_3a651039",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "Currently it\u0027s two fences per frame, so that should be fine. It should also deal with wraparound in normal use. A collision would require that someone intentionally hangs on to an old fence for weeks while waiting for the wraparound to happen, and even in that case the effects don\u0027t seem very bad - I think it would just cause tearing on a frame due to bad sync or potentially a GL error, but not memory corruption. Unless I\u0027m missing something, a wrap prevention CHECK seems like overkill.",
+      "parentUuid": "b2c273df_756aaef1",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1e294e_b870ce42",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 46
@@ -342,6 +396,24 @@
       "side": 1,
       "message": "ShallowFlush would be enough to create the fence. Otherwise you\u0027d have an issue anyway because you run the callbacks on the glInsert(Client)GpuFenceCHROMIUM command execution (which is what calls GpuFenceManager::CreateNewGpuFence), not on the next glFlush command.\nSince the GLFence creation explicitly calls glFlush, there\u0027s no need for a full flush.\n\nEither way, avoiding extra IPCs seems fine if we want to pay for the complexity (and assuming it\u0027s safe, see above), but I would recommend documenting on GpuControl that this happens out-of-order wrt commands, because it is the exception rather than the rule, as well as documenting the interaction with the reuse avoidance, and maybe writing a test, because this could break on a refactor.",
       "parentUuid": "f9c6c4d1_12ed70e7",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "973617a7_3ab6efee",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "You\u0027ve convinced me, I\u0027ve added a ShallowFlushCHROMIUM here to avoid surprises.",
+      "parentUuid": "ed7f5b3b_6dd03cf7",
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -728,6 +800,24 @@
     },
     {
       "key": {
+        "uuid": "d4323e3b_ab631813",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "Ah, I had the 1-liner when I wrote \"Done\", then reverted that later when adding the bool return. Changed as suggested, I wasn\u0027t aware of the \"size_t erase(key)\" variant.",
+      "parentUuid": "3ad80863_04ba375a",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b068400c_ae551e45",
         "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
         "patchSetId": 46
@@ -845,6 +935,24 @@
       "side": 1,
       "message": "I suppose it depends if you do more insert/erase operations or lookups. Moving GpuFenceEntry is just copying 4 pointers instead of 1 with the indirection, but you gain the allocation costs (time \u0026 memory overhead) and the cache effects of the indirection.",
       "parentUuid": "e63871f5_eeb7473c",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcdc14bd_9ba2dca0",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T08:26:32Z",
+      "side": 1,
+      "message": "These are typically only used once or twice after insertion, typically for either ServerWait or callback handling. Keeping as the unique_ptr map for now. In any case, this should not be performance critical in normal use.",
+      "parentUuid": "c2a6d623_943a4ee9",
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
