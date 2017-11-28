@@ -7,7 +7,6 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
-#include "base/stl_util.h"
 #include "base/trace_event/trace_event.h"
 #include "services/ui/display/screen_manager.h"
 #include "services/ui/display/viewport_metrics.h"
@@ -17,6 +16,7 @@
 #include "services/ui/ws/display_creation_config.h"
 #include "services/ui/ws/event_dispatcher.h"
 #include "services/ui/ws/frame_generator.h"
+#include "services/ui/ws/platform_display_mirror.h"
 #include "services/ui/ws/server_window.h"
 #include "services/ui/ws/user_display_manager.h"
 #include "services/ui/ws/user_display_manager_delegate.h"
@@ -91,11 +91,11 @@ bool DisplayManager::SetDisplayConfiguration(
     return false;
   }
 
-  std::set<int64_t> display_ids;
   size_t primary_display_index = std::numeric_limits<size_t>::max();
   bool found_internal_display = false;
 
   // Check the mirrors before potentially passing them to a unified display.
+  std::set<int64_t> mirror_ids;
   for (const auto& mirror : mirrors) {
     if (mirror.id() == display::kInvalidDisplayId) {
       LOG(ERROR) << "SetDisplayConfiguration passed invalid display id";
@@ -105,7 +105,7 @@ bool DisplayManager::SetDisplayConfiguration(
       LOG(ERROR) << "SetDisplayConfiguration passed unified display in mirrors";
       return false;
     }
-    if (!display_ids.insert(mirror.id()).second) {
+    if (!mirror_ids.insert(mirror.id()).second) {
       LOG(ERROR) << "SetDisplayConfiguration passed duplicate display id";
       return false;
     }
@@ -115,6 +115,8 @@ bool DisplayManager::SetDisplayConfiguration(
     }
     found_internal_display |= mirror.id() == internal_display_id;
   }
+
+  std::set<int64_t> display_ids;
   for (size_t i = 0; i < displays.size(); ++i) {
     const display::Display& display = displays[i];
     if (display.id() == display::kInvalidDisplayId) {
@@ -161,10 +163,37 @@ bool DisplayManager::SetDisplayConfiguration(
   // See comment in header as to why this doesn't use Display::SetInternalId().
   internal_display_id_ = internal_display_id;
 
+  // Update the primary display first, in case the old primary has been removed.
   display::DisplayList& display_list =
       display::ScreenManager::GetInstance()->GetScreen()->display_list();
   display_list.AddOrUpdateDisplay(displays[primary_display_index],
                                   display::DisplayList::Type::PRIMARY);
+
+  // Remove any existing displays that are not included in the configuration.
+  for (const display::Display& display : display_list.displays()) {
+    if (display_ids.count(display.id()) == 0) {
+      // The display list also contains mirrors, which do not have ws::Displays.
+      // If the destroyed display still has a root window, it is orphaned here.
+      // Root windows are destroyed by explicit window manager instruction.
+      if (Display* ws_display = GetDisplayById(display.id()))
+        DestroyDisplay(ws_display);
+      // Do not remove display::Displays entries for mirroring displays.
+      if (mirror_ids.count(display.id()) == 0)
+        display_list.RemoveDisplay(display.id());
+    }
+  }
+
+  // Remove any existing mirrors that are not included in the configuration.
+  for (int i = mirrors_.size() - 1; i >= 0; --i) {
+    if (mirror_ids.count(mirrors_[i]->display().id()) == 0) {
+      // Do not remove display::Displays entries for extended displays.
+      if (display_ids.count(mirrors_[i]->display().id()) == 0)
+        display_list.RemoveDisplay(mirrors_[i]->display().id());
+      mirrors_.erase(mirrors_.begin() + i);
+    }
+  }
+
+  // Add or update any displays that are included in the configuration.
   for (size_t i = 0; i < displays.size(); ++i) {
     Display* ws_display = GetDisplayById(displays[i].id());
     DCHECK(ws_display);
@@ -175,33 +204,28 @@ bool DisplayManager::SetDisplayConfiguration(
                                       display::DisplayList::Type::NOT_PRIMARY);
     }
   }
-  for (size_t i = 0; i < mirrors.size(); ++i) {
-    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus mirroring/unified mode.";
-    Display* ws_mirror = GetDisplayById(mirrors[i].id());
-    const auto& metrics = viewport_metrics[displays.size() + i];
-    if (!ws_mirror) {
-      // Create a mirror destination display on startup or on display connected.
-      CreateDisplay(mirrors[i], metrics);
-    } else {
-      // Reuse an existing display for mirroring that was previously extended.
-      ws_mirror->SetDisplay(mirrors[i]);
-      ws_mirror->OnViewportMetricsChanged(metrics);
-      display_list.AddOrUpdateDisplay(mirrors[i],
-                                      display::DisplayList::Type::NOT_PRIMARY);
-    }
-  }
 
-  std::set<int64_t> existing_display_ids;
-  for (const display::Display& display : display_list.displays())
-    existing_display_ids.insert(display.id());
-  std::set<int64_t> removed_display_ids =
-      base::STLSetDifference<std::set<int64_t>>(existing_display_ids,
-                                                display_ids);
-  for (int64_t display_id : removed_display_ids) {
-    display_list.RemoveDisplay(display_id);
-    // If the destroyed display still has a root window, it is orphaned here.
-    // Root windows are destroyed by explicit window manager instruction.
-    DestroyDisplay(GetDisplayById(display_id));
+  // Add or update any mirrors that are included in the configuration.
+  for (size_t i = 0; i < mirrors.size(); ++i) {
+    DCHECK(!GetDisplayById(mirrors[i].id()));
+    Display* ws_display_to_mirror = GetDisplayById(displays[0].id());
+    const auto& metrics = viewport_metrics[displays.size() + i];
+    PlatformDisplayMirror* mirror = nullptr;
+    for (size_t i = 0; i < mirrors_.size(); ++i) {
+      if (mirrors_[i]->display().id() == mirrors[i].id()) {
+        mirror = mirrors_[i].get();
+        break;
+      }
+    }
+    if (mirror) {
+      mirror->set_display(mirrors[i]);
+      mirror->UpdateViewportMetrics(metrics);
+    } else {
+      mirrors_.push_back(std::make_unique<PlatformDisplayMirror>(
+          mirrors[i], metrics, window_server_, ws_display_to_mirror));
+    }
+    display_list.AddOrUpdateDisplay(mirrors[i],
+                                    display::DisplayList::Type::NOT_PRIMARY);
   }
 
   for (auto& pair : user_display_managers_)
@@ -251,8 +275,10 @@ Display* DisplayManager::AddDisplayForWindowManager(
   const display::DisplayList::Type display_type =
       is_primary_display ? display::DisplayList::Type::PRIMARY
                          : display::DisplayList::Type::NOT_PRIMARY;
-  display::ScreenManager::GetInstance()->GetScreen()->display_list().AddDisplay(
-      display, display_type);
+  display::DisplayList& display_list =
+      display::ScreenManager::GetInstance()->GetScreen()->display_list();
+  // The display may already be listed as a mirror destination display.
+  display_list.AddOrUpdateDisplay(display, display_type);
   OnDisplayAdded(display, metrics);
   return GetDisplayById(display.id());
 }
@@ -361,6 +387,23 @@ void DisplayManager::OnDisplayAcceleratedWidgetAvailable(Display* display) {
   if (event_rewriter_)
     display->platform_display()->AddEventRewriter(event_rewriter_.get());
   window_server_->OnDisplayReady(display, is_first_display);
+}
+
+void DisplayManager::OnFirstSurfaceActivation(
+    Display* display,
+    const viz::SurfaceInfo& surface_info) {
+  display->platform_display()->GetFrameGenerator()->SetEmbeddedSurface(
+      surface_info);
+  // Also pass the surface info to any displays mirroring the given display.
+  for (size_t i = 0; i < mirrors_.size(); ++i) {
+    PlatformDisplayMirror* mirror = mirrors_[i].get();
+    if (mirror->display_to_mirror() == display) {
+      const display::ViewportMetrics& metrics = mirror->GetViewportMetrics();
+      viz::SurfaceInfo info(surface_info.id(), metrics.device_scale_factor,
+                            metrics.bounds_in_pixels.size());
+      mirror->GetFrameGenerator()->SetEmbeddedSurface(info);
+    }
+  }
 }
 
 void DisplayManager::SetHighContrastMode(bool enabled) {

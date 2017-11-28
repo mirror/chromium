@@ -34,7 +34,7 @@ class FrameGenerator : public viz::mojom::CompositorFrameSinkClient {
   void SetHighContrastMode(bool enabled);
 
   // Updates the WindowManager's SurfaceInfo.
-  void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info);
+  void SetEmbeddedSurface(const viz::SurfaceInfo& surface_info);
 
   // Swaps the |window_manager_surface_info_| with that of |other|.
   void SwapSurfaceWith(FrameGenerator* other);
@@ -43,6 +43,10 @@ class FrameGenerator : public viz::mojom::CompositorFrameSinkClient {
   void OnWindowSizeChanged(const gfx::Size& pixel_size);
   void Bind(
       std::unique_ptr<viz::mojom::CompositorFrameSink> compositor_frame_sink);
+
+  const viz::SurfaceInfo& window_manager_surface_info() const {
+    return window_manager_surface_info_;
+  }
 
  private:
   // viz::mojom::CompositorFrameSinkClient implementation:
@@ -86,7 +90,6 @@ class FrameGenerator : public viz::mojom::CompositorFrameSinkClient {
 };
 
 }  // namespace ws
-
 }  // namespace ui
 
 #endif  // SERVICES_UI_WS_FRAME_GENERATOR_H_
