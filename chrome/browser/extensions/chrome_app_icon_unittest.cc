@@ -3,8 +3,10 @@
 // found in the LICENSE file.
 
 #include <memory>
+#include <vector>
 
 #include "ash/app_list/model/app_list_item.h"
+#include "ash/app_list/model/app_list_model.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "chrome/browser/extensions/chrome_app_icon.h"
@@ -14,18 +16,23 @@
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_service_test_base.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/app_icon_loader_delegate.h"
 #include "chrome/common/chrome_constants.h"
+#include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
+#include "extensions/browser/extension_system.h"
 #include "extensions/common/constants.h"
+#include "ui/app_list/app_list_switches.h"
 #include "ui/gfx/image/image_unittest_util.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/arc/arc_util.h"
+#include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
+#include "chrome/browser/ui/app_list/app_list_service.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_test.h"
 #include "chrome/browser/ui/app_list/extension_app_model_builder.h"
 #include "chrome/browser/ui/app_list/search/extension_app_result.h"
-#include "chrome/browser/ui/app_list/test/test_app_list_controller_delegate.h"
 #include "components/arc/test/fake_app_instance.h"
 #endif  // defined(OS_CHROMEOS)
 
@@ -264,30 +271,36 @@ class ChromeAppIconWithModelTest : public ChromeAppIconTest {
 
  protected:
   void CreateBuilder() {
-    model_.reset(new app_list::AppListModel);
-    controller_.reset(new test::TestAppListControllerDelegate);
-    builder_.reset(new ExtensionAppModelBuilder(controller_.get()));
-    builder_->InitializeWithProfile(profile(), model_.get());
+    // Disable app list sync for tests
+    base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+    command_line->AppendSwitch(app_list::switches::kDisableSyncAppList);
+
+    // Make sure we have a Profile Manager.
+    DCHECK(temp_dir_.CreateUniqueTempDir());
+    TestingBrowserProcess::GetGlobal()->SetProfileManager(
+        new ProfileManagerWithoutInit(temp_dir_.GetPath()));
+
+    // All AppListModelBuilder instances should belong to an
+    // AppListSyncableService and access AppListModel through it.
+    syncable_service_.reset(new app_list::AppListSyncableService(
+        profile_.get(), extensions::ExtensionSystem::Get(profile_.get())));
+    model_ = syncable_service_->GetModel();
+    controller_ = AppListService::Get()->GetControllerDelegate();
   }
 
-  void ResetBuilder() {
-    builder_.reset();
-    controller_.reset();
-    model_.reset();
-  }
+  void ResetBuilder() { syncable_service_.reset(); }
 
   app_list::AppListItem* FindAppListItem(const std::string& app_id) {
     return model_->FindItem(app_id);
   }
 
-  test::TestAppListControllerDelegate* app_list_controller() {
-    return controller_.get();
-  }
+  AppListControllerDelegate* app_list_controller() { return controller_; }
 
  private:
-  std::unique_ptr<app_list::AppListModel> model_;
-  std::unique_ptr<test::TestAppListControllerDelegate> controller_;
-  std::unique_ptr<ExtensionAppModelBuilder> builder_;
+  app_list::AppListModel* model_;
+  AppListControllerDelegate* controller_;
+  base::ScopedTempDir temp_dir_;
+  std::unique_ptr<app_list::AppListSyncableService> syncable_service_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeAppIconWithModelTest);
 };

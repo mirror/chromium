@@ -28,6 +28,9 @@
 #include "chrome/browser/extensions/extension_service_test_base.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
+#include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
+#include "chrome/browser/ui/app_list/app_list_service.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_icon.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_icon_loader.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_item.h"
@@ -40,8 +43,8 @@
 #include "chrome/browser/ui/app_list/arc/arc_default_app_list.h"
 #include "chrome/browser/ui/app_list/arc/arc_package_syncable_service_factory.h"
 #include "chrome/browser/ui/app_list/arc/arc_pai_starter.h"
-#include "chrome/browser/ui/app_list/test/test_app_list_controller_delegate.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h"
+#include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_prefs.h"
@@ -56,6 +59,7 @@
 #include "extensions/common/manifest_constants.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_switches.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/events/event_constants.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
@@ -199,6 +203,15 @@ class ArcAppModelBuilderTest : public extensions::ExtensionServiceTestBase,
     InitializeExtensionService(ExtensionServiceInitParams());
     service_->Init();
 
+    // Disable app list sync for tests
+    base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+    command_line->AppendSwitch(app_list::switches::kDisableSyncAppList);
+
+    // Make sure we have a Profile Manager.
+    DCHECK(temp_dir_.CreateUniqueTempDir());
+    TestingBrowserProcess::GetGlobal()->SetProfileManager(
+        new ProfileManagerWithoutInit(temp_dir_.GetPath()));
+
     OnBeforeArcTestSetup();
     arc_test_.SetUp(profile_.get());
     CreateBuilder();
@@ -221,17 +234,15 @@ class ArcAppModelBuilderTest : public extensions::ExtensionServiceTestBase,
   void CreateBuilder() {
     ResetBuilder();  // Destroy any existing builder in the correct order.
 
-    model_.reset(new app_list::AppListModel);
-    controller_.reset(new test::TestAppListControllerDelegate);
-    builder_.reset(new ArcAppModelBuilder(controller_.get()));
-    builder_->InitializeWithProfile(profile_.get(), model_.get());
+    // All AppListModelBuilder instances should belong to an
+    // AppListSyncableService and access AppListModel through it.
+    syncable_service_.reset(new app_list::AppListSyncableService(
+        profile_.get(), extensions::ExtensionSystem::Get(profile_.get())));
+    model_ = syncable_service_->GetModel();
+    controller_ = AppListService::Get()->GetControllerDelegate();
   }
 
-  void ResetBuilder() {
-    builder_.reset();
-    controller_.reset();
-    model_.reset();
-  }
+  void ResetBuilder() { syncable_service_.reset(); }
 
   size_t GetArcItemCount() const {
     size_t arc_count = 0;
@@ -435,7 +446,7 @@ class ArcAppModelBuilderTest : public extensions::ExtensionServiceTestBase,
     app_instance()->SendPackageUninstalled(package.package_name);
   }
 
-  AppListControllerDelegate* controller() { return controller_.get(); }
+  AppListControllerDelegate* controller() { return controller_; }
 
   TestingProfile* profile() { return profile_.get(); }
 
@@ -463,9 +474,10 @@ class ArcAppModelBuilderTest : public extensions::ExtensionServiceTestBase,
 
  private:
   ArcAppTest arc_test_;
-  std::unique_ptr<app_list::AppListModel> model_;
-  std::unique_ptr<test::TestAppListControllerDelegate> controller_;
-  std::unique_ptr<ArcAppModelBuilder> builder_;
+  AppListControllerDelegate* controller_;
+  app_list::AppListModel* model_;
+  base::ScopedTempDir temp_dir_;
+  std::unique_ptr<app_list::AppListSyncableService> syncable_service_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcAppModelBuilderTest);
 };

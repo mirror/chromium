@@ -109,7 +109,7 @@ void ExtensionAppModelBuilder::OnDownloadProgress(
 
 void ExtensionAppModelBuilder::OnInstallFailure(
     const std::string& extension_id) {
-  model()->DeleteItem(extension_id);
+  service()->RemoveItemNoSync(extension_id);
 }
 
 void ExtensionAppModelBuilder::OnAppInstalled(
@@ -133,7 +133,7 @@ void ExtensionAppModelBuilder::OnAppInstalled(
   ExtensionAppItem* existing_item = GetExtensionAppItem(app_id);
   if (existing_item) {
     existing_item->Reload();
-    if (service())
+    if (sync_enabled())
       service()->UpdateItem(existing_item);
     return;
   }
@@ -145,12 +145,12 @@ void ExtensionAppModelBuilder::OnAppInstalled(
 void ExtensionAppModelBuilder::OnAppUninstalled(
     content::BrowserContext* browser_context,
     const std::string& app_id) {
-  if (service()) {
+  if (sync_enabled()) {
     DVLOG(2) << service() << ": OnAppUninstalled: " << app_id.substr(0, 8);
     service()->RemoveUninstalledItem(app_id);
-    return;
+  } else {
+    service()->RemoveUninstalledItemNoSync(app_id);
   }
-  model()->DeleteUninstalledItem(app_id);
 }
 
 void ExtensionAppModelBuilder::OnDisabledExtensionUpdated(

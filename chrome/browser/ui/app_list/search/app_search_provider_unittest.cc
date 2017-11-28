@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <utility>
@@ -19,21 +20,26 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/simple_test_clock.h"
 #include "chrome/browser/extensions/extension_service.h"
+#include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 #include "chrome/browser/ui/app_list/app_list_test_util.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_item.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_test.h"
 #include "chrome/browser/ui/app_list/extension_app_model_builder.h"
-#include "chrome/browser/ui/app_list/test/test_app_list_controller_delegate.h"
 #include "chrome/common/chrome_constants.h"
+#include "chrome/common/extensions/extension_constants.h"
+#include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/arc/test/fake_app_instance.h"
 #include "components/sync/model/string_ordinal.h"
 #include "extensions/browser/extension_prefs.h"
+#include "extensions/browser/extension_system.h"
 #include "extensions/browser/uninstall_reason.h"
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/extension_set.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/app_list/app_list_switches.h"
 
 namespace app_list {
 namespace test {
@@ -64,10 +70,25 @@ class AppSearchProviderTest : public AppListTestBase {
   void SetUp() override {
     AppListTestBase::SetUp();
 
-    model_.reset(new app_list::AppListModel);
-    controller_.reset(new ::test::TestAppListControllerDelegate);
-    builder_.reset(new ExtensionAppModelBuilder(controller_.get()));
-    builder_->InitializeWithProfile(profile_.get(), model_.get());
+    // Disable app list sync for tests
+    base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+    command_line->AppendSwitch(app_list::switches::kDisableSyncAppList);
+
+    // Make sure we have a Profile Manager.
+    DCHECK(temp_dir_.CreateUniqueTempDir());
+    TestingBrowserProcess::GetGlobal()->SetProfileManager(
+        new ProfileManagerWithoutInit(temp_dir_.GetPath()));
+
+    // All AppListModelBuilder instances should belong to an
+    // AppListSyncableService and access AppListModel through it.
+    syncable_service_.reset(new app_list::AppListSyncableService(
+        profile_.get(), extensions::ExtensionSystem::Get(profile_.get())));
+    model_ = syncable_service_->GetModel();
+  }
+
+  void TearDown() override {
+    syncable_service_.reset();
+    AppListTestBase::TearDown();
   }
 
   void CreateSearch() {
@@ -140,15 +161,15 @@ class AppSearchProviderTest : public AppListTestBase {
     service()->AddExtension(extension.get());
   }
 
-  AppListModel* model() { return model_.get(); }
+  AppListModel* model() { return model_; }
   const SearchProvider::Results& results() { return app_search_->results(); }
   ArcAppTest& arc_test() { return arc_test_; }
 
  private:
-  std::unique_ptr<app_list::AppListModel> model_;
+  app_list::AppListModel* model_;
+  base::ScopedTempDir temp_dir_;
   std::unique_ptr<AppSearchProvider> app_search_;
-  std::unique_ptr<ExtensionAppModelBuilder> builder_;
-  std::unique_ptr<::test::TestAppListControllerDelegate> controller_;
+  std::unique_ptr<app_list::AppListSyncableService> syncable_service_;
   ArcAppTest arc_test_;
 
   DISALLOW_COPY_AND_ASSIGN(AppSearchProviderTest);

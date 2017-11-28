@@ -8,63 +8,49 @@
 #include <vector>
 
 #include "ash/app_list/model/app_list_item.h"
-#include "ash/app_list/model/app_list_model.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 
 AppListModelBuilder::AppListModelBuilder(AppListControllerDelegate* controller,
                                          const char* item_type)
-    : controller_(controller),
-      item_type_(item_type) {
-}
+    : controller_(controller), item_type_(item_type), sync_enabled_(false) {}
 
 AppListModelBuilder::~AppListModelBuilder() {
 }
 
 void AppListModelBuilder::InitializeWithService(
     app_list::AppListSyncableService* service,
-    app_list::AppListModel* model) {
+    bool sync_enabled) {
   DCHECK(!service_ && !profile_);
-  model_ = model;
+  sync_enabled_ = sync_enabled;
   service_ = service;
   profile_ = service->profile();
 
   BuildModel();
 }
 
-void AppListModelBuilder::InitializeWithProfile(Profile* profile,
-                                                app_list::AppListModel* model) {
-  DCHECK(!service_ && !profile_);
-  model_ = model;
-  profile_ = profile;
-
-  BuildModel();
-}
-
 void AppListModelBuilder::InsertApp(
     std::unique_ptr<app_list::AppListItem> app) {
-  if (service_) {
+  if (sync_enabled_)
     service_->AddItem(std::move(app));
-    return;
-  }
-  model_->AddItem(std::move(app));
+  else
+    service_->AddItemNoSync(std::move(app));
 }
 
 void AppListModelBuilder::RemoveApp(const std::string& id,
                                     bool unsynced_change) {
-  if (!unsynced_change && service_) {
+  if (!unsynced_change && sync_enabled_)
     service_->RemoveUninstalledItem(id);
-    return;
-  }
-  model_->DeleteUninstalledItem(id);
+  else
+    service_->RemoveUninstalledItemNoSync(id);
 }
 
 const app_list::AppListSyncableService::SyncItem*
     AppListModelBuilder::GetSyncItem(const std::string& id) {
-  return service_ ? service_->GetSyncItem(id) : nullptr;
+  return sync_enabled_ && service_ ? service_->GetSyncItem(id) : nullptr;
 }
 
 app_list::AppListItem* AppListModelBuilder::GetAppItem(const std::string& id) {
-  app_list::AppListItem* item = model_->FindItem(id);
+  app_list::AppListItem* item = service_->FindItem(id);
   if (item && item->GetItemType() != item_type_) {
     VLOG(2) << "App Item matching id: " << id
             << " has incorrect type: '" << item->GetItemType() << "'";

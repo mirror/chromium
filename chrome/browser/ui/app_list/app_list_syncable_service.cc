@@ -335,6 +335,7 @@ AppListSyncableService::AppListSyncableService(
 AppListSyncableService::~AppListSyncableService() {
   // Remove observers.
   model_observer_.reset();
+  model_.reset();
 }
 
 bool AppListSyncableService::IsExtensionServiceReady() const {
@@ -401,18 +402,13 @@ void AppListSyncableService::BuildModel() {
   if (arc::IsArcAllowedForProfile(profile_))
     arc_apps_builder_.reset(new ArcAppModelBuilder(controller));
   DCHECK(profile_);
-  if (app_list::switches::IsAppListSyncEnabled()) {
-    VLOG(1) << this << ": AppListSyncableService: InitializeWithService.";
+  const bool sync_enabled = app_list::switches::IsAppListSyncEnabled();
+  if (sync_enabled) {
     SyncStarted();
-    apps_builder_->InitializeWithService(this, model_.get());
-    if (arc_apps_builder_.get())
-      arc_apps_builder_->InitializeWithService(this, model_.get());
-  } else {
-    VLOG(1) << this << ": AppListSyncableService: InitializeWithProfile.";
-    apps_builder_->InitializeWithProfile(profile_, model_.get());
-    if (arc_apps_builder_.get())
-      arc_apps_builder_->InitializeWithProfile(profile_, model_.get());
   }
+  apps_builder_->InitializeWithService(this, sync_enabled);
+  if (arc_apps_builder_.get())
+    arc_apps_builder_->InitializeWithService(this, sync_enabled);
 
   if (app_list::switches::IsDriveAppsInAppListEnabled() &&
       !::switches::ExtensionsDisabled()) {
@@ -514,6 +510,10 @@ void AppListSyncableService::HandleUpdateFinished() {
   NotifyObserversSyncUpdated();
 }
 
+app_list::AppListItem* AppListSyncableService::FindItem(const std::string& id) {
+  return model_->FindItem(id);
+}
+
 void AppListSyncableService::AddItem(std::unique_ptr<AppListItem> app_item) {
   SyncItem* sync_item = FindOrAddSyncItem(app_item.get());
   if (!sync_item)
@@ -532,6 +532,11 @@ void AppListSyncableService::AddItem(std::unique_ptr<AppListItem> app_item) {
   VLOG(2) << this << ": AddItem: " << sync_item->ToString()
           << " Folder: '" << folder_id << "'";
   model_->AddItemToFolder(std::move(app_item), folder_id);
+}
+
+void AppListSyncableService::AddItemNoSync(
+    std::unique_ptr<AppListItem> app_item) {
+  model_->AddItem(std::move(app_item));
 }
 
 AppListSyncableService::SyncItem* AppListSyncableService::FindOrAddSyncItem(
@@ -681,10 +686,19 @@ void AppListSyncableService::RemoveItem(const std::string& id) {
   PruneEmptySyncFolders();
 }
 
+void AppListSyncableService::RemoveItemNoSync(const std::string& id) {
+  model_->DeleteItem(id);
+}
+
 void AppListSyncableService::RemoveUninstalledItem(const std::string& id) {
   RemoveSyncItem(id);
   model_->DeleteUninstalledItem(id);
   PruneEmptySyncFolders();
+}
+
+void AppListSyncableService::RemoveUninstalledItemNoSync(
+    const std::string& id) {
+  model_->DeleteUninstalledItem(id);
 }
 
 void AppListSyncableService::UpdateItem(AppListItem* app_item) {

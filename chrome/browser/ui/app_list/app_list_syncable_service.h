@@ -88,15 +88,28 @@ class AppListSyncableService : public syncer::SyncableService,
   // Registers prefs to support local storage.
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
+  // Finds the item matching |id|.
+  app_list::AppListItem* FindItem(const std::string& id);
+
   // Adds |item| to |sync_items_| and |model_|. If a sync item already exists,
   // updates the existing sync item instead.
   void AddItem(std::unique_ptr<AppListItem> app_item);
 
+  // Adds |item| to |model_| but not |sync_items_|.
+  void AddItemNoSync(std::unique_ptr<AppListItem> app_item);
+
   // Removes sync item matching |id|.
   void RemoveItem(const std::string& id);
 
+  // Removes item matching |id| from |model_| but not |sync_items_|.
+  void RemoveItemNoSync(const std::string& id);
+
   // Removes sync item matching |id| after item uninstall.
   void RemoveUninstalledItem(const std::string& id);
+
+  // Removes item matching |id| from |model_| but not |sync_items| after item
+  // uninstall.
+  void RemoveUninstalledItemNoSync(const std::string& id);
 
   // Called when properties of an item may have changed, e.g. default/oem state.
   void UpdateItem(AppListItem* app_item);
@@ -147,6 +160,16 @@ class AppListSyncableService : public syncer::SyncableService,
   syncer::SyncError ProcessSyncChanges(
       const base::Location& from_here,
       const syncer::SyncChangeList& change_list) override;
+
+  // Only for tests.
+  ExtensionAppModelBuilder* GetExtensionAppModelBuilder() {
+    return apps_builder_.get();
+  }
+
+  // Only for tests.
+  ArcAppModelBuilder* GetArcAppModelBuilder() {
+    return arc_apps_builder_.get();
+  }
 
  private:
   class ModelObserver;
