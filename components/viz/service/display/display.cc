@@ -378,16 +378,27 @@ bool Display::DrawAndSwap() {
     if (scheduler_)
       scheduler_->DidSwapBuffers();
   } else {
-    if (have_damage && !size_matches)
-      aggregator_->SetFullDamageForSurface(current_surface_id_);
     TRACE_EVENT_INSTANT0("viz", "Swap skipped.", TRACE_EVENT_SCOPE_THREAD);
 
-    // Do not store more that the allowed size.
-    if (ui::LatencyInfo::Verify(frame.metadata.latency_info,
-                                "Display::DrawAndSwap")) {
-      stored_latency_info_.insert(stored_latency_info_.end(),
-                                  frame.metadata.latency_info.begin(),
-                                  frame.metadata.latency_info.end());
+    if (have_damage && !size_matches)
+      aggregator_->SetFullDamageForSurface(current_surface_id_);
+
+    if (have_damage) {
+      // Do not store more that the allowed size.
+      if (ui::LatencyInfo::Verify(frame.metadata.latency_info,
+                                  "Display::DrawAndSwap")) {
+        stored_latency_info_.insert(stored_latency_info_.end(),
+                                    frame.metadata.latency_info.begin(),
+                                    frame.metadata.latency_info.end());
+      }
+    } else {
+      base::TimeTicks now = base::TimeTicks::Now();
+      for (auto& latency : frame.metadata.latency_info) {
+        latency.AddLatencyNumberWithTimestamp(
+            ui::INPUT_EVENT_LATENCY_TERMINATED_NO_SWAP_COMPONENT, 0, 0, now, 1);
+      }
+      // TODO(brianderson): Plumb this to the latency tracker.
+      frame.metadata.latency_info.clear();
     }
 
     if (scheduler_) {

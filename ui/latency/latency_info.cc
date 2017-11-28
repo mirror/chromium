@@ -25,6 +25,12 @@ const char* GetComponentName(ui::LatencyComponentType type) {
   switch (type) {
     CASE_TYPE(INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT);
     CASE_TYPE(LATENCY_BEGIN_SCROLL_LISTENER_UPDATE_MAIN_COMPONENT);
+    CASE_TYPE(LATENCY_BEGIN_FRAME_RENDERER_MAIN_COMPONENT);
+    CASE_TYPE(LATENCY_BEGIN_FRAME_RENDERER_INVALIDATE_COMPONENT);
+    CASE_TYPE(LATENCY_BEGIN_FRAME_RENDERER_COMPOSITOR_COMPONENT);
+    CASE_TYPE(LATENCY_BEGIN_FRAME_UI_MAIN_COMPONENT);
+    CASE_TYPE(LATENCY_BEGIN_FRAME_UI_COMPOSITOR_COMPONENT);
+    CASE_TYPE(LATENCY_BEGIN_FRAME_DISPLAY_COMPOSITOR_COMPONENT);
     CASE_TYPE(INPUT_EVENT_LATENCY_SCROLL_UPDATE_ORIGINAL_COMPONENT);
     CASE_TYPE(INPUT_EVENT_LATENCY_FIRST_SCROLL_UPDATE_ORIGINAL_COMPONENT);
     CASE_TYPE(INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT);
@@ -66,13 +72,23 @@ bool IsTerminalComponent(ui::LatencyComponentType type) {
   }
 }
 
-bool IsBeginComponent(ui::LatencyComponentType type) {
-  return (type == ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT ||
-          type == ui::LATENCY_BEGIN_SCROLL_LISTENER_UPDATE_MAIN_COMPONENT);
-}
 
 bool IsInputLatencyBeginComponent(ui::LatencyComponentType type) {
   return type == ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT;
+}
+
+bool IsBeginFrameComponent(ui::LatencyComponentType type) {
+  return (type == ui::LATENCY_BEGIN_FRAME_RENDERER_MAIN_COMPONENT ||
+          type == ui::LATENCY_BEGIN_FRAME_RENDERER_INVALIDATE_COMPONENT ||
+          type == ui::LATENCY_BEGIN_FRAME_RENDERER_COMPOSITOR_COMPONENT ||
+          type == ui::LATENCY_BEGIN_FRAME_UI_MAIN_COMPONENT ||
+          type == ui::LATENCY_BEGIN_FRAME_UI_COMPOSITOR_COMPONENT ||
+          type == ui::LATENCY_BEGIN_FRAME_DISPLAY_COMPOSITOR_COMPONENT);
+}
+
+bool IsBeginComponent(ui::LatencyComponentType type) {
+  return (IsInputLatencyBeginComponent(type) || IsBeginFrameComponent(type) ||
+          type == ui::LATENCY_BEGIN_SCROLL_LISTENER_UPDATE_MAIN_COMPONENT);
 }
 
 // This class is for converting latency info to trace buffer friendly format.
@@ -130,10 +146,12 @@ static base::LazyInstance<LatencyInfoEnabledInitializer>::Leaky
 
 namespace ui {
 
-LatencyInfo::LatencyInfo() : LatencyInfo(SourceEventType::UNKNOWN) {}
+LatencyInfo::LatencyInfo() : LatencyInfo(SourceEventType::UNKNOWN, -1) {}
 
-LatencyInfo::LatencyInfo(SourceEventType type)
-    : trace_id_(-1),
+LatencyInfo::LatencyInfo(SourceEventType type) : LatencyInfo(type, -1) {}
+
+LatencyInfo::LatencyInfo(SourceEventType type, int64_t trace_id)
+    : trace_id_(trace_id),
       ukm_source_id_(ukm::kInvalidSourceId),
       coalesced_(false),
       began_(false),
@@ -230,17 +248,17 @@ void LatencyInfo::AddNewLatencyFrom(const LatencyInfo& other) {
 void LatencyInfo::AddLatencyNumber(LatencyComponentType component,
                                    int64_t id,
                                    int64_t component_sequence_number) {
-  AddLatencyNumberWithTimestampImpl(component, id, component_sequence_number,
-                                    base::TimeTicks::Now(), 1, nullptr);
+  AddLatencyNumberWithAll(component, id, component_sequence_number,
+                          base::TimeTicks::Now(), 1, "");
 }
 
 void LatencyInfo::AddLatencyNumberWithTraceName(
     LatencyComponentType component,
     int64_t id,
     int64_t component_sequence_number,
-    const char* trace_name_str) {
-  AddLatencyNumberWithTimestampImpl(component, id, component_sequence_number,
-                                    base::TimeTicks::Now(), 1, trace_name_str);
+    const std::string& trace_name_str) {
+  AddLatencyNumberWithAll(component, id, component_sequence_number,
+                          base::TimeTicks::Now(), 1, trace_name_str);
 }
 
 void LatencyInfo::AddLatencyNumberWithTimestamp(
@@ -249,17 +267,16 @@ void LatencyInfo::AddLatencyNumberWithTimestamp(
     int64_t component_sequence_number,
     base::TimeTicks time,
     uint32_t event_count) {
-  AddLatencyNumberWithTimestampImpl(component, id, component_sequence_number,
-                                    time, event_count, nullptr);
+  AddLatencyNumberWithAll(component, id, component_sequence_number, time,
+                          event_count, "");
 }
 
-void LatencyInfo::AddLatencyNumberWithTimestampImpl(
-    LatencyComponentType component,
-    int64_t id,
-    int64_t component_sequence_number,
-    base::TimeTicks time,
-    uint32_t event_count,
-    const char* trace_name_str) {
+void LatencyInfo::AddLatencyNumberWithAll(LatencyComponentType component,
+                                          int64_t id,
+                                          int64_t component_sequence_number,
+                                          base::TimeTicks time,
+                                          uint32_t event_count,
+                                          const std::string& trace_name_str) {
   const unsigned char* latency_info_enabled =
       g_latency_info_enabled.Get().latency_info_enabled;
 
@@ -278,20 +295,22 @@ void LatencyInfo::AddLatencyNumberWithTimestampImpl(
       // not when we actually issue the ASYNC_BEGIN trace event.
       LatencyComponent begin_component;
       base::TimeTicks ts;
-      if (FindLatency(INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT,
-                      0,
-                      &begin_component) ||
-          FindLatency(INPUT_EVENT_LATENCY_UI_COMPONENT,
-                      0,
-                      &begin_component)) {
+      if (IsBeginFrameComponent(component)) {
+        ts = time;
+      } else if (FindLatency(INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0,
+                             &begin_component) ||
+                 FindLatency(INPUT_EVENT_LATENCY_UI_COMPONENT, 0,
+                             &begin_component)) {
         ts = begin_component.event_time;
       } else {
         ts = base::TimeTicks::Now();
       }
 
-      if (trace_name_str) {
+      if (!trace_name_str.empty()) {
         if (IsInputLatencyBeginComponent(component))
           trace_name_ = std::string("InputLatency::") + trace_name_str;
+        else if (IsBeginFrameComponent(component))
+          trace_name_ = std::string("FrameLatency::") + trace_name_str;
         else
           trace_name_ = std::string("Latency::") + trace_name_str;
       }

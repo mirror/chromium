@@ -13,6 +13,7 @@
 #include "cc/scheduler/commit_earlyout_reason.h"
 #include "cc/scheduler/compositor_timing_history.h"
 #include "cc/scheduler/scheduler.h"
+#include "cc/trees/latency_info_swap_promise.h"
 #include "cc/trees/layer_tree_frame_sink.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_host_common.h"
@@ -39,6 +40,7 @@ SingleThreadProxy::SingleThreadProxy(LayerTreeHost* layer_tree_host,
     : layer_tree_host_(layer_tree_host),
       single_thread_client_(client),
       task_runner_provider_(task_runner_provider),
+      trace_name_("Main" + std::to_string(layer_tree_host->GetId())),
       next_frame_is_newly_committed_frame_(false),
 #if DCHECK_IS_ON()
       inside_impl_frame_(false),
@@ -55,7 +57,6 @@ SingleThreadProxy::SingleThreadProxy(LayerTreeHost* layer_tree_host,
   TRACE_EVENT0("cc", "SingleThreadProxy::SingleThreadProxy");
   DCHECK(task_runner_provider_);
   DCHECK(task_runner_provider_->IsMainThread());
-  DCHECK(layer_tree_host);
 }
 
 void SingleThreadProxy::Start() {
@@ -657,6 +658,13 @@ void SingleThreadProxy::ScheduledActionBeginMainFrameNotExpectedUntil(
 
 void SingleThreadProxy::BeginMainFrame(
     const viz::BeginFrameArgs& begin_frame_args) {
+  TRACE_EVENT1("cc", "BeginMainFrame", "name", trace_name_.c_str());
+
+  // This checker assumes NotifyReadyToCommit in this stack causes a synchronous
+  // commit.
+  ScopedAbortRemainingSwapPromises swap_promise_checker(
+      layer_tree_host_->GetSwapPromiseManager());
+
   if (scheduler_on_impl_thread_) {
     scheduler_on_impl_thread_->NotifyBeginMainFrameStarted(
         base::TimeTicks::Now());
@@ -673,11 +681,6 @@ void SingleThreadProxy::BeginMainFrame(
     return;
   }
 
-  // This checker assumes NotifyReadyToCommit in this stack causes a synchronous
-  // commit.
-  ScopedAbortRemainingSwapPromises swap_promise_checker(
-      layer_tree_host_->GetSwapPromiseManager());
-
   if (!layer_tree_host_->IsVisible()) {
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_NotVisible", TRACE_EVENT_SCOPE_THREAD);
     BeginMainFrameAbortedOnImplThread(
@@ -689,6 +692,14 @@ void SingleThreadProxy::BeginMainFrame(
   // Note: We do not want to prevent SetNeedsAnimate from requesting
   // a commit here.
   commit_requested_ = true;
+
+  static uint64_t g_trace_id = 0;
+  ui::LatencyInfo new_latency_info(ui::SourceEventType::FRAME, ++g_trace_id);
+  new_latency_info.AddLatencyNumberWithAll(
+      ui::LATENCY_BEGIN_FRAME_UI_MAIN_COMPONENT, 0, 0,
+      begin_frame_args.frame_time, 1, trace_name_);
+  layer_tree_host_->QueueSwapPromise(
+      std::make_unique<LatencyInfoSwapPromise>(new_latency_info));
 
   DoBeginMainFrame(begin_frame_args);
 

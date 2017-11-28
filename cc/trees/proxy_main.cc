@@ -14,6 +14,7 @@
 #include "cc/base/devtools_instrumentation.h"
 #include "cc/benchmarks/benchmark_instrumentation.h"
 #include "cc/resources/ui_resource_manager.h"
+#include "cc/trees/latency_info_swap_promise.h"
 #include "cc/trees/layer_tree_frame_sink.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/mutator_host.h"
@@ -29,6 +30,7 @@ ProxyMain::ProxyMain(LayerTreeHost* layer_tree_host,
     : layer_tree_host_(layer_tree_host),
       task_runner_provider_(task_runner_provider),
       layer_tree_host_id_(layer_tree_host->GetId()),
+      trace_name_("Main" + std::to_string(layer_tree_host_id_)),
       max_requested_pipeline_stage_(NO_PIPELINE_STAGE),
       current_pipeline_stage_(NO_PIPELINE_STAGE),
       final_pipeline_stage_(NO_PIPELINE_STAGE),
@@ -120,14 +122,28 @@ void ProxyMain::DidCompletePageScaleAnimation() {
 
 void ProxyMain::BeginMainFrame(
     std::unique_ptr<BeginMainFrameAndCommitState> begin_main_frame_state) {
+  DCHECK(IsMainThread());
+  DCHECK_EQ(NO_PIPELINE_STAGE, current_pipeline_stage_);
+
   benchmark_instrumentation::ScopedBeginFrameTask begin_frame_task(
       benchmark_instrumentation::kDoBeginFrame,
       begin_main_frame_state->begin_frame_id);
 
-  base::TimeTicks begin_main_frame_start_time = base::TimeTicks::Now();
+  // If the commit finishes, LayerTreeHost will transfer its swap promises to
+  // LayerTreeImpl. The destructor of ScopedSwapPromiseChecker aborts the
+  // remaining swap promises.
+  ScopedAbortRemainingSwapPromises swap_promise_checker(
+      layer_tree_host_->GetSwapPromiseManager());
 
-  DCHECK(IsMainThread());
-  DCHECK_EQ(NO_PIPELINE_STAGE, current_pipeline_stage_);
+  static uint64_t g_trace_id = 0;
+  ui::LatencyInfo new_latency_info(ui::SourceEventType::FRAME, ++g_trace_id);
+  new_latency_info.AddLatencyNumberWithAll(
+      ui::LATENCY_BEGIN_FRAME_RENDERER_MAIN_COMPONENT, 0, 0,
+      begin_main_frame_state->begin_frame_args.frame_time, 1, trace_name_);
+  layer_tree_host_->QueueSwapPromise(
+      std::make_unique<LatencyInfoSwapPromise>(new_latency_info));
+
+  base::TimeTicks begin_main_frame_start_time = base::TimeTicks::Now();
 
   // We need to issue image decode callbacks whether or not we will abort this
   // commit, since the request ids are only stored in |begin_main_frame_state|.
@@ -146,12 +162,6 @@ void ProxyMain::BeginMainFrame(
                                   base::Passed(&empty_swap_promises)));
     return;
   }
-
-  // If the commit finishes, LayerTreeHost will transfer its swap promises to
-  // LayerTreeImpl. The destructor of ScopedSwapPromiseChecker aborts the
-  // remaining swap promises.
-  ScopedAbortRemainingSwapPromises swap_promise_checker(
-      layer_tree_host_->GetSwapPromiseManager());
 
   final_pipeline_stage_ = max_requested_pipeline_stage_;
   max_requested_pipeline_stage_ = NO_PIPELINE_STAGE;
