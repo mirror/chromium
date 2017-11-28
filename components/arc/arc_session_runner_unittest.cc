@@ -8,6 +8,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback_helpers.h"
+#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -16,6 +17,7 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_session_manager_client.h"
 #include "components/arc/arc_session_runner.h"
+#include "components/arc/arc_util.h"
 #include "components/arc/test/fake_arc_session.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -56,6 +58,9 @@ class ArcSessionRunnerTest : public testing::Test,
     chromeos::DBusThreadManager::GetSetterForTesting()->SetSessionManagerClient(
         std::make_unique<chromeos::FakeSessionManagerClient>());
     chromeos::DBusThreadManager::Initialize();
+
+    SetArcAvailableCommandLineForTesting(
+        base::CommandLine::ForCurrentProcess());
 
     stop_reason_ = ArcStopReason::SHUTDOWN;
     restarting_ = false;
