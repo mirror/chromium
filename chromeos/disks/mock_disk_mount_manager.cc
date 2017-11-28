@@ -229,7 +229,7 @@ void MockDiskMountManager::NotifyDiskChanged(
     DiskEvent event,
     const DiskMountManager::Disk* disk) {
   for (auto& observer : observers_)
-    observer.OnDiskEvent(event, disk);
+    observer.OnBootDeviceDiskEvent(event, disk);
 }
 
 void MockDiskMountManager::NotifyDeviceChanged(DeviceEvent event,
