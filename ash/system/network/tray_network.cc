@@ -77,7 +77,7 @@ class NetworkTrayView : public TrayItemView,
   explicit NetworkTrayView(TrayNetwork* network_tray)
       : TrayItemView(network_tray) {
     CreateImageView();
-    UpdateNetworkStateHandlerIcon();
+    UpdateNetworkStateHandlerIcon(true);
   }
 
   ~NetworkTrayView() override {
@@ -86,7 +86,7 @@ class NetworkTrayView : public TrayItemView,
 
   const char* GetClassName() const override { return "NetworkTrayView"; }
 
-  void UpdateNetworkStateHandlerIcon() {
+  void UpdateNetworkStateHandlerIcon(bool notify_a11y) {
     gfx::ImageSkia image;
     base::string16 name;
     bool animating = false;
@@ -99,7 +99,7 @@ class NetworkTrayView : public TrayItemView,
     else
       network_icon::NetworkIconAnimation::GetInstance()->RemoveObserver(this);
 
-    UpdateConnectionStatus(GetConnectedNetwork());
+    UpdateConnectionStatus(GetConnectedNetwork(), notify_a11y);
   }
 
   // views::View:
@@ -109,11 +109,12 @@ class NetworkTrayView : public TrayItemView,
   }
 
   // network_icon::AnimationObserver:
-  void NetworkIconChanged() override { UpdateNetworkStateHandlerIcon(); }
+  void NetworkIconChanged() override { UpdateNetworkStateHandlerIcon(false); }
 
  private:
   // Updates connection status and notifies accessibility event when necessary.
-  void UpdateConnectionStatus(const NetworkState* connected_network) {
+  void UpdateConnectionStatus(const NetworkState* connected_network,
+                              bool notify_a11y) {
     using SignalStrength = network_icon::SignalStrength;
 
     base::string16 new_connection_status_string;
@@ -154,7 +155,7 @@ class NetworkTrayView : public TrayItemView,
     }
     if (new_connection_status_string != connection_status_string_) {
       connection_status_string_ = new_connection_status_string;
-      if (!connection_status_string_.empty())
+      if (notify_a11y && !connection_status_string_.empty())
         NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
     }
   }
@@ -306,12 +307,12 @@ void TrayNetwork::RequestToggleWifi() {
 }
 
 void TrayNetwork::OnCaptivePortalDetected(const std::string& /* guid */) {
-  NetworkStateChanged();
+  NetworkStateChanged(true);
 }
 
-void TrayNetwork::NetworkStateChanged() {
+void TrayNetwork::NetworkStateChanged(bool notify_a11y) {
   if (tray_)
-    tray_->UpdateNetworkStateHandlerIcon();
+    tray_->UpdateNetworkStateHandlerIcon(notify_a11y);
   if (default_)
     default_->Update();
   if (detailed_)
