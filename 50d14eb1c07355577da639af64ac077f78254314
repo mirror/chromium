@@ -151,6 +151,24 @@
       "revId": "50d14eb1c07355577da639af64ac077f78254314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22d5dee5_72f49622",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T18:33:11Z",
+      "side": 1,
+      "message": "\u003e I have the same intuition that they can be removed, but there is the odd case which is somehow still relevant:\n\u003e \n\u003e When OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial \u003d true and ShouldShowNonContextualZeroSuggest returns true, we run both MaybeUseCachedSuggestions() and CreateContextualSuggestionsRequest(std::string(), ...). \n\nI don\u0027t see how that happens.  If InZeroSuggestPersonalizedFieldTrial returns true, then ShouldShowNonContextualZeroSuggest() will always return false.  See line 544 on this patchset.\n\n\u003e I find this very bizarre. I believe MaybeUseCachedSuggestions should be wrapped around an\n\u003e if (OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial(\n\u003e           client()-\u003eGetPrefs()))\n\u003e and return after it uses Cached Suggestions. \n\u003e \n\u003e Let\u0027s consider this issue in a subsequent CL that uses the enum, as it seems out of the scope of this CL. See crbug.com/789137.",
+      "parentUuid": "456661d6_c4cd7b0c",
+      "revId": "50d14eb1c07355577da639af64ac077f78254314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
