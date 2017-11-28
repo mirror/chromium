@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed3de0d3_c8018d00",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-28T02:00:07Z",
+      "side": 1,
+      "message": "Which one does have wrong value, |search_start| or |search_end|?\nI guess it is |search_start| since EditingPositionOf() may return wrong\nvalue.\n\nPossible values of |search_start| are:\n - TABLE@0\n - Before(TABLE)\n - After(TABLE) ... this one?\n\nIt seems strange that EditingPositionOf() is called with anchor node and\noffset in container node. It should be container node + offset in container\nnode.\n\nHowever, in this case, |start| may be TABLE@0.",
+      "revId": "f35ff3763bf47780532b4a169e14f747caf0c5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
