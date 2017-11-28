@@ -1,0 +1,726 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6428d724_91b3955e",
+        "filename": "chrome/android/java/res/layout/accept_languages_list.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this line does anything on a RecyclerView",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c44986a_d4307950",
+        "filename": "chrome/android/java/res/layout/languages_preference.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "android:padding sets padding on all four edges, so paddingStart and paddingEnd are redundant.",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 25
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27a6f6b2_6b45a242",
+        "filename": "chrome/android/java/res/layout/languages_selection_toolbar.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "The mocks show the \"Add language\" screen toolbar using the same style as other preference screens. I believe the color maps to dark_action_bar_color based on tracing from styles.xml PreferencesTheme to its parent ThemeWithActionBar.",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641e79f7_411578da",
+        "filename": "chrome/android/java/res/menu/languages_action_bar_menu.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "I think we probably want to always show this as an action.",
+      "range": {
+        "startLine": 15,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 40
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199fc0d3_0d5f279d",
+        "filename": "chrome/android/java/res/menu/languages_action_bar_menu.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "The mocks show a back arrow to exit (rather than a close button), which is more in-line with other preference screens. Our bookmarks UI uses a back arrow for folder traversal. Checkout BookmarkActionBar.java\u0027s use of setNavigationButton(NAVIGATION_BUTTON_BACK) for an example.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06fcd3bd_721483dc",
+        "filename": "chrome/android/java/res/menu/languages_action_bar_menu.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "The mocks don\u0027t show a selection mode. When is this used?\n\nPerhaps in a follow-up CL we can add a selection mode.. multi-select -\u003e add language could be useful and should be easy to support with the selectable list widgets.",
+      "range": {
+        "startLine": 23,
+        "startChar": 25,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd14648_fd2aaf19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "nit: capitalize Chrome",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337223ff_e135397c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "nit: @return A sorted list..\n\nSame for getChromeLanguageList JavaDoc",
+      "range": {
+        "startLine": 930,
+        "startChar": 7,
+        "endLine": 930,
+        "endChar": 13
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7cb9f2_59cee2ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "s/accpet/accept\n\ns/for current/for the current",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa638a2_93aa1952",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "s/a accept/an accept",
+      "range": {
+        "startLine": 23,
+        "startChar": 32,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f35c81f_ce675a7b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "false is the default so this can just be \"private boolean mAccepted;\".",
+      "range": {
+        "startLine": 24,
+        "startChar": 20,
+        "endLine": 24,
+        "endChar": 38
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a94865_1b408484",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "All of these public method need JavaDocs",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8fe007_5ef296cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "nit: mRecyclerView?",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2803e39f_4f4ffa09",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "What\u0027s the expected ordering for how this method gets called? Is there some way to guarantee that it\u0027s called before mAddButtonClickListener is needed?",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b1a61a2_e7518479",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "Can/should this be mLanguagesList?",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03e2569_43eb4a23",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "How about just \"Get all language info from native.\"",
+      "range": {
+        "startLine": 118,
+        "startChar": 48,
+        "endLine": 118,
+        "endChar": 58
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a8fa136_8bd87923",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "Is it possible for accept languages to change through something other than these methods? If so, is there a listener/observer that could be notified of changes in the back end?",
+      "range": {
+        "startLine": 146,
+        "startChar": 7,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6390617_496de52f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "Why does the item only get added to mLanguagesList if it\u0027s not already in the languages map?",
+      "range": {
+        "startLine": 163,
+        "startChar": 12,
+        "endLine": 169,
+        "endChar": 0
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8413979_04c846ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "s/mDesc/mDescription",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e22c35_da83f866",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "This looks like it has some chunks code in common with LanguageListPreference. Is there a way to share code to reduce duplicate lines?",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac18b584_6b216abb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "This should have a type specified (probably \u003cLanguageItem\u003e)",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 32
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdaea33e_2070a1a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "I recommend pulling this out into a separate file. It\u0027s big enough to stand on its own.",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbbec80_c415925a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "Some quick code comments about when mFullLanguageList is used vs mLanguageList would be great. Also, mDisplayedLanguageList or something like that may help clarify what each is used for when scanning the code.",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 48
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ef1116_c21f33f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "style nit: put this on a single line and add a blank line after it",
+      "range": {
+        "startLine": 104,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 13
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f2346b_98d1a273",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "Should we also search in getNativeDisplayName() and/or getCode()?",
+      "range": {
+        "startLine": 111,
+        "startChar": 20,
+        "endLine": 111,
+        "endChar": 77
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcee6bd2_30a047e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "Remove this line if it\u0027s not needed.",
+      "range": {
+        "startLine": 123,
+        "startChar": 13,
+        "endLine": 123,
+        "endChar": 36
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd58815_18c68057",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "mDescription",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1741eb_f25c5a1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "\"selected\" in the selectable list widget world means that the user long-pressed the item and it is currently showing as selected. I think onLanguageClicked() is a more appropriate name.",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73f20cb_e58ba307",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "Please pull this out for now. iirc, our scripts that check for missing histograms/actions don\u0027t currently detect whether the call is commented out so landing this will cause pre-submit scripts to fail for future CLs.",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 66
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27edf805_c509bb1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "downloads_big isn\u0027t the right thing to use for the empty drawable. Is there a language icon that can be used instead?",
+      "range": {
+        "startLine": 178,
+        "startChar": 85,
+        "endLine": 178,
+        "endChar": 98
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad4af13_7847aec2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "How are you disallowing multi-select? Is it just that the item views don\u0027t have a long-press handler?\n\nFor the comment, I\u0027d use something like \"No multi-select support yet.\"",
+      "range": {
+        "startLine": 197,
+        "startChar": 55,
+        "endLine": 197,
+        "endChar": 92
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a6f3db_1d446701",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "Remove this line too",
+      "range": {
+        "startLine": 204,
+        "startChar": 7,
+        "endLine": 204,
+        "endChar": 55
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c517e2_fe26ae7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "I should update the API so both of these don\u0027t need to be called.. This is good for now, though.",
+      "range": {
+        "startLine": 218,
+        "startChar": 12,
+        "endLine": 219,
+        "endChar": 38
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60fe9764_5d641eb2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T03:41:00Z",
+      "side": 1,
+      "message": "Why 7?",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
