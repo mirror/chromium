@@ -52,8 +52,18 @@
           "reason": "appeared"
         },
         {
+          "object": "InlineTextBox 'Nested middlesize Window'",
+          "rect": [80, 182, 131, 15],
+          "reason": "appeared"
+        },
+        {
           "object": "LayoutSVGContainer g id='minimalWindow'",
           "rect": [38, 475, 121, 50],
+          "reason": "appeared"
+        },
+        {
+          "object": "InlineTextBox 'Big Window'",
+          "rect": [41, 142, 57, 16],
           "reason": "appeared"
         },
         {
