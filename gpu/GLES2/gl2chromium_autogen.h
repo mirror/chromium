@@ -409,5 +409,10 @@
 #define glSetColorSpaceMetadataCHROMIUM \
   GLES2_GET_FUN(SetColorSpaceMetadataCHROMIUM)
 #define glWindowRectanglesEXT GLES2_GET_FUN(WindowRectanglesEXT)
+#define glInsertGpuFenceCHROMIUM GLES2_GET_FUN(InsertGpuFenceCHROMIUM)
+#define glInsertClientGpuFenceCHROMIUM \
+  GLES2_GET_FUN(InsertClientGpuFenceCHROMIUM)
+#define glWaitGpuFenceCHROMIUM GLES2_GET_FUN(WaitGpuFenceCHROMIUM)
+#define glDestroyGpuFenceCHROMIUM GLES2_GET_FUN(DestroyGpuFenceCHROMIUM)
 
 #endif  // GPU_GLES2_GL2CHROMIUM_AUTOGEN_H_

@@ -414,6 +414,52 @@ void GLES2Implementation::SignalQuery(uint32_t query,
                  weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
 }
 
+GLuint GLES2Implementation::InsertGpuFenceCHROMIUM() {
+  GLuint client_id = GetIdAllocator(IdNamespaces::kGpuFences)
+                         ->AllocateIDAtOrAbove(last_gpu_fence_id_ + 1);
+  last_gpu_fence_id_ = client_id;
+  helper_->InsertGpuFenceINTERNAL(client_id);
+  GPU_CLIENT_LOG("returned " << client_id);
+  CheckGLError();
+  return client_id;
+}
+
+GLuint GLES2Implementation::InsertClientGpuFenceCHROMIUM(
+    ClientGpuFence source) {
+  GLuint client_id = GetIdAllocator(IdNamespaces::kGpuFences)
+                         ->AllocateIDAtOrAbove(last_gpu_fence_id_ + 1);
+  last_gpu_fence_id_ = client_id;
+
+  // Create the service-side GpuFenceEntry via gpu_control. This is guaranteed
+  // to arrive before any future GL helper_ commands on this stream, so it's
+  // safe to use the client_id generated here in following commands such as
+  // WaitGpuFenceCHROMIUM without explicit flushing.
+  gpu_control_->SendGpuFence(client_id, source);
+
+  GPU_CLIENT_LOG("returned " << client_id);
+  CheckGLError();
+  return client_id;
+}
+
+void GLES2Implementation::GetGpuFenceHandle(
+    uint32_t gpu_fence_id,
+    base::OnceCallback<void(const gfx::GpuFenceHandle&)> callback) {
+  // Issue a flush here to help ensure that a preceding InsertGpuFenceCHROMIUM
+  // will be processed in due course, to avoid relying on client flushing.
+  ShallowFlushCHROMIUM();
+  gpu_control_->GetGpuFenceHandle(gpu_fence_id, std::move(callback));
+}
+
+void GLES2Implementation::DestroyGpuFenceCHROMIUMHelper(GLuint client_id) {
+  if (GetIdAllocator(IdNamespaces::kGpuFences)->InUse(client_id)) {
+    GetIdAllocator(IdNamespaces::kGpuFences)->FreeID(client_id);
+    helper_->DestroyGpuFenceCHROMIUM(client_id);
+  } else {
+    SetGLError(GL_INVALID_VALUE, "glDestroyGpuFenceCHROMIUM",
+               "id not created by this context.");
+  }
+}
+
 void GLES2Implementation::SetAggressivelyFreeResources(
     bool aggressively_free_resources) {
   TRACE_EVENT1("gpu", "GLES2Implementation::SetAggressivelyFreeResources",
