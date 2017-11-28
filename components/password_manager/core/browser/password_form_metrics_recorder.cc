@@ -118,6 +118,11 @@ PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
         ukm_entry_builder_.SetUser_Action_SelectedDifferentPasswordInBubble(
             action.second);
         break;
+      case DetailedUserAction::kTriggeredManualFallbackForSavingOrUpdating:
+        /*ukm_entry_builder_
+            .SetUser_Action_TriggeredManualFallbackForSavingOrUpdating(
+                action.second);*/
+        break;
       case DetailedUserAction::kCorrectedUsernameInForm:
         ukm_entry_builder_.SetUser_Action_CorrectedUsernameInForm(
             action.second);
