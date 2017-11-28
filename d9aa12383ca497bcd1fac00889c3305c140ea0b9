@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a41d42_f3726537",
+        "filename": "base/fuchsia/fuchsia_logging.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-28T21:04:46Z",
+      "side": 1,
+      "message": "#include \u003ciomanip\u003e too, for the stream operations.",
+      "revId": "d9aa12383ca497bcd1fac00889c3305c140ea0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489379da_e5e5d505",
+        "filename": "base/fuchsia/fuchsia_logging.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-28T21:04:46Z",
+      "side": 1,
+      "message": "My thought with these is usually “match what the headers use so that it’s more likely to show up sooner when grepping,” so %d is sure the right call.",
+      "revId": "d9aa12383ca497bcd1fac00889c3305c140ea0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b544b59b_9ce7a119",
+        "filename": "base/fuchsia/fuchsia_logging.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-28T21:04:46Z",
+      "side": 1,
+      "message": "If you’re going to the trouble of using base::StringPrintf, just let it format the whole thing from the : on.\n\nYou can also avoid the StringPrintf and do everything with stream operations.",
+      "revId": "d9aa12383ca497bcd1fac00889c3305c140ea0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
