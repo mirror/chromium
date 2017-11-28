@@ -21,7 +21,18 @@
 
 <dom-module id="settings-reset-page">
   <template>
-    <style include="settings-shared"></style>
+    <style include="settings-shared">
+      .status-icon-container {
+        -webkit-padding-end: var(--settings-box-row-padding);
+      }
+      .chrome-cleanup-status-icon-remove {
+        --iron-icon-fill-color: var(--paper-grey-700);
+      }
+    </style>
+<!--
+    <settings-animated-pages id="pages" section="reset"
+        focus-config="[[focusConfig_]]">
+ -->    
     <settings-animated-pages id="reset-pages" section="reset">
       <neon-animatable route-path="default">
         <div class="settings-box first two-line" id="resetProfile"
@@ -60,7 +71,6 @@
           </settings-powerwash-dialog>
         </template>
 </if>
-<!-- This needs to be conditioned to a feature being enabled. -->
 <if expr="_google_chrome and is_win">
         <template is="dom-if" if="[[userInitiatedCleanupsEnabled_]]" restamp>
           <div class="settings-box two-line" id="chromeCleanupSubpageTrigger"
