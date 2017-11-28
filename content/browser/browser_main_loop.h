@@ -89,6 +89,7 @@ class ImageCursorsSet;
 
 namespace viz {
 class CompositingModeReporterImpl;
+class ForwardingCompositingModeReporterImpl;
 class FrameSinkManagerImpl;
 class HostFrameSinkManager;
 }
@@ -386,12 +387,10 @@ class CONTENT_EXPORT BrowserMainLoop {
   std::unique_ptr<viz::FrameSinkManagerImpl> frame_sink_manager_impl_;
 #endif
 
-  // Mojo pointers looking for CompositingModeReporter are fulfilled and bound
-  // into here. If the CompositingModeReporter is in-process then they point to
-  // a CompositingModeReporterImpl directly. Otherwise they may point to a
-  // ForwardingCompositingModeReporterImpl that redirects to the viz process.
-  mojo::BindingSet<viz::mojom::CompositingModeReporter>
-      compositing_mode_reporter_bindings_;
+  // Forwards requests to watch the compositing mode on to the viz process. This
+  // is null if the display compositor in this process.
+  std::unique_ptr<viz::ForwardingCompositingModeReporterImpl>
+      forwarding_compositing_mode_reporter_impl_;
   // Reports on the compositing mode in the system for clients to submit
   // resources of the right type. This is null if the display compositor
   // is not in this process.
