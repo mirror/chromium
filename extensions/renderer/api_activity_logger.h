@@ -34,6 +34,10 @@ class APIActivityLogger : public ObjectBackedNativeHandler {
                          const std::string& call_name,
                          const std::vector<v8::Local<v8::Value>>& arguments);
 
+  static void LogEvent(ScriptContext* script_context,
+                       const std::string& event_name,
+                       std::unique_ptr<base::ListValue> arguments);
+
   static void set_log_for_testing(bool log);
 
  private:

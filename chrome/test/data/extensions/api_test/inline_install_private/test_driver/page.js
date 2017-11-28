@@ -30,6 +30,8 @@ function expectError(id, expectedErrorCode, expectedError) {
 }
 
 chrome.runtime.getBackgroundPage(function(bg) {
+  console.warn('test name, yo');
+  console.warn(bg);
   console.error("testName is " + bg.testName);
 
   if (bg.testName == "successfulInstall") {

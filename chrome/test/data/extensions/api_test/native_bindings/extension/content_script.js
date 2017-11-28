@@ -2,8 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+console.warn('Script');
 chrome.runtime.onConnect.addListener(function listener(port) {
+  console.warn('on connect');
   port.onMessage.addListener((message) => {
+    console.warn('on port message');
     chrome.test.assertEq('background page', message);
     port.postMessage('content script');
   });
@@ -12,6 +15,7 @@ chrome.runtime.onConnect.addListener(function listener(port) {
 
 chrome.runtime.onMessage.addListener(
     function listener(message, sender, sendResponse) {
+  console.warn('on message');
   chrome.test.assertEq('async bounce', message);
   chrome.runtime.onMessage.removeListener(listener);
   // Respond asynchronously.
@@ -21,6 +25,8 @@ chrome.runtime.onMessage.addListener(
   return true;
 });
 
+console.warn('Sending message');
 chrome.runtime.sendMessage('startFlow', function(response) {
+  console.warn('Sent message');
   chrome.test.assertEq('started', response);
 });

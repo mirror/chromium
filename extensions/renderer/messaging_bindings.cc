@@ -226,6 +226,7 @@ void MessagingBindings::OpenChannelToNativeApp(
   {
     SCOPED_UMA_HISTOGRAM_TIMER(
         "Extensions.Messaging.SetPortIdTime.NativeApp");
+    LOG(WARNING) << "Opening native app: " << native_app_name;
     render_frame->Send(new ExtensionHostMsg_OpenChannelToNativeApp(
         render_frame->GetRoutingID(), native_app_name, port_id));
   }
