@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1f85af85_3534cda3",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T13:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d6274ef_7ebf7b72",
+      "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18031d07_37c60fd6",
         "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
         "patchSetId": 2
