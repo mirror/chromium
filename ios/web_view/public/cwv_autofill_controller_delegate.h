@@ -45,6 +45,10 @@ CWV_EXPORT
                   formName:(NSString*)formName
                      value:(NSString*)value;
 
+// Called when a form was submitted.
+- (void)autofillController:(CWVAutofillController*)autofillController
+     didSubmitFormWithName:(NSString*)formName;
+
 @end
 
 NS_ASSUME_NONNULL_END
