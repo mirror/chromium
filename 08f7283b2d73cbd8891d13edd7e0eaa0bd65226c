@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bd3e4c9_0ea2aa22",
+        "filename": "content/public/test/mock_download_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-28T15:34:04Z",
+      "side": 1,
+      "message": "nit: no content::",
+      "revId": "08f7283b2d73cbd8891d13edd7e0eaa0bd65226c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
