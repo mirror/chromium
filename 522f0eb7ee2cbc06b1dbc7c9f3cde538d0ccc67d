@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0635326c_34991906",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-28T07:16:34Z",
+      "side": 1,
+      "message": "Could we just call OnConnectionError()?",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1e75da_d1b467c1",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-28T07:16:34Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aaa5a2c_14b34f25",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-28T07:16:34Z",
+      "side": 1,
+      "message": "lost -\u003e loses\n\nits\u0027 ServiceWorkerRegistrationObjectHost -\u003e its ServiceWorkerRegistrationObjectHost\u0027s",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
