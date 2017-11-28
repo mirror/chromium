@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9304f4dd_e5ffcee5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:08:20Z",
+      "side": 1,
+      "message": "chaopeng@ / isherman@ - is there now a way to write a browsertest that requires a field trial to be set up very early (e.g. near the end of BrowserMainLoop::PreCreateThreads - see https://chromium-review.googlesource.com/c/chromium/src/+/786276/8/content/browser/browser_main_loop.cc#913).  Whatever I try doing, I run into either DCHECKs saying that I should use ScopedFeatureList or into DCHECKs saying that ScopedFeatureList has to be initialized from SetUpOnMainThread or later.",
+      "parentUuid": "5f0a9b34_5b306599",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 0
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7c4c967_e0b3e457",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 7
