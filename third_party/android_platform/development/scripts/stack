@@ -18,6 +18,7 @@
 
 import getopt
 import glob
+import llvm_symbolizer_helper
 import logging
 import os
 import sys
@@ -225,10 +226,15 @@ def main(argv):
   print ("Reading Android symbols from: "
          + os.path.normpath(symbol.SYMBOLS_DIR))
   chrome_search_path = symbol.GetLibrarySearchPaths()
+
+  llvm_symbolizer = llvm_symbolizer_helper.LLVMSymbolizerInstance()
+
   print ("Searching for Chrome symbols from within: "
          + ':'.join((os.path.normpath(d) for d in chrome_search_path)))
   stack_core.ConvertTrace(lines, load_vaddrs, more_info, fallback_monochrome,
-                          arch_defined)
+                          arch_defined, llvm_symbolizer)
+
+  llvm_symbolizer.Close()
 
   if rootdir:
     # be a good citizen and clean up...os.rmdir and os.removedirs() don't work
