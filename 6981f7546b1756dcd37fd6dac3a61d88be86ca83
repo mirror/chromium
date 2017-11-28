@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5ead0e80_5872c0b4",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T17:53:10Z",
+      "side": 1,
+      "message": "Doesn\u0027t the viz decision not get passed down? |forwarding_mode_reporter_| isn\u0027t never connected to the viz process if you hit the if block.",
+      "parentUuid": "d60150ad_e281027f",
+      "revId": "6981f7546b1756dcd37fd6dac3a61d88be86ca83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fdeae94_0a4ffe61",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 2
