@@ -16,8 +16,6 @@ using content::GlobalRequestID;
 using content::NavigationController;
 using content::WebContents;
 
-namespace chrome {
-
 #if defined(OS_ANDROID)
 NavigateParams::NavigateParams(WebContents* a_target_contents)
     : target_contents(a_target_contents) {}
@@ -61,5 +59,3 @@ void FillNavigateParamsFromOpenURLParams(NavigateParams* nav_params,
   nav_params->post_data = params.post_data;
   nav_params->started_from_context_menu = params.started_from_context_menu;
 }
-
-}  // namespace chrome
