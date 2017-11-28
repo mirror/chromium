@@ -34,6 +34,7 @@ function runTests() {
     shouldBeEqualToString('ahemFace.featureSettings', "'dlig' 1");
     shouldBeEqualToString('ahemFace.display', 'block');
 
+    /*
     debug('');
     defaultFace = new FontFace('defaultFace', 'local(foo)');
     shouldBeEqualToString('defaultFace.family', 'defaultFace');
@@ -99,6 +100,7 @@ function runTests() {
         }).catch(function(err) {
             shouldBeEqualToString('"' +  err.message + '"' , 'A network error occurred.');
         }).then(finishJSTest);
+        */
 }
 
 if (document.fonts)
