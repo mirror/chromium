@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6529a3bf_f887d6a5",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-28T18:48:57Z",
+      "side": 0,
+      "message": "What\u0027s going on here?",
+      "revId": "912d693feb072f24a973a99a3b036d0b27464883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

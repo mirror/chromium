@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3498a61_87e5da78",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-28T18:48:57Z",
+      "side": 1,
+      "message": "ASSERT_TRUE?",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74bf5011_addcf6a0",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-28T18:48:57Z",
+      "side": 1,
+      "message": "Move this up to the previous line?",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a21d38d_9e3102c1",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-28T18:48:57Z",
+      "side": 1,
+      "message": "ASSERT_TRUE?",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508437ec_89b7e821",
+        "filename": "chrome/browser/chromeos/policy/device_policy_cros_browser_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-28T18:48:57Z",
+      "side": 1,
+      "message": "ASSERT_TRUE?",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2739a5ce_dea7ab9e",
+        "filename": "chromeos/dbus/fake_auth_policy_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-28T18:48:57Z",
+      "side": 1,
+      "message": "Should this be ASSERT_TRUE?",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4f9360_1d05effa",
+        "filename": "chromeos/login/auth/authpolicy_test_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-28T18:48:57Z",
+      "side": 1,
+      "message": "Do we really need a separate file for this?",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
