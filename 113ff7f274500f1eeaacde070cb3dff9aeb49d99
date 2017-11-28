@@ -16,6 +16,24 @@
       "revId": "113ff7f274500f1eeaacde070cb3dff9aeb49d99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "953b5efa_e3658753",
+        "filename": "content/browser/service_worker/service_worker_database.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T06:29:28Z",
+      "side": 1,
+      "message": "I tested this manually and it looks fine:\n\n1. Enable FF via Experimental Web Platform Features and install a FF worker \u003chttps://foreign-fetch-worker.glitch.me/\u003e\n2. On another origin, use fetch(\u0027https://foreign-fetch-worker.glitch.me/random\u0027, { mode: \u0027cors\u0027 }).then(x \u003d\u003e x.text()).then(txt \u003d\u003e console.log(txt)) to verify FF works.\n3. Navigate to https://foreign-fetch-worker.glitch.me/?intercept to verify the SW works.\n4. Close the browser and rebuild with this patch.\n5. Open the browser.\n6. Repeat step 3 to verify the SW works.\n7. Repeat step 2 to verify that FF is not supported.",
+      "parentUuid": "c61075b4_dfec4958",
+      "revId": "113ff7f274500f1eeaacde070cb3dff9aeb49d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
