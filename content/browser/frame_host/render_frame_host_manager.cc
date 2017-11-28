@@ -1563,8 +1563,11 @@ bool RenderFrameHostManager::IsCurrentlySameSite(RenderFrameHostImpl* candidate,
   // If the process type is incorrect, reject the candidate even if |dest_url|
   // is same-site.  (The URL may have been installed as an app since
   // the last time we visited it.)
-  if (candidate->GetSiteInstance()->HasWrongProcessForURL(dest_url))
+  if (candidate->GetSiteInstance()->HasWrongProcessForURL(dest_url)) {
+    if (!frame_tree_node_->IsMainFrame())
+      NOTREACHED() << "Subframe HasWrongProcessForURL false for: " << dest_url;
     return false;
+  }
 
   // If we don't have a last successful URL, we can't trust the origin or URL
   // stored on the frame, so we fall back to GetSiteURL(). This case occurs
