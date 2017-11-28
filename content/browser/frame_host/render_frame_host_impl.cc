@@ -562,6 +562,10 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
 }
 
 RenderFrameHostImpl::~RenderFrameHostImpl() {
+  // Update the loading state now, while |this| object is still in a sane state.
+/*  if (is_loading_)
+    OnDidStopLoading();*/
+
   // Destroying navigation handle may call into delegates/observers,
   // so we do it early while |this| object is still in a sane state.
   navigation_handle_.reset();

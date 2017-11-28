@@ -27,11 +27,13 @@
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/resource_dispatcher_host.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_paths.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/controllable_http_response.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
@@ -1646,6 +1648,89 @@ IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
   TitleWatcher title_watcher(web_contents, base::ASCIIToUTF16("done"));
   base::string16 title = title_watcher.WaitAndGetTitle();
   ASSERT_EQ(title, base::ASCIIToUTF16("done"));
+}
+
+class LoadingObserver : public WebContentsObserver {
+ public:
+  explicit LoadingObserver(WebContents* web_contents)
+      : WebContentsObserver(web_contents) {}
+  bool is_loading() const { return is_loading_; }
+
+ private:
+  void DidStartLoading() override { is_loading_ = true; }
+  void DidStopLoading() override { is_loading_ = false; }
+  bool is_loading_ = false;
+};
+
+class WebContentsImplSitePerProcessBrowserTest
+    : public WebContentsImplBrowserTest {
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    IsolateAllSitesForTesting(command_line);
+  }
+};
+
+IN_PROC_BROWSER_TEST_F(WebContentsImplSitePerProcessBrowserTest,
+                       FrameDetachStopsLoading) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+  ControllableHttpResponse http_response(embedded_test_server(), "/foo.html");
+  const std::string kHttpResponseHeader =
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n";
+  ASSERT_TRUE(embedded_test_server()->Start());
+  LoadingObserver loading_observer(shell()->web_contents());
+  EXPECT_TRUE(NavigateToURL(
+      shell(), embedded_test_server()->GetURL("/page_with_iframe.html")));
+  EXPECT_FALSE(shell()->web_contents()->IsLoading());
+  EXPECT_FALSE(loading_observer.is_loading());
+
+  // First navigate the iframe cross-site.
+  GURL iframe_cross_site_url =
+      embedded_test_server()->GetURL("a.com", "/title1.html");
+  TestNavigationManager cross_site_navigation(shell()->web_contents(),
+                                              iframe_cross_site_url);
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  FrameTreeNode* iframe = root->child_at(0);
+  EXPECT_TRUE(ExecuteScript(
+      iframe->current_frame_host(),
+      "location.href = \"" + iframe_cross_site_url.spec() + "\";"));
+  cross_site_navigation.WaitForNavigationFinished();
+
+  // Have the iframe navigate and ensure the navigation is paused when it is
+  // ready to commit.
+  GURL iframe_navigation_url = embedded_test_server()->GetURL("/foo.html");
+  TestNavigationManager navigation(shell()->web_contents(),
+                                   iframe_navigation_url);
+  EXPECT_TRUE(ExecuteScript(
+      iframe->current_frame_host(),
+      "location.href = \"" + iframe_navigation_url.spec() + "\";"));
+  EXPECT_TRUE(navigation.WaitForRequestStart());
+  navigation.ResumeNavigation();
+  http_response.WaitForRequest();
+  http_response.Send(kHttpResponseHeader);
+  EXPECT_TRUE(navigation.WaitForResponse());
+  navigation.ResumeNavigation();
+
+  // We should have a speculative RenderFrameHost for the navigation and it
+  // should be loading.
+  EXPECT_TRUE(iframe->render_manager()->speculative_frame_host()->is_loading());
+  EXPECT_TRUE(shell()->web_contents()->IsLoading());
+  EXPECT_TRUE(loading_observer.is_loading());
+
+  // Do a document write in the main frame. This will detach the iframe. The
+  // WebContents should no longer be loading.
+  EXPECT_TRUE(ExecuteScript(root->current_frame_host(),
+                            "document.body.innerHTML = \'\';"));
+  navigation.WaitForNavigationFinished();
+  EXPECT_FALSE(root->child_at(0));
+  EXPECT_FALSE(shell()->web_contents()->IsLoading());
+  EXPECT_FALSE(loading_observer.is_loading());
+
+  EXPECT_TRUE(NavigateToURL(
+      shell(), embedded_test_server()->GetURL("/page_with_iframe.html")));
 }
 
 }  // namespace content
