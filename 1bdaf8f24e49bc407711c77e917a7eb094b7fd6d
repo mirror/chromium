@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3890606a_b59541b0",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-28T20:20:40Z",
+      "side": 1,
+      "message": "should we get rid of this one then?",
+      "revId": "1bdaf8f24e49bc407711c77e917a7eb094b7fd6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
