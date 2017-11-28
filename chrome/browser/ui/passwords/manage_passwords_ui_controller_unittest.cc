@@ -427,12 +427,9 @@ TEST_F(ManagePasswordsUIControllerTest, PasswordSaved) {
   EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
   controller()->OnPasswordSubmitted(std::move(test_form_manager));
 
-  base::HistogramTester histogram_tester;
   controller()->SavePassword(test_local_form().username_value,
                              test_local_form().password_value);
   ExpectIconStateIs(password_manager::ui::MANAGE_STATE);
-  histogram_tester.ExpectUniqueSample(
-      "PasswordManager.PasswordSavedWithManualFallback", false, 1);
 }
 
 TEST_F(ManagePasswordsUIControllerTest, PasswordSavedUKMRecording) {
@@ -880,11 +877,8 @@ TEST_F(ManagePasswordsUIControllerTest, PasswordUpdated) {
 
   ExpectIconStateIs(password_manager::ui::PENDING_PASSWORD_UPDATE_STATE);
   EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
-  base::HistogramTester histogram_tester;
   controller()->UpdatePassword(autofill::PasswordForm());
   ExpectIconStateIs(password_manager::ui::MANAGE_STATE);
-  histogram_tester.ExpectUniqueSample(
-      "PasswordManager.PasswordUpdatedWithManualFallback", false, 1);
 }
 
 TEST_F(ManagePasswordsUIControllerTest, SavePendingStatePasswordAutofilled) {
@@ -924,37 +918,68 @@ TEST_F(ManagePasswordsUIControllerTest, OpenBubbleTwice) {
 }
 
 TEST_F(ManagePasswordsUIControllerTest, ManualFallbackForSaving_UseFallback) {
+  using UkmEntry = ukm::builders::PasswordForm;
   for (bool is_update : {false, true}) {
     SCOPED_TRACE(testing::Message("is_update = ") << is_update);
-    std::unique_ptr<password_manager::PasswordFormManager> test_form_manager(
-        CreateFormManager());
-    test_form_manager->ProvisionallySave(
-        test_local_form(),
-        password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-    EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
-    controller()->OnShowManualFallbackForSaving(
-        std::move(test_form_manager), false /* has_generated_password */,
-        is_update);
-    ExpectIconAndControllerStateIs(
-        is_update ? password_manager::ui::PENDING_PASSWORD_UPDATE_STATE
-                  : password_manager::ui::PENDING_PASSWORD_STATE);
-    EXPECT_FALSE(controller()->opened_bubble());
-
-    // A user clicks on omnibox icon, opens the bubble and press Save/Update.
     base::HistogramTester histogram_tester;
+    ukm::TestAutoSetUkmRecorder test_ukm_recorder;
+    {
+      // Setup metrics recorder.
+      ukm::SourceId source_id = test_ukm_recorder.GetNewSourceID();
+      auto recorder =
+          base::MakeRefCounted<password_manager::PasswordFormMetricsRecorder>(
+              true /*is_main_frame_secure*/, &test_ukm_recorder, source_id,
+              GURL("http://www.example.com/"));
+      std::unique_ptr<password_manager::PasswordFormManager> test_form_manager(
+          CreateFormManagerWithMetricsRecorder(recorder));
+
+      test_form_manager->ProvisionallySave(
+          test_local_form(), password_manager::PasswordFormManager::
+                                 IGNORE_OTHER_POSSIBLE_USERNAMES);
+      EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility()).Times(3);
+      controller()->OnShowManualFallbackForSaving(
+          std::move(test_form_manager), false /* has_generated_password */,
+          is_update);
+      ExpectIconAndControllerStateIs(
+          is_update ? password_manager::ui::PENDING_PASSWORD_UPDATE_STATE
+                    : password_manager::ui::PENDING_PASSWORD_STATE);
+      EXPECT_FALSE(controller()->opened_bubble());
+
+      // A user clicks on omnibox icon, opens the bubble and press Save/Update.
+      if (is_update) {
+        controller()->UpdatePassword(autofill::PasswordForm());
+      } else {
+        controller()->SavePassword(test_local_form().username_value,
+                                   test_local_form().password_value);
+      }
+      controller()->OnBubbleHidden();
+
+      // Fake navigation so that the old form manager gets destroyed and
+      // reports its metrics.
+      std::unique_ptr<content::NavigationHandle> navigation_handle =
+          content::NavigationHandle::CreateNavigationHandleForTesting(
+              GURL(), main_rfh(), true);
+      navigation_handle.reset();  // Calls DidFinishNavigation.
+
+      EXPECT_TRUE(testing::Mock::VerifyAndClearExpectations(controller()));
+    }
+
+    // Verify metrics.
     if (is_update) {
-      EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
-      controller()->UpdatePassword(autofill::PasswordForm());
       histogram_tester.ExpectUniqueSample(
           "PasswordManager.PasswordUpdatedWithManualFallback", true, 1);
     } else {
-      controller()->SavePassword(test_local_form().username_value,
-                                 test_local_form().password_value);
       histogram_tester.ExpectUniqueSample(
           "PasswordManager.PasswordSavedWithManualFallback", true, 1);
     }
-    ExpectIconAndControllerStateIs(password_manager::ui::MANAGE_STATE);
-    testing::Mock::VerifyAndClearExpectations(controller());
+
+    const ukm::UkmSource* source =
+        test_ukm_recorder.GetSourceForUrl("http://www.example.com/");
+    ASSERT_TRUE(source);
+    test_ukm_recorder.ExpectMetric(
+        *source, UkmEntry::kEntryName,
+        UkmEntry::kUser_Action_TriggeredManualFallbackForSavingOrUpdatingName,
+        1u);
   }
 }
 
