@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e58ca9e_f8d59b54",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2017-11-28T14:50:58Z",
+      "side": 1,
+      "message": "deprecating the histogram but still using it? Deprecating a wrong histogram maybe?",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 66
+      },
+      "revId": "e50767d3a01fbbfd1b1760b8900b41e443b5284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
