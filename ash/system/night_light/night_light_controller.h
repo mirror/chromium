@@ -22,6 +22,8 @@ class PrefService;
 
 namespace ash {
 
+class ColorTemperatureAnimation;
+
 // Controls the NightLight feature that adjusts the color temperature of the
 // screen.
 class ASH_EXPORT NightLightController : public mojom::NightLightController,
@@ -73,6 +75,14 @@ class ASH_EXPORT NightLightController : public mojom::NightLightController,
   ~NightLightController() override;
 
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);
+
+  // Convenience functions for converting between the color temperature value,
+  // and the blue and green color scales. Note that the red color scale remains
+  // unaffected (i.e. its scale remains 1.0f);
+  static float TemperatureToBlueColorScale(float temperature);
+  static float TemperatureToGreenColorScale(float temperature);
+  static float BlueColorScaleToTemperature(float blue_scale);
+  static float GreenColorScaleToTemperature(float green_scale);
 
   AnimationDuration animation_duration() const { return animation_duration_; }
   AnimationDuration last_animation_duration() const {
@@ -167,6 +177,8 @@ class ASH_EXPORT NightLightController : public mojom::NightLightController,
   AnimationDuration animation_duration_ = AnimationDuration::kShort;
   // The animation duration of the change that was just performed.
   AnimationDuration last_animation_duration_ = AnimationDuration::kShort;
+
+  std::unique_ptr<ColorTemperatureAnimation> temperature_animation_;
 
   // The timer that schedules the start and end of NightLight when the schedule
   // type is either kSunsetToSunrise or kCustom.

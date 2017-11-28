@@ -48,6 +48,8 @@ class InProcessContextFactory : public ContextFactory,
     use_test_surface_ = use_test_surface;
   }
 
+  const SkMatrix44& output_color_matrix() const { return output_color_matrix_; }
+
   // This is used to call OnLostResources on all clients, to ensure they stop
   // using the SharedMainThreadContextProvider.
   void SendOnLostResources();
@@ -74,6 +76,8 @@ class InProcessContextFactory : public ContextFactory,
   void SetDisplayVisible(ui::Compositor* compositor, bool visible) override;
   void ResizeDisplay(ui::Compositor* compositor,
                      const gfx::Size& size) override;
+  void SetDisplayColorMatrix(ui::Compositor* compositor,
+                             const SkMatrix44& matrix) override;
   void SetDisplayColorSpace(
       ui::Compositor* compositor,
       const gfx::ColorSpace& blending_color_space,
@@ -114,6 +118,7 @@ class InProcessContextFactory : public ContextFactory,
   using PerCompositorDataMap =
       base::hash_map<ui::Compositor*, std::unique_ptr<PerCompositorData>>;
   PerCompositorDataMap per_compositor_data_;
+  SkMatrix44 output_color_matrix_;
 
   DISALLOW_COPY_AND_ASSIGN(InProcessContextFactory);
 };
