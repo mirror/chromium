@@ -22,6 +22,30 @@
       "revId": "e6adab84468426490b70a5c5be161b340da5d73d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b820651_61d301bf",
+        "filename": "chromeos/dbus/auth_policy_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-28T08:15:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e70504d1_744c335c",
+      "range": {
+        "startLine": 52,
+        "startChar": 31,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "e6adab84468426490b70a5c5be161b340da5d73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
