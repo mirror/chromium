@@ -482,6 +482,24 @@
     },
     {
       "key": {
+        "uuid": "ea581e82_14bcef3e",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T02:13:10Z",
+      "side": 1,
+      "message": "\u003e \u003e since they\u0027re not being combined... this can probably be a value member as well, rather than unique_ptr\n\u003e \n\u003e The pointer enables substituting the logger with a mock in tabs_tracker_unittest.cc.\n\nAh gmock.. ukm::TestUkmRecorder could make the mock obsolete, increase test coverage, and satisfy your TODO in tab_snapshot_logger.h.  (as well as appease gmock haters - Chrome bans it in ui/gfx and ui/views...)\n\n\n\u003e \u003e Note this is looking more and more like metrics::TabUsageRecorder. I think François missed your question?\n\u003e \n\u003e I\u0027ll confirm on Monday. TabUsageRecorder might be going away. (But that doesn\u0027t mean we can\u0027t keep it around and repurpose it, then move it into //chrome/browser/ui if we really want to.)\n\nYeah, if we still want the UMA that TabUsageRecorder was recording, I\u0027d suggest firing it from your class instead (sorry android ;).",
+      "parentUuid": "86db1304_3ac9de3e",
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76acd200_eb96d408",
         "filename": "chrome/browser/ui/tabs/tabs_tracker.h",
         "patchSetId": 16

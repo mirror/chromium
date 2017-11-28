@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a367e15_142ba19e",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T02:13:10Z",
+      "side": 1,
+      "message": "nit: \n  // Owned by TabActivityWatcher.\n\nor similar",
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0a4636_04ecd5bd",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T02:13:10Z",
+      "side": 1,
+      "message": "nit: auto* ? (I thought there was a clang plugin for this..). Or just Browser* - auto doesn\u0027t improve readability here.",
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b02cc62_d2c8df42",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T02:13:10Z",
+      "side": 1,
+      "message": "why this call? It seems out of place. Is it needed because this is not a browser test, and so some plumbing is required? Perhaps comment here (maybe http://crbug.com/590981 has context). E.g.\n\n// \u003csomething\u003e usually calls WebContents::WasHidden() when switching tabs, but that\u0027s\n// not present in a unit test, so invoke directly.\n\nAnd perhaps make it more clear whether it\u0027s this line or the line above that triggers the EXPECT_CALL (e.g. by reordering, or adding EXPECT_CALL(... .Times(0));",
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
