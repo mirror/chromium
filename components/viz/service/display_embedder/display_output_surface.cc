@@ -138,6 +138,9 @@ void DisplayOutputSurface::OnGpuSwapBuffersCompleted(
     const gfx::SwapResponse& response,
     const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
   DidReceiveSwapBuffersAck(response.result);
+  // TODO(ccameron): Forward |params_mac| through to the browser to be
+  // displayed.
+  // https://crbug.com/772576
   latency_info_cache_.OnSwapBuffersCompleted(response);
 }
 

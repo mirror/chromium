@@ -9,6 +9,7 @@
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
@@ -26,7 +27,10 @@
 
 #if defined(USE_OZONE)
 #include "components/viz/service/display_embedder/display_output_surface_ozone.h"
-#include "gpu/command_buffer/client/gles2_interface.h"
+#endif
+
+#if defined(OS_MACOSX)
+#include "components/viz/service/display_embedder/display_output_surface_mac.h"
 #endif
 
 namespace {
@@ -82,10 +86,11 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
 #if defined(USE_OZONE)
     display_output_surface = base::MakeUnique<DisplayOutputSurfaceOzone>(
         std::move(context_provider), surface_handle,
-        synthetic_begin_frame_source.get(), gpu_memory_buffer_manager_.get(),
-        GL_TEXTURE_2D, GL_RGB);
-#else
-    NOTREACHED();
+        synthetic_begin_frame_source.get(), gpu_memory_buffer_manager_.get());
+#elif defined(OS_MACOSX)
+    display_output_surface = base::MakeUnique<DisplayOutputSurfaceMac>(
+        std::move(context_provider), surface_handle,
+        synthetic_begin_frame_source.get(), gpu_memory_buffer_manager_.get());
 #endif
   } else {
     display_output_surface = base::MakeUnique<DisplayOutputSurface>(
