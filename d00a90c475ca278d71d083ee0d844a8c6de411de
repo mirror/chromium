@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73baed51_f4e1f830",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-28T05:49:24Z",
+      "side": 1,
+      "message": "Actually I think we should use *blink.h here? But I see the above line use *-shared.h.",
+      "range": {
+        "startLine": 51,
+        "startChar": 75,
+        "endLine": 51,
+        "endChar": 81
+      },
+      "revId": "d00a90c475ca278d71d083ee0d844a8c6de411de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63eb8bb3_1fba916b",
+        "filename": "third_party/WebKit/common/fetch/request_context_frame_type.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-28T05:49:24Z",
+      "side": 1,
+      "message": "I didn\u0027t find this part in the fetch spec, and find this issue https://github.com/whatwg/fetch/issues/93.\n\nIf the frame type already been replaced by other things?",
+      "range": {
+        "startLine": 8,
+        "startChar": 33,
+        "endLine": 8,
+        "endChar": 67
+      },
+      "revId": "d00a90c475ca278d71d083ee0d844a8c6de411de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
