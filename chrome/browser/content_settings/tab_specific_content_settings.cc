@@ -787,6 +787,7 @@ void TabSpecificContentSettings::DidStartNavigation(
   ClearGeolocationContentSettings();
   ClearMidiContentSettings();
   ClearPendingProtocolHandler();
+  ClearChangedToDefaultContentSettings();
 }
 
 void TabSpecificContentSettings::DidFinishNavigation(
@@ -840,6 +841,10 @@ void TabSpecificContentSettings::ClearGeolocationContentSettings() {
 
 void TabSpecificContentSettings::ClearMidiContentSettings() {
   midi_usages_state_.ClearStateMap();
+}
+
+void TabSpecificContentSettings::ClearChangedToDefaultContentSettings() {
+  content_settings_changed_to_default_.clear();
 }
 
 void TabSpecificContentSettings::GeolocationDidNavigate(

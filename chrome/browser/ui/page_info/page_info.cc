@@ -140,10 +140,12 @@ bool IsPermissionFactoryDefault(HostContentSettingsMap* content_settings,
 
 // Determines whether to show permission |type| in the Page Info UI. Only
 // applies to permissions listed in |kPermissionType|.
-bool ShouldShowPermission(const PageInfoUI::PermissionInfo& info,
-                          const GURL& site_url,
-                          HostContentSettingsMap* content_settings,
-                          content::WebContents* web_contents) {
+bool ShouldShowPermission(
+    const PageInfoUI::PermissionInfo& info,
+    const GURL& site_url,
+    HostContentSettingsMap* content_settings,
+    content::WebContents* web_contents,
+    TabSpecificContentSettings* tab_specific_content_settings) {
   // Note |CONTENT_SETTINGS_TYPE_ADS| will show up regardless of its default
   // value when it has been activated on the current origin.
   if (info.type == CONTENT_SETTINGS_TYPE_ADS) {
@@ -181,8 +183,11 @@ bool ShouldShowPermission(const PageInfoUI::PermissionInfo& info,
     return true;
 #endif
 
-  // All other content settings only show when they are non-factory-default.
-  if (IsPermissionFactoryDefault(content_settings, info)) {
+  // All other content settings only show when they are recently changhed to
+  // factory-default and those that are non-factory-default.
+  if (!tab_specific_content_settings->is_content_settings_changed_to_default(
+          info.type) &&
+      IsPermissionFactoryDefault(content_settings, info)) {
     return false;
   }
 
@@ -420,6 +425,9 @@ void PageInfo::OnSitePermissionChanged(ContentSettingsType type,
     UMA_HISTOGRAM_EXACT_LINEAR(
         "WebsiteSettings.OriginInfo.PermissionChanged.Blocked", histogram_value,
         num_values);
+  } else if (setting == ContentSetting::CONTENT_SETTING_DEFAULT) {
+    tab_specific_content_settings()->insert_content_settings_changed_to_default(
+        type);
   }
 
   // This is technically redundant given the histogram above, but putting the
@@ -840,7 +848,7 @@ void PageInfo::PresentSitePermissions() {
     }
 
     if (ShouldShowPermission(permission_info, site_url_, content_settings_,
-                             web_contents())) {
+                             web_contents(), tab_specific_content_settings())) {
       permission_info_list.push_back(permission_info);
     }
   }

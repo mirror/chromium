@@ -296,6 +296,15 @@ class TabSpecificContentSettings
     load_plugins_link_enabled_ = enabled;
   }
 
+  void insert_content_settings_changed_to_default(ContentSettingsType type) {
+    content_settings_changed_to_default_.insert(type);
+  }
+
+  bool is_content_settings_changed_to_default(ContentSettingsType type) const {
+    return content_settings_changed_to_default_.find(type) !=
+           content_settings_changed_to_default_.end();
+  }
+
   // Called to indicate whether access to the Pepper broker was allowed or
   // blocked.
   void SetPepperBrokerAllowed(bool allowed);
@@ -396,6 +405,8 @@ class TabSpecificContentSettings
   // Clears the MIDI settings.
   void ClearMidiContentSettings();
 
+  void ClearChangedToDefaultContentSettings();
+
   // Updates Geolocation settings on navigation.
   void GeolocationDidNavigate(content::NavigationHandle* navigation_handle);
 
@@ -459,6 +470,10 @@ class TabSpecificContentSettings
 
   // Observer to watch for content settings changed.
   ScopedObserver<HostContentSettingsMap, content_settings::Observer> observer_;
+
+  // Stores content settings changed from non-default to default, cleared on
+  // DidStartNavigation.
+  std::set<ContentSettingsType> content_settings_changed_to_default_;
 
   DISALLOW_COPY_AND_ASSIGN(TabSpecificContentSettings);
 };
