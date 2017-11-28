@@ -20,7 +20,7 @@ class TabSnapshotLoggerImpl : public TabSnapshotLogger {
 
   // TabSnapshotLogger:
   void LogBackgroundTab(ukm::SourceId ukm_source_id,
-                        content::WebContents* web_contents) override;
+                        const TabSnapshot& tab_snapshot) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TabSnapshotLoggerImpl);

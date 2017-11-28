@@ -13,10 +13,19 @@
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/test_browser_window.h"
 #include "chrome/test/base/testing_profile.h"
+#include "content/public/browser/native_web_keyboard_event.h"
+#include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/test/browser_test_utils.h"
 #include "content/public/test/web_contents_tester.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebMouseEvent.h"
+#include "ui/events/base_event_utils.h"
+#include "ui/events/keycodes/dom/dom_key.h"
+#include "ui/events/keycodes/keyboard_codes.h"
 
 using content::WebContentsTester;
 using testing::_;
@@ -34,7 +43,7 @@ class MockTabSnapshotLogger : public TabSnapshotLogger {
   // TabSnapshotLogger:
   MOCK_METHOD2(LogBackgroundTab,
                void(ukm::SourceId ukm_source_id,
-                    content::WebContents* web_contents));
+                    const TabSnapshot& tab_snapshot));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockTabSnapshotLogger);
@@ -56,7 +65,26 @@ class TestWebContentsObserver : public content::WebContentsObserver {
   DISALLOW_COPY_AND_ASSIGN(TestWebContentsObserver);
 };
 
+blink::WebMouseEvent GetMouseEvent(blink::WebInputEvent::Type event_type) {
+  return blink::WebMouseEvent(event_type, blink::WebInputEvent::kNoModifiers,
+                              blink::WebInputEvent::kTimeStampForTesting);
+}
+
 }  // namespace
+
+// Equality comparison for verifying mock calls.
+bool operator==(const TabSnapshotLogger::PageSnapshot& lhs,
+                const TabSnapshotLogger::PageSnapshot& rhs) {
+  return lhs.key_event_count == rhs.key_event_count &&
+         lhs.mouse_event_count == rhs.mouse_event_count &&
+         lhs.touch_event_count == rhs.touch_event_count;
+}
+
+bool operator==(const TabSnapshotLogger::TabSnapshot& lhs,
+                const TabSnapshotLogger::TabSnapshot& rhs) {
+  return lhs.web_contents == rhs.web_contents &&
+         lhs.page_snapshot == rhs.page_snapshot;
+}
 
 // Inherits from ChromeRenderViewHostTestHarness to use TestWebContents and
 // Profile.
@@ -94,6 +122,13 @@ class TabActivityWatcherTest : public ChromeRenderViewHostTestHarness {
     return test_contents;
   }
 
+  TabSnapshotLogger::TabSnapshot GetSnapshotFor(
+      content::WebContents* web_contents) {
+    TabSnapshotLogger::TabSnapshot snapshot;
+    snapshot.web_contents = web_contents;
+    return snapshot;
+  }
+
   StrictMock<MockTabSnapshotLogger>* mock_logger() { return mock_logger_; }
 
  private:
@@ -126,16 +161,19 @@ TEST_F(TabActivityWatcherTest, Basic) {
 
   // Pinning or unpinning test_contents_2 triggers the log.
   // Note that pinning the tab moves it to index 0.
-  EXPECT_CALL(*mock_logger(), LogBackgroundTab(_, test_contents_2));
+  EXPECT_CALL(*mock_logger(),
+              LogBackgroundTab(_, GetSnapshotFor(test_contents_2)));
   tab_strip_model->SetTabPinned(1, true);
 
-  EXPECT_CALL(*mock_logger(), LogBackgroundTab(_, test_contents_2));
+  EXPECT_CALL(*mock_logger(),
+              LogBackgroundTab(_, GetSnapshotFor(test_contents_2)));
   tab_strip_model->SetTabPinned(0, false);
 
   // Activate test_contents_2. Normally this would hide the current tab's
   // aura::Window, which is what actually triggers TabActivityWatcher to log the
   // change.
-  EXPECT_CALL(*mock_logger(), LogBackgroundTab(_, test_contents_1));
+  EXPECT_CALL(*mock_logger(),
+              LogBackgroundTab(_, GetSnapshotFor(test_contents_1)));
   tab_strip_model->ActivateTabAt(0, true);
   test_contents_1->WasHidden();
 
@@ -156,7 +194,43 @@ TEST_F(TabActivityWatcherTest, HideWindow) {
   tab_strip_model->ActivateTabAt(0, false);
 
   // Hiding the window triggers the log.
-  EXPECT_CALL(*mock_logger(), LogBackgroundTab(_, test_contents_1));
+  EXPECT_CALL(*mock_logger(),
+              LogBackgroundTab(_, GetSnapshotFor(test_contents_1)));
+  test_contents_1->WasHidden();
+
+  EXPECT_CALL(*mock_logger(), LogBackgroundTab(_, _)).Times(0);
+  tab_strip_model->CloseAllTabs();
+}
+
+TEST_F(TabActivityWatcherTest, InputEvents) {
+  Browser::CreateParams params(profile(), true);
+  auto browser = CreateBrowserWithTestWindowForParams(&params);
+
+  TabStripModel* tab_strip_model = browser->tab_strip_model();
+  content::WebContents* test_contents_1 =
+      AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[0]));
+  tab_strip_model->ActivateTabAt(0, false);
+
+  auto tab_snapshot = GetSnapshotFor(test_contents_1);
+
+  // Fake some input events. TODO(michaelpg): We may need a browser test for key
+  // and touch events. DO_NO_SUBMIT commented-out code:
+  /*
+  test_contents_1->GetRenderViewHost()->GetWidget()->ForwardKeyboardEvent(
+      GetKeyboardEvent(blink::WebInputEvent::kRawKeyDown));
+
+  content::SimulateKeyPress(test_contents_1, ui::DomKey::FromCharacter('U'),
+                            ui::DomCode::US_U, ui::VKEY_U, false, false, false,
+                            false);
+  */
+  for (int i = 0; i < 3; i++) {
+    blink::WebMouseEvent e = GetMouseEvent(blink::WebInputEvent::kMouseDown);
+    test_contents_1->GetRenderViewHost()->GetWidget()->ForwardMouseEvent(e);
+    tab_snapshot.page_snapshot.mouse_event_count++;
+  }
+
+  // Hiding the window triggers the log.
+  EXPECT_CALL(*mock_logger(), LogBackgroundTab(_, tab_snapshot));
   test_contents_1->WasHidden();
 
   EXPECT_CALL(*mock_logger(), LogBackgroundTab(_, _)).Times(0);
