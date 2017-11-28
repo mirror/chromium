@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce85e54f_435c86c6",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T17:18:56Z",
+      "side": 1,
+      "message": "nit: Simply just:\n\nThe sort order defined in https://tools.ietf.org/html/rfc7049#section-3.9 is similar to the CTAP order implemented here, but it ...",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "914614767789ca5ae8a8a49076e8c511e649a3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
