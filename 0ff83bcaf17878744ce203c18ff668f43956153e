@@ -22,6 +22,30 @@
       "revId": "0ff83bcaf17878744ce203c18ff668f43956153e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce4d44d_d5f317b4",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/filter-matches.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-28T21:58:36Z",
+      "side": 1,
+      "message": "I don\u0027t think we need both here, just the health thermometer.",
+      "parentUuid": "f4570c2b_2cb5412b",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 44
+      },
+      "revId": "0ff83bcaf17878744ce203c18ff668f43956153e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
