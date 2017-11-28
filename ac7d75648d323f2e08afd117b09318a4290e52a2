@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dce8d31a_bc7cdc3f",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-28T00:38:39Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "086c1e51_bd0a0e0c",
+      "range": {
+        "startLine": 917,
+        "startChar": 0,
+        "endLine": 922,
+        "endChar": 3
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89f1b708_a628da8a",
         "filename": "content/browser/child_process_security_policy_impl.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T22:00:09Z",
       "side": 0,
       "message": "I think detection of duplicate isolated origins is not that important and can be safely removed.  Making the detection work after the changes would require not using std::set\u003c...\u003e::insert(begin, end), but instead iterating and inserting (and checking) origins one-by-one.",
+      "range": {
+        "startLine": 1155,
+        "startChar": 4,
+        "endLine": 1155,
+        "endChar": 79
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dcf6dd8_2d28578e",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-28T00:38:39Z",
+      "side": 0,
+      "message": "Seems you\u0027re already walking through all origins to check for IsValidIsolatedOrigin(), so you could just move this warning into that loop.  (And let it ignore the duplicate when doing the insert() below rather than returning early.)\n\nBut I\u0027m also fine removing the warning.  It was likely helpful only in limited cases, such as someone trying to experiment with/without the --isolate-origins flag while specifying a.g.c or another site that\u0027s already isolated via enterprise policy, and not realizing why the site is still isolated without the flag.  But there\u0027s also a danger of warning unnecessarily when the enterprise policy contains a.g.c, or if our feature list intersects with enterprise policy.\n\nI would add a comment explaining the behavior though (which is that duplicates are still ignored).",
+      "parentUuid": "89f1b708_a628da8a",
       "range": {
         "startLine": 1155,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "026cee42_e8b3fb04",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-28T00:38:39Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "d1a2e76a_386efbeb",
+      "range": {
+        "startLine": 1164,
+        "startChar": 0,
+        "endLine": 1170,
+        "endChar": 3
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e21cd426_437ab9e9",
         "filename": "content/browser/child_process_security_policy_unittest.cc",
         "patchSetId": 7
@@ -91,6 +163,29 @@
       "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09b04630_5bcbd62d",
+        "filename": "content/browser/child_process_security_policy_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-28T00:38:39Z",
+      "side": 0,
+      "message": "I don\u0027t remember off the top of my head, but is there any other coverage that verifies the CPSP isolated_origins_ list correctness after multiple calls to AddIsolatedOrigins (possibly with duplicates)?  If not, we might want to keep a test for that.",
+      "range": {
+        "startLine": 992,
+        "startChar": 0,
+        "endLine": 992,
+        "endChar": 50
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -140,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "72867851_06ffae14",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-28T00:38:39Z",
+      "side": 0,
+      "message": "Right, see my comment in the header",
+      "parentUuid": "966d7596_c84c8da0",
+      "range": {
+        "startLine": 33,
+        "startChar": 72,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5832bca4_9932d51c",
         "filename": "content/common/site_isolation_policy.h",
         "patchSetId": 7
@@ -151,6 +270,30 @@
       "writtenOn": "2017-11-22T22:00:09Z",
       "side": 0,
       "message": "I\u0027ve removed this part of the comment, because I think it can be confusing (it can be read as saying that cross-process iframes are *not* possible if AreIsolatedOriginsEnabled is false -\n such reading would be incorrect because OOPIFs are always possible because of --isolate-extensions).",
+      "range": {
+        "startLine": 31,
+        "startChar": 42,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56dbe685_2008e84d",
+        "filename": "content/common/site_isolation_policy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-28T00:38:39Z",
+      "side": 0,
+      "message": "Yeah, that part of the comment was applicable back when AreCrossProcessFramesPossible was false on Android.  That\u0027s no longer true, and that function doesn\u0027t exist anymore, so it makes sense to remove this.",
+      "parentUuid": "5832bca4_9932d51c",
       "range": {
         "startLine": 31,
         "startChar": 42,
