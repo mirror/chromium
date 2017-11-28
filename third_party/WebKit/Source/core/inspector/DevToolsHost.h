@@ -32,6 +32,7 @@
 #include "core/CoreExport.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/wtf/Vector.h"
+#include "platform/wtf/text/AtomicString.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
@@ -80,7 +81,7 @@ class CORE_EXPORT DevToolsHost final : public ScriptWrappable {
   friend class FrontendMenuProvider;
 
   DevToolsHost(InspectorFrontendClient*, LocalFrame* frontend_frame);
-  void EvaluateScript(const String&);
+  void EvaluateScript(const AtomicString&);
 
   InspectorFrontendClient* client_;
   Member<LocalFrame> frontend_frame_;
