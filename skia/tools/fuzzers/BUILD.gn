@@ -1,0 +1,36 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# Skia fuzzing tools
+import("//build/config/features.gni")
+import("//testing/libfuzzer/fuzzer_test.gni")
+import("//third_party/protobuf/proto_library.gni")
+
+# skia BUILD depends on this target. Needed for package discovery
+group("fuzzers") {
+}
+
+proto_library("filter_proto") {
+  sources = [
+    "filter.proto",
+  ]
+}
+
+fuzzer_test("filter_proto_fuzzer") {
+  sources = [
+    "filter_proto_converter.cc",
+    "filter_proto_converter.h",
+    "filter_proto_fuzzer.cc",
+  ]
+
+  deps = [
+    ":filter_proto",
+    "//base",
+    "//base/test:test_support",
+    "//build/config:exe_and_shlib_deps",
+    "//build/win:default_exe_manifest",
+    "//skia",
+    "//third_party/libprotobuf-mutator",
+  ]
+}
