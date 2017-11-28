@@ -4,6 +4,7 @@
 
 #include "core/css/parser/CSSPropertyParser.h"
 
+#include "core/css/CSSColorValue.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/parser/CSSParser.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
@@ -264,6 +265,14 @@ TEST(CSSPropertyParserTest, GridPositionLimit8) {
       CSSParser::ParseSingleValue(CSSPropertyGridRowEnd, "-5000000000");
   DCHECK(value);
   EXPECT_EQ(GetGridPositionInteger(*value), -1000);
+}
+
+TEST(CSSPropertyParserTest, ParseColorWithFloat) {
+  const CSSValue* value = CSSParser::ParseSingleValue(
+      CSSPropertyBackgroundColor, "rgb(0.0, 0.0, 0.0)");
+  EXPECT_NE(nullptr, value);
+  EXPECT_TRUE(value->IsColorValue());
+  EXPECT_EQ(Color::kBlack, cssvalue::ToCSSColorValue(*value).Value());
 }
 
 }  // namespace blink
