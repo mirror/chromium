@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68ccb157_1980fd67",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-28T10:07:53Z",
+      "side": 1,
+      "message": "nit: Realms (\u003d v8::Contexts) can be different, but they must be the same origin.\n\n\"the same\" is a bit confusing.  \"the same origin\" or \"the same origin-domain\"?",
+      "range": {
+        "startLine": 286,
+        "startChar": 29,
+        "endLine": 286,
+        "endChar": 37
+      },
+      "revId": "efc0000e94457790118b7b306d112899aca3074a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
