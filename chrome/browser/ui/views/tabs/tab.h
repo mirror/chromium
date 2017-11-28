@@ -18,7 +18,6 @@
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/linear_animation.h"
 #include "ui/gfx/geometry/point.h"
-#include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/paint_throbber.h"
 #include "ui/views/context_menu_controller.h"
 #include "ui/views/controls/button/button.h"
@@ -171,9 +170,6 @@ class Tab : public gfx::AnimationDelegate,
   friend class ThrobberView;
   FRIEND_TEST_ALL_PREFIXES(TabStripTest, TabCloseButtonVisibilityWhenStacked);
 
-  // The animation object used to swap the favicon with the sad tab icon.
-  class FaviconCrashAnimation;
-
   class ThrobberView;
 
   // gfx::AnimationDelegate:
@@ -253,15 +249,6 @@ class Tab : public gfx::AnimationDelegate,
                                 bool active,
                                 SkColor color);
 
-  // Paints the attention indicator and |favicon_|. |favicon_| may be null.
-  // |favicon_draw_bounds| is |favicon_bounds_| adjusted for rtl and clipped to
-  // the bounds of the tab.
-  void PaintAttentionIndicatorAndIcon(gfx::Canvas* canvas,
-                                      const gfx::Rect& favicon_draw_bounds);
-
-  // Paints the favicon, mirrored for RTL if needed.
-  void PaintIcon(gfx::Canvas* canvas);
-
   // Updates the throbber.
   void UpdateThrobber(const TabRendererData& old);
 
@@ -293,19 +280,10 @@ class Tab : public gfx::AnimationDelegate,
   // mini tab title change and pulsing.
   double GetThrobValue();
 
-  // Set the temporary offset for the favicon. This is used during the crash
-  // animation.
-  void SetFaviconHidingOffset(int offset);
-
-  void SetShouldDisplayCrashedFavicon(bool value);
-
   // Recalculates the correct |button_color_| and resets the title, alert
   // indicator, and close button colors if necessary.  This should be called any
   // time the theme or active state may have changed.
   void OnButtonColorMaybeChanged();
-
-  // Schedules repaint task for icon.
-  void ScheduleIconPaint();
 
   // The controller, never NULL.
   TabController* const controller_;
@@ -321,12 +299,6 @@ class Tab : public gfx::AnimationDelegate,
   // True if the tab has been detached.
   bool detached_ = false;
 
-  // The offset used to animate the favicon location. This is used when the tab
-  // crashes.
-  int favicon_hiding_offset_ = 0;
-
-  bool should_display_crashed_favicon_ = false;
-
   enum AttentionType : int {
     kPinnedTabTitleChange = 1 << 0,     // The title of a pinned tab changed.
     kBlockedWebContents = 1 << 1,       // The WebContents is marked as blocked.
@@ -336,9 +308,6 @@ class Tab : public gfx::AnimationDelegate,
 
   // Whole-tab throbbing "pulse" animation.
   gfx::ThrobAnimation pulse_animation_;
-
-  // Crash icon animation (in place of favicon).
-  std::unique_ptr<FaviconCrashAnimation> crash_icon_animation_;
 
   scoped_refptr<gfx::AnimationContainer> animation_container_;
 
@@ -377,11 +346,6 @@ class Tab : public gfx::AnimationDelegate,
 
   // The current color of the alert indicator and close button icons.
   SkColor button_color_ = SK_ColorTRANSPARENT;
-
-  // The favicon for the tab. This might be the sad tab icon or a copy of
-  // data().favicon and may be modified for theming. It is created on demand
-  // and thus may be null.
-  gfx::ImageSkia favicon_;
 
   class BackgroundCache {
    public:
