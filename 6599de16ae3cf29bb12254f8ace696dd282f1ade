@@ -139,6 +139,24 @@
       "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1700fd0c_37e0f54f",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultInlineHeaders.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-28T13:37:03Z",
+      "side": 1,
+      "message": "Hmm, since there\u0027s no other fields that is less than 4 bytes, |char| still adds 4 bytes, but I agree that type safety is also important. LayoutNG keeps more ShapeResults in memory and that is the concern.\n\nMaybe we should move this to private bit fields and use accessors as we do for normal classes? We need to move |direction_| as well to really save the memory (or steal one bit from num_characters_ as we do for ShapeResult). I\u0027m ok to do it later, Q1 would be the perf period for LayoutNG.",
+      "parentUuid": "558169cd_db0055eb",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
