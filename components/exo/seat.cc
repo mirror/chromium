@@ -38,7 +38,9 @@ Seat::Seat() {
 Seat::~Seat() {
   aura::client::GetFocusClient(ash::Shell::Get()->GetPrimaryRootWindow())
       ->RemoveObserver(this);
-  WMHelper::GetInstance()->RemovePreTargetHandler(this);
+  // TODO(crbug.com/748380): Fix shutdown order.
+  if (WMHelper::HasInstance())
+    WMHelper::GetInstance()->RemovePreTargetHandler(this);
 }
 
 void Seat::AddObserver(SeatObserver* observer) {
