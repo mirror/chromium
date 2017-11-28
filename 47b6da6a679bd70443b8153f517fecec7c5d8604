@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5d2486db_d72dce0c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-28T09:57:43Z",
+      "side": 1,
+      "message": "Yes, I\u0027m suggesting to always do this check regardless of whether the URL is empty or not, or whether the protocol is javascript: or not.\n\nIIUC, the attached bug is a leak of cross origin function object, which shouldn\u0027t happen at all.\n\nI wanted to say that, **if the implementation were 100% correct**, all the three realms must be the same origin-domain.  Thus, the Entry realm (EnteredDOMWindow) must theoretically always be the same origin-domain.  So, if it\u0027s not true, it\u0027s wrong.  Then, we should throw regardless of URL or its protocol.\n\nI see no reason to limit it to javascript:.",
+      "parentUuid": "e07a3cab_2ddbd71a",
+      "revId": "47b6da6a679bd70443b8153f517fecec7c5d8604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f975f506_b45accef",
         "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
         "patchSetId": 1
