@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16577204_aee04808",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-28T18:30:29Z",
+      "side": 1,
+      "message": "Can you just change the bots to use the \u0027msvc-release-bot\u0027 configs (which are this) and get rid of these configs? The naming of this config is worse than useless at this point :)",
+      "revId": "aec3b0cbf494b8b2b0e65259ffc5c7dd31dc1f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
