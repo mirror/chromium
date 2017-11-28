@@ -381,10 +381,6 @@ namespace content {
 ////////////////////////////////////////////////////////////////////////////////
 // BrowserCompositorMacClient, public:
 
-NSView* RenderWidgetHostViewMac::BrowserCompositorMacGetNSView() const {
-  return cocoa_view_;
-}
-
 SkColor RenderWidgetHostViewMac::BrowserCompositorMacGetGutterColor(
     SkColor color) const {
   // When making an element on the page fullscreen the element's background
@@ -1123,7 +1119,7 @@ void RenderWidgetHostViewMac::UpdateScreenInfo(gfx::NativeView view) {
   local_surface_id_ = local_surface_id_allocator_.GenerateId();
   render_widget_host_->DidAllocateLocalSurfaceIdForAutoResize(
       render_widget_host_->last_auto_resize_request_number());
-  browser_compositor_->GetDelegatedFrameHost()->WasResized();
+  browser_compositor_->WasResized();
 }
 
 bool RenderWidgetHostViewMac::SupportsSpeech() const {
@@ -1742,8 +1738,15 @@ gfx::Point RenderWidgetHostViewMac::AccessibilityOriginInScreen(
   return gfx::Point(originInScreen.x, originInScreen.y);
 }
 
-NSView* RenderWidgetHostViewMac::AccessibilityGetAcceleratedWidget() {
-  return cocoa_view_;
+gfx::AcceleratedWidget
+RenderWidgetHostViewMac::AccessibilityGetAcceleratedWidget() {
+  if (browser_compositor_) {
+    ui::AcceleratedWidgetMac* accelerated_widget_mac =
+        browser_compositor_->GetAcceleratedWidgetMac();
+    if (accelerated_widget_mac)
+      return accelerated_widget_mac->accelerated_widget();
+  }
+  return gfx::kNullAcceleratedWidget;
 }
 
 void RenderWidgetHostViewMac::SetTextInputActive(bool active) {
@@ -2897,8 +2900,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   else
     renderWidgetHostView_->render_widget_host_->SendScreenRects();
   renderWidgetHostView_->render_widget_host_->WasResized();
-  renderWidgetHostView_->browser_compositor_->GetDelegatedFrameHost()
-      ->WasResized();
+  renderWidgetHostView_->browser_compositor_->WasResized();
 
   // Wait for the frame that WasResize might have requested. If the view is
   // being made visible at a new size, then this call will have no effect
