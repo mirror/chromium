@@ -334,3 +334,28 @@ VolumeManagerCommon.VOLUME_ALREADY_MOUNTED = 'volume_already_mounted';
 VolumeManagerCommon.TEAM_DRIVES_DIRECTORY_NAME = 'team_drives';
 VolumeManagerCommon.TEAM_DRIVES_DIRECTORY_PATH =
     '/' + VolumeManagerCommon.TEAM_DRIVES_DIRECTORY_NAME;
+
+/**
+ * @const
+ */
+VolumeManagerCommon.ARCHIVE_OPENED_EVENT_TYPE = 'archive_opened';
+
+/**
+ * The event type used for changing current directory when an archive file is
+ * newly mounted, or when opened a one already mounted.
+ * @param {!DirectoryEntry} mountPoint The root directory of the mounted
+ *     volume.
+ * @extends {Event}
+ * @constructor
+ * @class
+ */
+VolumeManagerCommon.ArchiveOpenedEvent = function(mountPoint) {
+  var e = new Event(VolumeManagerCommon.ARCHIVE_OPENED_EVENT_TYPE);
+
+  /**
+   * @const {!DirectoryEntry}
+   */
+  e.mountPoint = mountPoint;
+
+  return e;
+};

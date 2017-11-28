@@ -540,6 +540,11 @@ FileManager.prototype = /** @struct */ {
       listBeingUpdated.endBatchUpdates();
       listBeingUpdated = null;
     });
+    this.volumeManager_.addEventListener(
+        VolumeManagerCommon.ARCHIVE_OPENED_EVENT_TYPE, function(event) {
+          if (window.isFocused())
+            this.directoryModel_.changeDirectoryEntry(event.mountPoint);
+        }.bind(this));
 
     this.directoryModel_.addEventListener(
         'directory-changed',
