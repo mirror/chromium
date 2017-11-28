@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
 #include "ui/display/display_export.h"
+#include "ui/display/types/display_constants.h"
 
 namespace display {
 class Display;
@@ -100,14 +101,22 @@ class DISPLAY_EXPORT DisplayLayout final {
 
   std::vector<DisplayPlacement> placement_list;
 
-  // True if displays are mirrored.
-  bool mirrored;
+  // The id of the mirroring source display if the displays are mirrored.
+  // |kInvalidDisplayId| if the displays are not mirrored.
+  int64_t mirroring_source_id = kInvalidDisplayId;
+
+  // The id list of the mirroring destination displays if the displays are
+  // mirrored. Empty if the displays are not mirrored.
+  DisplayIdList mirroring_destination_ids;
+
+  // Return true if the displays are mirrored.
+  bool mirrored() const { return mirroring_source_id != kInvalidDisplayId; }
 
   // True if multi displays should default to unified mode.
-  bool default_unified;
+  bool default_unified = true;
 
   // The id of the display used as a primary display.
-  int64_t primary_id;
+  int64_t primary_id = kInvalidDisplayId;
 
   std::unique_ptr<DisplayLayout> Copy() const;
 

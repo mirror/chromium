@@ -26,8 +26,13 @@ DisplayLayoutBuilder& DisplayLayoutBuilder::SetDefaultUnified(
   return *this;
 }
 
-DisplayLayoutBuilder& DisplayLayoutBuilder::SetMirrored(bool mirrored) {
-  layout_->mirrored = mirrored;
+DisplayLayoutBuilder& DisplayLayoutBuilder::SetMirrored(
+    int64_t source_id,
+    const DisplayIdList& destination_ids) {
+  layout_->mirroring_source_id = source_id;
+  layout_->mirroring_destination_ids.clear();
+  for (const auto& id : destination_ids)
+    layout_->mirroring_destination_ids.emplace_back(id);
   return *this;
 }
 

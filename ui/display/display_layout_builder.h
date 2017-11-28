@@ -28,7 +28,8 @@ class DISPLAY_EXPORT DisplayLayoutBuilder final {
 
   DisplayLayoutBuilder& SetDefaultUnified(bool default_unified);
 
-  DisplayLayoutBuilder& SetMirrored(bool mirrored);
+  DisplayLayoutBuilder& SetMirrored(int64_t source_id,
+                                    const DisplayIdList& destination_ids);
 
   DisplayLayoutBuilder& ClearPlacements();
 

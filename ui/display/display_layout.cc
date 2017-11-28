@@ -473,8 +473,7 @@ bool DisplayPlacement::StringToPosition(const base::StringPiece& string,
 ////////////////////////////////////////////////////////////////////////////////
 // DisplayLayout
 
-DisplayLayout::DisplayLayout()
-    : mirrored(false), default_unified(true), primary_id(kInvalidDisplayId) {}
+DisplayLayout::DisplayLayout() {}
 
 DisplayLayout::~DisplayLayout() {}
 
@@ -578,7 +577,9 @@ std::unique_ptr<DisplayLayout> DisplayLayout::Copy() const {
   std::unique_ptr<DisplayLayout> copy(new DisplayLayout);
   for (const auto& placement : placement_list)
     copy->placement_list.push_back(placement);
-  copy->mirrored = mirrored;
+  copy->mirroring_source_id = mirroring_source_id;
+  for (const auto& id : mirroring_destination_ids)
+    copy->mirroring_destination_ids.emplace_back(id);
   copy->default_unified = default_unified;
   copy->primary_id = primary_id;
   return copy;
@@ -612,7 +613,7 @@ bool DisplayLayout::HasSamePlacementList(const DisplayLayout& layout) const {
 std::string DisplayLayout::ToString() const {
   std::stringstream s;
   s << "primary=" << primary_id;
-  if (mirrored)
+  if (mirrored())
     s << ", mirrored";
   if (default_unified)
     s << ", default_unified";

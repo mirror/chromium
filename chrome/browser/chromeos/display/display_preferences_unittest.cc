@@ -38,6 +38,7 @@
 #include "ui/display/manager/json_converter.h"
 #include "ui/display/screen.h"
 #include "ui/display/test/display_manager_test_api.h"
+#include "ui/display/types/display_constants.h"
 #include "ui/gfx/geometry/vector3d_f.h"
 #include "ui/message_center/message_center.h"
 
@@ -46,7 +47,8 @@ using ash::ResolutionNotificationController;
 namespace chromeos {
 namespace {
 const char kPrimaryIdKey[] = "primary-id";
-const char kMirroredKey[] = "mirrored";
+const char kMirroringSourceIdKey[] = "mirroring_source_id";
+const char kMirroringDestinationIdsKey[] = "mirroring_destination_ids";
 const char kPositionKey[] = "position";
 const char kOffsetKey[] = "offset";
 const char kPlacementDisplayIdKey[] = "placement.display_id";
@@ -227,6 +229,30 @@ class DisplayPreferencesTest : public ash::AshTestBase {
     pref_data->SetInteger("orientation", static_cast<int>(rotation));
   }
 
+  // A helper function to check the mirroring source and destination ids.
+  void CheckMirrorMode(
+      const base::DictionaryValue& layout_value,
+      int64_t expected_mirroring_source_id,
+      const display::DisplayIdList& expected_mirroring_destination_ids) {
+    std::string mirroring_source_id_str;
+    EXPECT_TRUE(layout_value.GetString(kMirroringSourceIdKey,
+                                       &mirroring_source_id_str));
+    EXPECT_EQ(base::Int64ToString(expected_mirroring_source_id),
+              mirroring_source_id_str);
+    const base::ListValue* mirroring_destination_id_list;
+    EXPECT_TRUE(layout_value.GetList(kMirroringDestinationIdsKey,
+                                     &mirroring_destination_id_list));
+    EXPECT_EQ(expected_mirroring_destination_ids.size(),
+              mirroring_destination_id_list->GetSize());
+    size_t index = 0;
+    for (const auto& id : expected_mirroring_destination_ids) {
+      std::string mirroring_destination_id_str;
+      mirroring_destination_id_list->GetString(index++,
+                                               &mirroring_destination_id_str);
+      EXPECT_EQ(base::Int64ToString(id), mirroring_destination_id_str);
+    }
+  }
+
   std::string GetRegisteredDisplayPlacementStr(
       const display::DisplayIdList& list) {
     return ash::Shell::Get()
@@ -371,9 +397,8 @@ TEST_F(DisplayPreferencesTest, BasicStores) {
   EXPECT_EQ(dummy_layout->placement_list[0].offset,
             stored_layout.placement_list[0].offset);
 
-  bool mirrored = true;
-  EXPECT_TRUE(layout_value->GetBoolean(kMirroredKey, &mirrored));
-  EXPECT_FALSE(mirrored);
+  CheckMirrorMode(*layout_value, display::kInvalidDisplayId,
+                  display::DisplayIdList());
 
   const base::DictionaryValue* properties =
       local_state()->GetDictionary(prefs::kDisplayProperties);
@@ -482,9 +507,8 @@ TEST_F(DisplayPreferencesTest, BasicStores) {
   if (true)
     return;
 
-  mirrored = true;
-  EXPECT_TRUE(layout_value->GetBoolean(kMirroredKey, &mirrored));
-  EXPECT_FALSE(mirrored);
+  CheckMirrorMode(*layout_value, display::kInvalidDisplayId,
+                  display::DisplayIdList());
   std::string primary_id_str;
   EXPECT_TRUE(layout_value->GetString(kPrimaryIdKey, &primary_id_str));
   EXPECT_EQ(base::Int64ToString(id2), primary_id_str);
@@ -509,9 +533,10 @@ TEST_F(DisplayPreferencesTest, BasicStores) {
   EXPECT_TRUE(layout_value->GetString(kPlacementParentDisplayIdKey, &id));
   EXPECT_EQ(base::Int64ToString(id2), id);
 
-  mirrored = false;
-  EXPECT_TRUE(layout_value->GetBoolean(kMirroredKey, &mirrored));
-  EXPECT_TRUE(mirrored);
+  display::DisplayIdList mirroring_destination_ids;
+  mirroring_destination_ids.emplace_back(id2);
+  CheckMirrorMode(*layout_value, id1, mirroring_destination_ids);
+
   EXPECT_TRUE(layout_value->GetString(kPrimaryIdKey, &primary_id_str));
   EXPECT_EQ(base::Int64ToString(id2), primary_id_str);
 
@@ -542,9 +567,9 @@ TEST_F(DisplayPreferencesTest, BasicStores) {
   EXPECT_EQ("right", position);
   EXPECT_TRUE(layout_value->GetInteger(kOffsetKey, &offset));
   EXPECT_EQ(0, offset);
-  mirrored = true;
-  EXPECT_TRUE(layout_value->GetBoolean(kMirroredKey, &mirrored));
-  EXPECT_FALSE(mirrored);
+  mirroring_destination_ids.clear();
+  mirroring_destination_ids.emplace_back(id2);
+  CheckMirrorMode(*layout_value, id1, mirroring_destination_ids);
   EXPECT_TRUE(layout_value->GetString(kPrimaryIdKey, &primary_id_str));
   EXPECT_EQ(base::Int64ToString(id1), primary_id_str);
 
@@ -568,9 +593,9 @@ TEST_F(DisplayPreferencesTest, BasicStores) {
   EXPECT_EQ("right", position);
   EXPECT_TRUE(layout_value->GetInteger(kOffsetKey, &offset));
   EXPECT_EQ(0, offset);
-  mirrored = true;
-  EXPECT_TRUE(layout_value->GetBoolean(kMirroredKey, &mirrored));
-  EXPECT_FALSE(mirrored);
+  mirroring_destination_ids.clear();
+  mirroring_destination_ids.emplace_back(id2);
+  CheckMirrorMode(*layout_value, id1, mirroring_destination_ids);
   EXPECT_TRUE(layout_value->GetString(kPrimaryIdKey, &primary_id_str));
   EXPECT_EQ(base::Int64ToString(id1), primary_id_str);
 
@@ -1015,7 +1040,7 @@ TEST_F(DisplayPreferencesTest, SaveUnifiedMode) {
   display::DisplayLayout stored_layout;
   EXPECT_TRUE(display::JsonToDisplayLayout(*new_value, &stored_layout));
   EXPECT_TRUE(stored_layout.default_unified);
-  EXPECT_FALSE(stored_layout.mirrored);
+  EXPECT_FALSE(stored_layout.mirrored());
 
   const base::DictionaryValue* displays =
       local_state()->GetDictionary(prefs::kDisplayProperties);
@@ -1037,14 +1062,14 @@ TEST_F(DisplayPreferencesTest, SaveUnifiedMode) {
       display::DisplayIdListToString(list), &new_value));
   EXPECT_TRUE(display::JsonToDisplayLayout(*new_value, &stored_layout));
   EXPECT_TRUE(stored_layout.default_unified);
-  EXPECT_TRUE(stored_layout.mirrored);
+  EXPECT_TRUE(stored_layout.mirrored());
 
   display_manager()->SetMirrorMode(false);
   ASSERT_TRUE(secondary_displays->GetDictionary(
       display::DisplayIdListToString(list), &new_value));
   EXPECT_TRUE(display::JsonToDisplayLayout(*new_value, &stored_layout));
   EXPECT_TRUE(stored_layout.default_unified);
-  EXPECT_FALSE(stored_layout.mirrored);
+  EXPECT_FALSE(stored_layout.mirrored());
 
   // Exit unified mode.
   display_manager()->SetDefaultMultiDisplayModeForCurrentDisplays(
@@ -1053,7 +1078,7 @@ TEST_F(DisplayPreferencesTest, SaveUnifiedMode) {
       display::DisplayIdListToString(list), &new_value));
   EXPECT_TRUE(display::JsonToDisplayLayout(*new_value, &stored_layout));
   EXPECT_FALSE(stored_layout.default_unified);
-  EXPECT_FALSE(stored_layout.mirrored);
+  EXPECT_FALSE(stored_layout.mirrored());
 }
 
 TEST_F(DisplayPreferencesTest, RestoreUnifiedMode) {
@@ -1078,7 +1103,14 @@ TEST_F(DisplayPreferencesTest, RestoreUnifiedMode) {
   EXPECT_TRUE(display_manager()->IsInUnifiedMode());
 
   // Restored to mirror, then unified.
-  StoreDisplayBoolPropertyForList(list, "mirrored", true);
+  StoreDisplayPropertyForList(
+      list, "mirroring_source_id",
+      base::MakeUnique<base::Value>(base::Int64ToString(id1)));
+  base::Value::ListStorage list_storage;
+  list_storage.emplace_back(base::Value(base::Int64ToString(id1 + 1)));
+  StoreDisplayPropertyForList(list, "mirroring_destination_ids",
+                              base::MakeUnique<base::Value>(list_storage));
+
   StoreDisplayBoolPropertyForList(list, "default_unified", true);
   LoadDisplayPreferences(false);
   UpdateDisplay("100x100,200x200");
@@ -1089,7 +1121,12 @@ TEST_F(DisplayPreferencesTest, RestoreUnifiedMode) {
 
   // Sanity check. Restore to extended.
   StoreDisplayBoolPropertyForList(list, "default_unified", false);
-  StoreDisplayBoolPropertyForList(list, "mirrored", false);
+  StoreDisplayPropertyForList(list, "mirroring_source_id",
+                              base::MakeUnique<base::Value>(base::Int64ToString(
+                                  display::kInvalidDisplayId)));
+  list_storage.clear();
+  StoreDisplayPropertyForList(list, "mirroring_destination_ids",
+                              base::MakeUnique<base::Value>(list_storage));
   LoadDisplayPreferences(false);
   UpdateDisplay("100x100,200x200");
   EXPECT_FALSE(display_manager()->IsInMirrorMode());
@@ -1163,10 +1200,16 @@ TEST_F(DisplayPreferencesTest, MirrorWhenEnterTableMode) {
   display::DisplayIdList list = display_manager()->GetCurrentDisplayIdList();
   ASSERT_EQ(2u, list.size());
   base::Value* value;
-  EXPECT_TRUE(GetDisplayPropertyFromList(list, "mirrored", &value));
-  bool mirrored;
-  EXPECT_TRUE(value->GetAsBoolean(&mirrored));
-  EXPECT_FALSE(mirrored);
+  EXPECT_TRUE(GetDisplayPropertyFromList(list, "mirroring_source_id", &value));
+  std::string mirroring_source_id_str;
+  EXPECT_TRUE(value->GetAsString(&mirroring_source_id_str));
+  EXPECT_EQ(base::Int64ToString(display::kInvalidDisplayId),
+            mirroring_source_id_str);
+  EXPECT_TRUE(
+      GetDisplayPropertyFromList(list, "mirroring_destination_ids", &value));
+  base::ListValue* mirroring_destination_id_list;
+  EXPECT_TRUE(value->GetAsList(&mirroring_destination_id_list));
+  EXPECT_TRUE(mirroring_destination_id_list->empty());
 
   // Exiting the tablet mode should exit mirror mode.
   controller->EnableTabletModeWindowManager(false);

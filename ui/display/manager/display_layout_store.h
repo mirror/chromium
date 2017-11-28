@@ -38,12 +38,17 @@ class DISPLAY_MANAGER_EXPORT DisplayLayoutStore {
   // |default_display_layout_|.
   const DisplayLayout& GetRegisteredDisplayLayout(const DisplayIdList& list);
 
-  // Update the multi display state in the display layout for
-  // |display_list|.  This creates new display layout if no layout is
-  // registered for |display_list|.
-  void UpdateMultiDisplayState(const DisplayIdList& display_list,
-                               bool mirrored,
-                               bool default_unified);
+  // Update the |mirroring_source_id| and |mirroring_destination_ids| in the
+  // display layout for |display_list|. This creates new display layout if no
+  // layout is registered for |display_list|.
+  void UpdateMirrorMode(const DisplayIdList& list,
+                        int64_t source_id,
+                        const DisplayIdList& destination_ids);
+
+  // Update the |default_unified| in the display layout for |display_list|. This
+  // creates new display layout if no layout is registered for |display_list|.
+  void UpdateUnifiedDesktopMode(const DisplayIdList& display_list,
+                                bool default_unified);
 
  private:
   // Creates new layout for display list from |default_display_layout_|.

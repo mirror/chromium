@@ -2338,17 +2338,17 @@ TEST_F(DisplayManagerTest, SoftwareMirroringWithCompositingCursor) {
 
 TEST_F(DisplayManagerTest, MirroredLayout) {
   UpdateDisplay("500x500,400x400");
-  EXPECT_FALSE(display_manager()->GetCurrentDisplayLayout().mirrored);
+  EXPECT_FALSE(display_manager()->GetCurrentDisplayLayout().mirrored());
   EXPECT_EQ(2, display::Screen::GetScreen()->GetNumDisplays());
   EXPECT_EQ(2U, display_manager()->num_connected_displays());
 
   UpdateDisplay("1+0-500x500,1+0-500x500");
-  EXPECT_TRUE(display_manager()->GetCurrentDisplayLayout().mirrored);
+  EXPECT_TRUE(display_manager()->GetCurrentDisplayLayout().mirrored());
   EXPECT_EQ(1, display::Screen::GetScreen()->GetNumDisplays());
   EXPECT_EQ(2U, display_manager()->num_connected_displays());
 
   UpdateDisplay("500x500,500x500");
-  EXPECT_FALSE(display_manager()->GetCurrentDisplayLayout().mirrored);
+  EXPECT_FALSE(display_manager()->GetCurrentDisplayLayout().mirrored());
   EXPECT_EQ(2, display::Screen::GetScreen()->GetNumDisplays());
   EXPECT_EQ(2U, display_manager()->num_connected_displays());
 }
@@ -2566,7 +2566,7 @@ TEST_F(DisplayManagerTest, UnifiedDesktopWithHardwareMirroring) {
   display::DisplayIdList list = display::test::CreateDisplayIdList2(1, 2);
   display::DisplayLayoutBuilder builder(
       display_manager()->layout_store()->GetRegisteredDisplayLayout(list));
-  builder.SetMirrored(false);
+  builder.SetMirrored(display::kInvalidDisplayId, display::DisplayIdList());
   display_manager()->layout_store()->RegisterLayoutForDisplayIdList(
       list, builder.Build());
 
@@ -3502,9 +3502,11 @@ TEST_F(DisplayManagerTest, ForcedMirrorMode) {
 
   const display::DisplayIdList current_list =
       display_manager()->GetCurrentDisplayIdList();
-  display_manager()->layout_store()->UpdateMultiDisplayState(
-      current_list, true /* mirrored */, false /* unified */);
-  EXPECT_FALSE(display_manager()->GetCurrentDisplayLayout().mirrored);
+  display::DisplayIdList destination_ids;
+  destination_ids.emplace_back(id2);
+  display_manager()->layout_store()->UpdateMirrorMode(current_list, id1,
+                                                      destination_ids);
+  EXPECT_FALSE(display_manager()->GetCurrentDisplayLayout().mirrored());
   EXPECT_EQ(display::MULTIPLE_DISPLAY_STATE_DUAL_MIRROR,
             observer.GetStateForDisplayIds(outputs));
 

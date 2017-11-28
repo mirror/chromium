@@ -46,6 +46,7 @@
 #include "ui/display/display_layout.h"
 #include "ui/display/manager/display_layout_store.h"
 #include "ui/display/manager/display_manager.h"
+#include "ui/display/manager/display_manager_utilities.h"
 #include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/wm/core/coordinate_conversion.h"
@@ -709,8 +710,15 @@ void WindowTreeHostManager::PostDisplayConfigurationChange() {
     display::DisplayIdList list = display_manager->GetCurrentDisplayIdList();
     const display::DisplayLayout& layout =
         layout_store->GetRegisteredDisplayLayout(list);
-    layout_store->UpdateMultiDisplayState(
-        list, display_manager->IsInMirrorMode(), layout.default_unified);
+    if (display_manager->IsInMirrorMode()) {
+      layout_store->UpdateMirrorMode(
+          list, display_manager->mirroring_source_id(),
+          display_manager->GetMirroringDestinationDisplayIdList());
+    } else {
+      layout_store->UpdateMirrorMode(list, display::kInvalidDisplayId,
+                                     display::DisplayIdList());
+    }
+
     if (display::Screen::GetScreen()->GetNumDisplays() > 1) {
       SetPrimaryDisplayId(layout.primary_id == display::kInvalidDisplayId
                               ? list[0]

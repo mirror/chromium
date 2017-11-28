@@ -63,8 +63,14 @@ struct StructTraits<display::mojom::DisplayPlacementDataView,
 template <>
 struct StructTraits<display::mojom::DisplayLayoutDataView,
                     std::unique_ptr<display::DisplayLayout>> {
-  static bool mirrored(const std::unique_ptr<display::DisplayLayout>& layout) {
-    return layout->mirrored;
+  static int64_t mirroring_source_id(
+      const std::unique_ptr<display::DisplayLayout>& layout) {
+    return layout->mirroring_source_id;
+  }
+
+  static const display::DisplayIdList& mirroring_destination_ids(
+      const std::unique_ptr<display::DisplayLayout>& layout) {
+    return layout->mirroring_destination_ids;
   }
 
   static bool default_unified(

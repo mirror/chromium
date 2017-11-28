@@ -98,7 +98,11 @@ bool StructTraits<display::mojom::DisplayLayoutDataView,
   if (!data.ReadPlacementList(&display_layout->placement_list))
     return false;
 
-  display_layout->mirrored = data.mirrored();
+  display_layout->mirroring_source_id = data.mirroring_source_id();
+  if (!data.ReadMirroringDestinationIds(
+          &display_layout->mirroring_destination_ids)) {
+    return false;
+  }
   display_layout->default_unified = data.default_unified();
   display_layout->primary_id = data.primary_display_id();
 

@@ -18,7 +18,8 @@ namespace display {
 namespace {
 
 // Persistent key names
-const char kMirroredKey[] = "mirrored";
+const char kMirroringSourceIdKey[] = "mirroring_source_id";
+const char kMirroringDestinationIdsKey[] = "mirroring_destination_ids";
 const char kDefaultUnifiedKey[] = "default_unified";
 const char kPrimaryIdKey[] = "primary-id";
 const char kDisplayPlacementKey[] = "display_placement";
@@ -100,6 +101,32 @@ bool UpdateFromDict(const base::DictionaryValue* dict_value,
 template <>
 bool UpdateFromDict(const base::DictionaryValue* dict_value,
                     const std::string& field_name,
+                    DisplayIdList* output) {
+  bool (base::Value::*getter)(const base::ListValue**) const =
+      &base::Value::GetAsList;
+  const base::ListValue* list = nullptr;
+  if (!UpdateFromDict(dict_value, field_name, getter, &list))
+    return false;
+
+  if (list == nullptr)
+    return true;
+
+  output->reserve(list->GetSize());
+  for (const auto& list_item : *list) {
+    std::string mirroring_destination_id_str;
+    if (!list_item.GetAsString(&mirroring_destination_id_str))
+      return false;
+    int64_t mirroring_destination_id;
+    base::StringToInt64(mirroring_destination_id_str,
+                        &mirroring_destination_id);
+    output->push_back(mirroring_destination_id);
+  }
+  return true;
+}
+
+template <>
+bool UpdateFromDict(const base::DictionaryValue* dict_value,
+                    const std::string& field_name,
                     int64_t* output) {
   bool (base::Value::*getter)(std::string*) const = &base::Value::GetAsString;
   std::string value;
@@ -151,7 +178,10 @@ bool JsonToDisplayLayout(const base::Value& value, DisplayLayout* layout) {
   if (!value.GetAsDictionary(&dict_value))
     return false;
 
-  if (!UpdateFromDict(dict_value, kMirroredKey, &layout->mirrored) ||
+  if (!UpdateFromDict(dict_value, kMirroringSourceIdKey,
+                      &layout->mirroring_source_id) ||
+      !UpdateFromDict(dict_value, kMirroringDestinationIdsKey,
+                      &layout->mirroring_destination_ids) ||
       !UpdateFromDict(dict_value, kDefaultUnifiedKey,
                       &layout->default_unified) ||
       !UpdateFromDict(dict_value, kPrimaryIdKey, &layout->primary_id)) {
@@ -172,7 +202,14 @@ bool DisplayLayoutToJson(const DisplayLayout& layout, base::Value* value) {
   if (!value->GetAsDictionary(&dict_value))
     return false;
 
-  dict_value->SetBoolean(kMirroredKey, layout.mirrored);
+  dict_value->SetString(kMirroringSourceIdKey,
+                        base::Int64ToString(layout.mirroring_source_id));
+  std::unique_ptr<base::ListValue> mirroring_destination_ids(
+      new base::ListValue);
+  for (const auto& id : layout.mirroring_destination_ids)
+    mirroring_destination_ids->AppendString(base::Int64ToString(id));
+  dict_value->Set(kMirroringDestinationIdsKey,
+                  std::move(mirroring_destination_ids));
   dict_value->SetBoolean(kDefaultUnifiedKey, layout.default_unified);
   dict_value->SetString(kPrimaryIdKey, base::Int64ToString(layout.primary_id));
 

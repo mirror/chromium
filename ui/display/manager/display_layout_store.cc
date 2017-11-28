@@ -89,7 +89,7 @@ void DisplayLayoutStore::RegisterLayoutForDisplayIdList(
 bool DisplayLayoutStore::GetMirrorMode(const DisplayIdList& list) {
   if (forced_mirror_mode_)
     return true;
-  return GetRegisteredDisplayLayout(list).mirrored;
+  return GetRegisteredDisplayLayout(list).mirrored();
 }
 
 const DisplayLayout& DisplayLayoutStore::GetRegisteredDisplayLayout(
@@ -104,9 +104,10 @@ const DisplayLayout& DisplayLayoutStore::GetRegisteredDisplayLayout(
   return *layout;
 }
 
-void DisplayLayoutStore::UpdateMultiDisplayState(const DisplayIdList& list,
-                                                 bool mirrored,
-                                                 bool default_unified) {
+void DisplayLayoutStore::UpdateMirrorMode(
+    const DisplayIdList& list,
+    int64_t source_id,
+    const DisplayIdList& destination_ids) {
   DCHECK(layouts_.find(list) != layouts_.end());
   if (layouts_.find(list) == layouts_.end())
     CreateDefaultDisplayLayout(list);
@@ -115,8 +116,19 @@ void DisplayLayoutStore::UpdateMultiDisplayState(const DisplayIdList& list,
     // Don't remember the mirrored status if it's forced by the
     // force_mirror_mode_ flag because it'll always be mirrored
     // regardless of the user setting.
-    layouts_[list]->mirrored = mirrored;
+    layouts_[list]->mirroring_source_id = source_id;
+    layouts_[list]->mirroring_destination_ids.clear();
+    for (const auto& id : destination_ids)
+      layouts_[list]->mirroring_destination_ids.emplace_back(id);
   }
+}
+
+void DisplayLayoutStore::UpdateUnifiedDesktopMode(const DisplayIdList& list,
+                                                  bool default_unified) {
+  DCHECK(layouts_.find(list) != layouts_.end());
+  if (layouts_.find(list) == layouts_.end())
+    CreateDefaultDisplayLayout(list);
+
   layouts_[list]->default_unified = default_unified;
 }
 

@@ -800,7 +800,7 @@ void DisplayManager::OnNativeDisplaysChanged(
         layout_store_->GetRegisteredDisplayLayout(list);
     // Mirror mode is set by DisplayConfigurator on the device.
     // Emulate it when running on linux desktop.
-    if (layout.mirrored)
+    if (layout.mirrored())
       SetMultiDisplayMode(MIRRORING);
   }
 #endif
@@ -1334,8 +1334,14 @@ void DisplayManager::SetDefaultMultiDisplayModeForCurrentDisplays(
     MultiDisplayMode mode) {
   DCHECK_NE(MIRRORING, mode);
   DisplayIdList list = GetCurrentDisplayIdList();
-  layout_store_->UpdateMultiDisplayState(list, IsInMirrorMode(),
-                                         mode == UNIFIED);
+  layout_store_->UpdateUnifiedDesktopMode(list, mode == UNIFIED);
+  if (IsInMirrorMode()) {
+    layout_store_->UpdateMirrorMode(list, mirroring_source_id(),
+                                    GetMirroringDestinationDisplayIdList());
+  } else {
+    layout_store_->UpdateMirrorMode(list, display::kInvalidDisplayId,
+                                    display::DisplayIdList());
+  }
   ReconfigureDisplays();
 }
 
