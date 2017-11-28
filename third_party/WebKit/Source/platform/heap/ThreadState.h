@@ -292,7 +292,10 @@ class PLATFORM_EXPORT ThreadState {
   void MarkPhaseVisitRoots();
   bool MarkPhaseAdvanceMarking(double deadline_seconds);
   void MarkPhaseEpilogue();
-  void CompleteSweep();
+  // Returns true if either sweeping was not running or sweeping was completed.
+  // Returns false if sweeping couldn't complete due to recursively calling
+  // completeSweep.
+  bool CompleteSweep();
   void PreSweep(BlinkGC::GCType);
   void PostSweep();
 

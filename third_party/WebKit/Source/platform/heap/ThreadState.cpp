@@ -894,17 +894,17 @@ void ThreadState::EagerSweep() {
   AccumulateSweepingTime(WTF::MonotonicallyIncreasingTimeMS() - start_time);
 }
 
-void ThreadState::CompleteSweep() {
+bool ThreadState::CompleteSweep() {
   DCHECK(CheckThread());
   // If we are not in a sweeping phase, there is nothing to do here.
   if (!IsSweepingInProgress())
-    return;
+    return true;
 
   // completeSweep() can be called recursively if finalizers can allocate
   // memory and the allocation triggers completeSweep(). This check prevents
   // the sweeping from being executed recursively.
   if (SweepForbidden())
-    return;
+    return false;
 
   SweepForbiddenScope scope(this);
   ScriptForbiddenScope script_forbidden_scope;
@@ -925,6 +925,7 @@ void ThreadState::CompleteSweep() {
   }
 
   PostSweep();
+  return true;
 }
 
 BlinkGCObserver::BlinkGCObserver(ThreadState* thread_state)
@@ -1234,9 +1235,12 @@ void ThreadState::IncrementalMarkingFinalize() {
 void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
                                  BlinkGC::GCType gc_type,
                                  BlinkGC::GCReason reason) {
-  // Nested collectGarbage() invocations aren't supported.
+  // Nested garbage collection invocations aren't supported.
   CHECK(!IsGCForbidden());
-  CompleteSweep();
+  // Garbage collection during sweeping is not supported. This can happen when
+  // finalizers trigger garbage collections.
+  if (!CompleteSweep())
+    return;
 
   RUNTIME_CALL_TIMER_SCOPE_IF_ISOLATE_EXISTS(
       GetIsolate(), RuntimeCallStats::CounterId::kCollectGarbage);
