@@ -164,6 +164,7 @@ class CanvasRenderingContext2DTest : public ::testing::Test {
   FakeImageSource opaque_bitmap_;
   FakeImageSource alpha_bitmap_;
   FakeGLES2Interface gl_;
+  const bool low_latency_ = false;
 
   // Set this to override frame settings.
   FrameSettingOverrideFunction override_settings_function_ = nullptr;
@@ -253,8 +254,9 @@ void CanvasRenderingContext2DTest::TearDown() {
 std::unique_ptr<Canvas2DLayerBridge> CanvasRenderingContext2DTest::MakeBridge(
     const IntSize& size,
     Canvas2DLayerBridge::AccelerationMode acceleration_mode) {
-  std::unique_ptr<Canvas2DLayerBridge> bridge = WTF::WrapUnique(
-      new Canvas2DLayerBridge(size, 0, acceleration_mode, CanvasColorParams()));
+  std::unique_ptr<Canvas2DLayerBridge> bridge =
+      WTF::WrapUnique(new Canvas2DLayerBridge(
+          size, 0, acceleration_mode, CanvasColorParams(), low_latency_));
   bridge->SetCanvasResourceHost(canvas_element_);
   return bridge;
 }

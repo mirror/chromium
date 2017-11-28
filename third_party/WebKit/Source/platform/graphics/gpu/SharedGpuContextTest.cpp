@@ -122,10 +122,11 @@ TEST_F(SharedGpuContextTest, Canvas2DLayerBridgeAutoRecovery) {
   EXPECT_FALSE(SharedGpuContext::IsValidWithoutRestoring());
   IntSize size(10, 10);
   CanvasColorParams color_params;
+  constexpr bool low_latency = false;
   std::unique_ptr<Canvas2DLayerBridge> bridge =
       WTF::WrapUnique(new Canvas2DLayerBridge(
           size, 0, /*msaa sample count*/
-          Canvas2DLayerBridge::kEnableAcceleration, color_params));
+          Canvas2DLayerBridge::kEnableAcceleration, color_params, low_latency));
   EXPECT_TRUE(bridge->IsAccelerated());
   EXPECT_TRUE(SharedGpuContext::IsValidWithoutRestoring());
   bridge->BeginDestruction();

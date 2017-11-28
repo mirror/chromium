@@ -62,7 +62,8 @@ namespace blink {
 Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
                                          int msaa_sample_count,
                                          AccelerationMode acceleration_mode,
-                                         const CanvasColorParams& color_params)
+                                         const CanvasColorParams& color_params,
+                                         bool low_latency)
     : ImageBufferSurface(size, color_params),
       logger_(WTF::WrapUnique(new Logger)),
       weak_ptr_factory_(this),
@@ -75,6 +76,7 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
       is_hidden_(false),
       is_deferral_enabled_(true),
       software_rendering_while_hidden_(false),
+      low_latency_(low_latency),
       acceleration_mode_(acceleration_mode),
       color_params_(color_params),
       resource_host_(nullptr) {
@@ -226,7 +228,8 @@ void Canvas2DLayerBridge::Hibernate() {
       snapshot->PaintImageForCurrentFrame().GetSkImage(), 0, 0, &copy_paint);
   hibernation_image_ = temp_hibernation_surface->makeImageSnapshot();
   ResetResourceProvider();
-  layer_->ClearTexture();
+  if (layer_)
+    layer_->ClearTexture();
 
   // shouldBeDirectComposited() may have changed.
   if (resource_host_)
@@ -267,10 +270,16 @@ CanvasResourceProvider* Canvas2DLayerBridge::GetOrCreateResourceProvider(
     software_rendering_while_hidden_ = true;
   }
 
-  CanvasResourceProvider::ResourceUsage usage =
-      want_acceleration
-          ? CanvasResourceProvider::kAcceleratedCompositedResourceUsage
-          : CanvasResourceProvider::kSoftwareCompositedResourceUsage;
+  CanvasResourceProvider::ResourceUsage usage;
+  if (low_latency_) {
+    usage = want_acceleration
+                ? CanvasResourceProvider::kAcceleratedResourceUsage
+                : CanvasResourceProvider::kSoftwareResourceUsage;
+  } else {
+    usage = want_acceleration
+                ? CanvasResourceProvider::kAcceleratedCompositedResourceUsage
+                : CanvasResourceProvider::kSoftwareCompositedResourceUsage;
+  }
 
   resource_provider_ = CanvasResourceProvider::Create(
       Size(), msaa_sample_count_, color_params_, usage,
@@ -286,7 +295,8 @@ CanvasResourceProvider* Canvas2DLayerBridge::GetOrCreateResourceProvider(
     ReportResourceProviderCreationFailure();
   }
 
-  if (resource_provider_ && resource_provider_->IsAccelerated() && !layer_) {
+  if (!low_latency_ && resource_provider_ &&
+      resource_provider_->IsAccelerated() && !layer_) {
     layer_ =
         Platform::Current()->CompositorSupport()->CreateExternalTextureLayer(
             this);
@@ -663,12 +673,16 @@ bool Canvas2DLayerBridge::PrepareTransferableResource(
 
 WebLayer* Canvas2DLayerBridge::Layer() {
   DCHECK(!destruction_in_progress_);
+  if (low_latency_)
+    return nullptr;
   // Trigger lazy layer creation
   GetOrCreateResourceProvider(kPreferAcceleration);
   return layer_ ? layer_->Layer() : nullptr;
 }
 
 void Canvas2DLayerBridge::DidDraw(const FloatRect& rect) {
+  if (low_latency_)
+    return;
   if (is_deferral_enabled_) {
     have_recorded_draw_commands_ = true;
     IntRect pixel_bounds = EnclosingIntRect(rect);
@@ -695,6 +709,7 @@ void Canvas2DLayerBridge::DidDraw(const FloatRect& rect) {
 void Canvas2DLayerBridge::FinalizeFrame() {
   TRACE_EVENT0("blink", "Canvas2DLayerBridge::FinalizeFrame");
   DCHECK(!destruction_in_progress_);
+  DCHECK(!low_latency_);
 
   // Make sure surface is ready for painting: fix the rendering mode now
   // because it will be too late during the paint invalidation phase.
@@ -720,6 +735,7 @@ void Canvas2DLayerBridge::FinalizeFrame() {
 
 void Canvas2DLayerBridge::DoPaintInvalidation(const FloatRect& dirty_rect) {
   DCHECK(!destruction_in_progress_);
+  DCHECK(!low_latency_);
   if (layer_ && acceleration_mode_ != kDisableAcceleration)
     layer_->Layer()->InvalidateRect(EnclosingIntRect(dirty_rect));
 }
