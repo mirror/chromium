@@ -1,0 +1,9 @@
+Ensures if navigating away from a project that already exists to a page without a project then a project gets created it works properly.
+
+file:///tmp/folder2
+    localhost%3a8000
+        devtools
+            network
+                resources
+                    empty.html
+
