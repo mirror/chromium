@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fdd2ba8_67559f0d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T01:22:07Z",
+      "side": 1,
+      "message": "here was michael\u0027s earlier comment: \"Please use ScopedObserver to automatically remove observers when possible.\"\n\nthis ensures that you don\u0027t forget to remove something that you added earlier.",
+      "revId": "4d58a9e9362bfd1b878d256b82717a57c08c9d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
