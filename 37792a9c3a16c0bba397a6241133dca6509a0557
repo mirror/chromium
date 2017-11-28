@@ -34,6 +34,24 @@
       "revId": "37792a9c3a16c0bba397a6241133dca6509a0557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1d6822_1808aff9",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaDrmBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-28T21:03:08Z",
+      "side": 1,
+      "message": "Jeff: Thanks for the clear explanation!\n\nActually, media code will make sure that the CDM will not be destroyed if there are still MediaCodec instances using the MediaCrypto associated with the CDM, e.g.\n\nhttps://cs.chromium.org/chromium/src/media/gpu/android/android_video_decode_accelerator.h?rcl\u003d3d00e383369c12a92975df561bdcc46314fcd42b\u0026l\u003d335\n\n(+liberato) So in theory we should not hit the latter case. But to be safe (and limit the dependency), I feel we should also catch IllegalArgumentException here, similar to how we handle IllegalStateException. Also add a comment about when this could happen, e.g. if MediaCrypto.release() is called...\n\nhttps://cs.chromium.org/chromium/src/media/base/android/java/src/org/chromium/media/MediaCodecBridge.java?rcl\u003d3d00e383369c12a92975df561bdcc46314fcd42b\u0026l\u003d456",
+      "parentUuid": "740403f3_1b1980ea",
+      "revId": "37792a9c3a16c0bba397a6241133dca6509a0557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
