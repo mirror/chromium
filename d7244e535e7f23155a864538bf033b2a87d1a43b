@@ -105,6 +105,24 @@
       "revId": "d7244e535e7f23155a864538bf033b2a87d1a43b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e178a0c_6174f184",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T02:59:01Z",
+      "side": 1,
+      "message": "That\u0027s pretty odd. It would be helpful to narrow that down. Maybe try ninja -j 1 -v ?",
+      "parentUuid": "ab9bfbd0_ae2ac4cb",
+      "revId": "d7244e535e7f23155a864538bf033b2a87d1a43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
