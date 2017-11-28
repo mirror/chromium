@@ -393,6 +393,30 @@
     },
     {
       "key": {
+        "uuid": "33df1b96_0769ecc7",
+        "filename": "extensions/common/api/extension_types.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-28T00:08:46Z",
+      "side": 1,
+      "message": "Works for me! :)",
+      "parentUuid": "a1eee881_83bcf5b5",
+      "range": {
+        "startLine": 45,
+        "startChar": 131,
+        "endLine": 45,
+        "endChar": 173
+      },
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9118b8e7_68f0b67b",
         "filename": "extensions/common/api/extension_types.json",
         "patchSetId": 2
@@ -469,6 +493,24 @@
       "side": 1,
       "message": "I tried to make it the enum but then I started getting compilation errors like below:\n\n  ../../ipc/ipc_param_traits.h:22:3: error: static_assert failed due to requirement \u0027internal::AlwaysFalse\u003cCSSOrigin\u003e::value\u0027 \"Cannot find the IPC::ParamTraits specialization. Did you forget to include the corresponding header file?\"\n    static_assert(internal::AlwaysFalse\u003cP\u003e::value,\n    ^             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  ../../ipc/ipc_message_utils.h:102:3: note: in instantiation of template class \u0027IPC::ParamTraits\u003cextensions::UserScript::CSSOrigin\u003e\u0027 requested here\n    ParamTraits\u003cType\u003e::Write(m, static_cast\u003cconst Type\u0026 \u003e(p));\n    ^\n  ../../extensions/common/extension_messages.h:184:3: note: in instantiation of function template specialization \u0027IPC::WriteParam\u003cextensions::UserScript::CSSOrigin\u003e\u0027 requested here\n    IPC_STRUCT_MEMBER(extensions::UserScript::CSSOrigin, css_origin)\n    ^\n  ../../ipc/param_traits_write_macros.h:17:44: note: expanded from macro \u0027IPC_STRUCT_MEMBER\u0027\n  #define IPC_STRUCT_MEMBER(type, name, ...) IPC_STRUCT_TRAITS_MEMBER(name)\n                                             ^\n  ../../ipc/param_traits_write_macros.h:27:40: note: expanded from macro \u0027IPC_STRUCT_TRAITS_MEMBER\u0027\n  #define IPC_STRUCT_TRAITS_MEMBER(name) WriteParam(m, p.name);\n\n  ...\n\nI see that run_at above (type UserScript::RunLocation) also converts to int and back.",
       "parentUuid": "ae058366_7356aaa6",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41307aba_805434ec",
+        "filename": "extensions/common/extension_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-28T00:08:46Z",
+      "side": 1,
+      "message": "\u003e I tried to make it the enum but then I started getting compilation errors like below:\n\u003e \n\u003e   ../../ipc/ipc_param_traits.h:22:3: error: static_assert failed due to requirement \u0027internal::AlwaysFalse\u003cCSSOrigin\u003e::value\u0027 \"Cannot find the IPC::ParamTraits specialization. Did you forget to include the corresponding header file?\"\n\u003e     static_assert(internal::AlwaysFalse\u003cP\u003e::value,\n\u003e     ^             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\u003e   ../../ipc/ipc_message_utils.h:102:3: note: in instantiation of template class \u0027IPC::ParamTraits\u003cextensions::UserScript::CSSOrigin\u003e\u0027 requested here\n\u003e     ParamTraits\u003cType\u003e::Write(m, static_cast\u003cconst Type\u0026 \u003e(p));\n\u003e     ^\n\u003e   ../../extensions/common/extension_messages.h:184:3: note: in instantiation of function template specialization \u0027IPC::WriteParam\u003cextensions::UserScript::CSSOrigin\u003e\u0027 requested here\n\u003e     IPC_STRUCT_MEMBER(extensions::UserScript::CSSOrigin, css_origin)\n\u003e     ^\n\u003e   ../../ipc/param_traits_write_macros.h:17:44: note: expanded from macro \u0027IPC_STRUCT_MEMBER\u0027\n\u003e   #define IPC_STRUCT_MEMBER(type, name, ...) IPC_STRUCT_TRAITS_MEMBER(name)\n\u003e                                              ^\n\u003e   ../../ipc/param_traits_write_macros.h:27:40: note: expanded from macro \u0027IPC_STRUCT_TRAITS_MEMBER\u0027\n\u003e   #define IPC_STRUCT_TRAITS_MEMBER(name) WriteParam(m, p.name);\n\u003e \n\u003e   ...\n\nThese errors just mean that you have to define the traits for the enum; we do this at the top of the messages file.  For an example, see the RunLocation traits here:\nhttps://chromium.googlesource.com/chromium/src/+/28d1e1c569221d38f3f8ab9859558642000665c2/extensions/common/extension_messages.h#48\n\n\u003e I see that run_at above (type UserScript::RunLocation) also converts to int and back.\n\nThanks for pointing this out!  We shouldn\u0027t do that.  I\u0027ve written up a quick CL to change that.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/792294",
+      "parentUuid": "db9988b2_f27adf0f",
       "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

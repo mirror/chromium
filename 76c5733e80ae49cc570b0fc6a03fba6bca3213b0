@@ -16,6 +16,74 @@
       "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359eaa7d_244a1e35",
+        "filename": "extensions/common/extension_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-28T00:08:46Z",
+      "side": 1,
+      "message": "See this comment for how to change this to an enum:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/778402/2/extensions/common/extension_messages.h#184\n\nLet\u0027s also make this an optional member here, in order to push the decision about default down to one place (the injection site).",
+      "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92737edb_decf8c7f",
+        "filename": "extensions/renderer/programmatic_script_injector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-28T00:08:46Z",
+      "side": 1,
+      "message": "for virtual methods, prefer always using CamelCase(). This is because we try to only use hacker_style() for simple getters/setters, but we don\u0027t (usually) consider anything that\u0027s virtual to be \"simple\".\n\nSo here, this would be:\nCSSOrigin GetCssOrigin()",
+      "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234c5f3d_7142e3b3",
+        "filename": "extensions/renderer/script_injection.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-28T00:08:46Z",
+      "side": 1,
+      "message": "And then finally here, we still have an optional, and have a single place of using the default.  Everywhere else can pass an empty optional if nothing is specified.\n\n// Default CSS origin is \"author\", but can be overridden to \"user\" by scripts.\nbase::Optional\u003cCSSOrigin\u003e css_origin \u003d injector_-\u003eGetCssOrigin();\nblink::WebDocument::CSSOrigin blink_css_origin \u003d\n    css_origin \u0026\u0026 *css_origin \u003d\u003d CSS_ORIGIN_USER ?\n        blink::WebDocument::kUserOrigin :\n        blink::WebDocument::kAuthorOrigin;",
+      "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8b0293_604dd567",
+        "filename": "extensions/renderer/script_injector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-28T00:08:46Z",
+      "side": 1,
+      "message": "nit: Add a function comment\n\nAlso, let\u0027s have this return an optional so that it can be unspecified (and we don\u0027t have to have an implicit default).",
+      "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

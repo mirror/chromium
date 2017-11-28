@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "83595acb_5d81513d",
+        "filename": "chrome/test/data/extensions/api_test/executescript/css_origin/test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-28T00:08:46Z",
+      "side": 1,
+      "message": "Using callbackFail(), you have to specify the exact error message.  If you use other APIs, you can get around it (e.g., chrome.test.assertTrue(/someregexp/.test(chrome.runtime.lastError.message)).  But I think using the hard coded string is probably okay here.",
+      "parentUuid": "1b414192_4eaef77c",
+      "revId": "f9f4f29e114c79b60fcf8dc5390ba7b6beb44589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6158e27_46f44bbc",
         "filename": "extensions/browser/api/execute_code_function.cc",
         "patchSetId": 4
@@ -50,6 +68,24 @@
       "revId": "f9f4f29e114c79b60fcf8dc5390ba7b6beb44589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17304867_f62e5e43",
+        "filename": "extensions/browser/api/execute_code_function.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-28T00:08:46Z",
+      "side": 1,
+      "message": "lg!",
+      "parentUuid": "d6158e27_46f44bbc",
+      "revId": "f9f4f29e114c79b60fcf8dc5390ba7b6beb44589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -84,6 +120,24 @@
       "revId": "f9f4f29e114c79b60fcf8dc5390ba7b6beb44589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a40d7bd_814a78f2",
+        "filename": "extensions/renderer/user_script_injector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-28T00:08:46Z",
+      "side": 1,
+      "message": "In my mind, CSS_ORIGIN_UNDEFINED would roughly equate to an empty base::Optional.  Propagating all the way into blink would be nice, but I think we can get the majority of the benefit  without needing to cross boundaries.  See also comments on the newest patch set.",
+      "parentUuid": "b07d344e_45215bff",
+      "revId": "f9f4f29e114c79b60fcf8dc5390ba7b6beb44589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
