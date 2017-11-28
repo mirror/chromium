@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0629f343_e25299eb",
+        "filename": "ui/aura/test/env_test_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-11-28T18:26:33Z",
+      "side": 1,
+      "message": "You might want to name this to EnvWindowTreeClientSetter, or some other name which emphasizes what it\u0027s setting the WTC on. The first time I encountered this in context, I was a bit baffled about what it was doing.",
+      "range": {
+        "startLine": 21,
+        "startChar": 30,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "7f5bff80d36cf61b0da3da6511a8cf38427e1fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
