@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b34aa4d8_009bcf78",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-28T21:45:28Z",
+      "side": 1,
+      "message": "This is to match std::map::erase() return type, which is also size_t: http://en.cppreference.com/w/cpp/container/map/erase.  Though I wonder why that is...  I guess to match multimap::erase() and multiset::erase() return types.\n\nI\u0027m happy to change to Boolean if you think it would be an improvement.",
+      "parentUuid": "c2036ef6_a3a5d351",
+      "range": {
+        "startLine": 1746,
+        "startChar": 0,
+        "endLine": 1746,
+        "endChar": 70
+      },
+      "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "348c9c1f_0e98a0ac",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 1
@@ -66,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "014d20b9_4f36e4e9",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2592,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-28T21:45:28Z",
+      "side": 1,
+      "message": "You are right about O(n) lookup not being efficient.\n\nSince I need to grab an |active_it| anyway, I can just use that to lookup the URL, so no need for (arguably redundant) multiple arguments.  What do you think?\n\nIf you prefer, I\u0027m happy to take two arguments instead.",
+      "parentUuid": "348c9c1f_0e98a0ac",
+      "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3515a7f6_f57d71d6",
         "filename": "net/spdy/chromium/spdy_session.h",
         "patchSetId": 1
@@ -80,6 +122,24 @@
       "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b8cc79_e8917e75",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-28T21:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3515a7f6_f57d71d6",
+      "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
