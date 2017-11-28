@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6aa3ed88_5b659ebd",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-28T16:12:59Z",
+      "side": 1,
+      "message": "sounds good. I can create a follow up CL to do this.",
+      "parentUuid": "918011d9_2c4efbce",
+      "revId": "6cccb42df388d298c969344e4c381b437fadd8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1135d8e7_5a25464a",
         "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-28T15:42:52Z",
       "side": 1,
       "message": "s/result/input/ in docstring",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "6cccb42df388d298c969344e4c381b437fadd8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95ee82d_0244c255",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-28T16:12:59Z",
+      "side": 1,
+      "message": "hah. Right. Sorry. Missed this.",
+      "parentUuid": "1135d8e7_5a25464a",
       "range": {
         "startLine": 34,
         "startChar": 9,
@@ -56,6 +98,24 @@
       "revId": "6cccb42df388d298c969344e4c381b437fadd8e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f3314c_21a0c826",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-28T16:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53cfc2e0_edbe6b83",
+      "revId": "6cccb42df388d298c969344e4c381b437fadd8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
