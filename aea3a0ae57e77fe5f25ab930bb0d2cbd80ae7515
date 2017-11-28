@@ -57,6 +57,30 @@
       "revId": "aea3a0ae57e77fe5f25ab930bb0d2cbd80ae7515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcee9a90_4051acf6",
+        "filename": "components/bookmarks/browser/bookmark_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-28T17:08:02Z",
+      "side": 1,
+      "message": "It\u0027s also used in bookmark_change_processor.cc. I originally thought using this function was cleaner than the subtle effect of calling GetFavicon(), but I\u0027m not convinced anymore so if you prefer I\u0027ll definitely revert the introduction of the API and instead use (the already existing) GetFavicon() + BookmarkModel::is_favicon_loaded(), and simply document that GetFavicon() has such side effects and that it\u0027s guaranteed that the favicon is loading or loaded on return. WDYT?",
+      "parentUuid": "be4f1beb_12002f2c",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 24
+      },
+      "revId": "aea3a0ae57e77fe5f25ab930bb0d2cbd80ae7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
