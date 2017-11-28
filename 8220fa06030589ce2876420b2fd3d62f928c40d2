@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9c48428_b34712ff",
+        "filename": "media/audio/mac/audio_manager_mac.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-11-28T17:50:29Z",
+      "side": 1,
+      "message": "nit: putting my paranoid hat on I\u0027d have a preference towards doing something like:\n\n  void increment_suppression() {\n    DCHECK_CALLED_ON_VALID_THREAD(thread_check);\n    ++suppression_count;\n  }\n\n  // Returns true when the last reference is released.\n  bool decrement_suppression() {\n    DCHECK_CALLED_ON_VALID_THREAD(thread_check);\n    DCHECK_GT(suppression_count, 0);\n    return (--suppression_count) \u003d\u003d 0;\n  }\n\n private:\n  int suppression_count \u003d 0;\n  THREAD_CHECKER(thread_check);",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 25
+      },
+      "revId": "8220fa06030589ce2876420b2fd3d62f928c40d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
