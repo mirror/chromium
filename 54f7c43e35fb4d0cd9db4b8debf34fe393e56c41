@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8f46b57_946c2eb7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/referrer-window.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-28T08:10:24Z",
+      "side": 1,
+      "message": "is this function name in pascal case intentionally?",
+      "revId": "54f7c43e35fb4d0cd9db4b8debf34fe393e56c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d545839e_30622882",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/referrer-window.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-28T08:10:24Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "54f7c43e35fb4d0cd9db4b8debf34fe393e56c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed5e685_2b5e3092",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/referrer-window.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-28T08:10:24Z",
+      "side": 1,
+      "message": "how about having assert_unreached here?",
+      "revId": "54f7c43e35fb4d0cd9db4b8debf34fe393e56c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504c150e_d1557813",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/referrer-window.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-28T08:10:24Z",
+      "side": 1,
+      "message": "how about aligning the order to the one in referrer-tests.js? i.e. workletType, fetchType, referrerPolicy and then scriptOrigins",
+      "revId": "54f7c43e35fb4d0cd9db4b8debf34fe393e56c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
