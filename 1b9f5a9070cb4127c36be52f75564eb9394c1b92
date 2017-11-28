@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d268e1b9_482bda14",
+        "filename": "content/browser/renderer_host/overscroll_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-28T18:14:35Z",
+      "side": 1,
+      "message": "Are these changes the result of a bad merge?",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 20
+      },
+      "revId": "1b9f5a9070cb4127c36be52f75564eb9394c1b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
