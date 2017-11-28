@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e97340fd_ad79cbbb",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T22:23:43Z",
+      "side": 1,
+      "message": "It doesn\u0027t deduce to a raw pointer, but a smart pointer - note the base::MakeUnique\n\nhttps://google.github.io/styleguide/cppguide.html#auto\n\"(Allowed) When the type is clear from local context (in the same expression or within a few lines). Initialization of a pointer or smart pointer with calls to new commonly falls into this category, as does use of auto in a range-based loop over a container whose type is spelled out nearby.\"",
+      "parentUuid": "0067c78a_bda77cfe",
+      "range": {
+        "startLine": 417,
+        "startChar": 4,
+        "endLine": 417,
+        "endChar": 8
+      },
+      "revId": "524e3f407bca68fa88faf4bc85a9cfaf8b80c42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e847d258_23073ed9",
         "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
         "patchSetId": 10
