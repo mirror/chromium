@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "cabf53de_60592c8e",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:47:07Z",
+      "side": 1,
+      "message": "Add a comment as to why this is called here.",
+      "range": {
+        "startLine": 1369,
+        "startChar": 2,
+        "endLine": 1369,
+        "endChar": 36
+      },
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a816fb2_cb4365e9",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:47:07Z",
+      "side": 1,
+      "message": "Add description.",
+      "range": {
+        "startLine": 20,
+        "startChar": 26,
+        "endLine": 20,
+        "endChar": 47
+      },
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f3454d_a323b51c",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:47:07Z",
+      "side": 1,
+      "message": "Please add a description.",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 41
+      },
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3718f4ab_4b4c4699",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:47:07Z",
+      "side": 1,
+      "message": "Are you guaranteed a new value here? If the value doesn\u0027t change, should you leave last_log_time_for_source_ alone?",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 19
+      },
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234ce4e4_d20bf729",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:47:07Z",
+      "side": 1,
+      "message": "Did you verify that you don\u0027t attempt to log tabs when closing a window/shutting-down? My concern is that if you close a window with multiple tabs the visible tab may change, and it isn\u0027t clear to me that you really want to log in this case.",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 50
+      },
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7108961_95ebaa5c",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:47:07Z",
+      "side": 1,
+      "message": "Do you care if the id is still 0?",
+      "range": {
+        "startLine": 116,
+        "startChar": 41,
+        "endLine": 116,
+        "endChar": 75
+      },
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a367e15_142ba19e",
         "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
         "patchSetId": 23
@@ -47,6 +185,52 @@
       "writtenOn": "2017-11-28T02:13:10Z",
       "side": 1,
       "message": "why this call? It seems out of place. Is it needed because this is not a browser test, and so some plumbing is required? Perhaps comment here (maybe http://crbug.com/590981 has context). E.g.\n\n// \u003csomething\u003e usually calls WebContents::WasHidden() when switching tabs, but that\u0027s\n// not present in a unit test, so invoke directly.\n\nAnd perhaps make it more clear whether it\u0027s this line or the line above that triggers the EXPECT_CALL (e.g. by reordering, or adding EXPECT_CALL(... .Times(0));",
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719fa3ae_80011e0b",
+        "filename": "chrome/browser/ui/tabs/tab_event.proto",
+        "patchSetId": 23
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:47:07Z",
+      "side": 1,
+      "message": "Could you elaborate on why this proto has \u0027event\u0027 in the name?",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e84e3c5_58fad2b9",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:47:07Z",
+      "side": 1,
+      "message": "How about making this pure virtual with the implementation else where? Easy to understand mocking that way.",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 31
+      },
       "revId": "5d4e0c46c4308175ea80b51379cf723bb599ddd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
