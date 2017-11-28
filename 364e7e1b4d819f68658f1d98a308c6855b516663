@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a91cc7d0_515852eb",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-28T00:51:35Z",
+      "side": 1,
+      "message": "Note to self - file a spec bug.",
+      "range": {
+        "startLine": 97,
+        "startChar": 25,
+        "endLine": 97,
+        "endChar": 61
+      },
+      "revId": "364e7e1b4d819f68658f1d98a308c6855b516663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
