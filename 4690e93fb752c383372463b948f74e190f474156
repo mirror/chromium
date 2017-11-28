@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f49014d2_a736c6f1",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-28T04:15:03Z",
+      "side": 1,
+      "message": "nit: const reference?",
+      "range": {
+        "startLine": 193,
+        "startChar": 23,
+        "endLine": 193,
+        "endChar": 31
+      },
+      "revId": "4690e93fb752c383372463b948f74e190f474156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b94166_81458fd2",
+        "filename": "chrome/test/base/ui_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-28T04:15:03Z",
+      "side": 1,
+      "message": "nit: const reference?",
+      "range": {
+        "startLine": 310,
+        "startChar": 17,
+        "endLine": 310,
+        "endChar": 22
+      },
+      "revId": "4690e93fb752c383372463b948f74e190f474156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
