@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e1b8675_ee9d5b7e",
+        "filename": "chrome/browser/media/cast_remoting_connector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T18:29:41Z",
+      "side": 1,
+      "message": "I don\u0027t know that much about media remoting logic, but I\u0027m wondering why this is in an else if section. Maybe it\u0027d be useful to have a comment that mentions why this is only needed in the case there\u0027s no active bridge.",
+      "revId": "a568d7976d87822e57c105d765314169fa1272ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
