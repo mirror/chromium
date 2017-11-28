@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "98616971_3341eb95",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T17:22:36Z",
+      "side": 1,
+      "message": "The type is very small, what if we made it move-only and stop allocating it on the heap with malloc?",
+      "parentUuid": "5950c72c_4cf8f2e6",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "541bceb0_39a3a57a",
         "filename": "components/viz/common/resources/scoped_local_resource.cc",
         "patchSetId": 18
