@@ -90,11 +90,12 @@ bool ContributesToClip(const SVGElement& element) {
   return DetermineClipStrategy(element) != ClipStrategy::kNone;
 }
 
-void PathFromElement(const SVGElement& element, Path& clip_path) {
-  if (auto* geometry = ToSVGGeometryElementOrNull(element))
-    geometry->ToClipPath(clip_path);
-  else if (auto* use = ToSVGUseElementOrNull(element))
-    use->ToClipPath(clip_path);
+Path PathFromElement(const SVGElement& element) {
+  if (IsSVGGeometryElement(element))
+    return ToSVGGeometryElement(element).ToClipPath();
+
+  SECURITY_DCHECK(IsSVGUseElement(element));
+  return ToSVGUseElement(element).ToClipPath();
 }
 
 }  // namespace
@@ -106,6 +107,7 @@ LayoutSVGResourceClipper::~LayoutSVGResourceClipper() {}
 
 void LayoutSVGResourceClipper::RemoveAllClientsFromCache(
     bool mark_for_invalidation) {
+  clip_content_path_validity_ = kClipContentPathUnknown;
   clip_content_path_.Clear();
   cached_paint_record_.reset();
   local_clip_bounds_ = FloatRect();
@@ -123,86 +125,44 @@ void LayoutSVGResourceClipper::RemoveClientFromCache(
                                         : kParentOnlyInvalidation);
 }
 
-bool LayoutSVGResourceClipper::CalculateClipContentPathIfNeeded() {
-  if (!clip_content_path_.IsEmpty())
-    return true;
+Optional<Path> LayoutSVGResourceClipper::AsPath() {
+  if (clip_content_path_validity_ == kClipContentPathValid)
+    return Optional<Path>(clip_content_path_);
+  if (clip_content_path_validity_ == kClipContentPathInvalid)
+    return WTF::nullopt;
+  DCHECK_EQ(clip_content_path_validity_, kClipContentPathUnknown);
 
+  clip_content_path_validity_ = kClipContentPathInvalid;
   // If the current clip-path gets clipped itself, we have to fallback to
   // masking.
   if (StyleRef().ClipPath())
-    return false;
+    return WTF::nullopt;
 
   unsigned op_count = 0;
-  bool using_builder = false;
   SkOpBuilder clip_path_builder;
-
   for (const SVGElement& child_element :
        Traversal<SVGElement>::ChildrenOf(*GetElement())) {
     ClipStrategy strategy = DetermineClipStrategy(child_element);
     if (strategy == ClipStrategy::kNone)
       continue;
-    if (strategy == ClipStrategy::kMask) {
-      clip_content_path_.Clear();
-      return false;
-    }
-
-    // First clip shape.
-    if (clip_content_path_.IsEmpty()) {
-      PathFromElement(child_element, clip_content_path_);
-      continue;
-    }
+    if (strategy == ClipStrategy::kMask)
+      return WTF::nullopt;
 
     // Multiple shapes require PathOps. In some degenerate cases PathOps can
     // exhibit quadratic behavior, so we cap the number of ops to a reasonable
     // count.
     const unsigned kMaxOps = 42;
-    if (++op_count > kMaxOps) {
-      clip_content_path_.Clear();
-      return false;
-    }
-
-    // Second clip shape => start using the builder.
-    if (!using_builder) {
-      clip_path_builder.add(clip_content_path_.GetSkPath(), kUnion_SkPathOp);
-      using_builder = true;
-    }
-
-    Path sub_path;
-    PathFromElement(child_element, sub_path);
-
-    clip_path_builder.add(sub_path.GetSkPath(), kUnion_SkPathOp);
+    if (++op_count > kMaxOps)
+      return WTF::nullopt;
+    clip_path_builder.add(PathFromElement(child_element).GetSkPath(),
+                          kUnion_SkPathOp);
   }
 
-  if (using_builder) {
-    SkPath resolved_path;
-    clip_path_builder.resolve(&resolved_path);
-    clip_content_path_ = resolved_path;
-  }
-
-  return true;
-}
-
-bool LayoutSVGResourceClipper::AsPath(
-    const AffineTransform& animated_local_transform,
-    const FloatRect& reference_box,
-    Path& clip_path) {
-  if (!CalculateClipContentPathIfNeeded())
-    return false;
-
-  clip_path = clip_content_path_;
-
-  // We are able to represent the clip as a path. Continue with direct clipping,
-  // and transform the content to userspace if necessary.
-  if (ClipPathUnits() == SVGUnitTypes::kSvgUnitTypeObjectboundingbox) {
-    AffineTransform transform;
-    transform.Translate(reference_box.X(), reference_box.Y());
-    transform.ScaleNonUniform(reference_box.Width(), reference_box.Height());
-    clip_path.Transform(transform);
-  }
-
-  // Transform path by animatedLocalTransform.
-  clip_path.Transform(animated_local_transform);
-  return true;
+  SkPath resolved_path;
+  clip_path_builder.resolve(&resolved_path);
+  clip_content_path_ = resolved_path;
+  clip_content_path_validity_ = kClipContentPathValid;
+  return Optional<Path>(clip_content_path_);
 }
 
 sk_sp<const PaintRecord> LayoutSVGResourceClipper::CreatePaintRecord() {
