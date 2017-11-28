@@ -12,6 +12,7 @@
 #include "ui/gfx/overlay_transform.h"
 
 namespace gfx {
+struct GpuFenceHandle;
 class Rect;
 class RectF;
 }
@@ -37,6 +38,12 @@ class ContextSupport {
   // Runs |callback| when a query created via glCreateQueryEXT() has cleared
   // passed the glEndQueryEXT() point.
   virtual void SignalQuery(uint32_t query, base::OnceClosure callback) = 0;
+
+  // Fetches a GpuFenceHandle for a GpuFence that was previously created by
+  // glInsertGpuFenceCHROMIUM on this context.
+  virtual void GetGpuFenceHandle(
+      uint32_t gpu_fence_id,
+      base::OnceCallback<void(const gfx::GpuFenceHandle&)> callback) = 0;
 
   // Indicates whether the context should aggressively free allocated resources.
   // If set to true, the context will purge all temporary resources when
