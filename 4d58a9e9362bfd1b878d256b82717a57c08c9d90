@@ -16,6 +16,24 @@
       "revId": "4d58a9e9362bfd1b878d256b82717a57c08c9d90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44224ca1_fd2575b7",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-28T01:54:06Z",
+      "side": 1,
+      "message": "sorry I\u0027m a little bit confused, I thought ScopedObserver will remove all the sources if it gets destructed? so I don\u0027t need to add Remove logic in the destructor for the IdleEventNotifier?\n\nOr are you suggesting I use ScopedObserver for all Observer pattern here?",
+      "parentUuid": "8fdd2ba8_67559f0d",
+      "revId": "4d58a9e9362bfd1b878d256b82717a57c08c9d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
