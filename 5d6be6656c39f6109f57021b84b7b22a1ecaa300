@@ -22,6 +22,30 @@
       "revId": "5d6be6656c39f6109f57021b84b7b22a1ecaa300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca66f837_a3765d65",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-28T22:50:04Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "25d0049d_7def8b6a",
+      "range": {
+        "startLine": 186,
+        "startChar": 72,
+        "endLine": 186,
+        "endChar": 75
+      },
+      "revId": "5d6be6656c39f6109f57021b84b7b22a1ecaa300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
