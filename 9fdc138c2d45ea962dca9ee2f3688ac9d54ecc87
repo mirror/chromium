@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2cb87a51_06cb513c",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-28T12:44:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "063a9863_d79cd90e",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf3bf9e_1ab82f5d",
         "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7bfad3_553e86ea",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-28T12:44:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edf3bf9e_1ab82f5d",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1abe1a8c_afa56b93",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-28T12:44:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b264730_a652f636",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8530514d_3d068c83",
         "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "af8761ce_62404d19",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-28T12:44:05Z",
+      "side": 1,
+      "message": "That\u0027s right. The StatusChecker never worked because it needs a Wait() call. \n\nI believe for all calls to StatusChangeChecker::Wait the return value should be checked, otherwise timeouts wouldn\u0027t be caught, so I added EXPECT_TRUE to them. Sadly the formatting is getting terrible this way, so I also added a helper method.",
+      "parentUuid": "8530514d_3d068c83",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8f8f6d9_7ae0c4b3",
         "filename": "components/sync/user_events/user_event_service_impl.cc",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-27T19:04:59Z",
       "side": 1,
       "message": "I\u0027m not convinced you want to drop the consent events before the engine inits. I think we\u0027d prefer to write it to persistent storage (level db), and wait for the engine to init, by returning true in this method.",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2a009b_09cd42a7",
+        "filename": "components/sync/user_events/user_event_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-28T12:44:05Z",
+      "side": 1,
+      "message": "Yes, it will be important that event recording is reliable for consents. Another place that drops events is UserEventSyncBridge::RecordUserEvent. It sounds like you already plan to implement a queue for the store, would that solve this issue? (https://crbug.com/709094 and https://crbug.com/761485)",
+      "parentUuid": "e8f8f6d9_7ae0c4b3",
       "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -115,6 +205,24 @@
       "writtenOn": "2017-11-27T19:04:59Z",
       "side": 1,
       "message": "Can you wait for https://chromium-review.googlesource.com/c/chromium/src/+/764408/12/components/sync/user_events/user_event_service_impl.cc to land instead?",
+      "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d6773b_6ba424bd",
+        "filename": "components/sync/user_events/user_event_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-28T12:44:05Z",
+      "side": 1,
+      "message": "Sure, that looks like a good approach to generalize this",
+      "parentUuid": "4a60b2d1_7131e012",
       "revId": "9fdc138c2d45ea962dca9ee2f3688ac9d54ecc87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
