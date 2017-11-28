@@ -100,6 +100,16 @@ Polymer({
       type: Object,
       value: chrome.bluetoothPrivate,
     },
+
+    /**
+     * Indicate whether we use fake bluetooth implementation for testing.
+     * @type {boolean}
+     * @private
+     */
+    useFakeBluetoothForTesting: {
+      type: Boolean,
+      value: false,
+    },
   },
 
   observers: ['deviceListChanged_(deviceList_.*)'],
@@ -113,8 +123,10 @@ Polymer({
 
   /** @override */
   ready: function() {
-    if (bluetoothApis.bluetoothApiForTest)
+    if (bluetoothApis.bluetoothApiForTest) {
       this.bluetooth = bluetoothApis.bluetoothApiForTest;
+      this.useFakeBluetoothForTesting = true;
+    }
     if (bluetoothApis.bluetoothPrivateApiForTest)
       this.bluetoothPrivate = bluetoothApis.bluetoothPrivateApiForTest;
   },
