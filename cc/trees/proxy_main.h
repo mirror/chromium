@@ -106,6 +106,7 @@ class CC_EXPORT ProxyMain : public Proxy {
   TaskRunnerProvider* task_runner_provider_;
 
   const int layer_tree_host_id_;
+  const std::string trace_name_;
 
   // The furthest pipeline stage which has been requested for the next
   // commit.

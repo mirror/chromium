@@ -9523,7 +9523,7 @@ TEST_F(LayerTreeHostImplTest, LatencyInfoPassedToCompositorFrameMetadata) {
 
   const std::vector<ui::LatencyInfo>& metadata_latency_after =
       fake_layer_tree_frame_sink->last_sent_frame()->metadata.latency_info;
-  EXPECT_EQ(1u, metadata_latency_after.size());
+  EXPECT_LE(1u, metadata_latency_after.size());
   EXPECT_TRUE(metadata_latency_after[0].FindLatency(
       ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT, 0, nullptr));
 }

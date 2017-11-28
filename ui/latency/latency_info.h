@@ -47,6 +47,13 @@ enum LatencyComponentType {
   // scroll processing in impl thread. This is the timestamp when we consider
   // the main thread scroll listener update is begun.
   LATENCY_BEGIN_SCROLL_LISTENER_UPDATE_MAIN_COMPONENT,
+  // The BeginFrame::frame_time of various frame sources.
+  LATENCY_BEGIN_FRAME_RENDERER_MAIN_COMPONENT,
+  LATENCY_BEGIN_FRAME_RENDERER_INVALIDATE_COMPONENT,
+  LATENCY_BEGIN_FRAME_RENDERER_COMPOSITOR_COMPONENT,
+  LATENCY_BEGIN_FRAME_UI_MAIN_COMPONENT,
+  LATENCY_BEGIN_FRAME_UI_COMPOSITOR_COMPONENT,
+  LATENCY_BEGIN_FRAME_DISPLAY_COMPOSITOR_COMPONENT,
   // ---------------------------NORMAL COMPONENT-------------------------------
   // The original timestamp of the touch event which converts to scroll update.
   INPUT_EVENT_LATENCY_SCROLL_UPDATE_ORIGINAL_COMPONENT,
@@ -111,6 +118,7 @@ enum SourceEventType {
   WHEEL,
   TOUCH,
   KEY_PRESS,
+  FRAME,
   OTHER,
   SOURCE_EVENT_TYPE_LAST = OTHER,
 };
@@ -142,6 +150,7 @@ class LatencyInfo {
   LatencyInfo();
   LatencyInfo(const LatencyInfo& other);
   LatencyInfo(SourceEventType type);
+  LatencyInfo(SourceEventType type, int64_t trace_id);
   ~LatencyInfo();
 
   // For test only.
@@ -175,7 +184,7 @@ class LatencyInfo {
   void AddLatencyNumberWithTraceName(LatencyComponentType component,
                                      int64_t id,
                                      int64_t component_sequence_number,
-                                     const char* trace_name_str);
+                                     const std::string& trace_name_str);
 
   // Modifies the current sequence number and adds a certain number of events
   // for a specific component.
@@ -184,6 +193,14 @@ class LatencyInfo {
                                      int64_t component_sequence_number,
                                      base::TimeTicks time,
                                      uint32_t event_count);
+
+  // Allows you to specify both the timestamp and trace name.
+  void AddLatencyNumberWithAll(LatencyComponentType component,
+                               int64_t id,
+                               int64_t component_sequence_number,
+                               base::TimeTicks time,
+                               uint32_t event_count,
+                               const std::string& trace_name_str);
 
   // Returns true if the a component with |type| and |id| is found in
   // the latency_components and the component is stored to |output| if
@@ -228,13 +245,6 @@ class LatencyInfo {
   void set_ukm_source_id(ukm::SourceId id) { ukm_source_id_ = id; }
 
  private:
-  void AddLatencyNumberWithTimestampImpl(LatencyComponentType component,
-                                         int64_t id,
-                                         int64_t component_sequence_number,
-                                         base::TimeTicks time,
-                                         uint32_t event_count,
-                                         const char* trace_name_str);
-
   // Converts latencyinfo into format that can be dumped into trace buffer.
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
   AsTraceableData();
