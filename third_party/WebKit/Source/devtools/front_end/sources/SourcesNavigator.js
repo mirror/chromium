@@ -234,6 +234,13 @@ Sources.OverridesNavigatorView = class extends Sources.NavigatorView {
     var fileSystem = await Persistence.isolatedFileSystemManager.addFileSystem('overrides');
     if (!fileSystem)
       return;
+    this._overridesFileSystemCreated(fileSystem);
+  }
+
+  /**
+   * @param {!Persistence.IsolatedFileSystem} fileSystem
+   */
+  _overridesFileSystemCreated(fileSystem) {
     var projectId = Persistence.FileSystemWorkspaceBinding.projectId(
         Persistence.FileSystemWorkspaceBinding.projectId(fileSystem.path()));
     var project = Workspace.workspace.project(projectId);
@@ -251,7 +258,9 @@ Sources.OverridesNavigatorView = class extends Sources.NavigatorView {
     }
     Persistence.networkPersistenceManager.addFileSystemOverridesProject(
         /** @type {string} */ (inspectedPageDomain), /** @type {!Workspace.Project} */ (project));
-    Common.settings.moduleSetting('persistenceNetworkOverridesEnabled').set(true);
+    var overridesEnabledSetting = Common.settings.moduleSetting('persistenceNetworkOverridesEnabled');
+    if (!overridesEnabledSetting.get())
+      overridesEnabledSetting.set(true);
   }
 
   /**

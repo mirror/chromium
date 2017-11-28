@@ -67,9 +67,15 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     this._fileSystemForDomain.set(domain, fileSystemPath);
     this._domainForFileSystemPathSetting.set(Array.from(this._domainForFileSystemMap.entries()));
 
+    if (!this._enabledSetting.get())
+      return;
     this._onProjectAdded(project);
     for (var uiSourceCode of project.uiSourceCodes())
       this._onUISourceCodeAdded(uiSourceCode);
+    var networkProjects = this._workspace.projectsForType(Workspace.projectTypes.Network);
+    this._updateActiveProject();
+    for (var networkProject of networkProjects)
+      networkProject.uiSourceCodes().forEach(this._onUISourceCodeAdded.bind(this));
     this.dispatchEventToListeners(Persistence.NetworkPersistenceManager.Events.ProjectDomainChanged, project);
   }
 
@@ -318,7 +324,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     var lastIndexOfSlash = encodedPath.lastIndexOf('/');
     var encodedFileName = encodedPath.substr(lastIndexOfSlash + 1);
     encodedPath = encodedPath.substr(0, lastIndexOfSlash);
-    this._activeProject.createFile(encodedPath, encodedFileName, content, encoded);
+    await this._activeProject.createFile(encodedPath, encodedFileName, content, encoded);
     this._fileCreatedForTest(encodedPath, encodedFileName);
   }
 
