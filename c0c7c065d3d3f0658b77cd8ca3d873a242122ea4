@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "d09adc9a_1d30fe7c",
+        "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-28T01:14:55Z",
+      "side": 1,
+      "message": "Sorry about that. No, the callback is not guaranteed to fire if the Bluetooth stack gets into some bad state where it cannot stop the advertisement. However:\n\n(1) According to metrics, it\u0027s extremely rare for that to occur. Most errors occur on registering, not unregistering.\n(2) If it gets stuck in that state, the normal BleAdvertiser is also broken by that point, so there\u0027s nothing we can do to recover anyway.",
+      "parentUuid": "6fabefa2_47b04b7e",
+      "range": {
+        "startLine": 106,
+        "startChar": 42,
+        "endLine": 106,
+        "endChar": 64
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee97fb5c_03fed221",
         "filename": "chromeos/components/tether/asynchronous_shutdown_object_container_impl.cc",
         "patchSetId": 3
