@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a6cae46_6f89799a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-28T02:01:39Z",
+      "side": 1,
+      "message": "Is this missing a verb somewhere?",
+      "revId": "d37c5852c7999b12e55a21108552b24699fd9847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
