@@ -22,6 +22,23 @@
       "revId": "4f14273f19fd6164f69cef30ca5621131e4c88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7710c07_a4150b9a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-28T12:38:43Z",
+      "side": 1,
+      "message": "Based on the error on the bots, you need to update the URL of the NavigationHandle here (that\u0027s probably why it was below the call to NavigationHandle::OnRequestRedirected). You can\u0027t call OnRequestRedirected, so we\u0027ll need to add a function to NavigationHandleImpl to do the updating. If you only need to update the URL, then a simple set_url method on the NavigationHandleImpl will do. Otherwise, I suggest splitting the begining of NHI::WillRedirectRequest (i.e. the part that does member allocation up until the call to IsSelfReferentialURL) into a new function UpdateStateFollowingRedirect. This function will be called from WillRedirectRequest and from here (just above the call to ResetNavigationRequest). This will set the NavigationHandle in the right state before we call DidFinishNavigation.",
+      "revId": "4f14273f19fd6164f69cef30ca5621131e4c88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
