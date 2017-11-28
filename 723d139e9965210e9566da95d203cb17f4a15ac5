@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dbc0251_8ee2556e",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-28T22:22:24Z",
+      "side": 1,
+      "message": "Should we put this before the switch paragraph? Otherwise if one DesktopCapturer implementation support kFakeId source id, the tests may not fail but the cost will be significantly increased.",
+      "range": {
+        "startLine": 465,
+        "startChar": 0,
+        "endLine": 465,
+        "endChar": 58
+      },
+      "revId": "723d139e9965210e9566da95d203cb17f4a15ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9261a19e_0b5db816",
+        "filename": "content/browser/media/capture/desktop_capture_device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-28T22:22:24Z",
+      "side": 1,
+      "message": "I think these two changes are not necessary anymore.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "723d139e9965210e9566da95d203cb17f4a15ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0c3356_f4019775",
+        "filename": "content/browser/media/capture/web_contents_video_capture_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-28T22:22:24Z",
+      "side": 1,
+      "message": "You can still put these logic into a static function in the anonymous namespace and keep |core_| const.",
+      "range": {
+        "startLine": 708,
+        "startChar": 0,
+        "endLine": 720,
+        "endChar": 1
+      },
+      "revId": "723d139e9965210e9566da95d203cb17f4a15ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
