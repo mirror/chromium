@@ -41,6 +41,8 @@ class SourceUrlRecorderWebContentsObserver
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
 
+  ukm::SourceId GetLastCommittedSourceId();
+
  private:
   explicit SourceUrlRecorderWebContentsObserver(
       content::WebContents* web_contents);
@@ -52,6 +54,8 @@ class SourceUrlRecorderWebContentsObserver
 
   // Map from navigation ID to the initial URL for that navigation.
   base::flat_map<int64_t, GURL> pending_navigations_;
+
+  int64_t last_committed_navigation_id_;
 
   DISALLOW_COPY_AND_ASSIGN(SourceUrlRecorderWebContentsObserver);
 };
@@ -96,6 +100,11 @@ void SourceUrlRecorderWebContentsObserver::DidFinishNavigation(
   MaybeRecordUrl(navigation_handle, initial_url);
 }
 
+ukm::SourceId SourceUrlRecorderWebContentsObserver::GetLastCommittedSourceId() {
+  return ukm::ConvertToSourceId(last_committed_navigation_id_,
+                                ukm::SourceIdType::NAVIGATION_ID);
+}
+
 void SourceUrlRecorderWebContentsObserver::MaybeRecordUrl(
     content::NavigationHandle* navigation_handle,
     const GURL& initial_url) {
@@ -103,8 +112,8 @@ void SourceUrlRecorderWebContentsObserver::MaybeRecordUrl(
   if (!ukm_recorder)
     return;
 
-  const ukm::SourceId source_id = ukm::ConvertToSourceId(
-      navigation_handle->GetNavigationId(), ukm::SourceIdType::NAVIGATION_ID);
+  last_committed_navigation_id_ = navigation_handle->GetNavigationId();
+  const ukm::SourceId source_id = GetLastCommittedSourceId();
 
   if (IsValidUkmUrl(initial_url))
     ukm_recorder->UpdateSourceURL(source_id, initial_url);
@@ -134,6 +143,12 @@ namespace ukm {
 void InitializeSourceUrlRecorderForWebContents(
     content::WebContents* web_contents) {
   SourceUrlRecorderWebContentsObserver::CreateForWebContents(web_contents);
+}
+
+SourceId GetSourceIdForWebContentsDocument(content::WebContents* web_contents) {
+  SourceUrlRecorderWebContentsObserver* obs =
+      SourceUrlRecorderWebContentsObserver::FromWebContents(web_contents);
+  return obs ? obs->GetLastCommittedSourceId() : kInvalidSourceId;
 }
 
 }  // namespace ukm

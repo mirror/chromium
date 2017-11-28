@@ -15,6 +15,9 @@ namespace ukm {
 void InitializeSourceUrlRecorderForWebContents(
     content::WebContents* web_contents);
 
+// Get a UKM SourceId for current document of web contents.
+SourceId GetSourceIdForWebContentsDocument(content::WebContents* web_contents);
+
 }  // namespace ukm
 
 #endif  // COMPONENTS_UKM_CONTENT_SOURCE_URL_RECORDER_H_
