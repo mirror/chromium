@@ -194,7 +194,8 @@
         "ConsoleViewMessage.js",
         "ConsolePrompt.js",
         "ConsoleView.js",
-        "ConsolePanel.js"
+        "ConsolePanel.js",
+        "ExpandableText.js"
     ],
     "resources": [
         "consoleContextSelector.css",
