@@ -265,6 +265,16 @@
   }
 }
 
+- (void)webState:(web::WebState*)webState
+    didSubmitDocumentWithFormNamed:(const std::string&)formName
+                     userInitiated:(BOOL)userInitiated {
+  if ([_delegate respondsToSelector:@selector
+                 (autofillController:didSubmitFormWithName:)]) {
+    [_delegate autofillController:self
+            didSubmitFormWithName:base::SysUTF8ToNSString(formName)];
+  }
+}
+
 - (void)webStateDestroyed:(web::WebState*)webState {
   [_autofillAgent detachFromWebState];
   _webStateObserverBridge.reset();
