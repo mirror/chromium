@@ -94,6 +94,7 @@ class ContentSettingMIDISysExImageModel
   ContentSettingMIDISysExImageModel();
 
   void UpdateFromWebContents(WebContents* web_contents) override;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(ContentSettingMIDISysExImageModel);
 };
@@ -122,17 +123,17 @@ struct ContentSettingsImageDetails {
 const ContentSettingsImageDetails kImageDetails[] = {
     {CONTENT_SETTINGS_TYPE_COOKIES, kCookieIcon, IDS_BLOCKED_COOKIES_MESSAGE, 0,
      IDS_ACCESSED_COOKIES_MESSAGE},
-    {CONTENT_SETTINGS_TYPE_IMAGES, kImageIcon, IDS_BLOCKED_IMAGES_MESSAGE, 0,
+    {CONTENT_SETTINGS_TYPE_IMAGES, kPhotoIcon, IDS_BLOCKED_IMAGES_MESSAGE, 0,
      0},
     {CONTENT_SETTINGS_TYPE_JAVASCRIPT, kCodeIcon,
      IDS_BLOCKED_JAVASCRIPT_MESSAGE, 0, 0},
-    {CONTENT_SETTINGS_TYPE_PLUGINS, kExtensionIcon, IDS_BLOCKED_PLUGINS_MESSAGE,
-     IDS_BLOCKED_PLUGIN_EXPLANATORY_TEXT, 0},
+    {CONTENT_SETTINGS_TYPE_PLUGINS, kExtension16x16Icon,
+     IDS_BLOCKED_PLUGINS_MESSAGE, IDS_BLOCKED_PLUGIN_EXPLANATORY_TEXT, 0},
     {CONTENT_SETTINGS_TYPE_POPUPS, kWebIcon, IDS_BLOCKED_POPUPS_TOOLTIP,
      IDS_BLOCKED_POPUPS_EXPLANATORY_TEXT, 0},
     {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT, kMixedContentIcon,
      IDS_BLOCKED_DISPLAYING_INSECURE_CONTENT, 0, 0},
-    {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, kExtensionIcon,
+    {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, kExtension16x16Icon,
      IDS_BLOCKED_PPAPI_BROKER_MESSAGE, 0, IDS_ALLOWED_PPAPI_BROKER_MESSAGE},
     {CONTENT_SETTINGS_TYPE_SOUND, kTabAudioIcon, IDS_BLOCKED_SOUND_TITLE, 0, 0},
 };
@@ -364,11 +365,11 @@ void ContentSettingMediaImageModel::UpdateFromWebContents(
   int id = IDS_CAMERA_BLOCKED;
   if (state & (TabSpecificContentSettings::MICROPHONE_BLOCKED |
                TabSpecificContentSettings::CAMERA_BLOCKED)) {
-    set_icon(vector_icons::kVideocamIcon, kBlockedBadgeIcon);
+    set_icon(kVideocam16x16Icon, kBlockedBadgeIcon);
     if (is_mic)
       id = is_cam ? IDS_MICROPHONE_CAMERA_BLOCKED : IDS_MICROPHONE_BLOCKED;
   } else {
-    set_icon(vector_icons::kVideocamIcon, gfx::kNoneIcon);
+    set_icon(kVideocam16x16Icon, gfx::kNoneIcon);
     id = IDS_CAMERA_ACCESSED;
     if (is_mic)
       id = is_cam ? IDS_MICROPHONE_CAMERA_ALLOWED : IDS_MICROPHONE_ACCESSED;
@@ -434,7 +435,7 @@ void ContentSettingSubresourceFilterImageModel::UpdateFromWebContents(
     return;
   }
 
-  set_icon(kSubresourceFilterActiveIcon, kBlockedBadgeIcon);
+  set_icon(kAdsIcon, kBlockedBadgeIcon);
   set_explanatory_string_id(IDS_BLOCKED_ADS_PROMPT_TITLE);
   set_tooltip(l10n_util::GetStringUTF16(IDS_BLOCKED_ADS_PROMPT_TOOLTIP));
   set_visible(true);
@@ -521,8 +522,7 @@ void ContentSettingMIDISysExImageModel::UpdateFromWebContents(
   usages_state.GetDetailedInfo(nullptr, &state_flags);
   bool allowed =
       !!(state_flags & ContentSettingsUsagesState::TABSTATE_HAS_ANY_ALLOWED);
-  set_icon(vector_icons::kMidiIcon,
-           allowed ? gfx::kNoneIcon : kBlockedBadgeIcon);
+  set_icon(kMidi16x16Icon, allowed ? gfx::kNoneIcon : kBlockedBadgeIcon);
   set_tooltip(l10n_util::GetStringUTF16(allowed
                                             ? IDS_MIDI_SYSEX_ALLOWED_TOOLTIP
                                             : IDS_MIDI_SYSEX_BLOCKED_TOOLTIP));
@@ -550,13 +550,13 @@ void ContentSettingDownloadsImageModel::UpdateFromWebContents(
   switch (download_request_limiter->GetDownloadUiStatus(web_contents)) {
     case DownloadRequestLimiter::DOWNLOAD_UI_ALLOWED:
       set_visible(true);
-      set_icon(kFileDownloadIcon, gfx::kNoneIcon);
+      set_icon(kFileDownload16x16Icon, gfx::kNoneIcon);
       set_explanatory_string_id(0);
       set_tooltip(l10n_util::GetStringUTF16(IDS_ALLOWED_DOWNLOAD_TITLE));
       return;
     case DownloadRequestLimiter::DOWNLOAD_UI_BLOCKED:
       set_visible(true);
-      set_icon(kFileDownloadIcon, kBlockedBadgeIcon);
+      set_icon(kFileDownload16x16Icon, kBlockedBadgeIcon);
       set_explanatory_string_id(IDS_BLOCKED_DOWNLOADS_EXPLANATION);
       set_tooltip(l10n_util::GetStringUTF16(IDS_BLOCKED_DOWNLOAD_TITLE));
       return;
