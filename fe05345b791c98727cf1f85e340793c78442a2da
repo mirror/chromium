@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "755517a7_f4b1c089",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-11-28T20:42:37Z",
+      "side": 1,
+      "message": "Thanks, that seems reasonable.",
+      "parentUuid": "10cf4dc0_41ae6b6b",
+      "range": {
+        "startLine": 21,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "fe05345b791c98727cf1f85e340793c78442a2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08aa830a_905d96c5",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
