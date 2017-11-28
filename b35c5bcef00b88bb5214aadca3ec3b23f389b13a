@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a3d3a1_1387ee4e",
+        "filename": "AUTHORS",
+        "patchSetId": 27
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T17:16:38Z",
+      "side": 1,
+      "message": "Unintended? Remove if so.",
+      "revId": "b35c5bcef00b88bb5214aadca3ec3b23f389b13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7d334e_86ee228e",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T17:16:38Z",
+      "side": 1,
+      "message": "Unused? Remove.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 24
+      },
+      "revId": "b35c5bcef00b88bb5214aadca3ec3b23f389b13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd117b8b_4bf354b3",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T17:16:38Z",
+      "side": 1,
+      "message": "Sandwich this whole method in \n#if defined(OS_WIN)\n#endif\nsince it\u0027s only called in l.777 for OS_WIN.",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 365,
+        "endChar": 3
+      },
+      "revId": "b35c5bcef00b88bb5214aadca3ec3b23f389b13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f387a5_84e67044",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T17:16:38Z",
+      "side": 1,
+      "message": "Please use C++ style comments ISO C style comments throughout.",
+      "range": {
+        "startLine": 775,
+        "startChar": 0,
+        "endLine": 775,
+        "endChar": 79
+      },
+      "revId": "b35c5bcef00b88bb5214aadca3ec3b23f389b13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75405098_b5ab1716",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T17:16:38Z",
+      "side": 1,
+      "message": "micro-nit: if you define them in the same order as you\nuse them in l.61, it\u0027s easier to read: |data|, |max_length|,\n|length|.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "b35c5bcef00b88bb5214aadca3ec3b23f389b13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35e90cb_37e306b4",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T17:16:38Z",
+      "side": 1,
+      "message": "I find this comment hard to parse, is it a question \nor a statement? (Try and make a statement if possible.)",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 78
+      },
+      "revId": "b35c5bcef00b88bb5214aadca3ec3b23f389b13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872afc7b_712b317d",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T17:16:38Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(MFPhotoCallback); ?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 2
+      },
+      "revId": "b35c5bcef00b88bb5214aadca3ec3b23f389b13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6322a923_6d44e841",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T17:16:38Z",
+      "side": 1,
+      "message": "Try to follow the declaration order: please move\nthis method to l. 88.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 1
+      },
+      "revId": "b35c5bcef00b88bb5214aadca3ec3b23f389b13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c351f6_27d85606",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T17:16:38Z",
+      "side": 1,
+      "message": "nit: no need for media:: (check throughout please).",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "b35c5bcef00b88bb5214aadca3ec3b23f389b13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e58948_ca58c2e7",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T17:16:38Z",
+      "side": 1,
+      "message": "By inlining I meant to write, on the .h file:\n\n  void set_use_media_foundation_for_testing(bool use) {\n    use_media_foundation_ \u003d use;\n  }\n\nand remove these lines entirely.",
+      "range": {
+        "startLine": 392,
+        "startChar": 0,
+        "endLine": 395,
+        "endChar": 1
+      },
+      "revId": "b35c5bcef00b88bb5214aadca3ec3b23f389b13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -751,6 +751,30 @@
       "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9453889_c1627e6c",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-28T17:16:38Z",
+      "side": 1,
+      "message": "My bad, I misunderstood these as clamping |height| between\na max and min values. Wrong suggestion, but still is better\nto use one liners (more succinct).",
+      "parentUuid": "05cb83f9_cfe185fb",
+      "range": {
+        "startLine": 569,
+        "startChar": 6,
+        "endLine": 573,
+        "endChar": 28
+      },
+      "revId": "d20c503d4320ab56a70086c826c5e597d1deab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
