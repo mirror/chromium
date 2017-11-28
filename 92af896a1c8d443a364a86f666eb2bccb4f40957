@@ -22,6 +22,30 @@
       "revId": "92af896a1c8d443a364a86f666eb2bccb4f40957",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973f3749_b7d75771",
+        "filename": "headless/test/headless_render_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-11-28T06:37:08Z",
+      "side": 1,
+      "message": "I thought it\u0027s chrome\u0027s convention to always use defined(). Replaced with ifndef.\n\nNot sure why this happens, seems it\u0027s not headless-specific: DevTools don\u0027t get that callback on HTTP redirect at all. Who should I file a bug to?",
+      "parentUuid": "c073d5b1_2b6b66a8",
+      "range": {
+        "startLine": 473,
+        "startChar": 5,
+        "endLine": 473,
+        "endChar": 12
+      },
+      "revId": "92af896a1c8d443a364a86f666eb2bccb4f40957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
