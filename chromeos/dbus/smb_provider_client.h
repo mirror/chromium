@@ -7,8 +7,7 @@
 
 #include <string>
 
-#include <base/callback.h>
-
+#include "base/callback.h"
 #include "chromeos/chromeos_export.h"
 #include "chromeos/dbus/dbus_client.h"
 #include "chromeos/dbus/smbprovider/directory_entry.pb.h"
@@ -26,6 +25,12 @@ class CHROMEOS_EXPORT SmbProviderClient : public DBusClient {
       base::OnceCallback<void(smbprovider::ErrorType error, int32_t mount_id)>;
   using UnmountCallback =
       base::OnceCallback<void(smbprovider::ErrorType error)>;
+  using ReadDirectoryCallback =
+      base::OnceCallback<void(smbprovider::ErrorType error,
+                              const smbprovider::DirectoryEntryList& entries)>;
+  using GetMetdataEntryCallback =
+      base::OnceCallback<void(smbprovider::ErrorType error,
+                              const smbprovider::DirectoryEntry& entry)>;
 
   ~SmbProviderClient() override;
 
@@ -41,6 +46,19 @@ class CHROMEOS_EXPORT SmbProviderClient : public DBusClient {
   // Calls Unmount. This removes the corresponding mount of |mount_id| from
   // the list of valid mounts. Subsequent operations on |mount_id| will fail.
   virtual void Unmount(int32_t mount_id, UnmountCallback callback) = 0;
+
+  // Calls ReadDirectory. Using the corresponding mount of |mount_id|, this
+  // reads the directory on a given |directory_path| and outputs the entries
+  // found as a DirectoryEntryList object.
+  virtual void ReadDirectory(int32_t mount_id,
+                             const std::string& directory_path,
+                             ReadDirectoryCallback callback) = 0;
+  // Calls GetMetadataEntry. Using the corresponding mount of |mount_id|, this
+  // reads an entry in a given |entry_path| and outputs the metadata as a
+  // DirectoryEntry object.
+  virtual void GetMetadataEntry(int32_t mount_id,
+                                const std::string& entry_path,
+                                GetMetdataEntryCallback callback) = 0;
 
  protected:
   // Create() should be used instead.
