@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bb3a3196_f2a7410d",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T18:43:42Z",
+      "side": 1,
+      "message": "nit: This function is not using |tag|.",
+      "range": {
+        "startLine": 120,
+        "startChar": 42,
+        "endLine": 120,
+        "endChar": 45
+      },
+      "revId": "6dd36e210c98b3f301ad8b45ed56ccd0470495fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba1658cb_c193d20f",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 4
@@ -101,6 +124,30 @@
       "side": 1,
       "message": "What about treating a tag as a type of CBORValue? (Major type 6). This might make it easier to then validate the value that is being tagged. It would also negate the need to pass the tag into every method in CborReader.",
       "parentUuid": "5f79103e_65ef1fd3",
+      "range": {
+        "startLine": 77,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 63
+      },
+      "revId": "6dd36e210c98b3f301ad8b45ed56ccd0470495fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4bb223_11677034",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T18:43:42Z",
+      "side": 1,
+      "message": "Have y\u0027all thought of how we want to handle this:\n\n   A tag always applies to the item that is directly followed by it.\n   Thus, if tag A is followed by tag B, which is followed by data item\n   C, tag A applies to the result of applying tag B on data item C.\n   That is, a tagged item is a data item consisting of a tag and a\n   value.  The content of the tagged item is the data item (the value)\n   that is being tagged.\n\nDo we expect we will need tagging required for CTAP?",
+      "parentUuid": "77a94bac_393f0ea9",
       "range": {
         "startLine": 77,
         "startChar": 1,
