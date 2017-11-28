@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6108a4ae_a7445696",
+        "filename": "chrome/renderer/extensions/extension_process_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T16:10:55Z",
+      "side": 1,
+      "message": "Just |git cl format| changes here...",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 63
+      },
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "429e7207_578c12bc",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T16:10:55Z",
+      "side": 1,
+      "message": "Is this still true?  Is worth trying to remove the WebUI exception in a follow-up CL?",
+      "range": {
+        "startLine": 1240,
+        "startChar": 0,
+        "endLine": 1243,
+        "endChar": 76
+      },
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
