@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f032ebc_be6ce9d9",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-28T15:14:47Z",
+      "side": 1,
+      "message": "@thestig: Is it OK to start using base::CPU in WebKit platform and to update third_party/WebKit/Source/platform/DEPS accordingly? Or should I re-implement or copy relevant cpuid logic from base?",
+      "revId": "ed916dc4f96968036156a7f10d375333b964a51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
