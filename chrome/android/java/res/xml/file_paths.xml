@@ -11,6 +11,7 @@
     <cache-path name="cache" path="net-export/"/>
     <cache-path name="webapk" path="webapks/" />
     <cache-path name="offline-cache" path="Offline Pages/archives/" />
+    <cache-path name="passwords-export" path="passwords/export/" />
 
     <!-- Note(twellington): This path is included to facilitate creating
          content:// URIs for downloads. This may no longer work if/when users

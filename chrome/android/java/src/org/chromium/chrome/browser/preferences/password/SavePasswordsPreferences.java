@@ -19,6 +19,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.ContentUriUtils;
+import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.PasswordUIView;
@@ -32,6 +34,10 @@ import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.TextMessagePreference;
 import org.chromium.ui.text.SpanApplier;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * The "Save passwords" screen in Settings, which allows the user to enable or disable password
@@ -112,6 +118,41 @@ public class SavePasswordsPreferences extends PreferenceFragment
         int id = item.getItemId();
         if (id == R.id.export_passwords) {
             // TODO(crbug.com/788701): Trigger the exporting dialogue here.
+            {
+                File tempFile = null;
+                try {
+                    tempFile = new File(ContextUtils.getApplicationContext().getFilesDir()
+                            + "/images/password-export.csv");
+                    // tempFile = new File("passwords/export/password-export.csv");
+                    tempFile.deleteOnExit();
+                    FileWriter tempWriter = new FileWriter(tempFile);
+                    // Writer tempWriter = Files.newBufferedWriter(tempFile.toPath(), UTF_8);
+                    tempWriter.write("a,b,c\nd,e,f\n");
+                    tempWriter.close();
+                } catch (IOException e) {
+                }
+                Intent send = new Intent(Intent.ACTION_SEND);
+                send.setType("text/plain");
+                Uri fileUri;
+                // Attempt to use a content Uri, for greater compatibility.  If the path isn't set
+                // up to be shared that way with a <paths> meta-data element, just use a file Uri
+                // instead.
+                try {
+                    fileUri = ContentUriUtils.getContentUriFromFile(tempFile);
+                } catch (IllegalArgumentException ex) {
+                    fileUri = Uri.fromFile(tempFile);
+                }
+                send.putExtra(Intent.EXTRA_STREAM, fileUri);
+
+                try {
+                    Intent chooser = Intent.createChooser(send, "VABR: " + fileUri.toString());
+                    // we start this activity outside the main activity.
+                    chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    ContextUtils.getApplicationContext().startActivity(chooser);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    // If no app handles it, do nothing.
+                }
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
