@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "877cbad3_230a5917",
+        "filename": "ash/sidebar/sidebar.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T16:22:05Z",
+      "side": 1,
+      "message": "nit: new line",
+      "revId": "24b08db5ddae41ffb62d2ae9070c5d18be54dbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e65114_0dcabd1a",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T16:22:05Z",
+      "side": 1,
+      "message": "nit:  // namespace",
+      "revId": "24b08db5ddae41ffb62d2ae9070c5d18be54dbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ced79cc_cdd70dde",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T16:22:05Z",
+      "side": 1,
+      "message": "optional: GetLocalBounds()",
+      "revId": "24b08db5ddae41ffb62d2ae9070c5d18be54dbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ba45ba_09ab8cde",
+        "filename": "ash/sidebar/sidebar_widget.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T16:22:05Z",
+      "side": 1,
+      "message": "nit: forward decl is enough? (you may leave it if you prefer though)",
+      "revId": "24b08db5ddae41ffb62d2ae9070c5d18be54dbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
