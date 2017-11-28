@@ -22,6 +22,30 @@
       "revId": "e50767d3a01fbbfd1b1760b8900b41e443b5284d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508ba64f_bf6d4650",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-28T15:10:38Z",
+      "side": 1,
+      "message": "This was a leftover from a cleanup in a previous larger version of this CL, that I decided not to include. Removed the \"obsolete\" annotation. Thanks for catching this!",
+      "parentUuid": "6e58ca9e_f8d59b54",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 66
+      },
+      "revId": "e50767d3a01fbbfd1b1760b8900b41e443b5284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
