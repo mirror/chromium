@@ -45,6 +45,8 @@ class LengthSize {
   void SetHeight(const Length& height) { height_ = height; }
   const Length& Height() const { return height_; }
 
+  bool IsEmpty() const { return width_.IsZero() || height_.IsZero(); }
+
  private:
   Length width_;
   Length height_;

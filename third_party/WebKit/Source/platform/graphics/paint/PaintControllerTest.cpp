@@ -5,8 +5,6 @@
 #include "platform/graphics/paint/PaintControllerTest.h"
 
 #include "platform/graphics/GraphicsContext.h"
-#include "platform/graphics/paint/ClipPathDisplayItem.h"
-#include "platform/graphics/paint/ClipPathRecorder.h"
 #include "platform/graphics/paint/ClipRecorder.h"
 #include "platform/graphics/paint/CompositingRecorder.h"
 #include "platform/graphics/paint/DisplayItemCacheSkipper.h"
@@ -1826,40 +1824,8 @@ TEST_P(PaintControllerTest, OptimizeNoopPairs) {
   GraphicsContext context(GetPaintController());
   DrawRect(context, first, kBackgroundType, FloatRect(0, 0, 100, 100));
   {
-    ClipPathRecorder clip_recorder(context, second, Path());
-    DrawRect(context, second, kBackgroundType, FloatRect(0, 0, 100, 100));
-  }
-  DrawRect(context, third, kBackgroundType, FloatRect(0, 0, 100, 100));
-
-  GetPaintController().CommitNewDisplayItems();
-  EXPECT_DISPLAY_LIST(GetPaintController().GetDisplayItemList(), 5,
-                      TestDisplayItem(first, kBackgroundType),
-                      TestDisplayItem(second, DisplayItem::kBeginClipPath),
-                      TestDisplayItem(second, kBackgroundType),
-                      TestDisplayItem(second, DisplayItem::kEndClipPath),
-                      TestDisplayItem(third, kBackgroundType));
-
-  DrawRect(context, first, kBackgroundType, FloatRect(0, 0, 100, 100));
-  {
     ClipRecorder clip_recorder(context, second, kClipType, IntRect(1, 1, 2, 2));
     // Do not draw anything for second.
-  }
-  DrawRect(context, third, kBackgroundType, FloatRect(0, 0, 100, 100));
-  GetPaintController().CommitNewDisplayItems();
-
-  // Empty clips should have been optimized out.
-  EXPECT_DISPLAY_LIST(GetPaintController().GetDisplayItemList(), 2,
-                      TestDisplayItem(first, kBackgroundType),
-                      TestDisplayItem(third, kBackgroundType));
-
-  second.SetDisplayItemsUncached();
-  DrawRect(context, first, kBackgroundType, FloatRect(0, 0, 100, 100));
-  {
-    ClipRecorder clip_recorder(context, second, kClipType, IntRect(1, 1, 2, 2));
-    {
-      ClipPathRecorder clip_path_recorder(context, second, Path());
-      // Do not draw anything for second.
-    }
   }
   DrawRect(context, third, kBackgroundType, FloatRect(0, 0, 100, 100));
   GetPaintController().CommitNewDisplayItems();
@@ -2113,7 +2079,6 @@ class PaintControllerUnderInvalidationTest
       ClipRecorder r1(context, container, kClipType, IntRect(1, 1, 9, 9));
       ClipRecorder r2(context, container, kClipType, IntRect(1, 1, 2, 2));
       ClipRecorder r3(context, container, kClipType, IntRect(1, 1, 3, 3));
-      ClipPathRecorder r4(context, container, Path());
     }
     {
       EXPECT_FALSE(SubsequenceRecorder::UseCachedSubsequenceIfPossible(
@@ -2195,7 +2160,6 @@ class PaintControllerUnderInvalidationTest
 
     {
       SubsequenceRecorder r(context, container);
-      { ClipPathRecorder clip_path_recorder(context, container, Path()); }
       ClipRecorder clip(context, container, kClipType, IntRect(1, 1, 9, 9));
       DrawRect(context, content, kBackgroundType,
                FloatRect(100, 100, 300, 300));
@@ -2206,7 +2170,6 @@ class PaintControllerUnderInvalidationTest
       EXPECT_FALSE(SubsequenceRecorder::UseCachedSubsequenceIfPossible(
           context, container));
       SubsequenceRecorder r(context, container);
-      { ClipPathRecorder clip_path_recorder(context, container, Path()); }
       ClipRecorder clip(context, container, kClipType, IntRect(1, 1, 30, 30));
       DrawRect(context, content, kBackgroundType,
                FloatRect(100, 100, 300, 300));

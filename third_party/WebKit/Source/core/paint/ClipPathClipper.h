@@ -5,56 +5,40 @@
 #ifndef ClipPathClipper_h
 #define ClipPathClipper_h
 
+#include "core/paint/FloatClipRecorder.h"
+#include "platform/geometry/FloatRect.h"
 #include "platform/graphics/paint/ClipPathRecorder.h"
 #include "platform/graphics/paint/CompositingRecorder.h"
 #include "platform/wtf/Optional.h"
 
 namespace blink {
 
-class ClipPathOperation;
-class FloatPoint;
-class FloatRect;
 class GraphicsContext;
-class LayoutSVGResourceClipper;
 class LayoutObject;
-
-enum class ClipperState { kNotApplied, kAppliedPath, kAppliedMask };
 
 class ClipPathClipper {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
   ClipPathClipper(GraphicsContext&,
-                  ClipPathOperation&,
                   const LayoutObject&,
-                  const FloatRect& reference_box,
-                  const FloatPoint& origin);
+                  const LayoutPoint& paint_offset);
   ~ClipPathClipper();
 
-  bool UsingMask() const {
-    return clipper_state_ == ClipperState::kAppliedMask;
-  }
+  bool IsIsolationInstalled() const { return !!mask_isolation_recorder_; }
+
+  static FloatRect LocalReferenceBox(const LayoutObject&);
+  static Optional<FloatRect> LocalClipPathBoundingBox(const LayoutObject&);
+  static Optional<Path> CanUsePathBasedClip(const LayoutObject&);
 
  private:
-  // Returns false if there is a problem drawing the mask.
-  bool PrepareEffect(const FloatRect& target_bounding_box,
-                     const FloatRect& visual_rect,
-                     const FloatPoint& layer_position_offset);
-  bool DrawClipAsMask(const FloatRect& target_bounding_box,
-                      const AffineTransform&,
-                      const FloatPoint&);
-  void FinishEffect();
-
-  LayoutSVGResourceClipper* resource_clipper_;
-  ClipperState clipper_state_;
-  const LayoutObject& layout_object_;
   GraphicsContext& context_;
+  const LayoutObject& layout_object_;
+  LayoutPoint paint_offset_;
 
-  // TODO(pdr): This pattern should be cleaned up so that the recorders are just
-  // on the stack.
+  Optional<FloatClipRecorder> clip_recorder_;
   Optional<ClipPathRecorder> clip_path_recorder_;
-  Optional<CompositingRecorder> mask_clip_recorder_;
-  Optional<CompositingRecorder> mask_content_recorder_;
+  Optional<CompositingRecorder> mask_isolation_recorder_;
 };
 
 }  // namespace blink
