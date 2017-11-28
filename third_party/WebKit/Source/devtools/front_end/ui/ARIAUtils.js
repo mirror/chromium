@@ -34,6 +34,22 @@ UI.ARIAUtils.markAsTreeitem = function(element) {
 
 /**
  * @param {!Element} element
+ * @param {?Element} controlledElement
+ */
+UI.ARIAUtils.setControls = function(element, controlledElement) {
+  if (!controlledElement) {
+    element.removeAttribute('aria-controls');
+    return;
+  }
+
+  if (controlledElement.id === '')
+    throw new Error('Controlled element must have ID');
+
+  element.setAttribute('aria-controls', controlledElement.id);
+};
+
+/**
+ * @param {!Element} element
  */
 UI.ARIAUtils.markAsPresentation = function(element) {
   element.setAttribute('role', 'presentation');
