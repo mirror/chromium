@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6c4fc71_6c2a84a7",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-28T17:51:41Z",
+      "side": 1,
+      "message": "nit: typo?",
+      "range": {
+        "startLine": 44,
+        "startChar": 41,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54465e52_0e18e049",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-28T17:51:41Z",
+      "side": 1,
+      "message": "I didn\u0027t see any tests for attribute\u003dvalue pairs.",
+      "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22dddd6_d8b74248",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-28T17:51:41Z",
+      "side": 1,
+      "message": "nit: do we make any guarantees if the call returns false?  Test this only on success?",
+      "range": {
+        "startLine": 40,
+        "startChar": 1,
+        "endLine": 40,
+        "endChar": 33
+      },
+      "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af42ac29_0389ad2b",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-28T17:51:41Z",
+      "side": 1,
+      "message": "Can we get some tests with more punctuation in the cdata section [\"\u0027\\] etc? Also common errors like \n  \u003c!CDATA[missing first bracket]]\u003e or \n  \u003c![CDATA[space between last bracket] ]\u003e",
+      "range": {
+        "startLine": 89,
+        "startChar": 32,
+        "endLine": 89,
+        "endChar": 53
+      },
+      "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae60c680_e35387bc",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-28T17:51:41Z",
+      "side": 1,
+      "message": "Also, what do we do about entities? e.g.\n  \u003chello\u003ejack \u0026amp; jill\u003c/hello\u003e",
+      "revId": "2f7d749fe4a24d4ea3f771a9396504800a03f070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
