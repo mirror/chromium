@@ -52,5 +52,20 @@ RendererScheduler* RendererWebSchedulerImpl::GetRendererSchedulerForTest() {
   return renderer_scheduler_;
 }
 
+void RendererWebSchedulerImpl::MaybeDeferTaskForVirtualTimeDeterminism(
+    const WebTraceLocation& from_here,
+    WTF::Closure task) {
+  if (renderer_scheduler_->IsVirualTimeEnabled()) {
+    LoadingTaskRunner()->PostDelayedTask(from_here, std::move(task),
+                                         base::TimeDelta::FromMilliseconds(10));
+  } else {
+    std::move(task).Run();
+  }
+}
+
+bool RendererWebSchedulerImpl::IsVirtualTimeEnabled() {
+  return renderer_scheduler_->IsVirualTimeEnabled();
+}
+
 }  // namespace scheduler
 }  // namespace blink
