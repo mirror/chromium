@@ -114,10 +114,13 @@ TaskQueueImpl::MainThreadOnly::MainThreadOnly(
 TaskQueueImpl::MainThreadOnly::~MainThreadOnly() {}
 
 void TaskQueueImpl::UnregisterTaskQueue() {
+  TaskDeque immediate_incoming_queue;
+
   {
     base::AutoLock lock(any_thread_lock_);
     base::AutoLock immediate_incoming_queue_lock(
         immediate_incoming_queue_lock_);
+
     if (main_thread_only().time_domain)
       main_thread_only().time_domain->UnregisterQueue(this);
 
@@ -134,17 +137,25 @@ void TaskQueueImpl::UnregisterTaskQueue() {
         OnNextWakeUpChangedCallback();
     main_thread_only().on_next_wake_up_changed_callback =
         OnNextWakeUpChangedCallback();
+    immediate_incoming_queue.Swap(immediate_incoming_queue_);
   }
+
+  // It is possible that task holds a scoped_refptr to the enclosing
+  // task queue. That means that deleting a task can result in deleting
+  // this TaskQueueImpl, so we need to clear all fields before actually
+  // deleting tasks.
 
   // Flush the queues outside of the lock because TSAN complains about a lock
   // order inversion for tasks that are posted from within a lock, with a
   // destructor that acquires the same lock.
-  main_thread_only().delayed_incoming_queue = std::priority_queue<Task>();
-  // NB this should be safe since TaskQueueImpl::PostImmediateTaskImpl does
-  // nothing if any_thread().task_queue_manager is null.
-  immediate_incoming_queue_.clear();
-  main_thread_only().immediate_work_queue.reset();
-  main_thread_only().delayed_work_queue.reset();
+
+  std::priority_queue<Task> delayed_incoming_queue;
+  delayed_incoming_queue.swap(main_thread_only().delayed_incoming_queue);
+
+  std::unique_ptr<WorkQueue> immediate_work_queue =
+      std::move(main_thread_only().immediate_work_queue);
+  std::unique_ptr<WorkQueue> delayed_work_queue =
+      std::move(main_thread_only().delayed_work_queue);
 }
 
 const char* TaskQueueImpl::GetName() const {
