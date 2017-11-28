@@ -4,6 +4,7 @@
 
 #include "ui/ozone/public/ozone_platform.h"
 
+#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/trace_event/trace_event.h"
 #include "ui/events/devices/device_data_manager.h"
@@ -16,10 +17,18 @@ namespace {
 
 bool g_platform_initialized_ui = false;
 bool g_platform_initialized_gpu = false;
+base::LazyInstance<base::OnceCallback<void(OzonePlatform*)>>::Leaky
+    instance_callback = LAZY_INSTANCE_INITIALIZER;
+
+base::Lock& GetOzoneInstanceLock() {
+  static base::Lock lock;
+  return lock;
+}
 
 }  // namespace
 
 OzonePlatform::OzonePlatform() {
+  GetOzoneInstanceLock().AssertAcquired();
   DCHECK(!instance_) << "There should only be a single OzonePlatform.";
   instance_ = this;
   g_platform_initialized_ui = false;
@@ -35,6 +44,8 @@ void OzonePlatform::InitializeForUI(const InitParams& args) {
     return;
   g_platform_initialized_ui = true;
   instance_->InitializeUI(args);
+  if (!instance_callback.Get().is_null())
+    std::move(instance_callback.Get()).Run(instance_);
   // This is deliberately created after initializing so that the platform can
   // create its own version of DDM.
   DeviceDataManager::CreateInstance();
@@ -47,10 +58,13 @@ void OzonePlatform::InitializeForGPU(const InitParams& args) {
     return;
   g_platform_initialized_gpu = true;
   instance_->InitializeGPU(args);
+  if (!instance_callback.Get().is_null())
+    std::move(instance_callback.Get()).Run(instance_);
 }
 
 // static
 void OzonePlatform::Shutdown() {
+  base::AutoLock lock(GetOzoneInstanceLock());
   auto* tmp = instance_;
   instance_ = nullptr;
   delete tmp;
@@ -58,12 +72,14 @@ void OzonePlatform::Shutdown() {
 
 // static
 OzonePlatform* OzonePlatform::GetInstance() {
+  base::AutoLock lock(GetOzoneInstanceLock());
   DCHECK(instance_) << "OzonePlatform is not initialized";
   return instance_;
 }
 
 // static
 OzonePlatform* OzonePlatform::EnsureInstance() {
+  base::AutoLock lock(GetOzoneInstanceLock());
   if (!instance_) {
     TRACE_EVENT1("ozone",
                  "OzonePlatform::Initialize",
@@ -77,6 +93,21 @@ OzonePlatform* OzonePlatform::EnsureInstance() {
     DCHECK_EQ(instance_, pl);
   }
   return instance_;
+}
+
+// static
+void OzonePlatform::RegisterStartupCallback(
+    base::OnceCallback<void(OzonePlatform*)> callback) {
+  OzonePlatform* inst = nullptr;
+  {
+    base::AutoLock lock(GetOzoneInstanceLock());
+    if (!instance_) {
+      instance_callback.Get() = std::move(callback);
+      return;
+    }
+    inst = instance_;
+  }
+  std::move(callback).Run(inst);
 }
 
 // static
