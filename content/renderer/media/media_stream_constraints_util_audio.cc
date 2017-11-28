@@ -139,6 +139,7 @@ class AudioCaptureCandidates {
     GOOG_BEAMFORMING,
     GOOG_HIGHPASS_FILTER,
     GOOG_EXPERIMENTAL_AUTO_GAIN_CONTROL,
+    DISABLE_HW_NOISE_SUPPRESSION,
     NUM_BOOL_CONSTRAINTS
   };
 
@@ -173,6 +174,9 @@ class AudioCaptureCandidates {
   }
   const DiscreteSet<bool>& disable_local_echo_set() const {
     return bool_sets_[DISABLE_LOCAL_ECHO];
+  }
+  const DiscreteSet<bool>& disable_hw_noise_suppression_set() const {
+    return bool_sets_[DISABLE_HW_NOISE_SUPPRESSION];
   }
   const DiscreteSet<bool>& render_to_associated_sink_set() const {
     return bool_sets_[RENDER_TO_ASSOCIATED_SINK];
@@ -217,8 +221,8 @@ const blink::BooleanConstraint blink::WebMediaTrackConstraintSet::*
         &blink::WebMediaTrackConstraintSet::goog_experimental_noise_suppression,
         &blink::WebMediaTrackConstraintSet::goog_beamforming,
         &blink::WebMediaTrackConstraintSet::goog_highpass_filter,
-        &blink::WebMediaTrackConstraintSet::
-            goog_experimental_auto_gain_control};
+        &blink::WebMediaTrackConstraintSet::goog_experimental_auto_gain_control,
+        &blink::WebMediaTrackConstraintSet::disable_hw_noise_suppression};
 
 // directly mapped boolean sets to audio properties
 struct BoolSetPropertyEntry {
@@ -480,6 +484,10 @@ AudioProcessingProperties SelectAudioProcessingProperties(
   properties.disable_hw_echo_cancellation =
       (echo_cancellation && !*echo_cancellation) ||
       (goog_echo_cancellation && !*goog_echo_cancellation);
+  properties.disable_hw_noise_suppression =
+      SelectBool(candidates.disable_hw_noise_suppression_set(),
+                 basic_constraint_set.disable_hw_noise_suppression,
+                 properties.disable_hw_noise_suppression);
 
   properties.goog_audio_mirroring =
       SelectBool(candidates.goog_audio_mirroring_set(),

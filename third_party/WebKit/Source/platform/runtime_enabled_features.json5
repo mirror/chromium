@@ -336,6 +336,11 @@
       status: "stable",
     },
     {
+      name: "DisableHwNoiseSuppression",
+      origin_trial_feature_name: "DisableHwNoiseSuppression",
+      status: "stable",
+    },
+    {
       name: "DisplayList2dCanvas",
       status: "stable",
     },

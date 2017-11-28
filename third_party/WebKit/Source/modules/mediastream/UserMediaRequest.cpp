@@ -42,6 +42,7 @@
 #include "core/dom/SpaceSplitString.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/HostsUsingFeatures.h"
+#include "core/origin_trials/origin_trials.h"
 #include "modules/mediastream/MediaConstraintsImpl.h"
 #include "modules/mediastream/MediaStream.h"
 #include "modules/mediastream/MediaStreamConstraints.h"
@@ -133,6 +134,12 @@ void CountAudioConstraintUses(ExecutionContext* context,
   if (RequestUsesDiscreteConstraint(
           constraints, &WebMediaTrackConstraintSet::echo_cancellation)) {
     counter.Count(WebFeature::kMediaStreamConstraintsEchoCancellation);
+  }
+  if (RequestUsesDiscreteConstraint(
+          constraints,
+          &WebMediaTrackConstraintSet::disable_hw_noise_suppression) &&
+      OriginTrials::disableHwNoiseSuppressionEnabled(context)) {
+    counter.Count(WebFeature::kMediaStreamConstraintsDisableHwNoiseSuppression);
   }
   if (RequestUsesNumericConstraint(constraints,
                                    &WebMediaTrackConstraintSet::latency)) {

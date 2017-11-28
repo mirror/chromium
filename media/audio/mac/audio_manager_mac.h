@@ -127,6 +127,18 @@ class MEDIA_EXPORT AudioManagerMac : public AudioManagerBase {
   }
   size_t basic_input_streams() const { return basic_input_streams_.size(); }
 
+  bool DeviceSupportsAmbientNoiseReduction(AudioDeviceID device_id);
+  bool SuppressNoiseReduction(AudioDeviceID device_id);
+  void UnsuppressNoiseReduction(AudioDeviceID device_id);
+
+  struct NoiseReductionState {
+    enum State { DISABLED, ENABLED };
+    State initial_state = DISABLED;
+    int suppression_count = 0;
+  };
+
+  std::map<AudioDeviceID, NoiseReductionState> device_noise_reduction_states_;
+
  protected:
   AudioParameters GetPreferredOutputStreamParameters(
       const std::string& output_device_id,
