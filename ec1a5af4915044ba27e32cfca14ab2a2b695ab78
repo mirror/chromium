@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99102749_99f05396",
+        "filename": "third_party/WebKit/LayoutTests/virtual/spv175/paint/invalidation/multicol/column-rules-fixed-height-expected.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-28T17:20:54Z",
+      "side": 1,
+      "message": "These new spv175 baselines are different from the base baselines in the raster invalidation reasons. The coverage of raster invalidation rectangles are almost the same. Previously these tests fail for both text and image results (because of wrong painting of multicols).",
+      "revId": "ec1a5af4915044ba27e32cfca14ab2a2b695ab78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
