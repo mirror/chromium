@@ -1829,6 +1829,7 @@ test("content_unittests") {
       "../renderer/p2p/ipc_network_manager_unittest.cc",
     ]
     deps += [
+      "//content/common:media_devices",
       "//services/device/public/interfaces",
       "//third_party/opus",
       "//third_party/webrtc/api:libjingle_peerconnection",
