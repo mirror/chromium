@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2f9b42e_5272962c",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-28T20:12:33Z",
+      "side": 1,
+      "message": "I don\u0027t quite think we need this BeginFrame(). If so, we should only add the code only when we have real implementation.",
+      "revId": "db3e0d4197eb4965656a7436f89592f47201add9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22e16c5_52d13293",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-28T20:12:33Z",
+      "side": 1,
+      "message": "Bug number?",
+      "revId": "db3e0d4197eb4965656a7436f89592f47201add9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5969fee0_39991b79",
+        "filename": "third_party/WebKit/Source/platform/graphics/RecordingImageBufferSurface.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-28T20:12:33Z",
+      "side": 1,
+      "message": "I\u0027m retiring this histogram...Do you still think you should add this?",
+      "revId": "db3e0d4197eb4965656a7436f89592f47201add9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
