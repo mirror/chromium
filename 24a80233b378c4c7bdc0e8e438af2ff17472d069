@@ -57,6 +57,23 @@
       "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063b3521_399b6de4",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-28T01:28:25Z",
+      "side": 1,
+      "message": "I probably need to add more comments stressing that you now need to understand the differences between WTF::Bind and WTF::BindRepeating. It\u0027s in a bit confusing state now.",
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
