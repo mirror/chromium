@@ -2039,7 +2039,7 @@ void RenderProcessHostImpl::CreateStoragePartitionService(
     mojom::StoragePartitionServiceRequest request) {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableMojoLocalStorage)) {
-    if (!(g_storage_partition_service_factory == nullptr)) {
+    if (!g_storage_partition_service_factory.empty()) {
       g_storage_partition_service_factory.Get().Run(this, std::move(request));
       return;
     }
