@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83b642cf_c6c31bfe",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-28T21:44:53Z",
+      "side": 0,
+      "message": "I think you should probably keep this assertion here.",
+      "range": {
+        "startLine": 157,
+        "startChar": 49,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "f48fd978788a26b4d270ed4893b2e3dce415830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
