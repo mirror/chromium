@@ -16,6 +16,24 @@
       "revId": "4c41f8611da5b49a1ff9f540b827469cd11b8473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3affd311_77cbbdcd",
+        "filename": "chrome/browser/resources/cryptotoken/signer.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1134440
+      },
+      "writtenOn": "2017-11-28T19:46:58Z",
+      "side": 1,
+      "message": "Er, I can\u0027t tell if that is a typo or a shorthand I don\u0027t know.  Can you spell it out?",
+      "parentUuid": "0c0a6895_3806a3ee",
+      "revId": "4c41f8611da5b49a1ff9f540b827469cd11b8473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
