@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "340ded97_d1473476",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "nit: s/is/can be/ ? *is* is specific to CF/fuzzing infrastructure and might be confusing to someone testing locally.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 16
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04d8576_149d82f5",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "nit s/Following things/The following/",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63f6bf2_73a2c95a",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "s/would/would be/",
+      "range": {
+        "startLine": 37,
+        "startChar": 44,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cccb65eb_d522c6bb",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "s/as argument/as an argument/",
+      "range": {
+        "startLine": 40,
+        "startChar": 74,
+        "endLine": 40,
+        "endChar": 82
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31fb2d38_4dad4909",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "this sentence placed here seems confusing given the previous definition of a seed corpus.\n\nMaybe something like replace \"Most fuzzers need a seed corpus with a few inputs to work at all.\" with \"While libFuzzer can start with an empty corpus, most fuzzers require a seed corpus to be useful.\"",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9331825_3ce68dec",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "this second part seems a bit repetitive. maybe remove or merge into the previous part?",
+      "range": {
+        "startLine": 47,
+        "startChar": 34,
+        "endLine": 50,
+        "endChar": 28
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbc6f67_87f7cf47",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "it feels like we can just skip this sentence since all a fuzzer author needs to know here is that it improves the efficiency (and it\u0027s fairly obvious why).",
+      "range": {
+        "startLine": 95,
+        "startChar": 22,
+        "endLine": 96,
+        "endChar": 71
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46379ce_7ca32297",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "fuzzing function seems like a confusing term, and is only ever used here. I think it\u0027s referring to LLVMFuzzerTestOneInput, so maybe replace it with that?",
+      "range": {
+        "startLine": 179,
+        "startChar": 17,
+        "endLine": 179,
+        "endChar": 32
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a754f8_d2e8a9bd",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "This sentence feels a bit vague, could you please clarify what you mean?",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 7
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad178c21_4e80544b",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "nit: maybe link to http://llvm.org/docs/LibFuzzer.html#startup-initialization. I don\u0027t think LLVMFuzzerInitialize is recommended though (only if you need access to argc/argv which shouldn\u0027t be the case) so might be fine to leave it out entirely.",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 22
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b800f0e_ab47eba2",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "This seems like repeting the first sentence, so maybe just: \"Beware that you might miss coverage...\"",
+      "range": {
+        "startLine": 210,
+        "startChar": 41,
+        "endLine": 210,
+        "endChar": 76
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f553dd_07241cca",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "nit: remove the \", but not always\" and just say \"This parameter can often...\"",
+      "range": {
+        "startLine": 210,
+        "startChar": 23,
+        "endLine": 210,
+        "endChar": 39
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4753224c_fafb5538",
+        "filename": "testing/libfuzzer/getting_started.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "nit: \"your sources\" is ambiguous. maybe s/your sources/the code that is being tested/",
+      "range": {
+        "startLine": 57,
+        "startChar": 66,
+        "endLine": 57,
+        "endChar": 78
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858bf1d7_57e6ba23",
+        "filename": "testing/libfuzzer/getting_started.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-28T22:10:44Z",
+      "side": 1,
+      "message": "nit: is this sentence necessary?",
+      "range": {
+        "startLine": 59,
+        "startChar": 85,
+        "endLine": 61,
+        "endChar": 19
+      },
+      "revId": "5273f86557b61996c12f3c643a5d1485fc65780f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
