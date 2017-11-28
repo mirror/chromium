@@ -106,12 +106,12 @@ std::unique_ptr<media::AudioInputDelegate> AudioInputDelegateImpl::Create(
     media::UserInputMonitor* user_input_monitor,
     AudioInputDeviceManager* audio_input_device_manager,
     std::unique_ptr<media::AudioLog> audio_log,
+    int render_process_id,
+    int render_frame_id,
     AudioInputDeviceManager::KeyboardMicRegistration keyboard_mic_registration,
     uint32_t shared_memory_count,
     int stream_id,
     int session_id,
-    int render_process_id,
-    int render_frame_id,
     bool automatic_gain_control,
     const media::AudioParameters& audio_parameters) {
   // Check if we have the permission to open the device and which device to use.
@@ -150,10 +150,9 @@ std::unique_ptr<media::AudioInputDelegate> AudioInputDelegateImpl::Create(
   return base::WrapUnique(new AudioInputDelegateImpl(
       subscriber, audio_manager, mirroring_manager, user_input_monitor,
       possibly_modified_parameters, std::move(writer),
-      std::move(foreign_socket), std::move(audio_log),
-      std::move(keyboard_mic_registration),
-      stream_id, render_process_id, render_frame_id, automatic_gain_control,
-      device));
+      std::move(foreign_socket), std::move(audio_log), render_process_id,
+      render_frame_id, std::move(keyboard_mic_registration), stream_id,
+      automatic_gain_control, device));
 }
 
 AudioInputDelegateImpl::AudioInputDelegateImpl(
@@ -165,10 +164,10 @@ AudioInputDelegateImpl::AudioInputDelegateImpl(
     std::unique_ptr<AudioInputSyncWriter> writer,
     std::unique_ptr<base::CancelableSyncSocket> foreign_socket,
     std::unique_ptr<media::AudioLog> audio_log,
-    AudioInputDeviceManager::KeyboardMicRegistration keyboard_mic_registration,
-    int stream_id,
     int render_process_id,
     int render_frame_id,
+    AudioInputDeviceManager::KeyboardMicRegistration keyboard_mic_registration,
+    int stream_id,
     bool automatic_gain_control,
     const MediaStreamDevice* device)
     : subscriber_(subscriber),
