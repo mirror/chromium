@@ -46,6 +46,30 @@
       "revId": "b3eeb451292a719992bae123c236ff6e8d1953f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21fea020_25fb2b98",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-28T13:36:31Z",
+      "side": 1,
+      "message": "As for using \"primary constructor\" with explanation -- no objections to that. What you describe sounds a lot like, e.g., \"designated initializer\" in Objective C, but I have not heard a standard term for that in C++ (and googling [c++ primary constructor] is not explaining it either).\n\nIndependently of explaining \"primary\", I think it is still useful to hint at which constructor is meant for production code. Or else someone might one day start creating the PasswordManagerExporter explicitly, then someone changes the secondary constructor to do it differently, and then subtle bugs might appear.",
+      "parentUuid": "8e55b87e_15b5bad5",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "b3eeb451292a719992bae123c236ff6e8d1953f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
