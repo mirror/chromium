@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b4f7ffb_592cd0fe",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 18886,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T20:50:31Z",
+      "side": 1,
+      "message": "Revert changes to this file.",
+      "range": {
+        "startLine": 18886,
+        "startChar": 62,
+        "endLine": 18886,
+        "endChar": 0
+      },
+      "revId": "e90d5e3a985629b102cee5ce443c4262e354817c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a313e63b_964ce109",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 89320,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T20:50:31Z",
+      "side": 1,
+      "message": "Nit: BooleanHit isn\u0027t appropriate here since you\u0027re logging both cases. Either use plain Boolean or a more custom enum (e.g. BooleanTimedOut - which you can add if it doesn\u0027t exist).\n\nSimilar comment for the other boolean histogram above.",
+      "range": {
+        "startLine": 89320,
+        "startChar": 70,
+        "endLine": 89320,
+        "endChar": 0
+      },
+      "revId": "e90d5e3a985629b102cee5ce443c4262e354817c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
