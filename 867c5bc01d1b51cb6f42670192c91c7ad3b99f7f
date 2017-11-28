@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "391d21da_15a493fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-28T19:03:38Z",
+      "side": 1,
+      "message": "4MB?",
+      "range": {
+        "startLine": 9,
+        "startChar": 45,
+        "endLine": 9,
+        "endChar": 47
+      },
+      "revId": "867c5bc01d1b51cb6f42670192c91c7ad3b99f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c7e901_df368dd8",
+        "filename": "headless/public/util/generic_url_request_job_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-28T19:03:38Z",
+      "side": 1,
+      "message": "typo: received",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 46
+      },
+      "revId": "867c5bc01d1b51cb6f42670192c91c7ad3b99f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
