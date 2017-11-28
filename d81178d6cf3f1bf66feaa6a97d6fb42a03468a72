@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "1024842b_2494b20d",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T07:44:15Z",
+      "side": 1,
+      "message": "Could this just accept ServiceWorkerRegistrationOptions instead of separating scope and update_via_cache? If we add more to RegOptions, I think we\u0027d have to edit this again.",
+      "revId": "d81178d6cf3f1bf66feaa6a97d6fb42a03468a72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4ba7a8b_16444d04",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 1
@@ -36,6 +53,30 @@
       "writtenOn": "2017-11-28T04:46:58Z",
       "side": 1,
       "message": "Would it be better to specify it as follows?\n// TODO(crbug/xxx): Implement |type| attribute.\nProbably the issue is crbug.com/680046. I believe nhiroki knows that:)",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 73
+      },
+      "revId": "d81178d6cf3f1bf66feaa6a97d6fb42a03468a72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2e268e_5ba7fab2",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T07:44:15Z",
+      "side": 1,
+      "message": "We can remove this TODO, it made more sense when |scope| was the only member.",
+      "parentUuid": "f4ba7a8b_16444d04",
       "range": {
         "startLine": 27,
         "startChar": 2,
