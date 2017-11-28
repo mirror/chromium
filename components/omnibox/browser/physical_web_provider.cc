@@ -238,7 +238,9 @@ void PhysicalWebProvider::ConstructZeroSuggestMatches(
     match.destination_url = url;
 
     match.contents = url_formatter::FormatUrl(
-        url, AutocompleteMatch::GetFormatTypes(false, false, false),
+        url,
+        AutocompleteMatch::GetFormatTypes(url.has_scheme(), false, false,
+                                          false),
         net::UnescapeRule::SPACES, nullptr, nullptr, nullptr);
     match.contents_class.push_back(
         ACMatchClassification(0, ACMatchClassification::URL));
