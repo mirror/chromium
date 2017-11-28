@@ -1,6 +1,7 @@
 include_rules = [
     "+base/debug",
     "+base/macros.h",
+    "+base/time/time.h",
     "+base/gtest_prod_util.h",
     "+build",
     "+services/service_manager/public/cpp/connector.h",

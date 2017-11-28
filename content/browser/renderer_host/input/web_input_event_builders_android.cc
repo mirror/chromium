@@ -7,6 +7,7 @@
 #include <android/input.h>
 
 #include "base/logging.h"
+#include "base/time/time.h"
 #include "ui/events/android/key_event_utils.h"
 #include "ui/events/base_event_utils.h"
 #include "ui/events/blink/blink_event_util.h"
@@ -91,7 +92,7 @@ WebKeyboardEvent WebKeyboardEventBuilder::Build(
 
   WebKeyboardEvent result(
       type, modifiers | ui::DomCodeToWebInputEventModifiers(dom_code),
-      time_sec);
+      base::TimeTicks() + base::TimeDelta::FromSecondsD(time_sec));
   result.windows_key_code = ui::LocatedToNonLocatedKeyboardCode(
       ui::KeyboardCodeFromAndroidKeyCode(keycode));
   result.native_key_code = keycode;
@@ -118,9 +119,8 @@ WebMouseEvent WebMouseEventBuilder::Build(
     int action_button) {
   DCHECK(WebInputEvent::IsMouseEventType(type));
   int modifiers = motion_event.GetFlags();
-  WebMouseEvent result(
-      type, ui::EventFlagsToWebEventModifiers(modifiers),
-      ui::EventTimeStampToSeconds(motion_event.GetEventTime()));
+  WebMouseEvent result(type, ui::EventFlagsToWebEventModifiers(modifiers),
+                       motion_event.GetEventTime());
 
   result.SetPositionInWidget(motion_event.GetX(0), motion_event.GetY(0));
   result.SetPositionInScreen(motion_event.GetRawX(0), motion_event.GetRawY(0));
@@ -153,7 +153,7 @@ WebMouseWheelEvent WebMouseWheelEventBuilder::Build(
     const ui::MotionEventAndroid& motion_event) {
   WebMouseWheelEvent result(WebInputEvent::kMouseWheel,
                             WebInputEvent::kNoModifiers,
-                            motion_event.time_sec());
+                            motion_event.GetEventTime());
   result.SetPositionInWidget(motion_event.GetX(0), motion_event.GetY(0));
   result.SetPositionInScreen(motion_event.GetRawX(0), motion_event.GetRawY(0));
   result.button = WebMouseEvent::Button::kNoButton;
@@ -171,7 +171,9 @@ WebGestureEvent WebGestureEventBuilder::Build(WebInputEvent::Type type,
                                               int x,
                                               int y) {
   DCHECK(WebInputEvent::IsGestureEventType(type));
-  WebGestureEvent result(type, WebInputEvent::kNoModifiers, time_sec);
+  WebGestureEvent result(
+      type, WebInputEvent::kNoModifiers,
+      base::TimeTicks() + base::TimeDelta::FromSecondsD(time_sec));
 
   result.x = x;
   result.y = y;

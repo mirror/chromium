@@ -29,9 +29,6 @@ struct CONTENT_EXPORT NativeWebKeyboardEvent : public blink::WebKeyboardEvent {
   NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
                          int modifiers,
                          base::TimeTicks timestamp);
-  NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
-                         int modifiers,
-                         double timestampSeconds);
 
   // Creates a native web keyboard event from a WebKeyboardEvent. The |os_event|
   // member may be a synthetic event, and possibly incomplete.
