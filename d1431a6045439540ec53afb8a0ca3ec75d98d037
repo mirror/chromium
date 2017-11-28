@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "42143464_827248cb",
+        "filename": "chrome/android/java/res/layout/languages_selection_toolbar.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-28T15:12:51Z",
+      "side": 1,
+      "message": "Another thought here -- rather than emulating the style of bookmarks/downloads/history, the language selection screen should emulate the style of other preference screens. SingleCategoryPreferences.java (used for site preferences like cookies, location, etc.) has search functionality that you should check out.\n\nThese options (selectable list widgets vs preference widgets) and why one is preferred over the other would be good to lay out in the \"UI Layout design\" section of your design doc.",
+      "parentUuid": "27a6f6b2_6b45a242",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "641e79f7_411578da",
         "filename": "chrome/android/java/res/menu/languages_action_bar_menu.xml",
         "patchSetId": 4
