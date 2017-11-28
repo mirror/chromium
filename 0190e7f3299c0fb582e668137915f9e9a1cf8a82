@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2893f26d_002dcee3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 19848,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-28T03:39:57Z",
+      "side": 1,
+      "message": "Perhaps note that the equivalent histogram on Android is called Launch.HomeScreenSource.",
+      "revId": "0190e7f3299c0fb582e668137915f9e9a1cf8a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
