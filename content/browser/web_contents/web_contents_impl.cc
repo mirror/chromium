@@ -3532,6 +3532,7 @@ void WebContentsImpl::DidChooseColorInColorChooser(SkColor color) {
   if (!rfh)
     return;
 
+  NOTREACHED();
   rfh->Send(new FrameMsg_DidChooseColorResponse(
       rfh->GetRoutingID(), color_chooser_info_->identifier, color));
 }
@@ -3545,6 +3546,7 @@ void WebContentsImpl::DidEndColorChooser() {
   if (!rfh)
     return;
 
+  NOTREACHED();
   rfh->Send(new FrameMsg_DidEndColorChooser(
       rfh->GetRoutingID(), color_chooser_info_->identifier));
   color_chooser_info_.reset();
@@ -4204,6 +4206,7 @@ void WebContentsImpl::OnOpenColorChooser(
     int color_chooser_id,
     SkColor color,
     const std::vector<ColorSuggestion>& suggestions) {
+  NOTREACHED();
   ColorChooser* new_color_chooser =
       delegate_ ? delegate_->OpenColorChooser(this, color, suggestions)
                 : nullptr;

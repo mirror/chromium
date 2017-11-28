@@ -48,6 +48,7 @@ void RendererWebColorChooserImpl::EndChooser() {
 void RendererWebColorChooserImpl::Open(
       SkColor initial_color,
       const std::vector<content::ColorSuggestion>& suggestions) {
+  NOTREACHED();
   Send(new FrameHostMsg_OpenColorChooser(routing_id(),
                                          identifier_,
                                          initial_color,
@@ -56,12 +57,14 @@ void RendererWebColorChooserImpl::Open(
 
 void RendererWebColorChooserImpl::OnDidChooseColorResponse(int color_chooser_id,
                                                            SkColor color) {
+  NOTREACHED();
   DCHECK(identifier_ == color_chooser_id);
 
   client_->DidChooseColor(static_cast<blink::WebColor>(color));
 }
 
 void RendererWebColorChooserImpl::OnDidEndColorChooser(int color_chooser_id) {
+  NOTREACHED();
   if (identifier_ != color_chooser_id)
     return;
   client_->DidEndChooser();
