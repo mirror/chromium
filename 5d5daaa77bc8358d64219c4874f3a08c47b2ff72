@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e641880c_4bb41259",
+        "filename": "chromeos/dbus/fake_smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-28T02:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3144ea26_c6eca888",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 43
+      },
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "171fd6ae_380600e4",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e707085c_6970e42a",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-28T02:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "171fd6ae_380600e4",
+      "range": {
+        "startLine": 31,
+        "startChar": 35,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23075d13_806fb9d9",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 7
@@ -62,6 +110,24 @@
       "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60784223_20891ce8",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-28T02:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23075d13_806fb9d9",
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "96f38f29_d9405bc5",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-28T02:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9b82f60_60480419",
+      "range": {
+        "startLine": 156,
+        "startChar": 7,
+        "endLine": 156,
+        "endChar": 21
+      },
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6bf448e_eeba4114",
         "filename": "chromeos/dbus/smb_provider_client.h",
         "patchSetId": 7
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "8eca5bc8_e8a91177",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-28T02:15:41Z",
+      "side": 1,
+      "message": "I agree, I was just looking at https://cs.chromium.org/chromium/src/chrome/browser/chromeos/smb_client/smb_file_system.h, which will be calling this class I believe, and they use base::FilePath. \n\nI will also change Mount to use FilePath",
+      "parentUuid": "a6bf448e_eeba4114",
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d45ed9a_ea56602b",
         "filename": "chromeos/dbus/smb_provider_client.h",
         "patchSetId": 7
@@ -119,6 +227,24 @@
       "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5976de4_9922bc6b",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-28T02:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d45ed9a_ea56602b",
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
