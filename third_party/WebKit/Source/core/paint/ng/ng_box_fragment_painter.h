@@ -8,6 +8,7 @@
 #include "core/layout/BackgroundBleedAvoidance.h"
 #include "core/layout/api/HitTestAction.h"
 #include "core/paint/BoxPainterBase.h"
+#include "platform/geometry/LayoutPoint.h"
 #include "platform/geometry/LayoutSize.h"
 #include "platform/wtf/Allocator.h"
 
@@ -62,6 +63,10 @@ class NGBoxFragmentPainter : public BoxPainterBase {
       const PaintInfo&);
   bool IntersectsPaintRect(const PaintInfo&, const LayoutPoint&) const;
 
+  void PaintInlineBox(const PaintInfo&,
+                      const LayoutPoint&,
+                      const LayoutPoint& container_block_paint_offset);
+  void PaintWithAdjustedOffset(PaintInfo&, const LayoutPoint&);
   void PaintBoxDecorationBackground(const PaintInfo&, const LayoutPoint&);
   void PaintBoxDecorationBackgroundWithRect(const PaintInfo&,
                                             const LayoutPoint&,
@@ -70,6 +75,9 @@ class NGBoxFragmentPainter : public BoxPainterBase {
   void PaintChildren(const Vector<std::unique_ptr<NGPaintFragment>>&,
                      const PaintInfo&,
                      const LayoutPoint&);
+  void PaintInlineChildren(const Vector<std::unique_ptr<NGPaintFragment>>&,
+                           const PaintInfo&,
+                           const LayoutPoint&);
   void PaintText(const NGPaintFragment&,
                  const PaintInfo&,
                  const LayoutPoint& paint_offset);
@@ -101,6 +109,8 @@ class NGBoxFragmentPainter : public BoxPainterBase {
                            const LayoutPoint& accumulated_offset);
 
   const NGPaintFragment& box_fragment_;
+  LayoutPoint container_block_paint_offset_;
+  bool is_inline_;
 };
 
 }  // namespace blink

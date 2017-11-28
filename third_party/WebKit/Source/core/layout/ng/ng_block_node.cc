@@ -130,9 +130,9 @@ void CopyFragmentDataToLayoutBoxForInlineChildren(
     // If the child is painted by non-NG painters, they need Location() set
     // correctly.
     LayoutObject* layout_object = child->GetLayoutObject();
-    if (layout_object && layout_object->IsLayoutReplaced()) {
+    if (layout_object && layout_object->IsBox()) {
       LayoutBox& layout_box = ToLayoutBox(*layout_object);
-      layout_box.SetLocation({child->Offset().left, child->Offset().top});
+      layout_box.SetLocation((offset + child->Offset()).ToLayoutPoint());
     }
 
     if (child->IsContainer()) {
