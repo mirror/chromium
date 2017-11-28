@@ -46,6 +46,30 @@
       "revId": "76cbeb3bc95d8c2d39dda01f0fb022670d35a46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe459ac_4820a6eb",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T20:24:07Z",
+      "side": 1,
+      "message": "I prefer it to ash/ too. Could we place it in display_move_window_util.h instead of ash/wm?\n\nBut there is a circular dependency if I want to use ash/ in ui/app_list/.\nui/app_list/ -\u003e ash/ -\u003e ui/app_list/presenter:presenter -\u003e ui/app_list/ -\u003e ash/, that is why I put the property here. Any suggestion about the DEPS?",
+      "parentUuid": "02ed8200_4d975be3",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 32
+      },
+      "revId": "76cbeb3bc95d8c2d39dda01f0fb022670d35a46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
