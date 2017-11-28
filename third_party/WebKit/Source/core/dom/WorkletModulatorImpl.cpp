@@ -4,6 +4,9 @@
 
 #include "core/dom/WorkletModulatorImpl.h"
 
+#include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "core/dom/DOMException.h"
+#include "core/dom/ExceptionCode.h"
 #include "core/loader/modulescript/WorkletModuleScriptFetcher.h"
 #include "core/workers/WorkletGlobalScope.h"
 
@@ -26,6 +29,14 @@ ModuleScriptFetcher* WorkletModulatorImpl::CreateModuleScriptFetcher() {
   auto global_scope = ToWorkletGlobalScope(GetExecutionContext());
   return new WorkletModuleScriptFetcher(
       global_scope->ModuleResponsesMapProxy());
+}
+
+void WorkletModulatorImpl::ResolveDynamically(const String&,
+                                              const KURL&,
+                                              const ReferrerScriptInfo&,
+                                              ScriptPromiseResolver* resolver) {
+  resolver->Reject(DOMException::Create(
+      kNotAllowedError, "import() is disallowed on WorkletGlobalScope."));
 }
 
 }  // namespace blink
