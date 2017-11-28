@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "639cac19_5c9366aa",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T18:07:50Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "2c4b21de_02ae896b",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0128228_bc348536",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 2
@@ -87,6 +105,126 @@
     },
     {
       "key": {
+        "uuid": "bdd0f7c3_7bd36db4",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T18:07:50Z",
+      "side": 1,
+      "message": "Should these be \u003c\u003d UINTn_MAX?\n\nTo prevent such discrepancies, can we somehow avoid defining these limits in two places? (That is, once here, and once in the encoder/decoder.)",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3bf552_fa138df7",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T18:07:50Z",
+      "side": 1,
+      "message": "Have you considered enforcing this only at serialization time, where we can return an error without crashing?\n\nAlthough that makes the comparator predicate difficult... maybe this is an indication that CBORValue is too tightly coupled with the details of serialization?",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a603b3_f6eabb53",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T18:07:50Z",
+      "side": 1,
+      "message": "Hmm, this is partially duplicating logic from the encoder :-/.\n\nI wonder if we can do either of the following:\n -- Actually use the encoder in the predicate to serialize keys and compare those. I\u0027m not sure what the performance impact would be.\n -- Sort CBORValue::Map containers according to some simpler predicate, and enforce this ordering only in CBORReader/Writer.",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b839672_271e5b90",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T18:07:50Z",
+      "side": 1,
+      "message": "nit: No longer moot.",
+      "range": {
+        "startLine": 33,
+        "startChar": 42,
+        "endLine": 34,
+        "endChar": 24
+      },
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f423b0ed_c705ccdb",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T18:07:50Z",
+      "side": 1,
+      "message": "This will sort first based on the size, don\u0027t we need the opposite? Can we just write a_type \u003c b_type?\n\nAlso, please add a unittest for this.",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 66
+      },
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f141d225_7da108c9",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T18:07:50Z",
+      "side": 1,
+      "message": "nit: No need to include the type anymore, it should be the same.",
+      "range": {
+        "startLine": 51,
+        "startChar": 41,
+        "endLine": 51,
+        "endChar": 47
+      },
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e740e68_5feb37ac",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 2
@@ -98,6 +236,23 @@
       "writtenOn": "2017-11-27T16:56:54Z",
       "side": 1,
       "message": "Do we want to fatally crash? Or can we handle it without crashing?",
+      "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab732072_816592fc",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-28T18:07:50Z",
+      "side": 1,
+      "message": "nit: For consistency, can we return const uint64_t\u0026 here? That would allow using std::tie above instead of make_pair.",
       "revId": "37cf22258998cc5f49abc5ba447a0500efe17c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
