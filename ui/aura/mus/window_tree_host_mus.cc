@@ -192,6 +192,17 @@ void WindowTreeHostMus::SetBoundsInPixels(const gfx::Rect& bounds) {
   WindowTreeHostPlatform::SetBoundsInPixels(bounds);
 }
 
+void WindowTreeHostMus::OverrideAcceleratedWidget(
+    gfx::AcceleratedWidget widget) {
+  bool was_visible = compositor()->IsVisible();
+  if (was_visible)
+    compositor()->SetVisible(false);
+  compositor()->ReleaseAcceleratedWidget();
+  OnAcceleratedWidgetAvailable(widget, GetDisplay().device_scale_factor());
+  if (was_visible)
+    compositor()->SetVisible(true);
+}
+
 void WindowTreeHostMus::DispatchEvent(ui::Event* event) {
   DCHECK(!event->IsKeyEvent());
   WindowTreeHostPlatform::DispatchEvent(event);
