@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d4ac80c_b459c963",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-28T19:06:32Z",
+      "side": 1,
+      "message": "Use:\n\n  if(SweepForbidden())\n    return;\n\ninstead.",
+      "revId": "91baf4000818cf7af3b6b5e88243fb7674dbb5c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
