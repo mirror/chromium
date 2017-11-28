@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c8f9333_9ab5e232",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-28T20:23:29Z",
+      "side": 1,
+      "message": "Yes. The new patch-set creates ScopedPaintChunkProperties for fragments only, but needs a change in PaintChunker to always create new chunk for changed chunk ids to avoid unnecessary full chunk raster invalidations when chunk id changes.\n\nI incline to optimizing chunk properties in a follow-up CL to separate the massive rebaselines of virtual/spv175 tests (that is to abandon the new patch-set in this CL and create another CL for it based on this CL). Wdyt?",
+      "parentUuid": "e066ecdd_aec39b82",
+      "revId": "b57d48bfad5d56081a421bc9b816747a008c5d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20dde4e4_d53f5012",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-28T01:20:16Z",
       "side": 1,
       "message": "What if the fragment itself allocates a new effect node?",
+      "revId": "b57d48bfad5d56081a421bc9b816747a008c5d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59c9752_782ee30c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-28T20:23:29Z",
+      "side": 1,
+      "message": "Done in the new patch-set.",
+      "parentUuid": "20dde4e4_d53f5012",
       "revId": "b57d48bfad5d56081a421bc9b816747a008c5d5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
