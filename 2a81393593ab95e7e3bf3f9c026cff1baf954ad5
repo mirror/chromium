@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17a133fe_d45bdcbd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-28T19:10:57Z",
+      "side": 1,
+      "message": "nit: Please make add a bug to track this feature.",
+      "revId": "2a81393593ab95e7e3bf3f9c026cff1baf954ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
