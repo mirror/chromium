@@ -357,6 +357,10 @@ void LayerTreeHostImpl::CommitComplete() {
 }
 
 void LayerTreeHostImpl::UpdateSyncTreeAfterCommitOrImplSideInvalidation() {
+  DCHECK(!inside_update_sync_tree_after_commit_or_invalidation_);
+  base::AutoReset<bool> auto_inside_sync_tree_update(
+      &inside_update_sync_tree_after_commit_or_invalidation_, true);
+
   if (CommitToActiveTree()) {
     active_tree_->HandleScrollbarShowRequestsFromMain();
 
@@ -4629,6 +4633,18 @@ void LayerTreeHostImpl::InitializeUkm(
     std::unique_ptr<ukm::UkmRecorder> recorder) {
   DCHECK(!ukm_manager_);
   ukm_manager_ = std::make_unique<UkmManager>(std::move(recorder));
+}
+
+void LayerTreeHostImpl::DidUpdateDrawProperties() {
+  // If this DrawProperties update happened while we are updating the sync tree
+  // right after commit or invalidation, then the state of animations will be
+  // updated by the controller as we animate it.
+  if (!image_animation_controller_ ||
+      inside_update_sync_tree_after_commit_or_invalidation_)
+    return;
+
+  image_animation_controller()->UpdateStateFromDrivers(
+      CurrentBeginFrameArgs().frame_time);
 }
 
 }  // namespace cc

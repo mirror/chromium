@@ -1121,10 +1121,7 @@ bool LayerTreeImpl::UpdateDrawProperties() {
                      "layers_updated_count", layers_updated_count);
   }
 
-  if (image_animation_controller()) {
-    image_animation_controller()->UpdateStateFromDrivers(
-        host_impl_->CurrentBeginFrameArgs().frame_time);
-  }
+  host_impl_->DidUpdateDrawProperties();
 
   DCHECK(!needs_update_draw_properties_)
       << "CalcDrawProperties should not set_needs_update_draw_properties()";
