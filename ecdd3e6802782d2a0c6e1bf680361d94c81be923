@@ -16,6 +16,24 @@
       "revId": "ecdd3e6802782d2a0c6e1bf680361d94c81be923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2834e2_b91c33d7",
+        "filename": "third_party/WebKit/Source/core/editing/testing/EditingTestBaseTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-28T04:53:10Z",
+      "side": 1,
+      "message": "I think so. As long as it\u0027s consistent and different from \"|foo\"",
+      "parentUuid": "f8708ada_3ed68b9e",
+      "revId": "ecdd3e6802782d2a0c6e1bf680361d94c81be923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
