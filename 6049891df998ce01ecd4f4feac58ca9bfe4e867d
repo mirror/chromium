@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "edeb808f_c616a4ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-28T08:48:24Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "6049891df998ce01ecd4f4feac58ca9bfe4e867d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9149bd2_f65b6621",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler_unittest.js",
         "patchSetId": 12
