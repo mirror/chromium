@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94d93459_02a2ce21",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-11-28T14:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c0f4a0_cee69635",
+      "revId": "50d14eb1c07355577da639af64ac077f78254314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d79547af_73592c54",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "70356bc8_bce0f452",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-11-28T14:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d79547af_73592c54",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 12
+      },
+      "revId": "50d14eb1c07355577da639af64ac077f78254314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d94bebcc_92c2ebd8",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 3
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "101697e5_1338d182",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-11-28T14:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d94bebcc_92c2ebd8",
+      "revId": "50d14eb1c07355577da639af64ac077f78254314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7664543_d491d1b8",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "50d14eb1c07355577da639af64ac077f78254314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456661d6_c4cd7b0c",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-11-28T14:25:34Z",
+      "side": 1,
+      "message": "I have the same intuition that they can be removed, but there is the odd case which is somehow still relevant:\n\nWhen OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial \u003d true and ShouldShowNonContextualZeroSuggest returns true, we run both MaybeUseCachedSuggestions() and CreateContextualSuggestionsRequest(std::string(), ...). \n\nI find this very bizarre. I believe MaybeUseCachedSuggestions should be wrapped around an\nif (OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial(\n          client()-\u003eGetPrefs()))\nand return after it uses Cached Suggestions. \n\nLet\u0027s consider this issue in a subsequent CL that uses the enum, as it seems out of the scope of this CL. See crbug.com/789137.",
+      "parentUuid": "e7664543_d491d1b8",
+      "revId": "50d14eb1c07355577da639af64ac077f78254314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
