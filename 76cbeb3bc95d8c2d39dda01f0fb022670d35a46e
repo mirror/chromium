@@ -118,6 +118,30 @@
       "revId": "76cbeb3bc95d8c2d39dda01f0fb022670d35a46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc679350_8ed24357",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T22:01:43Z",
+      "side": 1,
+      "message": "I am fine leaving it in ash/public since it might be useful for other window that sticks to a display.",
+      "parentUuid": "c21e6327_5a719ae1",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 32
+      },
+      "revId": "76cbeb3bc95d8c2d39dda01f0fb022670d35a46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
