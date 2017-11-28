@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f4913e5_02640ae1",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2081,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-28T21:45:01Z",
+      "side": 1,
+      "message": "Please add a new constructor. We don\u0027t want to propagate the usage of SetType; all WebInputEvents really should know their type when they are constructed.",
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fdefc7c_ee676606",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2092,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-28T21:45:01Z",
+      "side": 1,
+      "message": "What does idx mean?",
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cb4e5b_2d9f3077",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-28T21:45:01Z",
+      "side": 1,
+      "message": "Can you add a comment what FlushEvents does? I wouldn\u0027t expect a flush events to exist for PointerEvents but it looks like it does something magical with user gesture tokens.",
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de563454_200eabe9",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-28T21:45:01Z",
+      "side": 1,
+      "message": "Can a comment be added about this lifecycle? It isn\u0027t clear when it is created and how long it exists for. Previously it would maintain a life for the processing of the event, but now are you keeping it around until rAF time?\n\nWhat are the implications of that?",
+      "range": {
+        "startLine": 234,
+        "startChar": 18,
+        "endLine": 234,
+        "endChar": 38
+      },
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81ba46b_7dc297bd",
+        "filename": "third_party/WebKit/Source/platform/WebPointerEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-28T21:45:01Z",
+      "side": 1,
+      "message": "If scroll_capable is based solely on the type of event that was created, can this just be a method call on the WebPointer pointer type instead?",
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6231c7f7_58109e93",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-28T21:45:01Z",
+      "side": 1,
+      "message": "Can you add a comment what this means? When it is expected to be true?",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
