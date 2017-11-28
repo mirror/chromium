@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56b369d6_347a01a0",
+        "filename": "third_party/WebKit/Source/modules/mediastream/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-28T12:32:51Z",
+      "side": 1,
+      "message": "I don\u0027t think adding this dependency is allowed in Blink, but wait for haraken@\u0027s advice.",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 6
+      },
+      "revId": "59ac6e8c2eb2cfd779eaf18dfd81d9ee790a0343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
