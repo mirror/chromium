@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73bdecfe_964c844d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-28T03:08:45Z",
+      "side": 1,
+      "message": "if (cache_handler \u0026\u0026 cache_handler-\u003eCustomCacheOptions())\n  return *cache_handler-\u003eCustomCacheOptions();\nreturn v8_cache_options;",
+      "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e4604e_dd2fe79e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/CachedMetadataHandler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-28T03:08:45Z",
+      "side": 1,
+      "message": "// Used for V8 code cache generation when kV8CacheOptionsNone is not set in\n// Settings.\nvirtual Optional\u003cV8CacheOptions\u003e CustomCacheOptions() const {\n  return Optional\u003cV8CacheOptions\u003e();\n}",
+      "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e1fe41_92262e15",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-28T03:08:45Z",
+      "side": 1,
+      "message": "Optional\u003cV8CacheOptions\u003e CustomCacheOptions() const override {\n  // If the resource is served from CacheStorage, generate the V8 code cache\n  // in the first load.\n  if (!CacheStorageCacheName().IsNull())\n    return Optional\u003cV8CacheOptions\u003e(kV8CacheOptionsCodeWithoutHeatCheck);\n  return Optional\u003cV8CacheOptions\u003e();\n}",
+      "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
