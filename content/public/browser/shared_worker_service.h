@@ -22,6 +22,7 @@ class CONTENT_EXPORT SharedWorkerService {
   // its main script resource. Returns true on success.
   virtual bool TerminateWorker(const GURL& url,
                                const std::string& name,
+                               const url::Origin& constructor_origin,
                                StoragePartition* storage_partition,
                                ResourceContext* resource_context) = 0;
 
