@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "4f4a5028_d933d46c",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-28T21:19:00Z",
+      "side": 1,
+      "message": "You can land your change, and I\u0027ll handle the merge.  Yours is ready to go, and I have an issue to work out still.",
+      "parentUuid": "a259b412_1d17ef25",
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b78807b0_c24b8f7e",
         "filename": "chrome/browser/vr/metrics_helper.cc",
         "patchSetId": 9
