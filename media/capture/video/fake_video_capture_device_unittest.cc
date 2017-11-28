@@ -124,7 +124,7 @@ class MockClient : public VideoCaptureDevice::Client {
                              media::VideoPixelFormat format,
                              media::VideoPixelStorage storage,
                              int frame_feedback_id) override {
-    EXPECT_EQ(media::PIXEL_STORAGE_CPU, storage);
+    EXPECT_EQ(media::VideoPixelStorage::CPU, storage);
     EXPECT_GT(dimensions.GetArea(), 0);
     const VideoCaptureFormat frame_format(dimensions, 0.0, format);
     return CreateStubBuffer(0, frame_format.ImageAllocationSize());
