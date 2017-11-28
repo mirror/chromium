@@ -45,6 +45,12 @@ CWV_EXPORT
                   formName:(NSString*)formName
                      value:(NSString*)value;
 
+// Called when a form was submitted. |userInitiated| is YES if callback is fired
+// as a result of user interaction.
+- (void)autofillController:(CWVAutofillController*)autofillController
+     didSubmitFormWithName:(NSString*)formName
+             userInitiated:(BOOL)userInitiated;
+
 @end
 
 NS_ASSUME_NONNULL_END
