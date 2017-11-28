@@ -1144,16 +1144,20 @@
 
     'clang_official_release_bot_minimal_symbols': [
       # Now that the default win bots use clang, use a "clang" bot to make sure
-      # things stay compilable with msvc. TODO(thakis): Having a "clang" bot
-      # check that is very confusing, so rename to "msvc", crbug.com/751220
-      'no_clang', 'official', 'release_bot', 'minimal_symbols',
+      # things stay compilable with msvc. These bots are also no longer official
+      # because LTCG appears to time out while linking all test targets.
+      # TODO(thakis): Having a "clang" bot check that is very confusing, so
+      # rename to "msvc", crbug.com/751220
+      'no_clang', 'release_bot', 'minimal_symbols',
     ],
 
     'clang_official_release_bot_minimal_symbols_x86': [
       # Now that the default win bots use clang, use a "clang" bot to make sure
-      # things stay compilable with msvc. TODO(thakis): Having a "clang" bot
-      # check that is very confusing, so rename to "msvc", crbug.com/751220
-      'no_clang', 'official', 'release_bot', 'minimal_symbols', 'x86',
+      # things stay compilable with msvc. These bots are also no longer official
+      # because LTCG appears to time out while linking all test targets.
+      # TODO(thakis): Having a "clang" bot check that is very confusing, so
+      # rename to "msvc", crbug.com/751220
+      'no_clang', 'release_bot', 'minimal_symbols', 'x86',
     ],
 
     'clang_official_release_bot_minimal_symbols_x86_clang': [
