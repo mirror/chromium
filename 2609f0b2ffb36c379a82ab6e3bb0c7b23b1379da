@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3a2321eb_ec338ed8",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1234559
+      },
+      "writtenOn": "2017-11-28T06:53:47Z",
+      "side": 1,
+      "message": "in the test file render_view_browsertest.cc\nthere is a call  SetDeviceScaleFactor() that calls  view()-\u003eOnResize()",
+      "parentUuid": "f3436802_0fd54e91",
+      "range": {
+        "startLine": 2112,
+        "startChar": 11,
+        "endLine": 2112,
+        "endChar": 35
+      },
+      "revId": "2609f0b2ffb36c379a82ab6e3bb0c7b23b1379da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "318bd21c_1ba68820",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 8
