@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7e087fb1_569eca6c",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-11-28T19:23:59Z",
+      "side": 1,
+      "message": "Can you test with 500ms and see how bad it is?\nHow long does it hang for with 1s?",
+      "parentUuid": "ae26bc61_88f8516a",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee58a219_06d235f5",
         "filename": "ash/system/bluetooth/tray_bluetooth.cc",
         "patchSetId": 4
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Oops, this last line should be removed. \nBasically once UI get an update request, we wait for kUpdateFrequencyMs before doing the real update.\nI\u0027ve added some comments here.",
       "parentUuid": "1dfcd1b3_0e089de3",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 12
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3c66d7_5c454a99",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-11-28T19:23:59Z",
+      "side": 1,
+      "message": "That will work but will delay the first update by 1s. I guess since it does save a bit of complexity, so just removing this extra DoUpdate() should be fine.",
+      "parentUuid": "08449eaf_2dfc54ef",
       "range": {
         "startLine": 210,
         "startChar": 4,
@@ -421,6 +469,30 @@
       "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9cfe3d2_2fcf5fd9",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-11-28T19:23:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bda080f6_74642644",
+      "range": {
+        "startLine": 483,
+        "startChar": 6,
+        "endLine": 493,
+        "endChar": 35
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
