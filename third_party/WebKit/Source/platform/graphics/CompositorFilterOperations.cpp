@@ -108,13 +108,17 @@ bool CompositorFilterOperations::HasFilterThatMovesPixels() const {
 
 bool CompositorFilterOperations::operator==(
     const CompositorFilterOperations& o) const {
-  return filter_operations_ == o.filter_operations_;
+  if (filter_operations_ == o.filter_operations_) {
+    DCHECK(reference_box_ == o.reference_box_);
+    return true;
+  }
+  return false;
 }
 
 bool CompositorFilterOperations::EqualsIgnoringReferenceFilters(
     const CompositorFilterOperations& o) const {
   size_t size = filter_operations_.size();
-  if (size != o.filter_operations_.size())
+  if (size != o.filter_operations_.size() || reference_box_ != o.reference_box_)
     return false;
   for (size_t i = 0; i < size; ++i) {
     const auto& operation = filter_operations_.at(i);
