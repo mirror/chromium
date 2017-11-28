@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc7d6393_8ccc719e",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-28T15:26:33Z",
+      "side": 1,
+      "message": "TODO(crbug.com/788229): Use a factory for the AddressNormalizer.",
+      "revId": "16df0b2ca780f5ec08b53bd4dadb1d4c5fd1f633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
