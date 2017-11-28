@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a86dd60c_77c1132e",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-28T18:52:04Z",
+      "side": 0,
+      "message": "I should mention that I had to remove this because it is no longer true with this CL: RenderFrames unregister with the RenderWidget when they are detached, and so will no longer get visibility updates. Obviously since local subframes of OOPIFs didn\u0027t register in the first place, this never worked for them. I think the new behavior is reasonable, and I probably shouldn\u0027t have added this expectation in the first place since it isn\u0027t important.",
+      "revId": "b29e18bd4a3e16084b090e661b284f737d71d4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
