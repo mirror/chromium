@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cad8489_9dc575fe",
+        "filename": "chrome/browser/page_load_metrics/user_input_tracker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-28T18:27:42Z",
+      "side": 1,
+      "message": "Can we use the TimeStampForTesting in situations like this so we can eventually assert that TimeTicks is not null in the WebInputEvent ctor?",
+      "revId": "faf292f098ede33f5cc36f010ebf09d362bcad16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9373c235_cfe3350c",
+        "filename": "third_party/WebKit/public/platform/WebInputEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-28T18:27:42Z",
+      "side": 1,
+      "message": "This is a slightly different definition. Previously it was 123 seconds; now it is 123 microseconds.",
+      "revId": "faf292f098ede33f5cc36f010ebf09d362bcad16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
