@@ -13,6 +13,8 @@
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/bookmarks/startup_task_runner_service_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#include "ios/chrome/browser/download/browser_download_service.h"
+#include "ios/chrome/browser/download/browser_download_service_factory.h"
 #include "ios/chrome/browser/ios_chrome_io_thread.h"
 #import "ios/chrome/browser/omaha/omaha_service.h"
 #include "ios/chrome/browser/reading_list/reading_list_download_service.h"
@@ -88,6 +90,7 @@ NSString* const kStartProfileStartupTaskRunners =
       ->StartDeferredTaskRunners();
   ReadingListDownloadServiceFactory::GetForBrowserState(browserState)
       ->Initialize();
+  BrowserDownloadServiceFactory::GetForBrowserState(browserState);
 }
 
 - (void)applicationWillResignActiveNotification:(NSNotification*)notification {

@@ -63,6 +63,8 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/chrome_url_util.h"
+#import "ios/chrome/browser/download/pass_kit_tab_helper.h"
+#import "ios/chrome/browser/download/pass_kit_tab_helper_delegate.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/favicon/favicon_loader.h"
 #include "ios/chrome/browser/favicon/ios_chrome_favicon_loader_factory.h"
@@ -395,6 +397,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     PageInfoPresentation,
                                     PassKitDialogProvider,
                                     PasswordControllerDelegate,
+                                    PassKitTabHelperDelegate,
                                     PreloadControllerDelegate,
                                     QRScannerPresenting,
                                     RepostFormTabHelperDelegate,
@@ -2533,6 +2536,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   RepostFormTabHelper::CreateForWebState(tab.webState, self);
   NetExportTabHelper::CreateForWebState(tab.webState, self);
   CaptivePortalDetectorTabHelper::CreateForWebState(tab.webState, self);
+  PassKitTabHelper::CreateForWebState(tab.webState, self);
 
   // The language detection helper accepts a callback from the translate
   // client, so must be created after it.
@@ -2794,14 +2798,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
   return nil;
 }
 
-#pragma mark - PassKitDialogProvider methods
+#pragma mark - PassKit
 
-- (void)presentPassKitDialog:(NSData*)data {
-  NSError* error = nil;
-  PKPass* pass = nil;
-  if (data)
-    pass = [[PKPass alloc] initWithData:data error:&error];
-  if (error || !data) {
+- (void)presentPassKitDialogForPass:(PKPass*)pass {
+  if (!pass) {
     if ([_model currentTab]) {
       DCHECK(_model.currentTab.webState);
       infobars::InfoBarManager* infoBarManager =
@@ -2821,6 +2821,16 @@ bubblePresenterForFeature:(const base::Feature&)feature
                        }];
     }
   }
+}
+
+#pragma mark - PassKitDialogProvider methods
+
+- (void)presentPassKitDialog:(NSData*)data {
+  NSError* error = nil;
+  PKPass* pass = nil;
+  if (data)
+    pass = [[PKPass alloc] initWithData:data error:&error];
+  [self presentPassKitDialogForPass:pass];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -5322,6 +5332,14 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)printWebState:(web::WebState*)webState {
   if (webState == [_model currentTab].webState)
     [self printTab];
+}
+
+#pragma mark - PassKitTabHelperDelegate
+
+- (void)passKitTabHelper:(PassKitTabHelper*)tabHelper
+    presentDialogForPass:(PKPass*)pass
+                   error:(NSError*)error {
+  [self presentPassKitDialogForPass:pass];
 }
 
 #pragma mark - RepostFormTabHelperDelegate

@@ -1,0 +1,25 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+source_set("download") {
+  sources = [
+    "browser_download_service.h",
+    "browser_download_service.mm",
+    "browser_download_service_factory.h",
+    "browser_download_service_factory.mm",
+    "pass_kit_tab_helper.h",
+    "pass_kit_tab_helper.mm",
+    "pass_kit_tab_helper_delegate.h",
+  ]
+
+  deps = [
+    "//base",
+    "//components/keyed_service/core",
+    "//components/keyed_service/ios",
+    "//ios/web/public",
+    "//ios/web/public/download",
+  ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
