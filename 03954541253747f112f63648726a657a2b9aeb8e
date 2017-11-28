@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "871fdd29_07727b86",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T06:30:34Z",
+      "side": 1,
+      "message": "as a nit, we generally don\u0027t take const pointer values as arguments. also the declaration doesn\u0027t use const for these pointer values so that should be consistent.",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 38
+      },
+      "revId": "03954541253747f112f63648726a657a2b9aeb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340169a2_1f818cfa",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T06:30:34Z",
+      "side": 1,
+      "message": "it\u0027d be better to initialize this too, since you\u0027re doing the other ones as well -- otherwise keeping track of what\u0027s initialized in the constructor and what\u0027s specified in the header is harder",
+      "range": {
+        "startLine": 68,
+        "startChar": 42,
+        "endLine": 68,
+        "endChar": 54
+      },
+      "revId": "03954541253747f112f63648726a657a2b9aeb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
