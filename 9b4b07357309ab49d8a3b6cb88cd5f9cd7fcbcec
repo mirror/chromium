@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3de44978_a7d5d8ff",
+        "filename": "gpu/config/process_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-28T22:32:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "162d8cdb_21221754",
+      "range": {
+        "startLine": 624,
+        "startChar": 12,
+        "endLine": 624,
+        "endChar": 13
+      },
+      "revId": "9b4b07357309ab49d8a3b6cb88cd5f9cd7fcbcec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c4a086_3f136614",
         "filename": "gpu/config/process_json.py",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "9b4b07357309ab49d8a3b6cb88cd5f9cd7fcbcec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cd86d0_81e8f5ec",
+        "filename": "gpu/config/process_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-28T22:32:35Z",
+      "side": 1,
+      "message": "Done. Output is now the very informative and beautiful:\n\n    Exception: Unknown OS type \"windows\" for entry 248",
+      "parentUuid": "37c4a086_3f136614",
+      "revId": "9b4b07357309ab49d8a3b6cb88cd5f9cd7fcbcec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
