@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecfc665c_dd0d6b26",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T18:12:46Z",
+      "side": 1,
+      "message": "nit: , -\u003e ;\n\nAlso, I think you to clarify \"cached policy instead\" -\u003e \"used cached policy instead\" or \"stored policy in cache instead\"",
+      "range": {
+        "startLine": 1846,
+        "startChar": 23,
+        "endLine": 1846,
+        "endChar": 24
+      },
+      "revId": "3bdb004f1cd0527757300faaa0d73ed61f0ff6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
