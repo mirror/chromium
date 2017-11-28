@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7b0faff_94491ff1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/overlays/strip/StripLayoutHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-28T19:31:13Z",
+      "side": 1,
+      "message": "It can, yes. However this mimics the behavior of the existing code:\n\nstartAnimation(buildTabCreatedAnimation(tab), true);\n\nThe second parameter indicates that any running animation should finish. Places where this param is true are now preceded by finishAnimation().",
+      "parentUuid": "642ccdc8_ea974fc2",
+      "range": {
+        "startLine": 560,
+        "startChar": 12,
+        "endLine": 560,
+        "endChar": 30
+      },
+      "revId": "39049310b9342d0d766b43147453255a4ff3845d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2891f024_292f71ba",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/overlays/strip/StripLayoutHelper.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-28T17:46:41Z",
       "side": 1,
       "message": "Is it ok doing this after the animation finishes instead of in parallel?",
+      "range": {
+        "startLine": 846,
+        "startChar": 16,
+        "endLine": 852,
+        "endChar": 41
+      },
+      "revId": "39049310b9342d0d766b43147453255a4ff3845d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fa5b3b_da233173",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/overlays/strip/StripLayoutHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-28T19:31:13Z",
+      "side": 1,
+      "message": "It should be, it looks like this is the behavior on stable. This is easier to understand IMO.",
+      "parentUuid": "2891f024_292f71ba",
       "range": {
         "startLine": 846,
         "startChar": 16,
