@@ -243,6 +243,24 @@
     },
     {
       "key": {
+        "uuid": "2149ffeb_9cbaad8e",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T19:33:02Z",
+      "side": 1,
+      "message": "I tried running a copy of this CL through the trybots without the __NR_memfd_create check and it still failed. Oh well. Let\u0027s leave it in for now and work on the bug to determine why it\u0027s failing and what criteria need to be met to remove the TODO.",
+      "parentUuid": "472e26a5_5059e5fc",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98d3baa5_6d98e1b9",
         "filename": "base/memory/shared_memory_posix.cc",
         "patchSetId": 18
