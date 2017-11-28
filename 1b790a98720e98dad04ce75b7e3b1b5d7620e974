@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e287254e_6bcda1e1",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-28T17:35:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bb70f08_d2a4e764",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "840a7664_63cb8bf4",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
         "patchSetId": 20
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f348ebf9_210a928e",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-28T17:35:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "840a7664_63cb8bf4",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34bc01ec_4200b507",
         "filename": "testing/buildbot/filters/site-per-process.content_browsertests.filter",
         "patchSetId": 20
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-27T13:51:33Z",
       "side": 1,
       "message": "This is a bit annoying, since site-per-process is partly deployed. Do we know why this is failing?",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5cbdc9b_aee520fd",
+        "filename": "testing/buildbot/filters/site-per-process.content_browsertests.filter",
+        "patchSetId": 20
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-28T17:35:49Z",
+      "side": 1,
+      "message": "It is failing with/without this patch.\nI don\u0027t know why it is failing.",
+      "parentUuid": "34bc01ec_4200b507",
       "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "43e99b73_5825ca35",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-28T17:35:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21bc82b1_e74f1eee",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dae87cf_a15fe9dd",
         "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
         "patchSetId": 20
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4cc7937e_148b7746",
+        "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-28T17:35:49Z",
+      "side": 1,
+      "message": "Is it a blink specific coding-style?\nI started doing this in all my CLs since one reviewer asked me to do this instead.\n\nI will apply your suggestion in my next patchset.",
+      "parentUuid": "6dae87cf_a15fe9dd",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7ab63e5_442c2eec",
         "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
         "patchSetId": 20
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-27T13:51:33Z",
       "side": 1,
       "message": "Wouldn\u0027t the origin be the current document URL in that case?",
+      "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b55fa02_3bbcd1e7",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-28T17:35:49Z",
+      "side": 1,
+      "message": "Prior to this patch, the origin was set to SecurityOrigin::Create(KURL(drag_data-\u003eAsURL()) inside the FrameLoadRequest constructor. That\u0027s no more the case.\nI chose to keep the existing behavior in order not to break anything. That might be wrong or right. I don\u0027t know.\n\nThere are a few urls here that might be used. I am not sure if they are always defined and what they represent.\n1) drag_data-\u003eAsUrl()\n2) drag_initiator-\u003eUrl()   (But I don\u0027t really know when |drag_initiator_| is non-null)\n3) document_under_mouse_-\u003eUrl()\n\n@mkwst: What do you think?",
+      "parentUuid": "f7ab63e5_442c2eec",
       "revId": "1b790a98720e98dad04ce75b7e3b1b5d7620e974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
