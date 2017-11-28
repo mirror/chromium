@@ -42,13 +42,33 @@
           "reason": "appeared"
         },
         {
+          "object": "InlineTextBox 'Click on the second tab to see oversize content'",
+          "rect": [15, 291, 211, 37],
+          "reason": "appeared"
+        },
+        {
           "object": "InlineTextBox 'This is a tabgroup with triangular tab corners'",
+          "rect": [15, 291, 211, 37],
+          "reason": "appeared"
+        },
+        {
+          "object": "InlineTextBox 'and a double line tab. (use \"\\n\" as a line separator)'",
           "rect": [15, 291, 211, 37],
           "reason": "appeared"
         },
         {
           "object": "LayoutSVGContainer g id='tabgroupRect'",
           "rect": [37, 5, 161, 240],
+          "reason": "appeared"
+        },
+        {
+          "object": "LayoutSVGPath path id='tabgroupTriangle__0'",
+          "rect": [5, 255, 60, 33],
+          "reason": "appeared"
+        },
+        {
+          "object": "LayoutSVGPath path id='tabgroupTriangle__2'",
+          "rect": [124, 255, 59, 33],
           "reason": "appeared"
         },
         {
@@ -64,6 +84,11 @@
         {
           "object": "LayoutSVGText text",
           "rect": [130, 257, 47, 29],
+          "reason": "appeared"
+        },
+        {
+          "object": "LayoutSVGPath path id='tabgroupTriangle__3'",
+          "rect": [178, 255, 44, 33],
           "reason": "appeared"
         },
         {
