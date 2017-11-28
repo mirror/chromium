@@ -52,6 +52,7 @@
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoader.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/SchemeRegistry.h"
@@ -542,7 +543,7 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequestBlinkCORS(
 
 DocumentThreadableLoader::~DocumentThreadableLoader() {
   CHECK(!client_);
-  DCHECK(!resource_);
+  DCHECK(!GetResource());
 }
 
 void DocumentThreadableLoader::OverrideTimeout(
@@ -591,14 +592,16 @@ void DocumentThreadableLoader::Detach() {
 }
 
 void DocumentThreadableLoader::SetDefersLoading(bool value) {
-  if (GetResource())
-    GetResource()->SetDefersLoading(value);
+  if (GetResource() && GetResource()->Loader())
+    GetResource()->Loader()->SetDefersLoading(value);
 }
 
 void DocumentThreadableLoader::Clear() {
   client_ = nullptr;
   timeout_timer_.Stop();
   request_started_seconds_ = 0.0;
+  if (GetResource())
+    checker_.WillRemoveClient();
   ClearResource();
 }
 
@@ -740,6 +743,8 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
 
   // FIXME: consider combining this with CORS redirect handling performed by
   // CrossOriginAccessControl::handleRedirect().
+  if (GetResource())
+    checker_.WillRemoveClient();
   ClearResource();
 
   // If
@@ -1111,6 +1116,8 @@ void DocumentThreadableLoader::DidTimeout(TimerBase* timer) {
 }
 
 void DocumentThreadableLoader::LoadFallbackRequestForServiceWorker() {
+  if (GetResource())
+    checker_.WillRemoveClient();
   ClearResource();
   ResourceRequest fallback_request(fallback_request_for_service_worker_);
   fallback_request_for_service_worker_ = ResourceRequest();
@@ -1126,6 +1133,8 @@ void DocumentThreadableLoader::LoadActualRequest() {
   actual_request_ = ResourceRequest();
   actual_options_ = ResourceLoaderOptions();
 
+  if (GetResource())
+    checker_.WillRemoveClient();
   ClearResource();
 
   PrepareCrossOriginRequest(actual_request);
@@ -1199,6 +1208,7 @@ void DocumentThreadableLoader::LoadRequestAsync(
     new_params.SetOriginRestriction(FetchParameters::kNoOriginRestriction);
   }
   DCHECK(!GetResource());
+  checker_.WillAddClient();
 
   ResourceFetcher* fetcher = loading_context_->GetResourceFetcher();
   if (request.GetRequestContext() == WebURLRequest::kRequestContextVideo ||
@@ -1375,7 +1385,6 @@ ExecutionContext* DocumentThreadableLoader::GetExecutionContext() const {
 }
 
 void DocumentThreadableLoader::Trace(blink::Visitor* visitor) {
-  visitor->Trace(resource_);
   visitor->Trace(loading_context_);
   ThreadableLoader::Trace(visitor);
   RawResourceClient::Trace(visitor);

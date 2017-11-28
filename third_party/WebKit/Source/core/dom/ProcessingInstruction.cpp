@@ -303,7 +303,7 @@ void ProcessingInstruction::Trace(blink::Visitor* visitor) {
   visitor->Trace(sheet_);
   visitor->Trace(listener_for_xslt_);
   CharacterData::Trace(visitor);
-  ResourceOwner<StyleSheetResource>::Trace(visitor);
+  StyleSheetResourceClient::Trace(visitor);
 }
 
 }  // namespace blink
