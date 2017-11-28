@@ -16,6 +16,24 @@
       "revId": "cc057578ac4a2de68fefcdce4ff6bf6a62c17338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe7ab08_2bd790b2",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-28T07:30:17Z",
+      "side": 1,
+      "message": "Not really. This behavior is taken from DesktopWindowTreeHostX11. If the event is tested in CanDispatchEvent, then there is no way to know which base locations should be taken in order to translate event\u0027s location.",
+      "parentUuid": "5ea4f6ac_7dd0de36",
+      "revId": "cc057578ac4a2de68fefcdce4ff6bf6a62c17338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
