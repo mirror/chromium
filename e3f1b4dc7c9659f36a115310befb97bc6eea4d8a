@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc223f51_b1c93156",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e37049eb_3879a15b",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 19
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c0ace36_f3aaf257",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e63ce061_355b85b3",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c0ace36_f3aaf257",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eda18200_ee3e19a2",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca521d23_3a070f30",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda18200_ee3e19a2",
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "414f333a_3aa148a6",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "Done. In our case, the ptr could be null if there\u0027s no data, according to https://cs.chromium.org/chromium/src/chrome/browser/ui/tabs/tab_strip_model_experimental.cc?type\u003dcs\u0026l\u003d500. \nMichael, what does it mean to have no data?",
+      "parentUuid": "8e09b19a_28f8f416",
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fa819f4_6d627737",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
         "patchSetId": 4
@@ -96,6 +180,24 @@
       "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "350633c1_1f48064c",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fa819f4_6d627737",
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "95659be8_d67b4634",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38348939_3104958d",
+      "range": {
+        "startLine": 70,
+        "startChar": 14,
+        "endLine": 70,
+        "endChar": 22
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15b0a5cc_9a9e851a",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.h",
         "patchSetId": 4
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "da2b84f9_c2dcc297",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_ukm.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15b0a5cc_9a9e851a",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ddb1b44_253267b8",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
         "patchSetId": 4
@@ -159,6 +309,24 @@
       "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453a4834_30937a26",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ddb1b44_253267b8",
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "0987cf62_fc53cb46",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1918,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "498cc384_8ed9d4f6",
+      "range": {
+        "startLine": 1918,
+        "startChar": 29,
+        "endLine": 1918,
+        "endChar": 52
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34b967cf_818ff1d7",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 4
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "219d72fc_7672765b",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1963,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34b967cf_818ff1d7",
+      "range": {
+        "startLine": 1963,
+        "startChar": 55,
+        "endLine": 1963,
+        "endChar": 73
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "141adf88_3fa59f31",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 4
@@ -219,6 +435,30 @@
       "writtenOn": "2017-11-27T22:22:31Z",
       "side": 1,
       "message": "\"since\"?",
+      "range": {
+        "startLine": 1968,
+        "startChar": 38,
+        "endLine": 1968,
+        "endChar": 43
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c871067_8696c0c0",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1968,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "I did mean \"up to\". :) User becomes idle after \"last activity\". This metrics measures how long the user was active up to the last activity.",
+      "parentUuid": "141adf88_3fa59f31",
       "range": {
         "startLine": 1968,
         "startChar": 38,
@@ -251,6 +491,30 @@
       "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe0e87c_b0885058",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57130a89_36018c94",
+      "range": {
+        "startLine": 1978,
+        "startChar": 21,
+        "endLine": 1978,
+        "endChar": 26
+      },
+      "revId": "e3f1b4dc7c9659f36a115310befb97bc6eea4d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
