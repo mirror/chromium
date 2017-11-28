@@ -20,9 +20,12 @@
 #include "base/observer_list.h"
 #include "base/threading/thread_checker.h"
 #include "base/values.h"
+#include "chrome/browser/chromeos/file_system_provider/extension_provider.h"
 #include "chrome/browser/chromeos/file_system_provider/observer.h"
+#include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_observer.h"
+#include "chrome/browser/chromeos/file_system_provider/provider_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/watcher.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/extensions/api/file_system_provider.h"
@@ -89,8 +92,8 @@ class Service : public KeyedService,
 
   // Sets a custom ProvidedFileSystemInterface factory. Used by unit tests,
   // where an event router is not available.
-  void SetDefaultFileSystemFactoryForTesting(
-      const FileSystemFactoryCallback& factory_callback);
+  void SetExtensionProviderForTesting(
+      std::unique_ptr<ProviderInterface> provider);
 
   // Sets a custom Registry implementation. Used by unit tests.
   void SetRegistryForTesting(std::unique_ptr<RegistryInterface> registry);
@@ -101,25 +104,25 @@ class Service : public KeyedService,
   // tags are supported, then |supports_notify_tag| must be true. Note, that
   // it is required in order to enable the internal cache. For success, returns
   // base::File::FILE_OK, otherwise an error code.
-  base::File::Error MountFileSystem(const std::string& provider_id,
+  base::File::Error MountFileSystem(const ProviderId& provider_id,
                                     const MountOptions& options);
 
   // Unmounts a file system with the specified |file_system_id| for the
   // |provider_id|. For success returns base::File::FILE_OK, otherwise an error
   // code.
-  base::File::Error UnmountFileSystem(const std::string& provider_id,
+  base::File::Error UnmountFileSystem(const ProviderId& provider_id,
                                       const std::string& file_system_id,
                                       UnmountReason reason);
 
   // Requests unmounting of the file system. Returns false if the request could
   // not been created, true otherwise.
-  bool RequestUnmount(const std::string& provider_id,
+  bool RequestUnmount(const ProviderId& provider_id,
                       const std::string& file_system_id);
 
   // Requests mounting a new file system by the providing extension with
   // |provider_id|. Returns false if the request could not been created, true
   // otherwise.
-  bool RequestMount(const std::string& provider_id);
+  bool RequestMount(const ProviderId& provider_id);
 
   // Returns a list of information of all currently provided file systems. All
   // items are copied.
@@ -128,7 +131,7 @@ class Service : public KeyedService,
   // Returns a provided file system with |file_system_id|, handled by
   // the extension with |provider_id|. If not found, then returns NULL.
   ProvidedFileSystemInterface* GetProvidedFileSystem(
-      const std::string& provider_id,
+      const ProviderId& provider_id,
       const std::string& file_system_id);
 
   // Returns a provided file system attached to the the passed
@@ -143,7 +146,7 @@ class Service : public KeyedService,
   // Fills information of the specified providing extension and returns true.
   // If the extension is not a provider, or it doesn't exist, then false is
   // returned.
-  bool GetProvidingExtensionInfo(const std::string& provider_id,
+  bool GetProvidingExtensionInfo(const std::string& extension_id,
                                  ProvidingExtensionInfo* result) const;
 
   // Adds and removes observers.
@@ -169,8 +172,8 @@ class Service : public KeyedService,
                             const Watchers& watchers) override;
 
   // Registers a FileSystemFactory for the passed |provider_id|.
-  void RegisterFileSystemFactory(const std::string& provider_id,
-                                 FileSystemFactoryCallback file_system_factory);
+  void RegisterNativeProvider(const ProviderId& provider_id,
+                              std::unique_ptr<ProviderInterface> provider);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(FileSystemProviderServiceTest, RememberFileSystem);
@@ -181,7 +184,7 @@ class Service : public KeyedService,
 
   // Mounts the file system in the specified context. See MountFileSystem() for
   // more information.
-  base::File::Error MountFileSystemInternal(const std::string& provider_id,
+  base::File::Error MountFileSystemInternal(const ProviderId& provider_id,
                                             const MountOptions& options,
                                             MountContext context);
 
@@ -197,28 +200,27 @@ class Service : public KeyedService,
 
   // Removes the file system from preferences, so it is not remounted anymore
   // after a reboot.
-  void ForgetFileSystem(const std::string& provider_id,
+  void ForgetFileSystem(const ProviderId& provider_id,
                         const std::string& file_system_id);
 
   // Restores from preferences file systems mounted previously by the
   // |provider_id| provided file system.
-  void RestoreFileSystems(const std::string& provider_id);
+  void RestoreFileSystems(const ProviderId& provider_id);
 
-  // Returns a file system factory for the passed |provider_id|.
-  FileSystemFactoryCallback GetFileSystemFactory(
-      const std::string& provider_id);
+  // Returns a file system provider for the passed |provider_id|.
+  ProviderInterface* GetProvider(const ProviderId& provider_id);
 
   Profile* profile_;
   extensions::ExtensionRegistry* extension_registry_;  // Not owned.
-  FileSystemFactoryCallback default_file_system_factory_;
   base::ObserverList<Observer> observers_;
   std::map<FileSystemKey, std::unique_ptr<ProvidedFileSystemInterface>>
       file_system_map_;
   std::map<std::string, FileSystemKey> mount_point_name_to_key_map_;
   std::unique_ptr<RegistryInterface> registry_;
   base::ThreadChecker thread_checker_;
-  std::unordered_map<std::string, FileSystemFactoryCallback>
-      file_system_factory_map_;
+  std::unordered_map<std::string, std::unique_ptr<ProviderInterface>>
+      native_provider_map_;
+  std::unique_ptr<ProviderInterface> extension_provider_;
 
   base::WeakPtrFactory<Service> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(Service);

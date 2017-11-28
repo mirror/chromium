@@ -15,6 +15,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_number_conversions.h"
+#include "chrome/browser/chromeos/file_system_provider/fake_extension_provider.h"
 #include "chrome/browser/chromeos/file_system_provider/fake_provided_file_system.h"
 #include "chrome/browser/chromeos/file_system_provider/fake_registry.h"
 #include "chrome/browser/chromeos/file_system_provider/logging_observer.h"
@@ -41,9 +42,11 @@ namespace chromeos {
 namespace file_system_provider {
 namespace {
 
-const char kProviderId[] = "mbflcebpggnecokmikipoihdbecnjfoj";
+const ProviderId kProviderId =
+    ProviderId::CreateFromExtensionId("mbflcebpggnecokmikipoihdbecnjfoj");
 const char kDisplayName[] = "Camera Pictures";
-const char kCustomProviderId[] = "custom_provider_id";
+const ProviderId kCustomProviderId =
+    ProviderId::CreateFromNativeId("custom provider id");
 
 // The dot in the file system ID is there in order to check that saving to
 // preferences works correctly. File System ID is used as a key in
@@ -67,22 +70,33 @@ scoped_refptr<extensions::Extension> CreateFakeExtension(
 
 }  // namespace
 
-class FileSystemProviderServiceTest : public testing::Test {
+class FakeDefaultExtensionProvider : public FakeExtensionProvider {
  public:
-  std::unique_ptr<ProvidedFileSystemInterface> CreateDefaultFakeFileSystem(
+  std::unique_ptr<ProvidedFileSystemInterface> CreateProvidedFileSystem(
       Profile* profile,
-      const ProvidedFileSystemInfo& file_system_info) {
-    called_default_factory_ = true;
+      const ProvidedFileSystemInfo& file_system_info) override {
+    called_default_factory = true;
     return base::MakeUnique<FakeProvidedFileSystem>(file_system_info);
   }
 
-  std::unique_ptr<ProvidedFileSystemInterface> CreateCustomFakeFileSystem(
+  static bool called_default_factory;
+};
+bool FakeDefaultExtensionProvider::called_default_factory = false;
+
+class FakeCustomExtensionProvider : public FakeExtensionProvider {
+ public:
+  std::unique_ptr<ProvidedFileSystemInterface> CreateProvidedFileSystem(
       Profile* profile,
-      const ProvidedFileSystemInfo& file_system_info) {
-    called_custom_factory_ = true;
+      const ProvidedFileSystemInfo& file_system_info) override {
+    called_custom_factory = true;
     return base::MakeUnique<FakeProvidedFileSystem>(file_system_info);
   }
 
+  static bool called_custom_factory;
+};
+bool FakeCustomExtensionProvider::called_custom_factory = false;
+
+class FileSystemProviderServiceTest : public testing::Test {
  protected:
   FileSystemProviderServiceTest() : profile_(NULL) {}
 
@@ -101,9 +115,9 @@ class FileSystemProviderServiceTest : public testing::Test {
     extension_registry_.reset(new extensions::ExtensionRegistry(profile_));
 
     service_.reset(new Service(profile_, extension_registry_.get()));
-    service_->SetDefaultFileSystemFactoryForTesting(
-        base::Bind(&FakeProvidedFileSystem::Create));
-    extension_ = CreateFakeExtension(kProviderId);
+    service_->SetExtensionProviderForTesting(
+        base::MakeUnique<FakeExtensionProvider>());
+    extension_ = CreateFakeExtension(kProviderId.GetExtensionId());
 
     registry_ = new FakeRegistry;
     // Passes ownership to the service instance.
@@ -112,8 +126,6 @@ class FileSystemProviderServiceTest : public testing::Test {
     fake_watcher_.entry_path = base::FilePath(FILE_PATH_LITERAL("/a/b/c"));
     fake_watcher_.recursive = true;
     fake_watcher_.last_tag = "hello-world";
-    called_default_factory_ = false;
-    called_custom_factory_ = false;
   }
 
   void TearDown() override {
@@ -135,29 +147,27 @@ class FileSystemProviderServiceTest : public testing::Test {
 };
 
 TEST_F(FileSystemProviderServiceTest, RegisterFileSystemFactory) {
-  service_->RegisterFileSystemFactory(
-      kCustomProviderId,
-      base::Bind(&FileSystemProviderServiceTest::CreateCustomFakeFileSystem,
-                 base::Unretained(this)));
-  service_->SetDefaultFileSystemFactoryForTesting(
-      base::Bind(&FileSystemProviderServiceTest::CreateDefaultFakeFileSystem,
-                 base::Unretained(this)));
+  std::unique_ptr<ProviderInterface> customProvider =
+      base::MakeUnique<FakeCustomExtensionProvider>();
+  service_->RegisterNativeProvider(kCustomProviderId,
+                                   std::move(customProvider));
+  service_->SetExtensionProviderForTesting(
+      base::MakeUnique<FakeDefaultExtensionProvider>());
 
-  EXPECT_FALSE(FileSystemProviderServiceTest::called_default_factory_);
+  FakeCustomExtensionProvider::called_custom_factory = false;
+  FakeDefaultExtensionProvider::called_default_factory = false;
 
   EXPECT_EQ(base::File::FILE_OK,
             service_->MountFileSystem(
                 kProviderId, MountOptions(kFileSystemId, kDisplayName)));
 
-  EXPECT_TRUE(FileSystemProviderServiceTest::called_default_factory_);
-
-  EXPECT_FALSE(FileSystemProviderServiceTest::called_custom_factory_);
+  EXPECT_TRUE(FakeDefaultExtensionProvider::called_default_factory);
 
   EXPECT_EQ(base::File::FILE_OK,
             service_->MountFileSystem(
                 kCustomProviderId, MountOptions(kFileSystemId, kDisplayName)));
 
-  EXPECT_TRUE(FileSystemProviderServiceTest::called_custom_factory_);
+  EXPECT_TRUE(FakeCustomExtensionProvider::called_custom_factory);
 }
 
 TEST_F(FileSystemProviderServiceTest, MountFileSystem) {
@@ -321,7 +331,8 @@ TEST_F(FileSystemProviderServiceTest, UnmountFileSystem_WrongExtensionId) {
   LoggingObserver observer;
   service_->AddObserver(&observer);
 
-  const std::string kWrongExtensionId = "helloworldhelloworldhelloworldhe";
+  const ProviderId kWrongProviderId =
+      ProviderId("helloworldhelloworldhelloworldhe", ProviderId::EXTENSION);
 
   EXPECT_EQ(base::File::FILE_OK,
             service_->MountFileSystem(
@@ -330,7 +341,7 @@ TEST_F(FileSystemProviderServiceTest, UnmountFileSystem_WrongExtensionId) {
   ASSERT_EQ(1u, service_->GetProvidedFileSystemInfoList().size());
 
   EXPECT_EQ(base::File::FILE_ERROR_NOT_FOUND,
-            service_->UnmountFileSystem(kWrongExtensionId, kFileSystemId,
+            service_->UnmountFileSystem(kWrongProviderId, kFileSystemId,
                                         Service::UNMOUNT_REASON_USER));
   ASSERT_EQ(1u, observer.unmounts.size());
   EXPECT_EQ(base::File::FILE_ERROR_NOT_FOUND, observer.unmounts[0].error());
