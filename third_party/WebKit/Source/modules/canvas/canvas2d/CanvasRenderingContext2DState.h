@@ -186,6 +186,8 @@ class CanvasRenderingContext2DState final
   // Opaque.
   const PaintFlags* GetFlags(PaintType, ShadowMode, ImageType = kNoImage) const;
 
+  void SetCanvasOriginTainted() { canvas_origin_tainted_ = true; }
+
  private:
   CanvasRenderingContext2DState();
   CanvasRenderingContext2DState(const CanvasRenderingContext2DState&,
@@ -253,6 +255,7 @@ class CanvasRenderingContext2DState final
   SkFilterQuality image_smoothing_quality_;
 
   ClipList clip_list_;
+  bool canvas_origin_tainted_;
 };
 
 }  // namespace blink

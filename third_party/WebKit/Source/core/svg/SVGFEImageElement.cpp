@@ -163,4 +163,9 @@ FilterEffect* SVGFEImageElement::Build(SVGFilterBuilder*, Filter* filter) {
       preserve_aspect_ratio_->CurrentValue());
 }
 
+bool SVGFEImageElement::TaintsOrigin(bool inputs_taint_origin) const {
+  return cached_image_ &&
+         !cached_image_->IsAccessAllowed(GetDocument().GetSecurityOrigin());
+}
+
 }  // namespace blink

@@ -52,7 +52,8 @@ CanvasRenderingContext2DState::CanvasRenderingContext2DState()
       fill_style_dirty_(true),
       stroke_style_dirty_(true),
       line_dash_dirty_(false),
-      image_smoothing_quality_(kLow_SkFilterQuality) {
+      image_smoothing_quality_(kLow_SkFilterQuality),
+      canvas_origin_tainted_(false) {
   fill_flags_.setStyle(PaintFlags::kFill_Style);
   fill_flags_.setAntiAlias(true);
   image_flags_.setStyle(PaintFlags::kFill_Style);
@@ -301,8 +302,8 @@ sk_sp<PaintFilter> CanvasRenderingContext2DState::GetFilterForOffscreenCanvas(
       1.0f,  // Deliberately ignore zoom on the canvas element.
       &fill_flags_for_filter, &stroke_flags_for_filter);
 
-  FilterEffect* last_effect =
-      filter_effect_builder.BuildFilterEffect(operations);
+  FilterEffect* last_effect = filter_effect_builder.BuildFilterEffect(
+      operations, canvas_origin_tainted_);
   if (last_effect) {
     resolved_filter_ =
         PaintFilterBuilder::Build(last_effect, kInterpolationSpaceSRGB);
@@ -355,8 +356,8 @@ sk_sp<PaintFilter> CanvasRenderingContext2DState::GetFilter(
         1.0f,  // Deliberately ignore zoom on the canvas element.
         &fill_flags_for_filter, &stroke_flags_for_filter);
 
-    if (FilterEffect* last_effect =
-            filter_effect_builder.BuildFilterEffect(filter_style->Filter())) {
+    if (FilterEffect* last_effect = filter_effect_builder.BuildFilterEffect(
+            filter_style->Filter(), canvas_origin_tainted_)) {
       resolved_filter_ =
           PaintFilterBuilder::Build(last_effect, kInterpolationSpaceSRGB);
       if (resolved_filter_) {
