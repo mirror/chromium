@@ -16,6 +16,24 @@
       "revId": "2aa167ffc856acd214d3b6d0af9d91adf6196915",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9d3fcb_ae1d4c4a",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-28T00:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebce96a2_0532e12d",
+      "revId": "2aa167ffc856acd214d3b6d0af9d91adf6196915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
