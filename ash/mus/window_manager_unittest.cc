@@ -108,7 +108,7 @@ TEST_F(WindowManagerServiceTest, OpenWindow) {
   aura::WindowTreeClient client(connector(), &window_tree_delegate, nullptr,
                                 nullptr, nullptr, false);
   client.ConnectViaWindowTreeFactory();
-  aura::test::EnvTestHelper().SetWindowTreeClient(&client);
+  aura::test::WindowTreeClientSetter window_tree_client_setter(&client);
   std::map<std::string, std::vector<uint8_t>> properties;
   properties[ui::mojom::WindowManager::kWindowType_InitProperty] =
       mojo::ConvertTo<std::vector<uint8_t>>(
