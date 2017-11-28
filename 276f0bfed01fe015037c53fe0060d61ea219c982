@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ef9bd54_2f091767",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2549,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T19:31:47Z",
+      "side": 0,
+      "message": "this comment seems out of date now",
+      "revId": "276f0bfed01fe015037c53fe0060d61ea219c982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
