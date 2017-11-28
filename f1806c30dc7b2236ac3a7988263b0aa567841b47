@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaad7569_09f21aec",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-28T17:39:59Z",
+      "side": 1,
+      "message": "FYI: The value in doing it here is that the component updater will mark the update unsuccessful if this returns false.",
+      "range": {
+        "startLine": 89,
+        "startChar": 23,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "f1806c30dc7b2236ac3a7988263b0aa567841b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff6d996_a5854a9c",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-28T17:39:59Z",
+      "side": 1,
+      "message": "This could be moved into an anonymous namespace in the .cc. Up to you.",
+      "range": {
+        "startLine": 27,
+        "startChar": 52,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "f1806c30dc7b2236ac3a7988263b0aa567841b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
