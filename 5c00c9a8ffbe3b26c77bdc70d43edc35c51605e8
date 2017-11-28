@@ -34,6 +34,24 @@
       "revId": "5c00c9a8ffbe3b26c77bdc70d43edc35c51605e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb54b715_6b18b6dc",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-11-28T22:08:51Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Actually, I will change this back to 0.",
+      "parentUuid": "1102cc0e_7c5bf65c",
+      "revId": "5c00c9a8ffbe3b26c77bdc70d43edc35c51605e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
