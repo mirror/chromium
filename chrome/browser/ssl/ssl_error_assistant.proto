@@ -35,8 +35,25 @@ message MITMSoftware {
   optional string issuer_organization_regex = 3;
 }
 
+message UrgentInterstitial {
+  // Sha256 hashes of the certificate's public key. If a certificate is matched
+  // with one of the hashes, a urgent interstitial will be displayed.
+  repeated string sha256_hash = 1;
+
+  // The error code that will be displayed on the interstitial page.
+  required int32 error_code = 2;
+
+  // The type of interstitial that should be shown. This value is associated
+  // with the UrgentInterstitialPageType enum.
+  required int32 interstitial_type = 3;
+
+  // The support URL that will be displayed on the urgent interstitial.
+  optional string support_url = 4;
+}
+
 message SSLErrorAssistantConfig {
   optional uint32 version_id = 1;
   repeated CaptivePortalCert captive_portal_cert = 2;
   repeated MITMSoftware mitm_software = 3;
+  repeated UrgentInterstitial urgent_interstitial = 4;
 }

@@ -198,3 +198,44 @@ TEST_F(SSLErrorAssistantTest, MitMSoftwareMatching) {
 
   TestMITMSoftwareMatchFromString(kMisconfigSoftwareCert, "");
 }
+
+// Test to see if the urgent interstitials are matched correctly.
+TEST_F(SSLErrorAssistantTest, UrgentInterstitialList) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  EXPECT_EQ(1u, ssl_info().public_key_hashes.size());
+
+  auto config_proto =
+      base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+  config_proto->set_version_id(kLargeVersionId);
+
+  chrome_browser_ssl::UrgentInterstitial* filter =
+      config_proto->add_urgent_interstitial();
+  filter->set_error_code(0);
+  filter->set_interstitial_type(1);
+  filter->add_sha256_hash("sha256/nuthatch");
+  filter->add_sha256_hash(ssl_info().public_key_hashes[0].ToString());
+  filter->add_sha256_hash("sha256/treecreeper");
+
+  error_assistant()->SetErrorAssistantProto(std::move(config_proto));
+
+  UrgentInterstitial* urgent_interstitial =
+      error_assistant()->MatchUrgentInterstitial(ssl_info());
+  EXPECT_TRUE(urgent_interstitial);
+  EXPECT_EQ(1, (int)urgent_interstitial->interstitial_type());
+
+  error_assistant()->ResetForTesting();
+
+  // Tests for no matches.
+  config_proto.reset(new chrome_browser_ssl::SSLErrorAssistantConfig());
+  config_proto->set_version_id(kLargeVersionId);
+
+  filter = config_proto->add_urgent_interstitial();
+  filter->set_error_code(0);
+  filter->set_interstitial_type(1);
+
+  filter->add_sha256_hash("sha256/yellowlegs");
+  filter->add_sha256_hash("sha256/killdeer");
+
+  error_assistant()->SetErrorAssistantProto(std::move(config_proto));
+  EXPECT_FALSE(error_assistant()->MatchUrgentInterstitial(ssl_info()));
+}
