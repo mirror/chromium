@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c1322989_0e8acae3",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 0,
+      "message": "\u003e Seems you\u0027re already walking through all origins to check for IsValidIsolatedOrigin(), so you could just move this warning into that loop.  (And let it ignore the duplicate when doing the insert() below rather than returning early.)\n\nThis would require inserting one-by-one (see my other comment why batch insertion might be preferrable).  I guess I could retain the check by looking the old/new size of |isolated_origins_| and making sure the difference is the same as the size of |origins_to_add|.  But this seems like quite a bit of trouble and I am not sure if this is worth it.\n\n\u003e \n\u003e But I\u0027m also fine removing the warning.  It was likely helpful only in limited cases, such as someone trying to experiment with/without the --isolate-origins flag while specifying a.g.c or another site that\u0027s already isolated via enterprise policy, and not realizing why the site is still isolated without the flag.  But there\u0027s also a danger of warning unnecessarily when the enterprise policy contains a.g.c, or if our feature list intersects with enterprise policy.\n\u003e \n\u003e I would add a comment explaining the behavior though (which is that duplicates are still ignored).\n\nDone (added a comment in child_process_security_policy_impl.h).",
+      "parentUuid": "2dcf6dd8_2d28578e",
+      "range": {
+        "startLine": 1155,
+        "startChar": 4,
+        "endLine": 1155,
+        "endChar": 79
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1a2e76a_386efbeb",
         "filename": "content/browser/child_process_security_policy_impl.cc",
         "patchSetId": 7
@@ -189,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "781e3f67_86960c93",
+        "filename": "content/browser/child_process_security_policy_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 0,
+      "message": "Done (reintroduced a smaller test here).",
+      "parentUuid": "09b04630_5bcbd62d",
+      "range": {
+        "startLine": 992,
+        "startChar": 0,
+        "endLine": 992,
+        "endChar": 50
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57f6117b_79047434",
         "filename": "content/browser/site_instance_impl_unittest.cc",
         "patchSetId": 7
@@ -256,6 +304,30 @@
       "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f025c7_4f9819c0",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "72867851_06ffae14",
+      "range": {
+        "startLine": 33,
+        "startChar": 72,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f0a9b34_5b306599",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "\u003e I think I ran into some of those issues for the sign-in feature tests, but figured out some ways around it -- see chrome_navigation_browsertest.cc and in particular EnabledSignInIsolationBrowserTest and DisabledSignInIsolationBrowserTest.  Do those help here?\n\nI tried testing via DeprecatedEnableFeatureWithParam, but this is deprecated + it runs into a DCHECK in BrowserTestBase::SetUp (browser_test_base.cc(247)).  Adding disable-field-trial-config (like EnabledSignInIsolationBrowserTest does) didn\u0027t help.\n\nFWIW, my attempt to add a test looked like this:\n\ncontent/browser/isolated_origin_browsertest.cc:\n\n    class IsolatedOriginFieldTrialTest : public ContentBrowserTest {\n     public:\n      IsolatedOriginFieldTrialTest() {}\n      ~IsolatedOriginFieldTrialTest() override {}\n    \n      void SetUpCommandLine(base::CommandLine* command_line) override {\n        // The feature is checked very early during browser startup - this is why we\n        // cannot use ScopedFeatureList (which has to be initialized from\n        // SetUpOnMainThread) and have to use the deprecated helper function for\n        // setting up the field trial via command line parameters.\n        command_line-\u003eAppendSwitch(\"disable-field-trial-config\");\n        DeprecatedEnableFeatureWithParam(features::kIsolateOrigins,\n                                         features::kIsolateOriginsFieldTrialParamName,\n                                         \"https://field.trial.com/,https://bar.com/\",\n                                         command_line);\n    \n        ContentBrowserTest::SetUpCommandLine(command_line);\n      }\n    \n     private:\n      DISALLOW_COPY_AND_ASSIGN(IsolatedOriginFieldTrialTest);\n    };\n    \n    IN_PROC_BROWSER_TEST_F(IsolatedOriginFieldTrialTest, Test) {\n      auto* policy \u003d ChildProcessSecurityPolicyImpl::GetInstance();\n      EXPECT_TRUE(policy-    \u003eIsIsolatedOrigin(url::Origin::Create(GURL(\"https://field.trial.com/\"))));\n      EXPECT_TRUE(policy-\u003eIsIsolatedOrigin(url::Origin::Create(GURL(\"https://bar.com/\"))));\n    }",
+      "parentUuid": "4ed17b84_c146c03c",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 0
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7c4c967_e0b3e457",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 7
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "8a2db3da_bd24b92f",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8f02e46_429727d5",
+      "range": {
+        "startLine": 913,
+        "startChar": 29,
+        "endLine": 913,
+        "endChar": 70
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d7b5e0a_22134cfb",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 7
@@ -92,6 +140,30 @@
       "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283a752f_91ee03e6",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "Good idea.  I am trying to do this in a follow-up CL at https://chromium-review.googlesource.com/794303 (I\u0027ll send it out for review when the tryjobs pass).",
+      "parentUuid": "8d7b5e0a_22134cfb",
+      "range": {
+        "startLine": 915,
+        "startChar": 6,
+        "endLine": 915,
+        "endChar": 74
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "042c8696_10e6918f",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "\u003e And I suppose it\u0027s still better to insert the origins here vs in the loop on line 1150, since that makes us only grab the lock once?\n\nI am not sure about that.  I did it this way because:\n\n1) it seems cleaner than a loop (single statement [add this batch of items] seems cleaner than multiple statements [loop + insertion])\n\n2) there might be some optimization opportunities specific to a container.  in particular - if we switch to base::flat_set, then we need to insert in batches (O(N + M log M) where M is the size of the batch) rather than one-by-one (O(N^2)).",
+      "parentUuid": "67d623da_4ffc21da",
+      "range": {
+        "startLine": 1154,
+        "startChar": 20,
+        "endLine": 1154,
+        "endChar": 26
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1406c42_2136f0bf",
         "filename": "content/browser/child_process_security_policy_impl.h",
         "patchSetId": 7
@@ -156,6 +252,24 @@
       "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50aa202e_fcf77c4a",
+        "filename": "content/browser/child_process_security_policy_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1406c42_2136f0bf",
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +293,30 @@
       "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482dc8b5_b96e34da",
+        "filename": "content/browser/child_process_security_policy_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "base/containers/README.md has some good info on selecting the best map container.  In particular, it says that base::flat_set \"supports efficient construction from a vector of items which avoids the O(n^2) insertion time of each element separately.\".  I think that inserting N elements into std::set (black/red tree - each insertion amortizes to O(log N)) and into base::flat_set (sorting a batch of inserted elements is O(M log M) + merging with old set is O(N)) has similar performance.  Additionally, base::flat_set can avoid extra allocations (base::flat_set with contiguous vector with zero overhead VS std::set with separate black/red tree nodes with overhead of pointers to other nodes).\n\nFWIW, I talked with Daniel and he thinks we should just go ahead and switch (so this is what I\u0027ve done in the latest patchset).",
+      "parentUuid": "c8c359b4_9c321f70",
+      "range": {
+        "startLine": 374,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 58
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -228,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "28f0fc20_51b999d5",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8ed463d_20b995f0",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 79
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63b8de32_365ec606",
         "filename": "content/common/site_isolation_policy.cc",
         "patchSetId": 7
@@ -248,6 +410,30 @@
       "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6231ad7_b7e010b6",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "Right - we can fix this in a follow-up CL - see https://chromium-review.googlesource.com/c/chromium/src/+/786276/7/content/browser/browser_main_loop.cc#915",
+      "parentUuid": "63b8de32_365ec606",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 59
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -298,6 +484,30 @@
     },
     {
       "key": {
+        "uuid": "7a119c10_f3646b97",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "The trial won\u0027t \"activate\" until/unless base::FeatureList::IsEnabled is called.  So - cmdline (or enterprise policy) users will be automatically filtered out from the trial groups.",
+      "parentUuid": "2facfd06_2aa66ab1",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 65
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e22432e_c4979774",
         "filename": "content/common/site_isolation_policy.cc",
         "patchSetId": 7
@@ -309,6 +519,30 @@
       "writtenOn": "2017-11-28T00:38:39Z",
       "side": 1,
       "message": "Perhaps this should go into isolated_origin_util.cc?",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 67
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d946c3e1_60ae231a",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "I am not sure.  I think doing this here is fine (this way the code dealing with the policy [including parsing the different policies] is consolidated in site_isolation_policy.cc).  Does that sound good?",
+      "parentUuid": "2e22432e_c4979774",
       "range": {
         "startLine": 64,
         "startChar": 0,
@@ -344,6 +578,30 @@
     },
     {
       "key": {
+        "uuid": "be06bd12_183e5574",
+        "filename": "content/common/site_isolation_policy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "\u003e Let\u0027s clarify the comment to say that this list applies globally to the whole browser in all profiles.  (I\u0027m thinking ahead to where we\u0027ll have a list of isolated origins scoped to the BrowsingInstance, which won\u0027t be included here.)\n\nDone - added this info to the comment.\n\u003e \n\u003e Let\u0027s also be clear about what it does and doesn\u0027t include (origins specified manually --isolate-origins, enterprise policy for --isolate-origins, and the new field trial, but not sign-in).\n\nSort of done - I\u0027ve added a TODO comment (see also https://chromium-review.googlesource.com/c/chromium/src/+/786276/7/content/browser/browser_main_loop.cc#915).",
+      "parentUuid": "923885c5_84629d5e",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 73
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "122ab74c_b189ea97",
         "filename": "content/common/site_isolation_policy_unittest.cc",
         "patchSetId": 7
@@ -358,6 +616,24 @@
       "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcdd9b6_1434f698",
+        "filename": "content/common/site_isolation_policy_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-28T19:01:08Z",
+      "side": 1,
+      "message": "Done (added a test verification that duplicates are included in the result).",
+      "parentUuid": "122ab74c_b189ea97",
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
