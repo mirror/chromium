@@ -22,6 +22,30 @@
       "revId": "80ba51087d8c2caf7b29bb35cc94a4b4816c86f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5635fed5_dcde82c9",
+        "filename": "third_party/WebKit/Source/platform/loader/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-28T08:04:03Z",
+      "side": 0,
+      "message": "I can understand this feels cyclic, but the expression like \u0027a kind of cyclic dependency\u0027 bugs me a bit... :)\n\nPlatform\u0027s test dependency is typically:\n\nblink*tests -\u003e\n:test_support -\u003e\nloader:test_support\n\nAnd blink*tests tend to depend on both \":platform\" and \":test_support\", so this is not really cyclic, while this makes a diamond dependency graph.",
+      "parentUuid": "bb381a4c_c655c6e8",
+      "range": {
+        "startLine": 170,
+        "startChar": 4,
+        "endLine": 170,
+        "endChar": 42
+      },
+      "revId": "80ba51087d8c2caf7b29bb35cc94a4b4816c86f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
