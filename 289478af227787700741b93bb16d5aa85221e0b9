@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7e479a1_60f6e7f4",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-28T02:11:59Z",
+      "side": 1,
+      "message": "I used a bogus URL and it still passed, and checked the navigation entry which seemed to behave the same. Pretty sure the net stack isn\u0027t hitting real URLs.\n\nRemoved the observer.",
+      "parentUuid": "ce5974ef_b07eb539",
+      "revId": "289478af227787700741b93bb16d5aa85221e0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d97be114_b49d45fb",
         "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "268de30e_77a77dca",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-28T02:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d97be114_b49d45fb",
+      "revId": "289478af227787700741b93bb16d5aa85221e0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0622e69_34952eb0",
         "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
         "patchSetId": 17
@@ -50,6 +86,24 @@
       "revId": "289478af227787700741b93bb16d5aa85221e0b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aec6c62_c6cdfb9f",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-28T02:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0622e69_34952eb0",
+      "revId": "289478af227787700741b93bb16d5aa85221e0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
