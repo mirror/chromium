@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5448f446_3676ce3f",
+        "filename": "ios/chrome/browser/ui/history/clear_browsing_bar.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-11-28T02:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82b3d8ec_72c2a176",
+      "revId": "06e0bbf49c571397ffdf0d454c329bf8188073b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b503f905_9061e7e8",
         "filename": "ios/chrome/browser/ui/history/clear_browsing_bar.mm",
         "patchSetId": 2
