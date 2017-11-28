@@ -22,6 +22,30 @@
       "revId": "12fbeada76931c14f2f728e913024f7cfb52c362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe513a7f_26e89f68",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T22:59:03Z",
+      "side": 1,
+      "message": "That\u0027s my thinking too. I\u0027ll land this as is.",
+      "parentUuid": "463b1c99_c1586085",
+      "range": {
+        "startLine": 667,
+        "startChar": 0,
+        "endLine": 668,
+        "endChar": 55
+      },
+      "revId": "12fbeada76931c14f2f728e913024f7cfb52c362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
