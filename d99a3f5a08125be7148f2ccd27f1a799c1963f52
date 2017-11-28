@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "747835ee_5e452935",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-28T15:36:11Z",
+      "side": 1,
+      "message": "nit: I would rephrase the comment as follows:\n// Updates the state of the navigation handle after encountering a server redirect.",
+      "revId": "d99a3f5a08125be7148f2ccd27f1a799c1963f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
