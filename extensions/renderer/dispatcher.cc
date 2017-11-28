@@ -1069,6 +1069,9 @@ void Dispatcher::OnSetSessionInfo(version_info::Channel channel,
     blink::WebSecurityPolicy::RegisterURLSchemeAsAllowingServiceWorkers(
         blink::WebString::FromUTF8(extensions::kExtensionScheme));
   }
+
+  blink::WebSecurityPolicy::RegisterURLSchemeAsAllowingWasmEvalCSP(
+      blink::WebString::FromUTF8(extensions::kExtensionScheme));
 }
 
 void Dispatcher::OnSetScriptingWhitelist(
