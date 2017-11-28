@@ -764,10 +764,12 @@ void FragmentPaintPropertyTreeBuilder::UpdateFilter() {
   if (object_.NeedsPaintPropertyUpdate() ||
       full_context_.force_subtree_update) {
     if (NeedsFilter(object_)) {
-      CompositorFilterOperations filter =
-          ToLayoutBoxModelObject(object_)
-              .Layer()
-              ->CreateCompositorFilterOperationsForFilter(style);
+      CompositorFilterOperations filter;
+      if (properties_->Filter())
+        filter = properties_->Filter()->Filter();
+      auto& layer = *ToLayoutBoxModelObject(object_).Layer();
+      layer.UpdateCompositorFilterOperationsForFilter(filter);
+      layer.ClearFilterChanged();
 
       // The CSS filter spec didn't specify how filters interact with overflow
       // clips. The implementation here mimics the old Blink/WebKit behavior for
