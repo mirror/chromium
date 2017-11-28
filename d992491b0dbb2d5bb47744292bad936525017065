@@ -16,6 +16,24 @@
       "revId": "d992491b0dbb2d5bb47744292bad936525017065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc6682e_6feadae0",
+        "filename": "services/viz/public/interfaces/compositing/local_surface_id.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-28T21:44:22Z",
+      "side": 1,
+      "message": "I am actually a bit confused by this comment.\n\nThe client requests a LocalSurfaceId from the parent, right? The client perhaps allocates the Surface, but it doesn\u0027t allocate the identifier? Maybe I am misunderstanding.\n\nDo you have a suggestion for a better comment? Maybe something like \"An identifier allocated by the parent ...\" That would leave room for us to add the child_id and a comment describing how the child_id is allocated by the child.",
+      "parentUuid": "587a77d2_86f84d69",
+      "revId": "d992491b0dbb2d5bb47744292bad936525017065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
