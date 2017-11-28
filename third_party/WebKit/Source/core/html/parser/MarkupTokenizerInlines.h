@@ -37,14 +37,16 @@ inline bool IsTokenizerWhitespace(UChar cc) {
   return cc == ' ' || cc == '\x0A' || cc == '\x09' || cc == '\x0C';
 }
 
+template <bool supports16bit>
 inline void AdvanceStringAndASSERTIgnoringCase(
-    SegmentedString& source,
+    SegmentedStringImpl<supports16bit>& source,
     const char* expected_characters) {
   while (*expected_characters)
     source.AdvanceAndASSERTIgnoringCase(*expected_characters++);
 }
 
-inline void AdvanceStringAndASSERT(SegmentedString& source,
+template <bool supports16bit>
+inline void AdvanceStringAndASSERT(SegmentedStringImpl<supports16bit>& source,
                                    const char* expected_characters) {
   while (*expected_characters)
     source.AdvanceAndASSERT(*expected_characters++);

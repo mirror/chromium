@@ -84,7 +84,8 @@ static UChar AsHexDigit(UChar cc) {
 
 typedef Vector<UChar, 64> ConsumedCharacterBuffer;
 
-static void UnconsumeCharacters(SegmentedString& source,
+template <bool supports16bit>
+static void UnconsumeCharacters(SegmentedStringImpl<supports16bit>& source,
                                 ConsumedCharacterBuffer& consumed_characters) {
   if (consumed_characters.size() == 1)
     source.Push(consumed_characters[0]);
@@ -92,11 +93,13 @@ static void UnconsumeCharacters(SegmentedString& source,
     source.Push(consumed_characters[1]);
     source.Push(consumed_characters[0]);
   } else
-    source.Prepend(SegmentedString(String(consumed_characters)),
-                   SegmentedString::PrependType::kUnconsume);
+    source.Prepend(
+        SegmentedStringImpl<supports16bit>(String(consumed_characters)),
+        SegmentedStringImpl<supports16bit>::PrependType::kUnconsume);
 }
 
-static bool ConsumeNamedEntity(SegmentedString& source,
+template <bool supports16bit>
+static bool ConsumeNamedEntity(SegmentedStringImpl<supports16bit>& source,
                                DecodedHTMLEntity& decoded_entity,
                                bool& not_enough_characters,
                                UChar additional_allowed_character,
@@ -152,7 +155,8 @@ static bool ConsumeNamedEntity(SegmentedString& source,
   return false;
 }
 
-bool ConsumeHTMLEntity(SegmentedString& source,
+template <bool supports16bit>
+bool ConsumeHTMLEntity(SegmentedStringImpl<supports16bit>& source,
                        DecodedHTMLEntity& decoded_entity,
                        bool& not_enough_characters,
                        UChar additional_allowed_character) {
@@ -273,6 +277,15 @@ bool ConsumeHTMLEntity(SegmentedString& source,
   UnconsumeCharacters(source, consumed_characters);
   return false;
 }
+
+template bool ConsumeHTMLEntity(SegmentedStringImpl<false>&,
+                                DecodedHTMLEntity&,
+                                bool&,
+                                UChar);
+template bool ConsumeHTMLEntity(SegmentedStringImpl<true>&,
+                                DecodedHTMLEntity&,
+                                bool&,
+                                UChar);
 
 static size_t AppendUChar32ToUCharArray(UChar32 value, UChar* result) {
   if (U_IS_BMP(value)) {

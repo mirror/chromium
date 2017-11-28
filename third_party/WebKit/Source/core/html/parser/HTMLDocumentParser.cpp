@@ -417,7 +417,7 @@ void HTMLDocumentParser::ValidateSpeculations(
   // we'd likely need to do something more sophisticated with the HTMLToken.
   if (chunk->tokenizer_state == HTMLTokenizer::kDataState &&
       tokenizer->GetState() == HTMLTokenizer::kDataState &&
-      input_.Current().IsEmpty() &&
+      input_->CurrentIsEmpty() &&
       chunk->tree_builder_state ==
           HTMLTreeBuilderSimulator::StateFor(tree_builder_.Get())) {
     DCHECK(token->IsUninitialized());
@@ -456,9 +456,9 @@ void HTMLDocumentParser::DiscardSpeculationsAndResumeFrom(
   checkpoint->input_checkpoint = last_chunk_before_script->input_checkpoint;
   checkpoint->preload_scanner_checkpoint =
       last_chunk_before_script->preload_scanner_checkpoint;
-  checkpoint->unparsed_input = input_.Current().ToString().IsolatedCopy();
+  checkpoint->unparsed_input = input_->CurrentToString().IsolatedCopy();
   // FIXME: This should be passed in instead of cleared.
-  input_.Current().Clear();
+  input_->CurrentClear();
 
   DCHECK(checkpoint->unparsed_input.IsSafeToSendToAnotherThread());
   loading_task_runner_->PostTask(
@@ -637,6 +637,7 @@ void HTMLDocumentParser::ForcePlaintextForTextDocument() {
     tokenizer_->SetState(HTMLTokenizer::kPLAINTEXTState);
 }
 
+template <bool supports16bit>
 void HTMLDocumentParser::PumpTokenizer() {
   DCHECK(!IsStopped());
   DCHECK(tokenizer_);
@@ -654,20 +655,23 @@ void HTMLDocumentParser::PumpTokenizer() {
   if (!IsParsingFragment())
     xss_auditor_.Init(GetDocument(), &xss_auditor_delegate_);
 
+  HTMLInputStream<supports16bit>* input =
+      static_cast<HTMLInputStream<supports16bit>*>(input_);
+
   while (CanTakeNextToken()) {
     if (xss_auditor_.IsEnabled())
-      source_tracker_.Start(input_.Current(), tokenizer_.get(), Token());
+      source_tracker_.Start(input->Current(), tokenizer_.get(), Token());
 
     {
       RUNTIME_CALL_TIMER_SCOPE(
           V8PerIsolateData::MainThreadIsolate(),
           RuntimeCallStats::CounterId::kHTMLTokenizerNextToken);
-      if (!tokenizer_->NextToken(input_.Current(), Token()))
+      if (!tokenizer_->NextToken(input->Current(), Token()))
         break;
     }
 
     if (xss_auditor_.IsEnabled()) {
-      source_tracker_.end(input_.Current(), tokenizer_.get(), Token());
+      source_tracker_.end(input->Current(), tokenizer_.get(), Token());
 
       // We do not XSS filter innerHTML, which means we (intentionally) fail
       // http/tests/security/xssAuditor/dom-write-innerHTML.html
@@ -705,10 +709,19 @@ void HTMLDocumentParser::PumpTokenizer() {
       if (!preload_scanner_) {
         preload_scanner_ = CreatePreloadScanner(
             TokenPreloadScanner::ScannerType::kMainDocument);
-        preload_scanner_->AppendToEnd(input_.Current());
+        preload_scanner_->AppendToEnd(input->Current());
       }
       ScanAndPreload(preload_scanner_.get());
     }
+  }
+}
+
+void HTMLDocumentParser::PumpTokenizer() {
+  if (input_) {
+    if (input_->Supports16Bit())
+      PumpTokenizer<true>();
+    else
+      PumpTokenizer<false>();
   }
 }
 
@@ -753,8 +766,8 @@ bool HTMLDocumentParser::HasInsertionPoint() {
   // model of the EOF character differs slightly from the one in the spec
   // because our treatment is uniform between network-sourced and script-sourced
   // input streams whereas the spec treats them differently.
-  return input_.HasInsertionPoint() ||
-         (WasCreatedByScript() && !input_.HaveSeenEndOfFile());
+  return input_ && (input_->HasInsertionPoint() ||
+                    (WasCreatedByScript() && !input_->HaveSeenEndOfFile()));
 }
 
 void HTMLDocumentParser::insert(const String& source) {
@@ -771,9 +784,7 @@ void HTMLDocumentParser::insert(const String& source) {
     tokenizer_ = HTMLTokenizer::Create(options_);
   }
 
-  SegmentedString excluded_line_number_source(source);
-  excluded_line_number_source.SetExcludeLineNumbers();
-  input_.InsertAtCurrentInsertionPoint(excluded_line_number_source);
+  input_->InsertAtCurrentInsertionPoint(source);
   PumpTokenizerIfPossible();
 
   if (IsPaused()) {
@@ -869,13 +880,23 @@ void HTMLDocumentParser::Append(const String& input_source) {
   if (IsStopped())
     return;
 
+  DCHECK(!input_ || input_source.Is8Bit() || input_->Supports16Bit());
+  if (!input_) {
+    if (input_source.Is8Bit()) {
+      new (&input_8_bit_) HTMLInputStream<false>;
+      input_ = &input_8_bit_;
+    } else {
+      new (&input_16_bit_) HTMLInputStream<true>;
+      input_ = &input_16_bit_;
+    }
+  }
+
   // We should never reach this point if we're using a parser thread, as
   // appendBytes() will directly ship the data to the thread.
   DCHECK(!ShouldUseThreading());
 
   TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("blink.debug"),
                "HTMLDocumentParser::append", "size", input_source.length());
-  const SegmentedString source(input_source);
 
   if (GetDocument()->IsPrefetchOnly()) {
     // Do not prefetch if there is an appcache.
@@ -887,7 +908,7 @@ void HTMLDocumentParser::Append(const String& input_source) {
           CreatePreloadScanner(TokenPreloadScanner::ScannerType::kMainDocument);
     }
 
-    preload_scanner_->AppendToEnd(source);
+    preload_scanner_->AppendToEnd(SegmentedString(input_source));
     ScanAndPreload(preload_scanner_.get());
 
     // Return after the preload scanner, do not actually parse the document.
@@ -895,19 +916,19 @@ void HTMLDocumentParser::Append(const String& input_source) {
   }
 
   if (preload_scanner_) {
-    if (input_.Current().IsEmpty() && !IsPaused()) {
+    if (input_->CurrentIsEmpty() && !IsPaused()) {
       // We have parsed until the end of the current input and so are now moving
       // ahead of the preload scanner. Clear the scanner so we know to scan
       // starting from the current input point if we block again.
       preload_scanner_.reset();
     } else {
-      preload_scanner_->AppendToEnd(source);
+      preload_scanner_->AppendToEnd(SegmentedString(input_source));
       if (IsPaused())
         ScanAndPreload(preload_scanner_.get());
     }
   }
 
-  input_.AppendToEnd(source);
+  input_->AppendToEnd(input_source);
 
   if (InPumpSession()) {
     // We've gotten data off the network in a nested write. We don't want to
@@ -981,8 +1002,8 @@ void HTMLDocumentParser::Finish() {
   // background parser. In those cases, we ignore shouldUseThreading() and fall
   // through to the non-threading case.
   if (have_background_parser_) {
-    if (!input_.HaveSeenEndOfFile())
-      input_.CloseWithoutMarkingEndOfFile();
+    if (input_ && !input_->HaveSeenEndOfFile())
+      input_->CloseWithoutMarkingEndOfFile();
     loading_task_runner_->PostTask(
         BLINK_FROM_HERE,
         WTF::Bind(&BackgroundHTMLParser::Finish, background_parser_));
@@ -1000,8 +1021,8 @@ void HTMLDocumentParser::Finish() {
   // We're not going to get any more data off the network, so we tell the input
   // stream we've reached the end of file. finish() can be called more than
   // once, if the first time does not call end().
-  if (!input_.HaveSeenEndOfFile())
-    input_.MarkEndOfFile();
+  if (input_ && !input_->HaveSeenEndOfFile())
+    input_->MarkEndOfFile();
 
   AttemptToEnd();
 }
@@ -1021,18 +1042,20 @@ OrdinalNumber HTMLDocumentParser::LineNumber() const {
   if (have_background_parser_)
     return text_position_.line_;
 
-  return input_.Current().CurrentLine();
+  return input_ ? input_->CurrentCurrentLine()
+                : OrdinalNumber::FromZeroBasedInt(0);
 }
 
 TextPosition HTMLDocumentParser::GetTextPosition() const {
   if (have_background_parser_)
     return text_position_;
 
-  const SegmentedString& current_string = input_.Current();
-  OrdinalNumber line = current_string.CurrentLine();
-  OrdinalNumber column = current_string.CurrentColumn();
-
-  return TextPosition(line, column);
+  if (input_) {
+    return TextPosition(input_->CurrentCurrentLine(),
+                        input_->CurrentCurrentColumn());
+  }
+  return TextPosition(OrdinalNumber::FromZeroBasedInt(0),
+                      OrdinalNumber::FromZeroBasedInt(0));
 }
 
 bool HTMLDocumentParser::IsWaitingForScripts() const {
@@ -1083,7 +1106,7 @@ void HTMLDocumentParser::ResumeParsingAfterPause() {
 
 void HTMLDocumentParser::AppendCurrentInputStreamToPreloadScannerAndScan() {
   DCHECK(preload_scanner_);
-  preload_scanner_->AppendToEnd(input_.Current());
+  preload_scanner_->AppendToEnd(SegmentedString(input_->CurrentToString()));
   ScanAndPreload(preload_scanner_.get());
 }
 

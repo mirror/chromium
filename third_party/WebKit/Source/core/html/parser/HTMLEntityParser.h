@@ -63,10 +63,11 @@ class DecodedHTMLEntity {
   UChar data[kMaxLength];
 };
 
-CORE_EXPORT bool ConsumeHTMLEntity(SegmentedString&,
-                                   DecodedHTMLEntity& decoded_entity,
-                                   bool& not_enough_characters,
-                                   UChar additional_allowed_character = '\0');
+template <bool supports16bit>
+bool ConsumeHTMLEntity(SegmentedStringImpl<supports16bit>&,
+                       DecodedHTMLEntity& decoded_entity,
+                       bool& not_enough_characters,
+                       UChar additional_allowed_character = '\0');
 
 // Used by the XML parser.  Not suitable for use in HTML parsing.  Use
 // consumeHTMLEntity instead.
