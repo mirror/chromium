@@ -6,7 +6,9 @@
 #define NetworkInstrumentation_h
 
 #include "platform/PlatformExport.h"
+#include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourceTimingInfo.h"
 
 namespace blink {
 
@@ -35,7 +37,10 @@ class PLATFORM_EXPORT ScopedResourceLoadTracker {
 void PLATFORM_EXPORT ResourcePrioritySet(unsigned long resource_id,
                                          blink::ResourceLoadPriority);
 
-void PLATFORM_EXPORT EndResourceLoad(unsigned long resource_id, RequestOutcome);
+void PLATFORM_EXPORT EndResourceLoad(unsigned long resource_id,
+                                     Resource*,
+                                     ResourceTimingInfo*,
+                                     RequestOutcome);
 
 }  // namespace network_instrumentation
 }  // namespace blink
