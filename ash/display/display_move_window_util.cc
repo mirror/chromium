@@ -8,6 +8,7 @@
 #include <array>
 
 #include "ash/accessibility/accessibility_controller.h"
+#include "ash/public/cpp/window_properties.h"
 #include "ash/shell.h"
 #include "ash/wm/window_util.h"
 #include "ui/aura/window.h"
@@ -139,6 +140,9 @@ int64_t GetNextDisplay(const display::Display& origin_display,
 void HandleMoveWindowToDisplay(DisplayMoveWindowDirection direction) {
   aura::Window* window = wm::GetActiveWindow();
   if (!window)
+    return;
+
+  if (window->GetProperty(kDisplayMovementDisabledKey))
     return;
 
   display::Display origin_display =

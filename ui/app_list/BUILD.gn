@@ -110,6 +110,7 @@ component("app_list") {
   defines = [ "APP_LIST_IMPLEMENTATION" ]
 
   deps = [
+    "//ash/public/cpp",
     "//base",
     "//base:i18n",
     "//base/third_party/dynamic_annotations",
