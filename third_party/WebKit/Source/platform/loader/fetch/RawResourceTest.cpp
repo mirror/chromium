@@ -117,7 +117,9 @@ class AddingClient final : public GarbageCollectedFinalized<AddingClient>,
 
  public:
   AddingClient(DummyClient* client, Resource* resource)
-      : dummy_client_(client), resource_(resource) {}
+      : dummy_client_(client) {
+    SetResource(resource);
+  }
 
   ~AddingClient() override {}
 
@@ -136,17 +138,15 @@ class AddingClient final : public GarbageCollectedFinalized<AddingClient>,
   }
   String DebugName() const override { return "AddingClient"; }
 
-  void RemoveClient() { resource_->RemoveClient(dummy_client_); }
+  void RemoveClient() { ClearResource(); }
 
   void Trace(blink::Visitor* visitor) override {
     visitor->Trace(dummy_client_);
-    visitor->Trace(resource_);
     RawResourceClient::Trace(visitor);
   }
 
  private:
   Member<DummyClient> dummy_client_;
-  Member<Resource> resource_;
 };
 
 TEST_F(RawResourceTest, AddClientDuringCallback) {

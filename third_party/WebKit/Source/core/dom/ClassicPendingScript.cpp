@@ -222,7 +222,7 @@ void ClassicPendingScript::NotifyAppendData(ScriptResource* resource) {
 
 void ClassicPendingScript::Trace(blink::Visitor* visitor) {
   visitor->Trace(streamer_);
-  ResourceOwner<ScriptResource>::Trace(visitor);
+  ScriptResourceClient::Trace(visitor);
   MemoryCoordinatorClient::Trace(visitor);
   PendingScript::Trace(visitor);
 }
@@ -244,7 +244,7 @@ ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
   bool streamer_ready = (ready_state_ == kReady) && streamer_ &&
                         !streamer_->StreamingSuppressed();
   ScriptSourceCode source_code(streamer_ready ? streamer_ : nullptr,
-                               GetResource());
+                               ToScriptResource(GetResource()));
   return ClassicScript::Create(source_code, options_);
 }
 
