@@ -262,7 +262,6 @@ crbug.com/480769 virtual/mojo-loading/http/tests/devtools/service-workers/servic
 crbug.com/480769 virtual/pwa-full-code-cache/http/tests/devtools/service-workers/service-workers-redundant.html [ Slow ]
 crbug.com/480769 http/tests/devtools/service-workers/service-worker-agents.js [ Slow ]
 crbug.com/480769 virtual/mojo-loading/http/tests/devtools/service-workers/service-worker-agents.js [ Slow ]
-crbug.com/480769 virtual/pwa-full-code-cache/http/tests/devtools/service-workers/service-worker-agents.js [ Slow ]
 crbug.com/504703 inspector-protocol/debugger/debugger-step-into-dedicated-worker.js [ Slow ]
 crbug.com/535478 [ Win ] virtual/threaded/http/tests/devtools/tracing/decode-resize.html [ Slow ]
 crbug.com/548765 http/tests/devtools/console-fetch-logging.js [ Slow ]
