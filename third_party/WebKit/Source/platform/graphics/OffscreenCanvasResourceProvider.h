@@ -50,9 +50,9 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
     std::unique_ptr<viz::SharedBitmap> shared_bitmap_;
 
     // context_provider_wrapper_ is associated with texture_id_ and image_id.
-    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper_;
-    GLuint texture_id_ = 0;
-    GLuint image_id_ = 0;
+    //    WeakPtr<WebGraphicsContext3DProviderWrapper>
+    //    context_provider_wrapper_; GLuint texture_id_ = 0; GLuint image_id_ =
+    //    0;
 
     bool spare_lock_ = true;
     gpu::Mailbox mailbox_;
