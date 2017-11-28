@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3da7a49_e6cca8eb",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T00:18:53Z",
+      "side": 1,
+      "message": "sorry, i\u0027m still not sure what this means. if this is referring to something you want to do within the method, can you please move the comment there and change it to be more descriptive, like \"Call SomeMethod().\" or \"Pass state to |some_member_|.\"?",
+      "revId": "0cd4ff6f4b6b0a47e16cf8c7db8fb54154e70f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8b8783_211e04d0",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T00:18:53Z",
+      "side": 1,
+      "message": "nit: delete this comment",
+      "revId": "0cd4ff6f4b6b0a47e16cf8c7db8fb54154e70f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6136ac81_acefe137",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T00:18:53Z",
+      "side": 1,
+      "message": "nit: and this one",
+      "revId": "0cd4ff6f4b6b0a47e16cf8c7db8fb54154e70f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
