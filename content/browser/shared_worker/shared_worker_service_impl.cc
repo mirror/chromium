@@ -59,6 +59,7 @@ void SharedWorkerServiceImpl::ResetForTesting() {
 bool SharedWorkerServiceImpl::TerminateWorker(
     const GURL& url,
     const std::string& name,
+    const url::Origin& constructor_origin,
     StoragePartition* storage_partition,
     ResourceContext* resource_context) {
   StoragePartitionImpl* storage_partition_impl =
@@ -76,7 +77,8 @@ bool SharedWorkerServiceImpl::TerminateWorker(
   for (const auto& iter : worker_hosts_) {
     SharedWorkerHost* host = iter.second.get();
     if (host->IsAvailable() &&
-        host->instance()->Matches(url, name, partition_id, resource_context)) {
+        host->instance()->Matches(url, name, constructor_origin, partition_id,
+                                  resource_context)) {
       host->TerminateWorker();
       return true;
     }
@@ -120,7 +122,9 @@ void SharedWorkerServiceImpl::ConnectToWorker(
     const WorkerStoragePartitionId& partition_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (RenderFrameHost::FromID(process_id, frame_id)) {
+  RenderFrameHost* render_frame_host =
+      RenderFrameHost::FromID(process_id, frame_id);
+  if (render_frame_host) {
     RenderFrameHost* main_frame = RenderFrameHost::FromID(process_id, frame_id)
                                       ->GetRenderViewHost()
                                       ->GetMainFrame();
@@ -133,13 +137,18 @@ void SharedWorkerServiceImpl::ConnectToWorker(
       client->OnScriptLoadFailed();
       return;
     }
+  } else {
+    // TODO(nhiroki): Support the case where the requester is a worker (i.e.,
+    // nested worker) (https://crbug.com/31666).
+    client->OnScriptLoadFailed();
+    return;
   }
 
   auto instance = std::make_unique<SharedWorkerInstance>(
-      info->url, info->name, info->content_security_policy,
-      info->content_security_policy_type, info->creation_address_space,
-      resource_context, partition_id, creation_context_type,
-      base::UnguessableToken::Create());
+      info->url, info->name, render_frame_host->GetLastCommittedOrigin(),
+      info->content_security_policy, info->content_security_policy_type,
+      info->creation_address_space, resource_context, partition_id,
+      creation_context_type, base::UnguessableToken::Create());
 
   SharedWorkerHost* host = FindAvailableSharedWorkerHost(*instance);
   if (host) {
