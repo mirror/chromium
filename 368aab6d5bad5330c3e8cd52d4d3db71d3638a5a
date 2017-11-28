@@ -16,6 +16,24 @@
       "revId": "368aab6d5bad5330c3e8cd52d4d3db71d3638a5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a175b5b8_56a01abe",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T02:59:23Z",
+      "side": 1,
+      "message": "This flag is defined for chromeos only (https://chromium-review.googlesource.com/c/chromium/src/+/788722/6/chrome/common/chrome_features.h#313), so this part of the code should only run under chromeos.",
+      "parentUuid": "03be9506_829a43f2",
+      "revId": "368aab6d5bad5330c3e8cd52d4d3db71d3638a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
