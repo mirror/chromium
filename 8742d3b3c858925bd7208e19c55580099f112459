@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2ae3fc6_d57983d2",
+        "filename": "tools/cygprofile/delayed_dumper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-28T13:29:14Z",
+      "side": 1,
+      "message": "clock_gettime() does not return EINTR, so no wrapper is needed",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "8742d3b3c858925bd7208e19c55580099f112459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac23814_d67ce811",
+        "filename": "tools/cygprofile/delayed_dumper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-28T13:29:14Z",
+      "side": 1,
+      "message": "nit: it is interesting how we use long explanations with PLOG and one word explanations with plain perror. I am more used do the perror style, like:\n\nPLOG(FATAL) \u003c\u003c \"clock_gettime\";",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 43
+      },
+      "revId": "8742d3b3c858925bd7208e19c55580099f112459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
