@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "03a17feb_da85202e",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T23:27:28Z",
+      "side": 1,
+      "message": "I think it better to get the names change sooner rather than later. I prefer TabMetricsLogger over TabUkmLogger as it avoids an acronym that I think most people aren\u0027t familiar with. Feel free to stop by and IM to reach agreement on names.",
+      "parentUuid": "55897d34_d15d2cc1",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcc7259c_7e2eae02",
         "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
         "patchSetId": 2
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "I\u0027m testing TabSnapshotLogger by calling LogBackgroundTab directly. But the TabActivityWatcher will be created at startup and will be calling the same function when I do things in my tests, interfering with the results I\u0027m trying to track.\n\nSetting TabActivityWatcher\u0027s logger to a stub that does nothing prevents it from interfering with this test. I thought of a few alternatives I\u0027d like your thoughts on:\n\n1. add a DisableLoggingForTest() method to TabActivityWatcher\n2. don\u0027t unit-test TabSnapshotLogger like this; just expand TabActivityWatcherTest to try more scenarios and verify the UKMs that get logged. This avoids a lot of duplication in test setup.",
       "parentUuid": "8300308d_8e734736",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 19
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a29a48_c07c6222",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T23:27:28Z",
+      "side": 1,
+      "message": "I like 2 as it better mirrors how the code is actually used.",
+      "parentUuid": "88b34bed_e57c6df2",
       "range": {
         "startLine": 108,
         "startChar": 2,
