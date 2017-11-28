@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "158c0e80_0f420e77",
+        "filename": "chrome/utility/importer/firefox_importer_unittest_utils_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-28T00:07:39Z",
+      "side": 1,
+      "message": "I see.  Thanks for the explanation!",
+      "parentUuid": "edfa7f4d_fa05cfac",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 14
+      },
+      "revId": "240950e15e0abe89e90531caa840a36884c1b8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b955e7c5_9c02baba",
         "filename": "chrome/utility/importer/firefox_importer_unittest_utils_mac.mojom",
         "patchSetId": 3
