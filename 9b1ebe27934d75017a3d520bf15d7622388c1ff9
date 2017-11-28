@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caf792f6_3ebae301",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-28T03:13:39Z",
+      "side": 1,
+      "message": "These tests seem to be split up arbitrarily and all of them have the same content value: \"d is a property\". WDYT of splitting them up by what they are testing? For example, d-interpolation-segment-types.svg could test all the path types (M, L, H, Q, etc), and d-interpolation-multiple-segments.svg could test paths with multiple segments, and d-interpolation-invalid-paths.svg could test invalid paths.",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ebd86e_a9378716",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-28T03:13:39Z",
+      "side": 1,
+      "message": "nit: should this be \"interpolation-test-common.js\"?",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbd5abc_bbc2f3e8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-28T03:13:39Z",
+      "side": 1,
+      "message": "Are these conditionals for progress at 0 and 1 useful? I think you can just use the cubic-bezier return for simplicity.",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3641cbf8_df8777d5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-28T03:13:39Z",
+      "side": 1,
+      "message": "WDYT of creating (\u0026 deleting) the stylesheet and path elements in this function to ensure no state is leaked between calls to test_interpolation?",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b10e1b_09aaf525",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-28T03:13:39Z",
+      "side": 1,
+      "message": "This test relies on the fact that the current time is t\u003d0s and remains t\u003d0s for the duration of the test. Is that approach guaranteed to be non-flaky in all browsers?",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99abd188_9540f90c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-28T03:13:39Z",
+      "side": 1,
+      "message": "Add comment above here to help folks understand how the animation start\u0026duration are used:\n// Create an animation of length 2s that starts at -1s so the current time of 0s is\n// exactly halfway through the animation. A cubic bezier timing function is used that\n// evaluates to |progress| at the current time (halfway through the animation).\n\nOptional: since it\u0027s tied to the current animation duration that is setup here, WDYT of inlining the timing function and just creating it here?\n// A cubic bezier that evaluates to |progress| at 50%.\nconst y \u003d (8 * progress - 1) / 6;\nconst timing_function \u003d \u0027cubic-bezier(0, \u0027 + y + \u0027, 1, \u0027 + y + \u0027)\u0027;\n\nstylesheet.textContent \u003d\n...\n \u0027  animation: 2s \u0027 + timing_function + \u0027 -1s paused \u0027 + animationId + \u0027;\\n\u0027 +\n...",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e96235_b3cba19d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-28T03:13:39Z",
+      "side": 1,
+      "message": "Did you mean \"expectFrom\" or \"expectedFrom\"?",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
