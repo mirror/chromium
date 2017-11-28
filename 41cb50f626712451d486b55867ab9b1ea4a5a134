@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "021e23de_f1cd1ee4",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-28T05:00:43Z",
+      "side": 1,
+      "message": "Nit: do we need VADisplayState::?\n\nCould this go after l.238?",
+      "range": {
+        "startLine": 234,
+        "startChar": 23,
+        "endLine": 234,
+        "endChar": 39
+      },
+      "revId": "41cb50f626712451d486b55867ab9b1ea4a5a134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
