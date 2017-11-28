@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2d2dee4_67597cd8",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T17:50:55Z",
+      "side": 1,
+      "message": "I think what matters here is when we allow PBO entrypoints at the command buffer level.\n\nFor validating decoder, this is exactly IsWebGL2OrES3Context(). For passthrough, this would be IsWebGL2OrES3Context() ||  gl::HasExtension(extensions, \"GL_NV_pixel_buffer_object\"); correct ?\nBecause gl::HasExtension(extensions, \"GL_NV_pixel_buffer_object\") has no impact on validating command buffers, I think this can just stay as\nbool has_pixel_buffers \u003d IsWebGL2OrES3Context() ||  gl::HasExtension(extensions, \"GL_NV_pixel_buffer_object\");",
+      "revId": "52400724b8e86199aea17a7fc2a305c6c64399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
