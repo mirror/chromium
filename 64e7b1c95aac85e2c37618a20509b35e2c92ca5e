@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aacc3bb1_273ff483",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T04:52:55Z",
+      "side": 1,
+      "message": "Since we\u0027ve explained the S13n vs Non-S13n difference in the class comment, I think we don\u0027t need to mention them here since otherwise we\u0027d also need them in all the things below like |idle_callback_|. So we can assume S13nSW for these impl comments.",
+      "revId": "64e7b1c95aac85e2c37618a20509b35e2c92ca5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad3b4b9_d7e80a76",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T04:52:55Z",
+      "side": 1,
+      "message": "\"Events\" -\u003e  \"Timed out events\"\n\"when Non-S13nServiceWorker\" -\u003e \"in non-S13nServiceWorker\"",
+      "revId": "64e7b1c95aac85e2c37618a20509b35e2c92ca5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4115d55_e57c883d",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T04:52:55Z",
+      "side": 1,
+      "message": "\"when Non-S13nServiceWorker\" -\u003e \"in non-S13nServiceWorker\"",
+      "revId": "64e7b1c95aac85e2c37618a20509b35e2c92ca5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
