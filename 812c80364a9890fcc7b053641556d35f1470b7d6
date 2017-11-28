@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17c34921_22b555fb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-28T23:27:11Z",
+      "side": 1,
+      "message": "Can you check the [ Pass ] case too?",
+      "revId": "812c80364a9890fcc7b053641556d35f1470b7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
