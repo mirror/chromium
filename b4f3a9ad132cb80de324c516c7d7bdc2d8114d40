@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55897d34_d15d2cc1",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T21:25:49Z",
+      "side": 1,
+      "message": "Didn\u0027t realize that existed. Ultimately a few classes like this will log the state of a main-frame/page, tab, and browser at a point in time, and \"snapshot\" seemed like a good description of that, e.g. BrowserSnapshotLogger.\n\nIt was just \"TabLogger\" before. TabMetricsLogger doesn\u0027t seem a lot better... I could do TabUkmLogger -- I think it\u0027s possible this will become a base class for more than one type of metrics logging, but that\u0027s a hand-wavy future idea right now.\n\nHowever, I really want to land these for the M64 branch so we can get some logging in over the holidays -- could we discuss naming options at a later date?",
+      "parentUuid": "bfcdc41b_cfa801ca",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcc7259c_7e2eae02",
         "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "88b34bed_e57c6df2",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T21:25:49Z",
+      "side": 1,
+      "message": "I\u0027m testing TabSnapshotLogger by calling LogBackgroundTab directly. But the TabActivityWatcher will be created at startup and will be calling the same function when I do things in my tests, interfering with the results I\u0027m trying to track.\n\nSetting TabActivityWatcher\u0027s logger to a stub that does nothing prevents it from interfering with this test. I thought of a few alternatives I\u0027d like your thoughts on:\n\n1. add a DisableLoggingForTest() method to TabActivityWatcher\n2. don\u0027t unit-test TabSnapshotLogger like this; just expand TabActivityWatcherTest to try more scenarios and verify the UKMs that get logged. This avoids a lot of duplication in test setup.",
+      "parentUuid": "8300308d_8e734736",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 19
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3425cebd_3df6800c",
         "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
         "patchSetId": 2
@@ -82,6 +130,30 @@
       "writtenOn": "2017-11-28T16:24:46Z",
       "side": 1,
       "message": "Sorry for random question, why is this called LogBackgroundTab when one of these tabs (probably this one) is not in the background?",
+      "range": {
+        "startLine": 197,
+        "startChar": 27,
+        "endLine": 197,
+        "endChar": 43
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6d30f8_462cfe82",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T21:25:49Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be called with non-background tabs. This test should simulate that by activating the other tab.\n\nWe do only want to log tabs in the background. that may change eventually but it does drive some of the design decisions -- we don\u0027t need to observe events that might change frequently in the foreground, but won\u0027t change when the tab is in the background.",
+      "parentUuid": "3425cebd_3df6800c",
       "range": {
         "startLine": 197,
         "startChar": 27,
