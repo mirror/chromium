@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "c03b4db4_d2716307",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T21:44:12Z",
+      "side": 1,
+      "message": "i think it\u0027d be safer to cache the previous state so you can be sure you\u0027re only calling this when IsScreenLocked transitions from false to true.",
+      "revId": "294a3839b8d7325fcd5cd47edf8e73a472d322b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6706cf0_33459dd4",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 7
@@ -65,6 +82,57 @@
         "endLine": 98,
         "endChar": 56
       },
+      "revId": "294a3839b8d7325fcd5cd47edf8e73a472d322b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736a05e7_b09f1ed6",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T21:44:12Z",
+      "side": 1,
+      "message": "nit: feel free to delete the blank lines between all of these similar ScopedObserver members",
+      "revId": "294a3839b8d7325fcd5cd47edf8e73a472d322b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b905e7_97151a74",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T21:44:12Z",
+      "side": 1,
+      "message": "you should be calling this before you start using the client (i.e. move this to the top of the c\u0027tor body)",
+      "revId": "294a3839b8d7325fcd5cd47edf8e73a472d322b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574c5efb_12c5e6bf",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T21:44:12Z",
+      "side": 1,
+      "message": "nit: ReportScreenLocked",
       "revId": "294a3839b8d7325fcd5cd47edf8e73a472d322b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
