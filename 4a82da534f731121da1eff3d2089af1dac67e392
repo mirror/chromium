@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4bc03a7_66e1942e",
+        "filename": "ash/window_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T03:53:46Z",
+      "side": 1,
+      "message": "This should always be a WindowTreeHostMus, right? WDYT of putting OverrideAcceleratedWidget only on WindowTreeHostMus?",
+      "range": {
+        "startLine": 342,
+        "startChar": 4,
+        "endLine": 342,
+        "endChar": 21
+      },
+      "revId": "4a82da534f731121da1eff3d2089af1dac67e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a88c24_7d75e274",
+        "filename": "ui/aura/mus/window_tree_host_mus.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T03:53:46Z",
+      "side": 1,
+      "message": "Does any code need to be updated to deal with the widget changing? I saw CreateInputMethod() takes the widget, but it doesn\u0027t use it for chromeos.",
+      "range": {
+        "startLine": 201,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 30
+      },
+      "revId": "4a82da534f731121da1eff3d2089af1dac67e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
