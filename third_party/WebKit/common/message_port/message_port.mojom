@@ -28,6 +28,7 @@ struct TransferableMessage {
   CloneableMessage message;
   // Any ports being transfered as part of this message.
   array<handle<message_pipe>> ports;
+  array<uint8> stack_id;
 };
 
 // Struct wrapping a Blob interface pointer.
