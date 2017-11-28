@@ -41,6 +41,7 @@
 #include "third_party/webrtc/modules/desktop_capture/desktop_capture_options.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_capturer.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_frame.h"
+#include "third_party/webrtc/modules/desktop_capture/fake_desktop_capturer.h"
 #include "third_party/webrtc/modules/desktop_capture/mouse_cursor_monitor.h"
 
 namespace content {
@@ -460,12 +461,20 @@ std::unique_ptr<media::VideoCaptureDevice> DesktopCaptureDevice::Create(
     default: { NOTREACHED(); }
   }
 
+  // Maybe create fake desktop capturer for broswer tests.
+  if (!capturer && source.id == DesktopMediaID::kFakeId) {
+    capturer.reset(new webrtc::FakeDesktopCapturer());
+  }
+
   std::unique_ptr<media::VideoCaptureDevice> result;
   if (capturer)
     result.reset(new DesktopCaptureDevice(std::move(capturer), source.type));
 
   return result;
 }
+
+DesktopCaptureDevice::DesktopCaptureDevice()
+    : thread_("desktopCaptureThread") {}
 
 DesktopCaptureDevice::~DesktopCaptureDevice() {
   DCHECK(!core_);
