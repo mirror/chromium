@@ -954,7 +954,7 @@ SkFilterQuality GraphicsContext::ComputeFilterQuality(
   if (Printing()) {
     resampling = kInterpolationNone;
   } else if (image->CurrentFrameIsLazyDecoded()) {
-    resampling = kInterpolationHigh;
+    resampling = kInterpolationDefault;
   } else {
     resampling = ComputeInterpolationQuality(
         SkScalarToFloat(src.Width()), SkScalarToFloat(src.Height()),
