@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1e95aa0_4715a825",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-11-28T00:56:44Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 20,
+        "startChar": 30,
+        "endLine": 20,
+        "endChar": 41
+      },
+      "revId": "fe05345b791c98727cf1f85e340793c78442a2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980af9ab_9a9240be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-11-28T00:56:44Z",
+      "side": 1,
+      "message": "Why is this check still needed? Under what circumstances would a child instance be run outside of the context of a parent instance, and if this isn\u0027t expected to happen, can\u0027t we rely on the check in the parent?",
+      "range": {
+        "startLine": 21,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "fe05345b791c98727cf1f85e340793c78442a2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08aa830a_905d96c5",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-11-28T00:56:44Z",
+      "side": 1,
+      "message": "This is a bit hacky. I would prefer that we only iterate over the process list once. One clean approach would be to write a method that returns a list of (pid, bool) tuples, with the bool indicating whether or not the --child-process flag is present and filter it when you\u0027re done iterating. Or just track the first non-child-process instance you find so you can return it at the end if you don\u0027t find an alternative.",
+      "range": {
+        "startLine": 855,
+        "startChar": 20,
+        "endLine": 855,
+        "endChar": 0
+      },
+      "revId": "fe05345b791c98727cf1f85e340793c78442a2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
