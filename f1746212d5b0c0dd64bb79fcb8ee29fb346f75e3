@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eea41df1_53916436",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-28T23:29:21Z",
+      "side": 1,
+      "message": "The second sentence might be more clear as \"The stream should be considered non-audible until a DidChangeAudibleState() call says otherwise.\"",
+      "revId": "f1746212d5b0c0dd64bb79fcb8ee29fb346f75e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b69973_59a55f0b",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-28T23:29:21Z",
+      "side": 1,
+      "message": "Blank line between method and the next method\u0027s comments. Again the second sentence would be clearer as \"The stream should be considered no longer audible at this time; no further audible-state change notifications will be issued.\"",
+      "revId": "f1746212d5b0c0dd64bb79fcb8ee29fb346f75e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392a8602_71d4087a",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-28T23:29:21Z",
+      "side": 1,
+      "message": "Consider a paragraph break for separate topics. I.e\n\n// notification the stream should be considered not audible and no\n// audible-state change notification will be issued.\n//\n// Note: It is possible...\n\nThat said I think the note on sequences of DidStart/DidStop belongs on the interface level comment and not on the specific method.",
+      "revId": "f1746212d5b0c0dd64bb79fcb8ee29fb346f75e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534b3b41_01b4f310",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-28T23:29:21Z",
+      "side": 1,
+      "message": "Ditto on line break.",
+      "revId": "f1746212d5b0c0dd64bb79fcb8ee29fb346f75e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
