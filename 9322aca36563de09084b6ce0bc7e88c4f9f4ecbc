@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13824b1a_b25be149",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-28T22:06:33Z",
+      "side": 1,
+      "message": "Is it possible for the map to already include an entry for server? (Since we\u0027re iterating over the entries in one map and using the same key when adding to the second, initially empty, map)\n\nSame question about the spdy servers map, I think.",
+      "revId": "9322aca36563de09084b6ce0bc7e88c4f9f4ecbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d2a93c_81a8a4b6",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-28T22:06:33Z",
+      "side": 1,
+      "message": "Do you need to check the return value from this method?",
+      "range": {
+        "startLine": 1120,
+        "startChar": 65,
+        "endLine": 1120,
+        "endChar": 0
+      },
+      "revId": "9322aca36563de09084b6ce0bc7e88c4f9f4ecbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555622c4_168b0f07",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-28T22:06:33Z",
+      "side": 1,
+      "message": "What guarantees that this is true? It looks like the list starts out empty on line 1240 and it\u0027s only added to when broken or recently_broken are non-empty.",
+      "range": {
+        "startLine": 1299,
+        "startChar": 30,
+        "endLine": 1299,
+        "endChar": 0
+      },
+      "revId": "9322aca36563de09084b6ce0bc7e88c4f9f4ecbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

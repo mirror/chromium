@@ -22,6 +22,52 @@
       "revId": "f48fd978788a26b4d270ed4893b2e3dce415830c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27fed29_bd6d2ea0",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-28T22:06:33Z",
+      "side": 0,
+      "message": "Did you change this intentionally?",
+      "range": {
+        "startLine": 1030,
+        "startChar": 7,
+        "endLine": 1030,
+        "endChar": 0
+      },
+      "revId": "f48fd978788a26b4d270ed4893b2e3dce415830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b04e99b_e9186975",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-28T22:06:33Z",
+      "side": 0,
+      "message": "Oh, I thought we didn\u0027t actually set a limit on the number of broken services. I guess we actually did have a limit?",
+      "range": {
+        "startLine": 1101,
+        "startChar": 64,
+        "endLine": 1101,
+        "endChar": 0
+      },
+      "revId": "f48fd978788a26b4d270ed4893b2e3dce415830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
