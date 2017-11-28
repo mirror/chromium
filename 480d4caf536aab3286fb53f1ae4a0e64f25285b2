@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7062e93_237fef3c",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-28T15:39:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e6c2672_ca911c86",
+      "revId": "480d4caf536aab3286fb53f1ae4a0e64f25285b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58894f91_42308415",
         "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "480d4caf536aab3286fb53f1ae4a0e64f25285b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1041c7_bc0349a5",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-28T15:39:51Z",
+      "side": 1,
+      "message": "Good catch.\nThis change, including the change in the Zip Archiver extension, only stops putting entry to the registry when mounting a volume, but doesn\u0027t erase it proactively. So we\u0027d need another mechanism to do so.\nWe\u0027ll do it in another changelist if considered necessary.",
+      "parentUuid": "58894f91_42308415",
+      "revId": "480d4caf536aab3286fb53f1ae4a0e64f25285b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
