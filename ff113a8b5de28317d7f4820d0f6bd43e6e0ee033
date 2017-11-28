@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d23155b8_9a88d099",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-11-28T23:22:49Z",
+      "side": 0,
+      "message": "This is actually mildly scary code. It\u0027s theoretically possible for the ash state to get out of sync with the window property here, so that the window property value gets clobbered and out of sync. The new version keeps these in sync since it makes the window the source of truth...but were we relying on the state diverging? None of the unit tests fail...",
+      "revId": "ff113a8b5de28317d7f4820d0f6bd43e6e0ee033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
