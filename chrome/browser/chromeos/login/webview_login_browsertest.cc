@@ -2,20 +2,40 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/signin_partition_manager.h"
 #include "chrome/browser/chromeos/login/test/oobe_base_test.h"
+#include "chrome/browser/chromeos/login/test/oobe_screen_waiter.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_display.h"
+#include "chrome/browser/chromeos/policy/device_policy_cros_browser_test.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/ui/webui/signin/signin_utils.h"
 #include "chromeos/chromeos_switches.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/fake_session_manager_client.h"
+#include "components/content_settings/core/common/pref_names.h"
 #include "components/guest_view/browser/guest_view_manager.h"
+#include "components/policy/proto/chrome_device_policy.pb.h"
+#include "components/prefs/pref_change_registrar.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/test/browser_test_utils.h"
+#include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
+#include "crypto/nss_util_internal.h"
+#include "crypto/scoped_test_system_nss_key_slot.h"
 #include "media/base/media_switches.h"
 #include "net/cookies/canonical_cookie.h"
+#include "net/test/cert_test_util.h"
+#include "net/test/spawned_test_server/spawned_test_server.h"
+#include "net/test/test_data_directory.h"
 #include "services/network/public/interfaces/cookie_manager.mojom.h"
+
+namespace em = enterprise_management;
 
 namespace chromeos {
 
@@ -68,6 +88,43 @@ std::string GetAllCookies(content::StoragePartition* storage_partition) {
       base::BindOnce(&GetAllCookiesCallback, &cookies, run_loop.QuitClosure()));
   run_loop.Run();
   return cookies;
+}
+
+// Spins the loop until a notification is received from |prefs| that the value
+// of |pref_name| has changed. If the notification is received before Wait()
+// has been called, Wait() returns immediately and no loop is spun.
+class PrefChangeWatcher {
+ public:
+  PrefChangeWatcher(const char* pref_name, PrefService* prefs);
+
+  void Wait();
+
+  void OnPrefChange();
+
+ private:
+  bool pref_changed_;
+
+  base::RunLoop run_loop_;
+  PrefChangeRegistrar registrar_;
+
+  DISALLOW_COPY_AND_ASSIGN(PrefChangeWatcher);
+};
+
+PrefChangeWatcher::PrefChangeWatcher(const char* pref_name, PrefService* prefs)
+    : pref_changed_(false) {
+  registrar_.Init(prefs);
+  registrar_.Add(pref_name, base::Bind(&PrefChangeWatcher::OnPrefChange,
+                                       base::Unretained(this)));
+}
+
+void PrefChangeWatcher::Wait() {
+  if (!pref_changed_)
+    run_loop_.Run();
+}
+
+void PrefChangeWatcher::OnPrefChange() {
+  pref_changed_ = true;
+  run_loop_.Quit();
 }
 
 }  // namespace
@@ -311,6 +368,232 @@ IN_PROC_BROWSER_TEST_F(WebviewLoginTest, RequestCamera) {
       "    function() { window.domAutomationController.send(false); });",
       &getUserMediaSuccess));
   EXPECT_FALSE(getUserMediaSuccess);
+}
+
+class WebviewClientCertsLoginTest : public WebviewLoginTest {
+ public:
+  WebviewClientCertsLoginTest() {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitch(switches::kEnableSigninFrameClientCerts);
+    WebviewLoginTest::SetUpCommandLine(command_line);
+  }
+
+  void SetUpOnMainThread() override {
+    WebviewLoginTest::SetUpOnMainThread();
+
+    {
+      bool system_slot_constructed_successfully = false;
+      base::RunLoop loop;
+      content::BrowserThread::PostTask(
+          content::BrowserThread::IO, FROM_HERE,
+          base::BindOnce(&WebviewClientCertsLoginTest::SetUpTestSystemSlotOnIO,
+                         base::Unretained(this), loop.QuitClosure(),
+                         &system_slot_constructed_successfully));
+      loop.Run();
+      ASSERT_TRUE(system_slot_constructed_successfully);
+    }
+
+    // Import a second client cert signed by another CA than client_1 into the
+    // system wide key slot.
+    client_cert_ = net::ImportClientCertAndKeyFromFile(
+        net::GetTestCertsDirectory(), "client_1.pem", "client_1.pk8",
+        test_system_slot_->slot());
+    ASSERT_TRUE(client_cert_.get());
+  }
+
+  void SetUpTestSystemSlotOnIO(base::Closure done_callback,
+                               bool* system_slot_constructed_successfully) {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+    test_system_slot_.reset(new crypto::ScopedTestSystemNSSKeySlot());
+    *system_slot_constructed_successfully =
+        test_system_slot_->ConstructedSuccessfully();
+
+    content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
+                                     std::move(done_callback));
+  }
+
+  void SetUpInProcessBrowserTestFixture() override {
+    auto fake_session_manager_client =
+        base::MakeUnique<FakeSessionManagerClient>();
+    fake_session_manager_client_ = fake_session_manager_client.get();
+    DBusThreadManager::GetSetterForTesting()->SetSessionManagerClient(
+        std::move(fake_session_manager_client));
+    device_policy_test_helper_.InstallOwnerKey();
+    device_policy_test_helper_.MarkAsEnterpriseOwned();
+
+    WebviewLoginTest::SetUpInProcessBrowserTestFixture();
+  }
+
+  // Sets up the DeviceLoginScreenAutoSelectCertificateForUrls policy.
+  void SetAutoSelectCertificatePattern(const std::string& autoselect_pattern) {
+    // Set up the DeviceLoginScreenAutoSelectCertificateForUrls policy.
+    em::ChromeDeviceSettingsProto& proto(
+        device_policy_test_helper_.device_policy()->payload());
+    *proto.mutable_device_login_screen_auto_select_certificate_for_urls()
+         ->add_login_screen_auto_select_certificate_rules() =
+        autoselect_pattern;
+
+    device_policy_test_helper_.device_policy()->SetDefaultSigningKey();
+    device_policy_test_helper_.device_policy()->Build();
+
+    fake_session_manager_client_->set_device_policy(
+        device_policy_test_helper_.device_policy()->GetBlob());
+    PrefChangeWatcher watcher(prefs::kManagedAutoSelectCertificateForUrls,
+                              ProfileHelper::GetSigninProfile()->GetPrefs());
+    fake_session_manager_client_->OnPropertyChangeComplete(true);
+
+    watcher.Wait();
+  }
+
+  // Starts the Test HTTPS server with |ssl_options|.
+  void StartHttpsServer(const net::SpawnedTestServer::SSLOptions& ssl_options) {
+    https_server_ = base::MakeUnique<net::SpawnedTestServer>(
+        net::SpawnedTestServer::TYPE_HTTPS, ssl_options, base::FilePath());
+    ASSERT_TRUE(https_server_->Start());
+  }
+
+  // Requests |http_server_|'s client-cert test page in the sign-in webview.
+  // Returns the content of the client-cert test page.
+  std::string RequestClientCertTestPageInSigninFrame() {
+    WaitForGaiaPageLoad();
+    ExpectIdentifierPage();
+
+    GURL url = https_server_->GetURL("client-cert");
+    content::TestNavigationObserver navigation_observer(url);
+    navigation_observer.WatchExistingWebContents();
+
+    JS().Evaluate(base::StringPrintf(
+        "$('%s').src='%s'", gaia_frame_parent_.c_str(), url.spec().c_str()));
+
+    navigation_observer.Wait();
+
+    content::WebContents* main_web_contents = GetLoginUI()->GetWebContents();
+    content::WebContents* frame_web_contents =
+        signin::GetAuthFrameWebContents(main_web_contents, gaia_frame_parent_);
+    test::JSChecker frame_js_checker(frame_web_contents);
+    std::string https_reply_content =
+        frame_js_checker.GetString("document.body.textContent");
+
+    return https_reply_content;
+  }
+
+  // Shows the EULA screen and requests |http_server_|'s client-cert test page
+  // in the EULA webview. Returns the content of the client-cert test page.
+  std::string RequestClientCertTestPageInEulaFrame() {
+    ShowEulaScreen();
+    gaia_frame_parent_ = "cros-eula-frame";
+
+    GURL url = https_server_->GetURL("client-cert");
+    content::TestNavigationObserver navigation_observer(url);
+    navigation_observer.StartWatchingNewWebContents();
+
+    JS().Evaluate(base::StringPrintf(
+        "$('%s').src='%s'", gaia_frame_parent_.c_str(), url.spec().c_str()));
+
+    navigation_observer.Wait();
+
+    content::WebContents* main_web_contents = GetLoginUI()->GetWebContents();
+    content::WebContents* frame_web_contents =
+        signin::GetAuthFrameWebContents(main_web_contents, gaia_frame_parent_);
+    test::JSChecker frame_js_checker(frame_web_contents);
+    std::string https_reply_content =
+        frame_js_checker.GetString("document.body.textContent");
+
+    return https_reply_content;
+  }
+
+  void ShowEulaScreen() {
+    LoginDisplayHost::default_host()->StartWizard(OobeScreen::SCREEN_OOBE_EULA);
+    OobeScreenWaiter(OobeScreen::SCREEN_OOBE_EULA).Wait();
+  }
+
+ private:
+  policy::DevicePolicyCrosTestHelper device_policy_test_helper_;
+  FakeSessionManagerClient* fake_session_manager_client_;
+  std::unique_ptr<crypto::ScopedTestSystemNSSKeySlot> test_system_slot_;
+  scoped_refptr<net::X509Certificate> client_cert_;
+  std::unique_ptr<net::SpawnedTestServer> https_server_;
+};
+
+// Test that client certificate authentication using certificates from the
+// system slot is enabled in the sign-in frame. The server does not request
+// certificates signed by a specific authority.
+IN_PROC_BROWSER_TEST_F(WebviewClientCertsLoginTest,
+                       SigninFrameNoAuthorityGiven) {
+  net::SpawnedTestServer::SSLOptions ssl_options;
+  ssl_options.request_client_certificate = true;
+  ASSERT_NO_FATAL_FAILURE(StartHttpsServer(ssl_options));
+
+  const std::string autoselect_pattern =
+      "{\"pattern\": \"*\", \"filter\": {\"ISSUER\": {\"CN\": \"B CA\"}}}";
+  SetAutoSelectCertificatePattern(autoselect_pattern);
+
+  std::string https_reply_content = RequestClientCertTestPageInSigninFrame();
+  EXPECT_EQ(
+      "got client cert with fingerprint: "
+      "c66145f49caca4d1325db96ace0f12f615ba4981",
+      https_reply_content);
+}
+
+// Test that client certificate authentication using certificates from the
+// system slot is enabled in the sign-in frame. The server requests
+// a certificate signed by a specific authority.
+IN_PROC_BROWSER_TEST_F(WebviewClientCertsLoginTest, SigninFrameAuthorityGiven) {
+  net::SpawnedTestServer::SSLOptions ssl_options;
+  ssl_options.request_client_certificate = true;
+  base::FilePath ca_path =
+      net::GetTestCertsDirectory().Append(FILE_PATH_LITERAL("client_1_ca.pem"));
+  ssl_options.client_authorities.push_back(ca_path);
+  ASSERT_NO_FATAL_FAILURE(StartHttpsServer(ssl_options));
+
+  const std::string autoselect_pattern =
+      "{\"pattern\": \"*\", \"filter\": {\"ISSUER\": {\"CN\": \"B CA\"}}}";
+  SetAutoSelectCertificatePattern(autoselect_pattern);
+
+  std::string https_reply_content = RequestClientCertTestPageInSigninFrame();
+  EXPECT_EQ(
+      "got client cert with fingerprint: "
+      "c66145f49caca4d1325db96ace0f12f615ba4981",
+      https_reply_content);
+}
+
+// Test that client certificate authentication using certificates from the
+// system slot is enabled in the sign-in frame. The server requests
+// a certificate signed by a specific authority. The client doesn't have a
+// matching certificate.
+IN_PROC_BROWSER_TEST_F(WebviewClientCertsLoginTest,
+                       SigninFrameAuthorityGivenNoMatchingCert) {
+  net::SpawnedTestServer::SSLOptions ssl_options;
+  ssl_options.request_client_certificate = true;
+  base::FilePath ca_path =
+      net::GetTestCertsDirectory().Append(FILE_PATH_LITERAL("client_2_ca.pem"));
+  ssl_options.client_authorities.push_back(ca_path);
+  ASSERT_NO_FATAL_FAILURE(StartHttpsServer(ssl_options));
+
+  const std::string autoselect_pattern =
+      "{\"pattern\": \"*\", \"filter\": {\"ISSUER\": {\"CN\": \"B CA\"}}}";
+  SetAutoSelectCertificatePattern(autoselect_pattern);
+
+  std::string https_reply_content = RequestClientCertTestPageInSigninFrame();
+  EXPECT_EQ("got no client cert", https_reply_content);
+}
+
+// Tests that client certificate authentication is not enabled in a webview on
+// the sign-in screen which is not the sign-in frame. In this case, the EULA
+// webview is used.
+IN_PROC_BROWSER_TEST_F(WebviewClientCertsLoginTest,
+                       ClientCertRequestedInOtherWebView) {
+  net::SpawnedTestServer::SSLOptions ssl_options;
+  ssl_options.request_client_certificate = true;
+  ASSERT_NO_FATAL_FAILURE(StartHttpsServer(ssl_options));
+
+  const std::string autoselect_pattern =
+      "{\"pattern\": \"*\", \"filter\": {\"ISSUER\": {\"CN\": \"B CA\"}}}";
+  SetAutoSelectCertificatePattern(autoselect_pattern);
+
+  std::string https_reply_content = RequestClientCertTestPageInEulaFrame();
+  EXPECT_EQ("got no client cert", https_reply_content);
 }
 
 }  // namespace chromeos
