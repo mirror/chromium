@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "587a77d2_86f84d69",
+        "filename": "services/viz/public/interfaces/compositing/local_surface_id.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-28T21:35:48Z",
+      "side": 1,
+      "message": "nit: Update the comment?",
+      "revId": "d992491b0dbb2d5bb47744292bad936525017065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
