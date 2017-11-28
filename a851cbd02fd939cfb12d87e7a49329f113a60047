@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cfcc997_6b54bbe9",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_token_initializer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T17:06:58Z",
+      "side": 1,
+      "message": "Where would this be picked up?\n\nIt seems currently we rely on UserManagerBase::ChangeUserChildStatus being called and currently from ChildAccountService::PropagateChildStatusToUser, which might be a bit late.",
+      "revId": "a851cbd02fd939cfb12d87e7a49329f113a60047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
