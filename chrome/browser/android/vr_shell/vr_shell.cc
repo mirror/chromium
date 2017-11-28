@@ -937,6 +937,12 @@ void VrShell::OnVoiceResults(const base::string16& result) {
       base::android::ConvertUTF8ToJavaString(env, url.spec()));
 }
 
+void VrShell::OnAssetsLoaded(vr::AssetsLoadStatus status,
+                             const base::Version& component_version) {
+  vr::Assets::GetInstance()->GetMetricsHelper()->OnAssetsLoaded(
+      status, component_version);
+}
+
 // ----------------------------------------------------------------------------
 // Native JNI methods
 // ----------------------------------------------------------------------------
