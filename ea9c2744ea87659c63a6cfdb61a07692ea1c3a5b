@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c2d46a2_3beae63d",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T03:13:51Z",
+      "side": 1,
+      "message": "hmm, this override is needed to me. Can you be more specific here?\n\nI added some event type checks in AdjustSnappedBounds. I think we only need to change width if event is WM_EVENT_ADDED_TO_WORKSPACE, WM_EVENT_DISPLAY_BOUNDS_CHANGED, WM_EVENT_WORKAREA_BOUNDS_CHANGED.",
+      "parentUuid": "fd2050a8_2bae82b2",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e93b2594_8c850c81",
         "filename": "ash/wm/window_state.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c7268b_dc82e3cf",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T03:13:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e93b2594_8c850c81",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "36f95770_34210891",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T03:13:51Z",
+      "side": 1,
+      "message": "I agree, but I didn\u0027t find one universal entry for updating ratio. It should update when window bounds are changed actively, not passively. Current two active sources are (1) window state change, (2) dragging.\n\nI see the bounds are set by [1]. One way to do is to add another parameter to indicate event type?\n\nI would like to know your ideas.\n\n[1] https://cs.chromium.org/chromium/src/ash/wm/window_state.cc?q\u003dboundssetter\u0026sq\u003dpackage:chromium\u0026l\u003d60",
+      "parentUuid": "5f64c30e_3d93d767",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0726d5d1_83898c94",
         "filename": "ash/wm/window_state.cc",
         "patchSetId": 9
@@ -82,6 +136,24 @@
       "writtenOn": "2017-11-21T19:49:19Z",
       "side": 1,
       "message": "Perhaps updating the snapped ratio when bounds are set would handle all cases of bounds changes?",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9243381a_dab4b656",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T03:13:51Z",
+      "side": 1,
+      "message": "\"Bounds are set\" could also indicates display work area width change like shelf changed from bottom to left. In this case, snapped_width_ratio_ will become larger than 0.5 however it should be kept at 0.5.\n\nI think we shall only record the ratio when snapped window bounds changed, not display work area changed. However display work area changed may induce window bounds changed.",
+      "parentUuid": "0726d5d1_83898c94",
       "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "b676fde0_b7aa3f86",
+        "filename": "ash/wm/window_state.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T03:13:51Z",
+      "side": 1,
+      "message": "I updated the patch to do the reset. I thought if the setters \u0026 usages were all under IsSnapped(), we probably were fine.",
+      "parentUuid": "9a9aad19_eaac0861",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cf5e8c3_12c1b649",
         "filename": "ash/wm/window_state_unittest.cc",
         "patchSetId": 9
@@ -116,6 +206,24 @@
       "writtenOn": "2017-11-21T19:59:45Z",
       "side": 1,
       "message": "Have you tested that the MultiWindowResizeController works correctly with two snapped windows?",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0675750d_f5ade3be",
+        "filename": "ash/wm/window_state_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T03:13:51Z",
+      "side": 1,
+      "message": "Yes. It works fine. Should I add test coverage for it?\n\nI just knew the function of multi window resize and how to operate it : / We probably need adding metrics for it to know the metrics of user usage of this.",
+      "parentUuid": "1cf5e8c3_12c1b649",
       "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
