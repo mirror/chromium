@@ -22,6 +22,30 @@
       "revId": "cc6893b2363bb7b5ec27f064aea678b70a67af86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08f9fef_88685dcf",
+        "filename": "components/arc/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T21:07:07Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "9119739d_137e71d9",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 51
+      },
+      "revId": "cc6893b2363bb7b5ec27f064aea678b70a67af86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
