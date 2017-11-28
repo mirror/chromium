@@ -46,6 +46,30 @@
       "revId": "3266e2f53e9570623c83cd45b58c20dd885b94eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acf76d9_7cf4ec8e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SmartClipProviderTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-28T18:51:26Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "fd423aef_2b87042a",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 79
+      },
+      "revId": "3266e2f53e9570623c83cd45b58c20dd885b94eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
