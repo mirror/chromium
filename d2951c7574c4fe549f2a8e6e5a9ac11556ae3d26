@@ -1,0 +1,290 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9545272_c9a7bf07",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "nit: remove this comment and improve the name of SendSelection instead. Maybe SetSelectionToCurrentClipboardData?\n\nFyi, we typically avoid \"Send/Receive\" in exo code as we shouldn\u0027t assume that delegates actually send/receive messages as a result of callbacks.",
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f8ba0d_d51ff551",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "nit: move this to l.44, just above ReadData function",
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc08b99_fe6c37e3",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "why virtual?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc294ce6_e5854a7e",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "why virtual?",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac4495c_92abd03b",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "I think we should just leave it up to the caller to do detect if data source is deleted instead. It\u0027s confusing that we would get a callback after the instance has been deleted. Can we just read data and return vector and cancel any active callbacks in dtor using weak ptrs?",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb33cc8_d350779c",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "Can we avoid having virtual functions for testing here? that\u0027s a pattern we\u0027ve tried hard to avoid throughout exo code. standard classes like DataSource should be testable without that.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be31217_6d2f41ac",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "can we use weak ptrs instead of sequence numbers? see capture code in exo::Pointer for an example.",
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d11c16_3b1658c5",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "can this be null?",
+      "range": {
+        "startLine": 68,
+        "startChar": 36,
+        "endLine": 68,
+        "endChar": 42
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5569d45_81494ad4",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "should we set selection_source_ here so we can call Cancelled() and invalidate weak ptrs if SetSelection is called before data was read?",
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5c5076_5dc9cac1",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "nit: OnDataRead to match the callback",
+      "range": {
+        "startLine": 77,
+        "startChar": 11,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a666aa_49cfe9d2",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "one blank line here is enough",
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c36da7_0a00da04",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "Clipboard",
+      "range": {
+        "startLine": 59,
+        "startChar": 25,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d24abd_7ab01f86",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "see my other comments, I think it will make sense to add a read_data_weak_ptr_factory_ instead that can be used to cancel in flight data read callbacks.",
+      "range": {
+        "startLine": 79,
+        "startChar": 29,
+        "endLine": 79,
+        "endChar": 46
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2e5c5f_67868d7e",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T17:45:29Z",
+      "side": 1,
+      "message": "nit: blank line after this for consistency with other exo classes.",
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
