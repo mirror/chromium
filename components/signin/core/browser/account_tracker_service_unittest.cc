@@ -634,23 +634,23 @@ TEST_F(AccountTrackerServiceTest, Persistence) {
     // This will allow testing removal as well as child accounts which is only
     // allowed for a single account.
     SimulateTokenRevoked("alpha");
-    fetcher.FakeSetIsChildAccount("beta", true);
+    tracker.SetIsChildAccount("beta", true);
 
     fetcher.Shutdown();
     tracker.Shutdown();
  }
 
-  // Create a new tracker and make sure it loads the single account from
+ // Create a new tracker and make sure it loads the single account from
  // persistence. Also verify it is a child account.
-  {
-    AccountTrackerService tracker;
-    tracker.Initialize(signin_client());
+ {
+   AccountTrackerService tracker;
+   tracker.Initialize(signin_client());
 
-    std::vector<AccountInfo> infos = tracker.GetAccounts();
-    ASSERT_EQ(1u, infos.size());
-    CheckAccountDetails("beta", infos[0]);
-    ASSERT_TRUE(infos[0].is_child_account);
-    tracker.Shutdown();
+   std::vector<AccountInfo> infos = tracker.GetAccounts();
+   ASSERT_EQ(1u, infos.size());
+   CheckAccountDetails("beta", infos[0]);
+   ASSERT_TRUE(infos[0].is_child_account);
+   tracker.Shutdown();
   }
 }
 
@@ -1088,13 +1088,13 @@ TEST_F(AccountTrackerServiceTest, ChildAccountBasic) {
   {
     // Responses are processed iff there is a single account with a valid token
     // and the response is for that account.
-    fetcher.FakeSetIsChildAccount(child_id, true);
+    tracker.SetIsChildAccount(child_id, true);
     ASSERT_TRUE(observer.CheckEvents());
   }
   {
     SimulateTokenAvailable(child_id);
     IssueAccessToken(child_id);
-    fetcher.FakeSetIsChildAccount(child_id, true);
+    tracker.SetIsChildAccount(child_id, true);
     // Response was processed but observer is not notified as the account state
     // is invalid.
     ASSERT_TRUE(observer.CheckEvents());
@@ -1119,7 +1119,7 @@ TEST_F(AccountTrackerServiceTest, ChildAccountUpdatedAndRevoked) {
 
   SimulateTokenAvailable(child_id);
   IssueAccessToken(child_id);
-  fetcher.FakeSetIsChildAccount(child_id, false);
+  tracker.SetIsChildAccount(child_id, false);
   FakeUserInfoFetchSuccess(&fetcher, child_id);
   ASSERT_TRUE(observer.CheckEvents(TrackingEvent(UPDATED, child_id)));
   AccountInfo info = tracker.GetAccountInfo(child_id);
@@ -1144,7 +1144,7 @@ TEST_F(AccountTrackerServiceTest, ChildAccountUpdatedAndRevokedWithUpdate) {
 
   SimulateTokenAvailable(child_id);
   IssueAccessToken(child_id);
-  fetcher.FakeSetIsChildAccount(child_id, true);
+  tracker.SetIsChildAccount(child_id, true);
   FakeUserInfoFetchSuccess(&fetcher, child_id);
   ASSERT_TRUE(observer.CheckEvents(TrackingEvent(UPDATED, child_id)));
   AccountInfo info = tracker.GetAccountInfo(child_id);
@@ -1174,7 +1174,7 @@ TEST_F(AccountTrackerServiceTest, ChildAccountUpdatedTwiceThenRevoked) {
   FakeUserInfoFetchSuccess(&fetcher, child_id);
   // Since the account state is already valid, this will notify the
   // observers for the second time.
-  fetcher.FakeSetIsChildAccount(child_id, true);
+  tracker.SetIsChildAccount(child_id, true);
   ASSERT_TRUE(observer.CheckEvents(TrackingEvent(UPDATED, child_id),
                                    TrackingEvent(UPDATED, child_id)));
   SimulateTokenRevoked(child_id);
@@ -1200,14 +1200,14 @@ TEST_F(AccountTrackerServiceTest, ChildAccountGraduation) {
   IssueAccessToken(child_id);
 
   // Set and verify this is a child account.
-  fetcher.FakeSetIsChildAccount(child_id, true);
+  tracker.SetIsChildAccount(child_id, true);
   AccountInfo info = tracker.GetAccountInfo(child_id);
   ASSERT_TRUE(info.is_child_account);
   FakeUserInfoFetchSuccess(&fetcher, child_id);
   ASSERT_TRUE(observer.CheckEvents(TrackingEvent(UPDATED, child_id)));
 
   // Now simulate child account graduation.
-  fetcher.FakeSetIsChildAccount(child_id, false);
+  tracker.SetIsChildAccount(child_id, false);
   info = tracker.GetAccountInfo(child_id);
   ASSERT_FALSE(info.is_child_account);
   ASSERT_TRUE(observer.CheckEvents(TrackingEvent(UPDATED, child_id)));
