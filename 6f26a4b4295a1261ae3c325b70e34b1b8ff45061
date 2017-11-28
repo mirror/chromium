@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61320afb_1f30bdd6",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T13:34:42Z",
+      "side": 1,
+      "message": "Q: Is there a case where only one these can be true but not the other? Also can a single Compositor be in software mode while the others aren\u0027t?",
+      "revId": "6f26a4b4295a1261ae3c325b70e34b1b8ff45061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
