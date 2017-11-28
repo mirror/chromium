@@ -16,6 +16,24 @@
       "revId": "9b359d335d9d93790d22f25b4b8d89a25c534974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f154903d_e4ed0f20",
+        "filename": "build/install-build-deps.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-28T03:30:01Z",
+      "side": 0,
+      "message": "The dbg syms only get included when do_inst_syms \u003d\u003d 1.  The code is now:\nif test \"$do_inst_syms\" \u003d \"1\"; then\n  echo \"Including debugging symbols.\"\nelse\n  echo \"Skipping debugging symbols.\"\n  dbg_list\u003d\nfi",
+      "parentUuid": "d886359e_e265b89d",
+      "revId": "9b359d335d9d93790d22f25b4b8d89a25c534974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
