@@ -26,6 +26,8 @@ _DO_NOT_EDIT_WARNING = """// This file is auto-generated from
 
 """
 
+_OS_TYPE_MAP = ['android', 'win', 'macosx', 'chromeos', 'linux']
+
 
 def load_software_rendering_list_features(feature_type_filename):
   header_file = open(feature_type_filename, 'rb')
@@ -618,8 +620,14 @@ def process_json_file(json_filepath, list_tag,
     entry_id = entry['id']
     assert entry_id not in ids
     ids.append(entry_id)
-    if os_filter != None and 'os' in entry and entry['os']['type'] != os_filter:
-      continue
+    if 'os' in entry:
+      os_type = entry['os']['type']
+      # Check for typos in the .json data
+      if not os_type in _OS_TYPE_MAP:
+        raise Exception('Unknown OS type "%s" for entry %d' %
+                        (os_type, entry_id))
+      if os_filter != None and os_type != os_filter:
+        continue
     entry_count += 1
     write_entry(entry, total_features, feature_tag,
                 data_file, data_helper_file, data_exception_file)
