@@ -16,6 +16,24 @@
       "revId": "0190e7f3299c0fb582e668137915f9e9a1cf8a82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8938d1_61b42332",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 19848,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-28T04:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2893f26d_002dcee3",
+      "revId": "0190e7f3299c0fb582e668137915f9e9a1cf8a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
