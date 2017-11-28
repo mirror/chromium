@@ -62,9 +62,6 @@ class NotificationPlatformBridge {
   // failed. |callback| may be called directly or from a posted task.
   virtual void SetReadyCallback(NotificationBridgeReadyCallback callback) = 0;
 
- protected:
-  NotificationPlatformBridge() {}
-
  private:
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridge);
 };
