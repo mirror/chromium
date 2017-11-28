@@ -91,6 +91,137 @@
       "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b66885_d5f781e0",
+        "filename": "chrome/browser/ui/app_list/app_list_model_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T18:42:26Z",
+      "side": 1,
+      "message": "We don\u0027t need |sync_enabled_| flag because production code always uses AppListSyncableService. InitializeWithProfile is from legacy code and only used in tests. Since you are also update the tests, we can remove this code path completely.",
+      "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98deb848_05fef314",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T18:42:26Z",
+      "side": 1,
+      "message": "Why this is needed? |model| is a unique_ptr.",
+      "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ee2212_f83ec717",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T18:42:26Z",
+      "side": 1,
+      "message": "Can we clean up and remove IsAppListSyncEnabled() and relevant switches now?",
+      "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9641201c_7e47c1f6",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T18:42:26Z",
+      "side": 1,
+      "message": "Let\u0027s put this in builder instead of here.\n\nI am thinking that in the final state, builder owns ChromeAppListItem and can find the item on its own. AppListSyncableService only deals with AppListItem data.",
+      "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe58c6e_f003cdcc",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T18:42:26Z",
+      "side": 1,
+      "message": "If we can abstract out an interface, say ApplistModelUpdater, for AddItem/RemoveItem etc, we could group all model changes into one place. A builder would take an ApplistModelUpdater and use it to change the model. AppListSyncableService could be a delegate of the interface impl to update the sync side data. Later ApplistModelUpdater could be changed to forward the changes to ash via mojo.\n\nAnd test setup would be simpler too.",
+      "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56c3e08_d5c50ee0",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T18:42:26Z",
+      "side": 1,
+      "message": "nit: GetExtensionAppModelBuilder -\u003e GetExtensionAppModelBuilderForTest\n\nWe don\u0027t need comment with ForTest suffix and \"git cl presubmit\" warns if it is called in production code.",
+      "range": {
+        "startLine": 165,
+        "startChar": 28,
+        "endLine": 165,
+        "endChar": 55
+      },
+      "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4941fe44_49a4b598",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T18:42:26Z",
+      "side": 1,
+      "message": "nit: GetArcAppModelBuilder -\u003e GetArcAppModelBuilderForTest",
+      "range": {
+        "startLine": 170,
+        "startChar": 22,
+        "endLine": 170,
+        "endChar": 43
+      },
+      "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
