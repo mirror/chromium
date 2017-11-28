@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9dcf4327_0e4a671b",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-28T03:10:13Z",
+      "side": 1,
+      "message": "Was being extra cautious. Removed.",
+      "parentUuid": "7e7f1378_3bb5e6d9",
+      "range": {
+        "startLine": 300,
+        "startChar": 5,
+        "endLine": 300,
+        "endChar": 17
+      },
+      "revId": "645386bcf7bb6b11586c1983558a1ffed8c3e260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0f94e49_0bc3cdfe",
         "filename": "cc/ipc/cc_param_traits.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "645386bcf7bb6b11586c1983558a1ffed8c3e260",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b50d7c_a9be3cfb",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-28T03:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0f94e49_0bc3cdfe",
+      "range": {
+        "startLine": 296,
+        "startChar": 2,
+        "endLine": 305,
+        "endChar": 14
+      },
+      "revId": "645386bcf7bb6b11586c1983558a1ffed8c3e260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
