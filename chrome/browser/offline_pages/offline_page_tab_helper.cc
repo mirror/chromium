@@ -213,7 +213,7 @@ void OfflinePageTabHelper::SetOfflinePage(
   provisional_offline_info_.is_showing_offline_preview = is_offline_preview;
 }
 
-const OfflinePageItem* OfflinePageTabHelper::GetOfflinePageForTest() const {
+const OfflinePageItem* OfflinePageTabHelper::provisional_page() const {
   return provisional_offline_info_.offline_page.get();
 }
 
