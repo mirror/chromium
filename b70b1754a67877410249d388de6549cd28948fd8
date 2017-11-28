@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4321a6eb_3a78136a",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-28T17:36:24Z",
+      "side": 1,
+      "message": "Remove the first part of the condition, since is redundant. \nIf |last_resize_event_size_| has the initial value of (-1,-1) it\u0027s guaranteed to be different from |current_size| which always has nonnegative fields.",
+      "range": {
+        "startLine": 312,
+        "startChar": 8,
+        "endLine": 312,
+        "endChar": 31
+      },
+      "revId": "b70b1754a67877410249d388de6549cd28948fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
