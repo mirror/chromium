@@ -16,6 +16,24 @@
       "revId": "a2269178be435e8628d8077aa64c6bead9e0547b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1b4569_71650f21",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1001248
+      },
+      "writtenOn": "2017-11-28T20:00:23Z",
+      "side": 1,
+      "message": "Switched to DVLOG.\n\nThis is temporary and will likely disappear in future CLs. We\u0027ll rely on trace instrumentation in the future to distinguish backend code paths.\n\nI added it in this CL as a form of documentation/testing:\n- that these are the appropriate bits are for opting in to RasterDecoder\n- that these bits are set and available where they are required.",
+      "parentUuid": "c2381ace_bba1299b",
+      "revId": "a2269178be435e8628d8077aa64c6bead9e0547b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
