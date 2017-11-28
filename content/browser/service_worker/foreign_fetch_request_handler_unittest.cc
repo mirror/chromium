@@ -85,10 +85,8 @@ class ForeignFetchRequestHandlerTest : public testing::Test {
     version_->set_foreign_fetch_scopes({kScope});
 
     // Fix the time for testing to kNowTimestamp
-    std::unique_ptr<base::SimpleTestClock> clock =
-        std::make_unique<base::SimpleTestClock>();
-    clock->SetNow(base::Time::FromDoubleT(kNowTimestamp));
-    version_->SetClockForTesting(std::move(clock));
+    clock_.SetNow(base::Time::FromDoubleT(kNowTimestamp));
+    version_->SetClockForTesting(&clock_);
 
     context()->storage()->LazyInitializeForTest(
         base::BindOnce(&base::DoNothing));
@@ -248,6 +246,7 @@ class ForeignFetchRequestHandlerTest : public testing::Test {
   TestContentBrowserClient test_content_browser_client_;
   std::unique_ptr<EmbeddedWorkerTestHelper> helper_;
   TestBrowserThreadBundle browser_thread_bundle_;
+  base::SimpleTestClock clock_;
 
   net::URLRequestContext url_request_context_;
   net::TestDelegate url_request_delegate_;
@@ -378,9 +377,9 @@ TEST_F(ForeignFetchRequestHandlerTest,
   version->SetMainScriptHttpResponseInfo(*http_info);
 
   // Set mock clock on version to check timeout behavior.
-  base::SimpleTestTickClock* tick_clock = new base::SimpleTestTickClock();
-  tick_clock->SetNowTicks(base::TimeTicks::Now());
-  version->SetTickClockForTesting(base::WrapUnique(tick_clock));
+  base::SimpleTestTickClock tick_clock;
+  tick_clock.SetNowTicks(base::TimeTicks::Now());
+  version->SetTickClockForTesting(&tick_clock);
 
   // Make sure worker has a non-zero timeout.
   version->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
@@ -392,7 +391,7 @@ TEST_F(ForeignFetchRequestHandlerTest,
       base::TimeDelta::FromSeconds(10), ServiceWorkerVersion::KILL_ON_TIMEOUT);
 
   // Advance clock by a couple seconds.
-  tick_clock->Advance(base::TimeDelta::FromSeconds(4));
+  tick_clock.Advance(base::TimeDelta::FromSeconds(4));
   base::TimeDelta remaining_time = version->remaining_timeout();
   EXPECT_EQ(base::TimeDelta::FromSeconds(6), remaining_time);
 
