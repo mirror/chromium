@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3948ebc7_071baad2",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_mac.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-28T17:39:59Z",
+      "side": 1,
+      "message": "bikeshedding nit: should this be named GetParentAcceleratedWidget or something?",
+      "revId": "fd4da4a6aed5133ce8c5d20708f96a10f1a63211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
