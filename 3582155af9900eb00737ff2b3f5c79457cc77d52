@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2c72027_c59fddda",
+        "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-28T22:58:33Z",
+      "side": 1,
+      "message": "Can this be moved into a UKM helper? It seems universally helpful.",
+      "revId": "3582155af9900eb00737ff2b3f5c79457cc77d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
