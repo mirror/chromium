@@ -7,9 +7,9 @@
 #include "base/lazy_instance.h"
 
 namespace base {
-namespace {
+namespace default_tick_clock {
 LazyInstance<DefaultTickClock>::Leaky g_instance = LAZY_INSTANCE_INITIALIZER;
-}
+}  // namespace default_tick_clock
 
 DefaultTickClock::~DefaultTickClock() {}
 
@@ -19,7 +19,7 @@ TimeTicks DefaultTickClock::NowTicks() {
 
 // static
 DefaultTickClock* DefaultTickClock::GetInstance() {
-  return g_instance.Pointer();
+  return default_tick_clock::g_instance.Pointer();
 }
 
 }  // namespace base
