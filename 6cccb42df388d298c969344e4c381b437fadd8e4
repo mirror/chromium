@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "918011d9_2c4efbce",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-28T15:42:52Z",
+      "side": 1,
+      "message": "I think we should remove this duplication, maybe in a separate CL.  I think ::AutocompleteController should have static bool MatchIsUrlType(), which both AutocompleteControllerAndroid and this code calls to make this check.  Otherwise, someone will update the Clank function and miss this one, causing a bug.",
+      "revId": "6cccb42df388d298c969344e4c381b437fadd8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1135d8e7_5a25464a",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-28T15:42:52Z",
+      "side": 1,
+      "message": "s/result/input/ in docstring",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "6cccb42df388d298c969344e4c381b437fadd8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53cfc2e0_edbe6b83",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-28T15:42:52Z",
+      "side": 1,
+      "message": "Seems to duplicate \"won\u0027t interfere with autocomplete session\".  This is enough:\n\n// This function runs independently of any currently-running autocomplete\n// session.",
+      "revId": "6cccb42df388d298c969344e4c381b437fadd8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
