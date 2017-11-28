@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5e5880a0_44c13779",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T02:11:09Z",
+      "side": 1,
+      "message": "i don\u0027t think that you\u0027re using this member anymore, are you?",
+      "revId": "4d58a9e9362bfd1b878d256b82717a57c08c9d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fdd2ba8_67559f0d",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 7
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "sorry I\u0027m a little bit confused, I thought ScopedObserver will remove all the sources if it gets destructed? so I don\u0027t need to add Remove logic in the destructor for the IdleEventNotifier?\n\nOr are you suggesting I use ScopedObserver for all Observer pattern here?",
       "parentUuid": "8fdd2ba8_67559f0d",
+      "revId": "4d58a9e9362bfd1b878d256b82717a57c08c9d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df489ca_95359f54",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T02:11:09Z",
+      "side": 1,
+      "message": "i think he was asking you to replace all of these AddObserver calls with ScopedObserver. then you can remove the two remaining RemoveObserver calls in UserActivityLogger\u0027s d\u0027tor, and probably also delete the detector_ and power_manager_client_ members.",
+      "parentUuid": "44224ca1_fd2575b7",
       "revId": "4d58a9e9362bfd1b878d256b82717a57c08c9d90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
