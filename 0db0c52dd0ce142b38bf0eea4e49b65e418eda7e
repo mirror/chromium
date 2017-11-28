@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7b576fb_ae7201a8",
+        "filename": "DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-28T19:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5fc2656_f35fd41c",
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef4dfae0_6cc81734",
         "filename": "base/allocator/allocator_shim_default_dispatch_to_linker_wrapped_symbols.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7d396b_11b16e4a",
+        "filename": "base/allocator/allocator_shim_default_dispatch_to_linker_wrapped_symbols.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-28T19:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef4dfae0_6cc81734",
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9b33b800_8afaa89e",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-28T19:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73366d5e_56dadabd",
+      "range": {
+        "startLine": 47,
+        "startChar": 35,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fac9ce8_59738f19",
         "filename": "build/config/posix/BUILD.gn",
         "patchSetId": 10
@@ -73,6 +133,24 @@
       "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95b65e5_0b17df61",
+        "filename": "build/config/posix/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-28T19:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fac9ce8_59738f19",
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "38b84a37_fa91d721",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_settings_android.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-28T19:00:34Z",
+      "side": 1,
+      "message": "Done. Used David\u0027s vector\u003cjlong\u003e idea.",
+      "parentUuid": "b779411e_02a06db1",
+      "range": {
+        "startLine": 185,
+        "startChar": 56,
+        "endLine": 185,
+        "endChar": 61
+      },
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "888264c2_a87403fe",
         "filename": "third_party/android_crazy_linker/src/src/crazy_linker_wrappers.cpp",
         "patchSetId": 10
@@ -143,6 +245,30 @@
       "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c85f7b_f14efbef",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_wrappers.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-28T19:00:34Z",
+      "side": 1,
+      "message": "Done, had to use reinterpret_cast instead.",
+      "parentUuid": "888264c2_a87403fe",
+      "range": {
+        "startLine": 237,
+        "startChar": 45,
+        "endLine": 237,
+        "endChar": 49
+      },
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
