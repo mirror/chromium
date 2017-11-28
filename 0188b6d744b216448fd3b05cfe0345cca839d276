@@ -16,6 +16,24 @@
       "revId": "0188b6d744b216448fd3b05cfe0345cca839d276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf2a052_0e330bc6",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T18:38:21Z",
+      "side": 1,
+      "message": "Good eye.  After more investigation though, I don\u0027t think it matters.  Only iOS has the \"Enter the expiration date and CVC\" option in this string, because other platforms should have a title that handles it (IDS_AUTOFILL_CARD_UNMASK_PROMPT_TITLE vs. IDS_AUTOFILL_CARD_UNMASK_PROMPT_EXPIRED_TITLE).\n\nOn non-iOS platforms, the string is simply \"Once you confirm, your card details will be shared with this site.\" and makes no mention of CVC or expiration date.",
+      "parentUuid": "f1a037a3_14937fa2",
+      "revId": "0188b6d744b216448fd3b05cfe0345cca839d276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
