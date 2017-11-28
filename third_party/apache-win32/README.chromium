@@ -17,7 +17,13 @@ checkout path from /d/src/checkout/src as needed):
 
   % cd /d/src/checkout/src/third_party
   % mv apache-win32 apache-win32.bak
-  % curl -o httpd.msi http://www.apache.org/dist/httpd/binaries/win32/httpd-2.2.25-win32-x86-openssl-0.9.8y.msi
+  % curl -o httpd.msi https://archive.apache.org/dist/httpd/binaries/win32/httpd-2.2.25-win32-x86-openssl-0.9.8y.msi
+  % curl -o httpd.msi.sha1 https://archive.apache.org/dist/httpd/binaries/win32/httpd-2.2.25-win32-x86-openssl-0.9.8y.msi.sha1
+  % cat httpd.msi.sha1; sha1sum httpd.msi.sha1
+
+Manually verify that the SHA-1 hash of httpd.msi matches the one distributed in httpd.msi.sha1
+
+  % rm httpd.msi.sha1
   % cmd
   > start /wait msiexec /i httpd.msi /q INSTALLDIR=d:\src\checkout\src\third_party\apache-win32
   > exit
