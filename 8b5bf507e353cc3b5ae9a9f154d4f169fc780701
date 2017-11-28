@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9514f3e7_c239278a",
+        "filename": "ios/chrome/browser/geolocation/omnibox_geolocation_authorization_alert.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-28T09:15:30Z",
+      "side": 1,
+      "message": "Add a TODO(crbug.com/754642): Remove use of TopPresentedViewController()",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 13
+      },
+      "revId": "8b5bf507e353cc3b5ae9a9f154d4f169fc780701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
