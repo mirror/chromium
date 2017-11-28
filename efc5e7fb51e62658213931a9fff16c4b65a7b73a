@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f324fd0_9d0f2f7c",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-11-28T23:34:49Z",
+      "side": 1,
+      "message": "I find this name confusing as the defaults mean local node bounds. Either rename the function to something like ComputeNodeBounds (... with arguments that clarify) or refactor the function into global/local (or unclipped/clipped) variants.",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06f3ec3e_5043e31a",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-11-28T23:34:49Z",
+      "side": 1,
+      "message": "I would unify terms here. Global \u003d\u003d unclipped and local \u003d\u003d clipped. Use either global/local or unclipped/clipped but not both.",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7624706_10cb3f50",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-11-28T23:34:49Z",
+      "side": 1,
+      "message": "false /* clip_bounds */",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19441b69_daf5e968",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-11-28T23:34:49Z",
+      "side": 1,
+      "message": "TODO(katie):",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ca399af_b28c0b59",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-11-28T23:34:49Z",
+      "side": 1,
+      "message": "false /* clip_bounds */",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae30cbcd_e478d11b",
+        "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-11-28T23:34:49Z",
+      "side": 1,
+      "message": "If GetUnclippedLocation returns undefined, fall back to location. There are tree sources that don\u0027t (yet) expose unclipped location like ARC++, PDF, etc.",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
