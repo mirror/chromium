@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "10cf4dc0_41ae6b6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-11-28T19:57:13Z",
+      "side": 1,
+      "message": "While the init script doesn\u0027t do it anymore, there are some niche cases where one might want to call user-session directly (e.g., to avoid having a setuid binary). While I wouldn\u0027t go to any great length to support this use case, it\u0027s not really any extra effort in this case, so it\u0027s more I couldn\u0027t think of a compelling reason *not* to do the sanity check.",
+      "parentUuid": "980af9ab_9a9240be",
+      "range": {
+        "startLine": 21,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "fe05345b791c98727cf1f85e340793c78442a2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08aa830a_905d96c5",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
