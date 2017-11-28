@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a49c4ab_3b97c4f9",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-28T18:03:33Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e\n\nis still missing",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 8
+      },
+      "revId": "87c0bbf3793176a0508c5d5c56d9a343e59fb189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f58544_91c7147c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-28T18:03:33Z",
+      "side": 1,
+      "message": "nit: size_t",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 13
+      },
+      "revId": "87c0bbf3793176a0508c5d5c56d9a343e59fb189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe028673_49af1b28",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-28T18:03:33Z",
+      "side": 1,
+      "message": "nit: size_t",
+      "range": {
+        "startLine": 59,
+        "startChar": 10,
+        "endLine": 59,
+        "endChar": 13
+      },
+      "revId": "87c0bbf3793176a0508c5d5c56d9a343e59fb189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66eef7b4_f8456169",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-28T18:03:33Z",
+      "side": 1,
+      "message": "nit: base::ResetAndReturn(\u0026local) is unnecessary. std::move(local) is enough.\n\nSame throughout the rest of the change.",
+      "range": {
+        "startLine": 221,
+        "startChar": 2,
+        "endLine": 221,
+        "endChar": 41
+      },
+      "revId": "87c0bbf3793176a0508c5d5c56d9a343e59fb189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9141bb10_98c30c18",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-28T18:03:33Z",
+      "side": 1,
+      "message": "std::move() is only needed when you have an lvalue (a.k.a. a variable). This can be removed.",
+      "range": {
+        "startLine": 326,
+        "startChar": 14,
+        "endLine": 326,
+        "endChar": 24
+      },
+      "revId": "87c0bbf3793176a0508c5d5c56d9a343e59fb189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0facbed9_64fcd4d7",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-28T18:03:33Z",
+      "side": 1,
+      "message": "This is not necessarily true: You sometimes store the callback into |pending_requests_|. The safety/unsafety of binds is not where it\u0027s called, but _when_. Is there any chance that the callback can be executed after |this| is destroyed?\n\nIn this case there shouldn\u0027t be such chance: you are only storing the callback into a member variable, and thus all the callbacks should be deleted before |this| is invalidated.\n\nSame in all the other places you use base::Unretained.",
+      "range": {
+        "startLine": 507,
+        "startChar": 0,
+        "endLine": 508,
+        "endChar": 44
+      },
+      "revId": "87c0bbf3793176a0508c5d5c56d9a343e59fb189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
