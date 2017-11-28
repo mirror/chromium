@@ -29,8 +29,8 @@ class MockReportingServiceProxy {
   }
 
   // Interface implementation.
-  async queueDeprecationReport(url, message, sourceFile, lineNumber) {
-    this.resolve([url, message, sourceFile, lineNumber]);
+  async queueDeprecationReport(url, id, anticipatedRemoval, message, sourceFile, lineNumber) {
+    this.resolve([url, id, anticipatedRemoval, message, sourceFile, lineNumber]);
     this.resetPromise();
   }
 
@@ -54,8 +54,11 @@ promise_test(async () => {
 
   // Ensure the deprecation report is generated and routed to the reporting mojo
   // interface.
-  let [url, message, sourceFile, lineNumber] = await promise;
+  let [url, id, anticipatedRemoval, message, sourceFile, lineNumber] =
+      await promise;
   assert_true(url.url.endsWith("reporting-observer/reporting-api.html"));
+  assert_equals(typeof id, "string");
+  assert_equals(typeof anticipatedRemoval, "number");
   assert_equals(typeof message, "string");
   assert_true(sourceFile.endsWith("reporting-observer/reporting-api.html"));
   assert_equals(typeof lineNumber, "number");

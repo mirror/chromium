@@ -45,10 +45,15 @@ class ReportingServiceProxyImpl : public blink::mojom::ReportingServiceProxy {
   }
 
   void QueueDeprecationReport(const GURL& url,
+                              const std::string& id,
+                              double anticipatedRemoval,
                               const std::string& message,
                               const std::string& source_file,
                               int line_number) override {
     auto body = std::make_unique<base::DictionaryValue>();
+    body->SetString("id", id);
+    if (anticipatedRemoval)
+      body->SetDouble("anticipatedRemoval", anticipatedRemoval);
     body->SetString("message", message);
     body->SetString("sourceFile", source_file);
     body->SetInteger("lineNumber", line_number);
