@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96aee363_df07d147",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-28T18:54:26Z",
+      "side": 1,
+      "message": "Add a description (playback length in msec?).",
+      "range": {
+        "startLine": 662,
+        "startChar": 2,
+        "endLine": 662,
+        "endChar": 25
+      },
+      "revId": "12afd4302c147935ece765f592a174147ac7a2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
