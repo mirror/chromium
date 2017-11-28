@@ -64,8 +64,8 @@ bool ProviderId::operator==(const ProviderId& other) const {
 MountOptions::MountOptions()
     : writable(false),
       supports_notify_tag(false),
-      opened_files_limit(0) {
-}
+      opened_files_limit(0),
+      persistent(true) {}
 
 MountOptions::MountOptions(const std::string& file_system_id,
                            const std::string& display_name)
@@ -73,16 +73,18 @@ MountOptions::MountOptions(const std::string& file_system_id,
       display_name(display_name),
       writable(false),
       supports_notify_tag(false),
-      opened_files_limit(0) {
-}
+      opened_files_limit(0),
+      persistent(true) {}
+
+MountOptions::MountOptions(const MountOptions& source) = default;
 
 ProvidedFileSystemInfo::ProvidedFileSystemInfo()
     : writable_(false),
       supports_notify_tag_(false),
       configurable_(false),
       watchable_(false),
-      source_(extensions::SOURCE_FILE) {
-}
+      source_(extensions::SOURCE_FILE),
+      persistent_(true) {}
 
 ProvidedFileSystemInfo::ProvidedFileSystemInfo(
     const ProviderId& provider_id,
@@ -90,7 +92,8 @@ ProvidedFileSystemInfo::ProvidedFileSystemInfo(
     const base::FilePath& mount_path,
     bool configurable,
     bool watchable,
-    extensions::FileSystemProviderSource source)
+    extensions::FileSystemProviderSource source,
+    bool persistent)
     : provider_id_(provider_id),
       file_system_id_(mount_options.file_system_id),
       display_name_(mount_options.display_name),
@@ -100,7 +103,8 @@ ProvidedFileSystemInfo::ProvidedFileSystemInfo(
       mount_path_(mount_path),
       configurable_(configurable),
       watchable_(watchable),
-      source_(source) {
+      source_(source),
+      persistent_(persistent) {
   DCHECK_LE(0, mount_options.opened_files_limit);
 }
 

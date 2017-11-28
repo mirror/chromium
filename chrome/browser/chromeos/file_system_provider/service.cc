@@ -123,7 +123,6 @@ base::File::Error Service::MountFileSystemInternal(
     const MountOptions& options,
     MountContext context) {
   DCHECK(thread_checker_.CalledOnValidThread());
-
   // The mount point path and name are unique per system, since they are system
   // wide. This is necessary for copying between profiles.
   const base::FilePath& mount_path =
@@ -150,7 +149,8 @@ base::File::Error Service::MountFileSystemInternal(
       provider_id, options, mount_path,
       provider_info.capabilities.configurable(),
       provider_info.capabilities.watchable(),
-      provider_info.capabilities.source());
+      provider_info.capabilities.source(), false /* TODO: tentative code */
+      );
 
   // If already exists a file system provided by the same extension with this
   // id, then abort.
@@ -199,8 +199,9 @@ base::File::Error Service::MountFileSystemInternal(
       provider_id.ToString(), options.file_system_id)] = std::move(file_system);
   mount_point_name_to_key_map_[mount_point_name] =
       FileSystemKey(provider_id.ToString(), options.file_system_id);
-  registry_->RememberFileSystem(file_system_info,
-                                *file_system_ptr->GetWatchers());
+  if (options.persistent)
+    registry_->RememberFileSystem(file_system_info,
+                                  *file_system_ptr->GetWatchers());
 
   for (auto& observer : observers_) {
     observer.OnProvidedFileSystemMount(file_system_info, context,
