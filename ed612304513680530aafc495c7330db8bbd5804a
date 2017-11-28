@@ -140,6 +140,30 @@
       "revId": "ed612304513680530aafc495c7330db8bbd5804a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3d7f86_68a2d1a2",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-28T19:09:00Z",
+      "side": 1,
+      "message": "Right, we can have one output file per each process executed, that would be perfect",
+      "parentUuid": "b0c5cd1c_b115c28f",
+      "range": {
+        "startLine": 256,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 77
+      },
+      "revId": "ed612304513680530aafc495c7330db8bbd5804a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
