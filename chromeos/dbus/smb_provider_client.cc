@@ -26,6 +26,25 @@ smbprovider::ErrorType GetErrorFromReader(dbus::MessageReader* reader) {
   return static_cast<smbprovider::ErrorType>(int_error);
 }
 
+smbprovider::ErrorType GetErrorAndProto(
+    dbus::Response* response,
+    google::protobuf::MessageLite* protobuf) {
+  if (!response) {
+    DLOG(ERROR) << "Auth: Failed to  call to authpolicy";
+    return smbprovider::ERROR_DBUS_PARSE_FAILED;
+  }
+  dbus::MessageReader reader(response);
+  smbprovider::ErrorType error(GetErrorFromReader(&reader));
+  if (error != smbprovider::ERROR_OK) {
+    return error;
+  }
+  if (!reader.PopArrayOfBytesAsProto(protobuf)) {
+    DLOG(ERROR) << "Failed to parse protobuf.";
+    return smbprovider::ERROR_DBUS_PARSE_FAILED;
+  }
+  return smbprovider::ERROR_OK;
+}
+
 class SmbProviderClientImpl : public SmbProviderClient {
  public:
   SmbProviderClientImpl() : weak_ptr_factory_(this) {}
@@ -56,6 +75,36 @@ class SmbProviderClientImpl : public SmbProviderClient {
         &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         base::Bind(&SmbProviderClientImpl::HandleUnmountCallback,
                    weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
+  }
+
+  void ReadDirectory(int32_t mount_id,
+                     const std::string& directory_path,
+                     ReadDirectoryCallback callback) {
+    dbus::MethodCall method_call(smbprovider::kSmbProviderInterface,
+                                 smbprovider::kReadDirectoryMethod);
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendInt32(mount_id);
+    writer.AppendString(directory_path);
+    proxy_->CallMethod(&method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                       base::BindOnce(&SmbProviderClientImpl::HandleCallback<
+                                          smbprovider::DirectoryEntryList>,
+                                      weak_ptr_factory_.GetWeakPtr(),
+                                      base::Passed(&callback)));
+  }
+
+  void GetMetadataEntry(int32_t mount_id,
+                        const std::string& entry_path,
+                        GetMetdataEntryCallback callback) {
+    dbus::MethodCall method_call(smbprovider::kSmbProviderInterface,
+                                 smbprovider::kGetMetadataEntryMethod);
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendInt32(mount_id);
+    writer.AppendString(entry_path);
+    proxy_->CallMethod(
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        base::BindOnce(
+            &SmbProviderClientImpl::HandleCallback<smbprovider::DirectoryEntry>,
+            weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
   }
 
  protected:
@@ -99,6 +148,17 @@ class SmbProviderClientImpl : public SmbProviderClient {
     }
     dbus::MessageReader reader(response);
     std::move(callback).Run(GetErrorFromReader(&reader));
+  }
+
+  // Handles D-Bus callback for methods that return an error and a protobuf
+  // object.
+  template <class T>
+  void HandleCallback(base::OnceCallback<void(smbprovider::ErrorType error,
+                                              const T& response)> callback,
+                      dbus::Response* response) {
+    T proto;
+    smbprovider::ErrorType error(GetErrorAndProto(response, &proto));
+    std::move(callback).Run(error, proto);
   }
 
   dbus::ObjectProxy* proxy_ = nullptr;
