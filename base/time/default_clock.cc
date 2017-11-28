@@ -7,9 +7,9 @@
 #include "base/lazy_instance.h"
 
 namespace base {
-namespace {
+namespace default_clock {
 LazyInstance<DefaultClock>::Leaky g_instance = LAZY_INSTANCE_INITIALIZER;
-}
+}  // namespace default_clock
 
 DefaultClock::~DefaultClock() {}
 
@@ -19,7 +19,7 @@ Time DefaultClock::Now() {
 
 // static
 DefaultClock* DefaultClock::GetInstance() {
-  return g_instance.Pointer();
+  return default_clock::g_instance.Pointer();
 }
 
 }  // namespace base
