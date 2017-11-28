@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd36513b_e8f0c9e9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60428,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-28T06:57:23Z",
+      "side": 1,
+      "message": "I\u0027m not exactly sure how to interpret this.  Suppose that there is no update, and also updates are currently not allowed – based on my reading of this description, that\u0027s a reasonable possible state.  When would this metric be emitted in that case?  It sounds like a state that can last for a while, so would the metric be emitted periodically?  Or only once, during some sort of initialization step?  It would be helpful to clarify.",
+      "range": {
+        "startLine": 60428,
+        "startChar": 40,
+        "endLine": 60428,
+        "endChar": 56
+      },
+      "revId": "7acd7382062502fade9cf03b870d61cf31fffa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee71b22_8eeb6f83",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60429,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-28T06:57:23Z",
+      "side": 1,
+      "message": "nit: I think \"not possible\" would read a bit more clearly",
+      "range": {
+        "startLine": 60429,
+        "startChar": 19,
+        "endLine": 60429,
+        "endChar": 27
+      },
+      "revId": "7acd7382062502fade9cf03b870d61cf31fffa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
