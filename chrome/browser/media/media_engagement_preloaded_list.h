@@ -8,7 +8,9 @@
 #include <string>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 
 namespace base {
 class FilePath;
@@ -38,6 +40,10 @@ class MediaEngagementPreloadedList {
   // Check whether the list we have loaded is empty.
   bool IsEmpty() const { return trie_bits_ == 0; }
 
+  void SetOnLoadClosureForTesting(base::Closure closure) {
+    on_load_closure_ = base::MakeUnique<base::Closure>(closure);
+  }
+
  private:
   // Sets |result| to true if |input| is present in the list. If there was an
   // internal error when checking the list the function itself will return
@@ -56,6 +62,9 @@ class MediaEngagementPreloadedList {
 
   // If a list has been successfully loaded.
   bool is_loaded_ = false;
+
+  // A closure to be called when data is successfully loaded.
+  std::unique_ptr<base::Closure> on_load_closure_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaEngagementPreloadedList);
 };

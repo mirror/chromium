@@ -204,5 +204,11 @@ bool MediaEngagementPreloadedList::LoadFromFile(base::FilePath path) {
   root_position_ = message.root_position();
 
   is_loaded_ = true;
+
+  if (on_load_closure_) {
+    on_load_closure_->Run();
+    on_load_closure_.reset();
+  }
+
   return true;
 }
