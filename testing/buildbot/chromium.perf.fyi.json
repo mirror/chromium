@@ -175,10 +175,7 @@
         ],
         "isolate_name": "telemetry_perf_tests_new",
         "merge": {
-          "args": [
-            "--verbose"
-          ],
-          "script": "//tools/perf/core/merge_script.py"
+          "args": []
         },
         "name": "benchmarks for bot 1",
         "override_compile_targets": [
