@@ -187,6 +187,24 @@
       "revId": "50d14eb1c07355577da639af64ac077f78254314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb58af73_ee43b494",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T20:30:43Z",
+      "side": 1,
+      "message": "Oh, look, here I am mixing up my ands, ors, and nots.",
+      "parentUuid": "8a1d6eac_e707a8d4",
+      "revId": "50d14eb1c07355577da639af64ac077f78254314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
