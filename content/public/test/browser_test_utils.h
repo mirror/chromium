@@ -138,6 +138,13 @@ void SimulateMouseClickAt(WebContents* web_contents,
                           blink::WebMouseEvent::Button button,
                           const gfx::Point& point);
 
+// Simulates a LongPress using touch events at the x, y point in root-view
+// coordinates.
+void SimulateLongPressAt(WebContents* web_contents,
+                         int modifiers,
+                         int x,
+                         int y);
+
 // Same as SimulateMouseClickAt() except it forces the mouse event to go through
 // RenderWidgetHostInputEventRouter.
 void SimulateRoutedMouseClickAt(WebContents* web_contents,
