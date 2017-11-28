@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfcdc41b_cfa801ca",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:24:46Z",
+      "side": 1,
+      "message": "Any reason this class has \u0027Snapshot\u0027 in the name? I find that mildly confusing given there is a ui/snapshot directory and this in no way relates to it. Maybe TabMetricsLogger?",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc7259c_7e2eae02",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:24:46Z",
+      "side": 1,
+      "message": "optional: ASSERT_FALSE(entries.empty());",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8300308d_8e734736",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:24:46Z",
+      "side": 1,
+      "message": "How does this logger relate to the logger installed on line 71?",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 19
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3425cebd_3df6800c",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:24:46Z",
+      "side": 1,
+      "message": "Sorry for random question, why is this called LogBackgroundTab when one of these tabs (probably this one) is not in the background?",
+      "range": {
+        "startLine": 197,
+        "startChar": 27,
+        "endLine": 197,
+        "endChar": 43
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
