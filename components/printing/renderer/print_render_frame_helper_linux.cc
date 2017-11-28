@@ -82,13 +82,12 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   return true;
 #else
   PrintHostMsg_DidPrintPage_Params page_params;
-  if (!CopyMetafileDataToSharedMem(metafile,
-                                   &page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToSharedMem(metafile, &page_params.content)) {
     return false;
   }
 
-  page_params.data_size = metafile.GetDataSize();
   page_params.document_cookie = print_params.document_cookie;
+
   for (size_t i = 0; i < printed_pages.size(); ++i) {
     page_params.page_number = printed_pages[i];
     Send(new PrintHostMsg_DidPrintPage(routing_id(), page_params));
