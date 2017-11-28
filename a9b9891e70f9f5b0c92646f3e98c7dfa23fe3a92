@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ac984a9_16ff9804",
+        "filename": "third_party/WebKit/Source/platform/network/ParsedContentDisposition.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-28T03:34:28Z",
+      "side": 1,
+      "message": "Discussed offline and yhirano pointed out that even before this patch, ParsedContentHeaderFieldParameters has been returning a null string in case of parsing failure.\n\nSo, sorry, never mind.",
+      "parentUuid": "ea1ed4c0_d59c3d9a",
+      "revId": "a9b9891e70f9f5b0c92646f3e98c7dfa23fe3a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ca1daad_d287e0cc",
         "filename": "third_party/WebKit/Source/platform/network/ParsedContentHeaderFieldParameters.cpp",
         "patchSetId": 8
@@ -64,6 +82,24 @@
       "writtenOn": "2017-11-27T11:15:15Z",
       "side": 1,
       "message": "ditto as ParsedContentDisposition::ParameterValueForName() about Body::formData() and MIMEHeader::ParseHeader()",
+      "revId": "a9b9891e70f9f5b0c92646f3e98c7dfa23fe3a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40317282_ed60605f",
+        "filename": "third_party/WebKit/Source/platform/network/ParsedContentType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-28T03:34:28Z",
+      "side": 1,
+      "message": "ditto. nvm",
+      "parentUuid": "557c99de_b98e1915",
       "revId": "a9b9891e70f9f5b0c92646f3e98c7dfa23fe3a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
