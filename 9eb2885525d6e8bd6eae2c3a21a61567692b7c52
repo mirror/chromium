@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f597c048_6277e454",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T16:35:03Z",
+      "side": 1,
+      "message": "nit: Can return early if xwindow_ \u003d\u003d None instead?",
+      "revId": "9eb2885525d6e8bd6eae2c3a21a61567692b7c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
