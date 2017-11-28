@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b20b705_fca52d4b",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/repaint-overlay/layers-overlay.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-28T23:10:26Z",
+      "side": 1,
+      "message": "You don\u0027t need to review this file because it\u0027s generated. The changes reflect changes to repaint_overlay.py that I made weeks ago but forgot to update this file.",
+      "revId": "4c661c6a0320df574723a8a3f6119605cba72a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
