@@ -30,6 +30,7 @@ class ReferrerChainData : public base::SupportsUserData::Data {
   explicit ReferrerChainData(std::unique_ptr<ReferrerChain> referrer_chain);
   ~ReferrerChainData() override;
   ReferrerChain* GetReferrerChain();
+  static const char kDownloadReferrerChainDataKey[];
 
  private:
   std::unique_ptr<ReferrerChain> referrer_chain_;

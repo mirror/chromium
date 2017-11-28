@@ -84,6 +84,9 @@ static const int kNavigationRecordMaxSize = 100;
 static const int kReferrerChainMaxLength = 10;
 
 // -------------------------ReferrerChainData-----------------------
+const char ReferrerChainData::kDownloadReferrerChainDataKey[] =
+    "Referrer_chain_data_key";
+
 ReferrerChainData::ReferrerChainData(
     std::unique_ptr<ReferrerChain> referrer_chain)
     : referrer_chain_(std::move(referrer_chain)) {}
