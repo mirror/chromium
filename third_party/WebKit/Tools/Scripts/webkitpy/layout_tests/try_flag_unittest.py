@@ -115,13 +115,23 @@ class TryFlagTest(unittest.TestCase):
 
     def test_update(self):
         host = MockHost()
+        filesystem = host.filesystem
+        finder = PathFinder(filesystem)
+
+        flag_expectations_file = finder.path_from_layout_tests(
+            'FlagExpectations', 'foo')
+        filesystem.write_text_file(
+            flag_expectations_file,
+            'something/pass-unexpectedly-mac.html [ Fail ]')
+
         try_jobs = {
             self.linux_build: TryJobStatus('COMPLETED', 'SUCCESS'),
             self.win_build: TryJobStatus('COMPLETED', 'SUCCESS'),
             self.mac_build: TryJobStatus('COMPLETED', 'SUCCESS')
         }
         self._setup_mock_results(host.buildbot)
-        TryFlag(['update'], host, MockGitCL(host, try_jobs)).run()
+        cmd = ['update', '--flag=--foo']
+        TryFlag(cmd, host, MockGitCL(host, try_jobs)).run()
 
         def results_url(build):
             return '%s/%s/%s/layout-test-results/results.html' % (
@@ -148,6 +158,7 @@ class TryFlagTest(unittest.TestCase):
 
     def test_invalid_action(self):
         host = MockHost()
-        TryFlag(['invalid'], host, MockGitCL(host)).run()
+        cmd = ['invalid', '--flag=--foo']
+        TryFlag(cmd, host, MockGitCL(host)).run()
         self.assertEqual(host.stderr.getvalue(),
                          'specify "trigger" or "update"\n')
