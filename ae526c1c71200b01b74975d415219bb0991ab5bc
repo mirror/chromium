@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c8dd02c_dace9988",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-28T20:08:22Z",
+      "side": 1,
+      "message": "Remove/Rename? Here and the other places. :)",
+      "range": {
+        "startLine": 830,
+        "startChar": 7,
+        "endLine": 830,
+        "endChar": 27
+      },
+      "revId": "ae526c1c71200b01b74975d415219bb0991ab5bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

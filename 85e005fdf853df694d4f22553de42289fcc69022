@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "66d71753_ddd794ff",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-28T20:08:22Z",
+      "side": 1,
+      "message": "When you rationalize, is it possible that you put \"only_fill_when_focused\" on the first field?\nFor example, if we predict the first field is a area code. then the second field is the whole number, we would probably fill only the second.\n\nIf in that case we are wrong and the user put his number in the first field too, if think we would not catch it with the current code, but we would if we did not break. WDYT?",
+      "parentUuid": "b27fca86_2da101d2",
+      "range": {
+        "startLine": 337,
+        "startChar": 4,
+        "endLine": 338,
+        "endChar": 12
+      },
+      "revId": "85e005fdf853df694d4f22553de42289fcc69022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d64f3ea_4a4a8ce3",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "It\u0027s not a instance method of a class, how to mark it private?",
       "parentUuid": "3d64f3ea_4a4a8ce3",
+      "range": {
+        "startLine": 345,
+        "startChar": 5,
+        "endLine": 345,
+        "endChar": 62
+      },
+      "revId": "85e005fdf853df694d4f22553de42289fcc69022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f25a7c9_15e5f490",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-28T20:08:22Z",
+      "side": 1,
+      "message": "D\u0027oh! You can\u0027t :P I just read that part too fast.",
+      "parentUuid": "e0ccc8f8_cb36cb9f",
       "range": {
         "startLine": 345,
         "startChar": 5,
