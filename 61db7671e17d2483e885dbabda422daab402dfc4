@@ -105,6 +105,24 @@
       "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82e7f61_9a400ada",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-11-28T20:00:15Z",
+      "side": 1,
+      "message": "Either way isn\u0027t great - if we post to the UI thread then there\u0027s extra latency before the window contents become visible. Best case might be to post to a worker thread and do it there - then there\u0027s lower latency and no deadlock risk. GDI is threadsafe, so that shouldn\u0027t be an issue.",
+      "parentUuid": "964a87a6_e0390e75",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
