@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f4013860_9fc710ef",
+        "filename": "components/exo/buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-28T04:57:29Z",
+      "side": 1,
+      "message": "nit: please remove these if possible as I assume they are no longer needed?",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "a11321911fa3f367952c7679b3d2f3372904ef9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f23f4f4b_71c30908",
         "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_texture_mailbox.txt",
         "patchSetId": 14
