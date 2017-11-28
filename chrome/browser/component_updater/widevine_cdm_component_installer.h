@@ -18,6 +18,42 @@ class ComponentUpdateService;
 // The first part is IO intensive so we do it asynchronously in the file thread.
 void RegisterWidevineCdmComponent(ComponentUpdateService* cus);
 
+class WidevineCdmComponentInstallerPolicy : public ComponentInstallerPolicy {
+ public:
+  WidevineCdmComponentInstallerPolicy();
+  ~WidevineCdmComponentInstallerPolicy() override {}
+
+ private:
+  // The following methods override ComponentInstallerPolicy.
+  bool SupportsGroupPolicyEnabledComponentUpdates() const override;
+  bool RequiresNetworkEncryption() const override;
+  update_client::CrxInstaller::Result OnCustomInstall(
+      const base::DictionaryValue& manifest,
+      const base::FilePath& install_dir) override;
+  void OnCustomUninstall() override;
+  bool VerifyInstallation(const base::DictionaryValue& manifest,
+                          const base::FilePath& install_dir) const override;
+  void ComponentReady(const base::Version& version,
+                      const base::FilePath& path,
+                      std::unique_ptr<base::DictionaryValue> manifest) override;
+  base::FilePath GetRelativeInstallDir() const override;
+  void GetHash(std::vector<uint8_t>* hash) const override;
+  std::string GetName() const override;
+  update_client::InstallerAttributes GetInstallerAttributes() const override;
+  std::vector<std::string> GetMimeTypes() const override;
+
+  // Checks and updates CDM adapter if necessary to make sure the latest CDM
+  // adapter is always used.
+  // Note: The component is ready when CDM is present, but the CDM won't be
+  // registered until the adapter is copied by this function (see
+  // VerifyInstallation).
+  void UpdateCdmAdapter(const base::Version& cdm_version,
+                        const base::FilePath& cdm_install_dir,
+                        std::unique_ptr<base::DictionaryValue> manifest);
+
+  DISALLOW_COPY_AND_ASSIGN(WidevineCdmComponentInstallerPolicy);
+};
+
 }  // namespace component_updater
 
 #endif  // CHROME_BROWSER_COMPONENT_UPDATER_WIDEVINE_CDM_COMPONENT_INSTALLER_H_

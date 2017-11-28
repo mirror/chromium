@@ -239,33 +239,6 @@ void UpdatePathService(const base::FilePath& path) {
 #endif  // !defined(OS_LINUX) && defined(GOOGLE_CHROME_BUILD)
 
 #if defined(GOOGLE_CHROME_BUILD)
-class FlashComponentInstallerPolicy : public ComponentInstallerPolicy {
- public:
-  FlashComponentInstallerPolicy();
-  ~FlashComponentInstallerPolicy() override {}
-
- private:
-  // The following methods override ComponentInstallerPolicy.
-  bool SupportsGroupPolicyEnabledComponentUpdates() const override;
-  bool RequiresNetworkEncryption() const override;
-  update_client::CrxInstaller::Result OnCustomInstall(
-      const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) override;
-  void OnCustomUninstall() override;
-  bool VerifyInstallation(const base::DictionaryValue& manifest,
-                          const base::FilePath& install_dir) const override;
-  void ComponentReady(const base::Version& version,
-                      const base::FilePath& path,
-                      std::unique_ptr<base::DictionaryValue> manifest) override;
-  base::FilePath GetRelativeInstallDir() const override;
-  void GetHash(std::vector<uint8_t>* hash) const override;
-  std::string GetName() const override;
-  update_client::InstallerAttributes GetInstallerAttributes() const override;
-  std::vector<std::string> GetMimeTypes() const override;
-
-  DISALLOW_COPY_AND_ASSIGN(FlashComponentInstallerPolicy);
-};
-
 FlashComponentInstallerPolicy::FlashComponentInstallerPolicy() {}
 
 bool FlashComponentInstallerPolicy::SupportsGroupPolicyEnabledComponentUpdates()

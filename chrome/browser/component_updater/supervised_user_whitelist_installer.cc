@@ -241,47 +241,6 @@ void RemoveUnregisteredWhitelistsOnTaskRunner(
   }
 }
 
-class SupervisedUserWhitelistComponentInstallerPolicy
-    : public ComponentInstallerPolicy {
- public:
-  using RawWhitelistReadyCallback =
-      base::Callback<void(const base::string16&, /* title */
-                          const base::FilePath&, /* icon_path */
-                          const base::FilePath& /* whitelist_path */)>;
-
-  SupervisedUserWhitelistComponentInstallerPolicy(
-      const std::string& crx_id,
-      const std::string& name,
-      const RawWhitelistReadyCallback& callback)
-      : crx_id_(crx_id), name_(name), callback_(callback) {}
-  ~SupervisedUserWhitelistComponentInstallerPolicy() override {}
-
- private:
-  // ComponentInstallerPolicy overrides:
-  bool VerifyInstallation(const base::DictionaryValue& manifest,
-                          const base::FilePath& install_dir) const override;
-  bool SupportsGroupPolicyEnabledComponentUpdates() const override;
-  bool RequiresNetworkEncryption() const override;
-  update_client::CrxInstaller::Result OnCustomInstall(
-      const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) override;
-  void OnCustomUninstall() override;
-  void ComponentReady(const base::Version& version,
-                      const base::FilePath& install_dir,
-                      std::unique_ptr<base::DictionaryValue> manifest) override;
-  base::FilePath GetRelativeInstallDir() const override;
-  void GetHash(std::vector<uint8_t>* hash) const override;
-  std::string GetName() const override;
-  update_client::InstallerAttributes GetInstallerAttributes() const override;
-  std::vector<std::string> GetMimeTypes() const override;
-
-  std::string crx_id_;
-  std::string name_;
-  RawWhitelistReadyCallback callback_;
-
-  DISALLOW_COPY_AND_ASSIGN(SupervisedUserWhitelistComponentInstallerPolicy);
-};
-
 bool SupervisedUserWhitelistComponentInstallerPolicy::VerifyInstallation(
     const base::DictionaryValue& manifest,
     const base::FilePath& install_dir) const {
