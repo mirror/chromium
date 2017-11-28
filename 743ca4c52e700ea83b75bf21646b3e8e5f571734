@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fc046e0_328cd319",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-28T17:21:04Z",
+      "side": 1,
+      "message": "Should be replaced with IsArcPlayStoreAvailable() check?\nEven if ShouldArcAlwaysStart() returns true, if PlayStore is available, it is necessary to show OOBE or ArcSupport UI must be shown, I think.\n\n(off topic): BTW, is there a bit more reliable way to check?\nSpecifically, is it possible to see if the wizard is shown or not directly?\nMaintaining similar logic here and there looks difficult to me.",
+      "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22776b2_060473d0",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-28T17:21:04Z",
+      "side": 1,
+      "message": "IIUC, we don\u0027t show ToS, if and only if PlayStore is not available.\nEven if ShouldArcAlwaysStart returns true, if PlayStore is available, logically OOBE needs to be shown, right?\nThen, could you remove this? Practically your focused case is covered by above, I think.",
+      "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
