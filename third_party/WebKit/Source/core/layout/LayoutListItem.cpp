@@ -337,11 +337,11 @@ void LayoutListItem::PositionListMarker() {
     RootInlineBox& root = marker_->InlineBoxWrapper()->Root();
     bool hit_self_painting_layer = false;
 
-    LayoutUnit line_top = root.LineTop();
-    LayoutUnit line_bottom = root.LineBottom();
-
     if (need_block_direction_align_)
       AlignMarkerInBlockDirection();
+
+    LayoutUnit line_top = root.LineTop();
+    LayoutUnit line_bottom = root.LineBottom();
 
     // TODO(jchaffraix): Propagating the overflow to the line boxes seems
     // pretty wrong (https://crbug.com/554160).
@@ -418,9 +418,11 @@ void LayoutListItem::PositionListMarker() {
     }
 
     if (adjust_overflow) {
-      LayoutRect marker_rect(
-          LayoutPoint(marker_logical_left + line_offset, block_offset),
-          marker_->Size());
+      // AlignMarkerInBlockDirection and pagination_strut might move root in
+      // block direction. We should add line_top when compute overflow.
+      LayoutRect marker_rect(LayoutPoint(marker_logical_left + line_offset,
+                                         block_offset + line_top),
+                             marker_->Size());
       if (!Style()->IsHorizontalWritingMode())
         marker_rect = marker_rect.TransposedRect();
       LayoutBox* o = marker_;
