@@ -16,6 +16,24 @@
       "revId": "f35ff3763bf47780532b4a169e14f747caf0c5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f5f62e_c9e74d17",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-28T03:00:33Z",
+      "side": 1,
+      "message": "\u003e Which one does have wrong value, |search_start| or |search_end|?\n\u003e I guess it is |search_start| since EditingPositionOf() may return wrong\n\u003e value.\n\u003e \n\u003e Possible values of |search_start| are:\n\u003e  - TABLE@0\n\u003e  - Before(TABLE)\n\u003e  - After(TABLE) ... this one?\n\nI think it\u0027s |search_start| being wrong. We get:\n\nc \u003d pos \u003d TABLE@0\nboundary \u003d TABLE\nstart \u003d OUTPUT@1 as ParentAnchoredEquivalent() moves the position out from table\nsearch_start \u003d OUTPUT@AfterAnchor as OUTPUT is editing-ignored content\nsearch_end \u003d TABLE@AfterChildren\n\nI\u0027m not sure which one of them is wrong exactly. However, |search_start| doesn\u0027t seem very reasonable since it\u0027s out of |boundary|\n\n\u003e \n\u003e It seems strange that EditingPositionOf() is called with anchor node and\n\u003e offset in container node. It should be container node + offset in container\n\u003e node.\n\nThis part seems OK, since |start| is offset in anchor as it\u0027s created by ParentAnchoredEquivalent().\n\n\u003e \n\u003e However, in this case, |start| may be TABLE@0.",
+      "parentUuid": "ed3de0d3_c8018d00",
+      "revId": "f35ff3763bf47780532b4a169e14f747caf0c5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
