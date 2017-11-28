@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af991113_ab9f4409",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T20:47:43Z",
+      "side": 1,
+      "message": "Is it OK to apply this check to all Resources?\n(This check was introduced in https://codereview.chromium.org/2830753003)\n+yhirano@ +horo@\n\nIf so, it\u0027s better to split out this part of change into a separate CL.",
+      "revId": "30e1a64f65da91d911d3c1eb929eaed6ca0cd47e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38fbd1d7_2c88e739",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T20:47:43Z",
+      "side": 1,
+      "message": "RawResource is not revalidated and thus NotifyResponseReceived() here should be no-op. How about removing this call?",
+      "revId": "30e1a64f65da91d911d3c1eb929eaed6ca0cd47e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632630e8_bc15a89e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T20:47:43Z",
+      "side": 1,
+      "message": "- The code below is from RawResource, but now this should be no-op for RawResource because RawResource is never revalidated.\n- For ScriptResource and CSSs, there seems no corresponding code, so previously ScriptResource::NotifyAppendData() and StylesheetResourceClient::DidAppendFirstData() were not called for successful revalidation.",
+      "revId": "30e1a64f65da91d911d3c1eb929eaed6ca0cd47e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

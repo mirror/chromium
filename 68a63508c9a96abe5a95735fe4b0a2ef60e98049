@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2426b549_4f76f054",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T20:47:43Z",
+      "side": 0,
+      "message": "RawResource must be never revalidated, so this is a dead code.\nHow about removing this code block and add CHECK(!IsCacheValidator()) at the head of this method instead, in a separate CL? +yhirano@",
+      "revId": "68a63508c9a96abe5a95735fe4b0a2ef60e98049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
