@@ -13,6 +13,7 @@
 class BrowserProcessImpl;
 class HistogramSynchronizer;
 class NativeBackendKWallet;
+class KeyStorageLinux;
 
 namespace android_webview {
 class AwFormDatabaseService;
@@ -266,6 +267,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
   friend class net::MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives;
   friend class rlz_lib::FinancialPing;
   friend class shell_integration::LaunchXdgUtilityScopedAllowBaseSyncPrimitives;
+  friend class ::KeyStorageLinux;
 
   ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
   ~ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
