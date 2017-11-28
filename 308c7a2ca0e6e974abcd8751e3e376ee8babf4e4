@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f84be58_45840571",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_gpu_fence.txt",
+        "patchSetId": 53
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T19:52:55Z",
+      "side": 1,
+      "message": "InsertClientGpuFenceCHROMIUM doesn\u0027t do a Wait, the client must call WaitGpuFenceCHROMIUM on the inserted fence separately if they want that.\n\nThis extension always works with a pair of connected fences. This call creates the second fence of a pair based on a client-created source fence, and inserts it into the service GL stream as a waitable object.\n\nI think we have a disconnect here about how the extension and underlying mechanism works? I\u0027ll try to expand the gpu_synchronization.md explanations. (I guess this is following the tradition of GL extension documentation which often only seems to make sense for people who already know how it works, but I\u0027d like to make this clearer if possible.)",
+      "parentUuid": "d2da97bf_c1b15c38",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 15
+      },
+      "revId": "308c7a2ca0e6e974abcd8751e3e376ee8babf4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3a56710_9654a40d",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 53
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cc49948a_a96c5445",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T19:52:55Z",
+      "side": 1,
+      "message": "Good point, moved to GetGpuFenceHandle.",
+      "parentUuid": "c3a56710_9654a40d",
+      "range": {
+        "startLine": 422,
+        "startChar": 2,
+        "endLine": 424,
+        "endChar": 25
+      },
+      "revId": "308c7a2ca0e6e974abcd8751e3e376ee8babf4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e53c9b7_df087d53",
         "filename": "gpu/command_buffer/cmd_buffer_functions.txt",
         "patchSetId": 53
@@ -68,6 +116,30 @@
       "revId": "308c7a2ca0e6e974abcd8751e3e376ee8babf4e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1a8667_d467eafd",
+        "filename": "gpu/command_buffer/cmd_buffer_functions.txt",
+        "patchSetId": 53
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T19:52:55Z",
+      "side": 1,
+      "message": "I couldn\u0027t figure out a way to do so since the asynchronous command buffer calls can\u0027t return values to the client. This splits client-side ID generation from the corresponding async service work which will complete later.",
+      "parentUuid": "0e53c9b7_df087d53",
+      "range": {
+        "startLine": 399,
+        "startChar": 52,
+        "endLine": 399,
+        "endChar": 60
+      },
+      "revId": "308c7a2ca0e6e974abcd8751e3e376ee8babf4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

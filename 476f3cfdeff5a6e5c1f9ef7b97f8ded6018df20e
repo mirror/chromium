@@ -1087,6 +1087,30 @@
     },
     {
       "key": {
+        "uuid": "f5afc82c_9248ad2f",
+        "filename": "ui/gl/gl_fence.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T19:52:55Z",
+      "side": 1,
+      "message": "gfx::GpuFence is an interface class consisting of the GetGpuFenceHandle and AsClientGpuFence methods. A class that implements this interface is compatible with the CHROMIUM_gpu_fence mechanism, and a GpuFence object owns the resources backing a GpuFenceHandle and is responsible for cleaning them up.\n\nThe caller uses AsClientGpuFence for the InsertClientGpuFenceCHROMIUM argument, and the implementation will then use GetGpuFenceHandle on the underlying object for IPC transport.\n\nWe\u0027ve been through multiple variations of this in the course of the review, and this is-a implementation seemed cleanest overall.\n\nBasically, the choices are:\n\n- the current implementation: GLFence is-a GpuFence since it\u0027s basically directly usable as a ClientGpuFence for the API.\n\n- don\u0027t have a GpuFence class at all, and work with GpuFenceHandle directly throughout the API. This could work, but would make resource ownership rather nasty. GpuFenceHandle is copyable, but the underlying resource (file descriptor in this case) must be closed exactly once.\n\n- make GpuFence a pure container that owns a GpuFenceHandle. I had this implemented in PS42, see https://chromium-review.googlesource.com/c/chromium/src/+/680135/42/ui/gfx/gpu_fence.h and https://chromium-review.googlesource.com/c/chromium/src/+/680135/42/ui/gl/gl_fence.h . This was rather confusing since a GLFence conceptually owns the resource, so in this implementation GLFence::GetGpuFenceHandle passed ownership to the caller. The resulting code in https://chromium-review.googlesource.com/c/chromium/src/+/680135/42/docs/design/gpu_synchronization.md looked weird, where the \"send fence\" case needed to create a GLFence using a special CreateForGpuFence method and then use the GpuFenceHandle from it to construct a GpuFence. In review you had requested that I should rename CreateForGpuFence to CreateGpuFence which I think is evidence that it\u0027s a confusing API - this kind of GLFence isn\u0027t a GpuFence, just a specially constructed GLFence that can be used to create a GpuFence.\n\n- have GpuFence own a GLFence. This seems like a layering violation unless we make a EGLGpuFence subclass just for this purpose, and would involve a fair amount of boilerplate since we\u0027d need a GetUnderlyingGLFence method.\n\nI\u0027d be happy to discuss this more, but I think this seems to be the cleanest approach so far.",
+      "parentUuid": "a649a00b_c9df928a",
+      "range": {
+        "startLine": 16,
+        "startChar": 24,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c51b9197_ac094881",
         "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
         "patchSetId": 46
@@ -1139,6 +1163,24 @@
     },
     {
       "key": {
+        "uuid": "f3033f69_9bb7bf42",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T19:52:55Z",
+      "side": 1,
+      "message": "MakeUnique can only use a public constructor, protected would still not work. I changed it to use WrapUnique at piman@\u0027s suggestion which works with a private constructor and doesn\u0027t need the helper class.",
+      "parentUuid": "0c3cdb82_2e84bfb5",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a227ffa7_a79e006b",
         "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
         "patchSetId": 46
@@ -1162,6 +1204,30 @@
     },
     {
       "key": {
+        "uuid": "a359428b_87695daf",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T19:52:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a227ffa7_a79e006b",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "882c984e_f424ad91",
         "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
         "patchSetId": 46
@@ -1176,6 +1242,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e614fd_b901f7ec",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T19:52:55Z",
+      "side": 1,
+      "message": "See the comment I added to gl_fence_android_native_fence_sync.h\u0027s owned_fd_ member. It\u0027s to avoid making EGL calls as part of command buffer IPC transport internals.",
+      "parentUuid": "882c984e_f424ad91",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1231,6 +1315,24 @@
     },
     {
       "key": {
+        "uuid": "e4cafb8e_d24feb24",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T19:52:55Z",
+      "side": 1,
+      "message": "I\u0027ve renamed the protected GLFenceEGL::Initialize to InitializeInternal to try to make it less confusing. GLFence is different from GLSurface and GLImage which have public Initialize methods that the caller must use after construction. The existing GLFence variants just build objects in the constructor, assuming it can\u0027t fail. The new types can have construction fail, so there needs to be a new mechanism to handle that.\n\nThe public API is to use the Create factory methods to get an initialized objects, it calls InitializeInternal to make this happen. I\u0027ve made this CreateInternal private since clients of this class should use one of the two public creation methods to ensure that the resulting object works as a non-null GpuFence. Clients could use GLFenceEGL::Create(type, attribs) to get an equivalent EGL object which may be useful for low-level code, but they shouldn\u0027t expect that to work as a GpuFence.\n\nAs per earlier discussions in the CL, I think changing the GLFence contract to require explicit client-side initialization would be a potential trap since in current usage a new GLFence is immediately usable. A private constructor with factory methods seemed cleanest.",
+      "parentUuid": "ec6772f8_8e421a20",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e46a084_3f181823",
         "filename": "ui/gl/gl_fence_android_native_fence_sync.h",
         "patchSetId": 46
@@ -1245,6 +1347,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e180f3_103a9e77",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T19:52:55Z",
+      "side": 1,
+      "message": "I added a comment to explain. Basically, CommandBufferProxyImpl::SendGpuFence needs to call CloneHandleForIPC(GetGpuFenceHandle)), and it would seem fragile to do a eglDupNativeFenceFDANDROID call there as a side effect to get the file descriptor. I think currently it would work since it\u0027s all part of the same call stack where presumably nobody had a chance to manipulate the thread EGL context in between, but it seems weird.\n\n(This would not be an issue if the GLES call used a GpuFenceHandle as its ClientGpuFence type which I had initially intended, but IIRC you had vetoed that.)",
+      "parentUuid": "5e46a084_3f181823",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

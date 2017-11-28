@@ -141,6 +141,30 @@
       "revId": "014001c69f80dd63ee925d45c21ec0a7707cb00d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fbbd97_ad1a847a",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 43
+      },
+      "lineNbr": 4666,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T19:52:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4f962415_f5fb5626",
+      "range": {
+        "startLine": 4666,
+        "startChar": 18,
+        "endLine": 4666,
+        "endChar": 32
+      },
+      "revId": "014001c69f80dd63ee925d45c21ec0a7707cb00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
