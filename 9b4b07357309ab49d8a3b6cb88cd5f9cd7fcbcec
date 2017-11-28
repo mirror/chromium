@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "162d8cdb_21221754",
+        "filename": "gpu/config/process_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-28T22:08:05Z",
+      "side": 1,
+      "message": "Could you perhaps factor out the map in write_os_type into a global variable so that this can just be a test of:\n  if not os_type in OS_TYPE_MAP\nor similar?",
+      "range": {
+        "startLine": 624,
+        "startChar": 12,
+        "endLine": 624,
+        "endChar": 13
+      },
+      "revId": "9b4b07357309ab49d8a3b6cb88cd5f9cd7fcbcec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c4a086_3f136614",
+        "filename": "gpu/config/process_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-28T22:08:05Z",
+      "side": 1,
+      "message": "Could you add the entry ID to this exception to aid tracking down the error?",
+      "revId": "9b4b07357309ab49d8a3b6cb88cd5f9cd7fcbcec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
