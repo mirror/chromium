@@ -21,11 +21,14 @@ struct MountOptions {
   MountOptions(const std::string& file_system_id,
                const std::string& display_name);
 
+  MountOptions(const MountOptions& source);
+
   std::string file_system_id;
   std::string display_name;
   bool writable;
   bool supports_notify_tag;
   int opened_files_limit;
+  bool persistent;
 };
 
 class ProviderId {
@@ -69,7 +72,8 @@ class ProvidedFileSystemInfo {
                          const base::FilePath& mount_path,
                          bool configurable,
                          bool watchable,
-                         extensions::FileSystemProviderSource source);
+                         extensions::FileSystemProviderSource source,
+                         bool persistent);
 
   ProvidedFileSystemInfo(const ProvidedFileSystemInfo& other);
 
@@ -85,6 +89,7 @@ class ProvidedFileSystemInfo {
   bool configurable() const { return configurable_; }
   bool watchable() const { return watchable_; }
   extensions::FileSystemProviderSource source() const { return source_; }
+  bool persistent() const { return persistent_; }
 
  private:
   // ID of the provider supplying this file system.
@@ -116,6 +121,9 @@ class ProvidedFileSystemInfo {
 
   // Source of the file system's data.
   extensions::FileSystemProviderSource source_;
+
+  // Whether the file system mount should be persisted over login sessions.
+  bool persistent_;
 };
 
 }  // namespace file_system_provider
