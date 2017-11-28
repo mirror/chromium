@@ -58,6 +58,8 @@ const GURL kTestUrl3("http://test.org/page3");
 const GURL kTestUrl3WithFragment("http://test.org/page3#ref1");
 const GURL kTestUrl4("http://test.org/page4");
 const GURL kTestUrl5("http://test.org/page5");
+const GURL kTestUrl6("http://test.org/page6");
+const GURL kTestUrl7("http://test.org/page7");
 const GURL kTestUrlRedirectsTo3("http://test.org/first");
 
 const ClientId kTestClientId1 = ClientId(kBookmarkNamespace, "1234");
@@ -65,16 +67,30 @@ const ClientId kTestClientId2 = ClientId(kDownloadNamespace, "1a2b3c4d");
 const ClientId kTestClientId3 = ClientId(kAsyncNamespace, "3456abcd");
 const ClientId kTestClientId4 = ClientId(kNTPSuggestionsNamespace, "5678");
 const ClientId kTestClientId5 = ClientId(kBrowserActionsNamespace, "9999");
+const ClientId kTestClientId6 = ClientId(kDownloadNamespace, "a1");
+const ClientId kTestClientId7 = ClientId(kDownloadNamespace, "b2");
 
 // Note: as most file size values are below 1 KiB, the file size samples added
 // to page size histograms will mostly fall into the 0-sized bucket. So when
 // checking for correct reporting a 0 will be directly used instead of the
 // specific file size constant divided by 1024.
-const int kTestFileSize1 = 444;  // Real size of offline_pages/test.mhtml.
-const int kTestFileSize2 = 450;  // Real size of offline_pages/hello.mhtml.
-const int kTestFileSize3 = 450;  // Ditto.
+const int kTestFileSize1 = 444;  // Real size of test.mhtml.
+const int kTestFileSize2 = 450;  // Real size of hello.mhtml.
+const int kTestFileSize3 = 450;  // Real size of hello.mhtml.
 const int kTestFileSize4NonExistent = 9999;
-const int kTestFileSize5 = 450;  // Ditto.
+const int kTestFileSize5 = 450;           // Real size of hello.mhtml.
+const int kTestFileSize6Mismatch = 1450;  // Wrong size of hello.mhtml.
+const int kTestFileSize7 = 450;           // Real size of hello.mhtml.
+
+const std::string kTestDigest2(
+    "\x90\x64\xF9\x7C\x94\xE5\x9E\x91\x83\x3D\x41\xB0\x36\x90\x0A\xDF\xB3\xB1"
+    "\x5C\x13\xBE\xB8\x35\x8C\xF6\x5B\xC4\xB5\x5A\xFC\x3A\xCC",
+    32);                                       // SHA256 Hash of hello.mhtml.
+const std::string kTestDigest6(kTestDigest2);  // SHA256 Hash of hello.mhtml.
+const std::string kTestDigest7Mismatch(
+    "\xff\x64\xF9\x7C\x94\xE5\x9E\x91\x83\x3D\x41\xB0\x36\x90\x0A\xDF\xB3\xB1"
+    "\x5C\x13\xBE\xB8\x35\x8C\xF6\x5B\xC4\xB5\x5A\xFC\x3A\xCC",
+    32);  // Wrong SHA256 Hash of hello.mhtml.
 
 const int kTabId = 1;
 const int kBufSize = 1024;
@@ -239,10 +255,12 @@ class TestOfflinePageArchiver : public OfflinePageArchiver {
  public:
   TestOfflinePageArchiver(const GURL& url,
                           const base::FilePath& archive_file_path,
-                          int archive_file_size)
+                          int archive_file_size,
+                          const std::string& digest)
       : url_(url),
         archive_file_path_(archive_file_path),
-        archive_file_size_(archive_file_size) {}
+        archive_file_size_(archive_file_size),
+        digest_(digest) {}
   ~TestOfflinePageArchiver() override {}
 
   void CreateArchive(const base::FilePath& archives_dir,
@@ -252,13 +270,14 @@ class TestOfflinePageArchiver : public OfflinePageArchiver {
         FROM_HERE,
         base::Bind(callback, this, ArchiverResult::SUCCESSFULLY_CREATED, url_,
                    archive_file_path_, base::string16(), archive_file_size_,
-                   std::string()));
+                   digest_));
   }
 
  private:
   const GURL url_;
   const base::FilePath archive_file_path_;
   const int archive_file_size_;
+  const std::string digest_;
 
   DISALLOW_COPY_AND_ASSIGN(TestOfflinePageArchiver);
 };
@@ -275,6 +294,7 @@ class OfflinePageRequestJobTest : public testing::Test {
 
   void SimulateHasNetworkConnectivity(bool has_connectivity);
   void RunUntilIdle();
+  void WaitForAsyncOperation();
 
   void SavePage(const GURL& url,
                 const ClientId& client_id,
@@ -395,6 +415,9 @@ class OfflinePageRequestJobTest : public testing::Test {
   std::unique_ptr<TestURLRequestDelegate> url_request_delegate_;
   std::unique_ptr<net::URLRequest> request_;
 
+  bool async_operation_completed_ = false;
+  base::Closure async_operation_completed_callback_;
+
   DISALLOW_COPY_AND_ASSIGN(OfflinePageRequestJobTest);
 };
 
@@ -451,7 +474,7 @@ void OfflinePageRequestJobTest::SetUp() {
   base::FilePath archive_file_path =
       test_data_dir_path.AppendASCII("offline_pages").AppendASCII("test.mhtml");
   std::unique_ptr<TestOfflinePageArchiver> archiver(new TestOfflinePageArchiver(
-      kTestUrl1, archive_file_path, kTestFileSize1));
+      kTestUrl1, archive_file_path, kTestFileSize1, std::string()));
 
   SavePage(kTestUrl1, kTestClientId1, GURL(), std::move(archiver));
 
@@ -461,8 +484,8 @@ void OfflinePageRequestJobTest::SetUp() {
       test_data_dir_path.AppendASCII("offline_pages")
           .AppendASCII("hello.mhtml");
   std::unique_ptr<TestOfflinePageArchiver> archiver2(
-      new TestOfflinePageArchiver(kTestUrl1, archive_file_path2,
-                                  kTestFileSize2));
+      new TestOfflinePageArchiver(kTestUrl1, archive_file_path2, kTestFileSize2,
+                                  kTestDigest2));
 
   // Make sure that the creation time of 2nd offline file is later.
   clock_.Advance(base::TimeDelta::FromMinutes(10));
@@ -476,7 +499,7 @@ void OfflinePageRequestJobTest::SetUp() {
           .AppendASCII("hello.mhtml");
   std::unique_ptr<TestOfflinePageArchiver> archiver3(
       new TestOfflinePageArchiver(kTestUrl3WithFragment, archive_file_path3,
-                                  kTestFileSize3));
+                                  kTestFileSize3, std::string()));
 
   SavePage(kTestUrl3WithFragment, kTestClientId3, kTestUrlRedirectsTo3,
            std::move(archiver3));
@@ -487,7 +510,7 @@ void OfflinePageRequestJobTest::SetUp() {
           .AppendASCII("nonexistent.mhtml");
   std::unique_ptr<TestOfflinePageArchiver> archiver4(
       new TestOfflinePageArchiver(kTestUrl4, archive_file_path4,
-                                  kTestFileSize4NonExistent));
+                                  kTestFileSize4NonExistent, std::string()));
 
   SavePage(kTestUrl4, kTestClientId4, GURL(), std::move(archiver4));
 
@@ -496,14 +519,34 @@ void OfflinePageRequestJobTest::SetUp() {
       test_data_dir_path.AppendASCII("offline_pages")
           .AppendASCII("hello.mhtml");
   std::unique_ptr<TestOfflinePageArchiver> archiver5(
-      new TestOfflinePageArchiver(kTestUrl5, archive_file_path5,
-                                  kTestFileSize5));
+      new TestOfflinePageArchiver(kTestUrl5, archive_file_path5, kTestFileSize5,
+                                  std::string()));
 
   SavePage(kTestUrl5, kTestClientId5, kTestUrl5, std::move(archiver5));
 
   // Check if the original URL is still present.
   OfflinePageItem page = GetPage(offline_id5());
   EXPECT_EQ(kTestUrl5, page.original_url);
+
+  // Save an offline page pointing to mismatched file size.
+  base::FilePath archive_file_path6 =
+      test_data_dir_path.AppendASCII("offline_pages")
+          .AppendASCII("hello.mhtml");
+  std::unique_ptr<TestOfflinePageArchiver> archiver6(
+      new TestOfflinePageArchiver(kTestUrl6, archive_file_path6,
+                                  kTestFileSize6Mismatch, kTestDigest6));
+
+  SavePage(kTestUrl6, kTestClientId6, GURL(), std::move(archiver6));
+
+  // Save an offline page pointing to mismatched digest
+  base::FilePath archive_file_path7 =
+      test_data_dir_path.AppendASCII("offline_pages")
+          .AppendASCII("hello.mhtml");
+  std::unique_ptr<TestOfflinePageArchiver> archiver7(
+      new TestOfflinePageArchiver(kTestUrl7, archive_file_path7, kTestFileSize7,
+                                  kTestDigest7Mismatch));
+
+  SavePage(kTestUrl7, kTestClientId7, GURL(), std::move(archiver7));
 }
 
 void OfflinePageRequestJobTest::TearDown() {
@@ -518,6 +561,15 @@ void OfflinePageRequestJobTest::SimulateHasNetworkConnectivity(bool online) {
 
 void OfflinePageRequestJobTest::RunUntilIdle() {
   base::RunLoop().RunUntilIdle();
+}
+
+void OfflinePageRequestJobTest::WaitForAsyncOperation() {
+  // No need to wait if async operation is not needed.
+  if (async_operation_completed_)
+    return;
+  base::RunLoop run_loop;
+  async_operation_completed_callback_ = run_loop.QuitClosure();
+  run_loop.Run();
 }
 
 void OfflinePageRequestJobTest::SetUpNetworkObjectsOnIO() {
@@ -673,6 +725,7 @@ void OfflinePageRequestJobTest::SavePage(
     const ClientId& client_id,
     const GURL& original_url,
     std::unique_ptr<OfflinePageArchiver> archiver) {
+  async_operation_completed_ = false;
   OfflinePageModel::SavePageParams save_page_params;
   save_page_params.url = url;
   save_page_params.client_id = client_id;
@@ -681,7 +734,7 @@ void OfflinePageRequestJobTest::SavePage(
       save_page_params, std::move(archiver),
       base::Bind(&OfflinePageRequestJobTest::OnSavePageDone,
                  base::Unretained(this)));
-  RunUntilIdle();
+  WaitForAsyncOperation();
 }
 
 void OfflinePageRequestJobTest::OnSavePageDone(SavePageResult result,
@@ -697,6 +750,10 @@ void OfflinePageRequestJobTest::OnSavePageDone(SavePageResult result,
     offline_id4_ = offline_id;
   else if (offline_id5_ == -1)
     offline_id5_ = offline_id;
+
+  async_operation_completed_ = true;
+  if (!async_operation_completed_callback_.is_null())
+    async_operation_completed_callback_.Run();
 }
 
 OfflinePageItem OfflinePageRequestJobTest::GetPage(int64_t offline_id) {
@@ -1221,6 +1278,162 @@ TEST_F(OfflinePageRequestJobTest, LoadOfflinePageFromNonExistentFile) {
                          OfflinePageRequestJob::AccessEntryPoint::LINK);
   ExpectOfflinePageSizeUniqueSample(kTestClientId4,
                                     kTestFileSize4NonExistent / 1024, 1);
+  ExpectOnlinePageSizeTotalSuffixCount(0);
+}
+
+TEST_F(OfflinePageRequestJobTest, FileSizeMismatchOnDisconnectedNetwork) {
+  SimulateHasNetworkConnectivity(false);
+
+  InterceptRequest(kTestUrl6, "GET", "", "", content::RESOURCE_TYPE_MAIN_FRAME);
+  base::RunLoop().Run();
+
+  EXPECT_EQ(0, bytes_read());
+  EXPECT_FALSE(is_offline_page_set_in_navigation_data());
+  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ExpectOneUniqueSampleForAggregatedRequestResult(
+      OfflinePageRequestJob::AggregatedRequestResult::
+          DIGEST_MISMATCH_ON_DISCONNECTED_NETWORK);
+  ExpectNoAccessEntryPoint();
+  ExpectOfflinePageSizeTotalSuffixCount(0);
+  ExpectOnlinePageSizeTotalSuffixCount(0);
+}
+
+TEST_F(OfflinePageRequestJobTest, FileSizeMismatchOnProhibitivelySlowNetwork) {
+  SimulateHasNetworkConnectivity(true);
+  test_previews_decider()->set_should_allow_preview(true);
+
+  InterceptRequest(kTestUrl6, "GET", "", "", content::RESOURCE_TYPE_MAIN_FRAME);
+  base::RunLoop().Run();
+
+  EXPECT_EQ(0, bytes_read());
+  EXPECT_FALSE(is_offline_page_set_in_navigation_data());
+  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ExpectOneUniqueSampleForAggregatedRequestResult(
+      OfflinePageRequestJob::AggregatedRequestResult::
+          DIGEST_MISMATCH_ON_PROHIBITIVELY_SLOW_NETWORK);
+  ExpectNoAccessEntryPoint();
+  ExpectOfflinePageSizeTotalSuffixCount(0);
+  ExpectOnlinePageSizeTotalSuffixCount(0);
+}
+
+TEST_F(OfflinePageRequestJobTest, FileSizeMismatchOnConnectedNetwork) {
+  SimulateHasNetworkConnectivity(true);
+
+  // When custom offline header exists and contains value other than
+  // "reason=error", it means that offline page is forced to load.
+  InterceptRequest(kTestUrl6, "GET", kOfflinePageHeader,
+                   std::string(kOfflinePageHeaderReasonKey) + "=download",
+                   content::RESOURCE_TYPE_MAIN_FRAME);
+  base::RunLoop().Run();
+
+  EXPECT_EQ(0, bytes_read());
+  EXPECT_FALSE(is_offline_page_set_in_navigation_data());
+  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ExpectOneUniqueSampleForAggregatedRequestResult(
+      OfflinePageRequestJob::AggregatedRequestResult::
+          DIGEST_MISMATCH_ON_CONNECTED_NETWORK);
+  ExpectNoAccessEntryPoint();
+  ExpectOfflinePageSizeTotalSuffixCount(0);
+  ExpectOnlinePageSizeTotalSuffixCount(0);
+}
+
+TEST_F(OfflinePageRequestJobTest, FileSizeMismatchOnFlakyNetwork) {
+  SimulateHasNetworkConnectivity(true);
+
+  // When custom offline header exists and contains "reason=error", it means
+  // that net error is hit in last request due to flaky network.
+  InterceptRequest(kTestUrl6, "GET", kOfflinePageHeader,
+                   std::string(kOfflinePageHeaderReasonKey) + "=" +
+                       kOfflinePageHeaderReasonValueDueToNetError,
+                   content::RESOURCE_TYPE_MAIN_FRAME);
+  base::RunLoop().Run();
+
+  EXPECT_EQ(0, bytes_read());
+  EXPECT_FALSE(is_offline_page_set_in_navigation_data());
+  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ExpectOneUniqueSampleForAggregatedRequestResult(
+      OfflinePageRequestJob::AggregatedRequestResult::
+          DIGEST_MISMATCH_ON_FLAKY_NETWORK);
+  ExpectNoAccessEntryPoint();
+  ExpectOfflinePageSizeTotalSuffixCount(0);
+  ExpectOnlinePageSizeTotalSuffixCount(0);
+}
+
+TEST_F(OfflinePageRequestJobTest, DigestMismatchOnDisconnectedNetwork) {
+  SimulateHasNetworkConnectivity(false);
+
+  InterceptRequest(kTestUrl7, "GET", "", "", content::RESOURCE_TYPE_MAIN_FRAME);
+  base::RunLoop().Run();
+
+  EXPECT_EQ(0, bytes_read());
+  EXPECT_FALSE(is_offline_page_set_in_navigation_data());
+  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ExpectOneUniqueSampleForAggregatedRequestResult(
+      OfflinePageRequestJob::AggregatedRequestResult::
+          DIGEST_MISMATCH_ON_DISCONNECTED_NETWORK);
+  ExpectNoAccessEntryPoint();
+  ExpectOfflinePageSizeTotalSuffixCount(0);
+  ExpectOnlinePageSizeTotalSuffixCount(0);
+}
+
+TEST_F(OfflinePageRequestJobTest, DigestMismatchOnProhibitivelySlowNetwork) {
+  SimulateHasNetworkConnectivity(true);
+  test_previews_decider()->set_should_allow_preview(true);
+
+  InterceptRequest(kTestUrl7, "GET", "", "", content::RESOURCE_TYPE_MAIN_FRAME);
+  base::RunLoop().Run();
+
+  EXPECT_EQ(0, bytes_read());
+  EXPECT_FALSE(is_offline_page_set_in_navigation_data());
+  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ExpectOneUniqueSampleForAggregatedRequestResult(
+      OfflinePageRequestJob::AggregatedRequestResult::
+          DIGEST_MISMATCH_ON_PROHIBITIVELY_SLOW_NETWORK);
+  ExpectNoAccessEntryPoint();
+  ExpectOfflinePageSizeTotalSuffixCount(0);
+  ExpectOnlinePageSizeTotalSuffixCount(0);
+}
+
+TEST_F(OfflinePageRequestJobTest, DigestMismatchOnConnectedNetwork) {
+  SimulateHasNetworkConnectivity(true);
+
+  // When custom offline header exists and contains value other than
+  // "reason=error", it means that offline page is forced to load.
+  InterceptRequest(kTestUrl7, "GET", kOfflinePageHeader,
+                   std::string(kOfflinePageHeaderReasonKey) + "=download",
+                   content::RESOURCE_TYPE_MAIN_FRAME);
+  base::RunLoop().Run();
+
+  EXPECT_EQ(0, bytes_read());
+  EXPECT_FALSE(is_offline_page_set_in_navigation_data());
+  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ExpectOneUniqueSampleForAggregatedRequestResult(
+      OfflinePageRequestJob::AggregatedRequestResult::
+          DIGEST_MISMATCH_ON_CONNECTED_NETWORK);
+  ExpectNoAccessEntryPoint();
+  ExpectOfflinePageSizeTotalSuffixCount(0);
+  ExpectOnlinePageSizeTotalSuffixCount(0);
+}
+
+TEST_F(OfflinePageRequestJobTest, DigestMismatchOnFlakyNetwork) {
+  SimulateHasNetworkConnectivity(true);
+
+  // When custom offline header exists and contains "reason=error", it means
+  // that net error is hit in last request due to flaky network.
+  InterceptRequest(kTestUrl7, "GET", kOfflinePageHeader,
+                   std::string(kOfflinePageHeaderReasonKey) + "=" +
+                       kOfflinePageHeaderReasonValueDueToNetError,
+                   content::RESOURCE_TYPE_MAIN_FRAME);
+  base::RunLoop().Run();
+
+  EXPECT_EQ(0, bytes_read());
+  EXPECT_FALSE(is_offline_page_set_in_navigation_data());
+  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  ExpectOneUniqueSampleForAggregatedRequestResult(
+      OfflinePageRequestJob::AggregatedRequestResult::
+          DIGEST_MISMATCH_ON_FLAKY_NETWORK);
+  ExpectNoAccessEntryPoint();
+  ExpectOfflinePageSizeTotalSuffixCount(0);
   ExpectOnlinePageSizeTotalSuffixCount(0);
 }
 
