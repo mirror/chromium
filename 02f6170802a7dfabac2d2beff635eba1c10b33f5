@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1387a08d_21b911c4",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-28T11:48:00Z",
+      "side": 1,
+      "message": "It\u0027s a separate issue, but I wonder if a builder pattern would be appropriate here:\n\nThrottlingURLLoader::Builder().SetLoaderCallback().SetThrottles()....CreateAndStart() should help readability.\n\nKinuko-san, WDYT?",
+      "range": {
+        "startLine": 57,
+        "startChar": 46,
+        "endLine": 57,
+        "endChar": 66
+      },
+      "revId": "02f6170802a7dfabac2d2beff635eba1c10b33f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
