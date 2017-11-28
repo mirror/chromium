@@ -421,7 +421,7 @@ PermissionDecisionAutoBlocker::PermissionDecisionAutoBlocker(Profile* profile)
     : profile_(profile),
       db_manager_(nullptr),
       safe_browsing_timeout_(kCheckUrlTimeoutMs),
-      clock_(new base::DefaultClock()) {
+      clock_(base::DefaultClock::GetInstance()) {
   safe_browsing::SafeBrowsingService* sb_service =
       g_browser_process->safe_browsing_service();
   if (sb_service)
@@ -469,7 +469,6 @@ void PermissionDecisionAutoBlocker::
   safe_browsing_timeout_ = timeout;
 }
 
-void PermissionDecisionAutoBlocker::SetClockForTesting(
-    std::unique_ptr<base::Clock> clock) {
-  clock_ = std::move(clock);
+void PermissionDecisionAutoBlocker::SetClockForTesting(base::Clock* clock) {
+  clock_ = clock;
 }

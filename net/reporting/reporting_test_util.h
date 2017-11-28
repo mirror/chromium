@@ -10,6 +10,8 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/test/simple_test_clock.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "net/reporting/reporting_context.h"
 #include "net/reporting/reporting_delegate.h"
 #include "net/reporting/reporting_uploader.h"
@@ -105,12 +107,8 @@ class TestReportingContext : public ReportingContext {
   TestReportingContext(const ReportingPolicy& policy);
   ~TestReportingContext();
 
-  base::SimpleTestClock* test_clock() {
-    return reinterpret_cast<base::SimpleTestClock*>(clock());
-  }
-  base::SimpleTestTickClock* test_tick_clock() {
-    return reinterpret_cast<base::SimpleTestTickClock*>(tick_clock());
-  }
+  base::SimpleTestClock* test_clock() { return &clock_; }
+  base::SimpleTestTickClock* test_tick_clock() { return &tick_clock_; }
   base::MockTimer* test_delivery_timer() { return delivery_timer_; }
   base::MockTimer* test_garbage_collection_timer() {
     return garbage_collection_timer_;
@@ -123,6 +121,9 @@ class TestReportingContext : public ReportingContext {
   }
 
  private:
+  base::SimpleTestClock clock_;
+  base::SimpleTestTickClock tick_clock_;
+
   // Owned by the Persister and GarbageCollector, respectively, but referenced
   // here to preserve type:
 

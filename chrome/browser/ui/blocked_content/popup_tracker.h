@@ -44,9 +44,6 @@ class PopupTracker : public content::WebContentsObserver,
   void WasShown() override;
   void WasHidden() override;
 
-  // The clock which is used by the visibility tracker.
-  std::unique_ptr<base::DefaultTickClock> tick_clock_;
-
   // The |first_load_visibility_tracker_| tracks the time this WebContents is in
   // the foreground for the duration of the first page load.
   std::unique_ptr<ScopedVisibilityTracker> first_load_visibility_tracker_;

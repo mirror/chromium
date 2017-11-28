@@ -196,7 +196,7 @@ class RendererController final : public SharedSession::Client,
   // remote the content while this timer is running.
   base::OneShotTimer delayed_start_stability_timer_;
 
-  std::unique_ptr<base::TickClock> clock_;
+  base::TickClock* clock_;
 
   // The estimated transmission capacity (bytes/s) from Remoter.
   double transmission_capacity_ = 0;

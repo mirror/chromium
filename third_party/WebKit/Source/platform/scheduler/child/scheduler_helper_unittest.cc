@@ -52,14 +52,13 @@ void AppendToVectorReentrantTask(base::SingleThreadTaskRunner* task_runner,
 class SchedulerHelperTest : public ::testing::Test {
  public:
   SchedulerHelperTest()
-      : clock_(new base::SimpleTestTickClock()),
-        mock_task_runner_(new cc::OrderedSimpleTaskRunner(clock_.get(), false)),
+      : mock_task_runner_(new cc::OrderedSimpleTaskRunner(&clock_, false)),
         scheduler_helper_(new WorkerSchedulerHelper(
             CreateTaskQueueManagerWithUnownedClockForTest(nullptr,
                                                           mock_task_runner_,
-                                                          clock_.get()))),
+                                                          &clock_))),
         default_task_runner_(scheduler_helper_->DefaultWorkerTaskQueue()) {
-    clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
+    clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
   }
 
   ~SchedulerHelperTest() override {}
@@ -84,7 +83,7 @@ class SchedulerHelperTest : public ::testing::Test {
   }
 
  protected:
-  std::unique_ptr<base::SimpleTestTickClock> clock_;
+  base::SimpleTestTickClock clock_;
   scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
 
   std::unique_ptr<WorkerSchedulerHelper> scheduler_helper_;

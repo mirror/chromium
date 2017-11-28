@@ -31,13 +31,12 @@ void AppendToVectorTestTask(std::vector<std::string>* vector,
 class WorkerGlobalScopeSchedulerTest : public ::testing::Test {
  public:
   WorkerGlobalScopeSchedulerTest()
-      : clock_(new base::SimpleTestTickClock()),
-        mock_task_runner_(new base::TestSimpleTaskRunner()),
+      : mock_task_runner_(new base::TestSimpleTaskRunner()),
         scheduler_(new WorkerSchedulerImpl(
             CreateTaskQueueManagerWithUnownedClockForTest(nullptr,
                                                           mock_task_runner_,
-                                                          clock_.get()))) {
-    clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
+                                                          &clock_))) {
+    clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
   }
 
   ~WorkerGlobalScopeSchedulerTest() override {}
@@ -60,7 +59,7 @@ class WorkerGlobalScopeSchedulerTest : public ::testing::Test {
   }
 
  protected:
-  std::unique_ptr<base::SimpleTestTickClock> clock_;
+  base::SimpleTestTickClock clock_;
   scoped_refptr<base::TestSimpleTaskRunner> mock_task_runner_;
 
   std::unique_ptr<WorkerSchedulerImpl> scheduler_;

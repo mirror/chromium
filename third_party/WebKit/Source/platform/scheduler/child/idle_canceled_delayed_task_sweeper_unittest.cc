@@ -32,12 +32,11 @@ class IdleCanceledDelayedTaskSweeperTest : public ::testing::Test,
                                            public IdleHelper::Delegate {
  public:
   IdleCanceledDelayedTaskSweeperTest()
-      : clock_(new base::SimpleTestTickClock()),
-        mock_task_runner_(new cc::OrderedSimpleTaskRunner(clock_.get(), true)),
+      : mock_task_runner_(new cc::OrderedSimpleTaskRunner(&clock_, true)),
         scheduler_helper_(new MainThreadSchedulerHelper(
             CreateTaskQueueManagerWithUnownedClockForTest(nullptr,
                                                           mock_task_runner_,
-                                                          clock_.get()),
+                                                          &clock_),
             nullptr)),
         idle_helper_(
             new IdleHelper(scheduler_helper_.get(),
@@ -51,7 +50,7 @@ class IdleCanceledDelayedTaskSweeperTest : public ::testing::Test,
             new IdleCanceledDelayedTaskSweeper(scheduler_helper_.get(),
                                                idle_helper_->IdleTaskRunner())),
         default_task_queue_(scheduler_helper_->DefaultMainThreadTaskQueue()) {
-    clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
+    clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
   }
 
   ~IdleCanceledDelayedTaskSweeperTest() override {}
@@ -75,7 +74,7 @@ class IdleCanceledDelayedTaskSweeperTest : public ::testing::Test,
   void OnPendingTasksChanged(bool has_tasks) {}
 
  protected:
-  std::unique_ptr<base::SimpleTestTickClock> clock_;
+  base::SimpleTestTickClock clock_;
   scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
 
   std::unique_ptr<MainThreadSchedulerHelper> scheduler_helper_;
@@ -124,7 +123,7 @@ TEST_F(IdleCanceledDelayedTaskSweeperTest, TestSweep) {
   // Give the IdleCanceledDelayedTaskSweeper a chance to run but don't let
   // the first non canceled delayed task run.  This is important because the
   // canceled tasks would get removed by TaskQueueImpl::WakeUpForDelayedWork.
-  clock_->Advance(base::TimeDelta::FromSeconds(40));
+  clock_.Advance(base::TimeDelta::FromSeconds(40));
   idle_helper_->EnableLongIdlePeriod();
   mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(40));
 

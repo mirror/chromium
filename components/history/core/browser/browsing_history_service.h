@@ -254,7 +254,7 @@ class BrowsingHistoryService : public HistoryServiceObserver,
   syncer::SyncService* sync_service_;
 
   // The clock used to vend times.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   base::WeakPtrFactory<BrowsingHistoryService> weak_factory_;
 
