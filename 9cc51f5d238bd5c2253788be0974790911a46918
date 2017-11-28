@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f43ceead_9c9eff3d",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-28T22:06:31Z",
+      "side": 1,
+      "message": "I\u0027m guessing you need to plumb a LocalFrame or LocalFrameView pointer to this method. Having the dirty bit shared by all the OOPIFs in a process seems problematic (as you note in a comment below), in particular if an OOPIF and the main frame are in the same process.",
+      "revId": "9cc51f5d238bd5c2253788be0974790911a46918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564b4af7_b9cad9db",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-28T22:06:31Z",
+      "side": 1,
+      "message": "What is the consequence of ignoring it?",
+      "revId": "9cc51f5d238bd5c2253788be0974790911a46918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
