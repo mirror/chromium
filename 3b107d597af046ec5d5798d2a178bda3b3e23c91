@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15115f3d_e43f99bd",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12200,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-28T21:06:08Z",
+      "side": 1,
+      "message": "There are four calls to base::debug::Alias() added to this file that alias a pointer variable. This will force the compiler to retain the pointer, but the values that it points to will almost certainly be lost, because crash dumps are only guaranteed to retain the contents of stack memory, not heap or data segment memory. Given that the description for the change said \"Dump real and virtual current contexts\" I assume that the context itself was supposed to be retained.\n\nIf the pointer value (nullptr versus not) is all that is needed then the code is fine, if a bit confusing/ambiguous. If the GLContext information is needed then it is necessary to copy the objects or its data to local variables and alias those.\n\nI discovered these during an audit of base::debug::Alias while working on 756589. Please tag any fixes with that bug number, thanks.",
+      "revId": "3b107d597af046ec5d5798d2a178bda3b3e23c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
