@@ -16,6 +16,24 @@
       "revId": "a568d7976d87822e57c105d765314169fa1272ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200db5e5_38bcfb41",
+        "filename": "chrome/browser/media/cast_remoting_connector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-28T21:37:26Z",
+      "side": 1,
+      "message": "When there is active bridge, these are already done in StopRemoting() call. Added comment.",
+      "parentUuid": "3e1b8675_ee9d5b7e",
+      "revId": "a568d7976d87822e57c105d765314169fa1272ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
