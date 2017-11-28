@@ -52,6 +52,24 @@
       "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377b7574_8a8ca3b3",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8282,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T22:44:44Z",
+      "side": 1,
+      "message": "EXPECT_FALSE(mask_raster-\u003eIsSolidColor());\n\nRemove the fix from draw_property_utils too, then it will not DCHECK anymore with this patch, and you get:\n../../cc/trees/layer_tree_host_unittest.cc:8322: Failure\nValue of: mask_raster-\u003eIsSolidColor()\n  Actual: true\nExpected: false\n.",
+      "parentUuid": "c5525ec2_f1d7a501",
+      "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
