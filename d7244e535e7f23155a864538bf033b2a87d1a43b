@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adadcad2_7c4e1d5f",
+        "filename": "extensions/browser/api/media_perception_private/conversion_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T00:08:33Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "d7244e535e7f23155a864538bf033b2a87d1a43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0e1cd3e_4f2b1ac6",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T00:08:33Z",
+      "side": 1,
+      "message": "nit: \u0027String\u0027 (and \u0027entity\u0027) is unnecessary here and below.",
+      "revId": "d7244e535e7f23155a864538bf033b2a87d1a43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
