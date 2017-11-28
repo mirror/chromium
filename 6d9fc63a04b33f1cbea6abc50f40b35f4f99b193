@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a43bd953_58449361",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-28T06:41:41Z",
+      "side": 1,
+      "message": "optional:\nhow about remember the current ID, add synchronous getter, and then verify in TEST_F?",
+      "revId": "6d9fc63a04b33f1cbea6abc50f40b35f4f99b193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c245210_82b16471",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-28T06:41:41Z",
+      "side": 1,
+      "message": "Maybe call parent\u0027s MigrateToDircrpto?",
+      "revId": "6d9fc63a04b33f1cbea6abc50f40b35f4f99b193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755591b1_6b180217",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-28T06:41:41Z",
+      "side": 1,
+      "message": "Could you add ()?\ncf) 2. of https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Prefer-MakeUnique-to-WrapUnique\n\nWe should do that for other lines, but probably it may be out of focus of this CL.",
+      "revId": "6d9fc63a04b33f1cbea6abc50f40b35f4f99b193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
