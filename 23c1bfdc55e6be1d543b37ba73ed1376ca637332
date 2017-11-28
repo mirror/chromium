@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c25c5534_5e65e88c",
+        "filename": "components/ukm/ukm_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-28T16:18:57Z",
+      "side": 1,
+      "message": "maybe add a comment noting that this is for internal purposes only and does not represent anything likely to be interesting to UKM clients? for example this is not the source navigation time, but rather the time the source was first recorded.",
+      "revId": "23c1bfdc55e6be1d543b37ba73ed1376ca637332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
