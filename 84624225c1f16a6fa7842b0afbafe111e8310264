@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69aedf20_9e6d47e5",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:48:54Z",
+      "side": 1,
+      "message": "this looks reversed (or badly named?)",
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db46adb_90f41b37",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:48:54Z",
+      "side": 1,
+      "message": "icon_view-\u003eGetPreferredSize().height()  -\u003e  icon_height ?",
+      "range": {
+        "startLine": 118,
+        "startChar": 29,
+        "endLine": 118,
+        "endChar": 67
+      },
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34686b4_e8c72338",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:48:54Z",
+      "side": 1,
+      "message": "subtracting a height from a width looks really odd. It took me a while to understand the comment above, I think this would be clearer with a comment like \"Badging may make the icon slightly wider (but not taller). However, the layout should be the same whether or not the icon is badged, so allow the badged part of the icon to extend into the padding.\"",
+      "range": {
+        "startLine": 127,
+        "startChar": 58,
+        "endLine": 127,
+        "endChar": 79
+      },
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30fc8e95_59ef5c18",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:48:54Z",
+      "side": 1,
+      "message": "kBadgeSpacing -\u003e badge_spacing (kFooStyle is just compile-time constants / constexpr)",
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513880f1_29216402",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:48:54Z",
+      "side": 1,
+      "message": "comment why this is needed?",
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83325534_e703d6da",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:48:54Z",
+      "side": 1,
+      "message": "RangeStyleInfo::override_color is marked DEPRECATED",
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc048adb_b83986ed",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:48:54Z",
+      "side": 1,
+      "message": "FontList::Derive is really slow. And we don\u0027t allow UI to introduce inconsistent font styles in Chrome any more.. I don\u0027t see a bold font in any of your mocks. Can you link to the font spec from your designer? See http://crbug.com/691891 or https://bugs.chromium.org/p/chromium/issues/attachment?aid\u003d290996\u0026inline\u003d1 for examples of the fonts currently in the specification.\n\nIf your designer really wants bold (or semibold or whatever), then we can add the spec to chrome_typography.h and give it a name.\n\nas it is.... maybe views::style::STYLE_DIALOG_BUTTON_DEFAULT gives the style you want? You\u0027d probably want to comment, explaining why the text used for default/prominent dialog buttons is appropriate to use here, and use more appropriate method names.",
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2155d18_dce62939",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:48:54Z",
+      "side": 1,
+      "message": "since you\u0027re here, constexpr for all of these",
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a08ed87_019a72bf",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:48:54Z",
+      "side": 1,
+      "message": "this doesn\u0027t add clarity for me -- it is too vague. \"out\" variables are usually method arguments passed by taking an address to allow a method to return multiple data types, which is why it is confusing.\n\nI poked around some more -- I think having multiple \"error button\" data members is confusing, unnecessary and error-prone. If taking the correct action in the button listener is the only use-case, I think a better way to do that is just with a single error button, and just give it an id, like\n\n  // Track the error type so that the correct action can be taken in ButtonPressed().\n  sync_error_button_-\u003eset_id(error);\n\nand in ButtonPressed() {\n  if (sender \u003d\u003d sync_error_button_) {\n    sync_ui_util::AvatarSyncErrorType error \u003d\n        static_cast\u003csync_ui_util::AvatarSyncErrorType\u003e(sender-\u003eid());\n    switch (error) {\n\n    }\n  }\n\n\nThen you don\u0027t need |button_out| -- you can just always manipulate sync_error_button_",
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ddac67_8fd29a70",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:48:54Z",
+      "side": 1,
+      "message": "comment describing the layout",
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0eea765_d51627cc",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:48:54Z",
+      "side": 1,
+      "message": "did you try hover_button-\u003eSetBorder(views::CreateEmptyBorder(gfx::Insets(kMenuEdgeMargin));? (say in a comment why not?)",
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
