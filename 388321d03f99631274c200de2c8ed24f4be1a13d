@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85fdeb3a_f7ed28b4",
+        "filename": "third_party/WebKit/Source/core/editing/testing/EditingTestBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-28T02:02:34Z",
+      "side": 1,
+      "message": "nit: s/;/ \u003c\u003c position/\n\nIt is better to print |position| for ease of debugging test.",
+      "revId": "388321d03f99631274c200de2c8ed24f4be1a13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
