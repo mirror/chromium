@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "515241dd_e36d377f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T20:58:08Z",
+      "side": 1,
+      "message": "I think so.",
+      "parentUuid": "f9a508ff_89204f95",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "47b92b1dc04dcea8e08a6f408de4adddcc405371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "701b497c_cb1c3f52",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
         "patchSetId": 6
