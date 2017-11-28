@@ -280,6 +280,24 @@
       "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41765dfd_3c43ab9b",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-28T03:04:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure that\u0027s a safe assumption to make. I guess I\u0027m ok with it if you eat the AttributeError here, though. Letting it propagate is liable to mislead people.",
+      "parentUuid": "3628acd0_b5156303",
+      "revId": "7def6133d12ac1dc51b8d61e1d7082e253a13a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

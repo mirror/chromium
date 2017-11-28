@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21c5bc06_7045e8bd",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-28T03:04:14Z",
+      "side": 1,
+      "message": "Would it make more sense to have this live somewhere else? (//build/android, or somewhere in //tools?) I don\u0027t think this directory has presubmit pylint enabled.\n\nAlso, nit: the file should be named the same as the class.",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e291e1cf_14913c6e",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-28T03:04:14Z",
+      "side": 1,
+      "message": "Given how you\u0027re using this, I think it\u0027d be better to make this a context manager. You could then:\n\n - initialize the variables w/o starting the process in __init__\n - start the process in __enter__\n - terminate the process in __exit__\n - not have a __del__\n\nAlso, nit: just name this LLVMSymbolizer.",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0456d9d6_ca338399",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-28T03:04:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure that starting this at object creation is necessarily what we ought to be doing.",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ede05e_ca99c148",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-28T03:04:14Z",
+      "side": 1,
+      "message": "Are clients expected to call this? If not, prefix it w/ _.",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da5a05e_1cac537c",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-28T03:04:14Z",
+      "side": 1,
+      "message": "80 chars",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c01684_afa73779",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-28T03:04:14Z",
+      "side": 1,
+      "message": "This should be prefixed w/ a _ after making this a context manager.",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a213eae_060fe3d5",
+        "filename": "third_party/android_platform/development/scripts/stack_core.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-28T03:04:14Z",
+      "side": 1,
+      "message": "should likely be os.path.join",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaad94c9_0cc9d83a",
+        "filename": "third_party/android_platform/development/scripts/stack_core.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-28T03:04:14Z",
+      "side": 1,
+      "message": "should likely be os.path.join",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
