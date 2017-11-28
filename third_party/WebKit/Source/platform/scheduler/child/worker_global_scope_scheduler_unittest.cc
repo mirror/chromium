@@ -31,13 +31,11 @@ void AppendToVectorTestTask(std::vector<std::string>* vector,
 class WorkerGlobalScopeSchedulerTest : public ::testing::Test {
  public:
   WorkerGlobalScopeSchedulerTest()
-      : clock_(new base::SimpleTestTickClock()),
-        mock_task_runner_(new base::TestSimpleTaskRunner()),
-        main_task_runner_(SchedulerTqmDelegateForTest::Create(
-            mock_task_runner_,
-            base::WrapUnique(new TestTimeSource(clock_.get())))),
+      : mock_task_runner_(new base::TestSimpleTaskRunner()),
+        main_task_runner_(
+            SchedulerTqmDelegateForTest::Create(mock_task_runner_, &clock_)),
         scheduler_(new WorkerSchedulerImpl(main_task_runner_)) {
-    clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
+    clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
   }
 
   ~WorkerGlobalScopeSchedulerTest() override {}
@@ -60,7 +58,7 @@ class WorkerGlobalScopeSchedulerTest : public ::testing::Test {
   }
 
  protected:
-  std::unique_ptr<base::SimpleTestTickClock> clock_;
+  base::SimpleTestTickClock clock_;
   scoped_refptr<base::TestSimpleTaskRunner> mock_task_runner_;
 
   scoped_refptr<SchedulerTqmDelegate> main_task_runner_;

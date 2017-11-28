@@ -18,6 +18,11 @@ class BASE_EXPORT DefaultClock : public Clock {
 
   // Simply returns Time::Now().
   Time Now() override;
+
+  static DefaultClock* GetInstance();
+
+ private:
+  DefaultClock();
 };
 
 }  // namespace base

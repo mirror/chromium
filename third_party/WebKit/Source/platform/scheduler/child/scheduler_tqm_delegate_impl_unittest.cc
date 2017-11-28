@@ -23,7 +23,7 @@ TEST(SchedulerTqmDelegateImplTest, TestTaskRunnerOverriding) {
   {
     scoped_refptr<SchedulerTqmDelegateImpl> delegate(
         SchedulerTqmDelegateImpl::Create(
-            &loop, std::make_unique<base::DefaultTickClock>()));
+            &loop, base::DefaultTickClock::GetInstance()));
     delegate->SetDefaultTaskRunner(custom_runner);
     DCHECK_EQ(custom_runner, loop.task_runner());
   }

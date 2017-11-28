@@ -36,8 +36,7 @@ class BASE_EXPORT DelayedTaskManager {
   using PostTaskNowCallback = OnceCallback<void(std::unique_ptr<Task> task)>;
 
   // |tick_clock| can be specified for testing.
-  DelayedTaskManager(std::unique_ptr<TickClock> tick_clock =
-                         std::make_unique<DefaultTickClock>());
+  DelayedTaskManager(TickClock* tick_clock = DefaultTickClock::GetInstance());
   ~DelayedTaskManager();
 
   // Starts the delayed task manager, allowing past and future tasks to be
@@ -58,7 +57,7 @@ class BASE_EXPORT DelayedTaskManager {
                          TimeDelta delay,
                          PostTaskNowCallback post_task_now_callback);
 
-  const std::unique_ptr<TickClock> tick_clock_;
+  TickClock* tick_clock_;
 
   AtomicFlag started_;
 

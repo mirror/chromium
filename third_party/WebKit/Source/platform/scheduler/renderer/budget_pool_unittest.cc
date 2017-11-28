@@ -31,15 +31,13 @@ class BudgetPoolTest : public ::testing::Test {
   ~BudgetPoolTest() override {}
 
   void SetUp() override {
-    clock_.reset(new base::SimpleTestTickClock());
-    clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
+    clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
     mock_task_runner_ =
-        base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(clock_.get(), true);
-    delegate_ = SchedulerTqmDelegateForTest::Create(
-        mock_task_runner_, std::make_unique<TestTimeSource>(clock_.get()));
+        base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, true);
+    delegate_ = SchedulerTqmDelegateForTest::Create(mock_task_runner_, &clock_);
     scheduler_.reset(new RendererSchedulerImpl(delegate_));
     task_queue_throttler_ = scheduler_->task_queue_throttler();
-    start_time_ = clock_->NowTicks();
+    start_time_ = clock_.NowTicks();
   }
 
   void TearDown() override {
@@ -56,7 +54,7 @@ class BudgetPoolTest : public ::testing::Test {
   }
 
  protected:
-  std::unique_ptr<base::SimpleTestTickClock> clock_;
+  base::SimpleTestTickClock clock_;
   scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
   scoped_refptr<SchedulerTqmDelegate> delegate_;
   std::unique_ptr<RendererSchedulerImpl> scheduler_;

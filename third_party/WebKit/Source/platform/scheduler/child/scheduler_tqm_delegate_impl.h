@@ -23,7 +23,7 @@ class PLATFORM_EXPORT SchedulerTqmDelegateImpl : public SchedulerTqmDelegate {
   // |message_loop| is not owned and must outlive the lifetime of this object.
   static scoped_refptr<SchedulerTqmDelegateImpl> Create(
       base::MessageLoop* message_loop,
-      std::unique_ptr<base::TickClock> time_source);
+      base::TickClock* time_source);
 
   // SchedulerTqmDelegate implementation
   void SetDefaultTaskRunner(
@@ -46,12 +46,12 @@ class PLATFORM_EXPORT SchedulerTqmDelegateImpl : public SchedulerTqmDelegate {
 
  private:
   SchedulerTqmDelegateImpl(base::MessageLoop* message_loop,
-                           std::unique_ptr<base::TickClock> time_source);
+                           base::TickClock* time_source);
 
   // Not owned.
   base::MessageLoop* message_loop_;
   scoped_refptr<SingleThreadTaskRunner> message_loop_task_runner_;
-  std::unique_ptr<base::TickClock> time_source_;
+  base::TickClock* time_source_;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerTqmDelegateImpl);
 };

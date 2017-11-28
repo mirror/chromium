@@ -24,11 +24,11 @@ class IdleTimeEstimatorForTest : public IdleTimeEstimator {
  public:
   IdleTimeEstimatorForTest(
       const scoped_refptr<TaskQueue>& compositor_task_runner,
-      TestTimeSource* test_time_source,
+      base::TickClock* clock,
       int sample_count,
       double estimation_percentile)
       : IdleTimeEstimator(compositor_task_runner,
-                          test_time_source,
+                          clock,
                           sample_count,
                           estimation_percentile) {}
 };
@@ -41,18 +41,16 @@ class IdleTimeEstimatorTest : public ::testing::Test {
   ~IdleTimeEstimatorTest() override {}
 
   void SetUp() override {
-    clock_.reset(new base::SimpleTestTickClock());
-    clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
-    test_time_source_.reset(new TestTimeSource(clock_.get()));
+    clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
     mock_task_runner_ =
-        base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(clock_.get(), false);
-    main_task_runner_ = SchedulerTqmDelegateForTest::Create(
-        mock_task_runner_, std::make_unique<TestTimeSource>(clock_.get()));
+        base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, false);
+    main_task_runner_ =
+        SchedulerTqmDelegateForTest::Create(mock_task_runner_, &clock_);
     manager_ = std::make_unique<TaskQueueManager>(main_task_runner_);
     compositor_task_queue_ =
         manager_->CreateTaskQueue<TestTaskQueue>(TaskQueue::Spec("test_tq"));
-    estimator_.reset(new IdleTimeEstimatorForTest(
-        compositor_task_queue_, test_time_source_.get(), 10, 50));
+    estimator_.reset(
+        new IdleTimeEstimatorForTest(compositor_task_queue_, &clock_, 10, 50));
   }
 
   void SimulateFrameWithOneCompositorTask(int compositor_time) {
@@ -60,11 +58,11 @@ class IdleTimeEstimatorTest : public ::testing::Test {
         base::TimeDelta::FromMilliseconds(compositor_time);
     base::PendingTask task(FROM_HERE, base::Closure());
     estimator_->WillProcessTask(task);
-    clock_->Advance(non_idle_time);
+    clock_.Advance(non_idle_time);
     estimator_->DidCommitFrameToCompositor();
     estimator_->DidProcessTask(task);
     if (non_idle_time < frame_length_)
-      clock_->Advance(frame_length_ - non_idle_time);
+      clock_.Advance(frame_length_ - non_idle_time);
   }
 
   void SimulateFrameWithTwoCompositorTasks(int compositor_time1,
@@ -75,20 +73,19 @@ class IdleTimeEstimatorTest : public ::testing::Test {
         base::TimeDelta::FromMilliseconds(compositor_time2);
     base::PendingTask task(FROM_HERE, base::Closure());
     estimator_->WillProcessTask(task);
-    clock_->Advance(non_idle_time1);
+    clock_.Advance(non_idle_time1);
     estimator_->DidProcessTask(task);
 
     estimator_->WillProcessTask(task);
-    clock_->Advance(non_idle_time2);
+    clock_.Advance(non_idle_time2);
     estimator_->DidCommitFrameToCompositor();
     estimator_->DidProcessTask(task);
 
     base::TimeDelta idle_time = frame_length_ - non_idle_time1 - non_idle_time2;
-    clock_->Advance(idle_time);
+    clock_.Advance(idle_time);
   }
 
-  std::unique_ptr<base::SimpleTestTickClock> clock_;
-  std::unique_ptr<TestTimeSource> test_time_source_;
+  base::SimpleTestTickClock clock_;
   scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
   scoped_refptr<SchedulerTqmDelegate> main_task_runner_;
   std::unique_ptr<TaskQueueManager> manager_;

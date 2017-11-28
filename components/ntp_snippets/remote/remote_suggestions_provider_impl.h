@@ -135,9 +135,7 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   }
 
   // Overrides internal clock for testing purposes.
-  void SetClockForTesting(std::unique_ptr<base::Clock> clock) {
-    clock_ = std::move(clock);
-  }
+  void SetClockForTesting(base::Clock* clock) { clock_ = clock; }
 
   // TODO(tschumann): remove this method as soon as we inject the fetcher into
   // the constructor.
@@ -438,7 +436,7 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   std::set<Category, Category::CompareByID> categories_clear_when_initialized_;
 
   // A clock for getting the time. This allows to inject a clock in tests.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   // Prefetched pages tracker to query which urls have been prefetched.
   // |nullptr| is handled gracefully and just disables the functionality.

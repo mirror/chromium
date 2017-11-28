@@ -95,7 +95,7 @@ KeyedService* SuggestionsServiceFactory::BuildServiceInstanceFor(
   return new SuggestionsServiceImpl(
       signin_manager, token_service, sync_service, profile->GetRequestContext(),
       std::move(suggestions_store), std::move(thumbnail_manager),
-      std::move(blacklist_store), std::make_unique<base::DefaultTickClock>());
+      std::move(blacklist_store), base::DefaultTickClock::GetInstance());
 }
 
 void SuggestionsServiceFactory::RegisterProfilePrefs(

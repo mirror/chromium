@@ -337,7 +337,7 @@ struct PasswordSyncableService::SyncEntries {
 PasswordSyncableService::PasswordSyncableService(
     PasswordStoreSync* password_store)
     : password_store_(password_store),
-      clock_(new base::DefaultClock),
+      clock_(base::DefaultClock::GetInstance()),
       is_processing_sync_changes_(false) {}
 
 PasswordSyncableService::~PasswordSyncableService() = default;

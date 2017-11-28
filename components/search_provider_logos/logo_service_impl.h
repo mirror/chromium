@@ -51,7 +51,7 @@ class LogoServiceImpl : public LogoService {
   void SetLogoCacheForTests(std::unique_ptr<LogoCache> cache);
 
   // Overrides the clock used to check the time.
-  void SetClockForTests(std::unique_ptr<base::Clock> clock);
+  void SetClockForTests(base::Clock* clock);
 
  private:
   // Constructor arguments.
@@ -66,8 +66,10 @@ class LogoServiceImpl : public LogoService {
   // logo_tracker_ takes ownership if/when it is initialized.
   std::unique_ptr<image_fetcher::ImageDecoder> image_decoder_;
 
+  // For testing..
+  base::Clock* clock_for_test_;
+
   // For testing. logo_tracker_ takes ownership if/when it is initialized.
-  std::unique_ptr<base::Clock> clock_for_test_;
   std::unique_ptr<LogoCache> logo_cache_for_test_;
 
   // Lazily initialized on first call to GetLogo().

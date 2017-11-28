@@ -84,7 +84,7 @@ class OfflinePageStorageManager {
   void ClearPagesIfNeeded(const ClearStorageCallback& callback);
 
   // Sets the clock for testing.
-  void SetClockForTesting(std::unique_ptr<base::Clock> clock);
+  void SetClockForTesting(base::Clock* clock);
 
   // Resets the flag for storage usage reporting for testing purposes.
   void ResetUsageReportingFlagForTesting();
@@ -151,7 +151,7 @@ class OfflinePageStorageManager {
   base::Time last_clear_time_;
 
   // Clock for getting time.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   // We only report usage once per launch, keep track here.
   bool reported_usage_this_launch_;

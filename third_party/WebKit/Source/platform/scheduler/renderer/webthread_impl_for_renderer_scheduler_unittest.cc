@@ -44,10 +44,9 @@ class WebThreadImplForRendererSchedulerTest : public ::testing::Test {
   WebThreadImplForRendererSchedulerTest() {}
 
   void SetUp() override {
-    clock_.reset(new base::SimpleTestTickClock());
-    clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
-    scheduler_.reset(new RendererSchedulerImpl(SchedulerTqmDelegateImpl::Create(
-        &message_loop_, std::make_unique<TestTimeSource>(clock_.get()))));
+    clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
+    scheduler_ = std::make_unique<RendererSchedulerImpl>(
+        SchedulerTqmDelegateImpl::Create(&message_loop_, &clock_));
     default_task_runner_ = scheduler_->DefaultTaskQueue();
     thread_ = scheduler_->CreateMainThread();
   }
@@ -63,7 +62,7 @@ class WebThreadImplForRendererSchedulerTest : public ::testing::Test {
 
  protected:
   base::MessageLoop message_loop_;
-  std::unique_ptr<base::SimpleTestTickClock> clock_;
+  base::SimpleTestTickClock clock_;
   std::unique_ptr<RendererSchedulerImpl> scheduler_;
   scoped_refptr<base::SingleThreadTaskRunner> default_task_runner_;
   std::unique_ptr<blink::WebThread> thread_;

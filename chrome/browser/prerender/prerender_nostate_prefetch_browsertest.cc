@@ -111,13 +111,10 @@ class NoStatePrefetchBrowserTest
                        url, url_file, counter->AsWeakPtr()));
   }
 
-  base::SimpleTestTickClock* OverridePrerenderManagerTimeTicks() {
-    auto clock = base::MakeUnique<base::SimpleTestTickClock>();
-    auto* clock_ptr = clock.get();
+  void OverridePrerenderManagerTimeTicks(base::SimpleTestTickClock* clock) {
     // The default zero time causes the prerender manager to do strange things.
     clock->Advance(base::TimeDelta::FromSeconds(1));
-    GetPrerenderManager()->SetTickClockForTesting(std::move(clock));
-    return clock_ptr;
+    GetPrerenderManager()->SetTickClockForTesting(clock);
   }
 
   // Block until an AppCache exists for |manifest_url|.
@@ -723,12 +720,13 @@ IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, AppCacheHtmlUninitialized) {
 // the html tag.
 IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, AppCacheHtmlInitialized) {
   base::TimeTicks current_time = GetPrerenderManager()->GetCurrentTimeTicks();
-  auto* clock = OverridePrerenderManagerTimeTicks();
+  base::SimpleTestTickClock clock;
+  OverridePrerenderManagerTimeTicks(&clock);
   // Some navigations have already occurred in test setup. In order to track
   // duplicate prefetches correctly the test clock needs to be beyond those
   // navigations.
-  clock->SetNowTicks(current_time);
-  clock->Advance(base::TimeDelta::FromSeconds(600));
+  clock.SetNowTicks(current_time);
+  clock.Advance(base::TimeDelta::FromSeconds(600));
 
   // Fill manifest with the image url. The main resource will be cached
   // implicitly.
@@ -745,7 +743,7 @@ IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, AppCacheHtmlInitialized) {
 
   // If a page is prefetch shortly after being loading, the prefetch is
   // canceled. Advancing the clock prevents the cancelation.
-  clock->Advance(base::TimeDelta::FromSeconds(6000));
+  clock.Advance(base::TimeDelta::FromSeconds(6000));
 
   RequestCounter script_counter;
   CountRequestFor(kPrefetchScript, &script_counter);
@@ -763,12 +761,13 @@ IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, AppCacheHtmlInitialized) {
 // canceled.
 IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, AppCacheRegistered) {
   base::TimeTicks current_time = GetPrerenderManager()->GetCurrentTimeTicks();
-  auto* clock = OverridePrerenderManagerTimeTicks();
+  base::SimpleTestTickClock clock;
+  OverridePrerenderManagerTimeTicks(&clock);
   // Some navigations have already occurred in test setup. In order to track
   // duplicate prefetches correctly the test clock needs to be beyond those
   // navigations.
-  clock->SetNowTicks(current_time);
-  clock->Advance(base::TimeDelta::FromSeconds(600));
+  clock.SetNowTicks(current_time);
+  clock.Advance(base::TimeDelta::FromSeconds(600));
 
   // Fill manifest with kPrefetchPage so that it is cached without explicitly
   // listing a manifest.
@@ -790,7 +789,7 @@ IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, AppCacheRegistered) {
 
   // If a page is prefetch shortly after being loading, the prefetch is
   // canceled. Advancing the clock prevents the cancelation.
-  clock->Advance(base::TimeDelta::FromSeconds(6000));
+  clock.Advance(base::TimeDelta::FromSeconds(6000));
 
   RequestCounter page_counter;
   CountRequestFor(kPrefetchPage, &page_counter);
