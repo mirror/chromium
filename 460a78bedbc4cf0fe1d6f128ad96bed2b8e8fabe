@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55c90a1e_7129e6c3",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-28T02:32:23Z",
+      "side": 1,
+      "message": "since setInputElementAngularValue_ rejects null value with early return, do you actually need to test it here?",
+      "range": {
+        "startLine": 307,
+        "startChar": 3,
+        "endLine": 307,
+        "endChar": 28
+      },
+      "revId": "460a78bedbc4cf0fe1d6f128ad96bed2b8e8fabe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
