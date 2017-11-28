@@ -1800,11 +1800,104 @@ TEST_F(SpdySessionTest, FailedPing) {
   base::TimeTicks now = base::TimeTicks::Now();
   session_->last_read_time_ = now - base::TimeDelta::FromSeconds(1);
   session_->CheckPingStatus(now);
+  // Set check_ping_status_pending_ so that DCHECK in pending CheckPingStatus()
+  // on message loop does not fail.
+  session_->check_ping_status_pending_ = true;
+  // Execute pending CheckPingStatus() and drain session.
   base::RunLoop().RunUntilIdle();
 
   EXPECT_FALSE(session_);
   EXPECT_FALSE(HasSpdySession(spdy_session_pool_, key_));
   EXPECT_FALSE(spdy_stream1);
+}
+
+// This test documents incorrect behavior described in https://crbug.com/779670.
+// TODO(bnc): This test sets SpdySession::hung_interval_ to 100 ms instead of
+// mocking time, which makes the test slow.
+TEST_F(SpdySessionTest, WaitingForWrongPing) {
+  session_deps_.enable_ping = true;
+  session_deps_.time_func = TheNearFuture;
+
+  SpdySerializedFrame read_ping(spdy_util_.ConstructSpdyPing(1, true));
+  MockRead reads[] = {CreateMockRead(read_ping, 1), MockRead(ASYNC, 0, 4)};
+
+  SpdySerializedFrame write_ping0(spdy_util_.ConstructSpdyPing(1, false));
+  SpdySerializedFrame write_ping1(spdy_util_.ConstructSpdyPing(3, false));
+  SpdySerializedFrame goaway(spdy_util_.ConstructSpdyGoAway(
+      0, ERROR_CODE_PROTOCOL_ERROR, "Failed ping."));
+  MockWrite writes[] = {CreateMockWrite(write_ping0, 0),
+                        CreateMockWrite(write_ping1, 2),
+                        CreateMockWrite(goaway, 3)};
+
+  SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
+  session_deps_.socket_factory->AddSocketDataProvider(&data);
+  AddSSLSocketData();
+
+  CreateNetworkSession();
+  CreateSpdySession();
+
+  // Negative value means a preface ping will always be sent.
+  session_->set_connection_at_risk_of_loss_time(
+      base::TimeDelta::FromSeconds(-1));
+
+  const base::TimeDelta hung_interval = base::TimeDelta::FromMilliseconds(100);
+  session_->set_hung_interval(hung_interval);
+
+  base::WeakPtr<SpdyStream> spdy_stream1 =
+      CreateStreamSynchronously(SPDY_BIDIRECTIONAL_STREAM, session_, test_url_,
+                                MEDIUM, NetLogWithSource());
+  ASSERT_TRUE(spdy_stream1);
+  test::StreamDelegateSendImmediate delegate(spdy_stream1, nullptr);
+  spdy_stream1->SetDelegate(&delegate);
+
+  EXPECT_EQ(0, session_->pings_in_flight());
+  EXPECT_EQ(1u, session_->next_ping_id());
+  EXPECT_FALSE(session_->check_ping_status_pending());
+
+  // Send preface ping and post CheckPingStatus() task with delay.
+  session_->SendPrefacePingIfNoneInFlight();
+
+  EXPECT_EQ(1, session_->pings_in_flight());
+  EXPECT_EQ(3u, session_->next_ping_id());
+  EXPECT_TRUE(session_->check_ping_status_pending());
+
+  // Read PING ACK.
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(0, session_->pings_in_flight());
+  EXPECT_TRUE(session_->check_ping_status_pending());
+
+  // Fast forward mock time and send another preface ping.
+  // This will not post another CheckPingStatus().
+  g_time_delta = base::TimeDelta::FromMilliseconds(150);
+  session_->SendPrefacePingIfNoneInFlight();
+
+  EXPECT_EQ(1, session_->pings_in_flight());
+  EXPECT_EQ(5u, session_->next_ping_id());
+  EXPECT_TRUE(session_->check_ping_status_pending());
+
+  // WaitForClose() waits until CheckPingStatus() is executed.  This takes about
+  // 100 ms of wall time, but no mock time passes.
+  EXPECT_THAT(delegate.WaitForClose(), IsError(ERR_SPDY_PING_FAILED));
+
+  // Second PING was sent at the same mock time as CheckPingStatus() was
+  // executed, so second PING definitely did not time out.  However,
+  // |last_activity_time_| is when first ACK was received, 150 mock ms earlier,
+  // making CheckPingStatus() incorrectly believe the PING timed out, send a
+  // GOAWAY frame, and drain the session.
+  // (Note that PostDelayedTask() does not guarantee that task will be executed
+  // exactly |delay| later: it could be delayed if another task takes long.)
+  EXPECT_FALSE(session_->check_ping_status_pending());
+  EXPECT_TRUE(session_->IsDraining());
+
+  // Finish going away.
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(HasSpdySession(spdy_session_pool_, key_));
+  EXPECT_FALSE(session_);
+
+  EXPECT_TRUE(data.AllWriteDataConsumed());
+  EXPECT_TRUE(data.AllReadDataConsumed());
 }
 
 // Request kInitialMaxConcurrentStreams + 1 streams.  Receive a

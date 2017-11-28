@@ -2333,6 +2333,7 @@ void SpdySession::CheckPingStatus(base::TimeTicks last_check_time) {
   base::TimeDelta delay = hung_interval_ - (now - last_read_time_);
 
   if (delay.InMilliseconds() < 0 || last_read_time_ < last_check_time) {
+    check_ping_status_pending_ = false;
     DoDrainSession(ERR_SPDY_PING_FAILED, "Failed ping.");
     return;
   }
