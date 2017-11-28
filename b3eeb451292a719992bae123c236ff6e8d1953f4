@@ -22,6 +22,30 @@
       "revId": "b3eeb451292a719992bae123c236ff6e8d1953f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e55b87e_15b5bad5",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-28T13:29:47Z",
+      "side": 1,
+      "message": "Primary constructor is a term (and, in several modern languages, a feature) referring to a constructor which can replace any other constructor. When such a constructor exists, it\u0027s the only constructor which should set fields. Any other constructor should transform its input and pass it to the primary constructor.\n\nI understand that C++ coders might not be familiar with the term, but I would rather explain it in the terms that I described above, rather than talk about testing in the constructor declaration. WDYT?",
+      "parentUuid": "9ebbb502_58f92c26",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "b3eeb451292a719992bae123c236ff6e8d1953f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
