@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3deaf5ea_0376a305",
+        "filename": "chrome/utility/importer/firefox_importer_unittest_utils_mac.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-28T14:17:16Z",
+      "side": 1,
+      "message": "All IPC interfaces should have a top-level comment explaining what they are and which processes are the communicants.",
+      "revId": "757c4f5ca27f0ff072421f6bd11b97fb40d2be45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d706e7_1d0d91b3",
+        "filename": "chrome/utility/importer/firefox_importer_unittest_utils_mac.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-28T14:17:16Z",
+      "side": 1,
+      "message": "Avoid uncommon acronyms like \"FF\", so this should be \"FireFoxDecryptor\".",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "757c4f5ca27f0ff072421f6bd11b97fb40d2be45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d5b11a_2b4344b1",
+        "filename": "chrome/utility/importer/firefox_importer_unittest_utils_mac.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-28T14:17:16Z",
+      "side": 1,
+      "message": "It looks like this method should always be called first. If so, please document that.",
+      "revId": "757c4f5ca27f0ff072421f6bd11b97fb40d2be45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f4f5f6_d5905872",
+        "filename": "chrome/utility/importer/firefox_importer_unittest_utils_mac.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-28T14:17:16Z",
+      "side": 1,
+      "message": "What is |dll_path| for?",
+      "range": {
+        "startLine": 12,
+        "startChar": 34,
+        "endLine": 12,
+        "endChar": 42
+      },
+      "revId": "757c4f5ca27f0ff072421f6bd11b97fb40d2be45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea48caf7_08756863",
+        "filename": "chrome/utility/importer/firefox_importer_unittest_utils_mac.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-28T14:17:16Z",
+      "side": 1,
+      "message": "Does Init need to be called before this? What is a |signons_path|?",
+      "revId": "757c4f5ca27f0ff072421f6bd11b97fb40d2be45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646ce70c_9d7c9954",
+        "filename": "chrome/utility/importer/firefox_importer_unittest_utils_mac.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-28T14:17:16Z",
+      "side": 1,
+      "message": "Do you need an explicit Quit message? Generally Mojo services exit when the binding is removed.",
+      "revId": "757c4f5ca27f0ff072421f6bd11b97fb40d2be45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
