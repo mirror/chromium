@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cfe336a0_c7f68a87",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T18:21:15Z",
+      "side": 1,
+      "message": "Done.  I assume leave it in this directory though?",
+      "parentUuid": "5e42350e_b6844e02",
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ebb009f_e10f05dd",
         "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
         "patchSetId": 1
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "acab26d9_6edf400f",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T18:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f604184_735ab33f",
+      "range": {
+        "startLine": 20,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 62
+      },
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b90fd263_1ed41618",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T18:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ebb009f_e10f05dd",
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68551907_e230b3a5",
         "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
         "patchSetId": 1
@@ -94,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "c3dd05e0_314c709c",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T18:21:15Z",
+      "side": 1,
+      "message": "Ah, sorry.  Including just the .h creates a ton of linker errors because DialogEventObserver is a templated class, so the implementation needs to be known.\n\nhttps://www.codeproject.com/Articles/48575/How-to-define-a-template-class-in-a-h-file-and-imp\n\nI think the options are:\n1) Include the .cc here\n2) Include the .h here and include the .cc at the end of the .h\n3) Put the implementation in the .h and don\u0027t have a .cc",
+      "parentUuid": "07e41c9f_5875fe27",
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3411045b_519fc86d",
         "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
         "patchSetId": 1
@@ -117,6 +195,30 @@
     },
     {
       "key": {
+        "uuid": "460ccb3b_5d83ada4",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T18:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3411045b_519fc86d",
+      "range": {
+        "startLine": 739,
+        "startChar": 6,
+        "endLine": 739,
+        "endChar": 22
+      },
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95dc7ed3_ffb60365",
         "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
         "patchSetId": 1
@@ -137,6 +239,30 @@
       "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788a96d6_831f06e1",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-28T18:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95dc7ed3_ffb60365",
+      "range": {
+        "startLine": 746,
+        "startChar": 6,
+        "endLine": 746,
+        "endChar": 22
+      },
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
