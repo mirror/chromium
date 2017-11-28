@@ -606,6 +606,17 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   if (blocked_reason != ResourceRequestBlockedReason::kNone)
     return kBlock;
 
+  scoped_refptr<SecurityOrigin> origin = options.security_origin;
+  if (origin && !origin->IsSameSchemeHostPort(Context().GetSecurityOrigin()) &&
+      SecurityPolicy::IsAccessToURLWhiteListed(origin.get(), params.Url())) {
+    LOG(INFO) << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
+                 "Applying SetRequestorOrigin, switching from "
+              << Context().GetSecurityOrigin() << " to " << origin.get()
+              << " while loading URL " << params.Url().GetString();
+    DCHECK_EQ(origin->Protocol(), "chrome-extension");
+    resource_request.SetRequestorOrigin(origin);
+  }
+
   // For initial requests, call prepareRequest() here before revalidation
   // policy is determined.
   Context().PrepareRequest(resource_request,
@@ -614,7 +625,6 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   if (!params.Url().IsValid())
     return kAbort;
 
-  scoped_refptr<SecurityOrigin> origin = options.security_origin;
   params.MutableOptions().cors_flag =
       !origin || !origin->CanRequestNoSuborigin(params.Url());
 
