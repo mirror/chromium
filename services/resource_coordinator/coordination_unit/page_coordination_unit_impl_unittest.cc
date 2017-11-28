@@ -182,4 +182,25 @@ TEST_F(PageCoordinationUnitImplTest, TimeSinceLastNavigation) {
             cu_graph.page->TimeSinceLastNavigation());
 }
 
+TEST_F(PageCoordinationUnitImplTest, IsAlmostIdle) {
+  MockSinglePageInSingleProcessCoordinationUnitGraph cu_graph;
+  EXPECT_FALSE(cu_graph.page->WasAlmostIdle());
+  EXPECT_FALSE(cu_graph.page->IsAlmostIdle());
+
+  cu_graph.process->SetMainThreadTaskLoadIsLow(true);
+  cu_graph.frame->SetNetworkAlmostIdle(true);
+  EXPECT_TRUE(cu_graph.page->IsAlmostIdle());
+  EXPECT_TRUE(cu_graph.page->WasAlmostIdle());
+
+  cu_graph.process->SetMainThreadTaskLoadIsLow(false);
+  EXPECT_FALSE(cu_graph.page->IsAlmostIdle());
+  EXPECT_TRUE(cu_graph.page->WasAlmostIdle());
+
+  cu_graph.page->OnMainFrameNavigationCommitted();
+  EXPECT_FALSE(cu_graph.page->WasAlmostIdle());
+  cu_graph.process->SetMainThreadTaskLoadIsLow(true);
+  EXPECT_TRUE(cu_graph.page->IsAlmostIdle());
+  EXPECT_TRUE(cu_graph.page->WasAlmostIdle());
+}
+
 }  // namespace resource_coordinator

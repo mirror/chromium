@@ -40,6 +40,8 @@ class PageCoordinationUnitImpl
   // processes that are reachable from the pages's accessible frames.
   std::set<ProcessCoordinationUnitImpl*> GetAssociatedProcessCoordinationUnits()
       const;
+  bool WasAlmostIdle() const;
+  bool IsAlmostIdle();
   bool IsVisible() const;
   double GetCPUUsage() const;
 
@@ -79,6 +81,11 @@ class PageCoordinationUnitImpl
   base::TimeTicks visibility_change_time_;
   // Main frame navigation committed time.
   base::TimeTicks navigation_committed_time_;
+
+  // |was_almost_idle_| is only reset to false when main frame navigation of
+  // non-same document navigation is committed. And will be set to true when
+  // IsAlmostIdle() is called.
+  bool was_almost_idle_;
 
   DISALLOW_COPY_AND_ASSIGN(PageCoordinationUnitImpl);
 };

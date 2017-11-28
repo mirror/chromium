@@ -87,12 +87,6 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
     return;
   }
 
-  if (navigation_handle->IsInMainFrame()) {
-    UpdateUkmRecorder(navigation_handle->GetNavigationId());
-    ResetFlag();
-    page_resource_coordinator_->OnMainFrameNavigationCommitted();
-  }
-
   content::RenderFrameHost* render_frame_host =
       navigation_handle->GetRenderFrameHost();
 
@@ -103,6 +97,12 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
   auto* process_resource_coordinator =
       render_frame_host->GetProcess()->GetProcessResourceCoordinator();
   process_resource_coordinator->AddFrame(*frame_resource_coordinator);
+
+  if (navigation_handle->IsInMainFrame()) {
+    UpdateUkmRecorder(navigation_handle->GetNavigationId());
+    ResetFlag();
+    page_resource_coordinator_->OnMainFrameNavigationCommitted();
+  }
 }
 
 void ResourceCoordinatorWebContentsObserver::TitleWasSet(

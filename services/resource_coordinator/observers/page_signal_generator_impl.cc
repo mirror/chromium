@@ -80,10 +80,15 @@ void PageSignalGeneratorImpl::NotifyPageAlmostIdleIfPossible(
   DCHECK(IsPageAlmostIdleSignalEnabled());
   if (!frame_cu->IsMainFrame())
     return;
-  if (!frame_cu->IsAlmostIdle())
-    return;
+
   auto* page_cu = frame_cu->GetPageCoordinationUnit();
   if (!page_cu)
+    return;
+
+  // If the page is already in almost idle state, don't deliver the signal.
+  // PageAlmostIdle signal shouldn't be delivered again if the frame is already
+  // in almost idle state.
+  if (page_cu->WasAlmostIdle() || !page_cu->IsAlmostIdle())
     return;
   DISPATCH_PAGE_SIGNAL(receivers_, NotifyPageAlmostIdle, page_cu->id());
 }
