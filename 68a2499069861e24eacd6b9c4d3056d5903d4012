@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4b67208_86a276ff",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T20:11:51Z",
+      "side": 1,
+      "message": "Seems like this could be updated to take a CRYPTO_BUFFER rather than a base::StringPiece (perhaps as a cleanup for the future), given all of the usages extract the DER to a StringPiece.\n\nDo we have a good sense for when an API should prefer CRYPTO_BUFFER over StringPiece? They seem fairly interchangable.",
+      "revId": "68a2499069861e24eacd6b9c4d3056d5903d4012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18232634_9cbd9db4",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T20:11:51Z",
+      "side": 1,
+      "message": "I think our old call (CreateWithCopiedBuffer) was wrong, and we should have been doing base::Value(std::move(der_encoding))\n\nWith this new code, std::make_unique\u003cbase::Value\u003e(der_encoding) seems like it\u0027d suffice?",
+      "revId": "68a2499069861e24eacd6b9c4d3056d5903d4012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d98fc6_31c69f51",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T20:11:51Z",
+      "side": 1,
+      "message": "Bah, we should fix base::SHA1HashString to use a StringPiece to avoid this spurious copy.",
+      "revId": "68a2499069861e24eacd6b9c4d3056d5903d4012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82bd075_33c886de",
+        "filename": "content/browser/renderer_host/pepper/pepper_socket_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T20:11:51Z",
+      "side": 1,
+      "message": "Same remarks about base::Value(StringPiece)",
+      "revId": "68a2499069861e24eacd6b9c4d3056d5903d4012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077ce4ad_7cf0b9e4",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T20:11:51Z",
+      "side": 1,
+      "message": "Another good candidate for StringPiece -\u003e CRYPTO_BUFFER conversion",
+      "revId": "68a2499069861e24eacd6b9c4d3056d5903d4012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb7605d_f3561b4e",
+        "filename": "net/cert/x509_certificate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-28T20:11:51Z",
+      "side": 1,
+      "message": "It seems like this could have been CRYPTO_BUFFER converted",
+      "revId": "68a2499069861e24eacd6b9c4d3056d5903d4012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
