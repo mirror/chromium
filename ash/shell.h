@@ -52,6 +52,8 @@ class Insets;
 }
 
 namespace ui {
+class ContextFactory;
+class ContextFactoryPrivate;
 class UserActivityDetector;
 class UserActivityPowerManagerNotifier;
 }  // namespace ui
@@ -183,9 +185,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   typedef std::vector<RootWindowController*> RootWindowControllerList;
 
   // A shell must be explicitly created so that it can call |Init()| with the
-  // delegate set. |delegate| can be NULL (if not required for initialization).
-  // Takes ownership of |delegate|.
-  static Shell* CreateInstance(const ShellInitParams& init_params);
+  // delegate set.
+  static Shell* CreateInstance(ShellInitParams init_params);
 
   // Should never be called before |CreateInstance()|.
   static Shell* Get();
@@ -577,7 +578,8 @@ class ASH_EXPORT Shell : public SessionObserver,
         std::unique_ptr<ShellPort> shell_port);
   ~Shell() override;
 
-  void Init(const ShellInitParams& init_params);
+  void Init(ui::ContextFactory* context_factory,
+            ui::ContextFactoryPrivate* context_factory_private);
 
   // Initializes the root window so that it can host browser windows.
   void InitRootWindow(aura::Window* root_window);

@@ -5,6 +5,7 @@
 #include "ash/shell/content/client/shell_browser_main_parts.h"
 
 #include <memory>
+#include <utility>
 
 #include "ash/content/shell_content_state.h"
 #include "ash/login_status.h"
@@ -73,7 +74,8 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
   if (!views::ViewsDelegate::GetInstance())
     views_delegate_.reset(new ShellViewsDelegate);
 
-  delegate_ = new ash::shell::ShellDelegateImpl;
+  std::unique_ptr<ShellDelegateImpl> shell_delegate =
+      std::make_unique<ash::shell::ShellDelegateImpl>();
   // The global message center state must be initialized absent
   // g_browser_process.
   message_center::MessageCenter::Initialize();
@@ -88,10 +90,10 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
       new ShellContentStateImpl(browser_context_.get()));
   ui::MaterialDesignController::Initialize();
   ash::ShellInitParams init_params;
-  init_params.delegate = delegate_;
+  init_params.delegate = std::move(shell_delegate);
   init_params.context_factory = content::GetContextFactory();
   init_params.context_factory_private = content::GetContextFactoryPrivate();
-  ash::Shell::CreateInstance(init_params);
+  ash::Shell::CreateInstance(std::move(init_params));
 
   // Initialize session controller client and create fake user sessions. The
   // fake user sessions makes ash into the logged in state.
@@ -117,7 +119,6 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
 
 void ShellBrowserMainParts::PostMainMessageLoopRun() {
   window_watcher_.reset();
-  delegate_ = nullptr;
   ash::Shell::DeleteInstance();
   ShellContentState::DestroyInstance();
   // The global message center state must be shutdown absent
