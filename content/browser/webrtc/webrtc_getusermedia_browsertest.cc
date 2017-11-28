@@ -435,8 +435,10 @@ IN_PROC_BROWSER_TEST_F(WebRtcGetUserMediaBrowserTest,
                                                   expected_result);
 }
 
-// Test fails under MSan, http://crbug.com/445745
-#if defined(MEMORY_SANITIZER)
+// Test fails under MSan, http://crbug.com/445745.
+// Test currently doesn't do anything, and is quite flaky if it's made
+// to do anything.
+#if defined(MEMORY_SANITIZER) || 1
 #define MAYBE_TwoGetUserMediaAndVerifyFrameRate \
   DISABLED_TwoGetUserMediaAndVerifyFrameRate
 #else
