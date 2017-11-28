@@ -1,0 +1,137 @@
+<h1>Architecture</h1>
+<p>
+An extension is constructed of a manifest and any additional files it may need including a background script, content script, HTML, JavaScript and images. The architecture for an extension is dependent on its functionality requirements, it may contain every option, or just one.
+</p>
+<h2 id="manifest">Manifest</h2>
+<p>
+Every extension has a JSON-formatted manifest file, named manifest.json.
+The manifest dictates how the extension will function
+and registers important files.
+The following code shows the supported manifest fields for extensions,
+with links to the page that discusses each field.
+</p>
+<pre data-filename="manifest.json">
+  {
+    <em>// Required</em>
+    "<a href="manifest/manifest_version">manifest_version</a>": 2,
+    "<a href="manifest/name#name">name</a>": "My Extension",
+    "<a href="manifest/version">version</a>": "versionString",
+
+    <em>// Recommended</em>
+    "<a href="manifest/default_locale">default_locale</a>": "en",
+    "<a href="manifest/description">description</a>": "A plain text description",
+    "<a href="manifest/icons">icons</a>": {...},
+
+    <em>// Pick one (or none)</em>
+    "<a href="browserAction">browser_action</a>": {...},
+    "<a href="pageAction">page_action</a>": {...},
+
+    <em>// Pick one (or none)</em>
+    "<a href="background_pages">background</a>": {
+      "scripts": ["background.js"],
+      "<a href="event_pages">persistent</a>": false
+    },
+    "<a href="background_pages">background_page</a>": background.html,
+
+    <em>// Optional</em>
+    "author": ...,
+    "automation": ...,
+    "<a href="settings_override">chrome_settings_overrides</a>": {...},
+    "<a href="ui_override">chrome_ui_overrides</a>": {
+      "bookmarks_ui": {
+        "remove_bookmark_shortcut": true,
+        "remove_button": true
+      }
+    },
+    "<a href="override">chrome_url_overrides</a>": {...},
+    "<a href="commands">commands</a>": {...},
+    "content_capabilities": ...,
+    "<a href="content_scripts">content_scripts</a>": [{...}],
+    "<a href="contentSecurityPolicy">content_security_policy</a>": "policyString",
+    "converted_from_user_script": ...,
+    "current_locale": ...,
+    "declarative_net_request": ...,
+    "<a href="devtools">devtools_page</a>": "devtools.html",
+    "<a href="manifest/event_rules">event_rules</a>": [{...}],
+    "<a href="manifest/externally_connectable">externally_connectable</a>": {
+      "matches": ["*://*.example.com/*"]
+    },
+    "<a href="fileBrowserHandler">file_browser_handlers</a>": [...],
+    "<a href="manifest/file_system_provider">file_system_provider_capabilities</a>": {
+      "configurable": true,
+      "multiple_mounts": true,
+      "source": "network"
+    },
+    "<a href="manifest/homepage_url">homepage_url</a>": "http://path/to/homepage",
+    "<a href="shared_modules">import</a>": [{"id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}],
+    "<a href="manifest/incognito">incognito</a>": "spanning, split, or not_allowed",
+    "input_components": ...,
+    "<a href="manifest/key">key</a>": "publicKey",
+    "<a href="manifest/minimum_chrome_version">minimum_chrome_version</a>": "versionString",
+    "<a href="manifest/nacl_modules">nacl_modules</a>": [...],
+    "oauth2": ...,
+    "<a href="manifest/offline_enabled">offline_enabled</a>": true,
+    "<a href="omnibox">omnibox</a>": {
+      "keyword": "aString"
+    },
+    "<a href="permissions">optional_permissions</a>": ["tabs"],
+    "<a href="options">options_page</a>": "options.html",
+    "<a href="optionsV2">options_ui</a>": {
+      "chrome_style": true,
+      "page": "options.html"
+    },
+    "<a href="declare_permissions">permissions</a>": ["tabs"],
+    "platforms": ...,
+    "<a href="npapi">plugins</a>": [...],
+    "<a href="manifest/requirements">requirements</a>": {...},
+    "<a href="manifest/sandbox">sandbox</a>": [...],
+    "<a href="manifest/name#short_name">short_name</a>": "Short Name",
+    "signature": ...,
+    "spellcheck": ...,
+    "<a href="manifest/storage">storage</a>": {
+      "managed_schema": "schema.json"
+    },
+    "system_indicator": ...,
+    "<a href="ttsEngine">tts_engine</a>": {...},
+    "<a href="autoupdate">update_url</a>": "http://path/to/updateInfo.xml",
+    "<a href="manifest/version">version_name</a>": "aString",
+    "<a href="manifest/web_accessible_resources">web_accessible_resources</a>": [...]
+  }
+</pre>
+
+<h2 id="content">Content Script</h2>
+
+<p>
+Content scripts connect an extension to the webpage through message passing.
+Use them to manipulate and exchange information with the
+Document Object Model (DOM).
+</p>
+
+<pre data-filename="content_script.js">
+CODE EXAMPLE
+</pre>
+GRAPHIC EXAMPLE
+
+<h2 id="background">Background Script</h2>
+<p>
+The background script is an extensions event handler.
+The background script dispatches a response
+when registered listeners are triggered.
+</p>
+
+<p>
+A background script may listen for a message from the content script,
+and then respond.
+</p>
+<pre data-filename="background.js">
+CODE EXAMPLE
+</pre>
+
+GRAPHIC EXAMPLE
+<p>
+A background script can be registered as a JavaScript file,
+or if it is dependent on HTML elements,
+the HTML file can be registered with a script tag to the logic side.
+</p>
+
+<h2 id="options">Options</h2>
