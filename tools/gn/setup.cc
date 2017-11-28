@@ -377,9 +377,6 @@ bool Setup::RunPostMessageLoop() {
       err.PrintToStdout();
       return false;
     }
-    err.PrintNonfatalToStdout();
-    OutputString("\nThe build continued as if that argument was "
-                 "unspecified.\n\n");
     return true;
   }
 
