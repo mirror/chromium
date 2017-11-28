@@ -32836,6 +32836,11 @@ Called by update_net_trust_anchors.py.-->
   <int value="1" label="Has password field"/>
 </enum>
 
+<enum name="PasswordSaveMethod">
+  <int value="0" label="Automatic prompt"/>
+  <int value="1" label="Manual fallback"/>
+</enum>
+
 <enum name="PasswordSubmissionEvent">
   <int value="0" label="Password submission succeeded"/>
   <int value="1" label="Password submission failed"/>
