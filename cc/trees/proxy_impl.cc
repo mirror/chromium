@@ -497,9 +497,9 @@ void ProxyImpl::NotifyImageDecodeRequestFinished() {
   SetNeedsCommitOnImplThread();
 }
 
-void ProxyImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
+bool ProxyImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
   DCHECK(IsImplThread());
-  host_impl_->WillBeginImplFrame(args);
+  return host_impl_->WillBeginImplFrame(args);
 }
 
 void ProxyImpl::DidFinishImplFrame() {
