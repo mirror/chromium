@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "5e42350e_b6844e02",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-28T14:36:08Z",
+      "side": 1,
+      "message": "Since it\u0027s not autofill specific, we should probably drop the namespace (the using code will be cleaner)",
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ebb009f_e10f05dd",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-28T14:36:08Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f604184_735ab33f",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-28T14:36:08Z",
+      "side": 1,
+      "message": "nit: {} instead of std::list\u003c\u003e() ?",
+      "range": {
+        "startLine": 20,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 62
+      },
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68551907_e230b3a5",
         "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
         "patchSetId": 1
@@ -13,6 +70,70 @@
       "writtenOn": "2017-11-28T01:45:42Z",
       "side": 1,
       "message": "Mathieu: What\u0027s the Chrome-approved way to do this?  I assume it\u0027s not including a .cc file.",
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e41c9f_5875fe27",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-28T14:36:08Z",
+      "side": 1,
+      "message": "Including the .h? Sorry I don\u0027t understand the problem.",
+      "parentUuid": "68551907_e230b3a5",
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3411045b_519fc86d",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-28T14:36:08Z",
+      "side": 1,
+      "message": "std::make_unique plz",
+      "range": {
+        "startLine": 739,
+        "startChar": 6,
+        "endLine": 739,
+        "endChar": 22
+      },
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95dc7ed3_ffb60365",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-28T14:36:08Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 746,
+        "startChar": 6,
+        "endLine": 746,
+        "endChar": 22
+      },
       "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
