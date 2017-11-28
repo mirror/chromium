@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "472e26a5_5059e5fc",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T09:17:12Z",
+      "side": 1,
+      "message": "So I have a ChromeOS chroot environment, but I rarely use it and it\u0027s probably horribly out of date. Yet path/to/chromeos/chroot/usr/include/asm/unistd_64.h has __NR_memfd_create defined, just like the Linux sysroot.\n\nThat makes me wonder, did patch set 6 fail because shared_memory_helper.h tried to use __NR_memfd_create, and the header just forget to #include \"unistd.h\" ? And somehow Linux got lucky?",
+      "parentUuid": "56b95cf5_93b0eef3",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98d3baa5_6d98e1b9",
         "filename": "base/memory/shared_memory_posix.cc",
         "patchSetId": 18
