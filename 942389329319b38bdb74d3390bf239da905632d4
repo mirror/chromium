@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22c9ee95_4a913fb0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "Nit: filter",
+      "range": {
+        "startLine": 7,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8d118b_cff740a2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "Nit: Remove blank line?",
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35535be_2caa6b0d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "Not needed.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 17
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049d6842_26910fb7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "So could be a ref-test? (And I guess this will be \u0027lime\u0027 when feFlood is \"fixed\".)",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 43
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437ca6b1_786aed7f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this? (Paint with/prime the filter with something untainted?)",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b3c4b3_8f784b16",
+        "filename": "third_party/WebKit/Source/core/svg/SVGFEImageElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "We should probably pass/plumb the SecurityOrigin associated with the canvas context here to be extra strict. (I don\u0027t _think_ we can have a SecurityOrigin that is non-SO with the canvas context\u0027s here ATM, but it makes for an easy trap to fall into in the future.) Not quite sure how to interpret the \"...as well as document fragments such as SVG graphics elements.\" part of the spec, but we always load external (filter) documents requiring SO.",
+      "range": {
+        "startLine": 168,
+        "startChar": 41,
+        "endLine": 168,
+        "endChar": 74
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3701c5_3a13dc7e",
+        "filename": "third_party/WebKit/Source/core/svg/SVGFEImageElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "Test for this?",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 60
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87cd53de_8f388651",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "I think it would be nicer if we just provided the CanvasRenderingContextHost to CanvasRenderingContext2DState::GetFilterForOffscreenCanvas (the |canvas_size| argument could then also potentially be dropped) - having it in the state-stack seems unnecessarily fragile. (I.e storing the same state twice, one which is \"restorable\", which is not a good thing in these cases.)",
+      "range": {
+        "startLine": 1318,
+        "startChar": 4,
+        "endLine": 1319,
+        "endChar": 45
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9eb8492_057074c2",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "I think the old setup had the benefit of not requiring an is-tainted check once the canvas has been tainted. (And not relying on a bit in the state stack, we shouldn\u0027t need to reevaluate?)",
+      "range": {
+        "startLine": 1320,
+        "startChar": 4,
+        "endLine": 1321,
+        "endChar": 25
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bf0c98_261b28e7",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "Another motivation for passing the ...Host here:\n\nThis should taint the canvas if last_effect-\u003eOriginTainted() - like the regular GetFilter. (I don\u0027t think we can ever get a not-tainted -\u003e tainted transition here ATM, because reference filters are not supported in this context AFAIK.)",
+      "range": {
+        "startLine": 306,
+        "startChar": 18,
+        "endLine": 310,
+        "endChar": 3
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c5f88d_dceb211e",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "(See above; this turns into !context-\u003eOriginClean())",
+      "range": {
+        "startLine": 360,
+        "startChar": 36,
+        "endLine": 360,
+        "endChar": 58
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a49ecc_4b50bcf2",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FEDisplacementMap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T13:13:13Z",
+      "side": 1,
+      "message": "Nit: Maybe use https://drafts.fxtf.org/filter-effects/#fedisplacemnentmap-restrictions here instead.",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 76
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
