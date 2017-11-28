@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "4e9d785e_126267cf",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-28T16:22:32Z",
+      "side": 1,
+      "message": "Thumbs up.",
+      "parentUuid": "089947c7_2f0e7fef",
+      "revId": "4dfda7a64fdc675acac8661b3025d35fc9f2fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2783363_434bf1f1",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 2
