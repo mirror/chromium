@@ -93,6 +93,30 @@
       "revId": "68650e47cb2005cb8be0d73cab070a4c2869a70b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9175d97e_0e3b61b7",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 4723,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T12:32:26Z",
+      "side": 1,
+      "message": "Sounds fine to me if it\u0027s possible to reliably distinguish between the two kinds of identifiers.\nI\u0027m not sure GURL provides such functionality - maybe you\u0027ll have to go searching for slashes?",
+      "parentUuid": "d1024877_78cd3326",
+      "range": {
+        "startLine": 4723,
+        "startChar": 6,
+        "endLine": 4723,
+        "endChar": 136
+      },
+      "revId": "68650e47cb2005cb8be0d73cab070a4c2869a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
