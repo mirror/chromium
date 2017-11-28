@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1b48647_a24e7766",
+        "filename": "chromecast/tracing/ftrace.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-28T20:08:53Z",
+      "side": 1,
+      "message": "Should this be done before writing 0\\nmono to the trace file? (same question with events list below)",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 0
+      },
+      "revId": "ecf2445506eee5109172c99f000b51fb7b9cbfbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708ee394_3a35dc9b",
+        "filename": "chromecast/tracing/ftrace.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-28T20:08:53Z",
+      "side": 1,
+      "message": "Is no effect successful or not?",
+      "range": {
+        "startLine": 36,
+        "startChar": 39,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "ecf2445506eee5109172c99f000b51fb7b9cbfbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5b2fab_8f62ac0a",
+        "filename": "chromecast/tracing/system_tracer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-28T20:08:53Z",
+      "side": 1,
+      "message": "If |status|",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 13
+      },
+      "revId": "ecf2445506eee5109172c99f000b51fb7b9cbfbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee00ff3_aebb923d",
+        "filename": "chromecast/tracing/tracing_service_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-28T20:08:53Z",
+      "side": 1,
+      "message": "Not sure what this does, but assuming based on the name, do you really want to keep whitespace? Given:\n\nipc, gfx,swap\n\nyou\u0027re going to fail to match \" gfx\" aren\u0027t you?",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 41
+      },
+      "revId": "ecf2445506eee5109172c99f000b51fb7b9cbfbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
