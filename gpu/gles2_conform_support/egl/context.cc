@@ -187,6 +187,16 @@ void Context::SignalQuery(uint32_t query, const base::Closure& callback) {
   NOTIMPLEMENTED();
 }
 
+void Context::SendGpuFence(uint32_t gpu_fence_id, ClientGpuFence source) {
+  NOTIMPLEMENTED();
+}
+
+void Context::GetGpuFenceHandle(
+    uint32_t gpu_fence_id,
+    base::OnceCallback<void(const gfx::GpuFenceHandle&)> callback) {
+  NOTIMPLEMENTED();
+}
+
 void Context::SetLock(base::Lock*) {
   NOTIMPLEMENTED();
 }

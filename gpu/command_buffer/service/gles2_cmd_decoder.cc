@@ -49,6 +49,7 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 #include "gpu/command_buffer/service/gles2_cmd_srgb_converter.h"
 #include "gpu/command_buffer/service/gles2_cmd_validation.h"
+#include "gpu/command_buffer/service/gpu_fence_manager.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/gpu_state_tracer.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
@@ -84,6 +85,7 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/gpu_fence.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/ipc/color/gfx_param_traits.h"
 #include "ui/gfx/overlay_transform.h"
@@ -600,6 +602,9 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   void RestoreAllAttributes() const override;
 
   QueryManager* GetQueryManager() override { return query_manager_.get(); }
+  GpuFenceManager* GetGpuFenceManager() override {
+    return gpu_fence_manager_.get();
+  }
   FramebufferManager* GetFramebufferManager() override {
     return framebuffer_manager_.get();
   }
@@ -2395,6 +2400,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   std::unique_ptr<QueryManager> query_manager_;
 
+  std::unique_ptr<GpuFenceManager> gpu_fence_manager_;
+
   std::unique_ptr<VertexArrayManager> vertex_array_manager_;
 
   // The format of the back buffer_
@@ -3357,6 +3364,8 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
 
   query_manager_.reset(new QueryManager(this, feature_info_.get()));
 
+  gpu_fence_manager_.reset(new GpuFenceManager());
+
   util_.set_num_compressed_texture_formats(
       validators_->compressed_texture_format.GetValues().size());
 
@@ -3998,6 +4007,7 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
   caps.texture_storage_image =
       feature_info_->feature_flags().chromium_texture_storage_image;
   caps.supports_oop_raster = supports_oop_raster_;
+  caps.chromium_gpu_fence = feature_info_->feature_flags().chromium_gpu_fence;
 
   return caps;
 }
@@ -5010,6 +5020,11 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
     query_manager_.reset();
   }
 
+  if (gpu_fence_manager_.get()) {
+    gpu_fence_manager_->Destroy(have_context);
+    gpu_fence_manager_.reset();
+  }
+
   if (vertex_array_manager_ .get()) {
     vertex_array_manager_->Destroy(have_context);
     vertex_array_manager_.reset();
@@ -5132,6 +5147,50 @@ void GLES2DecoderImpl::ReturnFrontBuffer(const Mailbox& mailbox, bool is_lost) {
   }
 
   DLOG(ERROR) << "Attempting to return a frontbuffer that was not saved.";
+}
+
+error::Error GLES2DecoderImpl::HandleInsertGpuFenceINTERNAL(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::InsertGpuFenceINTERNAL& c =
+      *static_cast<const volatile gles2::cmds::InsertGpuFenceINTERNAL*>(
+          cmd_data);
+  if (!features().chromium_gpu_fence) {
+    return error::kUnknownCommand;
+  }
+  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
+  if (!GetGpuFenceManager()->CreateNewGpuFence(gpu_fence_id))
+    return error::kInvalidArguments;
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleWaitGpuFenceCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::WaitGpuFenceCHROMIUM& c =
+      *static_cast<const volatile gles2::cmds::WaitGpuFenceCHROMIUM*>(cmd_data);
+  if (!features().chromium_gpu_fence) {
+    return error::kUnknownCommand;
+  }
+  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
+  if (!GetGpuFenceManager()->WaitGpuFence(gpu_fence_id))
+    return error::kInvalidArguments;
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleDestroyGpuFenceCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::DestroyGpuFenceCHROMIUM& c =
+      *static_cast<const volatile gles2::cmds::DestroyGpuFenceCHROMIUM*>(
+          cmd_data);
+  if (!features().chromium_gpu_fence) {
+    return error::kUnknownCommand;
+  }
+  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
+  if (!GetGpuFenceManager()->RemoveGpuFence(gpu_fence_id))
+    return error::kInvalidArguments;
+  return error::kNoError;
 }
 
 void GLES2DecoderImpl::CreateBackTexture() {
