@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4fa2b920_18d955db",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-28T14:56:04Z",
+      "side": 1,
+      "message": "Yeah, I know, the naming is not perfect. That is why I was wondering of the vr_shell metrics helper would become cross platform, which it seems to get. Let\u0027s discuss naming after branch cut.",
+      "parentUuid": "ecc64505_82c41aa7",
+      "range": {
+        "startLine": 247,
+        "startChar": 35,
+        "endLine": 247,
+        "endChar": 50
+      },
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d169643_56682881",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.h",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-28T01:21:47Z",
       "side": 1,
       "message": "Take a look at https://chromium-review.googlesource.com/c/chromium/src/+/784095 - perhaps we can land part of that to avoid merge conflicts?",
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a259b412_1d17ef25",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-28T14:56:04Z",
+      "side": 1,
+      "message": "What about I revert the changes in vr usage monitor and you use the vr::Mode enum in your CL?",
+      "parentUuid": "2d169643_56682881",
       "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
