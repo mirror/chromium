@@ -11,6 +11,7 @@ namespace file_system_provider {
 
 ProviderId::ProviderId(const std::string& internal_id,
                        ProviderType provider_type)
+
     : internal_id_(internal_id), type_(provider_type) {}
 
 ProviderId::ProviderId() : type_(INVALID) {}
