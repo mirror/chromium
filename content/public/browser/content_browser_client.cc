@@ -69,6 +69,13 @@ GURL ContentBrowserClient::GetEffectiveURL(BrowserContext* browser_context,
   return url;
 }
 
+bool ContentBrowserClient::ShouldCompareEffectiveURLs(
+    BrowserContext* browser_context,
+    const GURL& dest_url,
+    bool is_main_frame) {
+  return true;
+}
+
 bool ContentBrowserClient::ShouldUseProcessPerSite(
     BrowserContext* browser_context, const GURL& effective_url) {
   return false;

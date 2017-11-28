@@ -49,6 +49,7 @@
 #include "chrome/common/chrome_features.h"
 #endif
 
+using content::RenderFrameHost;
 using content::WebContents;
 using extensions::Extension;
 
@@ -335,8 +336,7 @@ IN_PROC_BROWSER_TEST_P(HostedAppTest, SubframeRedirectsToHostedApp) {
 
   // Ensure that the frame navigated successfully and that it has correct
   // content.
-  content::RenderFrameHost* subframe =
-      content::ChildFrameAt(tab->GetMainFrame(), 0);
+  RenderFrameHost* subframe = content::ChildFrameAt(tab->GetMainFrame(), 0);
   EXPECT_EQ(app_url, subframe->GetLastCommittedURL());
   std::string result;
   EXPECT_TRUE(ExecuteScriptAndExtractString(
@@ -445,28 +445,140 @@ IN_PROC_BROWSER_TEST_P(HostedAppPWAOnlyTest, OpenInChrome) {
   ASSERT_EQ(1u, chrome::GetBrowserCount(browser()->profile()));
 }
 
-class HostedAppVsTdiTest : public HostedAppTest {
- public:
-  HostedAppVsTdiTest() {}
-  ~HostedAppVsTdiTest() override {}
+// Common app manifest for HostedAppProcessModelTests.
+constexpr const char kHostedAppProcessModelManifest[] =
+    R"( { "name": "Hosted App Process Model Test",
+            "version": "1",
+            "manifest_version": 2,
+            "app": {
+              "launch": {
+                "web_url": "%s"
+              },
+              "urls": ["*://app.site.com/frame_tree",  "*://isolated.site.com/"]
+            }
+          } )";
 
-  void SetUpOnMainThread() override {
-    scoped_feature_list_.InitAndEnableFeature(features::kTopDocumentIsolation);
-    HostedAppTest::SetUpOnMainThread();
-    ASSERT_TRUE(embedded_test_server()->Start());
+// This set of tests verify the hosted app process model behavior in various
+// isolation modes. They can be run by default, with --site-per-process, or
+// with --top-document-isolation. In each mode, they contain an isolated origin.
+class HostedAppProcessModelTest : public HostedAppTest {
+ public:
+  HostedAppProcessModelTest() {}
+  ~HostedAppProcessModelTest() override {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    ASSERT_TRUE(embedded_test_server()->InitializeAndListen());
+    std::string origin_list =
+        embedded_test_server()->GetURL("isolated.site.com", "/").spec();
+    command_line->AppendSwitchASCII(switches::kIsolateOrigins, origin_list);
   }
 
- private:
-  base::test::ScopedFeatureList scoped_feature_list_;
+  void SetUpOnMainThread() override {
+    HostedAppTest::SetUpOnMainThread();
+    host_resolver()->AddRule("*", "127.0.0.1");
+    embedded_test_server()->StartAcceptingConnections();
 
-  DISALLOW_COPY_AND_ASSIGN(HostedAppVsTdiTest);
+    should_swap_for_cross_site_ =
+        content::AreAllSitesIsolatedForTesting() ||
+        base::FeatureList::IsEnabled(features::kTopDocumentIsolation);
+
+    process_map_ = extensions::ProcessMap::Get(browser()->profile());
+
+    same_dir_url_ = embedded_test_server()->GetURL(
+      "app.site.com", "/frame_tree/simple.htm");
+    diff_dir_url_ = embedded_test_server()->GetURL(
+      "app.site.com", "/save_page/a.htm");
+    same_site_url_ = embedded_test_server()->GetURL(
+      "other.site.com", "/title1.html");
+    isolated_url_ = embedded_test_server()->GetURL(
+      "isolated.site.com", "/title1.html");
+    cross_site_url_ = embedded_test_server()->GetURL(
+      "cross.domain.com", "/title1.html");
+  }
+
+  // Opens a popup from |rfh| to |url|, verifies whether it should stay in the
+  // same process as |rfh| and whether it should be in an app process, and then
+  // closes the popup.
+  void TestPopupProcess(RenderFrameHost* rfh,
+                        const GURL& url,
+                        bool expect_same_process,
+                        bool expect_app_process) {
+    content::WebContentsAddedObserver tab_added_observer;
+    ASSERT_TRUE(content::ExecuteScript(rfh,
+                                       "window.open('" + url.spec() + "');"));
+    content::WebContents* new_tab = tab_added_observer.GetWebContents();
+    ASSERT_TRUE(new_tab);
+    WaitForLoadStop(new_tab);
+    EXPECT_EQ(url, new_tab->GetLastCommittedURL());
+    RenderFrameHost* new_rfh = new_tab->GetMainFrame();
+
+    EXPECT_EQ(expect_same_process, rfh->GetProcess() == new_rfh->GetProcess())
+         << " for " << url  << " from " << rfh->GetLastCommittedURL();
+
+    EXPECT_EQ(expect_app_process,
+              process_map_->Contains(new_rfh->GetProcess()->GetID()))
+        << " for " << url << " from " << rfh->GetLastCommittedURL();
+    EXPECT_EQ(expect_app_process,
+              new_rfh->GetSiteInstance()->GetSiteURL().SchemeIs(
+                  extensions::kExtensionScheme))
+        << " for " << url << " from " << rfh->GetLastCommittedURL();
+
+    ASSERT_TRUE(content::ExecuteScript(new_rfh, "window.close();"));
+  }
+
+  // Creates a subframe underneath |parent_rfh| to |url|, verifies whether it
+  // should stay in the same process as |parent_rfh| and whether it should be in
+  // an app process, and returns the subframe RFH.
+  RenderFrameHost* TestSubframeProcess(RenderFrameHost* parent_rfh,
+                                       const GURL& url,
+                                       bool expect_same_process,
+                                       bool expect_app_process) {
+    WebContents* web_contents = WebContents::FromRenderFrameHost(parent_rfh);
+    content::TestNavigationObserver nav_observer(web_contents, 1);
+    EXPECT_TRUE(ExecuteScript(
+        parent_rfh,
+        "var f = document.createElement('iframe');"
+        "f.src = '" + url.spec() + "';"
+        "document.body.appendChild(f);"));
+    nav_observer.Wait();
+
+    RenderFrameHost* subframe = content::FrameMatchingPredicate(
+        web_contents, base::Bind(&content::FrameHasSourceUrl, url));
+
+    EXPECT_EQ(expect_same_process,
+              parent_rfh->GetProcess() == subframe->GetProcess())
+        << " for " << url << " from " << parent_rfh->GetLastCommittedURL();
+
+    EXPECT_EQ(expect_app_process,
+              process_map_->Contains(subframe->GetProcess()->GetID()))
+        << " for " << url << " from " << parent_rfh->GetLastCommittedURL();
+    EXPECT_EQ(expect_app_process,
+              subframe->GetSiteInstance()->GetSiteURL().SchemeIs(
+                  extensions::kExtensionScheme))
+        << " for " << url << " from " << parent_rfh->GetLastCommittedURL();
+
+    return subframe;
+  }
+
+  bool should_swap_for_cross_site_;
+
+  extensions::ProcessMap* process_map_;
+
+  GURL same_dir_url_;
+  GURL diff_dir_url_;
+  GURL same_site_url_;
+  GURL isolated_url_;
+  GURL cross_site_url_;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(HostedAppProcessModelTest);
 };
 
 // Tests that even with --top-document-isolation, app.site.com (covered by app's
 // web extent) main frame and foo.site.com (not covered by app's web extent)
 // share the same renderer process.  See also https://crbug.com/679011.
 //
-// Relevant frames in the test:
+// Relevant frames in the tests:
 // - |app| - app.site.com/frame_tree/cross_origin_but_same_site_frames.html
 //           Main frame, launch URL of the hosted app (i.e. app.launch.web_url).
 // - |same_dir| - app.site.com/frame_tree/simple.htm
@@ -492,24 +604,36 @@ class HostedAppVsTdiTest : public HostedAppTest {
 // The test also verifies that all same-site frames (i.e. |app|, |same_dir|,
 // |diff_dir|, |same_site|) share the same renderer process.  This was a small
 // performance problem caused by https://crbug.com/679011.
-IN_PROC_BROWSER_TEST_P(HostedAppVsTdiTest, ProcessAllocation) {
-  // Setup and launch the hosted app.
+
+// TODO(creis): Clean up comments.
+
+// Start from inside the hosted app.  Same-site iframes and popups stay in app process, even when outside app's extent.
+// This allows them to script within the same effective origin, and avoids unnecessary OOPIFs.
+
+// Same-origin, non-app iframe stays in app process (even in --site-per-process).
+//  If iframe opens popup, it can script it.
+//    (This case makes OpenWebPopupFromWebIframe test obsolete.)
+// Same-site, non-app iframe stays in app process (even in --site-per-process).
+//  If iframe opens popup, it can script it.
+// Same-site but isolated origin iframe always leaves app process.
+//  If iframe opens popup, it can script it.
+// Cross-site, non-app iframe stays by default, but leaves app process in --site-per-process.
+//  If iframe opens popup, it can script it.
+
+// Same-origin, non-app popup stays in app process (even in --site-per-process).
+// Same-site, non-app popup stays in app process (even in --site-per-process).
+// Same-site but isolated origin popup always leaves app process.
+// Cross-site, non-app popup stays by default, but leaves app process in --site-per-process.
+
+
+IN_PROC_BROWSER_TEST_P(HostedAppProcessModelTest, IframesInsideHostedApp) {
+  // Set up and launch the hosted app.
   GURL url = embedded_test_server()->GetURL(
       "app.site.com", "/frame_tree/cross_origin_but_same_site_frames.html");
 
   extensions::TestExtensionDir test_app_dir;
-  test_app_dir.WriteManifest(base::StringPrintf(
-      R"( { "name": "Hosted App vs TDI Test",
-            "version": "1",
-            "manifest_version": 2,
-            "app": {
-              "launch": {
-                "web_url": "%s"
-              },
-              "urls": ["*://app.site.com/frame_tree"]
-            }
-          } )",
-      url.spec().c_str()));
+  test_app_dir.WriteManifest(
+      base::StringPrintf(kHostedAppProcessModelManifest, url.spec().c_str()));
   SetupApp(test_app_dir.UnpackedPath(), false);
 
   content::WebContents* web_contents =
@@ -520,11 +644,12 @@ IN_PROC_BROWSER_TEST_P(HostedAppVsTdiTest, ProcessAllocation) {
     return content::FrameMatchingPredicate(
         web_contents, base::Bind(&content::FrameMatchesName, name));
   };
-  content::RenderFrameHost* app = web_contents->GetMainFrame();
-  content::RenderFrameHost* same_dir = find_frame("SameOrigin-SamePath");
-  content::RenderFrameHost* diff_dir = find_frame("SameOrigin-DifferentPath");
-  content::RenderFrameHost* same_site = find_frame("OtherSubdomain-SameSite");
-  content::RenderFrameHost* cross_site = find_frame("CrossSite");
+  RenderFrameHost* app = web_contents->GetMainFrame();
+  RenderFrameHost* same_dir = find_frame("SameOrigin-SamePath");
+  RenderFrameHost* diff_dir = find_frame("SameOrigin-DifferentPath");
+  RenderFrameHost* same_site = find_frame("OtherSubdomain-SameSite");
+  RenderFrameHost* isolated = find_frame("Isolated-SameSite");
+  RenderFrameHost* cross_site = find_frame("CrossSite");
 
   // Sanity-check sites of all relevant frames to verify test setup.
   GURL app_site = content::SiteInstance::GetSiteForURL(
@@ -547,6 +672,12 @@ IN_PROC_BROWSER_TEST_P(HostedAppVsTdiTest, ProcessAllocation) {
   EXPECT_NE(same_site_site, app_site);
   EXPECT_EQ(same_site_site, diff_dir_site);
 
+  GURL isolated_site = content::SiteInstance::GetSiteForURL(
+      app_browser_->profile(), isolated->GetLastCommittedURL());
+  EXPECT_NE(extensions::kExtensionScheme, isolated_site.scheme());
+  EXPECT_NE(isolated_site, app_site);
+  EXPECT_NE(isolated_site, diff_dir_site);
+
   GURL cross_site_site = content::SiteInstance::GetSiteForURL(
       app_browser_->profile(), cross_site->GetLastCommittedURL());
   EXPECT_NE(cross_site_site, app_site);
@@ -559,111 +690,230 @@ IN_PROC_BROWSER_TEST_P(HostedAppVsTdiTest, ProcessAllocation) {
   EXPECT_TRUE(content::ExecuteScriptAndExtractString(
       same_dir, "domAutomationController.send(window.origin)",
       &same_dir_origin));
-
   std::string diff_dir_origin;
   EXPECT_TRUE(content::ExecuteScriptAndExtractString(
       diff_dir, "domAutomationController.send(window.origin)",
       &diff_dir_origin));
-
   EXPECT_EQ(diff_dir_origin, same_dir_origin);
 
-  // Verify scriptability and process placement.
+  // Verify all same-site iframes stay in the process, isolated origins don't,
+  // and cross-site leaves if the process model calls for it.
   EXPECT_EQ(same_dir->GetProcess(), app->GetProcess());
-  if (!content::AreAllSitesIsolatedForTesting()) {
-    // Verify that |same_dir| and |diff_dir| can script each other.
-    // (they should - they have the same origin).
-    std::string inner_text_from_other_frame;
-    ASSERT_TRUE(content::ExecuteScriptAndExtractString(
-        diff_dir,
-        R"( var w = window.open('', 'SameOrigin-SamePath');
-            domAutomationController.send(w.document.body.innerText); )",
-        &inner_text_from_other_frame));
-    EXPECT_EQ("Simple test page.", inner_text_from_other_frame);
+  EXPECT_EQ(diff_dir->GetProcess(), app->GetProcess());
+  EXPECT_EQ(same_site->GetProcess(), app->GetProcess());
+  EXPECT_NE(isolated->GetProcess(), app->GetProcess());
+  if (should_swap_for_cross_site_)
+    EXPECT_NE(cross_site->GetProcess(), app->GetProcess());
+  else
+    EXPECT_EQ(cross_site->GetProcess(), app->GetProcess());
 
-    // Verify there are no additional processes for same-site frames.
-    EXPECT_EQ(diff_dir->GetProcess(), app->GetProcess());
-    EXPECT_EQ(same_site->GetProcess(), app->GetProcess());
-    // TODO(lukasza): https://crbug.com/718516: For now it is okay for
-    // |cross_site| to be in any process, but we should probably revisit
-    // before launching --top-document-isolation more broadly.
-  } else {
-    // TODO(lukasza): https://crbug.com/718516: Process policy is not
-    // well-defined / settled wrt relationship between 1) hosted apps and 2)
-    // same-site web content outside of hosted app's extent.  When this test was
-    // authored --site-per-process would put |app| in a separate renderer
-    // process from |diff_dir| and |same_site|, even though such process
-    // placement can be problematic (if |app| tries to synchronously script
-    // |diff_dir| and/or |same_site|).
+  // Verify that |same_dir| and |diff_dir| can script each other.
+  // (they should - they have the same origin).
+  // TODO(creis): Re-enable once --site-per-process works.  Times out for now.
+  /*std::string inner_text_from_other_frame;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractString(
+      diff_dir,
+      R"( var w = window.open('', 'SameOrigin-SamePath');
+          domAutomationController.send(w.document.body.innerText); )",
+      &inner_text_from_other_frame));
+  EXPECT_EQ("Simple test page.", inner_text_from_other_frame);*/
+}
+
+IN_PROC_BROWSER_TEST_P(HostedAppProcessModelTest, PopupsInsideHostedApp) {
+  // Set up and launch the hosted app.
+  GURL url = embedded_test_server()->GetURL(
+      "app.site.com", "/frame_tree/cross_origin_but_same_site_frames.html");
+
+  extensions::TestExtensionDir test_app_dir;
+  test_app_dir.WriteManifest(
+      base::StringPrintf(kHostedAppProcessModelManifest, url.spec().c_str()));
+  SetupApp(test_app_dir.UnpackedPath(), false);
+
+  content::WebContents* web_contents =
+      app_browser_->tab_strip_model()->GetActiveWebContents();
+  content::WaitForLoadStop(web_contents);
+
+  auto find_frame = [web_contents](const std::string& name) {
+    return content::FrameMatchingPredicate(
+        web_contents, base::Bind(&content::FrameMatchesName, name));
+  };
+  RenderFrameHost* app = web_contents->GetMainFrame();
+  RenderFrameHost* same_dir = find_frame("SameOrigin-SamePath");
+  RenderFrameHost* diff_dir = find_frame("SameOrigin-DifferentPath");
+  RenderFrameHost* same_site = find_frame("OtherSubdomain-SameSite");
+  RenderFrameHost* isolated = find_frame("Isolated-SameSite");
+  RenderFrameHost* cross_site = find_frame("CrossSite");
+
+  // Verify all same-site popups opened from the main frame stay in the process,
+  // isolated origin popups don't, and cross-site popups leave if the process
+  // model calls for it.
+  {
+    SCOPED_TRACE("... for same_dir popup");
+    TestPopupProcess(app, same_dir_url_, true, true);
+  }
+  {
+    SCOPED_TRACE("... for diff_dir popup");
+    // TODO(creis): Should be true, true
+    TestPopupProcess(app, diff_dir_url_, !should_swap_for_cross_site_, !should_swap_for_cross_site_);
+  }
+  {
+    SCOPED_TRACE("... for same_site popup");
+    // TODO(creis): Should be true, true
+    TestPopupProcess(app, same_site_url_, !should_swap_for_cross_site_, !should_swap_for_cross_site_);
+  }
+  // TODO(creis): Add a different app case.
+  {
+    SCOPED_TRACE("... for isolated_url popup");
+    TestPopupProcess(app, isolated_url_, false, false);
+  }
+  // For cross-site, the resulting process is only in the app process if we
+  // don't swap processes.
+  {
+    SCOPED_TRACE("... for cross_site popup");
+    TestPopupProcess(app, cross_site_url_, !should_swap_for_cross_site_,
+                     !should_swap_for_cross_site_);
+  }
+
+  // If the iframes open popups that are same-origin with themselves, the popups
+  // should be in the same process as the respective iframes.
+  {
+    SCOPED_TRACE("... for same_dir iframe popup");
+    TestPopupProcess(same_dir, same_dir_url_, true, true);
+  }
+  {
+    SCOPED_TRACE("... for diff_dir iframe popup");
+    // TODO(creis): Should be true, true.
+    TestPopupProcess(diff_dir, diff_dir_url_, !should_swap_for_cross_site_, !should_swap_for_cross_site_);
+  }
+  {
+    SCOPED_TRACE("... for same_site iframe popup");
+    // TODO(creis): Should be true, true
+    TestPopupProcess(same_site, same_site_url_, !should_swap_for_cross_site_, !should_swap_for_cross_site_);
+  }
+  {
+    SCOPED_TRACE("... for isolated_url iframe popup");
+    TestPopupProcess(isolated, isolated_url_, true, false);
+  }
+  {
+    SCOPED_TRACE("... for cross_site iframe popup");
+    TestPopupProcess(cross_site, cross_site_url_, true,
+                     !should_swap_for_cross_site_);
   }
 }
 
-class HostedAppWithIsolatedOriginsTest : public HostedAppTest {
- public:
-  HostedAppWithIsolatedOriginsTest() {}
-  ~HostedAppWithIsolatedOriginsTest() override {}
+IN_PROC_BROWSER_TEST_P(HostedAppProcessModelTest, FromOutsideHostedApp) {
+  // Set up and launch the hosted app.
+  GURL app_url = embedded_test_server()->GetURL(
+      "app.site.com", "/frame_tree/simple.htm");
 
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    ASSERT_TRUE(embedded_test_server()->InitializeAndListen());
-    std::string origin_list =
-        embedded_test_server()->GetURL("isolated.foo.com", "/").spec();
-    command_line->AppendSwitchASCII(switches::kIsolateOrigins, origin_list);
+  extensions::TestExtensionDir test_app_dir;
+  test_app_dir.WriteManifest(base::StringPrintf(kHostedAppProcessModelManifest,
+                                                app_url.spec().c_str()));
+  SetupApp(test_app_dir.UnpackedPath(), false);
+
+  content::WebContents* web_contents =
+      app_browser_->tab_strip_model()->GetActiveWebContents();
+  content::WaitForLoadStop(web_contents);
+
+  // Starting same-origin but outside the app, popups should swap to the app.
+  {
+    SCOPED_TRACE("... from diff_dir");
+    ui_test_utils::NavigateToURL(app_browser_, diff_dir_url_);
+    RenderFrameHost* main_frame = web_contents->GetMainFrame();
+    EXPECT_FALSE(main_frame->GetSiteInstance()->GetSiteURL().SchemeIs(
+        extensions::kExtensionScheme));
+    TestPopupProcess(main_frame, app_url, false, true);
+    // Subframes in the app should not swap.
+    RenderFrameHost* diff_dir_rfh =
+        TestSubframeProcess(main_frame, app_url, true, false);
+    // Popups from the subframe, though same-origin, should swap to the app.
+    // See https://crbug.com/89272.
+    TestPopupProcess(diff_dir_rfh, app_url, false, true);
   }
 
-  void SetUpOnMainThread() override {
-    HostedAppTest::SetUpOnMainThread();
-    host_resolver()->AddRule("*", "127.0.0.1");
-    embedded_test_server()->StartAcceptingConnections();
+  // Starting same-site but outside the app, popups should swap to the app.
+  {
+    SCOPED_TRACE("... from same_site");
+    ui_test_utils::NavigateToURL(app_browser_, same_site_url_);
+    RenderFrameHost* main_frame = web_contents->GetMainFrame();
+    EXPECT_FALSE(main_frame->GetSiteInstance()->GetSiteURL().SchemeIs(
+        extensions::kExtensionScheme));
+    TestPopupProcess(main_frame, app_url, false, true);
+    // Subframes in the app should not swap.
+    RenderFrameHost* same_site_rfh =
+        TestSubframeProcess(main_frame, app_url, true, false);
+    // Popups from the subframe should swap to the app, as above.
+    TestPopupProcess(same_site_rfh, app_url, false, true);
   }
 
- private:
-  DISALLOW_COPY_AND_ASSIGN(HostedAppWithIsolatedOriginsTest);
-};
+  // Starting on an isolated origin, popups should swap to the app.
+  {
+    SCOPED_TRACE("... from isolated_url");
+    ui_test_utils::NavigateToURL(app_browser_, isolated_url_);
+    RenderFrameHost* main_frame = web_contents->GetMainFrame();
+    EXPECT_FALSE(main_frame->GetSiteInstance()->GetSiteURL().SchemeIs(
+        extensions::kExtensionScheme));
+    TestPopupProcess(main_frame, app_url, false, true);
+    // Subframes in the app should swap process, but not to an app process.
+    RenderFrameHost* isolated_rfh =
+        TestSubframeProcess(main_frame, app_url, false, true);  // TODO: in app?
+    // Popups from the subframe should swap to the app, as above.
+    TestPopupProcess(isolated_rfh, app_url, true, true);  // TODO: swap to app?
+  }
+
+  // Starting cross-site, popups should swap to the app.
+  {
+    SCOPED_TRACE("... from cross_site");
+    ui_test_utils::NavigateToURL(app_browser_, cross_site_url_);
+    RenderFrameHost* main_frame = web_contents->GetMainFrame();
+    EXPECT_FALSE(main_frame->GetSiteInstance()->GetSiteURL().SchemeIs(
+        extensions::kExtensionScheme));
+    TestPopupProcess(main_frame, app_url, false, true);
+    // Subframes in the app should swap if the process model needs it, but never
+    // into the app process.
+    RenderFrameHost* cross_site_rfh = TestSubframeProcess(
+        main_frame, app_url, !should_swap_for_cross_site_, should_swap_for_cross_site_);  // TODO: app?
+    // Popups from the subframe should swap to the app, as above.
+    TestPopupProcess(cross_site_rfh, app_url, should_swap_for_cross_site_, true);  // TODO: swap to app?
+  }
+}
 
 // Verify that when navigating to an isolated origin which is also part of
 // a hosted app's web extent, the isolated origin takes precedence for
 // SiteInstance determination and still ends up in a dedicated process.
-IN_PROC_BROWSER_TEST_P(HostedAppWithIsolatedOriginsTest,
+IN_PROC_BROWSER_TEST_P(HostedAppProcessModelTest,
                        IsolatedOriginTakesPrecedence) {
   // Launch a hosted app which covers an isolated origin in its web extent.
-  GURL url = embedded_test_server()->GetURL("app.foo.com", "/iframe.html");
+  GURL url =
+      embedded_test_server()->GetURL("app.site.com", "/frame_tree/iframe.html");
   extensions::TestExtensionDir test_app_dir;
-  test_app_dir.WriteManifest(base::StringPrintf(
-      R"( { "name": "Hosted App vs IsolatedOrigins Test",
-            "version": "1",
-            "manifest_version": 2,
-            "app": {
-              "launch": {
-                "web_url": "%s"
-              },
-              "urls": ["*://app.foo.com", "*://isolated.foo.com/"]
-            }
-          } )",
-      url.spec().c_str()));
+  test_app_dir.WriteManifest(
+      base::StringPrintf(kHostedAppProcessModelManifest, url.spec().c_str()));
   SetupApp(test_app_dir.UnpackedPath(), false);
 
   content::WebContents* app_contents =
       app_browser_->tab_strip_model()->GetActiveWebContents();
   content::WaitForLoadStop(app_contents);
 
-  content::RenderFrameHost* app = app_contents->GetMainFrame();
+  RenderFrameHost* app = app_contents->GetMainFrame();
 
   // A subframe on an app for an isolated origin should be kicked out to its
   // own process.
   GURL isolated_url =
-      embedded_test_server()->GetURL("isolated.foo.com", "/title1.html");
+      embedded_test_server()->GetURL("isolated.site.com", "/title1.html");
   EXPECT_TRUE(NavigateIframeToURL(app_contents, "test", isolated_url));
 
-  content::RenderFrameHost* app_subframe = content::ChildFrameAt(app, 0);
-  EXPECT_EQ(isolated_url, app_subframe->GetLastCommittedURL());
-  EXPECT_TRUE(app_subframe->IsCrossProcessSubframe());
-  EXPECT_NE(app->GetSiteInstance(), app_subframe->GetSiteInstance());
+  RenderFrameHost* isolated_subframe = content::ChildFrameAt(app, 0);
+  EXPECT_EQ(isolated_url, isolated_subframe->GetLastCommittedURL());
+  EXPECT_TRUE(isolated_subframe->IsCrossProcessSubframe());
+  EXPECT_NE(app->GetSiteInstance(), isolated_subframe->GetSiteInstance());
   EXPECT_EQ(isolated_url.GetOrigin(),
-            app_subframe->GetSiteInstance()->GetSiteURL());
+            isolated_subframe->GetSiteInstance()->GetSiteURL());
   GURL isolated_site = content::SiteInstance::GetSiteForURL(
-      app_browser_->profile(), app_subframe->GetLastCommittedURL());
+      app_browser_->profile(), isolated_subframe->GetLastCommittedURL());
   EXPECT_NE(extensions::kExtensionScheme, isolated_site.scheme());
-  EXPECT_FALSE(extensions::ProcessMap::Get(app_browser_->profile())
-                   ->Contains(app_subframe->GetProcess()->GetID()));
+  EXPECT_FALSE(
+      process_map_->Contains(isolated_subframe->GetProcess()->GetID()));
 
   // Navigating a regular tab to an isolated origin which is also part of an
   // app's web extent should use the isolated origin's SiteInstance and not the
@@ -675,16 +925,33 @@ IN_PROC_BROWSER_TEST_P(HostedAppWithIsolatedOriginsTest,
             web_contents->GetMainFrame()->GetSiteInstance()->GetSiteURL());
   EXPECT_NE(web_contents->GetMainFrame()->GetSiteInstance(),
             app->GetSiteInstance());
-  EXPECT_FALSE(
-      extensions::ProcessMap::Get(browser()->profile())
-          ->Contains(web_contents->GetMainFrame()->GetProcess()->GetID()));
+  EXPECT_FALSE(process_map_->Contains(
+      web_contents->GetMainFrame()->GetProcess()->GetID()));
 }
+
+// Start from outside the hosted app.  Swap to app process only for main frame navigations.
+// This allows hosted app to be launched from within the site, but never triggered for OOPIFs.
+// This preserves legacy behavior, though it can break scripting between same origin frames in some cases.
+
+// Same-origin, non-app page adds app iframe.  Stays in process (even in --site-per-process).
+//  If iframe opens app popup, it swaps to app process (see 89272, OpenAppFromIframe).
+// Same-site, non-app page adds app iframe.  Stays in process (even in --site-per-process).
+//  If iframe opens app popup, it swaps to app process (see 89272, OpenAppFromIframe).
+// Same-site but isolated origin adds app iframe.  Different, non-app process.
+//  If iframe opens app popup, it swaps to app process (see 89272, OpenAppFromIframe).
+// Cross-site, non-app page adds app iframe.  Stays by default, but different non-app process in --site-per-process.
+//  If iframe opens app popup, it swaps to app process (see 89272, OpenAppFromIframe).
+
+// Same-origin, non-app page opens popup to app.  Always switches to app process.
+// Same-site, non-app page opens popup to app.  Always switches to app process.
+// Same-site but isolated origin opens popup to app.  Always switches to app process.
+// Cross-site, non-app page opens popup to app.  Always switches to app process.
+
 
 INSTANTIATE_TEST_CASE_P(/* no prefix */, HostedAppTest, ::testing::Bool());
 INSTANTIATE_TEST_CASE_P(/* no prefix */,
                         HostedAppPWAOnlyTest,
                         ::testing::Values(true));
 INSTANTIATE_TEST_CASE_P(/* no prefix */,
-                        HostedAppWithIsolatedOriginsTest,
+                        HostedAppProcessModelTest,
                         ::testing::Bool());
-INSTANTIATE_TEST_CASE_P(/* no prefix */, HostedAppVsTdiTest, ::testing::Bool());

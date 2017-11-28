@@ -214,6 +214,10 @@ class CONTENT_EXPORT ContentBrowserClient {
                                const GURL& url,
                                bool is_isolated_origin);
 
+  virtual bool ShouldCompareEffectiveURLs(BrowserContext* browser_context,
+                                          const GURL& dest_url,
+                                          bool is_main_frame);
+
   // Returns whether all instances of the specified effective URL should be
   // rendered by the same process, rather than using process-per-site-instance.
   virtual bool ShouldUseProcessPerSite(BrowserContext* browser_context,

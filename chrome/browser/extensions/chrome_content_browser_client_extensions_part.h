@@ -27,6 +27,9 @@ class ChromeContentBrowserClientExtensionsPart
 
   // Corresponds to the ChromeContentBrowserClient function of the same name.
   static GURL GetEffectiveURL(Profile* profile, const GURL& url);
+  static bool ShouldCompareEffectiveURLs(Profile* profile,
+                                          const GURL& dest_url,
+                                          bool is_main_frame);
   static bool ShouldUseProcessPerSite(Profile* profile,
                                       const GURL& effective_url);
   static bool DoesSiteRequireDedicatedProcess(

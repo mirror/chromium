@@ -38,6 +38,11 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
       BrowserContext* browser_context,
       const GURL& url);
 
+  static bool IsSameWebSite(content::BrowserContext* browser_context,
+                            const GURL& src_url,
+                            const GURL& dest_url,
+                            bool should_compare_effective_urls);
+
   // SiteInstance interface overrides.
   int32_t GetId() override;
   bool HasProcess() const override;

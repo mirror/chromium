@@ -287,6 +287,28 @@ GURL ChromeContentBrowserClientExtensionsPart::GetEffectiveURL(
 }
 
 // static
+bool ChromeContentBrowserClientExtensionsPart::ShouldCompareEffectiveURLs(
+                                          Profile* profile,
+                                          const GURL& dest_url,
+                                          bool is_main_frame) {
+  ExtensionRegistry* registry = ExtensionRegistry::Get(profile);
+  if (!registry)
+    return false;
+
+  const Extension* extension =
+      registry->enabled_extensions().GetHostedAppByURL(dest_url);
+  if (!extension)
+    return false;
+
+  if (extension->from_bookmark())
+    return false;
+
+  // Now we know dest is a hosted app.
+  return is_main_frame;
+}
+
+
+// static
 bool ChromeContentBrowserClientExtensionsPart::ShouldUseProcessPerSite(
     Profile* profile, const GURL& effective_url) {
   if (!effective_url.SchemeIs(kExtensionScheme))

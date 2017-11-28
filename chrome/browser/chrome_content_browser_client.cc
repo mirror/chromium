@@ -1148,6 +1148,27 @@ GURL ChromeContentBrowserClient::GetEffectiveURL(
 #endif
 }
 
+bool ChromeContentBrowserClient::ShouldCompareEffectiveURLs(
+    content::BrowserContext* browser_context,
+    const GURL& dest_url,
+    bool is_main_frame) {
+  Profile* profile = Profile::FromBrowserContext(browser_context);
+  if (!profile)
+    return true;
+
+  // TODO(creis): Is this needed?
+  if (search::ShouldAssignURLToInstantRenderer(dest_url, profile))
+    return true;
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeContentBrowserClientExtensionsPart::ShouldCompareEffectiveURLs(
+      profile, dest_url, is_main_frame);
+#else
+  return true;
+#endif
+}
+
+
 bool ChromeContentBrowserClient::ShouldUseProcessPerSite(
     content::BrowserContext* browser_context, const GURL& effective_url) {
   // Non-extension, non-Instant URLs should generally use
