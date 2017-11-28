@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c438d490_45d9cd90",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-28T23:17:19Z",
+      "side": 1,
+      "message": "Oh good point. This is definitely true for adding spdy_servers_map, but I\u0027m confused how this applies to server_network_stats_map? When server_network_stats_map is being added, server_pref_map will not be empty since info from spdy_servers_map and alternative_service_map have already been added.",
+      "parentUuid": "13824b1a_b25be149",
+      "revId": "9322aca36563de09084b6ce0bc7e88c4f9f4ecbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02d2a93c_81a8a4b6",
         "filename": "net/http/http_server_properties_manager.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-28T22:06:33Z",
       "side": 1,
       "message": "Do you need to check the return value from this method?",
+      "range": {
+        "startLine": 1120,
+        "startChar": 65,
+        "endLine": 1120,
+        "endChar": 0
+      },
+      "revId": "9322aca36563de09084b6ce0bc7e88c4f9f4ecbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81baf8b_6a6e9a5a",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-28T23:17:19Z",
+      "side": 1,
+      "message": "This is what the original code did (lines 1108, 1109). I also thought it was kind of strange, but it seems the calls to GetSupportsQuic() elsewhere in the codebase do use the return value, so maybe it\u0027s just for those callers?",
+      "parentUuid": "02d2a93c_81a8a4b6",
       "range": {
         "startLine": 1120,
         "startChar": 65,
@@ -62,6 +104,30 @@
       "revId": "9322aca36563de09084b6ce0bc7e88c4f9f4ecbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a876e9_db1704b3",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-28T23:17:19Z",
+      "side": 1,
+      "message": "I have a check at the very start of this method that checks if either broken or recently_broken is non-empty.",
+      "parentUuid": "555622c4_168b0f07",
+      "range": {
+        "startLine": 1299,
+        "startChar": 30,
+        "endLine": 1299,
+        "endChar": 0
+      },
+      "revId": "9322aca36563de09084b6ce0bc7e88c4f9f4ecbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7cc3b14_664c0f5a",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-28T23:17:19Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "83b642cf_c6c31bfe",
+      "range": {
+        "startLine": 157,
+        "startChar": 49,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "f48fd978788a26b4d270ed4893b2e3dce415830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b27fed29_bd6d2ea0",
         "filename": "net/http/http_server_properties_manager.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1647cfa4_d318b0e5",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-28T23:17:19Z",
+      "side": 0,
+      "message": "Yes, the local var |alternative_service| wasn\u0027t actually being used anywhere, so I removed it.",
+      "parentUuid": "b27fed29_bd6d2ea0",
+      "range": {
+        "startLine": 1030,
+        "startChar": 7,
+        "endLine": 1030,
+        "endChar": 0
+      },
+      "revId": "f48fd978788a26b4d270ed4893b2e3dce415830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b04e99b_e9186975",
         "filename": "net/http/http_server_properties_manager.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "f48fd978788a26b4d270ed4893b2e3dce415830c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60165a38_4fd3608e",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-28T23:17:19Z",
+      "side": 0,
+      "message": "kMaxBrokenAlternativeServicesToPersist and kMaxRecentlyBrokenAlternativeServicesToPersist are currently both set to numeric_limits\u003cint\u003e::max() and need to be updated. I will do that in another CL.",
+      "parentUuid": "5b04e99b_e9186975",
+      "range": {
+        "startLine": 1101,
+        "startChar": 64,
+        "endLine": 1101,
+        "endChar": 0
+      },
+      "revId": "f48fd978788a26b4d270ed4893b2e3dce415830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
