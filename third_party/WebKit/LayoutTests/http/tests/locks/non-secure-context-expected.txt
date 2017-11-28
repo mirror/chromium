@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 14: Uncaught Error: Reloading with appropriate origin for desired context...
+This is a testharness.js-based test.
+FAIL API presence in non-secure contexts assert_false: LockManager is only present in secure contexts expected false got true
+Harness: the test ran to completion.
+
