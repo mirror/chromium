@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41452ca2_fb4faa97",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T19:22:28Z",
+      "side": 1,
+      "message": "nit: \u0027list\u0027 is a bit confusing as a variable name, easily confused with std::list.",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6b5bc5_d166a80c",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T19:22:28Z",
+      "side": 1,
+      "message": "We also need to test IsConnecting() here, or remove entries from |devices| when we add them to the list, otherwise connecting devices will be added twice.",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fddeadef_8c1e74b8",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T19:22:28Z",
+      "side": 1,
+      "message": "Avoid injecting this sort of thing in production code. See other comment.",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d54ad8_4bda2342",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T19:22:28Z",
+      "side": 1,
+      "message": "Instead of adding an extra variable for testing, make LIST_UPDATE_FREQUENCY_MS a property and set it to 0 in the test.",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c51dbbd_c2f9aafd",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T19:22:28Z",
+      "side": 1,
+      "message": "Shoudln\u0027t we always prioritize paired/connecting devices?",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eddc22d_c89f05c1",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T19:22:28Z",
+      "side": 1,
+      "message": "Same problem here, connecting devices will get added twice. In JS the easiest thing to do is probably to set priority devices in |devices| to \u0027undefined\u0027 and skip those in the second iteration.",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

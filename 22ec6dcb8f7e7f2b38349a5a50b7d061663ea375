@@ -556,6 +556,30 @@
       "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5c455b_a25c467a",
+        "filename": "chrome/test/data/webui/settings/bluetooth_page_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T19:22:28Z",
+      "side": 1,
+      "message": "When we set the timeout to 0 for tests, we still need to wait a frame after calling setDevicesForTest. Instead of using waitForTimeout, you can use Polymer.Base.async:\n\nPolymer.Base.async(function() {\n   assertEquals(4, subpage.deviceList_.length);\n   ...\n});",
+      "parentUuid": "f020fb28_fed13512",
+      "range": {
+        "startLine": 144,
+        "startChar": 28,
+        "endLine": 144,
+        "endChar": 32
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
