@@ -446,6 +446,24 @@
       "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3de9538c_9dbce9dd",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-28T00:29:53Z",
+      "side": 1,
+      "message": "Ack. If you want to leave the base/ change out and use the same pattern as other existing code, that works for me. Plus you don\u0027t have to wait for any approvals from me now.\n\nTo further explain my initial reaction - we\u0027ve managed to live without operator!\u003d for ~10 years, so it wasn\u0027t obvious why need it now. Also, since I didn\u0027t write LazyInstance, and I didn\u0027t look at it too closely, I wasn\u0027t sure what the right answer was either. Thus I asked a question and ran off for a few days. Happy to see you did all the research.",
+      "parentUuid": "4cdc4d39_75487613",
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
