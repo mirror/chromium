@@ -716,6 +716,27 @@ void SimulateRoutedMouseClickAt(WebContents* web_contents,
                                                             ui::LatencyInfo());
 }
 
+void SimulateRoutedLongPressAt(WebContents* web_contents,
+                               int modifiers,
+                               int x,
+                               int y) {
+  content::WebContentsImpl* web_contents_impl =
+      static_cast<content::WebContentsImpl*>(web_contents);
+  content::RenderWidgetHostViewBase* rwhvb =
+      static_cast<content::RenderWidgetHostViewBase*>(
+          web_contents->GetRenderWidgetHostView());
+
+  blink::WebGestureEvent gesture_event(
+      blink::WebInputEvent::kGestureLongPress, modifiers,
+      ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
+  gesture_event.x = gesture_event.global_x = x;
+  gesture_event.y = gesture_event.global_y = y;
+  gesture_event.source_device = blink::kWebGestureDeviceTouchscreen;
+
+  web_contents_impl->GetInputEventRouter()->RouteGestureEvent(
+      rwhvb, &gesture_event, ui::LatencyInfo());
+}
+
 void SimulateMouseEvent(WebContents* web_contents,
                         blink::WebInputEvent::Type type,
                         const gfx::Point& point) {

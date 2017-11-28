@@ -53,6 +53,7 @@
 #include "ui/base/test/ui_controls.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/range/range.h"
+#include "ui/touch_selection/touch_selection_menu_runner.h"
 
 using extensions::AppWindow;
 using extensions::ExtensionsAPIClient;
@@ -1554,6 +1555,45 @@ IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, DISABLED_Focus_InputMethod) {
   }
 }
 #endif
+
+IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, LongPressSelection) {
+  if (!GetParam())
+    return;
+  SetupTest("web_view/text_selection",
+            "/extensions/platform_apps/web_view/text_selection/guest.html");
+  ASSERT_TRUE(guest_web_contents());
+  ASSERT_TRUE(ui_test_utils::ShowAndFocusNativeWindow(GetPlatformAppWindow()));
+
+  auto filter = std::make_unique<content::InputMsgWatcher>(
+      guest_web_contents()->GetRenderWidgetHostView()->GetRenderWidgetHost(),
+      blink::WebInputEvent::kGestureLongPress);
+
+  gfx::Rect view_rect =
+      guest_web_contents()->GetRenderWidgetHostView()->GetViewBounds();
+  int mid_x = view_rect.x() + view_rect.width() / 2;
+  int mid_y = view_rect.y() + view_rect.height() / 2;
+
+  // Needed to get focus.
+  content::SimulateRoutedMouseClickAt(guest_web_contents(), 0,
+                                      blink::WebMouseEvent::Button::kLeft,
+                                      gfx::Point(mid_x, mid_y));
+
+  content::SimulateRoutedLongPressAt(guest_web_contents(), 0, mid_x, mid_y);
+
+  EXPECT_EQ(content::INPUT_EVENT_ACK_STATE_CONSUMED,
+            filter->GetAckStateWaitIfNecessary());
+
+  // Give enough time for the quick menu to fire.
+  scoped_refptr<content::MessageLoopRunner> message_loop_runner =
+      new content::MessageLoopRunner;
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, message_loop_runner->QuitClosure(),
+      base::TimeDelta::FromMilliseconds(200));
+  message_loop_runner->Run();
+
+  EXPECT_TRUE(ui::TouchSelectionMenuRunner::GetInstance()->IsRunning());
+  EXPECT_FALSE(guest_web_contents()->IsShowingContextMenu());
+}
 
 #if defined(OS_MACOSX)
 IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, TextSelection) {
