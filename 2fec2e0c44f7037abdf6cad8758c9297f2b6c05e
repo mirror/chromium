@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b36205_d2a54a88",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-28T14:05:43Z",
+      "side": 1,
+      "message": "Please expand the rationale for this. We discussed it offline and reached the agreement, but the OWNERS of this code will not necessarily guess the justification.\n\nIf it helps, I can enhance the document about the history of this metric, which we can reference here. Other suggestions about making it more transparent for reviewers are welcome!",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2209e134_a47b392b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-28T14:05:43Z",
+      "side": 1,
+      "message": "Generally wall clock should not be used for metrics, as it can go backwards. I see you switched from uptimeMillis(), but I cannot find a possible motivation.\n\nHere is a more detailed description of Android clock flavors: https://developer.android.com/reference/android/os/SystemClock.html",
+      "range": {
+        "startLine": 217,
+        "startChar": 28,
+        "endLine": 217,
+        "endChar": 94
+      },
+      "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a6638e_58b981e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-28T14:05:43Z",
+      "side": 1,
+      "message": "I am afraid, updating the name is pretty much a requirement for such change. Otherwise it would be muddied in a way that we won\u0027t be able to claim it has been garbage.",
+      "range": {
+        "startLine": 219,
+        "startChar": 29,
+        "endLine": 219,
+        "endChar": 55
+      },
+      "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141a0adb_b25d2b90",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-28T14:05:43Z",
+      "side": 1,
+      "message": "We should wait for the page to reach some level of load before asserting on UMA? See how we are using Semaphore with onNavigationEvent for CCT metric test in CustomTabActivityTest",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 42
+      },
+      "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
