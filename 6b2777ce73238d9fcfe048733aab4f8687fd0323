@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5b324a8_2536612b",
+        "filename": "device/vr/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-28T22:07:51Z",
+      "side": 1,
+      "message": "We should probably update this list and alphabetize it.",
+      "revId": "6b2777ce73238d9fcfe048733aab4f8687fd0323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6fa213_1ce0e2ac",
+        "filename": "device/vr/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-28T22:07:51Z",
+      "side": 1,
+      "message": "Internals",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 23
+      },
+      "revId": "6b2777ce73238d9fcfe048733aab4f8687fd0323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34c2461_dbd13d4e",
+        "filename": "third_party/openvr/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-28T22:07:51Z",
+      "side": 1,
+      "message": "Make alphabetical.",
+      "revId": "6b2777ce73238d9fcfe048733aab4f8687fd0323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
