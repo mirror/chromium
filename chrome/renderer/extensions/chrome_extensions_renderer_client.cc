@@ -26,6 +26,7 @@
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
+#include "extensions/common/manifest_handlers/app_isolation_info.h"
 #include "extensions/common/switches.h"
 #include "extensions/renderer/dispatcher.h"
 #include "extensions/renderer/extension_frame_helper.h"
@@ -38,6 +39,7 @@
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebPluginParams.h"
+#include "url/gurl.h"
 
 using extensions::Extension;
 
@@ -56,9 +58,15 @@ void IsGuestViewApiAvailableToScriptContext(
   }
 }
 
+bool IsHostedApp(const extensions::ExtensionSet& extensions, const GURL& url) {
+  const extensions::Extension* extension =
+      GetNonBookmarkAppExtension(extensions, url);
+  return extension && extension->is_app();
+}
+
 // Returns true if the frame is navigating to an URL either into or out of an
 // extension app's extent.
-bool CrossesExtensionExtents(blink::WebLocalFrame* frame,
+bool CrossesHostedAppExtents(blink::WebLocalFrame* frame,
                              const GURL& new_url,
                              bool is_extension_url,
                              bool is_initial_navigation) {
@@ -67,6 +75,8 @@ bool CrossesExtensionExtents(blink::WebLocalFrame* frame,
 
   extensions::RendererExtensionRegistry* extension_registry =
       extensions::RendererExtensionRegistry::Get();
+  const extensions::ExtensionSet& main_thread_extensions =
+      *extension_registry->GetMainThreadExtensionSet();
 
   // If old_url is still empty and this is an initial navigation, then this is
   // a window.open operation.  We should look at the opener URL.  Note that the
@@ -100,14 +110,22 @@ bool CrossesExtensionExtents(blink::WebLocalFrame* frame,
       return false;
   }
 
+  // With --isolate-extensions, forking is no longer needed to isolate
+  // extensions into separate renderer processes (i.e. isolation should
+  // be enforced by the transfer logic).
+  bool old_or_new_is_hosted_app =
+      IsHostedApp(main_thread_extensions, old_url) ||
+      IsHostedApp(main_thread_extensions, new_url);
+  if (!old_or_new_is_hosted_app)
+    return false;
+
   // Only consider keeping non-app URLs in an app process if this window
   // has an opener (in which case it might be an OAuth popup that tries to
   // script an iframe within the app).
   bool should_consider_workaround = !!frame->Opener();
 
-  return extensions::CrossesExtensionProcessBoundary(
-      *extension_registry->GetMainThreadExtensionSet(), old_url, new_url,
-      should_consider_workaround);
+  return CrossesExtensionProcessBoundary(main_thread_extensions, old_url,
+                                         new_url, should_consider_workaround);
 }
 
 }  // namespace
@@ -254,7 +272,7 @@ bool ChromeExtensionsRendererClient::ShouldFork(blink::WebLocalFrame* frame,
       extensions::RendererExtensionRegistry::Get();
 
   // Determine if the new URL is an extension (excluding bookmark apps).
-  const Extension* new_url_extension = extensions::GetNonBookmarkAppExtension(
+  const Extension* new_url_extension = GetNonBookmarkAppExtension(
       *extension_registry->GetMainThreadExtensionSet(), url);
   bool is_extension_url = !!new_url_extension;
 
@@ -264,7 +282,7 @@ bool ChromeExtensionsRendererClient::ShouldFork(blink::WebLocalFrame* frame,
   // browser process when they are ready to commit.  It is necessary for client
   // redirects, which won't be transferred in the same way.
   if (!is_server_redirect &&
-      CrossesExtensionExtents(frame, url, is_extension_url,
+      CrossesHostedAppExtents(frame, url, is_extension_url,
                               is_initial_navigation)) {
     // Include the referrer in this case since we're going from a hosted web
     // page. (the packaged case is handled previously by the extension
