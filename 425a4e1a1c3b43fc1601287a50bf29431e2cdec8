@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b829c4d_28904ba6",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T04:32:15Z",
+      "side": 1,
+      "message": "looking at InkDropHostView::SetInkDropMode(..).. it doesn\u0027t seem to do much. If someone clicks the button while it\u0027s `ON` does that irreversibly add the layer that\u0027s causing problems?",
+      "revId": "425a4e1a1c3b43fc1601287a50bf29431e2cdec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
