@@ -1,0 +1,249 @@
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              REL (Relocatable file)
+  Machine:                           ARM
+  Version:                           0x1
+  Entry point address:               0x0
+  Start of program headers:          0 (bytes into file)
+  Start of section headers:          4364 (bytes into file)
+  Flags:                             0x5000000, Version5 EABI
+  Size of this header:               52 (bytes)
+  Size of program headers:           0 (bytes)
+  Number of program headers:         0
+  Size of section headers:           40 (bytes)
+  Number of section headers:         29
+  Section header string table index: 1
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .strtab           STRTAB          00000000 000d5c 0003b0 00      0   0  1
+  [ 2] .text             PROGBITS        00000000 000034 000000 00  AX  0   0  4
+  [ 3] .text.trace_initi PROGBITS        00000000 000034 00009c 00  AX  0   0  4
+  [ 4] .rel.text.trace_i REL             00000000 000b24 000050 08     28   3  4
+  [ 5] .ARM.exidx.text.t ARM_EXIDX       00000000 0000d0 000008 00  AL  3   0  4
+  [ 6] .rel.ARM.exidx.te REL             00000000 000b74 000010 08     28   5  4
+  [ 7] .group            GROUP           00000000 000840 000014 04     28  36  4
+  [ 8] .text._ZN20trace_ PROGBITS        00000000 0000d8 000028 00 AXG  0   0  2
+  [ 9] .rel.text._ZN20tr REL             00000000 000b84 000010 08   G 28   8  4
+  [10] .ARM.exidx.text._ ARM_EXIDX       00000000 000100 000008 00 ALG  8   0  4
+  [11] .rel.ARM.exidx.te REL             00000000 000b94 000010 08   G 28  10  4
+  [12] .bss._ZZ13trace_i NOBITS          00000000 000108 000004 00  WA  0   0  4
+  [13] .rodata.str1.1    PROGBITS        00000000 000108 00000a 01 AMS  0   0  1
+  [14] .debug_str        PROGBITS        00000000 000112 000326 01  MS  0   0  1
+  [15] .debug_abbrev     PROGBITS        00000000 000438 00007e 00      0   0  1
+  [16] .debug_info       PROGBITS        00000000 0004b6 000125 00      0   0  1
+  [17] .rel.debug_info   REL             00000000 000ba4 000168 08     28  16  4
+  [18] .debug_ranges     PROGBITS        00000000 0005db 000018 00      0   0  1
+  [19] .rel.debug_ranges REL             00000000 000d0c 000020 08     28  18  4
+  [20] .debug_macinfo    PROGBITS        00000000 0005f3 000001 00      0   0  1
+  [21] .comment          PROGBITS        00000000 0005f4 000024 01  MS  0   0  1
+  [22] .note.GNU-stack   PROGBITS        00000000 000618 000000 00      0   0  1
+  [23] .ARM.attributes   ARM_ATTRIBUTES  00000000 000618 00003c 00      0   0  1
+  [24] .debug_frame      PROGBITS        00000000 000654 00004c 00      0   0  4
+  [25] .rel.debug_frame  REL             00000000 000d2c 000020 08     28  24  4
+  [26] .debug_line       PROGBITS        00000000 0006a0 00019e 00      0   0  1
+  [27] .rel.debug_line   REL             00000000 000d4c 000010 08     28  26  4
+  [28] .symtab           SYMTAB          00000000 000854 0002d0 10      1  36  4
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings)
+  I (info), L (link order), G (group), T (TLS), E (exclude), x (unknown)
+  O (extra OS processing required) o (OS specific), p (processor specific)
+
+COMDAT group section [    7] `.group' [_ZN20trace_event_internal12ScopedTracerD2Ev] contains 4 sections:
+   [Index]    Name
+   [    8]   .text._ZN20trace_event_internal12ScopedTracerD2Ev
+   [    9]   .rel.text._ZN20trace_event_internal12ScopedTracerD2Ev
+   [   10]   .ARM.exidx.text._ZN20trace_event_internal12ScopedTracerD2Ev
+   [   11]   .rel.ARM.exidx.text._ZN20trace_event_internal12ScopedTracerD2Ev
+
+There are no program headers in this file.
+
+Relocation section '.rel.text.trace_initial' at offset 0xb24 contains 10 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+0000001c  0000240a R_ARM_THM_CALL    00000001   _ZN20trace_event_inter
+0000002a  0000260a R_ARM_THM_CALL    00000000   _ZN4base11trace_event8
+00000038  0000290a R_ARM_THM_CALL    00000000   _ZN4base14PlatformThre
+00000042  00002a0a R_ARM_THM_CALL    00000000   _ZN4base9TimeTicks3Now
+00000046  0000250a R_ARM_THM_CALL    00000000   _ZN4base11trace_event8
+00000072  0000280a R_ARM_THM_CALL    00000000   _ZN4base11trace_event8
+0000008c  00001d03 R_ARM_REL32       00000000   _ZZ13trace_initialE26t
+00000090  00001b03 R_ARM_REL32       00000000   .L.str
+00000094  00001d03 R_ARM_REL32       00000000   _ZZ13trace_initialE26t
+00000098  00001c03 R_ARM_REL32       00000003   .L.str.1
+
+Relocation section '.rel.ARM.exidx.text.trace_initial' at offset 0xb74 contains 2 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000000  00002b00 R_ARM_NONE        00000000   __aeabi_unwind_cpp_pr0
+00000000  00001e2a R_ARM_PREL31      00000000   .text.trace_initial
+
+Relocation section '.rel.text._ZN20trace_event_internal12ScopedTracerD2Ev' at offset 0xb84 contains 2 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+0000000e  0000250a R_ARM_THM_CALL    00000000   _ZN4base11trace_event8
+0000001e  0000270a R_ARM_THM_CALL    00000000   _ZN4base11trace_event8
+
+Relocation section '.rel.ARM.exidx.text._ZN20trace_event_internal12ScopedTracerD2Ev' at offset 0xb94 contains 2 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000000  00002b00 R_ARM_NONE        00000000   __aeabi_unwind_cpp_pr0
+00000000  00001f2a R_ARM_PREL31      00000000   .text._ZN20trace_event
+
+Relocation section '.rel.debug_info' at offset 0xba4 contains 45 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000006  00002002 R_ARM_ABS32       00000000   .debug_abbrev
+0000000c  00000202 R_ARM_ABS32       00000000   
+00000012  00000302 R_ARM_ABS32       00000023   
+00000016  00002302 R_ARM_ABS32       00000000   .debug_line
+0000001a  00000402 R_ARM_ABS32       00000045   
+00000022  00002102 R_ARM_ABS32       00000000   .debug_ranges
+00000027  00000502 R_ARM_ABS32       00000079   
+0000002b  00000602 R_ARM_ABS32       000000b6   
+00000033  00000702 R_ARM_ABS32       000000bb   
+00000037  00000802 R_ARM_ABS32       000000e0   
+0000003e  00000902 R_ARM_ABS32       000000ef   
+00000042  00000a02 R_ARM_ABS32       0000011b   
+0000004a  00000b02 R_ARM_ABS32       00000128   
+0000004e  00000c02 R_ARM_ABS32       00000166   
+00000056  00000d02 R_ARM_ABS32       0000016c   
+0000005a  00000e02 R_ARM_ABS32       00000192   
+00000061  00000f02 R_ARM_ABS32       000001a2   
+00000065  00001002 R_ARM_ABS32       000001da   
+0000006d  00001102 R_ARM_ABS32       000001e8   
+00000071  00001202 R_ARM_ABS32       0000024c   
+00000079  00001302 R_ARM_ABS32       00000272   
+0000007d  00001402 R_ARM_ABS32       000002d3   
+00000085  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+00000089  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+0000008d  00001502 R_ARM_ABS32       000002de   
+00000098  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+0000009c  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000a7  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000ab  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000b7  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000bb  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000c6  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000ca  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000d5  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000d9  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000e5  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000e9  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000f4  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+000000f8  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+00000105  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+00000109  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+00000111  00001f02 R_ARM_ABS32       00000000   .text._ZN20trace_event
+00000115  00001f02 R_ARM_ABS32       00000000   .text._ZN20trace_event
+00000119  00001602 R_ARM_ABS32       000002ec   
+0000011d  00001702 R_ARM_ABS32       00000318   
+
+Relocation section '.rel.debug_ranges' at offset 0xd0c contains 4 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000000  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+00000004  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+00000008  00001f02 R_ARM_ABS32       00000000   .text._ZN20trace_event
+0000000c  00001f02 R_ARM_ABS32       00000000   .text._ZN20trace_event
+
+Relocation section '.rel.debug_frame' at offset 0xd2c contains 4 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000014  00002202 R_ARM_ABS32       00000000   .debug_frame
+00000018  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+00000038  00002202 R_ARM_ABS32       00000000   .debug_frame
+0000003c  00001f02 R_ARM_ABS32       00000000   .text._ZN20trace_event
+
+Relocation section '.rel.debug_line' at offset 0xd4c contains 2 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+000000f3  00001e02 R_ARM_ABS32       00000000   .text.trace_initial
+00000173  00001f02 R_ARM_ABS32       00000000   .text._ZN20trace_event
+
+Unwind table index '.ARM.exidx.text.trace_initial' at offset 0xd0 contains 1 entries:
+
+0x0 <trace_initial>: 0x8017acb0
+  Compact model index: 0
+  0x17      vsp = vsp + 96
+  0xac      pop {r4, r5, r6, r7, r8, r14}
+  0xb0      finish
+
+
+Unwind table index '.ARM.exidx.text._ZN20trace_event_internal12ScopedTracerD2Ev' at offset 0x100 contains 1 entries:
+
+0x0 <_ZN20trace_event_internal12ScopedTracerD2Ev>: 0x80b10ca8
+  Compact model index: 0
+  0xb1 0x0c pop {r2, r3}
+  0xa8      pop {r4, r14}
+
+
+Symbol table '.symtab' contains 45 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS trace_initial.cc
+     2: 00000000     0 NOTYPE  LOCAL  DEFAULT   14 
+     3: 00000023     0 NOTYPE  LOCAL  DEFAULT   14 
+     4: 00000045     0 NOTYPE  LOCAL  DEFAULT   14 
+     5: 00000079     0 NOTYPE  LOCAL  DEFAULT   14 
+     6: 000000b6     0 NOTYPE  LOCAL  DEFAULT   14 
+     7: 000000bb     0 NOTYPE  LOCAL  DEFAULT   14 
+     8: 000000e0     0 NOTYPE  LOCAL  DEFAULT   14 
+     9: 000000ef     0 NOTYPE  LOCAL  DEFAULT   14 
+    10: 0000011b     0 NOTYPE  LOCAL  DEFAULT   14 
+    11: 00000128     0 NOTYPE  LOCAL  DEFAULT   14 
+    12: 00000166     0 NOTYPE  LOCAL  DEFAULT   14 
+    13: 0000016c     0 NOTYPE  LOCAL  DEFAULT   14 
+    14: 00000192     0 NOTYPE  LOCAL  DEFAULT   14 
+    15: 000001a2     0 NOTYPE  LOCAL  DEFAULT   14 
+    16: 000001da     0 NOTYPE  LOCAL  DEFAULT   14 
+    17: 000001e8     0 NOTYPE  LOCAL  DEFAULT   14 
+    18: 0000024c     0 NOTYPE  LOCAL  DEFAULT   14 
+    19: 00000272     0 NOTYPE  LOCAL  DEFAULT   14 
+    20: 000002d3     0 NOTYPE  LOCAL  DEFAULT   14 
+    21: 000002de     0 NOTYPE  LOCAL  DEFAULT   14 
+    22: 000002ec     0 NOTYPE  LOCAL  DEFAULT   14 
+    23: 00000318     0 NOTYPE  LOCAL  DEFAULT   14 
+    24: 0000008c     0 NOTYPE  LOCAL  DEFAULT    3 $d.1
+    25: 00000000     0 NOTYPE  LOCAL  DEFAULT    3 $t.0
+    26: 00000000     0 NOTYPE  LOCAL  DEFAULT    8 $t.2
+    27: 00000000     3 OBJECT  LOCAL  DEFAULT   13 .L.str
+    28: 00000003     7 OBJECT  LOCAL  DEFAULT   13 .L.str.1
+    29: 00000000     4 OBJECT  LOCAL  DEFAULT   12 _ZZ13trace_initialE26trac
+    30: 00000000     0 SECTION LOCAL  DEFAULT    3 
+    31: 00000000     0 SECTION LOCAL  DEFAULT    8 
+    32: 00000000     0 SECTION LOCAL  DEFAULT   15 
+    33: 00000000     0 SECTION LOCAL  DEFAULT   18 
+    34: 00000000     0 SECTION LOCAL  DEFAULT   24 
+    35: 00000000     0 SECTION LOCAL  DEFAULT   26 
+    36: 00000001    40 FUNC    WEAK   HIDDEN     8 _ZN20trace_event_internal
+    37: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND _ZN4base11trace_event8Tra
+    38: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND _ZN4base11trace_event8Tra
+    39: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND _ZN4base11trace_event8Tra
+    40: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND _ZN4base11trace_event8Tra
+    41: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND _ZN4base14PlatformThread9
+    42: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND _ZN4base9TimeTicks3NowEv
+    43: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND __aeabi_unwind_cpp_pr0
+    44: 00000001   156 FUNC    GLOBAL HIDDEN     3 trace_initial
+
+No version information found in this file.
+Attribute Section: aeabi
+File Attributes
+  Tag_conformance: "2.09"
+  Tag_CPU_arch: v7
+  Tag_CPU_arch_profile: Application
+  Tag_ARM_ISA_use: Yes
+  Tag_THUMB_ISA_use: Thumb-2
+  Tag_FP_arch: VFPv3
+  Tag_Advanced_SIMD_arch: NEONv1
+  Tag_ABI_PCS_R9_use: V6
+  Tag_ABI_PCS_RW_data: PC-relative
+  Tag_ABI_PCS_RO_data: PC-relative
+  Tag_ABI_PCS_GOT_use: GOT-indirect
+  Tag_ABI_PCS_wchar_t: 4
+  Tag_ABI_FP_denormal: Needed
+  Tag_ABI_FP_exceptions: Needed
+  Tag_ABI_FP_number_model: IEEE 754
+  Tag_ABI_align_needed: 8-byte
+  Tag_ABI_align_preserved: 8-byte, except leaf SP
+  Tag_ABI_enum_size: int
+  Tag_CPU_unaligned_access: v6
+  Tag_ABI_FP_16bit_format: IEEE 754

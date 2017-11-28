@@ -1,0 +1,181 @@
+
+trace_708990_c2.o:     file format elf32-littlearm
+
+
+Disassembly of section .text.trace_708990_c2:
+
+00000000 <trace_708990_c2>:
+   0:	b5b0      	push	{r4, r5, r7, lr}
+   2:	b088      	sub	sp, #32
+   4:	4813      	ldr	r0, [pc, #76]	; (54 <trace_708990_c2+0x54>)
+   6:	2100      	movs	r1, #0
+   8:	9103      	str	r1, [sp, #12]
+   a:	4478      	add	r0, pc
+   c:	f7ff fffe 	bl	0 <trace_708990_c2>
+  10:	7800      	ldrb	r0, [r0, #0]
+  12:	f010 0f19 	tst.w	r0, #25
+  16:	d104      	bne.n	22 <trace_708990_c2+0x22>
+  18:	a803      	add	r0, sp, #12
+  1a:	f7ff fffe 	bl	0 <trace_708990_c2>
+  1e:	b008      	add	sp, #32
+  20:	bdb0      	pop	{r4, r5, r7, pc}
+  22:	4c0d      	ldr	r4, [pc, #52]	; (58 <trace_708990_c2+0x58>)
+  24:	447c      	add	r4, pc
+  26:	4620      	mov	r0, r4
+  28:	f7ff fffe 	bl	0 <trace_708990_c2>
+  2c:	4d0b      	ldr	r5, [pc, #44]	; (5c <trace_708990_c2+0x5c>)
+  2e:	4601      	mov	r1, r0
+  30:	a801      	add	r0, sp, #4
+  32:	447d      	add	r5, pc
+  34:	462a      	mov	r2, r5
+  36:	f7ff fffe 	bl	0 <trace_708990_c2>
+  3a:	4620      	mov	r0, r4
+  3c:	f7ff fffe 	bl	0 <trace_708990_c2>
+  40:	e9dd 1201 	ldrd	r1, r2, [sp, #4]
+  44:	e9cd 0504 	strd	r0, r5, [sp, #16]
+  48:	a803      	add	r0, sp, #12
+  4a:	3004      	adds	r0, #4
+  4c:	9003      	str	r0, [sp, #12]
+  4e:	e9cd 1206 	strd	r1, r2, [sp, #24]
+  52:	e7e1      	b.n	ffffffc6 <.L.str.5+0xffffffac>
+  54:	00000046 	.word	0x00000046
+  58:	00000030 	.word	0x00000030
+  5c:	00000026 	.word	0x00000026
+
+Disassembly of section .text._ZN26CategoryEnabledPtrInternalILb1EE5valueEPKc:
+
+00000000 <_ZN26CategoryEnabledPtrInternalILb1EE5valueEPKc>:
+   0:	b510      	push	{r4, lr}
+   2:	f8df c038 	ldr.w	ip, [pc, #56]	; 3c <_ZN26CategoryEnabledPtrInternalILb1EE5valueEPKc+0x3c>
+   6:	f04f 0e00 	mov.w	lr, #0
+   a:	44fc      	add	ip, pc
+   c:	e00c      	b.n	28 <_ZN26CategoryEnabledPtrInternalILb1EE5valueEPKc+0x28>
+   e:	f85c 302e 	ldr.w	r3, [ip, lr, lsl #2]
+  12:	4602      	mov	r2, r0
+  14:	e002      	b.n	1c <_ZN26CategoryEnabledPtrInternalILb1EE5valueEPKc+0x1c>
+  16:	b161      	cbz	r1, 32 <_ZN26CategoryEnabledPtrInternalILb1EE5valueEPKc+0x32>
+  18:	3201      	adds	r2, #1
+  1a:	3301      	adds	r3, #1
+  1c:	7819      	ldrb	r1, [r3, #0]
+  1e:	7814      	ldrb	r4, [r2, #0]
+  20:	42a1      	cmp	r1, r4
+  22:	d0f8      	beq.n	16 <_ZN26CategoryEnabledPtrInternalILb1EE5valueEPKc+0x16>
+  24:	f10e 0e01 	add.w	lr, lr, #1
+  28:	f1be 0f03 	cmp.w	lr, #3
+  2c:	d9ef      	bls.n	e <_ZN26CategoryEnabledPtrInternalILb1EE5valueEPKc+0xe>
+  2e:	2000      	movs	r0, #0
+  30:	bd10      	pop	{r4, pc}
+  32:	4803      	ldr	r0, [pc, #12]	; (40 <_ZN26CategoryEnabledPtrInternalILb1EE5valueEPKc+0x40>)
+  34:	4478      	add	r0, pc
+  36:	4470      	add	r0, lr
+  38:	bd10      	pop	{r4, pc}
+  3a:	bf00      	nop
+  3c:	0000002e 	.word	0x0000002e
+  40:	00000008 	.word	0x00000008
+
+Disassembly of section .text._ZN20trace_event_internalL13AddTraceEventEcPKhPKcS3_yjy:
+
+00000000 <_ZN20trace_event_internalL13AddTraceEventEcPKhPKcS3_yjy>:
+   0:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+   4:	b090      	sub	sp, #64	; 0x40
+   6:	4615      	mov	r5, r2
+   8:	460c      	mov	r4, r1
+   a:	4606      	mov	r6, r0
+   c:	f7ff fffe 	bl	0 <_ZN4base14PlatformThread9CurrentIdEv>
+  10:	f10d 0838 	add.w	r8, sp, #56	; 0x38
+  14:	4607      	mov	r7, r0
+  16:	4640      	mov	r0, r8
+  18:	f7ff fffe 	bl	0 <_ZN4base9TimeTicks3NowEv>
+  1c:	f7ff fffe 	bl	0 <_ZN4base11trace_event8TraceLog11GetInstanceEv>
+  20:	4601      	mov	r1, r0
+  22:	2000      	movs	r0, #0
+  24:	e9cd 0008 	strd	r0, r0, [sp, #32]
+  28:	2258      	movs	r2, #88	; 0x58
+  2a:	e9cd 000a 	strd	r0, r0, [sp, #40]	; 0x28
+  2e:	4623      	mov	r3, r4
+  30:	e9cd 000c 	strd	r0, r0, [sp, #48]	; 0x30
+  34:	e9cd 5000 	strd	r5, r0, [sp]
+  38:	e9cd 0002 	strd	r0, r0, [sp, #8]
+  3c:	e9cd 0004 	strd	r0, r0, [sp, #16]
+  40:	4630      	mov	r0, r6
+  42:	e9cd 7806 	strd	r7, r8, [sp, #24]
+  46:	f7ff fffe 	bl	0 <_ZN4base11trace_event8TraceLog37AddTraceEventWithThreadIdAndTimestampEcPKhPKcS5_yyiRKNS_9TimeTicksEiPKS5_S3_PKyPNSt6__ndk110unique_ptrINS0_24ConvertableToTraceFormatENSD_14default_deleteISF_EEEEj>
+  4a:	b010      	add	sp, #64	; 0x40
+  4c:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+
+Disassembly of section .text._ZN20trace_event_internal12ScopedTracerD2Ev:
+
+00000000 <_ZN20trace_event_internal12ScopedTracerD2Ev>:
+   0:	b51c      	push	{r2, r3, r4, lr}
+   2:	4604      	mov	r4, r0
+   4:	6820      	ldr	r0, [r4, #0]
+   6:	b160      	cbz	r0, 22 <_ZN20trace_event_internal12ScopedTracerD2Ev+0x22>
+   8:	6860      	ldr	r0, [r4, #4]
+   a:	7800      	ldrb	r0, [r0, #0]
+   c:	b148      	cbz	r0, 22 <_ZN20trace_event_internal12ScopedTracerD2Ev+0x22>
+   e:	f7ff fffe 	bl	0 <_ZN4base11trace_event8TraceLog11GetInstanceEv>
+  12:	f104 0c04 	add.w	ip, r4, #4
+  16:	e89c 100e 	ldmia.w	ip, {r1, r2, r3, ip}
+  1a:	f8cd c000 	str.w	ip, [sp]
+  1e:	f7ff fffe 	bl	0 <_ZN4base11trace_event8TraceLog24UpdateTraceEventDurationEPKhPKcNS0_16TraceEventHandleE>
+  22:	4620      	mov	r0, r4
+  24:	b002      	add	sp, #8
+  26:	bd10      	pop	{r4, pc}
+
+Disassembly of section .text.trace_708990_c2_unknown:
+
+00000000 <trace_708990_c2_unknown>:
+   0:	b5b0      	push	{r4, r5, r7, lr}
+   2:	b088      	sub	sp, #32
+   4:	4815      	ldr	r0, [pc, #84]	; (5c <trace_708990_c2_unknown+0x5c>)
+   6:	2200      	movs	r2, #0
+   8:	4915      	ldr	r1, [pc, #84]	; (60 <trace_708990_c2_unknown+0x60>)
+   a:	4478      	add	r0, pc
+   c:	9203      	str	r2, [sp, #12]
+   e:	4479      	add	r1, pc
+  10:	f7ff fffe 	bl	0 <trace_708990_c2_unknown>
+  14:	7800      	ldrb	r0, [r0, #0]
+  16:	f010 0f19 	tst.w	r0, #25
+  1a:	d104      	bne.n	26 <trace_708990_c2_unknown+0x26>
+  1c:	a803      	add	r0, sp, #12
+  1e:	f7ff fffe 	bl	0 <trace_708990_c2_unknown>
+  22:	b008      	add	sp, #32
+  24:	bdb0      	pop	{r4, r5, r7, pc}
+  26:	4c0f      	ldr	r4, [pc, #60]	; (64 <trace_708990_c2_unknown+0x64>)
+  28:	4d0f      	ldr	r5, [pc, #60]	; (68 <trace_708990_c2_unknown+0x68>)
+  2a:	447c      	add	r4, pc
+  2c:	447d      	add	r5, pc
+  2e:	4620      	mov	r0, r4
+  30:	4629      	mov	r1, r5
+  32:	f7ff fffe 	bl	0 <trace_708990_c2_unknown>
+  36:	4601      	mov	r1, r0
+  38:	a801      	add	r0, sp, #4
+  3a:	462a      	mov	r2, r5
+  3c:	f7ff fffe 	bl	0 <trace_708990_c2_unknown>
+  40:	4620      	mov	r0, r4
+  42:	4629      	mov	r1, r5
+  44:	f7ff fffe 	bl	0 <trace_708990_c2_unknown>
+  48:	e9dd 1201 	ldrd	r1, r2, [sp, #4]
+  4c:	e9cd 0504 	strd	r0, r5, [sp, #16]
+  50:	a803      	add	r0, sp, #12
+  52:	3004      	adds	r0, #4
+  54:	9003      	str	r0, [sp, #12]
+  56:	e9cd 1206 	strd	r1, r2, [sp, #24]
+  5a:	e7df      	b.n	ffffffc2 <.L.str.5+0xffffffa8>
+  5c:	0000004e 	.word	0x0000004e
+  60:	0000004e 	.word	0x0000004e
+  64:	00000036 	.word	0x00000036
+  68:	00000038 	.word	0x00000038
+
+Disassembly of section .text._ZN26CategoryEnabledPtrInternalILb0EE5valueEPKc:
+
+00000000 <_ZN26CategoryEnabledPtrInternalILb0EE5valueEPKc>:
+   0:	b510      	push	{r4, lr}
+   2:	4604      	mov	r4, r0
+   4:	6820      	ldr	r0, [r4, #0]
+   6:	b100      	cbz	r0, a <_ZN26CategoryEnabledPtrInternalILb0EE5valueEPKc+0xa>
+   8:	bd10      	pop	{r4, pc}
+   a:	4608      	mov	r0, r1
+   c:	f7ff fffe 	bl	0 <_ZN4base11trace_event8TraceLog23GetCategoryGroupEnabledEPKc>
+  10:	6020      	str	r0, [r4, #0]
+  12:	bd10      	pop	{r4, pc}
