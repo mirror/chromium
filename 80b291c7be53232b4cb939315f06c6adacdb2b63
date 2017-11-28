@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7687dd72_95133e2f",
+        "filename": "third_party/openvr/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-28T22:42:21Z",
+      "side": 1,
+      "message": "unrelated nit: I think this should be \"Chrome\" (this is different than branding).",
+      "range": {
+        "startLine": 15,
+        "startChar": 58,
+        "endLine": 15,
+        "endChar": 66
+      },
+      "revId": "80b291c7be53232b4cb939315f06c6adacdb2b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdb8d12_18ead2d0",
+        "filename": "third_party/openvr/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-28T22:42:21Z",
+      "side": 1,
+      "message": "Should this be a newline?",
+      "range": {
+        "startLine": 15,
+        "startChar": 67,
+        "endLine": 15,
+        "endChar": 69
+      },
+      "revId": "80b291c7be53232b4cb939315f06c6adacdb2b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
