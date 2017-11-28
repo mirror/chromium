@@ -10,6 +10,7 @@ group("all_tests") {
     ":ios_chrome_bookmarks_egtests",
     ":ios_chrome_device_check_egtests",
     ":ios_chrome_external_url_egtests",
+    ":ios_chrome_feature_engagement_egtests",
     ":ios_chrome_flaky_egtests",
     ":ios_chrome_integration_egtests",
     ":ios_chrome_multitasking_egtests",
@@ -33,6 +34,13 @@ chrome_ios_eg_test("ios_chrome_integration_egtests") {
     "//ios/chrome/browser/passwords:eg_tests",
   ]
 }
+
+chrome_ios_eg_test("ios_chrome_feature_engagement_egtests") {
+  deps = [
+    "//ios/chrome/browser/feature_engagement:eg_tests",
+  ]
+}
+
 chrome_ios_eg_test("ios_chrome_payments_egtests") {
   deps = [
     ":test_support",
