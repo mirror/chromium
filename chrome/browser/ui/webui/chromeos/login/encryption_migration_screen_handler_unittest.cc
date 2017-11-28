@@ -110,6 +110,36 @@ class TestEncryptionMigrationScreenHandler
   int64_t free_disk_space_;
 };
 
+// Fake CryptohomeClient implementation for this test.
+class TestCryptohomeClient : public FakeCryptohomeClient {
+ public:
+  TestCryptohomeClient() = default;
+  ~TestCryptohomeClient() override = default;
+
+  void set_expected_id(const cryptohome::Identification& id) {
+    expected_id_ = id;
+  }
+
+  void set_is_minimal_migration_expected(bool expected) {
+    is_minimal_migration_expected_ = expected;
+  }
+
+  void MigrateToDircrypto(const cryptohome::Identification& id,
+                          const cryptohome::MigrateToDircryptoRequest& request,
+                          VoidDBusMethodCallback callback) override {
+    EXPECT_EQ(is_minimal_migration_expected_, request.minimal_migration());
+    EXPECT_EQ(expected_id_, id);
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(std::move(callback), true));
+  }
+
+ private:
+  cryptohome::Identification expected_id_;
+  bool is_minimal_migration_expected_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(TestCryptohomeClient);
+};
+
 class EncryptionMigrationScreenHandlerTest : public testing::Test {
  public:
   EncryptionMigrationScreenHandlerTest() = default;
@@ -136,10 +166,9 @@ class EncryptionMigrationScreenHandlerTest : public testing::Test {
         mock_async_method_caller_);
 
     // Set up fake DBusThreadManager parts.
-    auto fake_cryptohome_client = base::MakeUnique<FakeCryptohomeClient>();
-    fake_cryptohome_client_ = fake_cryptohome_client.get();
+    fake_cryptohome_client_ = new TestCryptohomeClient;
     DBusThreadManager::GetSetterForTesting()->SetCryptohomeClient(
-        std::move(fake_cryptohome_client));
+        std::unique_ptr<CryptohomeClient>(fake_cryptohome_client_));
 
     DBusThreadManager::GetSetterForTesting()->SetPowerManagerClient(
         base::MakeUnique<FakePowerManagerClient>());
@@ -179,6 +208,7 @@ class EncryptionMigrationScreenHandlerTest : public testing::Test {
 
   // Sets up expectation that the existing user home will be mounted for
   // migration using |mock_homedir_methods_|.
+  // TODO(crbug.com/741274): Use the fake when homedir_methods is dead.
   void ExpectMountExistingVault(cryptohome::MountError mount_error) {
     EXPECT_CALL(
         *mock_homedir_methods_,
@@ -199,21 +229,10 @@ class EncryptionMigrationScreenHandlerTest : public testing::Test {
   // |mock_homedir_methods_|. If |expect_minimal_migration| is true, verifies
   // that minimal migration has been requested.
   void ExpectStartMigration(bool expect_minimal_migration) {
-    EXPECT_CALL(
-        *mock_homedir_methods_,
-        MigrateToDircrypto(cryptohome::Identification(
-                               user_context_.GetAccountId()) /* 0: id */,
-                           _ /* 1: minimal_migration*/, _ /* 2: callback */))
-        .WillOnce(WithArgs<1, 2>(
-            Invoke([expect_minimal_migration](
-                       const cryptohome::MigrateToDircryptoRequest request,
-                       const cryptohome::HomedirMethods::DBusResultCallback&
-                           callback) {
-              EXPECT_EQ(expect_minimal_migration, request.minimal_migration());
-              // Call the callback immediately - actual result is sent later
-              // using DircryptoMigrationProgressHandler.
-              callback.Run(true /* success */);
-            })));
+    fake_cryptohome_client_->set_expected_id(
+        cryptohome::Identification(user_context_.GetAccountId()));
+    fake_cryptohome_client_->set_is_minimal_migration_expected(
+        expect_minimal_migration);
   }
 
  protected:
@@ -222,7 +241,7 @@ class EncryptionMigrationScreenHandlerTest : public testing::Test {
 
   std::unique_ptr<user_manager::ScopedUserManager> scoped_user_manager_enabler_;
   cryptohome::MockHomedirMethods* mock_homedir_methods_ = nullptr;
-  FakeCryptohomeClient* fake_cryptohome_client_ = nullptr;
+  TestCryptohomeClient* fake_cryptohome_client_ = nullptr;
   cryptohome::MockAsyncMethodCaller* mock_async_method_caller_ = nullptr;
   std::unique_ptr<TestEncryptionMigrationScreenHandler>
       encryption_migration_screen_handler_;
