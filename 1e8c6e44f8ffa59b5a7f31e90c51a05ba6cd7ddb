@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "aa69fdef_edcb7356",
+        "filename": "third_party/WebKit/Source/core/frame/csp/SourceListDirective.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-11-28T16:59:59Z",
+      "side": 1,
+      "message": "I don\u0027t think we have access to the URL here, but I\u0027m trying to plumb the option in from higher up the stack. I didn\u0027t quite get it done yesterday, but I should have it out today. I do think it\u0027s important to have that check here so that wasm-eval still gets flagged as an error on the web at large.",
+      "parentUuid": "ec462741_0248cafd",
+      "revId": "1e8c6e44f8ffa59b5a7f31e90c51a05ba6cd7ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80b3f7af_30428022",
         "filename": "third_party/WebKit/Source/platform/weborigin/SchemeRegistry.cpp",
         "patchSetId": 18
