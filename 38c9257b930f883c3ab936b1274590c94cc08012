@@ -34,6 +34,24 @@
       "revId": "38c9257b930f883c3ab936b1274590c94cc08012",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9536e367_d1069de2",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-28T05:17:35Z",
+      "side": 0,
+      "message": "Really sorry for the late response. I actually also prefer checking bindings_ and delete this pattern better, that one feels simpler / more natural to me. (I also myself have written / reviewed that pattern before)",
+      "parentUuid": "ca1ebd8a_fee84dad",
+      "revId": "38c9257b930f883c3ab936b1274590c94cc08012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
