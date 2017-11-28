@@ -103,6 +103,47 @@
       "revId": "1ae94231a05359bda36ed4fc18a16e36b69c7771",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b15751_b20048d1",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-28T21:39:22Z",
+      "side": 1,
+      "message": "I\u0027m in the process of migrating all crash keys off this old API onto the new one. Could you please try using the new API instead?\n\nIt would look like this:\n\n#include \"components/crash/core/common/crash_key.h\"\n\nstatic crash_reporter::CrashKeyString\u003c32\u003e cdm_version_key(\"cdm-version\");\ncdm_version_key.Set(cdm_version);\n\n... where \"32\" is the number of bytes you want to allocate for the value\u0027s storage.\n\nAnd add a GN dependency on //components/crash/core/common:crash_key.\n\nYou then don\u0027t need to add the crash key to any registration list.",
+      "range": {
+        "startLine": 172,
+        "startChar": 15,
+        "endLine": 172,
+        "endChar": 31
+      },
+      "revId": "1ae94231a05359bda36ed4fc18a16e36b69c7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086a1d16_ba188a50",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-28T21:39:22Z",
+      "side": 1,
+      "message": "This will set the key/value in the crashing process and it will remain set after it is called.",
+      "parentUuid": "3c4bbaca_7afb34a3",
+      "revId": "1ae94231a05359bda36ed4fc18a16e36b69c7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
