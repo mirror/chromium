@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0878ae0_8030dd13",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-28T01:37:42Z",
+      "side": 1,
+      "message": "This should be left out -- PSEUDO_HDR doesn\u0027t have an SkTransferFn representation.",
+      "revId": "2afd2d2470f9128aae0a608db015ab3670014c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f30b913_e71543b7",
+        "filename": "ui/gfx/color_transform.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-28T01:37:42Z",
+      "side": 1,
+      "message": "This works too, right?\n  mat4 dither_matrix(0.0, 8.0, 2.0, 10.0, ...);\n  float threshold \u003d (1.0 / 16.0) * dither_matrix[x_mod][y_mod];\nMight be easier to read.\n\nAlso put a TODO mentioning that this is for demo purposes -- dithering should be done somewhere else (probably in the shader generator)",
+      "revId": "2afd2d2470f9128aae0a608db015ab3670014c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b54dc4_29524318",
+        "filename": "ui/gfx/color_transform.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-28T01:37:42Z",
+      "side": 1,
+      "message": "Put in a comment explaining the need for high precision for this particular transfer function.",
+      "revId": "2afd2d2470f9128aae0a608db015ab3670014c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
