@@ -34,6 +34,24 @@
       "revId": "9b359d335d9d93790d22f25b4b8d89a25c534974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5993617_b30512da",
+        "filename": "build/install-build-deps.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-28T03:40:11Z",
+      "side": 0,
+      "message": "Oh, I see. That\u0027s fine then.",
+      "parentUuid": "f154903d_e4ed0f20",
+      "revId": "9b359d335d9d93790d22f25b4b8d89a25c534974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
