@@ -631,20 +631,26 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleMouseWheel(
   cc::EventListenerProperties properties =
       input_handler_->GetEventListenerProperties(
           cc::EventListenerClass::kMouseWheel);
-  switch (properties) {
-    case cc::EventListenerProperties::kPassive:
-      result = DID_HANDLE_NON_BLOCKING;
-      break;
-    case cc::EventListenerProperties::kBlockingAndPassive:
-    case cc::EventListenerProperties::kBlocking:
-      result = DID_NOT_HANDLE;
-      break;
-    case cc::EventListenerProperties::kNone:
-      result = DROP_EVENT;
-      break;
-    default:
-      NOTREACHED();
-      result = DROP_EVENT;
+  WebFloatPoint position_in_screen = wheel_event.PositionInWidget();
+  if (!input_handler_->HasWheelEventHandlerAt(
+          gfx::Point(position_in_screen.x, position_in_screen.y))) {
+    result = DROP_EVENT;
+  } else {
+    switch (properties) {
+      case cc::EventListenerProperties::kPassive:
+        result = DID_HANDLE_NON_BLOCKING;
+        break;
+      case cc::EventListenerProperties::kBlockingAndPassive:
+      case cc::EventListenerProperties::kBlocking:
+        result = DID_NOT_HANDLE;
+        break;
+      case cc::EventListenerProperties::kNone:
+        result = DROP_EVENT;
+        break;
+      default:
+        NOTREACHED();
+        result = DROP_EVENT;
+    }
   }
 
   mouse_wheel_result_ = result;

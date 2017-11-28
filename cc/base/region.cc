@@ -107,6 +107,14 @@ void Region::Intersect(const Region& region) {
   skregion_.op(region.skregion_, SkRegion::kIntersect_Op);
 }
 
+std::vector<gfx::Rect> Region::rects() const {
+  std::vector<gfx::Rect> result;
+  for (Iterator it(*this); it.has_rect(); it.next()) {
+    result.push_back(it.rect());
+  }
+  return result;
+}
+
 std::string Region::ToString() const {
   if (IsEmpty())
     return gfx::Rect().ToString();
