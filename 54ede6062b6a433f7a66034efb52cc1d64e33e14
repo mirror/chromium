@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "456dbf9a_7e2fe1ff",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-11-28T19:06:23Z",
+      "side": 1,
+      "message": "Nit: double space before \"Rename\".",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "54ede6062b6a433f7a66034efb52cc1d64e33e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22efc93_83b71c4d",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-11-28T19:06:23Z",
+      "side": 1,
+      "message": "Should the variable name be changed only when we handle crbug.com/786964? The mismatch between the variable and the feature name seems unusual.",
+      "range": {
+        "startLine": 83,
+        "startChar": 76,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "54ede6062b6a433f7a66034efb52cc1d64e33e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2cadfcd_e7b0bfbd",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-11-28T19:06:23Z",
+      "side": 1,
+      "message": "Do you think it\u0027s worth sending a UMA histogram when we hit this case? Can be in a follow up CL.",
+      "revId": "54ede6062b6a433f7a66034efb52cc1d64e33e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe4b3dc_c46e45a5",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-11-28T19:06:23Z",
+      "side": 1,
+      "message": "Nit: this could be:\n\nstd::map\u003cstd::string, std::string\u003e params{{\"tag\", tag}};",
+      "range": {
+        "startLine": 83,
+        "startChar": 24,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "54ede6062b6a433f7a66034efb52cc1d64e33e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9d2827_74d3f584",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-11-28T19:06:23Z",
+      "side": 1,
+      "message": "Please reuse the variable declared elsewhere.",
+      "range": {
+        "startLine": 91,
+        "startChar": 75,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "54ede6062b6a433f7a66034efb52cc1d64e33e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
