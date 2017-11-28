@@ -22,6 +22,30 @@
       "revId": "902e84f0e4cb6af6e8ea7de2e1862799fdc7686b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c26cc5_a6972313",
+        "filename": "ios/chrome/browser/web/progress_indicator_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-28T17:43:14Z",
+      "side": 0,
+      "message": "Sure. Done (here and in the other file using an InfiniteProvider).",
+      "parentUuid": "84b614b4_3f351ed6",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 24
+      },
+      "revId": "902e84f0e4cb6af6e8ea7de2e1862799fdc7686b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
