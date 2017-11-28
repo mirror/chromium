@@ -119,7 +119,7 @@ gfx::NativeCursor ExtensionViewViews::GetCursor(const ui::MouseEvent& event) {
 gfx::Size ExtensionViewViews::GetMinimumSize() const {
   // If the minimum size has never been set, returns the preferred size (same
   // behavior as views::View).
-  return (minimum_size_ == gfx::Size()) ? GetPreferredSize() : minimum_size_;
+  return minimum_size_.IsEmpty() ? GetPreferredSize() : minimum_size_;
 }
 
 void ExtensionViewViews::PreferredSizeChanged() {

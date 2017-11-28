@@ -30,8 +30,8 @@ class PermissionPromptImpl : public PermissionPrompt {
  private:
   void Show();
 
-  Browser* browser_;
-  Delegate* delegate_;
+  Browser* const browser_;    // Never nullptr.
+  Delegate* const delegate_;  // Never nullptr.
   PermissionsBubbleDialogDelegateView* bubble_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(PermissionPromptImpl);

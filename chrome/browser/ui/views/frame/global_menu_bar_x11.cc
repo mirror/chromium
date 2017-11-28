@@ -416,7 +416,7 @@ void GlobalMenuBarX11::InitServer(unsigned long xid) {
     chrome::AddCommandObserver(browser_, it->first, this);
   }
 
-  pref_change_registrar_.Init(browser_->profile()->GetPrefs());
+  pref_change_registrar_.Init(profile_->GetPrefs());
   pref_change_registrar_.Add(
       bookmarks::prefs::kShowBookmarkBar,
       base::Bind(&GlobalMenuBarX11::OnBookmarkBarVisibilityChanged,
@@ -433,7 +433,6 @@ void GlobalMenuBarX11::InitServer(unsigned long xid) {
   }
 
   ProfileManager* profile_manager = g_browser_process->profile_manager();
-  DCHECK(profile_manager);
   avatar_menu_.reset(new AvatarMenu(
       &profile_manager->GetProfileAttributesStorage(), this, nullptr));
   avatar_menu_->RebuildMenu();
@@ -597,7 +596,7 @@ void GlobalMenuBarX11::OnBookmarkBarVisibilityChanged() {
   CommandIDMenuItemMap::iterator it =
       id_to_menu_item_.find(IDC_SHOW_BOOKMARK_BAR);
   if (it != id_to_menu_item_.end()) {
-    PrefService* prefs = browser_->profile()->GetPrefs();
+    PrefService* prefs = profile_->GetPrefs();
     // Note: Unlike the GTK version, we don't appear to need to do tricks where
     // we block activation while setting the toggle.
     menuitem_property_set_int(

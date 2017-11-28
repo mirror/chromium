@@ -241,8 +241,8 @@ class BrowserActionsContainer : public views::View,
   // The vector of toolbar actions (icons/image buttons for each action).
   ToolbarActionViews toolbar_action_views_;
 
-  // The Browser object the container is associated with.
-  Browser* browser_;
+  // The Browser object the container is associated with. Never nullptr.
+  Browser* const browser_;
 
   // The main container we are serving as overflow for, or NULL if this
   // class is the the main container. See class comments for details on

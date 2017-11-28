@@ -61,8 +61,8 @@ class ExtensionToolbarMenuView : public views::ScrollView,
   // Returns the padding before the BrowserActionsContainer in the menu.
   int start_padding() const;
 
-  // The associated browser.
-  Browser* browser_;
+  // The associated browser. Never nullptr.
+  Browser* const browser_;
 
   // The app menu, which may need to be closed after a drag-and-drop.
   AppMenu* app_menu_;
@@ -74,7 +74,7 @@ class ExtensionToolbarMenuView : public views::ScrollView,
   BrowserActionsContainer* container_;
 
   // The maximum allowed height for the view.
-  int max_height_;
+  const int max_height_;
 
   ScopedObserver<ToolbarActionsBar, ToolbarActionsBarObserver>
       toolbar_actions_bar_observer_;

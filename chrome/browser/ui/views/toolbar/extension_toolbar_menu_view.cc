@@ -18,11 +18,19 @@
 #include "ui/views/controls/menu/submenu_view.h"
 
 namespace {
+
+// In *very* extreme cases, it's possible that there are so many overflowed
+// actions, we won't be able to show them all. Cap the height so that the
+// overflow won't be excessively tall (at 8 icons per row, this allows for
+// 104 total extensions).
+constexpr int kMaxOverflowRows = 13;
+
 // The delay before we close the app menu if this was opened for a drop so that
 // the user can see a browser action if one was moved.
 // This can be changed for tests.
 int g_close_menu_delay = 300;
-}
+
+}  // namespace
 
 ExtensionToolbarMenuView::ExtensionToolbarMenuView(
     Browser* browser,
@@ -32,7 +40,7 @@ ExtensionToolbarMenuView::ExtensionToolbarMenuView(
       app_menu_(app_menu),
       menu_item_(menu_item),
       container_(nullptr),
-      max_height_(0),
+      max_height_(ToolbarActionsBar::IconHeight() * kMaxOverflowRows),
       toolbar_actions_bar_observer_(this),
       weak_factory_(this) {
   // Use a transparent background so that the menu's background shows through.
@@ -47,12 +55,6 @@ ExtensionToolbarMenuView::ExtensionToolbarMenuView(
   // Listen for the drop to finish so we can close the app menu, if necessary.
   toolbar_actions_bar_observer_.Add(main->toolbar_actions_bar());
 
-  // In *very* extreme cases, it's possible that there are so many overflowed
-  // actions, we won't be able to show them all. Cap the height so that the
-  // overflow won't be excessively tall (at 8 icons per row, this allows for
-  // 104 total extensions).
-  const int kMaxOverflowRows = 13;
-  max_height_ = ToolbarActionsBar::IconHeight() * kMaxOverflowRows;
   ClipHeightTo(0, max_height_);
 }
 

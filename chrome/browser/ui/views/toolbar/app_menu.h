@@ -159,8 +159,8 @@ class AppMenu : public views::MenuDelegate,
   // from.
   CommandIDToEntry command_id_to_entry_;
 
-  // Browser the menu is being shown for.
-  Browser* browser_;
+  // Browser the menu is being shown for. Never nullptr.
+  Browser* const browser_;
 
   // |CancelAndEvaluate| sets |selected_menu_model_| and |selected_index_|.
   // If |selected_menu_model_| is non-null after the menu completes
