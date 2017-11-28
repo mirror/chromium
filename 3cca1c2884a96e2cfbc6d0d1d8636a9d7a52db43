@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42187f45_9be64df0",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T20:55:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cda6f75c_a161ba77",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "907d3e50_93fdb5a1",
         "filename": "ash/accessibility/accessibility_controller.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T17:10:20Z",
       "side": 1,
       "message": "Not for this CL: It would be nice to get rid of this. It would be nicer if there was a separate code path to show an a11y notification, so code that wanted to show one could toggle spoken feedback then explicitly show (or not show) a notification. I think this was added for braille device support, and it seems messy.",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9c70e8_50137309",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T20:55:24Z",
+      "side": 1,
+      "message": "yeap, it is under the radar. Thanks.",
+      "parentUuid": "907d3e50_93fdb5a1",
       "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c3a32ec8_d713979b",
+        "filename": "ash/accessibility/accessibility_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T20:55:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "954c5322_0c78bcf6",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bcd80c1_589e00d2",
         "filename": "ash/accessibility/accessibility_controller_unittest.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c3670f8f_0ea995bc",
+        "filename": "ash/accessibility/accessibility_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T20:55:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1bcd80c1_589e00d2",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0bad2bd_89b7de0b",
         "filename": "ash/system/tray_accessibility_unittest.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b072227_739a4f8e",
+        "filename": "ash/system/tray_accessibility_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T20:55:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a0bad2bd_89b7de0b",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +208,24 @@
       "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450531f9_c9e47ebe",
+        "filename": "chrome/browser/chromeos/system/tray_accessibility_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-28T20:55:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b202d2f4_a4c81383",
+      "revId": "3cca1c2884a96e2cfbc6d0d1d8636a9d7a52db43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
