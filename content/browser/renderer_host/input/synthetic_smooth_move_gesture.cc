@@ -264,7 +264,7 @@ void SyntheticSmoothMoveGesture::ForwardMouseWheelEvent(
       current_move_segment_start_position_.y());
   mouse_wheel_event.phase = phase;
 
-  mouse_wheel_event.SetTimeStampSeconds(ConvertTimestampToSeconds(timestamp));
+  mouse_wheel_event.SetTimeStamp(timestamp);
 
   target->DispatchInputEventToPlatform(mouse_wheel_event);
 }

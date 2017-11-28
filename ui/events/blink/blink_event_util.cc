@@ -563,8 +563,7 @@ std::pair<WebGestureEvent, WebGestureEvent> CoalesceScrollAndPinch(
          IsCompatibleScrollorPinch(new_event, *second_last_event));
 
   WebGestureEvent scroll_event(WebInputEvent::kGestureScrollUpdate,
-                               new_event.GetModifiers(),
-                               new_event.TimeStampSeconds());
+                               new_event.GetModifiers(), new_event.TimeStamp());
   WebGestureEvent pinch_event;
   scroll_event.source_device = new_event.source_device;
   scroll_event.primary_pointer_type = new_event.primary_pointer_type;
@@ -608,10 +607,9 @@ blink::WebTouchEvent CreateWebTouchEventFromMotionEvent(
                     static_cast<int>(blink::WebTouchEvent::kTouchesLengthCap),
                 "inconsistent maximum number of active touch points");
 
-  blink::WebTouchEvent result(
-      ToWebTouchEventType(event.GetAction()),
-      EventFlagsToWebEventModifiers(event.GetFlags()),
-      ui::EventTimeStampToSeconds(event.GetEventTime()));
+  blink::WebTouchEvent result(ToWebTouchEventType(event.GetAction()),
+                              EventFlagsToWebEventModifiers(event.GetFlags()),
+                              event.GetEventTime());
   result.dispatch_type = result.GetType() == WebInputEvent::kTouchCancel
                              ? WebInputEvent::kEventNonBlocking
                              : WebInputEvent::kBlocking;
@@ -677,8 +675,7 @@ WebGestureEvent CreateWebGestureEvent(const GestureEventDetails& details,
                                       int flags,
                                       uint32_t unique_touch_event_id) {
   WebGestureEvent gesture(WebInputEvent::kUndefined,
-                          EventFlagsToWebEventModifiers(flags),
-                          ui::EventTimeStampToSeconds(timestamp));
+                          EventFlagsToWebEventModifiers(flags), timestamp);
   gesture.x = gfx::ToFlooredInt(location.x());
   gesture.y = gfx::ToFlooredInt(location.y());
   gesture.global_x = gfx::ToFlooredInt(raw_location.x());

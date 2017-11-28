@@ -46,15 +46,6 @@ bool IsInterestingInputEvent(const blink::WebInputEvent& event) {
   }
 }
 
-base::TimeTicks GetTimeTicksFromSeconds(double seconds) {
-  // WebInputEvent::timeStampSeconds is a double representing number of
-  // monotonic seconds in TimeTicks time base. There's no convenience API for
-  // initializing a TimeTicks from such a value. The canonical way to perform
-  // this initialization is to create a TimeTicks with value 0 and add a
-  // TimeDelta to it.
-  return base::TimeTicks() + base::TimeDelta::FromSecondsD(seconds);
-}
-
 }  // namespace
 
 constexpr size_t UserInputTracker::kMaxTrackedEvents;
@@ -68,7 +59,7 @@ UserInputTracker::~UserInputTracker() {}
 // static
 base::TimeTicks UserInputTracker::GetEventTime(
     const blink::WebInputEvent& event) {
-  return GetTimeTicksFromSeconds(event.TimeStampSeconds());
+  return event.TimeStamp();
 }
 
 // static

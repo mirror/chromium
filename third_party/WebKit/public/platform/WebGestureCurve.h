@@ -25,6 +25,8 @@
 #ifndef WebGestureCurve_h
 #define WebGestureCurve_h
 
+#include "base/time/time.h"
+
 namespace blink {
 
 class WebGestureCurveTarget;
@@ -38,6 +40,9 @@ class WebGestureCurve {
   virtual ~WebGestureCurve() {}
 
   // Returns false if curve has finished and can no longer be applied.
+  // TODO(dcheng): This parameter should be a base::TimeDelta, but there is
+  // incorrect usage of base::TimeTicks throughout the gesture code. Fix in a
+  // followup.
   virtual bool Apply(double time, WebGestureCurveTarget*) = 0;
 };
 

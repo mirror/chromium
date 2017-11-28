@@ -21,6 +21,7 @@ class EVENTS_BASE_EXPORT GestureCurve {
   // The output |velocity| represents the instantenous velocity at |time|.
   // Returns false if |time| exceeds the fling duration, in which case
   // the terminal offset will be reported.
+  // TODO(dcheng): |time| should be a base::TimeDelta.
   virtual bool ComputeScrollOffset(base::TimeTicks time,
                                    gfx::Vector2dF* offset,
                                    gfx::Vector2dF* velocity) = 0;

@@ -34,6 +34,8 @@ _CONFIG = [
             'base::MakeRefCounted',
             'base::Optional',
             'base::SingleThreadTaskRunner',
+            'base::TimeDelta',
+            'base::TimeTicks',
             'base::UnguessableToken',
             'base::make_optional',
             'base::make_span',

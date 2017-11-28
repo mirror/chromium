@@ -16,19 +16,14 @@ namespace {
 // 2100ms to make sure the age is greater than 2 seconds.
 const int kTooOldMilliseconds = 2100;
 
-double ToMonotonicallyIncreasingSeconds(base::TimeTicks t) {
-  return (t - base::TimeTicks()).InSecondsF();
-}
-
 class FakeInputEvent : public blink::WebInputEvent {
  public:
   FakeInputEvent(blink::WebInputEvent::Type type = blink::WebInputEvent::kChar,
                  int modifiers = blink::WebInputEvent::kNoModifiers)
-      : WebInputEvent(
-            sizeof(FakeInputEvent),
-            type,
-            modifiers,
-            ToMonotonicallyIncreasingSeconds(base::TimeTicks::Now())) {}
+      : WebInputEvent(sizeof(FakeInputEvent),
+                      type,
+                      modifiers,
+                      base::TimeTicks::Now()) {}
 
   base::TimeTicks GetTimeStamp() {
     return UserInputTracker::GetEventTime(*this);
@@ -77,8 +72,7 @@ TEST_F(UserInputTrackerTest, MultipleEvents) {
 
   // Make sure that the two events are monotonically increasing, and that both
   // are in the past.
-  e1.SetTimeStampSeconds(ToMonotonicallyIncreasingSeconds(
-      e2.GetTimeStamp() - base::TimeDelta::FromMilliseconds(100)));
+  e1.SetTimeStamp(e2.GetTimeStamp() - base::TimeDelta::FromMilliseconds(100));
 
   base::TimeTicks after =
       e2.GetTimeStampRounded() + base::TimeDelta::FromMicroseconds(1);
@@ -134,8 +128,7 @@ TEST_F(UserInputTrackerTest, IgnoreEventsOlderThanConsumed) {
 
   // Make sure that the two events are monotonically increasing, and that both
   // are in the past.
-  e1.SetTimeStampSeconds(ToMonotonicallyIncreasingSeconds(
-      e2.GetTimeStamp() - base::TimeDelta::FromMilliseconds(100)));
+  e1.SetTimeStamp(e2.GetTimeStamp() - base::TimeDelta::FromMilliseconds(100));
 
   base::TimeTicks after =
       e2.GetTimeStampRounded() + base::TimeDelta::FromMicroseconds(1);
@@ -167,9 +160,8 @@ TEST_F(UserInputTrackerTest, ExcludeOldEvents) {
   FakeInputEvent e1;
   FakeInputEvent e2;
   // make sure e1 is too old to be considered.
-  e1.SetTimeStampSeconds(ToMonotonicallyIncreasingSeconds(
-      e2.GetTimeStamp() -
-      base::TimeDelta::FromMilliseconds(kTooOldMilliseconds)));
+  e1.SetTimeStamp(e2.GetTimeStamp() -
+                  base::TimeDelta::FromMilliseconds(kTooOldMilliseconds));
 
   tracker.OnInputEvent(e1);
   tracker.OnInputEvent(e2);
@@ -201,17 +193,15 @@ TEST_F(UserInputTrackerTest, RateLimit) {
   // kTooManyEntries milliseconds in the past, and then synthesize one event for
   // each of kTooManyEntries after this start point. This guarantees that all
   // events are in the past.
-  e.SetTimeStampSeconds(ToMonotonicallyIncreasingSeconds(
-      e.GetTimeStamp() -
-      base::TimeDelta::FromMilliseconds(kTooManyEntries * 2)));
+  e.SetTimeStamp(e.GetTimeStamp() -
+                 base::TimeDelta::FromMilliseconds(kTooManyEntries * 2));
 
   // Insert more than kMaxEntries entries. The rate limiting logic should
   // prevent more than kMaxEntries entries from actually being inserted. A
   // DCHECK in OnInputEvent verifies that we don't exceed the expected capacity.
   for (size_t i = 0; i < kTooManyEntries; ++i) {
     tracker.OnInputEvent(e);
-    e.SetTimeStampSeconds(e.TimeStampSeconds() +
-                          base::TimeDelta::FromMilliseconds(1).InSecondsF());
+    e.SetTimeStamp(e.TimeStamp() + base::TimeDelta::FromMilliseconds(1));
   }
 
   // Do a basic sanity check to make sure we can find events in the tracker.
