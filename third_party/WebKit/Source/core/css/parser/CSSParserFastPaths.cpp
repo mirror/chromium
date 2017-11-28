@@ -196,6 +196,7 @@ static inline bool IsColorPropertyID(CSSPropertyID property_id) {
 template <typename CharacterType>
 static int CheckForValidDouble(const CharacterType* string,
                                const CharacterType* end,
+                               const bool terminated_by_space,
                                const char terminator) {
   int length = end - string;
   if (length < 1)
@@ -205,7 +206,8 @@ static int CheckForValidDouble(const CharacterType* string,
   int processed_length = 0;
 
   for (int i = 0; i < length; ++i) {
-    if (string[i] == terminator) {
+    if (string[i] == terminator ||
+        (terminated_by_space && IsHTMLSpace<CharacterType>(string[i]))) {
       processed_length = i;
       break;
     }
@@ -229,8 +231,10 @@ template <typename CharacterType>
 static int ParseDouble(const CharacterType* string,
                        const CharacterType* end,
                        const char terminator,
+                       const bool terminated_by_space,
                        double& value) {
-  int length = CheckForValidDouble(string, end, terminator);
+  int length =
+      CheckForValidDouble(string, end, terminated_by_space, terminator);
   if (!length)
     return 0;
 
@@ -264,11 +268,11 @@ static int ParseDouble(const CharacterType* string,
 }
 
 template <typename CharacterType>
-static bool ParseColorIntOrPercentage(const CharacterType*& string,
-                                      const CharacterType* end,
-                                      const char terminator,
-                                      CSSPrimitiveValue::UnitType& expect,
-                                      int& value) {
+static bool ParseColorNumberOrPercentage(const CharacterType*& string,
+                                         const CharacterType* end,
+                                         const char terminator,
+                                         CSSPrimitiveValue::UnitType& expect,
+                                         int& value) {
   const CharacterType* current = string;
   double local_value = 0;
   bool negative = false;
@@ -295,21 +299,29 @@ static bool ParseColorIntOrPercentage(const CharacterType*& string,
   if (current == end)
     return false;
 
-  if (expect == CSSPrimitiveValue::UnitType::kNumber &&
-      (*current == '.' || *current == '%'))
+  if (expect == CSSPrimitiveValue::UnitType::kNumber && *current == '%')
     return false;
 
   if (*current == '.') {
     // We already parsed the integral part, try to parse
-    // the fraction part of the percentage value.
-    double percentage = 0;
-    int num_characters_parsed = ParseDouble(current, end, '%', percentage);
-    if (!num_characters_parsed)
-      return false;
-    current += num_characters_parsed;
-    if (*current != '%')
-      return false;
-    local_value += percentage;
+    // the fraction part.
+    double fractional = 0;
+    int num_characters_parsed =
+        ParseDouble(current, end, '%', false, fractional);
+    if (num_characters_parsed) {
+      // Number is a percent.
+      current += num_characters_parsed;
+      if (*current != '%')
+        return false;
+    } else {
+      // Number is a decimal.
+      num_characters_parsed =
+          ParseDouble(current, end, terminator, true, fractional);
+      if (!num_characters_parsed)
+        return false;
+      current += num_characters_parsed;
+    }
+    local_value += fractional;
   }
 
   if (expect == CSSPrimitiveValue::UnitType::kPercentage && *current != '%')
@@ -375,7 +387,7 @@ static inline bool ParseAlphaValue(const CharacterType*& string,
     return false;
 
   if (string[0] != '0' && string[0] != '1' && string[0] != '.') {
-    if (CheckForValidDouble(string, end, terminator)) {
+    if (CheckForValidDouble(string, end, false, terminator)) {
       value = negative ? 0 : 255;
       string = end;
       return true;
@@ -400,7 +412,7 @@ static inline bool ParseAlphaValue(const CharacterType*& string,
   }
 
   double alpha = 0;
-  if (!ParseDouble(string, end, terminator, alpha))
+  if (!ParseDouble(string, end, terminator, false, alpha))
     return false;
   value =
       negative ? 0 : static_cast<int>(roundf(std::min(alpha, 1.0) * 255.0f));
@@ -455,11 +467,11 @@ static bool FastParseColorInternal(RGBA32& rgb,
     int blue;
     int alpha;
 
-    if (!ParseColorIntOrPercentage(current, end, ',', expect, red))
+    if (!ParseColorNumberOrPercentage(current, end, ',', expect, red))
       return false;
-    if (!ParseColorIntOrPercentage(current, end, ',', expect, green))
+    if (!ParseColorNumberOrPercentage(current, end, ',', expect, green))
       return false;
-    if (!ParseColorIntOrPercentage(current, end, ',', expect, blue))
+    if (!ParseColorNumberOrPercentage(current, end, ',', expect, blue))
       return false;
     if (!ParseAlphaValue(current, end, ')', alpha))
       return false;
@@ -476,11 +488,11 @@ static bool FastParseColorInternal(RGBA32& rgb,
     int red;
     int green;
     int blue;
-    if (!ParseColorIntOrPercentage(current, end, ',', expect, red))
+    if (!ParseColorNumberOrPercentage(current, end, ',', expect, red))
       return false;
-    if (!ParseColorIntOrPercentage(current, end, ',', expect, green))
+    if (!ParseColorNumberOrPercentage(current, end, ',', expect, green))
       return false;
-    if (!ParseColorIntOrPercentage(current, end, ')', expect, blue))
+    if (!ParseColorNumberOrPercentage(current, end, ')', expect, blue))
       return false;
     if (current != end)
       return false;
