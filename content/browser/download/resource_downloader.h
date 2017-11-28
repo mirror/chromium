@@ -10,6 +10,7 @@
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/ssl_status.h"
+#include "content/public/common/child_process_host.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
