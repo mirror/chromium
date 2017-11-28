@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "jingle/glue/proxy_resolving_client_socket.h"
+#include "services/network/public/cpp/proxy_resolving_client_socket.h"
 
 #include <stdint.h>
 #include <string>
@@ -25,7 +25,7 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
-namespace jingle_glue {
+namespace network {
 
 ProxyResolvingClientSocket::ProxyResolvingClientSocket(
     net::ClientSocketFactory* socket_factory,
@@ -112,7 +112,8 @@ ProxyResolvingClientSocket::~ProxyResolvingClientSocket() {
   Disconnect();
 }
 
-int ProxyResolvingClientSocket::Read(net::IOBuffer* buf, int buf_len,
+int ProxyResolvingClientSocket::Read(net::IOBuffer* buf,
+                                     int buf_len,
                                      const net::CompletionCallback& callback) {
   if (transport_.get() && transport_->socket())
     return transport_->socket()->Read(buf, buf_len, callback);
@@ -120,10 +121,9 @@ int ProxyResolvingClientSocket::Read(net::IOBuffer* buf, int buf_len,
   return net::ERR_SOCKET_NOT_CONNECTED;
 }
 
-int ProxyResolvingClientSocket::Write(
-    net::IOBuffer* buf,
-    int buf_len,
-    const net::CompletionCallback& callback) {
+int ProxyResolvingClientSocket::Write(net::IOBuffer* buf,
+                                      int buf_len,
+                                      const net::CompletionCallback& callback) {
   if (transport_.get() && transport_->socket())
     return transport_->socket()->Write(buf, buf_len, callback);
   NOTREACHED();
@@ -152,13 +152,8 @@ int ProxyResolvingClientSocket::Connect(
 
   // First we try and resolve the proxy.
   int status = network_session_->proxy_service()->ResolveProxy(
-      proxy_url_,
-      std::string(),
-      &proxy_info_,
-      proxy_resolve_callback_,
-      &pac_request_,
-      NULL,
-      net_log_);
+      proxy_url_, std::string(), &proxy_info_, proxy_resolve_callback_,
+      &pac_request_, NULL, net_log_);
   if (status != net::ERR_IO_PENDING) {
     // We defer execution of ProcessProxyResolveDone instead of calling it
     // directly here for simplicity. From the caller's point of view,
@@ -187,9 +182,9 @@ void ProxyResolvingClientSocket::ProcessProxyResolveDone(int status) {
   if (status == net::OK) {
     // Remove unsupported proxies from the list.
     proxy_info_.RemoveProxiesWithoutScheme(
-        net::ProxyServer::SCHEME_DIRECT |
-        net::ProxyServer::SCHEME_HTTP | net::ProxyServer::SCHEME_HTTPS |
-        net::ProxyServer::SCHEME_SOCKS4 | net::ProxyServer::SCHEME_SOCKS5);
+        net::ProxyServer::SCHEME_DIRECT | net::ProxyServer::SCHEME_HTTP |
+        net::ProxyServer::SCHEME_HTTPS | net::ProxyServer::SCHEME_SOCKS4 |
+        net::ProxyServer::SCHEME_SOCKS5);
 
     if (proxy_info_.is_empty()) {
       // No proxies/direct to choose from. This happens when we don't support
@@ -353,8 +348,7 @@ bool ProxyResolvingClientSocket::IsConnectedAndIdle() const {
   return transport_->socket()->IsConnectedAndIdle();
 }
 
-int ProxyResolvingClientSocket::GetPeerAddress(
-    net::IPEndPoint* address) const {
+int ProxyResolvingClientSocket::GetPeerAddress(net::IPEndPoint* address) const {
   if (!transport_.get() || !transport_->socket()) {
     NOTREACHED();
     return net::ERR_SOCKET_NOT_CONNECTED;
@@ -440,4 +434,4 @@ void ProxyResolvingClientSocket::CloseTransportSocket() {
   transport_.reset();
 }
 
-}  // namespace jingle_glue
+}  // namespace network
