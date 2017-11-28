@@ -1843,6 +1843,20 @@ external/wpt/css/css-color/t424-hsl-parsing-f.xht [ WontFix ]
 external/wpt/css/css-color/t425-hsla-onscreen-multiple-boxes-c.xht [ WontFix ]
 external/wpt/css/css-color/t425-hsla-parsing-f.xht [ WontFix ]
 
+# Doesn't wait long enough for screenshot
+external/wpt/FileAPI/url/url_xmlhttprequest_img.html [ WontFix ]
+
+# Timeout
+external/wpt/html/browsers/browsing-the-web/unloading-documents/unload/006.html [ WontFix ]
+external/wpt/html/browsers/history/the-history-interface/joint_session_history/002.html [ WontFix ]
+external/wpt/html/browsers/history/the-history-interface/traverse_the_history_1.html [ WontFix ]
+external/wpt/html/browsers/history/the-history-interface/traverse_the_history_write_after_load_1.html [ WontFix ]
+external/wpt/html/semantics/document-metadata/the-style-element/style-error-01.html [ WontFix ]
+external/wpt/html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-candidate-remove-addEventListener.html [ WontFix ]
+external/wpt/html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-candidate-remove-onerror.html [ WontFix ]
+external/wpt/svg/linking/scripted/href-animate-element.html [ WontFix ]
+external/wpt/svg/linking/scripted/href-mpath-element.html [ WontFix ]
+
 # Requires --use-fake-ui-for-media-stream to run.
 external/wpt/mediacapture-streams/MediaStream-default-feature-policy.https.html [ WontFix ]
 
