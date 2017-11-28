@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/command_line.h"
+#include "base/macros.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/storage_partition_impl.h"
@@ -55,6 +56,9 @@ class IsolatedOriginTest : public ContentBrowserTest {
                               "document.body.appendChild(link);"
                               "link.click();"));
   }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(IsolatedOriginTest);
 };
 
 // Check that navigating a main frame from an non-isolated origin to an
@@ -897,6 +901,8 @@ class StoragePartitonInterceptor
   // Keep a pointer to the original implementation of the service, so all
   // calls can be forwarded to it.
   mojom::StoragePartitionService* storage_partition_service_;
+
+  DISALLOW_COPY_AND_ASSIGN(StoragePartitonInterceptor);
 };
 
 void CreateTestStoragePartitionService(
