@@ -21,6 +21,21 @@
           "object": "LayoutBlockFlow DIV id='target'",
           "rect": [1, 201, 100, 100],
           "reason": "appeared"
+        },
+        {
+          "object": "LayoutBlockFlow DIV id='target'",
+          "rect": [1, 201, 100, 100],
+          "reason": "appeared"
+        },
+        {
+          "object": "LayoutScrollbarPart (anonymous)",
+          "rect": [1, 289, 88, 12],
+          "reason": "appeared"
+        },
+        {
+          "object": "LayoutScrollbarPart (anonymous)",
+          "rect": [89, 201, 12, 88],
+          "reason": "appeared"
         }
       ]
     }

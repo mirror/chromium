@@ -9,6 +9,11 @@
         {
           "object": "LayoutTextControl INPUT id='target'",
           "rect": [7, 7, 66, 24],
+          "reason": "appeared"
+        },
+        {
+          "object": "LayoutTextControl INPUT id='target'",
+          "rect": [7, 7, 66, 24],
           "reason": "subtree"
         },
         {
