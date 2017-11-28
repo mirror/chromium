@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "85ec2296_4d469396",
+        "filename": "third_party/WebKit/Source/platform/fonts/SimpleFontData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-28T12:03:16Z",
+      "side": 1,
+      "message": "Good point. Ideally, we should try to get right of GlyphData and just use the full ShapeResult in the place where this is used for GetEmphasisMarkGlyphData.",
+      "parentUuid": "855bc56e_8894c384",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5842c328_919f2211",
         "filename": "third_party/WebKit/Source/platform/fonts/SimpleFontData.h",
         "patchSetId": 4
