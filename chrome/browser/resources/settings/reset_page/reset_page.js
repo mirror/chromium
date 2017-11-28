@@ -91,5 +91,4 @@ Polymer({
     settings.navigateTo(settings.routes.CHROME_CLEANUP);
   },
   // </if>
-
 });
