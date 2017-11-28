@@ -675,6 +675,30 @@
     },
     {
       "key": {
+        "uuid": "8fcab699_ccd74840",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T06:10:58Z",
+      "side": 1,
+      "message": "My proposed fix will immediately clean up the progress bar if Drive is not currently syncing, else it will be cleaned up once sync is complete. Else some additional logic is needed to make sure that the progress bar doesn\u0027t get cleaned up more than once - IIRC, if you request an item with an id that is not registered, it will create a new item..",
+      "parentUuid": "c315436b_05ea66be",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 69
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59b50ba7_f2f00b7c",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
@@ -772,6 +796,24 @@
       "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48858304_e985a81e",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T06:10:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b39c292d_707962b1",
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

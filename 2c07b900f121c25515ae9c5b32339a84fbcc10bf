@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "4b43562e_d11af12d",
+        "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T06:10:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f4b6a66_def51f9e",
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b90763_1bebff25",
         "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
         "patchSetId": 6
@@ -211,6 +229,24 @@
       "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662cfb1a_f767ad02",
+        "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T06:10:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3d40c29_6a952721",
+      "revId": "2c07b900f121c25515ae9c5b32339a84fbcc10bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

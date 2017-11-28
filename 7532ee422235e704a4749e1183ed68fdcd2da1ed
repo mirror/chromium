@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "a597a50f_15b09b25",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T06:10:58Z",
+      "side": 1,
+      "message": "I don\u0027t know what I missed last time I tried this, but this time, it did work!",
+      "parentUuid": "653aa348_59f576b9",
+      "range": {
+        "startLine": 430,
+        "startChar": 49,
+        "endLine": 431,
+        "endChar": 71
+      },
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e09a165_cfef96de",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 7
@@ -238,6 +262,24 @@
       "side": 1,
       "message": "Leaving TODO with asignee:oka@ SGTM. Thanks!",
       "parentUuid": "f3aa03a6_d5c4c74f",
+      "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25957576_a10da7dd",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T06:10:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16e72de0_9727f76e",
       "revId": "7532ee422235e704a4749e1183ed68fdcd2da1ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

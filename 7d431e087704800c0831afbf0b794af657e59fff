@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90c6603b_0f3b8a4f",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T06:10:58Z",
+      "side": 1,
+      "message": "Actually, I kind of ignored these observers, and after looking into them right now it seems like a much better way to go. Thanks for the feedback, fix incoming!",
+      "parentUuid": "df59e089_bbccd698",
+      "revId": "7d431e087704800c0831afbf0b794af657e59fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b72c12d_3b0bdeb4",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "7d431e087704800c0831afbf0b794af657e59fff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19488421_a2b06494",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T06:10:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b72c12d_3b0bdeb4",
+      "revId": "7d431e087704800c0831afbf0b794af657e59fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "575b9de0_8782fe19",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T06:10:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf29c503_aa64bba0",
+      "revId": "7d431e087704800c0831afbf0b794af657e59fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d392482_67c5e2c8",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bba8d4dd_25841ec7",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T06:10:58Z",
+      "side": 1,
+      "message": "It creates a copy of the array - if this isn\u0027t done, both elements will hold references to the exact same object, causing hard-to-discover side effects.",
+      "parentUuid": "2d392482_67c5e2c8",
+      "revId": "7d431e087704800c0831afbf0b794af657e59fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d101325_f3295f03",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 9
@@ -84,6 +156,24 @@
       "revId": "7d431e087704800c0831afbf0b794af657e59fff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7073848b_d127f67a",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-28T06:10:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d101325_f3295f03",
+      "revId": "7d431e087704800c0831afbf0b794af657e59fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
