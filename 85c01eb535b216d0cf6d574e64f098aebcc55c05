@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4682ebbf_e7a9b469",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T17:45:05Z",
+      "side": 1,
+      "message": "My quick reading of the code finds that a reconnectSession(sessionId) call from Cast SDK translates to a joinRoute(\"cast-session_\" + sessionId) call in MR, which the Cast MRP handles by stripping out the prefix and doing a match with sessionId against its session records.\n\nBecause the route also has presentation id \u003d\u003d sessionId, and we have code in Cast MRP that handles joining by presentation ID (i.e. non-prefixed with \"cast-session_\"), this seems to indicate that join should still continue to work if we stopped adding the prefix in reconectSession, at least in theory.\n\nMaybe this can be part of a future cleanup of route management in Cast MRP as there are other cleanups that would be nice to do as well.",
+      "parentUuid": "e4d7d0e8_0d25be67",
+      "revId": "85c01eb535b216d0cf6d574e64f098aebcc55c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b114f178_6b65c1d1",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 4
