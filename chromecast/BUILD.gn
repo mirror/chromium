@@ -34,6 +34,9 @@ group("all") {
   if (!is_android) {
     deps += [ ":cast_shell" ]
   }
+  if (is_linux) {
+    deps += [ "//chromecast/tracing" ]
+  }
   if (chromecast_branding != "public") {
     deps += [ "//chromecast/internal:all" ]
   }
