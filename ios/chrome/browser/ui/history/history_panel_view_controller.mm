@@ -32,6 +32,8 @@
 namespace {
 // Shadow opacity for the clear browsing button and the header when scrolling.
 CGFloat kShadowOpacity = 0.2f;
+
+int martiTest = 0;
 }  // namespace
 
 @interface HistoryPanelViewController ()<
@@ -44,6 +46,12 @@ CGFloat kShadowOpacity = 0.2f;
   // Privacy settings, or "Edit" for entering a mode for deleting individual
   // entries. When in edit mode, the bar displays options to Delete or Cancel.
   ClearBrowsingBar* _clearBrowsingBar;
+  ClearBrowsingBar* _clearBrowsingBar1;
+  ClearBrowsingBar* _clearBrowsingBar2;
+  ClearBrowsingBar* _clearBrowsingBar3;
+  ClearBrowsingBar* _clearBrowsingBar4;
+  ClearBrowsingBar* _clearBrowsingBar5;
+
   // View controller for the search bar.
   HistorySearchViewController* _searchViewController;
   // Container view for history collection and clear browsing button to enable
@@ -145,6 +153,61 @@ CGFloat kShadowOpacity = 0.2f;
                               action:@selector(deleteSelectedItems)];
   [_clearBrowsingBar setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_containerView addSubview:_clearBrowsingBar];
+
+  _clearBrowsingBar1 = [[ClearBrowsingBar alloc] initWithFrame:CGRectZero];
+  [_clearBrowsingBar1
+      setClearBrowsingDataTarget:self
+                          action:@selector(openPrivacySettings)];
+  [_clearBrowsingBar1 setEditTarget:self action:@selector(enterEditingMode)];
+  [_clearBrowsingBar1 setCancelTarget:self action:@selector(exitEditingMode)];
+  [_clearBrowsingBar1 setDeleteTarget:self
+                               action:@selector(deleteSelectedItems)];
+  [_clearBrowsingBar1 setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_containerView addSubview:_clearBrowsingBar1];
+
+  _clearBrowsingBar2 = [[ClearBrowsingBar alloc] initWithFrame:CGRectZero];
+  [_clearBrowsingBar2
+      setClearBrowsingDataTarget:self
+                          action:@selector(openPrivacySettings)];
+  [_clearBrowsingBar2 setEditTarget:self action:@selector(enterEditingMode)];
+  [_clearBrowsingBar2 setCancelTarget:self action:@selector(exitEditingMode)];
+  [_clearBrowsingBar2 setDeleteTarget:self
+                               action:@selector(deleteSelectedItems)];
+  [_clearBrowsingBar2 setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_containerView addSubview:_clearBrowsingBar2];
+
+  _clearBrowsingBar3 = [[ClearBrowsingBar alloc] initWithFrame:CGRectZero];
+  [_clearBrowsingBar3
+      setClearBrowsingDataTarget:self
+                          action:@selector(openPrivacySettings)];
+  [_clearBrowsingBar3 setEditTarget:self action:@selector(enterEditingMode)];
+  [_clearBrowsingBar3 setCancelTarget:self action:@selector(exitEditingMode)];
+  [_clearBrowsingBar3 setDeleteTarget:self
+                               action:@selector(deleteSelectedItems)];
+  [_clearBrowsingBar3 setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_containerView addSubview:_clearBrowsingBar3];
+
+  _clearBrowsingBar4 = [[ClearBrowsingBar alloc] initWithFrame:CGRectZero];
+  [_clearBrowsingBar4
+      setClearBrowsingDataTarget:self
+                          action:@selector(openPrivacySettings)];
+  [_clearBrowsingBar4 setEditTarget:self action:@selector(enterEditingMode)];
+  [_clearBrowsingBar4 setCancelTarget:self action:@selector(exitEditingMode)];
+  [_clearBrowsingBar4 setDeleteTarget:self
+                               action:@selector(deleteSelectedItems)];
+  [_clearBrowsingBar4 setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_containerView addSubview:_clearBrowsingBar4];
+
+  _clearBrowsingBar5 = [[ClearBrowsingBar alloc] initWithFrame:CGRectZero];
+  [_clearBrowsingBar5
+      setClearBrowsingDataTarget:self
+                          action:@selector(openPrivacySettings)];
+  [_clearBrowsingBar5 setEditTarget:self action:@selector(enterEditingMode)];
+  [_clearBrowsingBar5 setCancelTarget:self action:@selector(exitEditingMode)];
+  [_clearBrowsingBar5 setDeleteTarget:self
+                               action:@selector(deleteSelectedItems)];
+  [_clearBrowsingBar5 setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_containerView addSubview:_clearBrowsingBar5];
   [self configureClearBrowsingBar];
 
   ConfigureAppBarWithCardStyle(_appBar);
@@ -175,10 +238,23 @@ CGFloat kShadowOpacity = 0.2f;
   NSDictionary* views = @{
     @"collectionView" : [_historyCollectionController view],
     @"clearBrowsingBar" : _clearBrowsingBar,
+    @"clearBrowsingBar1" : _clearBrowsingBar1,
+    @"clearBrowsingBar2" : _clearBrowsingBar2,
+    @"clearBrowsingBar3" : _clearBrowsingBar3,
+    @"clearBrowsingBar4" : _clearBrowsingBar4,
+    @"clearBrowsingBar5" : _clearBrowsingBar5,
   };
   NSArray* constraints = @[
-    @"V:|[collectionView][clearBrowsingBar]|", @"H:|[collectionView]|",
-    @"H:|[clearBrowsingBar]|"
+    @"V:|[collectionView][clearBrowsingBar][clearBrowsingBar1]["
+    @"clearBrowsingBar2][clearBrowsingBar3][clearBrowsingBar4]["
+    @"clearBrowsingBar5]|",
+    @"H:|[collectionView]|",
+    @"H:|[clearBrowsingBar]|",
+    @"H:|[clearBrowsingBar1]|",
+    @"H:|[clearBrowsingBar2]|",
+    @"H:|[clearBrowsingBar3]|",
+    @"H:|[clearBrowsingBar4]|",
+    @"H:|[clearBrowsingBar5]|",
   ];
   ApplyVisualConstraints(constraints, views);
   [super updateViewConstraints];
@@ -186,6 +262,16 @@ CGFloat kShadowOpacity = 0.2f;
 
 - (BOOL)disablesAutomaticKeyboardDismissal {
   return NO;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)orient {
+  [super didRotateFromInterfaceOrientation:orient];
+  [_clearBrowsingBar updateHeight];
+  [_clearBrowsingBar1 updateHeight];
+  [_clearBrowsingBar2 updateHeight];
+  [_clearBrowsingBar3 updateHeight];
+  [_clearBrowsingBar4 updateHeight];
+  [_clearBrowsingBar5 updateHeight];
 }
 
 #pragma mark - Status bar
@@ -335,6 +421,11 @@ CGFloat kShadowOpacity = 0.2f;
   }
   [_historyCollectionController setEditing:YES];
   [_clearBrowsingBar setEditing:YES];
+  [_clearBrowsingBar1 setEditing:YES];
+  [_clearBrowsingBar2 setEditing:YES];
+  [_clearBrowsingBar3 setEditing:YES];
+  [_clearBrowsingBar4 setEditing:YES];
+  [_clearBrowsingBar5 setEditing:YES];
   if (_historyCollectionController.searching) {
     [_searchViewController setEnabled:NO];
   }
@@ -343,8 +434,79 @@ CGFloat kShadowOpacity = 0.2f;
 }
 
 - (void)exitEditingMode {
+  martiTest = (martiTest + 1) % 6;
+
+  if (martiTest == 1) {
+    [_clearBrowsingBar string1:@"مسح بيانات التصفح..." string2:@"تحرير"];
+    [_clearBrowsingBar1 string1:@"Esborra dades de navegació" string2:@"Edita"];
+    [_clearBrowsingBar2 string1:@"Smazat údaje o prohlížení..."
+                        string2:@"Upravit"];
+    [_clearBrowsingBar3 string1:@"Ryd browserdata..." string2:@"Rediger"];
+    [_clearBrowsingBar4 string1:@"Browserdaten löschen..."
+                        string2:@"Bearbeiten"];
+    [_clearBrowsingBar5 string1:@"Διαγραφή δεδομένων περιήγησης…"
+                        string2:@"Επεξεργασία"];
+  } else if (martiTest == 2) {
+    [_clearBrowsingBar string1:@"Clear Browsing Data..." string2:@"Edit"];
+    [_clearBrowsingBar1 string1:@"Borrar datos de navegación..."
+                        string2:@"Editar"];
+    [_clearBrowsingBar2 string1:@"Borrar datos de navegación..."
+                        string2:@"Editar"];
+    [_clearBrowsingBar3 string1:@"Poista selaustiedot..." string2:@"Muokkaa"];
+    [_clearBrowsingBar4 string1:@"I-clear ang Data sa Pag-browse..."
+                        string2:@"I-edit"];
+    [_clearBrowsingBar5 string1:@"Effacer les données de navigation..."
+                        string2:@"Modifier"];
+  } else if (martiTest == 3) {
+    [_clearBrowsingBar string1:@"ब्राउज़िंग डेटा साफ़ करें..." string2:@"संपादित करें"];
+    [_clearBrowsingBar1 string1:@"Obriši podatke o pregledavanju..."
+                        string2:@"Uredi"];
+    [_clearBrowsingBar2 string1:@"Böngészési adatok törlése…"
+                        string2:@"Szerkesztés"];
+    [_clearBrowsingBar3 string1:@"Hapus Data Browsing..." string2:@"Edit"];
+    [_clearBrowsingBar4 string1:@"Cancella dati di navigazione..."
+                        string2:@"Modifica"];
+    [_clearBrowsingBar5 string1:@"閲覧履歴を消去..." string2:@"編集"];
+  } else if (martiTest == 4) {
+    [_clearBrowsingBar string1:@"인터넷 사용 기록 삭제..." string2:@"수정"];
+    [_clearBrowsingBar1 string1:@"Kosongkan Data Semakan Imbas..."
+                        string2:@"Edit"];
+    [_clearBrowsingBar2 string1:@"Browsegegevens wissen..."
+                        string2:@"Bewerken"];
+    [_clearBrowsingBar3 string1:@"Wyczyść dane przeglądania..."
+                        string2:@"Edycja"];
+    [_clearBrowsingBar4 string1:@"Limpar dados de navegação..."
+                        string2:@"Editar"];
+    [_clearBrowsingBar5 string1:@"Limpar dados de navegação..."
+                        string2:@"Editar"];
+  } else if (martiTest == 5) {
+    [_clearBrowsingBar string1:@"Șterge datele de navigare..."
+                       string2:@"Editează"];
+    [_clearBrowsingBar1 string1:@"Очистить историю..." string2:@"Изменить"];
+    [_clearBrowsingBar2 string1:@"Vymazať dáta prehliadania..."
+                        string2:@"Upraviť"];
+    [_clearBrowsingBar3 string1:@"Rensa webbinformation ..."
+                        string2:@"Redigera"];
+    [_clearBrowsingBar4 string1:@"ล้างข้อมูลการท่องเว็บ" string2:@"แก้ไข"];
+    [_clearBrowsingBar5 string1:@"Göz Atma Verilerini Temizle..."
+                        string2:@"Düzenle"];
+  } else {
+    [_clearBrowsingBar string1:@"Очистити дані веб-перегляду..."
+                       string2:@"Редагувати"];
+    [_clearBrowsingBar1 string1:@"Xóa DL duyệt web" string2:@"Chỉnh sửa"];
+    [_clearBrowsingBar2 string1:@"清除浏览数据..." string2:@"修改"];
+    [_clearBrowsingBar3 string1:@"清除瀏覽資料..." string2:@"編輯"];
+    [_clearBrowsingBar4 string1:@"--" string2:@"--"];
+    [_clearBrowsingBar5 string1:@"--" string2:@"--"];
+  }
+
   [_historyCollectionController setEditing:NO];
   [_clearBrowsingBar setEditing:NO];
+  [_clearBrowsingBar1 setEditing:NO];
+  [_clearBrowsingBar2 setEditing:NO];
+  [_clearBrowsingBar3 setEditing:NO];
+  [_clearBrowsingBar4 setEditing:NO];
+  [_clearBrowsingBar5 setEditing:NO];
   if (_historyCollectionController.searching) {
     [_searchViewController setEnabled:YES];
   }
@@ -412,10 +574,18 @@ CGFloat kShadowOpacity = 0.2f;
 }
 
 - (void)configureClearBrowsingBar {
-  _clearBrowsingBar.editing = _historyCollectionController.editing;
-  _clearBrowsingBar.deleteButtonEnabled =
-      [_historyCollectionController hasSelectedEntries];
-  _clearBrowsingBar.editButtonEnabled = ![_historyCollectionController isEmpty];
+  [self configureClearBrowsingBar:_clearBrowsingBar];
+  [self configureClearBrowsingBar:_clearBrowsingBar1];
+  [self configureClearBrowsingBar:_clearBrowsingBar2];
+  [self configureClearBrowsingBar:_clearBrowsingBar3];
+  [self configureClearBrowsingBar:_clearBrowsingBar4];
+  [self configureClearBrowsingBar:_clearBrowsingBar5];
+}
+
+- (void)configureClearBrowsingBar:(ClearBrowsingBar*)bar {
+  bar.editing = _historyCollectionController.editing;
+  bar.deleteButtonEnabled = [_historyCollectionController hasSelectedEntries];
+  bar.editButtonEnabled = ![_historyCollectionController isEmpty];
 }
 
 #pragma mark - UIResponder

@@ -30,6 +30,10 @@
 - (void)setDeleteTarget:(id)taret action:(SEL)action;
 // Sets the target/action of the "Cancel" button.
 - (void)setCancelTarget:(id)target action:(SEL)action;
+// Updates the height of the ClearBrowsingBar.
+- (void)updateHeight;
+
+- (void)string1:(NSString*)string1 string2:(NSString*)string2;
 
 @end
 #endif  // IOS_CHROME_BROWSER_UI_HISTORY_CLEAR_BROWSING_BAR_H_
