@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c8adae0_a05ec85b",
+        "filename": "components/autofill/content/renderer/form_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-28T23:47:49Z",
+      "side": 1,
+      "message": "I were thinking we could unify the way to check whether form is visible here, but found out the change will be big and have much more risk. Right, \"successful\" isn\u0027t suitable here, how about change to \"OnInferredFormSubmission()\"?",
+      "parentUuid": "382cee6d_e861f5d2",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 208,
+        "endChar": 32
+      },
+      "revId": "a9d82b53bb10c4c3a4f38704aad238a1f8b37bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8489d8eb_725d9432",
         "filename": "components/autofill/content/renderer/form_tracker.h",
         "patchSetId": 7
