@@ -270,6 +270,10 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
                                float scroll_x,
                                float scroll_y) override;
 
+  void SendGesturePinchBegin() override;
+  LRESULT SendGesturePinchUpdate(float scale) override;
+  void SendGesturePinchEnd() override;
+
   // Returns the auto-hide edges of the appbar. See
   // ViewsDelegate::GetAppbarAutohideEdges() for details. If the edges change,
   // OnAppbarAutohideEdgesChanged() is called.

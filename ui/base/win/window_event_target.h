@@ -94,6 +94,10 @@ class UI_BASE_EXPORT WindowEventTarget {
                                        float scroll_x,
                                        float scroll_y) = 0;
 
+  virtual void SendGesturePinchBegin() = 0;
+  virtual LRESULT SendGesturePinchUpdate(float scale) = 0;
+  virtual void SendGesturePinchEnd() = 0;
+
  protected:
   WindowEventTarget();
   virtual ~WindowEventTarget();
