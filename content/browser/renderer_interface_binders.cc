@@ -17,6 +17,7 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
+#include "content/public/browser/interfaces/interface_filter.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "services/device/public/interfaces/constants.mojom.h"
@@ -32,6 +33,17 @@
 namespace content {
 namespace {
 
+// Forwards service requests to Service Manager since the renderer cannot launch
+// out-of-process services on is own.
+template <typename Interface>
+void ForwardServiceRequest(const char* service_name,
+                           mojo::InterfaceRequest<Interface> request,
+                           RenderProcessHost* host,
+                           const url::Origin& origin) {
+  auto* connector = BrowserContext::GetConnectorFor(host->GetBrowserContext());
+  connector->BindInterface(service_name, std::move(request));
+}
+
 // A holder for a parameterized BinderRegistry for content-layer interfaces
 // exposed to web workers.
 class RendererInterfaceBinders {
@@ -44,9 +56,17 @@ class RendererInterfaceBinders {
                      mojo::ScopedMessagePipeHandle interface_pipe,
                      RenderProcessHost* host,
                      const url::Origin& origin) {
-    if (parameterized_binder_registry_.TryBindInterface(
-            interface_name, &interface_pipe, host, origin)) {
-      return;
+    auto it = interface_configurations_.find(interface_name);
+    if (it != interface_configurations_.end()) {
+      // XXX: Not kFrame.
+      if (!it->second.IsAllowed(WebContextType::kFrame, host, nullptr,
+                                origin)) {
+        return;
+      }
+      if (parameterized_binder_registry_.TryBindInterface(
+              interface_name, &interface_pipe, host, origin)) {
+        return;
+      }
     }
 
     GetContentClient()->browser()->BindInterfaceRequestFromWorker(
@@ -58,29 +78,83 @@ class RendererInterfaceBinders {
   bool TryBindInterface(const std::string& interface_name,
                         mojo::ScopedMessagePipeHandle* interface_pipe,
                         RenderFrameHost* frame) {
+    auto it = interface_configurations_.find(interface_name);
+    if (it != interface_configurations_.end()) {
+      if (!it->second.IsAllowed(WebContextType::kFrame, frame->GetProcess(),
+                                frame, frame->GetLastCommittedOrigin())) {
+        DVLOG(1) << interface_name << " blocked";
+        interface_pipe->reset();
+        return true;
+      }
+    } else {
+      return false;
+    }
+    if (frame_binder_registry_.TryBindInterface(interface_name, interface_pipe,
+                                                frame)) {
+      return true;
+    }
     return parameterized_binder_registry_.TryBindInterface(
         interface_name, interface_pipe, frame->GetProcess(),
         frame->GetLastCommittedOrigin());
   }
 
  private:
+  template <typename Interface>
+  void AddInterface(base::Callback<void(mojo::InterfaceRequest<Interface>,
+                                        RenderFrameHost*)> frame_callback,
+                    base::Callback<void(mojo::InterfaceRequest<Interface>,
+                                        RenderProcessHost*,
+                                        const url::Origin&)> callback,
+                    InterfaceConfiguration configuration) {
+    frame_binder_registry_.AddInterface(std::move(frame_callback));
+    AddInterface(std::move(callback), std::move(configuration));
+  }
+
+  template <typename Interface>
+  void AddInterface(base::Callback<void(mojo::InterfaceRequest<Interface>,
+                                        RenderFrameHost*)> frame_callback,
+                    InterfaceConfiguration configuration) {
+    frame_binder_registry_.AddInterface(std::move(frame_callback));
+    bool inserted = interface_configurations_
+                        .emplace(Interface::Name_, std::move(configuration))
+                        .second;
+    DCHECK(inserted);
+  }
+
+  template <typename Interface>
+  void AddInterface(base::Callback<void(mojo::InterfaceRequest<Interface>,
+                                        RenderProcessHost*,
+                                        const url::Origin&)> callback,
+                    InterfaceConfiguration configuration) {
+    parameterized_binder_registry_.AddInterface(std::move(callback));
+    bool inserted = interface_configurations_
+                        .emplace(Interface::Name_, std::move(configuration))
+                        .second;
+    DCHECK(inserted);
+  }
+
+  template <typename Interface>
+  void AddInterface(const char* service_name,
+                    InterfaceConfiguration configuration) {
+    parameterized_binder_registry_.AddInterface(
+        base::Bind(&ForwardServiceRequest<Interface>, service_name));
+    bool inserted = interface_configurations_
+                        .emplace(Interface::Name_, std::move(configuration))
+                        .second;
+    DCHECK(inserted);
+  }
+
   void InitializeParameterizedBinderRegistry();
 
   service_manager::BinderRegistryWithArgs<RenderProcessHost*,
                                           const url::Origin&>
       parameterized_binder_registry_;
-};
+  service_manager::BinderRegistryWithArgs<RenderFrameHost*>
+      frame_binder_registry_;
 
-// Forwards service requests to Service Manager since the renderer cannot launch
-// out-of-process services on is own.
-template <typename Interface>
-void ForwardServiceRequest(const char* service_name,
-                           mojo::InterfaceRequest<Interface> request,
-                           RenderProcessHost* host,
-                           const url::Origin& origin) {
-  auto* connector = BrowserContext::GetConnectorFor(host->GetBrowserContext());
-  connector->BindInterface(service_name, std::move(request));
-}
+  std::unordered_map<std::string, InterfaceConfiguration>
+      interface_configurations_;
+};
 
 // Register renderer-exposed interfaces. Each registered interface binder is
 // exposed to all renderer-hosted execution context types (document/frame,
@@ -89,40 +163,46 @@ void ForwardServiceRequest(const char* service_name,
 // interface requests from frames, binders registered on the frame itself
 // override binders registered here.
 void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
-  parameterized_binder_registry_.AddInterface(base::Bind(
-      &ForwardServiceRequest<shape_detection::mojom::BarcodeDetection>,
-      shape_detection::mojom::kServiceName));
-  parameterized_binder_registry_.AddInterface(base::Bind(
-      &ForwardServiceRequest<shape_detection::mojom::FaceDetectionProvider>,
-      shape_detection::mojom::kServiceName));
-  parameterized_binder_registry_.AddInterface(
-      base::Bind(&ForwardServiceRequest<shape_detection::mojom::TextDetection>,
-                 shape_detection::mojom::kServiceName));
-  parameterized_binder_registry_.AddInterface(
-      base::Bind(&ForwardServiceRequest<device::mojom::VibrationManager>,
-                 device::mojom::kServiceName));
-  parameterized_binder_registry_.AddInterface(
+  AddInterface<shape_detection::mojom::BarcodeDetection>(
+      shape_detection::mojom::kServiceName, {});
+  AddInterface<shape_detection::mojom::FaceDetectionProvider>(
+      shape_detection::mojom::kServiceName, {});
+  AddInterface<shape_detection::mojom::TextDetection>(
+      shape_detection::mojom::kServiceName, {});
+  AddInterface<device::mojom::VibrationManager>(device::mojom::kServiceName,
+                                                {});
+  AddInterface(
+      base::Bind(
+          [](blink::mojom::WebSocketRequest request, RenderFrameHost* host) {
+            WebSocketManager::CreateWebSocket(host->GetProcess()->GetID(),
+                                              host->GetRoutingID(),
+                                              std::move(request));
+          }),
       base::Bind([](blink::mojom::WebSocketRequest request,
                     RenderProcessHost* host, const url::Origin& origin) {
         WebSocketManager::CreateWebSocket(host->GetID(), MSG_ROUTING_NONE,
                                           std::move(request));
-      }));
-  parameterized_binder_registry_.AddInterface(
+      }),
+      {});
+  AddInterface(
       base::Bind([](payments::mojom::PaymentManagerRequest request,
                     RenderProcessHost* host, const url::Origin& origin) {
         static_cast<StoragePartitionImpl*>(host->GetStoragePartition())
             ->GetPaymentAppContext()
             ->CreatePaymentManager(std::move(request));
-      }));
-  parameterized_binder_registry_.AddInterface(
+      }),
+      {CreateContextTypeInterfaceFilter(
+          {WebContextType::kFrame, WebContextType::kServiceWorker})});
+  AddInterface(
       base::Bind([](blink::mojom::PermissionServiceRequest request,
                     RenderProcessHost* host, const url::Origin& origin) {
         static_cast<RenderProcessHostImpl*>(host)
             ->permission_service_context()
             .CreateService(std::move(request));
-      }));
-  parameterized_binder_registry_.AddInterface(
-      base::Bind(&CreateDedicatedWorkerHostFactory));
+      }),
+      {});
+  AddInterface(base::Bind(&CreateDedicatedWorkerHostFactory),
+               {CreateContextTypeInterfaceFilter({WebContextType::kFrame})});
 }
 
 RendererInterfaceBinders& GetRendererInterfaceBinders() {
