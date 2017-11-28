@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "991cc4ab_48750a2e",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T17:32:53Z",
+      "side": 1,
+      "message": "Hrm, I was trying to keep what I think is the behavior without this change. Namely, without this change, the ClientCertStore returned for the sign-in profile is empty, so I expect SSLClientAuthHandler::DidGetClientCerts to hit the has_client_cert_store \u0026\u0026 empty case:\nhttps://cs.chromium.org/chromium/src/content/browser/ssl/ssl_client_auth_handler.cc?rcl\u003dc0746bf1b473b3cceffda51994281d0cc4d0cf63\u0026l\u003d178\n\nDid I miss some detail, or is this what it is doing?\nIf yes, I\u0027d like to add a comment here, but I\u0027m not even sure what to write :)\n\"Proceed without client authentication\" would probably be correct but doesn\u0027t give my intent of not changing the current behavior.\nProbably \"Proceed as if no client certificates are available in the context.\" would be best. WDYT (only if my remarks above are correct of course)?",
+      "parentUuid": "b0d75eca_2f629c43",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31f2de84_22a69a1a",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 6
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "96dc6970_43b42b7d",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T17:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04e7e924_2e8afcf6",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2b355a9_598c3887",
         "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
         "patchSetId": 6
@@ -64,6 +100,24 @@
       "writtenOn": "2017-11-28T16:33:13Z",
       "side": 1,
       "message": "BUG: If this fails, you\u0027ll end up hanging line 389, because you\u0027ll never post the done_callback\n\nThis is because ASSERT_TRUE is, in effect, an early return when the assertion fails.\n\nI think you want this as EXPECT_TRUE and then up at line 390 you want to make sure that there have been no failures.\n\nHowever, because SetUpOnMainThread() is itself a subroutine, in addition to changing this to EXPECT_TRUE, you really want to assert during your actual unittest start that no test failure assertions had fired before you actually run your test.",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367a2dea_48941fdf",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T17:32:53Z",
+      "side": 1,
+      "message": "Very good point, I can\u0027t even really use ASSERT_NO_FATAL_FAILURE here.\nDecided to propagate the result to the caller using a bool* parameter and ASSERT_TRUE there. WDYT?\n\nAnyway, I\u0027ll have to fix this in platform_keys_apitest.cc which inspired me to do this in a follow-up CL.",
+      "parentUuid": "e2b355a9_598c3887",
       "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "d02247b1_0cce1a53",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T17:32:53Z",
+      "side": 1,
+      "message": "At least I can use ASSERT_NO_FATAL_FAILURE here :) Thanks for catching this!",
+      "parentUuid": "f4d61c83_8d1bf5dd",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97a1bed4_9d71d58d",
         "filename": "chrome/browser/chromeos/net/client_cert_filter_chromeos.h",
         "patchSetId": 6
@@ -101,6 +173,24 @@
       "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7967490c_a4ff7570",
+        "filename": "chrome/browser/chromeos/net/client_cert_filter_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T17:32:53Z",
+      "side": 1,
+      "message": "Reverted as discussed in next general \"factory method\" comment thread.",
+      "parentUuid": "97a1bed4_9d71d58d",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "e88c2997_d703b5f8",
+        "filename": "chrome/browser/chromeos/net/client_cert_filter_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T17:32:53Z",
+      "side": 1,
+      "message": "Reverted as discussed in next general \"factory method\" comment thread.",
+      "parentUuid": "74b5d024_75405b4d",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921b5cdb_467fb508",
         "filename": "chrome/browser/chromeos/net/client_cert_filter_chromeos.h",
         "patchSetId": 6
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "9143a751_e8886027",
+        "filename": "chrome/browser/chromeos/net/client_cert_filter_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T17:32:53Z",
+      "side": 1,
+      "message": "Hrm, the idea was to make it clearer to the reader what the intention is. But I think you\u0027re right, the comments on the ctor are good enough to make the reader understand that it\u0027s valid to pass |use_system_slot|\u003dtrue and |username_hash|\u003dempty. \n\nReverted this.",
+      "parentUuid": "921b5cdb_467fb508",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d4e1258_bab4cb29",
         "filename": "chrome/browser/profiles/profile_io_data.h",
         "patchSetId": 6
@@ -149,6 +275,24 @@
       "writtenOn": "2017-11-28T16:33:13Z",
       "side": 1,
       "message": "Similar to my remarks about the ctor, it seems like given that use_system_key_slot_ and username_hash_ are known, whether or not the sign-in filter is used is really just a property of these two values - that is, no need to add an extra bool, right?\n\nIs there a reason for the explicit member?",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1304e023_93541f62",
+        "filename": "chrome/browser/profiles/profile_io_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-28T17:32:53Z",
+      "side": 1,
+      "message": "The issue is that use_system_key_slot_ is also used to set the system slot in the profile\u0027s NSSDatabase, see [1]. We don\u0027t really need that for this feature (+ it\u0027d be some work to get it working, as the //chrome/browser/net/nss_context_chromeos.cc is not really prepared for the |username_hash|\u003d\u003d\"\" but |use_system_token|\u003dtrue case).\n\nWe could rename these to e.g. use_system_key_slot_client_certs and use_system_key_slot_nss_context (see new patchset)?\nOr we could only run EnableNSSSystemKeySlotForResourceContext if |username_hash_| is not empty, not introducing new variables.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/profiles/profile_io_data.cc?rcl\u003dec3c1112036e473a780b3cdb1162d31794954bb2\u0026l\u003d1134",
+      "parentUuid": "2d4e1258_bab4cb29",
       "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
