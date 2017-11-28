@@ -384,6 +384,11 @@ std::vector<std::string> SwReporterInstallerPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
 }
 
+bool SwReporterInstallerPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
+}
+
 bool SwReporterInstallerPolicy::IsExperimentalEngineEnabled() const {
   return is_experimental_engine_supported_ &&
          base::FeatureList::IsEnabled(kExperimentalEngineFeature);

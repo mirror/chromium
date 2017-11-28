@@ -110,6 +110,11 @@ std::vector<std::string> VrAssetsComponentInstallerTraits::GetMimeTypes()
   return std::vector<std::string>();
 }
 
+bool VrAssetsComponentInstallerTraits::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
+}
+
 void RegisterVrAssetsComponent(ComponentUpdateService* cus) {
   std::unique_ptr<ComponentInstallerPolicy> policy(
       new VrAssetsComponentInstallerTraits());

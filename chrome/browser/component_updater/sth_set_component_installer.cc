@@ -115,6 +115,11 @@ std::vector<std::string> STHSetComponentInstallerPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
 }
 
+bool STHSetComponentInstallerPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
+}
+
 void STHSetComponentInstallerPolicy::LoadSTHsFromDisk(
     const base::FilePath& sths_path,
     const base::Version& version) {

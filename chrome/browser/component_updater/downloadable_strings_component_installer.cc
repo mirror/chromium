@@ -428,6 +428,11 @@ DownloadableStringsComponentInstallerPolicy::GetMimeTypes() const {
   return {};
 }
 
+bool DownloadableStringsComponentInstallerPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
+}
+
 static void OnUpdateResult(update_client::Error error) {
   if (error == update_client::Error::NONE && !g_component_ready) {
     // The component was not downloaded, even though no error was reported.

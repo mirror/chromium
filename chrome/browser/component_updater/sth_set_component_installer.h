@@ -64,6 +64,7 @@ class STHSetComponentInstallerPolicy : public ComponentInstallerPolicy {
   std::string GetName() const override;
   update_client::InstallerAttributes GetInstallerAttributes() const override;
   std::vector<std::string> GetMimeTypes() const override;
+  bool IsUninstallable(const base::DictionaryValue& manifest) const override;
 
   // Reads and parses the on-disk json.
   void LoadSTHsFromDisk(const base::FilePath& sths_file_path,

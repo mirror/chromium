@@ -104,6 +104,10 @@ class ComponentInstallerPolicy {
   // ^[-_a-zA-Z0-9]{1,256}$ and valid values the value part of an attribute
   // match ^[-.,;+_=a-zA-Z0-9]{0,256}$ .
   virtual update_client::InstallerAttributes GetInstallerAttributes() const = 0;
+
+  // Return true if the component allows to be uninstalled, return false if not
+  // allowed.
+  virtual bool IsUninstallable(const base::DictionaryValue& manifest) const = 0;
 };
 
 // Defines the installer for Chrome components. The behavior of this class is

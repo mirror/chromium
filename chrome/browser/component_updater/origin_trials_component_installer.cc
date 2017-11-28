@@ -144,6 +144,11 @@ std::vector<std::string> OriginTrialsComponentInstallerPolicy::GetMimeTypes()
   return std::vector<std::string>();
 }
 
+bool OriginTrialsComponentInstallerPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
+}
+
 void RegisterOriginTrialsComponent(ComponentUpdateService* cus,
                                    const base::FilePath& user_data_dir) {
   auto installer = base::MakeRefCounted<ComponentInstaller>(

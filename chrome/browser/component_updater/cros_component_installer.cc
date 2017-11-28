@@ -166,6 +166,20 @@ std::vector<std::string> CrOSComponentInstallerPolicy::GetMimeTypes() const {
   return mime_types;
 }
 
+bool CrOSComponentInstallerPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  std::string is_removable;
+  if (manifest.GetString("is_removable", &is_removable)) {
+    if (is_removable == "true") {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+}
+
 bool CrOSComponentInstallerPolicy::IsCompatible(
     const std::string& env_version_str,
     const std::string& min_env_version_str) {

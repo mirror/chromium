@@ -114,6 +114,11 @@ ThirdPartyModuleListComponentInstallerPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
 }
 
+bool ThirdPartyModuleListComponentInstallerPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
+}
+
 update_client::InstallerAttributes
 ThirdPartyModuleListComponentInstallerPolicy::GetInstallerAttributes() const {
   return update_client::InstallerAttributes();

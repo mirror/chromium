@@ -58,6 +58,7 @@ class ThirdPartyModuleListComponentInstallerPolicy
   void GetHash(std::vector<uint8_t>* hash) const override;
   std::string GetName() const override;
   std::vector<std::string> GetMimeTypes() const override;
+  bool IsUninstallable(const base::DictionaryValue& manifest) const override;
   update_client::InstallerAttributes GetInstallerAttributes() const override;
 
   // Returns the path to the proto file for the given |install_dir|.

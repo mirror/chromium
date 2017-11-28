@@ -128,6 +128,11 @@ FileTypePoliciesComponentInstallerPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
 }
 
+bool FileTypePoliciesComponentInstallerPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
+}
+
 void RegisterFileTypePoliciesComponent(ComponentUpdateService* cus,
                                        const base::FilePath& user_data_dir) {
   VLOG(1) << "Registering File Type Policies component.";

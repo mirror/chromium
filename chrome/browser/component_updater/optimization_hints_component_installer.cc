@@ -130,6 +130,11 @@ OptimizationHintsComponentInstallerPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
 }
 
+bool OptimizationHintsComponentInstallerPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
+}
+
 void RegisterOptimizationHintsComponent(ComponentUpdateService* cus,
                                         PrefService* profile_prefs) {
   if (!base::FeatureList::IsEnabled(previews::features::kOptimizationHints)) {

@@ -293,6 +293,7 @@ class WidevineCdmComponentInstallerPolicy : public ComponentInstallerPolicy {
   std::string GetName() const override;
   update_client::InstallerAttributes GetInstallerAttributes() const override;
   std::vector<std::string> GetMimeTypes() const override;
+  bool IsUninstallable(const base::DictionaryValue& manifest) const override;
 
   // Checks and updates CDM adapter if necessary to make sure the latest CDM
   // adapter is always used.
@@ -376,6 +377,11 @@ WidevineCdmComponentInstallerPolicy::GetInstallerAttributes() const {
 std::vector<std::string> WidevineCdmComponentInstallerPolicy::GetMimeTypes()
     const {
   return std::vector<std::string>();
+}
+
+bool WidevineCdmComponentInstallerPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
 }
 
 static bool HasValidAdapter(const base::FilePath& adapter_version_path,

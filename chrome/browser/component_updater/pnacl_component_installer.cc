@@ -185,6 +185,7 @@ class PnaclComponentInstallerPolicy : public ComponentInstallerPolicy {
   std::string GetName() const override;
   update_client::InstallerAttributes GetInstallerAttributes() const override;
   std::vector<std::string> GetMimeTypes() const override;
+  bool IsUninstallable(const base::DictionaryValue& manifest) const override;
 
   DISALLOW_COPY_AND_ASSIGN(PnaclComponentInstallerPolicy);
 };
@@ -250,6 +251,11 @@ PnaclComponentInstallerPolicy::GetInstallerAttributes() const {
 
 std::vector<std::string> PnaclComponentInstallerPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
+}
+
+bool PnaclComponentInstallerPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
 }
 
 }  // namespace

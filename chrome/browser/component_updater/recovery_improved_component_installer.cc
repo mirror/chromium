@@ -83,6 +83,10 @@ std::vector<std::string> RecoveryImprovedInstallerPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
 }
 
+bool RecoveryImprovedInstallerPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
+}
 void RegisterRecoveryImprovedComponent(ComponentUpdateService* cus,
                                        PrefService* prefs) {
 #if defined(GOOGLE_CHROME_BUILD)

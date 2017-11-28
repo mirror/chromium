@@ -66,6 +66,7 @@ class CRLSetPolicy : public ComponentInstallerPolicy {
   std::string GetName() const override;
   update_client::InstallerAttributes GetInstallerAttributes() const override;
   std::vector<std::string> GetMimeTypes() const override;
+  bool IsUninstallable(const base::DictionaryValue& manifest) const override;
 
   DISALLOW_COPY_AND_ASSIGN(CRLSetPolicy);
 };
@@ -124,6 +125,11 @@ update_client::InstallerAttributes CRLSetPolicy::GetInstallerAttributes()
 
 std::vector<std::string> CRLSetPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
+}
+
+bool CRLSetPolicy::IsUninstallable(
+    const base::DictionaryValue& manifest) const {
+  return true;
 }
 
 }  // namespace

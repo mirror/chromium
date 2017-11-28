@@ -52,6 +52,7 @@ class OptimizationHintsComponentInstallerPolicy
   std::string GetName() const override;
   update_client::InstallerAttributes GetInstallerAttributes() const override;
   std::vector<std::string> GetMimeTypes() const override;
+  bool IsUninstallable(const base::DictionaryValue& manifest) const override;
 
   const base::Version ruleset_format_version_;
 

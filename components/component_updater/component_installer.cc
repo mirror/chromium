@@ -197,10 +197,22 @@ bool ComponentInstaller::GetInstalledFile(const std::string& file,
 
 bool ComponentInstaller::Uninstall() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  task_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(&ComponentInstaller::UninstallOnTaskRunner, this));
-  return true;
+  // Only try to delete any files that are in our user-level install path.
+  base::FilePath userInstallPath;
+  if (!PathService::Get(DIR_COMPONENT_USER, &userInstallPath))
+    return false;
+  if (!userInstallPath.IsParent(current_install_dir_))
+    return false;
+
+  auto manifest = update_client::ReadManifest(current_install_dir_);
+
+  if (installer_policy_->IsUninstallable(*manifest)) {
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&ComponentInstaller::UninstallOnTaskRunner, this));
+    return true;
+  } else
+    return false;
 }
 
 bool ComponentInstaller::FindPreinstallation(
@@ -348,13 +360,6 @@ void ComponentInstaller::StartRegistration(
 void ComponentInstaller::UninstallOnTaskRunner() {
   DCHECK(task_runner_.get());
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
-
-  // Only try to delete any files that are in our user-level install path.
-  base::FilePath userInstallPath;
-  if (!PathService::Get(DIR_COMPONENT_USER, &userInstallPath))
-    return;
-  if (!userInstallPath.IsParent(current_install_dir_))
-    return;
 
   const base::FilePath base_dir = current_install_dir_.DirName();
   base::FileEnumerator file_enumerator(base_dir, false,
