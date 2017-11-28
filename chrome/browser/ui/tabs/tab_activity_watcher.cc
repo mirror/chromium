@@ -8,6 +8,8 @@
 #include "chrome/browser/ui/tabs/tab_snapshot_logger_impl.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
@@ -28,7 +30,8 @@ constexpr base::TimeDelta kPerSourceLogTimeout =
 // per-WebContents data that TabActivityWatcher uses to log the tab.
 class TabActivityWatcher::WebContentsData
     : public content::WebContentsObserver,
-      public content::WebContentsUserData<WebContentsData> {
+      public content::WebContentsUserData<WebContentsData>,
+      public content::RenderWidgetHost::InputEventObserver {
  public:
   ~WebContentsData() override = default;
 
@@ -39,6 +42,10 @@ class TabActivityWatcher::WebContentsData
 
   ukm::SourceId ukm_source_id() const { return ukm_source_id_; }
 
+  const TabSnapshotLogger::TabSnapshot& tab_snapshot() const {
+    return tab_snapshot_;
+  }
+
   base::TimeTicks last_log_time_for_source() const {
     return last_log_time_for_source_;
   }
@@ -47,9 +54,18 @@ class TabActivityWatcher::WebContentsData
   friend class content::WebContentsUserData<WebContentsData>;
 
   explicit WebContentsData(content::WebContents* web_contents)
-      : WebContentsObserver(web_contents) {}
+      : WebContentsObserver(web_contents) {
+    tab_snapshot_.web_contents = web_contents;
+    web_contents->GetRenderViewHost()->GetWidget()->AddInputEventObserver(this);
+  }
 
   // content::WebContentsObserver:
+  void RenderViewHostChanged(content::RenderViewHost* old_host,
+                             content::RenderViewHost* new_host) override {
+    if (old_host != nullptr)
+      old_host->GetWidget()->RemoveInputEventObserver(this);
+    new_host->GetWidget()->AddInputEventObserver(this);
+  }
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override {
     if (!navigation_handle->HasCommitted() ||
@@ -68,9 +84,22 @@ class TabActivityWatcher::WebContentsData
 
     // Clear the per-SourceId last log time.
     last_log_time_for_source_ = base::TimeTicks();
+
+    // Reset the per-page data.
+    tab_snapshot_.page_snapshot = TabSnapshotLogger::PageSnapshot();
   }
   void WasHidden() override {
     TabActivityWatcher::GetInstance()->OnWasHidden(web_contents());
+  }
+
+  // content::RenderWidgetHost::InputEventObserver:
+  void OnInputEvent(const blink::WebInputEvent& event) override {
+    if (blink::WebInputEvent::IsMouseEventType(event.GetType()))
+      tab_snapshot_.page_snapshot.mouse_event_count++;
+    else if (blink::WebInputEvent::IsKeyboardEventType(event.GetType()))
+      tab_snapshot_.page_snapshot.key_event_count++;
+    else if (blink::WebInputEvent::IsTouchEventType(event.GetType()))
+      tab_snapshot_.page_snapshot.touch_event_count++;
   }
 
   // Updated when a navigation is finished.
@@ -78,6 +107,9 @@ class TabActivityWatcher::WebContentsData
 
   // Used to throttle event logging per SourceId.
   base::TimeTicks last_log_time_for_source_;
+
+  // Stores current stats for the tab.
+  TabSnapshotLogger::TabSnapshot tab_snapshot_;
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsData);
 };
@@ -135,7 +167,8 @@ void TabActivityWatcher::MaybeLogTab(content::WebContents* web_contents) {
   }
 
   ukm::SourceId ukm_source_id = web_contents_data->ukm_source_id();
-  tab_snapshot_logger_->LogBackgroundTab(ukm_source_id, web_contents);
+  tab_snapshot_logger_->LogBackgroundTab(ukm_source_id,
+                                         web_contents_data->tab_snapshot());
   web_contents_data->DidLog(now);
 }
 
