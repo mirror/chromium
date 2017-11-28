@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de51c2fc_31bd3f21",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T19:27:47Z",
+      "side": 1,
+      "message": "you already have nativeGetTab in this class...could we not just call that here (and remove the piping in C++)?",
+      "revId": "a09ef9a9691237996dd074516225e1b0b13d1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463a5fc1_1e7daa80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T19:27:47Z",
+      "side": 1,
+      "message": "Seems like we shouldn\u0027t need this.  I think these should be asserts.\n\nLooks like your test code doesn\u0027t need this.",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "a09ef9a9691237996dd074516225e1b0b13d1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3734337_0ebc9641",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T19:27:47Z",
+      "side": 1,
+      "message": "nit (applies elsewhere), if the comment doesn\u0027t fit on a single line, use this kind of formatting:\n\n/**\n * @return ..... blah ....\n *         ..... second line blah ...\n */",
+      "range": {
+        "startLine": 170,
+        "startChar": 9,
+        "endLine": 170,
+        "endChar": 15
+      },
+      "revId": "a09ef9a9691237996dd074516225e1b0b13d1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde07bb0_e951c3f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T19:27:47Z",
+      "side": 1,
+      "message": "naming nit, I would call this createTabObserver",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 30
+      },
+      "revId": "a09ef9a9691237996dd074516225e1b0b13d1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a6884c_c3461347",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T19:27:47Z",
+      "side": 1,
+      "message": "why not tab.isLoading()?",
+      "revId": "a09ef9a9691237996dd074516225e1b0b13d1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb15858_53dc141b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T19:27:47Z",
+      "side": 1,
+      "message": "I wonder if we could have a helper function:\n\nshowInfobarIfApplicable(Tab tab) {\n    if (!tab.isUserInteractable() || tab.isLoading()) return;\n    showSurveyInfoBar(tab, siteId);\n    tab.removeObserver(this);\n}\n\nThen both of these functions could just call into this.",
+      "range": {
+        "startLine": 189,
+        "startChar": 24,
+        "endLine": 189,
+        "endChar": 42
+      },
+      "revId": "a09ef9a9691237996dd074516225e1b0b13d1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56923ad_03b1c514",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyControllerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T19:27:47Z",
+      "side": 1,
+      "message": "this isn\u0027t needed with the next line (applies elsewhere).  No need to check null if the next line is an equality check.",
+      "range": {
+        "startLine": 151,
+        "startChar": 15,
+        "endLine": 151,
+        "endChar": 28
+      },
+      "revId": "a09ef9a9691237996dd074516225e1b0b13d1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab213f7a_7662e2c9",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyControllerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T19:27:47Z",
+      "side": 1,
+      "message": "Here and elsewhere in the file, let\u0027s not to times(1), but do any() instead.  These are performance critical and we don\u0027t want to have to update this file if some call site queries incognito multiple times.",
+      "revId": "a09ef9a9691237996dd074516225e1b0b13d1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042d7ec8_a219a2aa",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyControllerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-28T19:27:47Z",
+      "side": 1,
+      "message": "I would call this: getLastTabInfobarShown",
+      "revId": "a09ef9a9691237996dd074516225e1b0b13d1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
