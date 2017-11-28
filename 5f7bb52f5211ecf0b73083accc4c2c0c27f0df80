@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a4eb42f_0068fa61",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-video-keynav-space-vol.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T15:30:37Z",
+      "side": 1,
+      "message": "Realised when testing locally that this is wrap. Looks better in the log on one line :)",
+      "range": {
+        "startLine": 2,
+        "startChar": 68,
+        "endLine": 3,
+        "endChar": 5
+      },
+      "revId": "5f7bb52f5211ecf0b73083accc4c2c0c27f0df80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e925d02b_f1414b87",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-video-keynav-space-vol.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T15:30:37Z",
+      "side": 1,
+      "message": "When I tried locally, I first saw this test failing because I was clicking on the test link but that opens the test in Chrome and Chrome doesn\u0027t have `eventSender`. Instead, you should click on the line anywhere else and that shows the actual test output.\n\nSomething I often do when testing locally is to run the test with:\n`./out/desktop/content_shell --run-layout-test third_party/WebKit/LayoutTests/media/controls/controls-video-keynav-space-vol.html`",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "5f7bb52f5211ecf0b73083accc4c2c0c27f0df80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb06cd7_72c34e11",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-video-keynav-space-vol.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T15:30:37Z",
+      "side": 1,
+      "message": "After checking locally, I think you should replace all the `onfoo` with:\n```\nvideo.addEventListener(\u0027foo\u0027, t.step_func(() \u003d\u003e {\n  [...]\n}), { once: true });\n```\n\nThis will create stronger tests.",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "5f7bb52f5211ecf0b73083accc4c2c0c27f0df80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
