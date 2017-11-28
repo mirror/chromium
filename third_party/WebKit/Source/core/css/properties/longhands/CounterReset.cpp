@@ -4,7 +4,7 @@
 
 #include "core/css/properties/longhands/CounterReset.h"
 
-#include "core/css/properties/CSSPropertyCounterUtils.h"
+#include "core/css/properties/CSSParsingUtils.h"
 
 namespace blink {
 namespace CSSLonghand {
@@ -13,8 +13,8 @@ const CSSValue* CounterReset::ParseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext&,
     const CSSParserLocalContext&) const {
-  return CSSPropertyCounterUtils::ConsumeCounter(
-      range, CSSPropertyCounterUtils::kResetDefaultValue);
+  return CSSParsingUtils::ConsumeCounter(range,
+                                         CSSParsingUtils::kResetDefaultValue);
 }
 
 }  // namespace CSSLonghand
