@@ -152,7 +152,7 @@ class TraceableCounter {
     return value_;
   }
 
-  void Trace() {
+  void Trace() const {
     TRACE_COUNTER_ID1(category, name_, object_, converter_(value_));
   }
 
