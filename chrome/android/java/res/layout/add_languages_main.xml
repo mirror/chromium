@@ -3,9 +3,9 @@
      Use of this source code is governed by a BSD-style license that can be
      found in the LICENSE file. -->
 
-<android.support.v7.widget.RecyclerView
+<org.chromium.chrome.browser.widget.selection.SelectableListLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/language_list"
+    android:id="@+id/selectable_list"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" />
+    android:layout_height="match_parent"
+    android:background="@color/modern_primary_color" />
