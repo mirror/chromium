@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26e01cf0_198235c3",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-28T00:14:57Z",
+      "side": 1,
+      "message": "This is per SubmitCompositorFrame but usually a no-op because there are no activation dependencies. SubmitCompositorFrame happens once per client per vblank.",
+      "parentUuid": "cfdada28_6b84617b",
+      "revId": "608b832c6a7065c45cb0dda18c9452c545fa22b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cdbf498_c081c1ec",
         "filename": "components/viz/service/surfaces/surface.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T23:39:43Z",
       "side": 1,
       "message": "Can this end up recursing?",
+      "revId": "608b832c6a7065c45cb0dda18c9452c545fa22b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee45f50d_e101e65a",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-28T00:14:57Z",
+      "side": 1,
+      "message": "No, this is just for immediate dependencies.",
+      "parentUuid": "8cdbf498_c081c1ec",
       "revId": "608b832c6a7065c45cb0dda18c9452c545fa22b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
