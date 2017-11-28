@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ceea368_bd15a9f0",
+        "filename": "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T21:00:17Z",
+      "side": 1,
+      "message": "What\u0027s the return value? (it\u0027s guessable from context, but we should comment on that explicitly.)",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 42
+      },
+      "revId": "590f56606ab42a8b5d80dd92b514bf84fbd26616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
