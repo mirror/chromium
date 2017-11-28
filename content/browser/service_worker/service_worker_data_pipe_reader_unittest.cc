@@ -15,6 +15,7 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/base/io_buffer.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
@@ -29,23 +30,24 @@ class MockServiceWorkerURLRequestJob : public ServiceWorkerURLRequestJob {
  public:
   explicit MockServiceWorkerURLRequestJob(
       ServiceWorkerURLRequestJob::Delegate* delegate)
-      : ServiceWorkerURLRequestJob(nullptr,
-                                   nullptr,
-                                   "",
-                                   nullptr,
-                                   nullptr,
-                                   network::mojom::FetchRequestMode::kNoCORS,
-                                   network::mojom::FetchCredentialsMode::kOmit,
-                                   FetchRedirectMode::FOLLOW_MODE,
-                                   std::string() /* integrity */,
-                                   false /* keepalive */,
-                                   RESOURCE_TYPE_MAIN_FRAME,
-                                   REQUEST_CONTEXT_TYPE_HYPERLINK,
-                                   REQUEST_CONTEXT_FRAME_TYPE_TOP_LEVEL,
-                                   scoped_refptr<ResourceRequestBody>(),
-                                   ServiceWorkerFetchType::FETCH,
-                                   base::Optional<base::TimeDelta>(),
-                                   delegate),
+      : ServiceWorkerURLRequestJob(
+            nullptr,
+            nullptr,
+            "",
+            nullptr,
+            nullptr,
+            network::mojom::FetchRequestMode::kNoCORS,
+            network::mojom::FetchCredentialsMode::kOmit,
+            FetchRedirectMode::FOLLOW_MODE,
+            std::string() /* integrity */,
+            false /* keepalive */,
+            RESOURCE_TYPE_MAIN_FRAME,
+            REQUEST_CONTEXT_TYPE_HYPERLINK,
+            blink::mojom::RequestContextFrameType::kTopLevel,
+            scoped_refptr<ResourceRequestBody>(),
+            ServiceWorkerFetchType::FETCH,
+            base::Optional<base::TimeDelta>(),
+            delegate),
         is_response_started_(false) {}
 
   void OnResponseStarted() override { is_response_started_ = true; }

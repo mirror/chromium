@@ -25,7 +25,6 @@
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/common/service_worker/service_worker_types.h"
-#include "content/public/common/request_context_frame_type.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/service_worker_modes.h"
@@ -36,6 +35,7 @@
 #include "net/url_request/url_request_status.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "storage/common/blob_storage/blob_storage_constants.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -74,7 +74,7 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
       bool keepalive,
       ResourceType resource_type,
       RequestContextType request_context_type,
-      RequestContextFrameType frame_type,
+      blink::mojom::RequestContextFrameType frame_type,
       scoped_refptr<ResourceRequestBody> body,
       ServiceWorkerFetchType fetch_type,
       const base::Optional<base::TimeDelta>& timeout,
@@ -307,7 +307,7 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
   const bool keepalive_;
   const ResourceType resource_type_;
   RequestContextType request_context_type_;
-  RequestContextFrameType frame_type_;
+  blink::mojom::RequestContextFrameType frame_type_;
   bool fall_back_required_;
   // ResourceRequestBody has a collection of BlobDataHandles attached to it
   // using the userdata mechanism. So we have to keep it not to free the blobs.

@@ -329,7 +329,7 @@ ServiceWorkerURLRequestJob::ServiceWorkerURLRequestJob(
     bool keepalive,
     ResourceType resource_type,
     RequestContextType request_context_type,
-    RequestContextFrameType frame_type,
+    blink::mojom::RequestContextFrameType frame_type,
     scoped_refptr<ResourceRequestBody> body,
     ServiceWorkerFetchType fetch_type,
     const base::Optional<base::TimeDelta>& timeout,

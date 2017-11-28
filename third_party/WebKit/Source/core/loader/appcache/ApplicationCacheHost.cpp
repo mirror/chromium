@@ -56,6 +56,7 @@
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebURLResponse.h"
 #include "public/platform/WebVector.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom-blink.h"
 
 namespace blink {
 
@@ -79,8 +80,8 @@ void ApplicationCacheHost::WillStartLoading(ResourceRequest& request) {
   if (!IsApplicationCacheEnabled())
     return;
 
-  if (request.GetFrameType() == WebURLRequest::kFrameTypeTopLevel ||
-      request.GetFrameType() == WebURLRequest::kFrameTypeNested)
+  if (request.GetFrameType() == mojom::RequestContextFrameType::kTopLevel ||
+      request.GetFrameType() == mojom::RequestContextFrameType::kNested)
     WillStartLoadingMainResource(request.Url(), request.HttpMethod());
 
   if (!host_)

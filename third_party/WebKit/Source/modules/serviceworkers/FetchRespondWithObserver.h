@@ -28,7 +28,7 @@ class MODULES_EXPORT FetchRespondWithObserver : public RespondWithObserver {
                                           const KURL& request_url,
                                           network::mojom::FetchRequestMode,
                                           WebURLRequest::FetchRedirectMode,
-                                          WebURLRequest::FrameType,
+                                          mojom::RequestContextFrameType,
                                           WebURLRequest::RequestContext,
                                           WaitUntilObserver*);
 
@@ -44,7 +44,7 @@ class MODULES_EXPORT FetchRespondWithObserver : public RespondWithObserver {
                            const KURL& request_url,
                            network::mojom::FetchRequestMode,
                            WebURLRequest::FetchRedirectMode,
-                           WebURLRequest::FrameType,
+                           mojom::RequestContextFrameType,
                            WebURLRequest::RequestContext,
                            WaitUntilObserver*);
 
@@ -52,7 +52,7 @@ class MODULES_EXPORT FetchRespondWithObserver : public RespondWithObserver {
   const KURL request_url_;
   const network::mojom::FetchRequestMode request_mode_;
   const WebURLRequest::FetchRedirectMode redirect_mode_;
-  const WebURLRequest::FrameType frame_type_;
+  const mojom::RequestContextFrameType frame_type_;
   const WebURLRequest::RequestContext request_context_;
 };
 

@@ -40,13 +40,14 @@
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/Time.h"
 #include "platform/wtf/text/TextEncoding.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom-blink.h"
 
 namespace blink {
 
 CSSStyleSheetResource* CSSStyleSheetResource::Fetch(FetchParameters& params,
                                                     ResourceFetcher* fetcher) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
-            WebURLRequest::kFrameTypeNone);
+            mojom::RequestContextFrameType::kNone);
   params.SetRequestContext(WebURLRequest::kRequestContextStyle);
   CSSStyleSheetResource* resource = ToCSSStyleSheetResource(
       fetcher->RequestResource(params, CSSStyleSheetResourceFactory()));

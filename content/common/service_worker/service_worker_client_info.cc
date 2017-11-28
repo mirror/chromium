@@ -6,6 +6,7 @@
 
 #include "base/logging.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 
@@ -16,7 +17,7 @@ ServiceWorkerClientInfo::ServiceWorkerClientInfo()
                               blink::mojom::PageVisibilityState::kLast,
                               false,
                               GURL(),
-                              REQUEST_CONTEXT_FRAME_TYPE_LAST,
+                              blink::mojom::RequestContextFrameType::kTopLevel,
                               base::TimeTicks(),
                               base::TimeTicks(),
                               blink::mojom::ServiceWorkerClientType::kLast) {}
@@ -26,7 +27,7 @@ ServiceWorkerClientInfo::ServiceWorkerClientInfo(
     blink::mojom::PageVisibilityState page_visibility_state,
     bool is_focused,
     const GURL& url,
-    RequestContextFrameType frame_type,
+    blink::mojom::RequestContextFrameType frame_type,
     base::TimeTicks last_focus_time,
     base::TimeTicks create_time,
     blink::mojom::ServiceWorkerClientType client_type)
@@ -45,7 +46,7 @@ ServiceWorkerClientInfo::ServiceWorkerClientInfo(
 bool ServiceWorkerClientInfo::IsEmpty() const {
   return page_visibility_state == blink::mojom::PageVisibilityState::kLast &&
          is_focused == false && url.is_empty() &&
-         frame_type == REQUEST_CONTEXT_FRAME_TYPE_LAST &&
+         frame_type == blink::mojom::RequestContextFrameType::kTopLevel &&
          client_type == blink::mojom::ServiceWorkerClientType::kLast;
 }
 

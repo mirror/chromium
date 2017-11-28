@@ -43,6 +43,7 @@
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 #include "services/network/public/interfaces/cors.mojom-blink.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom-blink.h"
 
 namespace blink {
 
@@ -251,8 +252,8 @@ class PLATFORM_EXPORT ResourceRequest final {
     request_context_ = context;
   }
 
-  WebURLRequest::FrameType GetFrameType() const { return frame_type_; }
-  void SetFrameType(WebURLRequest::FrameType frame_type) {
+  mojom::RequestContextFrameType GetFrameType() const { return frame_type_; }
+  void SetFrameType(mojom::RequestContextFrameType frame_type) {
     frame_type_ = frame_type;
   }
 
@@ -373,7 +374,7 @@ class PLATFORM_EXPORT ResourceRequest final {
   WebURLRequest::PreviewsState previews_state_;
   scoped_refptr<ExtraData> extra_data_;
   WebURLRequest::RequestContext request_context_;
-  WebURLRequest::FrameType frame_type_;
+  mojom::RequestContextFrameType frame_type_;
   network::mojom::FetchRequestMode fetch_request_mode_;
   network::mojom::FetchCredentialsMode fetch_credentials_mode_;
   WebURLRequest::FetchRedirectMode fetch_redirect_mode_;
@@ -434,7 +435,7 @@ struct CrossThreadResourceRequestData {
   int requestor_process_id_;
   int app_cache_host_id_;
   WebURLRequest::RequestContext request_context_;
-  WebURLRequest::FrameType frame_type_;
+  mojom::RequestContextFrameType frame_type_;
   network::mojom::FetchRequestMode fetch_request_mode_;
   network::mojom::FetchCredentialsMode fetch_credentials_mode_;
   WebURLRequest::FetchRedirectMode fetch_redirect_mode_;

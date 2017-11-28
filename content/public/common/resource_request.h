@@ -12,7 +12,6 @@
 #include "base/optional.h"
 #include "content/common/content_export.h"
 #include "content/public/common/previews_state.h"
-#include "content/public/common/request_context_frame_type.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/resource_request_body.h"
 #include "content/public/common/resource_type.h"
@@ -20,6 +19,7 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_request_headers.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 #include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
@@ -136,8 +136,8 @@ struct CONTENT_EXPORT ResourceRequest {
       blink::WebMixedContentContextType::kBlockable;
 
   // The frame type passed to the ServiceWorker.
-  RequestContextFrameType fetch_frame_type =
-      REQUEST_CONTEXT_FRAME_TYPE_AUXILIARY;
+  blink::mojom::RequestContextFrameType fetch_frame_type =
+      blink::mojom::RequestContextFrameType::kAuxiliary;
 
   // Optional resource request body (may be null).
   scoped_refptr<ResourceRequestBody> request_body;

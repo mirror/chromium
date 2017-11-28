@@ -42,7 +42,7 @@ TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
   original.SetRequestorProcessID(40);
   original.SetAppCacheHostID(50);
   original.SetRequestContext(WebURLRequest::kRequestContextAudio);
-  original.SetFrameType(WebURLRequest::kFrameTypeNested);
+  original.SetFrameType(mojom::RequestContextFrameType::kNested);
   original.SetHTTPReferrer(
       Referrer("http://www.example.com/referrer.htm", kReferrerPolicyDefault));
 
@@ -74,7 +74,7 @@ TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
   EXPECT_EQ(40, original.RequestorProcessID());
   EXPECT_EQ(50, original.AppCacheHostID());
   EXPECT_EQ(WebURLRequest::kRequestContextAudio, original.GetRequestContext());
-  EXPECT_EQ(WebURLRequest::kFrameTypeNested, original.GetFrameType());
+  EXPECT_EQ(mojom::RequestContextFrameType::kNested, original.GetFrameType());
   EXPECT_STREQ("http://www.example.com/referrer.htm",
                original.HttpReferrer().Utf8().data());
   EXPECT_EQ(kReferrerPolicyDefault, original.GetReferrerPolicy());
@@ -108,7 +108,7 @@ TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
   EXPECT_EQ(40, copy1.RequestorProcessID());
   EXPECT_EQ(50, copy1.AppCacheHostID());
   EXPECT_EQ(WebURLRequest::kRequestContextAudio, copy1.GetRequestContext());
-  EXPECT_EQ(WebURLRequest::kFrameTypeNested, copy1.GetFrameType());
+  EXPECT_EQ(mojom::RequestContextFrameType::kNested, copy1.GetFrameType());
   EXPECT_STREQ("http://www.example.com/referrer.htm",
                copy1.HttpReferrer().Utf8().data());
   EXPECT_EQ(kReferrerPolicyDefault, copy1.GetReferrerPolicy());

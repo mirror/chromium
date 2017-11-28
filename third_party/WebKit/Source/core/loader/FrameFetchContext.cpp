@@ -91,6 +91,7 @@
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "third_party/WebKit/common/device_memory/approximated_device_memory.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom-blink.h"
 
 namespace blink {
 
@@ -489,7 +490,7 @@ void FrameFetchContext::DispatchWillSendRequest(
 void FrameFetchContext::DispatchDidReceiveResponse(
     unsigned long identifier,
     const ResourceResponse& response,
-    WebURLRequest::FrameType frame_type,
+    mojom::RequestContextFrameType frame_type,
     WebURLRequest::RequestContext request_context,
     Resource* resource,
     ResourceResponseType response_type) {
@@ -887,7 +888,7 @@ void FrameFetchContext::SetFirstPartyCookieAndRequestorOrigin(
   // requests). This value will be updated during redirects, consistent with
   // https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site-00#section-2.1.1?
   if (request.SiteForCookies().IsNull()) {
-    if (request.GetFrameType() == WebURLRequest::kFrameTypeTopLevel) {
+    if (request.GetFrameType() == mojom::RequestContextFrameType::kTopLevel) {
       request.SetSiteForCookies(request.Url());
     } else {
       request.SetSiteForCookies(GetSiteForCookies());
@@ -898,7 +899,7 @@ void FrameFetchContext::SetFirstPartyCookieAndRequestorOrigin(
   // directly.  Top-level frame types are taken care of in 'FrameLoadRequest()'.
   // Auxiliary frame types in 'CreateWindow()' and 'FrameLoader::Load'.
   if (!request.RequestorOrigin()) {
-    if (request.GetFrameType() == WebURLRequest::kFrameTypeNone) {
+    if (request.GetFrameType() == mojom::RequestContextFrameType::kNone) {
       request.SetRequestorOrigin(GetRequestorOrigin());
     } else {
       // Set the requestor origin to the same origin as the frame's document
@@ -991,7 +992,7 @@ void FrameFetchContext::CountDeprecation(WebFeature feature) const {
 
 bool FrameFetchContext::ShouldBlockFetchByMixedContentCheck(
     WebURLRequest::RequestContext request_context,
-    WebURLRequest::FrameType frame_type,
+    mojom::RequestContextFrameType frame_type,
     ResourceRequest::RedirectStatus redirect_status,
     const KURL& url,
     SecurityViolationReportingPolicy reporting_policy) const {

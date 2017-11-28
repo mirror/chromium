@@ -6,6 +6,7 @@
 
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "third_party/WebKit/common/fetch/request_context_frame_type.mojom-blink.h"
 
 namespace blink {
 
@@ -14,7 +15,7 @@ Resource* LinkFetchResource::Fetch(Resource::Type type,
                                    ResourceFetcher* fetcher) {
   DCHECK_EQ(type, kLinkPrefetch);
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
-            WebURLRequest::kFrameTypeNone);
+            mojom::RequestContextFrameType::kNone);
   return fetcher->RequestResource(params, LinkResourceFactory(type));
 }
 

@@ -155,7 +155,7 @@ void WorkerFetchContext::CountDeprecation(WebFeature feature) const {
 
 bool WorkerFetchContext::ShouldBlockFetchByMixedContentCheck(
     WebURLRequest::RequestContext request_context,
-    WebURLRequest::FrameType frame_type,
+    mojom::RequestContextFrameType frame_type,
     ResourceRequest::RedirectStatus redirect_status,
     const KURL& url,
     SecurityViolationReportingPolicy reporting_policy) const {
@@ -276,7 +276,7 @@ void WorkerFetchContext::DispatchWillSendRequest(
 void WorkerFetchContext::DispatchDidReceiveResponse(
     unsigned long identifier,
     const ResourceResponse& response,
-    WebURLRequest::FrameType frame_type,
+    mojom::RequestContextFrameType frame_type,
     WebURLRequest::RequestContext request_context,
     Resource* resource,
     ResourceResponseType) {
