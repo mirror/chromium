@@ -197,7 +197,7 @@ JobScheduler::JobScheduler(
     queue_[i].reset(new JobQueue(kMaxJobCount[i], NUM_CONTEXT_TYPES,
                                  kMaxBatchCount, kMaxBatchSize));
 
-  net::NetworkChangeNotifier::AddConnectionTypeObserver(this);
+  net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
 }
 
 JobScheduler::~JobScheduler() {
@@ -208,7 +208,7 @@ JobScheduler::~JobScheduler() {
     num_queued_jobs += queue_[i]->GetNumberOfJobs();
   DCHECK_EQ(num_queued_jobs, job_map_.size());
 
-  net::NetworkChangeNotifier::RemoveConnectionTypeObserver(this);
+  net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
 }
 
 std::vector<JobInfo> JobScheduler::GetJobInfoList() {
@@ -1145,13 +1145,21 @@ void JobScheduler::UpdateProgress(JobID job_id,
   NotifyJobUpdated(job_entry->job_info);
 }
 
-void JobScheduler::OnConnectionTypeChanged(
+void JobScheduler::OnNetworkChanged(
     net::NetworkChangeNotifier::ConnectionType type) {
+  // When network goes online, OnNetworkChanged is called
+  // with CONNECIONT_NONE signal immediately prior to all online signals.
+  // This statement prevents the device from terminating the drive jobs
+  // in the above situation.
+  if (type == net::NetworkChangeNotifier::CONNECTION_NONE &&
+      !net::NetworkChangeNotifier::IsOffline())
+    return;
+
   DCHECK(thread_checker_.CalledOnValidThread());
 
   // Resume the job loop.
-  // Note that we don't need to check the network connection status as it will
-  // be checked in GetCurrentAcceptedPriority().
+  // The network connection status will be checked in
+  // GetCurrentAcceptedPriority() after Observers perform constructive action.
   for (int i = METADATA_QUEUE; i < NUM_QUEUES; ++i)
     DoJobLoop(static_cast<QueueType>(i));
 }
