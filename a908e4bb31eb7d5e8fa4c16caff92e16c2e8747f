@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fd56da0_b85113c3",
+        "filename": "chrome/app/theme/default_200_percent/common/turn_on_sync_illustration.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-28T15:22:21Z",
+      "side": 1,
+      "message": "Trent: We do not yet have the final asset (this is just a placeholder that UX provided). Is this acceptable to add this placeholder until we get the asset, or should we simply add some empty padding in the menu instead of this PNG file?",
+      "revId": "a908e4bb31eb7d5e8fa4c16caff92e16c2e8747f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913e94be_01281d3e",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-28T15:22:21Z",
+      "side": 1,
+      "message": "The menu width for pre-DICE should not change. To avoid this, we should have 2 constants here and decide on what width to use in the constructor. I suggest adding a field name menu_width_ that is initialized in the constructor.",
+      "range": {
+        "startLine": 104,
+        "startChar": 10,
+        "endLine": 104,
+        "endChar": 26
+      },
+      "revId": "a908e4bb31eb7d5e8fa4c16caff92e16c2e8747f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e260fe9_d81d367b",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-28T15:22:21Z",
+      "side": 1,
+      "message": "I think there will be a section for the DICE enabled case. Let\u0027s make a big if to capture all of DICE. Something like:\nif  (signin::IsDiceEnabledForProfile(browser_-\u003eprofile()-\u003eGetPrefs()))\n  return CreateDiceCurrentProfileView(...);",
+      "range": {
+        "startLine": 836,
+        "startChar": 20,
+        "endLine": 836,
+        "endChar": 0
+      },
+      "revId": "a908e4bb31eb7d5e8fa4c16caff92e16c2e8747f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6fc11f_15d51efa",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-28T15:22:21Z",
+      "side": 1,
+      "message": "Add a blank line.",
+      "range": {
+        "startLine": 839,
+        "startChar": 11,
+        "endLine": 839,
+        "endChar": 35
+      },
+      "revId": "a908e4bb31eb7d5e8fa4c16caff92e16c2e8747f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
