@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb1bda6d_24666690",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-28T22:02:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f349dda4_a947e9ec",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "7ace215f56f63d9644b276688835de8d9259f2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67d401d5_a8b39f2c",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "7ace215f56f63d9644b276688835de8d9259f2aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57bcbd5_2da2fd15",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-28T22:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67d401d5_a8b39f2c",
+      "revId": "7ace215f56f63d9644b276688835de8d9259f2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
