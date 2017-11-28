@@ -51,6 +51,10 @@ class ChromeCleanupHandler
   // and retrieves the current cleanup state.
   void HandleRegisterChromeCleanerObserver(const base::ListValue* args);
 
+  // Callback for the "startScanning" message to start scanning the user's
+  // system to detect unwanted software.
+  void HandleStartScanning(const base::ListValue* args);
+
   // Callback for the "restartComputer" message to finalize the cleanup with a
   // system restart.
   void HandleRestartComputer(const base::ListValue* args);
