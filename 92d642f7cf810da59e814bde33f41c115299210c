@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae899fd9_db2fd935",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T18:21:46Z",
+      "side": 1,
+      "message": "s/metrics.xml/histograms.xml",
+      "parentUuid": "199df2fe_7047d7c9",
+      "revId": "92d642f7cf810da59e814bde33f41c115299210c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6057e15b_c7428b54",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 2
