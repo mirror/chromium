@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "63555b62_cc226bcf",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T22:36:13Z",
+      "side": 1,
+      "message": "In non-viz renderer\u0027s do it right, thanks for the poke I\u0027ll write a patch for viz separately.\n\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/render_process_host_impl.cc?rcl\u003d41f6d9bb9df60f3e4b231dabe099a81a041e34f8\u0026l\u003d2745\n\nIn non-viz it checks the ImageTransportFactory. With viz that\u0027ll be this class, so it\u0027ll work as well, since this class checks the command line flags and sets that bool, the Renderer process will get a disable-gpu-compositing flag which it looks for to avoid trying to go use gpu.",
+      "parentUuid": "d605d9aa_33087d7d",
+      "revId": "6981f7546b1756dcd37fd6dac3a61d88be86ca83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fdeae94_0a4ffe61",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 2
