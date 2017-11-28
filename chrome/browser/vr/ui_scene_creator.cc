@@ -237,7 +237,8 @@ void UiSceneCreator::Create2dBrowsingSubtreeRoots() {
           [](UiElement* e, const ModalPromptType& t) {
             if (t == kModalPromptTypeExitVRForSiteInfo) {
               e->SetVisibleImmediately(false);
-            } else if (t == kModalPromptTypeExitVRForAudioPermission) {
+            } else if (t ==
+                       kModalPromptTypeExitVRForVoiceInputAudioPermission) {
               e->SetOpacity(kModalPromptFadeOpacity);
             } else {
               e->SetVisible(true);
@@ -1227,10 +1228,11 @@ void UiSceneCreator::CreateAudioPermissionPrompt() {
   backplane->set_event_handlers(event_handlers);
   backplane->SetVisible(false);
   backplane->SetTransitionedProperties({OPACITY});
-  backplane->AddBinding(VR_BIND_FUNC(
-      bool, Model, model_,
-      active_modal_prompt_type == kModalPromptTypeExitVRForAudioPermission,
-      UiElement, backplane.get(), SetVisible));
+  backplane->AddBinding(
+      VR_BIND_FUNC(bool, Model, model_,
+                   active_modal_prompt_type ==
+                       kModalPromptTypeExitVRForVoiceInputAudioPermission,
+                   UiElement, backplane.get(), SetVisible));
 
   std::unique_ptr<Shadow> shadow = base::MakeUnique<Shadow>();
   shadow->set_draw_phase(kPhaseForeground);
@@ -1243,11 +1245,11 @@ void UiSceneCreator::CreateAudioPermissionPrompt() {
           base::Bind(&UiBrowserInterface::OnExitVrPromptResult,
                      base::Unretained(browser_),
                      ExitVrPromptChoice::CHOICE_EXIT,
-                     UiUnsupportedMode::kAndroidPermissionNeeded),
+                     UiUnsupportedMode::kVoiceInputNeedsAndroidPermission),
           base::Bind(&UiBrowserInterface::OnExitVrPromptResult,
                      base::Unretained(browser_),
                      ExitVrPromptChoice::CHOICE_STAY,
-                     UiUnsupportedMode::kAndroidPermissionNeeded));
+                     UiUnsupportedMode::kVoiceInputNeedsAndroidPermission));
   prompt->set_name(kAudioPermissionPrompt);
   prompt->set_draw_phase(kPhaseForeground);
   prompt->SetSize(kAudioPermissionPromptWidth, kAudioPermissionPromptHeight);

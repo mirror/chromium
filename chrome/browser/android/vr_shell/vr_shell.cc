@@ -678,7 +678,7 @@ void VrShell::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
       Java_VrShellImpl_onUnhandledPageInfo(env, j_vr_shell_);
       return;
     }
-    case vr::UiUnsupportedMode::kAndroidPermissionNeeded: {
+    case vr::UiUnsupportedMode::kVoiceInputNeedsAndroidPermission: {
       JNIEnv* env = base::android::AttachCurrentThread();
       Java_VrShellImpl_onUnhandledPermissionPrompt(env, j_vr_shell_);
       return;
@@ -706,14 +706,14 @@ void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
       break;
   }
 
-  if (reason == vr::UiUnsupportedMode::kAndroidPermissionNeeded) {
+  if (reason == vr::UiUnsupportedMode::kVoiceInputNeedsAndroidPermission) {
     // Note that we already measure the number of times user exit VR because of
     // audio permission through VR.Shell.EncounteredUnsupportedMode histogram.
     // The reason we introduce this new histogram is to measure how likely user
     // chose to not give audio permission through the reported true and false.
     // Its purpose is different from EncounteredUnsupportedMode so we added
     // this new histogram instead of plumbing the information into existing one.
-    UMA_HISTOGRAM_BOOLEAN("VR.Shell.AudioPermission.ExitVRChoice",
+    UMA_HISTOGRAM_BOOLEAN("VR.VoiceInputAudioPermission.ExitVRChoice",
                           choice == vr::ExitVrPromptChoice::CHOICE_EXIT);
   }
 
@@ -759,7 +759,7 @@ void VrShell::SetVoiceSearchActive(bool active) {
     return;
 
   if (!HasAudioPermission()) {
-    OnUnsupportedMode(vr::UiUnsupportedMode::kAndroidPermissionNeeded);
+    OnUnsupportedMode(vr::UiUnsupportedMode::kVoiceInputNeedsAndroidPermission);
     return;
   }
 
