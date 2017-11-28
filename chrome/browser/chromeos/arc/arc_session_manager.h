@@ -308,9 +308,9 @@ class ArcSessionManager : public ArcSessionRunner::Observer,
   void OnBackgroundAndroidManagementChecked(
       policy::AndroidManagementClient::Result result);
 
-  // Requests to starts ARC instance. Also, update the internal state to
-  // ACTIVE.
-  void StartArc();
+  // Requests to start ARC instance. Also, updates the internal state to ACTIVE.
+  // If starting ARC fails then false is returned and state is set to STOPPED.
+  bool StartArc();
 
   // Requests to stop ARC instnace. This resets two persistent flags:
   // kArcSignedIn and kArcTermsAccepted, so that, in next enabling,

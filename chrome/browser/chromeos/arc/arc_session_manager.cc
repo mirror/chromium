@@ -610,7 +610,8 @@ bool ArcSessionManager::RequestEnableImpl() {
   }
 
   if (start_arc_directly) {
-    StartArc();
+    if (!StartArc())
+      return false;
     // When in ARC kiosk mode, there's no Chrome tabs to restore. Remove the
     // cgroups now.
     if (IsArcKioskMode())
@@ -887,7 +888,7 @@ void ArcSessionManager::OnBackgroundAndroidManagementChecked(
   }
 }
 
-void ArcSessionManager::StartArc() {
+bool ArcSessionManager::StartArc() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(state_ == State::STOPPED ||
          state_ == State::CHECKING_ANDROID_MANAGEMENT)
@@ -900,6 +901,9 @@ void ArcSessionManager::StartArc() {
   arc_start_time_ = base::Time::Now();
   provisioning_reported_ = false;
   arc_session_runner_->RequestStart(ArcInstanceMode::FULL_INSTANCE);
+
+  // RequestStart may fail inline.
+  return state_ == State::ACTIVE;
 }
 
 void ArcSessionManager::StopArc() {
