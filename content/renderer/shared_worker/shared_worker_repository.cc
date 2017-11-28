@@ -7,7 +7,9 @@
 #include "content/common/view_messages.h"
 #include "content/renderer/render_frame_impl.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerConnectListener.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -21,6 +23,7 @@ void SharedWorkerRepository::Connect(
     const blink::WebURL& url,
     const blink::WebString& name,
     DocumentID document_id,
+    const blink::WebSecurityOrigin& security_origin,
     const blink::WebString& content_security_policy,
     blink::WebContentSecurityPolicyType content_security_policy_type,
     blink::WebAddressSpace creation_address_space,
@@ -32,8 +35,9 @@ void SharedWorkerRepository::Connect(
     interface_provider_->GetInterface(mojo::MakeRequest(&connector_));
 
   mojom::SharedWorkerInfoPtr info(mojom::SharedWorkerInfo::New(
-      url, name.Utf8(), content_security_policy.Utf8(),
-      content_security_policy_type, creation_address_space));
+      url, name.Utf8(), url::Origin(security_origin),
+      content_security_policy.Utf8(), content_security_policy_type,
+      creation_address_space));
 
   mojom::SharedWorkerClientPtr client;
   AddWorker(document_id,
