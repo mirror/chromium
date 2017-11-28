@@ -90,6 +90,10 @@ class ASH_EXPORT PowerButtonController
     return tablet_controller_.get();
   }
 
+  PowerButtonDisplayController* display_controller_for_test() {
+    return display_controller_.get();
+  }
+
   void set_power_button_type_for_test(ButtonType button_type) {
     button_type_ = button_type;
   }
