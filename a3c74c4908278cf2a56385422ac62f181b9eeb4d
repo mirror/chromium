@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50a01eb3_9ed2de0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-28T21:17:19Z",
+      "side": 1,
+      "message": "URLs are easier for folks to use vs change IDs (or at least in addition) crrev.com/f55bc8681df27414e459c972affd317944156178",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 7
+      },
+      "revId": "a3c74c4908278cf2a56385422ac62f181b9eeb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

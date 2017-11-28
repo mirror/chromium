@@ -16,6 +16,24 @@
       "revId": "308834fdb273202288d12f9a8aa8fd4bb91ec67b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b32ae1_e2ab7715",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_interactive_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-28T21:17:19Z",
+      "side": 1,
+      "message": "Fullscreen browser tests were running between 99.99% and 99.999% success rates.  After a period of time trying to diagnose issues on multiple platforms I decided to favor OS level abstraction and unit tests, and as needed manual testing for larger changes.  The root cause wasn\u0027t determined.",
+      "parentUuid": "d205f84c_c2424b19",
+      "revId": "308834fdb273202288d12f9a8aa8fd4bb91ec67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
