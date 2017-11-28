@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4841ade7_115a3dc9",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-28T22:16:56Z",
+      "side": 1,
+      "message": "Rather than cast GetResource(), just call ResourceLoader directly. This is the only use of RawResource::SetDefersLoading(), so remove that, too.",
+      "revId": "f72dec867d3cec1d7a3be3ded45a4795198c3685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

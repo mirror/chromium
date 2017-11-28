@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1398ba66_d9200026",
+        "filename": "third_party/WebKit/Source/core/svg/SVGElementProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-28T22:16:56Z",
+      "side": 1,
+      "message": "Instead of SVGResourceClients being clients directly, have this SVGElementProxy be the single ResourceClient and have it notified the associated SVGResourceClients.",
+      "revId": "f0a376128341b42b92d7a74373769b4d758280e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
