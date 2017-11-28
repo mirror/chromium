@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1108bbdb_ba3f7e5d",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T22:58:19Z",
+      "side": 1,
+      "message": "This is fine for now I\u0027m sure.",
+      "parentUuid": "a7d34e83_fefac986",
+      "revId": "7db110100b1176efdfba0e2fea49d3716f960902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d478b133_c18a14e4",
         "filename": "services/ui/ws/display_manager.h",
         "patchSetId": 4
@@ -195,6 +213,24 @@
       "side": 1,
       "message": "Yeah, unified may need to pass the sub-bounds of the unified display that this display would be mirroring here. I\u0027m not sure exactly how that will affect testing, I haven\u0027t looked closely enough there. What tests are you thinking that will need to be rewritten?",
       "parentUuid": "2858a4f4_2a362d6e",
+      "revId": "7db110100b1176efdfba0e2fea49d3716f960902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e310cb_e2acd710",
+        "filename": "services/ui/ws/platform_display.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T22:58:19Z",
+      "side": 1,
+      "message": "The WS display tests use a totally different system for setting up displays than what is used for real. So probably all of the tests need to be rewritten. :)",
+      "parentUuid": "8e2b6e00_b0f74763",
       "revId": "7db110100b1176efdfba0e2fea49d3716f960902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

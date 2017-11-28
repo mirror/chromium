@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cae4fc0a_1896c1aa",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T22:58:19Z",
+      "side": 1,
+      "message": "base::flat_set",
+      "revId": "9cd33e1b4457ae8b9c4dc51ac0fdd81bbed6e4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ad329b_d52e294b",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T22:58:19Z",
+      "side": 1,
+      "message": "base::flat_set",
+      "revId": "9cd33e1b4457ae8b9c4dc51ac0fdd81bbed6e4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04df6a11_9328918c",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T22:58:19Z",
+      "side": 1,
+      "message": "Does \"for (auto\u0026 mirror : mirrors_)\" work here?",
+      "revId": "9cd33e1b4457ae8b9c4dc51ac0fdd81bbed6e4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67be425_4ab06523",
+        "filename": "services/ui/ws/display_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T22:58:19Z",
+      "side": 1,
+      "message": "OnWindowManagerSurfaceActivation() maybe?",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 31
+      },
+      "revId": "9cd33e1b4457ae8b9c4dc51ac0fdd81bbed6e4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bea2847_ce00bc6b",
+        "filename": "services/ui/ws/platform_display.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T22:58:19Z",
+      "side": 1,
+      "message": "// static:",
+      "revId": "9cd33e1b4457ae8b9c4dc51ac0fdd81bbed6e4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69937175_583be80b",
+        "filename": "services/ui/ws/platform_display.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T22:58:19Z",
+      "side": 1,
+      "message": "Whenever I see this I wonder if the WS even remotely works on Android.",
+      "revId": "9cd33e1b4457ae8b9c4dc51ac0fdd81bbed6e4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af2d077_14337459",
+        "filename": "services/ui/ws/platform_display.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T22:58:19Z",
+      "side": 1,
+      "message": "Can this be protected?",
+      "revId": "9cd33e1b4457ae8b9c4dc51ac0fdd81bbed6e4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7581b5_7a310b75",
+        "filename": "services/ui/ws/platform_display_mirror.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T22:58:19Z",
+      "side": 1,
+      "message": "Drop \" \u003d nullptr\" since that\u0027s the default.",
+      "revId": "9cd33e1b4457ae8b9c4dc51ac0fdd81bbed6e4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
