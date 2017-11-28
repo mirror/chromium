@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95029560_ea378fc9",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-28T17:13:11Z",
+      "side": 1,
+      "message": "nit: \"the second proxy server\" -\u003e \"the second proxy configuration\"",
+      "revId": "56ea383044a25a76787ea84a791541dbb1516522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e555b2cb_b592d9d4",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-28T17:13:11Z",
+      "side": 1,
+      "message": "nit: Could you add a comment here to mention that this test is a regression test?\n\n// Regression test for crbug.com/787148.",
+      "revId": "56ea383044a25a76787ea84a791541dbb1516522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e833ad_138da81c",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-28T17:13:11Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "56ea383044a25a76787ea84a791541dbb1516522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d88bd300_48e28b9f",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-28T17:13:11Z",
+      "side": 1,
+      "message": "Is there a particular reason that you chose ERR_CONNECTION_FAILED instead of OK here?\n\nThe test might be easier to read if the second attempt (after ReconsiderProxyAfterError()) succeeds instead of failing.",
+      "revId": "56ea383044a25a76787ea84a791541dbb1516522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b89046_cd2c1b16",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-28T17:13:11Z",
+      "side": 1,
+      "message": "nit: can we add the following checks to make sure that the mock socket data have been consumed?\n\nEXPECT_TRUE(quic_data.AllReadDataConsumed());\nEXPECT_TRUE(quic_data.AllWriteDataConsumed());\nEXPECT_TRUE(tcp_data_1.AllReadDataConsumed());\nEXPECT_TRUE(tcp_data_1.AllWriteDataConsumed());\nEXPECT_TRUE(tcp_data_2.AllReadDataConsumed());\nEXPECT_TRUE(tcp_data_2.AllWriteDataConsumed());",
+      "revId": "56ea383044a25a76787ea84a791541dbb1516522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b823e82_46c38424",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-28T17:13:11Z",
+      "side": 1,
+      "message": "nit: Could you add a comment here to mention that this test is a regression test?\n\n// Regression test for crbug.com/787148.",
+      "revId": "56ea383044a25a76787ea84a791541dbb1516522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031d8919_26b4cd84",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-28T17:13:11Z",
+      "side": 1,
+      "message": "nit: same here. can we make sure all socket data have been consumed?",
+      "revId": "56ea383044a25a76787ea84a791541dbb1516522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
