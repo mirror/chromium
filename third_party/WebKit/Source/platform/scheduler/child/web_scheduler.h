@@ -102,6 +102,14 @@ class PLATFORM_EXPORT WebScheduler {
   virtual void RemovePendingNavigation(
       scheduler::RendererScheduler::NavigatingFrameType) = 0;
 
+  // Unless virtual time is enabled |task| is run immediately (not posted). If
+  // virtual time is enabled it's posted as a delayed task.
+  virtual void MaybeDeferTaskForVirtualTimeDeterminism(const WebTraceLocation&,
+                                                       WTF::Closure) = 0;
+
+  // Returns true if virtual time is enabled, otherwise returns false.
+  virtual bool IsVirtualTimeEnabled() = 0;
+
   // Test helpers.
 
   // Return a reference to an underlying RendererScheduler object.

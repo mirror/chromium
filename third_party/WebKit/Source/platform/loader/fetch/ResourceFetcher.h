@@ -130,7 +130,11 @@ class PLATFORM_EXPORT ResourceFetcher
 
   enum LoaderFinishType { kDidFinishLoading, kDidFinishFirstPartInMultipart };
   void HandleLoaderFinish(Resource*, double finish_time, LoaderFinishType);
+  void HandleLoaderFinishCompletion(Resource*,
+                                    double finish_time,
+                                    LoaderFinishType);
   void HandleLoaderError(Resource*, const ResourceError&);
+  void HandleLoaderErrorCompletion(Resource*, ResourceError);
   bool IsControlledByServiceWorker() const;
 
   String GetCacheIdentifier() const;
