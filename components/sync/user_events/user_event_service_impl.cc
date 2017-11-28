@@ -60,11 +60,22 @@ bool UserEventServiceImpl::MightRecordEvents(bool off_the_record,
 
 bool UserEventServiceImpl::ShouldRecordEvent(
     const UserEventSpecifics& specifics) {
+  // TODO(crbug.com/781765): Consent recording should not fail if sync_service
+  // is not yet initialized.
+  if (!sync_service_->IsEngineInitialized()) {
+    return false;
+  }
+  // Consent recording doesn't require history sync to be enabled because it
+  // is not related to history. It is also not user data, so it doesn't get
+  // disabled for users with passphrase.
+  if (specifics.has_user_consent()) {
+    DCHECK(!specifics.has_navigation_id());
+    return true;
+  }
   // We only record events if the user is syncing history (as indicated by
   // GetPreferredDataTypes()) and has not enabled a custom passphrase (as
   // indicated by IsUsingSecondaryPassphrase()).
-  return sync_service_->IsEngineInitialized() &&
-         !sync_service_->IsUsingSecondaryPassphrase() &&
+  return !sync_service_->IsUsingSecondaryPassphrase() &&
          sync_service_->GetPreferredDataTypes().Has(HISTORY_DELETE_DIRECTIVES);
 }
 
