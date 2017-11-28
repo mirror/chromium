@@ -45,6 +45,30 @@
       "revId": "d00a90c475ca278d71d083ee0d844a8c6de411de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562419ca_a5b42c63",
+        "filename": "third_party/WebKit/common/fetch/request_context_frame_type.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T07:16:52Z",
+      "side": 1,
+      "message": "Hm yes, https://github.com/whatwg/fetch/commit/d2208faa939998cf56bb08a724cd8d4590afea47 removed this.\n\nI\u0027m not sure where this should live. We introduced it in https://codereview.chromium.org/389993002 and it appears used for more than service workers, so common/service_worker is not the right place. On the other hand, it\u0027s not part of the Fetch spec.\n\nWe might make a directory like common/loader for code that Chrome loading depends on, but isn\u0027t part of the Fetch spec... but I suspect that should be a small directory. Or it could be common/fetch with a comment that this type has been removed from the Fetch spec.\n\nNeed loading people\u0027s input on this.",
+      "parentUuid": "63eb8bb3_1fba916b",
+      "range": {
+        "startLine": 8,
+        "startChar": 33,
+        "endLine": 8,
+        "endChar": 67
+      },
+      "revId": "d00a90c475ca278d71d083ee0d844a8c6de411de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
