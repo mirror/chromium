@@ -16,6 +16,24 @@
       "revId": "a947f7ac90eae2c05f855f035afe87fccee887a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117fd496_d9f694f8",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-28T17:56:19Z",
+      "side": 1,
+      "message": "Good catch; this actually uncovered a bug I had missed in the array-style input parsing! Done.",
+      "parentUuid": "0f29deb0_6886ff10",
+      "revId": "a947f7ac90eae2c05f855f035afe87fccee887a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
