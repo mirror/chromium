@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "6375dc8b_0714100f",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T20:55:22Z",
+      "side": 1,
+      "message": "So this is possible, but is ui/views the best place for this? The includes in that file seem to actually be views-specific.",
+      "parentUuid": "d88aaac0_050cec1d",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e77dac3_dd1a1733",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 14
@@ -651,6 +669,24 @@
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b7e2fd_f93de0cd",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-28T20:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "982d54f4_3c8bc27a",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
