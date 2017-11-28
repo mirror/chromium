@@ -110,6 +110,7 @@ class TestWebState : public WebState {
   void OnNavigationFinished(NavigationContext* navigation_context);
   void OnRenderProcessGone();
   void OnFormActivity(const FormActivityParams& params);
+  void OnVisibleSecurityStateChanged();
 
  private:
   BrowserState* browser_state_;
