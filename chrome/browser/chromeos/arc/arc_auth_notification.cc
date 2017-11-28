@@ -19,6 +19,7 @@
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
+#include "components/arc/arc_util.h"
 #include "components/session_manager/core/session_manager.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -116,6 +117,9 @@ void ArcAuthNotification::DisableForTesting() {
 
 void ArcAuthNotification::Show() {
   DCHECK(!g_disabled);
+
+  if (!IsArcAllowedForProfile(profile_))
+    return;
 
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT, kNotifierId);
