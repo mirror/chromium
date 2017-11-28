@@ -39,7 +39,7 @@ function buy() {  // eslint-disable-line no-unused-vars
               });
         })
         .catch(function(error) {
-          print(error.message);
+          print('show() rejected<br>' + error.message);
         });
   } catch (error) {
     print(error.message);
