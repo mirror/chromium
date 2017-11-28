@@ -7,6 +7,8 @@ source_set("download") {
   sources = [
     "download_manager_controller.h",
     "download_manager_controller.mm",
+    "pass_kit_coordinator.h",
+    "pass_kit_coordinator.mm",
   ]
   deps = [
     "resources:download_manager_controller_xib",
