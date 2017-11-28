@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ba19b1b_9f0bdd29",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-28T19:41:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b9d0bb9_36c026f4",
+      "revId": "630bd18467c6dcc3192096c858fe3cc7b1191c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f054e14f_4875dcbb",
         "filename": "components/previews/content/previews_io_data.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-28T18:58:05Z",
       "side": 1,
       "message": "I don\u0027t think this works appropriately. In particular, if the reason is user_recently_opted_out, we don\u0027t check user_blacklisted or host_blacklisted. This method will currently report everything but USER_RECENTLY_OPTED_OUT as successful.\n\nYou might want (in the order that the reasons are checked):\n\nif (reason \u003d\u003d  PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED) {\n  LogPreviewDecisionMade(reason, url, time, type, false /* checked */);\n  return;\n}\nLogPreviewDecisionMade(PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED,\n                           url, time, type, true /* checked */);\n\nif (reason \u003d\u003d  PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT) {\n  LogPreviewDecisionMade(reason, url, time, type, false /* checked */);\n  return;\n}\nLogPreviewDecisionMade(PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT,\n                           url, time, type, true /* checked */);\n\n...",
+      "revId": "630bd18467c6dcc3192096c858fe3cc7b1191c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645ed8c4_1be614db",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-28T19:41:42Z",
+      "side": 1,
+      "message": "Fixed. Thanks for the catch, I forgot to add the test for this.\n\nI added some modification to the test \"LogDecisionMadeBlacklistStatusesDefault\", but with some hack. If it is too hacky, I can separate them in to 4 tests.",
+      "parentUuid": "f054e14f_4875dcbb",
       "revId": "630bd18467c6dcc3192096c858fe3cc7b1191c1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
