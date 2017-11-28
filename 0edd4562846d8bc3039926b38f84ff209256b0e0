@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d729c1a_c316ac67",
+        "filename": "content/renderer/media/webrtc/processed_local_audio_source.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T16:47:15Z",
+      "side": 1,
+      "message": "Yeah, the check at the hardware level currently only checks if it\u0027s supported - it should also check if it\u0027s enabled before setting this effect as enabled. In practice, it doesn\u0027t really matter since claiming that it\u0027s on when it\u0027s not just means the lower layers will ignore the request to disable it (since it already is disabled).\n\nWRT to what to do when all processing has been turned off, I guess that\u0027s something we can experiment with: whether it should affect _all_ processing as far as we\u0027re aware, or just Chrome\u0027s internal processing. I\u0027ll add a comment about that.",
+      "parentUuid": "7a74e7f2_19b48df6",
+      "range": {
+        "startLine": 114,
+        "startChar": 24,
+        "endLine": 114,
+        "endChar": 25
+      },
+      "revId": "0edd4562846d8bc3039926b38f84ff209256b0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8419226c_b4950b0c",
         "filename": "media/audio/mac/audio_low_latency_input_mac.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c91af931_8d7707f8",
+        "filename": "media/audio/mac/audio_low_latency_input_mac.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T16:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8419226c_b4950b0c",
+      "range": {
+        "startLine": 529,
+        "startChar": 34,
+        "endLine": 529,
+        "endChar": 49
+      },
+      "revId": "0edd4562846d8bc3039926b38f84ff209256b0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50d16d2b_0aad4dda",
         "filename": "media/audio/mac/audio_low_latency_input_mac.h",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-28T15:22:07Z",
       "side": 1,
       "message": "Can we remove this variable and use input_params_.frames_per_buffer() instead?",
+      "range": {
+        "startLine": 186,
+        "startChar": 14,
+        "endLine": 186,
+        "endChar": 32
+      },
+      "revId": "0edd4562846d8bc3039926b38f84ff209256b0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b09eb4_fd8b4c65",
+        "filename": "media/audio/mac/audio_low_latency_input_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T16:47:15Z",
+      "side": 1,
+      "message": "Tried it. Looks alright.",
+      "parentUuid": "50d16d2b_0aad4dda",
       "range": {
         "startLine": 186,
         "startChar": 14,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fa6bfdcd_427a82aa",
+        "filename": "media/audio/mac/audio_low_latency_input_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T16:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "743bd68e_a9f13498",
+      "range": {
+        "startLine": 205,
+        "startChar": 18,
+        "endLine": 205,
+        "endChar": 31
+      },
+      "revId": "0edd4562846d8bc3039926b38f84ff209256b0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f1e6bf_61316da9",
         "filename": "media/audio/mac/audio_low_latency_input_mac.h",
         "patchSetId": 9
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "1fd018ed_45c77d4d",
+        "filename": "media/audio/mac/audio_low_latency_input_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T16:47:15Z",
+      "side": 1,
+      "message": "It\u0027s not really an on/off switch right here, though. I\u0027ve added a comment where I try to explain its use, but I agree the naming is a bit confusing. I\u0027ll sleep on it and see if I come up with something better tomorrow.",
+      "parentUuid": "23f1e6bf_61316da9",
+      "revId": "0edd4562846d8bc3039926b38f84ff209256b0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b009303f_990e8e79",
         "filename": "media/audio/mac/audio_manager_mac.cc",
         "patchSetId": 9
@@ -122,6 +236,30 @@
       "writtenOn": "2017-11-28T15:22:07Z",
       "side": 1,
       "message": "is there some documentation for the known state values?  Any chance that it\u0027s either 0 or not 0? (meaning that -1 or even 0xffff could also be \u0027true\u0027 values)",
+      "range": {
+        "startLine": 1143,
+        "startChar": 27,
+        "endLine": 1143,
+        "endChar": 44
+      },
+      "revId": "0edd4562846d8bc3039926b38f84ff209256b0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92dbeda8_d3c6ae15",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T16:47:15Z",
+      "side": 1,
+      "message": "Oh, there is, and it says that a Boolean control\u0027s property value is \"A UInt32 where 0 means off/false and non-zero means on/true.\" - so I\u0027ve changed it.",
+      "parentUuid": "b009303f_990e8e79",
       "range": {
         "startLine": 1143,
         "startChar": 27,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "f10729b7_2912c780",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T16:47:15Z",
+      "side": 1,
+      "message": "I\u0027ve done it like that for now. There have been different ideas on what should happen if disabling fails - either way works.",
+      "parentUuid": "6b14fa08_44bcea66",
+      "range": {
+        "startLine": 1158,
+        "startChar": 10,
+        "endLine": 1158,
+        "endChar": 27
+      },
+      "revId": "0edd4562846d8bc3039926b38f84ff209256b0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ef7cd6d_ea24c15c",
         "filename": "media/audio/mac/audio_manager_mac.h",
         "patchSetId": 9
@@ -168,6 +330,30 @@
       "writtenOn": "2017-11-28T15:22:07Z",
       "side": 1,
       "message": "documentation would be good here",
+      "range": {
+        "startLine": 140,
+        "startChar": 47,
+        "endLine": 140,
+        "endChar": 77
+      },
+      "revId": "0edd4562846d8bc3039926b38f84ff209256b0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f382dfa8_467d3c1c",
+        "filename": "media/audio/mac/audio_manager_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-28T16:47:15Z",
+      "side": 1,
+      "message": "Added some.",
+      "parentUuid": "0ef7cd6d_ea24c15c",
       "range": {
         "startLine": 140,
         "startChar": 47,
