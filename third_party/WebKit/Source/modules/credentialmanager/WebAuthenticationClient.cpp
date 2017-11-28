@@ -79,6 +79,12 @@ WebAuthenticationClient::~WebAuthenticationClient() {}
 void WebAuthenticationClient::DispatchMakeCredential(
     const MakeCredentialOptions& publicKey,
     std::unique_ptr<PublicKeyCallbacks> callbacks) {
+  if (!authenticator_) {
+    callbacks->OnError(
+        WebCredentialManagerError::kWebCredentialManagerUnknownError);
+    return;
+  }
+
   auto options = webauth::mojom::blink::MakeCredentialOptions::From(publicKey);
   if (!options) {
     callbacks->OnError(
@@ -90,7 +96,6 @@ void WebAuthenticationClient::DispatchMakeCredential(
       std::move(options),
       ConvertToBaseCallback(WTF::Bind(&RespondToPublicKeyCallback,
                                       WTF::Passed(std::move(callbacks)))));
-  return;
 }
 
 void WebAuthenticationClient::GetAssertion(
