@@ -128,34 +128,40 @@ void VTTParser::Parse() {
         state_ = kHeader;
         break;
 
-      case kHeader:
-        // Steps 10 - 14 - Allow a header (comment area) under the WEBVTT line.
-        CollectMetadataHeader(line);
-
-        if (line.IsEmpty()) {
-          state_ = kId;
-          break;
+      case kHeader: {
+        // Steps 11 - 14 - Collect WebVTT block
+        // 14.1
+        BlockType type = CollectWebVTTBlock(line);
+        if (type == BlockType::kCue) {
+          // 14.2 block is WebVTT cue
+          ResetCueValues();
+          if (!Buffer_.IsEmpty()) {
+            state_ = CollectCueId(Buffer_.ToString());
+            Buffer_.Clear();
+          }
+          if (line.Contains("-->"))
+            state_ = CollectTimingsAndSettings(line);
+        } else if (type == BlockType::kRegion) {
+          // 14.4 Create Region and add block to regions list
+          CreateNewRegion(Buffer_.ToString());
+        } else {
+          if (line.Contains("-->"))
+            state_ = RecoverCue(line);
         }
-
-        // Step 15 - Break out of header loop if the line could be a timestamp
-        // line.
-        if (line.Contains("-->"))
-          state_ = RecoverCue(line);
-
-        // Step 16 - Line is not the empty string and does not contain "-->".
         break;
+      }
 
       case kId:
-        // Steps 17 - 20 - Allow any number of line terminators, then initialize
-        // new cue values.
+        // Steps 17 - 20 - Allow any number of line terminators, then
+        // initialize new cue values.
         if (line.IsEmpty())
           break;
 
         // Step 21 - Cue creation (start a new cue).
         ResetCueValues();
 
-        // Steps 22 - 25 - Check if this line contains an optional identifier or
-        // timing data.
+        // Steps 22 - 25 - Check if this line contains an optional identifier
+        // or timing data.
         state_ = CollectCueId(line);
         break;
 
@@ -171,8 +177,8 @@ void VTTParser::Parse() {
         break;
 
       case kCueText:
-        // Steps 31 - 41 - Collect the cue text, create a cue, and add it to the
-        // output.
+        // Steps 31 - 41 - Collect the cue text, create a cue, and add it to
+        // the output.
         state_ = CollectCueText(line);
         break;
 
@@ -212,35 +218,74 @@ bool VTTParser::HasRequiredFileIdentifier(const String& line) {
   return true;
 }
 
-void VTTParser::CollectMetadataHeader(const String& line) {
-  // WebVTT header parsing (WebVTT parser algorithm step 12)
+VTTParser::BlockType VTTParser::CollectWebVTTBlock(String& line) {
+  // WebVTT header parsing (WebVTT parser algorithm step 14)
 
+  BlockType type = BlockType::kInvalid;
   // The only currently supported header is the "Region" header.
   if (!RuntimeEnabledFeatures::WebVTTRegionsEnabled())
-    return;
+    return type;
+  // 1 - 10 : Initial setup
+  Buffer_.Clear();
+  int line_count = 0;
+  bool in_header = false, seen_arrow = false;
+  // 11.1 line contains the charecters
+  do {
+    // 11.2 increment line count
+    line_count++;
+    // 11.4 If line contains the three-character substring "-->" (U+002D
+    // HYPHEN-MINUS, U+002D HYPHEN-MINUS, U+003E GREATER-THAN SIGN), then run
+    // these substeps
+    if (line.Contains("-->")) {
+      // 11.4.1 If in header is not set and at least one of the following
+      // conditions are true: line count is 1 or line count is 2 and seen arrow
+      // is false
+      if (!in_header && (line_count == 1 || (line_count == 2 && !seen_arrow))) {
+        seen_arrow = true;
+        // cue creation, cue timing settings and cue text colleted based on
+        // BlockType::kCue
+        type = BlockType::kCue;
+      }
+      break;
+    }
+    if (line.IsEmpty()) {
+      // 11.5 if line empty string break out of loop
+      break;
+    }
+    // 11.6.1 If in header is not set and line count is 2
+    if (!in_header && line_count == 2) {
+      // 11.6.1.2 seen cue is false and buffer starts with the substring
+      // "REGION" state_ is used to check for seen cue
+      if (state_ == kHeader && Buffer_.ToString().StartsWith("REGION")) {
+        if (current_content_.length() > kFileIdentifierLength) {
+          UChar maybe_separator =
+              current_content_.ToString()[kFileIdentifierLength];
+          // remaining characters in buffer (if any) are all ASCII whitespace
+          if (maybe_separator != kSpaceCharacter) {
+            break;
+          }
+        }
+        in_header = true;
+        type = BlockType::kRegion;
+      }
+    }
+    // 11.6.2 If buffer is not the empty string, append a U+000A LINE FEED (LF)
+    // character to buffer.
+    if (!Buffer_.IsEmpty())
+      Buffer_.Append(kNewlineCharacter);
+    // Append line to buffer.
+    Buffer_.Append(line);
+  } while (line_reader_.GetLine(line));
 
-  // Step 12.4 If line contains the character ":" (A U+003A COLON), then set
-  // metadata's name to the substring of line before the first ":" character and
-  // metadata's value to the substring after this character.
-  size_t colon_position = line.find(':');
-  if (colon_position == kNotFound)
-    return;
-
-  String header_name = line.Substring(0, colon_position);
-
-  // Steps 12.5 If metadata's name equals "Region":
-  if (header_name == "Region") {
-    String header_value = line.Substring(colon_position + 1);
-    // Steps 12.5.1 - 12.5.11 Region creation: Let region be a new text track
-    // region [...]
-    CreateNewRegion(header_value);
-  }
+  // return the block type
+  return type;
 }
 
 VTTParser::ParseState VTTParser::CollectCueId(const String& line) {
   if (line.Contains("-->"))
     return CollectTimingsAndSettings(line);
-  current_id_ = AtomicString(line);
+  if (!line.Contains(kCarriageReturnCharacter))
+    current_id_ = AtomicString(line);
   return kTimingsAndSettings;
 }
 

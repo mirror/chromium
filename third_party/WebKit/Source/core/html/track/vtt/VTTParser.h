@@ -68,7 +68,7 @@ class VTTParser final : public GarbageCollectedFinalized<VTTParser> {
     kCueText,
     kBadCue
   };
-
+  enum class BlockType { kCue, kStyle, kRegion, kInvalid };
   static VTTParser* Create(VTTParserClient* client, Document& document) {
     return new VTTParser(client, document);
   }
@@ -90,6 +90,12 @@ class VTTParser final : public GarbageCollectedFinalized<VTTParser> {
     // any order, separated from each other by one or more U+0020 SPACE
     // characters or U+0009 CHARACTER TABULATION (tab) characters.
     return c == ' ' || c == '\t';
+  }
+  static inline bool IsValidSettingRegionDelimter(UChar c) {
+    // ... a WebVTT Region consists of zero or more of the following components,
+    // in any order, separated from each other by U+000A LINE FEED character or
+    //  U+0020 SPACE character
+    return c == '\n' || c == ' ';
   }
   static bool CollectTimeStamp(const String&, double& time_stamp);
 
@@ -125,11 +131,12 @@ class VTTParser final : public GarbageCollectedFinalized<VTTParser> {
   ParseState CollectCueText(const String&);
   ParseState RecoverCue(const String&);
   ParseState IgnoreBadCue(const String&);
+  ParseState RecoverRegion(String&);
 
   void CreateNewCue();
   void ResetCueValues();
 
-  void CollectMetadataHeader(const String&);
+  BlockType CollectWebVTTBlock(String&);
   void CreateNewRegion(const String& header_value);
 
   static bool CollectTimeStamp(VTTScanner& input, double& time_stamp);
@@ -140,6 +147,7 @@ class VTTParser final : public GarbageCollectedFinalized<VTTParser> {
   double current_start_time_;
   double current_end_time_;
   StringBuilder current_content_;
+  StringBuilder Buffer_;
   String current_settings_;
 
   Member<VTTParserClient> client_;
