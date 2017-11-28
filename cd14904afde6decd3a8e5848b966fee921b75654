@@ -70,6 +70,30 @@
       "revId": "cd14904afde6decd3a8e5848b966fee921b75654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97b6a1b_8fed4951",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-11-28T04:10:51Z",
+      "side": 1,
+      "message": "we did create dupes of \"strings.js\" (which is the |path| value given here often and was duplicated in some other place as well)",
+      "parentUuid": "ef045ca5_8cd243d0",
+      "range": {
+        "startLine": 161,
+        "startChar": 18,
+        "endLine": 161,
+        "endChar": 24
+      },
+      "revId": "cd14904afde6decd3a8e5848b966fee921b75654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
