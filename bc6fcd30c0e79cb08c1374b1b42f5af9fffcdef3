@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "cedd7c0f_4314ada1",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "What would happen if you dropped this ifdef?",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8110b658_5efbcdf2",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "style: no { }",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23f65226_02a8187f",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 8
@@ -13,6 +47,30 @@
       "writtenOn": "2017-11-27T16:58:07Z",
       "side": 1,
       "message": "It feels like these should really be null pointers, and we should fix VRDisplay.cpp to handle the eye parameters being null.",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf29fd0_95ba073d",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "or make it base::Optional\u003cVREyeParameter\u003e?",
+      "parentUuid": "23f65226_02a8187f",
       "range": {
         "startLine": 58,
         "startChar": 26,
@@ -59,6 +117,97 @@
     },
     {
       "key": {
+        "uuid": "93af31d2_8555a4fd",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "Hopefully, all the quaternion maths can be reviewed by someone else. It\u0027s been a while :)",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a639128d_b5c36ff5",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "style: leave empty line",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba47e9a_3b4aa1e4",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "It\u0027s nitpicky but `OrientationDevice` seems a bit too generic to be in `device` namespace. Maybe prefixed with VR?",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0443e6a0_cc60b44d",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "nit: add `const`?",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50826d2_9379df8d",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "Instead of a gfx::Quaternion and a bool, you could use base::Optional\u003cgfx::Quaternion\u003e.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ed43367_dcd06b96",
         "filename": "device/vr/orientation/orientation_device.h",
         "patchSetId": 8
@@ -76,6 +225,137 @@
         "endLine": 50,
         "endChar": 32
       },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7e1c22_c55102e1",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "style: all the methods should be before the variables.",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f842663d_c5aca913",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 25,
+        "startChar": 56,
+        "endLine": 25,
+        "endChar": 58
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ef4f3f_3fb2c2e1",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "nit: I think it\u0027s often more readable if error/special cases are trigerred early. Something like:\n```\nif (!device_ready_) {\n  pending_callbacks_.emplace_back(std::move(callback));\n  return;\n}\n\n[...]\n```\n\n(feel free to ignore this comment obviously :))",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22a7d30_d2b1b04e",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "This can be shortened to: `for (auto it : pending_callbacks_) {` :)",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e8694b_71bb4098",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "Would it make sense to refactor this block and the one above to a method called `RunCallback()`?",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342f1f6e_93a905f0",
+        "filename": "device/vr/orientation/orientation_device_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "Should this be moved inside the class?",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea14aad2_a0f7e7f9",
+        "filename": "device/vr/orientation/orientation_device_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:52:51Z",
+      "side": 1,
+      "message": "style: methods should be above variables",
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
