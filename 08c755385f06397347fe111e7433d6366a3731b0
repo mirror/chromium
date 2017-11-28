@@ -16,6 +16,24 @@
       "revId": "08c755385f06397347fe111e7433d6366a3731b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde5228d_0ec1ac50",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-28T06:48:45Z",
+      "side": 1,
+      "message": "hmm...let me think about that tomorrow.\n\nIn all honestly, I just copy/pasted this comment from the original code. I didn\u0027t think through the correctness.",
+      "parentUuid": "024a4619_079413e4",
+      "revId": "08c755385f06397347fe111e7433d6366a3731b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
