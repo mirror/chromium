@@ -1668,7 +1668,6 @@ jumbo_component("base") {
       "mac/scoped_objc_class_swizzler.h",
       "mac/scoped_objc_class_swizzler.mm",
       "mac/scoped_typeref.h",
-      "memory/shared_memory_posix.cc",
       "message_loop/message_pump_mac.h",
       "message_loop/message_pump_mac.mm",
       "power_monitor/power_monitor_device_source_ios.mm",
