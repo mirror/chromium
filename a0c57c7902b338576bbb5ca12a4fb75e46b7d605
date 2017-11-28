@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e32b7f61_ab72a9c4",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-28T23:12:28Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "dad34281_695e846f",
+      "range": {
+        "startLine": 15,
+        "startChar": 20,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "a0c57c7902b338576bbb5ca12a4fb75e46b7d605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c300a06e_27ff9dc8",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "a0c57c7902b338576bbb5ca12a4fb75e46b7d605",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d7eed4_13bf76f2",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-28T23:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c300a06e_27ff9dc8",
+      "range": {
+        "startLine": 443,
+        "startChar": 18,
+        "endLine": 443,
+        "endChar": 19
+      },
+      "revId": "a0c57c7902b338576bbb5ca12a4fb75e46b7d605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

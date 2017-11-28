@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8028db6_4767309b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-28T23:12:28Z",
+      "side": 1,
+      "message": "Ideally, instead of rebasing the command, we should do:\n\nsubprocess.check_call(command, cwd\u003dBUILD_DIR)\n\nBut, unfortunately, the above fails to run tests with the following errors, and I still don\u0027t know why:\n\n1/105] GURLTest.Types (0 ms)\n[58282:9479:1128/143211.874904:1048875918056581:ERROR:launch_mac.cc(164)] posix_spawnp(url_unittests): -2 No such file or directory\nFailed to get out-of-band test success data, dumping full stdio below:\n\n[2/105] GURLTest.Components (0 ms)\nFailed to get out-of-band test success data, dumping full stdio below:\n\n[3/105] GURLTest.Empty (0 ms)\nFailed to get out-of-band test success data, dumping full stdio below:\n\n[4/105] GURLTest.Copy (0 ms)\nFailed to get out-of-band test success data, dumping full stdio below:\n\n...",
+      "revId": "831e539c694bac23d355418a5ef4869519dd5518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
