@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cc09610_d93a61fa",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 24426,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T22:10:33Z",
+      "side": 0,
+      "message": "Do not remove these values; they help interpret existing logs.\n\nThis change should not touch enums.xml at all.",
+      "revId": "f5b3d8e33b0a9e07e708f345e66a219835ad8e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
