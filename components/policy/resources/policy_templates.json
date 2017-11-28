@@ -3797,7 +3797,7 @@
         'type': 'array',
         'items': { 'type': 'string' },
       },
-      'supported_on': ['chrome_os:65-'],
+      'supported_on': ['chrome_os:64-'],
       'device_only': True,
       'features': {
         'dynamic_refresh': True,
