@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86e860f0_a1f94855",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T10:19:59Z",
+      "side": 1,
+      "message": "Nit: Simply calling this kLast is the convention (same below)",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9a6a5b_bf97f442",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T10:19:59Z",
+      "side": 1,
+      "message": "Would it be possible to add some comments that describe which process the CdmProxy interface is hosted in?",
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b4585c_bf863e23",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T10:19:59Z",
+      "side": 1,
+      "message": "Would it be possible to add these methods when there\u0027s a CL that implements the corresponding functions? It\u0027s hard to do a security review without that implementation.",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f79482_de519daa",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T10:19:59Z",
+      "side": 1,
+      "message": "Similarly for CdmProxyClient: which process does this live in?",
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
