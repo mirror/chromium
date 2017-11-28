@@ -46,6 +46,92 @@
       "revId": "524e3f407bca68fa88faf4bc85a9cfaf8b80c42c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0067c78a_bda77cfe",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T22:16:30Z",
+      "side": 1,
+      "message": "auto -\u003e auto*\n\n\"do not use auto to deduce a raw pointer, use auto* instead\"\nSee https://chromium-cpp.appspot.com/",
+      "range": {
+        "startLine": 417,
+        "startChar": 4,
+        "endLine": 417,
+        "endChar": 8
+      },
+      "revId": "524e3f407bca68fa88faf4bc85a9cfaf8b80c42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e847d258_23073ed9",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T22:16:30Z",
+      "side": 1,
+      "message": "nit: std::make_unique\u003c\u003e",
+      "range": {
+        "startLine": 418,
+        "startChar": 8,
+        "endLine": 418,
+        "endChar": 24
+      },
+      "revId": "524e3f407bca68fa88faf4bc85a9cfaf8b80c42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b80f4b_849eb034",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T22:16:30Z",
+      "side": 1,
+      "message": "nit: std::make_unique\u003c\u003e",
+      "range": {
+        "startLine": 451,
+        "startChar": 20,
+        "endLine": 451,
+        "endChar": 36
+      },
+      "revId": "524e3f407bca68fa88faf4bc85a9cfaf8b80c42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece9d9be_a0b3e841",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T22:16:30Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN(...)",
+      "revId": "524e3f407bca68fa88faf4bc85a9cfaf8b80c42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
