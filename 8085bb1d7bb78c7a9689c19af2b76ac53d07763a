@@ -52,6 +52,24 @@
       "revId": "8085bb1d7bb78c7a9689c19af2b76ac53d07763a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2f97a6_70fa07f0",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-28T02:27:10Z",
+      "side": 0,
+      "message": "Yes, there is such a difference -- we are now passing un-canonicalized position, while we used to pass canonicalized position.\n\nThe result should still be the same, because IndexForPosition() counts the number of plain text characters before the passed position, while canonicalization shouldn\u0027t skip any plain text character (unless there\u0027s bug in it).\n\nUpdated patch description accordingly.",
+      "parentUuid": "a616dc17_959b55be",
+      "revId": "8085bb1d7bb78c7a9689c19af2b76ac53d07763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
