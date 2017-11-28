@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c558882e_6262bcd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 36
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-28T00:49:04Z",
+      "side": 1,
+      "message": "please follow the formatting conventions.",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1317f91f_22fd8836",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 36
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-28T00:49:04Z",
+      "side": 1,
+      "message": "nit: adds a PresentationCallback",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3816c161_cb13104d",
+        "filename": "components/viz/service/display/output_surface_client.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-28T00:49:04Z",
+      "side": 1,
+      "message": "Please document this in more detail. Presentation means that the CompositorFrame has started scanout?",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81fd2b4a_dacd705d",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-28T00:49:04Z",
+      "side": 1,
+      "message": "So: the time when a buffer begins scan-out?",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ae5ed9_b1194162",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-28T00:49:04Z",
+      "side": 1,
+      "message": "this should be of type PresentationFlags",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52367762_df759b6f",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-28T00:49:04Z",
+      "side": 1,
+      "message": "you need to update the comment to reflect the code?",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9936955d_515063e3",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-28T00:49:04Z",
+      "side": 1,
+      "message": "Should this be a RepeatingCallback?",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebaaec7_001ac0da",
+        "filename": "ui/ozone/demo/gl_renderer.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-28T00:49:04Z",
+      "side": 1,
+      "message": "why not print something out concerning the timing info?",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
