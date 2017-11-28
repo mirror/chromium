@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb7770ff_49985fd0",
+        "filename": "third_party/WebKit/Source/core/dom/SecurityContext.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-28T08:34:33Z",
+      "side": 1,
+      "message": "Hm, could this be renamed a bit to match better with the behavior?  I wasn\u0027t able to guess what\u0027d happen until I read the code.  Or returning an enum like Mike suggested may be also helpful.\n\n// Apply the sandbox flag, and also maybe update the security origin\n// to the newly created unique one with |is_potentially_trustworthy|.\n// Returns true if the security origin is updated.\nbool ApplySandboxFlagsAndMaybeUpdateOrigin(...);",
+      "revId": "197b4bc60899680a793d48f91167757784d9b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
