@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4ac42b45_65504c26",
+        "filename": "chrome/browser/vr/model/modal_prompt_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-28T20:54:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae3bd3c1_5b71488a",
+      "range": {
+        "startLine": 15,
+        "startChar": 37,
+        "endLine": 15,
+        "endChar": 42
+      },
+      "revId": "c415b97637c6706b8ded95f2bca73df6cd4313a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b3e4e95_7c11ff9e",
         "filename": "chrome/browser/vr/ui_unsupported_mode.h",
         "patchSetId": 2
@@ -157,6 +181,72 @@
       "revId": "c415b97637c6706b8ded95f2bca73df6cd4313a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba41e93c_55839f6f",
+        "filename": "chrome/browser/vr/ui_unsupported_mode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-28T20:54:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b388fe5f_6722c268",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "c415b97637c6706b8ded95f2bca73df6cd4313a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d40f826_58a87b67",
+        "filename": "chrome/browser/vr/ui_unsupported_mode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-28T20:54:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a01757f0_de4b4aab",
+      "range": {
+        "startLine": 19,
+        "startChar": 60,
+        "endLine": 19,
+        "endChar": 72
+      },
+      "revId": "c415b97637c6706b8ded95f2bca73df6cd4313a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f50f7727_f536a060",
+        "filename": "chrome/browser/vr/ui_unsupported_mode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-28T20:54:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "427ddbe7_a6a5a9bf",
+      "revId": "c415b97637c6706b8ded95f2bca73df6cd4313a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

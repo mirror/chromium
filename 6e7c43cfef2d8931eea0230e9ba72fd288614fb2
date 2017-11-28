@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec080a66_13ebffe6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92598,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-28T20:54:16Z",
+      "side": 1,
+      "message": "I will rename the other VoiceSearch metrics to this structure in a separate CL.",
+      "range": {
+        "startLine": 92598,
+        "startChar": 17,
+        "endLine": 92598,
+        "endChar": 32
+      },
+      "revId": "6e7c43cfef2d8931eea0230e9ba72fd288614fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
