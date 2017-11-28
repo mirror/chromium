@@ -827,9 +827,11 @@ def parse_config_arg(args):
     return (None, list(args))
 
 
-def get_daemon_proc(config_file):
+def get_daemon_proc(config_file, child_process):
   """Checks if there is already an instance of this script running against
-  |config_file|, and returns a psutil.Process instance for it.
+  |config_file|, and returns a psutil.Process instance for it. If
+  |child_process| is true, only check for an instance with the --child-process
+  flag specified.
 
   If a process is found without --config in the command line, get_daemon_proc
   will fall back to the old behavior of checking whether the script path matches
@@ -839,6 +841,18 @@ def get_daemon_proc(config_file):
     A Process instance for the existing daemon process, or None if the daemon
     is not running.
   """
+
+  # Note: When making changes to how instances are detected, it is imperative
+  # that this function retains the ability to find older versions. Otherwise,
+  # upgrades can leave the user with two running sessions, with confusing
+  # results.
+
+  if not child_process:
+    # Even if not required, we still want to prefer a process with the flag
+    # specified, so check that first.
+    process = get_daemon_proc(config_file, True)
+    if process is not None:
+      return process
 
   uid = os.getuid()
   this_pid = os.getpid()
@@ -868,7 +882,8 @@ def get_daemon_proc(config_file):
         continue
       if (os.path.basename(cmdline[0]).startswith('python') and
           os.path.basename(cmdline[1]) == os.path.basename(sys.argv[0]) and
-          "--start" in cmdline and "--child-process" in cmdline):
+          "--start" in cmdline and
+          (not child_process or "--child-process" in cmdline)):
         process_config = parse_config_arg(cmdline[2:])[0]
         if process_config is None:
           # Fall back to old behavior if there is no --config argument
@@ -1411,7 +1426,7 @@ Web Store: https://chrome.google.com/remotedesktop"""
 
   # Check for a modal command-line option (start, stop, etc.)
   if options.get_status:
-    proc = get_daemon_proc(config_file)
+    proc = get_daemon_proc(config_file, False)
     if proc is not None:
       print("STARTED")
     elif is_supported_platform():
@@ -1423,11 +1438,11 @@ Web Store: https://chrome.google.com/remotedesktop"""
   # TODO(sergeyu): Remove --check-running once NPAPI plugin and NM host are
   # updated to always use get-status flag instead.
   if options.check_running:
-    proc = get_daemon_proc(config_file)
+    proc = get_daemon_proc(config_file, False)
     return 1 if proc is None else 0
 
   if options.stop:
-    proc = get_daemon_proc(config_file)
+    proc = get_daemon_proc(config_file, False)
     if proc is None:
       print("The daemon is not currently running")
     else:
@@ -1441,7 +1456,7 @@ Web Store: https://chrome.google.com/remotedesktop"""
     return 0
 
   if options.reload:
-    proc = get_daemon_proc(config_file)
+    proc = get_daemon_proc(config_file, False)
     if proc is None:
       return 1
     proc.send_signal(signal.SIGHUP)
@@ -1506,7 +1521,7 @@ Web Store: https://chrome.google.com/remotedesktop"""
 
   # Determine whether a desktop is already active for the specified host
   # configuration.
-  if get_daemon_proc(config_file) is not None:
+  if get_daemon_proc(config_file, options.child_process) is not None:
     # Debian policy requires that services should "start" cleanly and return 0
     # if they are already running.
     if options.child_process:
