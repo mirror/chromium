@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b1a75fc_d84fdea4",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-28T11:45:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "674246fe_3f308de6",
+      "revId": "baaea9f292fbcf950637e3c37fe2bb6ad353bea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f46df90_0ed2297f",
         "filename": "ui/base/ime/text_input_client.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "baaea9f292fbcf950637e3c37fe2bb6ad353bea2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f551fe7b_f5c5bd0b",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-28T11:45:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3f46df90_0ed2297f",
+      "revId": "baaea9f292fbcf950637e3c37fe2bb6ad353bea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
