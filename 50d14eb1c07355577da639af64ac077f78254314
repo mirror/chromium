@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c0f4a0_cee69635",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T01:31:39Z",
+      "side": 1,
+      "message": "If I\u0027m reading the code below correctly, this is a gate for whether they should be displayed, not simply \"are allowed to be display\".  Am I right?  If so, can you please \"will be displayed.\" and also rename the function according (Allow-\u003eDisplay).",
+      "revId": "50d14eb1c07355577da639af64ac077f78254314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79547af_73592c54",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T01:31:39Z",
+      "side": 1,
+      "message": "please indent lines 94 and 95 to start from beneath the \"The\" from line 93.  I think that\u0027ll look better.",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 12
+      },
+      "revId": "50d14eb1c07355577da639af64ac077f78254314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94bebcc_92c2ebd8",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T01:31:39Z",
+      "side": 1,
+      "message": "Please distribute the ! (de morgan\u0027s law) so make this test more easily understandable.",
+      "revId": "50d14eb1c07355577da639af64ac077f78254314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7664543_d491d1b8",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T01:31:39Z",
+      "side": 1,
+      "message": "Are lines 182-185 necessary?  Can they be removed?",
+      "revId": "50d14eb1c07355577da639af64ac077f78254314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
