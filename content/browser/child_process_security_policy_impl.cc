@@ -15,7 +15,6 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
 #include "content/browser/isolated_origin_util.h"
@@ -1146,28 +1145,15 @@ bool ChildProcessSecurityPolicyImpl::CanSendMidiSysExMessage(int child_id) {
   return state->second->can_send_midi_sysex();
 }
 
-void ChildProcessSecurityPolicyImpl::AddIsolatedOrigin(
-    const url::Origin& origin) {
-  CHECK(IsolatedOriginUtil::IsValidIsolatedOrigin(origin));
+void ChildProcessSecurityPolicyImpl::AddIsolatedOrigins(
+    const std::vector<url::Origin>& origins_to_add) {
+  for (const url::Origin& origin : origins_to_add)
+    CHECK(IsolatedOriginUtil::IsValidIsolatedOrigin(origin));
 
+  // Taking the lock once and doing a batch insertion via base::flat_set::insert
+  // is important because of performance characteristics of base::flat_set.
   base::AutoLock lock(lock_);
-  if (isolated_origins_.count(origin)) {
-    LOG(ERROR) << "Ignoring duplicate isolated origin: " << origin.Serialize();
-    return;
-  }
-
-  isolated_origins_.insert(origin);
-}
-
-void ChildProcessSecurityPolicyImpl::AddIsolatedOriginsFromCommandLine(
-    const std::string& origin_list) {
-  for (const base::StringPiece& origin_piece :
-       base::SplitStringPiece(origin_list, ",", base::TRIM_WHITESPACE,
-                              base::SPLIT_WANT_NONEMPTY)) {
-    url::Origin origin = url::Origin::Create((GURL(origin_piece)));
-    if (!origin.unique())
-      AddIsolatedOrigin(origin);
-  }
+  isolated_origins_.insert(origins_to_add.begin(), origins_to_add.end());
 }
 
 bool ChildProcessSecurityPolicyImpl::IsIsolatedOrigin(
