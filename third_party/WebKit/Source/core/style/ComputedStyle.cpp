@@ -1347,6 +1347,7 @@ const AtomicString& ComputedStyle::TextEmphasisMarkString() const {
 }
 
 CSSAnimationData& ComputedStyle::AccessAnimations() {
+  DCHECK(!AnimationsLocked());
   if (!AnimationsInternal())
     SetAnimationsInternal(CSSAnimationData::Create());
   return *AnimationsInternal();

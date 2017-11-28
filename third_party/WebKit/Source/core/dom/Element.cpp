@@ -2025,6 +2025,8 @@ void Element::RecalcStyle(StyleRecalcChange change) {
         if (ElementAnimations* element_animations =
                 data->GetElementAnimations())
           element_animations->SetAnimationStyleChange(false);
+        if (ComputedStyle* style = MutableComputedStyle())
+          style->SetAnimationsLocked(false);
       }
     }
     if (ParentComputedStyle()) {
@@ -2307,6 +2309,8 @@ void Element::SetAnimationStyleChange(bool animation_style_change) {
   if (ElementAnimations* element_animations =
           GetElementRareData()->GetElementAnimations())
     element_animations->SetAnimationStyleChange(animation_style_change);
+  if (ComputedStyle* style = MutableComputedStyle())
+    style->SetAnimationsLocked(animation_style_change);
 }
 
 void Element::ClearAnimationStyleChange() {
@@ -2315,6 +2319,8 @@ void Element::ClearAnimationStyleChange() {
   if (ElementAnimations* element_animations =
           GetElementRareData()->GetElementAnimations())
     element_animations->SetAnimationStyleChange(false);
+  if (ComputedStyle* style = MutableComputedStyle())
+    style->SetAnimationsLocked(false);
 }
 
 void Element::SetNeedsAnimationStyleRecalc() {
