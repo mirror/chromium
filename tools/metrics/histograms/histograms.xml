@@ -89289,6 +89289,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="UI.CompositorResizeLock.TimedOut" units="BooleanHit">
+  <owner>fsamuel@chromium.org</owner>
+  <summary>
+    Tracks whether the CompositorResizeLock is being released due to timing out
+    or not.
+  </summary>
+</histogram>
+
 <histogram name="UI.DeviceScale" units="%">
   <owner>bsep@chromium.org</owner>
   <summary>
@@ -92607,6 +92615,23 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Records whenever an intermediate keyboard state has been active for longer
     than a fixed timeout.
+  </summary>
+</histogram>
+
+<histogram name="Viz.SurfaceDependencyDeadline.DeadlineHit" units="BooleanHit">
+  <owner>fsamuel@chromium.org</owner>
+  <summary>
+    Tracks whether an activation of a surface was due to due to a deadline or
+    the resolution of dependencies.
+  </summary>
+</histogram>
+
+<histogram name="Viz.SurfaceDependencyDeadline.Duration" units="ms">
+  <owner>fsamuel@chromium.org</owner>
+  <summary>
+    The amount of time it took for a Surface with unresolved dependencies to
+    activate. Note that some activations may be triggered due to a deadline
+    hitting. That is tracked in the DeadlineHit histogram.
   </summary>
 </histogram>
 
