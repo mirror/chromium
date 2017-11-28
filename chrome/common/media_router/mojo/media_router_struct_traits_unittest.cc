@@ -50,6 +50,7 @@ TEST_F(MediaRouterStructTraitsTest, DialMediaSink) {
   GURL app_url("https://example.com");
 
   MediaSink sink(sink_id, sink_name, icon_type);
+  sink.set_provider_id(MediaRouteProviderId::EXTENSION);
   DialSinkExtraData extra_data;
   EXPECT_TRUE(extra_data.ip_address.AssignFromIPLiteral(ip_address));
   extra_data.model_name = model_name;
@@ -71,6 +72,7 @@ TEST_F(MediaRouterStructTraitsTest, CastMediaSink) {
   std::string model_name("model name");
 
   MediaSink sink(sink_id, sink_name, icon_type);
+  sink.set_provider_id(MediaRouteProviderId::EXTENSION);
   CastSinkExtraData extra_data;
   extra_data.ip_endpoint = net::IPEndPoint(net::IPAddress(192, 168, 1, 2), 0);
   extra_data.model_name = model_name;
@@ -92,6 +94,7 @@ TEST_F(MediaRouterStructTraitsTest, GenericMediaSink) {
   SinkIconType icon_type(SinkIconType::CAST);
 
   MediaSink sink(sink_id, sink_name, icon_type);
+  sink.set_provider_id(MediaRouteProviderId::EXTENSION);
   MediaSinkInternal generic_sink;
   generic_sink.set_sink(sink);
 
