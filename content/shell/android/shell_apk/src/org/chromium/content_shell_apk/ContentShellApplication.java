@@ -28,8 +28,7 @@ public class ContentShellApplication extends ContentApplication {
         PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX);
         ApplicationStatus.initialize(this);
     }
-
-    @Override
+    
     public void initCommandLine() {
         if (!CommandLine.isInitialized()) {
             CommandLine.initFromFile(COMMAND_LINE_FILE);
