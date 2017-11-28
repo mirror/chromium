@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59895730_44dbbbc4",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-28T08:21:19Z",
+      "side": 1,
+      "message": "Just calling OnConnectionError() won\u0027t delete the object because its |bindings_| is not empty, yet.\nAnother way to delete it is to stop the running service worker which holds the reference to it, see https://chromium-review.googlesource.com/c/chromium/src/+/778360/7/content/browser/background_sync/background_sync_manager_unittest.cc.\nBut I think \u0027delete xxx\u0027 is clearer/straightforward for unit test, so chose that way.",
+      "parentUuid": "0635326c_34991906",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd1e75da_d1b467c1",
         "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1d8d4d_50d5934f",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-28T08:21:19Z",
+      "side": 1,
+      "message": "Discussing in previous same comment.",
+      "parentUuid": "dd1e75da_d1b467c1",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "193e4055_676d8291",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-28T08:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aaa5a2c_14b34f25",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a99a0993_c7c5a7ec",
         "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e23488_b2601e3f",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-28T08:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a99a0993_c7c5a7ec",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "38417088_5274c045",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-28T08:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee290ede_f82387b3",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abee81b5_3f7dae7a",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09fcd7f2_d3922b39",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-28T08:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abee81b5_3f7dae7a",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +232,30 @@
       "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a349062e_6bdf686f",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-28T08:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2190d15e_d4c01ba6",
+      "range": {
+        "startLine": 154,
+        "startChar": 32,
+        "endLine": 154,
+        "endChar": 36
+      },
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
