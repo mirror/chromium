@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08fa8feb_d237c650",
+        "filename": "ui/android/java/src/org/chromium/ui/display/PhysicalDisplayAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T15:02:44Z",
+      "side": 1,
+      "message": "OK. I took the liberty to do the same for `bitsPerComponent` below :)",
+      "parentUuid": "9e3adfec_13fb4bcc",
+      "revId": "4189a41a95c375ea922345e8a03406fb7f1b3f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8ed2549_b877df4b",
         "filename": "ui/android/java/src/org/chromium/ui/display/PhysicalDisplayAndroid.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T17:20:21Z",
       "side": 1,
       "message": "indent?",
+      "revId": "4189a41a95c375ea922345e8a03406fb7f1b3f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6520c4f7_82bb4f1c",
+        "filename": "ui/android/java/src/org/chromium/ui/display/PhysicalDisplayAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T15:02:44Z",
+      "side": 1,
+      "message": "Sadly, that\u0027s the indent `git cl format` forced me to do :(",
+      "parentUuid": "e8ed2549_b877df4b",
       "revId": "4189a41a95c375ea922345e8a03406fb7f1b3f7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
