@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "810812d6_302ba4bc",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-28T19:30:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae899fd9_db2fd935",
+      "revId": "92d642f7cf810da59e814bde33f41c115299210c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6057e15b_c7428b54",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 2
@@ -57,6 +75,30 @@
       "revId": "92d642f7cf810da59e814bde33f41c115299210c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d1057e_5e1bf084",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19067,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-28T19:30:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6057e15b_c7428b54",
+      "range": {
+        "startLine": 19067,
+        "startChar": 72,
+        "endLine": 19067,
+        "endChar": 0
+      },
+      "revId": "92d642f7cf810da59e814bde33f41c115299210c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
