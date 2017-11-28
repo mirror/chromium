@@ -1102,10 +1102,6 @@ std::unique_ptr<WebFrameScheduler> ChromeClientImpl::CreateFrameScheduler(
                                                       frame_type);
 }
 
-double ChromeClientImpl::LastFrameTimeMonotonic() const {
-  return web_view_->LastFrameTimeMonotonic();
-}
-
 WebAutofillClient* ChromeClientImpl::AutofillClientFromFrame(
     LocalFrame* frame) {
   if (!frame) {
