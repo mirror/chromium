@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d9625b8_e07e946d",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-28T15:47:16Z",
+      "side": 1,
+      "message": "No, we do not know the event from mouse or touchpad in WM_POINTERDOWN message.",
+      "parentUuid": "f0af06c5_145332c6",
+      "range": {
+        "startLine": 338,
+        "startChar": 10,
+        "endLine": 338,
+        "endChar": 30
+      },
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da0acb56_0b28e7c6",
         "filename": "ui/base/win/direct_manipulation.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfb1256_4ade4e17",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-28T15:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da0acb56_0b28e7c6",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a9cb0605_7495f686",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-28T15:47:16Z",
+      "side": 1,
+      "message": "Changed the timer begin with DM_POINTERHITTEST and end with the transform complete. How to add hook to BeginFrame?",
+      "parentUuid": "b7789636_834681f4",
+      "range": {
+        "startLine": 161,
+        "startChar": 39,
+        "endLine": 161,
+        "endChar": 54
+      },
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50bdfa94_0f42b9c8",
         "filename": "ui/base/win/window_event_target.h",
         "patchSetId": 11
@@ -115,6 +187,30 @@
       "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161bfcac_a256dce3",
+        "filename": "ui/base/win/window_event_target.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-28T15:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50bdfa94_0f42b9c8",
+      "range": {
+        "startLine": 93,
+        "startChar": 18,
+        "endLine": 93,
+        "endChar": 37
+      },
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +243,24 @@
       "side": 1,
       "message": "It needs to be a MouseWheelEvent.. We ultimately want to define a Touchpad event. You could get the cursorposition from GetCursorPos(..) instead of storing it possibly.\n\nThe modifiers really should be populated correctly as well.",
       "parentUuid": "c1f58538_d6446fa0",
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e47647_0a1123ba",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-28T15:47:16Z",
+      "side": 1,
+      "message": "are the modifiers necessary? we don\u0027t zoom in/out for ctrl+touchpad scroll on Mac and CrOS.",
+      "parentUuid": "f0dc17f3_61ca9191",
       "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
