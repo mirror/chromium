@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25171542_6128fce6",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-28T22:48:26Z",
+      "side": 1,
+      "message": "nit: no {} needed here",
+      "revId": "4f4b97835569c6b82bdbb530cc564ba6e284bd69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
