@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4031aab6_aace3bbb",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-28T21:29:55Z",
+      "side": 1,
+      "message": "/*user_initiated\u003d*/true",
+      "revId": "d92a1d9bb8b7cca1d13cb444f554e255f1d358df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b315f15_9d134e07",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-28T21:29:55Z",
+      "side": 1,
+      "message": "Would it be useful to pass |userInitiated| flag?",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "d92a1d9bb8b7cca1d13cb444f554e255f1d358df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
