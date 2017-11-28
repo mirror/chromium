@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94038948_b407b48d",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-28T19:12:51Z",
+      "side": 1,
+      "message": "Mark, on ios-chrome-passkit design doc you said that it\u0027s OK to have dependencies on InfoBarManager, InfoBarManagerImpl and SimpleAlertInfoBarDelegate:\nhttps://docs.google.com/a/google.com/document/d/1ww4AGMXxgGc25l1VIZkTPblJWrRe4kStGzDHmHtFCpo/edit?disco\u003dAAAABbPXWH8\n\nbut you also said that coordinator should delegate infobar presentation to BVC:\nhttps://docs.google.com/a/google.com/document/d/1ww4AGMXxgGc25l1VIZkTPblJWrRe4kStGzDHmHtFCpo/edit?disco\u003dAAAABbPXWIw\n\nI think if we have to choose between 2 bad options (add code to BVC, or present infobar in coordinator), I would go with presenting the infobar in the coordinator. This is because I believe that bloated BVC is a bigger problem, than coordinators dependency on infobar code. But I don\u0027t have a strong opinion, so please let me know if you prefer the delegation for presenting the infobar.",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 26
+      },
+      "revId": "8c272214e7945d3f868ff611075d1fb739790163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
