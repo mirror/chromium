@@ -50,6 +50,80 @@
       "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99a0993_c7c5a7ec",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T07:24:08Z",
+      "side": 1,
+      "message": "Would it be better to do this Remove() in the destructor?",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee290ede_f82387b3",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T07:24:08Z",
+      "side": 1,
+      "message": "Also need some paragraph about how this class deletes itself when it\u0027s no longer needed.",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abee81b5_3f7dae7a",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T07:24:08Z",
+      "side": 1,
+      "message": "Add a comment about // Object deletes itself.",
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2190d15e_d4c01ba6",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T07:24:08Z",
+      "side": 1,
+      "message": "don\u0027t need \"just\"",
+      "range": {
+        "startLine": 154,
+        "startChar": 32,
+        "endLine": 154,
+        "endChar": 36
+      },
+      "revId": "522f0eb7ee2cbc06b1dbc7c9f3cde538d0ccc67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
