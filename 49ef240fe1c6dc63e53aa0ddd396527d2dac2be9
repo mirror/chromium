@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "7fde3507_e2ffe4bd",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T01:19:06Z",
+      "side": 1,
+      "message": "super nit: \"the long standing event timeout and the idle timeout\" for consistency with the order of the list below.",
+      "revId": "49ef240fe1c6dc63e53aa0ddd396527d2dac2be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5baaea3_a8ed5076",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T01:19:06Z",
+      "side": 1,
+      "message": "Can you also update this comment to explain the difference between S13nSW and non-S13nSW? In non-S13nSW the class does nothing, except calls the abort callbacks upon destruction?",
+      "revId": "49ef240fe1c6dc63e53aa0ddd396527d2dac2be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b6e0cd_919b603f",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T01:19:06Z",
+      "side": 1,
+      "message": "dont\u0027 need \"the\"  here",
+      "range": {
+        "startLine": 71,
+        "startChar": 39,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "49ef240fe1c6dc63e53aa0ddd396527d2dac2be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29efb76f_0acf6dd9",
         "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
         "patchSetId": 17
@@ -43,6 +100,40 @@
         "endLine": 74,
         "endChar": 73
       },
+      "revId": "49ef240fe1c6dc63e53aa0ddd396527d2dac2be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff814bc9_e1947f4a",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T01:19:06Z",
+      "side": 1,
+      "message": "I misunderstood what |idle_time_|\" is. I don\u0027t think you need the |kIdleDelay| detail, it makes it hard to parse. Recommend changing this to \"The time the service worker started (or will start) being considered idle. This time is null if there are any inflight events.\"",
+      "revId": "49ef240fe1c6dc63e53aa0ddd396527d2dac2be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abed6f1c_c75925cb",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-28T01:19:06Z",
+      "side": 1,
+      "message": "Could we have a very simple test also when S13nSW flag is disabled (hopefully not a parameterized test, those are heavy).",
       "revId": "49ef240fe1c6dc63e53aa0ddd396527d2dac2be9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
