@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "6b85d418_8010252f",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "That\u0027s probably true, but it\u0027s certainly safer to first delete them since string resources have arbitrary names. E.g.:\n\nres/values-zh-rTW/tw_values.xml\nres/values-zh-rHK/hk_values.xml\n\nThis would be valid an aapt wouldn\u0027t complain so long as both xmls defined resources with the same names.\n\nI haven\u0027t seen different names be used, so I don\u0027t think it\u0027s a problem in practice, but I think it\u0027d be better to explicitly delete in a first for-loop.",
+      "parentUuid": "89cffb28_9922b222",
+      "revId": "9fc0dbfc6395d6eabbc82f68f1c9eed7b4101166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f5224b8_f79799d1",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 4

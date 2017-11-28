@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf320c87_ebf7e2bf",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "nit: prefix with _",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57737de2_b5895921",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "nit: inline this... Existing pattern seems to be that args go inline.",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce7c01e_22a71e47",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "nit: asked estevenson about this, and touch is not necessary. This command is here just to mkdirs. Can you change to build_utils.MakeDirectory(os.path.dirname(hk_path)",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb38549c_8edeff31",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "nit: prefix with _ (same with other helpers below that are missing it)",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f404cac6_cdc495d8",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "nit: indent it too large here (and in _PackageLibrary)",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9867dd87_68c2f448",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "nit: Add comment:\n  # Creates a .zip with AndroidManifest.xml, resources.arsc, res/*\n  # Also creates R.txt",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a7178f_c2bafc36",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "nit: Can you add a comment here saying that it\u0027s only purpose is creating R.txt.",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328bf74b_ccf9c281",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "nit: never start a function with a blank line",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed33d571_66d2d81e",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "I think this should come first to match the order that they\u0027re listed in GN.",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08ae4a4_3e902498",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "nit: add the only when options.apk_path is set?",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59573bbe_b608ab07",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "nit: Move this line into the condition that also adds the --apk-path arg (other output are added this way).",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f209db70_e44b5e06",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T01:59:08Z",
+      "side": 1,
+      "message": "Yes we do :).",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
