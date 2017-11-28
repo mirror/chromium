@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a9189a4_8f030227",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-11-28T15:33:13Z",
+      "side": 1,
+      "message": "Even if just for this file, it might be nice to \n\n  #define Z_STATIC_ASSERT(name,cond) ...\n\nI can imagine it\u0027d help to read that if you\u0027re unfamiliar with the idiom,\nor have become accustomed to reading static_assert / _Static_assert.",
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fca41b_9e2d60db",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-11-28T15:33:13Z",
+      "side": 1,
+      "message": "Looks like we only ever use these next two functions as \n\n   storechunk(out, loadchunk(from));\n\nThat suggests\n\n   copy_one_chunk(out, from);\n\n?  I think that\u0027d could just be implemented as\n\n   Z_BUILTIN_MEMCPY(out, from, CHUNKCOPY_CHUNK_SIZE);",
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3607311_ee7de53e",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-11-28T15:33:13Z",
+      "side": 1,
+      "message": "This section might be easier to follow transposed with all the NEON first, then all the SSE?\n\nI suspect we can replace these macros with static inline functions without losing any of the inlining.  It\u0027ll be nicer for our future selves to work with typed functions  and not so much #()\\ noise, I bet.",
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3b538a_d0d0e848",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-11-28T15:33:13Z",
+      "side": 1,
+      "message": "vld1q_dup_u64() takes a uint64_t*, not a void*.  So I think GCC\u0027s right to assume 8 byte alignment here, and further, Clang could very well start doing the same at any time.\n\nI suspect that to play strictly by alignment rules, we really need to use only vld...u8() methods to load.  This alternate impl. here looks fine to me.",
+      "range": {
+        "startLine": 174,
+        "startChar": 3,
+        "endLine": 175,
+        "endChar": 23
+      },
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a054633f_dff899ce",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-11-28T15:33:13Z",
+      "side": 1,
+      "message": "Same deal here... isn\u0027t the compiler free to assume the argument to vld1q_dup_u32() really is 32-bit aligned?",
+      "range": {
+        "startLine": 195,
+        "startChar": 31,
+        "endLine": 195,
+        "endChar": 52
+      },
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183d509e_ea7d1738",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-11-28T15:33:13Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3769c9e_9b3de798",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-11-28T15:33:13Z",
+      "side": 1,
+      "message": "I think we can just use Z_BUILTIN_MEMCPY() here?",
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
