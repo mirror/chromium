@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5c19c19_26a27491",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-28T18:08:21Z",
+      "side": 1,
+      "message": "Yes SnapWindow() might not change the state (e.g., it\u0027s possible the state LEFT_SNAPPED -\u003e LEFT_SNAPPED or BOTH_SNAPPED -\u003e BOTH_SNAPPED). But we might still want to record the user\u0027s attempt to snap a window.",
+      "parentUuid": "e173533c_6f8b1fa8",
+      "revId": "084439b00730f56442ba896f3795193a78221388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fea7e407_b198098a",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-28T16:13:02Z",
       "side": 1,
       "message": "same here",
+      "revId": "084439b00730f56442ba896f3795193a78221388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d281f34a_27871080",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-28T18:08:21Z",
+      "side": 1,
+      "message": "The same as above. We might still want to record the user\u0027s double tapping action.",
+      "parentUuid": "fea7e407_b198098a",
       "revId": "084439b00730f56442ba896f3795193a78221388",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
