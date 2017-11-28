@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9586e80c_e1d98a35",
+        "filename": "chrome/android/java/res/layout/accept_languages_list.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6428d724_91b3955e",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c44986a_d4307950",
         "filename": "chrome/android/java/res/layout/languages_preference.xml",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b955066f_c12722aa",
+        "filename": "chrome/android/java/res/layout/languages_preference.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "It\u0027s interesting, in @style/PreferenceLayout, it set layout\u0027s top/bottom and start/end.\n\nIf I used padding\u003d0 to reset all paddings to 0, the start/end paddings still exists. I guess in the Android implementation, padding\u003d0 will reset left/right/top/bottom, not including start/end.",
+      "parentUuid": "4c44986a_d4307950",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 25
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "2692b18a_7e447737",
+        "filename": "chrome/android/java/res/layout/languages_selection_toolbar.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Thanks for the tips, Will do. That could save me some code to build a selectable layout before we support multi selection.",
+      "parentUuid": "42143464_827248cb",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "641e79f7_411578da",
         "filename": "chrome/android/java/res/menu/languages_action_bar_menu.xml",
         "patchSetId": 4
@@ -106,6 +178,30 @@
       "writtenOn": "2017-11-28T03:41:00Z",
       "side": 1,
       "message": "I think we probably want to always show this as an action.",
+      "range": {
+        "startLine": 15,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 40
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17faede7_3b3cdc2a",
+        "filename": "chrome/android/java/res/menu/languages_action_bar_menu.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "As the latest comments, I will try the \"Cookie\" way. So this may be not needed anymore.\nSame as below",
+      "parentUuid": "641e79f7_411578da",
       "range": {
         "startLine": 15,
         "startChar": 12,
@@ -181,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "82cb5a44_a6aadf3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ffd14648_fd2aaf19",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "337223ff_e135397c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
         "patchSetId": 4
@@ -204,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "71abb0ca_d6eae913",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "337223ff_e135397c",
+      "range": {
+        "startLine": 930,
+        "startChar": 7,
+        "endLine": 930,
+        "endChar": 13
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a7cb9f2_59cee2ed",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
         "patchSetId": 4
@@ -218,6 +356,24 @@
       "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10edf6b_fa8af730",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a7cb9f2_59cee2ed",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -244,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "73a1a9af_9632cc1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7fa638a2_93aa1952",
+      "range": {
+        "startLine": 23,
+        "startChar": 32,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f35c81f_ce675a7b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
         "patchSetId": 4
@@ -267,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "ca5abad2_e1103ec8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2f35c81f_ce675a7b",
+      "range": {
+        "startLine": 24,
+        "startChar": 20,
+        "endLine": 24,
+        "endChar": 38
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28a94865_1b408484",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
         "patchSetId": 4
@@ -281,6 +485,24 @@
       "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f42ca8_9996a5cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "28a94865_1b408484",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -307,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "c655635c_9217b5fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cb8fe007_5ef296cc",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2803e39f_4f4ffa09",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 4
@@ -324,6 +570,24 @@
     },
     {
       "key": {
+        "uuid": "ab3e01ed_f888da6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "The reason I set this manually because I don\u0027t want to expose the Fragment Activity to this class.\n\nSo in the Preference\u0027s host fragment, OnClickListener will be set in fragment\u0027s onCreate, which is a very early stage.",
+      "parentUuid": "2803e39f_4f4ffa09",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b1a61a2_e7518479",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 4
@@ -338,6 +602,24 @@
       "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a5eb39_e52bab87",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2b1a61a2_e7518479",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -364,6 +646,30 @@
     },
     {
       "key": {
+        "uuid": "1f741cd9_944590d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d03e2569_43eb4a23",
+      "range": {
+        "startLine": 118,
+        "startChar": 48,
+        "endLine": 118,
+        "endChar": 58
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a8fa136_8bd87923",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 4
@@ -375,6 +681,30 @@
       "writtenOn": "2017-11-28T03:41:00Z",
       "side": 1,
       "message": "Is it possible for accept languages to change through something other than these methods? If so, is there a listener/observer that could be notified of changes in the back end?",
+      "range": {
+        "startLine": 146,
+        "startChar": 7,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e512c64_c9f404bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Thanks, Actually before I created this \"LanguageListUpdater\" interface, I tried to figure out whether there is something similar like Tiktok Events in Chrome code base (https://g3doc.corp.google.com/java/com/google/apps/tiktok/g3doc/ui/events/intro.md?cl\u003dhead), which is an efficient way to broadcast events from leaf (sub view) to Root (Activity). \n\nWith event framework as above, I could get rid of \"setAddButtonClickListener\" and \"LanguageListUpdater\" which will make the code much cleaner, Unfortunately I didn\u0027t find something useful after digging for a while. \n\nIf you know an existing framework for the event handling, please let me know. Probably in another CL?",
+      "parentUuid": "5a8fa136_8bd87923",
       "range": {
         "startLine": 146,
         "startChar": 7,
@@ -410,6 +740,30 @@
     },
     {
       "key": {
+        "uuid": "f9e0054f_5c5a1798",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "languages map is read from a list returned by PrefServiceBridge.getChromeLanguageList(), and when native generates the ChromeLanguageList for Android, it will filter some languages out if these language codes are not recognized by current Android OS.\n\nBut the getUserLanguageCodes() simply returns a language code list shared by all platforms, so some language codes inside may be NOT recognized by device\u0027s Android OS, we need to check the list first.\n\nEg. suppose all languages predefined in Chrome native are [a,b,c,d,e] and \u0027d\u0027 is supported by window 10. Android 5.1 supports only [a,b,c,e], while getUserLanguageCodes could return [a,d]. but for devices with Android 5.1,  only [a] will be listed.\n\nHope the explanation is clear.",
+      "parentUuid": "a6390617_496de52f",
+      "range": {
+        "startLine": 163,
+        "startChar": 12,
+        "endLine": 169,
+        "endChar": 0
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8413979_04c846ca",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 4
@@ -427,6 +781,24 @@
     },
     {
       "key": {
+        "uuid": "19b93ece_feb05120",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b8413979_04c846ca",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e22c35_da83f866",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
         "patchSetId": 4
@@ -438,6 +810,30 @@
       "writtenOn": "2017-11-28T03:41:00Z",
       "side": 1,
       "message": "This looks like it has some chunks code in common with LanguageListPreference. Is there a way to share code to reduce duplicate lines?",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabc455b_9d703770",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "As you motioned in the latest comment, I will try the \"Cookie\" preference way to re-implement the fragment.\n\nSo most of the code below will be removed.",
+      "parentUuid": "90e22c35_da83f866",
       "range": {
         "startLine": 38,
         "startChar": 13,
@@ -599,6 +995,24 @@
     },
     {
       "key": {
+        "uuid": "e32eb820_9e58835f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd58815_18c68057",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e1741eb_f25c5a1a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
         "patchSetId": 4
@@ -731,6 +1145,30 @@
     },
     {
       "key": {
+        "uuid": "987fae69_8c9d2055",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54c517e2_fe26ae7e",
+      "range": {
+        "startLine": 218,
+        "startChar": 12,
+        "endLine": 219,
+        "endChar": 38
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60fe9764_5d641eb2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
         "patchSetId": 4
@@ -742,6 +1180,24 @@
       "writtenOn": "2017-11-28T03:41:00Z",
       "side": 1,
       "message": "Why 7?",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797c54be_63924091",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-28T15:39:56Z",
+      "side": 1,
+      "message": "Do we have a Util class or Interface to store all kinds of Intents definition (eg. request_codes, data_key...), which could help us avoid any conflict.\n\nI simply checked some other components, the codes they used seems random\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkActivity.java?type\u003dcs\u0026q\u003dEDIT_BOOKMARK_REQUEST_CODE+file:%5Esrc/chrome/android/java/src/org/chromium/chrome/browser/bookmarks/+package:%5Echromium$\u0026l\u003d24\n\nSo I just made 7 for this. Glad to know the guideline for the definition if you point it out.",
+      "parentUuid": "60fe9764_5d641eb2",
       "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
