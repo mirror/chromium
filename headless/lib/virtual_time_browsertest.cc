@@ -114,14 +114,15 @@ class VirtualTimeObserverTest : public VirtualTimeBrowserTest {
   // emulation::Observer implementation:
   void OnVirtualTimeBudgetExpired(
       const emulation::VirtualTimeBudgetExpiredParams& params) override {
-    std::vector<std::string> expected_log = {"step1",
-                                             "Advanced to 100ms",
+    std::vector<std::string> expected_log = {"Advanced to 10ms",
+                                             "step1",
+                                             "Advanced to 110ms",
                                              "step2",
-                                             "Paused @ 100ms",
-                                             "Advanced to 200ms",
+                                             "Paused @ 110ms",
+                                             "Advanced to 210ms",
                                              "step3",
-                                             "Paused @ 200ms",
-                                             "Advanced to 300ms",
+                                             "Paused @ 210ms",
+                                             "Advanced to 310ms",
                                              "step4",
                                              "pass"};
     // Note after the PASS step there are a number of virtual time advances, but
@@ -598,5 +599,51 @@ class VirtualTimeAndHistoryNavigationTest : public VirtualTimeBrowserTest {
 };
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(VirtualTimeAndHistoryNavigationTest);
+
+namespace {
+static constexpr char kResourceErrorLoop[] = R"(
+<html>
+<script>
+var counter = 1;
+</script>
+<img src="1" onerror="this.src='' + ++counter;">
+</html>
+)";
+}
+
+class VirtualTimeAndResourceErrorLoopTest : public VirtualTimeBrowserTest {
+ public:
+  VirtualTimeAndResourceErrorLoopTest() { SetInitialURL("http://foo.com/"); }
+
+  ProtocolHandlerMap GetProtocolHandlers() override {
+    ProtocolHandlerMap protocol_handlers;
+    std::unique_ptr<TestInMemoryProtocolHandler> http_handler(
+        new TestInMemoryProtocolHandler(browser()->BrowserIOThread(), nullptr));
+    http_handler_ = http_handler.get();
+    http_handler->InsertResponse("http://foo.com/",
+                                 {kResourceErrorLoop, "text/html"});
+    protocol_handlers[url::kHttpScheme] = std::move(http_handler);
+    return protocol_handlers;
+  }
+
+  void RunDevTooledTest() override {
+    http_handler_->SetHeadlessBrowserContext(browser_context_);
+    VirtualTimeBrowserTest::RunDevTooledTest();
+  }
+
+  // emulation::Observer implementation:
+  void OnVirtualTimeBudgetExpired(
+      const emulation::VirtualTimeBudgetExpiredParams& params) override {
+    // The budget is 5000 virtual ms.  The resources are delivered with 10
+    // virtual ms delay, that plus the initial page means we should have 501
+    // urls.
+    EXPECT_EQ(501u, http_handler_->urls_requested().size());
+    FinishAsynchronousTest();
+  }
+
+  TestInMemoryProtocolHandler* http_handler_;  // NOT OWNED
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(VirtualTimeAndResourceErrorLoopTest);
 
 }  // namespace headless
