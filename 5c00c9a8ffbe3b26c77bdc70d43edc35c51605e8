@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cea5bcbc_ac194de8",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-28T20:50:17Z",
+      "side": 1,
+      "message": "Are you changing this to -1 out of concern that it might lose precision when compared to 0 later?",
+      "revId": "5c00c9a8ffbe3b26c77bdc70d43edc35c51605e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
