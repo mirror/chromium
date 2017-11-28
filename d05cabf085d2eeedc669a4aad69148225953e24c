@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2609b50_da248ecc",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-28T01:01:22Z",
+      "side": 1,
+      "message": "This comment is too hard to understand. Can you reword it?",
+      "revId": "d05cabf085d2eeedc669a4aad69148225953e24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45dae01_4650e7a7",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-28T01:01:22Z",
+      "side": 1,
+      "message": "I don\u0027t understand these conditions. PAGE_TRANSITION_AUTO_BOOKMARK is documented as opening the page from a suggestion... doesn\u0027t seem particularly relevant. Is the documentation wrong? What exact launching cases are being handled here?\n\nI think \"return PROCEED\" means that we will handle the nav in the browser. So why are there two different outcomes here: if it\u0027s a redirect and the target doesn\u0027t match the app window, you explicitly OpenInChrome(browser) and then PROCEED. If not, you still PROCEED. I don\u0027t understand what this is doing.",
+      "revId": "d05cabf085d2eeedc669a4aad69148225953e24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
