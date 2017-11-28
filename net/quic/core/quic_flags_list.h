@@ -209,3 +209,6 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_truncate_long_details, true)
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2,
           false)
+
+// If true, use deframer from net/quic/http instead of net/http2.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_hq_deframer, true)
