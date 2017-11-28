@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "605c3633_32ab55d6",
+        "filename": "chrome/browser/ui/webui/chromeos/bluetooth_pairing_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T21:53:39Z",
+      "side": 1,
+      "message": "nit: default",
+      "range": {
+        "startLine": 94,
+        "startChar": 54,
+        "endLine": 94,
+        "endChar": 2
+      },
+      "revId": "8d87ed7ba5ec9357766fb73363de95e27b312732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf1a9d5_cd46121c",
+        "filename": "chrome/browser/ui/webui/chromeos/bluetooth_pairing_dialog.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T21:53:39Z",
+      "side": 1,
+      "message": "typo:pairing",
+      "range": {
+        "startLine": 17,
+        "startChar": 23,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "8d87ed7ba5ec9357766fb73363de95e27b312732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
