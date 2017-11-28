@@ -162,8 +162,6 @@ size_t RegisterChromeCrashKeys() {
     {mac::kSendAction, kMediumSize},
     {mac::kNSEvent, kMediumSize},
     {mac::kToolbarNibInfo, kMediumSize},
-    {mac::kZombie, kMediumSize},
-    {mac::kZombieTrace, kMediumSize},
     // content/:
     {"text-input-context-client", kMediumSize},
 // media/:
