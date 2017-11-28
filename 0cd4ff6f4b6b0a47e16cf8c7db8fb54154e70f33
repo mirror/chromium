@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03d15591_33fc9e9a",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-28T00:50:11Z",
+      "side": 1,
+      "message": "sorry, forgot to update that... meant to change the TODO.",
+      "parentUuid": "a3da7a49_e6cca8eb",
+      "revId": "0cd4ff6f4b6b0a47e16cf8c7db8fb54154e70f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc8b8783_211e04d0",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "676158d3_2d5ee527",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-28T00:50:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc8b8783_211e04d0",
+      "revId": "0cd4ff6f4b6b0a47e16cf8c7db8fb54154e70f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6136ac81_acefe137",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "0cd4ff6f4b6b0a47e16cf8c7db8fb54154e70f33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737764e4_2ef50f00",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-28T00:50:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6136ac81_acefe137",
+      "revId": "0cd4ff6f4b6b0a47e16cf8c7db8fb54154e70f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
