@@ -132,7 +132,7 @@ void CopyFragmentDataToLayoutBoxForInlineChildren(
     LayoutObject* layout_object = child->GetLayoutObject();
     if (layout_object && layout_object->IsLayoutReplaced()) {
       LayoutBox& layout_box = ToLayoutBox(*layout_object);
-      layout_box.SetLocation({child->Offset().left, child->Offset().top});
+      layout_box.SetLocation((offset + child->Offset()).ToLayoutPoint());
     }
 
     if (child->IsContainer()) {
