@@ -337,13 +337,17 @@ class MockSyntheticTouchscreenPinchTouchTarget
   ZoomDirection zoom_direction() const { return zoom_direction_; }
 
   float ComputeScaleFactor() const {
+    // This compensates for kSlopEpsilon in scale_gesture_detector. The
+    // synthetic gesture controller must assume an extra pixel of delta to
+    // exceed the slop.
+    int kEpsilon = 1;
     switch (zoom_direction_) {
       case ZOOM_IN:
-        return last_pointer_distance_ /
-               (initial_pointer_distance_ + 2 * GetTouchSlopInDips());
+        return last_pointer_distance_ / (initial_pointer_distance_ +
+                                         2 * (GetTouchSlopInDips() + kEpsilon));
       case ZOOM_OUT:
-        return last_pointer_distance_ /
-               (initial_pointer_distance_ - 2 * GetTouchSlopInDips());
+        return last_pointer_distance_ / (initial_pointer_distance_ -
+                                         2 * (GetTouchSlopInDips() + kEpsilon));
       case ZOOM_DIRECTION_UNKNOWN:
         return 1.0f;
       default:
