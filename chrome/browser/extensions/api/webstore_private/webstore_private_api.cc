@@ -218,14 +218,15 @@ WebstorePrivateBeginInstallWithManifest3Function::Run() {
   ActiveInstallData install_data(details().id);
   scoped_active_install_.reset(new ScopedActiveInstall(tracker, install_data));
 
-  net::URLRequestContextGetter* context_getter = nullptr;
+  content::mojom::URLLoaderFactory* loader_factory = nullptr;
   if (!icon_url.is_empty()) {
-    context_getter = content::BrowserContext::GetDefaultStoragePartition(
-        browser_context())->GetURLRequestContext();
+    loader_factory =
+        content::BrowserContext::GetDefaultStoragePartition(browser_context())
+            ->GetURLLoaderFactoryForBrowserProcess();
   }
 
   scoped_refptr<WebstoreInstallHelper> helper = new WebstoreInstallHelper(
-      this, details().id, details().manifest, icon_url, context_getter);
+      this, details().id, details().manifest, icon_url, loader_factory);
 
   // The helper will call us back via OnWebstoreParseSuccess or
   // OnWebstoreParseFailure.
