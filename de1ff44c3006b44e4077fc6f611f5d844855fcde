@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbea3587_3f2dfd1c",
+        "filename": "chrome/browser/ui/webui/chromeos/bluetooth_pairing_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T21:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c3d223e_c98081eb",
+      "range": {
+        "startLine": 64,
+        "startChar": 50,
+        "endLine": 64,
+        "endChar": 52
+      },
+      "revId": "de1ff44c3006b44e4077fc6f611f5d844855fcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a27c8085_7b63bd3c",
         "filename": "chrome/browser/ui/webui/chromeos/bluetooth_pairing_dialog.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "78089dd1_16a3ff16",
+        "filename": "chrome/browser/ui/webui/chromeos/bluetooth_pairing_dialog.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T21:46:52Z",
+      "side": 1,
+      "message": "Oops, done, thanks.",
+      "parentUuid": "a27c8085_7b63bd3c",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "de1ff44c3006b44e4077fc6f611f5d844855fcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09690ac6_11bce50d",
         "filename": "chrome/browser/ui/webui/chromeos/system_web_dialog_delegate.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-28T19:54:41Z",
       "side": 1,
       "message": "Are you sure it\u0027s OK to put these dialogs in the same container as login/oobe UI?\n\nI imagine that clicking outside the dialog window would activate the login UI window, which \nwould mean that the system dialog would get stacked behind the login UI (and, given that login window is full-screen, become unreachable by the user).",
+      "range": {
+        "startLine": 64,
+        "startChar": 27,
+        "endLine": 64,
+        "endChar": 66
+      },
+      "revId": "de1ff44c3006b44e4077fc6f611f5d844855fcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a947d0c6_ff3267e0",
+        "filename": "chrome/browser/ui/webui/chromeos/system_web_dialog_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-28T21:46:52Z",
+      "side": 1,
+      "message": "That is a really good point, thanks for catching it. I think the best solution for login is to use the LockSystemModalContainer there, rather than trying to introduce an always on top lock screen container. There\u0027s no real value in the login screen to having these be non modal.",
+      "parentUuid": "09690ac6_11bce50d",
       "range": {
         "startLine": 64,
         "startChar": 27,
