@@ -519,18 +519,17 @@ TEST_P(JsonPrefStoreTest, ReadAsyncWithInterceptor) {
 TEST_F(JsonPrefStoreTest, WriteCountHistogramTestBasic) {
   base::HistogramTester histogram_tester;
 
-  SimpleTestClock* test_clock = new SimpleTestClock;
-  SetCurrentTimeInMinutes(0, test_clock);
+  SimpleTestClock test_clock;
+  SetCurrentTimeInMinutes(0, &test_clock);
   JsonPrefStore::WriteCountHistogram histogram(
       base::TimeDelta::FromSeconds(10),
-      base::FilePath(FILE_PATH_LITERAL("/tmp/Local State")),
-      std::unique_ptr<base::Clock>(test_clock));
+      base::FilePath(FILE_PATH_LITERAL("/tmp/Local State")), &test_clock);
   int32_t report_interval =
       JsonPrefStore::WriteCountHistogram::kHistogramWriteReportIntervalMins;
 
   histogram.RecordWriteOccured();
 
-  SetCurrentTimeInMinutes(1.5 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(1.5 * report_interval, &test_clock);
   histogram.ReportOutstandingWrites();
   std::unique_ptr<HistogramSamples> samples =
       histogram.GetHistogram()->SnapshotSamples();
@@ -547,26 +546,25 @@ TEST_F(JsonPrefStoreTest, WriteCountHistogramTestBasic) {
 TEST_F(JsonPrefStoreTest, WriteCountHistogramTestSinglePeriod) {
   base::HistogramTester histogram_tester;
 
-  SimpleTestClock* test_clock = new SimpleTestClock;
-  SetCurrentTimeInMinutes(0, test_clock);
+  SimpleTestClock test_clock;
+  SetCurrentTimeInMinutes(0, &test_clock);
   JsonPrefStore::WriteCountHistogram histogram(
       base::TimeDelta::FromSeconds(10),
-      base::FilePath(FILE_PATH_LITERAL("/tmp/Local State")),
-      std::unique_ptr<base::Clock>(test_clock));
+      base::FilePath(FILE_PATH_LITERAL("/tmp/Local State")), &test_clock);
   int32_t report_interval =
       JsonPrefStore::WriteCountHistogram::kHistogramWriteReportIntervalMins;
 
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(0.5 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(0.5 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(0.7 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(0.7 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
 
   // Nothing should be recorded until the report period has elapsed.
   std::string histogram_name = histogram.GetHistogram()->histogram_name();
   histogram_tester.ExpectTotalCount(histogram_name, 0);
 
-  SetCurrentTimeInMinutes(1.3 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(1.3 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
 
   // Now the report period has elapsed.
@@ -575,7 +573,7 @@ TEST_F(JsonPrefStoreTest, WriteCountHistogramTestSinglePeriod) {
 
   // The last write won't be recorded because the second count period hasn't
   // fully elapsed.
-  SetCurrentTimeInMinutes(1.5 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(1.5 * report_interval, &test_clock);
   histogram.ReportOutstandingWrites();
 
   histogram_tester.ExpectBucketCount(histogram_name, 3, 1);
@@ -585,36 +583,35 @@ TEST_F(JsonPrefStoreTest, WriteCountHistogramTestSinglePeriod) {
 TEST_F(JsonPrefStoreTest, WriteCountHistogramTestMultiplePeriods) {
   base::HistogramTester histogram_tester;
 
-  SimpleTestClock* test_clock = new SimpleTestClock;
-  SetCurrentTimeInMinutes(0, test_clock);
+  SimpleTestClock test_clock;
+  SetCurrentTimeInMinutes(0, &test_clock);
   JsonPrefStore::WriteCountHistogram histogram(
       base::TimeDelta::FromSeconds(10),
-      base::FilePath(FILE_PATH_LITERAL("/tmp/Local State")),
-      std::unique_ptr<base::Clock>(test_clock));
+      base::FilePath(FILE_PATH_LITERAL("/tmp/Local State")), &test_clock);
   int32_t report_interval =
       JsonPrefStore::WriteCountHistogram::kHistogramWriteReportIntervalMins;
 
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(0.5 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(0.5 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(0.7 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(0.7 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(1.3 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(1.3 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(1.5 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(1.5 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(2.1 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(2.1 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(2.5 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(2.5 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(2.7 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(2.7 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(3.3 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(3.3 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
 
   // The last write won't be recorded because the second count period hasn't
   // fully elapsed
-  SetCurrentTimeInMinutes(3.5 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(3.5 * report_interval, &test_clock);
   histogram.ReportOutstandingWrites();
   std::string histogram_name = histogram.GetHistogram()->histogram_name();
   histogram_tester.ExpectBucketCount(histogram_name, 3, 2);
@@ -625,12 +622,11 @@ TEST_F(JsonPrefStoreTest, WriteCountHistogramTestMultiplePeriods) {
 TEST_F(JsonPrefStoreTest, WriteCountHistogramTestPeriodWithGaps) {
   base::HistogramTester histogram_tester;
 
-  SimpleTestClock* test_clock = new SimpleTestClock;
-  SetCurrentTimeInMinutes(0, test_clock);
+  SimpleTestClock test_clock;
+  SetCurrentTimeInMinutes(0, &test_clock);
   JsonPrefStore::WriteCountHistogram histogram(
       base::TimeDelta::FromSeconds(10),
-      base::FilePath(FILE_PATH_LITERAL("/tmp/Local State")),
-      std::unique_ptr<base::Clock>(test_clock));
+      base::FilePath(FILE_PATH_LITERAL("/tmp/Local State")), &test_clock);
   int32_t report_interval =
       JsonPrefStore::WriteCountHistogram::kHistogramWriteReportIntervalMins;
 
@@ -640,22 +636,22 @@ TEST_F(JsonPrefStoreTest, WriteCountHistogramTestPeriodWithGaps) {
   // No writes in the second and third periods.
 
   // 2 writes in the fourth period.
-  SetCurrentTimeInMinutes(3.1 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(3.1 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(3.3 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(3.3 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
 
   // No writes in the fifth period.
 
   // 3 writes in the sixth period.
-  SetCurrentTimeInMinutes(5.1 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(5.1 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(5.3 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(5.3 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
-  SetCurrentTimeInMinutes(5.5 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(5.5 * report_interval, &test_clock);
   histogram.RecordWriteOccured();
 
-  SetCurrentTimeInMinutes(6.1 * report_interval, test_clock);
+  SetCurrentTimeInMinutes(6.1 * report_interval, &test_clock);
   histogram.ReportOutstandingWrites();
   std::string histogram_name = histogram.GetHistogram()->histogram_name();
   histogram_tester.ExpectBucketCount(histogram_name, 0, 3);

@@ -62,9 +62,7 @@ class PasswordSyncableService : public syncer::SyncableService {
       const syncer::SyncableService::StartSyncFlare& flare);
 
 #if defined(UNIT_TEST)
-  void set_clock(std::unique_ptr<base::Clock> clock) {
-    clock_ = std::move(clock);
-  }
+  void set_clock(base::Clock* clock) { clock_ = clock; }
 #endif
 
  private:
@@ -126,7 +124,7 @@ class PasswordSyncableService : public syncer::SyncableService {
   syncer::SyncableService::StartSyncFlare flare_;
 
   // Clock for date_synced updates.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   // True if processing sync changes is in progress.
   bool is_processing_sync_changes_;

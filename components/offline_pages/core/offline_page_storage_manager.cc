@@ -36,7 +36,7 @@ OfflinePageStorageManager::OfflinePageStorageManager(
     : model_(model),
       policy_controller_(policy_controller),
       archive_manager_(archive_manager),
-      clock_(new base::DefaultClock()),
+      clock_(base::DefaultClock::GetInstance()),
       reported_usage_this_launch_(false),
       weak_ptr_factory_(this) {}
 
@@ -52,9 +52,8 @@ void OfflinePageStorageManager::ClearPagesIfNeeded(
       weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
-void OfflinePageStorageManager::SetClockForTesting(
-    std::unique_ptr<base::Clock> clock) {
-  clock_ = std::move(clock);
+void OfflinePageStorageManager::SetClockForTesting(base::Clock* clock) {
+  clock_ = clock;
 }
 
 void OfflinePageStorageManager::ResetUsageReportingFlagForTesting() {

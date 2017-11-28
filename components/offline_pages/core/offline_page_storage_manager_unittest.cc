@@ -221,7 +221,7 @@ class OfflinePageStorageManagerTest : public testing::Test {
   // testing::Test
   void TearDown() override;
 
-  base::SimpleTestClock* clock() { return clock_; }
+  base::SimpleTestClock* clock() { return &clock_; }
   int last_cleared_page_count() const {
     return static_cast<int>(last_cleared_page_count_);
   }
@@ -237,7 +237,7 @@ class OfflinePageStorageManagerTest : public testing::Test {
   std::unique_ptr<ClientPolicyController> policy_controller_;
   std::unique_ptr<TestArchiveManager> archive_manager_;
 
-  base::SimpleTestClock* clock_;
+  base::SimpleTestClock clock_;
   std::unique_ptr<base::HistogramTester> histogram_tester_;
 
   size_t last_cleared_page_count_;
@@ -255,10 +255,8 @@ void OfflinePageStorageManagerTest::Initialize(
     const std::vector<PageSettings>& page_settings,
     StorageStats stats,
     TestOptions options) {
-  std::unique_ptr<base::SimpleTestClock> clock(new base::SimpleTestClock());
-  clock_ = clock.get();
-  clock_->SetNow(base::Time::Now());
-  model_.reset(new OfflinePageTestModel(page_settings, clock_,
+  clock_.SetNow(base::Time::Now());
+  model_.reset(new OfflinePageTestModel(page_settings, &clock_,
                                         policy_controller_.get(), options));
 
   if (stats.free_disk_space == 0)
@@ -269,7 +267,7 @@ void OfflinePageStorageManagerTest::Initialize(
   archive_manager_.reset(new TestArchiveManager(stats));
   manager_.reset(new OfflinePageStorageManager(
       model_.get(), policy_controller(), archive_manager_.get()));
-  manager_->SetClockForTesting(std::move(clock));
+  manager_->SetClockForTesting(&clock_);
 
   histogram_tester_ = base::MakeUnique<base::HistogramTester>();
 }
