@@ -16,6 +16,24 @@
       "revId": "1e340c4007b3d69676fc6ef1cd5211a032530247",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cca7a4a_c7fae7b8",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-28T12:41:27Z",
+      "side": 1,
+      "message": "It is (or will be) a common implementation for AVX and SSE optimizations. VectorMathImpl.cpp is a good name for it.",
+      "parentUuid": "15fc3dd1_81926924",
+      "revId": "1e340c4007b3d69676fc6ef1cd5211a032530247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
