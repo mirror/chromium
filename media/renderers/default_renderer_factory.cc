@@ -92,9 +92,20 @@ DefaultRendererFactory::CreateVideoDecoders(
                                             &video_decoders);
     }
 
-    video_decoders.push_back(std::make_unique<GpuVideoDecoder>(
-        gpu_factories, request_overlay_info_cb, target_color_space,
-        media_log_));
+    bool include_gpu_decoder = true;
+#if defined(OS_ANDROID)
+    // If MojoVideoDecoder (MCVD) is not enabled, then include AVDA.  Otherwise,
+    // don't.  We don't want MCVD failures to fall back to AVDA; AVDA shouldn't
+    // be able to do things that MCVD can't.
+    include_gpu_decoder =
+        !base::FeatureList::IsEnabled(media::kMojoVideoDecoder);
+#endif  // OS_ANDROID
+
+    if (include_gpu_decoder) {
+      video_decoders.push_back(std::make_unique<GpuVideoDecoder>(
+          gpu_factories, request_overlay_info_cb, target_color_space,
+          media_log_));
+    }
   }
 
 #if !defined(MEDIA_DISABLE_LIBVPX)
