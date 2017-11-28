@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e066ecdd_aec39b82",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-28T01:20:16Z",
+      "side": 1,
+      "message": "Can the state set in PaintLayerContents be pushed down to here to avoid this conditional?",
+      "revId": "b57d48bfad5d56081a421bc9b816747a008c5d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20dde4e4_d53f5012",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-28T01:20:16Z",
+      "side": 1,
+      "message": "What if the fragment itself allocates a new effect node?",
+      "revId": "b57d48bfad5d56081a421bc9b816747a008c5d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
