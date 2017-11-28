@@ -74,6 +74,10 @@
 #include "base/mac/foundation_util.h"
 #endif
 
+#if defined(OS_ANDROID)
+#include "ui/android/view_android.h"
+#endif
+
 namespace content {
 
 namespace {
@@ -408,6 +412,15 @@ bool BlinkTestController::PrepareForLayoutTest(
       LoadDevToolsJSTest();
     else
       main_window_->LoadURL(test_url_);
+
+#if defined(OS_ANDROID)
+    // On Android, the browser main loop runs on the UI thread so the view
+    // hierarchy never gets to layout since the UI thread is blocked. This hack
+    // simulates a layout and ensures our RenderWidget hierarchy gets correctly
+    // sized.
+    main_window_->web_contents()->GetNativeView()->OnSizeChanged(
+        initial_size_.width(), initial_size_.height());
+#endif
   } else {
 #if defined(OS_MACOSX)
     // Shell::SizeTo is not implemented on all platforms.
