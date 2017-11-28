@@ -42,8 +42,6 @@ class MODULES_EXPORT ModulesInitializer : public CoreInitializer {
   WebRemotePlaybackClient* CreateWebRemotePlaybackClient(
       HTMLMediaElement&) const override;
 
-  void ProvideCredentialManagerClient(Page&, WebCredentialManagerClient*)
-      const override;
   void ProvideModulesToPage(Page&, WebViewClient*) const override;
   void ForceNextWebGLContextCreationToFail() const override;
 
