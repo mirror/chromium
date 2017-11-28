@@ -168,6 +168,8 @@ class VaapiVideoDecodeAccelerator::VaapiH264Accelerator
   VaapiWrapper* vaapi_wrapper_;
   VaapiVideoDecodeAccelerator* vaapi_dec_;
 
+  SEQUENCE_CHECKER(sequence_checker_);
+
   DISALLOW_COPY_AND_ASSIGN(VaapiH264Accelerator);
 };
 
@@ -214,6 +216,8 @@ class VaapiVideoDecodeAccelerator::VaapiVP8Accelerator
 
   VaapiWrapper* vaapi_wrapper_;
   VaapiVideoDecodeAccelerator* vaapi_dec_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(VaapiVP8Accelerator);
 };
@@ -266,6 +270,8 @@ class VaapiVideoDecodeAccelerator::VaapiVP9Accelerator
 
   VaapiWrapper* vaapi_wrapper_;
   VaapiVideoDecodeAccelerator* vaapi_dec_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(VaapiVP9Accelerator);
 };
@@ -1051,6 +1057,18 @@ void VaapiVideoDecodeAccelerator::Cleanup() {
   client_ptr_factory_.reset();
   weak_this_factory_.InvalidateWeakPtrs();
 
+  decoder_thread_task_runner_->DeleteSoon(FROM_HERE, decoder_.release());
+  if (h264_accelerator_) {
+    decoder_thread_task_runner_->DeleteSoon(FROM_HERE,
+                                            h264_accelerator_.release());
+  } else if (vp8_accelerator_) {
+    decoder_thread_task_runner_->DeleteSoon(FROM_HERE,
+                                            vp8_accelerator_.release());
+  } else if (vp9_accelerator_) {
+    decoder_thread_task_runner_->DeleteSoon(FROM_HERE,
+                                            vp9_accelerator_.release());
+  }
+
   // Signal all potential waiters on the decoder_thread_, let them early-exit,
   // as we've just moved to the kDestroying state, and wait for all tasks
   // to finish.
@@ -1134,12 +1152,16 @@ VaapiVideoDecodeAccelerator::VaapiH264Accelerator::VaapiH264Accelerator(
     : vaapi_wrapper_(vaapi_wrapper), vaapi_dec_(vaapi_dec) {
   DCHECK(vaapi_wrapper_);
   DCHECK(vaapi_dec_);
+  DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
-VaapiVideoDecodeAccelerator::VaapiH264Accelerator::~VaapiH264Accelerator() {}
+VaapiVideoDecodeAccelerator::VaapiH264Accelerator::~VaapiH264Accelerator() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+}
 
 scoped_refptr<H264Picture>
 VaapiVideoDecodeAccelerator::VaapiH264Accelerator::CreateH264Picture() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   scoped_refptr<VaapiDecodeSurface> va_surface = vaapi_dec_->CreateSurface();
   if (!va_surface)
     return nullptr;
@@ -1162,6 +1184,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitFrameMetadata(
     const H264Picture::Vector& ref_pic_listb0,
     const H264Picture::Vector& ref_pic_listb1,
     const scoped_refptr<H264Picture>& pic) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   VAPictureParameterBufferH264 pic_param;
   memset(&pic_param, 0, sizeof(pic_param));
 
@@ -1276,6 +1299,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitSlice(
     const scoped_refptr<H264Picture>& pic,
     const uint8_t* data,
     size_t size) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   VASliceParameterBufferH264 slice_param;
   memset(&slice_param, 0, sizeof(slice_param));
 
@@ -1377,6 +1401,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitSlice(
 bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitDecode(
     const scoped_refptr<H264Picture>& pic) {
   VLOGF(4) << "Decoding POC " << pic->pic_order_cnt;
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   scoped_refptr<VaapiDecodeSurface> dec_surface =
       H264PictureToVaapiDecodeSurface(pic);
 
@@ -1385,6 +1410,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitDecode(
 
 bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::OutputPicture(
     const scoped_refptr<H264Picture>& pic) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   scoped_refptr<VaapiDecodeSurface> dec_surface =
       H264PictureToVaapiDecodeSurface(pic);
   dec_surface->set_visible_rect(pic->visible_rect);
@@ -1394,12 +1420,14 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::OutputPicture(
 }
 
 void VaapiVideoDecodeAccelerator::VaapiH264Accelerator::Reset() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   vaapi_wrapper_->DestroyPendingBuffers();
 }
 
 scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>
 VaapiVideoDecodeAccelerator::VaapiH264Accelerator::
     H264PictureToVaapiDecodeSurface(const scoped_refptr<H264Picture>& pic) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   VaapiH264Picture* vaapi_pic = pic->AsVaapiH264Picture();
   CHECK(vaapi_pic);
   return vaapi_pic->dec_surface();
@@ -1408,6 +1436,7 @@ VaapiVideoDecodeAccelerator::VaapiH264Accelerator::
 void VaapiVideoDecodeAccelerator::VaapiH264Accelerator::FillVAPicture(
     VAPictureH264* va_pic,
     scoped_refptr<H264Picture> pic) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   VASurfaceID va_surface_id = VA_INVALID_SURFACE;
 
   if (!pic->nonexisting) {
@@ -1444,6 +1473,7 @@ int VaapiVideoDecodeAccelerator::VaapiH264Accelerator::FillVARefFramesFromDPB(
     const H264DPB& dpb,
     VAPictureH264* va_pics,
     int num_pics) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   H264Picture::Vector::const_reverse_iterator rit;
   int i;
 
@@ -1464,12 +1494,16 @@ VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::VaapiVP8Accelerator(
     : vaapi_wrapper_(vaapi_wrapper), vaapi_dec_(vaapi_dec) {
   DCHECK(vaapi_wrapper_);
   DCHECK(vaapi_dec_);
+  DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
-VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::~VaapiVP8Accelerator() {}
+VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::~VaapiVP8Accelerator() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+}
 
 scoped_refptr<VP8Picture>
 VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::CreateVP8Picture() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   scoped_refptr<VaapiDecodeSurface> va_surface = vaapi_dec_->CreateSurface();
   if (!va_surface)
     return nullptr;
@@ -1490,6 +1524,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::SubmitDecode(
     const scoped_refptr<VP8Picture>& last_frame,
     const scoped_refptr<VP8Picture>& golden_frame,
     const scoped_refptr<VP8Picture>& alt_frame) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   VAIQMatrixBufferVP8 iq_matrix_buf;
   memset(&iq_matrix_buf, 0, sizeof(VAIQMatrixBufferVP8));
 
@@ -1672,6 +1707,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::SubmitDecode(
 
 bool VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::OutputPicture(
     const scoped_refptr<VP8Picture>& pic) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   scoped_refptr<VaapiDecodeSurface> dec_surface =
       VP8PictureToVaapiDecodeSurface(pic);
   dec_surface->set_visible_rect(pic->visible_rect);
@@ -1682,6 +1718,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::OutputPicture(
 scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>
 VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::
     VP8PictureToVaapiDecodeSurface(const scoped_refptr<VP8Picture>& pic) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   VaapiVP8Picture* vaapi_pic = pic->AsVaapiVP8Picture();
   CHECK(vaapi_pic);
   return vaapi_pic->dec_surface();
@@ -1693,12 +1730,16 @@ VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::VaapiVP9Accelerator(
     : vaapi_wrapper_(vaapi_wrapper), vaapi_dec_(vaapi_dec) {
   DCHECK(vaapi_wrapper_);
   DCHECK(vaapi_dec_);
+  DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
-VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::~VaapiVP9Accelerator() {}
+VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::~VaapiVP9Accelerator() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+}
 
 scoped_refptr<VP9Picture>
 VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::CreateVP9Picture() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   scoped_refptr<VaapiDecodeSurface> va_surface = vaapi_dec_->CreateSurface();
   if (!va_surface)
     return nullptr;
@@ -1712,6 +1753,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::SubmitDecode(
     const Vp9LoopFilterParams& lf,
     const std::vector<scoped_refptr<VP9Picture>>& ref_pictures,
     const base::Closure& done_cb) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // |done_cb| should be null as we return false from IsFrameContextRequired().
   DCHECK(done_cb.is_null());
 
@@ -1836,6 +1878,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::SubmitDecode(
 
 bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::OutputPicture(
     const scoped_refptr<VP9Picture>& pic) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   scoped_refptr<VaapiDecodeSurface> dec_surface =
       VP9PictureToVaapiDecodeSurface(pic);
   dec_surface->set_visible_rect(pic->visible_rect);
@@ -1846,6 +1889,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::OutputPicture(
 bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::GetFrameContext(
     const scoped_refptr<VP9Picture>& pic,
     Vp9FrameContext* frame_ctx) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   NOTIMPLEMENTED() << "Frame context update not supported";
   return false;
 }
@@ -1853,6 +1897,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::GetFrameContext(
 scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>
 VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::
     VP9PictureToVaapiDecodeSurface(const scoped_refptr<VP9Picture>& pic) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   VaapiVP9Picture* vaapi_pic = pic->AsVaapiVP9Picture();
   CHECK(vaapi_pic);
   return vaapi_pic->dec_surface();
