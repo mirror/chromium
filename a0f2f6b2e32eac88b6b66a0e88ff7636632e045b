@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a7c1de5_74329ffa",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-28T00:04:59Z",
+      "side": 1,
+      "message": "Nit: Typo in TODO",
+      "revId": "a0f2f6b2e32eac88b6b66a0e88ff7636632e045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5679c9_a41e0f78",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-28T00:04:59Z",
+      "side": 1,
+      "message": "Nit: Typo in TODO",
+      "revId": "a0f2f6b2e32eac88b6b66a0e88ff7636632e045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079fe098_5c3d217e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-28T00:04:59Z",
+      "side": 1,
+      "message": "Nit: Can you put a line break after the period?",
+      "revId": "a0f2f6b2e32eac88b6b66a0e88ff7636632e045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c466a6fc_f9ec1c2d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-28T00:04:59Z",
+      "side": 1,
+      "message": "Nit: extra |",
+      "revId": "a0f2f6b2e32eac88b6b66a0e88ff7636632e045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
