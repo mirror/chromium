@@ -932,12 +932,12 @@ void WebContentsImpl::SetDelegate(WebContentsDelegate* delegate) {
     // Ensure the visible RVH reflects the new delegate's preferences.
     if (view_)
       view_->SetOverscrollControllerEnabled(CanOverscrollContent());
-    if (GetRenderViewHost())
+    if (GetRenderManager()->current_host())
       RenderFrameDevToolsAgentHost::WebContentsCreated(this);
   }
 }
 
-RenderFrameHostImpl* WebContentsImpl::GetMainFrame() const {
+RenderFrameHostImpl* WebContentsImpl::GetMainFrameImpl() const {
   return frame_tree_.root()->current_frame_host();
 }
 

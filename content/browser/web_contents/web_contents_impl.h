@@ -308,7 +308,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   const GURL& GetURL() const override;
   const GURL& GetVisibleURL() const override;
   const GURL& GetLastCommittedURL() const override;
-  RenderFrameHostImpl* GetMainFrame() const override;
+  RenderFrameHostImpl* GetMainFrame() const { return GetMainFrameImpl(); }
+  RenderFrameHostImpl* GetMainFrameImpl() const override;
   RenderFrameHostImpl* GetFocusedFrame() override;
   RenderFrameHostImpl* FindFrameByFrameTreeNodeId(int frame_tree_node_id,
                                                   int process_id) override;

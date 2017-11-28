@@ -48,7 +48,6 @@ class TestWebContents : public WebContentsImpl, public WebContentsTester {
                                  scoped_refptr<SiteInstance> instance);
 
   // WebContentsImpl overrides (returning the same values, but in Test* types)
-  TestRenderFrameHost* GetMainFrame() const override;
   TestRenderViewHost* GetRenderViewHost() const override;
   // Overrides to avoid establishing Mojo connection with renderer process.
   int DownloadImage(const GURL& url,
@@ -57,6 +56,13 @@ class TestWebContents : public WebContentsImpl, public WebContentsTester {
                     bool bypass_cache,
                     const ImageDownloadCallback& callback) override;
   const GURL& GetLastCommittedURL() const override;
+  // This uses a non-virtual override so that tests that use RenderFrameHostImpl
+  // instead of TestRenderFrameHost, such as BackgroundLoaderOfflinerTest, can
+  // avoid a bad cast while accessing the RenderFrameHost by calling the base
+  // class version of this function.
+  TestRenderFrameHost* GetMainFrame() const {
+    return static_cast<TestRenderFrameHost*>(GetMainFrameImpl());
+  }
 
   // WebContentsTester implementation.
   void CommitPendingNavigation() override;

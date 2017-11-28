@@ -53,10 +53,6 @@ TestWebContents::~TestWebContents() {
   EXPECT_FALSE(expect_set_history_offset_and_length_);
 }
 
-TestRenderFrameHost* TestWebContents::GetMainFrame() const {
-  return static_cast<TestRenderFrameHost*>(WebContentsImpl::GetMainFrame());
-}
-
 TestRenderViewHost* TestWebContents::GetRenderViewHost() const {
     return static_cast<TestRenderViewHost*>(
         WebContentsImpl::GetRenderViewHost());

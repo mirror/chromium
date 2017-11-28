@@ -244,7 +244,7 @@ class WebContents : public PageNavigator,
   virtual const GURL& GetLastCommittedURL() const = 0;
 
   // Returns the main frame for the currently active view.
-  virtual RenderFrameHost* GetMainFrame() const = 0;
+  RenderFrameHost* GetMainFrame() const { return GetMainFrameImpl(); }
 
   // Returns the focused frame for the currently active view.
   virtual RenderFrameHost* GetFocusedFrame() = 0;
@@ -824,6 +824,9 @@ class WebContents : public PageNavigator,
   // Returns true if the WebContents has completed its first meaningful paint.
   virtual bool CompletedFirstVisuallyNonEmptyPaint() const = 0;
 #endif  // OS_ANDROID
+
+ protected:
+  virtual RenderFrameHost* GetMainFrameImpl() const = 0;
 
  private:
   // This interface should only be implemented inside content.
