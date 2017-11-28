@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c9a2b2b_60816492",
+        "filename": "content/browser/media/media_capabilities_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:33:15Z",
+      "side": 1,
+      "message": "style: kEnum is the new style, ENUM is the old one.",
+      "revId": "ae2373ccc245079483816c83d2e94c8e16dbc81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d714ba5f_51a5b83f",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:33:15Z",
+      "side": 1,
+      "message": "Set to `true` by default so if `ParseAudioCodecString()` doesn\u0027t set it, it fails anyway?",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "ae2373ccc245079483816c83d2e94c8e16dbc81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a585b0e_109cfb16",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:33:15Z",
+      "side": 1,
+      "message": "Maybe set a default value as those are out params?",
+      "revId": "ae2373ccc245079483816c83d2e94c8e16dbc81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d1f867_ca596593",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:33:15Z",
+      "side": 1,
+      "message": "as above",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "ae2373ccc245079483816c83d2e94c8e16dbc81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8851d28f_455f15b6",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T14:33:15Z",
+      "side": 1,
+      "message": "`DCHECK_EQ` takes the expected value first",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 11
+      },
+      "revId": "ae2373ccc245079483816c83d2e94c8e16dbc81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
