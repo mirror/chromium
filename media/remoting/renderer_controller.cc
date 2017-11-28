@@ -109,6 +109,8 @@ void RendererController::OnBecameDominantVisibleContent(bool is_dominant) {
   if (is_dominant_content_ == is_dominant)
     return;
   is_dominant_content_ = is_dominant;
+  if (!is_dominant_content_)
+    forced_mirroring_ = false;
   UpdateAndMaybeSwitch(BECAME_DOMINANT_CONTENT, BECAME_AUXILIARY_CONTENT);
 }
 
@@ -373,7 +375,7 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
   // remote rendering. However, current technical limitations require encrypted
   // content be remoted without waiting for a user signal.
   if (!is_encrypted_)
-    should_be_remoting &= is_dominant_content_;
+    should_be_remoting &= (is_dominant_content_ && !forced_mirroring_);
 
   if ((remote_rendering_started_ ||
        delayed_start_stability_timer_.IsRunning()) == should_be_remoting)
@@ -511,7 +513,11 @@ void RendererController::OnRendererFatalError(StopTrigger stop_trigger) {
   if (!remote_rendering_started_)
     return;
 
-  encountered_renderer_fatal_error_ = true;
+  if (stop_trigger == FRAME_DROP_RATE_HIGH || stop_trigger == PACING_TOO_SLOWLY)
+    forced_mirroring_ = true;
+  else
+    encountered_renderer_fatal_error_ = true;
+
   UpdateAndMaybeSwitch(UNKNOWN_START_TRIGGER, stop_trigger);
 }
 

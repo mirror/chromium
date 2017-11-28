@@ -189,6 +189,11 @@ class RendererControllerTest : public ::testing::Test,
     EXPECT_FALSE(IsInDelayedStart());
   }
 
+  void ExpectFullscreenMirroring() const {
+    EXPECT_TRUE(controller_->is_dominant_content_);
+    EXPECT_TRUE(controller_->forced_mirroring_);
+  }
+
   base::MessageLoop message_loop_;
 
  protected:
@@ -430,6 +435,31 @@ TEST_F(RendererControllerTest, StartSuccessWithHighFrameRate) {
   DelayedStartEnds(false, 60);
   RunUntilIdle();
   ExpectInRemoting();
+}
+
+TEST_F(RendererControllerTest, PacingTooSlowly) {
+  const scoped_refptr<SharedSession> shared_session =
+      FakeRemoterFactory::CreateSharedSession(false);
+  mojom::RemotingSinkMetadata sink_metadata = GetDefaultSinkMetadata(true);
+  InitializeControllerAndBecomeDominant(
+      shared_session, DefaultMetadata(VideoCodec::kCodecVP8), sink_metadata);
+  RunUntilIdle();
+  ExpectInDelayedStart();
+  DelayedStartEnds(false);
+  RunUntilIdle();
+  ExpectInRemoting();  // All requirements now satisfied.
+  controller_->OnRendererFatalError(StopTrigger::PACING_TOO_SLOWLY);
+  RunUntilIdle();
+  ExpectInLocalRendering();
+  ExpectFullscreenMirroring();  // Switch to fullscreen mirroring.
+  shared_session->OnSinkAvailable(sink_metadata.Clone());
+  RunUntilIdle();
+  controller_->OnBecameDominantVisibleContent(false);
+  RunUntilIdle();
+  ExpectInLocalRendering();
+  controller_->OnBecameDominantVisibleContent(true);
+  RunUntilIdle();
+  ExpectInDelayedStart();  // Try start remoting again.
 }
 
 #endif  // OS_ANDROID

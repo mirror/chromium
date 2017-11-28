@@ -74,9 +74,13 @@ class RendererController final : public SharedSession::Client,
   base::WeakPtr<RpcBroker> GetRpcBroker() const;
 #endif
 
-  // Called by CourierRenderer when it encountered a fatal error. This will
-  // cause remoting to shut down and never start back up for the lifetime of
-  // this controller.
+  // Called by CourierRenderer when either encounted a fatal error or forced to
+  // switch to mirroring because the frame drop rate was too high or pacing was
+  // too slowly. This call will cause remoting to shut down. When encounted
+  // fatal errors, the remoting will never start back up for the lifetime of
+  // this controller. Otherwise, the remoting might be re-started after the
+  // media element stops and re-starts being the dominant visible content in the
+  // tab.
   void OnRendererFatalError(StopTrigger stop_trigger);
 
  private:
@@ -160,14 +164,19 @@ class RendererController final : public SharedSession::Client,
   // Indicates whether video is paused.
   bool is_paused_ = true;
 
-  // Indicates whether OnRendererFatalError() has been called. This indicates
-  // one of several possible problems: 1) An environmental problem such as
-  // out-of-memory, insufficient network bandwidth, etc. 2) The receiver may
-  // have been unable to play-out the content correctly (e.g., not capable of a
-  // high frame rate at a high resolution). 3) An implementation bug. In any
-  // case, once a renderer encounters a fatal error, remoting will be shut down
-  // and never start again for the lifetime of this controller.
+  // This indicates one of the following possible problems: 1) An environmental
+  // problem such as out-of-memory. 2) The receiver may have been unable to
+  // play-out the content correctly (e.g., not capable of a high frame rate at a
+  // high resolution). 3) An implementation bug. In any case, once a renderer
+  // encounters a fatal error, remoting will be shut down and never start again
+  // for the lifetime of this controller.
   bool encountered_renderer_fatal_error_ = false;
+
+  // Indicates whether remoting session was forced to mirroring because the
+  // frame drop rate was too high or the pacing was too slowly. When this is
+  // true, further remoting session can not be started. This value is reset when
+  // the media element stops being the dominant visible content in the tab.
+  bool forced_mirroring_ = false;
 
   // This is initially the SharedSession passed to the ctor, and might be
   // replaced with a different instance later if OnSetCdm() is called.
