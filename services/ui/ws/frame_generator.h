@@ -44,6 +44,10 @@ class FrameGenerator : public viz::mojom::CompositorFrameSinkClient {
   void Bind(
       std::unique_ptr<viz::mojom::CompositorFrameSink> compositor_frame_sink);
 
+  const viz::SurfaceInfo& window_manager_surface_info() const {
+    return window_manager_surface_info_;
+  }
+
  private:
   // viz::mojom::CompositorFrameSinkClient implementation:
   void DidReceiveCompositorFrameAck(
@@ -86,7 +90,6 @@ class FrameGenerator : public viz::mojom::CompositorFrameSinkClient {
 };
 
 }  // namespace ws
-
 }  // namespace ui
 
 #endif  // SERVICES_UI_WS_FRAME_GENERATOR_H_
