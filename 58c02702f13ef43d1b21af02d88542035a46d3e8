@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32f9b853_365273f8",
+        "filename": "trace_test/trace_708990_c1.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-28T02:08:34Z",
+      "side": 1,
+      "message": "Thanks.\n\nIndeed, I added this approach to trace_test/trace_708990_c2.cc\n(this file is trace_test/trace_708990_c1.cc).\n\n\nOne thing different from your suggestion is ..\n\nI defined LIST_KNOWN_CATEGORIES(X) as\n\n#define LIST_KNOWN_CATEGORIES(X) \\\n    X(foo, false) \\\n    X(bar, false) \\\n    X(zoo, false) \\\n    X(cc, false) \\                      \u003c-- each false can be changed to true\n\nand defined an additional uint8_t array rather than use\n\nstruct Category and #define INIT_CATEGORY(name) { name, false },\n\nbecause I thought we must provide an option to choose enable each category or not\n(some of false above can be changed to true).",
+      "parentUuid": "f4db7d42_ff4a8d4c",
+      "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cd9959c_2232fdd1",
         "filename": "trace_test/trace_708990_c1.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5c2a3039_b978a461",
+        "filename": "trace_test/trace_708990_c1.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-28T02:08:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cd9959c_2232fdd1",
+      "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "829d27d0_0647bbfb",
         "filename": "trace_test/trace_708990_c1.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d37d39b_aeb7bc0b",
+        "filename": "trace_test/trace_708990_c1.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-28T02:08:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "829d27d0_0647bbfb",
+      "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +136,24 @@
       "side": 1,
       "message": "Ah, need to fix one definition above:\n\n  #define TEST_INTERNAL_TRACE_EVENT_GET_CATEGORY_INFO(category_group) \\\n     CategoryEnabledPtrInternal\u003cIsKnownCategory(category_group)\u003e \\\n         TRACE_EVENT_API_UUID(enabled_ptr);",
       "parentUuid": "ed922e7d_a24d51d0",
+      "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d55ec5e_9b43b49a",
+        "filename": "trace_test/trace_708990_c1.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-28T02:08:34Z",
+      "side": 1,
+      "message": "This is awesome!\n\nOne minor question ...\nIn struct CategoryEnabledPtrInternal\u003cfalse\u003e, we must not use the static variable and method (as the following code), right?\n\ntemplate \u003c\u003e struct CategoryEnabledPtrInternal\u003cfalse\u003e {\n     TRACE_EVENT_API_ATOMIC_WORD sAtomic \u003d 0;\n     uint8_t* value(const char* category) {\n        auto enabled_ptr \u003d reinterpret_cast\u003cuint8_t*\u003e(TRACE_EVENT_API_ATOMIC_LOAD(sAtomic));\n        if (UNLIKELY(enabled_ptr \u003d\u003d nullptr)) {\n           enabled_ptr \u003d TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(category);\n           TRACE_EVENT_API_ATOMIC_STORE(\n               sAtomic, reinterpret_cast\u003cTRACE_EVENT_API_ATOMIC_WORD\u003e(enabled_ptr));\n        }\n        return enabled_ptr;\n     }\n   }\n\nInstead, we must make its instance in each function static, right?",
+      "parentUuid": "583e2067_1187f8d8",
       "revId": "58c02702f13ef43d1b21af02d88542035a46d3e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
