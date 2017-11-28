@@ -52,7 +52,6 @@ class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
   // Note: |on_sequence_done| will be invoked on the UI thread.
   SwReporterInstallerPolicy(
       const SwReporterRunner& reporter_runner,
-      bool is_experimental_engine_supported,
       safe_browsing::SwReporterInvocationType invocation_type,
       safe_browsing::OnReporterSequenceDone on_sequence_done);
   ~SwReporterInstallerPolicy() override;
@@ -78,12 +77,7 @@ class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
  private:
   friend class SwReporterInstallerTest;
 
-  // Returns true if the experimental engine is supported and the Feature is
-  // enabled.
-  bool IsExperimentalEngineEnabled() const;
-
   SwReporterRunner reporter_runner_;
-  const bool is_experimental_engine_supported_;
 
   const safe_browsing::SwReporterInvocationType invocation_type_;
 
