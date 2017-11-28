@@ -10,6 +10,7 @@
 #include <algorithm>
 
 #include "base/strings/string_number_conversions.h"
+#include "build/build_config.h"
 
 namespace storage {
 
@@ -41,6 +42,14 @@ void DataElement::SetToFileRange(base::File file,
                                  uint64_t offset,
                                  uint64_t length,
                                  const base::Time& expected_modification_time) {
+  DCHECK(file.IsValid());
+// Files on Windows must be opened for async operations.
+#if defined(OS_WIN)
+  DCHECK(file.async());
+#elif defined(OS_POSIX)
+  DCHECK(!file.async());
+#endif
+
   type_ = TYPE_RAW_FILE;
   file_ = std::move(file);
   path_ = path;

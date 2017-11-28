@@ -13,15 +13,22 @@
 
 namespace IPC {
 
+PlatformFileForTransit::PlatformFileForTransit()
+    :
 #if defined(OS_WIN)
-PlatformFileForTransit::PlatformFileForTransit() : handle_(nullptr) {}
+      file_(nullptr),
+#endif  // defined(OS_WIN)
+      is_async_(false) {
+}
 
-PlatformFileForTransit::PlatformFileForTransit(HANDLE handle)
-    : handle_(handle) {}
+PlatformFileForTransit::PlatformFileForTransit(FileType file, bool is_async)
+    : file_(file), is_async_(is_async) {}
 
 bool PlatformFileForTransit::operator==(
     const PlatformFileForTransit& platform_file) const {
-  return handle_ == platform_file.handle_;
+  // No need to check |is_async_| - if they're the same handle, that shuold be
+  // the same, too.
+  return file_ == platform_file.file_;
 }
 
 bool PlatformFileForTransit::operator!=(
@@ -29,18 +36,25 @@ bool PlatformFileForTransit::operator!=(
   return !(*this == platform_file);
 }
 
-HANDLE PlatformFileForTransit::GetHandle() const {
-  return handle_;
+PlatformFileForTransit::FileType PlatformFileForTransit::GetFile() const {
+  return file_;
 }
 
 bool PlatformFileForTransit::IsValid() const {
-  return handle_ != nullptr;
+#if defined(OS_WIN)
+  return file_ != nullptr;
+#elif defined(OS_POSIX)
+  return file_.fd >= 0;
+#endif
 }
 
-#endif  // defined(OS_WIN)
+bool PlatformFileForTransit::IsAsync() const {
+  return is_async_;
+}
 
 PlatformFileForTransit GetPlatformFileForTransit(base::PlatformFile handle,
-                                                 bool close_source_handle) {
+                                                 bool close_source_handle,
+                                                 bool is_async) {
 #if defined(OS_WIN)
   HANDLE raw_handle = INVALID_HANDLE_VALUE;
   DWORD options = DUPLICATE_SAME_ACCESS;
@@ -52,7 +66,7 @@ PlatformFileForTransit GetPlatformFileForTransit(base::PlatformFile handle,
     return IPC::InvalidPlatformFileForTransit();
   }
 
-  return IPC::PlatformFileForTransit(raw_handle);
+  return IPC::PlatformFileForTransit(raw_handle, is_async);
 #elif defined(OS_POSIX)
   // If asked to close the source, we can simply re-use the source fd instead of
   // dup()ing and close()ing.
@@ -63,14 +77,18 @@ PlatformFileForTransit GetPlatformFileForTransit(base::PlatformFile handle,
   // close the source handle before the message is sent, creating a race
   // condition.
   int fd = close_source_handle ? handle : HANDLE_EINTR(::dup(handle));
-  return base::FileDescriptor(fd, true);
+  return IPC::PlatformFileForTransit(base::FileDescriptor(fd, true), is_async);
 #else
   #error Not implemented.
 #endif
 }
 
 PlatformFileForTransit TakePlatformFileForTransit(base::File file) {
-  return GetPlatformFileForTransit(file.TakePlatformFile(), true);
+  return GetPlatformFileForTransit(file.TakePlatformFile(), true, file.async());
+}
+
+PlatformFileForTransit DuplicatePlatformFileForTransit(const base::File& file) {
+  return GetPlatformFileForTransit(file.GetPlatformFile(), false, file.async());
 }
 
 }  // namespace IPC

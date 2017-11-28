@@ -158,9 +158,9 @@ void ParamTraits<storage::DataElement>::Write(base::Pickle* m,
       break;
     }
     case storage::DataElement::TYPE_RAW_FILE: {
-      WriteParam(
-          m, IPC::GetPlatformFileForTransit(p.file().GetPlatformFile(),
-                                            false /* close_source_handle */));
+      WriteParam(m, IPC::GetPlatformFileForTransit(
+                        p.file().GetPlatformFile(),
+                        false /* close_source_handle */, p.file().async()));
       WriteParam(m, p.path());
       WriteParam(m, p.offset());
       WriteParam(m, p.length());
@@ -242,6 +242,8 @@ bool ParamTraits<storage::DataElement>::Read(const base::Pickle* m,
       if (!ReadParam(m, iter, &platform_file_for_transit))
         return false;
       base::File file = PlatformFileForTransitToFile(platform_file_for_transit);
+      if (!file.IsValid() || !file.async())
+        return false;
       base::FilePath file_path;
       if (!ReadParam(m, iter, &file_path))
         return false;

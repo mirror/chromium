@@ -455,8 +455,7 @@ void PdfConverterUtilityProcessHostClient::OnTempPdfReady(ScopedTempFile pdf) {
   if (!utility_process_host_ || !pdf)
     return OnFailed();
   // Should reply with OnPageCount().
-  SendStartMessage(
-      IPC::GetPlatformFileForTransit(pdf->file().GetPlatformFile(), false));
+  SendStartMessage(IPC::DuplicatePlatformFileForTransit(pdf->file()));
 }
 
 void PdfConverterUtilityProcessHostClient::OnPageCount(int page_count) {
@@ -499,8 +498,8 @@ void PdfConverterUtilityProcessHostClient::OnTempFileReady(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!utility_process_host_ || !temp_file)
     return OnFailed();
-  IPC::PlatformFileForTransit transit = IPC::GetPlatformFileForTransit(
-      temp_file->file().GetPlatformFile(), false);
+  IPC::PlatformFileForTransit transit =
+      IPC::DuplicatePlatformFileForTransit(temp_file->file());
   callback_data->set_file(std::move(temp_file));
   // Should reply with OnPageDone().
   SendGetPageMessage(callback_data->page_number(), transit);

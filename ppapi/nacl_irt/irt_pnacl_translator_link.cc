@@ -55,7 +55,7 @@ class TranslatorLinkListener : public IPC::Listener {
     std::vector<int> obj_file_fds(obj_files.size());
     for (size_t i = 0; i < obj_files.size(); ++i) {
       CHECK(obj_files[i].is_file());
-      obj_file_fds[i] = obj_files[i].descriptor().fd;
+      obj_file_fds[i] = obj_files[i].descriptor().GetFile().fd;
     }
     int result = func_(nexe_file.descriptor().fd,
                        obj_file_fds.data(),

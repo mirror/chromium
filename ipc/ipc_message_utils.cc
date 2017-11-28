@@ -21,6 +21,7 @@
 #include "ipc/ipc_message_attachment.h"
 #include "ipc/ipc_message_attachment_set.h"
 #include "ipc/ipc_mojo_param_traits.h"
+#include "ipc/ipc_platform_file.h"
 
 #if defined(OS_POSIX)
 #include "base/file_descriptor_posix.h"
@@ -34,7 +35,6 @@
 #if defined(OS_WIN)
 #include <tchar.h>
 #include "ipc/handle_win.h"
-#include "ipc/ipc_platform_file.h"
 #endif
 
 #if defined(OS_FUCHSIA)
@@ -738,20 +738,29 @@ void ParamTraits<base::SharedMemoryHandle>::Log(const param_type& p,
   LogParam(static_cast<uint64_t>(p.GetSize()), l);
 }
 
-#if defined(OS_WIN)
 void ParamTraits<PlatformFileForTransit>::Write(base::Pickle* m,
                                                 const param_type& p) {
+#if defined(OS_WIN)
+  // ParamTraits<base::PlatformFile>::Write has similar logic on POSIX
+  // platforms.
   m->WriteBool(p.IsValid());
-  if (p.IsValid()) {
-    HandleWin handle_win(p.GetHandle());
-    ParamTraits<HandleWin>::Write(m, handle_win);
-    ::CloseHandle(p.GetHandle());
-  }
+  if (!p.IsValid())
+    return;
+  HandleWin handle_win(p.GetFile());
+  ParamTraits<HandleWin>::Write(m, handle_win);
+  ::CloseHandle(p.GetFile());
+#elif defined(OS_POSIX)
+  ParamTraits<base::FileDescriptor>::Write(m, p.GetFile());
+#endif
+
+  m->WriteBool(p.IsAsync());
 }
 
 bool ParamTraits<PlatformFileForTransit>::Read(const base::Pickle* m,
                                                base::PickleIterator* iter,
                                                param_type* r) {
+  PlatformFileForTransit::FileType file;
+#if defined(OS_WIN)
   bool is_valid;
   if (!iter->ReadBool(&is_valid))
     return false;
@@ -763,15 +772,32 @@ bool ParamTraits<PlatformFileForTransit>::Read(const base::Pickle* m,
   HandleWin handle_win;
   if (!ParamTraits<HandleWin>::Read(m, iter, &handle_win))
     return false;
-  *r = PlatformFileForTransit(handle_win.get_handle());
+  file = handle_win.get_handle();
+#elif defined(OS_POSIX)
+  if (!ParamTraits<base::FileDescriptor>::Read(m, iter, &file))
+    return false;
+#endif
+
+  bool is_async;
+  if (!iter->ReadBool(&is_async))
+    return false;
+
+  *r = PlatformFileForTransit(file, is_async);
   return true;
 }
 
 void ParamTraits<PlatformFileForTransit>::Log(const param_type& p,
                                               std::string* l) {
-  LogParam(p.GetHandle(), l);
+  l->append("(");
+#if defined(OS_WIN)
+  LogParam(p.GetFile(), l);
+#elif defined(OS_POSIX)
+  LogParam(p.GetFile().fd, l);
+#endif
+  l->append(", ");
+  LogParam(p.IsAsync(), l);
+  l->append(")");
 }
-#endif  // defined(OS_WIN)
 
 void ParamTraits<base::FilePath>::Write(base::Pickle* m, const param_type& p) {
   p.WriteToPickle(m);
