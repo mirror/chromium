@@ -88,6 +88,24 @@
       "revId": "d8a93a0d1a19baba9b25fd3893840a7548bdcbe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "233bc8e4_e1cf527a",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-11-28T02:04:50Z",
+      "side": 1,
+      "message": "For M64, if absolutely anything goes wrong with the code to fetch or decode the ID token, we should default to it being a regular user sign-in. For M-65, let\u0027s open an issue and figure out the best way to mitigate worst case scenarios with the flow.",
+      "parentUuid": "406311e2_53ec93f3",
+      "revId": "d8a93a0d1a19baba9b25fd3893840a7548bdcbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
