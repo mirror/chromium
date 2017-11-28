@@ -226,6 +226,30 @@
     },
     {
       "key": {
+        "uuid": "9d253fbb_5bda1843",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-28T22:32:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a5e10ad_6f46256a",
+      "range": {
+        "startLine": 148,
+        "startChar": 1,
+        "endLine": 148,
+        "endChar": 17
+      },
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaab31ac_12a061d8",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
         "patchSetId": 4
@@ -273,6 +297,24 @@
       "side": 1,
       "message": "sgtm, let\u0027s ban about: too and write a test for about:blank with EXPECT_FALSE.",
       "parentUuid": "69c4e7c0_9dfe0c50",
+      "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79acdb2f_f7c1b6bd",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-28T22:32:38Z",
+      "side": 1,
+      "message": "enforcing here https://chromium-review.googlesource.com/c/chromium/src/+/784396/7/components/arc/intent_helper/arc_intent_helper_bridge.cc#124 test already added to TestOnOpenUrl_ChromeScheme check last patchset: \nhttps://chromium-review.googlesource.com/c/chromium/src/+/784396/7/components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc#302",
+      "parentUuid": "48bca788_87d82e33",
       "revId": "38bc89065109a394f2623054a47ffa9c4d0d23bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
