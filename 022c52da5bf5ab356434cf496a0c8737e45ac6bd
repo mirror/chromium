@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a52797b2_b0b8944f",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-28T08:04:37Z",
+      "side": 1,
+      "message": "Check that value !\u003d 0?",
+      "revId": "022c52da5bf5ab356434cf496a0c8737e45ac6bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
