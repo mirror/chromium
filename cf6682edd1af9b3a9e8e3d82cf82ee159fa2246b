@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ffae61c_ad80b972",
+        "filename": "content/shell/test_runner/web_frame_test_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-28T00:45:27Z",
+      "side": 1,
+      "message": "If we drop the notification during RenderViewImpl::Initialize(), will the WebFrameTestClient receive another DidReceiveTitle later on, once the frame is created?  Or do we not care about this, since no tests rely on knowing the title in this case?",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 456,
+        "endChar": 48
+      },
+      "revId": "cf6682edd1af9b3a9e8e3d82cf82ee159fa2246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
