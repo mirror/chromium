@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9060e5b3_20a974f2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T22:54:37Z",
+      "side": 1,
+      "message": "Done. If |original_value| is 100, then upper will point to the std::end(kBatteryPercentBuckets), so *(upper-1) will be 100. I\u0027ve added unit tests too, but I had to move this function out of anonymous namespace.",
+      "parentUuid": "07b3a5d7_3480a08d",
+      "revId": "597aef6d2a39520595bd31b77da9355078304be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3e2f1d7_88d0c73d",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "597aef6d2a39520595bd31b77da9355078304be1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfa264e_185f8ac4",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T22:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3e2f1d7_88d0c73d",
+      "revId": "597aef6d2a39520595bd31b77da9355078304be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1dbde498_bee1ce77",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T22:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61426d98_dc091844",
+      "revId": "597aef6d2a39520595bd31b77da9355078304be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1886d8f1_8878b368",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "597aef6d2a39520595bd31b77da9355078304be1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880959cc_9ff5230c",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-28T22:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1886d8f1_8878b368",
+      "revId": "597aef6d2a39520595bd31b77da9355078304be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
