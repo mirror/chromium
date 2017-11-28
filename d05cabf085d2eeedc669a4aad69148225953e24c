@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e6a3a16f_b572175d",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-28T02:16:36Z",
+      "side": 1,
+      "message": "Can you make these explicitly typed?",
+      "range": {
+        "startLine": 124,
+        "startChar": 2,
+        "endLine": 124,
+        "endChar": 6
+      },
+      "revId": "d05cabf085d2eeedc669a4aad69148225953e24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2609b50_da248ecc",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 4
@@ -30,6 +53,24 @@
       "writtenOn": "2017-11-28T01:01:22Z",
       "side": 1,
       "message": "I don\u0027t understand these conditions. PAGE_TRANSITION_AUTO_BOOKMARK is documented as opening the page from a suggestion... doesn\u0027t seem particularly relevant. Is the documentation wrong? What exact launching cases are being handled here?\n\nI think \"return PROCEED\" means that we will handle the nav in the browser. So why are there two different outcomes here: if it\u0027s a redirect and the target doesn\u0027t match the app window, you explicitly OpenInChrome(browser) and then PROCEED. If not, you still PROCEED. I don\u0027t understand what this is doing.",
+      "revId": "d05cabf085d2eeedc669a4aad69148225953e24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03046f97_a3678d26",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-28T02:16:36Z",
+      "side": 1,
+      "message": "As discussed, this could be moved around slightly such that the diff is just adding this to the top of the function:\n\n+\n+  if (is_redirect \u0026\u0026\n+      PageTransitionCoreTypeIs(transition_type,\n+                               ui::PAGE_TRANSITION_AUTO_BOOKMARK) \u0026\u0026\n+      GetAppForWindow() !\u003d GetTargetApp()) {\n+    DVLOG(1) \u003c\u003c \"Out-of-scope navigation during launch. Opening in Chrome.\";\n+    Browser* browser \u003d chrome::FindBrowserWithWebContents(\n+        navigation_handle()-\u003eGetWebContents());\n+    DCHECK(browser);\n+    chrome::OpenInChrome(browser);\n+  }\n+\n\nAlso: TODO: Possibly fall through to the logic below to open target in app window, if it belongs to an app.",
+      "parentUuid": "d45dae01_4650e7a7",
       "revId": "d05cabf085d2eeedc669a4aad69148225953e24c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
