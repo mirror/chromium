@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a366823_5455c50d",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-28T23:24:16Z",
+      "side": 1,
+      "message": "nit: had",
+      "range": {
+        "startLine": 658,
+        "startChar": 13,
+        "endLine": 658,
+        "endChar": 33
+      },
+      "revId": "6ea3235c9ab7584d09e07f4d0cbc9295dad30048",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd39c34_5b854c1f",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-28T23:24:16Z",
+      "side": 1,
+      "message": "What is the performance impact of this change? I\u0027m not sure I buy that iterating a handful of layers in a vector and checking whether they have images in InvalidateRegionForImages is slower than iterating a smaller handful of layer ids, then looking up each of those layers in a map and calling the function.\n\nAlso possible insert/erase on raster source updates in a flat set are not necessarily better than a potentially more stable set of layers.",
+      "revId": "6ea3235c9ab7584d09e07f4d0cbc9295dad30048",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
