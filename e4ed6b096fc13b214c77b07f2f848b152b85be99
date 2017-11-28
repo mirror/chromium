@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "953749b1_59dbded4",
+        "filename": "extensions/renderer/bindings/js_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-28T21:24:00Z",
+      "side": 1,
+      "message": "explicit here too.",
+      "revId": "e4ed6b096fc13b214c77b07f2f848b152b85be99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2011606d_68db4794",
+        "filename": "extensions/renderer/extension_js_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-28T21:24:00Z",
+      "side": 1,
+      "message": "ScriptContext* const ...",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 16
+      },
+      "revId": "e4ed6b096fc13b214c77b07f2f848b152b85be99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
