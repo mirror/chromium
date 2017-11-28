@@ -526,11 +526,13 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
                                             disable_overlay_ca_layers),
             GetGpuMemoryBufferManager());
 #else
+        const GLenum format =
+            capabilities.texture_format_bgra8888 ? GL_BGRA_EXT : GL_RGB;
         auto gpu_output_surface =
             std::make_unique<GpuSurfacelessBrowserCompositorOutputSurface>(
                 context_provider, data->surface_handle, vsync_callback,
                 CreateOverlayCandidateValidator(compositor->widget()),
-                GL_TEXTURE_2D, GL_RGB,
+                GL_TEXTURE_2D, format,
                 display::DisplaySnapshot::PrimaryFormat(),
                 GetGpuMemoryBufferManager());
         gpu_vsync_control = gpu_output_surface.get();
