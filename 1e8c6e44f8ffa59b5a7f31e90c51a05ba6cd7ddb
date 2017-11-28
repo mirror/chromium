@@ -87,6 +87,24 @@
       "revId": "1e8c6e44f8ffa59b5a7f31e90c51a05ba6cd7ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702bda38_2dad9754",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SchemeRegistry.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-11-28T20:53:20Z",
+      "side": 1,
+      "message": "Done\n\nThanks for the suggestion!",
+      "parentUuid": "80b3f7af_30428022",
+      "revId": "1e8c6e44f8ffa59b5a7f31e90c51a05ba6cd7ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
