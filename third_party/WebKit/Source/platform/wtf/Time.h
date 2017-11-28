@@ -85,6 +85,8 @@ class TimeWrapper {
     return TimeWrapper() + TimeDelta::FromSecondsD(seconds);
   }
 
+  bool is_null() const { return value_.is_null(); }
+
   TimeWrapper& operator=(TimeWrapper other) {
     value_ = other.value_;
     return *this;
