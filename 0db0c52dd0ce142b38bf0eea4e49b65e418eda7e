@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5fc2656_f35fd41c",
+        "filename": "DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T03:22:15Z",
+      "side": 1,
+      "message": "Should call this out in the commit description",
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4dfae0_6cc81734",
+        "filename": "base/allocator/allocator_shim_default_dispatch_to_linker_wrapped_symbols.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T03:22:15Z",
+      "side": 1,
+      "message": "nit: add a comment that this is defined in malloc.h on other platforms",
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73366d5e_56dadabd",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T03:22:15Z",
+      "side": 1,
+      "message": "nit: this is just r16, no \"b\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 35,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fac9ce8_59738f19",
+        "filename": "build/config/posix/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T03:22:15Z",
+      "side": 1,
+      "message": "nit: Either assign to sysroot here and drop the else clause, or just delete this line (GN does not use block scoping)",
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1318185e_34aac462",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_settings_android.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T03:22:15Z",
+      "side": 1,
+      "message": "I\u0027m no style guide expert, but I think we\u0027re supposed to always use C++ casts (static_cast)? There were a couple bare casts in the linker files as well.",
+      "range": {
+        "startLine": 185,
+        "startChar": 56,
+        "endLine": 185,
+        "endChar": 61
+      },
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888264c2_a87403fe",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_wrappers.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-28T03:22:15Z",
+      "side": 1,
+      "message": "static_cast",
+      "range": {
+        "startLine": 237,
+        "startChar": 45,
+        "endLine": 237,
+        "endChar": 49
+      },
+      "revId": "0db0c52dd0ce142b38bf0eea4e49b65e418eda7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
