@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "38bdf92f_c1a3da81",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T11:21:11Z",
+      "side": 1,
+      "message": "Nit: There\u0027s a prefix bound for this namespace, so h:link et.c would cut down on the boilerplate.",
+      "range": {
+        "startLine": 5,
+        "startChar": 5,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "caf792f6_3ebae301",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
         "patchSetId": 3
@@ -13,6 +36,70 @@
       "writtenOn": "2017-11-28T03:13:39Z",
       "side": 1,
       "message": "These tests seem to be split up arbitrarily and all of them have the same content value: \"d is a property\". WDYT of splitting them up by what they are testing? For example, d-interpolation-segment-types.svg could test all the path types (M, L, H, Q, etc), and d-interpolation-multiple-segments.svg could test paths with multiple segments, and d-interpolation-invalid-paths.svg could test invalid paths.",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d779443_8fad5524",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T11:21:11Z",
+      "side": 1,
+      "message": "I second this request for \"name rather than number (when possible)\".",
+      "parentUuid": "caf792f6_3ebae301",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca31577_7201fab0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T11:21:11Z",
+      "side": 1,
+      "message": "Any particular reason not to use \u003cscript xlink:href\u003d\"...\"/\u003e? Similarly for the \u003cstyle\u003e element above. (I.e if we\u0027re bothered enough to write tests as .svg/XML then we should probably use SVG vocabulary as much as possible...)",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bc1080_f38b2239",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/getComputedStyle.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T11:21:11Z",
+      "side": 1,
+      "message": "Maybe add some variation to the path data to make the sources more distinct. (\"...H 30\", \"...H 40\" et.c, or so.)",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 27
+      },
       "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +134,24 @@
       "writtenOn": "2017-11-28T03:13:39Z",
       "side": 1,
       "message": "Are these conditionals for progress at 0 and 1 useful? I think you can just use the cubic-bezier return for simplicity.",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2bac294_e363ce61",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-28T11:21:11Z",
+      "side": 1,
+      "message": "I suspect it would be difficult to generalize the cubic bezier to that degree.",
+      "parentUuid": "dfbd5abc_bbc2f3e8",
       "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
