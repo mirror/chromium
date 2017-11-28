@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c4e5e57_013de502",
+        "filename": "ui/app_list/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-28T22:05:17Z",
+      "side": 1,
+      "message": "After migrating to ash, we still need the window property to keep the behavior. Hence I don\u0027t think we need to remove this after migrating to ash.",
+      "revId": "9ff332dbf00ed08938644045aa039860e05f1158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
