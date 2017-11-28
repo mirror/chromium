@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff7dc9ad_6617d845",
+        "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-28T16:39:42Z",
+      "side": 1,
+      "message": "notification is initialized here:\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc?l\u003d147\nthis happens only if IsArcAllowedForProfile was true.\n\nIt looks like IsARcAllowedForProfile changed its value in your scenario, which is not allowed.",
+      "range": {
+        "startLine": 121,
+        "startChar": 1,
+        "endLine": 123,
+        "endChar": 0
+      },
+      "revId": "43a7f11c457e20917f69b7bc827f77d42d2aad11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
