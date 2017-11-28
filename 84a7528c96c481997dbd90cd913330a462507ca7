@@ -52,6 +52,24 @@
       "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5af4b6_14f87750",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-28T06:27:35Z",
+      "side": 1,
+      "message": "I partly agree with haraken-san. I feel like we need another enum indicating internal types besides this TaskType. However, I don\u0027t have a strong opinion on kInternalInitialization. Don\u0027t we need at least one TaskType indicating internal usage anyway?",
+      "parentUuid": "112040ab_a2817b47",
+      "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
