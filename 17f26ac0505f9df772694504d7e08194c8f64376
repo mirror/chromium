@@ -117,6 +117,30 @@
       "revId": "17f26ac0505f9df772694504d7e08194c8f64376",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a9297e7_16587cc1",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-28T18:46:17Z",
+      "side": 1,
+      "message": "no need! this is being done for you: https://cs.chromium.org/chromium/src/components/arc/connection_holder.h?q\u003dConnectionHolder\u0026sq\u003dpackage:chromium\u0026l\u003d157",
+      "parentUuid": "a7b42aa5_a180ddcf",
+      "range": {
+        "startLine": 413,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 1
+      },
+      "revId": "17f26ac0505f9df772694504d7e08194c8f64376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
