@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9c3d223e_c98081eb",
+        "filename": "chrome/browser/ui/webui/chromeos/bluetooth_pairing_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T19:54:41Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "range": {
+        "startLine": 64,
+        "startChar": 50,
+        "endLine": 64,
+        "endChar": 52
+      },
+      "revId": "de1ff44c3006b44e4077fc6f611f5d844855fcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a27c8085_7b63bd3c",
         "filename": "chrome/browser/ui/webui/chromeos/bluetooth_pairing_dialog.h",
         "patchSetId": 2
@@ -18,6 +41,29 @@
         "startChar": 0,
         "endLine": 18,
         "endChar": 32
+      },
+      "revId": "de1ff44c3006b44e4077fc6f611f5d844855fcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09690ac6_11bce50d",
+        "filename": "chrome/browser/ui/webui/chromeos/system_web_dialog_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T19:54:41Z",
+      "side": 1,
+      "message": "Are you sure it\u0027s OK to put these dialogs in the same container as login/oobe UI?\n\nI imagine that clicking outside the dialog window would activate the login UI window, which \nwould mean that the system dialog would get stacked behind the login UI (and, given that login window is full-screen, become unreachable by the user).",
+      "range": {
+        "startLine": 64,
+        "startChar": 27,
+        "endLine": 64,
+        "endChar": 66
       },
       "revId": "de1ff44c3006b44e4077fc6f611f5d844855fcde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
