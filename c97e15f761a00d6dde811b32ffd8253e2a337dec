@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "9ed78e06_83f46655",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-28T09:12:25Z",
+      "side": 1,
+      "message": "Yes, I\u0027m adding the SetOverride() and ClearOverride() functions in FakeGeolocation for layouttest. After that I\u0027ll add the wrapper function.\nFor OverrideGeolocationForService(), it is ok to just pass (lat, long).\nFor OverrideGeolocationForConnector(), client have to pass (lat, long, Altitude, Accuracy).",
+      "parentUuid": "e3bc7a36_d94b2037",
+      "revId": "c97e15f761a00d6dde811b32ffd8253e2a337dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b2ab777_3374d387",
         "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
         "patchSetId": 6
@@ -132,6 +150,30 @@
       "side": 1,
       "message": "What if some followup test wants to connect to the real impl (i.e., there\u0027s no followup call to SetGlobalBinderForTesting)? Will they get this override instead, or does the override implicitly get torn down as part of teardown? I imagine it\u0027s the latter, just want to be sure.",
       "parentUuid": "1eb87e27_54e51c50",
+      "range": {
+        "startLine": 533,
+        "startChar": 39,
+        "endLine": 533,
+        "endChar": 64
+      },
+      "revId": "c97e15f761a00d6dde811b32ffd8253e2a337dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b0f1ba_c3fad5d8",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-28T09:12:25Z",
+      "side": 1,
+      "message": "Yes, the SetGlobalBinderForTesting is process-level override. I\u0027ll add the clearBinder in teardown.",
+      "parentUuid": "73d6165b_6fbb31d0",
       "range": {
         "startLine": 533,
         "startChar": 39,
@@ -238,6 +280,24 @@
       "side": 1,
       "message": "I was thinking that if we make a utility function that does all the work for you by just taking in a (lat, long), then it would be useful to just have a simple test that calls that function, then requests geolocation and verifies that the returned geoposition has the specified (lat, long). In general I think in //services we should err on the side of \"over\" -- over-documentation, over-testing, etc. Reason being that we\u0027re hoping that these services will form the foundation of Chromium-based products for the next N years :).",
       "parentUuid": "9a19eacb_d73668eb",
+      "revId": "c97e15f761a00d6dde811b32ffd8253e2a337dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79bff3c_8f42132b",
+        "filename": "device/geolocation/public/cpp/fake_geolocation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-28T09:12:25Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll add the test:)",
+      "parentUuid": "7bb391ca_d2a9600e",
       "revId": "c97e15f761a00d6dde811b32ffd8253e2a337dec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
