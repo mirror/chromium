@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d605d9aa_33087d7d",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-28T22:32:34Z",
+      "side": 1,
+      "message": "Oh right, I totally missed that. Thinking out loud, would it be better if [Forwarding]CompositingModeReportImpl checked the flags (or BrowserMainLoop checks and passes in) the value so that renderers start in software sooner, much like this optimization here? You wouldn\u0027t need this special case either.",
+      "parentUuid": "de75654f_35e7502f",
+      "revId": "6981f7546b1756dcd37fd6dac3a61d88be86ca83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fdeae94_0a4ffe61",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 2
