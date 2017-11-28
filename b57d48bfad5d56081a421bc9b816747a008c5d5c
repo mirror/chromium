@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "01f981a9_c4a49b2d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-28T22:39:10Z",
+      "side": 1,
+      "message": "Sounds fine to me.",
+      "parentUuid": "043568ff_b5cdfc49",
+      "revId": "b57d48bfad5d56081a421bc9b816747a008c5d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20dde4e4_d53f5012",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 10
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Done in the new patch-set.",
       "parentUuid": "20dde4e4_d53f5012",
+      "revId": "b57d48bfad5d56081a421bc9b816747a008c5d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538d4ce9_44888140",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-28T22:39:10Z",
+      "side": 1,
+      "message": "I don\u0027t see a difference in the code...am I misreading something?",
+      "parentUuid": "f59c9752_782ee30c",
       "revId": "b57d48bfad5d56081a421bc9b816747a008c5d5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
