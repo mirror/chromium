@@ -22,6 +22,30 @@
       "revId": "59ac6e8c2eb2cfd779eaf18dfd81d9ee790a0343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303f9a5f_13f28946",
+        "filename": "third_party/WebKit/Source/modules/mediastream/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-28T17:54:35Z",
+      "side": 1,
+      "message": "Yeah, this is not allowed.\n\nWould you try to move //content/common/media/media_devices.mojom to WebKit/common/media/media_devices.mojom ?\n\n(I\u0027m assuming that media_devices.mojom is used by both browser and renderer. Only code shared by browser and renderer should go to WebKit/common/.)",
+      "parentUuid": "56b369d6_347a01a0",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 6
+      },
+      "revId": "59ac6e8c2eb2cfd779eaf18dfd81d9ee790a0343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
