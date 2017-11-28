@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed601431_577040d0",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-28T00:07:48Z",
+      "side": 1,
+      "message": "Should these be removed?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 75
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d5422b_c64b5db7",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-28T00:07:48Z",
+      "side": 1,
+      "message": "Why the name change? The new name sounds like it should return a BOOL but it doesn\u0027t.",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ba9504_1ee7513a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-28T00:07:48Z",
+      "side": 1,
+      "message": "Prefer to be explicit about strong/weak.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce35ac6e_f808939a",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-28T00:07:48Z",
+      "side": 1,
+      "message": "May I suggest:\n\"Should be called when the tab switcher was shown.\"",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f60b2c_fc76504c",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-28T00:07:48Z",
+      "side": 1,
+      "message": "You should use base::mac::ObjCCastStrict, so that\n1) it DCHECKS on the type of object, and\n2) you don\u0027t need to use -respondsToSelector:. \nI also noticed that -wasHidden/-wasShown is not on the public API for the TabSwitcherPanelView class. Could you make it part of the public API?",
+      "range": {
+        "startLine": 340,
+        "startChar": 2,
+        "endLine": 341,
+        "endChar": 54
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
