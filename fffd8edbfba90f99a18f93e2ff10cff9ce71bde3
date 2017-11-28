@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e037b19c_aafa9a67",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-28T05:09:02Z",
+      "side": 1,
+      "message": "Why isnt this code in TreeScopeStyleSheetCollection in that case?",
+      "parentUuid": "53343e4e_34083231",
+      "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5dd6bfc2_894704d5",
         "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
         "patchSetId": 1
@@ -64,6 +82,24 @@
       "writtenOn": "2017-11-25T13:34:07Z",
       "side": 1,
       "message": "This is essentially what ScopedStyleResolver::AppendActiveStyleSheets does for author sheets.",
+      "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1640d9ed_46049eb6",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-28T05:09:02Z",
+      "side": 1,
+      "message": "Why isnt this in ScopedStyleResolver in that case?",
+      "parentUuid": "120c9154_010a913f",
       "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
