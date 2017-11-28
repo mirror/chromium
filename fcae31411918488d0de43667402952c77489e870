@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62b69c4d_b23f4bee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:01:37Z",
+      "side": 1,
+      "message": "It\u0027s worth saying something like \"This should match the tab context menu, which already says \"Mute Site\" by default.\" Also worth pointing out in the CL description that this should be behind a feature flag, but we can\u0027t do that in a .xib file.",
+      "revId": "fcae31411918488d0de43667402952c77489e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e5b244_a93fdfb5",
+        "filename": "chrome/app/nibs/MainMenu.xib",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T03:01:37Z",
+      "side": 1,
+      "message": "This should probably have some correspondence to 35012 in chrome_command_ids.h . i.e.,\n\n#define IDC_WINDOW_MUTE_TAB             35012\n\nI probably wouldn\u0027t bother renaming the variable, but just change the text in the .grd from \"Mute Tab\" to \"Mute Site\"",
+      "revId": "fcae31411918488d0de43667402952c77489e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
