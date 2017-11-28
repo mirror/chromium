@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7b9212e_6c4aa449",
+        "filename": "third_party/WebKit/Source/modules/vr/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-28T19:25:30Z",
+      "side": 1,
+      "message": "OWNERS assumes you have a lot of familiarity with the source and conventions here and can comfortably sign off on patches from people unfamiliar with said conventions. Do you feel you\u0027re at that point? I definitely wouldn\u0027t feel comfortable putting myself on as an owner anywhere in blink :P",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 20
+      },
+      "revId": "7c0274fe627d20180bff3a321342bdb4661916a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
