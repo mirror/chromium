@@ -35,7 +35,7 @@ ScopedVariant SELF(CHILDID_SELF);
 
 }  // namespace
 
-class AXPlatformNodeTest : public testing::Test {
+class AXPlatformNodeWinTest : public ui::AXPlatformNodeTest {
  public:
   AXPlatformNodeWinTest() {}
   ~AXPlatformNodeWinTest() override {}
