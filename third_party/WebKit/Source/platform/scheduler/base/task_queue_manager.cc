@@ -496,8 +496,7 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
 
   double task_start_time_sec = 0;
   base::TimeTicks task_start_time;
-  TRACE_TASK_EXECUTION("TaskQueueManager::ProcessTaskFromWorkQueue",
-                       pending_task);
+  TRACE_EVENT0("toplevel, benchmark", "TaskQueueManager::ProcessTaskFromWorkQueue");
   if (queue->GetShouldNotifyObservers()) {
     for (auto& observer : task_observers_)
       observer.WillProcessTask(pending_task);
