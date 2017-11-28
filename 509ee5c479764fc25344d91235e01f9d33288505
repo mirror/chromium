@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4785dcc6_79af2c67",
+        "filename": "third_party/WebKit/Source/devtools/front_end/application_test_runner/ResourcesTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-11-28T17:27:30Z",
+      "side": 1,
+      "message": "I wonder if this would be more reliable if called storageAgent().clearDataForOrigin directly.",
+      "revId": "509ee5c479764fc25344d91235e01f9d33288505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
