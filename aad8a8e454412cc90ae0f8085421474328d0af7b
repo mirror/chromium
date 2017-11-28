@@ -22,6 +22,30 @@
       "revId": "aad8a8e454412cc90ae0f8085421474328d0af7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c818d25d_c2b7299c",
+        "filename": "base/time/default_tick_clock.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-28T04:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "748647fc_c50844a6",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "aad8a8e454412cc90ae0f8085421474328d0af7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
