@@ -926,8 +926,16 @@ TEST_F(ManagePasswordsUIControllerTest, OpenBubbleTwice) {
 TEST_F(ManagePasswordsUIControllerTest, ManualFallbackForSaving_UseFallback) {
   for (bool is_update : {false, true}) {
     SCOPED_TRACE(testing::Message("is_update = ") << is_update);
+    // Setup metrics recorder.
+    ukm::TestAutoSetUkmRecorder test_ukm_recorder;
+    ukm::SourceId source_id = test_ukm_recorder.GetNewSourceID();
+    auto recorder =
+        base::MakeRefCounted<password_manager::PasswordFormMetricsRecorder>(
+            true /*is_main_frame_secure*/, &test_ukm_recorder, source_id,
+            GURL("http://www.example.com/"));
+
     std::unique_ptr<password_manager::PasswordFormManager> test_form_manager(
-        CreateFormManager());
+        CreateFormManagerWithMetricsRecorder(recorder));
     test_form_manager->ProvisionallySave(
         test_local_form(),
         password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
@@ -953,6 +961,13 @@ TEST_F(ManagePasswordsUIControllerTest, ManualFallbackForSaving_UseFallback) {
       histogram_tester.ExpectUniqueSample(
           "PasswordManager.PasswordSavedWithManualFallback", true, 1);
     }
+    const int64_t kTriggeredManualFallbackForSavingOrUpdatingAsInt64 =
+        static_cast<int64_t>(
+            password_manager::PasswordFormMetricsRecorder::DetailedUserAction::
+                kTriggeredManualFallbackForSavingOrUpdating);
+    EXPECT_THAT(test_ukm_recorder.GetMetrics(*source, UkmEntry::kEntryName,
+                                             UkmEntry::kUser_ActionName),
+                Contains(kTriggeredManualFallbackForSavingOrUpdatingAsInt64));
     ExpectIconAndControllerStateIs(password_manager::ui::MANAGE_STATE);
     testing::Mock::VerifyAndClearExpectations(controller());
   }

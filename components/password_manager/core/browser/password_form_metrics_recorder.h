@@ -157,6 +157,7 @@ class PasswordFormMetricsRecorder
     // Interactions with password bubble.
     kEditedUsernameInBubble = 100,
     kSelectedDifferentPasswordInBubble = 101,
+    kTriggeredManualFallbackForSavingOrUpdating = 102,
 
     // Interactions with form.
     kCorrectedUsernameInForm = 200,
