@@ -425,11 +425,12 @@ static void WriteLayoutSVGTextBox(TextStream& ts, const LayoutSVGText& text) {
   // landed. We want to preserve the old layout test results for now.
   ts << " contains 1 chunk(s)";
 
-  if (text.Parent() && (text.Parent()->ResolveColor(CSSPropertyColor) !=
-                        text.ResolveColor(CSSPropertyColor))) {
+  const CSSProperty& css_property_color = GetCSSPropertyColor();
+  if (text.Parent() && (text.Parent()->ResolveColor(css_property_color) !=
+                        text.ResolveColor(css_property_color))) {
     WriteNameValuePair(
         ts, "color",
-        text.ResolveColor(CSSPropertyColor).NameForLayoutTreeAsText());
+        text.ResolveColor(css_property_color).NameForLayoutTreeAsText());
   }
 }
 
