@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e173533c_6f8b1fa8",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T16:13:02Z",
+      "side": 1,
+      "message": "Doesn\u0027t this mean that this may not change the state? If so, don\u0027t we want to skip recording?",
+      "revId": "084439b00730f56442ba896f3795193a78221388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea7e407_b198098a",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-28T16:13:02Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "084439b00730f56442ba896f3795193a78221388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
