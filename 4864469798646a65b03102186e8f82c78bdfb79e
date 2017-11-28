@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d57e9041_323c79bb",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-28T02:55:25Z",
+      "side": 1,
+      "message": "Right. I didn\u0027t realize that PixelTests has output_surface_. Removed.",
+      "parentUuid": "28212ba0_25887d4e",
+      "revId": "4864469798646a65b03102186e8f82c78bdfb79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd15dace_c0df9894",
         "filename": "components/viz/service/display/gl_renderer_unittest.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T21:15:10Z",
       "side": 1,
       "message": "Can we add a test in here that verifies UniformMatrix4fv() is called on a mock GL context appropriately (for the root not for children, with the right arguments and such)?",
+      "revId": "4864469798646a65b03102186e8f82c78bdfb79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd0931e_e69a42cd",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-28T02:55:25Z",
+      "side": 1,
+      "message": "Done. But I still need to add the case where there are children passes.",
+      "parentUuid": "dd15dace_c0df9894",
       "revId": "4864469798646a65b03102186e8f82c78bdfb79e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3e352b3f_cbc060fd",
+        "filename": "components/viz/service/display/overlay_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-28T02:55:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "996c9d32_3a541949",
+      "revId": "4864469798646a65b03102186e8f82c78bdfb79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2949e74c_d3702c7d",
         "filename": "components/viz/service/display/renderer_pixeltest.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "4864469798646a65b03102186e8f82c78bdfb79e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a37993e_3072ceb3",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-28T02:55:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2949e74c_d3702c7d",
+      "revId": "4864469798646a65b03102186e8f82c78bdfb79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

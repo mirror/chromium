@@ -266,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "454b950f_54472e23",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-28T02:55:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f9325b0_f5dfce18",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56ed5f86_51f1d050",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 1
@@ -423,6 +441,24 @@
       "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f8554b_d14fd043",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-28T02:55:25Z",
+      "side": 1,
+      "message": "I moved all temperature-related code out of ui::Layer. I\u0027m now doing the animation in the NightLightController as suggested using a gfx::LinearAnimation.\n\nAlso, regarding damaging and drawing as a result of setting the color matrix on the display (instead of doing Compositor::ScheduleFullRedraw()), I\u0027m now doing the following inside viz::Display:\n\n  if (aggregator_) {\n    if (current_surface_id_.is_valid())\n      aggregator_-\u003eSetFullDamageForSurface(current_surface_id_);\n  }\n\n  DrawAndSwap();\n\n\nIt seems to be working correctly, Please let me know if there\u0027s something else I should do.\n\nI\u0027m Ok with splitting into multiple CLs, but I wanted to show you here the full implementation in its entirety so that it\u0027s easier to see the big picture.",
+      "parentUuid": "f78768d1_fc3d6bc7",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
