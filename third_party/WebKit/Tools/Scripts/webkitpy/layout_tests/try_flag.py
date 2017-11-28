@@ -64,12 +64,11 @@ class TryFlag(object):
 
     def trigger(self):
         flag = self._args.flag
-        if flag:
-            self._set_flag(flag)
-            if self._args.regenerate:
-                self._clear_expectations(flag)
-            self._git_cl.run(['upload', '--bypass-hooks', '-f',
-                              '-m', 'Flag try job for %s.' % flag])
+        self._set_flag(flag)
+        if self._args.regenerate:
+            self._clear_expectations(flag)
+        self._git_cl.run(['upload', '--bypass-hooks', '-f',
+                          '-m', 'Flag try job for %s.' % flag])
         for builder in sorted(BUILDER_MASTERS.keys()):
             master = BUILDER_MASTERS[builder]
             self._git_cl.trigger_try_jobs([builder], master)
@@ -150,7 +149,7 @@ def parse_args(argv):
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('action', help='"trigger" or "update"')
     parser.add_argument('--bug', help='crbug number for expectation lines')
-    parser.add_argument('--flag',
+    parser.add_argument('--flag', required=True,
                         help='flag to force-enable in run-webkit-tests')
     parser.add_argument('--regenerate', action='store_true',
                         help='clear the flag expectations before triggering')
