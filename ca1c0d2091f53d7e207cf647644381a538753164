@@ -22,6 +22,30 @@
       "revId": "ca1c0d2091f53d7e207cf647644381a538753164",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9dd3a04_88cf2020",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-28T18:23:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e084c871_a3f56f95",
+      "range": {
+        "startLine": 81,
+        "startChar": 12,
+        "endLine": 81,
+        "endChar": 20
+      },
+      "revId": "ca1c0d2091f53d7e207cf647644381a538753164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
