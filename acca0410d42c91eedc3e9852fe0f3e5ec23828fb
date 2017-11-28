@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac842aff_c956d129",
+        "filename": "chrome/browser/resources/print_preview/data/destination.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T00:09:08Z",
+      "side": 1,
+      "message": "Should we make an HTML file print_preview_utils.js too? Since this is a \"util\" file, I am assuming there will be a need to import it from other components too.",
+      "revId": "acca0410d42c91eedc3e9852fe0f3e5ec23828fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479c30cc_3d83b5dd",
+        "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T00:09:08Z",
+      "side": 1,
+      "message": "Nit: Indentation off.",
+      "revId": "acca0410d42c91eedc3e9852fe0f3e5ec23828fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f868d0d6_2ad351ea",
+        "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T00:09:08Z",
+      "side": 1,
+      "message": "Since settings_behavior depends directly on assert() let\u0027s declare it here too (it is probably getting that dependency transitively now).",
+      "revId": "acca0410d42c91eedc3e9852fe0f3e5ec23828fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6aa299d_c50bb880",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T00:09:08Z",
+      "side": 1,
+      "message": "Nit (optional): Let\u0027s keep every element in a separate line. You can force clang-format to do this by adding a comma after the last element (I think).",
+      "revId": "acca0410d42c91eedc3e9852fe0f3e5ec23828fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c88f195_c3cf276a",
+        "filename": "chrome/browser/resources/print_preview/new/scaling_settings.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T00:09:08Z",
+      "side": 1,
+      "message": "Perhaps add a comment to mention that this is done to avoid endless loops of inputString_ \u003c-\u003e settings.scaling.value observers.",
+      "revId": "acca0410d42c91eedc3e9852fe0f3e5ec23828fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc35ec5e_1fe87cb2",
+        "filename": "chrome/browser/resources/print_preview/new/scaling_settings.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T00:09:08Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think using this.set() is necessary for top-level paths like \u0027inputString_\u0027.",
+      "revId": "acca0410d42c91eedc3e9852fe0f3e5ec23828fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de5fe32_e920f52e",
+        "filename": "chrome/browser/resources/print_preview/new/scaling_settings.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T00:09:08Z",
+      "side": 1,
+      "message": "Assuming that this is not volatile, right? Otherwise it should be declared as a dependency of onInputChanged_.",
+      "range": {
+        "startLine": 57,
+        "startChar": 31,
+        "endLine": 57,
+        "endChar": 61
+      },
+      "revId": "acca0410d42c91eedc3e9852fe0f3e5ec23828fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e50350e7_32690b22",
+        "filename": "chrome/browser/resources/print_preview/new/settings_behavior.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T00:09:08Z",
+      "side": 1,
+      "message": "Need to import chrome://resources/html/assert.html. See example at\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/toolbar.html?l\u003d7",
+      "revId": "acca0410d42c91eedc3e9852fe0f3e5ec23828fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e504a0a_6784f23a",
+        "filename": "chrome/browser/resources/print_preview/new/settings_behavior.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T00:09:08Z",
+      "side": 1,
+      "message": "Nit: Maybe just do assert(!!setting, ...), which is shorter.",
+      "revId": "acca0410d42c91eedc3e9852fe0f3e5ec23828fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4059624d_7baf076d",
+        "filename": "chrome/browser/resources/print_preview/new/settings_behavior.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-28T00:09:08Z",
+      "side": 1,
+      "message": "FYI you can use template strings to concatenate strings as follows:\nthis.set(`settings.${settingName}.value`, value);\n\nSame at line 44. See https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#Template-Literals.",
+      "revId": "acca0410d42c91eedc3e9852fe0f3e5ec23828fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
