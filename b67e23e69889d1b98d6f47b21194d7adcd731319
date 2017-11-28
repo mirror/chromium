@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bde24ad_aff965e2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-28T00:37:33Z",
+      "side": 1,
+      "message": "thanks for the suggestion, my understanding is if the screen is undimmed, it must be triggered by a user activity or change of power source, which will trigger the MaybeLog down below (and stop the timer). WDYT?",
+      "parentUuid": "3ec00df7_8d457df2",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a491084_6cf66def",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79024fca_b59b757e",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-28T00:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a491084_6cf66def",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0e6bed92_6aaf8e17",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-28T00:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad86128a_b90942b5",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "185a1dc5_a4a3a39a",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b250e745_c9f87d09",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-28T00:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "185a1dc5_a4a3a39a",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "69407706_a77c73cb",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-28T00:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a83b1a8_b5ec340b",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c16e1cfd_92b8eedb",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6a0eb5_8172a36c",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-28T00:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c16e1cfd_92b8eedb",
+      "revId": "b67e23e69889d1b98d6f47b21194d7adcd731319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
