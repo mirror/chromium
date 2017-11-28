@@ -77,9 +77,10 @@ class ForeignFetchRequestHandlerTest : public testing::Test {
 
     // Create a registration for the worker which has foreign fetch event
     // handler.
-    registration_ = new ServiceWorkerRegistration(
-        blink::mojom::ServiceWorkerRegistrationOptions(kScope), kRegistrationId,
-        context()->AsWeakPtr());
+    blink::mojom::ServiceWorkerRegistrationOptions options;
+    options.scope = kScope;
+    registration_ = new ServiceWorkerRegistration(options, kRegistrationId,
+                                                  context()->AsWeakPtr());
     version_ = new ServiceWorkerVersion(registration_.get(), kResource1,
                                         kVersionId, context()->AsWeakPtr());
     version_->set_foreign_fetch_scopes({kScope});
@@ -188,11 +189,10 @@ class ForeignFetchRequestHandlerTest : public testing::Test {
   void CreateServiceWorkerTypeProviderHost() {
     // Create another worker whose requests will be intercepted by the foreign
     // fetch event handler.
+    blink::mojom::ServiceWorkerRegistrationOptions options;
+    options.scope = GURL("https://host/scope");
     scoped_refptr<ServiceWorkerRegistration> registration =
-        new ServiceWorkerRegistration(
-            blink::mojom::ServiceWorkerRegistrationOptions(
-                GURL("https://host/scope")),
-            1L, context()->AsWeakPtr());
+        new ServiceWorkerRegistration(options, 1L, context()->AsWeakPtr());
     scoped_refptr<ServiceWorkerVersion> version = new ServiceWorkerVersion(
         registration.get(), GURL("https://host/script.js"), 1L,
         context()->AsWeakPtr());
