@@ -109,7 +109,7 @@ void VideoCaptureDeviceClient::OnIncomingCapturedData(
     base::TimeDelta timestamp,
     int frame_feedback_id) {
   TRACE_EVENT0("video", "VideoCaptureDeviceClient::OnIncomingCapturedData");
-  DCHECK_EQ(media::PIXEL_STORAGE_CPU, format.pixel_storage);
+  DCHECK_EQ(media::VideoPixelStorage::CPU, format.pixel_storage);
 
   if (last_captured_pixel_format_ != format.pixel_format) {
     OnLog("Pixel format: " +
@@ -158,7 +158,7 @@ void VideoCaptureDeviceClient::OnIncomingCapturedData(
   const gfx::Size dimensions(destination_width, destination_height);
   Buffer buffer =
       ReserveOutputBuffer(dimensions, media::PIXEL_FORMAT_I420,
-                          media::PIXEL_STORAGE_CPU, frame_feedback_id);
+                          media::VideoPixelStorage::CPU, frame_feedback_id);
 #if DCHECK_IS_ON()
   dropped_frame_counter_ = buffer.is_valid() ? 0 : dropped_frame_counter_ + 1;
   if (dropped_frame_counter_ >= kMaxDroppedFrames)
@@ -283,9 +283,9 @@ void VideoCaptureDeviceClient::OnIncomingCapturedData(
     return;
   }
 
-  const VideoCaptureFormat output_format =
-      VideoCaptureFormat(dimensions, format.frame_rate,
-                         media::PIXEL_FORMAT_I420, media::PIXEL_STORAGE_CPU);
+  const VideoCaptureFormat output_format = VideoCaptureFormat(
+      dimensions, format.frame_rate, media::PIXEL_FORMAT_I420,
+      media::VideoPixelStorage::CPU);
   OnIncomingCapturedBuffer(std::move(buffer), output_format, reference_time,
                            timestamp);
 }
@@ -418,7 +418,7 @@ void VideoCaptureDeviceClient::OnIncomingCapturedY16Data(
     int frame_feedback_id) {
   Buffer buffer =
       ReserveOutputBuffer(format.frame_size, media::PIXEL_FORMAT_Y16,
-                          media::PIXEL_STORAGE_CPU, frame_feedback_id);
+                          media::VideoPixelStorage::CPU, frame_feedback_id);
   // The input |length| can be greater than the required buffer size because of
   // paddings and/or alignments, but it cannot be smaller.
   DCHECK_GE(static_cast<size_t>(length), format.ImageAllocationSize());
@@ -432,9 +432,9 @@ void VideoCaptureDeviceClient::OnIncomingCapturedY16Data(
     return;
   auto buffer_access = buffer.handle_provider->GetHandleForInProcessAccess();
   memcpy(buffer_access->data(), data, length);
-  const VideoCaptureFormat output_format =
-      VideoCaptureFormat(format.frame_size, format.frame_rate,
-                         media::PIXEL_FORMAT_Y16, media::PIXEL_STORAGE_CPU);
+  const VideoCaptureFormat output_format = VideoCaptureFormat(
+      format.frame_size, format.frame_rate, media::PIXEL_FORMAT_Y16,
+      media::VideoPixelStorage::CPU);
   OnIncomingCapturedBuffer(std::move(buffer), output_format, reference_time,
                            timestamp);
 }
