@@ -485,8 +485,9 @@ BrowserAccessibilityManagerMac::GetUserInfoForValueChangedNotification(
   };
 }
 
-NSView* BrowserAccessibilityManagerMac::GetParentView() {
-  return delegate() ? delegate()->AccessibilityGetAcceleratedWidget() : nullptr;
+gfx::AcceleratedWidget BrowserAccessibilityManagerMac::GetParentView() {
+  return delegate() ? delegate()->AccessibilityGetAcceleratedWidget()
+                    : gfx::kNullAcceleratedWidget;
 }
 
 }  // namespace content
