@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e98ddb4f_21cc586d",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-28T01:10:23Z",
+      "side": 1,
+      "message": "These two functions can be combined if you set the href attribute equal to the page you want to navigate to:\n\nonLinkTap_: function(e) {\n  e.preventDefault();\n  extensions.navigation.navigateTo({page: new URL(e.target.html).pathname});\n}",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "76372e63e6a32a4762f056f9fab3b52068d26770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
