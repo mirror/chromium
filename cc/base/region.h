@@ -20,12 +20,17 @@ class TracedValue;
 }
 }
 
+namespace gfx {
+class Path;
+}
+
 namespace cc {
 class SimpleEnclosedRegion;
 
 class CC_BASE_EXPORT Region {
  public:
   Region();
+  explicit Region(const SkRegion& region);
   Region(const Region& region);
   Region(const gfx::Rect& rect);  // NOLINT(runtime/explicit)
   ~Region();
@@ -37,6 +42,7 @@ class CC_BASE_EXPORT Region {
   void Clear();
   bool IsEmpty() const;
   int GetRegionComplexity() const;
+  void GetBoundaryPath(gfx::Path* path) const;
 
   bool Contains(const gfx::Point& point) const;
   bool Contains(const gfx::Rect& rect) const;
