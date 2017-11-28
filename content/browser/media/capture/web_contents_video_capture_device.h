@@ -55,7 +55,7 @@ class CONTENT_EXPORT WebContentsVideoCaptureDevice
       int main_render_frame_id,
       bool enable_auto_throttling);
 
-  const std::unique_ptr<media::ScreenCaptureDeviceCore> core_;
+  std::unique_ptr<media::ScreenCaptureDeviceCore> core_;
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsVideoCaptureDevice);
 };
