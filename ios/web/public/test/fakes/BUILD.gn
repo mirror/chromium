@@ -39,6 +39,7 @@ source_set("fakes") {
     "test_native_content_provider.mm",
     "test_navigation_manager.h",
     "test_navigation_manager.mm",
+    "test_session_certificate_policy_cache.h",
     "test_web_client.h",
     "test_web_client.mm",
     "test_web_state.h",

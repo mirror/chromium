@@ -106,7 +106,6 @@
     DCHECK(snapshotManager);
     DCHECK(tab);
     DCHECK(tab.tabId);
-    DCHECK([tab webController]);
     _snapshotManager = snapshotManager;
     _webController = [tab webController];
     _tab = tab;
