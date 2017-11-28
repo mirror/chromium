@@ -51,6 +51,24 @@
       "revId": "fcae31411918488d0de43667402952c77489e870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77fea1c6_62335cce",
+        "filename": "chrome/app/nibs/MainMenu.xib",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-28T23:40:39Z",
+      "side": 1,
+      "message": "\u003e Changing the name of the variable seems a good thing to do to keep the code clear, wouldn\u0027t it?\n\nIf the name changes, then IDC_WINDOW_MUTE_TAB should change too -- that\u0027s where the 35012 in the `tag\u003d\"35012\"` on this line comes from.\n\n(and if you rename that, then you should rename MuteTab() to MuteSite() in browser_commands.cc, etc.).\n\nCurrently that 35012 means that chrome::MuteTab() gets invoked, so IDS_MUTE_TAB_MAC is a good name.",
+      "parentUuid": "38f9f851_c4469f1b",
+      "revId": "fcae31411918488d0de43667402952c77489e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
