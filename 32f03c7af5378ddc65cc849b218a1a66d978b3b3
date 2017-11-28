@@ -22,6 +22,30 @@
       "revId": "32f03c7af5378ddc65cc849b218a1a66d978b3b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d00011_785e867b",
+        "filename": "extensions/browser/api/declarative_webrequest/webrequest_condition.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T23:36:40Z",
+      "side": 0,
+      "message": "It is not necessarily incorrect, but it is also no longer relevant. The information needed from navigation UI data doesn\u0027t change over the course of the request\u0027s lifetime and so WebRequestInfo can just safely cache it ASAP at construction time on the IO thread, eliminating any dependency on navigation UI data.",
+      "parentUuid": "60492972_c854fd93",
+      "range": {
+        "startLine": 41,
+        "startChar": 18,
+        "endLine": 41,
+        "endChar": 36
+      },
+      "revId": "32f03c7af5378ddc65cc849b218a1a66d978b3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

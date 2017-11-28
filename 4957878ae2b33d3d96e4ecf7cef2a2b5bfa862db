@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b6d28c8_7943dac4",
+        "filename": "chrome/browser/extensions/api/declarative_webrequest/webrequest_action_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T23:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad96d9f8_8f3c1269",
+      "range": {
+        "startLine": 153,
+        "startChar": 17,
+        "endLine": 153,
+        "endChar": 24
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a2186d6_ea233e5f",
         "filename": "extensions/browser/api/web_request/web_request_api.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffc1b2c_3a1e247d",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T23:36:40Z",
+      "side": 1,
+      "message": "Done (I\u0027ve updated the comments to make more sense in light of the new code).",
+      "parentUuid": "9a2186d6_ea233e5f",
+      "range": {
+        "startLine": 1027,
+        "startChar": 18,
+        "endLine": 1029,
+        "endChar": 23
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dceb9b7b_2d20126d",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T23:36:40Z",
+      "side": 1,
+      "message": "Yeah, good point. :)  Done",
+      "parentUuid": "eee3447a_4340610d",
+      "range": {
+        "startLine": 1036,
+        "startChar": 2,
+        "endLine": 1036,
+        "endChar": 73
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ee5275d_0f6c5c57",
         "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28313386_eba6578a",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T23:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ee5275d_0f6c5c57",
+      "range": {
+        "startLine": 60,
+        "startChar": 28,
+        "endLine": 60,
+        "endChar": 35
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "24082443_f6e5aa64",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T23:36:40Z",
+      "side": 1,
+      "message": "It simply won\u0027t return any values (i.e. it will return false and not modify the outputs). There is no process or frame ID associated with browser-side navigation requests, and a non-null navigation_ui_data implies a browser-side navigation request.\n\nIn any case, this code is now gone.",
+      "parentUuid": "022b3e64_5dbbeb0a",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 39
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25ec4b4c_f4a0629f",
         "filename": "extensions/browser/api/web_request/web_request_info.cc",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13db5e50_b99d7bb7",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T23:36:40Z",
+      "side": 1,
+      "message": "Actually, no good reason. Really we\u0027re just scraping data from wherever it\u0027s available, and when I wrote this it was meant to be as close as possible to existing logic.\n\nUpon closer inspection of ResourceRequestInfoImpl code, this is indeed redundant. In fact GetRenderFrameForRequest will never succeed in cases where |info| is null, and when |info| is not null it will return exactly the same information.\n\nSo I\u0027ve removed the call to GetRenderFrameForRequest and am now using GetRenderFrameID() here.",
+      "parentUuid": "25ec4b4c_f4a0629f",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 21
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "9642c33e_f722dbbf",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T23:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44d3205c_b649a4e2",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 29
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e110ae1a_09b19390",
         "filename": "extensions/browser/api/web_request/web_request_info.h",
         "patchSetId": 6
@@ -183,6 +351,30 @@
       "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf002f4_9d56fceb",
+        "filename": "extensions/browser/api/web_request/web_request_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-28T23:36:40Z",
+      "side": 1,
+      "message": "Actually, it has to be available by then since the event router depends on it being available even during OnBeforeRequest. Done. (And good call!)",
+      "parentUuid": "e110ae1a_09b19390",
+      "range": {
+        "startLine": 129,
+        "startChar": 5,
+        "endLine": 129,
+        "endChar": 25
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
