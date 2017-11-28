@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/containers/flat_set.h"
+#include "base/files/scoped_file.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 
@@ -47,6 +48,9 @@ class DataSource {
  private:
   DataSourceDelegate* const delegate_;
   base::ObserverList<DataSourceObserver> observers_;
+
+  // Mime types which has been offerred.
+  std::set<std::string> mime_types_;
 
   DISALLOW_COPY_AND_ASSIGN(DataSource);
 };
