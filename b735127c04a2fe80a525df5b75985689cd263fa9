@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87df044e_2e4bfa1f",
+        "filename": "chrome/browser/extensions/chrome_app_icon_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:53:45Z",
+      "side": 1,
+      "message": "End sentences with proper punctuation.",
+      "range": {
+        "startLine": 274,
+        "startChar": 37,
+        "endLine": 274,
+        "endChar": 38
+      },
+      "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93c9a4b_3dac007d",
+        "filename": "chrome/browser/extensions/chrome_app_icon_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:53:45Z",
+      "side": 1,
+      "message": "Prefer asserts/expects in unit tests. In this case ASSERT_TRUE.",
+      "range": {
+        "startLine": 279,
+        "startChar": 4,
+        "endLine": 279,
+        "endChar": 10
+      },
+      "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d2b6bf_5789789f",
+        "filename": "chrome/browser/extensions/chrome_app_icon_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:53:45Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 285,
+        "startChar": 28,
+        "endLine": 285,
+        "endChar": 31
+      },
+      "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a940cf_3768911a",
+        "filename": "chrome/browser/extensions/chrome_app_icon_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T16:53:45Z",
+      "side": 1,
+      "message": "Initialize these to null and document ownership.",
+      "range": {
+        "startLine": 300,
+        "startChar": 26,
+        "endLine": 301,
+        "endChar": 41
+      },
+      "revId": "b735127c04a2fe80a525df5b75985689cd263fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
