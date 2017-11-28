@@ -77,30 +77,9 @@ bool PathProviderPosix(int key, FilePath* result) {
 #endif
     }
     case DIR_SOURCE_ROOT: {
-      // Allow passing this in the environment, for more flexibility in build
-      // tree configurations (sub-project builds, gyp --output_dir, etc.)
-      std::unique_ptr<Environment> env(Environment::Create());
-      std::string cr_source_root;
-      FilePath path;
-      if (env->GetVar("CR_SOURCE_ROOT", &cr_source_root)) {
-        path = FilePath(cr_source_root);
-        if (PathExists(path)) {
-          *result = path;
-          return true;
-        }
-        DLOG(WARNING) << "CR_SOURCE_ROOT is set, but it appears to not "
-                      << "point to a directory.";
-      }
-      // On POSIX, unit tests execute two levels deep from the source root.
-      // For example:  out/{Debug|Release}/net_unittest
-      if (PathService::Get(DIR_EXE, &path)) {
-        *result = path.DirName().DirName();
-        return true;
-      }
-
-      DLOG(ERROR) << "Couldn't find your source root.  "
-                  << "Try running from your chromium/src directory.";
-      return false;
+      FilePath path(__FILE__);
+      *result = path.DirName();
+      return true;
     }
     case DIR_USER_DESKTOP:
       *result = nix::GetXDGUserDirectory("DESKTOP", "Desktop");
