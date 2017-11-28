@@ -285,8 +285,8 @@ InterpolationQuality ComputeInterpolationQuality(float src_width,
   if (!is_data_complete)
     return kInterpolationLow;
 
-  // Everything else gets resampled at high quality.
-  return kInterpolationHigh;
+  // Everything else gets resampled at default quality.
+  return kInterpolationDefault;
 }
 
 int ClampedAlphaForBlending(float alpha) {
