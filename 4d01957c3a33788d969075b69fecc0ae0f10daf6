@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efacf894_0622278d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/document-user-activation-feature-policy-alternating.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T16:56:31Z",
+      "side": 1,
+      "message": "To reply to myself, yes, it is working for same origin iframes. I do not know if it is intentional but the iframe here is cross origin. You might want to simply set `src\u003d/media/[...]\"` to keep it same origin.",
+      "parentUuid": "d210e109_df0bdc2c",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfedc3f4_3139e9ba",
         "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
         "patchSetId": 5
@@ -47,6 +65,24 @@
       "writtenOn": "2017-11-27T17:49:30Z",
       "side": 1,
       "message": "Any way we could W3C test harness instead of TestRunner?\n\nedit: I guess I see now why you are using TestRunner as string comparison is easier :)",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074bdbe4_68cb877c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T16:56:31Z",
+      "side": 1,
+      "message": "Feel free to ignore this comment :)",
+      "parentUuid": "a43f28a4_f533a02c",
       "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -115,6 +151,24 @@
       "writtenOn": "2017-11-27T17:49:30Z",
       "side": 1,
       "message": "Also, should we test if there is an HTTP header to disable autoplay on a given origin but allow\u003dautoplay is still set?",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3df9129_34cccb0b",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-28T16:56:31Z",
+      "side": 1,
+      "message": "You can do this by creating a PHP file and adding at the top:\n```\n\u003c?php\nHeader(\"Feature-Policy: autoplay \u0027none\u0027\");\n?\u003e\n```",
+      "parentUuid": "a40dd23a_5ba40df9",
       "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
