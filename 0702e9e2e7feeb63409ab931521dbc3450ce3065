@@ -22,6 +22,30 @@
       "revId": "0702e9e2e7feeb63409ab931521dbc3450ce3065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a13db7c_26d3ff09",
+        "filename": "net/spdy/chromium/header_coalescer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-28T10:57:46Z",
+      "side": 1,
+      "message": "I\u0027m sorry, I misread the specs.  In fact, field-content cannot be empty, but the RFC does not say that header field value is defined by field-content, only that _valid characters_ are defined by field-content.  (How does an ABNF rule, which is essentially a regex, define a set of allowed characters?)",
+      "parentUuid": "52fa07b9_b84a9599",
+      "range": {
+        "startLine": 116,
+        "startChar": 22,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "0702e9e2e7feeb63409ab931521dbc3450ce3065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
