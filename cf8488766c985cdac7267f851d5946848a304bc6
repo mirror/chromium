@@ -34,6 +34,24 @@
       "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5525ec2_f1d7a501",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8282,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-28T22:39:11Z",
+      "side": 1,
+      "message": "Seems to work fine for me.  Which EXPECT?\n\ndiff --git a/cc/trees/layer_tree_host_unittest.cc b/cc/trees/layer_tree_host_unittest\nindex 38d3f247c2fe..64a47a536df0 100644\n--- a/cc/trees/layer_tree_host_unittest.cc\n+++ b/cc/trees/layer_tree_host_unittest.cc\n@@ -8271,16 +8271,11 @@ class DontUpdateLayersWithEmptyBounds : public LayerTreeTest \n     child_ \u003d FakePictureLayer::Create(\u0026child_client_);\n     mask_ \u003d FakePictureLayer::Create(\u0026mask_client_);\n \n-    // Add a lot of draw ops, to make sure the recording source\n-    // hits the early out and avoids being detected as solid color even\n+    // Make sure the recording source avoids being detected as solid color even\n     // though it is empty. This ensures we hit later code paths that would\n     // early out if solid color in CanHaveTilings().\n-    PaintFlags flags;\n-    flags.setColor(SK_ColorRED);\n-    for (int i \u003d 0; i \u003c 100; ++i) {\n-      child_client_.add_draw_rect(gfx::Rect(3, 3), flags);\n-      mask_client_.add_draw_rect(gfx::Rect(2, 2), flags);\n-    }\n+    child_client_.set_fill_with_nonsolid_color(true);\n+    mask_client_.set_fill_with_nonsolid_color(true);\n \n     root_client_.set_bounds(gfx::Size(10, 10));\n     root-\u003eSetBounds(gfx::Size(10, 10));",
+      "parentUuid": "5353cb0a_ee384a17",
+      "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
