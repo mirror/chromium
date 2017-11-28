@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42138e96_ae0f7477",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaDrmBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-28T19:29:22Z",
+      "side": 1,
+      "message": "I like this more!\n\nOne question for you and possibly jtinker@: What does release() do exactly? I don\u0027t see much documentation on this method:\n\nhttps://developer.android.com/reference/android/media/MediaCrypto.html#release()\n\nThe reason I am asking is that after this call, MediaCodec could still be configured with the MediaCrypto object. What\u0027s gonna happen if we still try to decrypt/decode encrypted buffers in MediaCodec? Ideally we should get NO_KEY exception in that case.",
+      "revId": "37792a9c3a16c0bba397a6241133dca6509a0557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
