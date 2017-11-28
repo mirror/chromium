@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c6fb375_06edf354",
+        "filename": "AUTHORS",
+        "patchSetId": 29
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bde52f57_778c4c75",
+      "range": {
+        "startLine": 903,
+        "startChar": 0,
+        "endLine": 903,
+        "endChar": 41
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f51e39aa_8ec07bc8",
         "filename": "AUTHORS",
         "patchSetId": 29
@@ -39,6 +63,24 @@
       "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514250ce_bdb85f89",
+        "filename": "AUTHORS",
+        "patchSetId": 29
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "It seems that you did not see my first answer about this.\nThis is intended since this PR was created on my work hours for company Cosium.",
+      "parentUuid": "f51e39aa_8ec07bc8",
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "1200f656_f9ff42ac",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "You have multiple test named MAYBE_*.\nExample: MAYBE_GetPhotoState\nWithout this guy, it doesn\u0027t compile.\nIt worked before because tests were TEST_F and not TEST_P.\n\nYou can have a look at https://github.com/google/googletest/issues/389",
+      "parentUuid": "d749dabe_718cf287",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 35
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41ad15a5_478bd6ad",
         "filename": "media/capture/video/win/photo_callback_factory_mf_win.h",
         "patchSetId": 29
@@ -85,6 +151,30 @@
       "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b93ab5_3a770f2e",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41ad15a5_478bd6ad",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "95db266d_9e275761",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "|kFirstVideoStream| became |kPreferredVideoPreviewStream|:\n\nconst DWORD kPreferredVideoPreviewStream \u003d static_cast\u003cDWORD\u003e(MF_CAPTURE_ENGINE_PREFERRED_SOURCE_STREAM_FOR_VIDEO_PREVIEW);\n\nHere I need MF_SOURCE_READER_FIRST_VIDEO_STREAM. This is why.",
+      "parentUuid": "32db2881_171a4576",
+      "range": {
+        "startLine": 289,
+        "startChar": 23,
+        "endLine": 289,
+        "endChar": 79
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3944b860_85b49b57",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 29
@@ -131,6 +245,30 @@
       "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97cf2fb2_589624fc",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3944b860_85b49b57",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 47
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "9a8ab25a_616f4589",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9642407_41979b9c",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 0
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75485820_f6b33d25",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 29
@@ -177,6 +339,30 @@
       "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25690f5a_74f6038b",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "Static_cast are not the same between the two cases.",
+      "parentUuid": "75485820_f6b33d25",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 5
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "9b3e10da_500aa643",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33c84187_bbfc597e",
+      "range": {
+        "startLine": 354,
+        "startChar": 0,
+        "endLine": 354,
+        "endChar": 33
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0f0e3eb_235a0a05",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 29
@@ -223,6 +433,30 @@
       "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b7d2a4_b3910d03",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "It was not continuing since hr is set to E_FAIL and all the remaining code was checking SUCCEEDED(hr).\nNevertheless, with early return, it is clearer.",
+      "parentUuid": "a0f0e3eb_235a0a05",
+      "range": {
+        "startLine": 356,
+        "startChar": 0,
+        "endLine": 357,
+        "endChar": 16
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "6e9ba5ba_64bd4304",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c5839a1_977082c6",
+      "range": {
+        "startLine": 370,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 22
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83666eba_618c9ebb",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 29
@@ -269,6 +527,30 @@
       "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd6893e_a04c15ba",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-28T23:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83666eba_618c9ebb",
+      "range": {
+        "startLine": 433,
+        "startChar": 0,
+        "endLine": 437,
+        "endChar": 3
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
