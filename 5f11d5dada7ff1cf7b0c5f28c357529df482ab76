@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "558f4a10_1b94d7d2",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-28T20:22:38Z",
+      "side": 1,
+      "message": "nit: No need to specify \"static\" in an anonymous namespace.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 6
+      },
+      "revId": "5f11d5dada7ff1cf7b0c5f28c357529df482ab76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49cc24b7_cb6e8589",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-28T20:22:38Z",
+      "side": 1,
+      "message": "I tried to find where the Mode enum is defined, but wasn\u0027t able to locate it.  Are there in fact other values that the enum can take on?  In general, it\u0027s best practice to list all possible values, so that the compiler can prompt you to update switch stmts as needed when new values are added.",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "5f11d5dada7ff1cf7b0c5f28c357529df482ab76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
