@@ -33,8 +33,8 @@ class CorruptDataPack(Exception):
   pass
 
 
-DataPackContents = collections.namedtuple(
-    'DataPackContents', 'resources encoding')
+DataPackContents = collections.namedtuple('DataPackContents',
+    ['resources', 'encoding', 'version', 'aliases', 'sizes'])
 
 
 def Format(root, lang='en', output_dir='.'):
@@ -59,45 +59,55 @@ def ReadDataPack(input_file):
 
 def ReadDataPackFromString(data):
   """Reads a data pack file and returns a dictionary."""
-  original_data = data
-
   # Read the header.
   version = struct.unpack('<I', data[:4])[0]
   if version == 4:
     resource_count, encoding = struct.unpack('<IB', data[4:9])
     alias_count = 0
-    data = data[9:]
+    header_size = 9
   elif version == 5:
     encoding, resource_count, alias_count = struct.unpack('<BxxxHH', data[4:12])
-    data = data[12:]
+    header_size = 12
   else:
     raise WrongFileVersion('Found version: ' + str(version))
 
   resources = {}
   kIndexEntrySize = 2 + 4  # Each entry is a uint16 and a uint32.
   def entry_at_index(idx):
-    offset = idx * kIndexEntrySize
+    offset = header_size + idx * kIndexEntrySize
     return struct.unpack('<HI', data[offset:offset + kIndexEntrySize])
 
   prev_resource_id, prev_offset = entry_at_index(0)
   for i in xrange(1, resource_count + 1):
     resource_id, offset = entry_at_index(i)
-    resources[prev_resource_id] = original_data[prev_offset:offset]
+    resources[prev_resource_id] = data[prev_offset:offset]
     prev_resource_id, prev_offset = resource_id, offset
 
+  id_table_size = (resource_count + 1) * kIndexEntrySize
   # Read the alias table.
-  alias_data = data[(resource_count + 1) * kIndexEntrySize:]
   kAliasEntrySize = 2 + 2  # uint16, uint16
   def alias_at_index(idx):
-    offset = idx * kAliasEntrySize
-    return struct.unpack('<HH', alias_data[offset:offset + kAliasEntrySize])
+    offset = header_size + id_table_size + idx * kAliasEntrySize
+    return struct.unpack('<HH', data[offset:offset + kAliasEntrySize])
 
+  aliases = {}
   for i in xrange(alias_count):
     resource_id, index = alias_at_index(i)
     aliased_id = entry_at_index(index)[0]
+    aliases[resource_id] = aliased_id
     resources[resource_id] = resources[aliased_id]
 
-  return DataPackContents(resources, encoding)
+  alias_table_size = kAliasEntrySize * alias_count
+  sizes = [
+      ('header', header_size),
+      ('id_table', id_table_size),
+      ('alias_table', alias_table_size),
+      ('data', len(data) - header_size - id_table_size - alias_table_size),
+  ]
+  computed_size = sum(x[1] for x in sizes)
+  assert computed_size == len(data), 'original={} computed={}'.format(
+      len(data), computed_size)
+  return DataPackContents(resources, encoding, version, aliases, sizes)
 
 
 def WriteDataPackToString(resources, encoding):
@@ -192,7 +202,7 @@ def RePack(output_file, input_files, whitelist_file=None,
 
 def RePackFromDataPackStrings(inputs, whitelist,
                               suppress_removed_key_output=False):
-  """Returns a data pack string that combines the resources from inputs.
+  """Combines all inputs into one.
 
   Args:
       inputs: a list of data pack strings that need to be combined.
@@ -201,8 +211,7 @@ def RePackFromDataPackStrings(inputs, whitelist,
       suppress_removed_key_output: Do not print removed keys.
 
   Returns:
-      DataPackContents: a tuple containing the new combined data pack and its
-                        encoding.
+      Returns a tuple of (resources_by_id, encoding).
 
   Raises:
       KeyError: if there are duplicate keys or resource encoding is
@@ -239,7 +248,7 @@ def RePackFromDataPackStrings(inputs, whitelist,
   # Encoding is 0 for BINARY, 1 for UTF8 and 2 for UTF16
   if encoding is None:
     encoding = BINARY
-  return DataPackContents(resources, encoding)
+  return resources, encoding
 
 
 def main():
