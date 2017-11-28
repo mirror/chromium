@@ -65,6 +65,16 @@ use utf8;
 
 my $win32 = eval 'use Win32; 1' ? 1 : 0;
 
+# For diagnostic purposes, leave a record of various temporary
+# directory locations on the original STDERR
+print STDERR "tmpdir() => " . tmpdir() . "\n";
+print STDERR "\$ENV{TMP} => " . ($ENV{TMP} || '(unset)') . "\n";
+print STDERR "\$ENV{TEMP} => " . ($ENV{TEMP} || '(unset)') . "\n";
+print STDERR "\$ENV{TMPDIR} => " . ($ENV{TMPDIR} || '(unset)') . "\n";
+if ($win32) {
+  print STDERR "GetFolderPath(CSIDL_LOCAL_APPDATA()) => " . Win32::GetFolderPath(Win32::CSIDL_LOCAL_APPDATA()) . "\n";
+}
+
 open STDERR, '>&STDOUT';  # let the test see die() output
 binmode STDOUT, ':encoding(utf-8)';
 autoflush STDOUT 1;
