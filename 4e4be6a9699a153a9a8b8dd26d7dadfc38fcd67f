@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0b3a620_645270a0",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-28T23:43:28Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "043f6d35_bdcdaff0",
+      "range": {
+        "startLine": 407,
+        "startChar": 12,
+        "endLine": 407,
+        "endChar": 55
+      },
+      "revId": "4e4be6a9699a153a9a8b8dd26d7dadfc38fcd67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0acd929_31e148eb",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
         "patchSetId": 10
