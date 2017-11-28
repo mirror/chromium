@@ -49,13 +49,6 @@ v8::Local<v8::Value> MessageToV8(v8::Local<v8::Context> context,
 // |value| is either an int32 or -0.
 int ExtractIntegerId(v8::Local<v8::Value> value);
 
-// The result of the call to ParseMessageOptions().
-enum ParseOptionsResult {
-  TYPE_ERROR,  // The arguments were invalid.
-  THROWN,      // The script threw an error during parsing.
-  SUCCESS,     // Parsing succeeded.
-};
-
 // Flags for ParseMessageOptions().
 enum ParseOptionsFlags {
   NO_FLAGS = 0,
@@ -75,11 +68,9 @@ struct MessageOptions {
 // provided channel name (this is only true for connect() calls). Populates the
 // result in |params_out| or |error_out| (depending on the success of the
 // parse).
-ParseOptionsResult ParseMessageOptions(v8::Local<v8::Context> context,
-                                       v8::Local<v8::Object> v8_options,
-                                       int flags,
-                                       MessageOptions* options_out,
-                                       std::string* error_out);
+MessageOptions ParseMessageOptions(v8::Local<v8::Context> context,
+                                   v8::Local<v8::Object> v8_options,
+                                   int flags);
 
 // Parses the target from |v8_target_id|, or uses the extension associated with
 // the |script_context| as a default. Returns true on success, and false on

@@ -239,6 +239,24 @@ TEST_F(RuntimeHooksDelegateTest, SendMessage) {
   tester.TestSendMessage(
       "{data: 'hello'}, {includeTlsChannelId: true}, function() {}",
       kStandardMessage, self_target, true, SendMessageTester::OPEN);
+  {
+    // Even though we parse the message options separately, we do a conversion
+    // of the object passed into the API. This means that something subtle like
+    // this, which throws on the second access of a property, shouldn't trip us
+    // up.
+    constexpr char kTrickyConnectOptions[] =
+        R"({data: 'hello'},
+           {
+             get includeTlsChannelId() {
+               if (this.checkedOnce)
+                 throw new Error('tricked!');
+               this.checkedOnce = true;
+               return true;
+             }
+           })";
+    tester.TestSendMessage(kTrickyConnectOptions, kStandardMessage, self_target,
+                           true, SendMessageTester::CLOSED);
+  }
 
   std::string other_id_str = crx_file::id_util::GenerateId("other");
   const char* other_id = other_id_str.c_str();  // For easy StringPrintf()ing.
