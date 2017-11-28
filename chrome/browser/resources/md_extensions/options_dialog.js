@@ -5,13 +5,6 @@
 cr.define('extensions', function() {
   'use strict';
 
-  const MAX_HEIGHT = 600;
-  const MAX_WIDTH = 600;
-  const MIN_HEIGHT = 300;
-  const MIN_WIDTH = 300;
-  const HEADER_EXTRA_SPACING = 50;  // 40 from x-button + 10 from img margin.
-  const DIALOG_PADDING = 32;        // Padding from cr-dialog's .body styling.
-
   const OptionsDialog = Polymer({
     is: 'extensions-options-dialog',
 
@@ -31,37 +24,39 @@ cr.define('extensions', function() {
 
     /** @param {chrome.developerPrivate.ExtensionInfo} data */
     show: function(data) {
+      console.log('-----show 0');
       this.data_ = data;
       if (!this.extensionOptions_)
         this.extensionOptions_ = document.createElement('ExtensionOptions');
+      console.log('-----show 1');
       this.extensionOptions_.extension = this.data_.id;
       this.extensionOptions_.onclose = this.close.bind(this);
-      const bounded = function(min, max, val) {
-        return Math.min(Math.max(min, val), max);
-      };
 
+      console.log('-----show 2');
       const onSizeChanged = e => {
-        const minHeaderWidth =
-            this.$$('#icon-and-name-wrapper img').offsetWidth +
-            this.$$('#icon-and-name-wrapper span').offsetWidth +
-            HEADER_EXTRA_SPACING;
-        const minWidth = Math.max(minHeaderWidth, MIN_WIDTH);
-        this.extensionOptions_.style.height =
-            bounded(MIN_HEIGHT, MAX_HEIGHT, e.height) + 'px';
-        this.extensionOptions_.style.width =
-            bounded(minWidth, MAX_WIDTH, e.width) + 'px';
-        this.$.dialog.style.width =
-            (bounded(minWidth, MAX_WIDTH, e.width) + DIALOG_PADDING) + 'px';
+        console.log('-----show 6');
+        this.extensionOptions_.style.height = e.height + 'px';
+        this.extensionOptions_.style.width = e.width + 'px';
+
+        console.log('-----show 7');
+        if (!this.$$('dialog').open) {
+          console.log('-----show 8');
+          this.$$('dialog').showModal();
+          console.log('-----show 9');
+        }
+        console.log('-----show 10');
       };
 
+      console.log('-----show 3');
       this.extensionOptions_.onpreferredsizechanged = onSizeChanged;
+      console.log('-----show 4');
       this.$.body.appendChild(this.extensionOptions_);
-      this.$$('dialog').showModal();
-      onSizeChanged({height: 0, width: 0});
+      console.log('-----show 5');
     },
 
     close: function() {
       this.$$('dialog').close();
+      this.extensionOptions_.onpreferredsizechanged = null;
     },
 
     /** @private */
