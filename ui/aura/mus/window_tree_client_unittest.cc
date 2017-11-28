@@ -43,6 +43,7 @@
 #include "ui/aura/window_tracker.h"
 #include "ui/aura/window_tree_host_observer.h"
 #include "ui/base/class_property.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/compositor/compositor.h"
 #include "ui/display/display.h"
 #include "ui/display/display_switches.h"
@@ -148,6 +149,8 @@ class WindowTreeClientWmTestSurfaceSync
 
   // WindowTreeClientWmTest:
   void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+        switches::kMus, switches::kMusHostVizValue);
     if (GetParam()) {
       base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
           switches::kForceDeviceScaleFactor, "2");
