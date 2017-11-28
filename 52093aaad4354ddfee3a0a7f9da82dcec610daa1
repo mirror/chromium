@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04275461_8ff01363",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-28T04:01:19Z",
+      "side": 1,
+      "message": "maybe you meant PerformHTTPFetch() and PerformDataFetch()",
+      "revId": "52093aaad4354ddfee3a0a7f9da82dcec610daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb95c12b_dbed80cf",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-28T04:01:19Z",
+      "side": 1,
+      "message": "need to also rename this to make it compile",
+      "revId": "52093aaad4354ddfee3a0a7f9da82dcec610daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
