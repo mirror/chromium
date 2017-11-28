@@ -66,7 +66,9 @@ enum VideoPersistenceControlsType {
 }  // anonymous namespace
 
 inline HTMLVideoElement::HTMLVideoElement(Document& document)
-    : HTMLMediaElement(videoTag, document), remoting_interstitial_(nullptr) {
+    : HTMLMediaElement(videoTag, document),
+      remoting_interstitial_(nullptr),
+      last_resize_event_size_(-1, -1) {
   if (document.GetSettings()) {
     default_poster_url_ =
         AtomicString(document.GetSettings()->GetDefaultVideoPosterURL());
@@ -301,6 +303,20 @@ void HTMLVideoElement::OnBecamePersistentVideo(bool value) {
 
   if (GetWebMediaPlayer())
     GetWebMediaPlayer()->OnDisplayTypeChanged(DisplayType());
+}
+
+void HTMLVideoElement::SizeChanged() {
+  if (ready_state_ > kHaveNothing) {
+    IntSize current_size = IntSize(videoWidth(), videoHeight());
+
+    if (last_resize_event_size_ != current_size) {
+      last_resize_event_size_ = current_size;
+      ScheduleEvent(EventTypeNames::resize);
+    }
+  }
+
+  if (GetLayoutObject())
+    GetLayoutObject()->UpdateFromElement();
 }
 
 bool HTMLVideoElement::IsPersistent() const {

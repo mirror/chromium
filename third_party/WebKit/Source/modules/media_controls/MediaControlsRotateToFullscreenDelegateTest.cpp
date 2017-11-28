@@ -268,9 +268,12 @@ TEST_F(MediaControlsRotateToFullscreenDelegateTest, ComputeVideoOrientation) {
   testing::RunPendingTasks();
 
   // Each `ComputeVideoOrientation` calls `NaturalSize` twice, except the first
-  // one where the video is not yet ready.
+  // one where the video is not yet ready, as well as two calls from
+  // `SimulateVideoReadyState()`
   EXPECT_CALL(GetWebMediaPlayer(), NaturalSize())
-      .Times(12)
+      .Times(14)
+      .WillOnce(Return(WebSize(400, 400)))
+      .WillOnce(Return(WebSize(400, 400)))
       .WillOnce(Return(WebSize(400, 400)))
       .WillOnce(Return(WebSize(400, 400)))
       .WillOnce(Return(WebSize(300, 200)))

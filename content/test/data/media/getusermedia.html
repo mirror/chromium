@@ -615,7 +615,7 @@
             failTest("loadstart should not be called");
           }
 
-          video.onresize = function() {
+          video.ontimeupdate = function() {
             assertNotEquals(video.srcObject, null);
             assertEquals(0, video.videoHeight);
             assertEquals(0, video.videoWidth);

@@ -141,6 +141,7 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
 
   // WebMediaPlayerClient implementation.
   void OnBecamePersistentVideo(bool) final;
+  void SizeChanged() final;
 
   bool IsPersistent() const;
 
@@ -184,6 +185,10 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   Member<MediaRemotingInterstitial> remoting_interstitial_;
 
   AtomicString default_poster_url_;
+
+  // Size of the video in the last resize event sent to avoid sending any
+  // events with the same previous size
+  IntSize last_resize_event_size_;
 
   // TODO(mlamouri): merge these later. At the moment, the former is used for
   // CSS rules used to hide the custom controls and the latter is used to report
