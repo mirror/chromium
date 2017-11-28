@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05d30918_ce0c5575",
+        "filename": "components/cast_channel/cast_channel_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T19:14:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "096e1ff9_c772c6a7",
+      "revId": "419547dcc13cd513acf5d913776afd3ca599397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fee20da_abaaa3cb",
         "filename": "components/cast_channel/cast_socket_service.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-28T18:03:18Z",
       "side": 1,
       "message": "I wonder if we should just force callers to pass valid IP addresses (i.e. turn this into a CHECK) vs passing a nullptr which seems like a recipe for crashes?  It looks like the callers already do their own validation.",
+      "revId": "419547dcc13cd513acf5d913776afd3ca599397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b9b96f_5d171859",
+        "filename": "components/cast_channel/cast_socket_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T19:14:00Z",
+      "side": 1,
+      "message": "Since all callers already do validation it could make sense, especially given the security context. I will change it to a CHECK.",
+      "parentUuid": "7fee20da_abaaa3cb",
       "revId": "419547dcc13cd513acf5d913776afd3ca599397e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "419547dcc13cd513acf5d913776afd3ca599397e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e1bb16_0bc5a84b",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T19:14:00Z",
+      "side": 1,
+      "message": "Yeah, this DCHECK is a \"shouldn\u0027t happen\". Similarly in CMSSImpl.",
+      "parentUuid": "57b1878a_d13d98ec",
+      "revId": "419547dcc13cd513acf5d913776afd3ca599397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
