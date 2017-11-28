@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad96d9f8_8f3c1269",
+        "filename": "chrome/browser/extensions/api/declarative_webrequest/webrequest_action_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-28T22:29:58Z",
+      "side": 1,
+      "message": "This is redundant?",
+      "range": {
+        "startLine": 153,
+        "startChar": 17,
+        "endLine": 153,
+        "endChar": 24
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2186d6_ea233e5f",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-28T22:29:58Z",
+      "side": 1,
+      "message": "This comment is redundant now. Can be moved to web_request_info.cc.",
+      "range": {
+        "startLine": 1027,
+        "startChar": 18,
+        "endLine": 1029,
+        "endChar": 23
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee3447a_4340610d",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-28T22:29:58Z",
+      "side": 1,
+      "message": "Can\u0027t this just be \n\nif (request-\u003eframe_data) {\n event_details-\u003eSetFrameData(..);\n} else {\n event_details.release()-\u003eDetermineFrameDataOnIO(..)\n}",
+      "range": {
+        "startLine": 1036,
+        "startChar": 2,
+        "endLine": 1036,
+        "endChar": 73
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee5275d_0f6c5c57",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-28T22:29:58Z",
+      "side": 1,
+      "message": "Add a comment to the header that this takes ownership of |request_body_data|.",
+      "range": {
+        "startLine": 60,
+        "startChar": 28,
+        "endLine": 60,
+        "endChar": 35
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022b3e64_5dbbeb0a",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-28T22:29:58Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why this is only called when no |navigation_ui_data| is available? Also, from comments it seems that ResourceRequestInfo should be used for requests going through ResourceDispatcherHost. For these requests, does/can ResourceRequestInfo::GetRenderFrameForRequest return a wrong render_process_id/frame_id?",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 39
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ec4b4c_f4a0629f",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-28T22:29:58Z",
+      "side": 1,
+      "message": "We initialize render_process_id here but not frame_id using info-\u003eGetRenderFrameID(). Why?",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 21
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d3205c_b649a4e2",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-28T22:29:58Z",
+      "side": 1,
+      "message": "Can you move |request_body_data| initialization logic to a helper function?",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 29
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e110ae1a_09b19390",
+        "filename": "extensions/browser/api/web_request/web_request_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-28T22:29:58Z",
+      "side": 1,
+      "message": "Can\u0027t we also cache the result obtained from WebViewRendererState or is it the case that it might not be available during WebRequestInfo construction?",
+      "range": {
+        "startLine": 129,
+        "startChar": 5,
+        "endLine": 129,
+        "endChar": 25
+      },
+      "revId": "4957878ae2b33d3d96e4ecf7cef2a2b5bfa862db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60492972_c854fd93",
+        "filename": "extensions/browser/api/declarative_webrequest/webrequest_condition.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-28T22:29:58Z",
+      "side": 0,
+      "message": "This seems to imply that |navigation_ui_data| might not be available in all request stages, which is incorrect, right?",
+      "range": {
+        "startLine": 41,
+        "startChar": 18,
+        "endLine": 41,
+        "endChar": 36
+      },
+      "revId": "32f03c7af5378ddc65cc849b218a1a66d978b3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
