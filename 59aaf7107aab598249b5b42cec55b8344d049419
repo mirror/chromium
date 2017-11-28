@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d2a9606_cbbde98d",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 30
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1185209
+      },
+      "writtenOn": "2017-11-28T13:04:07Z",
+      "side": 1,
+      "message": "is it needed to include the vulkan libs for skia? Is chrome not simply passing Skia function to the getProcAddr functions. Thus only chrome itself should need to link against the lib?",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "59aaf7107aab598249b5b42cec55b8344d049419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
