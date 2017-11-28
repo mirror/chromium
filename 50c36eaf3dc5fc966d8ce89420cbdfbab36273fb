@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "eafc4555_3d956b1c",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-28T16:40:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6aacd98_aa24e3c6",
+      "range": {
+        "startLine": 322,
+        "startChar": 6,
+        "endLine": 322,
+        "endChar": 33
+      },
+      "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d9f0230_ea4d1db2",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 2
@@ -181,6 +205,24 @@
       "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822fb5ef_b7be2b59",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-28T16:40:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e8ee9450_6693cb54",
+      "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

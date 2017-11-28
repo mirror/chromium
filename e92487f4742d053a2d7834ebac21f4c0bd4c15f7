@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5f3525f_cf7832b0",
+        "filename": "third_party/closure_compiler/externs/passwords_private.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-28T16:40:08Z",
+      "side": 1,
+      "message": "These changes are now completely unrelated to this CL. They should have been done in https://crrev.com/c/663380, but they weren\u0027t. Should I leave them in or clean this up in an extra follow-up CL?",
+      "revId": "e92487f4742d053a2d7834ebac21f4c0bd4c15f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

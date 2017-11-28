@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3ad8462_67d9ee62",
+        "filename": "chrome/test/data/webui/settings/passwords_and_forms_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-28T16:40:08Z",
+      "side": 1,
+      "message": "I had to change this to assertDeepEquals because passwordsSection now creates a copy of the elements due to the change in setSavedPasswordsListener. Hence they are not the same object anymore and checking for strictEquals will always fail.",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 24
+      },
+      "revId": "6ba98b4eed1cd95a70b2a9e23a3c63ae7823943b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9944d454_fef244e1",
+        "filename": "chrome/test/data/webui/settings/settings_passwords_section_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-28T16:40:08Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 253,
+        "startChar": 6,
+        "endLine": 253,
+        "endChar": 22
+      },
+      "revId": "6ba98b4eed1cd95a70b2a9e23a3c63ae7823943b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
