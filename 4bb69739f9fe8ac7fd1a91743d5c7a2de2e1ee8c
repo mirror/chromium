@@ -16,6 +16,24 @@
       "revId": "4bb69739f9fe8ac7fd1a91743d5c7a2de2e1ee8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7bbe985_fcfa5b67",
+        "filename": "tools/perf/page_sets/v8_top_25.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-11-28T11:41:22Z",
+      "side": 1,
+      "message": "Yes, it has 5 Ads (720 X 90) and they fit on one page.",
+      "parentUuid": "1986b0f4_21344c8f",
+      "revId": "4bb69739f9fe8ac7fd1a91743d5c7a2de2e1ee8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
