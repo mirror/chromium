@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c3e215c_29d3d64c",
+        "filename": "services/network/public/cpp/mutable_network_traffic_annotation_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-28T22:11:11Z",
+      "side": 1,
+      "message": "Is the MutableNetworkTrafficAnnotationTagTestService just for these tests?\n\nYou can just use:\n\nEXPECT_TRUE(mojom::MutableNetworkTrafficAnnottionTag::Deserialize(\n      mojom::MutableNetworkTrafficAnnottionTag::Serialize(original), \u0026copy));\n\nSo you don\u0027t need the bogus services.  Also goes for the other unittest file as well.",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "4d616cd46565da30abc7d454581b50ad5ea01925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727aaac2_8314f6cc",
+        "filename": "services/network/public/cpp/mutable_partial_network_traffic_annotation_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-28T22:11:11Z",
+      "side": 1,
+      "message": "nit:  Blank line before DISALLOW_COPY_AND_ASSIGN, include base/macros.h.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "4d616cd46565da30abc7d454581b50ad5ea01925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb5aebe_3a3c5b13",
+        "filename": "services/network/public/interfaces/mutable_network_traffic_annotation_tag.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-28T22:11:11Z",
+      "side": 1,
+      "message": "/docs/network_traffic_annotations.md",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "4d616cd46565da30abc7d454581b50ad5ea01925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d655bda_40657d44",
+        "filename": "services/network/public/interfaces/mutable_partial_network_traffic_annotation_tag.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-28T22:11:11Z",
+      "side": 1,
+      "message": "/docs/network_traffic_annotations.md",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "4d616cd46565da30abc7d454581b50ad5ea01925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
