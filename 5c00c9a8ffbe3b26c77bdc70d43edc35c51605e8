@@ -16,6 +16,24 @@
       "revId": "5c00c9a8ffbe3b26c77bdc70d43edc35c51605e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1102cc0e_7c5bf65c",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-28T21:46:58Z",
+      "side": 1,
+      "message": "Actually looking a bit more at this, does this break DeprecationReport::anticipatedRemoval()? If you leave this as -1 then it looks like that would need to be modified as well, but I\u0027m curious about the the rationale for this change in the first place.",
+      "parentUuid": "cea5bcbc_ac194de8",
+      "revId": "5c00c9a8ffbe3b26c77bdc70d43edc35c51605e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
