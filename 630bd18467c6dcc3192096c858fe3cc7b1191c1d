@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b9d0bb9_36c026f4",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-28T18:58:05Z",
+      "side": 1,
+      "message": "In general, having \"not\" in a bool name can lead to some confusion IMO. Maybe, just call the variable \"host_blacklisted_by_user\" and invert the checks accordingly.",
+      "revId": "630bd18467c6dcc3192096c858fe3cc7b1191c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f054e14f_4875dcbb",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-28T18:58:05Z",
+      "side": 1,
+      "message": "I don\u0027t think this works appropriately. In particular, if the reason is user_recently_opted_out, we don\u0027t check user_blacklisted or host_blacklisted. This method will currently report everything but USER_RECENTLY_OPTED_OUT as successful.\n\nYou might want (in the order that the reasons are checked):\n\nif (reason \u003d\u003d  PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED) {\n  LogPreviewDecisionMade(reason, url, time, type, false /* checked */);\n  return;\n}\nLogPreviewDecisionMade(PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED,\n                           url, time, type, true /* checked */);\n\nif (reason \u003d\u003d  PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT) {\n  LogPreviewDecisionMade(reason, url, time, type, false /* checked */);\n  return;\n}\nLogPreviewDecisionMade(PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT,\n                           url, time, type, true /* checked */);\n\n...",
+      "revId": "630bd18467c6dcc3192096c858fe3cc7b1191c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84a9d78_387e9c54",
+        "filename": "components/previews/content/previews_ui_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-28T18:58:05Z",
+      "side": 1,
+      "message": "Hmm. checked still isn\u0027t clear to me, as if it is disallowed for reason X, we are still checking that reason. It\u0027s definitely a hard concept to word, but I think the concept we are trying to represent is \"|reason| is checked but not applicable\". Maybe bool reason_not_applicable? Maybe tbansal will have some ideas.",
+      "range": {
+        "startLine": 84,
+        "startChar": 59,
+        "endLine": 84,
+        "endChar": 66
+      },
+      "revId": "630bd18467c6dcc3192096c858fe3cc7b1191c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
