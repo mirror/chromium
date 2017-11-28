@@ -81,6 +81,30 @@
       "revId": "aea3a0ae57e77fe5f25ab930bb0d2cbd80ae7515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c562e0c3_85b2aaba",
+        "filename": "components/bookmarks/browser/bookmark_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-28T17:31:14Z",
+      "side": 1,
+      "message": "Perfect! SGTM",
+      "parentUuid": "dcee9a90_4051acf6",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 24
+      },
+      "revId": "aea3a0ae57e77fe5f25ab930bb0d2cbd80ae7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
