@@ -98,13 +98,31 @@ class CORE_EXPORT NGContainerFragmentBuilder : public NGBaseFragmentBuilder {
   NGContainerFragmentBuilder& AddInlineOutOfFlowChildCandidate(
       NGBlockNode,
       const NGLogicalOffset& child_line_offset,
-      TextDirection line_direction);
+      TextDirection line_direction,
+      LayoutObject* inline_container);
 
   NGContainerFragmentBuilder& AddOutOfFlowDescendant(
       NGOutOfFlowPositionedDescendant);
 
   void GetAndClearOutOfFlowDescendantCandidates(
       Vector<NGOutOfFlowPositionedDescendant>* descendant_candidates);
+
+  struct FragmentPair {
+    scoped_refptr<NGPhysicalFragment> start_linebox_fragment;
+    scoped_refptr<NGPhysicalFragment> start_fragment;
+    NGLogicalOffset start_linebox_offset;
+    scoped_refptr<NGPhysicalFragment> end_linebox_fragment;
+    scoped_refptr<NGPhysicalFragment> end_fragment;
+    NGLogicalOffset end_linebox_offset;
+  };
+
+  void ComputeInlineContainerFragments(
+      HashMap<const LayoutObject*, FragmentPair>* inline_container_fragments,
+      NGLogicalSize* container_size);
+
+#ifndef NDEBUG
+  String ToString() const;
+#endif
 
  protected:
   // An out-of-flow positioned-candidate is a temporary data structure used
