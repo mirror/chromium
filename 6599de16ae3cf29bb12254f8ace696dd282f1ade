@@ -90,6 +90,23 @@
     },
     {
       "key": {
+        "uuid": "be0722d9_7ee7312d",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-28T14:08:32Z",
+      "side": 1,
+      "message": "nit: we have an anonymous ns just above, could move there and drop static.",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d2c1a2d_f8b60805",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.cpp",
         "patchSetId": 4
@@ -101,6 +118,40 @@
       "writtenOn": "2017-11-28T09:31:47Z",
       "side": 1,
       "message": "Nice!",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d81fafe_8831c9e9",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-28T14:08:32Z",
+      "side": 1,
+      "message": "nit: let\u0027s keep the new predicate under UNLIKELY().",
+      "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f16ab6_54361cc4",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-28T14:08:32Z",
+      "side": 1,
+      "message": "nit: ditto",
       "revId": "6599de16ae3cf29bb12254f8ace696dd282f1ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
