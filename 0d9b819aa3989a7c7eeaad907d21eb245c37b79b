@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeb8f0c2_a8733011",
+        "filename": "content/browser/webrtc/webrtc_getusermedia_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-28T13:02:25Z",
+      "side": 1,
+      "message": "nit: crbug.com reference for flakiness.",
+      "range": {
+        "startLine": 439,
+        "startChar": 9,
+        "endLine": 439,
+        "endChar": 19
+      },
+      "revId": "0d9b819aa3989a7c7eeaad907d21eb245c37b79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
