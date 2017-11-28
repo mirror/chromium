@@ -681,7 +681,7 @@ public class AwContents implements SmartClipProvider {
     }
 
     //--------------------------------------------------------------------------------------------
-    private class AwGestureStateListener extends GestureStateListener {
+    private class AwGestureStateListener implements GestureStateListener {
         @Override
         public void onPinchStarted() {
             // While it's possible to re-layout the view during a pinch gesture, the effect is very
@@ -858,8 +858,7 @@ public class AwContents implements SmartClipProvider {
 
     private void initializeContentViewCore(ContentViewCore contentViewCore, Context context,
             ViewAndroidDelegate viewDelegate, InternalAccessDelegate internalDispatcher,
-            WebContents webContents, GestureStateListener gestureStateListener,
-            WindowAndroid windowAndroid) {
+            WebContents webContents, WindowAndroid windowAndroid) {
         contentViewCore.initialize(viewDelegate, internalDispatcher, webContents, windowAndroid);
         contentViewCore.setActionModeCallback(
                 new AwActionModeCallback(mContext, this,
@@ -869,7 +868,6 @@ public class AwContents implements SmartClipProvider {
                     new AutofillActionModeCallback(context, mAutofillProvider));
         }
         contentViewCore.setSelectionClient(SelectionClient.createSmartSelectionClient(webContents));
-        contentViewCore.addGestureStateListener(gestureStateListener);
 
         // Listen for dpad events from IMEs (e.g. Samsung Cursor Control) so we know to enable
         // spatial navigation mode to allow these events to move focus out of the WebView.
@@ -1139,12 +1137,12 @@ public class AwContents implements SmartClipProvider {
         mViewAndroidDelegate =
                 new AwViewAndroidDelegate(mContainerView, mContentsClient, mScrollOffsetManager);
         initializeContentViewCore(mContentViewCore, mContext, mViewAndroidDelegate,
-                mInternalAccessAdapter, webContents, new AwGestureStateListener(),
-                mWindowAndroid.getWindowAndroid());
+                mInternalAccessAdapter, webContents, mWindowAndroid.getWindowAndroid());
         nativeSetJavaPeers(mNativeAwContents, this, mWebContentsDelegate, mContentsClientBridge,
                 mIoThreadClient, mInterceptNavigationDelegate, mAutofillProvider);
         mWebContents = mContentViewCore.getWebContents();
         mWebContents.setInternalsHolder(new WebContentsInternalsHolder(this));
+        mWebContents.getGestureListenerManager().addListener(new AwGestureStateListener());
 
         mNavigationController = mWebContents.getNavigationController();
         installWebContentsObserver();

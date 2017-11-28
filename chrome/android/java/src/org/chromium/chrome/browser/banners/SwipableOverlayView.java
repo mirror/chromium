@@ -98,12 +98,14 @@ public abstract class SwipableOverlayView extends FrameLayout {
      */
     public void setContentViewCore(ContentViewCore contentViewCore) {
         if (mContentViewCore != null) {
-            mContentViewCore.removeGestureStateListener(mGestureStateListener);
+            mContentViewCore.getWebContents().getGestureListenerManager().removeListener(
+                    mGestureStateListener);
         }
 
         mContentViewCore = contentViewCore;
         if (mContentViewCore != null) {
-            mContentViewCore.addGestureStateListener(mGestureStateListener);
+            mContentViewCore.getWebContents().getGestureListenerManager().addListener(
+                    mGestureStateListener);
         }
     }
 

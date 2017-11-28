@@ -87,6 +87,11 @@ public interface WebContents extends Parcelable {
     boolean isDestroyed();
 
     /**
+     * @return The object managing gesture state listeners.
+     */
+    GestureListenerManager getGestureListenerManager();
+
+    /**
      * @return The navigation controller associated with this WebContents.
      */
     NavigationController getNavigationController();

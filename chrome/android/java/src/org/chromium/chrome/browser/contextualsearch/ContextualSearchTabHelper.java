@@ -210,7 +210,7 @@ public class ContextualSearchTabHelper
         ContextualSearchManager contextualSearchManager = getContextualSearchManager(mTab);
         if (mGestureStateListener == null && contextualSearchManager != null) {
             mGestureStateListener = contextualSearchManager.getGestureStateListener();
-            cvc.addGestureStateListener(mGestureStateListener);
+            cvc.getWebContents().getGestureListenerManager().addListener(mGestureStateListener);
 
             // If we needed to add our listener, we also need to add our selection client.
             cvc.setSelectionClient(mSelectionClientManager.addContextualSearchSelectionClient(
@@ -228,7 +228,7 @@ public class ContextualSearchTabHelper
         if (cvc == null) return;
 
         if (mGestureStateListener != null) {
-            cvc.removeGestureStateListener(mGestureStateListener);
+            cvc.getWebContents().getGestureListenerManager().removeListener(mGestureStateListener);
             mGestureStateListener = null;
 
             // If we needed to remove our listener, we also need to remove our selection client.
