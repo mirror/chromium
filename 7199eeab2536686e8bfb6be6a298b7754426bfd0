@@ -251,6 +251,24 @@
       "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f69020f_2647f416",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-28T07:37:25Z",
+      "side": 1,
+      "message": "It is http://crrev.com/c/720817 as described.",
+      "parentUuid": "7cc3ccd8_3997e305",
+      "revId": "7199eeab2536686e8bfb6be6a298b7754426bfd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

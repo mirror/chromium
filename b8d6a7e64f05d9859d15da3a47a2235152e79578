@@ -16,6 +16,24 @@
       "revId": "b8d6a7e64f05d9859d15da3a47a2235152e79578",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7fb41f_43fe72f9",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-28T07:37:25Z",
+      "side": 1,
+      "message": "If there are LayoutObject insertion after LayoutSelection::Commit(),\n|old_range| include such LayoutObject because we don\u0027t clear selection while the insertion.",
+      "parentUuid": "bd6b9eea_8d0b6723",
+      "revId": "b8d6a7e64f05d9859d15da3a47a2235152e79578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
