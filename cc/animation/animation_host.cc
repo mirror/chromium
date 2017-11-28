@@ -633,7 +633,8 @@ size_t AnimationHost::CompositedAnimationsCount() const {
 
 void AnimationHost::SetAnimationCounts(
     size_t total_animations_count,
-    size_t main_thread_compositable_animations_count) {
+    size_t main_thread_compositable_animations_count,
+    bool current_frame_has_raf) {
   size_t composited_animations_count = CompositedAnimationsCount();
   if (main_thread_animations_count_ !=
       total_animations_count - composited_animations_count) {
@@ -650,6 +651,10 @@ void AnimationHost::SetAnimationCounts(
   }
   DCHECK_GE(main_thread_animations_count_,
             main_thread_compositable_animations_count_);
+  if (current_frame_has_raf != current_frame_has_raf_) {
+    current_frame_has_raf_ = current_frame_has_raf;
+    SetNeedsPushProperties();
+  }
 }
 
 size_t AnimationHost::MainThreadAnimationsCount() const {
@@ -658,6 +663,10 @@ size_t AnimationHost::MainThreadAnimationsCount() const {
 
 size_t AnimationHost::MainThreadCompositableAnimationsCount() const {
   return main_thread_compositable_animations_count_;
+}
+
+bool AnimationHost::CurrentFrameHasRAF() const {
+  return current_frame_has_raf_;
 }
 
 }  // namespace cc

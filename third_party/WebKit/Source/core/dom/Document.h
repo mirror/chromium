@@ -1421,6 +1421,9 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void RecordUkmOutliveTimeAfterShutdown(int outlive_time_count);
 
+  bool CurrentFrameHadRAF();
+  void ResetCurrentFrameHadRAF();
+
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);
 
@@ -1810,6 +1813,8 @@ class CORE_EXPORT Document : public ContainerNode,
   int64_t ukm_source_id_;
 
   bool needs_to_record_ukm_outlive_time_;
+
+  bool current_frame_had_raf_ = false;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

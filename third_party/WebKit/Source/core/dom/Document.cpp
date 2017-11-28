@@ -6574,6 +6574,8 @@ void Document::ServiceScriptedAnimations(
     double monotonic_animation_start_time) {
   if (!scripted_animation_controller_)
     return;
+  current_frame_had_raf_ =
+      scripted_animation_controller_->HasRegisteredCallbacks();
   scripted_animation_controller_->ServiceScriptedAnimations(
       monotonic_animation_start_time);
 }
@@ -7209,6 +7211,14 @@ scoped_refptr<WebTaskRunner> Document::GetTaskRunner(TaskType type) {
 
 Policy* Document::policy() {
   return Policy::Create(this);
+}
+
+bool Document::CurrentFrameHadRAF() {
+  return current_frame_had_raf_;
+}
+
+void Document::ResetCurrentFrameHadRAF() {
+  current_frame_had_raf_ = false;
 }
 
 void Document::Trace(blink::Visitor* visitor) {

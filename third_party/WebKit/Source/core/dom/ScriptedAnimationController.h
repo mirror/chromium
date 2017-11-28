@@ -59,6 +59,9 @@ class CORE_EXPORT ScriptedAnimationController
   typedef int CallbackId;
   CallbackId RegisterCallback(FrameRequestCallbackCollection::FrameCallback*);
   void CancelCallback(CallbackId);
+  bool HasRegisteredCallbacks() const {
+    return !callback_collection_.IsEmpty();
+  }
 
   // Animation frame events are used for resize events, scroll events, etc.
   void EnqueueEvent(Event*);

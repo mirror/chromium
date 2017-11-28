@@ -338,6 +338,10 @@ class AnimationCompositorAnimationsTest : public RenderingTest {
 
   LocalFrame* GetFrame() const { return helper_.LocalMainFrame()->GetFrame(); }
 
+  void BeginFrame() {
+    helper_.WebView()->BeginFrame(WTF::MonotonicallyIncreasingTime());
+  }
+
   void ForceFullCompositingUpdate() {
     helper_.WebView()->UpdateAllLifecyclePhases();
   }
@@ -1344,6 +1348,45 @@ TEST_F(AnimationCompositorAnimationsTest,
 
   element->SetLayoutObject(nullptr);
   LayoutObjectProxy::Dispose(layout_object);
+}
+
+TEST_F(AnimationCompositorAnimationsTest, simpleRafAnimation) {
+  LoadTestData("opacity-change-with-raf.html");
+
+  // Run a full frame after loading the test data so that scripted animations
+  // are serviced and data propagated.
+  BeginFrame();
+  ForceFullCompositingUpdate();
+
+  CompositorAnimationHost* host =
+      GetFrame()->GetDocument()->View()->GetCompositorAnimationHost();
+  EXPECT_TRUE(host->GetCurrentFrameHasRAFForTesting());
+}
+
+TEST_F(AnimationCompositorAnimationsTest, twoRafAnimationWithOneCancelled) {
+  LoadTestData("two-raf-with-one-cancelled.html");
+
+  // Run a full frame after loading the test data so that scripted animations
+  // are serviced and data propagated.
+  BeginFrame();
+  ForceFullCompositingUpdate();
+
+  CompositorAnimationHost* host =
+      GetFrame()->GetDocument()->View()->GetCompositorAnimationHost();
+  EXPECT_TRUE(host->GetCurrentFrameHasRAFForTesting());
+}
+
+TEST_F(AnimationCompositorAnimationsTest, twoRafAnimationBothCancelled) {
+  LoadTestData("two-raf-both-cancelled.html");
+
+  // Run a full frame after loading the test data so that scripted animations
+  // are serviced and data propagated.
+  BeginFrame();
+  ForceFullCompositingUpdate();
+
+  CompositorAnimationHost* host =
+      GetFrame()->GetDocument()->View()->GetCompositorAnimationHost();
+  EXPECT_FALSE(host->GetCurrentFrameHasRAFForTesting());
 }
 
 TEST_F(AnimationCompositorAnimationsTest, canStartElementOnCompositorEffect) {
