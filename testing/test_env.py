@@ -172,7 +172,6 @@ def symbolize_snippets_in_json(cmd, env):
 
 def run_executable(cmd, env):
   """Runs an executable with:
-    - environment variable CR_SOURCE_ROOT set to the root directory.
     - environment variable LANGUAGE to en_US.UTF-8.
     - environment variable CHROME_DEVEL_SANDBOX set
     - Reuses sys.executable automatically.
@@ -180,9 +179,6 @@ def run_executable(cmd, env):
   extra_env = {}
   # Many tests assume a English interface...
   extra_env['LANG'] = 'en_US.UTF-8'
-  # Used by base/base_paths_linux.cc as an override. Just make sure the default
-  # logic is used.
-  env.pop('CR_SOURCE_ROOT', None)
   extra_env.update(get_sandbox_env(env))
 
   # Copy logic from  tools/build/scripts/slave/runtest.py.
