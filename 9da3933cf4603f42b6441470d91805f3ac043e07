@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1b6a5a5a_416653e7",
+        "filename": "chrome/browser/chromeos/system_logs/command_line_log_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-28T17:18:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "650a0ce7_56880e89",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 71
+      },
+      "revId": "9da3933cf4603f42b6441470d91805f3ac043e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "568b7d03_c3a42503",
         "filename": "chrome/browser/chromeos/system_logs/debug_daemon_log_source.cc",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "This was intended. The response_ object should not be used afterwards. I figured that a nullptr would be more obvious than a moved object.\n\nI have now changed the code to swap with an empty map to prevent crashes in the non-intended case of a call.",
       "parentUuid": "568b7d03_c3a42503",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 35
+      },
+      "revId": "9da3933cf4603f42b6441470d91805f3ac043e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a67ba0_29557ff5",
+        "filename": "chrome/browser/chromeos/system_logs/debug_daemon_log_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-28T17:18:39Z",
+      "side": 1,
+      "message": "Thanks for the change, this is better now.",
+      "parentUuid": "1a9aa5a2_d6ea432f",
       "range": {
         "startLine": 155,
         "startChar": 4,
