@@ -241,6 +241,30 @@
     },
     {
       "key": {
+        "uuid": "13db8f8a_e0e4a277",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-11-28T18:55:35Z",
+      "side": 1,
+      "message": "How far in the future is this network-service world? Given that this code originally landed in Chrome untested quite some time ago, is it reasonable to settle for this testing for now and address this down the road, when this network-service world comes into being? At that point, it might be clearer what the best way to test this is.",
+      "parentUuid": "e0b0b7fb_d826d80a",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
@@ -312,6 +336,30 @@
     },
     {
       "key": {
+        "uuid": "815ff6b6_1f2e7e34",
+        "filename": "components/certificate_transparency/single_tree_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-11-28T18:55:35Z",
+      "side": 1,
+      "message": "I\u0027ve made it check those two combinations for now. We can improve it to be agnostic to address_family and host_resolver_flags in the future, if we need to.",
+      "parentUuid": "df80928c_d2e75d88",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 45
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0066e7b6_3ee4ddd3",
         "filename": "components/certificate_transparency/single_tree_tracker.h",
         "patchSetId": 5
@@ -363,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "6234fa1f_e1bea05c",
+        "filename": "components/certificate_transparency/tree_state_tracker_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-11-28T18:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fda6dbe6_6e702c80",
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e639b6e_69b81ea0",
         "filename": "net/cert/ct_verifier.h",
         "patchSetId": 5
@@ -391,6 +457,24 @@
       "writtenOn": "2017-11-15T16:50:51Z",
       "side": 1,
       "message": "This implementation really belongs in the HostResolverImpl, not the HostResolver. Sorry, I know that\u0027s more work.\n\nAlso, I\u0027d like this API better if it got the source and staleness without the whole entry, similar to what ResolveStaleFromCache() does, but you\u0027re welcome to ignore that suggestion.",
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcf141d_5ff37c48",
+        "filename": "net/dns/host_resolver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-11-28T18:55:35Z",
+      "side": 1,
+      "message": "The implementation needs to be shared with MockHostResolverBase, and I think HostResolverMojo too. I\u0027ve refactored this code, and the code from SingleTreeTracker that calls it, into a new function called HasCacheEntry(), which I\u0027ve put in net/dns/host_cache.{h,cc}. That can then be called from HostResolverImpl, MockHostResolverBase and HostResolverMojo. It no longer returns the whole entry, but instead returns just the source and staleness via out parameters. Better?",
+      "parentUuid": "f34c739e_218ddeaf",
       "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
