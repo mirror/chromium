@@ -6,6 +6,7 @@
 #define CONTENT_RENDERER_SERVICE_WORKER_SERVICE_WORKER_TIMEOUT_TIMER_H_
 
 #include <map>
+#include <set>
 
 #include "base/callback.h"
 #include "base/containers/queue.h"
@@ -49,7 +50,8 @@ class CONTENT_EXPORT ServiceWorkerTimeoutTimer {
 
   // StartEvent() should be called at the beginning of an event. It returns an
   // event id. The event id should be passed to EndEvent() when the event has
-  // finished.
+  // finished. The TimeTicks when StartEvent() is called should be different
+  // from the previous calls.
   // See the class comment to know when |abort_callback| runs.
   int StartEvent(base::OnceCallback<void(int /* event_id */)> abort_callback);
   void EndEvent(int event_id);
@@ -70,14 +72,26 @@ class CONTENT_EXPORT ServiceWorkerTimeoutTimer {
   // Updates the internal states and fires timeout callbacks if any.
   void UpdateStatus();
 
-  // For event timeouts. Contains only inflight events.
-  std::map<int /* event_id */, base::OnceClosure> abort_callbacks_;
+  struct EventInfo {
+    EventInfo(int id,
+              base::TimeTicks expiration_time,
+              base::OnceClosure abort_callback);
+    ~EventInfo();
+    // Compares |expiration_time|, or |id| if |expiration_time| is the same.
+    bool operator<(const EventInfo& other) const;
 
-  // For long standing event timeouts. Contains both inflight and settled
-  // events. If an |event_id| does not exist in |abort_callbacks_|, the event
-  // already finished successfully.
-  base::queue<std::pair<base::TimeTicks, int /* event_id */>>
-      event_timeout_times_;
+    const int id;
+    const base::TimeTicks expiration_time;
+    mutable base::OnceClosure abort_callback;
+  };
+
+  // For long standing event timeouts. Contains inflight events and ordered by
+  // the expiration time.
+  std::set<EventInfo> inflight_events_;
+
+  // For long standing event timeouts. Contains inflight events. This is used to
+  // look up an event in |inflight_events_| by its id.
+  std::map<int /* event_id */, std::set<EventInfo>::iterator> id_event_map_;
 
   // For idle timeouts. The time the service worker started being considered
   // idle. This time is null if there are any inflight events.
