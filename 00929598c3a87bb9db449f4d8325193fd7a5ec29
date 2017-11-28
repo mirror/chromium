@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fda396d_3c051936",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T23:57:16Z",
+      "side": 1,
+      "message": "Please add a comment.",
+      "range": {
+        "startLine": 23,
+        "startChar": 10,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "00929598c3a87bb9db449f4d8325193fd7a5ec29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf10940_810f67ab",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T23:57:16Z",
+      "side": 1,
+      "message": "Why not just 5*(original_value/5);\n\nThen, you can remove the array.",
+      "range": {
+        "startLine": 35,
+        "startChar": 73,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "00929598c3a87bb9db449f4d8325193fd7a5ec29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a707cffc_89be053e",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T23:57:16Z",
+      "side": 1,
+      "message": "This DCHECK will be false if we disable UKM via server-side experiment. Remove it.",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 24
+      },
+      "revId": "00929598c3a87bb9db449f4d8325193fd7a5ec29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c920899_5c0a1461",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T23:57:16Z",
+      "side": 1,
+      "message": "On the design doc review, I see that Martin requested that these timestamps be reduced in granularity. Is that being done somewhere?",
+      "range": {
+        "startLine": 82,
+        "startChar": 59,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "00929598c3a87bb9db449f4d8325193fd7a5ec29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c002ff81_1822c4dc",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T23:57:16Z",
+      "side": 1,
+      "message": "This should be a single test with multiple cases. You should use a table-driven test.",
+      "range": {
+        "startLine": 27,
+        "startChar": 52,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "00929598c3a87bb9db449f4d8325193fd7a5ec29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

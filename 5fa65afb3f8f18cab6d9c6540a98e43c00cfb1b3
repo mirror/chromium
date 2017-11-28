@@ -37,6 +37,47 @@
     },
     {
       "key": {
+        "uuid": "7d91c556_80ad61da",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T23:57:16Z",
+      "side": 1,
+      "message": "I don\u0027t see this change? Did you forget to do it or forget to upload a patchset?",
+      "parentUuid": "3cd3bd88_bb285938",
+      "revId": "5fa65afb3f8f18cab6d9c6540a98e43c00cfb1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "242e32e5_968ace94",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-28T23:57:16Z",
+      "side": 1,
+      "message": "Methods that are simply overrides should not have comments and should be grouped together with a single comment specifying the class it\u0027s overriding, i.e:\n\n// UserActivityLoggerDelegate:",
+      "range": {
+        "startLine": 34,
+        "startChar": 60,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "5fa65afb3f8f18cab6d9c6540a98e43c00cfb1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57118292_fd155caa",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 8
