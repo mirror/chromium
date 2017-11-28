@@ -42,7 +42,8 @@ bool ValidInternalFormat(unsigned internalformat, gfx::BufferFormat format) {
     case GL_RGB_YCBCR_420V_CHROMIUM:
       return format == gfx::BufferFormat::YUV_420_BIPLANAR;
     case GL_RGBA:
-      return format == gfx::BufferFormat::RGBA_8888;
+      return format == gfx::BufferFormat::RGBA_8888 ||
+             format == gfx::BufferFormat::BGRA_8888;
     case GL_BGRA_EXT:
       return format == gfx::BufferFormat::BGRA_8888;
     case GL_RED_EXT:
