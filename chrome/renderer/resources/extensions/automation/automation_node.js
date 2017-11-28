@@ -181,6 +181,14 @@ var GetBoundsForRange = natives.GetBoundsForRange;
 /**
  * @param {number} axTreeID The id of the accessibility tree.
  * @param {number} nodeID The id of a node.
+ * @return {?automation.Rect} The unclipped location of the node, or
+ * undefined if the tree or node wasn't found.
+ */
+var GetUnclippedLocation = natives.GetUnclippedLocation;
+
+/**
+ * @param {number} axTreeID The id of the accessibility tree.
+ * @param {number} nodeID The id of a node.
  * @return {!Array.<number>} The text offset where each line starts, or an empty
  *     array if this node has no text content, or undefined if the tree or node
  *     was not found.
@@ -351,6 +359,10 @@ AutomationNodeImpl.prototype = {
 
   boundsForRange: function(startIndex, endIndex) {
     return GetBoundsForRange(this.treeID, this.id, startIndex, endIndex);
+  },
+
+  get unclippedLocation() {
+    return GetUnclippedLocation(this.treeID, this.id);
   },
 
   get indexInParent() {
@@ -1273,6 +1285,7 @@ utils.expose(AutomationNode, AutomationNodeImpl, {
       'underline',
       'lineThrough',
       'customActions',
+      'unclippedLocation',
   ]),
 });
 

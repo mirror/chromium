@@ -70,12 +70,13 @@ v8::Local<v8::Object> RectToV8Object(v8::Isolate* isolate,
 static gfx::Rect ComputeGlobalNodeBounds(AutomationAXTreeWrapper* tree_wrapper,
                                          ui::AXNode* node,
                                          gfx::RectF local_bounds = gfx::RectF(),
-                                         bool* offscreen = nullptr) {
+                                         bool* offscreen = nullptr,
+                                         bool clip_bounds = true) {
   gfx::RectF bounds = local_bounds;
 
   while (node) {
-    bounds =
-        tree_wrapper->tree()->RelativeToTreeBounds(node, bounds, offscreen);
+    bounds = tree_wrapper->tree()->RelativeToTreeBounds(node, bounds, offscreen,
+                                                        clip_bounds);
 
     AutomationAXTreeWrapper* previous_tree_wrapper = tree_wrapper;
     ui::AXNode* parent = tree_wrapper->owner()->GetParent(
@@ -519,6 +520,15 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
         result.Set(RectToV8Object(isolate, global_bounds));
       });
   RouteNodeIDFunction(
+      "GetUnclippedLocation",
+      [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
+         AutomationAXTreeWrapper* tree_wrapper, ui::AXNode* node) {
+        bool offscreen = false;
+        gfx::Rect global_unclipped_bounds = ComputeGlobalNodeBounds(
+            tree_wrapper, node, gfx::RectF(), &offscreen, false);
+        result.Set(RectToV8Object(isolate, global_unclipped_bounds));
+      });
+  RouteNodeIDFunction(
       "GetLineStartOffsets",
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
          AutomationAXTreeWrapper* tree_wrapper, ui::AXNode* node) {
@@ -596,8 +606,10 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
         // Convert from local to global coordinates second, after subsetting,
         // because the local to global conversion might involve matrix
         // transformations.
-        gfx::Rect global_bounds =
-            ComputeGlobalNodeBounds(tree_wrapper, node, local_bounds);
+        // TODO: Instead of removing clipping we could trim local_bounds to
+        // fit in the clipped space?
+        gfx::Rect global_bounds = ComputeGlobalNodeBounds(
+            tree_wrapper, node, local_bounds, nullptr, false);
         result.Set(RectToV8Object(isolate, global_bounds));
       });
 
