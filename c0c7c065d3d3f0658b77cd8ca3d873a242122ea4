@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "e9185ee5_79d72ba1",
+        "filename": "chromeos/components/tether/ad_hoc_ble_advertiser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-11-28T01:18:39Z",
+      "side": 1,
+      "message": "Hmm... would we want to just remove the deviceID from the map or is there no point anyway because we can\u0027t stop the advertisement? Should we retry?",
+      "parentUuid": "d09adc9a_1d30fe7c",
+      "range": {
+        "startLine": 106,
+        "startChar": 42,
+        "endLine": 106,
+        "endChar": 64
+      },
+      "revId": "c0c7c065d3d3f0658b77cd8ca3d873a242122ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee97fb5c_03fed221",
         "filename": "chromeos/components/tether/asynchronous_shutdown_object_container_impl.cc",
         "patchSetId": 3
