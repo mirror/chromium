@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e3295f8_c4ae3c97",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-28T09:48:26Z",
+      "side": 1,
+      "message": "nit: Should be \"explicit\"?",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 14
+      },
+      "revId": "f0c9e2be026ee9ad6c5719c2c3270e8e116087d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "712adc03_6abf8c2b",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-28T09:48:26Z",
+      "side": 1,
+      "message": "nit: Could you please add some comment in registry.cc that we don\u0027t need to write and read \"persistent\" from preferences as all file systems which are remembered must be persistent?",
+      "range": {
+        "startLine": 391,
+        "startChar": 41,
+        "endLine": 391,
+        "endChar": 59
+      },
+      "revId": "f0c9e2be026ee9ad6c5719c2c3270e8e116087d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d386771f_4978cf50",
+        "filename": "chrome/browser/chromeos/file_system_provider/service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-28T09:48:26Z",
+      "side": 1,
+      "message": "nit: Will fit in one or two lines?",
+      "range": {
+        "startLine": 415,
+        "startChar": 13,
+        "endLine": 415,
+        "endChar": 38
+      },
+      "revId": "f0c9e2be026ee9ad6c5719c2c3270e8e116087d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3b7859d_db8c0ddb",
+        "filename": "chrome/browser/chromeos/file_system_provider/service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-28T09:48:26Z",
+      "side": 1,
+      "message": "nit: Can be EXPECT_EQ?",
+      "range": {
+        "startLine": 417,
+        "startChar": 2,
+        "endLine": 417,
+        "endChar": 11
+      },
+      "revId": "f0c9e2be026ee9ad6c5719c2c3270e8e116087d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a023c21_5460e83a",
+        "filename": "chrome/common/extensions/api/file_system_provider.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-28T09:48:26Z",
+      "side": 1,
+      "message": "Please add that by default it\u0027s true.",
+      "revId": "f0c9e2be026ee9ad6c5719c2c3270e8e116087d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
