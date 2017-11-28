@@ -5,6 +5,7 @@
 #include "bindings/core/v8/V8ScriptRunner.h"
 
 #include "bindings/core/v8/ReferrerScriptInfo.h"
+#include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8BindingForTesting.h"
 #include "core/loader/resource/ScriptResource.h"
@@ -27,7 +28,7 @@ class V8ScriptRunnerTest : public ::testing::Test {
 
   void SetUp() override {
     // To trick various layers of caching, increment a counter for each
-    // test and use it in code(), fielname() and url().
+    // test and use it in Code() and Url().
     counter_++;
   }
 
@@ -41,9 +42,6 @@ class V8ScriptRunnerTest : public ::testing::Test {
     // - Pad counter to 1000 digits, to trick minimal cacheability threshold.
     return WTF::String::Format("a = function() { 1 + 1; } // %01000d\n",
                                counter_);
-  }
-  WTF::String Filename() const {
-    return WTF::String::Format("whatever%d.js", counter_);
   }
   KURL Url() const {
     return KURL(WTF::String::Format("http://bla.com/bla%d", counter_));
@@ -60,10 +58,17 @@ class V8ScriptRunnerTest : public ::testing::Test {
 
   bool CompileScript(ScriptState* script_state, V8CacheOptions cache_options) {
     return !V8ScriptRunner::CompileScript(
-                script_state, V8String(script_state->GetIsolate(), Code()),
-                Filename(), String(), WTF::TextPosition(),
-                ScriptSourceLocationType::kExternalFile, nullptr,
-                resource_.Get() ? resource_->CacheHandler() : nullptr,
+                script_state, ScriptSourceCode(nullptr, resource_),
+                kNotSharableCrossOrigin, cache_options, ReferrerScriptInfo())
+                .IsEmpty();
+  }
+
+  bool CompileInlineScript(ScriptState* script_state,
+                           V8CacheOptions cache_options) {
+    return !V8ScriptRunner::CompileScript(
+                script_state,
+                ScriptSourceCode(Code(), ScriptSourceLocationType::kInternal,
+                                 nullptr, Url()),
                 kNotSharableCrossOrigin, cache_options, ReferrerScriptInfo())
                 .IsEmpty();
   }
@@ -74,6 +79,9 @@ class V8ScriptRunnerTest : public ::testing::Test {
 
   void SetResource() {
     resource_ = ScriptResource::CreateForTest(Url(), UTF8Encoding());
+    String code = Code();
+    resource_->AppendData(code.Utf8().data(), code.Utf8().length());
+    resource_->FinishForTest();
   }
 
   CachedMetadataHandler* CacheHandler() { return resource_->CacheHandler(); }
@@ -88,9 +96,10 @@ int V8ScriptRunnerTest::counter_ = 0;
 
 TEST_F(V8ScriptRunnerTest, resourcelessShouldPass) {
   V8TestingScope scope;
-  EXPECT_TRUE(CompileScript(scope.GetScriptState(), kV8CacheOptionsNone));
-  EXPECT_TRUE(CompileScript(scope.GetScriptState(), kV8CacheOptionsParse));
-  EXPECT_TRUE(CompileScript(scope.GetScriptState(), kV8CacheOptionsCode));
+  EXPECT_TRUE(CompileInlineScript(scope.GetScriptState(), kV8CacheOptionsNone));
+  EXPECT_TRUE(
+      CompileInlineScript(scope.GetScriptState(), kV8CacheOptionsParse));
+  EXPECT_TRUE(CompileInlineScript(scope.GetScriptState(), kV8CacheOptionsCode));
 }
 
 TEST_F(V8ScriptRunnerTest, emptyResourceDoesNotHaveCacheHandler) {
