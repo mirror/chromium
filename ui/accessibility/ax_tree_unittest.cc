@@ -668,6 +668,7 @@ TEST(AXTreeTest, AttributeChangeCallbacks) {
   initial_state.nodes[0].AddBoolAttribute(AX_ATTR_BUSY, false);
   initial_state.nodes[0].AddFloatAttribute(AX_ATTR_MIN_VALUE_FOR_RANGE, 1.0);
   initial_state.nodes[0].AddFloatAttribute(AX_ATTR_MAX_VALUE_FOR_RANGE, 10.0);
+  initial_state.nodes[0].AddFloatAttribute(AX_ATTR_STEP_VALUE_FOR_RANGE, 3.0);
   initial_state.nodes[0].AddIntAttribute(AX_ATTR_SCROLL_X, 5);
   initial_state.nodes[0].AddIntAttribute(AX_ATTR_SCROLL_X_MIN, 1);
   AXTree tree(initial_state);
@@ -686,6 +687,7 @@ TEST(AXTreeTest, AttributeChangeCallbacks) {
   update0.nodes[0].AddBoolAttribute(AX_ATTR_BUSY, true);
   update0.nodes[0].AddFloatAttribute(AX_ATTR_MIN_VALUE_FOR_RANGE, 2.0);
   update0.nodes[0].AddFloatAttribute(AX_ATTR_MAX_VALUE_FOR_RANGE, 9.0);
+  update0.nodes[0].AddFloatAttribute(AX_ATTR_STEP_VALUE_FOR_RANGE, 0.5);
   update0.nodes[0].AddIntAttribute(AX_ATTR_SCROLL_X, 6);
   update0.nodes[0].AddIntAttribute(AX_ATTR_SCROLL_X_MIN, 2);
   EXPECT_TRUE(tree.Unserialize(update0));
