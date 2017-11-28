@@ -16,6 +16,24 @@
       "revId": "449f836365584963e3388a79478e64c3f572c2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1f6719_a3a85394",
+        "filename": "chrome/browser/ui/views/extensions/bookmark_app_confirmation_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-28T03:54:23Z",
+      "side": 1,
+      "message": "OK, that works. Done.",
+      "parentUuid": "f7796dd4_7f441738",
+      "revId": "449f836365584963e3388a79478e64c3f572c2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
