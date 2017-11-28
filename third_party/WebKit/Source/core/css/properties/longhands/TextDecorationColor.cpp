@@ -22,10 +22,27 @@ const CSSValue* TextDecorationColor::ParseSingleValue(
 const blink::Color TextDecorationColor::ColorIncludingFallback(
     bool visited_link,
     const ComputedStyle& style) const {
-  StyleColor result = style.DecorationColorIncludingFallback(visited_link);
+  StyleColor result = visited_link
+                          ? style.TextDecorationColorIgnoringUnvisited()
+                          : style.TextDecorationColor();
+
+  if (result.IsCurrentColor()) {
+    result = visited_link ? style.TextFillColorIgnoringUnvisited()
+                          : style.TextFillColorIgnoringVisited();
+    if (style.TextStrokeWidth()) {
+      // Prefer stroke color if possible, but not if it's fully transparent.
+      StyleColor text_stroke_style_color =
+          visited_link ? style.TextStrokeColorIgnoringUnvisited()
+                       : style.TextStrokeColorIgnoringVisited();
+      if (!text_stroke_style_color.IsCurrentColor() &&
+          text_stroke_style_color.GetColor().Alpha())
+        result = text_stroke_style_color;
+    }
+  }
+
   if (!result.IsCurrentColor())
     return result.GetColor();
-  return visited_link ? style.VisitedLinkColor() : style.GetColor();
+  return visited_link ? style.VisitedLinkColor() : style.ColorIgnoringVisited();
 }
 
 const CSSValue* TextDecorationColor::CSSValueFromComputedStyle(
