@@ -1016,4 +1016,9 @@ bool TCPSocketWin::GetEstimatedRoundTripTime(base::TimeDelta* out_rtt) const {
   return false;
 }
 
+void TCPSocketWin::Tag(const SocketTag& tag) {
+  // Socket tagging not supported on Windows.
+  CHECK(false);
+}
+
 }  // namespace net

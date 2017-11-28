@@ -73,6 +73,8 @@ class FakeStreamSocket : public StreamSocket {
     return 0;
   }
 
+  void Tag(const SocketTag& tag) override {}
+
   // Socket implementation
   int Read(IOBuffer* buf,
            int buf_len,
