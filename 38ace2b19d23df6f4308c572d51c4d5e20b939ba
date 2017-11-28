@@ -16,6 +16,24 @@
       "revId": "38ace2b19d23df6f4308c572d51c4d5e20b939ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1703c68_2ded5bb3",
+        "filename": "content/browser/webui/url_data_manager_backend.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1172047
+      },
+      "writtenOn": "2017-11-28T08:53:37Z",
+      "side": 1,
+      "message": "Yes, the renderer will again fetch the same resource, like an image, even though it may already have it in memory.\nIn our particular case this is important because the resource may be different (or no longer exit) after some time even though it has the same URL (a resource is deleted and some time later a new one is created and reuses the URL). Of course it can be argued that the issue should be worked around, e.g. by appending a query param with a timestamp to make the URL unique.\n\nHowever I would also argue that if a UrlDataSource indicates it doesn\u0027t allow caching then each and every request should be fetched from the source directly. It is then the responsibility of the UrlDataSource to implement caching if necessary (in our case it includes cache eviction for deleted elements).\n\nI am no expert on HTTP caching but it is my understanding that \"no-cache\" works together with \"last-modified-since\" or \"ETag\" headers for cache revalidation. Therefore I would expect either \"Cache-control: no-store\" or a way for UrlDataSources to provide \"ETag\" and/or \"last-modified-since\" for better cache control.\n\nThis change will influence all UrlDataSource implementations so it might have an undesirable effect on those that rely on the current behaviour by not implementing their own cache but returning false from AllowCaching().\nIt will also cause multiple fetches of the same resource when it\u0027s used multiple times on the page (which, I would say, is a downside of the proposed solution).",
+      "parentUuid": "8cf7c091_1a1ed78c",
+      "revId": "38ace2b19d23df6f4308c572d51c4d5e20b939ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
