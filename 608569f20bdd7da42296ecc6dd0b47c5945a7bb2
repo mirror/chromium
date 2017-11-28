@@ -50,6 +50,24 @@
       "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23059897_770913da",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-28T19:02:42Z",
+      "side": 1,
+      "message": "V8CacheOptions is in bindings/core/v8 and thus not accessible from here (platform/loader).\n(And also I wouldn\u0027t like to move CachedMetadataHandlerImpl outside platform/loader to control its correctness and timing issues)",
+      "parentUuid": "79e1fe41_92262e15",
+      "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
