@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13308428_51d7ef23",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 95609,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-28T22:06:11Z",
+      "side": 1,
+      "message": "nit: add\nper ongoing WebRTC call\n(assuming that\u0027s true)",
+      "range": {
+        "startLine": 95609,
+        "startChar": 36,
+        "endLine": 95609,
+        "endChar": 0
+      },
+      "revId": "c5d5aa8dcb5406b7a5812536004468b6d48bee10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
