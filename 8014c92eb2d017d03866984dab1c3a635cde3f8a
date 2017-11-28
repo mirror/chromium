@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f94d37b9_bda0effb",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-28T13:32:35Z",
+      "side": 1,
+      "message": "This is not necessary (executed in the bottom of this function.)",
+      "revId": "8014c92eb2d017d03866984dab1c3a635cde3f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55472649_60d81150",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-28T13:32:35Z",
+      "side": 1,
+      "message": "Is it guaranteed that |syncing| becomes true after all importOne_() are called?\nIf not, there is a chance that CANCELLED is called twice.\n\n0. Start importing photo A and B.\n1. importOne_ for A is called.\n2. DriveSyncHandler\u0027s |syncing| becomes true for uploading A.\n3. requestCancel() is called \u003d\u003e CANCELLED is notified.\n4. importOne_ for B is called. \u003d\u003e CANCELLED is notified.\n\nI\u0027m not sure if it can occur, but if it can, maybe we should check if the CANCELLED is already notified in importOne_.",
+      "revId": "8014c92eb2d017d03866984dab1c3a635cde3f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c08729_789569f9",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-28T13:32:35Z",
+      "side": 1,
+      "message": "asset is not necessary.",
+      "range": {
+        "startLine": 461,
+        "startChar": 35,
+        "endLine": 461,
+        "endChar": 48
+      },
+      "revId": "8014c92eb2d017d03866984dab1c3a635cde3f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e56d038_72efcc4f",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-28T13:32:35Z",
+      "side": 1,
+      "message": "Leave the TODO comment in a format like below:\n\nTODO(oka): Retry copies only when they failed due to insufficient disk space. crbug.com/788692.",
+      "revId": "8014c92eb2d017d03866984dab1c3a635cde3f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
