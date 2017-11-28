@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87c9a069_feb4e9ee",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-28T19:16:39Z",
+      "side": 1,
+      "message": "nit: copy_successful would be clearer.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 18
+      },
+      "revId": "eaf60d8561a7dd2ea4379a1160c13953a150f8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
