@@ -106,6 +106,24 @@
       "revId": "37792a9c3a16c0bba397a6241133dca6509a0557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f3af60_3f0fe0bc",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaDrmBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1242380
+      },
+      "writtenOn": "2017-11-28T22:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5a5bd56_77f85295",
+      "revId": "37792a9c3a16c0bba397a6241133dca6509a0557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
