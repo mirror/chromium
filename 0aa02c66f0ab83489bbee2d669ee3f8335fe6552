@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c53b122_02b169e3",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-11-28T15:17:57Z",
+      "side": 1,
+      "message": "What about is_fuchsia? We\u0027d probably want this there too if we thinlto there. Where do we not want this? Windows? Chrome OS?",
+      "revId": "0aa02c66f0ab83489bbee2d669ee3f8335fe6552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
