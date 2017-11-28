@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "8360f34f_3952601b",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-28T16:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ddd3348_bbfecfce",
+      "revId": "03340dfcb8be27205b538c87274e17ee14ce3d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f404cac6_cdc495d8",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 5
