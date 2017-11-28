@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b530f7f_7caf0ba5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-28T21:45:41Z",
+      "side": 1,
+      "message": "I\u0027m sorry, I am not able to write a great test for this scenario.  In particular, I am not able to execute the delayed CheckPingStatus() to make sure it does not drain the session.  However, I am able to check that a second call to MaybeSendPrefacePing() does not sent out a new ping frame because there is a pending CheckPingStatus().  This test will be another use case for implementing RunLoop-compatible FastForward in net_unittests.\n\nI wrote a unittest on trunk for documenting the broken behavior, see https://crrev.com/c/794032.  It hinges on how CheckPingStatus() incorrectly closes the session, failing outstanding requests, so a delegate.WaitForClose() can be used to wait actual wall time for CheckPingStatus() to be executed.  This is not possible here because CheckPingStatus() does not have a side effect (like draining the session and hence failing requests) that could be used to call a RunLoop::Quit() (like delegate\u0027s TestCompletionCallback does).\n\nThat\u0027s why I cannot write a good unittest using wall time.  Currently it is not possible either to mock time in tests for the following reasons (note that SpdySession::time_func_ mocks what would otherwise be base::Now() calls, it does not affect delays for tasks posted with PostDelayedTask()):\n\nAccording to [1], ScopedMockTimeMessageLoopTaskRunner is deprecated in favor of TestMockTimeTaskRunner of Type::kBoundToThread.\n\nBoth ScopedMockTimeMessageLoopTaskRunner and TestMockTimeTaskRunner of Type::kStandalone are incompatible with base::RunLoop() which TestCompletionCallback::WaitForResult() uses which is buried deep in both CreateSpdySession() and in StreamDelegateBase::WaitForResult().\n\nTestMockTimeTaskRunner of Type::kBoundToThread cannot be instantiated because it is incompatible with MessageLoop.  In particular, the DCHECK [2] is triggered.\n\nThe solution might be if the ScopedTaskEnvironment of NetTestSuite was of type MainThreadType::MOCK_TIME [3].  I believe this is beyond the scope of this CL.\n\n[1] https://cs.chromium.org/chromium/src/base/test/scoped_mock_time_message_loop_task_runner.h?l\u003d25\n[2] https://cs.chromium.org/chromium/src/base/run_loop.cc?l\u003d72\n[3] https://cs.chromium.org/chromium/src/base/test/scoped_task_environment.h?l\u003d68",
+      "parentUuid": "52ccd7ed_c28ae882",
+      "revId": "02f1703ba8e71f8a718fa4cbec374515d4f577d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b482189_7b04801c",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9ddb8d88_005156d2",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2259,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-28T21:45:41Z",
+      "side": 1,
+      "message": "Great idea!  Done.",
+      "parentUuid": "6b482189_7b04801c",
+      "revId": "02f1703ba8e71f8a718fa4cbec374515d4f577d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92b78146_c4fe3171",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "02f1703ba8e71f8a718fa4cbec374515d4f577d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320b89ae_6bd8b806",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-28T21:45:41Z",
+      "side": 1,
+      "message": "Good catch! Done.  I also modified the comment for check_ping_status_pending_ member in the header file to emphasize this invariant.",
+      "parentUuid": "92b78146_c4fe3171",
+      "revId": "02f1703ba8e71f8a718fa4cbec374515d4f577d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
