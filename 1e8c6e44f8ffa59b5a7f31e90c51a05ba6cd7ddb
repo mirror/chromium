@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec462741_0248cafd",
+        "filename": "third_party/WebKit/Source/core/frame/csp/SourceListDirective.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-28T08:30:25Z",
+      "side": 1,
+      "message": "I\u0027d still like to see you doing the `SchemeRegistry` check here: you\u0027ll be exposing the keyword to the web if you don\u0027t, as discussed earlier. Did you have issues moving this over?",
+      "revId": "1e8c6e44f8ffa59b5a7f31e90c51a05ba6cd7ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b3f7af_30428022",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SchemeRegistry.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-28T08:30:25Z",
+      "side": 1,
+      "message": "Blink shouldn\u0027t know about `chrome-extension`. I\u0027d prefer for this to be empty in Blink, and populated by the embedder.\n\n`SchemeRegistry::RegisterURLSchemeAsAllowingServiceWorkers()` is a good example of how this might work, routing through `WebSecurityPolicy::RegisterURLSchemeAsAllowingServiceWorkers()` to expose the registry to the embedder in `extensions::Dispatcher::OnSetSessionInfo()`.",
+      "revId": "1e8c6e44f8ffa59b5a7f31e90c51a05ba6cd7ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
