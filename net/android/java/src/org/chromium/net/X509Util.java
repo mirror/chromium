@@ -549,7 +549,7 @@ public class X509Util {
                 } catch (CertificateException eTestManager) {
                     // Neither of the trust managers confirms the validity of the certificate chain,
                     // log the error message returned by the system trust manager.
-                    Log.i(TAG, "Failed to validate the certificate chain, error: "
+                    Log.e(TAG, "Failed to validate the certificate chain, error: "
                             + eDefaultManager.getMessage());
                     return new AndroidCertVerifyResult(
                             CertVerifyStatusAndroid.NO_TRUSTED_ROOT);
