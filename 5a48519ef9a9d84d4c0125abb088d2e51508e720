@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f46908ee_b7c63596",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-28T21:56:57Z",
+      "side": 1,
+      "message": "I think NEEDS_WAIT is meant to keep us from waiting on a sync token more than once, but generally for DCHECKing that we\u0027re waiting before using thing. Branching here based on it seems a bit different from that. Instead I think it\u0027d be better than we have already waited on the resources before we get here, as that\u0027s what the code is expecting, or that we don\u0027t send resource ids to this method that we didn\u0027t wait on yet - either way this would be more explicit in the caller as it manages the resource ids rather than early out here, which can hide bugs where the caller forgets to wait and therefore the resource disappears.",
+      "revId": "5a48519ef9a9d84d4c0125abb088d2e51508e720",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
