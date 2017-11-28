@@ -1,0 +1,273 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e819290a_057b6c7a",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059cb0eb_8a720a95",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "nit: rm new line (to be consistent with other delegates)",
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f781b4e2_fb75fb49",
+        "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_api_delegate_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "range": {
+        "startLine": 33,
+        "startChar": 72,
+        "endLine": 33,
+        "endChar": 75
+      },
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee56ba7_36367b09",
+        "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_api_delegate_chromeos.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "I think you can use callback_forward.h here",
+      "range": {
+        "startLine": 8,
+        "startChar": 15,
+        "endLine": 8,
+        "endChar": 25
+      },
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982c9697_0787db44",
+        "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_api_delegate_chromeos.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "nit: I\u0027d typdef this in MediaPerceptionAPIDelegate (for better readability)\n(and also document the return value)",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 50
+      },
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dea2b2a_4eae5e16",
+        "filename": "chromeos/dbus/proto/media_perception.proto",
+        "patchSetId": 21
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "I\u0027d remove this.",
+      "range": {
+        "startLine": 39,
+        "startChar": 69,
+        "endLine": 39,
+        "endChar": 77
+      },
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef1107b_5b90d04c",
+        "filename": "extensions/browser/api/extensions_api_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "nit: rm",
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd20b616_99e03094",
+        "filename": "extensions/browser/api/extensions_api_client.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "This seems more like a delegate method comment.\n\nI\u0027d just go with\n\"Returns a delegate for embedder-specific chrome.mediaPerceptionPrivate API behavior.\"",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 78
+      },
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9472a8f_759ea4c6",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_delegate.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 71
+      },
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f40959_798be047",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "can you reword this to be easier to parse",
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f09b17_b9a47cde",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "I\u0027d remove this part.\n\nAlso, can you add a todo to remove this when old deployment path is not used anymore.\nAnd maybe add a warning to the console (i.e. WriteToConsole(content::CONSOLE_MESSAGE_LEVEL_WARNING,\n               \"Using media analytics from deprecated deployment path.\"));",
+      "range": {
+        "startLine": 207,
+        "startChar": 12,
+        "endLine": 209,
+        "endChar": 16
+      },
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736ab66e_9617927b",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_private_apitest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "this is expected to be a mount path, right? I\u0027d change this string to indicate that.",
+      "range": {
+        "startLine": 39,
+        "startChar": 52,
+        "endLine": 39,
+        "endChar": 68
+      },
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "441d0c6a_65a11a0f",
+        "filename": "extensions/test/data/media_perception_private/component/runtest.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-28T23:23:39Z",
+      "side": 1,
+      "message": "add test that setAnalyticsComponent fails if media analytics process is already running.\n\nand maybe one to verify the upstart start request has the mount path properly set after setAnalyticsComponent is called.",
+      "revId": "eb7769af62071b04d988df7ce6b9f0bf46c9399b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
