@@ -847,7 +847,7 @@ void ArcSessionManager::OnAndroidManagementChecked(
 
 void ArcSessionManager::StartBackgroundAndroidManagementCheck() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  DCHECK_EQ(state_, State::ACTIVE);
+  DCHECK(state_ == State::ACTIVE || state_ == State::STOPPED);
   DCHECK(!android_management_checker_);
 
   // Skip Android management check for testing.
