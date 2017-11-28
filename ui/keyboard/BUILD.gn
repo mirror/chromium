@@ -30,6 +30,8 @@ component("keyboard") {
     "keyboard_switches.h",
     "keyboard_ui.cc",
     "keyboard_ui.h",
+    "keyboard_ukm_recorder.cc",
+    "keyboard_ukm_recorder.h",
     "keyboard_util.cc",
     "keyboard_util.h",
   ]
@@ -38,6 +40,7 @@ component("keyboard") {
 
   deps = [
     "//base",
+    "//services/metrics/public/cpp:ukm_builders",
     "//ui/aura",
     "//ui/base",
     "//ui/base/ime",
@@ -153,6 +156,7 @@ test("keyboard_unittests") {
     "container_full_width_behavior_unittest.cc",
     "keyboard_controller_unittest.cc",
     "keyboard_event_filter_unittest.cc",
+    "keyboard_ukm_recorder_unittest.cc",
     "keyboard_util_unittest.cc",
     "test/run_all_unittests.cc",
   ]
@@ -163,6 +167,7 @@ test("keyboard_unittests") {
     ":test_support",
     "//base",
     "//base/test:test_support",
+    "//components/ukm:test_support",
     "//mojo/edk/system",
     "//testing/gtest",
     "//ui/aura:test_support",

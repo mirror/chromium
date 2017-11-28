@@ -12,6 +12,7 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
+#include "components/ukm/test_ukm_recorder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/test/aura_test_helper.h"
@@ -35,6 +36,7 @@
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/wm/core/default_activation_client.h"
+#include "url/gurl.h"
 
 #if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_platform.h"
@@ -174,6 +176,20 @@ class TestKeyboardLayoutDelegate : public KeyboardLayoutDelegate {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestKeyboardLayoutDelegate);
+};
+
+class DummyTextInputClientWithSourceInfo : public ui::DummyTextInputClient {
+ public:
+  DummyTextInputClientWithSourceInfo(ui::TextInputType type, std::string info)
+      : ui::DummyTextInputClient(type), source_info_(info) {}
+
+  const std::string& GetClientSourceInfo() const override {
+    return source_info_;
+  }
+
+ private:
+  std::string source_info_;
+  DISALLOW_COPY_AND_ASSIGN(DummyTextInputClientWithSourceInfo);
 };
 
 }  // namespace
@@ -732,6 +748,46 @@ TEST_F(KeyboardControllerTest, DisplayChangeShouldNotifyBoundsChange) {
   EXPECT_EQ(3, visible_bounds_number_of_calls());
   EXPECT_EQ(3, occluding_bounds_number_of_calls());
   EXPECT_EQ(3, is_available_number_of_calls());
+}
+
+TEST_F(KeyboardControllerTest, UkmRecorderTest) {
+  ScopedTouchKeyboardEnabler scoped_keyboard_enabler;
+  ukm::TestAutoSetUkmRecorder test_recorder;
+
+  GURL url("chrome://settings");
+  DummyTextInputClientWithSourceInfo invalid_client(ui::TEXT_INPUT_TYPE_TEXT,
+                                                    "invalid");
+  DummyTextInputClientWithSourceInfo client(ui::TEXT_INPUT_TYPE_TEXT,
+                                            url.spec());
+  ui::DummyTextInputClient no_client(ui::TEXT_INPUT_TYPE_NONE);
+
+  base::RunLoop run_loop;
+  aura::Window* keyboard_container(controller()->GetContainerWindow());
+  std::unique_ptr<KeyboardContainerObserver> keyboard_container_observer(
+      new KeyboardContainerObserver(keyboard_container, &run_loop));
+  root_window()->AddChild(keyboard_container);
+
+  test_recorder.Purge();
+  test_recorder.EnableRecording();
+  ASSERT_EQ(0u, test_recorder.entries_count());
+
+  SetFocus(&client);
+  EXPECT_EQ(1u, test_recorder.sources_count());
+  EXPECT_EQ(1u, test_recorder.entries_count());
+  auto* source = test_recorder.GetSourceForUrl(url);
+  test_recorder.ExpectMetric(*source, "VirtualKeyboard.Open", "TextInputType",
+                             ui::TEXT_INPUT_TYPE_TEXT);
+
+  SetFocus(&no_client);
+  EXPECT_EQ(1u, test_recorder.sources_count());
+  EXPECT_EQ(1u, test_recorder.entries_count());
+  EXPECT_TRUE(WillHideKeyboard());
+  RunLoop(&run_loop);
+
+  // Shouldn't record ukm for a client which has invalid souce info.
+  SetFocus(&invalid_client);
+  EXPECT_EQ(1u, test_recorder.sources_count());
+  EXPECT_EQ(1u, test_recorder.entries_count());
 }
 
 }  // namespace keyboard
