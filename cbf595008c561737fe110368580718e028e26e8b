@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6128cbc_f857f6b7",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T21:05:19Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 211,
+        "startChar": 17,
+        "endLine": 211,
+        "endChar": 26
+      },
+      "revId": "cbf595008c561737fe110368580718e028e26e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e70f81_87ffc4ed",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T21:05:19Z",
+      "side": 1,
+      "message": "order of decisions?",
+      "range": {
+        "startLine": 311,
+        "startChar": 9,
+        "endLine": 311,
+        "endChar": 28
+      },
+      "revId": "cbf595008c561737fe110368580718e028e26e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c02ac6e_38323106",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T21:05:19Z",
+      "side": 1,
+      "message": "May be make this static const so it is not recreated everytime the method is called?",
+      "range": {
+        "startLine": 312,
+        "startChar": 2,
+        "endLine": 312,
+        "endChar": 27
+      },
+      "revId": "cbf595008c561737fe110368580718e028e26e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8feaf467_73f232e6",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T21:05:19Z",
+      "side": 1,
+      "message": "how can we ensure that the order remains consistent across files?",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 316,
+        "endChar": 50
+      },
+      "revId": "cbf595008c561737fe110368580718e028e26e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da023082_ed4808fb",
+        "filename": "components/previews/content/previews_io_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T21:05:19Z",
+      "side": 1,
+      "message": "s/is/was/",
+      "range": {
+        "startLine": 71,
+        "startChar": 32,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "cbf595008c561737fe110368580718e028e26e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5058dab_1233f30d",
+        "filename": "components/previews/content/previews_ui_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T21:05:19Z",
+      "side": 1,
+      "message": "s/is/was",
+      "range": {
+        "startLine": 85,
+        "startChar": 22,
+        "endLine": 85,
+        "endChar": 24
+      },
+      "revId": "cbf595008c561737fe110368580718e028e26e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1214f103_c4d43fa9",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T21:05:19Z",
+      "side": 1,
+      "message": "was",
+      "range": {
+        "startLine": 84,
+        "startChar": 66,
+        "endLine": 84,
+        "endChar": 68
+      },
+      "revId": "cbf595008c561737fe110368580718e028e26e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afaff68e_255a26f7",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T21:05:19Z",
+      "side": 1,
+      "message": "It\u0027s still a bit confusing. Right now, it is using the word \"checked\" to define \"checked\" which is leading to confusion. May be say something along the lines of: something was computed, and compared against something else, and comparison of the two values indicated whether there was a match or not.",
+      "range": {
+        "startLine": 84,
+        "startChar": 69,
+        "endLine": 84,
+        "endChar": 76
+      },
+      "revId": "cbf595008c561737fe110368580718e028e26e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "130a55f8_a765dbd4",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-28T21:05:19Z",
+      "side": 1,
+      "message": "this is confusing. I do not understand how to calculate the opposite of an enum? May be just rm this?",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 59
+      },
+      "revId": "cbf595008c561737fe110368580718e028e26e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
