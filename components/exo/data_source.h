@@ -48,6 +48,13 @@ class DataSource {
   DataSourceDelegate* const delegate_;
   base::ObserverList<DataSourceObserver> observers_;
 
+  class DataSourceReader;
+  std::unique_ptr<DataSourceReader> data_source_reader_;
+
+  // Mime types which has been offerred.
+  std::set<std::string> mime_types_;
+  bool cancelled_;
+
   DISALLOW_COPY_AND_ASSIGN(DataSource);
 };
 
