@@ -173,8 +173,9 @@ bool TimerBase::Comparator::operator()(const TimerBase* a,
 
 // static
 TimeTicks TimerBase::TimerMonotonicallyIncreasingTime() const {
-  return TimeTicks::FromSeconds(
-      TimerTaskRunner()->MonotonicallyIncreasingVirtualTimeSeconds());
+  return TimeTicks() +
+         base::TimeDelta::FromSecondsD(
+             TimerTaskRunner()->MonotonicallyIncreasingVirtualTimeSeconds());
 }
 
 }  // namespace blink

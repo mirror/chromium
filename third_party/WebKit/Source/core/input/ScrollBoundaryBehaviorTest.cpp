@@ -80,8 +80,7 @@ void ScrollBoundaryBehaviorTest::Scroll(double x, double y) {
 WebGestureEvent ScrollBoundaryBehaviorTest::ScrollBegin(double hint_x,
                                                         double hint_y) {
   WebGestureEvent event(WebInputEvent::kGestureScrollBegin,
-                        WebInputEvent::kNoModifiers,
-                        TimeTicks::Now().InSeconds());
+                        WebInputEvent::kNoModifiers, TimeTicks::Now());
   event.x = event.global_x = 20;
   event.y = event.global_y = 20;
   event.source_device = WebGestureDevice::kWebGestureDeviceTouchscreen;
@@ -95,8 +94,7 @@ WebGestureEvent ScrollBoundaryBehaviorTest::ScrollBegin(double hint_x,
 WebGestureEvent ScrollBoundaryBehaviorTest::ScrollUpdate(double delta_x,
                                                          double delta_y) {
   WebGestureEvent event(WebInputEvent::kGestureScrollUpdate,
-                        WebInputEvent::kNoModifiers,
-                        TimeTicks::Now().InSeconds());
+                        WebInputEvent::kNoModifiers, TimeTicks::Now());
   event.x = event.global_x = 20;
   event.y = event.global_y = 20;
   event.source_device = WebGestureDevice::kWebGestureDeviceTouchscreen;
@@ -108,8 +106,7 @@ WebGestureEvent ScrollBoundaryBehaviorTest::ScrollUpdate(double delta_x,
 
 WebGestureEvent ScrollBoundaryBehaviorTest::ScrollEnd() {
   WebGestureEvent event(WebInputEvent::kGestureScrollEnd,
-                        WebInputEvent::kNoModifiers,
-                        TimeTicks::Now().InSeconds());
+                        WebInputEvent::kNoModifiers, TimeTicks::Now());
   event.x = event.global_x = 20;
   event.y = event.global_y = 20;
   event.source_device = WebGestureDevice::kWebGestureDeviceTouchscreen;

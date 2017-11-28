@@ -423,7 +423,9 @@ class TimeBase {
   // may be unclear from the perspective of a caller.
   //
   // DEPRECATED - Do not use in new code. http://crbug.com/634507
-  static TimeClass FromInternalValue(int64_t us) { return TimeClass(us); }
+  static constexpr TimeClass FromInternalValue(int64_t us) {
+    return TimeClass(us);
+  }
 
  protected:
   constexpr explicit TimeBase(int64_t us) : us_(us) {}
@@ -847,7 +849,7 @@ class BASE_EXPORT TimeTicks : public time_internal::TimeBase<TimeTicks> {
 
   // Please use Now() to create a new object. This is for internal use
   // and testing.
-  explicit TimeTicks(int64_t us) : TimeBase(us) {}
+  constexpr explicit TimeTicks(int64_t us) : TimeBase(us) {}
 };
 
 // For logging use only.
