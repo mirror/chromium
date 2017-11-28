@@ -57,10 +57,12 @@ base::string16 GetNetworkName(const NetworkState& network) {
 
 }  // namespace
 
+// static
 bool InternetDetailDialog::IsShown() {
   return s_internet_detail_dialog_count > 0;
 }
 
+// static
 void InternetDetailDialog::ShowDialog(const std::string& network_id) {
   auto* network_state_handler = NetworkHandler::Get()->network_state_handler();
   const NetworkState* network;
