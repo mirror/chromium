@@ -1711,6 +1711,23 @@ TEST_P(CertVerifyProcInternalTest, IsIssuedByKnownRootIgnoresTestRoots) {
   EXPECT_FALSE(verify_result.is_issued_by_known_root);
 }
 
+TEST_P(CertVerifyProcInternalTest, VerifiesPSS) {
+  // Load root_ca_cert.pem into the test root store.
+  ScopedTestRoot test_root(
+      ImportCertFromFile(GetTestCertsDirectory(), "root_ca_cert.pem").get());
+
+  scoped_refptr<X509Certificate> cert(
+      ImportCertFromFile(GetTestCertsDirectory(), "pss_cert.pem"));
+
+  // Verification should pass.
+  int flags = 0;
+  CertVerifyResult verify_result;
+  int error = Verify(cert.get(), "127.0.0.1", flags, NULL, CertificateList(),
+                     &verify_result);
+  EXPECT_THAT(error, IsOk());
+  EXPECT_EQ(0U, verify_result.cert_status);
+}
+
 // Test that CRLSets are effective in making a certificate appear to be
 // revoked.
 TEST_P(CertVerifyProcInternalTest, CRLSet) {

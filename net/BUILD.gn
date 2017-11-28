@@ -2400,6 +2400,7 @@ bundle_data("test_support_bundle_data") {
     "data/ssl/certificates/ok_cert.pem",
     "data/ssl/certificates/ok_cert_by_intermediate.pem",
     "data/ssl/certificates/post_june_2016.pem",
+    "data/ssl/certificates/pss_cert.pem",
     "data/ssl/certificates/pre_br_validity_bad_121.pem",
     "data/ssl/certificates/pre_br_validity_bad_2020.pem",
     "data/ssl/certificates/pre_br_validity_ok.pem",
