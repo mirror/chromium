@@ -655,6 +655,7 @@ void PictureLayerImpl::UpdateRasterSource(
   const bool recording_updated =
       !raster_source_ || raster_source_->GetDisplayItemList() !=
                              raster_source->GetDisplayItemList();
+  const bool recording_has_images = HasImages();
 
   // Unregister for all images on the current raster source, if the recording
   // was updated.
@@ -670,6 +671,11 @@ void PictureLayerImpl::UpdateRasterSource(
   // TODO(khushalsagar): UMA the number of animated images in layer?
   if (recording_updated)
     RegisterAnimatedImages();
+
+  // If the image state for the layer changed, update the tracking in
+  // LayerTreeImpl.
+  if (recording_has_images != HasImages())
+    layer_tree_impl()->UpdatePictureLayerWithImages(this);
 
   // The |new_invalidation| must be cleared before updating tilings since they
   // access the invalidation through the PictureLayerTilingClient interface.
@@ -1584,15 +1590,20 @@ bool PictureLayerImpl::HasValidTilePriorities() const {
          (contributes_to_drawn_render_surface() || raster_even_if_not_drawn());
 }
 
+bool PictureLayerImpl::HasImages() const {
+  if (!raster_source_)
+    return false;
+
+  if (!raster_source_->GetDisplayItemList())
+    return false;
+
+  return !raster_source_->GetDisplayItemList()->discardable_image_map().empty();
+}
+
 void PictureLayerImpl::InvalidateRegionForImages(
     const PaintImageIdFlatSet& images_to_invalidate) {
   TRACE_EVENT0("cc", "PictureLayerImpl::InvalidateRegionForImages");
-
-  if (!raster_source_ || !raster_source_->GetDisplayItemList() ||
-      raster_source_->GetDisplayItemList()->discardable_image_map().empty()) {
-    TRACE_EVENT0("cc", "PictureLayerImpl::InvalidateRegionForImages NoImages");
-    return;
-  }
+  DCHECK(HasImages());
 
   InvalidationRegion image_invalidation;
   for (auto image_id : images_to_invalidate) {
@@ -1602,6 +1613,7 @@ void PictureLayerImpl::InvalidateRegionForImages(
     for (const auto& r : rects.container())
       image_invalidation.Union(r);
   }
+
   Region invalidation;
   image_invalidation.Swap(&invalidation);
 

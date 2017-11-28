@@ -303,10 +303,12 @@ void LayerTreeImpl::InvalidateRegionForImages(
   if (images_to_invalidate.empty())
     return;
 
-  // TODO(khushalsagar): It might be better to keep track of layers with images
-  // and only iterate through those here.
-  for (auto* picture_layer : picture_layers_)
+  for (auto picture_layer_id : picture_layers_with_images_) {
+    auto* picture_layer =
+        static_cast<PictureLayerImpl*>(LayerById(picture_layer_id));
+    DCHECK(picture_layer->HasImages());
     picture_layer->InvalidateRegionForImages(images_to_invalidate);
+  }
 }
 
 bool LayerTreeImpl::IsRootLayer(const LayerImpl* layer) const {
@@ -1650,6 +1652,15 @@ void LayerTreeImpl::UnregisterPictureLayerImpl(PictureLayerImpl* layer) {
       std::find(picture_layers_.begin(), picture_layers_.end(), layer);
   DCHECK(it != picture_layers_.end());
   picture_layers_.erase(it);
+  picture_layers_with_images_.erase(layer->id());
+}
+
+void LayerTreeImpl::UpdatePictureLayerWithImages(
+    const PictureLayerImpl* layer) {
+  if (layer->HasImages())
+    picture_layers_with_images_.insert(layer->id());
+  else
+    picture_layers_with_images_.erase(layer->id());
 }
 
 void LayerTreeImpl::RegisterScrollbar(ScrollbarLayerImplBase* scrollbar_layer) {
