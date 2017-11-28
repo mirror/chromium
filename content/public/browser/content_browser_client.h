@@ -86,7 +86,7 @@ class SSLInfo;
 class URLRequest;
 class URLRequestContext;
 class URLRequestContextGetter;
-}
+}  // namespace net
 
 namespace rappor {
 class RapporService;
@@ -329,12 +329,6 @@ class CONTENT_EXPORT ContentBrowserClient {
       SiteInstance* site_instance,
       const GURL& current_url,
       const GURL& new_url);
-
-  // Returns true if the given navigation redirect should cause a renderer
-  // process swap.
-  virtual bool ShouldSwapProcessesForRedirect(BrowserContext* browser_context,
-                                              const GURL& current_url,
-                                              const GURL& new_url);
 
   // Returns true if the passed in URL should be assigned as the site of the
   // current SiteInstance, if it does not yet have a site.

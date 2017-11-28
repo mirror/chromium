@@ -77,7 +77,7 @@ namespace content {
 namespace {
 
 ShellContentBrowserClient* g_browser_client;
-bool g_swap_processes_for_redirect = false;
+bool g_transfer_all_navigations = false;
 
 #if defined(OS_LINUX)
 breakpad::CrashHandlerHostLinux* CreateCrashHandlerHost(
@@ -133,8 +133,8 @@ ShellContentBrowserClient* ShellContentBrowserClient::Get() {
   return g_browser_client;
 }
 
-void ShellContentBrowserClient::SetSwapProcessesForRedirect(bool swap) {
-  g_swap_processes_for_redirect = swap;
+void ShellContentBrowserClient::RequireDedicatedProcessForAllSitesForTesting() {
+  g_transfer_all_navigations = true;
 }
 
 ShellContentBrowserClient::ShellContentBrowserClient()
@@ -156,6 +156,9 @@ BrowserMainParts* ShellContentBrowserClient::CreateBrowserMainParts(
 bool ShellContentBrowserClient::DoesSiteRequireDedicatedProcess(
     BrowserContext* browser_context,
     const GURL& effective_site_url) {
+  if (g_transfer_all_navigations)
+    return true;
+
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (!command_line->HasSwitch(switches::kIsolateSitesForTesting))
     return false;
@@ -339,13 +342,6 @@ SpeechRecognitionManagerDelegate*
 
 net::NetLog* ShellContentBrowserClient::GetNetLog() {
   return shell_browser_main_parts_->net_log();
-}
-
-bool ShellContentBrowserClient::ShouldSwapProcessesForRedirect(
-    BrowserContext* browser_context,
-    const GURL& current_url,
-    const GURL& new_url) {
-  return g_swap_processes_for_redirect;
 }
 
 DevToolsManagerDelegate*
