@@ -16,6 +16,24 @@
       "revId": "37792a9c3a16c0bba397a6241133dca6509a0557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740403f3_1b1980ea",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaDrmBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1159079
+      },
+      "writtenOn": "2017-11-28T20:49:25Z",
+      "side": 1,
+      "message": "MediaCrypto.release() causes the native resources associated with the java MediaCrypto object to be deleted. If the codec has been stopped or reset, it will no longer have an associated MediaCrypto object, so there will be no problem with any operations performed on it. If the codec is still in the running state and you call queueSecureInputBuffer) you will get an IllegalArgumentException.",
+      "parentUuid": "42138e96_ae0f7477",
+      "revId": "37792a9c3a16c0bba397a6241133dca6509a0557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
