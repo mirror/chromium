@@ -152,6 +152,9 @@ namespace fileSystemProvider {
     // Whether the file system supports the <code>tag</code> field for observed
     // directories.
     boolean? supportsNotifyTag;
+  
+    // Whether the volume should be memorized over login sessions.
+    boolean? persistent;
   };
 
   // Options for the $(ref:unmount) method.
