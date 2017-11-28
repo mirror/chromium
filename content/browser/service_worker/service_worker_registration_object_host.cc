@@ -4,7 +4,6 @@
 
 #include "content/browser/service_worker/service_worker_registration_object_host.h"
 
-#include "base/memory/ptr_util.h"
 #include "content/browser/service_worker/service_worker_consts.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_handle.h"
@@ -18,7 +17,7 @@ namespace content {
 
 ServiceWorkerRegistrationObjectHost::ServiceWorkerRegistrationObjectHost(
     base::WeakPtr<ServiceWorkerContextCore> context,
-    ServiceWorkerProviderHost* provider_host,
+    base::WeakPtr<ServiceWorkerProviderHost> provider_host,
     scoped_refptr<ServiceWorkerRegistration> registration)
     : provider_host_(provider_host),
       context_(context),
@@ -39,6 +38,7 @@ ServiceWorkerRegistrationObjectHost::~ServiceWorkerRegistrationObjectHost() {
 
 blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
 ServiceWorkerRegistrationObjectHost::CreateObjectInfo() {
+  DCHECK(provider_host_);
   auto info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
   info->options = blink::mojom::ServiceWorkerRegistrationOptions::New(
       registration_->pattern());
@@ -100,7 +100,7 @@ void ServiceWorkerRegistrationObjectHost::Update(UpdateCallback callback) {
 
   context_->UpdateServiceWorker(
       registration_.get(), false /* force_bypass_cache */,
-      false /* skip_script_comparison */, provider_host_,
+      false /* skip_script_comparison */, provider_host_.get(),
       base::AdaptCallbackForRepeating(
           base::BindOnce(&ServiceWorkerRegistrationObjectHost::UpdateComplete,
                          weak_ptr_factory_.GetWeakPtr(), std::move(callback))));
@@ -270,6 +270,8 @@ void ServiceWorkerRegistrationObjectHost::SetVersionAttributes(
     ServiceWorkerVersion* installing_version,
     ServiceWorkerVersion* waiting_version,
     ServiceWorkerVersion* active_version) {
+  if (!provider_host_)
+    return;
   if (!changed_mask.changed())
     return;
 
@@ -294,9 +296,11 @@ void ServiceWorkerRegistrationObjectHost::OnConnectionError() {
   // If there are still bindings, |this| is still being used.
   if (!bindings_.empty())
     return;
-  // Will destroy |this|.
-  provider_host_->RemoveServiceWorkerRegistrationObjectHost(
-      registration()->id());
+  if (provider_host_) {
+    provider_host_->RemoveServiceWorkerRegistrationObjectHost(
+        registration()->id());
+  }
+  delete this;
 }
 
 template <typename CallbackType, typename... Args>
@@ -304,7 +308,7 @@ bool ServiceWorkerRegistrationObjectHost::CanServeRegistrationObjectHostMethods(
     CallbackType* callback,
     const char* error_prefix,
     Args... args) {
-  if (!context_) {
+  if (!provider_host_ || !context_) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
         std::string(error_prefix) +
