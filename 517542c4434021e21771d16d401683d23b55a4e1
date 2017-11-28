@@ -217,6 +217,24 @@
       "revId": "517542c4434021e21771d16d401683d23b55a4e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad6f6ff_7cb4a9f7",
+        "filename": "sandbox/linux/syscall_broker/broker_process.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-28T18:50:40Z",
+      "side": 1,
+      "message": "I don\u0027t think the __old_kernel_stat struct is exported, but I\u0027m not sure we need it to be. We don\u0027t introspect any part of the struct as part of brokering, so as long as the syscall\u0027s buffer has space enough, we should be okay.",
+      "parentUuid": "d184993c_56672a40",
+      "revId": "517542c4434021e21771d16d401683d23b55a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

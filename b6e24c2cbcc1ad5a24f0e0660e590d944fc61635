@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dc634fc_8858199f",
+        "filename": "sandbox/linux/syscall_broker/broker_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-28T18:50:40Z",
+      "side": 1,
+      "message": "Update or remove?",
+      "revId": "b6e24c2cbcc1ad5a24f0e0660e590d944fc61635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9757ca30_0584f182",
+        "filename": "sandbox/linux/syscall_broker/broker_process.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-28T18:50:40Z",
+      "side": 1,
+      "message": "For fstatat and newfstatat, we should also check that the flags\u003d\u003d0, since we\u0027re not brokering those, returning EINVAL otherwise.",
+      "revId": "b6e24c2cbcc1ad5a24f0e0660e590d944fc61635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
