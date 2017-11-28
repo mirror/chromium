@@ -13,7 +13,7 @@ namespace blink {
 
 StyleRuleKeyframe::StyleRuleKeyframe(std::unique_ptr<Vector<double>> keys,
                                      CSSPropertyValueSet* properties)
-    : StyleRuleBase(kKeyframe), properties_(properties), keys_(*keys) {}
+    : properties_(properties), keys_(*keys) {}
 
 String StyleRuleKeyframe::KeyText() const {
   DCHECK(!keys_.IsEmpty());
@@ -63,9 +63,9 @@ String StyleRuleKeyframe::CssText() const {
   return result.ToString();
 }
 
-void StyleRuleKeyframe::TraceAfterDispatch(blink::Visitor* visitor) {
+void StyleRuleKeyframe::Trace(blink::Visitor* visitor) {
   visitor->Trace(properties_);
-  StyleRuleBase::TraceAfterDispatch(visitor);
+  StyleRuleBase::Trace(visitor);
 }
 
 }  // namespace blink

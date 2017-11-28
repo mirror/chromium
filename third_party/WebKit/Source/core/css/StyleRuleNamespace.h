@@ -5,6 +5,7 @@
 #ifndef StyleRuleNamespace_h
 #define StyleRuleNamespace_h
 
+#include "core/css/CSSNamespaceRule.h"
 #include "core/css/StyleRule.h"
 
 namespace blink {
@@ -17,20 +18,27 @@ class StyleRuleNamespace final : public StyleRuleBase {
     return new StyleRuleNamespace(prefix, uri);
   }
 
-  StyleRuleNamespace* Copy() const {
+  StyleRuleNamespace* Copy() const override {
     return new StyleRuleNamespace(prefix_, uri_);
   }
 
   AtomicString Prefix() const { return prefix_; }
   AtomicString Uri() const { return uri_; }
 
-  void TraceAfterDispatch(blink::Visitor* visitor) {
-    StyleRuleBase::TraceAfterDispatch(visitor);
+  bool IsNamespaceRule() const override { return true; }
+  void Trace(blink::Visitor* visitor) override {
+    StyleRuleBase::Trace(visitor);
   }
 
  private:
   StyleRuleNamespace(AtomicString prefix, AtomicString uri)
-      : StyleRuleBase(kNamespace), prefix_(prefix), uri_(uri) {}
+      : prefix_(prefix), uri_(uri) {}
+
+  CSSRule* CreateCSSOMWrapperInternal(
+      CSSStyleSheet* parent_sheet) const override {
+    return CSSNamespaceRule::Create(const_cast<StyleRuleNamespace*>(this),
+                                    parent_sheet);
+  }
 
   AtomicString prefix_;
   AtomicString uri_;
