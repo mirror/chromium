@@ -52,6 +52,24 @@
       "revId": "38c9257b930f883c3ab936b1274590c94cc08012",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1049e14_6ea500b5",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-28T06:34:48Z",
+      "side": 0,
+      "message": "Got it. So, let\u0027s follow the majority, and thanks a lot for Shimazu-san\u0027s suggestion.",
+      "parentUuid": "9536e367_d1069de2",
+      "revId": "38c9257b930f883c3ab936b1274590c94cc08012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
