@@ -667,8 +667,9 @@ QuicStreamFactory::QuicStreamFactory(
     int max_idle_time_before_crypto_handshake_seconds,
     bool connect_using_default_network,
     bool migrate_sessions_on_network_change,
-    bool migrate_sessions_on_network_change_v2,
     bool migrate_sessions_early,
+    bool migrate_sessions_on_network_change_v2,
+    bool migrate_sessions_early_v2,
     bool allow_server_migration,
     bool race_cert_verification,
     bool estimate_initial_rtt,
@@ -715,11 +716,14 @@ QuicStreamFactory::QuicStreamFactory(
       migrate_sessions_on_network_change_v2_(
           migrate_sessions_on_network_change_v2 &&
           NetworkChangeNotifier::AreNetworkHandlesSupported()),
+      migrate_sessions_early_v2_(migrate_sessions_early_v2 &&
+                                 migrate_sessions_on_network_change_v2_),
       migrate_sessions_on_network_change_(
           !migrate_sessions_on_network_change_v2_ &&
           migrate_sessions_on_network_change &&
           NetworkChangeNotifier::AreNetworkHandlesSupported()),
-      migrate_sessions_early_(migrate_sessions_early &&
+      migrate_sessions_early_(!migrate_sessions_early_v2_ &&
+                              migrate_sessions_early &&
                               migrate_sessions_on_network_change_),
       allow_server_migration_(allow_server_migration),
       race_cert_verification_(race_cert_verification),
@@ -757,6 +761,9 @@ QuicStreamFactory::QuicStreamFactory(
   // migrate_sessions_on_network_change is set to true.
   if (migrate_sessions_early)
     DCHECK(migrate_sessions_on_network_change);
+
+  if (migrate_sessions_early_v2)
+    DCHECK(migrate_sessions_on_network_change_v2);
 
   NetworkChangeNotifier::AddIPAddressObserver(this);
   if (NetworkChangeNotifier::AreNetworkHandlesSupported())
@@ -1411,7 +1418,7 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
       connection, std::move(socket), this, quic_crypto_client_stream_factory_,
       clock_, transport_security_state_, std::move(server_info), server_id,
       require_confirmation, migrate_sessions_early_,
-      migrate_sessions_on_network_change_,
+      migrate_sessions_on_network_change_, migrate_sessions_early_v2_,
       migrate_sessions_on_network_change_v2_, yield_after_packets_,
       yield_after_duration_, cert_verify_flags, config, &crypto_config_,
       network_connection_.connection_description(), dns_resolution_start_time,
