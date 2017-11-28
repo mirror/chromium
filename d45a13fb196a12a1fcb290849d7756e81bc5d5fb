@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7f600d5_03e5dcee",
+        "filename": "ui/platform_window/x11/x11_window_manager_ozone.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-28T19:57:34Z",
+      "side": 1,
+      "message": "sorry, added by accident when I was splitting the commit into smaller ones.",
+      "parentUuid": "f3a28a94_a06984e4",
+      "revId": "d45a13fb196a12a1fcb290849d7756e81bc5d5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0825e65_6ca00472",
         "filename": "ui/platform_window/x11/x11_window_manager_ozone.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T23:26:53Z",
       "side": 1,
       "message": "Is it possible for an X11 window to not have an associated X11WindowOzone? For example, for the open/save file dialogs in chrome-x11 still use the GTK dialogs, whose X11 window does not have an X11WindowOzone. Although maybe we never call this for such windows?",
+      "revId": "d45a13fb196a12a1fcb290849d7756e81bc5d5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7ecf70_ca13e503",
+        "filename": "ui/platform_window/x11/x11_window_manager_ozone.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-28T19:57:34Z",
+      "side": 1,
+      "message": "Nope, we don\u0027t have such a case at all.",
+      "parentUuid": "d0825e65_6ca00472",
       "revId": "d45a13fb196a12a1fcb290849d7756e81bc5d5fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
