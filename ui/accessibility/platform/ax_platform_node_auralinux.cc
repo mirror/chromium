@@ -1046,6 +1046,7 @@ void AXPlatformNodeAuraLinux::DataChanged() {
 
   if (!atk_object_) {
     atk_object_ = CreateAtkObject();
+    g_object_ref_sink(atk_object_);
   }
 }
 
@@ -1220,6 +1221,7 @@ AtkHyperlink* AXPlatformNodeAuraLinux::GetAtkHyperlink() {
   if (!atk_hyperlink_) {
     atk_hyperlink_ =
         ATK_HYPERLINK(g_object_new(AX_PLATFORM_ATK_HYPERLINK_TYPE, 0));
+    g_object_ref_sink(atk_hyperlink_);
     ax_platform_atk_hyperlink_set_object(
         AX_PLATFORM_ATK_HYPERLINK(atk_hyperlink_), this);
   }
