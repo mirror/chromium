@@ -22,6 +22,30 @@
       "revId": "7ab0335558f4fe85d12c08ce75c65306680d5f6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb50f20_b731845d",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-11-28T00:50:53Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "0997a039_eb4f3f87",
+      "range": {
+        "startLine": 1049,
+        "startChar": 29,
+        "endLine": 1049,
+        "endChar": 76
+      },
+      "revId": "7ab0335558f4fe85d12c08ce75c65306680d5f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
