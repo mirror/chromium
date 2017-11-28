@@ -16,6 +16,24 @@
       "revId": "0aa02c66f0ab83489bbee2d669ee3f8335fe6552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27e45d0_9d7d08d0",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-28T19:08:45Z",
+      "side": 1,
+      "message": "Yes, this could probably become !is_win \u0026\u0026 target_os !\u003d \"chromeos\", assuming that Chrome OS is still planning to enable optimizations. yunlian?",
+      "parentUuid": "0c53b122_02b169e3",
+      "revId": "0aa02c66f0ab83489bbee2d669ee3f8335fe6552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
