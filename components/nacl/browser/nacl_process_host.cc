@@ -771,8 +771,7 @@ bool NaClProcessHost::StartNaClExecution() {
     const base::File& irt_file = nacl_browser->IrtFile();
     CHECK(irt_file.IsValid());
     // Send over the IRT file handle.  We don't close our own copy!
-    params.irt_handle = IPC::GetPlatformFileForTransit(
-        irt_file.GetPlatformFile(), false);
+    params.irt_handle = IPC::DuplicatePlatformFileForTransit(irt_file);
     if (params.irt_handle == IPC::InvalidPlatformFileForTransit()) {
       return false;
     }
@@ -782,7 +781,7 @@ bool NaClProcessHost::StartNaClExecution() {
       net::SocketDescriptor server_bound_socket = GetDebugStubSocketHandle();
       if (server_bound_socket != net::kInvalidSocket) {
         params.debug_stub_server_bound_socket = IPC::GetPlatformFileForTransit(
-            server_bound_socket, true);
+            server_bound_socket, true, false /* is_async */);
       }
     }
 #endif

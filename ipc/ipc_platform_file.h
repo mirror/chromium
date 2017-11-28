@@ -16,70 +16,86 @@
 
 namespace IPC {
 
-#if defined(OS_WIN)
 class IPC_MESSAGE_SUPPORT_EXPORT PlatformFileForTransit {
  public:
+#if defined(OS_WIN)
+  using FileType = HANDLE;
+#else
+  using FileType = base::FileDescriptor;
+#endif
+
   // Creates an invalid platform file.
   PlatformFileForTransit();
 
   // Creates a platform file that takes unofficial ownership of |handle|. Note
-  // that ownership is not handled by a Scoped* class due to usage patterns of
-  // this class and its POSIX counterpart [base::FileDescriptor]. When this
-  // class is used as an input to an IPC message, the IPC subsystem will close
-  // |handle|. When this class is used as the output from an IPC message, the
-  // receiver is expected to take ownership of |handle|.
-  explicit PlatformFileForTransit(HANDLE handle);
+  // that ownership is not handled by a Scoped* class. On Windows, when this
+  // class is used as an input to an IPC message, the IPC subsystem will take
+  // ownership of |file|. On other platforms, it respects whether or not |file|
+  // owns its own fd. When this class is used as the output from an IPC message,
+  // the receiver is expected to take ownership of |file|.
+  //
+  // |is_async| must be true if the file is open for async IO.
+  PlatformFileForTransit(FileType file, bool is_async);
 
   // Comparison operators.
   bool operator==(const PlatformFileForTransit& platform_file) const;
   bool operator!=(const PlatformFileForTransit& platform_file) const;
 
-  HANDLE GetHandle() const;
+  FileType GetFile() const;
   bool IsValid() const;
+  bool IsAsync() const;
 
  private:
-  HANDLE handle_;
+  FileType file_;
+  bool is_async_;
 };
-#elif defined(OS_POSIX)
-typedef base::FileDescriptor PlatformFileForTransit;
-#endif
 
 inline PlatformFileForTransit InvalidPlatformFileForTransit() {
-#if defined(OS_WIN)
   return PlatformFileForTransit();
-#elif defined(OS_POSIX)
-  return base::FileDescriptor();
-#endif
 }
 
 inline base::PlatformFile PlatformFileForTransitToPlatformFile(
     const PlatformFileForTransit& transit) {
 #if defined(OS_WIN)
-  return transit.GetHandle();
+  return transit.GetFile();
 #elif defined(OS_POSIX)
-  return transit.fd;
+  return transit.GetFile().fd;
 #endif
 }
 
 inline base::File PlatformFileForTransitToFile(
     const PlatformFileForTransit& transit) {
+  base::PlatformFile file;
 #if defined(OS_WIN)
-  return base::File(transit.GetHandle());
+  file = transit.GetFile();
 #elif defined(OS_POSIX)
-  return base::File(transit.fd);
+  file = transit.GetFile().fd;
 #endif
+  if (!transit.IsAsync()) {
+    return base::File(file);
+  } else {
+    return base::File::CreateForAsyncHandle(file);
+  }
 }
 
 // Creates a new handle that can be passed through IPC. The result must be
 // passed to the IPC layer as part of a message, or else it will leak.
 IPC_MESSAGE_SUPPORT_EXPORT PlatformFileForTransit
-GetPlatformFileForTransit(base::PlatformFile file, bool close_source_handle);
+GetPlatformFileForTransit(base::PlatformFile file,
+                          bool close_source_handle,
+                          bool is_async);
 
 // Creates a new handle that can be passed through IPC. The result must be
 // passed to the IPC layer as part of a message, or else it will leak.
 // Note that this function takes ownership of |file|.
 IPC_MESSAGE_SUPPORT_EXPORT PlatformFileForTransit
 TakePlatformFileForTransit(base::File file);
+
+// Creates a new handle that can be passed through IPC. The result must be
+// passed to the IPC layer as part of a message, or else it will leak.
+// Note that this function does not take ownership of |file|.
+IPC_MESSAGE_SUPPORT_EXPORT PlatformFileForTransit
+DuplicatePlatformFileForTransit(const base::File& file);
 
 }  // namespace IPC
 
