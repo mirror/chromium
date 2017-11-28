@@ -48,6 +48,8 @@ class SingleDebugDaemonLogSourceTest : public ::testing::Test {
     return fetch_callback_;
   }
 
+  void RunUntilIdle() { scoped_task_environment_.RunUntilIdle(); }
+
   int num_callback_calls() const { return num_callback_calls_; }
 
   const SystemLogsResponse& response() const { return response_; }
@@ -84,7 +86,7 @@ TEST_F(SingleDebugDaemonLogSourceTest, SingleCall) {
   SingleDebugDaemonLogSource source(SupportedSource::kModetest);
 
   source.Fetch(fetch_callback());
-  base::RunLoop().RunUntilIdle();
+  RunUntilIdle();
 
   EXPECT_EQ(1, num_callback_calls());
   ASSERT_EQ(1U, response().size());
@@ -97,7 +99,7 @@ TEST_F(SingleDebugDaemonLogSourceTest, MultipleCalls) {
   SingleDebugDaemonLogSource source(SupportedSource::kLsusb);
 
   source.Fetch(fetch_callback());
-  base::RunLoop().RunUntilIdle();
+  RunUntilIdle();
 
   EXPECT_EQ(1, num_callback_calls());
   ASSERT_EQ(1U, response().size());
@@ -108,7 +110,7 @@ TEST_F(SingleDebugDaemonLogSourceTest, MultipleCalls) {
   ClearResponse();
 
   source.Fetch(fetch_callback());
-  base::RunLoop().RunUntilIdle();
+  RunUntilIdle();
 
   EXPECT_EQ(2, num_callback_calls());
   ASSERT_EQ(1U, response().size());
@@ -119,7 +121,7 @@ TEST_F(SingleDebugDaemonLogSourceTest, MultipleCalls) {
   ClearResponse();
 
   source.Fetch(fetch_callback());
-  base::RunLoop().RunUntilIdle();
+  RunUntilIdle();
 
   EXPECT_EQ(3, num_callback_calls());
   ASSERT_EQ(1U, response().size());
@@ -131,7 +133,7 @@ TEST_F(SingleDebugDaemonLogSourceTest, MultipleCalls) {
 TEST_F(SingleDebugDaemonLogSourceTest, MultipleSources) {
   SingleDebugDaemonLogSource source1(SupportedSource::kModetest);
   source1.Fetch(fetch_callback());
-  base::RunLoop().RunUntilIdle();
+  RunUntilIdle();
 
   EXPECT_EQ(1, num_callback_calls());
   ASSERT_EQ(1U, response().size());
@@ -143,7 +145,7 @@ TEST_F(SingleDebugDaemonLogSourceTest, MultipleSources) {
 
   SingleDebugDaemonLogSource source2(SupportedSource::kLsusb);
   source2.Fetch(fetch_callback());
-  base::RunLoop().RunUntilIdle();
+  RunUntilIdle();
 
   EXPECT_EQ(2, num_callback_calls());
   ASSERT_EQ(1U, response().size());
