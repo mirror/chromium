@@ -269,7 +269,7 @@ class DiskMountManagerImpl : public DiskMountManager {
     refresh_callbacks_.push_back(callback);
     if (refresh_callbacks_.size() == 1) {
       // If there's no in-flight refreshing task, start it.
-      cros_disks_client_->EnumerateAutoMountableDevices(
+      cros_disks_client_->EnumerateDevices(
           base::Bind(&DiskMountManagerImpl::RefreshAfterEnumerateDevices,
                      weak_ptr_factory_.GetWeakPtr()),
           base::Bind(&DiskMountManagerImpl::RefreshCompleted,
@@ -627,10 +627,7 @@ class DiskMountManagerImpl : public DiskMountManager {
 
   // Callback for GetDeviceProperties.
   void OnGetDeviceProperties(const DiskInfo& disk_info) {
-    // TODO(zelidrag): Find a better way to filter these out before we
-    // fetch the properties:
-    // Ignore disks coming from the device we booted the system from.
-    if (disk_info.on_boot_device())
+    if (disk_info.is_virtual())
       return;
 
     LOG(WARNING) << "Found disk " << disk_info.device_path();
@@ -651,6 +648,8 @@ class DiskMountManagerImpl : public DiskMountManager {
     auto access_mode = access_modes_.find(disk_info.device_path());
     bool write_disabled_by_policy = access_mode != access_modes_.end()
         && access_mode->second == chromeos::MOUNT_ACCESS_MODE_READ_ONLY;
+    // TODO(agawronska): Add constructor for Disk from DiskInfo. Introduce Disk
+    // builder class for tests.
     Disk* disk = new Disk(
         disk_info.device_path(), disk_info.mount_path(),
         write_disabled_by_policy, disk_info.system_path(),
@@ -773,7 +772,8 @@ class DiskMountManagerImpl : public DiskMountManager {
   void NotifyDiskStatusUpdate(DiskEvent event,
                               const Disk* disk) {
     for (auto& observer : observers_)
-      observer.OnDiskEvent(event, disk);
+      disk->IsAutoMountable() ? observer.OnAutoMountableDiskEvent(event, disk)
+                              : observer.OnBootDeviceDiskEvent(event, disk);
   }
 
   // Notifies all observers about device status update.

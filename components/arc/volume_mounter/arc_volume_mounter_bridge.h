@@ -42,7 +42,10 @@ class ArcVolumeMounterBridge
   void OnConnectionReady() override;
 
   // chromeos::disks::DiskMountManager::Observer overrides:
-  void OnDiskEvent(
+  void OnAutoMountableDiskEvent(
+      chromeos::disks::DiskMountManager::DiskEvent event,
+      const chromeos::disks::DiskMountManager::Disk* disk) override;
+  void OnBootDeviceDiskEvent(
       chromeos::disks::DiskMountManager::DiskEvent event,
       const chromeos::disks::DiskMountManager::Disk* disk) override;
   void OnDeviceEvent(chromeos::disks::DiskMountManager::DeviceEvent event,
