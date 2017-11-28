@@ -16,6 +16,29 @@
       "revId": "036dd7ccb00a48bf3950529d6ce98e0ee7ed7e0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a25030e5_b0a9bdd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-28T19:06:17Z",
+      "side": 1,
+      "message": "Nit: I would simplify this sentence to just say:\n\n\"never pass an aliased security origin.\"\n\nI feel like we usually try to avoid converting to string and then back to origin, so if we can keep the public API more strongly typed, that seems preferable.",
+      "range": {
+        "startLine": 35,
+        "startChar": 48,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "036dd7ccb00a48bf3950529d6ce98e0ee7ed7e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
