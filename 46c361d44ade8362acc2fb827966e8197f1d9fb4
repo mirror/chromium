@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2471dd10_1bafa940",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-28T07:58:31Z",
+      "side": 1,
+      "message": "nit: const cryptohome::Identification\u0026 id() const { return id_; }\n(const / naming)\nDitto for below.",
+      "revId": "46c361d44ade8362acc2fb827966e8197f1d9fb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c4983d_ff8640b0",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-28T07:58:31Z",
+      "side": 1,
+      "message": "nit: EXPECT_TRUE/FALSE for bool verification. Ditto for below.",
+      "revId": "46c361d44ade8362acc2fb827966e8197f1d9fb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
