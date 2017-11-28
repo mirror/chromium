@@ -330,22 +330,32 @@ LayoutRect InlineTextBox::LocalSelectionRect(
     top_point = LayoutPoint(r.X(), sel_top);
     width = logical_width;
     height = sel_height;
-    if (consider_current_selection && HasWrappedSelectionNewline()) {
-      if (!IsLeftToRightDirection())
-        top_point.SetX(LayoutUnit(top_point.X() - NewlineSpaceWidth()));
-      width += NewlineSpaceWidth();
-    }
   } else {
     top_point = LayoutPoint(sel_top, r.X());
     width = sel_height;
     height = logical_width;
-    // TODO(wkorman): RTL text embedded in top-to-bottom text can create
-    // bottom-to-top situations. Add tests and ensure we handle correctly.
-    if (consider_current_selection && HasWrappedSelectionNewline())
-      height += NewlineSpaceWidth();
   }
 
-  return LayoutRect(top_point, LayoutSize(width, height));
+  LayoutRect selection_rect(top_point, LayoutSize(width, height));
+  if (consider_current_selection)
+    ExtendRectToIncludeNewlineForSelection(selection_rect);
+  return selection_rect;
+}
+
+void InlineTextBox::ExtendRectToIncludeNewlineForSelection(
+    LayoutRect& rect) const {
+  if (!HasWrappedSelectionNewline())
+    return;
+
+  if (IsHorizontal()) {
+    if (!IsLeftToRightDirection())
+      rect.SetX(LayoutUnit(rect.X() - NewlineSpaceWidth()));
+    rect.SetWidth(LayoutUnit(rect.Width() + NewlineSpaceWidth()));
+  } else {
+    // TODO(wkorman): RTL text embedded in top-to-bottom text can create
+    // bottom-to-top situations. Add tests and ensure we handle correctly.
+    rect.SetHeight(LayoutUnit(rect.Height() + NewlineSpaceWidth()));
+  }
 }
 
 void InlineTextBox::DeleteLine() {
