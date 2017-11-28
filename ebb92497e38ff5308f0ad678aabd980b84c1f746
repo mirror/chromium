@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc27c8c7_318d384e",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-28T18:43:43Z",
+      "side": 0,
+      "message": "What happened to ERROR state? Is it no longer possible for a task to fail?",
+      "revId": "ebb92497e38ff5308f0ad678aabd980b84c1f746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

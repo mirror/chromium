@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5968511f_9c5df2a2",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-28T18:43:43Z",
+      "side": 1,
+      "message": "This isn\u0027t a good practice. Why is it necessary?",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
