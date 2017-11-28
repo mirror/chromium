@@ -197,6 +197,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // Tells the scheduler that all TaskQueues should use virtual time. Returns
   // the TimeTicks that virtual time offsets will be relative to.
   base::TimeTicks EnableVirtualTime();
+  bool IsVirualTimeEnabled() const;
 
   // Migrates all task queues to real time.
   void DisableVirtualTimeForTesting();

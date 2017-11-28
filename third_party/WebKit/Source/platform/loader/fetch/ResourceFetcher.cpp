@@ -1375,11 +1375,24 @@ void ResourceFetcher::HandleLoaderFinish(Resource* resource,
     }
   }
 
-  resource->VirtualTimePauser().PauseVirtualTime(false);
   Context().DispatchDidFinishLoading(
       resource->Identifier(), finish_time, encoded_data_length,
       resource->GetResponse().DecodedBodyLength());
 
+  resource->VirtualTimePauser().PauseVirtualTime(false);
+  Platform::Current()
+      ->CurrentThread()
+      ->Scheduler()
+      ->MaybeDeferTaskForVirtualTimeDeterminism(
+          BLINK_FROM_HERE,
+          WTF::Bind(&ResourceFetcher::HandleLoaderFinishCompletion,
+                    WrapPersistent(this), WrapPersistent(resource), finish_time,
+                    type));
+}
+
+void ResourceFetcher::HandleLoaderFinishCompletion(Resource* resource,
+                                                   double finish_time,
+                                                   LoaderFinishType type) {
   if (type == kDidFinishLoading)
     resource->Finish(finish_time, Context().GetLoadingTaskRunner().get());
 
@@ -1397,11 +1410,22 @@ void ResourceFetcher::HandleLoaderError(Resource* resource,
   bool is_internal_request = resource->Options().initiator_info.name ==
                              FetchInitiatorTypeNames::internal;
 
-  resource->VirtualTimePauser().PauseVirtualTime(false);
   Context().DispatchDidFail(resource->Identifier(), error,
                             resource->GetResponse().EncodedDataLength(),
                             is_internal_request);
 
+  resource->VirtualTimePauser().PauseVirtualTime(false);
+  Platform::Current()
+      ->CurrentThread()
+      ->Scheduler()
+      ->MaybeDeferTaskForVirtualTimeDeterminism(
+          BLINK_FROM_HERE,
+          WTF::Bind(&ResourceFetcher::HandleLoaderErrorCompletion,
+                    WrapPersistent(this), WrapPersistent(resource), error));
+}
+
+void ResourceFetcher::HandleLoaderErrorCompletion(Resource* resource,
+                                                  ResourceError error) {
   if (error.IsCancellation())
     RemovePreload(resource);
   resource->FinishAsError(error, Context().GetLoadingTaskRunner().get());

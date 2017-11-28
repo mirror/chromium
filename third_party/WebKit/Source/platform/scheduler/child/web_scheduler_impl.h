@@ -52,6 +52,10 @@ class PLATFORM_EXPORT WebSchedulerImpl : public WebScheduler {
       scheduler::RendererScheduler::NavigatingFrameType type) override {}
   void RemovePendingNavigation(
       scheduler::RendererScheduler::NavigatingFrameType type) override {}
+  void MaybeDeferTaskForVirtualTimeDeterminism(
+      const WebTraceLocation& from_here,
+      WTF::Closure task) override;
+  bool IsVirtualTimeEnabled() override;
 
  private:
   static void RunIdleTask(std::unique_ptr<WebThread::IdleTask> task,

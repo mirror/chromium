@@ -25,8 +25,11 @@ class PLATFORM_EXPORT RendererWebSchedulerImpl : public WebSchedulerImpl {
   std::unique_ptr<WebViewScheduler> CreateWebViewScheduler(
       InterventionReporter* intervention_reporter,
       WebViewScheduler::WebViewSchedulerDelegate* delegate) override;
-
   RendererScheduler* GetRendererSchedulerForTest() override;
+
+  void MaybeDeferTaskForVirtualTimeDeterminism(const WebTraceLocation&,
+                                               WTF::Closure task) override;
+  bool IsVirtualTimeEnabled() override;
 
  private:
   RendererSchedulerImpl* renderer_scheduler_;  // NOT OWNED
