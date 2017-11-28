@@ -25,7 +25,9 @@ class WMState;
 namespace aura {
 class Env;
 class TestScreen;
+class TestWindowManagerDelegate;
 class TestWindowTree;
+class TestWindowTreeClientDelegate;
 class TestWindowTreeClientSetup;
 class Window;
 class WindowManagerDelegate;
@@ -39,6 +41,7 @@ class FocusClient;
 }
 namespace test {
 class TestWindowParentingClient;
+class WindowTreeClientSetter;
 
 // A helper class owned by tests that does common initialization required for
 // Aura use. This class creates a root window with clients and other objects
@@ -54,6 +57,12 @@ class AuraTestHelper {
   // Makes aura target mus with a mock WindowTree (TestWindowTree). Must be
   // called before SetUp().
   void EnableMusWithTestWindowTree(
+      WindowTreeClientDelegate* window_tree_delegate,
+      WindowManagerDelegate* window_manager_delegate);
+
+  // Variant of EnableMusWithTestWindowTree() that also creates a TestScreen.
+  // This mode is similar to that of connnecting as the window manager.
+  void EnableMusWithTestWindowTreeAndScreen(
       WindowTreeClientDelegate* window_tree_delegate,
       WindowManagerDelegate* window_manager_delegate);
 
@@ -103,6 +112,9 @@ class AuraTestHelper {
     // service:ui.
     MUS_CREATE_WINDOW_TREE_CLIENT,
 
+    // Same as MUS_CREATE_WINDOW_TREE_CLIENT, but also creates a TestScreen.
+    MUS_CREATE_WINDOW_TREE_CLIENT_AND_SCREEN,
+
     // Mus without creating a WindowTree. This is used when the test wants to
     // create the WindowTreeClient itself. This mode is enabled by way of
     // EnableMusWithWindowTreeClient().
@@ -117,6 +129,12 @@ class AuraTestHelper {
   bool teardown_called_;
   ui::ContextFactory* context_factory_to_restore_ = nullptr;
   ui::ContextFactoryPrivate* context_factory_private_to_restore_ = nullptr;
+  std::unique_ptr<WindowTreeClientSetter> window_tree_client_setter_;
+  // This is only created if Env has already been created and it's Mode is MUS.
+  std::unique_ptr<TestWindowTreeClientDelegate>
+      test_window_tree_client_delegate_;
+  // This is only created if Env has already been created and it's Mode is MUS.
+  std::unique_ptr<TestWindowManagerDelegate> test_window_manager_delegate_;
   std::unique_ptr<TestWindowTreeClientSetup> window_tree_client_setup_;
   Env::Mode env_mode_to_restore_ = Env::Mode::LOCAL;
   std::unique_ptr<aura::Env> env_;
