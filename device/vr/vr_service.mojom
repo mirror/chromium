@@ -82,7 +82,7 @@ interface VRServiceClient {
 };
 
 interface VRSubmitFrameClient {
-  OnSubmitFrameTransferred();
+  OnSubmitFrameTransferred(bool success);
   OnSubmitFrameRendered();
 };
 
