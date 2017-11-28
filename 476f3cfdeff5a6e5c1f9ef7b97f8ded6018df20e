@@ -349,6 +349,24 @@
     },
     {
       "key": {
+        "uuid": "cd1352a5_0e4c252e",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-28T22:05:44Z",
+      "side": 1,
+      "message": "Sorry, I\u0027ve removed the flush in InsertClientGpuFenceCHROMIUM again, it was a major performance hit. (Drop from ~52fps to ~44fps in a synthetic WebVR example.) Let me know if you still think this is a risk beyond occasional tearing frames if intentionally misused.",
+      "parentUuid": "d520f793_3a651039",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1e294e_b870ce42",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 46
