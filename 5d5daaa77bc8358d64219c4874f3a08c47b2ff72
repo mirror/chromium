@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3144ea26_c6eca888",
+        "filename": "chromeos/dbus/fake_smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T01:47:34Z",
+      "side": 1,
+      "message": "entry_list",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 43
+      },
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171fd6ae_380600e4",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T01:47:34Z",
+      "side": 1,
+      "message": "nit: protobuf_out",
+      "range": {
+        "startLine": 31,
+        "startChar": 35,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23075d13_806fb9d9",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T01:47:34Z",
+      "side": 1,
+      "message": "nit: \"Handles D-Bus responses for methods ...\"",
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b82f60_60480419",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T01:47:34Z",
+      "side": 1,
+      "message": "HandleProtoCallback?",
+      "range": {
+        "startLine": 156,
+        "startChar": 7,
+        "endLine": 156,
+        "endChar": 21
+      },
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6bf448e_eeba4114",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T01:47:34Z",
+      "side": 1,
+      "message": "curious what others think, but maybe it\u0027d be better to pass a base::FilePath (which is just a wrapper around std::string, as i understand it) here and below. it doesn\u0027t really feel like it adds complexity to the client class, and it makes it less likely that people will pass the wrong thing.",
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d45ed9a_ea56602b",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-28T01:47:34Z",
+      "side": 1,
+      "message": "nit: add a blank line after this one",
+      "revId": "5d5daaa77bc8358d64219c4874f3a08c47b2ff72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
