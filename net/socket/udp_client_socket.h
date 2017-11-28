@@ -11,6 +11,7 @@
 #include "net/base/net_export.h"
 #include "net/base/rand_callback.h"
 #include "net/socket/datagram_client_socket.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/udp_socket.h"
 
 namespace net {
@@ -33,6 +34,7 @@ class NET_EXPORT_PRIVATE UDPClientSocket : public DatagramClientSocket {
                           const IPEndPoint& address) override;
   int ConnectUsingDefaultNetwork(const IPEndPoint& address) override;
   NetworkChangeNotifier::NetworkHandle GetBoundNetwork() const override;
+  void Tag(const SocketTag& tag) override;
   int Read(IOBuffer* buf,
            int buf_len,
            const CompletionCallback& callback) override;
@@ -53,6 +55,7 @@ class NET_EXPORT_PRIVATE UDPClientSocket : public DatagramClientSocket {
  private:
   UDPSocket socket_;
   NetworkChangeNotifier::NetworkHandle network_;
+  SocketTag tag_;
 
   DISALLOW_COPY_AND_ASSIGN(UDPClientSocket);
 };
