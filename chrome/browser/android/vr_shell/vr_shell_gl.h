@@ -125,6 +125,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
                       int viewport_offset,
                       const gfx::Size& render_size,
                       vr::RenderInfo* out_render_info);
+  void UpdateContentViewportTransforms(const gfx::Transform& head_pose);
   void DrawFrame(int16_t frame_index, base::TimeTicks current_time);
   void DrawIntoAcquiredFrame(int16_t frame_index, base::TimeTicks current_time);
   void DrawFrameSubmitWhenReady(int16_t frame_index,
@@ -133,6 +134,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void DrawFrameSubmitNow(int16_t frame_index, const gfx::Transform& head_pose);
   bool ShouldDrawWebVr();
   void DrawWebVr();
+  void DrawContentQuad();
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
   void UpdateController(const gfx::Transform& head_pose,
@@ -175,7 +177,9 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void OnAssetsLoaded(bool success, std::string environment);
 
   // samplerExternalOES texture data for WebVR content image.
+  int content_texture_id_ = 0;
   int webvr_texture_id_ = 0;
+  bool use_quad_layer_ = false;
 
   // Set from feature flag.
   bool webvr_vsync_align_;
@@ -194,6 +198,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   std::unique_ptr<gvr::BufferViewport> webvr_browser_ui_right_viewport_;
   std::unique_ptr<gvr::BufferViewport> webvr_left_viewport_;
   std::unique_ptr<gvr::BufferViewport> webvr_right_viewport_;
+  std::unique_ptr<gvr::BufferViewport> content_left_viewport_;
+  std::unique_ptr<gvr::BufferViewport> content_right_viewport_;
   std::unique_ptr<gvr::SwapChain> swap_chain_;
   gvr::Frame acquired_frame_;
   base::queue<std::pair<uint8_t, WebVrBounds>> pending_bounds_;

@@ -102,6 +102,8 @@ static constexpr int kNumSamplesPerPixelWebVr = 1;
 
 static constexpr float kRedrawSceneAngleDeltaDegrees = 1.0;
 
+static constexpr gvr::Rectf kContentUv = {0.0f, 1.0f, 0.0f, 1.0f};
+
 static gvr_keyboard_context* keyboard_context;
 
 // TODO(ymalik,crbug.com/780318): This callback is temporary until we have an
@@ -291,9 +293,9 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
 
   unsigned int textures[2];
   glGenTextures(2, textures);
-  unsigned int content_texture_id = textures[0];
+  content_texture_id_ = textures[0];
   webvr_texture_id_ = textures[1];
-  content_surface_texture_ = gl::SurfaceTexture::Create(content_texture_id);
+  content_surface_texture_ = gl::SurfaceTexture::Create(content_texture_id_);
   webvr_surface_texture_ = gl::SurfaceTexture::Create(webvr_texture_id_);
   CreateContentSurface();
   content_surface_texture_->SetFrameAvailableCallback(base::Bind(
@@ -306,7 +308,7 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   if (!reinitializing)
     InitializeRenderer();
 
-  ui_->OnGlInitialized(content_texture_id,
+  ui_->OnGlInitialized(content_texture_id_,
                        vr::UiElementRenderer::kTextureLocationExternal, true);
 
   vr::Assets::GetInstance()->LoadWhenComponentReady(base::BindOnce(
@@ -586,6 +588,23 @@ void VrShellGl::InitializeRenderer() {
                                            webvr_right_viewport_.get());
   webvr_right_viewport_->SetSourceBufferIndex(kFramePrimaryBuffer);
 
+  // Set up Content UI viewports. Content will be shown as a quad layer to get
+  // the best possible quality. These will be elements 2=left eye
+  // and 3=right eye.
+  content_left_viewport_.reset(
+      new gvr::BufferViewport(gvr_api_->CreateBufferViewport()));
+  buffer_viewport_list_->GetBufferViewport(GVR_LEFT_EYE,
+                                           content_left_viewport_.get());
+  content_left_viewport_->SetSourceBufferIndex(kFrameWebVrBrowserUiBuffer);
+  content_left_viewport_->SetSourceUv(kContentUv);
+
+  content_right_viewport_.reset(
+      new gvr::BufferViewport(gvr_api_->CreateBufferViewport()));
+  buffer_viewport_list_->GetBufferViewport(GVR_RIGHT_EYE,
+                                           content_right_viewport_.get());
+  content_right_viewport_->SetSourceBufferIndex(kFrameWebVrBrowserUiBuffer);
+  content_right_viewport_->SetSourceUv(kContentUv);
+
   browser_->GvrDelegateReady(gvr_api_->GetViewerType());
 }
 
@@ -688,10 +707,18 @@ void VrShellGl::HandleControllerAppButtonActivity(
   if (controller_->ButtonDownHappened(
           gvr::ControllerButton::GVR_CONTROLLER_BUTTON_APP)) {
     controller_start_direction_ = controller_direction;
+
+    // For comparison purposes, show and hide the quad layer when the app button
+    // is being held.
+    use_quad_layer_ = true;
+    content_frame_available_ = true;
   }
 
   if (controller_->ButtonUpHappened(
           gvr::ControllerButton::GVR_CONTROLLER_BUTTON_APP)) {
+    use_quad_layer_ = false;
+    content_frame_available_ = true;
+
     // TODO(ymalik,crbug.com/780318): We temporarily show and hide the keyboard
     // when the app button is pressed. This behavior is behind a runtime enabled
     // feature and should go away as soon as we have editable input fields.
@@ -825,6 +852,35 @@ void VrShellGl::UpdateEyeInfos(const gfx::Transform& head_pose,
   }
 }
 
+void VrShellGl::UpdateContentViewportTransforms(
+    const gfx::Transform& head_pose) {
+  vr::UiElement* content_quad =
+      ui_->scene()->GetUiElementByName(vr::kContentQuad);
+  if (!content_quad)
+    return;
+
+  gfx::Transform quad_transform = content_quad->world_space_transform();
+  // The Texture Quad renderer draws quads that extend from -0.5 to 0.5 in X and
+  // Y, while Daydream's quad layers are implicitly -1.0 to 1.0. Thus to ensure
+  // things line up we have to scale by 0.5.
+  quad_transform.Scale3d(0.5f, 0.5f, 1.0f);
+
+  for (auto eye : {GVR_LEFT_EYE, GVR_RIGHT_EYE}) {
+    gfx::Transform eye_matrix;
+    GvrMatToTransform(gvr_api_->GetEyeFromHeadMatrix(eye), &eye_matrix);
+    gfx::Transform view_matrix = eye_matrix * head_pose;
+    gfx::Transform content_matrix = view_matrix * quad_transform;
+
+    gvr::Mat4f viewport_transform;
+    TransformToGvrMat(content_matrix, &viewport_transform);
+
+    gvr::BufferViewport* viewport = (eye == GVR_LEFT_EYE)
+                                        ? content_left_viewport_.get()
+                                        : content_right_viewport_.get();
+    viewport->SetTransform(viewport_transform);
+  }
+}
+
 void VrShellGl::DrawFrame(int16_t frame_index, base::TimeTicks current_time) {
   TRACE_EVENT1("gpu", "VrShellGl::DrawFrame", "frame", frame_index);
   if (!webvr_delayed_frame_submit_.IsCancelled()) {
@@ -862,6 +918,9 @@ void VrShellGl::DrawFrame(int16_t frame_index, base::TimeTicks current_time) {
           kFramePrimaryBuffer,
           {render_info_primary_.surface_texture_size.width(),
            render_info_primary_.surface_texture_size.height()});
+      swap_chain_->ResizeBuffer(kFrameWebVrBrowserUiBuffer,
+                                {content_tex_physical_size_.width(),
+                                 content_tex_physical_size_.height()});
     }
   }
 
@@ -961,58 +1020,77 @@ void VrShellGl::DrawIntoAcquiredFrame(int16_t frame_index,
   std::vector<const vr::UiElement*> overlay_elements;
   if (ShouldDrawWebVr()) {
     overlay_elements = ui_->scene()->GetVisibleWebVrOverlayForegroundElements();
-  }
 
-  if (!overlay_elements.empty() && ShouldDrawWebVr()) {
-    // WebVR content may use an arbitray size buffer. We need to draw browser UI
-    // on a different buffer to make sure that our UI has enough resolution.
+    if (!overlay_elements.empty()) {
+      // WebVR content may use an arbitray size buffer. We need to draw browser
+      // UI on a different buffer to make sure that our UI has enough
+      // resolution.
+      acquired_frame_.BindBuffer(kFrameWebVrBrowserUiBuffer);
+
+      // Update recommended fov and uv per frame.
+      buffer_viewport_list_->GetBufferViewport(GVR_LEFT_EYE,
+                                               buffer_viewport_.get());
+      const gvr::Rectf& fov_recommended_left = buffer_viewport_->GetSourceFov();
+      buffer_viewport_list_->GetBufferViewport(GVR_RIGHT_EYE,
+                                               buffer_viewport_.get());
+      const gvr::Rectf& fov_recommended_right =
+          buffer_viewport_->GetSourceFov();
+
+      // Set render info to recommended setting. It will be used as our base for
+      // optimization.
+      vr::RenderInfo render_info_webvr_browser_ui;
+      render_info_webvr_browser_ui.head_pose = render_info_primary_.head_pose;
+      webvr_browser_ui_left_viewport_->SetSourceFov(fov_recommended_left);
+      webvr_browser_ui_right_viewport_->SetSourceFov(fov_recommended_right);
+      buffer_viewport_list_->SetBufferViewport(
+          kViewportListWebVrBrowserUiOffset + GVR_LEFT_EYE,
+          *webvr_browser_ui_left_viewport_);
+      buffer_viewport_list_->SetBufferViewport(
+          kViewportListWebVrBrowserUiOffset + GVR_RIGHT_EYE,
+          *webvr_browser_ui_right_viewport_);
+      UpdateEyeInfos(render_info_webvr_browser_ui.head_pose,
+                     kViewportListWebVrBrowserUiOffset, render_size_webvr_ui_,
+                     &render_info_webvr_browser_ui);
+      gvr::Rectf minimal_fov;
+      GetMinimalFov(render_info_webvr_browser_ui.left_eye_model.view_matrix,
+                    overlay_elements, fov_recommended_left, kZNear,
+                    &minimal_fov);
+      webvr_browser_ui_left_viewport_->SetSourceFov(minimal_fov);
+
+      GetMinimalFov(render_info_webvr_browser_ui.right_eye_model.view_matrix,
+                    overlay_elements, fov_recommended_right, kZNear,
+                    &minimal_fov);
+      webvr_browser_ui_right_viewport_->SetSourceFov(minimal_fov);
+
+      buffer_viewport_list_->SetBufferViewport(
+          kViewportListWebVrBrowserUiOffset + GVR_LEFT_EYE,
+          *webvr_browser_ui_left_viewport_);
+      buffer_viewport_list_->SetBufferViewport(
+          kViewportListWebVrBrowserUiOffset + GVR_RIGHT_EYE,
+          *webvr_browser_ui_right_viewport_);
+      UpdateEyeInfos(render_info_webvr_browser_ui.head_pose,
+                     kViewportListWebVrBrowserUiOffset, render_size_webvr_ui_,
+                     &render_info_webvr_browser_ui);
+
+      ui_->ui_renderer()->DrawWebVrOverlayForeground(
+          render_info_webvr_browser_ui);
+
+      acquired_frame_.Unbind();
+    }
+  } else if (use_quad_layer_) {
+    // Draw the main browser content to a quad layer.
     acquired_frame_.BindBuffer(kFrameWebVrBrowserUiBuffer);
 
-    // Update recommended fov and uv per frame.
-    buffer_viewport_list_->GetBufferViewport(GVR_LEFT_EYE,
-                                             buffer_viewport_.get());
-    const gvr::Rectf& fov_recommended_left = buffer_viewport_->GetSourceFov();
-    buffer_viewport_list_->GetBufferViewport(GVR_RIGHT_EYE,
-                                             buffer_viewport_.get());
-    const gvr::Rectf& fov_recommended_right = buffer_viewport_->GetSourceFov();
-
-    // Set render info to recommended setting. It will be used as our base for
-    // optimization.
-    vr::RenderInfo render_info_webvr_browser_ui;
-    render_info_webvr_browser_ui.head_pose = render_info_primary_.head_pose;
-    webvr_browser_ui_left_viewport_->SetSourceFov(fov_recommended_left);
-    webvr_browser_ui_right_viewport_->SetSourceFov(fov_recommended_right);
-    buffer_viewport_list_->SetBufferViewport(
-        kViewportListWebVrBrowserUiOffset + GVR_LEFT_EYE,
-        *webvr_browser_ui_left_viewport_);
-    buffer_viewport_list_->SetBufferViewport(
-        kViewportListWebVrBrowserUiOffset + GVR_RIGHT_EYE,
-        *webvr_browser_ui_right_viewport_);
-    UpdateEyeInfos(render_info_webvr_browser_ui.head_pose,
-                   kViewportListWebVrBrowserUiOffset, render_size_webvr_ui_,
-                   &render_info_webvr_browser_ui);
-    gvr::Rectf minimal_fov;
-    GetMinimalFov(render_info_webvr_browser_ui.left_eye_model.view_matrix,
-                  overlay_elements, fov_recommended_left, kZNear, &minimal_fov);
-    webvr_browser_ui_left_viewport_->SetSourceFov(minimal_fov);
-
-    GetMinimalFov(render_info_webvr_browser_ui.right_eye_model.view_matrix,
-                  overlay_elements, fov_recommended_right, kZNear,
-                  &minimal_fov);
-    webvr_browser_ui_right_viewport_->SetSourceFov(minimal_fov);
+    UpdateContentViewportTransforms(render_info_primary_.head_pose);
 
     buffer_viewport_list_->SetBufferViewport(
         kViewportListWebVrBrowserUiOffset + GVR_LEFT_EYE,
-        *webvr_browser_ui_left_viewport_);
+        *content_left_viewport_);
     buffer_viewport_list_->SetBufferViewport(
         kViewportListWebVrBrowserUiOffset + GVR_RIGHT_EYE,
-        *webvr_browser_ui_right_viewport_);
-    UpdateEyeInfos(render_info_webvr_browser_ui.head_pose,
-                   kViewportListWebVrBrowserUiOffset, render_size_webvr_ui_,
-                   &render_info_webvr_browser_ui);
+        *content_right_viewport_);
 
-    ui_->ui_renderer()->DrawWebVrOverlayForeground(
-        render_info_webvr_browser_ui);
+    DrawContentQuad();
 
     acquired_frame_.Unbind();
   }
@@ -1187,6 +1265,21 @@ void VrShellGl::DrawWebVr() {
   ui_->ui_element_renderer()->DrawWebVr(webvr_texture_id_);
 }
 
+void VrShellGl::DrawContentQuad() {
+  TRACE_EVENT0("gpu", "VrShellGl::DrawContentQuad");
+  // Don't need face culling, depth testing, blending, etc. Turn it all off.
+  glDisable(GL_CULL_FACE);
+  glDisable(GL_SCISSOR_TEST);
+  glDisable(GL_BLEND);
+  glDisable(GL_POLYGON_OFFSET_FILL);
+
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  glViewport(0, 0, content_tex_physical_size_.width(),
+             content_tex_physical_size_.height());
+  ui_->ui_element_renderer()->DrawWebVr(content_texture_id_);
+}
+
 void VrShellGl::OnPause() {
   paused_ = true;
   vsync_helper_.CancelVSyncRequest();
@@ -1236,6 +1329,9 @@ void VrShellGl::ContentPhysicalBoundsChanged(int width, int height) {
     content_surface_texture_->SetDefaultBufferSize(width, height);
   content_tex_physical_size_.set_width(width);
   content_tex_physical_size_.set_height(height);
+  if (!ShouldDrawWebVr()) {
+    swap_chain_->ResizeBuffer(kFrameWebVrBrowserUiBuffer, {width, height});
+  }
 }
 
 base::WeakPtr<VrShellGl> VrShellGl::GetWeakPtr() {
