@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "df44b929_2e71622e",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T00:38:47Z",
+      "side": 1,
+      "message": "It seems this method is not necessary, since we never send this object (and MediaStatus) from the browser to the extension. For objects that are only transmitted in one direction, it seems we need only one of fromNewVersion / toNewVersion?",
+      "revId": "9a8d334ddbefd972d47f6091561cf935d854f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e89dba_216d5bbd",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T00:38:47Z",
+      "side": 1,
+      "message": "this.hangouts_extra_data may be undefined. How about this.hangouts_extra_data \u0026\u0026 this.hangouts_extra_data.toNewVersion()?",
+      "revId": "9a8d334ddbefd972d47f6091561cf935d854f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec92d005_fdace504",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T00:38:47Z",
+      "side": 1,
+      "message": "Missing \"new\"",
+      "revId": "9a8d334ddbefd972d47f6091561cf935d854f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4da6c4_3be4c2b9",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T00:38:47Z",
+      "side": 1,
+      "message": "I think this should be \"mediaRouter.mojom.MediaSinkExtraData.Tags.dialMediaSink\".",
+      "revId": "9a8d334ddbefd972d47f6091561cf935d854f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb88251_535f2d20",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T00:38:47Z",
+      "side": 1,
+      "message": "Just curious, is there an advantage in invoking the method on this.ptr.getProxy() instead of this.ptr? As you can tell, the MR extension does the latter.",
+      "revId": "9a8d334ddbefd972d47f6091561cf935d854f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca29b373_19c1e633",
         "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
         "patchSetId": 5
@@ -31,6 +116,41 @@
       "side": 1,
       "message": "I agree it\u0027s unfortunate, and I think that makes sense to me. Can you add a TODO to stop doing this? And how can we go about coordinating an update to the extension to let us eventually resolve the TODO?",
       "parentUuid": "ca29b373_19c1e633",
+      "revId": "9a8d334ddbefd972d47f6091561cf935d854f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ee9bd9_107fa212",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T00:38:47Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t realize that would be a problem since it worked fine up to this point with the old bindings. I agree with your assessment. Could you add a note and a TODO(imcheng) to stop exporting internal classes? I created an internal bug to track converting our MR extension to stop overwriting \"mojo\" and to use new bindings code.",
+      "parentUuid": "a4c8f949_4777dc64",
+      "revId": "9a8d334ddbefd972d47f6091561cf935d854f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58660c5d_bf50bdef",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-28T00:38:47Z",
+      "side": 1,
+      "message": "Can this just be (issue.secondaryActions || []).map(issueActionToMojo_); ?",
       "revId": "9a8d334ddbefd972d47f6091561cf935d854f58b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
