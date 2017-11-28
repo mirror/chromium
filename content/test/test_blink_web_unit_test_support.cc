@@ -134,6 +134,10 @@ TestBlinkWebUnitTestSupport::TestBlinkWebUnitTestSupport()
   gin::V8Initializer::LoadV8Natives();
 #endif
 
+#if defined(USE_V8_CONTEXT_SNAPSHOT)
+  gin::V8Initializer::LoadV8ContextSnapshot();
+#endif
+
   scoped_refptr<base::SingleThreadTaskRunner> dummy_task_runner;
   std::unique_ptr<base::ThreadTaskRunnerHandle> dummy_task_runner_handle;
   if (!base::ThreadTaskRunnerHandle::IsSet()) {
