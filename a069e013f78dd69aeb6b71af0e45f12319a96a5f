@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "952dc712_805e8b5d",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-28T22:48:54Z",
+      "side": 1,
+      "message": "I was assuming it was safe as base::Unretained(this) is used above FetchDeviceDescription (without the DeviceDescriptionFetcher being owned by this).\nI changed these Unretained to use a WeakPtr.",
+      "parentUuid": "23439af6_312cd69b",
+      "range": {
+        "startLine": 212,
+        "startChar": 27,
+        "endLine": 212,
+        "endChar": 37
+      },
+      "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b96ce8b_da0e0761",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0af7b0_72ac5ef6",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-28T22:48:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b96ce8b_da0e0761",
+      "range": {
+        "startLine": 56,
+        "startChar": 42,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6cc85d03_b8d7142f",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-28T22:48:54Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "253aa0ec_3abed991",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4a93dbf_26c8a517",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0dda80_6aedd0cf",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-28T22:48:54Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "c4a93dbf_26c8a517",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
