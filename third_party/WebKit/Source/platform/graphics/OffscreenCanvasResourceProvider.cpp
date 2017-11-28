@@ -33,7 +33,7 @@ OffscreenCanvasResourceProvider::CreateOrRecycleFrameResource() {
     recyclable_resource_->spare_lock_ = true;
     return std::move(recyclable_resource_);
   }
-  return std::make_unique<FrameResource>();
+  return std::unique_ptr<FrameResource>(new FrameResource());
 }
 
 void OffscreenCanvasResourceProvider::TransferResource(
@@ -45,7 +45,7 @@ void OffscreenCanvasResourceProvider::TransferResource(
   // filtering effect on the quad.
   resource->filter = GL_NEAREST;
   // TODO(crbug.com/646022): making this overlay-able.
-  resource->is_overlay_candidate = false;
+  resource->is_overlay_candidate = true;
 }
 
 // TODO(xlai): Handle error cases when, by any reason,

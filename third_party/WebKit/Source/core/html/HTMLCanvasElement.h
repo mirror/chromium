@@ -48,6 +48,7 @@
 #include "platform/graphics/CanvasResourceHost.h"
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/graphics/GraphicsTypes3D.h"
+#include "platform/graphics/OffscreenCanvasFrameDispatcher.h"
 #include "platform/graphics/OffscreenCanvasPlaceholder.h"
 #include "platform/graphics/SurfaceLayerBridge.h"
 #include "platform/heap/Handle.h"
@@ -84,6 +85,7 @@ class CORE_EXPORT HTMLCanvasElement final
       public WebSurfaceLayerBridgeObserver,
       public ImageBitmapSource,
       public OffscreenCanvasPlaceholder,
+      public OffscreenCanvasFrameDispatcherClient,  // TODO: rename class
       public CanvasResourceHost {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(HTMLCanvasElement);
@@ -216,6 +218,9 @@ class CORE_EXPORT HTMLCanvasElement final
                                   Optional<IntRect> crop_rect,
                                   const ImageBitmapOptions&) override;
 
+  // OffscreenCanvasFrameDispatcherClient implementation
+  void BeginFrame() override;
+
   // OffscreenCanvasPlaceholder implementation.
   void SetPlaceholderFrame(scoped_refptr<StaticBitmapImage>,
                            WeakPtr<OffscreenCanvasFrameDispatcher>,
@@ -282,6 +287,8 @@ class CORE_EXPORT HTMLCanvasElement final
   void SetNeedsUnbufferedInputEvents(bool value) {
     needs_unbuffered_input_ = value;
   }
+
+  bool LowLatencyEnabled() const { return !!frame_dispatcher_; }
 
  protected:
   void DidMoveToNewDocument(Document& old_document) override;
@@ -350,7 +357,12 @@ class CORE_EXPORT HTMLCanvasElement final
   mutable scoped_refptr<Image> copied_image_;
 
   // Used for OffscreenCanvas that controls this HTML canvas element
+  // and for low latency mode.
   std::unique_ptr<::blink::SurfaceLayerBridge> surface_layer_bridge_;
+
+  // Used for low latency mode.
+  // TODO: rename to CanvasFrameDispatcher.
+  std::unique_ptr<OffscreenCanvasFrameDispatcher> frame_dispatcher_;
 
   bool did_notify_listeners_for_current_frame_ = false;
 
