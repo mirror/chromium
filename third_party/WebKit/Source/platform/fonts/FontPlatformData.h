@@ -38,6 +38,7 @@
 #include "platform/PlatformExport.h"
 #include "platform/fonts/FontDescription.h"
 #include "platform/fonts/FontOrientation.h"
+#include "platform/fonts/FontObjectsCount.h"
 #include "platform/fonts/SmallCapsIterator.h"
 #include "platform/graphics/paint/PaintFont.h"
 #include "platform/graphics/paint/PaintTypeface.h"
@@ -78,7 +79,7 @@ class Font;
 class HarfBuzzFace;
 class FontVariationSettings;
 
-class PLATFORM_EXPORT FontPlatformData {
+class PLATFORM_EXPORT FontPlatformData : public CountedFontObj<FontPlatformData> {
   USING_FAST_MALLOC(FontPlatformData);
 
  public:

@@ -58,7 +58,7 @@ struct GlyphData {
 
 class FontDescription;
 
-class PLATFORM_EXPORT SimpleFontData : public FontData {
+class PLATFORM_EXPORT SimpleFontData : public FontData, public CountedFontObj<SimpleFontData> {
  public:
   // Used to create platform fonts.
   static scoped_refptr<SimpleFontData> Create(
