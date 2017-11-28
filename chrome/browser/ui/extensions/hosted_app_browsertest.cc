@@ -20,6 +20,7 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
@@ -44,6 +45,11 @@
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/base/clipboard/clipboard.h"
+
+#if defined(TOOLKIT_VIEWS)
+#include "chrome/browser/ui/apps/app_info_dialog.h"
+#include "ui/views/widget/widget.h"
+#endif
 
 #if defined(OS_MACOSX)
 #include "chrome/common/chrome_features.h"
@@ -444,6 +450,25 @@ IN_PROC_BROWSER_TEST_P(HostedAppPWAOnlyTest, OpenInChrome) {
   content::RunAllPendingInMessageLoop();
   ASSERT_EQ(1u, chrome::GetBrowserCount(browser()->profile()));
 }
+
+#if defined(TOOLKIT_VIEWS)
+// Check the 'App info' menu button for Hosted App windows.
+IN_PROC_BROWSER_TEST_P(HostedAppPWAOnlyTest, AppInfo) {
+  WebApplicationInfo web_app_info;
+  web_app_info.app_url = GURL(kExampleURL);
+  const extensions::Extension* app = InstallBookmarkApp(web_app_info);
+  Browser* app_browser = LaunchAppBrowser(app);
+
+  bool dialog_created = false;
+
+  SetAppInfoDialogCreatedCallbackForTesting(base::BindOnce(
+      [](bool* dialog_created) { *dialog_created = true; }, &dialog_created));
+
+  chrome::ExecuteCommand(app_browser, IDC_APP_INFO);
+
+  EXPECT_TRUE(dialog_created);
+}
+#endif
 
 class HostedAppVsTdiTest : public HostedAppTest {
  public:
