@@ -47,6 +47,7 @@ SSLInfo& SSLInfo::operator=(const SSLInfo& info) {
   ct_cert_policy_compliance = info.ct_cert_policy_compliance;
   ct_policy_compliance_required = info.ct_policy_compliance_required;
   ocsp_result = info.ocsp_result;
+  is_fatal_cert_error = info.is_fatal_cert_error;
   return *this;
 }
 
@@ -72,6 +73,7 @@ void SSLInfo::Reset() {
       ct::CertPolicyCompliance::CERT_POLICY_COMPLIES_VIA_SCTS;
   ct_policy_compliance_required = false;
   ocsp_result = OCSPVerifyResult();
+  is_fatal_cert_error = false;
 }
 
 void SSLInfo::SetCertError(int error) {
