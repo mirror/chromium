@@ -26,19 +26,25 @@ enum class FileStatus {
 };
 
 // Look up a binary based on the required data points.
-// - Returns true if match found in whitelist.  I.E. Allow module load.
-bool IsModuleWhitelisted(const std::string& basename,
-                         DWORD image_size,
-                         DWORD time_date_stamp);
+// - |whitelist| == true to search the whitelist, false for blacklist.
+// - Returns true if match found in specified list.  I.E. Allow/Block if true.
+bool IsModuleListed(bool whitelist,
+                    const std::string& basename,
+                    DWORD image_size,
+                    DWORD time_date_stamp);
 
 // Get the full path of the whitelist file used.
-std::wstring GetFilePathUsed();
+std::wstring GetWlFilePathUsed();
+
+// Get the full path of the blacklist file used.
+std::wstring GetBlFilePathUsed();
 
 // Initialize internal whitelist from file.
 FileStatus InitFromFile();
 
-// Sets the path to the whitelist file for use by tests.
-void OverrideFilePathForTesting(const std::wstring& new_path);
+// Overrides the whitelist and blacklist paths for use by tests.
+void OverrideFilePathsForTesting(const std::wstring& new_wl_path,
+                                 const std::wstring& new_bl_path);
 
 }  // namespace whitelist
 
