@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "d6aacd98_aa24e3c6",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-28T01:27:54Z",
+      "side": 1,
+      "message": "If you wanted to tie the passwordUiEntry and password together in a \n\u0027struct\u0027 like Devlin mentioned, you can map from the private api here:\n\n    var setSavedPasswordsListener \u003d list \u003d\u003e {\n      this.savedPasswords \u003d list.map(entry \u003d\u003e {\n        return {\n          entry: entry,\n          password: \u0027\u0027,\n        };\n      });\n    };\n\nAfter this change, every item in the list will have a password field.\nThe type will be:\n/** @typedef {{\n *    entry: PasswordUiEntry,\n *    password: string\n *  }}\n */\nWhich you can name so it\u0027s easier to use.",
+      "range": {
+        "startLine": 322,
+        "startChar": 6,
+        "endLine": 322,
+        "endChar": 33
+      },
+      "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d9f0230_ea4d1db2",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 2
