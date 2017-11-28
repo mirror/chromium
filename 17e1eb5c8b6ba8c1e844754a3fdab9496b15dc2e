@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "a0132fea_efb27c01",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-28T01:29:29Z",
+      "side": 1,
+      "message": "Hi, is there any buildbot/trybots has enable_vulkan flag appended?\n\nIn below two bugs, they reports BasicVulkanTests fails or build errors when enable_vulkan.\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d682523\u0026desc\u003d2\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d683815\n\nBut this CL passes all bots. If enable_vulkan flag appended in bots, this CL should fail some bots.",
+      "revId": "17e1eb5c8b6ba8c1e844754a3fdab9496b15dc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f348deb1_7ec51713",
         "filename": "components/viz/service/display/skia_renderer.h",
         "patchSetId": 29
