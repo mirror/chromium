@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d960f4a_4cd178bf",
+        "filename": "tools/perf/benchmarks/wasm.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-28T01:52:58Z",
+      "side": 1,
+      "message": "Hmhh, I thought we removed this in the last CL after switching to use SharedWebGLStory? Can you make another Cl to remove this?",
+      "revId": "b6f72d6009047ee357251386e25600090281acbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
