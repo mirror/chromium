@@ -21,6 +21,9 @@ struct OpenURLParams;
 class WebContents;
 }  // namespace content
 
+namespace user_prefs {
+class PrefRegistrySyncable;
+}
 
 extern const base::Feature kAbusiveExperienceEnforce;
 
@@ -66,6 +69,8 @@ class SafeBrowsingTriggeredPopupBlocker
     kCount
   };
 
+  static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
+
   static std::unique_ptr<SafeBrowsingTriggeredPopupBlocker> MaybeCreate(
       content::WebContents* web_contents);
   ~SafeBrowsingTriggeredPopupBlocker() override;
@@ -90,6 +95,12 @@ class SafeBrowsingTriggeredPopupBlocker
       safe_browsing::SBThreatType threat_type,
       const safe_browsing::ThreatMetadata& threat_metadata) override;
   void OnSubresourceFilterGoingAway() override;
+
+  // Returns the value of either of the following (if set), checked in the same
+  // order:
+  // - the enterprise policy.
+  // - feature is enabled.
+  static bool IsEnabled(const content::WebContents* web_contents);
 
   // Data scoped to a single page. Will be reset at navigation commit.
   class PageData {
