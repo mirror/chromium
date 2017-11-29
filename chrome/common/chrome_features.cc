@@ -578,6 +578,12 @@ const base::Feature kEasyUnlockPromotions{"EasyUnlockPromotions",
 // Enables or disables TPM firmware update capability on Chrome OS.
 const base::Feature kTPMFirmwareUpdate{"TPMFirmwareUpdate",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Enables or disables user activity event logging for power management on
+// Chrome OS.
+const base::Feature kUserActivityEventLogging{
+    "UserActivityEventLogging", base::FEATURE_DISABLED_BY_DEFAULT};
+
 #endif  // defined(OS_CHROMEOS)
 
 }  // namespace features
