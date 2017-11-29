@@ -544,6 +544,30 @@
     },
     {
       "key": {
+        "uuid": "07d94886_d393ac59",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-11-29T21:41:19Z",
+      "side": 1,
+      "message": "Good catch. Suggested description:\n\"Description on the Languages settings screen. Appears above a list of one or more languages that the user selects, to tell Chrome which languages they prefer to use to read website content.\"",
+      "parentUuid": "b165841f_a40979b4",
+      "range": {
+        "startLine": 922,
+        "startChar": 65,
+        "endLine": 922,
+        "endChar": 126
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cac0bad_69cc9cee",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 11
@@ -572,6 +596,24 @@
       "writtenOn": "2017-11-29T05:29:31Z",
       "side": 1,
       "message": "Sure, will ping Shimi for more details",
+      "parentUuid": "2cac0bad_69cc9cee",
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94213e07_f92f65a6",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-11-29T21:41:19Z",
+      "side": 1,
+      "message": "Let\u0027s use:\ndesc\u003d\"Appears next to the \u0027offer to translate\u0027 switch that controls whether or not Chrome will display the Google Translate UI on web pages that are not in the user\u0027s preferred language(s).\n\nmessage: \"Offer to translate pages in other languages\"",
       "parentUuid": "2cac0bad_69cc9cee",
       "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
