@@ -8,10 +8,10 @@
 #include "ash/media_controller.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/shell.h"
+#include "ash/system/power/scoped_display_forced_off.h"
 #include "ash/touch/touch_devices_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
-#include "base/logging.h"
 #include "base/time/tick_clock.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "ui/events/devices/input_device_manager.h"
@@ -34,17 +34,22 @@ bool IsTabletModeActive() {
 
 PowerButtonDisplayController::PowerButtonDisplayController(
     base::TickClock* tick_clock)
-    : tick_clock_(tick_clock), weak_ptr_factory_(this) {
+    : tick_clock_(tick_clock),
+      display_forced_off_observer_(this),
+      weak_ptr_factory_(this) {
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
   ui::InputDeviceManager::GetInstance()->AddObserver(this);
   Shell::Get()->PrependPreTargetHandler(this);
 
+  display_forced_off_observer_.Add(Shell::Get()->display_forced_off_setter());
+
   disable_touchscreen_while_screen_off_ =
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kTouchscreenUsableWhileScreenOff);
 
-  GetInitialBacklightsForcedOff();
+  if (Shell::Get()->display_forced_off_setter()->backlights_forced_off_set())
+    UpdateTouchscreenStatus();
 }
 
 PowerButtonDisplayController::~PowerButtonDisplayController() {
@@ -54,30 +59,28 @@ PowerButtonDisplayController::~PowerButtonDisplayController() {
       this);
 }
 
+bool PowerButtonDisplayController::IsScreenOn() const {
+  return screen_state_ == ScreenState::ON;
+}
+
 void PowerButtonDisplayController::SetDisplayForcedOff(bool forced_off) {
-  if (backlights_forced_off_ == forced_off)
+  if ((display_forced_off_ && display_forced_off_->IsActive()) == forced_off)
     return;
 
-  // Set the display and keyboard backlights (if present) to |forced_off|.
-  chromeos::DBusThreadManager::Get()
-      ->GetPowerManagerClient()
-      ->SetBacklightsForcedOff(forced_off);
-  backlights_forced_off_ = forced_off;
-  UpdateTouchscreenStatus();
+  if (forced_off) {
+    display_forced_off_ =
+        Shell::Get()->display_forced_off_setter()->ForceDisplayOff();
+  } else {
+    display_forced_off_.reset();
+  }
 
-  if (backlights_forced_off_)
+  if (forced_off)
     Shell::Get()->media_controller()->SuspendMediaSessions();
 
   // Send an a11y alert.
   Shell::Get()->accessibility_controller()->TriggerAccessibilityAlert(
       forced_off ? mojom::AccessibilityAlert::SCREEN_OFF
                  : mojom::AccessibilityAlert::SCREEN_ON);
-}
-
-void PowerButtonDisplayController::PowerManagerRestarted() {
-  chromeos::DBusThreadManager::Get()
-      ->GetPowerManagerClient()
-      ->SetBacklightsForcedOff(backlights_forced_off_);
 }
 
 void PowerButtonDisplayController::BrightnessChanged(int level,
@@ -95,8 +98,13 @@ void PowerButtonDisplayController::BrightnessChanged(int level,
   // https://crbug.com/743291
   if ((screen_state_ == ScreenState::OFF_AUTO) !=
           (old_state == ScreenState::OFF_AUTO) &&
-      disable_touchscreen_while_screen_off_)
+      disable_touchscreen_while_screen_off_) {
     UpdateTouchscreenStatus();
+  }
+}
+
+void PowerButtonDisplayController::OnBacklightsForcedOffChanged() {
+  UpdateTouchscreenStatus();
 }
 
 void PowerButtonDisplayController::SuspendDone(
@@ -135,26 +143,13 @@ void PowerButtonDisplayController::OnStylusStateChanged(ui::StylusState state) {
     SetDisplayForcedOff(false);
 }
 
-void PowerButtonDisplayController::GetInitialBacklightsForcedOff() {
-  chromeos::DBusThreadManager::Get()
-      ->GetPowerManagerClient()
-      ->GetBacklightsForcedOff(base::BindOnce(
-          &PowerButtonDisplayController::OnGotInitialBacklightsForcedOff,
-          weak_ptr_factory_.GetWeakPtr()));
-}
-
-void PowerButtonDisplayController::OnGotInitialBacklightsForcedOff(
-    base::Optional<bool> is_forced_off) {
-  backlights_forced_off_ = is_forced_off.value_or(false);
-  UpdateTouchscreenStatus();
-}
-
 void PowerButtonDisplayController::UpdateTouchscreenStatus() {
-  const bool disable_touchscreen =
-      backlights_forced_off_ || (screen_state_ == ScreenState::OFF_AUTO &&
-                                 disable_touchscreen_while_screen_off_);
+  DisplayForcedOffSetter* forced_off_setter =
+      Shell::Get()->display_forced_off_setter();
+  const bool disable_touchscreen = forced_off_setter->backlights_forced_off() ||
+                                   (screen_state_ == ScreenState::OFF_AUTO &&
+                                    disable_touchscreen_while_screen_off_);
   Shell::Get()->touch_devices_controller()->SetTouchscreenEnabled(
       !disable_touchscreen, TouchscreenEnabledSource::GLOBAL);
 }
-
 }  // namespace ash

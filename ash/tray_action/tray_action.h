@@ -5,14 +5,24 @@
 #ifndef ASH_TRAY_ACTION_TRAY_ACTION_H_
 #define ASH_TRAY_ACTION_TRAY_ACTION_H_
 
+#include <memory>
+
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/tray_action.mojom.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/scoped_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "ui/events/devices/input_device_event_observer.h"
+
+namespace ui {
+class InputDeviceManager;
+enum class StylusState;
+}  // namespace ui
 
 namespace ash {
 
+class LockScreenNoteDisplayStateHandler;
 class TrayActionObserver;
 
 // Controller that ash can use to request a predefined set of actions to be
@@ -24,7 +34,8 @@ class TrayActionObserver;
 // Currently, only single action is supported - creating new note on the lock
 // screen - Chrome handles this action by launching an app (if any) that is
 // registered as a lock screen enabled action handler for the new note action.
-class ASH_EXPORT TrayAction : public mojom::TrayAction {
+class ASH_EXPORT TrayAction : public mojom::TrayAction,
+                              public ui::InputDeviceEventObserver {
  public:
   TrayAction();
   ~TrayAction() override;
@@ -56,6 +67,13 @@ class ASH_EXPORT TrayAction : public mojom::TrayAction {
 
   void FlushMojoForTesting();
 
+  void OnStylusStateChanged(ui::StylusState state) override;
+
+  LockScreenNoteDisplayStateHandler*
+  lock_screen_note_display_state_handler_for_test() {
+    return lock_screen_note_display_state_handler_.get();
+  }
+
  private:
   // Notifies the observers that state for the lock screen note action has been
   // updated.
@@ -65,11 +83,17 @@ class ASH_EXPORT TrayAction : public mojom::TrayAction {
   mojom::TrayActionState lock_screen_note_state_ =
       mojom::TrayActionState::kNotAvailable;
 
+  std::unique_ptr<LockScreenNoteDisplayStateHandler>
+      lock_screen_note_display_state_handler_;
+
   base::ObserverList<TrayActionObserver> observers_;
 
   mojo::Binding<mojom::TrayAction> binding_;
 
   mojom::TrayActionClientPtr tray_action_client_;
+
+  ScopedObserver<ui::InputDeviceManager, ui::InputDeviceEventObserver>
+      stylus_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(TrayAction);
 };

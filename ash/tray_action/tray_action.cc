@@ -6,14 +6,20 @@
 
 #include <utility>
 
+#include "ash/lock_screen_action/lock_screen_note_display_state_handler.h"
+#include "ash/shell.h"
 #include "ash/tray_action/tray_action_observer.h"
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/logging.h"
+#include "ui/events/devices/input_device_manager.h"
+#include "ui/events/devices/stylus_state.h"
 
 namespace ash {
 
-TrayAction::TrayAction() : binding_(this) {}
+TrayAction::TrayAction() : binding_(this), stylus_observer_(this) {
+  stylus_observer_.Add(ui::InputDeviceManager::GetInstance());
+}
 
 TrayAction::~TrayAction() = default;
 
@@ -53,6 +59,10 @@ void TrayAction::SetClient(mojom::TrayActionClientPtr tray_action_client,
     lock_screen_note_state_ = lock_screen_note_state;
   }
 
+  lock_screen_note_display_state_handler_ =
+      std::make_unique<LockScreenNoteDisplayStateHandler>(
+          Shell::Get()->display_forced_off_setter());
+
   // Setting action handler value can change effective state - notify observers
   // if that was the case.
   if (GetLockScreenNoteState() != old_lock_screen_note_state)
@@ -83,6 +93,11 @@ void TrayAction::RequestNewLockScreenNote(mojom::LockScreenNoteOrigin origin) {
 void TrayAction::CloseLockScreenNote(mojom::CloseLockScreenNoteReason reason) {
   if (tray_action_client_)
     tray_action_client_->CloseLockScreenNote(reason);
+}
+
+void TrayAction::OnStylusStateChanged(ui::StylusState state) {
+  if (state == ui::StylusState::REMOVED)
+    lock_screen_note_display_state_handler_->AttemptNoteLaunchForStylusEject();
 }
 
 void TrayAction::FlushMojoForTesting() {
