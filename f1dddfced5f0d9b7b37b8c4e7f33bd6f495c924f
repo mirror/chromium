@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f5b0b0e8_d695def7",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-29T20:47:25Z",
+      "side": 1,
+      "message": "This is a valid concern. Tibor and I talked about this approach not scaling well, but you\u0027re right at we can worry about this later, as we have more start modes to worry about.",
+      "parentUuid": "57c2a0c6_9b75b296",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72438f16_06dc56dc",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.h",
         "patchSetId": 2
@@ -166,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3d102bf3_5496c7a8",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-29T20:47:25Z",
+      "side": 1,
+      "message": "Ack. I think this will be useful when we have more defined types for the types of sessions that\u0027re started. Currently, it would just be DLA or non-DLA, which isn\u0027t super useful.",
+      "parentUuid": "72438f16_06dc56dc",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 23
+      },
+      "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9828f0f1_8ed03966",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -186,6 +234,30 @@
       "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850aca23_378c56aa",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 92587,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-29T20:47:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9828f0f1_8ed03966",
+      "range": {
+        "startLine": 92587,
+        "startChar": 17,
+        "endLine": 92587,
+        "endChar": 52
+      },
+      "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
