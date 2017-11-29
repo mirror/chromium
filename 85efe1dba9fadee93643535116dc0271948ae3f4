@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bc0e1bc_dc8ca411",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T23:13:17Z",
+      "side": 1,
+      "message": "optional - do you need/want something like\n \n // SUPERVISED_USER_AUTH_ERROR doesn\u0027t need a button.\n DCHECK_NE(sync_ui_util::SUPERVISED_USER_AUTH_ERROR, error);\n\n?  But I don\u0027t know if these should be coupled together -- just checking button_string_id is fine IMO.",
+      "revId": "85efe1dba9fadee93643535116dc0271948ae3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
