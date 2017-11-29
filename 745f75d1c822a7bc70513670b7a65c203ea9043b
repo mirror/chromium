@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeef0e2c_030e017d",
+        "filename": "third_party/WebKit/Source/core/svg/SVGElementProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-29T20:39:25Z",
+      "side": 1,
+      "message": "Offline discussion summary:\nThis is never called, because document_-\u003eAddClient(this) is not called.\nIf we call document_-\u003eAddClient(this) in Resolve(), then what should we do when SVGElementProxy::AddClient() is called after NotifyFinished()? We might want to call ResourceElementChanged() in that case, but this seems just moving the synchronous notification issue from Resource-ResourceClient layer to SVGElementProxy-SVGResourceClient layer.",
+      "revId": "745f75d1c822a7bc70513670b7a65c203ea9043b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
