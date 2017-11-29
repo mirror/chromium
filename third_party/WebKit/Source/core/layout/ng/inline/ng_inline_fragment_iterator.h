@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/ng/geometry/ng_physical_offset.h"
+#include "core/layout/ng/geometry/ng_physical_offset_rect.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Vector.h"
 
@@ -32,6 +33,9 @@ class CORE_EXPORT NGInlineFragmentIterator {
   struct Result {
     const NGPhysicalFragment* fragment;
     NGPhysicalOffset offset_to_container_box;
+
+    // Returns fragment box relative from container box.
+    NGPhysicalOffsetRect FragementRectInContainerBox() const;
   };
   using Results = Vector<Result, 1>;
 
