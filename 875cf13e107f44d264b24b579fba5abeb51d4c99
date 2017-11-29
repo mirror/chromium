@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "207920f7_f191914d",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-29T22:09:24Z",
+      "side": 0,
+      "message": "Expanding a bit on the rationale behind removing this DCHECK: since we currently only support one Instance being alive at the same time, if we ever have more than one, we want to disconnect one. Since that scenario _can_ legally happen, instead of stating it as a precondition / crash, we need to arbitrarily choose one of the two to become the canonical instance, and I chose the most recent one to be that (in case the previous instance is still alive for some reason and wedged).",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "875cf13e107f44d264b24b579fba5abeb51d4c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee5aff51_862b8c54",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-29T22:09:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we want to make these two return \"empty\" values when IsConnected() \u003d\u003d false. Currently in the span of time between SetInstance() is called and NotifyConnectionReady() is broadcast, we do return the instance, but maybe we shouldn\u0027t.\n\nI papered it over for the time being by clearing them out in OnConnectionClosed(), since we definitely do not want to return the pointers once the connection has been severed, but I think it should be safe to make these something along the lines of \"return IsConnected() ? instance_ : nullptr;\"\n\nWDYT?",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 65
+      },
+      "revId": "5be5a5524123affbfad39e32bd6b5b60953caddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
