@@ -42,6 +42,8 @@ Polymer({
    * @private
    */
   siteChanged_: function(site) {
+    // TODO(csharrison): Need to make this work for the ADS setting, which has
+    // its own specific source...
     if (site.source == settings.SiteSettingSource.DEFAULT) {
       this.defaultSetting_ = site.setting;
       this.$.permission.value = settings.ContentSetting.DEFAULT;
