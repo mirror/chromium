@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "139cb57e_7392dc84",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-29T14:11:59Z",
+      "side": 1,
+      "message": "With this doc, I would expect to be able to see behind the toolbar if I set alpha to 0. Should we document that this is not the case?",
+      "range": {
+        "startLine": 54,
+        "startChar": 43,
+        "endLine": 54,
+        "endChar": 50
+      },
+      "revId": "8c2e2b65abed13c0289eebaff21b85e44a289879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15f289d_c8c29f81",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-29T14:11:59Z",
+      "side": 1,
+      "message": "I still don\u0027t get it.\nDoes that mean that setBackgroundAlpha should only be called on incognito? should that be DCHECKed? documented?\nThis seems to be a big assumption to be let as a comment in implementation alone.",
+      "range": {
+        "startLine": 114,
+        "startChar": 54,
+        "endLine": 114,
+        "endChar": 63
+      },
+      "revId": "8c2e2b65abed13c0289eebaff21b85e44a289879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
