@@ -9,6 +9,7 @@ const SourceType = {
   POLICY: 'policy',
   SIDELOADED: 'sideloaded',
   UNPACKED: 'unpacked',
+  UNKNOWN: 'unknown',
 };
 
 cr.define('extensions', function() {
@@ -74,11 +75,19 @@ cr.define('extensions', function() {
             chrome.developerPrivate.ControllerType.POLICY) {
       return SourceType.POLICY;
     }
-    if (item.location == chrome.developerPrivate.Location.THIRD_PARTY)
-      return SourceType.SIDELOADED;
-    if (item.location == chrome.developerPrivate.Location.UNPACKED)
-      return SourceType.UNPACKED;
-    return SourceType.WEBSTORE;
+
+    switch (item.location) {
+      case chrome.developerPrivate.Location.THIRD_PARTY:
+        return SourceType.SIDELOADED;
+      case chrome.developerPrivate.Location.UNPACKED:
+        return SourceType.UNPACKED;
+      case chrome.developerPrivate.Location.UNKNOWN:
+        return SourceType.UNKNOWN;
+      case chrome.developerPrivate.Location.FROM_STORE:
+        return SourceType.WEBSTORE;
+    }
+
+    assertNotReached(item.location);
   }
 
   /**
@@ -90,6 +99,7 @@ cr.define('extensions', function() {
       case SourceType.POLICY:
         return loadTimeData.getString('itemSourcePolicy');
       case SourceType.SIDELOADED:
+      case SourceType.UNKNOWN:
         return loadTimeData.getString('itemSourceSideloaded');
       case SourceType.UNPACKED:
         return loadTimeData.getString('itemSourceUnpacked');
