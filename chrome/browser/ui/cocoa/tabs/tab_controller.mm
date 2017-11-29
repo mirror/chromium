@@ -19,6 +19,7 @@
 #import "chrome/browser/ui/cocoa/sprite_view.h"
 #import "chrome/browser/ui/cocoa/tabs/alert_indicator_button_cocoa.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_controller_target.h"
+#import "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_view.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
 #import "extensions/common/extension.h"
@@ -318,19 +319,42 @@ static const CGFloat kPinnedTabWidth = kDefaultTabHeight * 2;
 
 - (void)updateIconViewFrameWithAnimation:(BOOL)shouldAnimate {
   NSRect iconViewFrame = [iconView_ frame];
+  BOOL isRTL = cocoa_l10n_util::ShouldDoExperimentalRTLLayout();
 
   if ([self pinned]) {
     // Center the icon.
     iconViewFrame.origin.x =
-        std::floor(([TabController pinnedTabWidth] - gfx::kFaviconSize) / 2.0);
+        std::floor((kPinnedTabWidth - gfx::kFaviconSize) / 2.0);
+    // A newly-pinned tab animates itself to a narrower width. In RTL this
+    // means the left edge moves closer to the right edge. For some reason the
+    // AppKit pushes the iconview far to the left, giving it a negative X origin
+    // that renders it invisible. Pinned tabs have a fixed width, so disable
+    // horizontal autoresizing while pinned to avoid this problem.
+    if (isRTL) {
+      [iconView_ setAutoresizingMask:NSViewMinYMargin];
+
+      // The tab ends up animating to its new size before the iconview has had
+      // a chance to move to the middle of the tab, so the iconview hangs off
+      // to the right for a noticeable amount of time. Disable the iconview
+      // animation so that everything looks better.
+      shouldAnimate = NO;
+    }
   } else {
-    BOOL isRTL = cocoa_l10n_util::ShouldDoExperimentalRTLLayout();
-    iconViewFrame.origin.x =
-        isRTL ? kInitialTabWidth - kTabLeadingPadding - gfx::kFaviconSize
-              : kTabLeadingPadding;
+    if (isRTL) {
+      const CGFloat tabWidth = NSWidth([[self tabView] frame]);
+      iconViewFrame.origin.x =
+          tabWidth - kTabLeadingPadding - gfx::kFaviconSize;
+      // Set/restore the autoresizing mask (see above).
+      [iconView_ setAutoresizingMask:NSViewMinXMargin | NSViewMinYMargin];
+    } else {
+      iconViewFrame.origin.x = kTabLeadingPadding;
+    }
   }
 
   if (shouldAnimate) {
+    // Animate at the same rate as the tab changes shape.
+    [[NSAnimationContext currentContext]
+        setDuration:[TabStripController tabAnimationDuration]];
     [[iconView_ animator] setFrame:iconViewFrame];
   } else {
     [iconView_ setFrame:iconViewFrame];
