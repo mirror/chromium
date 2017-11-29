@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b4ebfce_856aafe3",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42377eb8_a616479a",
+      "range": {
+        "startLine": 153,
+        "startChar": 6,
+        "endLine": 153,
+        "endChar": 32
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "266d2426_fb7f32f6",
         "filename": "media/capture/video/video_capture_device_unittest.cc",
         "patchSetId": 31
@@ -45,6 +69,30 @@
       "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594ef30d_2569a5b6",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "The method has the wrong name.\nIt should be called CreateCallback to override its parent.\nCreateCallback is called by video_capture_device_mf_win.cc.\nIt missed virtual keyword on the parent and override on the mock.\nFixed",
+      "parentUuid": "266d2426_fb7f32f6",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "29510ea2_1c9802fc",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "I need it because of CreateCallback",
+      "parentUuid": "f1324699_3262d0f4",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 62
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b86780ff_55a0cf7e",
         "filename": "media/capture/video/video_capture_device_unittest.cc",
         "patchSetId": 31
@@ -91,6 +163,30 @@
       "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf96229_d94ef16d",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b86780ff_55a0cf7e",
+      "range": {
+        "startLine": 776,
+        "startChar": 2,
+        "endLine": 776,
+        "endChar": 3
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8bc847cb_3ddf4ab5",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "We need this because the mock |callback| must be used by MediaFoundation in order to make assertions on |callback| later.",
+      "parentUuid": "ed41f72a_dcc6a652",
+      "range": {
+        "startLine": 790,
+        "startChar": 10,
+        "endLine": 790,
+        "endChar": 36
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "975afd29_a900bf98",
         "filename": "media/capture/video/video_capture_device_unittest.cc",
         "patchSetId": 31
@@ -137,6 +257,30 @@
       "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534a1732_f7bd14d0",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "975afd29_a900bf98",
+      "range": {
+        "startLine": 813,
+        "startChar": 0,
+        "endLine": 813,
+        "endChar": 15
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "587c7927_0b15fc8b",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7a6d7b7_f3f83fe1",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 23
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e652ad20_1f7c804c",
         "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
         "patchSetId": 31
@@ -183,6 +351,30 @@
       "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbff17e9_6afea7b0",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "At the beginning of the CL, there was only MFPhotoCallback inside video_capture_device_mf_win.cc. There wasn\u0027t PhotoCallbackFactoryMFWin.\n\nThen Christian raised concerns about the fact that we were not sure that MediaFoundation was well behaving with ref counting on the callback. We decided to test the MediaFoundation behaviour.\n\nI pulled out the MFPhotoCallback and added PhotoCallbackFactoryMFWin. This way I could inject a mock MFPhotoCallback registering MediaFoundation behaviour.\n\nI don\u0027t see how you could do that with a static factory method.",
+      "parentUuid": "e652ad20_1f7c804c",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "6224a40e_5c582bb7",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80baf449_0e924787",
+      "range": {
+        "startLine": 101,
+        "startChar": 47,
+        "endLine": 101,
+        "endChar": 64
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76bf1515_25332615",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 31
@@ -229,6 +445,30 @@
       "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f060be1f_3bef7455",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76bf1515_25332615",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "13026d2c_5b0cb7dc",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8fac5aa_9b1f057c",
+      "range": {
+        "startLine": 294,
+        "startChar": 18,
+        "endLine": 294,
+        "endChar": 19
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bd2286d_384e5038",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 31
@@ -275,6 +539,30 @@
       "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6855702f_0d1957a3",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bd2286d_384e5038",
+      "range": {
+        "startLine": 332,
+        "startChar": 68,
+        "endLine": 332,
+        "endChar": 72
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "e1ef8235_85d20b09",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1870779_16049fe4",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 32
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae6c599b_45deeea3",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 31
@@ -321,6 +633,30 @@
       "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70fb0dea_54136cd8",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae6c599b_45deeea3",
+      "range": {
+        "startLine": 411,
+        "startChar": 31,
+        "endLine": 411,
+        "endChar": 35
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "4bd3d25f_7787803b",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a45e617_7f30503c",
+      "range": {
+        "startLine": 455,
+        "startChar": 0,
+        "endLine": 455,
+        "endChar": 33
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaf0ab8a_01a245f0",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 31
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "c219e4ae_b22eb7f6",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaf0ab8a_01a245f0",
+      "range": {
+        "startLine": 517,
+        "startChar": 48,
+        "endLine": 517,
+        "endChar": 65
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e5f719f_cdf13230",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 31
@@ -390,6 +774,30 @@
       "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd9ee54_a47552fd",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-29T17:10:19Z",
+      "side": 1,
+      "message": "This is multi line because of clang format.\nBut ok.",
+      "parentUuid": "3e5f719f_cdf13230",
+      "range": {
+        "startLine": 668,
+        "startChar": 28,
+        "endLine": 670,
+        "endChar": 73
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
