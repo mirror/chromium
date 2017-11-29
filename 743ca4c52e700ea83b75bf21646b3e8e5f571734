@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cc4e3dff_b025f90d",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T22:14:12Z",
+      "side": 1,
+      "message": "\u003e (off topic): BTW, is there a bit more reliable way to check?\n\nL420-428 checks the login screen is showing ARC ToS screen. Should we always use that?",
+      "parentUuid": "8914f91d_af7b15dd",
+      "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c22776b2_060473d0",
         "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
         "patchSetId": 2
