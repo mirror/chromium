@@ -65,9 +65,7 @@ void RemoteDevice::LoadBeaconSeeds(
 }
 
 std::string RemoteDevice::GetDeviceId() const {
-  std::string to_return;
-  base::Base64Encode(public_key, &to_return);
-  return to_return;
+  return RemoteDevice::GenerateDeviceId(public_key);
 }
 
 std::string RemoteDevice::GetTruncatedDeviceIdForLogs() const {
@@ -100,6 +98,21 @@ bool RemoteDevice::operator<(const RemoteDevice& other) const {
   // each RemoteDevice. However, since it can contain null bytes, use
   // GetDeviceId(), which cannot contain null bytes, to compare devices.
   return GetDeviceId().compare(other.GetDeviceId()) < 0;
+}
+
+// static
+std::string RemoteDevice::GenerateDeviceId(const std::string& public_key) {
+  std::string to_return;
+  base::Base64Encode(public_key, &to_return);
+  return to_return;
+}
+
+// static
+std::string RemoteDevice::DerivePublicKey(const std::string& device_id) {
+  std::string to_return;
+  if (base::Base64Decode(device_id, &to_return))
+    return to_return;
+  return std::string();
 }
 
 // static
