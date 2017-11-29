@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90f39736_d404e3bb",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-29T20:31:39Z",
+      "side": 1,
+      "message": "This helps a lot, but my basic question is still \"where does an instance of this interface come from?\"  I presume that would be in the NetworkService interface changes, which aren\u0027t included in this CL?",
+      "range": {
+        "startLine": 86,
+        "startChar": 10,
+        "endLine": 86,
+        "endChar": 27
+      },
+      "revId": "e0b7fcfc24b944304c2beed6dfc59b7574c2c0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
