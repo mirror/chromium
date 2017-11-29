@@ -11,6 +11,11 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/time/time.h"
+#include "chrome/browser/vr/fps_meter.h"
+
+namespace vr {
+class HeuristicVSyncAverage;
+}
 
 namespace vr_shell {
 
@@ -24,11 +29,16 @@ class AndroidVSyncHelper {
 
   void RequestVSync(const base::Callback<void(base::TimeTicks)>& callback);
   void CancelVSyncRequest();
+  // The last interval may be a multiple of the actual refresh interval, use
+  // with care.
   base::TimeDelta LastVSyncInterval() { return last_interval_; }
+  // Heuristically estimated average VSync interval.
+  base::TimeDelta AverageVSyncInterval();
 
  private:
   base::TimeTicks last_vsync_;
   base::TimeDelta last_interval_;
+  std::unique_ptr<vr::HeuristicVSyncAverage> intervals_;
   base::Callback<void(base::TimeTicks)> callback_;
 
   base::android::ScopedJavaGlobalRef<jobject> j_object_;

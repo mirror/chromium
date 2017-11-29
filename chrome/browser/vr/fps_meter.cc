@@ -84,4 +84,45 @@ int64_t SlidingAverage::GetAverageOrDefault(int64_t default_value) const {
   return values_.GetSum() / values_.GetCount();
 }
 
+SlidingTimeDeltaAverage::SlidingTimeDeltaAverage(size_t window_size)
+    : sample_microseconds_(window_size) {}
+
+SlidingTimeDeltaAverage::~SlidingTimeDeltaAverage() = default;
+
+void SlidingTimeDeltaAverage::AddSample(base::TimeDelta value) {
+  sample_microseconds_.AddSample(value.InMicroseconds());
+}
+
+base::TimeDelta SlidingTimeDeltaAverage::GetAverageOrDefault(
+    base::TimeDelta default_value) const {
+  return base::TimeDelta::FromMicroseconds(
+      sample_microseconds_.GetAverageOrDefault(default_value.InMicroseconds()));
+}
+
+HeuristicVSyncAverage::HeuristicVSyncAverage(size_t window_size)
+    : SlidingTimeDeltaAverage(window_size), min_samples_(window_size) {}
+
+HeuristicVSyncAverage::~HeuristicVSyncAverage() {}
+
+void HeuristicVSyncAverage::AddSample(base::TimeDelta interval) {
+  // Ignore implausible intervals.
+  if (interval.InMicroseconds() < 0)
+    return;
+
+  base::TimeDelta average = GetAverage();
+
+  // If we have a reasonable average, attempt to correct for multiples of the
+  // actual interval. This assumes that the reported interval isn't a drastic
+  // underestimate for many frames in a row.
+  if (!average.is_zero() && GetCount() >= min_samples_) {
+    // Adjust if the measured interval is an approximate integer multiple of
+    // the current average.
+    int multiplier = (interval.InSecondsF() / average.InSecondsF() + 0.5);
+    if (multiplier > 1)
+      interval /= multiplier;
+  }
+
+  SlidingTimeDeltaAverage::AddSample(interval);
+}
+
 }  // namespace vr

@@ -103,4 +103,56 @@ TEST(SlidingAverage, Basics) {
   EXPECT_EQ(30, meter.GetAverage());
 }
 
+TEST(SlidingTimeDeltaAverage, Basics) {
+  SlidingTimeDeltaAverage meter(5);
+
+  EXPECT_EQ(base::TimeDelta::FromSeconds(42),
+            meter.GetAverageOrDefault(base::TimeDelta::FromSeconds(42)));
+  EXPECT_EQ(base::TimeDelta(), meter.GetAverage());
+
+  meter.AddSample(base::TimeDelta::FromSeconds(100));
+  EXPECT_EQ(base::TimeDelta::FromSeconds(100),
+            meter.GetAverageOrDefault(base::TimeDelta::FromSeconds(42)));
+  EXPECT_EQ(base::TimeDelta::FromSeconds(100), meter.GetAverage());
+
+  meter.AddSample(base::TimeDelta::FromMilliseconds(200000));
+  EXPECT_EQ(base::TimeDelta::FromSeconds(150), meter.GetAverage());
+}
+
+TEST(HeuristicVSyncAverage, Basics) {
+  HeuristicVSyncAverage meter(5);
+
+  // Synthesize some samples based on a 20ms interval (50fps),
+  // starting out slow and settling on the true value with
+  // a fair amount of skipped frames.
+  meter.AddSample(base::TimeDelta::FromMilliseconds(-1466655));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(20));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(40));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(60));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(40));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(21));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(19));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(20));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(41));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(20));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(22));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(20));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(22));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(41));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(22));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(39));
+
+  EXPECT_EQ(20, meter.GetAverage().InMilliseconds());
+
+  // Add a bunch of slow frames, this shouldn't confuse it.
+  meter.AddSample(base::TimeDelta::FromMilliseconds(41));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(39));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(61));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(99));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(42));
+  meter.AddSample(base::TimeDelta::FromMilliseconds(81));
+
+  EXPECT_EQ(20, meter.GetAverage().InMilliseconds());
+}
+
 }  // namespace vr
