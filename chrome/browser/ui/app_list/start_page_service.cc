@@ -450,35 +450,6 @@ void StartPageService::OnSpeechSoundLevelChanged(int16_t level) {
 
 void StartPageService::OnSpeechRecognitionStateChanged(
     SpeechRecognitionState new_state) {
-  // Sometimes this can be called even though there are no audio input devices.
-  if (audio_status_ && !audio_status_->CanListen())
-    new_state = SPEECH_RECOGNITION_OFF;
-  if (!microphone_available_)
-    new_state = SPEECH_RECOGNITION_OFF;
-  if (!network_available_)
-    new_state = SPEECH_RECOGNITION_NETWORK_ERROR;
-
-  if (state_ == new_state)
-    return;
-
-  if ((new_state == SPEECH_RECOGNITION_READY ||
-       new_state == SPEECH_RECOGNITION_OFF ||
-       new_state == SPEECH_RECOGNITION_NETWORK_ERROR) &&
-      speech_recognizer_) {
-    speech_recognizer_->Stop();
-  }
-
-  if (!InSpeechRecognition(state_) && InSpeechRecognition(new_state)) {
-      RecordAction(UserMetricsAction("AppList_VoiceSearchStartedManually"));
-  } else if (InSpeechRecognition(state_) && !InSpeechRecognition(new_state) &&
-             !speech_result_obtained_) {
-    RecordAction(UserMetricsAction("AppList_VoiceSearchCanceled"));
-  }
-  speech_button_toggled_manually_ = false;
-  speech_result_obtained_ = false;
-  state_ = new_state;
-  for (auto& observer : observers_)
-    observer.OnSpeechRecognitionStateChanged(new_state);
 }
 
 void StartPageService::Shutdown() {
