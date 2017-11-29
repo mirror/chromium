@@ -55,6 +55,7 @@
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "components/ssl_config/ssl_config_prefs.h"
 #include "components/sync/base/pref_names.h"
+#include "components/sync/driver/sync_passphrase_policy_handler.h"
 #include "components/sync/driver/sync_policy_handler.h"
 #include "components/translate/core/browser/translate_pref_names.h"
 #include "components/variations/pref_names.h"
@@ -942,6 +943,7 @@ std::unique_ptr<ConfigurationPolicyHandlerList> BuildHandlerList(
   handlers->AddHandler(base::MakeUnique<JavascriptPolicyHandler>());
   handlers->AddHandler(base::MakeUnique<NetworkPredictionPolicyHandler>());
   handlers->AddHandler(base::MakeUnique<RestoreOnStartupPolicyHandler>());
+  handlers->AddHandler(base::MakeUnique<syncer::SyncPassphrasePolicyHandler>());
   handlers->AddHandler(base::MakeUnique<syncer::SyncPolicyHandler>());
 
   handlers->AddHandler(base::MakeUnique<StringMappingListPolicyHandler>(

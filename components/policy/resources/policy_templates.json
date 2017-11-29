@@ -146,7 +146,7 @@
 #   persistent IDs for all fields (but not for groups!) are needed. These are
 #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
 #   because doing so would break the deployed wire format!
-#   For your editing convenience: highest ID currently used: 401
+#   For your editing convenience: highest ID currently used: 402
 #   And don't forget to also update the EnterprisePolicies enum of
 #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
 #
@@ -1887,6 +1887,25 @@
 
       This policy should not be enabled when <ph name="ROAMING_PROFILE_SUPPORT_ENABLED_POLICY_NAME">RoamingProfileSupportEnabled</ph> policy is set to enabled as that feature shares the same client side functionality. The Google-hosted synchronization is disabled in this case completely.''',
       'arc_support': 'Disabling Google Sync will cause Android Backup and Restore to not function properly.',
+    },
+    {
+      'name': 'SyncCustomPassphraseRequired',
+      'type': 'main',
+      'schema': { 'type': 'boolean' },
+      'supported_on': ['chrome.*:64-', 'chrome_os:64-'],
+      'features': {
+        'dynamic_refresh': True,
+        'per_profile': True,
+      },
+      'example_value': True,
+      'id': 402,
+      'caption': '''Require custom passphrase for synchronization of data with Google''',
+      'tags': ['filtering', 'google-sharing'],
+      'desc': '''Requires users to create a custom passphrase in order to enable data synchronization in <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> using Google-hosted synchronization services and prevents users from changing this setting.
+
+      If you enable this setting, users cannot change or override this setting in <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph>.
+
+      If this policy is left not set users will be able to choose whether they use a custom passphrase or their Google credentials to sync their data.''',
     },
     {
       'name': 'RoamingProfileSupportEnabled',

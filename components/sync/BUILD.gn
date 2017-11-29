@@ -631,6 +631,8 @@ static_library("sync") {
 
   if (!is_ios) {
     sources += [
+      "driver/sync_passphrase_policy_handler.cc",
+      "driver/sync_passphrase_policy_handler.h",
       "driver/sync_policy_handler.cc",
       "driver/sync_policy_handler.h",
     ]
@@ -1003,7 +1005,10 @@ source_set("unit_tests") {
   }
 
   if (!is_ios) {
-    sources += [ "driver/sync_policy_handler_unittest.cc" ]
+    sources += [
+      "driver/sync_passphrase_policy_handler_unittest.cc",
+      "driver/sync_policy_handler_unittest.cc",
+    ]
     deps += [
       "//components/policy:generated",
       "//components/policy/core/browser",

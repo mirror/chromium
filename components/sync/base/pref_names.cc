@@ -70,6 +70,10 @@ const char kSyncWifiCredentials[] = "sync.wifi_credentials";
 // sync.
 const char kSyncManaged[] = "sync.managed";
 
+// Boolean used by enterprise configuration management to force users to create
+// their own sync passphrase instead of using their Google credentials.
+const char kSyncRequireCustomPassphrase[] = "sync.require_custom_passphrase";
+
 // Boolean to prevent sync from automatically starting up.  This is
 // used when sync is disabled by the user in sync settings.
 const char kSyncSuppressStart[] = "sync.suppress_start";
