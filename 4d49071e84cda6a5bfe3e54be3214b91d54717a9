@@ -34,6 +34,24 @@
       "revId": "4d49071e84cda6a5bfe3e54be3214b91d54717a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9114be9_da9f6eee",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-29T11:11:14Z",
+      "side": 1,
+      "message": "Makes sense.",
+      "parentUuid": "fd58035f_e93f76c0",
+      "revId": "4d49071e84cda6a5bfe3e54be3214b91d54717a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
