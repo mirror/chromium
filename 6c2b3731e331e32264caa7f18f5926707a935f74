@@ -16,6 +16,24 @@
       "revId": "6c2b3731e331e32264caa7f18f5926707a935f74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05eaaab8_a757ca52",
+        "filename": "extensions/common/manifest_handlers/requirements_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T06:10:58Z",
+      "side": 1,
+      "message": "Just saw your reply on the bug (read them in the wrong order, apparently :)); let\u0027s discuss tomorrow and circle back here.",
+      "parentUuid": "e2822a01_427ba148",
+      "revId": "6c2b3731e331e32264caa7f18f5926707a935f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
