@@ -213,6 +213,12 @@ DriveSyncHandler.prototype.requestCancel_ = function(entry) {
  */
 DriveSyncHandler.prototype.onDriveSyncError_ = function(event) {
   window.webkitResolveLocalFileSystemURL(event.fileUrl, function(entry) {
+    if (event.type === 'misc') {
+      console.log(
+          'Google Drive was unable to sync "' + entry.name +
+          'right now. Google Drive will try again later.');
+      return;
+    }
     var item = new ProgressCenterItem();
     item.id =
         DriveSyncHandler.DRIVE_SYNC_ERROR_PREFIX + (this.errorIdCounter_++);
@@ -230,9 +236,8 @@ DriveSyncHandler.prototype.onDriveSyncError_ = function(event) {
       case 'no_server_space':
         item.message = strf('SYNC_NO_SERVER_SPACE', entry.name);
         break;
-      case 'misc':
-        item.message = strf('SYNC_MISC_ERROR', entry.name);
-        break;
+      default:
+        console.warning('Unknown error type: ' + event.type) break;
     }
     this.progressCenter_.updateItem(item);
   }.bind(this));
