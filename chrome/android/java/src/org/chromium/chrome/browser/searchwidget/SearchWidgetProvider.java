@@ -212,8 +212,7 @@ public class SearchWidgetProvider extends AppWidgetProvider {
         Context context = getDelegate().getContext();
 
         // Abort if the user needs to go through First Run.
-        if (FirstRunFlowSequencer.launch(context, intent, true /* requiresBroadcast */,
-                    false /* preferLightweightFre */)) {
+        if (FirstRunFlowSequencer.launch(context, intent, true /* requiresBroadcast */)) {
             return;
         }
 
@@ -398,8 +397,8 @@ public class SearchWidgetProvider extends AppWidgetProvider {
     }
 
     static boolean shouldShowFullString() {
-        boolean freIsNotNecessary = FirstRunFlowSequencer.checkIfFirstRunIsNecessary(
-                                            getDelegate().getContext(), null, false)
+        boolean freIsNotNecessary =
+                FirstRunFlowSequencer.checkIfFirstRunIsNecessary(getDelegate().getContext(), null)
                 == null;
         boolean noNeedToCheckForSearchDialog =
                 !LocaleManager.getInstance().needToCheckForSearchEnginePromo();
