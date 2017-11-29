@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e47ad6a1_bcb0328b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-29T08:58:51Z",
+      "side": 1,
+      "message": "set the WorkletGlobalScope\u0027s referrer_policy_ to ...\n\nor\n\nset the owner Document\u0027s ReferrerPolicy to the WorkletGlobalScope\n\nor\n\nforgot to configure the WorkletGlobalScope with the owner ...",
+      "revId": "e69b5d2eff38e1f3a0fa9bc68bb2e1e9cab2abed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ef0b9e_85aaff68",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/animation-worklet-referrer.https-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-29T08:58:51Z",
+      "side": 1,
+      "message": "let\u0027s write a short comment in the CL description explaining that these failures are to be fixed.",
+      "revId": "e69b5d2eff38e1f3a0fa9bc68bb2e1e9cab2abed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494605ba_204c7da4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/referrer-checker.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-29T08:58:51Z",
+      "side": 1,
+      "message": "this would look for just \"?\" when expected_referrer is \"\". it\u0027s not something we want to do (though it happens only when L17 fails, meaning that Blink is broken). Let\u0027s run this line only when expected_referrer is not empty.",
+      "revId": "e69b5d2eff38e1f3a0fa9bc68bb2e1e9cab2abed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
