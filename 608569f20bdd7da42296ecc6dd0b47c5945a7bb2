@@ -104,6 +104,24 @@
       "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553aacc8_8ae79334",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-29T13:55:21Z",
+      "side": 1,
+      "message": "+1.\nI like IsServedFromCacheStorage().",
+      "parentUuid": "5942a0c6_77ae69a3",
+      "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
