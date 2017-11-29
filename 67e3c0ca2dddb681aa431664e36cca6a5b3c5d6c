@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba85a8e2_55b41b07",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T14:54:10Z",
+      "side": 1,
+      "message": "\"The delegate for this text field\".",
+      "range": {
+        "startLine": 99,
+        "startChar": 3,
+        "endLine": 99,
+        "endChar": 11
+      },
+      "revId": "67e3c0ca2dddb681aa431664e36cca6a5b3c5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f824271b_eff2a4b3",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T14:54:10Z",
+      "side": 1,
+      "message": "Comments for these properties would be nice, but failing that, a newline to separate them from the property that has a comment would also be good.",
+      "range": {
+        "startLine": 102,
+        "startChar": 1,
+        "endLine": 102,
+        "endChar": 9
+      },
+      "revId": "67e3c0ca2dddb681aa431664e36cca6a5b3c5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be605e6d_9b9453d7",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T14:54:10Z",
+      "side": 1,
+      "message": "nit:\n\n#pragma mark - pre-edit",
+      "range": {
+        "startLine": 339,
+        "startChar": 13,
+        "endLine": 339,
+        "endChar": 20
+      },
+      "revId": "67e3c0ca2dddb681aa431664e36cca6a5b3c5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
