@@ -290,6 +290,30 @@
       "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2978bf4b_fcbc93e1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/task_queue_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-29T19:19:00Z",
+      "side": 1,
+      "message": "Oh, yes, I may have changed it at some point as a part of policy mechanism refactoring. Do we want to change this?",
+      "parentUuid": "2f17a1fa_e4bf1916",
+      "range": {
+        "startLine": 90,
+        "startChar": 53,
+        "endLine": 90,
+        "endChar": 72
+      },
+      "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
