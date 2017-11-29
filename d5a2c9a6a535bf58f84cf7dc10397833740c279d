@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa952d43_2d8a9be7",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-29T22:31:35Z",
+      "side": 1,
+      "message": "will this also work for content:// ?\nOr is that going to be solved separately?",
+      "range": {
+        "startLine": 317,
+        "startChar": 50,
+        "endLine": 317,
+        "endChar": 59
+      },
+      "revId": "d5a2c9a6a535bf58f84cf7dc10397833740c279d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35542d3a_0c801240",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-29T22:31:35Z",
+      "side": 1,
+      "message": "This is only true for temporary pages, where we don\u0027t save the digest.\n\nFor user requested pages, you might already have lost the trust in the page and removed the digest...",
+      "revId": "d5a2c9a6a535bf58f84cf7dc10397833740c279d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48dfdb40_70e2eca3",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-29T22:31:35Z",
+      "side": 1,
+      "message": "this seems to be providing only a single page, which was OK until now, but I think we may have multiple options (some could be not trusted, while some others are trusted.)\n\nWould it make sense to get a list of items ordered by preference here?",
+      "revId": "d5a2c9a6a535bf58f84cf7dc10397833740c279d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
