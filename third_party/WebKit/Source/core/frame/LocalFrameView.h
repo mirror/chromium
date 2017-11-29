@@ -924,6 +924,14 @@ class CORE_EXPORT LocalFrameView final
       ForceThrottlingInvalidationBehavior = kDontForceThrottlingInvalidation,
       NotifyChildrenBehavior = kNotifyChildren);
 
+  bool scroll_gesture_region_is_dirty() const {
+    return scroll_gesture_region_is_dirty_;
+  }
+  void set_scroll_gesture_region_is_dirty(bool dirty) {
+    scroll_gesture_region_is_dirty_ = dirty;
+  }
+  void ScrollableAreasDidChange();
+
  protected:
   // Scroll the content via the compositor.
   bool ScrollContentsFastPath(const IntSize& scroll_delta);
@@ -1275,6 +1283,7 @@ class CORE_EXPORT LocalFrameView final
   bool forcing_layout_parent_view_;
   bool needs_intersection_observation_;
   bool needs_forced_compositing_update_;
+  bool scroll_gesture_region_is_dirty_;
 
   Member<ElementVisibilityObserver> visibility_observer_;
 
