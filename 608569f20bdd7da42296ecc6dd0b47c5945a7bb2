@@ -86,6 +86,24 @@
       "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5942a0c6_77ae69a3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-11-29T10:48:23Z",
+      "side": 1,
+      "message": "+1 to Mythri\u0027s suggestion, with something like IsServedFromNamedCache maybe",
+      "parentUuid": "34a68a7e_96721f77",
+      "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
