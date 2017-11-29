@@ -59,7 +59,7 @@ use warnings FATAL => 'all';
 use CGI qw(-oldstyle_urls);
 use Encode qw(encode decode is_utf8);
 use File::Basename qw(dirname);
-use File::Spec::Functions qw(catfile tmpdir);
+use File::Spec::Functions qw(catfile rel2abs tmpdir);
 use File::Temp qw(tempdir tempfile);
 use utf8;
 
@@ -92,7 +92,7 @@ my $system_tmpdir =
   $ENV{TMPDIR} || $ENV{TEMP} || $ENV{TMP} || $local_appdata_temp;
 $system_tmpdir =~ /\A([^\0- ]*)\z/s
   or die "untaint failed: $!";
-$system_tmpdir = $1;
+$system_tmpdir = rel2abs($1);
 if ($win32) {
   $system_tmpdir =
     Win32::GetFullPathName(Win32::GetANSIPathName($system_tmpdir));
@@ -107,6 +107,11 @@ $basename =~ /\A([^\0- ]*)\z/s
   or die "untaint failed: $!";
 $basename = $1;
 my $data = decode utf8 => $req->url_param('data');
+
+# The system temporary directory must already exist.
+if (!-d $system_tmpdir) {
+  die(encode utf8 => "Can't create $basename: missing $system_tmpdir");
+}
 
 # Create a random-named subdirectory of the system temporary directory
 # to hold the newly-created test file. The X's will be replaced with
