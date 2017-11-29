@@ -82,6 +82,7 @@
 #include "ash/system/night_light/night_light_controller.h"
 #include "ash/system/palette/palette_tray.h"
 #include "ash/system/palette/palette_welcome_bubble.h"
+#include "ash/system/power/display_forced_off_setter.h"
 #include "ash/system/power/peripheral_battery_notifier.h"
 #include "ash/system/power/power_button_controller.h"
 #include "ash/system/power/power_event_observer.h"
@@ -727,6 +728,7 @@ Shell::~Shell() {
 
   power_button_controller_.reset();
   lock_state_controller_.reset();
+  display_forced_off_setter_.reset();
 
   screen_pinning_controller_.reset();
 
@@ -1010,6 +1012,8 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   sticky_keys_controller_.reset(new StickyKeysController);
   screen_pinning_controller_ = std::make_unique<ScreenPinningController>();
+
+  display_forced_off_setter_ = std::make_unique<DisplayForcedOffSetter>();
 
   lock_state_controller_ =
       std::make_unique<LockStateController>(shutdown_controller_.get());
