@@ -121,6 +121,11 @@ BookmarkAppNavigationThrottle::WillRedirectRequest() {
 
 content::NavigationThrottle::ThrottleCheckResult
 BookmarkAppNavigationThrottle::ProcessNavigation() {
+  if (navigation_handle()->WasStartedFromContextMenu()) {
+    DVLOG(1) << "Don't intercept: Navigation started from the context menu.";
+    return content::NavigationThrottle::PROCEED;
+  }
+
   ui::PageTransition transition_type = navigation_handle()->GetPageTransition();
   if (!PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK) &&
       !PageTransitionCoreTypeIs(transition_type,
