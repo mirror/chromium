@@ -242,6 +242,30 @@
       "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b56d5f6_fdb190ed",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/task_queue_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-29T18:55:42Z",
+      "side": 1,
+      "message": "Hm, it does apply to all queues. When virtual time is enabled, all queues start using virtual time, right?",
+      "parentUuid": "1ba937e4_8915c2a6",
+      "range": {
+        "startLine": 90,
+        "startChar": 53,
+        "endLine": 90,
+        "endChar": 72
+      },
+      "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
