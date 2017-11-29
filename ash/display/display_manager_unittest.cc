@@ -2314,26 +2314,22 @@ TEST_F(DisplayManagerTest, SoftwareMirroringWithCompositingCursor) {
       display_manager()->GetDisplayInfo(
           display_manager()->GetSecondaryDisplay().id());
 
+  // Using software mirroring enables cursor compositing.
   display_manager()->SetSoftwareMirroring(true);
   display_manager()->UpdateDisplays();
 
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
-  EXPECT_FALSE(root_windows[0]->Contains(test_api.GetCursorWindow()));
-
-  Shell::Get()->SetCursorCompositingEnabled(true);
-
   EXPECT_TRUE(root_windows[0]->Contains(test_api.GetCursorWindow()));
 
   // Removes the first display and keeps the second one.
+  // Disabling software mirroring disables cursor compositing.
   display_manager()->SetSoftwareMirroring(false);
   std::vector<display::ManagedDisplayInfo> new_info_list;
   new_info_list.push_back(secondary_info);
   display_manager()->OnNativeDisplaysChanged(new_info_list);
 
   root_windows = Shell::GetAllRootWindows();
-  EXPECT_TRUE(root_windows[0]->Contains(test_api.GetCursorWindow()));
-
-  Shell::Get()->SetCursorCompositingEnabled(false);
+  EXPECT_FALSE(root_windows[0]->Contains(test_api.GetCursorWindow()));
 }
 
 TEST_F(DisplayManagerTest, MirroredLayout) {
