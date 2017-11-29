@@ -16,6 +16,24 @@
       "revId": "c889b8020b5399e6e600548b984d8703ac428ea0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b6eb43_6a95270b",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-29T21:09:25Z",
+      "side": 1,
+      "message": "I\u0027m okay to delete all the lines here. It had been present here before I refactored the code, and didn\u0027t want to delete them at that moment, given the comment describing what can be done in the future.",
+      "parentUuid": "1726da2e_faf0cf2d",
+      "revId": "c889b8020b5399e6e600548b984d8703ac428ea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
