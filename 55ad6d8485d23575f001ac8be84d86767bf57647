@@ -22,6 +22,30 @@
       "revId": "55ad6d8485d23575f001ac8be84d86767bf57647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b603b3f_c0c616e6",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-29T21:20:50Z",
+      "side": 1,
+      "message": "Doh! Massive spew here:\n\nconstructor for \u0027WebViewSurfaceSynchronizationTest_AutosizeBeforeNavigation_Test\u0027 must explicitly initialize the base class \u0027WebViewSurfaceSynchronizationTest\u0027 which does not have a default constructor\n\nIt seems like we cannot use DISALLOW_COPY_AND_ASSIGN in tests.",
+      "parentUuid": "59d6fdea_e09e13a9",
+      "range": {
+        "startLine": 917,
+        "startChar": 0,
+        "endLine": 917,
+        "endChar": 2
+      },
+      "revId": "55ad6d8485d23575f001ac8be84d86767bf57647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
