@@ -954,6 +954,8 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnSetHasReceivedUserGesture)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ScrollRectToVisibleInParentFrame,
                         OnScrollRectToVisibleInParentFrame)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_SetHasReceivedUserGestureBeforeNavigation,
+                        OnSetHasReceivedUserGestureBeforeNavigation)
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ShowPopup, OnShowPopup)
     IPC_MESSAGE_HANDLER(FrameHostMsg_HidePopup, OnHidePopup)
@@ -2785,6 +2787,10 @@ void RenderFrameHostImpl::OnScrollRectToVisibleInParentFrame(
   if (!proxy)
     return;
   proxy->ScrollRectToVisible(rect_to_scroll, properties);
+}
+
+void RenderFrameHostImpl::OnSetHasReceivedUserGestureBeforeNavigation() {
+  frame_tree_node_->OnSetHasReceivedUserGestureBeforeNavigation();
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
