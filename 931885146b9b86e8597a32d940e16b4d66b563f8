@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d659cada_f09233a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T03:23:41Z",
+      "side": 1,
+      "message": "Done, I\u0027ll copy the list to the issue after submission.",
+      "parentUuid": "74e4292f_35f6d86e",
+      "revId": "931885146b9b86e8597a32d940e16b4d66b563f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4dce43b_801b0da7",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-28T07:32:29Z",
       "side": 1,
       "message": "(could this line fit into the previous line?)",
+      "revId": "931885146b9b86e8597a32d940e16b4d66b563f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1781edef_87bf1d05",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T03:23:41Z",
+      "side": 1,
+      "message": "surprisingly no... it becomes 86 cols. We might be able to remove Delegate now, I\u0027ll add it to the TODOs. On the other hand, it might help for unit testing.",
+      "parentUuid": "c4dce43b_801b0da7",
       "revId": "931885146b9b86e8597a32d940e16b4d66b563f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
