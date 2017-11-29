@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f714afd3_c8166a47",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/autoplay-test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-29T14:55:50Z",
+      "side": 1,
+      "message": "You could also put this logic into receivedResult; it might be a bit clearer, and you could call receivedResult unconditionally, both here and in the onmessage listener on line 75 -- WDYT?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "c4fc4fa9a823dcd1ee09ac9910b50d52fda65fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3433d399_041d19eb",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-29T14:55:50Z",
+      "side": 1,
+      "message": "nit: traverse",
+      "range": {
+        "startLine": 76,
+        "startChar": 47,
+        "endLine": 76,
+        "endChar": 54
+      },
+      "revId": "c4fc4fa9a823dcd1ee09ac9910b50d52fda65fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
