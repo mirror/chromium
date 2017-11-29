@@ -39,6 +39,30 @@
       "revId": "036dd7ccb00a48bf3950529d6ce98e0ee7ed7e0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2de6abe_c3d75985",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-29T19:35:41Z",
+      "side": 1,
+      "message": "The supplied WebSecurityOrigin is constructed from a string or a URL, and thus there\u0027s no need for unnecessary back conversion.\n\nI also slightly prefer keeping WebSecurityOrigin here, and added a comment to SetIsolatedWorldSecurityOrigin().",
+      "parentUuid": "a25030e5_b0a9bdd7",
+      "range": {
+        "startLine": 35,
+        "startChar": 48,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "036dd7ccb00a48bf3950529d6ce98e0ee7ed7e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
