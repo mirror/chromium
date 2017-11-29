@@ -341,18 +341,14 @@ void Textfield::SetTextInputFlags(int flags) {
 
 void Textfield::SetText(const base::string16& new_text) {
   model_->SetText(new_text);
-  OnCaretBoundsChanged();
-  SchedulePaint();
-  NotifyAccessibilityEvent(ui::AX_EVENT_VALUE_CHANGED, true);
+  UpdateAfterChange(true /* text_changed */, true /* cursor_changed */);
 }
 
 void Textfield::AppendText(const base::string16& new_text) {
   if (new_text.empty())
     return;
   model_->Append(new_text);
-  OnCaretBoundsChanged();
-  SchedulePaint();
-  NotifyAccessibilityEvent(ui::AX_EVENT_TEXT_CHANGED, true);
+  UpdateAfterChange(true /* text_changed */, true /* cursor_changed */);
 }
 
 void Textfield::InsertOrReplaceText(const base::string16& new_text) {
