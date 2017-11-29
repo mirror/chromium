@@ -7,6 +7,9 @@
 
 #include <utility>
 
+#include "base/bind.h"
+#include "base/memory/scoped_refptr.h"
+#include "base/sequenced_task_runner.h"
 #include "chrome/common/media_router/media_sink.h"
 #include "net/base/ip_address.h"
 #include "net/base/ip_endpoint.h"
