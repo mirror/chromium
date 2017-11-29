@@ -434,6 +434,10 @@ int64_t ProxyResolvingClientSocket::GetTotalReceivedBytes() const {
   return 0;
 }
 
+void ProxyResolvingClientSocket::Tag(const net::SocketTag& tag) {
+  NOTIMPLEMENTED();
+}
+
 void ProxyResolvingClientSocket::CloseTransportSocket() {
   if (transport_.get() && transport_->socket())
     transport_->socket()->Disconnect();

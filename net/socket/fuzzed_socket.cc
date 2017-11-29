@@ -240,6 +240,8 @@ int64_t FuzzedSocket::GetTotalReceivedBytes() const {
   return total_bytes_read_;
 }
 
+void FuzzedSocket::Tag(const net::SocketTag& tag) {}
+
 Error FuzzedSocket::ConsumeReadWriteErrorFromData() {
   return data_provider_->PickValueInArray(kReadWriteErrors);
 }

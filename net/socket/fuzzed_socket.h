@@ -86,6 +86,7 @@ class FuzzedSocket : public StreamSocket {
   void ClearConnectionAttempts() override;
   void AddConnectionAttempts(const ConnectionAttempts& attempts) override;
   int64_t GetTotalReceivedBytes() const override;
+  void Tag(const net::SocketTag& tag) override;
 
  private:
   // Returns a net::Error that can be returned by a read or a write. Reads and
