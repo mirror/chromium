@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "382553aa_3015b35d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-paint-api/invalid-image-constructor-error.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-29T18:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "359740d7_a16c28f0",
+      "range": {
+        "startLine": 22,
+        "startChar": 14,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "2ded36e87412ca4511425eca4f6f153aa68051d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d09d4a_5a3fba1c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-paint-api/paint2d-image-ref.html",
         "patchSetId": 2
@@ -53,6 +77,24 @@
       "writtenOn": "2017-11-21T20:35:07Z",
       "side": 1,
       "message": "doesn\u0027t this need to be an async test if it doesn\u0027t have the correct result until the image is loaded?",
+      "revId": "2ded36e87412ca4511425eca4f6f153aa68051d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c8c867_0fae58f9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-paint-api/paint2d-image-ref.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-29T18:29:38Z",
+      "side": 1,
+      "message": "In the new patch, I made this image as background image, I think that should fix it.",
+      "parentUuid": "f1d09d4a_5a3fba1c",
       "revId": "2ded36e87412ca4511425eca4f6f153aa68051d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
