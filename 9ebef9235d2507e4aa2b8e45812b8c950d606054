@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dbebc594_21d4e3bc",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1844,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-29T05:51:14Z",
+      "side": 1,
+      "message": "Thanks! That\u0027s wrong. Added a code to update pending_requests_ too.",
+      "parentUuid": "0f0fac6f_69d2a00b",
+      "revId": "9ebef9235d2507e4aa2b8e45812b8c950d606054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d80d454_10a0a049",
         "filename": "content/browser/service_worker/service_worker_version.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "9ebef9235d2507e4aa2b8e45812b8c950d606054",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfe3bd8_3b47a92b",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-29T05:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d80d454_10a0a049",
+      "revId": "9ebef9235d2507e4aa2b8e45812b8c950d606054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
