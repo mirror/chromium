@@ -134,9 +134,16 @@ void DisplayOutputSurface::DidReceiveSwapBuffersAck(gfx::SwapResult result) {
   client_->DidReceiveSwapBuffersAck();
 }
 
+void DisplayOutputSurface::DidReceiveSwapDisplayParams(
+    const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
+  NOTREACHED();
+}
+
 void DisplayOutputSurface::OnGpuSwapBuffersCompleted(
     const gfx::SwapResponse& response,
     const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
+  if (params_mac)
+    DidReceiveSwapDisplayParams(params_mac);
   DidReceiveSwapBuffersAck(response.result);
   latency_info_cache_.OnSwapBuffersCompleted(response);
 }
