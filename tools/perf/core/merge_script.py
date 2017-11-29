@@ -42,6 +42,15 @@ def main():
   parser.add_argument('jsons_to_merge', nargs='*')
 
   args = parser.parse_args()
+  print "Print args to merge_script.py"
+  print "output json"
+  print args.output_json
+  print "build properties"
+  print args.build_properties
+  print "summary json"
+  print args.summary_json
+  print "jsons to merge"
+  print args.jsons_to_merge
   return MergeJson(args.output_json, args.jsons_to_merge)
 
 
