@@ -76,8 +76,7 @@ base::string16 OmniboxView::SanitizeTextForPaste(const base::string16& text) {
   return StripJavascriptSchemas(base::CollapseWhitespace(text, true));
 }
 
-OmniboxView::~OmniboxView() {
-}
+OmniboxView::~OmniboxView() = default;
 
 void OmniboxView::OpenMatch(const AutocompleteMatch& match,
                             WindowOpenDisposition disposition,

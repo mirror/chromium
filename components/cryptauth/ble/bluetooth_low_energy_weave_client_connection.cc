@@ -991,7 +991,8 @@ BluetoothLowEnergyWeaveClientConnection::WriteRequest::WriteRequest(
     WriteRequestType request_type)
     : WriteRequest(val, request_type, nullptr /* associated_wire_message */) {}
 
-BluetoothLowEnergyWeaveClientConnection::WriteRequest::~WriteRequest() {}
+BluetoothLowEnergyWeaveClientConnection::WriteRequest::~WriteRequest() =
+    default;
 
 }  // namespace weave
 

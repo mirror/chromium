@@ -12,7 +12,7 @@
 
 namespace arc {
 
-FakeIntentHelperInstance::FakeIntentHelperInstance() {}
+FakeIntentHelperInstance::FakeIntentHelperInstance() = default;
 
 FakeIntentHelperInstance::Broadcast::Broadcast(const std::string& action,
                                                const std::string& package_name,
@@ -20,13 +20,10 @@ FakeIntentHelperInstance::Broadcast::Broadcast(const std::string& action,
                                                const std::string& extras)
     : action(action), package_name(package_name), cls(cls), extras(extras) {}
 
-FakeIntentHelperInstance::Broadcast::Broadcast(const Broadcast& broadcast)
-    : action(broadcast.action),
-      package_name(broadcast.package_name),
-      cls(broadcast.cls),
-      extras(broadcast.extras) {}
+FakeIntentHelperInstance::Broadcast::Broadcast(const Broadcast& broadcast) =
+    default;
 
-FakeIntentHelperInstance::Broadcast::~Broadcast() {}
+FakeIntentHelperInstance::Broadcast::~Broadcast() = default;
 
 FakeIntentHelperInstance::HandledIntent::HandledIntent(
     mojom::IntentInfoPtr intent,
@@ -48,7 +45,7 @@ void FakeIntentHelperInstance::SetIntentHandlers(
   intent_handlers_[action] = std::move(handlers);
 }
 
-FakeIntentHelperInstance::~FakeIntentHelperInstance() {}
+FakeIntentHelperInstance::~FakeIntentHelperInstance() = default;
 
 void FakeIntentHelperInstance::AddPreferredPackage(
     const std::string& package_name) {}

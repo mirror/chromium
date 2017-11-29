@@ -74,7 +74,7 @@ PrefValueStore::PrefValueStore(PrefStore* managed_prefs,
   }
 }
 
-PrefValueStore::~PrefValueStore() {}
+PrefValueStore::~PrefValueStore() = default;
 
 PrefValueStore* PrefValueStore::CloneAndSpecialize(
     PrefStore* managed_prefs,

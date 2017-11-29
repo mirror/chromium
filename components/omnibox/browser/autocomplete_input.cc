@@ -151,8 +151,7 @@ void AutocompleteInput::Init(
 
 AutocompleteInput::AutocompleteInput(const AutocompleteInput& other) = default;
 
-AutocompleteInput::~AutocompleteInput() {
-}
+AutocompleteInput::~AutocompleteInput() = default;
 
 // static
 std::string AutocompleteInput::TypeToString(metrics::OmniboxInputType type) {

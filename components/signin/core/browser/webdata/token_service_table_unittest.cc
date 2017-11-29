@@ -16,8 +16,8 @@ using base::Time;
 
 class TokenServiceTableTest : public testing::Test {
  public:
-  TokenServiceTableTest() {}
-  ~TokenServiceTableTest() override {}
+  TokenServiceTableTest() = default;
+  ~TokenServiceTableTest() override = default;
 
  protected:
   void SetUp() override {

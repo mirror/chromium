@@ -100,7 +100,7 @@ DomainReliabilityScheduler::DomainReliabilityScheduler(
   }
 }
 
-DomainReliabilityScheduler::~DomainReliabilityScheduler() {}
+DomainReliabilityScheduler::~DomainReliabilityScheduler() = default;
 
 void DomainReliabilityScheduler::OnBeaconAdded() {
   if (!upload_pending_)

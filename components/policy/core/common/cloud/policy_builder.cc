@@ -185,7 +185,7 @@ PolicyBuilder::PolicyBuilder() {
   policy_data_->set_service_account_identity(kFakeServiceAccountIdentity);
 }
 
-PolicyBuilder::~PolicyBuilder() {}
+PolicyBuilder::~PolicyBuilder() = default;
 
 std::unique_ptr<crypto::RSAPrivateKey> PolicyBuilder::GetSigningKey() const {
   if (raw_signing_key_.empty())

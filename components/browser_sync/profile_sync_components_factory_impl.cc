@@ -117,7 +117,7 @@ ProfileSyncComponentsFactoryImpl::ProfileSyncComponentsFactoryImpl(
   DCHECK(url_request_context_getter_);
 }
 
-ProfileSyncComponentsFactoryImpl::~ProfileSyncComponentsFactoryImpl() {}
+ProfileSyncComponentsFactoryImpl::~ProfileSyncComponentsFactoryImpl() = default;
 
 void ProfileSyncComponentsFactoryImpl::RegisterDataTypes(
     syncer::SyncService* sync_service,
@@ -371,7 +371,7 @@ TokenServiceProvider::TokenServiceProvider(
     OAuth2TokenService* token_service)
     : task_runner_(task_runner), token_service_(token_service) {}
 
-TokenServiceProvider::~TokenServiceProvider() {}
+TokenServiceProvider::~TokenServiceProvider() = default;
 
 scoped_refptr<base::SingleThreadTaskRunner>
 TokenServiceProvider::GetTokenServiceTaskRunner() {

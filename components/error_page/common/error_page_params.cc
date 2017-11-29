@@ -14,7 +14,6 @@ ErrorPageParams::ErrorPageParams()
       search_tracking_id(-1) {
 }
 
-ErrorPageParams::~ErrorPageParams() {
-}
+ErrorPageParams::~ErrorPageParams() = default;
 
 }  // namespace error_page

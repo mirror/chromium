@@ -60,8 +60,7 @@ ReadOnlyTestInstaller::ReadOnlyTestInstaller(const base::FilePath& install_dir)
     : install_directory_(install_dir) {
 }
 
-ReadOnlyTestInstaller::~ReadOnlyTestInstaller() {
-}
+ReadOnlyTestInstaller::~ReadOnlyTestInstaller() = default;
 
 bool ReadOnlyTestInstaller::GetInstalledFile(const std::string& file,
                                              base::FilePath* installed_file) {

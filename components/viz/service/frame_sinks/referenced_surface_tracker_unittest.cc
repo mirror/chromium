@@ -42,8 +42,8 @@ SurfaceId MakeSurfaceId(const FrameSinkId& frame_sink_id, uint32_t local_id) {
 
 class ReferencedSurfaceTrackerTest : public testing::Test {
  public:
-  ReferencedSurfaceTrackerTest() {}
-  ~ReferencedSurfaceTrackerTest() override {}
+  ReferencedSurfaceTrackerTest() = default;
+  ~ReferencedSurfaceTrackerTest() override = default;
 
   const std::vector<SurfaceReference>& references_to_remove() const {
     return references_to_remove_;

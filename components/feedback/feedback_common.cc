@@ -121,7 +121,7 @@ FeedbackCommon::AttachedFile::AttachedFile(const std::string& filename,
                                            std::unique_ptr<std::string> data)
     : name(filename), data(std::move(data)) {}
 
-FeedbackCommon::AttachedFile::~AttachedFile() {}
+FeedbackCommon::AttachedFile::~AttachedFile() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // FeedbackCommon::
@@ -211,7 +211,7 @@ void FeedbackCommon::PrepareReport(
     feedback_data->set_bucket(category_tag());
 }
 
-FeedbackCommon::~FeedbackCommon() {}
+FeedbackCommon::~FeedbackCommon() = default;
 
 void FeedbackCommon::CompressFile(
     const base::FilePath& filename,

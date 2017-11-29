@@ -88,8 +88,7 @@ BasicHTTPURLRequestContextGetter::GetNetworkTaskRunner() const {
   return network_task_runner_;
 }
 
-BasicHTTPURLRequestContextGetter::~BasicHTTPURLRequestContextGetter() {
-}
+BasicHTTPURLRequestContextGetter::~BasicHTTPURLRequestContextGetter() = default;
 
 DataReductionProxyIOData::DataReductionProxyIOData(
     Client client,

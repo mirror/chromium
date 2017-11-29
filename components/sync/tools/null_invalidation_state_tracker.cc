@@ -14,8 +14,8 @@
 
 namespace syncer {
 
-NullInvalidationStateTracker::NullInvalidationStateTracker() {}
-NullInvalidationStateTracker::~NullInvalidationStateTracker() {}
+NullInvalidationStateTracker::NullInvalidationStateTracker() = default;
+NullInvalidationStateTracker::~NullInvalidationStateTracker() = default;
 
 void NullInvalidationStateTracker::ClearAndSetNewClientId(
     const std::string& data) {

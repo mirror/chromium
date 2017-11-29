@@ -38,7 +38,7 @@ bool IsSupportedFormat(gfx::BufferFormat format) {
 SharedMemory::SharedMemory(const base::SharedMemoryHandle& handle)
     : shared_memory_(handle, true /* read-only */) {}
 
-SharedMemory::~SharedMemory() {}
+SharedMemory::~SharedMemory() = default;
 
 std::unique_ptr<Buffer> SharedMemory::CreateBuffer(const gfx::Size& size,
                                                    gfx::BufferFormat format,

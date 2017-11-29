@@ -350,7 +350,7 @@ RequestCoordinatorTest::RequestCoordinatorTest()
                          kBatteryPercentageHigh,
                          net::NetworkChangeNotifier::CONNECTION_3G) {}
 
-RequestCoordinatorTest::~RequestCoordinatorTest() {}
+RequestCoordinatorTest::~RequestCoordinatorTest() = default;
 
 void RequestCoordinatorTest::SetUp() {
   coordinator_taco_ = base::MakeUnique<RequestCoordinatorStubTaco>();

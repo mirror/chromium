@@ -30,6 +30,6 @@ bool SequencedModelWorker::IsOnModelSequence() {
   return runner_->RunsTasksInCurrentSequence();
 }
 
-SequencedModelWorker::~SequencedModelWorker() {}
+SequencedModelWorker::~SequencedModelWorker() = default;
 
 }  // namespace syncer

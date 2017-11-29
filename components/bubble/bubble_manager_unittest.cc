@@ -60,7 +60,7 @@ class ChainCloseBubbleDelegate : public MockBubbleDelegate {
  public:
   ChainCloseBubbleDelegate(BubbleManager* manager) : manager_(manager) {}
 
-  ~ChainCloseBubbleDelegate() override {}
+  ~ChainCloseBubbleDelegate() override = default;
 
   void DidClose(BubbleCloseReason reason) override {
     manager_->CloseAllBubbles(BUBBLE_CLOSE_FOCUS_LOST);
@@ -74,8 +74,8 @@ class ChainCloseBubbleDelegate : public MockBubbleDelegate {
 
 class MockBubbleManagerObserver : public BubbleManager::BubbleManagerObserver {
  public:
-  MockBubbleManagerObserver() {}
-  ~MockBubbleManagerObserver() override {}
+  MockBubbleManagerObserver() = default;
+  ~MockBubbleManagerObserver() override = default;
 
   MOCK_METHOD1(OnBubbleNeverShown, void(BubbleReference));
   MOCK_METHOD2(OnBubbleClosed, void(BubbleReference, BubbleCloseReason));
@@ -92,7 +92,7 @@ class BubbleManagerSubclass : public BubbleManager {
 class BubbleManagerTest : public testing::Test {
  public:
   BubbleManagerTest();
-  ~BubbleManagerTest() override {}
+  ~BubbleManagerTest() override = default;
 
   void SetUp() override;
   void TearDown() override;
@@ -104,7 +104,7 @@ class BubbleManagerTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(BubbleManagerTest);
 };
 
-BubbleManagerTest::BubbleManagerTest() {}
+BubbleManagerTest::BubbleManagerTest() = default;
 
 void BubbleManagerTest::SetUp() {
   testing::Test::SetUp();

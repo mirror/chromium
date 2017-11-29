@@ -19,7 +19,7 @@ const int64_t kPeriodStartTimestampMs = 1577836800000L;
 
 class CryptAuthRawEidGeneratorImplTest : public testing::Test {
  protected:
-  CryptAuthRawEidGeneratorImplTest() {}
+  CryptAuthRawEidGeneratorImplTest() = default;
 };
 
 TEST_F(CryptAuthRawEidGeneratorImplTest, ProducesTwoByteValue) {

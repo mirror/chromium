@@ -52,8 +52,7 @@ SyncSchedulerImpl::SyncSchedulerImpl(Delegate* delegate,
       weak_ptr_factory_(this) {
 }
 
-SyncSchedulerImpl::~SyncSchedulerImpl() {
-}
+SyncSchedulerImpl::~SyncSchedulerImpl() = default;
 
 void SyncSchedulerImpl::Start(
     const base::TimeDelta& elapsed_time_since_last_sync,

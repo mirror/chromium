@@ -221,7 +221,7 @@ LeakDetector::LeakDetector()
       max_call_stack_unwind_depth_(0),
       sampling_factor_(0) {}
 
-LeakDetector::~LeakDetector() {}
+LeakDetector::~LeakDetector() = default;
 
 // static
 void LeakDetector::AllocHook(const void* ptr, size_t size) {

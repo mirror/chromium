@@ -17,7 +17,7 @@ std::unique_ptr<ModelTypeChangeProcessor> ModelTypeChangeProcessor::Create(
       type, bridge, dump_stack, CommitOnlyTypes().Has(type));
 }
 
-ModelTypeChangeProcessor::ModelTypeChangeProcessor() {}
-ModelTypeChangeProcessor::~ModelTypeChangeProcessor() {}
+ModelTypeChangeProcessor::ModelTypeChangeProcessor() = default;
+ModelTypeChangeProcessor::~ModelTypeChangeProcessor() = default;
 
 }  // namespace syncer

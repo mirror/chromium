@@ -21,13 +21,13 @@ PolicyLoadStatusSampler::PolicyLoadStatusSampler() {
   Add(POLICY_LOAD_STATUS_STARTED);
 }
 
-PolicyLoadStatusSampler::~PolicyLoadStatusSampler() {}
+PolicyLoadStatusSampler::~PolicyLoadStatusSampler() = default;
 
 void PolicyLoadStatusSampler::Add(PolicyLoadStatus status) {
   status_bits_[status] = true;
 }
 
-PolicyLoadStatusUmaReporter::PolicyLoadStatusUmaReporter() {}
+PolicyLoadStatusUmaReporter::PolicyLoadStatusUmaReporter() = default;
 
 PolicyLoadStatusUmaReporter::~PolicyLoadStatusUmaReporter() {
   base::HistogramBase* histogram(base::LinearHistogram::FactoryGet(

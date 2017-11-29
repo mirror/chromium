@@ -6,7 +6,7 @@
 
 namespace wallpaper {
 
-WallpaperFilesId::WallpaperFilesId() {}
+WallpaperFilesId::WallpaperFilesId() = default;
 
 WallpaperFilesId::WallpaperFilesId(const std::string& id) : id_(id) {}
 

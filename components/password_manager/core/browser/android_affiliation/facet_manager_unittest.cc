@@ -84,7 +84,7 @@ class MockFacetManagerHost : public FacetManagerHost {
   explicit MockFacetManagerHost(TestFacetManagerNotifier* notifier)
       : notifier_(notifier), signaled_need_network_request_(false) {}
 
-  ~MockFacetManagerHost() override {}
+  ~MockFacetManagerHost() override = default;
 
   // Sets the |facet_uri| that will be expected to appear in calls coming from
   // the FacetManager under test.

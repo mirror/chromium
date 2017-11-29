@@ -33,8 +33,7 @@ ToolbarModelImpl::ToolbarModelImpl(ToolbarModelDelegate* delegate,
   DCHECK(delegate_);
 }
 
-ToolbarModelImpl::~ToolbarModelImpl() {
-}
+ToolbarModelImpl::~ToolbarModelImpl() = default;
 
 // ToolbarModelImpl Implementation.
 base::string16 ToolbarModelImpl::GetFormattedURL(size_t* prefix_end) const {

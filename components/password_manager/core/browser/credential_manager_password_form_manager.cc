@@ -44,8 +44,8 @@ CredentialManagerPasswordFormManager::CredentialManagerPasswordFormManager(
   GrabFetcher(std::move(form_fetcher));
 }
 
-CredentialManagerPasswordFormManager::~CredentialManagerPasswordFormManager() {
-}
+CredentialManagerPasswordFormManager::~CredentialManagerPasswordFormManager() =
+    default;
 
 void CredentialManagerPasswordFormManager::ProcessMatches(
     const std::vector<const PasswordForm*>& non_federated,

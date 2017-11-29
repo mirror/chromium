@@ -41,13 +41,13 @@ ManageAccountsParams::ManageAccountsParams(const ManageAccountsParams&) =
 
 // Trivial constructors and destructors.
 DiceResponseParams::DiceResponseParams() : user_intention(DiceAction::NONE) {}
-DiceResponseParams::~DiceResponseParams() {}
+DiceResponseParams::~DiceResponseParams() = default;
 DiceResponseParams::DiceResponseParams(const DiceResponseParams&) = default;
-DiceResponseParams::SigninInfo::SigninInfo() {}
-DiceResponseParams::SigninInfo::~SigninInfo() {}
+DiceResponseParams::SigninInfo::SigninInfo() = default;
+DiceResponseParams::SigninInfo::~SigninInfo() = default;
 DiceResponseParams::SigninInfo::SigninInfo(const SigninInfo&) = default;
-DiceResponseParams::SignoutInfo::SignoutInfo() {}
-DiceResponseParams::SignoutInfo::~SignoutInfo() {}
+DiceResponseParams::SignoutInfo::SignoutInfo() = default;
+DiceResponseParams::SignoutInfo::~SignoutInfo() = default;
 DiceResponseParams::SignoutInfo::SignoutInfo(const SignoutInfo&) = default;
 
 bool SettingsAllowSigninCookies(

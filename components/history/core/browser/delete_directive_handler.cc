@@ -132,7 +132,7 @@ class DeleteDirectiveHandler::DeleteDirectiveTask : public HistoryDBTask {
   void DoneRunOnMainThread() override;
 
  private:
-  ~DeleteDirectiveTask() override {}
+  ~DeleteDirectiveTask() override = default;
 
   // Process a list of global Id directives. Delete all visits to a URL in
   // time ranges of directives if the timestamp of one visit matches with one

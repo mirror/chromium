@@ -46,7 +46,7 @@ em::RemoteCommand GenerateCommandProto(RemoteCommandJob::UniqueIDType unique_id,
 // Mock class for RemoteCommandsQueue::Observer.
 class MockRemoteCommandsQueueObserver : public RemoteCommandsQueue::Observer {
  public:
-  MockRemoteCommandsQueueObserver() {}
+  MockRemoteCommandsQueueObserver() = default;
 
   // RemoteCommandsQueue::Observer:
   MOCK_METHOD1(OnJobStarted, void(RemoteCommandJob* command));

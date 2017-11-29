@@ -112,8 +112,7 @@ CustomFakeGCMDriver::CustomFakeGCMDriver()
       last_connection_observer_(nullptr),
       removed_connection_observer_(nullptr) {}
 
-CustomFakeGCMDriver::~CustomFakeGCMDriver() {
-}
+CustomFakeGCMDriver::~CustomFakeGCMDriver() = default;
 
 void CustomFakeGCMDriver::SetAccountTokens(
     const std::vector<GCMClient::AccountTokenInfo>& accounts) {

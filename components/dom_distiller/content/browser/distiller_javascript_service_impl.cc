@@ -20,7 +20,7 @@ DistillerJavaScriptServiceImpl::DistillerJavaScriptServiceImpl(
     : render_frame_host_(render_frame_host),
       distiller_ui_handle_(distiller_ui_handle) {}
 
-DistillerJavaScriptServiceImpl::~DistillerJavaScriptServiceImpl() {}
+DistillerJavaScriptServiceImpl::~DistillerJavaScriptServiceImpl() = default;
 
 void DistillerJavaScriptServiceImpl::HandleDistillerOpenSettingsCall() {
   if (!distiller_ui_handle_) {

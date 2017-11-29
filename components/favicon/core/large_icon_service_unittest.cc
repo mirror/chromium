@@ -136,7 +136,7 @@ class LargeIconServiceTest : public testing::Test {
         large_icon_service_(&mock_favicon_service_,
                             base::WrapUnique(mock_image_fetcher_)) {}
 
-  ~LargeIconServiceTest() override {}
+  ~LargeIconServiceTest() override = default;
 
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
@@ -403,7 +403,7 @@ class LargeIconServiceGetterTest : public LargeIconServiceTest,
                                    public ::testing::WithParamInterface<bool> {
  public:
   LargeIconServiceGetterTest() : LargeIconServiceTest() {}
-  ~LargeIconServiceGetterTest() override {}
+  ~LargeIconServiceGetterTest() override = default;
 
   void GetLargeIconOrFallbackStyleAndWaitForCallback(
       const GURL& page_url,

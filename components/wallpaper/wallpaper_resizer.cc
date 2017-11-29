@@ -116,8 +116,7 @@ WallpaperResizer::WallpaperResizer(const gfx::ImageSkia& image,
   image_.MakeThreadSafe();
 }
 
-WallpaperResizer::~WallpaperResizer() {
-}
+WallpaperResizer::~WallpaperResizer() = default;
 
 void WallpaperResizer::StartResize() {
   start_calculation_time_ = base::TimeTicks::Now();

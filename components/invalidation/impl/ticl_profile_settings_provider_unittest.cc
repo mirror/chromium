@@ -51,9 +51,9 @@ class TiclProfileSettingsProviderTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(TiclProfileSettingsProviderTest);
 };
 
-TiclProfileSettingsProviderTest::TiclProfileSettingsProviderTest() {}
+TiclProfileSettingsProviderTest::TiclProfileSettingsProviderTest() = default;
 
-TiclProfileSettingsProviderTest::~TiclProfileSettingsProviderTest() {}
+TiclProfileSettingsProviderTest::~TiclProfileSettingsProviderTest() = default;
 
 void TiclProfileSettingsProviderTest::SetUp() {
   gcm::GCMChannelStatusSyncer::RegisterProfilePrefs(pref_service_.registry());

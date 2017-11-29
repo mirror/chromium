@@ -13,8 +13,7 @@ BrowserContextKeyedBaseFactory::BrowserContextKeyedBaseFactory(
     : KeyedServiceBaseFactory(name, manager) {
 }
 
-BrowserContextKeyedBaseFactory::~BrowserContextKeyedBaseFactory() {
-}
+BrowserContextKeyedBaseFactory::~BrowserContextKeyedBaseFactory() = default;
 
 content::BrowserContext* BrowserContextKeyedBaseFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {

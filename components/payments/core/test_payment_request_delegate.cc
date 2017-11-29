@@ -23,7 +23,7 @@ TestPaymentRequestDelegate::TestPaymentRequestDelegate(
                          &payments_client_,
                          personal_data_manager) {}
 
-TestPaymentRequestDelegate::~TestPaymentRequestDelegate() {}
+TestPaymentRequestDelegate::~TestPaymentRequestDelegate() = default;
 
 autofill::PersonalDataManager*
 TestPaymentRequestDelegate::GetPersonalDataManager() {
@@ -100,9 +100,9 @@ bool TestPaymentRequestDelegate::IsBrowserWindowActive() const {
   return true;
 }
 
-TestPaymentsClientDelegate::TestPaymentsClientDelegate() {}
+TestPaymentsClientDelegate::TestPaymentsClientDelegate() = default;
 
-TestPaymentsClientDelegate::~TestPaymentsClientDelegate() {}
+TestPaymentsClientDelegate::~TestPaymentsClientDelegate() = default;
 
 void TestPaymentsClientDelegate::OnDidGetRealPan(
     autofill::AutofillClient::PaymentsRpcResult result,
@@ -112,7 +112,7 @@ TestURLRequestContextGetter::TestURLRequestContextGetter(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner)
     : task_runner_(task_runner) {}
 
-TestURLRequestContextGetter::~TestURLRequestContextGetter() {}
+TestURLRequestContextGetter::~TestURLRequestContextGetter() = default;
 
 net::URLRequestContext* TestURLRequestContextGetter::GetURLRequestContext() {
   return nullptr;

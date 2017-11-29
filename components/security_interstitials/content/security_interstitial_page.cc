@@ -46,8 +46,7 @@ SecurityInterstitialPage::SecurityInterstitialPage(
   // create it here.
 }
 
-SecurityInterstitialPage::~SecurityInterstitialPage() {
-}
+SecurityInterstitialPage::~SecurityInterstitialPage() = default;
 
 content::InterstitialPage* SecurityInterstitialPage::interstitial_page() const {
   return interstitial_page_;

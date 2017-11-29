@@ -48,7 +48,7 @@ class AffiliationServiceTest : public testing::Test {
       : main_task_runner_(new base::TestSimpleTaskRunner),
         main_task_runner_handle_(main_task_runner_),
         background_task_runner_(new base::TestMockTimeTaskRunner) {}
-  ~AffiliationServiceTest() override {}
+  ~AffiliationServiceTest() override = default;
 
  protected:
   void DestroyService() { service_.reset(); }

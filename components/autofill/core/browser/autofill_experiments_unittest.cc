@@ -64,7 +64,7 @@ class TestSyncService : public syncer::FakeSyncService {
 
 class AutofillExperimentsTest : public testing::Test {
  public:
-  AutofillExperimentsTest() {}
+  AutofillExperimentsTest() = default;
 
  protected:
   void SetUp() override {

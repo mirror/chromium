@@ -22,7 +22,7 @@ namespace test {
 
 class FakeViewRequestDelegate : public ViewRequestDelegate {
  public:
-  virtual ~FakeViewRequestDelegate() {}
+  virtual ~FakeViewRequestDelegate() = default;
   MOCK_METHOD1(OnArticleReady,
                void(const DistilledArticleProto* article_proto));
   MOCK_METHOD1(OnArticleUpdated,

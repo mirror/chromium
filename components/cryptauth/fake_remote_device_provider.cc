@@ -6,9 +6,9 @@
 
 namespace cryptauth {
 
-FakeRemoteDeviceProvider::FakeRemoteDeviceProvider() {}
+FakeRemoteDeviceProvider::FakeRemoteDeviceProvider() = default;
 
-FakeRemoteDeviceProvider::~FakeRemoteDeviceProvider() {}
+FakeRemoteDeviceProvider::~FakeRemoteDeviceProvider() = default;
 
 const RemoteDeviceList FakeRemoteDeviceProvider::GetSyncedDevices() const {
   return synced_remote_devices_;

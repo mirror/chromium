@@ -165,8 +165,7 @@ bool IsFormInteresting(const FormData& form, size_t num_editable_elements) {
 
 FormCache::FormCache(WebLocalFrame* frame) : frame_(frame) {}
 
-FormCache::~FormCache() {
-}
+FormCache::~FormCache() = default;
 
 std::vector<FormData> FormCache::ExtractNewForms() {
   std::vector<FormData> forms;

@@ -10,10 +10,10 @@
 namespace storage_monitor {
 
 TestMediaTransferProtocolManagerChromeOS::
-    TestMediaTransferProtocolManagerChromeOS() {}
+    TestMediaTransferProtocolManagerChromeOS() = default;
 
 TestMediaTransferProtocolManagerChromeOS::
-    ~TestMediaTransferProtocolManagerChromeOS() {}
+    ~TestMediaTransferProtocolManagerChromeOS() = default;
 
 void TestMediaTransferProtocolManagerChromeOS::AddObserver(Observer* observer) {
 }

@@ -27,7 +27,7 @@ class PaymentMethodManifestDownloaderTest : public testing::Test {
                        base::Unretained(this)));
   }
 
-  ~PaymentMethodManifestDownloaderTest() override {}
+  ~PaymentMethodManifestDownloaderTest() override = default;
 
   MOCK_METHOD1(OnManifestDownload, void(const std::string& content));
 
@@ -230,7 +230,7 @@ class WebAppManifestDownloaderTest : public testing::Test {
                        base::Unretained(this)));
   }
 
-  ~WebAppManifestDownloaderTest() override {}
+  ~WebAppManifestDownloaderTest() override = default;
 
   MOCK_METHOD1(OnManifestDownload, void(const std::string& content));
 

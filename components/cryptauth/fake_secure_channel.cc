@@ -16,7 +16,7 @@ FakeSecureChannel::FakeSecureChannel(std::unique_ptr<Connection> connection,
                                      CryptAuthService* cryptauth_service)
     : SecureChannel(std::move(connection), cryptauth_service) {}
 
-FakeSecureChannel::~FakeSecureChannel() {}
+FakeSecureChannel::~FakeSecureChannel() = default;
 
 void FakeSecureChannel::ChangeStatus(const Status& new_status) {
   Status old_status = status_;

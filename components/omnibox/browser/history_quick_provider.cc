@@ -63,8 +63,7 @@ void HistoryQuickProvider::Start(const AutocompleteInput& input,
   }
 }
 
-HistoryQuickProvider::~HistoryQuickProvider() {
-}
+HistoryQuickProvider::~HistoryQuickProvider() = default;
 
 void HistoryQuickProvider::DoAutocomplete() {
   // Get the matching URLs from the DB.

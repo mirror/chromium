@@ -24,7 +24,7 @@ DirectoryTypeDebugInfoEmitter::DirectoryTypeDebugInfoEmitter(
     base::ObserverList<TypeDebugInfoObserver>* observers)
     : DataTypeDebugInfoEmitter(type, observers), directory_(nullptr) {}
 
-DirectoryTypeDebugInfoEmitter::~DirectoryTypeDebugInfoEmitter() {}
+DirectoryTypeDebugInfoEmitter::~DirectoryTypeDebugInfoEmitter() = default;
 
 void DirectoryTypeDebugInfoEmitter::EmitStatusCountersUpdate() {
   // This is expensive.  Avoid running this code unless about:sync is open.

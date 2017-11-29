@@ -87,7 +87,7 @@ std::string GetRetryMapKeyFromOrigin(const std::string& origin) {
 class TestPreviewsDecider : public previews::PreviewsDecider {
  public:
   TestPreviewsDecider(bool allow_previews) : allow_previews_(allow_previews) {}
-  ~TestPreviewsDecider() override {}
+  ~TestPreviewsDecider() override = default;
 
   // previews::PreviewsDecider:
   bool ShouldAllowPreviewAtECT(
@@ -112,7 +112,7 @@ class TestPreviewsDecider : public previews::PreviewsDecider {
 class DataReductionProxyConfigTest : public testing::Test {
  public:
   DataReductionProxyConfigTest() : mock_config_used_(false) {}
-  ~DataReductionProxyConfigTest() override {}
+  ~DataReductionProxyConfigTest() override = default;
 
   void SetUp() override {
     net::NetworkChangeNotifier::SetTestNotificationsOnly(true);

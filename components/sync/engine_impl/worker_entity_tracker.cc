@@ -19,7 +19,7 @@ WorkerEntityTracker::WorkerEntityTracker(const std::string& client_tag_hash)
   DCHECK(!client_tag_hash_.empty());
 }
 
-WorkerEntityTracker::~WorkerEntityTracker() {}
+WorkerEntityTracker::~WorkerEntityTracker() = default;
 
 void WorkerEntityTracker::ReceiveUpdate(const UpdateResponseData& update) {
   if (!UpdateContainsNewVersion(update))

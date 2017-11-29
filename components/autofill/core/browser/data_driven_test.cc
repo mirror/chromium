@@ -107,7 +107,6 @@ DataDrivenTest::DataDrivenTest(const base::FilePath& test_data_directory)
     : test_data_directory_(test_data_directory) {
 }
 
-DataDrivenTest::~DataDrivenTest() {
-}
+DataDrivenTest::~DataDrivenTest() = default;
 
 }  // namespace autofill

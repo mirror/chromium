@@ -111,7 +111,7 @@ SentGetOperationCleanupTask::SentGetOperationCleanupTask(
       request_factory_(request_factory),
       weak_ptr_factory_(this) {}
 
-SentGetOperationCleanupTask::~SentGetOperationCleanupTask() {}
+SentGetOperationCleanupTask::~SentGetOperationCleanupTask() = default;
 
 void SentGetOperationCleanupTask::Run() {
   std::unique_ptr<std::set<std::string>> ongoing_operation_names =

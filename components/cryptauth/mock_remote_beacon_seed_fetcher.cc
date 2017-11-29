@@ -11,7 +11,7 @@ namespace cryptauth {
 MockRemoteBeaconSeedFetcher::MockRemoteBeaconSeedFetcher()
     : RemoteBeaconSeedFetcher(nullptr) {}
 
-MockRemoteBeaconSeedFetcher::~MockRemoteBeaconSeedFetcher() {}
+MockRemoteBeaconSeedFetcher::~MockRemoteBeaconSeedFetcher() = default;
 
 bool MockRemoteBeaconSeedFetcher::FetchSeedsForDevice(
     const RemoteDevice& remote_device,

@@ -30,7 +30,7 @@ DistillerJsRenderFrameObserver::DistillerJsRenderFrameObserver(
       weak_factory_.GetWeakPtr()));
 }
 
-DistillerJsRenderFrameObserver::~DistillerJsRenderFrameObserver() {}
+DistillerJsRenderFrameObserver::~DistillerJsRenderFrameObserver() = default;
 
 void DistillerJsRenderFrameObserver::DidStartProvisionalLoad(
     blink::WebDocumentLoader* document_loader) {

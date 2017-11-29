@@ -60,7 +60,7 @@ NudgeTracker::NudgeTracker()
   }
 }
 
-NudgeTracker::~NudgeTracker() {}
+NudgeTracker::~NudgeTracker() = default;
 
 bool NudgeTracker::IsSyncRequired() const {
   if (IsRetryRequired())

@@ -189,8 +189,7 @@ FakeWebHistoryService::FakeWebHistoryService(
       web_and_app_activity_enabled_(false),
       other_forms_of_browsing_history_present_(false) {}
 
-FakeWebHistoryService::~FakeWebHistoryService() {
-}
+FakeWebHistoryService::~FakeWebHistoryService() = default;
 
 void FakeWebHistoryService::SetupFakeResponse(
     bool emulate_success, int emulate_response_code) {

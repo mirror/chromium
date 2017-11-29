@@ -18,7 +18,7 @@ OverlayStrategyFullscreen::OverlayStrategyFullscreen(
   DCHECK(capability_checker);
 }
 
-OverlayStrategyFullscreen::~OverlayStrategyFullscreen() {}
+OverlayStrategyFullscreen::~OverlayStrategyFullscreen() = default;
 
 bool OverlayStrategyFullscreen::Attempt(
     cc::DisplayResourceProvider* resource_provider,

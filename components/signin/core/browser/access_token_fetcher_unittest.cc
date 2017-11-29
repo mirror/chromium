@@ -67,7 +67,7 @@ class AccessTokenFetcherTest : public testing::Test {
 #endif  // OS_CHROMEOS
   }
 
-  ~AccessTokenFetcherTest() override {}
+  ~AccessTokenFetcherTest() override = default;
 
   std::unique_ptr<AccessTokenFetcher> CreateFetcher(
       AccessTokenFetcher::TokenCallback callback) {

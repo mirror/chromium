@@ -243,7 +243,7 @@ bool ReportMetricsAndFinalizeSync(sql::Connection* db) {
 MetricsFinalizationTask::MetricsFinalizationTask(PrefetchStore* prefetch_store)
     : prefetch_store_(prefetch_store), weak_factory_(this) {}
 
-MetricsFinalizationTask::~MetricsFinalizationTask() {}
+MetricsFinalizationTask::~MetricsFinalizationTask() = default;
 
 void MetricsFinalizationTask::Run() {
   prefetch_store_->Execute(

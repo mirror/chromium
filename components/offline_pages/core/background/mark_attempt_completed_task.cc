@@ -17,7 +17,7 @@ MarkAttemptCompletedTask::MarkAttemptCompletedTask(
     const RequestQueueStore::UpdateCallback& callback)
     : UpdateRequestTask(store, request_id, callback) {}
 
-MarkAttemptCompletedTask::~MarkAttemptCompletedTask() {}
+MarkAttemptCompletedTask::~MarkAttemptCompletedTask() = default;
 
 void MarkAttemptCompletedTask::UpdateRequestImpl(
     std::unique_ptr<UpdateRequestsResult> read_result) {

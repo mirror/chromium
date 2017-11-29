@@ -211,7 +211,7 @@ class TestLoFiDecider : public LoFiDecider {
         should_be_client_lofi_auto_reload_(false),
         should_request_lofi_resource_(false),
         ignore_is_using_data_reduction_proxy_check_(false) {}
-  ~TestLoFiDecider() override {}
+  ~TestLoFiDecider() override = default;
 
   bool IsUsingLoFi(const net::URLRequest& request) const override {
     return should_request_lofi_resource_;
@@ -300,7 +300,7 @@ class TestLoFiDecider : public LoFiDecider {
 class TestLoFiUIService : public LoFiUIService {
  public:
   TestLoFiUIService() : on_lofi_response_(false) {}
-  ~TestLoFiUIService() override {}
+  ~TestLoFiUIService() override = default;
 
   bool DidNotifyLoFiResponse() const { return on_lofi_response_; }
 
@@ -316,8 +316,8 @@ class TestLoFiUIService : public LoFiUIService {
 
 class TestPreviewsDecider : public previews::PreviewsDecider {
  public:
-  TestPreviewsDecider() {}
-  ~TestPreviewsDecider() override {}
+  TestPreviewsDecider() = default;
+  ~TestPreviewsDecider() override = default;
   // previews::PreviewsDecider:
   bool ShouldAllowPreviewAtECT(
       const net::URLRequest& request,
@@ -2131,7 +2131,7 @@ class DataReductionProxyNetworkDelegateClientLoFiTest : public testing::Test {
 };
 
 DataReductionProxyNetworkDelegateClientLoFiTest::
-    ~DataReductionProxyNetworkDelegateClientLoFiTest() {}
+    ~DataReductionProxyNetworkDelegateClientLoFiTest() = default;
 
 TEST_F(DataReductionProxyNetworkDelegateClientLoFiTest, DataSavingsNonDRP) {
   const char kSimple200ResponseHeaders[] =

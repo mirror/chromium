@@ -155,7 +155,7 @@ class AffiliationBackendTest : public testing::Test {
       : backend_task_runner_(new base::TestMockTimeTaskRunner),
         consumer_task_runner_(new base::TestSimpleTaskRunner),
         mock_fetch_throttler_(nullptr) {}
-  ~AffiliationBackendTest() override {}
+  ~AffiliationBackendTest() override = default;
 
  protected:
   void GetAffiliationsAndBranding(MockAffiliationConsumer* consumer,

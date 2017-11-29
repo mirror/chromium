@@ -61,7 +61,7 @@ RapporServiceImpl::RapporServiceImpl(
                    kRapporDailyEventHistogram),
       recording_enabled_(false) {}
 
-RapporServiceImpl::~RapporServiceImpl() {}
+RapporServiceImpl::~RapporServiceImpl() = default;
 
 void RapporServiceImpl::AddDailyObserver(
     std::unique_ptr<metrics::DailyEvent::Observer> observer) {

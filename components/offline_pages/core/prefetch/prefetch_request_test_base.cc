@@ -23,7 +23,7 @@ PrefetchRequestTestBase::PrefetchRequestTestBase()
       request_context_(new net::TestURLRequestContextGetter(
           base::ThreadTaskRunnerHandle::Get())) {}
 
-PrefetchRequestTestBase::~PrefetchRequestTestBase() {}
+PrefetchRequestTestBase::~PrefetchRequestTestBase() = default;
 
 void PrefetchRequestTestBase::SetUp() {
   field_trial_list_ = base::MakeUnique<base::FieldTrialList>(

@@ -38,7 +38,7 @@ class PaymentRequestStateTest : public testing::Test,
     credit_card_visa_.set_use_count(5u);
     test_personal_data_manager_.AddTestingCreditCard(&credit_card_visa_);
   }
-  ~PaymentRequestStateTest() override {}
+  ~PaymentRequestStateTest() override = default;
 
   // PaymentRequestState::Observer:
   void OnGetAllPaymentInstrumentsFinished() override {}

@@ -71,8 +71,7 @@ WebCacheManager::WebCacheManager()
                  content::NotificationService::AllBrowserContextsAndSources());
 }
 
-WebCacheManager::~WebCacheManager() {
-}
+WebCacheManager::~WebCacheManager() = default;
 
 void WebCacheManager::Add(int renderer_id) {
   DCHECK(inactive_renderers_.count(renderer_id) == 0);

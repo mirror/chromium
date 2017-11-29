@@ -65,7 +65,7 @@ class AutofillProfileValidationUtilTest : public testing::Test,
     profile_validation_util::ValidateEmailAddress(profile);
   }
 
-  ~AutofillProfileValidationUtilTest() override {}
+  ~AutofillProfileValidationUtilTest() override = default;
 
  private:
   std::unique_ptr<AddressValidator> validator_;

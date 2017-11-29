@@ -52,9 +52,9 @@ class SyncServiceObserverMock : public syncer::SyncServiceObserver {
   MOCK_METHOD1(OnStateChanged, void(syncer::SyncService*));
 };
 
-SyncServiceObserverMock::SyncServiceObserverMock() {}
+SyncServiceObserverMock::SyncServiceObserverMock() = default;
 
-SyncServiceObserverMock::~SyncServiceObserverMock() {}
+SyncServiceObserverMock::~SyncServiceObserverMock() = default;
 
 }  // namespace
 

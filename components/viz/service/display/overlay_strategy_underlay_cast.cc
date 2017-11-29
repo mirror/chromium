@@ -15,7 +15,7 @@ OverlayStrategyUnderlayCast::OverlayStrategyUnderlayCast(
     OverlayCandidateValidator* capability_checker)
     : OverlayStrategyUnderlay(capability_checker) {}
 
-OverlayStrategyUnderlayCast::~OverlayStrategyUnderlayCast() {}
+OverlayStrategyUnderlayCast::~OverlayStrategyUnderlayCast() = default;
 
 bool OverlayStrategyUnderlayCast::Attempt(
     cc::DisplayResourceProvider* resource_provider,

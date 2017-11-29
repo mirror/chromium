@@ -35,7 +35,7 @@ const char ContentAutofillDriverFactory::
     kContentAutofillDriverFactoryWebContentsUserDataKey[] =
         "web_contents_autofill_driver_factory";
 
-ContentAutofillDriverFactory::~ContentAutofillDriverFactory() {}
+ContentAutofillDriverFactory::~ContentAutofillDriverFactory() = default;
 
 // static
 void ContentAutofillDriverFactory::CreateForWebContentsAndDelegate(

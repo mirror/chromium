@@ -42,7 +42,7 @@ FileSystemApp::FileSystemApp() : lock_table_(new LockTable) {
       base::Bind(&FileSystemApp::Create, base::Unretained(this)));
 }
 
-FileSystemApp::~FileSystemApp() {}
+FileSystemApp::~FileSystemApp() = default;
 
 void FileSystemApp::OnStart() {}
 

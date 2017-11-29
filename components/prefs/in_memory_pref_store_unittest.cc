@@ -17,7 +17,7 @@ const char kTestPref[] = "test.pref";
 
 class InMemoryPrefStoreTest : public testing::Test {
  public:
-  InMemoryPrefStoreTest() { }
+  InMemoryPrefStoreTest() = default;
 
   void SetUp() override { store_ = new InMemoryPrefStore(); }
  protected:

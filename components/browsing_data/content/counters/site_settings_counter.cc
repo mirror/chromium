@@ -27,7 +27,7 @@ SiteSettingsCounter::SiteSettingsCounter(HostContentSettingsMap* map,
 #endif
 }
 
-SiteSettingsCounter::~SiteSettingsCounter() {}
+SiteSettingsCounter::~SiteSettingsCounter() = default;
 
 void SiteSettingsCounter::OnInitialized() {}
 

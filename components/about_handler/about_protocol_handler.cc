@@ -8,11 +8,9 @@
 
 namespace about_handler {
 
-AboutProtocolHandler::AboutProtocolHandler() {
-}
+AboutProtocolHandler::AboutProtocolHandler() = default;
 
-AboutProtocolHandler::~AboutProtocolHandler() {
-}
+AboutProtocolHandler::~AboutProtocolHandler() = default;
 
 net::URLRequestJob* AboutProtocolHandler::MaybeCreateJob(
     net::URLRequest* request,

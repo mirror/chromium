@@ -28,7 +28,7 @@ OverlayJsRenderFrameObserver::OverlayJsRenderFrameObserver(
       weak_factory_.GetWeakPtr()));
 }
 
-OverlayJsRenderFrameObserver::~OverlayJsRenderFrameObserver() {}
+OverlayJsRenderFrameObserver::~OverlayJsRenderFrameObserver() = default;
 
 void OverlayJsRenderFrameObserver::DidStartProvisionalLoad(
     blink::WebDocumentLoader* document_loader) {

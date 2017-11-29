@@ -16,7 +16,7 @@ SyncPolicyHandler::SyncPolicyHandler()
     : policy::TypeCheckingPolicyHandler(policy::key::kSyncDisabled,
                                         base::Value::Type::BOOLEAN) {}
 
-SyncPolicyHandler::~SyncPolicyHandler() {}
+SyncPolicyHandler::~SyncPolicyHandler() = default;
 
 void SyncPolicyHandler::ApplyPolicySettings(const policy::PolicyMap& policies,
                                             PrefValueMap* prefs) {

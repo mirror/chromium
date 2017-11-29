@@ -245,7 +245,7 @@ CastCRLImpl::CastCRLImpl(const TbsCrl& tbs_crl,
   }
 }
 
-CastCRLImpl::~CastCRLImpl() {}
+CastCRLImpl::~CastCRLImpl() = default;
 
 // Verifies the revocation status of the certificate chain, at the specified
 // time.

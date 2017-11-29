@@ -17,7 +17,7 @@ SyncMergeResult::SyncMergeResult(ModelType type)
 
 SyncMergeResult::SyncMergeResult(const SyncMergeResult& other) = default;
 
-SyncMergeResult::~SyncMergeResult() {}
+SyncMergeResult::~SyncMergeResult() = default;
 
 // Setters.
 void SyncMergeResult::set_error(SyncError error) {

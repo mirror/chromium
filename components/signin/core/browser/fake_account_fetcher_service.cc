@@ -8,7 +8,7 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 
-FakeAccountFetcherService::FakeAccountFetcherService() {}
+FakeAccountFetcherService::FakeAccountFetcherService() = default;
 
 void FakeAccountFetcherService::FakeUserInfoFetchSuccess(
     const std::string& account_id,

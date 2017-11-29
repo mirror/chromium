@@ -46,7 +46,7 @@ const char kSubpageThree[] = "three";
 
 class FakeAutocompleteProviderClient : public MockAutocompleteProviderClient {
  public:
-  FakeAutocompleteProviderClient() {}
+  FakeAutocompleteProviderClient() = default;
 
   std::string GetEmbedderRepresentationOfAboutScheme() override {
     return kEmbedderAboutScheme;
@@ -90,7 +90,7 @@ class BuiltinProviderTest : public testing::Test {
   };
 
   BuiltinProviderTest() : provider_(nullptr) {}
-  ~BuiltinProviderTest() override {}
+  ~BuiltinProviderTest() override = default;
 
   void SetUp() override {
     client_.reset(new FakeAutocompleteProviderClient());

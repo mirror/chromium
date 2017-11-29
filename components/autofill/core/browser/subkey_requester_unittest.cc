@@ -47,7 +47,7 @@ class SubKeyReceiver : public base::RefCountedThreadSafe<SubKeyReceiver> {
 
  private:
   friend class base::RefCountedThreadSafe<SubKeyReceiver>;
-  ~SubKeyReceiver() {}
+  ~SubKeyReceiver() = default;
 
   int subkeys_size_;
 
@@ -63,7 +63,7 @@ class TestSubKeyRequester : public SubKeyRequester {
       : SubKeyRequester(std::move(source), std::move(storage)),
         should_load_rules_(true) {}
 
-  ~TestSubKeyRequester() override {}
+  ~TestSubKeyRequester() override = default;
 
   void ShouldLoadRules(bool should_load_rules) {
     should_load_rules_ = should_load_rules;
@@ -100,7 +100,7 @@ class SubKeyRequesterTest : public testing::Test {
         std::unique_ptr<Storage>(new NullStorage));
   }
 
-  ~SubKeyRequesterTest() override {}
+  ~SubKeyRequesterTest() override = default;
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   std::unique_ptr<TestSubKeyRequester> requester_;

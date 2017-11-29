@@ -32,8 +32,7 @@ PasswordGenerationManager::PasswordGenerationManager(
     : client_(client), driver_(driver) {
 }
 
-PasswordGenerationManager::~PasswordGenerationManager() {
-}
+PasswordGenerationManager::~PasswordGenerationManager() = default;
 
 void PasswordGenerationManager::DetectFormsEligibleForGeneration(
     const std::vector<autofill::FormStructure*>& forms) {

@@ -279,7 +279,7 @@ class ThreatDetailsFactoryImpl : public ThreatDetailsFactory {
  private:
   friend struct base::LazyInstanceTraitsBase<ThreatDetailsFactoryImpl>;
 
-  ThreatDetailsFactoryImpl() {}
+  ThreatDetailsFactoryImpl() = default;
 
   DISALLOW_COPY_AND_ASSIGN(ThreatDetailsFactoryImpl);
 };

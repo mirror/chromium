@@ -42,7 +42,7 @@ namespace arc {
 
 FakeAppInstance::FakeAppInstance(mojom::AppHost* app_host)
     : app_host_(app_host) {}
-FakeAppInstance::~FakeAppInstance() {}
+FakeAppInstance::~FakeAppInstance() = default;
 
 void FakeAppInstance::InitDeprecated(mojom::AppHostPtr host_ptr) {
   Init(std::move(host_ptr), base::BindOnce(&base::DoNothing));

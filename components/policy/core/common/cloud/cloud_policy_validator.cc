@@ -47,7 +47,7 @@ enum MetricPolicyKeyVerification {
 
 }  // namespace
 
-CloudPolicyValidatorBase::~CloudPolicyValidatorBase() {}
+CloudPolicyValidatorBase::~CloudPolicyValidatorBase() = default;
 
 void CloudPolicyValidatorBase::ValidateTimestamp(
     base::Time not_before,

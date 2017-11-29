@@ -24,10 +24,9 @@ SuggestionsStore::SuggestionsStore(PrefService* profile_prefs)
   DCHECK(profile_prefs);
 }
 
-SuggestionsStore::SuggestionsStore() {
-}
+SuggestionsStore::SuggestionsStore() = default;
 
-SuggestionsStore::~SuggestionsStore() {}
+SuggestionsStore::~SuggestionsStore() = default;
 
 void SuggestionsStore::SetClockForTesting(
     std::unique_ptr<base::Clock> test_clock) {

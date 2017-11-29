@@ -901,7 +901,7 @@ namespace {
 
 class TestHttpPostProviderInterface : public HttpPostProviderInterface {
  public:
-  ~TestHttpPostProviderInterface() override {}
+  ~TestHttpPostProviderInterface() override = default;
 
   void SetExtraRequestHeaders(const char* headers) override {}
   void SetURL(const char* url, int port) override {}
@@ -922,7 +922,7 @@ class TestHttpPostProviderInterface : public HttpPostProviderInterface {
 
 class TestHttpPostProviderFactory : public HttpPostProviderFactory {
  public:
-  ~TestHttpPostProviderFactory() override {}
+  ~TestHttpPostProviderFactory() override = default;
   void Init(const std::string& user_agent,
             const BindToTrackerCallback& bind_to_tracker_callback) override {}
   HttpPostProviderInterface* Create() override {
@@ -980,7 +980,7 @@ class SyncManagerTest : public testing::Test,
     switches_.encryption_method = EngineComponentsFactory::ENCRYPTION_KEYSTORE;
   }
 
-  virtual ~SyncManagerTest() {}
+  virtual ~SyncManagerTest() = default;
 
   virtual void DoSetUp(bool enable_local_sync_backend) {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
@@ -2699,7 +2699,7 @@ TEST_F(SyncManagerWithLocalBackendTest, StartSyncInLocalMode) {
 class MockSyncScheduler : public FakeSyncScheduler {
  public:
   MockSyncScheduler() : FakeSyncScheduler() {}
-  virtual ~MockSyncScheduler() {}
+  virtual ~MockSyncScheduler() = default;
 
   MOCK_METHOD2(Start, void(SyncScheduler::Mode, base::Time));
   MOCK_METHOD1(ScheduleConfiguration, void(const ConfigurationParams&));
@@ -2716,7 +2716,7 @@ class ComponentsFactory : public TestEngineComponentsFactory {
                                     storage_used),
         scheduler_to_use_(scheduler_to_use),
         cycle_context_(cycle_context) {}
-  ~ComponentsFactory() override {}
+  ~ComponentsFactory() override = default;
 
   std::unique_ptr<SyncScheduler> BuildScheduler(
       const std::string& name,
@@ -3447,7 +3447,7 @@ TEST_F(SyncManagerChangeProcessingTest, AttachmentMetadataOnlyChanges) {
 // to load.
 class SyncManagerInitInvalidStorageTest : public SyncManagerTest {
  public:
-  SyncManagerInitInvalidStorageTest() {}
+  SyncManagerInitInvalidStorageTest() = default;
 
   EngineComponentsFactory* GetFactory() override {
     return new TestEngineComponentsFactory(

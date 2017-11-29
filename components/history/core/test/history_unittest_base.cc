@@ -16,8 +16,7 @@
 
 namespace history {
 
-HistoryUnitTestBase::~HistoryUnitTestBase() {
-}
+HistoryUnitTestBase::~HistoryUnitTestBase() = default;
 
 void HistoryUnitTestBase::ExecuteSQLScript(const base::FilePath& sql_path,
                                            const base::FilePath& db_path) {
@@ -38,7 +37,6 @@ void HistoryUnitTestBase::ExecuteSQLScript(const base::FilePath& sql_path,
   ASSERT_TRUE(connection.Execute(sql.c_str()));
 }
 
-HistoryUnitTestBase::HistoryUnitTestBase() {
-}
+HistoryUnitTestBase::HistoryUnitTestBase() = default;
 
 }  // namespace history

@@ -16,7 +16,7 @@ ProxyDataTypeController::ProxyDataTypeController(ModelType type)
   DCHECK(ProxyTypes().Has(type));
 }
 
-ProxyDataTypeController::~ProxyDataTypeController() {}
+ProxyDataTypeController::~ProxyDataTypeController() = default;
 
 bool ProxyDataTypeController::ShouldLoadModelBeforeConfigure() const {
   return false;

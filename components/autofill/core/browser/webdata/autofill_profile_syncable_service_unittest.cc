@@ -46,8 +46,8 @@ const int kValidityStateBitfield = 1984;
 class MockAutofillProfileSyncableService
     : public AutofillProfileSyncableService {
  public:
-  MockAutofillProfileSyncableService() {}
-  virtual ~MockAutofillProfileSyncableService() {}
+  MockAutofillProfileSyncableService() = default;
+  virtual ~MockAutofillProfileSyncableService() = default;
 
   using AutofillProfileSyncableService::DataBundle;
   using AutofillProfileSyncableService::set_sync_processor;
@@ -105,8 +105,8 @@ MATCHER_P(DataBundleCheck, n_bundle, "") {
 
 class MockSyncChangeProcessor : public syncer::SyncChangeProcessor {
  public:
-  MockSyncChangeProcessor() {}
-  ~MockSyncChangeProcessor() override {}
+  MockSyncChangeProcessor() = default;
+  ~MockSyncChangeProcessor() override = default;
 
   MOCK_METHOD2(ProcessSyncChanges,
                syncer::SyncError(const base::Location&,
@@ -118,8 +118,8 @@ class MockSyncChangeProcessor : public syncer::SyncChangeProcessor {
 
 class TestSyncChangeProcessor : public syncer::SyncChangeProcessor {
  public:
-  TestSyncChangeProcessor() {}
-  ~TestSyncChangeProcessor() override {}
+  TestSyncChangeProcessor() = default;
+  ~TestSyncChangeProcessor() override = default;
 
   syncer::SyncError ProcessSyncChanges(
       const base::Location& location,

@@ -60,7 +60,7 @@ class TestSecurityStateHelper {
         is_error_page_(false),
         is_view_source_(false),
         has_policy_certificate_(false) {}
-  virtual ~TestSecurityStateHelper() {}
+  virtual ~TestSecurityStateHelper() = default;
 
   void SetCertificate(scoped_refptr<net::X509Certificate> cert) {
     cert_ = std::move(cert);

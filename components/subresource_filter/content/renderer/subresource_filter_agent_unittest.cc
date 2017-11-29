@@ -101,7 +101,7 @@ constexpr const char kEvaluationTotalCPUDuration[] =
 
 class SubresourceFilterAgentTest : public ::testing::Test {
  public:
-  SubresourceFilterAgentTest() {}
+  SubresourceFilterAgentTest() = default;
 
  protected:
   void SetUp() override { ResetAgent(); }

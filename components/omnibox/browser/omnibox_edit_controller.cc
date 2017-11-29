@@ -24,4 +24,4 @@ OmniboxEditController::OmniboxEditController()
       transition_(ui::PageTransitionFromInt(
           ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)) {}
 
-OmniboxEditController::~OmniboxEditController() {}
+OmniboxEditController::~OmniboxEditController() = default;

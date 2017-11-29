@@ -6,9 +6,9 @@
 
 namespace multidevice {
 
-FakeDeviceSync::FakeDeviceSync() {}
+FakeDeviceSync::FakeDeviceSync() = default;
 
-FakeDeviceSync::~FakeDeviceSync() {}
+FakeDeviceSync::~FakeDeviceSync() = default;
 
 void FakeDeviceSync::ForceEnrollmentNow() {
   observers_.ForAllPtrs([this](

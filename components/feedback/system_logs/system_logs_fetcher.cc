@@ -44,7 +44,7 @@ SystemLogsFetcher::SystemLogsFetcher(bool scrub_data)
     anonymizer_ = base::MakeUnique<feedback::AnonymizerTool>();
 }
 
-SystemLogsFetcher::~SystemLogsFetcher() {}
+SystemLogsFetcher::~SystemLogsFetcher() = default;
 
 void SystemLogsFetcher::AddSource(std::unique_ptr<SystemLogsSource> source) {
   data_sources_.emplace_back(std::move(source));

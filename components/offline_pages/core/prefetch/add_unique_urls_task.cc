@@ -149,7 +149,7 @@ AddUniqueUrlsTask::AddUniqueUrlsTask(
   DCHECK(prefetch_store_);
 }
 
-AddUniqueUrlsTask::~AddUniqueUrlsTask() {}
+AddUniqueUrlsTask::~AddUniqueUrlsTask() = default;
 
 void AddUniqueUrlsTask::Run() {
   prefetch_store_->Execute(base::BindOnce(&AddUrlsAndCleanupZombiesSync,

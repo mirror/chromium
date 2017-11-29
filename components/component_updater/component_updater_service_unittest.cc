@@ -171,23 +171,17 @@ class OnDemandTester {
   update_client::Error error_ = update_client::Error::NONE;
 };
 
-MockInstaller::MockInstaller() {
-}
+MockInstaller::MockInstaller() = default;
 
-MockInstaller::~MockInstaller() {
-}
+MockInstaller::~MockInstaller() = default;
 
-MockUpdateClient::MockUpdateClient() {
-}
+MockUpdateClient::MockUpdateClient() = default;
 
-MockUpdateClient::~MockUpdateClient() {
-}
+MockUpdateClient::~MockUpdateClient() = default;
 
-MockServiceObserver::MockServiceObserver() {
-}
+MockServiceObserver::MockServiceObserver() = default;
 
-MockServiceObserver::~MockServiceObserver() {
-}
+MockServiceObserver::~MockServiceObserver() = default;
 
 void OnDemandTester::OnDemand(ComponentUpdateService* cus,
                               const std::string& id) {

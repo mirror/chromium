@@ -5,10 +5,8 @@
 #include "components/keyed_service/core/keyed_service_export.h"
 #include "components/keyed_service/core/keyed_service_shutdown_notifier.h"
 
-KeyedServiceShutdownNotifier::KeyedServiceShutdownNotifier() {
-}
-KeyedServiceShutdownNotifier::~KeyedServiceShutdownNotifier() {
-}
+KeyedServiceShutdownNotifier::KeyedServiceShutdownNotifier() = default;
+KeyedServiceShutdownNotifier::~KeyedServiceShutdownNotifier() = default;
 
 std::unique_ptr<base::CallbackList<void()>::Subscription>
 KeyedServiceShutdownNotifier::Subscribe(const base::Closure& callback) {

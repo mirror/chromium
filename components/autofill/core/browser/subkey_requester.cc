@@ -85,7 +85,7 @@ SubKeyRequester::SubKeyRequester(std::unique_ptr<Source> source,
                                  std::unique_ptr<Storage> storage)
     : address_validator_(std::move(source), std::move(storage), this) {}
 
-SubKeyRequester::~SubKeyRequester() {}
+SubKeyRequester::~SubKeyRequester() = default;
 
 void SubKeyRequester::StartRegionSubKeysRequest(const std::string& region_code,
                                                 const std::string& language,

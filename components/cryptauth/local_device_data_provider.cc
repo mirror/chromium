@@ -15,7 +15,7 @@ LocalDeviceDataProvider::LocalDeviceDataProvider(
     CryptAuthService* cryptauth_service)
     : cryptauth_service_(cryptauth_service) {}
 
-LocalDeviceDataProvider::~LocalDeviceDataProvider() {}
+LocalDeviceDataProvider::~LocalDeviceDataProvider() = default;
 
 bool LocalDeviceDataProvider::GetLocalDeviceData(
     std::string* public_key_out,

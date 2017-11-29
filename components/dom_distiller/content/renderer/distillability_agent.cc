@@ -210,7 +210,7 @@ void DistillabilityAgent::DidMeaningfulLayout(
       IsDistillablePage(doc, is_last), is_last);
 }
 
-DistillabilityAgent::~DistillabilityAgent() {}
+DistillabilityAgent::~DistillabilityAgent() = default;
 
 void DistillabilityAgent::OnDestruct() {
   delete this;

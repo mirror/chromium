@@ -68,7 +68,7 @@ base::FilePath test_file(const char* file) {
 
 class MockUpdateClient : public UpdateClient {
  public:
-  MockUpdateClient() {}
+  MockUpdateClient() = default;
 
   void Install(const std::string& id,
                CrxDataCallback crx_data_callback,
@@ -110,13 +110,13 @@ class MockUpdateClient : public UpdateClient {
                     int reason));
 
  private:
-  ~MockUpdateClient() override {}
+  ~MockUpdateClient() override = default;
 };
 
 class FakeInstallerPolicy : public ComponentInstallerPolicy {
  public:
-  FakeInstallerPolicy() {}
-  ~FakeInstallerPolicy() override {}
+  FakeInstallerPolicy() = default;
+  ~FakeInstallerPolicy() override = default;
 
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& dir) const override {

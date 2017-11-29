@@ -130,7 +130,7 @@ CleanupTaskTest::CleanupTaskTest()
     : task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {}
 
-CleanupTaskTest::~CleanupTaskTest() {}
+CleanupTaskTest::~CleanupTaskTest() = default;
 
 void CleanupTaskTest::SetUp() {
   DeviceConditions conditions;

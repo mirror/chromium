@@ -8,11 +8,10 @@ namespace history {
 
 KeywordSearchTermVisit::KeywordSearchTermVisit() : visits(0) {}
 
-KeywordSearchTermVisit::~KeywordSearchTermVisit() {}
-
+KeywordSearchTermVisit::~KeywordSearchTermVisit() = default;
 
 KeywordSearchTermRow::KeywordSearchTermRow() : keyword_id(0), url_id(0) {}
 
-KeywordSearchTermRow::~KeywordSearchTermRow() {}
+KeywordSearchTermRow::~KeywordSearchTermRow() = default;
 
 }  // namespace history

@@ -78,7 +78,7 @@ class CustomFrameView : public ash::CustomFrameViewAshBase {
   using ShapeRects = std::vector<gfx::Rect>;
 
   explicit CustomFrameView(views::Widget* widget) : widget_(widget) {}
-  ~CustomFrameView() override {}
+  ~CustomFrameView() override = default;
 
   // Overridden from ash::CustomFrameViewAshBase:
   void SetShouldPaintHeader(bool paint) override {
@@ -128,7 +128,7 @@ class CustomFrameView : public ash::CustomFrameViewAshBase {
 class CustomWindowTargeter : public aura::WindowTargeter {
  public:
   CustomWindowTargeter(views::Widget* widget) : widget_(widget) {}
-  ~CustomWindowTargeter() override {}
+  ~CustomWindowTargeter() override = default;
 
   // Overridden from aura::WindowTargeter:
   bool EventLocationInsideBounds(aura::Window* window,
@@ -264,7 +264,7 @@ ShellSurface::Config::Config(
       resize_component(resize_component),
       compositor_lock(std::move(compositor_lock)) {}
 
-ShellSurface::Config::~Config() {}
+ShellSurface::Config::~Config() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // ShellSurface, ScopedConfigure:

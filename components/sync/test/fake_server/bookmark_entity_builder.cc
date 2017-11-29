@@ -39,7 +39,7 @@ BookmarkEntityBuilder::BookmarkEntityBuilder(
 BookmarkEntityBuilder::BookmarkEntityBuilder(
     const BookmarkEntityBuilder& other) = default;
 
-BookmarkEntityBuilder::~BookmarkEntityBuilder() {}
+BookmarkEntityBuilder::~BookmarkEntityBuilder() = default;
 
 void BookmarkEntityBuilder::SetParentId(const std::string& parent_id) {
   parent_id_ = parent_id;

@@ -29,7 +29,7 @@ class WarmupURLFetcherTest : public WarmupURLFetcher {
                            url_request_context_getter)
       : WarmupURLFetcher(url_request_context_getter) {}
 
-  ~WarmupURLFetcherTest() override {}
+  ~WarmupURLFetcherTest() override = default;
 
   using WarmupURLFetcher::FetchWarmupURL;
   using WarmupURLFetcher::GetWarmupURLWithQueryParam;

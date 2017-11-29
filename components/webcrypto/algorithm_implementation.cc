@@ -9,8 +9,7 @@
 
 namespace webcrypto {
 
-AlgorithmImplementation::~AlgorithmImplementation() {
-}
+AlgorithmImplementation::~AlgorithmImplementation() = default;
 
 Status AlgorithmImplementation::Encrypt(
     const blink::WebCryptoAlgorithm& algorithm,

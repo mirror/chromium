@@ -97,7 +97,6 @@ base::Value MakeValue(const AccountId& v) {
   return base::Value(v.Serialize());
 }
 
-ParsedValueContainer<AccountId>::ParsedValueContainer() {
-}
+ParsedValueContainer<AccountId>::ParsedValueContainer() = default;
 
 }  // namespace login

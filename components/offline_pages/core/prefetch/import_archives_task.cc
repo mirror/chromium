@@ -98,7 +98,7 @@ ImportArchivesTask::ImportArchivesTask(PrefetchStore* prefetch_store,
       prefetch_importer_(prefetch_importer),
       weak_ptr_factory_(this) {}
 
-ImportArchivesTask::~ImportArchivesTask() {}
+ImportArchivesTask::~ImportArchivesTask() = default;
 
 void ImportArchivesTask::Run() {
   prefetch_store_->Execute(

@@ -27,7 +27,7 @@ class BlockingHttpPost : public HttpPostProviderInterface {
   BlockingHttpPost()
       : wait_for_abort_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                         base::WaitableEvent::InitialState::NOT_SIGNALED) {}
-  ~BlockingHttpPost() override {}
+  ~BlockingHttpPost() override = default;
 
   void SetExtraRequestHeaders(const char* headers) override {}
   void SetURL(const char* url, int port) override {}
@@ -53,7 +53,7 @@ class BlockingHttpPost : public HttpPostProviderInterface {
 
 class BlockingHttpPostFactory : public HttpPostProviderFactory {
  public:
-  ~BlockingHttpPostFactory() override {}
+  ~BlockingHttpPostFactory() override = default;
   void Init(const std::string& user_agent,
             const BindToTrackerCallback& bind_to_tracker_callback) override {}
 
@@ -127,7 +127,7 @@ namespace {
 class FailingHttpPost : public HttpPostProviderInterface {
  public:
   explicit FailingHttpPost(int error_code) : error_code_(error_code) {}
-  ~FailingHttpPost() override {}
+  ~FailingHttpPost() override = default;
 
   void SetExtraRequestHeaders(const char* headers) override {}
   void SetURL(const char* url, int port) override {}
@@ -153,7 +153,7 @@ class FailingHttpPost : public HttpPostProviderInterface {
 class FailingHttpPostFactory : public HttpPostProviderFactory {
  public:
   explicit FailingHttpPostFactory(int error_code) : error_code_(error_code) {}
-  ~FailingHttpPostFactory() override {}
+  ~FailingHttpPostFactory() override = default;
   void Init(const std::string& user_agent,
             const BindToTrackerCallback& bind_to_tracker_callback) override {}
 

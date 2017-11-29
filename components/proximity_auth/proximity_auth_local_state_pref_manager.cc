@@ -22,7 +22,8 @@ ProximityAuthLocalStatePrefManager::ProximityAuthLocalStatePrefManager(
     PrefService* local_state)
     : local_state_(local_state) {}
 
-ProximityAuthLocalStatePrefManager::~ProximityAuthLocalStatePrefManager() {}
+ProximityAuthLocalStatePrefManager::~ProximityAuthLocalStatePrefManager() =
+    default;
 
 // static.
 void ProximityAuthLocalStatePrefManager::RegisterPrefs(

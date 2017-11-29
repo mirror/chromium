@@ -11,12 +11,12 @@
 
 namespace security_state {
 
-SSLStatusInputEventData::SSLStatusInputEventData() {}
+SSLStatusInputEventData::SSLStatusInputEventData() = default;
 SSLStatusInputEventData::SSLStatusInputEventData(
     const InsecureInputEventData& initial_data)
     : data_(initial_data) {}
 
-SSLStatusInputEventData::~SSLStatusInputEventData() {}
+SSLStatusInputEventData::~SSLStatusInputEventData() = default;
 
 InsecureInputEventData* SSLStatusInputEventData::input_events() {
   return &data_;

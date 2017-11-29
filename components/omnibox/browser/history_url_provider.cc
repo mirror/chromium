@@ -306,8 +306,7 @@ SearchTermsDataSnapshot::SearchTermsDataSnapshot(
       google_image_search_source_(search_terms_data.GoogleImageSearchSource()) {
 }
 
-SearchTermsDataSnapshot::~SearchTermsDataSnapshot() {
-}
+SearchTermsDataSnapshot::~SearchTermsDataSnapshot() = default;
 
 std::string SearchTermsDataSnapshot::GoogleBaseURLValue() const {
   return google_base_url_value_;
@@ -440,8 +439,7 @@ HistoryURLProviderParams::HistoryURLProviderParams(
               : nullptr),
       search_terms_data(new SearchTermsDataSnapshot(search_terms_data)) {}
 
-HistoryURLProviderParams::~HistoryURLProviderParams() {
-}
+HistoryURLProviderParams::~HistoryURLProviderParams() = default;
 
 HistoryURLProvider::HistoryURLProvider(AutocompleteProviderClient* client,
                                        AutocompleteProviderListener* listener)

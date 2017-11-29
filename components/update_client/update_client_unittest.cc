@@ -121,8 +121,7 @@ FakePingManagerImpl::FakePingManagerImpl(
     const scoped_refptr<Configurator>& config)
     : PingManager(config) {}
 
-FakePingManagerImpl::~FakePingManagerImpl() {
-}
+FakePingManagerImpl::~FakePingManagerImpl() = default;
 
 bool FakePingManagerImpl::SendPing(const Component& component) {
   PingData ping_data;
@@ -190,8 +189,7 @@ UpdateClientTest::UpdateClientTest() {
   metadata_ = base::MakeUnique<PersistedData>(pref_.get(), nullptr);
 }
 
-UpdateClientTest::~UpdateClientTest() {
-}
+UpdateClientTest::~UpdateClientTest() = default;
 
 void UpdateClientTest::RunThreads() {
   runloop_.Run();
@@ -2379,7 +2377,7 @@ TEST_F(UpdateClientTest, SendUninstallPing) {
 
    private:
     FakeCrxDownloader() : CrxDownloader(nullptr) {}
-    ~FakeCrxDownloader() override {}
+    ~FakeCrxDownloader() override = default;
 
     void DoStartDownload(const GURL& url) override {}
   };

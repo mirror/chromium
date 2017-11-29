@@ -138,7 +138,7 @@ BrowsingHistoryService::HistoryEntry::HistoryEntry()
 BrowsingHistoryService::HistoryEntry::HistoryEntry(const HistoryEntry& other) =
     default;
 
-BrowsingHistoryService::HistoryEntry::~HistoryEntry() {}
+BrowsingHistoryService::HistoryEntry::~HistoryEntry() = default;
 
 bool BrowsingHistoryService::HistoryEntry::SortByTimeDescending(
     const BrowsingHistoryService::HistoryEntry& entry1,
@@ -146,7 +146,7 @@ bool BrowsingHistoryService::HistoryEntry::SortByTimeDescending(
   return entry1.time > entry2.time;
 }
 
-BrowsingHistoryService::QueryResultsInfo::~QueryResultsInfo() {}
+BrowsingHistoryService::QueryResultsInfo::~QueryResultsInfo() = default;
 
 BrowsingHistoryService::BrowsingHistoryService(
     BrowsingHistoryDriver* driver,

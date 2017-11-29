@@ -38,11 +38,9 @@
 
 namespace history {
 
-VisitSegmentDatabase::VisitSegmentDatabase() {
-}
+VisitSegmentDatabase::VisitSegmentDatabase() = default;
 
-VisitSegmentDatabase::~VisitSegmentDatabase() {
-}
+VisitSegmentDatabase::~VisitSegmentDatabase() = default;
 
 bool VisitSegmentDatabase::InitSegmentTables() {
   // Segments table.

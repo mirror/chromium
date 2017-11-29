@@ -10,7 +10,7 @@ namespace ukm {
 
 HistoryDeleteObserver::HistoryDeleteObserver() : history_observer_(this) {}
 
-HistoryDeleteObserver::~HistoryDeleteObserver() {}
+HistoryDeleteObserver::~HistoryDeleteObserver() = default;
 
 void HistoryDeleteObserver::ObserveServiceForDeletions(
     history::HistoryService* history_service) {

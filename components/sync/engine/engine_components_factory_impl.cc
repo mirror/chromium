@@ -25,7 +25,7 @@ EngineComponentsFactoryImpl::EngineComponentsFactoryImpl(
     const Switches& switches)
     : switches_(switches) {}
 
-EngineComponentsFactoryImpl::~EngineComponentsFactoryImpl() {}
+EngineComponentsFactoryImpl::~EngineComponentsFactoryImpl() = default;
 
 std::unique_ptr<SyncScheduler> EngineComponentsFactoryImpl::BuildScheduler(
     const std::string& name,

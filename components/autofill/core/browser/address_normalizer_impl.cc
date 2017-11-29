@@ -91,7 +91,7 @@ class AddressNormalizerImpl::NormalizationRequest {
         base::TimeDelta::FromSeconds(timeout_seconds));
   }
 
-  ~NormalizationRequest() {}
+  ~NormalizationRequest() = default;
 
   void OnRulesLoaded(bool success) {
     on_timeout_.Cancel();
@@ -138,7 +138,7 @@ AddressNormalizerImpl::AddressNormalizerImpl(std::unique_ptr<Source> source,
     : address_validator_(std::move(source), std::move(storage), this),
       app_locale_(app_locale) {}
 
-AddressNormalizerImpl::~AddressNormalizerImpl() {}
+AddressNormalizerImpl::~AddressNormalizerImpl() = default;
 
 void AddressNormalizerImpl::LoadRulesForRegion(const std::string& region_code) {
   address_validator_.LoadRules(region_code);

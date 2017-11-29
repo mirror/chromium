@@ -82,7 +82,7 @@ class StubAttachmentService : public AttachmentService {
 
 class AttachmentServiceProxyTest : public testing::Test {
  protected:
-  AttachmentServiceProxyTest() {}
+  AttachmentServiceProxyTest() = default;
 
   void SetUp() override {
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

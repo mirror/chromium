@@ -12,7 +12,8 @@ SyncChangeProcessorWrapperForTest::SyncChangeProcessorWrapperForTest(
   DCHECK(wrapped_);
 }
 
-SyncChangeProcessorWrapperForTest::~SyncChangeProcessorWrapperForTest() {}
+SyncChangeProcessorWrapperForTest::~SyncChangeProcessorWrapperForTest() =
+    default;
 
 SyncError SyncChangeProcessorWrapperForTest::ProcessSyncChanges(
     const base::Location& from_here,

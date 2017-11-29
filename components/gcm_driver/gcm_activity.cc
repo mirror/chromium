@@ -10,53 +10,39 @@ Activity::Activity()
     : time(base::Time::Now()) {
 }
 
-Activity::~Activity() {
-}
+Activity::~Activity() = default;
 
-CheckinActivity::CheckinActivity() {
-}
+CheckinActivity::CheckinActivity() = default;
 
-CheckinActivity::~CheckinActivity() {
-}
+CheckinActivity::~CheckinActivity() = default;
 
-ConnectionActivity::ConnectionActivity() {
-}
+ConnectionActivity::ConnectionActivity() = default;
 
-ConnectionActivity::~ConnectionActivity() {
-}
+ConnectionActivity::~ConnectionActivity() = default;
 
-RegistrationActivity::RegistrationActivity() {
-}
+RegistrationActivity::RegistrationActivity() = default;
 
-RegistrationActivity::~RegistrationActivity() {
-}
+RegistrationActivity::~RegistrationActivity() = default;
 
 ReceivingActivity::ReceivingActivity()
     : message_byte_size(0) {
 }
 
-ReceivingActivity::~ReceivingActivity() {
-}
+ReceivingActivity::~ReceivingActivity() = default;
 
-SendingActivity::SendingActivity() {
-}
+SendingActivity::SendingActivity() = default;
 
-SendingActivity::~SendingActivity() {
-}
+SendingActivity::~SendingActivity() = default;
 
-DecryptionFailureActivity::DecryptionFailureActivity() {
-}
+DecryptionFailureActivity::DecryptionFailureActivity() = default;
 
-DecryptionFailureActivity::~DecryptionFailureActivity() {
-}
+DecryptionFailureActivity::~DecryptionFailureActivity() = default;
 
-RecordedActivities::RecordedActivities() {
-}
+RecordedActivities::RecordedActivities() = default;
 
 RecordedActivities::RecordedActivities(const RecordedActivities& other) =
     default;
 
-RecordedActivities::~RecordedActivities() {
-}
+RecordedActivities::~RecordedActivities() = default;
 
 }  // namespace gcm

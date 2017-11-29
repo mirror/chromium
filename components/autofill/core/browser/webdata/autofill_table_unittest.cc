@@ -123,8 +123,8 @@ int GetAutofillEntryCount(const base::string16& name,
 
 class AutofillTableTest : public testing::Test {
  public:
-  AutofillTableTest() {}
-  ~AutofillTableTest() override {}
+  AutofillTableTest() = default;
+  ~AutofillTableTest() override = default;
 
  protected:
   void SetUp() override {
@@ -2042,8 +2042,8 @@ struct GetFormValuesTestCase {
 
 class GetFormValuesTest : public testing::TestWithParam<GetFormValuesTestCase> {
  public:
-  GetFormValuesTest() {}
-  ~GetFormValuesTest() override {}
+  GetFormValuesTest() = default;
+  ~GetFormValuesTest() override = default;
 
  protected:
   void SetUp() override {

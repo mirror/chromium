@@ -168,11 +168,9 @@ bool ShouldForceExperiment(const Study_Experiment& experiment,
 
 }  // namespace
 
-VariationsSeedProcessor::VariationsSeedProcessor() {
-}
+VariationsSeedProcessor::VariationsSeedProcessor() = default;
 
-VariationsSeedProcessor::~VariationsSeedProcessor() {
-}
+VariationsSeedProcessor::~VariationsSeedProcessor() = default;
 
 void VariationsSeedProcessor::CreateTrialsFromSeed(
     const VariationsSeed& seed,

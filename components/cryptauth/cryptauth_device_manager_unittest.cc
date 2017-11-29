@@ -306,7 +306,7 @@ class TestCryptAuthDeviceManager : public CryptAuthDeviceManager {
     SetSyncSchedulerForTest(base::WrapUnique(scoped_sync_scheduler_));
   }
 
-  ~TestCryptAuthDeviceManager() override {}
+  ~TestCryptAuthDeviceManager() override = default;
 
   base::WeakPtr<MockSyncScheduler> GetSyncScheduler() {
     return weak_sync_scheduler_factory_.GetWeakPtr();

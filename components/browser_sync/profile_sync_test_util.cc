@@ -248,7 +248,7 @@ ProfileSyncServiceBundle::ProfileSyncServiceBundle()
   signin_manager_.Initialize(&pref_service_);
 }
 
-ProfileSyncServiceBundle::~ProfileSyncServiceBundle() {}
+ProfileSyncServiceBundle::~ProfileSyncServiceBundle() = default;
 
 ProfileSyncService::InitParams ProfileSyncServiceBundle::CreateBasicInitParams(
     ProfileSyncService::StartBehavior start_behavior,

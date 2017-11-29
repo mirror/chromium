@@ -152,7 +152,8 @@ TemporaryPagesConsistencyCheckTask::TemporaryPagesConsistencyCheckTask(
       archives_dir_(archives_dir),
       weak_ptr_factory_(this) {}
 
-TemporaryPagesConsistencyCheckTask::~TemporaryPagesConsistencyCheckTask() {}
+TemporaryPagesConsistencyCheckTask::~TemporaryPagesConsistencyCheckTask() =
+    default;
 
 void TemporaryPagesConsistencyCheckTask::Run() {
   std::vector<std::string> temp_namespaces =

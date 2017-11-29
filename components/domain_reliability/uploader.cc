@@ -203,8 +203,8 @@ class DomainReliabilityUploaderImpl
 
 }  // namespace
 
-DomainReliabilityUploader::DomainReliabilityUploader() {}
-DomainReliabilityUploader::~DomainReliabilityUploader() {}
+DomainReliabilityUploader::DomainReliabilityUploader() = default;
+DomainReliabilityUploader::~DomainReliabilityUploader() = default;
 
 // static
 std::unique_ptr<DomainReliabilityUploader> DomainReliabilityUploader::Create(

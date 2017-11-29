@@ -88,7 +88,7 @@ GCMInvalidationBridge::Core::Core(
   DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
-GCMInvalidationBridge::Core::~Core() {}
+GCMInvalidationBridge::Core::~Core() = default;
 
 void GCMInvalidationBridge::Core::Initialize(
     ConnectionStateCallback connection_state_callback,

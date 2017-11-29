@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-AccumulatingMetadataChangeList::AccumulatingMetadataChangeList() {}
-AccumulatingMetadataChangeList::~AccumulatingMetadataChangeList() {}
+AccumulatingMetadataChangeList::AccumulatingMetadataChangeList() = default;
+AccumulatingMetadataChangeList::~AccumulatingMetadataChangeList() = default;
 
 void AccumulatingMetadataChangeList::TransferChanges(
     ModelTypeStore* store,

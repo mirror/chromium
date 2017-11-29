@@ -18,8 +18,7 @@ FakeInvalidationService::FakeInvalidationService()
   token_service_.set_auto_post_fetch_response_on_message_loop(true);
 }
 
-FakeInvalidationService::~FakeInvalidationService() {
-}
+FakeInvalidationService::~FakeInvalidationService() = default;
 
 void FakeInvalidationService::RegisterInvalidationHandler(
       syncer::InvalidationHandler* handler) {

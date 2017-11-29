@@ -556,7 +556,7 @@ TEST_F(GLRendererWithDefaultHarnessTest, ExternalStencil) {
 
 class ForbidSynchronousCallContext : public cc::TestWebGraphicsContext3D {
  public:
-  ForbidSynchronousCallContext() {}
+  ForbidSynchronousCallContext() = default;
 
   void getAttachedShaders(GLuint program,
                           GLsizei max_count,
@@ -674,7 +674,7 @@ TEST_F(GLRendererTest, InitializationDoesNotMakeSynchronousCalls) {
 
 class LoseContextOnFirstGetContext : public cc::TestWebGraphicsContext3D {
  public:
-  LoseContextOnFirstGetContext() {}
+  LoseContextOnFirstGetContext() = default;
 
   void getProgramiv(GLuint program, GLenum pname, GLint* value) override {
     context_lost_ = true;
@@ -1784,7 +1784,7 @@ class MockOutputSurface : public OutputSurface {
  public:
   explicit MockOutputSurface(scoped_refptr<ContextProvider> provider)
       : OutputSurface(std::move(provider)) {}
-  virtual ~MockOutputSurface() {}
+  virtual ~MockOutputSurface() = default;
 
   void BindToClient(OutputSurfaceClient*) override {}
 
@@ -2488,7 +2488,7 @@ class GLRendererWithMockContextTest : public ::testing::Test {
  protected:
   class MockContextSupport : public cc::TestContextSupport {
    public:
-    MockContextSupport() {}
+    MockContextSupport() = default;
     MOCK_METHOD1(SetAggressivelyFreeResources,
                  void(bool aggressively_free_resources));
   };

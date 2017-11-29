@@ -35,7 +35,7 @@ class ImageDataFetcherTest : public testing::Test {
       : test_request_context_getter_(
             new net::TestURLRequestContextGetter(message_loop_.task_runner())),
         image_data_fetcher_(test_request_context_getter_.get()) {}
-  ~ImageDataFetcherTest() override {}
+  ~ImageDataFetcherTest() override = default;
 
   MOCK_METHOD2(OnImageDataFetched,
                void(const std::string&, const RequestMetadata&));

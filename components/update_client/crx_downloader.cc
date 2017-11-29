@@ -60,7 +60,7 @@ CrxDownloader::CrxDownloader(std::unique_ptr<CrxDownloader> successor)
     : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       successor_(std::move(successor)) {}
 
-CrxDownloader::~CrxDownloader() {}
+CrxDownloader::~CrxDownloader() = default;
 
 void CrxDownloader::set_progress_callback(
     const ProgressCallback& progress_callback) {

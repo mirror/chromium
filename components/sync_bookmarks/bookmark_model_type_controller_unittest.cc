@@ -79,8 +79,8 @@ class TestSyncService : public syncer::FakeSyncService {
 
 class TestModelTypeConfigurer : public syncer::ModelTypeConfigurer {
  public:
-  TestModelTypeConfigurer() {}
-  ~TestModelTypeConfigurer() override {}
+  TestModelTypeConfigurer() = default;
+  ~TestModelTypeConfigurer() override = default;
 
   void ConfigureDataTypes(ConfigureParams params) override {}
 

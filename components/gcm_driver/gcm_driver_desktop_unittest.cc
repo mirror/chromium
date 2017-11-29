@@ -65,8 +65,7 @@ class FakeGCMConnectionObserver : public GCMConnectionObserver {
 FakeGCMConnectionObserver::FakeGCMConnectionObserver() : connected_(false) {
 }
 
-FakeGCMConnectionObserver::~FakeGCMConnectionObserver() {
-}
+FakeGCMConnectionObserver::~FakeGCMConnectionObserver() = default;
 
 void FakeGCMConnectionObserver::OnConnected(
     const net::IPEndPoint& ip_endpoint) {
@@ -191,8 +190,7 @@ GCMDriverTest::GCMDriverTest()
       unregistration_result_(GCMClient::UNKNOWN_ERROR) {
 }
 
-GCMDriverTest::~GCMDriverTest() {
-}
+GCMDriverTest::~GCMDriverTest() = default;
 
 void GCMDriverTest::SetUp() {
   GCMChannelStatusSyncer::RegisterPrefs(prefs_.registry());
@@ -586,11 +584,9 @@ class GCMDriverFunctionalTest : public GCMDriverTest {
   DISALLOW_COPY_AND_ASSIGN(GCMDriverFunctionalTest);
 };
 
-GCMDriverFunctionalTest::GCMDriverFunctionalTest() {
-}
+GCMDriverFunctionalTest::GCMDriverFunctionalTest() = default;
 
-GCMDriverFunctionalTest::~GCMDriverFunctionalTest() {
-}
+GCMDriverFunctionalTest::~GCMDriverFunctionalTest() = default;
 
 void GCMDriverFunctionalTest::SetUp() {
   GCMDriverTest::SetUp();
@@ -940,11 +936,9 @@ class GCMChannelStatusSyncerTest : public GCMDriverTest {
   DISALLOW_COPY_AND_ASSIGN(GCMChannelStatusSyncerTest);
 };
 
-GCMChannelStatusSyncerTest::GCMChannelStatusSyncerTest() {
-}
+GCMChannelStatusSyncerTest::GCMChannelStatusSyncerTest() = default;
 
-GCMChannelStatusSyncerTest::~GCMChannelStatusSyncerTest() {
-}
+GCMChannelStatusSyncerTest::~GCMChannelStatusSyncerTest() = default;
 
 void GCMChannelStatusSyncerTest::SetUp() {
   GCMDriverTest::SetUp();
@@ -1189,11 +1183,9 @@ class GCMDriverInstanceIDTest : public GCMDriverTest {
   DISALLOW_COPY_AND_ASSIGN(GCMDriverInstanceIDTest);
 };
 
-GCMDriverInstanceIDTest::GCMDriverInstanceIDTest() {
-}
+GCMDriverInstanceIDTest::GCMDriverInstanceIDTest() = default;
 
-GCMDriverInstanceIDTest::~GCMDriverInstanceIDTest() {
-}
+GCMDriverInstanceIDTest::~GCMDriverInstanceIDTest() = default;
 
 void GCMDriverInstanceIDTest::GetReady() {
   CreateDriver();

@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-SyncEngineEventListener::SyncEngineEventListener() {}
+SyncEngineEventListener::SyncEngineEventListener() = default;
 
-SyncEngineEventListener::~SyncEngineEventListener() {}
+SyncEngineEventListener::~SyncEngineEventListener() = default;
 
 }  // namespace syncer

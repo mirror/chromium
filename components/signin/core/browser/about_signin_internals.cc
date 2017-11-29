@@ -195,7 +195,7 @@ AboutSigninInternals::AboutSigninInternals(
       signin_error_controller_(signin_error_controller),
       cookie_manager_service_(cookie_manager_service) {}
 
-AboutSigninInternals::~AboutSigninInternals() {}
+AboutSigninInternals::~AboutSigninInternals() = default;
 
 // static
 void AboutSigninInternals::RegisterPrefs(
@@ -438,7 +438,7 @@ AboutSigninInternals::TokenInfo::TokenInfo(
       error(GoogleServiceAuthError::AuthErrorNone()),
       removed_(false) {}
 
-AboutSigninInternals::TokenInfo::~TokenInfo() {}
+AboutSigninInternals::TokenInfo::~TokenInfo() = default;
 
 bool AboutSigninInternals::TokenInfo::LessThan(
     const std::unique_ptr<TokenInfo>& a,
@@ -498,7 +498,7 @@ AboutSigninInternals::TokenInfo::ToValue() const {
 AboutSigninInternals::SigninStatus::SigninStatus()
     : timed_signin_fields(TIMED_FIELDS_COUNT) {}
 
-AboutSigninInternals::SigninStatus::~SigninStatus() {}
+AboutSigninInternals::SigninStatus::~SigninStatus() = default;
 
 AboutSigninInternals::TokenInfo* AboutSigninInternals::SigninStatus::FindToken(
     const std::string& account_id,

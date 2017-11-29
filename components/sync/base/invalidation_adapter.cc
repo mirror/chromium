@@ -9,7 +9,7 @@ namespace syncer {
 InvalidationAdapter::InvalidationAdapter(const Invalidation& invalidation)
     : invalidation_(invalidation) {}
 
-InvalidationAdapter::~InvalidationAdapter() {}
+InvalidationAdapter::~InvalidationAdapter() = default;
 
 bool InvalidationAdapter::IsUnknownVersion() const {
   return invalidation_.is_unknown_version();

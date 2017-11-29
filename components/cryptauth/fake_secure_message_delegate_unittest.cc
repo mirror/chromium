@@ -91,7 +91,7 @@ void CheckSerializedSecureMessage(
 
 class CryptAuthFakeSecureMessageDelegateTest : public testing::Test {
  protected:
-  CryptAuthFakeSecureMessageDelegateTest() {}
+  CryptAuthFakeSecureMessageDelegateTest() = default;
 
   FakeSecureMessageDelegate delegate_;
 

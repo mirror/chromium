@@ -182,11 +182,9 @@ Status VerifyUsages(const JwkReader& jwk,
 
 }  // namespace
 
-JwkReader::JwkReader() {
-}
+JwkReader::JwkReader() = default;
 
-JwkReader::~JwkReader() {
-}
+JwkReader::~JwkReader() = default;
 
 Status JwkReader::Init(const CryptoData& bytes,
                        bool expected_extractable,

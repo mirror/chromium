@@ -116,7 +116,7 @@ FrontendDataTypeController::FrontendDataTypeController()
                                   GROUP_UI),
       state_(NOT_RUNNING) {}
 
-FrontendDataTypeController::~FrontendDataTypeController() {}
+FrontendDataTypeController::~FrontendDataTypeController() = default;
 
 bool FrontendDataTypeController::StartModels() {
   DCHECK(CalledOnValidThread());

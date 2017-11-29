@@ -44,7 +44,7 @@ class TestingURLBlacklistManager : public URLBlacklistManager {
         update_called_(0),
         set_blacklist_called_(false) {}
 
-  ~TestingURLBlacklistManager() override {}
+  ~TestingURLBlacklistManager() override = default;
 
   // Make this method public for testing.
   using URLBlacklistManager::ScheduleUpdate;
@@ -80,7 +80,7 @@ class TestingURLBlacklistManager : public URLBlacklistManager {
 
 class URLBlacklistManagerTest : public testing::Test {
  protected:
-  URLBlacklistManagerTest() {}
+  URLBlacklistManagerTest() = default;
 
   void SetUp() override {
     pref_service_.registry()->RegisterListPref(policy_prefs::kUrlBlacklist);
@@ -119,20 +119,9 @@ struct FilterTestParams {
         port_(port),
         path_(path) {}
 
-  FilterTestParams(const FilterTestParams& params)
-      : filter_(params.filter_), scheme_(params.scheme_), host_(params.host_),
-        match_subdomains_(params.match_subdomains_), port_(params.port_),
-        path_(params.path_) {}
+  FilterTestParams(const FilterTestParams& params) = default;
 
-  const FilterTestParams& operator=(const FilterTestParams& params) {
-    filter_ = params.filter_;
-    scheme_ = params.scheme_;
-    host_ = params.host_;
-    match_subdomains_ = params.match_subdomains_;
-    port_ = params.port_;
-    path_ = params.path_;
-    return *this;
-  }
+  const FilterTestParams& operator=(const FilterTestParams& params) = default;
 
   const std::string& filter() const { return filter_; }
   const std::string& scheme() const { return scheme_; }
@@ -160,7 +149,7 @@ void PrintTo(const FilterTestParams& params, std::ostream* os) {
 class URLBlacklistFilterToComponentsTest
     : public testing::TestWithParam<FilterTestParams> {
  public:
-  URLBlacklistFilterToComponentsTest() {}
+  URLBlacklistFilterToComponentsTest() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(URLBlacklistFilterToComponentsTest);

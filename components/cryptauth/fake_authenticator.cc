@@ -10,9 +10,9 @@
 
 namespace cryptauth {
 
-FakeAuthenticator::FakeAuthenticator() {}
+FakeAuthenticator::FakeAuthenticator() = default;
 
-FakeAuthenticator::~FakeAuthenticator() {}
+FakeAuthenticator::~FakeAuthenticator() = default;
 
 void FakeAuthenticator::Authenticate(
     const Authenticator::AuthenticationCallback& callback) {

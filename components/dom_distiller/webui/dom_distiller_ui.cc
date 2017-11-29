@@ -56,6 +56,6 @@ DomDistillerUi::DomDistillerUi(content::WebUI* web_ui,
       base::MakeUnique<DomDistillerHandler>(service, scheme));
 }
 
-DomDistillerUi::~DomDistillerUi() {}
+DomDistillerUi::~DomDistillerUi() = default;
 
 }  // namespace dom_distiller

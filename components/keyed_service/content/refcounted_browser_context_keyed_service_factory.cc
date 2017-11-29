@@ -42,8 +42,7 @@ RefcountedBrowserContextKeyedServiceFactory::
 }
 
 RefcountedBrowserContextKeyedServiceFactory::
-    ~RefcountedBrowserContextKeyedServiceFactory() {
-}
+    ~RefcountedBrowserContextKeyedServiceFactory() = default;
 
 scoped_refptr<RefcountedKeyedService>
 RefcountedBrowserContextKeyedServiceFactory::GetServiceForBrowserContext(

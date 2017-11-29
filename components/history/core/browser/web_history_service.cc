@@ -71,7 +71,7 @@ class RequestImpl : public WebHistoryService::Request,
                     private OAuth2TokenService::Consumer,
                     private net::URLFetcherDelegate {
  public:
-  ~RequestImpl() override {}
+  ~RequestImpl() override = default;
 
   // Returns the response code received from the server, which will only be
   // valid if the request succeeded.
@@ -346,11 +346,9 @@ std::unique_ptr<base::DictionaryValue> CreateDeletion(
 
 }  // namespace
 
-WebHistoryService::Request::Request() {
-}
+WebHistoryService::Request::Request() = default;
 
-WebHistoryService::Request::~Request() {
-}
+WebHistoryService::Request::~Request() = default;
 
 WebHistoryService::WebHistoryService(
     OAuth2TokenService* token_service,
@@ -362,8 +360,7 @@ WebHistoryService::WebHistoryService(
       weak_ptr_factory_(this) {
 }
 
-WebHistoryService::~WebHistoryService() {
-}
+WebHistoryService::~WebHistoryService() = default;
 
 void WebHistoryService::AddObserver(WebHistoryServiceObserver* observer) {
   observer_list_.AddObserver(observer);

@@ -35,7 +35,7 @@ FakeSyncClient::FakeSyncClient(SyncApiComponentFactory* factory)
   SyncPrefs::RegisterProfilePrefs(pref_service_.registry());
 }
 
-FakeSyncClient::~FakeSyncClient() {}
+FakeSyncClient::~FakeSyncClient() = default;
 
 void FakeSyncClient::Initialize() {}
 

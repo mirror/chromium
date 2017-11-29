@@ -17,9 +17,9 @@
 
 namespace policy {
 
-URLBlacklistPolicyHandler::URLBlacklistPolicyHandler() {}
+URLBlacklistPolicyHandler::URLBlacklistPolicyHandler() = default;
 
-URLBlacklistPolicyHandler::~URLBlacklistPolicyHandler() {}
+URLBlacklistPolicyHandler::~URLBlacklistPolicyHandler() = default;
 
 bool URLBlacklistPolicyHandler::CheckPolicySettings(const PolicyMap& policies,
                                                     PolicyErrorMap* errors) {

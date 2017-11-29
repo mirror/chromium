@@ -28,8 +28,8 @@ namespace {
 // registrationId.
 class CustomFakeGCMDriver : public gcm::FakeGCMDriver {
  public:
-  CustomFakeGCMDriver() {}
-  ~CustomFakeGCMDriver() override {}
+  CustomFakeGCMDriver() = default;
+  ~CustomFakeGCMDriver() override = default;
 
  protected:
   // FakeGCMDriver override:
@@ -51,7 +51,7 @@ class GCMInvalidationBridgeTest : public ::testing::Test {
   GCMInvalidationBridgeTest()
       : connection_online_(false) {}
 
-  ~GCMInvalidationBridgeTest() override {}
+  ~GCMInvalidationBridgeTest() override = default;
 
   void SetUp() override {
     token_service_.reset(new FakeProfileOAuth2TokenService());

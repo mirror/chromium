@@ -12,11 +12,9 @@
 
 namespace policy {
 
-MockCloudExternalDataManager::MockCloudExternalDataManager() {
-}
+MockCloudExternalDataManager::MockCloudExternalDataManager() = default;
 
-MockCloudExternalDataManager::~MockCloudExternalDataManager() {
-}
+MockCloudExternalDataManager::~MockCloudExternalDataManager() = default;
 
 std::unique_ptr<ExternalDataFetcher>
 MockCloudExternalDataManager::CreateExternalDataFetcher(

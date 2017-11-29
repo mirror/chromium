@@ -86,7 +86,7 @@ const char kTestSchema[] =
 class MockComponentCloudPolicyDelegate
     : public ComponentCloudPolicyService::Delegate {
  public:
-  virtual ~MockComponentCloudPolicyDelegate() {}
+  virtual ~MockComponentCloudPolicyDelegate() = default;
 
   MOCK_METHOD0(OnComponentCloudPolicyUpdated, void());
 };
@@ -103,7 +103,7 @@ class TestURLRequestContextGetter : public net::URLRequestContextGetter {
   }
 
  private:
-  ~TestURLRequestContextGetter() override {}
+  ~TestURLRequestContextGetter() override = default;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 };

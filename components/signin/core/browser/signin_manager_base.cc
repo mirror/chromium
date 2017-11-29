@@ -37,7 +37,7 @@ SigninManagerBase::SigninManagerBase(
   DCHECK(account_tracker_service_);
 }
 
-SigninManagerBase::~SigninManagerBase() {}
+SigninManagerBase::~SigninManagerBase() = default;
 
 // static
 void SigninManagerBase::RegisterProfilePrefs(

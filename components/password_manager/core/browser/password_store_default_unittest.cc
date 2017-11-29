@@ -51,7 +51,7 @@ class MockPasswordStoreConsumer : public PasswordStoreConsumer {
 class BadLoginDatabase : public LoginDatabase {
  public:
   BadLoginDatabase() : LoginDatabase(base::FilePath()) {}
-  ~BadLoginDatabase() override {}
+  ~BadLoginDatabase() override = default;
 
   // LoginDatabase:
   bool Init() override { return false; }

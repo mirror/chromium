@@ -17,7 +17,7 @@ MarkAttemptStartedTask::MarkAttemptStartedTask(
     const RequestQueueStore::UpdateCallback& callback)
     : UpdateRequestTask(store, request_id, callback) {}
 
-MarkAttemptStartedTask::~MarkAttemptStartedTask() {}
+MarkAttemptStartedTask::~MarkAttemptStartedTask() = default;
 
 void MarkAttemptStartedTask::UpdateRequestImpl(
     std::unique_ptr<UpdateRequestsResult> read_result) {

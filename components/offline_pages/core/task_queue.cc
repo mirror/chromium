@@ -14,7 +14,7 @@ TaskQueue::TaskQueue(Delegate* delegate)
   DCHECK(delegate_);
 }
 
-TaskQueue::~TaskQueue() {}
+TaskQueue::~TaskQueue() = default;
 
 void TaskQueue::AddTask(std::unique_ptr<Task> task) {
   task->SetTaskCompletionCallback(

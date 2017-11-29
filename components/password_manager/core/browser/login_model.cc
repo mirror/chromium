@@ -6,9 +6,9 @@
 
 namespace password_manager {
 
-LoginModelObserver::LoginModelObserver() {}
+LoginModelObserver::LoginModelObserver() = default;
 
-LoginModelObserver::~LoginModelObserver() {}
+LoginModelObserver::~LoginModelObserver() = default;
 
 void LoginModelObserver::OnAutofillDataAvailable(
     const autofill::PasswordForm& credentials) {
@@ -21,7 +21,7 @@ void LoginModelObserver::OnAutofillDataAvailable(
   }
 }
 
-LoginModel::LoginModel() {}
-LoginModel::~LoginModel() {}
+LoginModel::LoginModel() = default;
+LoginModel::~LoginModel() = default;
 
 }  // namespace password_manager

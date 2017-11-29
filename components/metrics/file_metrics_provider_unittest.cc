@@ -37,7 +37,7 @@ namespace metrics {
 
 class HistogramFlattenerDeltaRecorder : public base::HistogramFlattener {
  public:
-  HistogramFlattenerDeltaRecorder() {}
+  HistogramFlattenerDeltaRecorder() = default;
 
   void RecordDelta(const base::HistogramBase& histogram,
                    const base::HistogramSamples& snapshot) override {

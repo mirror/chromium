@@ -23,7 +23,7 @@ LevelDBServiceImpl::LevelDBServiceImpl(
     scoped_refptr<base::SequencedTaskRunner> file_task_runner)
     : thread_(new LevelDBMojoProxy(std::move(file_task_runner))) {}
 
-LevelDBServiceImpl::~LevelDBServiceImpl() {}
+LevelDBServiceImpl::~LevelDBServiceImpl() = default;
 
 void LevelDBServiceImpl::Open(
     filesystem::mojom::DirectoryPtr directory,

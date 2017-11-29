@@ -50,7 +50,7 @@ class FakeAutofillAgent : public mojom::AutofillAgent {
         called_clear_form_(false),
         called_clear_previewed_form_(false) {}
 
-  ~FakeAutofillAgent() override {}
+  ~FakeAutofillAgent() override = default;
 
   void BindRequest(mojo::ScopedMessagePipeHandle handle) {
     bindings_.AddBinding(this, mojom::AutofillAgentRequest(std::move(handle)));
@@ -236,7 +236,7 @@ class MockAutofillManager : public AutofillManager {
  public:
   MockAutofillManager(AutofillDriver* driver, AutofillClient* client)
       : AutofillManager(driver, client, kAppLocale, kDownloadState) {}
-  virtual ~MockAutofillManager() {}
+  virtual ~MockAutofillManager() = default;
 
   MOCK_METHOD0(Reset, void());
 };
@@ -260,7 +260,7 @@ class TestContentAutofillDriver : public ContentAutofillDriver {
         new MockAutofillManager(this, client));
     SetAutofillManager(std::move(autofill_manager));
   }
-  ~TestContentAutofillDriver() override {}
+  ~TestContentAutofillDriver() override = default;
 
   virtual MockAutofillManager* mock_autofill_manager() {
     return static_cast<MockAutofillManager*>(autofill_manager());

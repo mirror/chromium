@@ -15,7 +15,7 @@ class ContextMenuDelegateUserData : public base::SupportsUserData::Data {
  public:
   explicit ContextMenuDelegateUserData(ContextMenuDelegate* menu_delegate)
       : menu_delegate_(menu_delegate) {}
-  ~ContextMenuDelegateUserData() override {}
+  ~ContextMenuDelegateUserData() override = default;
   ContextMenuDelegate* menu_delegate() { return menu_delegate_; }
 
  private:
@@ -30,8 +30,7 @@ ContextMenuDelegate::ContextMenuDelegate(content::WebContents* web_contents) {
       base::MakeUnique<ContextMenuDelegateUserData>(this));
 }
 
-ContextMenuDelegate::~ContextMenuDelegate() {
-}
+ContextMenuDelegate::~ContextMenuDelegate() = default;
 
 // static
 ContextMenuDelegate* ContextMenuDelegate::FromWebContents(

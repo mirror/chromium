@@ -41,8 +41,7 @@ TestConfigurator::TestConfigurator()
       context_(base::MakeRefCounted<net::TestURLRequestContextGetter>(
           base::ThreadTaskRunnerHandle::Get())) {}
 
-TestConfigurator::~TestConfigurator() {
-}
+TestConfigurator::~TestConfigurator() = default;
 
 int TestConfigurator::InitialDelay() const {
   return initial_time_;

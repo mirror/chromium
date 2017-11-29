@@ -47,8 +47,7 @@ JsonPrefStore::ReadResult::ReadResult()
     : error(PersistentPrefStore::PREF_READ_ERROR_NONE), no_dir(false) {
 }
 
-JsonPrefStore::ReadResult::~ReadResult() {
-}
+JsonPrefStore::ReadResult::~ReadResult() = default;
 
 namespace {
 

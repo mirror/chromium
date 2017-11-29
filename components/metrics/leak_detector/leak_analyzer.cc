@@ -28,7 +28,7 @@ LeakAnalyzer::LeakAnalyzer(uint32_t ranking_size,
   suspected_leaks_.reserve(ranking_size);
 }
 
-LeakAnalyzer::~LeakAnalyzer() {}
+LeakAnalyzer::~LeakAnalyzer() = default;
 
 void LeakAnalyzer::AddSample(RankedSet ranked_set) {
   // Save the ranked entries from the previous call.

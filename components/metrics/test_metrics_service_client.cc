@@ -21,8 +21,7 @@ TestMetricsServiceClient::TestMetricsServiceClient()
       reporting_is_managed_(false),
       enable_default_(EnableMetricsDefault::DEFAULT_UNKNOWN) {}
 
-TestMetricsServiceClient::~TestMetricsServiceClient() {
-}
+TestMetricsServiceClient::~TestMetricsServiceClient() = default;
 
 metrics::MetricsService* TestMetricsServiceClient::GetMetricsService() {
   return nullptr;

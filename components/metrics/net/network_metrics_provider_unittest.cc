@@ -29,7 +29,7 @@ class TestNetworkQualityEstimatorProvider
   explicit TestNetworkQualityEstimatorProvider(
       net::TestNetworkQualityEstimator* estimator)
       : estimator_(estimator) {}
-  ~TestNetworkQualityEstimatorProvider() override {}
+  ~TestNetworkQualityEstimatorProvider() override = default;
 
  private:
   // NetworkMetricsProvider::NetworkQualityEstimatorProvider:

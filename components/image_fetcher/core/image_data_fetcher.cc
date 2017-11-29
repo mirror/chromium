@@ -31,7 +31,7 @@ struct ImageDataFetcher::ImageDataFetcherRequest {
                           std::unique_ptr<net::URLFetcher> url_fetcher)
       : callback(callback), url_fetcher(std::move(url_fetcher)) {}
 
-  ~ImageDataFetcherRequest() {}
+  ~ImageDataFetcherRequest() = default;
 
   // The callback to run after the image data was fetched. The callback will
   // be run even if the image data could not be fetched successfully.
@@ -46,7 +46,7 @@ ImageDataFetcher::ImageDataFetcher(
       data_use_service_name_(DataUseUserData::IMAGE_FETCHER_UNTAGGED),
       next_url_fetcher_id_(0) {}
 
-ImageDataFetcher::~ImageDataFetcher() {}
+ImageDataFetcher::~ImageDataFetcher() = default;
 
 void ImageDataFetcher::SetDataUseServiceName(
     DataUseServiceName data_use_service_name) {

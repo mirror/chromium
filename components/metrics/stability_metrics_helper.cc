@@ -67,7 +67,7 @@ StabilityMetricsHelper::StabilityMetricsHelper(PrefService* local_state)
   DCHECK(local_state_);
 }
 
-StabilityMetricsHelper::~StabilityMetricsHelper() {}
+StabilityMetricsHelper::~StabilityMetricsHelper() = default;
 
 void StabilityMetricsHelper::ProvideStabilityMetrics(
     SystemProfileProto* system_profile_proto) {

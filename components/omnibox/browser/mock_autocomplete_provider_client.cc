@@ -13,5 +13,4 @@ MockAutocompleteProviderClient::MockAutocompleteProviderClient() {
           GetRequestContext());
 }
 
-MockAutocompleteProviderClient::~MockAutocompleteProviderClient() {
-}
+MockAutocompleteProviderClient::~MockAutocompleteProviderClient() = default;

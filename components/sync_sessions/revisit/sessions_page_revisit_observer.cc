@@ -22,7 +22,7 @@ SessionsPageRevisitObserver::SessionsPageRevisitObserver(
     std::unique_ptr<ForeignSessionsProvider> provider)
     : provider_(std::move(provider)) {}
 
-SessionsPageRevisitObserver::~SessionsPageRevisitObserver() {}
+SessionsPageRevisitObserver::~SessionsPageRevisitObserver() = default;
 
 void SessionsPageRevisitObserver::OnPageVisit(
     const GURL& url,

@@ -23,7 +23,7 @@ RegionDataLoaderImpl::RegionDataLoaderImpl(
       this, &RegionDataLoaderImpl::OnRegionDataLoaded));
 }
 
-RegionDataLoaderImpl::~RegionDataLoaderImpl() {}
+RegionDataLoaderImpl::~RegionDataLoaderImpl() = default;
 
 void RegionDataLoaderImpl::LoadRegionData(
     const std::string& country_code,

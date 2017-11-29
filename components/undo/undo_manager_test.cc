@@ -106,8 +106,7 @@ TestUndoOperation::TestUndoOperation(TestUndoService* undo_service)
       : undo_service_(undo_service) {
 }
 
-TestUndoOperation::~TestUndoOperation() {
-}
+TestUndoOperation::~TestUndoOperation() = default;
 
 void TestUndoOperation::Undo() {
   undo_service_->TriggerOperation();
@@ -129,8 +128,7 @@ TestUndoService::TestUndoService() : performing_redo_(false),
                                      redo_operation_count_(0) {
 }
 
-TestUndoService::~TestUndoService() {
-}
+TestUndoService::~TestUndoService() = default;
 
 void TestUndoService::Redo() {
   base::AutoReset<bool> incoming_changes(&performing_redo_, true);

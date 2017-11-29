@@ -41,7 +41,7 @@ class PreviewsOptOutStoreSQLTest : public testing::Test {
  public:
   PreviewsOptOutStoreSQLTest()
       : field_trials_(new base::FieldTrialList(nullptr)) {}
-  ~PreviewsOptOutStoreSQLTest() override {}
+  ~PreviewsOptOutStoreSQLTest() override = default;
 
   // Called when |store_| is done loading.
   void OnLoaded(std::unique_ptr<BlackListItemMap> black_list_map,

@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-ProtocolEventObserver::ProtocolEventObserver() {}
+ProtocolEventObserver::ProtocolEventObserver() = default;
 
-ProtocolEventObserver::~ProtocolEventObserver() {}
+ProtocolEventObserver::~ProtocolEventObserver() = default;
 
 }  // namespace syncer

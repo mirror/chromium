@@ -98,14 +98,14 @@ class InterceptingPrefFilter : public PrefFilter {
   DISALLOW_COPY_AND_ASSIGN(InterceptingPrefFilter);
 };
 
-InterceptingPrefFilter::InterceptingPrefFilter() {}
+InterceptingPrefFilter::InterceptingPrefFilter() = default;
 
 InterceptingPrefFilter::InterceptingPrefFilter(
     OnWriteCallbackPair callback_pair) {
   on_write_callback_pair_ = callback_pair;
 }
 
-InterceptingPrefFilter::~InterceptingPrefFilter() {}
+InterceptingPrefFilter::~InterceptingPrefFilter() = default;
 
 void InterceptingPrefFilter::FilterOnLoad(
     const PostFilterOnLoadCallback& post_filter_on_load_callback,

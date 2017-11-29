@@ -6,11 +6,9 @@
 
 namespace data_reduction_proxy {
 
-DataStore::DataStore() {
-}
+DataStore::DataStore() = default;
 
-DataStore::~DataStore() {
-}
+DataStore::~DataStore() = default;
 
 void DataStore::InitializeOnDBThread() {
 }

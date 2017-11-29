@@ -25,9 +25,9 @@
 
 namespace policy {
 
-PolicyDetailsMap::PolicyDetailsMap() {}
+PolicyDetailsMap::PolicyDetailsMap() = default;
 
-PolicyDetailsMap::~PolicyDetailsMap() {}
+PolicyDetailsMap::~PolicyDetailsMap() = default;
 
 GetChromePolicyDetailsCallback PolicyDetailsMap::GetCallback() const {
   return base::Bind(&PolicyDetailsMap::Lookup, base::Unretained(this));

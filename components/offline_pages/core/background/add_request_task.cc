@@ -17,7 +17,7 @@ AddRequestTask::AddRequestTask(RequestQueueStore* store,
       callback_(callback),
       weak_ptr_factory_(this) {}
 
-AddRequestTask::~AddRequestTask() {}
+AddRequestTask::~AddRequestTask() = default;
 
 void AddRequestTask::Run() {
   AddRequest();

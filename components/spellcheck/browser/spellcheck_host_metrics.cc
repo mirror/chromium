@@ -27,8 +27,7 @@ SpellCheckHostMetrics::SpellCheckHostMetrics()
   RecordWordCounts();
 }
 
-SpellCheckHostMetrics::~SpellCheckHostMetrics() {
-}
+SpellCheckHostMetrics::~SpellCheckHostMetrics() = default;
 
 // static
 void SpellCheckHostMetrics::RecordCustomWordCountStats(size_t count) {

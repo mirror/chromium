@@ -8,8 +8,8 @@
 
 namespace syncer {
 
-UserShare::UserShare() {}
+UserShare::UserShare() = default;
 
-UserShare::~UserShare() {}
+UserShare::~UserShare() = default;
 
 }  // namespace syncer

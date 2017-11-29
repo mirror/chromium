@@ -26,8 +26,7 @@ RequestCoordinatorStubTaco::RequestCoordinatorStubTaco() {
   ukm_reporter_ = base::MakeUnique<OfflinePagesUkmReporterStub>();
 }
 
-RequestCoordinatorStubTaco::~RequestCoordinatorStubTaco() {
-}
+RequestCoordinatorStubTaco::~RequestCoordinatorStubTaco() = default;
 
 void RequestCoordinatorStubTaco::SetOfflinerPolicy(
     std::unique_ptr<OfflinerPolicy> policy) {

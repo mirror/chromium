@@ -19,8 +19,7 @@ FakeGCMDriver::FakeGCMDriver(
     : GCMDriver(base::FilePath(), blocking_task_runner) {
 }
 
-FakeGCMDriver::~FakeGCMDriver() {
-}
+FakeGCMDriver::~FakeGCMDriver() = default;
 
 void FakeGCMDriver::ValidateRegistration(
     const std::string& app_id,

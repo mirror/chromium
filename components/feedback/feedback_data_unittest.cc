@@ -32,7 +32,7 @@ class MockUploader : public FeedbackUploader {
       : FeedbackUploader(context,
                          FeedbackUploaderFactory::CreateUploaderTaskRunner()),
         on_report_sent_(on_report_sent) {}
-  ~MockUploader() override {}
+  ~MockUploader() override = default;
 
   // feedback::FeedbackUploader:
   void StartDispatchingReport() override { on_report_sent_.Run(); }

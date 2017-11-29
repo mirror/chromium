@@ -26,8 +26,8 @@ const char kApplicationLocale[] = "intl.app_locale";
 // A mock provider that allows us to capture pref observer changes.
 class MockPrefService : public TestingPrefServiceSimple {
  public:
-  MockPrefService() {}
-  virtual ~MockPrefService() {}
+  MockPrefService() = default;
+  virtual ~MockPrefService() = default;
 
   MOCK_METHOD2(AddPrefObserver, void(const std::string&, PrefObserver*));
   MOCK_METHOD2(RemovePrefObserver, void(const std::string&, PrefObserver*));
@@ -37,8 +37,8 @@ class MockPrefService : public TestingPrefServiceSimple {
 
 class PrefChangeRegistrarTest : public testing::Test {
  public:
-  PrefChangeRegistrarTest() {}
-  ~PrefChangeRegistrarTest() override {}
+  PrefChangeRegistrarTest() = default;
+  ~PrefChangeRegistrarTest() override = default;
 
  protected:
   void SetUp() override;

@@ -82,8 +82,7 @@ HistoryDatabase::HistoryDatabase(
                        download_interrupt_reason_crash) {
 }
 
-HistoryDatabase::~HistoryDatabase() {
-}
+HistoryDatabase::~HistoryDatabase() = default;
 
 sql::InitStatus HistoryDatabase::Init(const base::FilePath& history_name) {
   db_.set_histogram_tag("History");

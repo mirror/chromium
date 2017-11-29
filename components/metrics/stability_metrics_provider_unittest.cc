@@ -16,7 +16,7 @@ class StabilityMetricsProviderTest : public testing::Test {
     StabilityMetricsProvider::RegisterPrefs(prefs_.registry());
   }
 
-  ~StabilityMetricsProviderTest() override {}
+  ~StabilityMetricsProviderTest() override = default;
 
  protected:
   TestingPrefServiceSimple prefs_;

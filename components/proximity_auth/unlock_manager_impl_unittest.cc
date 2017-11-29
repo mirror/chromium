@@ -61,8 +61,8 @@ RemoteStatusUpdate kRemoteScreenlockStateUnknown = {
 
 class MockRemoteDeviceLifeCycle : public RemoteDeviceLifeCycle {
  public:
-  MockRemoteDeviceLifeCycle() {}
-  ~MockRemoteDeviceLifeCycle() override {}
+  MockRemoteDeviceLifeCycle() = default;
+  ~MockRemoteDeviceLifeCycle() override = default;
 
   MOCK_METHOD0(Start, void());
   MOCK_CONST_METHOD0(GetRemoteDevice, cryptauth::RemoteDevice());
@@ -75,8 +75,8 @@ class MockRemoteDeviceLifeCycle : public RemoteDeviceLifeCycle {
 
 class MockMessenger : public Messenger {
  public:
-  MockMessenger() {}
-  ~MockMessenger() override {}
+  MockMessenger() = default;
+  ~MockMessenger() override = default;
 
   MOCK_METHOD1(AddObserver, void(MessengerObserver* observer));
   MOCK_METHOD1(RemoveObserver, void(MessengerObserver* observer));
@@ -96,7 +96,7 @@ class MockProximityMonitor : public ProximityMonitor {
   MockProximityMonitor() : started_(false), stopped_(false) {
     ON_CALL(*this, IsUnlockAllowed()).WillByDefault(Return(true));
   }
-  ~MockProximityMonitor() override {}
+  ~MockProximityMonitor() override = default;
 
   void Start() override { started_ = true; }
   void Stop() override { stopped_ = true; }
@@ -121,7 +121,7 @@ class TestUnlockManager : public UnlockManagerImpl {
                     ProximityAuthClient* proximity_auth_client)
       : UnlockManagerImpl(screenlock_type, proximity_auth_client, nullptr),
         proximity_monitor_(nullptr) {}
-  ~TestUnlockManager() override {}
+  ~TestUnlockManager() override = default;
 
   using UnlockManager::OnAuthAttempted;
   using MessengerObserver::OnUnlockEventSent;

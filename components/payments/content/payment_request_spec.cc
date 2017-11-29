@@ -96,7 +96,7 @@ PaymentRequestSpec::PaymentRequestSpec(
       &url_payment_method_identifiers_, &payment_method_identifiers_set_,
       &stringified_method_data_);
 }
-PaymentRequestSpec::~PaymentRequestSpec() {}
+PaymentRequestSpec::~PaymentRequestSpec() = default;
 
 void PaymentRequestSpec::UpdateWith(mojom::PaymentDetailsPtr details) {
   details_ = std::move(details);

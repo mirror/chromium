@@ -246,17 +246,17 @@ bool ShouldHandleElement(
 
 }  // namespace
 
-TagAndAttributesItem::TagAndAttributesItem() {}
+TagAndAttributesItem::TagAndAttributesItem() = default;
 
 TagAndAttributesItem::TagAndAttributesItem(
     const std::string& tag_name_param,
     const std::vector<std::string>& attributes_param)
     : tag_name(tag_name_param), attributes(attributes_param) {}
 
-TagAndAttributesItem::TagAndAttributesItem(const TagAndAttributesItem& item)
-    : tag_name(item.tag_name), attributes(item.attributes) {}
+TagAndAttributesItem::TagAndAttributesItem(const TagAndAttributesItem& item) =
+    default;
 
-TagAndAttributesItem::~TagAndAttributesItem() {}
+TagAndAttributesItem::~TagAndAttributesItem() = default;
 
 uint32_t ThreatDOMDetails::kMaxNodes = 500;
 uint32_t ThreatDOMDetails::kMaxAttributes = 100;
@@ -274,7 +274,7 @@ ThreatDOMDetails::ThreatDOMDetails(content::RenderFrame* render_frame)
   ParseTagAndAttributeParams(&tag_and_attributes_list_);
 }
 
-ThreatDOMDetails::~ThreatDOMDetails() {}
+ThreatDOMDetails::~ThreatDOMDetails() = default;
 
 bool ThreatDOMDetails::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;

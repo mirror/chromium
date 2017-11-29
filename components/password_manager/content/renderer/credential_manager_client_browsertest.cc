@@ -36,8 +36,8 @@ const char kTestCredentialReject[] = "https://reject.com/";
 
 class FakeCredentialManager : public mojom::CredentialManager {
  public:
-  FakeCredentialManager() {}
-  ~FakeCredentialManager() override {}
+  FakeCredentialManager() = default;
+  ~FakeCredentialManager() override = default;
 
   void BindRequest(mojom::CredentialManagerAssociatedRequest request) {
     bindings_.AddBinding(this, std::move(request));
@@ -80,7 +80,7 @@ class CredentialManagerClientTest : public content::RenderViewTest {
  public:
   CredentialManagerClientTest()
       : callback_errored_(false), callback_succeeded_(false) {}
-  ~CredentialManagerClientTest() override {}
+  ~CredentialManagerClientTest() override = default;
 
   void SetUp() override {
     content::RenderViewTest::SetUp();
@@ -133,7 +133,7 @@ class TestNotificationCallbacks
   explicit TestNotificationCallbacks(CredentialManagerClientTest* test)
       : test_(test) {}
 
-  ~TestNotificationCallbacks() override {}
+  ~TestNotificationCallbacks() override = default;
 
   void OnSuccess() override { test_->set_callback_succeeded(true); }
 
@@ -151,7 +151,7 @@ class TestRequestCallbacks
   explicit TestRequestCallbacks(CredentialManagerClientTest* test)
       : test_(test) {}
 
-  ~TestRequestCallbacks() override {}
+  ~TestRequestCallbacks() override = default;
 
   void OnSuccess(std::unique_ptr<blink::WebCredential> credential) override {
     test_->set_callback_succeeded(true);

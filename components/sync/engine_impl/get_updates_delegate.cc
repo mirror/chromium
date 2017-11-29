@@ -36,15 +36,15 @@ void PassiveApplyUpdates(const ModelTypeSet& gu_types,
 
 }  // namespace
 
-GetUpdatesDelegate::GetUpdatesDelegate() {}
+GetUpdatesDelegate::GetUpdatesDelegate() = default;
 
-GetUpdatesDelegate::~GetUpdatesDelegate() {}
+GetUpdatesDelegate::~GetUpdatesDelegate() = default;
 
 NormalGetUpdatesDelegate::NormalGetUpdatesDelegate(
     const NudgeTracker& nudge_tracker)
     : nudge_tracker_(nudge_tracker) {}
 
-NormalGetUpdatesDelegate::~NormalGetUpdatesDelegate() {}
+NormalGetUpdatesDelegate::~NormalGetUpdatesDelegate() = default;
 
 // This function assumes the progress markers have already been populated.
 void NormalGetUpdatesDelegate::HelpPopulateGuMessage(
@@ -96,7 +96,7 @@ ConfigureGetUpdatesDelegate::ConfigureGetUpdatesDelegate(
     sync_pb::GetUpdatesCallerInfo::GetUpdatesSource source)
     : source_(source) {}
 
-ConfigureGetUpdatesDelegate::~ConfigureGetUpdatesDelegate() {}
+ConfigureGetUpdatesDelegate::~ConfigureGetUpdatesDelegate() = default;
 
 void ConfigureGetUpdatesDelegate::HelpPopulateGuMessage(
     sync_pb::GetUpdatesMessage* get_updates) const {
@@ -140,9 +140,9 @@ ConfigureGetUpdatesDelegate::ConvertConfigureSourceToOrigin(
   }
 }
 
-PollGetUpdatesDelegate::PollGetUpdatesDelegate() {}
+PollGetUpdatesDelegate::PollGetUpdatesDelegate() = default;
 
-PollGetUpdatesDelegate::~PollGetUpdatesDelegate() {}
+PollGetUpdatesDelegate::~PollGetUpdatesDelegate() = default;
 
 void PollGetUpdatesDelegate::HelpPopulateGuMessage(
     sync_pb::GetUpdatesMessage* get_updates) const {

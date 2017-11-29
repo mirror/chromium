@@ -59,7 +59,7 @@ const char* HttpResponse::GetServerConnectionCodeString(
 ServerConnectionManager::Connection::Connection(ServerConnectionManager* scm)
     : scm_(scm) {}
 
-ServerConnectionManager::Connection::~Connection() {}
+ServerConnectionManager::Connection::~Connection() = default;
 
 bool ServerConnectionManager::Connection::ReadBufferResponse(
     string* buffer_out,

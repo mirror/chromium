@@ -45,7 +45,7 @@ DataUse::DataUse(const GURL& url,
 
 DataUse::DataUse(const DataUse& other) = default;
 
-DataUse::~DataUse() {}
+DataUse::~DataUse() = default;
 
 bool DataUse::operator==(const DataUse& other) const {
   return AreNonByteCountFieldsEqual(*this, other) &&

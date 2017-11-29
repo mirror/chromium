@@ -32,7 +32,7 @@ class RuleIteratorImpl : public RuleIterator {
         rule_end_(rule_end),
         auto_lock_(auto_lock) {
   }
-  ~RuleIteratorImpl() override {}
+  ~RuleIteratorImpl() override = default;
 
   bool HasNext() const override { return (current_rule_ != rule_end_); }
 
@@ -85,7 +85,8 @@ bool OriginIdentifierValueMap::PatternPair::operator<(
 
 OriginIdentifierValueMap::ValueEntry::ValueEntry() : last_modified(), value(){};
 
-OriginIdentifierValueMap::ValueEntry::~ValueEntry(){};
+OriginIdentifierValueMap::ValueEntry::~ValueEntry() = default;
+;
 
 std::unique_ptr<RuleIterator> OriginIdentifierValueMap::GetRuleIterator(
     ContentSettingsType content_type,
@@ -113,9 +114,9 @@ size_t OriginIdentifierValueMap::size() const {
   return size;
 }
 
-OriginIdentifierValueMap::OriginIdentifierValueMap() {}
+OriginIdentifierValueMap::OriginIdentifierValueMap() = default;
 
-OriginIdentifierValueMap::~OriginIdentifierValueMap() {}
+OriginIdentifierValueMap::~OriginIdentifierValueMap() = default;
 
 base::Value* OriginIdentifierValueMap::GetValue(
     const GURL& primary_url,

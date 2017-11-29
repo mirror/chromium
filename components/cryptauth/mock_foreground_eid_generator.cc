@@ -15,7 +15,7 @@ MockForegroundEidGenerator::MockForegroundEidGenerator()
       identified_device_(nullptr),
       num_identify_calls_(0) {}
 
-MockForegroundEidGenerator::~MockForegroundEidGenerator() {}
+MockForegroundEidGenerator::~MockForegroundEidGenerator() = default;
 
 std::unique_ptr<ForegroundEidGenerator::EidData>
 MockForegroundEidGenerator::GenerateBackgroundScanFilter(

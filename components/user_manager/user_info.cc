@@ -6,10 +6,8 @@
 
 namespace user_manager {
 
-UserInfo::UserInfo() {
-}
+UserInfo::UserInfo() = default;
 
-UserInfo::~UserInfo() {
-}
+UserInfo::~UserInfo() = default;
 
 }  // namespace user_manager

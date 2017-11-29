@@ -31,7 +31,7 @@ class PdfCompositorTestService : public printing::PdfCompositorService {
  public:
   explicit PdfCompositorTestService(const std::string& creator)
       : PdfCompositorService(creator) {}
-  ~PdfCompositorTestService() override {}
+  ~PdfCompositorTestService() override = default;
 
   // PdfCompositorService:
   void PrepareToStart() override {}
@@ -45,7 +45,7 @@ class PdfServiceTestClient : public service_manager::test::ServiceTestClient,
     registry_.AddInterface<service_manager::mojom::ServiceFactory>(
         base::Bind(&PdfServiceTestClient::Create, base::Unretained(this)));
   }
-  ~PdfServiceTestClient() override {}
+  ~PdfServiceTestClient() override = default;
 
   // service_manager::Service
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
@@ -78,7 +78,7 @@ class PdfServiceTestClient : public service_manager::test::ServiceTestClient,
 class PdfCompositorServiceTest : public service_manager::test::ServiceTest {
  public:
   PdfCompositorServiceTest() : ServiceTest("pdf_compositor_service_unittest") {}
-  ~PdfCompositorServiceTest() override {}
+  ~PdfCompositorServiceTest() override = default;
 
   MOCK_METHOD1(CallbackOnSuccess, void(mojo::SharedBufferHandle));
   MOCK_METHOD1(CallbackOnError, void(mojom::PdfCompositor::Status));

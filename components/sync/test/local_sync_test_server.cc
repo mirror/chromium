@@ -29,7 +29,7 @@ LocalSyncTestServer::LocalSyncTestServer(uint16_t port, uint16_t xmpp_port)
   SetPort(port);
 }
 
-LocalSyncTestServer::~LocalSyncTestServer() {}
+LocalSyncTestServer::~LocalSyncTestServer() = default;
 
 bool LocalSyncTestServer::AddCommandLineArguments(
     base::CommandLine* command_line) const {

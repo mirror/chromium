@@ -65,7 +65,7 @@ UkmReportingService::UkmReportingService(metrics::MetricsServiceClient* client,
                       kMinPersistedBytes,
                       kMaxLogRetransmitSize) {}
 
-UkmReportingService::~UkmReportingService() {}
+UkmReportingService::~UkmReportingService() = default;
 
 metrics::LogStore* UkmReportingService::log_store() {
   return &persisted_logs_;

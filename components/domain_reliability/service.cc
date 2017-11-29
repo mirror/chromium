@@ -55,7 +55,7 @@ class DomainReliabilityServiceImpl : public DomainReliabilityService {
         browser_context_(browser_context),
         weak_factory_(this) {}
 
-  ~DomainReliabilityServiceImpl() override {}
+  ~DomainReliabilityServiceImpl() override = default;
 
   // DomainReliabilityService implementation:
 
@@ -182,8 +182,8 @@ DomainReliabilityService* DomainReliabilityService::Create(
                                           browser_context);
 }
 
-DomainReliabilityService::~DomainReliabilityService() {}
+DomainReliabilityService::~DomainReliabilityService() = default;
 
-DomainReliabilityService::DomainReliabilityService() {}
+DomainReliabilityService::DomainReliabilityService() = default;
 
 }  // namespace domain_reliability

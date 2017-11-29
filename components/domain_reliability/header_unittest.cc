@@ -15,8 +15,8 @@ namespace {
 
 class DomainReliabilityHeaderTest : public testing::Test {
  protected:
-  DomainReliabilityHeaderTest() {}
-  ~DomainReliabilityHeaderTest() override {}
+  DomainReliabilityHeaderTest() = default;
+  ~DomainReliabilityHeaderTest() override = default;
 
   void Parse(std::string value) {
     parsed_ = DomainReliabilityHeader::Parse(value);

@@ -14,7 +14,7 @@ TestTaskRunner::TestTaskRunner(
     scoped_refptr<base::TestSimpleTaskRunner> task_runner)
     : task_runner_(task_runner) {}
 
-TestTaskRunner::~TestTaskRunner() {}
+TestTaskRunner::~TestTaskRunner() = default;
 
 void TestTaskRunner::RunTask(std::unique_ptr<Task> task) {
   DCHECK(task.get());

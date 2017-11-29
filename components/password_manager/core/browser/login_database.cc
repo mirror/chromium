@@ -524,8 +524,7 @@ std::string GeneratePlaceholders(size_t count) {
 LoginDatabase::LoginDatabase(const base::FilePath& db_path)
     : db_path_(db_path) {}
 
-LoginDatabase::~LoginDatabase() {
-}
+LoginDatabase::~LoginDatabase() = default;
 
 bool LoginDatabase::Init() {
   // Set pragmas for a small, private database (based on WebDatabase).

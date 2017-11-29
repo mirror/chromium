@@ -44,11 +44,11 @@ void ContentSerializedNavigationDriver::SetInstance(
   g_instance = instance;
 }
 
-ContentSerializedNavigationDriver::ContentSerializedNavigationDriver() {
-}
+ContentSerializedNavigationDriver::ContentSerializedNavigationDriver() =
+    default;
 
-ContentSerializedNavigationDriver::~ContentSerializedNavigationDriver() {
-}
+ContentSerializedNavigationDriver::~ContentSerializedNavigationDriver() =
+    default;
 
 int ContentSerializedNavigationDriver::GetDefaultReferrerPolicy() const {
   return blink::kWebReferrerPolicyDefault;

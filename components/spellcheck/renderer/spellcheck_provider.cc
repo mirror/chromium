@@ -52,8 +52,7 @@ SpellCheckProvider::SpellCheckProvider(
     render_frame->GetWebFrame()->SetTextCheckClient(this);
 }
 
-SpellCheckProvider::~SpellCheckProvider() {
-}
+SpellCheckProvider::~SpellCheckProvider() = default;
 
 spellcheck::mojom::SpellCheckHost& SpellCheckProvider::GetSpellCheckHost() {
   if (spell_check_host_)

@@ -19,7 +19,7 @@ using TypeToIndexMap = std::map<ModelType, size_t>;
 CommitProcessor::CommitProcessor(CommitContributorMap* commit_contributor_map)
     : commit_contributor_map_(commit_contributor_map) {}
 
-CommitProcessor::~CommitProcessor() {}
+CommitProcessor::~CommitProcessor() = default;
 
 void CommitProcessor::GatherCommitContributions(
     ModelTypeSet commit_types,

@@ -175,8 +175,7 @@ RLZTracker::RLZTracker()
   DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
-RLZTracker::~RLZTracker() {
-}
+RLZTracker::~RLZTracker() = default;
 
 // static
 void RLZTracker::SetRlzDelegate(std::unique_ptr<RLZTrackerDelegate> delegate) {

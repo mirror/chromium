@@ -127,7 +127,7 @@ FrameEvictionManager::FrameEvictionManager()
 #endif
 }
 
-FrameEvictionManager::~FrameEvictionManager() {}
+FrameEvictionManager::~FrameEvictionManager() = default;
 
 void FrameEvictionManager::CullUnlockedFrames(size_t saved_frame_limit) {
   while (!unlocked_frames_.empty() &&

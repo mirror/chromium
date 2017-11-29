@@ -27,7 +27,7 @@ using syncable::WriteTransaction;
 TestEntryFactory::TestEntryFactory(syncable::Directory* dir)
     : directory_(dir), next_revision_(1) {}
 
-TestEntryFactory::~TestEntryFactory() {}
+TestEntryFactory::~TestEntryFactory() = default;
 
 int64_t TestEntryFactory::CreateUnappliedNewItemWithParent(
     const string& item_id,

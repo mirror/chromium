@@ -56,7 +56,7 @@ class TestAutofillTable : public AutofillTable {
   explicit TestAutofillTable(std::vector<CreditCard> cards_on_disk)
       : cards_on_disk_(cards_on_disk) {}
 
-  ~TestAutofillTable() override {}
+  ~TestAutofillTable() override = default;
 
   bool GetServerCreditCards(
       std::vector<std::unique_ptr<CreditCard>>* cards) const override {

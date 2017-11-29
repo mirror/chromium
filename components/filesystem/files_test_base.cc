@@ -16,8 +16,7 @@ FilesTestBase::FilesTestBase()
     : ServiceTest("filesystem_service_unittests") {
 }
 
-FilesTestBase::~FilesTestBase() {
-}
+FilesTestBase::~FilesTestBase() = default;
 
 void FilesTestBase::SetUp() {
   ServiceTest::SetUp();

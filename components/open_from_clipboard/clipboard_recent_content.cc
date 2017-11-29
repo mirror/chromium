@@ -14,10 +14,9 @@ ClipboardRecentContent* g_clipboard_recent_content = nullptr;
 
 }  // namespace
 
-ClipboardRecentContent::ClipboardRecentContent() {}
+ClipboardRecentContent::ClipboardRecentContent() = default;
 
-ClipboardRecentContent::~ClipboardRecentContent() {
-}
+ClipboardRecentContent::~ClipboardRecentContent() = default;
 
 // static
 ClipboardRecentContent* ClipboardRecentContent::GetInstance() {

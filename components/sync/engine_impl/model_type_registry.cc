@@ -44,7 +44,7 @@ CommitQueueProxy::CommitQueueProxy(
     const scoped_refptr<base::SequencedTaskRunner>& sync_thread)
     : worker_(worker), sync_thread_(sync_thread) {}
 
-CommitQueueProxy::~CommitQueueProxy() {}
+CommitQueueProxy::~CommitQueueProxy() = default;
 
 void CommitQueueProxy::NudgeForCommit() {
   sync_thread_->PostTask(FROM_HERE,
@@ -70,7 +70,7 @@ ModelTypeRegistry::ModelTypeRegistry(
   }
 }
 
-ModelTypeRegistry::~ModelTypeRegistry() {}
+ModelTypeRegistry::~ModelTypeRegistry() = default;
 
 void ModelTypeRegistry::ConnectNonBlockingType(
     ModelType type,

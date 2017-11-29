@@ -137,8 +137,7 @@ BookmarkLoadDetails::BookmarkLoadDetails(
       max_id_(max_id),
       ids_reassigned_(false) {}
 
-BookmarkLoadDetails::~BookmarkLoadDetails() {
-}
+BookmarkLoadDetails::~BookmarkLoadDetails() = default;
 
 void BookmarkLoadDetails::LoadExtraNodes() {
   if (!load_extra_callback_.is_null())

@@ -61,9 +61,9 @@ bool AttachmentMetadataMatches(const MutableEntry& entity) {
 
 }  // namespace
 
-ConflictResolver::ConflictResolver() {}
+ConflictResolver::ConflictResolver() = default;
 
-ConflictResolver::~ConflictResolver() {}
+ConflictResolver::~ConflictResolver() = default;
 
 void ConflictResolver::ProcessSimpleConflict(WriteTransaction* trans,
                                              const Id& id,

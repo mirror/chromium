@@ -76,7 +76,7 @@ GuestViewManager::GuestViewManager(
       delegate_(std::move(delegate)),
       weak_ptr_factory_(this) {}
 
-GuestViewManager::~GuestViewManager() {}
+GuestViewManager::~GuestViewManager() = default;
 
 // static
 GuestViewManager* GuestViewManager::CreateWithDelegate(
@@ -520,6 +520,6 @@ GuestViewManager::GuestViewData::GuestViewData(
 GuestViewManager::GuestViewData::GuestViewData(const GuestViewData& other) =
     default;
 
-GuestViewManager::GuestViewData::~GuestViewData() {}
+GuestViewManager::GuestViewData::~GuestViewData() = default;
 
 }  // namespace guest_view

@@ -59,7 +59,7 @@ ThreatDetailsRedirectsCollector::GetCollectedUrls() const {
   return redirects_urls_;
 }
 
-ThreatDetailsRedirectsCollector::~ThreatDetailsRedirectsCollector() {}
+ThreatDetailsRedirectsCollector::~ThreatDetailsRedirectsCollector() = default;
 
 void ThreatDetailsRedirectsCollector::StartGetRedirects(
     const std::vector<GURL>& urls) {

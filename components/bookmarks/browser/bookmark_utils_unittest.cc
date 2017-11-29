@@ -36,7 +36,7 @@ class BookmarkUtilsTest : public testing::Test,
         grouped_changes_beginning_count_(0),
         grouped_changes_ended_count_(0) {}
 
-  ~BookmarkUtilsTest() override {}
+  ~BookmarkUtilsTest() override = default;
 
 // Copy and paste is not yet supported on iOS. http://crbug.com/228147
 #if !defined(OS_IOS)

@@ -83,7 +83,7 @@ PersistentPagesConsistencyCheckTaskTest::
       should_create_file_(false) {}
 
 PersistentPagesConsistencyCheckTaskTest::
-    ~PersistentPagesConsistencyCheckTaskTest() {}
+    ~PersistentPagesConsistencyCheckTaskTest() = default;
 
 void PersistentPagesConsistencyCheckTaskTest::SetUp() {
   store_test_util_.BuildStoreInMemory();

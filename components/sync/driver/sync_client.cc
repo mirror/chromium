@@ -6,7 +6,7 @@
 
 namespace syncer {
 
-SyncClient::SyncClient() {}
-SyncClient::~SyncClient() {}
+SyncClient::SyncClient() = default;
+SyncClient::~SyncClient() = default;
 
 }  // namespace syncer

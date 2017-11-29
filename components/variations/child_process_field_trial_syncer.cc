@@ -17,7 +17,7 @@ ChildProcessFieldTrialSyncer::ChildProcessFieldTrialSyncer(
     base::FieldTrialList::Observer* observer)
     : observer_(observer) {}
 
-ChildProcessFieldTrialSyncer::~ChildProcessFieldTrialSyncer() {}
+ChildProcessFieldTrialSyncer::~ChildProcessFieldTrialSyncer() = default;
 
 void ChildProcessFieldTrialSyncer::InitFieldTrialObserving(
     const base::CommandLine& command_line) {

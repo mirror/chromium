@@ -19,8 +19,10 @@
 
 namespace assist_ranker {
 
-BinaryClassifierPredictor::BinaryClassifierPredictor(){};
-BinaryClassifierPredictor::~BinaryClassifierPredictor(){};
+BinaryClassifierPredictor::BinaryClassifierPredictor() = default;
+;
+BinaryClassifierPredictor::~BinaryClassifierPredictor() = default;
+;
 
 // static
 std::unique_ptr<BinaryClassifierPredictor> BinaryClassifierPredictor::Create(

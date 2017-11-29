@@ -15,8 +15,7 @@ namespace infobars {
 
 // InfoBarManager::Observer ---------------------------------------------------
 
-InfoBarManager::Observer::~Observer() {
-}
+InfoBarManager::Observer::~Observer() = default;
 
 void InfoBarManager::Observer::OnInfoBarAdded(InfoBar* infobar) {
 }
@@ -108,7 +107,7 @@ InfoBarManager::InfoBarManager() {
     infobars_enabled_ = false;
 }
 
-InfoBarManager::~InfoBarManager() {}
+InfoBarManager::~InfoBarManager() = default;
 
 void InfoBarManager::ShutDown() {
   // Destroy all remaining InfoBars.  It's important to not animate here so that

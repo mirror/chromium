@@ -129,8 +129,7 @@ PersonalDataManagerMock::PersonalDataManagerMock()
     : PersonalDataManager("en-US") {
 }
 
-PersonalDataManagerMock::~PersonalDataManagerMock() {
-}
+PersonalDataManagerMock::~PersonalDataManagerMock() = default;
 
 void PersonalDataManagerMock::Reset() {
   profiles_.clear();
@@ -198,8 +197,7 @@ AutofillMergeTest::AutofillMergeTest() : DataDrivenTest(GetTestDataDir()) {
   }
 }
 
-AutofillMergeTest::~AutofillMergeTest() {
-}
+AutofillMergeTest::~AutofillMergeTest() = default;
 
 void AutofillMergeTest::SetUp() {
   test::DisableSystemServices(nullptr);

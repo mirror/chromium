@@ -70,7 +70,7 @@ TestHarness::TestHarness(PolicyLevel level)
     : PolicyProviderTestHarness(level, POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD) {
 }
 
-TestHarness::~TestHarness() {}
+TestHarness::~TestHarness() = default;
 
 void TestHarness::SetUp() {}
 
@@ -151,7 +151,7 @@ class TestCloudPolicyManager : public CloudPolicyManager {
                            store,
                            task_runner,
                            task_runner) {}
-  ~TestCloudPolicyManager() override {}
+  ~TestCloudPolicyManager() override = default;
 
   // Publish the protected members for testing.
   using CloudPolicyManager::client;

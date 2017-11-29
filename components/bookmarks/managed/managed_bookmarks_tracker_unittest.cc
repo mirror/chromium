@@ -38,7 +38,7 @@ namespace bookmarks {
 class ManagedBookmarksTrackerTest : public testing::Test {
  public:
   ManagedBookmarksTrackerTest() : managed_node_(nullptr) {}
-  ~ManagedBookmarksTrackerTest() override {}
+  ~ManagedBookmarksTrackerTest() override = default;
 
   void SetUp() override {
     RegisterManagedBookmarksPrefs(prefs_.registry());

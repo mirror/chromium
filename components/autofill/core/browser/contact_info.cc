@@ -18,13 +18,13 @@
 
 namespace autofill {
 
-NameInfo::NameInfo() {}
+NameInfo::NameInfo() = default;
 
 NameInfo::NameInfo(const NameInfo& info) : FormGroup() {
   *this = info;
 }
 
-NameInfo::~NameInfo() {}
+NameInfo::~NameInfo() = default;
 
 NameInfo& NameInfo::operator=(const NameInfo& info) {
   if (this == &info)
@@ -179,13 +179,13 @@ void NameInfo::SetFullName(const base::string16& full) {
   family_ = parts.family;
 }
 
-EmailInfo::EmailInfo() {}
+EmailInfo::EmailInfo() = default;
 
 EmailInfo::EmailInfo(const EmailInfo& info) : FormGroup() {
   *this = info;
 }
 
-EmailInfo::~EmailInfo() {}
+EmailInfo::~EmailInfo() = default;
 
 EmailInfo& EmailInfo::operator=(const EmailInfo& info) {
   if (this == &info)
@@ -215,13 +215,13 @@ void EmailInfo::SetRawInfo(ServerFieldType type, const base::string16& value) {
   email_ = value;
 }
 
-CompanyInfo::CompanyInfo() {}
+CompanyInfo::CompanyInfo() = default;
 
 CompanyInfo::CompanyInfo(const CompanyInfo& info) : FormGroup() {
   *this = info;
 }
 
-CompanyInfo::~CompanyInfo() {}
+CompanyInfo::~CompanyInfo() = default;
 
 CompanyInfo& CompanyInfo::operator=(const CompanyInfo& info) {
   if (this == &info)

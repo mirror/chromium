@@ -62,8 +62,7 @@ CryptAuthClientImpl::CryptAuthClientImpl(
       has_call_started_(false),
       weak_ptr_factory_(this) {}
 
-CryptAuthClientImpl::~CryptAuthClientImpl() {
-}
+CryptAuthClientImpl::~CryptAuthClientImpl() = default;
 
 void CryptAuthClientImpl::GetMyDevices(
     const GetMyDevicesRequest& request,
@@ -329,8 +328,7 @@ CryptAuthClientFactoryImpl::CryptAuthClientFactoryImpl(
       device_classifier_(device_classifier) {
 }
 
-CryptAuthClientFactoryImpl::~CryptAuthClientFactoryImpl() {
-}
+CryptAuthClientFactoryImpl::~CryptAuthClientFactoryImpl() = default;
 
 std::unique_ptr<CryptAuthClient> CryptAuthClientFactoryImpl::CreateInstance() {
   return base::MakeUnique<CryptAuthClientImpl>(

@@ -89,7 +89,8 @@ class MultiDeviceServiceTest : public service_manager::test::ServiceTest {
 
   MultiDeviceServiceTest() : ServiceTest(kServiceTestName){};
 
-  ~MultiDeviceServiceTest() override{};
+  ~MultiDeviceServiceTest() override = default;
+  ;
 
   void SetUp() override {
     ServiceTest::SetUp();

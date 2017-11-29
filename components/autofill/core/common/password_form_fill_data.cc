@@ -11,9 +11,9 @@
 
 namespace autofill {
 
-UsernamesCollectionKey::UsernamesCollectionKey() {}
+UsernamesCollectionKey::UsernamesCollectionKey() = default;
 
-UsernamesCollectionKey::~UsernamesCollectionKey() {}
+UsernamesCollectionKey::~UsernamesCollectionKey() = default;
 
 bool UsernamesCollectionKey::operator<(
     const UsernamesCollectionKey& other) const {
@@ -27,8 +27,7 @@ PasswordFormFillData::PasswordFormFillData()
 PasswordFormFillData::PasswordFormFillData(const PasswordFormFillData& other) =
     default;
 
-PasswordFormFillData::~PasswordFormFillData() {
-}
+PasswordFormFillData::~PasswordFormFillData() = default;
 
 void InitPasswordFormFillData(
     const PasswordForm& form_on_page,

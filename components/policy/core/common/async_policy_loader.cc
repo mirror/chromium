@@ -33,7 +33,7 @@ AsyncPolicyLoader::AsyncPolicyLoader(
     const scoped_refptr<base::SequencedTaskRunner>& task_runner)
     : task_runner_(task_runner) {}
 
-AsyncPolicyLoader::~AsyncPolicyLoader() {}
+AsyncPolicyLoader::~AsyncPolicyLoader() = default;
 
 Time AsyncPolicyLoader::LastModificationTime() {
   return Time();

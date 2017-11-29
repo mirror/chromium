@@ -22,7 +22,7 @@ namespace autofill {
 
 class AddressFieldTest : public testing::Test {
  public:
-  AddressFieldTest() {}
+  AddressFieldTest() = default;
 
  protected:
   std::vector<std::unique_ptr<AutofillField>> list_;

@@ -75,7 +75,7 @@ GetPagesTaskTest::GetPagesTaskTest()
       store_test_util_(task_runner_),
       runner_(task_runner_) {}
 
-GetPagesTaskTest::~GetPagesTaskTest() {}
+GetPagesTaskTest::~GetPagesTaskTest() = default;
 
 void GetPagesTaskTest::SetUp() {
   testing::Test::SetUp();

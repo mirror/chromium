@@ -62,7 +62,7 @@ AddRequestTaskTest::AddRequestTaskTest()
       task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {}
 
-AddRequestTaskTest::~AddRequestTaskTest() {}
+AddRequestTaskTest::~AddRequestTaskTest() = default;
 
 void AddRequestTaskTest::PumpLoop() {
   task_runner_->RunUntilIdle();

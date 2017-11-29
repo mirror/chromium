@@ -50,8 +50,7 @@ GCMAccountMapper::GCMAccountMapper(GCMDriver* gcm_driver)
       weak_ptr_factory_(this) {
 }
 
-GCMAccountMapper::~GCMAccountMapper() {
-}
+GCMAccountMapper::~GCMAccountMapper() = default;
 
 void GCMAccountMapper::Initialize(const AccountMappings& account_mappings,
                                   const DispatchMessageCallback& callback) {

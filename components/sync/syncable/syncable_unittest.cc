@@ -68,7 +68,7 @@ TestBackingStore::TestBackingStore(const std::string& dir_name,
     : OnDiskDirectoryBackingStore(dir_name, backing_filepath),
       fail_save_changes_(false) {}
 
-TestBackingStore::~TestBackingStore() {}
+TestBackingStore::~TestBackingStore() = default;
 
 bool TestBackingStore::SaveChanges(
     const Directory::SaveChangesSnapshot& snapshot) {
@@ -122,7 +122,7 @@ TestDirectory::TestDirectory(
                 nullptr),
       backing_store_(backing_store) {}
 
-TestDirectory::~TestDirectory() {}
+TestDirectory::~TestDirectory() = default;
 
 // crbug.com/144422
 #if defined(OS_ANDROID)

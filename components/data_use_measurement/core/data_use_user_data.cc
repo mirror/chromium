@@ -34,7 +34,7 @@ DataUseUserData::DataUseUserData(ServiceName service_name, AppState app_state)
       app_state_(app_state),
       content_type_(DataUseContentType::OTHER) {}
 
-DataUseUserData::~DataUseUserData() {}
+DataUseUserData::~DataUseUserData() = default;
 
 // static
 const void* const DataUseUserData::kUserDataKey =

@@ -14,9 +14,9 @@
 
 namespace metrics {
 
-MetricsLogManager::MetricsLogManager() {}
+MetricsLogManager::MetricsLogManager() = default;
 
-MetricsLogManager::~MetricsLogManager() {}
+MetricsLogManager::~MetricsLogManager() = default;
 
 void MetricsLogManager::BeginLoggingWithLog(std::unique_ptr<MetricsLog> log) {
   DCHECK(!current_log_);

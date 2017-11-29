@@ -30,6 +30,6 @@ NTPTileImpression::NTPTileImpression(int index,
       data_generation_time(data_generation_time),
       url_for_rappor(url_for_rappor) {}
 
-NTPTileImpression::~NTPTileImpression() {}
+NTPTileImpression::~NTPTileImpression() = default;
 
 }  // namespace ntp_tiles

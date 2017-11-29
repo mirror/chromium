@@ -24,8 +24,8 @@ namespace {
 
 class PreviewsUserDataTest : public testing::Test {
  public:
-  PreviewsUserDataTest() {}
-  ~PreviewsUserDataTest() override {}
+  PreviewsUserDataTest() = default;
+  ~PreviewsUserDataTest() override = default;
 
  private:
   base::MessageLoopForIO message_loop_;

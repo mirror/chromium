@@ -19,8 +19,7 @@ CloudDeviceDescription::CloudDeviceDescription() {
   Reset();
 }
 
-CloudDeviceDescription::~CloudDeviceDescription() {
-}
+CloudDeviceDescription::~CloudDeviceDescription() = default;
 
 void CloudDeviceDescription::Reset() {
   root_.reset(new base::DictionaryValue);

@@ -54,8 +54,7 @@ CredentialInfo::CredentialInfo(const autofill::PasswordForm& form,
 
 CredentialInfo::CredentialInfo(const CredentialInfo& other) = default;
 
-CredentialInfo::~CredentialInfo() {
-}
+CredentialInfo::~CredentialInfo() = default;
 
 bool CredentialInfo::operator==(const CredentialInfo& rhs) const {
   return (type == rhs.type && id == rhs.id && name == rhs.name &&

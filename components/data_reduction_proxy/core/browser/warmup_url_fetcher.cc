@@ -25,7 +25,7 @@ WarmupURLFetcher::WarmupURLFetcher(
   DCHECK(url_request_context_getter_);
 }
 
-WarmupURLFetcher::~WarmupURLFetcher() {}
+WarmupURLFetcher::~WarmupURLFetcher() = default;
 
 void WarmupURLFetcher::FetchWarmupURL() {
   UMA_HISTOGRAM_EXACT_LINEAR("DataReductionProxy.WarmupURL.FetchInitiated", 1,

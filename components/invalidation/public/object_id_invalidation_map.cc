@@ -20,12 +20,12 @@ ObjectIdInvalidationMap ObjectIdInvalidationMap::InvalidateAll(
   return invalidate_all;
 }
 
-ObjectIdInvalidationMap::ObjectIdInvalidationMap() {}
+ObjectIdInvalidationMap::ObjectIdInvalidationMap() = default;
 
 ObjectIdInvalidationMap::ObjectIdInvalidationMap(
     const ObjectIdInvalidationMap& other) = default;
 
-ObjectIdInvalidationMap::~ObjectIdInvalidationMap() {}
+ObjectIdInvalidationMap::~ObjectIdInvalidationMap() = default;
 
 ObjectIdSet ObjectIdInvalidationMap::GetObjectIds() const {
   ObjectIdSet ret;

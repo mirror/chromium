@@ -77,8 +77,8 @@ ACTION(QuitMainMessageLoop) {
 
 class PersonalDataLoadedObserverMock : public PersonalDataManagerObserver {
  public:
-  PersonalDataLoadedObserverMock() {}
-  virtual ~PersonalDataLoadedObserverMock() {}
+  PersonalDataLoadedObserverMock() = default;
+  virtual ~PersonalDataLoadedObserverMock() = default;
 
   MOCK_METHOD0(OnPersonalDataChanged, void());
 };
@@ -2697,8 +2697,8 @@ class SaveImportedProfileTest
     : public PersonalDataManagerTestBase,
       public testing::TestWithParam<SaveImportedProfileTestCase> {
  public:
-  SaveImportedProfileTest() {}
-  ~SaveImportedProfileTest() override {}
+  SaveImportedProfileTest() = default;
+  ~SaveImportedProfileTest() override = default;
 
   void SetUp() override {
     OSCryptMocker::SetUp();

@@ -291,9 +291,7 @@ bool IsValidSchema(const base::DictionaryValue* dict,
 
 }  // namespace
 
-
-JSONSchemaValidator::Error::Error() {
-}
+JSONSchemaValidator::Error::Error() = default;
 
 JSONSchemaValidator::Error::Error(const std::string& message)
     : path(message) {
@@ -437,7 +435,7 @@ JSONSchemaValidator::JSONSchemaValidator(base::DictionaryValue* schema,
   }
 }
 
-JSONSchemaValidator::~JSONSchemaValidator() {}
+JSONSchemaValidator::~JSONSchemaValidator() = default;
 
 bool JSONSchemaValidator::Validate(const base::Value* instance) {
   errors_.clear();

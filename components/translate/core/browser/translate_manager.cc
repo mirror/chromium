@@ -60,7 +60,7 @@ const char kUrlQueryName[] = "u";
 
 }  // namespace
 
-TranslateManager::~TranslateManager() {}
+TranslateManager::~TranslateManager() = default;
 
 // static
 std::unique_ptr<TranslateManager::TranslateErrorCallbackList::Subscription>

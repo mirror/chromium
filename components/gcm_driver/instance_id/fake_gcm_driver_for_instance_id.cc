@@ -21,8 +21,7 @@ FakeGCMDriverForInstanceID::FakeGCMDriverForInstanceID(
     const scoped_refptr<base::SequencedTaskRunner>& blocking_task_runner)
     : FakeGCMDriver(blocking_task_runner) {}
 
-FakeGCMDriverForInstanceID::~FakeGCMDriverForInstanceID() {
-}
+FakeGCMDriverForInstanceID::~FakeGCMDriverForInstanceID() = default;
 
 gcm::InstanceIDHandler*
 FakeGCMDriverForInstanceID::GetInstanceIDHandlerInternal() {

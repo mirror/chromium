@@ -200,7 +200,7 @@ class UnmaskCardRequest : public PaymentsRequest {
         CreditCard::MASKED_SERVER_CARD == request_details.card.record_type() ||
         CreditCard::FULL_SERVER_CARD == request_details.card.record_type());
   }
-  ~UnmaskCardRequest() override {}
+  ~UnmaskCardRequest() override = default;
 
   std::string GetRequestUrlPath() override { return kUnmaskCardRequestPath; }
 
@@ -268,7 +268,7 @@ class GetUploadDetailsRequest : public PaymentsRequest {
         active_experiments_(active_experiments),
         app_locale_(app_locale),
         delegate_(delegate) {}
-  ~GetUploadDetailsRequest() override {}
+  ~GetUploadDetailsRequest() override = default;
 
   std::string GetRequestUrlPath() override {
     return kGetUploadDetailsRequestPath;
@@ -332,7 +332,7 @@ class UploadCardRequest : public PaymentsRequest {
   UploadCardRequest(const PaymentsClient::UploadRequestDetails& request_details,
                     PaymentsClientSaveDelegate* delegate)
       : request_details_(request_details), delegate_(delegate) {}
-  ~UploadCardRequest() override {}
+  ~UploadCardRequest() override = default;
 
   std::string GetRequestUrlPath() override { return kUploadCardRequestPath; }
 
@@ -427,15 +427,15 @@ class UploadCardRequest : public PaymentsRequest {
 const char PaymentsClient::kRecipientName[] = "recipient_name";
 const char PaymentsClient::kPhoneNumber[] = "phone_number";
 
-PaymentsClient::UnmaskRequestDetails::UnmaskRequestDetails() {}
+PaymentsClient::UnmaskRequestDetails::UnmaskRequestDetails() = default;
 PaymentsClient::UnmaskRequestDetails::UnmaskRequestDetails(
     const UnmaskRequestDetails& other) = default;
-PaymentsClient::UnmaskRequestDetails::~UnmaskRequestDetails() {}
+PaymentsClient::UnmaskRequestDetails::~UnmaskRequestDetails() = default;
 
-PaymentsClient::UploadRequestDetails::UploadRequestDetails() {}
+PaymentsClient::UploadRequestDetails::UploadRequestDetails() = default;
 PaymentsClient::UploadRequestDetails::UploadRequestDetails(
     const UploadRequestDetails& other) = default;
-PaymentsClient::UploadRequestDetails::~UploadRequestDetails() {}
+PaymentsClient::UploadRequestDetails::~UploadRequestDetails() = default;
 
 PaymentsClient::PaymentsClient(net::URLRequestContextGetter* context_getter,
                                PrefService* pref_service,
@@ -451,7 +451,7 @@ PaymentsClient::PaymentsClient(net::URLRequestContextGetter* context_getter,
       has_retried_authorization_(false),
       weak_ptr_factory_(this) {}
 
-PaymentsClient::~PaymentsClient() {}
+PaymentsClient::~PaymentsClient() = default;
 
 void PaymentsClient::Prepare() {
   if (access_token_.empty())

@@ -562,8 +562,7 @@ GCMDriverDesktop::GCMDriverDesktop(
                  blocking_task_runner));
 }
 
-GCMDriverDesktop::~GCMDriverDesktop() {
-}
+GCMDriverDesktop::~GCMDriverDesktop() = default;
 
 void GCMDriverDesktop::ValidateRegistration(
     const std::string& app_id,

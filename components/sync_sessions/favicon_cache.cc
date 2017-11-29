@@ -237,7 +237,7 @@ FaviconCache::FaviconCache(favicon::FaviconService* favicon_service,
   DVLOG(1) << "Setting favicon limit to " << max_sync_favicon_limit;
 }
 
-FaviconCache::~FaviconCache() {}
+FaviconCache::~FaviconCache() = default;
 
 syncer::SyncMergeResult FaviconCache::MergeDataAndStartSyncing(
     syncer::ModelType type,

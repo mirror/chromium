@@ -15,8 +15,7 @@ SpellcheckLanguage::SpellcheckLanguage(
     : platform_spelling_engine_(CreateNativeSpellingEngine(embedder_provider)) {
 }
 
-SpellcheckLanguage::~SpellcheckLanguage() {
-}
+SpellcheckLanguage::~SpellcheckLanguage() = default;
 
 void SpellcheckLanguage::Init(base::File file, const std::string& language) {
   DCHECK(platform_spelling_engine_.get());

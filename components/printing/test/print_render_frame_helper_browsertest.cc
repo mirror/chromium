@@ -148,7 +148,7 @@ class DidPreviewPageListener : public IPC::Listener {
 class PrintRenderFrameHelperTestBase : public content::RenderViewTest {
  public:
   PrintRenderFrameHelperTestBase() : print_render_thread_(nullptr) {}
-  ~PrintRenderFrameHelperTestBase() override {}
+  ~PrintRenderFrameHelperTestBase() override = default;
 
  protected:
   // content::RenderViewTest:
@@ -319,7 +319,7 @@ class PrintRenderFrameHelperTestBase : public content::RenderViewTest {
 class MAYBE_PrintRenderFrameHelperTest : public PrintRenderFrameHelperTestBase {
  public:
   MAYBE_PrintRenderFrameHelperTest() {}
-  ~MAYBE_PrintRenderFrameHelperTest() override {}
+  ~MAYBE_PrintRenderFrameHelperTest() override = default;
 
   void SetUp() override { PrintRenderFrameHelperTestBase::SetUp(); }
 

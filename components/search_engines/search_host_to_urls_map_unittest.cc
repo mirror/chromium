@@ -20,7 +20,7 @@ typedef SearchHostToURLsMap::TemplateURLSet TemplateURLSet;
 // Basic functionality for the SearchHostToURLsMap tests.
 class SearchHostToURLsMapTest : public testing::Test {
  public:
-  SearchHostToURLsMapTest() {}
+  SearchHostToURLsMapTest() = default;
 
   void SetUp() override;
 

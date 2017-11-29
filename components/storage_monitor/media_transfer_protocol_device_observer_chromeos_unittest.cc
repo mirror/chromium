@@ -99,7 +99,7 @@ class MediaTransferProtocolDeviceObserverChromeOSTest : public testing::Test {
   MediaTransferProtocolDeviceObserverChromeOSTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP) {}
 
-  ~MediaTransferProtocolDeviceObserverChromeOSTest() override {}
+  ~MediaTransferProtocolDeviceObserverChromeOSTest() override = default;
 
  protected:
   void SetUp() override {

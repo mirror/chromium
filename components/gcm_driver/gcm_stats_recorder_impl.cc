@@ -169,8 +169,7 @@ GCMStatsRecorderImpl::GCMStatsRecorderImpl()
       data_message_received_since_connected_(false),
       received_data_message_burst_size_(0) {}
 
-GCMStatsRecorderImpl::~GCMStatsRecorderImpl() {
-}
+GCMStatsRecorderImpl::~GCMStatsRecorderImpl() = default;
 
 void GCMStatsRecorderImpl::SetDelegate(Delegate* delegate) {
   delegate_ = delegate;

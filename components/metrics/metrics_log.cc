@@ -96,8 +96,7 @@ MetricsLog::MetricsLog(const std::string& client_id,
   RecordCoreSystemProfile(client_, system_profile);
 }
 
-MetricsLog::~MetricsLog() {
-}
+MetricsLog::~MetricsLog() = default;
 
 // static
 void MetricsLog::RegisterPrefs(PrefRegistrySimple* registry) {

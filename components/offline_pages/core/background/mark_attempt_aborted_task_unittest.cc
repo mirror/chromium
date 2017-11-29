@@ -51,7 +51,7 @@ MarkAttemptAbortedTaskTest::MarkAttemptAbortedTaskTest()
     : task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {}
 
-MarkAttemptAbortedTaskTest::~MarkAttemptAbortedTaskTest() {}
+MarkAttemptAbortedTaskTest::~MarkAttemptAbortedTaskTest() = default;
 
 void MarkAttemptAbortedTaskTest::PumpLoop() {
   task_runner_->RunUntilIdle();

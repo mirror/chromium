@@ -33,8 +33,7 @@ DistillerURLFetcher::DistillerURLFetcher(
   : context_getter_(context_getter) {
 }
 
-DistillerURLFetcher::~DistillerURLFetcher() {
-}
+DistillerURLFetcher::~DistillerURLFetcher() = default;
 
 void DistillerURLFetcher::FetchURL(const std::string& url,
                                    const URLFetcherCallback& callback) {

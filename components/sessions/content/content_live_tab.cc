@@ -28,7 +28,7 @@ ContentLiveTab* ContentLiveTab::GetForWebContents(
 ContentLiveTab::ContentLiveTab(content::WebContents* contents)
     : web_contents_(contents) {}
 
-ContentLiveTab::~ContentLiveTab() {}
+ContentLiveTab::~ContentLiveTab() = default;
 
 bool ContentLiveTab::IsInitialBlankNavigation() {
   return navigation_controller().IsInitialBlankNavigation();

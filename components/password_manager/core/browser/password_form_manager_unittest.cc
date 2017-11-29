@@ -327,7 +327,7 @@ class MockPasswordManagerDriver : public StubPasswordManagerDriver {
     mock_autofill_manager_.SetDownloadManager(mock_autofill_download_manager_);
   }
 
-  ~MockPasswordManagerDriver() {}
+  ~MockPasswordManagerDriver() = default;
 
   MOCK_METHOD1(FillPasswordForm, void(const autofill::PasswordFormFillData&));
   MOCK_METHOD1(ShowInitialPasswordAccountSuggestions,

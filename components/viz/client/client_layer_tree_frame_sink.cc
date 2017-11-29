@@ -69,7 +69,7 @@ ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
   DETACH_FROM_THREAD(thread_checker_);
 }
 
-ClientLayerTreeFrameSink::~ClientLayerTreeFrameSink() {}
+ClientLayerTreeFrameSink::~ClientLayerTreeFrameSink() = default;
 
 base::WeakPtr<ClientLayerTreeFrameSink> ClientLayerTreeFrameSink::GetWeakPtr() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);

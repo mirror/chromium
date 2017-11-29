@@ -63,9 +63,9 @@ bool DeserializeFingerPrints(
 
 }  // namespace
 
-WebAppManifestSectionTable::WebAppManifestSectionTable() {}
+WebAppManifestSectionTable::WebAppManifestSectionTable() = default;
 
-WebAppManifestSectionTable::~WebAppManifestSectionTable() {}
+WebAppManifestSectionTable::~WebAppManifestSectionTable() = default;
 
 WebAppManifestSectionTable* WebAppManifestSectionTable::FromWebDatabase(
     WebDatabase* db) {

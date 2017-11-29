@@ -27,7 +27,7 @@ class PolicyHeaderIOHelperTest : public testing::Test {
   PolicyHeaderIOHelperTest() {
     task_runner_ = base::MakeRefCounted<base::TestSimpleTaskRunner>();
   }
-  ~PolicyHeaderIOHelperTest() override {}
+  ~PolicyHeaderIOHelperTest() override = default;
 
   void SetUp() override {
     helper_ = base::MakeUnique<PolicyHeaderIOHelper>(

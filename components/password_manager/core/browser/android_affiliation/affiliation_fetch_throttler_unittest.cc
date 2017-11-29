@@ -67,7 +67,7 @@ class AffiliationFetchThrottlerTest : public testing::Test {
         task_runner_(new base::TestMockTimeTaskRunner),
         mock_tick_clock_(task_runner_->GetMockTickClock()),
         mock_delegate_(mock_tick_clock_.get()) {}
-  ~AffiliationFetchThrottlerTest() override {}
+  ~AffiliationFetchThrottlerTest() override = default;
 
   std::unique_ptr<AffiliationFetchThrottler> CreateThrottler() {
     return std::make_unique<AffiliationFetchThrottler>(

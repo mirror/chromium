@@ -205,8 +205,7 @@ void Snippet::ConvertMatchPositionsToWide(
   }
 }
 
-Snippet::Snippet() {
-}
+Snippet::Snippet() = default;
 
 Snippet::Snippet(const Snippet& other) = default;
 
@@ -215,8 +214,7 @@ Snippet::Snippet(const Snippet& other) = default;
 Snippet::Snippet(Snippet&& other) noexcept
     : text_(std::move(other.text_)), matches_(std::move(other.matches_)) {}
 
-Snippet::~Snippet() {
-}
+Snippet::~Snippet() = default;
 
 Snippet& Snippet::operator=(const Snippet&) = default;
 

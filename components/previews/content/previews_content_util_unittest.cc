@@ -22,8 +22,8 @@ namespace {
 
 class TestPreviewsDecider : public PreviewsDecider {
  public:
-  TestPreviewsDecider() {}
-  ~TestPreviewsDecider() override {}
+  TestPreviewsDecider() = default;
+  ~TestPreviewsDecider() override = default;
 
   bool ShouldAllowPreviewAtECT(
       const net::URLRequest& request,
@@ -62,7 +62,7 @@ class TestPreviewsDecider : public PreviewsDecider {
 class PreviewsContentUtilTest : public testing::Test {
  public:
   PreviewsContentUtilTest() : previews_decider_(), context_() {}
-  ~PreviewsContentUtilTest() override {}
+  ~PreviewsContentUtilTest() override = default;
 
   TestPreviewsDecider* previews_decider() { return &previews_decider_; }
 

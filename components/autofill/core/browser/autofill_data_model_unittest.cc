@@ -28,7 +28,7 @@ class TestAutofillDataModel : public AutofillDataModel {
     set_use_count(use_count);
     set_use_date(use_date);
   }
-  ~TestAutofillDataModel() override {}
+  ~TestAutofillDataModel() override = default;
 
  private:
   base::string16 GetRawInfo(ServerFieldType type) const override {

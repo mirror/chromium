@@ -17,8 +17,8 @@ ContentPlatformSpecificTabData::ContentPlatformSpecificTabData(
       session_storage_namespace_(web_contents->GetController()
                                      .GetDefaultSessionStorageNamespace()) {}
 
-ContentPlatformSpecificTabData::ContentPlatformSpecificTabData() {}
+ContentPlatformSpecificTabData::ContentPlatformSpecificTabData() = default;
 
-ContentPlatformSpecificTabData::~ContentPlatformSpecificTabData() {}
+ContentPlatformSpecificTabData::~ContentPlatformSpecificTabData() = default;
 
 }  // namespace sessions

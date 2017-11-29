@@ -67,6 +67,6 @@ ScopedAccountConsistency::ScopedAccountConsistency(
   DCHECK_EQ(method, GetAccountConsistencyMethod());
 }
 
-ScopedAccountConsistency::~ScopedAccountConsistency() {}
+ScopedAccountConsistency::~ScopedAccountConsistency() = default;
 
 }  // namespace signin

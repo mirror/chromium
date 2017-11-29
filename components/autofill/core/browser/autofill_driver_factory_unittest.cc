@@ -49,7 +49,7 @@ class PublicAutofillDriverFactory : public AutofillDriverFactory {
   explicit PublicAutofillDriverFactory(AutofillClient* client)
       : AutofillDriverFactory(client) {}
 
-  ~PublicAutofillDriverFactory() {}
+  ~PublicAutofillDriverFactory() = default;
 
   using AutofillDriverFactory::AddForKey;
   using AutofillDriverFactory::DeleteForKey;
@@ -58,7 +58,7 @@ class PublicAutofillDriverFactory : public AutofillDriverFactory {
 // Wrapper around an integer, checking that the integer is 0 on desctruction.
 class CheckedInt {
  public:
-  CheckedInt() {}
+  CheckedInt() = default;
 
   ~CheckedInt() { EXPECT_EQ(0, val_); }
 
@@ -74,7 +74,7 @@ class AutofillDriverFactoryTest : public testing::Test {
  public:
   AutofillDriverFactoryTest() : factory_(&client_) {}
 
-  ~AutofillDriverFactoryTest() override {}
+  ~AutofillDriverFactoryTest() override = default;
 
   // AutofillDriverFactory stores drivers in a map with keys, which are void*
   // pointers. The factory never dereferences them, so their value does not

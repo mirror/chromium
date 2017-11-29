@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-ModelTypeConnector::ModelTypeConnector() {}
+ModelTypeConnector::ModelTypeConnector() = default;
 
-ModelTypeConnector::~ModelTypeConnector() {}
+ModelTypeConnector::~ModelTypeConnector() = default;
 
 }  // namespace syncer

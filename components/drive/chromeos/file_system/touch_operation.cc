@@ -52,8 +52,7 @@ TouchOperation::TouchOperation(base::SequencedTaskRunner* blocking_task_runner,
       weak_ptr_factory_(this) {
 }
 
-TouchOperation::~TouchOperation() {
-}
+TouchOperation::~TouchOperation() = default;
 
 void TouchOperation::TouchFile(const base::FilePath& file_path,
                                const base::Time& last_access_time,

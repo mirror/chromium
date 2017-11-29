@@ -18,8 +18,8 @@ namespace {
 
 class TestGpuService : public mojom::GpuService {
  public:
-  TestGpuService() {}
-  ~TestGpuService() override {}
+  TestGpuService() = default;
+  ~TestGpuService() override = default;
 
   bool HasAllocationRequest(gfx::GpuMemoryBufferId id, int client_id) const {
     for (const auto& req : allocation_requests_) {
@@ -144,8 +144,8 @@ class TestGpuService : public mojom::GpuService {
 // correctly.
 class FakeClientNativePixmapFactory : public gfx::ClientNativePixmapFactory {
  public:
-  FakeClientNativePixmapFactory() {}
-  ~FakeClientNativePixmapFactory() override {}
+  FakeClientNativePixmapFactory() = default;
+  ~FakeClientNativePixmapFactory() override = default;
 
   // gfx::ClientNativePixmapFactory:
   bool IsConfigurationSupported(gfx::BufferFormat format,

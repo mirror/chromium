@@ -29,8 +29,7 @@ namespace domain_reliability {
 // static
 const int DomainReliabilityContext::kMaxUploadDepthToSchedule = 1;
 
-DomainReliabilityContext::Factory::~Factory() {
-}
+DomainReliabilityContext::Factory::~Factory() = default;
 
 // static
 const size_t DomainReliabilityContext::kMaxQueuedBeacons = 150;

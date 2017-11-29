@@ -19,9 +19,9 @@
 
 namespace syncer {
 
-JsSyncManagerObserver::JsSyncManagerObserver() {}
+JsSyncManagerObserver::JsSyncManagerObserver() = default;
 
-JsSyncManagerObserver::~JsSyncManagerObserver() {}
+JsSyncManagerObserver::~JsSyncManagerObserver() = default;
 
 void JsSyncManagerObserver::SetJsEventHandler(
     const WeakHandle<JsEventHandler>& event_handler) {

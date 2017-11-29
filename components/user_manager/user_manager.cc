@@ -39,8 +39,7 @@ void UserManager::UserSessionStateObserver::ActiveUserHashChanged(
     const std::string& hash) {
 }
 
-UserManager::UserSessionStateObserver::~UserSessionStateObserver() {
-}
+UserManager::UserSessionStateObserver::~UserSessionStateObserver() = default;
 
 UserManager::UserAccountData::UserAccountData(
     const base::string16& display_name,
@@ -49,8 +48,7 @@ UserManager::UserAccountData::UserAccountData(
     : display_name_(display_name), given_name_(given_name), locale_(locale) {
 }
 
-UserManager::UserAccountData::~UserAccountData() {
-}
+UserManager::UserAccountData::~UserAccountData() = default;
 
 void UserManager::Initialize() {
   DCHECK(!UserManager::instance);
@@ -73,8 +71,7 @@ UserManager* user_manager::UserManager::Get() {
   return UserManager::instance;
 }
 
-UserManager::~UserManager() {
-}
+UserManager::~UserManager() = default;
 
 // static
 void UserManager::SetInstance(UserManager* user_manager) {

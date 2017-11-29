@@ -63,7 +63,7 @@ RemoteDeviceLoader::RemoteDeviceLoader(
       secure_message_delegate_(std::move(secure_message_delegate)),
       weak_ptr_factory_(this) {}
 
-RemoteDeviceLoader::~RemoteDeviceLoader() {}
+RemoteDeviceLoader::~RemoteDeviceLoader() = default;
 
 void RemoteDeviceLoader::Load(bool should_load_beacon_seeds,
                               const RemoteDeviceCallback& callback) {

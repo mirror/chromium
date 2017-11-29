@@ -66,5 +66,4 @@ WebDatabase* WebDataServiceBase::GetDatabase() {
   return wdbs_->GetDatabaseOnDB();
 }
 
-WebDataServiceBase::~WebDataServiceBase() {
-}
+WebDataServiceBase::~WebDataServiceBase() = default;

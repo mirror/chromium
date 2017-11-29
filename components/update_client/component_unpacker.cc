@@ -28,7 +28,7 @@
 
 namespace update_client {
 
-ComponentUnpacker::Result::Result() {}
+ComponentUnpacker::Result::Result() = default;
 
 ComponentUnpacker::ComponentUnpacker(
     const std::vector<uint8_t>& pk_hash,
@@ -43,7 +43,7 @@ ComponentUnpacker::ComponentUnpacker(
       error_(UnpackerError::kNone),
       extended_error_(0) {}
 
-ComponentUnpacker::~ComponentUnpacker() {}
+ComponentUnpacker::~ComponentUnpacker() = default;
 
 bool ComponentUnpacker::UnpackInternal() {
   return Verify() && Unzip() && BeginPatching();

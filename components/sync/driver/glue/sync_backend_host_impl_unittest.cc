@@ -93,7 +93,7 @@ class FakeSyncManagerFactory : public SyncManagerFactory {
       : fake_manager_(fake_manager) {
     *fake_manager_ = nullptr;
   }
-  ~FakeSyncManagerFactory() override {}
+  ~FakeSyncManagerFactory() override = default;
 
   // SyncManagerFactory implementation.  Called on the sync thread.
   std::unique_ptr<SyncManager> CreateSyncManager(
@@ -162,7 +162,7 @@ class SyncEngineTest : public testing::Test {
                          base::Unretained(this))),
         fake_manager_(nullptr) {}
 
-  ~SyncEngineTest() override {}
+  ~SyncEngineTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());

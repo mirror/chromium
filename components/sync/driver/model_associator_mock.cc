@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-ModelAssociatorMock::ModelAssociatorMock() {}
+ModelAssociatorMock::ModelAssociatorMock() = default;
 
-ModelAssociatorMock::~ModelAssociatorMock() {}
+ModelAssociatorMock::~ModelAssociatorMock() = default;
 
 }  // namespace syncer

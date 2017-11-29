@@ -164,7 +164,7 @@ struct ValidationCase {
         field_type(field_type),
         expected_valid(expected_valid),
         expected_error_id(expected_error_id) {}
-  ~ValidationCase() {}
+  ~ValidationCase() = default;
 
   const char* const value;
   const ServerFieldType field_type;
@@ -323,7 +323,7 @@ struct CCNumberCase {
         supported_basic_card_networks(supported_basic_card_networks),
         expected_valid(expected_valid),
         expected_error_id(expected_error_id) {}
-  ~CCNumberCase() {}
+  ~CCNumberCase() = default;
 
   const char* const value;
   const std::set<std::string> supported_basic_card_networks;
@@ -419,7 +419,7 @@ INSTANTIATE_TEST_CASE_P(
 struct GetCvcLengthForCardTypeCase {
   GetCvcLengthForCardTypeCase(const char* card_type, size_t expected_length)
       : card_type(card_type), expected_length(expected_length) {}
-  ~GetCvcLengthForCardTypeCase() {}
+  ~GetCvcLengthForCardTypeCase() = default;
 
   const char* const card_type;
   const size_t expected_length;

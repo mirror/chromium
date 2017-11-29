@@ -11,11 +11,9 @@ namespace ownership {
 ///////////////////////////////////////////////////////////////////////////
 // PublicKey
 
-PublicKey::PublicKey() {
-}
+PublicKey::PublicKey() = default;
 
-PublicKey::~PublicKey() {
-}
+PublicKey::~PublicKey() = default;
 
 ///////////////////////////////////////////////////////////////////////////
 // PrivateKey
@@ -23,7 +21,6 @@ PublicKey::~PublicKey() {
 PrivateKey::PrivateKey(crypto::ScopedSECKEYPrivateKey key)
     : key_(std::move(key)) {}
 
-PrivateKey::~PrivateKey() {
-}
+PrivateKey::~PrivateKey() = default;
 
 }  // namespace ownership

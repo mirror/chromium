@@ -93,8 +93,7 @@ TypedURLSyncBridge::TypedURLSyncBridge(
   DCHECK(sync_metadata_database_);
 }
 
-TypedURLSyncBridge::~TypedURLSyncBridge() {
-}
+TypedURLSyncBridge::~TypedURLSyncBridge() = default;
 
 std::unique_ptr<MetadataChangeList>
 TypedURLSyncBridge::CreateMetadataChangeList() {

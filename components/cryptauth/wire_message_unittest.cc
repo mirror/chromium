@@ -13,8 +13,8 @@ namespace cryptauth {
 
 class CryptAuthWireMessageTest : public testing::Test {
  protected:
-  CryptAuthWireMessageTest() {}
-  ~CryptAuthWireMessageTest() override {}
+  CryptAuthWireMessageTest() = default;
+  ~CryptAuthWireMessageTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CryptAuthWireMessageTest);

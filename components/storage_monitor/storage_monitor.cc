@@ -17,15 +17,14 @@ StorageMonitor* g_storage_monitor = nullptr;
 
 }  // namespace
 
-StorageMonitor::Receiver::~Receiver() {
-}
+StorageMonitor::Receiver::~Receiver() = default;
 
 class StorageMonitor::ReceiverImpl : public StorageMonitor::Receiver {
  public:
   explicit ReceiverImpl(StorageMonitor* notifications)
       : notifications_(notifications) {}
 
-  ~ReceiverImpl() override {}
+  ~ReceiverImpl() override = default;
 
   void ProcessAttach(const StorageInfo& info) override;
 
@@ -142,8 +141,7 @@ StorageMonitor::StorageMonitor()
   receiver_.reset(new ReceiverImpl(this));
 }
 
-StorageMonitor::~StorageMonitor() {
-}
+StorageMonitor::~StorageMonitor() = default;
 
 StorageMonitor::Receiver* StorageMonitor::receiver() const {
   return receiver_.get();

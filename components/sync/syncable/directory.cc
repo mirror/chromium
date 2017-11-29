@@ -54,7 +54,7 @@ Directory::PersistedKernelInfo::PersistedKernelInfo() {
   }
 }
 
-Directory::PersistedKernelInfo::~PersistedKernelInfo() {}
+Directory::PersistedKernelInfo::~PersistedKernelInfo() = default;
 
 void Directory::PersistedKernelInfo::ResetDownloadProgress(
     ModelType model_type) {
@@ -84,7 +84,7 @@ size_t Directory::PersistedKernelInfo::EstimateMemoryUsage() const {
 Directory::SaveChangesSnapshot::SaveChangesSnapshot()
     : kernel_info_status(KERNEL_SHARE_INFO_INVALID) {}
 
-Directory::SaveChangesSnapshot::~SaveChangesSnapshot() {}
+Directory::SaveChangesSnapshot::~SaveChangesSnapshot() = default;
 
 bool Directory::SaveChangesSnapshot::HasUnsavedMetahandleChanges() const {
   return !dirty_metas.empty() || !metahandles_to_purge.empty() ||
@@ -108,7 +108,7 @@ Directory::Kernel::Kernel(
   DCHECK(transaction_observer.IsInitialized());
 }
 
-Directory::Kernel::~Kernel() {}
+Directory::Kernel::~Kernel() = default;
 
 Directory::Directory(
     std::unique_ptr<DirectoryBackingStore> store,

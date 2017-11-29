@@ -30,7 +30,7 @@ using KeyboardTest = test::ExoTestBase;
 
 class MockKeyboardDelegate : public KeyboardDelegate {
  public:
-  MockKeyboardDelegate() {}
+  MockKeyboardDelegate() = default;
 
   // Overridden from KeyboardDelegate:
   MOCK_METHOD1(OnKeyboardDestroying, void(Keyboard*));
@@ -45,7 +45,7 @@ class MockKeyboardDelegate : public KeyboardDelegate {
 class MockKeyboardDeviceConfigurationDelegate
     : public KeyboardDeviceConfigurationDelegate {
  public:
-  MockKeyboardDeviceConfigurationDelegate() {}
+  MockKeyboardDeviceConfigurationDelegate() = default;
 
   // Overridden from KeyboardDeviceConfigurationDelegate:
   MOCK_METHOD1(OnKeyboardDestroying, void(Keyboard*));
@@ -54,7 +54,7 @@ class MockKeyboardDeviceConfigurationDelegate
 
 class MockKeyboardObserver : public KeyboardObserver {
  public:
-  MockKeyboardObserver() {}
+  MockKeyboardObserver() = default;
 
   // Overridden from KeyboardObserver:
   MOCK_METHOD1(OnKeyboardDestroying, void(Keyboard*));

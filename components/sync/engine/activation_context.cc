@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-ActivationContext::ActivationContext() {}
+ActivationContext::ActivationContext() = default;
 
-ActivationContext::~ActivationContext() {}
+ActivationContext::~ActivationContext() = default;
 
 }  // namespace syncer

@@ -28,7 +28,7 @@ class BitmapData : public base::RefCountedThreadSafe<BitmapData> {
 
  private:
   friend class base::RefCountedThreadSafe<BitmapData>;
-  ~BitmapData() {}
+  ~BitmapData() = default;
   DISALLOW_COPY_AND_ASSIGN(BitmapData);
 };
 

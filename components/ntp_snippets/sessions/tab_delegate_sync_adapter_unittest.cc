@@ -25,7 +25,7 @@ namespace {
 
 class TestSyncService : public syncer::FakeSyncService {
  public:
-  TestSyncService() {}
+  TestSyncService() = default;
   OpenTabsUIDelegate* GetOpenTabsUIDelegate() override { return tabs_; }
   OpenTabsUIDelegate* tabs_ = nullptr;
 
@@ -35,7 +35,7 @@ class TestSyncService : public syncer::FakeSyncService {
 
 class MockOpenTabsUIDelegate : public OpenTabsUIDelegate {
  public:
-  MockOpenTabsUIDelegate() {}
+  MockOpenTabsUIDelegate() = default;
   MOCK_CONST_METHOD2(GetSyncedFaviconForPageURL,
                      bool(const std::string&,
                           scoped_refptr<RefCountedMemory>*));

@@ -12,7 +12,7 @@ namespace syncable {
 ScopedKernelLock::ScopedKernelLock(const Directory* dir)
     : scoped_lock_(dir->kernel()->mutex), dir_(dir) {}
 
-ScopedKernelLock::~ScopedKernelLock() {}
+ScopedKernelLock::~ScopedKernelLock() = default;
 
 }  // namespace syncable
 }  // namespace syncer

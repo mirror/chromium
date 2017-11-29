@@ -18,7 +18,7 @@ FakeBluetoothInstance::GattDBResult::GattDBResult(
     std::vector<mojom::BluetoothGattDBElementPtr>&& db)
     : remote_addr_(std::move(remote_addr)), db_(std::move(db)) {}
 
-FakeBluetoothInstance::GattDBResult::~GattDBResult() {}
+FakeBluetoothInstance::GattDBResult::~GattDBResult() = default;
 
 FakeBluetoothInstance::LEDeviceFoundData::LEDeviceFoundData(
     mojom::BluetoothAddressPtr&& addr,
@@ -26,7 +26,7 @@ FakeBluetoothInstance::LEDeviceFoundData::LEDeviceFoundData(
     std::vector<mojom::BluetoothAdvertisingDataPtr>&& adv_data)
     : addr_(std::move(addr)), rssi_(rssi), adv_data_(std::move(adv_data)) {}
 
-FakeBluetoothInstance::LEDeviceFoundData::~LEDeviceFoundData() {}
+FakeBluetoothInstance::LEDeviceFoundData::~LEDeviceFoundData() = default;
 
 void FakeBluetoothInstance::InitDeprecated(mojom::BluetoothHostPtr host_ptr) {
   Init(std::move(host_ptr), base::BindOnce(&base::DoNothing));

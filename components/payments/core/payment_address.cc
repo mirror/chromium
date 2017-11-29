@@ -26,7 +26,7 @@ static const char kAddressSortingCode[] = "sortingCode";
 
 }  // namespace
 
-PaymentAddress::PaymentAddress() {}
+PaymentAddress::PaymentAddress() = default;
 PaymentAddress::PaymentAddress(const PaymentAddress& other) = default;
 PaymentAddress::~PaymentAddress() = default;
 

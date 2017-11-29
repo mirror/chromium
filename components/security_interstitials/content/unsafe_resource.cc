@@ -33,7 +33,7 @@ UnsafeResource::UnsafeResource()
 UnsafeResource::UnsafeResource(
     const UnsafeResource& other) = default;
 
-UnsafeResource::~UnsafeResource() {}
+UnsafeResource::~UnsafeResource() = default;
 
 bool UnsafeResource::IsMainPageLoadBlocked() const {
   // Subresource hits cannot happen until after main page load is committed.

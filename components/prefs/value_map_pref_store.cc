@@ -10,7 +10,7 @@
 #include "base/stl_util.h"
 #include "base/values.h"
 
-ValueMapPrefStore::ValueMapPrefStore() {}
+ValueMapPrefStore::ValueMapPrefStore() = default;
 
 bool ValueMapPrefStore::GetValue(const std::string& key,
                                  const base::Value** value) const {
@@ -66,7 +66,7 @@ void ValueMapPrefStore::SetValueSilently(const std::string& key,
   prefs_.SetValue(key, std::move(value));
 }
 
-ValueMapPrefStore::~ValueMapPrefStore() {}
+ValueMapPrefStore::~ValueMapPrefStore() = default;
 
 void ValueMapPrefStore::NotifyInitializationCompleted() {
   for (Observer& observer : observers_)

@@ -182,7 +182,7 @@ TexCoordPrecision TexCoordPrecisionRequired(GLES2Interface* context,
                                    max_size.height());
 }
 
-VertexShader::VertexShader() {}
+VertexShader::VertexShader() = default;
 
 void VertexShader::Init(GLES2Interface* context,
                         unsigned program,
@@ -401,7 +401,7 @@ std::string VertexShader::GetShaderString() const {
   return header + source;
 }
 
-FragmentShader::FragmentShader() {}
+FragmentShader::FragmentShader() = default;
 
 std::string FragmentShader::GetShaderString() const {
   TexCoordPrecision precision = tex_coord_precision_;

@@ -12,7 +12,7 @@ namespace sync_sessions {
 
 class SyncTabNodePoolTest : public testing::Test {
  protected:
-  SyncTabNodePoolTest() {}
+  SyncTabNodePoolTest() = default;
 
   int GetMaxUsedTabNodeId() const { return pool_.max_used_tab_node_id_; }
 

@@ -21,8 +21,7 @@ LanguageState::LanguageState(TranslateDriver* driver)
   DCHECK(translate_driver_);
 }
 
-LanguageState::~LanguageState() {
-}
+LanguageState::~LanguageState() = default;
 
 void LanguageState::DidNavigate(bool is_same_document_navigation,
                                 bool is_main_frame,

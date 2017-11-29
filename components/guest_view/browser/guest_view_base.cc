@@ -41,10 +41,8 @@ base::LazyInstance<WebContentsGuestViewMap>::Leaky g_webcontents_guestview_map =
 
 }  // namespace
 
-SetSizeParams::SetSizeParams() {
-}
-SetSizeParams::~SetSizeParams() {
-}
+SetSizeParams::SetSizeParams() = default;
+SetSizeParams::~SetSizeParams() = default;
 
 // This observer ensures that the GuestViewBase destroys itself when its
 // embedder goes away. It also tracks when the embedder's fullscreen is
@@ -59,7 +57,7 @@ class GuestViewBase::OwnerContentsObserver : public WebContentsObserver {
         destroyed_(false),
         guest_(guest) {}
 
-  ~OwnerContentsObserver() override {}
+  ~OwnerContentsObserver() override = default;
 
   // WebContentsObserver implementation.
   void WebContentsDestroyed() override {
@@ -150,7 +148,7 @@ class GuestViewBase::OpenerLifetimeObserver : public WebContentsObserver {
       : WebContentsObserver(guest->GetOpener()->web_contents()),
         guest_(guest) {}
 
-  ~OpenerLifetimeObserver() override {}
+  ~OpenerLifetimeObserver() override = default;
 
   // WebContentsObserver implementation.
   void WebContentsDestroyed() override {
@@ -184,7 +182,7 @@ GuestViewBase::GuestViewBase(WebContents* owner_web_contents)
   SetOwnerHost();
 }
 
-GuestViewBase::~GuestViewBase() {}
+GuestViewBase::~GuestViewBase() = default;
 
 void GuestViewBase::Init(const base::DictionaryValue& create_params,
                          const WebContentsCreatedCallback& callback) {

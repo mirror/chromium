@@ -12,7 +12,7 @@ namespace syncer {
 const char kTestCacheGuid[] = "test-guid";
 
 FakeSyncEngine::FakeSyncEngine() : fail_initial_download_(false) {}
-FakeSyncEngine::~FakeSyncEngine() {}
+FakeSyncEngine::~FakeSyncEngine() = default;
 
 void FakeSyncEngine::Initialize(InitParams params) {
   params.host->OnEngineInitialized(ModelTypeSet(), WeakHandle<JsBackend>(),

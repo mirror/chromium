@@ -28,8 +28,8 @@ namespace syncer {
 
 class SyncBackendMigratorTest : public testing::Test {
  public:
-  SyncBackendMigratorTest() {}
-  virtual ~SyncBackendMigratorTest() {}
+  SyncBackendMigratorTest() = default;
+  virtual ~SyncBackendMigratorTest() = default;
 
   virtual void SetUp() {
     test_user_share_.SetUp();
@@ -93,7 +93,7 @@ class SyncBackendMigratorTest : public testing::Test {
 
 class MockMigrationObserver : public MigrationObserver {
  public:
-  virtual ~MockMigrationObserver() {}
+  virtual ~MockMigrationObserver() = default;
 
   MOCK_METHOD0(OnMigrationStateChange, void());
 };

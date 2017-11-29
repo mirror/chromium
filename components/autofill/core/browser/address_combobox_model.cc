@@ -33,7 +33,7 @@ AddressComboboxModel::AddressComboboxModel(
   UpdateAddresses();
 }
 
-AddressComboboxModel::~AddressComboboxModel() {}
+AddressComboboxModel::~AddressComboboxModel() = default;
 
 int AddressComboboxModel::GetItemCount() const {
   // When there are not addresses, a special entry is shown to prompt the user

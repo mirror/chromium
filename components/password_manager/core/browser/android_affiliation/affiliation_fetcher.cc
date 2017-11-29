@@ -72,8 +72,7 @@ AffiliationFetcher::AffiliationFetcher(
   }
 }
 
-AffiliationFetcher::~AffiliationFetcher() {
-}
+AffiliationFetcher::~AffiliationFetcher() = default;
 
 // static
 AffiliationFetcher* AffiliationFetcher::Create(

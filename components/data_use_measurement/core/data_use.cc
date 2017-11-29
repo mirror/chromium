@@ -11,7 +11,7 @@ DataUse::DataUse(TrafficType traffic_type)
       total_bytes_sent_(0),
       total_bytes_received_(0) {}
 
-DataUse::~DataUse() {}
+DataUse::~DataUse() = default;
 
 void DataUse::IncrementTotalBytes(int64_t bytes_received, int64_t bytes_sent) {
   total_bytes_received_ += bytes_received;

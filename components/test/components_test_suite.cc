@@ -103,8 +103,8 @@ class ComponentsTestSuite : public base::TestSuite {
 
 class ComponentsUnitTestEventListener : public testing::EmptyTestEventListener {
  public:
-  ComponentsUnitTestEventListener() {}
-  ~ComponentsUnitTestEventListener() override {}
+  ComponentsUnitTestEventListener() = default;
+  ~ComponentsUnitTestEventListener() override = default;
 
   void OnTestStart(const testing::TestInfo& test_info) override {
 #if !defined(OS_IOS)

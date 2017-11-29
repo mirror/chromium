@@ -8,9 +8,9 @@
 
 namespace syncer {
 
-FakeInvalidator::FakeInvalidator() {}
+FakeInvalidator::FakeInvalidator() = default;
 
-FakeInvalidator::~FakeInvalidator() {}
+FakeInvalidator::~FakeInvalidator() = default;
 
 bool FakeInvalidator::IsHandlerRegistered(InvalidationHandler* handler) const {
   return registrar_.IsHandlerRegisteredForTest(handler);

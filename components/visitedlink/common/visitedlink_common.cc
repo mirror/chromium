@@ -21,8 +21,7 @@ VisitedLinkCommon::VisitedLinkCommon()
   memset(salt_, 0, sizeof(salt_));
 }
 
-VisitedLinkCommon::~VisitedLinkCommon() {
-}
+VisitedLinkCommon::~VisitedLinkCommon() = default;
 
 // FIXME: this uses linear probing, it should be replaced with quadratic
 // probing or something better. See VisitedLinkMaster::AddFingerprint

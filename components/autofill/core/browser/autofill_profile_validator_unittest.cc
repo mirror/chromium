@@ -41,7 +41,7 @@ class ValidationTestDataSource : public TestdataSource {
  public:
   ValidationTestDataSource() : TestdataSource(true) {}
 
-  ~ValidationTestDataSource() override {}
+  ~ValidationTestDataSource() override = default;
 
   void Get(const std::string& key, const Callback& data_ready) const override {
     data_ready(
@@ -80,7 +80,7 @@ class AutofillProfileValidatorTest : public testing::Test {
  protected:
   const std::unique_ptr<AutofillProfileValidator> validator_;
 
-  ~AutofillProfileValidatorTest() override {}
+  ~AutofillProfileValidatorTest() override = default;
 
   void OnValidated(AutofillProfile* profile) {
     // Make sure the profile has the expected validity state.

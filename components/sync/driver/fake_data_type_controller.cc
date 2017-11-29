@@ -24,7 +24,7 @@ FakeDataTypeController::FakeDataTypeController(ModelType type)
       should_load_model_before_configure_(false),
       register_with_backend_call_count_(0) {}
 
-FakeDataTypeController::~FakeDataTypeController() {}
+FakeDataTypeController::~FakeDataTypeController() = default;
 
 bool FakeDataTypeController::ShouldLoadModelBeforeConfigure() const {
   return should_load_model_before_configure_;

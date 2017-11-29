@@ -204,7 +204,7 @@ void CheckEqualPasswordFormGenerationData(
 class AutofillTypeTraitsTestImpl : public testing::Test,
                                    public mojom::TypeTraitsTest {
  public:
-  AutofillTypeTraitsTestImpl() {}
+  AutofillTypeTraitsTestImpl() = default;
 
   mojom::TypeTraitsTestPtr GetTypeTraitsTestProxy() {
     mojom::TypeTraitsTestPtr proxy;

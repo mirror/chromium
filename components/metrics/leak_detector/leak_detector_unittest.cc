@@ -45,7 +45,7 @@ class TestObserver : public LeakDetector::Observer {
     }
   };
 
-  TestObserver() {}
+  TestObserver() = default;
 
   void OnLeaksFound(
       const std::vector<MemoryLeakReportProto>& reports) override {

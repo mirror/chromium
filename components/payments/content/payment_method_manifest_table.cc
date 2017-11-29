@@ -27,9 +27,9 @@ WebDatabaseTable::TypeKey GetKey() {
 
 }  // namespace
 
-PaymentMethodManifestTable::PaymentMethodManifestTable() {}
+PaymentMethodManifestTable::PaymentMethodManifestTable() = default;
 
-PaymentMethodManifestTable::~PaymentMethodManifestTable() {}
+PaymentMethodManifestTable::~PaymentMethodManifestTable() = default;
 
 PaymentMethodManifestTable* PaymentMethodManifestTable::FromWebDatabase(
     WebDatabase* db) {

@@ -39,7 +39,7 @@ PhoneNumber::PhoneNumber(const PhoneNumber& number) : profile_(nullptr) {
   *this = number;
 }
 
-PhoneNumber::~PhoneNumber() {}
+PhoneNumber::~PhoneNumber() = default;
 
 PhoneNumber& PhoneNumber::operator=(const PhoneNumber& number) {
   if (this == &number)
@@ -204,11 +204,9 @@ void PhoneNumber::UpdateCacheIfNeeded(const std::string& app_locale) const {
     cached_parsed_phone_ = i18n::PhoneObject(number_, region);
 }
 
-PhoneNumber::PhoneCombineHelper::PhoneCombineHelper() {
-}
+PhoneNumber::PhoneCombineHelper::PhoneCombineHelper() = default;
 
-PhoneNumber::PhoneCombineHelper::~PhoneCombineHelper() {
-}
+PhoneNumber::PhoneCombineHelper::~PhoneCombineHelper() = default;
 
 bool PhoneNumber::PhoneCombineHelper::SetInfo(const AutofillType& type,
                                               const base::string16& value) {

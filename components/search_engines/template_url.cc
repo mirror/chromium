@@ -193,8 +193,7 @@ TemplateURLRef::SearchTermsArgs::SearchTermsArgs(
 TemplateURLRef::SearchTermsArgs::SearchTermsArgs(const SearchTermsArgs& other) =
     default;
 
-TemplateURLRef::SearchTermsArgs::~SearchTermsArgs() {
-}
+TemplateURLRef::SearchTermsArgs::~SearchTermsArgs() = default;
 
 TemplateURLRef::SearchTermsArgs::ContextualSearchParams::
     ContextualSearchParams()
@@ -213,8 +212,7 @@ TemplateURLRef::SearchTermsArgs::ContextualSearchParams::ContextualSearchParams(
     const ContextualSearchParams& other) = default;
 
 TemplateURLRef::SearchTermsArgs::ContextualSearchParams::
-    ~ContextualSearchParams() {
-}
+    ~ContextualSearchParams() = default;
 
 // TemplateURLRef -------------------------------------------------------------
 
@@ -244,8 +242,7 @@ TemplateURLRef::TemplateURLRef(const TemplateURL* owner, size_t index_in_owner)
   DCHECK_LT(index_in_owner_, owner_->alternate_urls().size());
 }
 
-TemplateURLRef::~TemplateURLRef() {
-}
+TemplateURLRef::~TemplateURLRef() = default;
 
 TemplateURLRef::TemplateURLRef(const TemplateURLRef& source) = default;
 
@@ -1149,8 +1146,7 @@ TemplateURL::AssociatedExtensionInfo::AssociatedExtensionInfo(
       install_time(install_time),
       wants_to_be_default_engine(wants_to_be_default_engine) {}
 
-TemplateURL::AssociatedExtensionInfo::~AssociatedExtensionInfo() {
-}
+TemplateURL::AssociatedExtensionInfo::~AssociatedExtensionInfo() = default;
 
 TemplateURL::TemplateURL(const TemplateURLData& data, Type type)
     : data_(data),
@@ -1180,8 +1176,7 @@ TemplateURL::TemplateURL(const TemplateURLData& data,
       extension_id, install_time, wants_to_be_default_engine);
 }
 
-TemplateURL::~TemplateURL() {
-}
+TemplateURL::~TemplateURL() = default;
 
 // static
 base::string16 TemplateURL::GenerateKeyword(const GURL& url) {

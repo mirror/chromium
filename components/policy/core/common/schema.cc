@@ -264,11 +264,9 @@ class Schema::InternalStorage
   DISALLOW_COPY_AND_ASSIGN(InternalStorage);
 };
 
-Schema::InternalStorage::InternalStorage() {
-}
+Schema::InternalStorage::InternalStorage() = default;
 
-Schema::InternalStorage::~InternalStorage() {
-}
+Schema::InternalStorage::~InternalStorage() = default;
 
 // static
 scoped_refptr<const Schema::InternalStorage> Schema::InternalStorage::Wrap(
@@ -720,19 +718,12 @@ Schema::Iterator::Iterator(const scoped_refptr<const InternalStorage>& storage,
       it_(storage->property(node->begin)),
       end_(storage->property(node->end)) {}
 
-Schema::Iterator::Iterator(const Iterator& iterator)
-    : storage_(iterator.storage_),
-      it_(iterator.it_),
-      end_(iterator.end_) {}
+Schema::Iterator::Iterator(const Iterator& iterator) = default;
 
-Schema::Iterator::~Iterator() {}
+Schema::Iterator::~Iterator() = default;
 
-Schema::Iterator& Schema::Iterator::operator=(const Iterator& iterator) {
-  storage_ = iterator.storage_;
-  it_ = iterator.it_;
-  end_ = iterator.end_;
-  return *this;
-}
+Schema::Iterator& Schema::Iterator::operator=(const Iterator& iterator) =
+    default;
 
 bool Schema::Iterator::IsAtEnd() const {
   return it_ == end_;
@@ -756,16 +747,11 @@ Schema::Schema(const scoped_refptr<const InternalStorage>& storage,
                const SchemaNode* node)
     : storage_(storage), node_(node) {}
 
-Schema::Schema(const Schema& schema)
-    : storage_(schema.storage_), node_(schema.node_) {}
+Schema::Schema(const Schema& schema) = default;
 
-Schema::~Schema() {}
+Schema::~Schema() = default;
 
-Schema& Schema::operator=(const Schema& schema) {
-  storage_ = schema.storage_;
-  node_ = schema.node_;
-  return *this;
-}
+Schema& Schema::operator=(const Schema& schema) = default;
 
 // static
 Schema Schema::Wrap(const SchemaData* data) {

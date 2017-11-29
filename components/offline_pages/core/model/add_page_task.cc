@@ -84,7 +84,7 @@ AddPageTask::AddPageTask(OfflinePageMetadataStoreSQL* store,
       callback_(std::move(callback)),
       weak_ptr_factory_(this) {}
 
-AddPageTask::~AddPageTask() {}
+AddPageTask::~AddPageTask() = default;
 
 void AddPageTask::Run() {
   if (!store_) {

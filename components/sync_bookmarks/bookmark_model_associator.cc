@@ -210,8 +210,7 @@ BookmarkModelAssociator::Context::Context(
       duplicate_count_(0),
       native_model_sync_state_(UNSET) {}
 
-BookmarkModelAssociator::Context::~Context() {
-}
+BookmarkModelAssociator::Context::~Context() = default;
 
 void BookmarkModelAssociator::Context::PushNode(int64_t sync_id) {
   dfs_stack_.push(sync_id);

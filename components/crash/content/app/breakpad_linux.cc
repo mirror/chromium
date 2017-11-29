@@ -347,8 +347,7 @@ MimeWriter::MimeWriter(int fd, const char* const mime_boundary)
       mime_boundary_(mime_boundary) {
 }
 
-MimeWriter::~MimeWriter() {
-}
+MimeWriter::~MimeWriter() = default;
 
 void MimeWriter::AddBoundary() {
   AddString(mime_boundary_);
@@ -995,7 +994,7 @@ class NonBrowserCrashHandler : public google_breakpad::CrashGenerationClient {
             kCrashDumpSignal)) {
   }
 
-  ~NonBrowserCrashHandler() override {}
+  ~NonBrowserCrashHandler() override = default;
 
   bool RequestDump(const void* crash_context,
                    size_t crash_context_size) override {
