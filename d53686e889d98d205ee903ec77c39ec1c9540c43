@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcf0154f_72d94dd7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T23:50:57Z",
+      "side": 1,
+      "message": "This will cause a strict mode violation that we should allow (since we don\u0027t really want to wait for an AsyncTask to execute)",
+      "range": {
+        "startLine": 398,
+        "startChar": 12,
+        "endLine": 400,
+        "endChar": 46
+      },
+      "revId": "d53686e889d98d205ee903ec77c39ec1c9540c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6fbe3e2_02a30a31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T23:50:57Z",
+      "side": 1,
+      "message": "PromoDialog\u0027s constructor calls PromoDialogLAyout#initialize(getDialogParams()), so I wouldn\u0027t expect setting a boolean in this constructor for use in getDialogParams() to work.. what am I missing?",
+      "revId": "d53686e889d98d205ee903ec77c39ec1c9540c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
