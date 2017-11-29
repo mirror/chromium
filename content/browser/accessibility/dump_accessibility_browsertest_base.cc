@@ -295,6 +295,9 @@ void DumpAccessibilityTestBase::RunTestForPlatform(
       all_frame_urls.push_back(url);
   }
 
+  SimulateRoutedMouseClickAt(
+      web_contents, 0, blink::WebMouseEvent::Button::kLeft, gfx::Point(0, 0));
+
   // Wait for the accessibility tree to fully load for all frames,
   // by searching for the WEB_AREA node in the accessibility tree
   // with the url of each frame in our frame tree. Note that this

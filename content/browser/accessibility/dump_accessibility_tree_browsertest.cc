@@ -1126,6 +1126,10 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
   RunHtmlTest(FILE_PATH_LITERAL("frameset.html"));
 }
 
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, Fullscreen) {
+  RunHtmlTest(FILE_PATH_LITERAL("fullscreen.html"));
+}
+
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityHead) {
   RunHtmlTest(FILE_PATH_LITERAL("head.html"));
 }
