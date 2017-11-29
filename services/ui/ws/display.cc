@@ -30,10 +30,6 @@
 #include "ui/base/cursor/cursor.h"
 #include "ui/display/screen.h"
 
-#if defined(USE_OZONE)
-#include "ui/ozone/public/ozone_platform.h"
-#endif
-
 namespace ui {
 namespace ws {
 
@@ -48,7 +44,7 @@ Display::~Display() {
   window_server_->window_manager_window_tree_factory_set()->RemoveObserver(
       this);
 
-  if (!focus_controller_) {
+  if (focus_controller_) {
     focus_controller_->RemoveObserver(this);
     focus_controller_.reset();
   }
@@ -167,7 +163,7 @@ bool Display::SetFocusedWindow(ServerWindow* new_focused_window) {
   ServerWindow* old_focused_window = focus_controller_->GetFocusedWindow();
   if (old_focused_window == new_focused_window)
     return true;
-  DCHECK(!new_focused_window || root_window()->Contains(new_focused_window));
+  DCHECK(!new_focused_window || root_->Contains(new_focused_window));
   return focus_controller_->SetFocusedWindow(new_focused_window);
 }
 
@@ -297,14 +293,6 @@ void Display::OnNativeCaptureLost() {
   WindowManagerDisplayRoot* display_root = GetActiveWindowManagerDisplayRoot();
   if (display_root)
     display_root->window_manager_state()->SetCapture(nullptr, kInvalidClientId);
-}
-
-OzonePlatform* Display::GetOzonePlatform() {
-#if defined(USE_OZONE)
-  return OzonePlatform::GetInstance();
-#else
-  return nullptr;
-#endif
 }
 
 bool Display::IsHostingViz() const {

@@ -14,6 +14,7 @@
 #include "ui/events/event_sink.h"
 #include "ui/events/system_input_injector.h"
 #include "ui/gfx/geometry/point.h"
+#include "ui/ozone/public/cursor_factory_ozone.h"
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/platform_window/platform_window.h"
 #include "ui/platform_window/stub/stub_window.h"
@@ -47,22 +48,19 @@ class TestEventSink : public EventSink {
 // A PlatformDisplayDelegate to connect the PlatformDisplay to a TestEventSink.
 class TestPlatformDisplayDelegate : public PlatformDisplayDelegate {
  public:
-  TestPlatformDisplayDelegate(TestEventSink* sink, OzonePlatform* platform)
-      : event_sink_(sink), ozone_platform_(platform) {}
+  explicit TestPlatformDisplayDelegate(TestEventSink* sink) : sink_(sink) {}
   ~TestPlatformDisplayDelegate() override = default;
 
   // PlatformDisplayDelegate:
   const display::Display& GetDisplay() override { return stub_display_; }
   ServerWindow* GetRootWindow() override { return nullptr; }
-  EventSink* GetEventSink() override { return event_sink_; }
+  EventSink* GetEventSink() override { return sink_; }
   void OnAcceleratedWidgetAvailable() override {}
   void OnNativeCaptureLost() override {}
-  OzonePlatform* GetOzonePlatform() override { return ozone_platform_; }
   bool IsHostingViz() const override { return true; }
 
  private:
-  TestEventSink* event_sink_;
-  OzonePlatform* ozone_platform_;
+  TestEventSink* sink_;
   display::Display stub_display_;
 
   DISALLOW_COPY_AND_ASSIGN(TestPlatformDisplayDelegate);
@@ -102,14 +100,12 @@ class TestOzonePlatform : public OzonePlatform {
   DISALLOW_COPY_AND_ASSIGN(TestOzonePlatform);
 };
 
-// Test fails in part because services_unittests appears to have its own ozone
-// platform that it initializes. For some reason, this only started failing
-// locally and on the trybots on 06/13/2017, while passing when run on the CQ
-// and the builders. crbug.com/732987
-TEST(PlatformDisplayDefaultTest, DISABLED_EventDispatch) {
+TEST(PlatformDisplayDefaultTest, EventDispatch) {
   // ThreadTaskRunnerHandle needed required by ThreadedImageCursors.
   base::MessageLoop loop;
+
   // Setup ozone so the display can be initialized.
+  OzonePlatform::Shutdown();
   TestOzonePlatform platform;
 
   // Create the display.
@@ -120,6 +116,7 @@ TEST(PlatformDisplayDefaultTest, DISABLED_EventDispatch) {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
       base::ThreadTaskRunnerHandle::Get();
   ImageCursorsSet image_cursors_set;
+  CursorFactoryOzone cursor_factory_ozone;
   std::unique_ptr<ThreadedImageCursors> threaded_image_cursors =
       std::make_unique<ThreadedImageCursors>(task_runner,
                                              image_cursors_set.GetWeakPtr());
@@ -128,7 +125,7 @@ TEST(PlatformDisplayDefaultTest, DISABLED_EventDispatch) {
 
   // Initialize the display with a test EventSink so we can sense events.
   TestEventSink event_sink;
-  TestPlatformDisplayDelegate delegate(&event_sink, &platform);
+  TestPlatformDisplayDelegate delegate(&event_sink);
   display.Init(&delegate);
 
   // Event dispatch is handled at the PlatformWindowDelegate level.
