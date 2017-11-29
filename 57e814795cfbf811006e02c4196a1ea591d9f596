@@ -16,6 +16,24 @@
       "revId": "57e814795cfbf811006e02c4196a1ea591d9f596",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb0d58b_b681567d",
+        "filename": "third_party/WebKit/Source/core/probe/CoreProbes.pidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-29T20:02:57Z",
+      "side": 1,
+      "message": "If I understand correctly, this will just rename the member of probe::RecalculateStyle from the default |paramDocument| to |document|.",
+      "parentUuid": "66cf6adf_d8260e57",
+      "revId": "57e814795cfbf811006e02c4196a1ea591d9f596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
