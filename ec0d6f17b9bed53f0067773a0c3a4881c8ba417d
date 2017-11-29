@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33febeb9_4a3f86e2",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-29T23:38:39Z",
+      "side": 1,
+      "message": "For proper alpha order.",
+      "range": {
+        "startLine": 644,
+        "startChar": 56,
+        "endLine": 644,
+        "endChar": 0
+      },
+      "revId": "ec0d6f17b9bed53f0067773a0c3a4881c8ba417d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
