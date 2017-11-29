@@ -93,6 +93,8 @@ import org.chromium.chrome.browser.metrics.LaunchMetrics;
 import org.chromium.chrome.browser.metrics.StartupMetrics;
 import org.chromium.chrome.browser.metrics.UmaSessionStats;
 import org.chromium.chrome.browser.metrics.WebApkUma;
+import org.chromium.chrome.browser.modaldialog.AppModalPresenter;
+import org.chromium.chrome.browser.modaldialog.ModalDialogManager;
 import org.chromium.chrome.browser.multiwindow.MultiWindowUtils;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
 import org.chromium.chrome.browser.nfc.BeamController;
@@ -257,6 +259,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     private ContextualSearchManager mContextualSearchManager;
     protected ReaderModeManager mReaderModeManager;
     private SnackbarManager mSnackbarManager;
+    private ModalDialogManager mModalDialogManager;
     private DataUseSnackbarController mDataUseSnackbarController;
     private DataReductionPromoSnackbarController mDataReductionPromoSnackbarController;
     private AppMenuPropertiesDelegate mAppMenuPropertiesDelegate;
@@ -404,6 +407,9 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             mBottomSheetContentController.init(mBottomSheet, mTabModelSelector, this);
         }
         ((BottomContainer) findViewById(R.id.bottom_container)).initialize(mFullscreenManager);
+
+        mModalDialogManager =
+                new ModalDialogManager(new AppModalPresenter(this), ModalDialogManager.APP_MODAL);
     }
 
     @Override
@@ -1193,6 +1199,14 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     @Override
     public SnackbarManager getSnackbarManager() {
         return mSnackbarManager;
+    }
+
+    /**
+     * @return The {@link ModalDialogManager} that manages the display of tab modal dialogs (e.g.
+     *         JavaScript dialogs).
+     */
+    public ModalDialogManager getModalDialogManager() {
+        return mModalDialogManager;
     }
 
     protected Drawable getBackgroundDrawable() {
