@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "16d5ecbe_fc177a86",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-29T22:36:48Z",
+      "side": 1,
+      "message": "I think the change you suggested is for the \u0027new\u0027 mechanism that lives in go/clear-temporary-page-in-opmtaskified, which hasn\u0027t been implemented yet... With that, there should be a new test testing the time-related clearing. That would be the next thing to work on i think.",
+      "parentUuid": "bdf21013_d066d3a2",
+      "range": {
+        "startLine": 387,
+        "startChar": 5,
+        "endLine": 387,
+        "endChar": 0
+      },
+      "revId": "620646e2041854645683f75c9b7387e433665320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa8a7892_4bc2d008",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0433be8a_76e76642",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-29T22:36:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa8a7892_4bc2d008",
+      "revId": "620646e2041854645683f75c9b7387e433665320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69d81cb0_d2401818",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-29T07:02:27Z",
       "side": 1,
       "message": "I am not comfortable with this being a raw pointer.\nIt is better to be unique, and for you to copy to raw pointer in test I think.\nBut feel free to send me code search snippets to change my mind.",
+      "range": {
+        "startLine": 464,
+        "startChar": 9,
+        "endLine": 464,
+        "endChar": 23
+      },
+      "revId": "620646e2041854645683f75c9b7387e433665320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874c77f7_3e3c42bc",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-29T22:36:48Z",
+      "side": 1,
+      "message": "Done.\nThere are no snippets about this during my search, i just adopted the previous version in OPMImpl.\nI don\u0027t have any problems changing this, however I couldn\u0027t see any issue with either way. Is this a preference or is there an actual right/wrong for this thing?",
+      "parentUuid": "69d81cb0_d2401818",
       "range": {
         "startLine": 464,
         "startChar": 9,
