@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c37561f_df160549",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-29T23:34:36Z",
+      "side": 1,
+      "message": "It would be good to have a bug for this.",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "f4028eaae0b76bb690e8058ec7352ee725e9192c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a1b1b2_5d40e26a",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-29T23:34:36Z",
+      "side": 1,
+      "message": "render_frame_host",
+      "range": {
+        "startLine": 791,
+        "startChar": 2,
+        "endLine": 791,
+        "endChar": 7
+      },
+      "revId": "f4028eaae0b76bb690e8058ec7352ee725e9192c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc62426_12d0fe32",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-29T23:34:36Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs mojo::MakeRequest any more; just \u0026interstitial_page.",
+      "range": {
+        "startLine": 792,
+        "startChar": 12,
+        "endLine": 792,
+        "endChar": 23
+      },
+      "revId": "f4028eaae0b76bb690e8058ec7352ee725e9192c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a319aa98_e0a5ced4",
+        "filename": "chrome/common/interstitial_page.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-29T23:34:36Z",
+      "side": 1,
+      "message": "Perhaps call this interstitial_page_renderer.mojom, and the interface InterstitialPageRenderer?",
+      "range": {
+        "startLine": 5,
+        "startChar": 20,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "f4028eaae0b76bb690e8058ec7352ee725e9192c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eed5061_449bcecb",
+        "filename": "chrome/common/interstitial_page.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-29T23:34:36Z",
+      "side": 1,
+      "message": "Maybe more general as:\n\n\"Tells the renderer that it is displaying an interstitial page\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 3,
+        "endLine": 7,
+        "endChar": 62
+      },
+      "revId": "f4028eaae0b76bb690e8058ec7352ee725e9192c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c0e3c7_06ff5785",
+        "filename": "chrome/renderer/content_settings_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-29T23:34:36Z",
+      "side": 1,
+      "message": "OnInterstitialPageRendererRequest to match the change in name of interface and mojom file?",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 32
+      },
+      "revId": "f4028eaae0b76bb690e8058ec7352ee725e9192c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
