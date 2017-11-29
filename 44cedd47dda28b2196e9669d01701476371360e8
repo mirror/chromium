@@ -16,6 +16,24 @@
       "revId": "44cedd47dda28b2196e9669d01701476371360e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a0c3dc_b6cb2e3a",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_event_log_apitest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-29T10:33:01Z",
+      "side": 1,
+      "message": "Sorry, but it wouldn\u0027t be sufficient. WebRtcTestBase::SetUp() actually runs the tests\u0027 bodies (weird, I know), so anything happening after it actually happens too late. And we can\u0027t Initialize() before it, because some things need to happen before Initialize(). (Beg pardon about the vagueness of \"some things\", but I don\u0027t recall it off the top of my head, and I don\u0027t think it\u0027s important enough to check, unless you\u0027re interested in knowing.)",
+      "parentUuid": "1a729081_76d5ed40",
+      "revId": "44cedd47dda28b2196e9669d01701476371360e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
