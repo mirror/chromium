@@ -14,6 +14,7 @@
 #include "base/files/file_util.h"
 #include "base/files/scoped_file.h"
 #include "base/logging.h"
+#include "base/macros.h"
 #include "base/memory/shared_memory_helper.h"
 #include "base/memory/shared_memory_tracker.h"
 #include "base/posix/eintr_wrapper.h"
@@ -29,6 +30,10 @@
 #if defined(OS_ANDROID)
 #include "base/os_compat_android.h"
 #include "third_party/ashmem/ashmem.h"
+#endif
+
+#if defined(OS_MACOSX) && !defined(OS_IOS)
+#error "MacOS uses shared_memory_mac.cc"
 #endif
 
 namespace base {
@@ -56,7 +61,7 @@ void SharedMemory::CloseHandle(const SharedMemoryHandle& handle) {
 
 // static
 size_t SharedMemory::GetHandleLimit() {
-  return base::GetMaxFds();
+  return GetMaxFds();
 }
 
 // static
@@ -92,14 +97,14 @@ bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
   // This function theoretically can block on the disk, but realistically
   // the temporary files we create will just go into the buffer cache
   // and be deleted before they ever make it out to disk.
-  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  ThreadRestrictions::ScopedAllowIO allow_io;
 
   ScopedFILE fp;
   bool fix_size = true;
   ScopedFD readonly_fd;
 
   FilePath path;
-  if (options.name_deprecated == nullptr || options.name_deprecated->empty()) {
+  if (!options.name_deprecated || options.name_deprecated->empty()) {
     bool result =
         CreateAnonymousSharedMemory(options, &fp, &readonly_fd, &path);
     if (!result)
@@ -177,7 +182,7 @@ bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
     }
     requested_size_ = options.size;
   }
-  if (fp == nullptr) {
+  if (!fp) {
     PLOG(ERROR) << "Creating shared memory in " << path.value() << " failed";
     FilePath dir = path.DirName();
     if (access(dir.value().c_str(), W_OK | X_OK) < 0) {
@@ -194,10 +199,10 @@ bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
   int readonly_mapped_file = -1;
   bool result = PrepareMapFile(std::move(fp), std::move(readonly_fd),
                                &mapped_file, &readonly_mapped_file);
-  shm_ = SharedMemoryHandle(base::FileDescriptor(mapped_file, false),
-                            options.size, UnguessableToken::Create());
+  shm_ = SharedMemoryHandle(FileDescriptor(mapped_file, false), options.size,
+                            UnguessableToken::Create());
   readonly_shm_ =
-      SharedMemoryHandle(base::FileDescriptor(readonly_mapped_file, false),
+      SharedMemoryHandle(FileDescriptor(readonly_mapped_file, false),
                          options.size, shm_.GetGUID());
   return result;
 }
@@ -211,7 +216,7 @@ bool SharedMemory::Delete(const std::string& name) {
     return false;
 
   if (PathExists(path))
-    return base::DeleteFile(path, false);
+    return DeleteFile(path, false);
 
   // Doesn't exist, so success.
   return true;
@@ -225,7 +230,7 @@ bool SharedMemory::Open(const std::string& name, bool read_only) {
   read_only_ = read_only;
 
   const char *mode = read_only ? "r" : "r+";
-  ScopedFILE fp(base::OpenFile(path, mode));
+  ScopedFILE fp(OpenFile(path, mode));
   ScopedFD readonly_fd(HANDLE_EINTR(open(path.value().c_str(), O_RDONLY)));
   if (!readonly_fd.is_valid()) {
     DPLOG(ERROR) << "open(\"" << path.value() << "\", O_RDONLY) failed";
@@ -245,10 +250,10 @@ bool SharedMemory::Open(const std::string& name, bool read_only) {
   // single version of the service process.
   // We pass the size |0|, which is a dummy size and wrong, but otherwise
   // harmless.
-  shm_ = SharedMemoryHandle(base::FileDescriptor(mapped_file, false), 0u,
+  shm_ = SharedMemoryHandle(FileDescriptor(mapped_file, false), 0u,
                             UnguessableToken::Create());
   readonly_shm_ = SharedMemoryHandle(
-      base::FileDescriptor(readonly_mapped_file, false), 0, shm_.GetGUID());
+      FileDescriptor(readonly_mapped_file, false), 0, shm_.GetGUID());
   return result;
 }
 #endif  // !defined(OS_ANDROID)
@@ -278,7 +283,7 @@ bool SharedMemory::MapAt(off_t offset, size_t bytes) {
   memory_ = mmap(nullptr, bytes, PROT_READ | (read_only_ ? 0 : PROT_WRITE),
                  MAP_SHARED, shm_.GetHandle(), offset);
 
-  bool mmap_succeeded = memory_ != (void*)-1 && memory_ != nullptr;
+  bool mmap_succeeded = memory_ && memory_ != reinterpret_cast<void*>(-1);
   if (mmap_succeeded) {
     mapped_size_ = bytes;
     mapped_id_ = shm_.GetGUID();
@@ -294,7 +299,7 @@ bool SharedMemory::MapAt(off_t offset, size_t bytes) {
 }
 
 bool SharedMemory::Unmap() {
-  if (memory_ == nullptr)
+  if (!memory_)
     return false;
 
   SharedMemoryTracker::GetInstance()->DecrementMemoryUsage(*this);
@@ -345,11 +350,12 @@ bool SharedMemory::FilePathForMemoryName(const std::string& mem_name,
     return false;
 
 #if defined(GOOGLE_CHROME_BUILD)
-  std::string name_base = std::string("com.google.Chrome");
+  static const char kShmem[] = "com.google.Chrome.shmem.";
 #else
-  std::string name_base = std::string("org.chromium.Chromium");
+  static const char kShmem[] = "org.chromium.Chromium.shmem.";
 #endif
-  *path = temp_dir.AppendASCII(name_base + ".shmem." + mem_name);
+  CR_DEFINE_STATIC_LOCAL(const std::string, name_base, (kShmem));
+  *path = temp_dir.AppendASCII(name_base + mem_name);
   return true;
 }
 #endif  // !defined(OS_ANDROID)
