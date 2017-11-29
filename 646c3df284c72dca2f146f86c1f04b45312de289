@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "aed61900_2da0a7ce",
+        "filename": "third_party/WebKit/LayoutTests/svg/as-image/svg-as-image-div-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T14:11:19Z",
+      "side": 1,
+      "message": "Yes, \u0027float\u0027 is needed for \u0027shape-outside\u0027 to apply, so that part is obvious. Looks it\u0027s the XML parsing error that ends up triggering it - I assume adding !GetImage()-\u003eCachedImage()-\u003eErrorOccurred() in a reasonable place in ShapeValue::IsImageValid alsop fixes the issue?\n\nA better name might be one that mentions that there\u0027s a parse error, so maybe:\n\nsvg-with-parse-error-crash.html (also add \"parse error\" somewhere in the text in the test)\n\nPresumably we could also test this with an \u003cimg\u003e and checking for \u0027load\u0027 or \u0027error\u0027 being dispacthed?",
+      "parentUuid": "761cd2c0_f84611bd",
+      "range": {
+        "startLine": 11,
+        "startChar": 92,
+        "endLine": 11,
+        "endChar": 136
+      },
+      "revId": "646c3df284c72dca2f146f86c1f04b45312de289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "022b2096_43bf1cfa",
         "filename": "third_party/WebKit/LayoutTests/svg/as-image/svg-as-image-div-crash.html",
         "patchSetId": 3
@@ -375,6 +399,29 @@
       "revId": "646c3df284c72dca2f146f86c1f04b45312de289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16c410e4_b4355b02",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T14:11:19Z",
+      "side": 1,
+      "message": "I think this regresses the bugfix for cases where size\u003d0x0 and there is a reference to some resource (data URL) that needs to load async.",
+      "range": {
+        "startLine": 427,
+        "startChar": 32,
+        "endLine": 427,
+        "endChar": 72
+      },
+      "revId": "646c3df284c72dca2f146f86c1f04b45312de289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
