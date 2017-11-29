@@ -64,9 +64,6 @@ QUIC_FLAG(double, FLAGS_quic_bbr_rtt_variation_weight, 0.0f)
 // Congestion window gain for QUIC BBR during PROBE_BW phase.
 QUIC_FLAG(double, FLAGS_quic_bbr_cwnd_gain, 2.0f)
 
-// Support bandwidth resumption in QUIC BBR.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_bandwidth_resumption, true)
-
 // Add the equivalent number of bytes as 3 TCP TSO segments to QUIC's BBR CWND.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_add_tso_cwnd, false)
 
