@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7432b6b9_4c9f0611",
+        "filename": "gpu/ipc/in_process_command_buffer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-29T22:10:19Z",
+      "side": 1,
+      "message": "I\u0027m passing in GpuChannelManagerDelegate. Done.\n\nI didn\u0027t rename it, because I\u0027m not totally sure what to call it. It\u0027s kind of a proxy for GpuServiceImpl, so GpuServiceProxy? Idk. Happy to change it or leave it be.",
+      "parentUuid": "653d1162_8c5babef",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fcb564b_50fe136b",
         "filename": "ui/gfx/win/rendering_window_manager.cc",
         "patchSetId": 16
@@ -195,6 +213,24 @@
       "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4a50d6_68108a4d",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-29T22:10:19Z",
+      "side": 1,
+      "message": "Done. Using base::TaskPriority::USER_BLOCKING which is the highest priority task.",
+      "parentUuid": "aca48d83_03b1cdac",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
