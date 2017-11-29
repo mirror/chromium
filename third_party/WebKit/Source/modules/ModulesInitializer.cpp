@@ -5,6 +5,7 @@
 #include "modules/ModulesInitializer.h"
 
 #include "bindings/modules/v8/ModuleBindingsInitializer.h"
+#include "build/build_config.h"
 #include "core/css/CSSPaintImageGenerator.h"
 #include "core/dom/ContextFeaturesClientImpl.h"
 #include "core/dom/Document.h"
@@ -89,6 +90,10 @@
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/web/WebViewClient.h"
 
+#if !defined(OS_ANDROID)
+#include "modules/zoom_metrics/StyleCollector.h"
+#endif
+
 namespace blink {
 
 void ModulesInitializer::Initialize() {
@@ -151,6 +156,12 @@ void ModulesInitializer::InitLocalFrame(LocalFrame& frame) const {
       &AppBannerController::BindMojoRequest, WrapWeakPersistent(&frame)));
   frame.GetInterfaceRegistry()->AddInterface(WTF::Bind(
       &TextSuggestionBackendImpl::Create, WrapWeakPersistent(&frame)));
+#if !defined(OS_ANDROID)
+  // This is really scoped to the document.
+  frame.GetInterfaceRegistry()->AddInterface(
+      WTF::Bind(&::blink::zoom_metrics::StyleCollector::BindMojoRequest,
+                WrapWeakPersistent(&frame)));
+#endif
 }
 
 void ModulesInitializer::InstallSupplements(LocalFrame& frame) const {

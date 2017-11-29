@@ -1,0 +1,40 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom.zoom_metrics;
+
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
+struct MainFrameStyleInfo {
+  // The size of the viewport. Independent of zoom factor.
+  gfx.mojom.Size visible_content_size;
+  // The size of the content.
+  gfx.mojom.Size contents_size;
+  // The width needed to display the document without horizontal scrollbars.
+  uint32 preferred_width;
+};
+
+struct StyleInfo {
+  // Map font sizes to number of characters of that size found in page.
+  map<uint8, uint32> font_size_distribution;
+
+  MainFrameStyleInfo? main_frame_info;
+
+  // The size of the largest image, if there are any images.
+  gfx.mojom.Size? largest_image;
+
+  // The size of the largest object (e.g. video, canvas), if there are any.
+  gfx.mojom.Size? largest_object;
+
+  // Area of page covered in text content.
+  uint32 text_area = 0;
+  // Area of page covered in images.
+  uint32 image_area = 0;
+  // Area of page covered in other objects (e.g. video, canvas).
+  uint32 object_area = 0;
+};
+
+interface StyleCollector {
+  GetStyle() => (StyleInfo? info);
+};

@@ -835,6 +835,10 @@ mojom("mojo_bindings") {
   overridden_deps = [ "//third_party/WebKit/common:mojo_platform_bindings" ]
   component_deps = [ "//third_party/WebKit/common:blink_common" ]
 
+  if (!is_android) {
+    sources += [ "platform/modules/zoom_metrics/style_collector.mojom" ]
+  }
+
   component_output_prefix = "blink_mojo_bindings"
 
   # The chromium variant must be linked with content and use the same export

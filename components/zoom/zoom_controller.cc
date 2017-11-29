@@ -42,7 +42,8 @@ ZoomController::ZoomController(content::WebContents* web_contents)
       can_show_bubble_(true),
       zoom_mode_(ZOOM_MODE_DEFAULT),
       zoom_level_(1.0),
-      browser_context_(web_contents->GetBrowserContext()) {
+      browser_context_(web_contents->GetBrowserContext()),
+      metrics_recorder_(web_contents) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   host_zoom_map_ = content::HostZoomMap::GetForWebContents(web_contents);
   zoom_level_ = host_zoom_map_->GetDefaultZoomLevel();
@@ -101,6 +102,18 @@ bool ZoomController::SetZoomLevel(double zoom_level) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // A client did not initiate this zoom change.
   return SetZoomLevelByClient(zoom_level, nullptr);
+}
+
+bool ZoomController::SetZoomLevelByUser(double zoom_level) {
+  bool success = SetZoomLevel(zoom_level);
+
+  if (success)
+    metrics_recorder_.OnUserZoom(
+        content::ZoomLevelToZoomFactor(zoom_level),
+        content::ZoomLevelToZoomFactor(GetDefaultZoomLevel()),
+        (zoom_mode_ == ZOOM_MODE_DEFAULT || zoom_mode_ == ZOOM_MODE_ISOLATED));
+
+  return success;
 }
 
 bool ZoomController::SetZoomLevelByClient(

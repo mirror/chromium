@@ -12,4 +12,5 @@ typemaps = [
   "//components/signin/public/interfaces/account_id.typemap",
   "//components/spellcheck/common/spellcheck.typemap",
   "//components/translate/content/common/translate.typemap",
+  "//components/zoom/metrics/zoom_metrics.typemap",
 ]

@@ -21,6 +21,7 @@
           "autofill::mojom::PasswordAutofillAgent",
           "autofill::mojom::PasswordGenerationAgent",
           "blink::mojom::document_metadata::CopylessPaste",
+          "blink::mojom::zoom_metrics::StyleCollector",
           "chrome::mojom::InsecureContentRenderer",
           "chrome::mojom::ChromeRenderFrame",
           "contextual_search::mojom::OverlayPageNotifierService",
