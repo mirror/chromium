@@ -25,8 +25,8 @@
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/frame/UseCounter.h"
-#include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLDivElement.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html_names.h"
 #include "core/style/ComputedStyle.h"
@@ -190,7 +190,7 @@ void HTMLMeterElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
   inner->AppendChild(bar);
 
   HTMLDivElement* fallback = HTMLDivElement::Create(GetDocument());
-  fallback->AppendChild(HTMLContentElement::Create(GetDocument()));
+  fallback->AppendChild(HTMLSlotElement::Create(GetDocument()));
   fallback->SetShadowPseudoId(AtomicString("-internal-fallback"));
   root.AppendChild(fallback);
 }
