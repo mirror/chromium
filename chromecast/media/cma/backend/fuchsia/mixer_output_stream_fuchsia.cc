@@ -17,15 +17,25 @@
 namespace chromecast {
 namespace media {
 
+// Always use 48kHz sample rate for the output stream. Currently 48kHz sample
+// rate has to be used for 2 reasons:
+//   1. Some loopback consumers assume that loopback is always sampled at 48kHz.
+//      See b/38282085.
+//   2. Fuchsia's mixer normally resamples to 48kHz and it uses low quality
+//      bilinear resampler, see MTWN-45.
+// StreamMixer will resample all output streams to this sample rate.
+constexpr int kSampleRate = 48000;
+
 // |buffer_size| passed to media_client library when initializing audio output
 // stream. Current implementation ignores this parameter, so the value doesn't
 // make much difference. StreamMixer by default writes chunks of 768 frames.
 constexpr int kDefaultPeriodSize = 768;
 
-// Same value as in MixerOutputStreamAlsa. Currently this value is used to
-// simulate blocking Write() similar to ALSA's behavior, see comments in
+// Maximum buffer duration. This value is used to simulate blocking Write()
+// similar to ALSA's behavior, see comments in
 // MixerOutputStreamFuchsia::Write().
-constexpr int kMaxOutputBufferSizeFrames = 4096;
+constexpr base::TimeDelta kMaxOutputBufferDuration =
+    base::TimeDelta::FromMilliseconds(40);
 
 // static
 std::unique_ptr<MixerOutputStream> MixerOutputStream::Create() {
@@ -40,7 +50,7 @@ MixerOutputStreamFuchsia::~MixerOutputStreamFuchsia() {
 }
 
 bool MixerOutputStreamFuchsia::IsFixedSampleRate() {
-  return false;
+  return true;
 }
 
 bool MixerOutputStreamFuchsia::Start(int requested_sample_rate, int channels) {
@@ -52,7 +62,7 @@ bool MixerOutputStreamFuchsia::Start(int requested_sample_rate, int channels) {
   DCHECK(manager_);
 
   fuchsia_audio_parameters fuchsia_params;
-  fuchsia_params.sample_rate = requested_sample_rate;
+  fuchsia_params.sample_rate = kSampleRate;
   fuchsia_params.num_channels = channels;
   fuchsia_params.buffer_size = kDefaultPeriodSize;
 
@@ -70,7 +80,7 @@ bool MixerOutputStreamFuchsia::Start(int requested_sample_rate, int channels) {
     return false;
   }
 
-  sample_rate_ = requested_sample_rate;
+  sample_rate_ = kSampleRate;
   channels_ = channels;
 
   started_time_ = base::TimeTicks();
@@ -151,13 +161,12 @@ bool MixerOutputStreamFuchsia::Write(const float* data,
   // MixerOutputStreamAlsa uses blocking Write() and StreamMixer relies on that
   // behavior. Sleep() below replicates the same behavior on Fuchsia.
   // TODO(sergeyu): Refactor StreamMixer to work with non-blocking Write().
-  base::TimeDelta max_buffer_duration =
-      ::media::AudioTimestampHelper::FramesToTime(kMaxOutputBufferSizeFrames,
-                                                  sample_rate_);
   base::TimeDelta current_buffer_duration =
       GetCurrentStreamTime() - base::TimeTicks::Now();
-  if (current_buffer_duration > max_buffer_duration)
-    base::PlatformThread::Sleep(current_buffer_duration - max_buffer_duration);
+  if (current_buffer_duration > kMaxOutputBufferDuration) {
+    base::PlatformThread::Sleep(current_buffer_duration -
+                                kMaxOutputBufferDuration);
+  }
 
   return true;
 }
