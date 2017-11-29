@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e9d4fcd_df936b72",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-29T21:03:28Z",
+      "side": 1,
+      "message": "Add DCHECK(connector_); here?",
+      "revId": "4385d51b756fa341a8b1dde1a5d6e870db97d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3780ec9e_fac531f7",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-29T21:03:28Z",
+      "side": 1,
+      "message": "Now that this is a class, I think it would be nice if this class could guarantee that |callback| will only be invoked while |this| still exists. This can be done by, for example, using a trampoline method in this class bound with a WeakPtr that invokes the actual callback. That way you don\u0027t need to use WeakPtr in DeviceDescriptionService. Sorry for the churn.",
+      "revId": "4385d51b756fa341a8b1dde1a5d6e870db97d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
