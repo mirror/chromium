@@ -9,7 +9,6 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "platform/bindings/V8DOMActivityLogger.h"
 #include "platform/wtf/Forward.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/Base64.h"
 #include "public/platform/WebCache.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -74,8 +73,9 @@ class ActivityLoggerTest : public ::testing::Test {
  protected:
   ActivityLoggerTest() {
     activity_logger_ = new TestActivityLogger();
-    V8DOMActivityLogger::SetActivityLogger(kIsolatedWorldId, String(),
-                                           WTF::WrapUnique(activity_logger_));
+    V8DOMActivityLogger::SetActivityLogger(
+        kIsolatedWorldId, String(),
+        std::unique_ptr<TestActivityLogger>(activity_logger_));
     web_view_helper_.Initialize();
     script_controller_ = &web_view_helper_.WebView()
                               ->MainFrameImpl()

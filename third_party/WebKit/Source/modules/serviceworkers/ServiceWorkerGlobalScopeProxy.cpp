@@ -81,7 +81,6 @@
 #include "platform/network/ContentSecurityPolicyResponseHeaders.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/modules/notifications/WebNotificationData.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 #include "public/platform/modules/serviceworker/service_worker_event_status.mojom-blink.h"
@@ -271,9 +270,9 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
   String origin;
   if (!source_origin.IsUnique())
     origin = source_origin.ToString();
-  ServiceWorker* source =
-      ServiceWorker::From(worker_global_scope_->GetExecutionContext(),
-                          WTF::WrapUnique(handle.release()));
+  ServiceWorker* source = ServiceWorker::From(
+      worker_global_scope_->GetExecutionContext(),
+      std::unique_ptr<WebServiceWorker::Handle>(handle.release()));
   WaitUntilObserver* observer = WaitUntilObserver::Create(
       WorkerGlobalScope(), WaitUntilObserver::kMessage, event_id);
 

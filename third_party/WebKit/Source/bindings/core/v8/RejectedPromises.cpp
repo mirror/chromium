@@ -17,7 +17,6 @@
 #include "platform/bindings/V8PerIsolateData.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/Functional.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
 
@@ -34,9 +33,9 @@ class RejectedPromises::Message final {
       const String& error_message,
       std::unique_ptr<SourceLocation> location,
       AccessControlStatus cors_status) {
-    return WTF::WrapUnique(new Message(script_state, promise, exception,
-                                       error_message, std::move(location),
-                                       cors_status));
+    return std::unique_ptr<Message>(
+        new Message(script_state, promise, exception, error_message,
+                    std::move(location), cors_status));
   }
 
   bool IsCollected() { return collected_ || !script_state_->ContextIsValid(); }

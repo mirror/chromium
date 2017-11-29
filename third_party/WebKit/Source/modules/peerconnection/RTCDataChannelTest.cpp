@@ -4,7 +4,9 @@
 
 #include "modules/peerconnection/RTCDataChannel.h"
 
+#include <memory>
 #include <string>
+
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/DOMException.h"
@@ -12,7 +14,6 @@
 #include "core/testing/NullExecutionContext.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "platform/heap/Heap.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebRTCDataChannelHandler.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -76,8 +77,8 @@ class MockHandler final : public WebRTCDataChannelHandler {
 
 TEST(RTCDataChannelTest, BufferedAmount) {
   MockHandler* handler = new MockHandler();
-  RTCDataChannel* channel = RTCDataChannel::Create(new NullExecutionContext,
-                                                   WTF::WrapUnique(handler));
+  RTCDataChannel* channel = RTCDataChannel::Create(
+      new NullExecutionContext, std::unique_ptr<MockHandler>(handler));
 
   handler->ChangeState(WebRTCDataChannelHandlerClient::kReadyStateOpen);
   String message(std::string(100, 'A').c_str());
@@ -87,8 +88,8 @@ TEST(RTCDataChannelTest, BufferedAmount) {
 
 TEST(RTCDataChannelTest, BufferedAmountLow) {
   MockHandler* handler = new MockHandler();
-  RTCDataChannel* channel = RTCDataChannel::Create(new NullExecutionContext,
-                                                   WTF::WrapUnique(handler));
+  RTCDataChannel* channel = RTCDataChannel::Create(
+      new NullExecutionContext, std::unique_ptr<MockHandler>(handler));
 
   // Add and drain 100 bytes
   handler->ChangeState(WebRTCDataChannelHandlerClient::kReadyStateOpen);
@@ -151,8 +152,8 @@ TEST(RTCDataChannelTest, BufferedAmountLow) {
 
 TEST(RTCDataChannelTest, SendAfterContextDestroyed) {
   MockHandler* handler = new MockHandler();
-  RTCDataChannel* channel = RTCDataChannel::Create(new NullExecutionContext,
-                                                   WTF::WrapUnique(handler));
+  RTCDataChannel* channel = RTCDataChannel::Create(
+      new NullExecutionContext, std::unique_ptr<MockHandler>(handler));
   handler->ChangeState(WebRTCDataChannelHandlerClient::kReadyStateOpen);
   channel->ContextDestroyed(nullptr);
 
@@ -165,8 +166,8 @@ TEST(RTCDataChannelTest, SendAfterContextDestroyed) {
 
 TEST(RTCDataChannelTest, CloseAfterContextDestroyed) {
   MockHandler* handler = new MockHandler();
-  RTCDataChannel* channel = RTCDataChannel::Create(new NullExecutionContext,
-                                                   WTF::WrapUnique(handler));
+  RTCDataChannel* channel = RTCDataChannel::Create(
+      new NullExecutionContext, std::unique_ptr<MockHandler>(handler));
   handler->ChangeState(WebRTCDataChannelHandlerClient::kReadyStateOpen);
   channel->ContextDestroyed(nullptr);
   channel->close();

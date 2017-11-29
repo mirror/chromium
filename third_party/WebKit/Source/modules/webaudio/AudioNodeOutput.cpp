@@ -27,7 +27,6 @@
 #include <memory>
 #include "modules/webaudio/AudioNodeInput.h"
 #include "modules/webaudio/BaseAudioContext.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Threading.h"
 
 namespace blink {
@@ -51,7 +50,8 @@ inline AudioNodeOutput::AudioNodeOutput(AudioHandler* handler,
 std::unique_ptr<AudioNodeOutput> AudioNodeOutput::Create(
     AudioHandler* handler,
     unsigned number_of_channels) {
-  return WTF::WrapUnique(new AudioNodeOutput(handler, number_of_channels));
+  return std::unique_ptr<AudioNodeOutput>(
+      new AudioNodeOutput(handler, number_of_channels));
 }
 
 void AudioNodeOutput::Dispose() {

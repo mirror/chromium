@@ -32,7 +32,6 @@
 #include "core/dom/ExecutionContext.h"
 #include "modules/mediastream/MediaStreamTrack.h"
 #include "modules/peerconnection/RTCDTMFToneChangeEvent.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebMediaStreamTrack.h"
 #include "public/platform/WebRTCDTMFSenderHandler.h"
@@ -51,8 +50,9 @@ RTCDTMFSender* RTCDTMFSender::Create(
     WebRTCPeerConnectionHandler* peer_connection_handler,
     MediaStreamTrack* track,
     ExceptionState& exception_state) {
-  std::unique_ptr<WebRTCDTMFSenderHandler> handler = WTF::WrapUnique(
-      peer_connection_handler->CreateDTMFSender(track->Component()));
+  std::unique_ptr<WebRTCDTMFSenderHandler> handler =
+      std::unique_ptr<WebRTCDTMFSenderHandler>(
+          peer_connection_handler->CreateDTMFSender(track->Component()));
   if (!handler) {
     exception_state.ThrowDOMException(kNotSupportedError,
                                       "The MediaStreamTrack provided is not an "

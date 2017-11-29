@@ -36,7 +36,6 @@
 #include "modules/indexeddb/IDBRequest.h"
 #include "modules/indexeddb/IDBValue.h"
 #include "platform/SharedBuffer.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/modules/indexeddb/WebIDBCursor.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabase.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabaseError.h"
@@ -57,7 +56,7 @@ namespace blink {
 // static
 std::unique_ptr<WebIDBCallbacksImpl> WebIDBCallbacksImpl::Create(
     IDBRequest* request) {
-  return WTF::WrapUnique(new WebIDBCallbacksImpl(request));
+  return std::unique_ptr<WebIDBCallbacksImpl>(new WebIDBCallbacksImpl(request));
 }
 
 WebIDBCallbacksImpl::WebIDBCallbacksImpl(IDBRequest* request)
@@ -107,13 +106,14 @@ void WebIDBCallbacksImpl::OnSuccess(WebIDBCursor* cursor,
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
-  request_->HandleResponse(WTF::WrapUnique(cursor), key, primary_key,
+  request_->HandleResponse(std::unique_ptr<WebIDBCursor>(cursor), key,
+                           primary_key,
                            IDBValue::Create(value, request_->GetIsolate()));
 }
 
 void WebIDBCallbacksImpl::OnSuccess(WebIDBDatabase* backend,
                                     const WebIDBMetadata& metadata) {
-  std::unique_ptr<WebIDBDatabase> db = WTF::WrapUnique(backend);
+  std::unique_ptr<WebIDBDatabase> db = std::unique_ptr<WebIDBDatabase>(backend);
   if (request_) {
     probe::AsyncTask async_task(request_->GetExecutionContext(), this,
                                 "success");
@@ -196,7 +196,8 @@ void WebIDBCallbacksImpl::OnUpgradeNeeded(long long old_version,
                                           const WebIDBMetadata& metadata,
                                           unsigned short data_loss,
                                           WebString data_loss_message) {
-  std::unique_ptr<WebIDBDatabase> db = WTF::WrapUnique(database);
+  std::unique_ptr<WebIDBDatabase> db =
+      std::unique_ptr<WebIDBDatabase>(database);
   if (request_) {
     probe::AsyncTask async_task(request_->GetExecutionContext(), this,
                                 "upgradeNeeded");

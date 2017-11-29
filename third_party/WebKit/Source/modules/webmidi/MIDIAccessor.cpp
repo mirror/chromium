@@ -32,7 +32,6 @@
 
 #include <memory>
 #include "modules/webmidi/MIDIAccessorClient.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 #include "public/platform/modules/webmidi/WebMIDIAccessor.h"
@@ -45,7 +44,7 @@ namespace blink {
 
 // Factory method
 std::unique_ptr<MIDIAccessor> MIDIAccessor::Create(MIDIAccessorClient* client) {
-  return WTF::WrapUnique(new MIDIAccessor(client));
+  return std::unique_ptr<MIDIAccessor>(new MIDIAccessor(client));
 }
 
 MIDIAccessor::MIDIAccessor(MIDIAccessorClient* client) : client_(client) {

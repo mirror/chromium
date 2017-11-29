@@ -16,7 +16,6 @@
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "modules/serviceworkers/ServiceWorkerError.h"
 #include "platform/bindings/ScriptState.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/platform/modules/serviceworker/service_worker_registration.mojom-blink.h"
 
@@ -44,24 +43,27 @@ void ServiceWorkerRegistration::SetInstalling(
     std::unique_ptr<WebServiceWorker::Handle> handle) {
   if (!GetExecutionContext())
     return;
-  installing_ = ServiceWorker::From(GetExecutionContext(),
-                                    WTF::WrapUnique(handle.release()));
+  installing_ = ServiceWorker::From(
+      GetExecutionContext(),
+      std::unique_ptr<WebServiceWorker::Handle>(handle.release()));
 }
 
 void ServiceWorkerRegistration::SetWaiting(
     std::unique_ptr<WebServiceWorker::Handle> handle) {
   if (!GetExecutionContext())
     return;
-  waiting_ = ServiceWorker::From(GetExecutionContext(),
-                                 WTF::WrapUnique(handle.release()));
+  waiting_ = ServiceWorker::From(
+      GetExecutionContext(),
+      std::unique_ptr<WebServiceWorker::Handle>(handle.release()));
 }
 
 void ServiceWorkerRegistration::SetActive(
     std::unique_ptr<WebServiceWorker::Handle> handle) {
   if (!GetExecutionContext())
     return;
-  active_ = ServiceWorker::From(GetExecutionContext(),
-                                WTF::WrapUnique(handle.release()));
+  active_ = ServiceWorker::From(
+      GetExecutionContext(),
+      std::unique_ptr<WebServiceWorker::Handle>(handle.release()));
 }
 
 ServiceWorkerRegistration* ServiceWorkerRegistration::GetOrCreate(

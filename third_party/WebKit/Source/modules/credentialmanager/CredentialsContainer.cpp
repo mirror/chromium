@@ -32,7 +32,6 @@
 #include "platform/credentialmanager/PlatformFederatedCredential.h"
 #include "platform/credentialmanager/PlatformPasswordCredential.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCredential.h"
 #include "public/platform/WebCredentialManagerClient.h"
@@ -191,8 +190,8 @@ class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
     SECURITY_CHECK(!frame || IsSameOriginWithAncestors(frame));
 
     std::unique_ptr<WebCredential> credential =
-        WTF::WrapUnique(web_credential.release());
-    if (!frame) {
+        std::unique_ptr<WebCredential>(web_credential.release());
+    if (!credential || !frame) {
       resolver_->Resolve();
       return;
     }
