@@ -135,6 +135,15 @@
                    }];
 }
 
+- (CGRect)visibleOmniboxFrame {
+  CGRect frame = self.locationBarContainer.frame;
+  frame =
+      [self.view.superview convertRect:frame
+                              fromView:[self.locationBarContainer superview]];
+  // Account for the omnibox background image transparent sides.
+  return CGRectInset(frame, -kBackgroundImageVisibleRectOffset, 0);
+}
+
 #pragma mark - View lifecyle
 
 - (void)viewDidLoad {
