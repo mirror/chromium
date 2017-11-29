@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bebb0dc7_b484faf4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-29T18:11:29Z",
+      "side": 1,
+      "message": "The 200 and 10k min/max values seem pretty arbitrary.\n\nAlso, 10k milliseconds is only 10s. I don\u0027t think it\u0027s a sufficiently high max.\n\nI suggest using the same buckets that the desktop startup metric (Startup.FirstWebContents.NonEmptyPaint2) uses, which uses UMA_HISTOGRAM_LONG_TIMES_100() - with a min of 1ms and max of 1hr.\n\n1hr is definitely a lot and wouldn\u0027t really be reasonable, but given you\u0027re using 100 buckets - you should still be able to get a good distribution.\n\nYou can look at UMA data for Startup.FirstWebContents.NonEmptyPaint2 on Windows or Mac to see how the distribution of buckets looks like. I think it should be sufficient for mobile too.",
+      "range": {
+        "startLine": 215,
+        "startChar": 55,
+        "endLine": 215,
+        "endChar": 0
+      },
+      "revId": "2742fa0bf56fdf35fa05e351a178a7d52884c70e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37123097_eafae42f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 37716,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-29T18:11:29Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of the MobileStartup naming convention. I think it\u0027s an antipattern.\n\nHow about naming it Startup.Android.Experimental.Cold.TimeTo..?",
+      "range": {
+        "startLine": 37716,
+        "startChar": 31,
+        "endLine": 37716,
+        "endChar": 43
+      },
+      "revId": "2742fa0bf56fdf35fa05e351a178a7d52884c70e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
