@@ -424,7 +424,7 @@ ImageResourceContent::UpdateImageResult ImageResourceContent::UpdateImage(
       // https://www.w3.org/TR/SVG/struct.html#SVGElementWidthAttribute
       if (!image_ ||
           (image_->IsNull() && (!image_->IsSVGImage() ||
-                                size_available_ == Image::kSizeUnavailable))) {
+                                size_available_ != Image::kSizeAvailable))) {
         ClearImage();
         return UpdateImageResult::kShouldDecodeError;
       }
