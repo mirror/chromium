@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e23498e_928d20c3",
+        "filename": "internal_gyp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-29T07:46:28Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand why this keeps creeping into my CLs. I don\u0027t know what it is and it doesn\u0027t appear locally in my git logs or in the list of files being uploaded to Gerrit :-\\",
+      "revId": "9eb98a4d93b6ffa5aca4baeabdfef0e220d81dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
