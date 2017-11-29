@@ -46,6 +46,30 @@
       "revId": "80ba51087d8c2caf7b29bb35cc94a4b4816c86f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e220585_ebd02e34",
+        "filename": "third_party/WebKit/Source/platform/loader/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-29T07:26:12Z",
+      "side": 0,
+      "message": "My understanding of target \".../platform\" was wrong. I thought it was equal to \".../platform:*\", and it contained \".../platform:test_support\" too.",
+      "parentUuid": "5635fed5_dcde82c9",
+      "range": {
+        "startLine": 170,
+        "startChar": 4,
+        "endLine": 170,
+        "endChar": 42
+      },
+      "revId": "80ba51087d8c2caf7b29bb35cc94a4b4816c86f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
