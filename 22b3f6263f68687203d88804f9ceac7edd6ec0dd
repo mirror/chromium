@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e663a801_a5d99588",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-11-29T18:44:53Z",
+      "side": 0,
+      "message": "lets not remove this just yet.  we can leave the dead code for now, I was planning on renaming anyways.   \n\nor is there a presubmit saying it is no longer in use?  if so fine to rip out.  we will need a new isolate at some point, but not your current problem :)",
+      "revId": "22b3f6263f68687203d88804f9ceac7edd6ec0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
