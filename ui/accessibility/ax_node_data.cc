@@ -127,6 +127,7 @@ bool IsNodeIdIntAttribute(AXIntAttribute attr) {
     case AX_ATTR_SCROLL_Y_MAX:
     case AX_ATTR_TEXT_SEL_START:
     case AX_ATTR_TEXT_SEL_END:
+    case AX_ATTR_TEXT_VALUE_FRIENDLY_PREFIX_LENGTH:
     case AX_ATTR_TABLE_ROW_COUNT:
     case AX_ATTR_TABLE_COLUMN_COUNT:
     case AX_ATTR_TABLE_ROW_INDEX:
@@ -601,6 +602,9 @@ std::string AXNodeData::ToString() const {
         break;
       case AX_ATTR_TEXT_SEL_END:
         result += " sel_end=" + value;
+        break;
+      case AX_ATTR_TEXT_VALUE_FRIENDLY_PREFIX_LENGTH:
+        result += " value_prefix_length=" + value;
         break;
       case AX_ATTR_ARIA_COLUMN_COUNT:
         result += " aria_column_count=" + value;

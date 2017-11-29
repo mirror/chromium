@@ -2349,7 +2349,8 @@ STDMETHODIMP AXPlatformNodeWin::get_text(LONG start_offset,
                                          LONG end_offset,
                                          BSTR* text) {
   COM_OBJECT_VALIDATE_1_ARG(text);
-  int sel_end = GetIntAttribute(AX_ATTR_TEXT_SEL_START);
+  int sel_end = GetIntAttribute(AX_ATTR_TEXT_SEL_START) +
+                GetIntAttribute(AX_ATTR_TEXT_VALUE_FRIENDLY_PREFIX_LENGTH);
   base::string16 text_str = TextForIAccessibleText();
   LONG len = static_cast<LONG>(text_str.size());
 
@@ -3767,6 +3768,12 @@ LONG AXPlatformNodeWin::FindBoundary(const base::string16& text,
                                      IA2TextBoundaryType ia2_boundary,
                                      LONG start_offset,
                                      TextBoundaryDirection direction) {
+  if (start_offset >= 0) {
+    int selection_offsets_offset =
+        GetIntAttribute(ui::AX_ATTR_TEXT_VALUE_FRIENDLY_PREFIX_LENGTH);
+    start_offset -= selection_offsets_offset;
+  }
+
   HandleSpecialTextOffset(&start_offset);
   TextBoundaryType boundary = IA2TextBoundaryToTextBoundary(ia2_boundary);
   std::vector<int32_t> line_breaks;
@@ -4120,6 +4127,13 @@ void AXPlatformNodeWin::GetSelectionOffsets(int* selection_start,
   if (IsSimpleTextControl() &&
       GetIntAttribute(ui::AX_ATTR_TEXT_SEL_START, selection_start) &&
       GetIntAttribute(ui::AX_ATTR_TEXT_SEL_END, selection_end)) {
+    // For simple text controls, there can be friendly descriptive text
+    // added before and after the actual user-editable value, for example,
+    // the title in URL that was selected in the omnibox.
+    int selection_offsets_offset =
+        GetIntAttribute(ui::AX_ATTR_TEXT_VALUE_FRIENDLY_PREFIX_LENGTH);
+    *selection_start += selection_offsets_offset;
+    *selection_end += selection_offsets_offset;
     return;
   }
 

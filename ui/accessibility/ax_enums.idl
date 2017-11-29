@@ -376,6 +376,13 @@
     text_sel_start,
     text_sel_end,
 
+    // The length of the friendly prefix text used in the omnibox so that
+    // invisible "friendly" text can be announced before and after the URL to
+    // explain what it is, e.g. prefixing it with a document title and ending
+    // with "location from history". The friendly text is added to the name
+    // so that it is spoken whenever the text in the box changes.
+    text_value_friendly_prefix_length,
+
     // aria_col* and aria_row* attributes
     aria_column_count,
     aria_cell_column_index,

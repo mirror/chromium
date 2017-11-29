@@ -118,6 +118,7 @@ std::string AccessibilityTreeFormatterBlink::IntAttrToString(
     case ui::AX_ATTR_TEXT_SEL_END:
     case ui::AX_ATTR_TEXT_SEL_START:
     case ui::AX_ATTR_TEXT_STYLE:
+    case ui::AX_ATTR_TEXT_VALUE_FRIENDLY_PREFIX_LENGTH:
     case ui::AX_INT_ATTRIBUTE_NONE:
       break;
   }
