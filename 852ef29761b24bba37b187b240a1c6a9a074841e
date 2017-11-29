@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc8f8773_e753e646",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-29T20:57:48Z",
+      "side": 1,
+      "message": "Yeah. Good point. :) I\u0027ll change the comment to be more precise.",
+      "parentUuid": "eabf895d_0719484f",
+      "range": {
+        "startLine": 267,
+        "startChar": 50,
+        "endLine": 267,
+        "endChar": 58
+      },
+      "revId": "852ef29761b24bba37b187b240a1c6a9a074841e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2994a7f8_d4b2eec4",
         "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-29T16:47:05Z",
       "side": 1,
       "message": "Should we use GetMimeTypeFromExtension to look for a text/css MIME?",
+      "range": {
+        "startLine": 213,
+        "startChar": 39,
+        "endLine": 213,
+        "endChar": 66
+      },
+      "revId": "852ef29761b24bba37b187b240a1c6a9a074841e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78988ddb_19b2e09e",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-29T20:57:48Z",
+      "side": 1,
+      "message": "That would certainly be more theoretically correct. Practically, it looks like there\u0027s only one extension that matters: https://cs.chromium.org/chromium/src/net/base/mime_util.cc?rcl\u003db361969a4ccdd3780934b78adb73ded0e1461aa7\u0026l\u003d95.\n\nI also don\u0027t think we can yet include //net/base from //Source/core. I\u0027d prefer not to add new dependencies to Blink until we\u0027ve really worked out what ought to be talking to what. I guess we could put something in WebKit/common today to springboard out to GetMimeTypeFromExtension, but that seems overengineered for this check. :)",
+      "parentUuid": "2994a7f8_d4b2eec4",
       "range": {
         "startLine": 213,
         "startChar": 39,
