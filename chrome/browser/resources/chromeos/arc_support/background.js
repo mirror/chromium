@@ -810,6 +810,19 @@ chrome.app.runtime.onLaunched.addListener(function() {
     appWindow.contentWindow.cr.ui.overlay.globalInitialization();
     overlay.addEventListener('cancelOverlay', hideOverlay);
 
+    var focusCatcherStart = doc.getElementById('focus-catcher-start');
+    var focusCatcherEnd = doc.getElementById('focus-catcher-end');
+    var overlayClose = doc.getElementById('overlay-close');
+    var overlayWebview = doc.getElementById('overlay-url');
+    focusCatcherStart.addEventListener('focus', function() {
+      overlayClose.focus();
+    });
+    focusCatcherEnd.addEventListener('focus', function() {
+      overlayClose.focus();
+      // In case webview overlay is not visible next line would be just ignored.
+      overlayWebview.focus();
+    });
+
     connectPort();
   };
 
