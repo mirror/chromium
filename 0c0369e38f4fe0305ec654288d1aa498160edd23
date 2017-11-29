@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdf7b876_c899a373",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-29T09:54:21Z",
+      "side": 1,
+      "message": "assert_not_equals(sender, null) like below would result in nicer error messages. I see there is existing asserts like this, I suppose change them all.",
+      "range": {
+        "startLine": 327,
+        "startChar": 6,
+        "endLine": 327,
+        "endChar": 17
+      },
+      "revId": "0c0369e38f4fe0305ec654288d1aa498160edd23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
