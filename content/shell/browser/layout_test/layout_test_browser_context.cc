@@ -21,8 +21,12 @@
 #include "content/shell/browser/layout_test/layout_test_url_request_context_getter.h"
 #include "content/shell/browser/shell_url_request_context_getter.h"
 #include "content/test/mock_background_sync_controller.h"
-#include "device/geolocation/geolocation_provider.h"
+#include "device/geolocation/public/cpp/fake_geolocation.h"
+#include "device/geolocation/public/interfaces/geolocation_context.mojom.h"
 #include "device/geolocation/public/interfaces/geoposition.mojom.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "services/device/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/service_context.h"
 
 #if defined(OS_WIN)
 #include "base/base_paths_win.h"
@@ -38,13 +42,6 @@ namespace content {
 LayoutTestBrowserContext::LayoutTestBrowserContext(bool off_the_record,
                                                    net::NetLog* net_log)
     : ShellBrowserContext(off_the_record, net_log) {
-  Init();
-}
-
-LayoutTestBrowserContext::~LayoutTestBrowserContext() {
-}
-
-void LayoutTestBrowserContext::Init() {
   // Fake geolocation coordinates for testing.
   device::mojom::Geoposition position;
   position.latitude = 0;
@@ -52,8 +49,19 @@ void LayoutTestBrowserContext::Init() {
   position.altitude = 0;
   position.accuracy = 0;
   position.timestamp = base::Time::Now();
-  device::GeolocationProvider::GetInstance()->OverrideLocationForTesting(
-      position);
+
+  fake_geolocation_ =
+      std::make_unique<device::FakeGeolocationContext>(position);
+
+  service_manager::ServiceContext::SetGlobalBinderForTesting(
+      device::mojom::kServiceName, device::mojom::GeolocationContext::Name_,
+      base::Bind(&device::FakeGeolocationContext::BindForOverrideService,
+                 base::Unretained(fake_geolocation_.get())));
+}
+
+LayoutTestBrowserContext::~LayoutTestBrowserContext() {
+  service_manager::ServiceContext::ClearGlobalBindersForTesting(
+      device::mojom::kServiceName);
 }
 
 ShellURLRequestContextGetter*
