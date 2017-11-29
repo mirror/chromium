@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c5c4c52c_cd024826",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceClipper.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-29T17:06:10Z",
+      "side": 0,
+      "message": "Looks like you\u0027re also dropping this avoid-builder-for-single-shape-clips optimization.\n\nIIRC that was added on concerns that SkOpBuilder::resolve() may perform non-trivial work even for single paths.  A quick peek seems to confirm that.\n\nSo I would suggest we keep the optimization for now, or try to land separately.",
+      "revId": "8d71ca83bd7d6e377d06e0b13db6521faff8313d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3e99a24_55ab24d0",
         "filename": "third_party/WebKit/Source/core/style/ClipPathOperation.h",
         "patchSetId": 13
