@@ -93,6 +93,7 @@ class AutocompleteProviderClient {
   virtual std::vector<base::string16> GetBuiltinsToProvideAsUserTypes() = 0;
 
   virtual bool IsOffTheRecord() const = 0;
+  virtual bool IsAuthenticated() const = 0;
   virtual bool SearchSuggestEnabled() const = 0;
 
   virtual bool TabSyncEnabledAndUnencrypted() const = 0;

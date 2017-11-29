@@ -46,6 +46,7 @@ class ChromeAutocompleteProviderClient : public AutocompleteProviderClient {
   std::vector<base::string16> GetBuiltinURLs() override;
   std::vector<base::string16> GetBuiltinsToProvideAsUserTypes() override;
   bool IsOffTheRecord() const override;
+  bool IsAuthenticated() const override;
   bool SearchSuggestEnabled() const override;
   bool TabSyncEnabledAndUnencrypted() const override;
   void Classify(
