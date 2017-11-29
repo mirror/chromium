@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab08c4a1_e7cd5df0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabDelegateFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-29T21:16:44Z",
+      "side": 1,
+      "message": "How about the case where we have a bottom bar inside the CCT? Looking at CustomTabsBottomBarDelegate, we do seem to set this particular value to something non-zero",
+      "range": {
+        "startLine": 185,
+        "startChar": 15,
+        "endLine": 185,
+        "endChar": 18
+      },
+      "revId": "f78f63d7753efd770785252a9adb53a088480d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
