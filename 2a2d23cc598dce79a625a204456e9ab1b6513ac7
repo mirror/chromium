@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b652d2e_2dff3247",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T21:26:43Z",
+      "side": 1,
+      "message": "Nit: wrap description at 72 chars",
+      "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
