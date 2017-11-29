@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f044f325_bd296aa7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-29T00:12:14Z",
+      "side": 1,
+      "message": "Please make this a complete sentence, starting with a capital letter and ending with a full stop.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "77b5dd41acc9d5aab372beb61bf183f76ab1ee9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12d94d0_0e1d25fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-29T00:12:14Z",
+      "side": 1,
+      "message": "This line is redundant and not needed.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 46
+      },
+      "revId": "77b5dd41acc9d5aab372beb61bf183f76ab1ee9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d18517d_b14f4578",
         "filename": "AUTHORS",
         "patchSetId": 2
