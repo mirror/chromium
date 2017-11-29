@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe804610_80b38a25",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-29T21:55:32Z",
+      "side": 1,
+      "message": "I think we should be converting to kNumber not kPixels.",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c5bdfe_eacd630f",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-29T21:55:32Z",
+      "side": 1,
+      "message": "Maybe these should be x, not x_?",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fedb3c53_d9b218a3",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-29T21:55:32Z",
+      "side": 1,
+      "message": "if statements with only one statement can omit the braces.",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e82442_f596063c",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-29T21:55:32Z",
+      "side": 1,
+      "message": "Can you move this include to the cpp file?",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5cb8ad_143a58b4",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-29T21:55:32Z",
+      "side": 1,
+      "message": "I think this can just be a function in the cpp file (in an anonymous namespace).\nAlso, the name should start with capital I.",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff768fd3_96c8fd4f",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-29T21:55:32Z",
+      "side": 1,
+      "message": "You can move this line to be after z_.",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
