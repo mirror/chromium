@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a607ca10_e0b66abb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-29T23:15:42Z",
+      "side": 1,
+      "message": "remove this before submitting? (or change to \"depends on these CLs\" and link to them)",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 67
+      },
+      "revId": "1938bd17fbfe5abae8b567d47c3a0224cbb055b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7c08a3_5ce5a82b",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logging_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-29T23:15:42Z",
+      "side": 1,
+      "message": "already included in header",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 79
+      },
+      "revId": "1938bd17fbfe5abae8b567d47c3a0224cbb055b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -93,6 +93,30 @@
       "revId": "2aefac325328f03f0d7f94204ca841bcfa76ae80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40009cc_708e3c18",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-29T23:15:42Z",
+      "side": 1,
+      "message": "This file is structured alphabetically, it\u0027s not divided into single defined(FOO) blocks. There are a bunch of other defined(OS_CHROMEOS) sections in the file. So please add\n\n#if defined(OS_CHROMEOS)\nextern const base::Feature kUserActivityEventLogging;\n#endif\n\nafter line 279.",
+      "parentUuid": "1891f0a8_2d2cb1f0",
+      "range": {
+        "startLine": 310,
+        "startChar": 27,
+        "endLine": 310,
+        "endChar": 52
+      },
+      "revId": "2aefac325328f03f0d7f94204ca841bcfa76ae80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
