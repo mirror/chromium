@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b473e211_aec616d6",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-29T05:45:36Z",
+      "side": 1,
+      "message": "nit: TODOs (or comments) inside such a complex condition are hard to read. Just move this to the top of the if statement.",
+      "revId": "93ffeb899aa92c3aada488a47e3935b317528175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
