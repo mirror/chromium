@@ -34,6 +34,24 @@
       "revId": "cedb8404dd581b150979bd86a040814cd97313fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f713b6_395970f8",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-29T22:00:40Z",
+      "side": 1,
+      "message": "I agree. As I was cleaning up this patch set, everything started pointing in that direction.\nI could put the check in (Web)UserMediaRequest and expose it as a flag, but it doesn\u0027t really seem scalable. I\u0027d expect the ExecutionContext (i.e. the Document, in this case) to still be alive when this method is called, but I\u0027ve not enough insight into blink to actually say for sure.",
+      "parentUuid": "a5f3f8b7_e922a171",
+      "revId": "cedb8404dd581b150979bd86a040814cd97313fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
