@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f3f611_fd94a94b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-29T14:38:53Z",
+      "side": 1,
+      "message": "s/clank/clang/",
+      "range": {
+        "startLine": 9,
+        "startChar": 48,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "ea9ffec58fc3bd5a84e6ef4c5e3c292d155c0641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
