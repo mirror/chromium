@@ -16,6 +16,24 @@
       "revId": "2cbbc3b3243987d0dcfe9238c28dde82d9798432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effa1e2f_685ffb93",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-29T22:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7accc6d_c6db2340",
+      "revId": "2cbbc3b3243987d0dcfe9238c28dde82d9798432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
