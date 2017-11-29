@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c1fa7dc_63890f8b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-29T15:54:05Z",
+      "side": 1,
+      "message": "I\u0027ve got the same new field in https://chromium-review.googlesource.com/c/chromium/src/+/788251.",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 32
+      },
+      "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4252d37_f4a0dbf7",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-29T15:54:05Z",
+      "side": 1,
+      "message": "I\u0027m unsure how this will pan out in the future. IIUC, if the VR session was initiated by autopresentation we use these histograms instead of the one above. Do you anticipate that we switch back and forth between VR modes in an autopresent VR session. I\u0027m unsure what this will tell us. We can also discuss this offline.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
