@@ -16,6 +16,24 @@
       "revId": "4d49071e84cda6a5bfe3e54be3214b91d54717a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd58035f_e93f76c0",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-29T11:04:07Z",
+      "side": 1,
+      "message": "Do you mean that we should use base::TimeDelta rather than WTF::TimeDelta?\nAs this class is used in core/ and modules/, I thought we prefer WTF to base at the moment.\n\nAnyway, assuming wtf/Time.h will be gone soon, we\u0027ll revisit here to update WTF::Time* in that process.",
+      "parentUuid": "defc15cc_9a2a690a",
+      "revId": "4d49071e84cda6a5bfe3e54be3214b91d54717a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
