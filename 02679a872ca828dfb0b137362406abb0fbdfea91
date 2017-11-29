@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "cb0bc6ca_9a3f1df0",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-29T19:35:45Z",
+      "side": 1,
+      "message": "Sounds good, thanks for explaining.",
+      "parentUuid": "3452f389_789f9819",
+      "range": {
+        "startLine": 492,
+        "startChar": 42,
+        "endLine": 492,
+        "endChar": 63
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce3a630b_88244c11",
         "filename": "third_party/WebKit/Source/core/input/ScrollManager.h",
         "patchSetId": 19
@@ -460,6 +484,30 @@
       "side": 1,
       "message": "Thanks! I\u0027m not an expert on it, but seems FrameView::GetScrollableArea is more general than FrameView::LayoutViewportScrollableArea()? https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/LocalFrameView.cpp?gsn\u003dGetScrollableArea\u0026l\u003d5124",
       "parentUuid": "38f0438f_366e3859",
+      "range": {
+        "startLine": 381,
+        "startChar": 6,
+        "endLine": 381,
+        "endChar": 38
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ac11a8_5b3f9d2b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-29T19:35:45Z",
+      "side": 1,
+      "message": "GetScrollableArea returns the RootFrameViewport if it applies, which is probably not what you want (that\u0027ll include Pinch-Zoom which feels weird with snapping).\n\nLayoutViewportScrollableArea is a helper while we work on shipping --root-layer-scrolls. RootLayerScrolls makes it so that scrolling for the root frame is handled by LayoutView-\u003eGetScrollableArea(), rather than the FrameView. See https://bit.ly/root-layer-scrolling if you\u0027re curious.\n\nIn any case, you can use the helper method I suggested above here.",
+      "parentUuid": "38828a65_a2522d8d",
       "range": {
         "startLine": 381,
         "startChar": 6,
@@ -883,6 +931,30 @@
       "side": 1,
       "message": "As we\u0027re handling did_scroll_x and did_scroll_y in SnapCoordinator, there is no need to expand the ScrollOrientation class.",
       "parentUuid": "23dd0976_39067705",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 11
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dac37af_8c1740da",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollTypes.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-29T19:35:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dd3dc317_b50aeb44",
       "range": {
         "startLine": 189,
         "startChar": 2,
