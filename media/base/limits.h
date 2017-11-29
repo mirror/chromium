@@ -70,6 +70,16 @@ enum {
   // this buffer size on any board.
   kMinAudioBufferSize = 256,
   kMaxAudioBufferSize = 8192,
+#elif defined(OS_ANDROID)
+  // UMA stats show that hardware buffer sizes range from a low of 96
+  // up to 87,360(!).  Set the minimum to 128, and a max of 8192.
+  // (The stats say 8192 includes 99.1% of all devices, as of
+  // 2017/11/29.)
+  kMinAudioBufferSize = 128,
+  kMaxAudioBufferSize = 8192,
+#elif defined(OS_LINUX)
+  kMinAudioBufferSize = 256,
+  kMaxAudioBufferSize = 8192,
 #endif
 };
 
