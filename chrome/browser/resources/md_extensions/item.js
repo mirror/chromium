@@ -222,6 +222,7 @@ cr.define('extensions', function() {
         case SourceType.POLICY:
           return 'communication:business';
         case SourceType.SIDELOADED:
+        case SourceType.UNKNOWN:
           return 'input';
         case SourceType.UNPACKED:
           return 'extensions-icons:unpacked';
