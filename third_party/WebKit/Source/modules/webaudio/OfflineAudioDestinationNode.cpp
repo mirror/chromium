@@ -26,6 +26,7 @@
 #include "modules/webaudio/OfflineAudioDestinationNode.h"
 
 #include <algorithm>
+#include "core/origin_trials/origin_trials.h"
 #include "modules/webaudio/AudioNodeInput.h"
 #include "modules/webaudio/AudioNodeOutput.h"
 #include "modules/webaudio/AudioWorkletMessagingProxy.h"
@@ -148,7 +149,8 @@ void OfflineAudioDestinationHandler::InitializeOfflineRenderThread(
 
   // Use Experimental AudioWorkletThread only when AudioWorklet is enabled and
   // there is an active AudioWorkletGlobalScope.
-  if (RuntimeEnabledFeatures::AudioWorkletEnabled() &&
+  if ((OriginTrials::audioWorkletEnabled(Context()->GetExecutionContext()) ||
+       RuntimeEnabledFeatures::AudioWorkletEnabled()) &&
       Context()->HasWorkletMessagingProxy()) {
     DCHECK(Context()->WorkletMessagingProxy()->GetWorkletBackingThread());
     worklet_backing_thread_ =
@@ -367,7 +369,8 @@ WebThread* OfflineAudioDestinationHandler::GetRenderingThread() {
 
   // Use Experimental AudioWorkletThread only when AudioWorklet is enabled and
   // there is an active AudioWorkletGlobalScope.
-  if (RuntimeEnabledFeatures::AudioWorkletEnabled() &&
+  if ((OriginTrials::audioWorkletEnabled(Context()->GetExecutionContext()) ||
+       RuntimeEnabledFeatures::AudioWorkletEnabled()) &&
       Context()->HasWorkletMessagingProxy()) {
     DCHECK(!render_thread_ && worklet_backing_thread_);
     return worklet_backing_thread_;
@@ -381,7 +384,8 @@ void OfflineAudioDestinationHandler::RestartRendering() {
   // If the worklet thread is not assigned yet, that means the context has
   // started without a valid WorkletGlobalScope. Assign the worklet thread,
   // and it will be picked up when the GetRenderingThread() is called next.
-  if (RuntimeEnabledFeatures::AudioWorkletEnabled() &&
+  if ((OriginTrials::audioWorkletEnabled(Context()->GetExecutionContext()) ||
+       RuntimeEnabledFeatures::AudioWorkletEnabled()) &&
       Context()->HasWorkletMessagingProxy() &&
       !worklet_backing_thread_) {
     DCHECK(Context()->WorkletMessagingProxy()->GetWorkletBackingThread());

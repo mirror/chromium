@@ -17059,6 +17059,9 @@ Called by update_net_error_codes.py.-->
   <int value="2246"
       label="HTMLAnchorElementDownloadInSandboxWithoutUserGesture"/>
   <int value="2247" label="WindowOpenRealmMismatch"/>
+  <int value="2248" label="AudioWorkletGlobalScopeRegisterProcessor"/>
+  <int value="2249" label="AudioWorkletNodeConstructor"/>
+  <int value="2250" label="AudioWorkletProcessorConstructor"/>
 </enum>
 
 <enum name="FeedbackSource">
