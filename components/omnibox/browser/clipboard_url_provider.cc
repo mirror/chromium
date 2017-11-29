@@ -86,7 +86,8 @@ void ClipboardURLProvider::Start(const AutocompleteInput& input,
   // Add the clipboard match. The relevance is 800 to beat ZeroSuggest results.
   AutocompleteMatch match(this, 800, false, AutocompleteMatchType::CLIPBOARD);
   match.destination_url = url;
-  auto format_types = AutocompleteMatch::GetFormatTypes(false, false, false);
+  auto format_types =
+      AutocompleteMatch::GetFormatTypes(url.has_scheme(), false, false, false);
   match.contents.assign(url_formatter::FormatUrl(
       url, format_types, net::UnescapeRule::SPACES, nullptr, nullptr, nullptr));
   AutocompleteMatch::ClassifyLocationInString(
