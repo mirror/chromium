@@ -17,7 +17,7 @@
 
 namespace content {
 
-namespace {
+namespace media_stream_constraints_util_audio_unittest {
 
 using BoolSetFunction = void (blink::BooleanConstraint::*)(bool);
 using StringSetFunction =
@@ -48,8 +48,6 @@ static bool Contains(const std::vector<T>& vector, T value) {
   auto it = std::find(vector.begin(), vector.end(), value);
   return it != vector.end();
 }
-
-}  // namespace
 
 class MediaStreamConstraintsUtilAudioTest
     : public testing::TestWithParam<std::string> {
@@ -270,7 +268,7 @@ class MediaStreamConstraintsUtilAudioTest
     }
   }
 
-  void CheckDevice(const mojom::AudioInputDeviceCapabilities& expected_device,
+  void CheckDevice(const ::mojom::AudioInputDeviceCapabilities& expected_device,
                    const AudioCaptureSettings& result) {
     EXPECT_EQ(expected_device.device_id, result.device_id());
     EXPECT_EQ(expected_device.parameters.sample_rate(),
@@ -306,10 +304,10 @@ class MediaStreamConstraintsUtilAudioTest
 
   MockConstraintFactory constraint_factory_;
   AudioDeviceCaptureCapabilities capabilities_;
-  const mojom::AudioInputDeviceCapabilities* default_device_ = nullptr;
-  const mojom::AudioInputDeviceCapabilities* hw_echo_canceller_device_ =
+  const ::mojom::AudioInputDeviceCapabilities* default_device_ = nullptr;
+  const ::mojom::AudioInputDeviceCapabilities* hw_echo_canceller_device_ =
       nullptr;
-  const mojom::AudioInputDeviceCapabilities* geometry_device_ = nullptr;
+  const ::mojom::AudioInputDeviceCapabilities* geometry_device_ = nullptr;
   const std::vector<media::Point> kMicPositions = {{8, 8, 8}, {4, 4, 4}};
 };
 
@@ -982,4 +980,5 @@ INSTANTIATE_TEST_CASE_P(,
                                         kMediaStreamSourceSystem,
                                         kMediaStreamSourceDesktop));
 
+}  // namespace media_stream_constraints_util_audio_unittest
 }  // namespace content

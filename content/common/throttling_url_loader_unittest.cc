@@ -15,7 +15,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
-namespace {
+namespace throttling_url_loader_unittest {
 
 GURL request_url = GURL("http://example.org");
 GURL redirect_url = GURL("http://example.com");
@@ -945,5 +945,5 @@ TEST_F(ThrottlingURLLoaderTest, DestroyingThrottlingURLLoaderInDelegateCall) {
   EXPECT_EQ(nullptr, throttle_);
 }
 
-}  // namespace
+}  // namespace throttling_url_loader_unittest
 }  // namespace content
