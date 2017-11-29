@@ -22,6 +22,30 @@
       "revId": "7cab3055dca75223755b2ef4d1c4b126a70d563a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b6b11c_058808de",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGShape.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T17:16:08Z",
+      "side": 1,
+      "message": "I wrote a comment similar to that in the class initializer, do you want me to move it here (or clarify it)?",
+      "parentUuid": "b81f4c98_c9e84b5b",
+      "range": {
+        "startLine": 266,
+        "startChar": 34,
+        "endLine": 266,
+        "endChar": 63
+      },
+      "revId": "7cab3055dca75223755b2ef4d1c4b126a70d563a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
