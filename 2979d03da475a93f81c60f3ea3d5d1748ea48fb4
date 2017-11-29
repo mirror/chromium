@@ -22,6 +22,30 @@
       "revId": "2979d03da475a93f81c60f3ea3d5d1748ea48fb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1ad9b2_35bea84c",
+        "filename": "cc/layers/recording_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-29T22:43:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "650a4cb7_7c6cf4b0",
+      "range": {
+        "startLine": 46,
+        "startChar": 29,
+        "endLine": 46,
+        "endChar": 63
+      },
+      "revId": "2979d03da475a93f81c60f3ea3d5d1748ea48fb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
