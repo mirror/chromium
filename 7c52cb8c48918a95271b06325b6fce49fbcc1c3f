@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "046ef316_24a296b7",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-29T22:00:31Z",
+      "side": 1,
+      "message": "Is this something we can fix with the existing metrics (change name and move data to new name?)\n\nI wish I had this feedback when these were originally added.",
+      "parentUuid": "e7b6e47b_8b9322c1",
+      "range": {
+        "startLine": 67,
+        "startChar": 43,
+        "endLine": 67,
+        "endChar": 55
+      },
+      "revId": "7c52cb8c48918a95271b06325b6fce49fbcc1c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4af7d75b_74c8eb97",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-29T21:22:39Z",
       "side": 1,
       "message": "It looks like this code is templatized purely to ensure that the UMA_HISTOGRAM_CUSTOM_TIMES macro is instantiated separately for each possible SessionType.  Is that correct?  If so, it would likely be more efficient overall to use base::UmaHistogramCustomTimes, which allows variable histogram names from a single callsite.\n\n(Probably best to address this in a follow-up CL, if you agree that it\u0027s worth changing.)",
+      "range": {
+        "startLine": 142,
+        "startChar": 75,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "7c52cb8c48918a95271b06325b6fce49fbcc1c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d66fe1_7b7f4143",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-29T22:00:31Z",
+      "side": 1,
+      "message": "Yes worth doing. Yash, please file a bug for this cleanup.",
+      "parentUuid": "4af7d75b_74c8eb97",
       "range": {
         "startLine": 142,
         "startChar": 75,
