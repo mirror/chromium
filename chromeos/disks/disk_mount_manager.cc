@@ -662,6 +662,17 @@ class DiskMountManagerImpl : public DiskMountManager {
         disk_info.is_hidden(), disk_info.file_system_type(), base_mount_path);
     disks_.insert(
         std::make_pair(disk_info.device_path(), base::WrapUnique(disk)));
+    if (!disk_info.mount_path().empty()) {
+      const MountPointInfo mount_info(disk_info.device_path(),
+                                      disk_info.mount_path(), MOUNT_TYPE_DEVICE,
+                                      MOUNT_CONDITION_NONE);
+      auto result = mount_points_.insert(
+          std::make_pair(disk_info.mount_path(), mount_info));
+      // If mount point exists update mount info.
+      if (!result.second) {
+        result.first->second = mount_info;
+      }
+    }
     NotifyDiskStatusUpdate(is_new ? DISK_ADDED : DISK_CHANGED, disk);
   }
 
