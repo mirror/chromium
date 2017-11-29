@@ -156,6 +156,8 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
             mBottomSheet.setSheetState(sheetState, true, StateChangeReason.NEW_TAB);
         }
 
+        mBottomSheet.setHandleVisibility(false);
+
         for (Observer observer : mObservers) observer.onNewTabShown();
     }
 
@@ -222,6 +224,8 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
         } else {
             showTabSwitcherToolbarIfNecessary();
         }
+
+        mBottomSheet.setHandleVisibility(true);
 
         mHideOverviewOnClose = false;
 

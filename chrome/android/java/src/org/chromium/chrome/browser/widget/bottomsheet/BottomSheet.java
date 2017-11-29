@@ -271,6 +271,12 @@ public class BottomSheet
     /** Whether the {@link BottomSheet} and its children should react to touch events. */
     private boolean mIsTouchEnabled;
 
+    /**
+     * Whether the toolbar handle is currently hidden. When the handle is hidden the sheet
+     * cannot be moved.
+     */
+    private boolean mToolbarHandleHidden;
+
     /** Whether the sheet is currently open. */
     private boolean mIsSheetOpen;
 
@@ -993,6 +999,16 @@ public class BottomSheet
             // scenarios on Android J. See crbug.com/769611.
             mControlContainer.requestLayout();
         }
+    }
+
+    /**
+     * Set the toolbar pull handle visibility. If the handle is hidden, the sheet is not
+     * moveable by drag/swipe.
+     * @param isVisible Whether the handle should be visible.
+     */
+    public void setHandleVisibility(boolean isVisible) {
+        mToolbarHandleHidden = !isVisible;
+        mDefaultToolbarView.setHandleVisbility(isVisible);
     }
 
     @Override
@@ -1796,7 +1812,7 @@ public class BottomSheet
 
         return !isToolbarAndroidViewHidden()
                 && (!isInOverviewMode() || mNtpController.isShowingNewTabUi())
-                && !isFindInPageVisible;
+                && !isFindInPageVisible && !mToolbarHandleHidden;
     }
 
     /**
