@@ -177,6 +177,24 @@
       "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca48d83_03b1cdac",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-11-29T21:03:28Z",
+      "side": 1,
+      "message": "Doing it on a worker thread would also avoid a deadlock, because the IO thread wouldn\u0027t wait on the worker thread for the operation to complete.",
+      "parentUuid": "4e6add5a_e7a345d5",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
