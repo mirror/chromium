@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e480124_02884b74",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-29T23:26:38Z",
+      "side": 1,
+      "message": "I thought this was idea abandoned because of the overhead of Mojo vs. JNI.",
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
