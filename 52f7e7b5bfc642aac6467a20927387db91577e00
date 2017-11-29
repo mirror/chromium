@@ -46,6 +46,30 @@
       "revId": "52f7e7b5bfc642aac6467a20927387db91577e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f052d6a0_a32aefcf",
+        "filename": "chrome/browser/android/compositor/layer/contextual_search_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T16:46:26Z",
+      "side": 1,
+      "message": "We can measure without waiting for a layout pass in . We could call #getView()#measure(getWidthMeasureSpec(), getHeightMeasureSpec()) in ContextualSearchBannerControl and use then use #getView()#getMeasuredHeight() to determine the height needed to display the full text.",
+      "parentUuid": "a0a647b9_2e44e586",
+      "range": {
+        "startLine": 211,
+        "startChar": 52,
+        "endLine": 211,
+        "endChar": 56
+      },
+      "revId": "52f7e7b5bfc642aac6467a20927387db91577e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
