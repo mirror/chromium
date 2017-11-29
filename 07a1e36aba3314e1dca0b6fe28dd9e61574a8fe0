@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b362934f_b371e1bd",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-29T09:05:43Z",
+      "side": 1,
+      "message": "Hmmm, I think separate would be better for histograms. It would be nice to know how often people paste links for apps they have installed.",
+      "parentUuid": "cb88f859_2e382985",
+      "revId": "07a1e36aba3314e1dca0b6fe28dd9e61574a8fe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "332fb6bd_5cc384a2",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "07a1e36aba3314e1dca0b6fe28dd9e61574a8fe0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abdc4ce_7725a8c9",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-29T09:05:43Z",
+      "side": 1,
+      "message": "I think the proposed reword changed the meaning a bit. I changed the original to clarify.",
+      "parentUuid": "332fb6bd_5cc384a2",
+      "range": {
+        "startLine": 507,
+        "startChar": 66,
+        "endLine": 507,
+        "endChar": 67
+      },
+      "revId": "07a1e36aba3314e1dca0b6fe28dd9e61574a8fe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
