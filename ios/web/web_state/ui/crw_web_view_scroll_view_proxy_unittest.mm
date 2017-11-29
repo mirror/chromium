@@ -119,6 +119,51 @@ TEST_F(CRWWebViewScrollViewProxyTest, testScrollViewPresent) {
 
   [[[mockScrollView_ expect] andReturnValue:@NO] scrollsToTop];
   EXPECT_FALSE([webViewScrollViewProxy_ scrollsToTop]);
+
+  if (@available(iOS 11, *)) {
+    [[[mockScrollView_ expect]
+        andReturnValue:@(UIScrollViewContentInsetAdjustmentAutomatic)]
+        contentInsetAdjustmentBehavior];
+    EXPECT_EQ(UIScrollViewContentInsetAdjustmentAutomatic,
+              [webViewScrollViewProxy_ contentInsetAdjustmentBehavior]);
+
+    [[[mockScrollView_ expect]
+        andReturnValue:@(UIScrollViewContentInsetAdjustmentNever)]
+        contentInsetAdjustmentBehavior];
+    EXPECT_EQ(UIScrollViewContentInsetAdjustmentNever,
+              [webViewScrollViewProxy_ contentInsetAdjustmentBehavior]);
+  }
+}
+
+// Tests that CRWWebViewScrollViewProxy correctly delegates property setters to
+// the underlying UIScrollView.
+TEST_F(CRWWebViewScrollViewProxyTest, testScrollViewSetProperties) {
+  [webViewScrollViewProxy_ setScrollView:mockScrollView_];
+
+  if (@available(iOS 11, *)) {
+    [[mockScrollView_ expect] setContentInsetAdjustmentBehavior:
+                                  UIScrollViewContentInsetAdjustmentNever];
+    [webViewScrollViewProxy_ setContentInsetAdjustmentBehavior:
+                                 UIScrollViewContentInsetAdjustmentNever];
+    [mockScrollView_ verify];
+  }
+}
+
+// Tests that -setContentInsetAdjustmentBehavior: works even if it is called
+// before setting the scroll view.
+TEST_F(CRWWebViewScrollViewProxyTest,
+       testSetContentInsetAdjustmentBehaviorBeforeSettingScrollView) {
+  if (@available(iOS 11, *)) {
+    [[mockScrollView_ expect] setContentInsetAdjustmentBehavior:
+                                  UIScrollViewContentInsetAdjustmentNever];
+
+    [webViewScrollViewProxy_ setScrollView:nil];
+    [webViewScrollViewProxy_ setContentInsetAdjustmentBehavior:
+                                 UIScrollViewContentInsetAdjustmentNever];
+    [webViewScrollViewProxy_ setScrollView:mockScrollView_];
+
+    [mockScrollView_ verify];
+  }
 }
 
 // Tests that CRWWebViewScrollViewProxy returns the correct property values when
@@ -138,6 +183,10 @@ TEST_F(CRWWebViewScrollViewProxyTest, testScrollViewAbsent) {
   EXPECT_FALSE([webViewScrollViewProxy_ isDecelerating]);
   EXPECT_FALSE([webViewScrollViewProxy_ isDragging]);
   EXPECT_FALSE([webViewScrollViewProxy_ scrollsToTop]);
+  if (@available(iOS 11, *)) {
+    EXPECT_EQ(UIScrollViewContentInsetAdjustmentAutomatic,
+              [webViewScrollViewProxy_ contentInsetAdjustmentBehavior]);
+  }
 
   // Make sure setting the properties is fine too.
   // Arbitrary point.
