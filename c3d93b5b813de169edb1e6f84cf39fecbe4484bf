@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17fe95c2_b4cec970",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-29T13:36:18Z",
+      "side": 1,
+      "message": "Is the view hidden in normal mode? In that case, the subviews are also hidden?",
+      "range": {
+        "startLine": 114,
+        "startChar": 36,
+        "endLine": 114,
+        "endChar": 45
+      },
+      "revId": "c3d93b5b813de169edb1e6f84cf39fecbe4484bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996bf118_4f1610aa",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-29T13:36:18Z",
+      "side": 1,
+      "message": "This color will be seen behind the background color.\nIs that expected? How are they composed?",
+      "range": {
+        "startLine": 116,
+        "startChar": 75,
+        "endLine": 116,
+        "endChar": 78
+      },
+      "revId": "c3d93b5b813de169edb1e6f84cf39fecbe4484bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e13b08_472de1c2",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-29T13:36:18Z",
+      "side": 1,
+      "message": "nit: create views in the order they are added.",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 21
+      },
+      "revId": "c3d93b5b813de169edb1e6f84cf39fecbe4484bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
