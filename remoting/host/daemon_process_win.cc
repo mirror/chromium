@@ -53,7 +53,8 @@ IPC::PlatformFileForTransit GetRegistryKeyForTransit(
     const base::win::RegKey& key) {
   base::PlatformFile handle =
       reinterpret_cast<base::PlatformFile>(key.Handle());
-  return IPC::GetPlatformFileForTransit(handle, false);
+  return IPC::GetPlatformFileForTransit(handle, false /* close_source_handle */,
+                                        false /* is_async */);
 }
 
 }  // namespace

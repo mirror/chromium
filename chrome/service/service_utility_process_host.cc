@@ -116,8 +116,7 @@ class ServiceUtilityProcessHost::PdfToEmfState {
       emf_files_.push(CreateTempFile());
       host_->Send(new ChromeUtilityMsg_RenderPDFPagesToMetafiles_GetPage(
           current_page_++,
-          IPC::GetPlatformFileForTransit(
-              emf_files_.back().GetPlatformFile(), false)));
+          IPC::DuplicatePlatformFileForTransit(emf_files_.back())));
     }
   }
 

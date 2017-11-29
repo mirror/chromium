@@ -29,7 +29,8 @@ PepperProxyChannelDelegateImpl::ShareHandleWithRemote(
     base::PlatformFile handle,
     base::ProcessId remote_pid,
     bool should_close_source) {
-  return IPC::GetPlatformFileForTransit(handle, should_close_source);
+  return IPC::GetPlatformFileForTransit(handle, should_close_source,
+                                        false /* is_async */);
 }
 
 base::SharedMemoryHandle

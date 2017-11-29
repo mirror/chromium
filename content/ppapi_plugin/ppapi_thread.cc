@@ -206,7 +206,8 @@ IPC::PlatformFileForTransit PpapiThread::ShareHandleWithRemote(
     base::PlatformFile handle,
     base::ProcessId peer_pid,
     bool should_close_source) {
-  return IPC::GetPlatformFileForTransit(handle, should_close_source);
+  return IPC::GetPlatformFileForTransit(handle, should_close_source,
+                                        false /* is_async */);
 }
 
 base::SharedMemoryHandle PpapiThread::ShareSharedMemoryHandleWithRemote(

@@ -228,7 +228,8 @@ IPC::PlatformFileForTransit RendererPpapiHostImpl::ShareHandleWithRemote(
     // Duplicate the file handle for in process mode so this function
     // has the same semantics for both in process mode and out of
     // process mode (i.e., the remote side must cloes the handle).
-    return IPC::GetPlatformFileForTransit(handle, should_close_source);
+    return IPC::GetPlatformFileForTransit(handle, should_close_source,
+                                          false /* is_async */);
   }
   return dispatcher_->ShareHandleWithRemote(handle, should_close_source);
 }

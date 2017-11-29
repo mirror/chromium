@@ -122,7 +122,7 @@ void NonSfiListener::OnStart(const nacl::NaClStartParams& params) {
   CHECK(params.version.size() == 0);
   // Ensure that a debug stub FD isn't passed through accidentally.
   CHECK(!params.enable_debug_stub);
-  CHECK(params.debug_stub_server_bound_socket.fd == -1);
+  CHECK(params.debug_stub_server_bound_socket.GetFile().fd == -1);
 
   CHECK(params.irt_handle == IPC::InvalidPlatformFileForTransit());
   CHECK(params.debug_stub_server_bound_socket ==
