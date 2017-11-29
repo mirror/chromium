@@ -383,7 +383,7 @@ TEST_F(ServiceWorkerScriptURLLoaderTest, Error_CertificateError) {
 
   // The request should be failed because of the response with the certificate
   // error.
-  EXPECT_EQ(net::ERR_INSECURE_RESPONSE, client_.completion_status().error_code);
+  EXPECT_EQ(net::ERR_CERT_DATE_INVALID, client_.completion_status().error_code);
   EXPECT_FALSE(client_.has_received_response());
 
   // The response shouldn't be stored in the storage.
