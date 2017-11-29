@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31a0cc36_a552846b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-29T22:52:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5de1a88_f55be80e",
+      "revId": "0cf9fe99794d4c450d75fb66dac0f193f8e0fa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a50e993_b7e066a2",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "0cf9fe99794d4c450d75fb66dac0f193f8e0fa81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c646e59_b9c5709b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-29T22:52:55Z",
+      "side": 1,
+      "message": "Ok, I think I\u0027ve got it clarified now.",
+      "parentUuid": "8a50e993_b7e066a2",
+      "revId": "0cf9fe99794d4c450d75fb66dac0f193f8e0fa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
