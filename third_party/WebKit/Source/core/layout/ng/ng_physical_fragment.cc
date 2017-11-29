@@ -196,6 +196,15 @@ Node* NGPhysicalFragment::GetNode() const {
   return layout_object_ ? layout_object_->GetNode() : nullptr;
 }
 
+bool NGPhysicalFragment::IsPlacedByLayoutNG() const {
+  // TODO(kojii): Move this to a flag for |LayoutNGBlockFlow::UpdateBlockLayout|
+  // to set.
+  if (!layout_object_)
+    return false;
+  const LayoutObject* parent = layout_object_->Parent();
+  return parent && parent->IsLayoutNGMixin();
+}
+
 NGPixelSnappedPhysicalBoxStrut NGPhysicalFragment::BorderWidths() const {
   unsigned edges = BorderEdges();
   NGPhysicalBoxStrut box_strut(

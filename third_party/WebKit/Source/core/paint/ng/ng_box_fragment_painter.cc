@@ -11,9 +11,12 @@
 #include "core/layout/ng/geometry/ng_box_strut.h"
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
+#include "core/layout/ng/layout_ng_mixin.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
+#include "core/paint/AdjustPaintOffsetScope.h"
 #include "core/paint/BackgroundImageGeometry.h"
 #include "core/paint/BoxDecorationData.h"
+#include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintPhase.h"
@@ -44,19 +47,56 @@ NGBoxFragmentPainter::NGBoxFragmentPainter(const NGPaintFragment& box)
           box.GetLayoutObject()->GeneratingNode(),
           BoxStrutToLayoutRectOutsets(box.PhysicalFragment().BorderWidths()),
           LayoutRectOutsets()),
-      box_fragment_(box) {
+      box_fragment_(box),
+      border_edges_(
+          NGBorderEdges::FromPhysical(box.PhysicalFragment().BorderEdges(),
+                                      box.Style().GetWritingMode())),
+      is_inline_(false) {
   DCHECK(box.PhysicalFragment().IsBox());
 }
 
 void NGBoxFragmentPainter::Paint(const PaintInfo& paint_info,
                                  const LayoutPoint& paint_offset) {
-  if (!IntersectsPaintRect(paint_info, paint_offset))
+  const NGPhysicalFragment& fragment = box_fragment_.PhysicalFragment();
+  const LayoutObject* layout_object = fragment.GetLayoutObject();
+  DCHECK(layout_object && layout_object->IsBox());
+  if (!fragment.IsPlacedByLayoutNG()) {
+    // |fragment.Offset()| is valid only when it is placed by LayoutNG parent.
+    // Use LayoutBox::Location() if not. crbug.com/788590
+    AdjustPaintOffsetScope adjustment(ToLayoutBox(*layout_object), paint_info,
+                                      paint_offset);
+    PaintWithAdjustedOffset(adjustment.MutablePaintInfo(),
+                            adjustment.AdjustedPaintOffset());
+    return;
+  }
+
+  AdjustPaintOffsetScope adjustment(box_fragment_, paint_info, paint_offset);
+  PaintWithAdjustedOffset(adjustment.MutablePaintInfo(),
+                          adjustment.AdjustedPaintOffset());
+}
+
+void NGBoxFragmentPainter::PaintInlineBox(
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset,
+    const LayoutPoint& block_paint_offset) {
+  DCHECK(box_fragment_.GetLayoutObject() &&
+         box_fragment_.GetLayoutObject()->IsLayoutInline());
+  is_inline_ = true;
+  block_paint_offset_ = block_paint_offset;
+  PaintInfo info(paint_info);
+  PaintWithAdjustedOffset(
+      info, paint_offset + box_fragment_.Offset().ToLayoutPoint());
+}
+
+void NGBoxFragmentPainter::PaintWithAdjustedOffset(
+    PaintInfo& info,
+    const LayoutPoint& paint_offset) {
+  if (!IntersectsPaintRect(info, paint_offset))
     return;
 
   if (box_fragment_.PhysicalFragment().IsInlineBlock())
-    return PaintInlineBlock(paint_info, paint_offset);
+    return PaintInlineBlock(info, paint_offset);
 
-  PaintInfo info(paint_info);
   PaintPhase original_phase = info.phase;
 
   if (original_phase == PaintPhase::kOutline) {
@@ -195,6 +235,11 @@ void NGBoxFragmentPainter::PaintInlineObject(const PaintInfo& paint_info,
 void NGBoxFragmentPainter::PaintContents(const PaintInfo& paint_info,
                                          const LayoutPoint& paint_offset) {
   PaintInfo descendants_info = paint_info.ForDescendants();
+  if (is_inline_) {
+    PaintInlineChildren(box_fragment_.Children(), descendants_info,
+                        paint_offset);
+    return;
+  }
   PaintChildren(box_fragment_.Children(), descendants_info, paint_offset);
 }
 
@@ -279,7 +324,8 @@ void NGBoxFragmentPainter::PaintBoxDecorationBackgroundWithRect(
       Node* generating_node = box_fragment_.GetLayoutObject()->GeneratingNode();
       const Document& document = box_fragment_.GetLayoutObject()->GetDocument();
       PaintBorder(box_fragment_, document, generating_node, paint_info,
-                  paint_rect, style, box_decoration_data.bleed_avoidance);
+                  paint_rect, style, box_decoration_data.bleed_avoidance,
+                  border_edges_.line_left, border_edges_.line_right);
     }
   }
 
@@ -296,6 +342,33 @@ static bool RequiresLegacyFallback(const NGPhysicalFragment& fragment) {
   // TODO(kojii): Review if this is still needed.
   LayoutObject* layout_object = fragment.GetLayoutObject();
   return layout_object->IsLayoutReplaced();
+}
+
+void NGBoxFragmentPainter::PaintInlineChildBoxUsingLegacyFallback(
+    const NGPhysicalFragment& fragment,
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) {
+  LayoutObject* layout_object = fragment.GetLayoutObject();
+  DCHECK(layout_object);
+  if (layout_object->IsLayoutNGMixin() &&
+      ToLayoutBlockFlow(layout_object)->PaintFragment()) {
+    // This object will use NGBoxFragmentPainter. NGBoxFragmentPainter expects
+    // |paint_offset| relative to the parent, even when in inline context.
+    layout_object->Paint(paint_info, paint_offset);
+    return;
+  }
+
+  // When in inline context, pre-NG painters expect |paint_offset| of their
+  // block container.
+  if (layout_object->IsAtomicInlineLevel()) {
+    // Pre-NG painters also expect callers to use |PaintAllPhasesAtomically()|
+    // for atomic inlines.
+    ObjectPainter(*layout_object)
+        .PaintAllPhasesAtomically(paint_info, block_paint_offset_);
+    return;
+  }
+
+  layout_object->Paint(paint_info, block_paint_offset_);
 }
 
 void NGBoxFragmentPainter::PaintAllPhasesAtomically(
@@ -329,23 +402,39 @@ void NGBoxFragmentPainter::PaintChildren(
     const Vector<std::unique_ptr<NGPaintFragment>>& children,
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset) {
-  PaintInfo child_info(paint_info);
   for (const auto& child : children) {
     const NGPhysicalFragment& fragment = child->PhysicalFragment();
-    LayoutPoint child_offset = paint_offset + LayoutSize(fragment.Offset().left,
-                                                         fragment.Offset().top);
     if (fragment.Type() == NGPhysicalFragment::kFragmentBox) {
       if (child->HasSelfPaintingLayer())
         continue;
-      PaintInfo info(paint_info);
       if (RequiresLegacyFallback(fragment))
-        fragment.GetLayoutObject()->Paint(info, child_offset);
+        fragment.GetLayoutObject()->Paint(paint_info, paint_offset);
       else
-        NGBoxFragmentPainter(*child).Paint(info, child_offset);
+        NGBoxFragmentPainter(*child).Paint(paint_info, paint_offset);
     } else if (fragment.Type() == NGPhysicalFragment::kFragmentLineBox) {
-      PaintLineBox(*child, child_info, child_offset);
-    } else if (fragment.Type() == NGPhysicalFragment::kFragmentText) {
+      PaintLineBox(*child, paint_info, paint_offset);
+    }
+  }
+}
+
+void NGBoxFragmentPainter::PaintInlineChildren(
+    const Vector<std::unique_ptr<NGPaintFragment>>& children,
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) {
+  for (const auto& child : children) {
+    const NGPhysicalFragment& fragment = child->PhysicalFragment();
+    if (fragment.Type() == NGPhysicalFragment::kFragmentText) {
       PaintText(*child, paint_info, paint_offset);
+    } else if (fragment.Type() == NGPhysicalFragment::kFragmentBox) {
+      if (child->HasSelfPaintingLayer())
+        continue;
+      if (RequiresLegacyFallback(fragment)) {
+        PaintInlineChildBoxUsingLegacyFallback(fragment, paint_info,
+                                               paint_offset);
+      } else {
+        NGBoxFragmentPainter(*child).PaintInlineBox(paint_info, paint_offset,
+                                                    block_paint_offset_);
+      }
     }
   }
 }
@@ -361,7 +450,12 @@ void NGBoxFragmentPainter::PaintLineBox(
       paint_info.phase != PaintPhase::kMask)
     return;
 
-  PaintChildren(line_box_fragment.Children(), paint_info, paint_offset);
+  // Line box fragments don't have LayoutObject and nothing to paint. Accumulate
+  // its offset and paint children.
+  block_paint_offset_ = paint_offset;
+  PaintInlineChildren(
+      line_box_fragment.Children(), paint_info,
+      paint_offset + line_box_fragment.Offset().ToLayoutPoint());
 }
 
 void NGBoxFragmentPainter::PaintInlineBlock(const PaintInfo& paint_info,
@@ -466,8 +560,8 @@ BoxPainterBase::FillLayerInfo NGBoxFragmentPainter::GetFillLayerInfo(
     BackgroundBleedAvoidance bleed_avoidance) const {
   return BoxPainterBase::FillLayerInfo(
       box_fragment_.GetLayoutObject()->GetDocument(), box_fragment_.Style(),
-      box_fragment_.HasOverflowClip(), color, bg_layer, bleed_avoidance, true,
-      true);
+      box_fragment_.HasOverflowClip(), color, bg_layer, bleed_avoidance,
+      border_edges_.line_left, border_edges_.line_right);
 }
 
 void NGBoxFragmentPainter::PaintBackground(
