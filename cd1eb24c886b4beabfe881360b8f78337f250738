@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7551cf9_90a81f2c",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-29T13:07:19Z",
+      "side": 1,
+      "message": "The idea expressed in the design doc [1] was to pass the callback with each call of PreparePasswordsForExport rather than on construction. It would then be a OnceCallback which would either get called once and thrown away, or just thrown away (on user cancelling).\n\n\n[1] https://docs.google.com/document/d/1miKr2x0PTNIKgt3RQeur51ICQ66uszlYAmFXJONbG_0/edit#heading\u003dh.mnnwhrv1qaak",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 76
+      },
+      "revId": "cd1eb24c886b4beabfe881360b8f78337f250738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
