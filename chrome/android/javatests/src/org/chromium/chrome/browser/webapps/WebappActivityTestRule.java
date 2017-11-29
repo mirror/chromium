@@ -17,6 +17,7 @@ import org.junit.Rule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ShortcutHelper;
@@ -118,7 +119,14 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
                 callback.waitForCallback(0);
                 callback.getStorage().updateFromShortcutIntent(createIntent());
                 base.evaluate();
-                WebappRegistry.getInstance().clearForTesting();
+                // Make sure we run on the UI thread to prevent concurrent modification of the
+                // registry
+                ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+                    @Override
+                    public void run() {
+                        WebappRegistry.getInstance().clearForTesting();
+                    }
+                });
             }
         };
 
