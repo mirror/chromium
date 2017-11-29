@@ -66,8 +66,11 @@ const char kMaxAgeKey[] = "max-age";
 HeaderEndpointOutcome ProcessEndpoint(ReportingDelegate* delegate,
                                       ReportingCache* cache,
                                       base::TimeTicks now,
-                                      const GURL& url,
-                                      const base::Value& value) {
+                                      const url::Origin& origin,
+                                      const base::Value& value,
+                                      GURL* endpoint_url_out) {
+  *endpoint_url_out = GURL();
+
   const base::DictionaryValue* dict = nullptr;
   if (!value.GetAsDictionary(&dict))
     return HeaderEndpointOutcome::DISCARDED_NOT_DICTIONARY;
@@ -105,13 +108,13 @@ HeaderEndpointOutcome ProcessEndpoint(ReportingDelegate* delegate,
     subdomains = ReportingClient::Subdomains::INCLUDE;
   }
 
+  *endpoint_url_out = endpoint_url;
+
   if (ttl_sec == 0) {
-    cache->RemoveClientForOriginAndEndpoint(url::Origin::Create(url),
-                                            endpoint_url);
+    cache->RemoveClientForOriginAndEndpoint(origin, endpoint_url);
     return HeaderEndpointOutcome::REMOVED;
   }
 
-  url::Origin origin = url::Origin::Create(url);
   if (!delegate->CanSetClient(origin, endpoint_url))
     return HeaderEndpointOutcome::SET_REJECTED_BY_DELEGATE;
 
@@ -156,13 +159,29 @@ void ReportingHeaderParser::ParseHeader(ReportingContext* context,
 
   ReportingDelegate* delegate = context->delegate();
   ReportingCache* cache = context->cache();
+
+  url::Origin origin = url::Origin::Create(url);
+
+  std::vector<GURL> old_endpoints;
+  cache->GetEndpointsForOrigin(origin, &old_endpoints);
+
+  std::set<GURL> new_endpoints;
+
   base::TimeTicks now = context->tick_clock()->NowTicks();
   for (size_t i = 0; i < list->GetSize(); i++) {
     const base::Value* endpoint = nullptr;
     bool got_endpoint = list->Get(i, &endpoint);
     DCHECK(got_endpoint);
-    RecordHeaderEndpointOutcome(
-        ProcessEndpoint(delegate, cache, now, url, *endpoint));
+    GURL endpoint_url;
+    RecordHeaderEndpointOutcome(ProcessEndpoint(delegate, cache, now, origin,
+                                                *endpoint, &endpoint_url));
+    new_endpoints.insert(endpoint_url);
+  }
+
+  // Remove any endpoints that weren't specified in the current header(s).
+  for (const GURL& old_endpoint : old_endpoints) {
+    if (new_endpoints.count(old_endpoint) == 0u)
+      cache->RemoveClientForOriginAndEndpoint(origin, old_endpoint);
   }
 }
 
