@@ -31,7 +31,6 @@
 
 #include <memory>
 #include "platform/bindings/ScriptWrappable.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
@@ -42,7 +41,7 @@ class SQLErrorData {
  public:
   static std::unique_ptr<SQLErrorData> Create(unsigned code,
                                               const String& message) {
-    return WTF::WrapUnique(new SQLErrorData(code, message));
+    return std::unique_ptr<SQLErrorData>(new SQLErrorData(code, message));
   }
 
   static std::unique_ptr<SQLErrorData> Create(unsigned code,

@@ -87,7 +87,6 @@
 #include "platform/peerconnection/RTCAnswerOptionsPlatform.h"
 #include "platform/peerconnection/RTCOfferOptionsPlatform.h"
 #include "platform/runtime_enabled_features.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCryptoAlgorithmParams.h"
@@ -1591,8 +1590,9 @@ void RTCPeerConnection::DidAddRemoteDataChannel(
   if (signaling_state_ == kSignalingStateClosed)
     return;
 
-  RTCDataChannel* channel =
-      RTCDataChannel::Create(GetExecutionContext(), WTF::WrapUnique(handler));
+  RTCDataChannel* channel = RTCDataChannel::Create(
+      GetExecutionContext(),
+      std::unique_ptr<WebRTCDataChannelHandler>(handler));
   ScheduleDispatchEvent(RTCDataChannelEvent::Create(EventTypeNames::datachannel,
                                                     false, false, channel));
   has_data_channels_ = true;

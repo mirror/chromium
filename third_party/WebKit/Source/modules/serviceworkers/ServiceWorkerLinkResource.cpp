@@ -18,7 +18,6 @@
 #include "modules/serviceworkers/ServiceWorkerContainer.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/scheduler/child/web_scheduler.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/modules/serviceworker/service_worker_error_type.mojom-blink.h"

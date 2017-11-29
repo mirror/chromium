@@ -4,10 +4,11 @@
 
 #include "modules/indexeddb/IDBValue.h"
 
+#include <memory>
+
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "platform/blob/BlobData.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebBlobInfo.h"
 #include "public/platform/modules/indexeddb/WebIDBValue.h"
 #include "v8/include/v8.h"
@@ -33,8 +34,7 @@ IDBValue::IDBValue(scoped_refptr<SharedBuffer> data,
                    const IDBKeyPath& key_path)
     : data_(std::move(data)),
       blob_data_(std::make_unique<Vector<scoped_refptr<BlobDataHandle>>>()),
-      blob_info_(
-          WTF::WrapUnique(new Vector<WebBlobInfo>(web_blob_info.size()))),
+      blob_info_(std::make_unique<Vector<WebBlobInfo>>(web_blob_info.size())),
       primary_key_(primary_key && primary_key->IsValid() ? primary_key
                                                          : nullptr),
       key_path_(key_path) {
@@ -51,7 +51,7 @@ IDBValue::IDBValue(const IDBValue* value,
     : data_(value->data_),
       blob_data_(std::make_unique<Vector<scoped_refptr<BlobDataHandle>>>()),
       blob_info_(
-          WTF::WrapUnique(new Vector<WebBlobInfo>(value->blob_info_->size()))),
+          std::make_unique<Vector<WebBlobInfo>>(value->blob_info_->size())),
       primary_key_(primary_key),
       key_path_(key_path) {
   for (size_t i = 0; i < value->blob_info_->size(); ++i) {

@@ -20,7 +20,6 @@
 #include "platform/loader/fetch/CachedMetadata.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/Deque.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/TextEncodingRegistry.h"
 
 namespace blink {
@@ -460,14 +459,16 @@ void ScriptStreamer::NotifyAppendData(ScriptResource* resource) {
     DCHECK(!source_);
     stream_ = new SourceStream;
     // m_source takes ownership of m_stream.
-    source_ = WTF::WrapUnique(
-        new v8::ScriptCompiler::StreamedSource(stream_, encoding_));
+    source_ = std::make_unique<v8::ScriptCompiler::StreamedSource>(stream_,
+                                                                   encoding_);
 
     ScriptState::Scope scope(script_state_.get());
     std::unique_ptr<v8::ScriptCompiler::ScriptStreamingTask>
-        script_streaming_task(
-            WTF::WrapUnique(v8::ScriptCompiler::StartStreamingScript(
-                script_state_->GetIsolate(), source_.get(), compile_options_)));
+        script_streaming_task =
+            std::unique_ptr<v8::ScriptCompiler::ScriptStreamingTask>(
+                v8::ScriptCompiler::StartStreamingScript(
+                    script_state_->GetIsolate(), source_.get(),
+                    compile_options_));
     if (!script_streaming_task) {
       // V8 cannot stream the script.
       SuppressStreaming();

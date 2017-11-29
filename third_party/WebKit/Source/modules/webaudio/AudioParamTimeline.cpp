@@ -26,6 +26,7 @@
 #include "modules/webaudio/AudioParamTimeline.h"
 
 #include <algorithm>
+#include <memory>
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "build/build_config.h"
@@ -35,7 +36,6 @@
 #include "platform/audio/AudioUtilities.h"
 #include "platform/wtf/CPU.h"
 #include "platform/wtf/MathExtras.h"
-#include "platform/wtf/PtrUtil.h"
 
 #if defined(ARCH_CPU_X86_FAMILY)
 #include <emmintrin.h>
@@ -171,7 +171,8 @@ float AudioParamTimeline::ValueCurveAtTime(double t,
 
 std::unique_ptr<AudioParamTimeline::ParamEvent>
 AudioParamTimeline::ParamEvent::CreateSetValueEvent(float value, double time) {
-  return WTF::WrapUnique(new ParamEvent(ParamEvent::kSetValue, value, time));
+  return std::unique_ptr<ParamEvent>(
+      new ParamEvent(ParamEvent::kSetValue, value, time));
 }
 
 std::unique_ptr<AudioParamTimeline::ParamEvent>
@@ -179,8 +180,8 @@ AudioParamTimeline::ParamEvent::CreateLinearRampEvent(float value,
                                                       double time,
                                                       float initial_value,
                                                       double call_time) {
-  return WTF::WrapUnique(new ParamEvent(ParamEvent::kLinearRampToValue, value,
-                                        time, initial_value, call_time));
+  return std::unique_ptr<ParamEvent>(new ParamEvent(
+      ParamEvent::kLinearRampToValue, value, time, initial_value, call_time));
 }
 
 std::unique_ptr<AudioParamTimeline::ParamEvent>
@@ -188,8 +189,9 @@ AudioParamTimeline::ParamEvent::CreateExponentialRampEvent(float value,
                                                            double time,
                                                            float initial_value,
                                                            double call_time) {
-  return WTF::WrapUnique(new ParamEvent(ParamEvent::kExponentialRampToValue,
-                                        value, time, initial_value, call_time));
+  return std::unique_ptr<ParamEvent>(
+      new ParamEvent(ParamEvent::kExponentialRampToValue, value, time,
+                     initial_value, call_time));
 }
 
 std::unique_ptr<AudioParamTimeline::ParamEvent>
@@ -200,7 +202,7 @@ AudioParamTimeline::ParamEvent::CreateSetTargetEvent(float value,
   // returns NaN or Infinity due to division by zero.  The caller
   // should have converted this to a SetValueEvent.
   DCHECK_NE(time_constant, 0);
-  return WTF::WrapUnique(
+  return std::unique_ptr<ParamEvent>(
       new ParamEvent(ParamEvent::kSetTarget, value, time, time_constant));
 }
 
@@ -212,9 +214,9 @@ AudioParamTimeline::ParamEvent::CreateSetValueCurveEvent(
   double curve_points = (curve.size() - 1) / duration;
   float end_value = curve.data()[curve.size() - 1];
 
-  return WTF::WrapUnique(new ParamEvent(ParamEvent::kSetValueCurve, time,
-                                        duration, curve, curve_points,
-                                        end_value));
+  return std::unique_ptr<ParamEvent>(new ParamEvent(ParamEvent::kSetValueCurve,
+                                                    time, duration, curve,
+                                                    curve_points, end_value));
 }
 
 std::unique_ptr<AudioParamTimeline::ParamEvent>
@@ -231,7 +233,7 @@ AudioParamTimeline::ParamEvent::CreateCancelValuesEvent(
            saved_type == ParamEvent::kSetValueCurve);
   }
 
-  return WTF::WrapUnique(
+  return std::unique_ptr<ParamEvent>(
       new ParamEvent(ParamEvent::kCancelValues, time, std::move(saved_event)));
 }
 
@@ -248,7 +250,7 @@ AudioParamTimeline::ParamEvent::CreateGeneralEvent(
     double curve_points_per_second,
     float curve_end_value,
     std::unique_ptr<ParamEvent> saved_event) {
-  return WTF::WrapUnique(new ParamEvent(
+  return std::unique_ptr<ParamEvent>(new ParamEvent(
       type, value, time, initial_value, call_time, time_constant, duration,
       curve, curve_points_per_second, curve_end_value, std::move(saved_event)));
 }

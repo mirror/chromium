@@ -101,7 +101,6 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/Functional.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/StringUTF8Adaptor.h"
 #include "platform/wtf/typed_arrays/ArrayBufferContents.h"
@@ -5319,8 +5318,8 @@ void WebGLRenderingContextBase::TexImageHelperHTMLVideoElement(
     // Try using an accelerated image buffer, this allows YUV conversion to be
     // done on the GPU.
     std::unique_ptr<ImageBufferSurface> surface =
-        WTF::WrapUnique(new AcceleratedImageBufferSurface(
-            IntSize(video->videoWidth(), video->videoHeight())));
+        std::make_unique<AcceleratedImageBufferSurface>(
+            IntSize(video->videoWidth(), video->videoHeight()));
     if (surface->IsValid()) {
       std::unique_ptr<ImageBuffer> image_buffer(
           ImageBuffer::Create(std::move(surface)));
