@@ -10,6 +10,8 @@ import android.app.PendingIntent;
 import android.app.RemoteInput;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -581,9 +583,8 @@ public class NotificationPlatformBridge {
                 profileId, incognito, tag, webApkPackage, -1 /* actionIndex */);
 
         boolean hasImage = image != null;
-        boolean forWebApk = !webApkPackage.isEmpty();
         NotificationBuilderBase notificationBuilder =
-                createNotificationBuilder(context, forWebApk, hasImage, origin)
+                createNotificationBuilder(context, hasImage)
                         .setTitle(title)
                         .setBody(body)
                         .setImage(image)
@@ -597,6 +598,16 @@ public class NotificationPlatformBridge {
                         .setRenotify(renotify)
                         .setOrigin(UrlFormatter.formatUrlForSecurityDisplay(
                                 origin, false /* showScheme */));
+
+        if (shouldSetChannelId(webApkPackage)) {
+            // TODO(crbug.com/700377): Channel ID should be retrieved from cache in native and
+            // passed through to here with other notification parameters.
+            String channelId =
+                    ChromeFeatureList.isEnabled(ChromeFeatureList.SITE_NOTIFICATION_CHANNELS)
+                    ? SiteChannelsManager.getInstance().getChannelIdForOrigin(origin)
+                    : ChannelDefinitions.CHANNEL_ID_SITES;
+            notificationBuilder.setChannelId(channelId);
+        }
 
         for (int actionIndex = 0; actionIndex < actions.length; actionIndex++) {
             PendingIntent intent = makePendingIntent(context,
@@ -626,9 +637,11 @@ public class NotificationPlatformBridge {
         notificationBuilder.setVibrate(makeVibrationPattern(vibrationPattern));
 
         String platformTag = makePlatformTag(notificationId, origin, tag);
-        if (forWebApk) {
-            WebApkServiceClient.getInstance().notifyNotification(
-                    webApkPackage, notificationBuilder, platformTag, PLATFORM_ID);
+        if (!webApkPackage.isEmpty()) {
+            WebApkServiceClient.getInstance().notifyNotification(webApkPackage, notificationBuilder,
+                    platformTag, PLATFORM_ID,
+                    ContextUtils.getApplicationContext().getString(
+                            R.string.webapk_notification_channel_name));
         } else {
             // Set up a pending intent for going to the settings screen for |origin|.
             Intent settingsIntent = PreferencesLauncher.createIntentForSettingsPage(
@@ -661,22 +674,33 @@ public class NotificationPlatformBridge {
         }
     }
 
-    private NotificationBuilderBase createNotificationBuilder(
-            Context context, boolean forWebApk, boolean hasImage, String origin) {
-        // Don't set a channelId for web apk notifications because the channel won't be
-        // initialized for the web apk and it will crash on notify - see crbug.com/727178.
-        // (It's okay to not set a channel on them because web apks don't target O yet.)
-        // TODO(crbug.com/700377): Channel ID should be retrieved from cache in native and passed
-        // through to here with other notification parameters.
-        String channelId = (forWebApk || Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
-                ? null
-                : ChromeFeatureList.isEnabled(ChromeFeatureList.SITE_NOTIFICATION_CHANNELS)
-                        ? SiteChannelsManager.getInstance().getChannelIdForOrigin(origin)
-                        : ChannelDefinitions.CHANNEL_ID_SITES;
+    private NotificationBuilderBase createNotificationBuilder(Context context, boolean hasImage) {
         if (useCustomLayouts(hasImage)) {
-            return new CustomNotificationBuilder(context, channelId);
+            return new CustomNotificationBuilder(context);
         }
-        return new StandardNotificationBuilder(context, channelId);
+        return new StandardNotificationBuilder(context);
+    }
+
+    /** Returns whether the WebAPK targets to SDK 26+. */
+    private boolean webApkTargetAtLeastO(String webApkPackage) {
+        if (TextUtils.isEmpty(webApkPackage)) return false;
+
+        try {
+            ApplicationInfo info =
+                    ContextUtils.getApplicationContext().getPackageManager().getApplicationInfo(
+                            webApkPackage, 0);
+            return info.targetSdkVersion >= Build.VERSION_CODES.O;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /** Returns whether to set a channel id when building a notification. */
+    private boolean shouldSetChannelId(String webApkPackage) {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                && (webApkPackage.isEmpty() || webApkTargetAtLeastO(webApkPackage));
     }
 
     /**
