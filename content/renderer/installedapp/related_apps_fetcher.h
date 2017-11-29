@@ -11,20 +11,14 @@
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/modules/installedapp/WebRelatedAppsFetcher.h"
 
-namespace blink {
-namespace mojom {
-class ManifestManager;
-}
-}  // namespace blink
-
 namespace content {
 
+class RenderFrameImpl;
 struct Manifest;
-class ManifestManager;
 
 class CONTENT_EXPORT RelatedAppsFetcher : public blink::WebRelatedAppsFetcher {
  public:
-  explicit RelatedAppsFetcher(blink::mojom::ManifestManager* manifest_manager);
+  explicit RelatedAppsFetcher(RenderFrameImpl* frame);
   ~RelatedAppsFetcher() override;
 
   // blink::WebRelatedAppsFetcher overrides:
@@ -43,7 +37,7 @@ class CONTENT_EXPORT RelatedAppsFetcher : public blink::WebRelatedAppsFetcher {
       const GURL& url,
       const Manifest& manifest);
 
-  blink::mojom::ManifestManager* const manifest_manager_;
+  RenderFrameImpl* const frame_;
 
   DISALLOW_COPY_AND_ASSIGN(RelatedAppsFetcher);
 };

@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "content/public/common/manifest.h"
+#include "content/renderer/render_frame_impl.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/modules/installedapp/WebRelatedApplication.h"
 #include "third_party/WebKit/public/platform/modules/manifest/manifest.mojom.h"
@@ -13,9 +14,8 @@
 
 namespace content {
 
-RelatedAppsFetcher::RelatedAppsFetcher(
-    blink::mojom::ManifestManager* manifest_manager)
-    : manifest_manager_(manifest_manager) {}
+RelatedAppsFetcher::RelatedAppsFetcher(RenderFrameImpl* frame)
+    : frame_(frame) {}
 
 RelatedAppsFetcher::~RelatedAppsFetcher() {}
 
@@ -23,7 +23,7 @@ void RelatedAppsFetcher::GetManifestRelatedApplications(
     std::unique_ptr<blink::WebCallbacks<
         const blink::WebVector<blink::WebRelatedApplication>&,
         void>> callbacks) {
-  manifest_manager_->RequestManifest(
+  frame_->GetManifestManager().RequestManifest(
       base::BindOnce(&RelatedAppsFetcher::OnGetManifestForRelatedApplications,
                      base::Unretained(this), base::Passed(&callbacks)));
 }
