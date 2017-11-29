@@ -261,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "25dd9d86_ca6a244e",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-11-29T00:02:51Z",
+      "side": 1,
+      "message": "Thanks for double checking Lei! Yeah that aligns with what was I was getting. It\u0027ll be interesting to know if our official chromeos builds actually include the memfd_create code or not.",
+      "parentUuid": "2149ffeb_9cbaad8e",
+      "revId": "d2997b1be774c2432ac47f29ef55a6a6265c583f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d3baa5_6d98e1b9",
         "filename": "base/memory/shared_memory_posix.cc",
         "patchSetId": 18
