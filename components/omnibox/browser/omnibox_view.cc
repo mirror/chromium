@@ -87,6 +87,10 @@ void OmniboxView::OpenMatch(const AutocompleteMatch& match,
   // Invalid URLs such as chrome://history can end up here.
   if (!match.destination_url.is_valid() || !model_)
     return;
+  // If user requests navigation, change disposition so OpenMatch()
+  // doesn't switch tabs.
+  if (shift_key_pressed_ && disposition == WindowOpenDisposition::CURRENT_TAB)
+    disposition = WindowOpenDisposition::SINGLETON_TAB;
   model_->OpenMatch(
       match, disposition, alternate_nav_url, pasted_text, selected_line);
 }
@@ -187,7 +191,7 @@ OmniboxView::StateChanges OmniboxView::GetStateChanges(const State& before,
 
 OmniboxView::OmniboxView(OmniboxEditController* controller,
                          std::unique_ptr<OmniboxClient> client)
-    : controller_(controller) {
+    : controller_(controller), shift_key_pressed_(false) {
   // |client| can be null in tests.
   if (client) {
     model_.reset(new OmniboxEditModel(this, controller, std::move(client)));

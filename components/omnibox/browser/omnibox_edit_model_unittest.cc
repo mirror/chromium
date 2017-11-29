@@ -14,22 +14,32 @@
 #include "components/omnibox/browser/test_omnibox_client.h"
 #include "components/omnibox/browser/test_omnibox_edit_controller.h"
 #include "components/omnibox/browser/test_omnibox_view.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+class MockOmniboxEditController : public TestOmniboxEditController {
+ public:
+  MockOmniboxEditController() {}
+
+  // OmniboxEditController:
+  MOCK_METHOD2(SwitchToTabWithURL, bool(const std::string&, bool));
+};
 
 class OmniboxEditModelTest : public testing::Test {
  public:
   void SetUp() override {
-    controller_ = base::MakeUnique<TestOmniboxEditController>();
+    controller_ = base::MakeUnique<MockOmniboxEditController>();
     view_ = base::MakeUnique<TestOmniboxView>(controller_.get());
     model_ = base::MakeUnique<OmniboxEditModel>(
         view_.get(), controller_.get(), base::MakeUnique<TestOmniboxClient>());
   }
 
+  MockOmniboxEditController* controller() { return controller_.get(); }
   const TestOmniboxView& view() { return *view_; }
   OmniboxEditModel* model() { return model_.get(); }
 
  private:
-  std::unique_ptr<TestOmniboxEditController> controller_;
+  std::unique_ptr<MockOmniboxEditController> controller_;
   std::unique_ptr<TestOmniboxView> view_;
   std::unique_ptr<OmniboxEditModel> model_;
 };
@@ -156,4 +166,21 @@ TEST_F(OmniboxEditModelTest, AlternateNavHasHTTP) {
                      alternate_nav_url, base::string16(), 0);
   EXPECT_TRUE(AutocompleteInput::HasHTTPScheme(
       client->alternate_nav_match().fill_into_edit));
+}
+
+TEST_F(OmniboxEditModelTest, TabSwitchDisposition) {
+  AutocompleteMatch match(model()->autocomplete_controller()->search_provider(),
+                          0, false, AutocompleteMatchType::TAB_SEARCH);
+  GURL url("http://abcd/");
+  match.destination_url = url;
+
+  EXPECT_CALL(*controller(), SwitchToTabWithURL(url.spec(), true))
+      .Times(1)
+      .WillRepeatedly(testing::Return(true));
+  model()->OnSetFocus(false);  // Avoids DCHECK in OpenMatch().
+  model()->SetUserText(base::ASCIIToUTF16(url.spec()));
+  model()->OpenMatch(match, WindowOpenDisposition::CURRENT_TAB, url,
+                     base::string16(), 0);
+  model()->OpenMatch(match, WindowOpenDisposition::SINGLETON_TAB, url,
+                     base::string16(), 0);
 }
