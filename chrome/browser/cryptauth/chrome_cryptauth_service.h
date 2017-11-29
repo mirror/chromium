@@ -70,6 +70,7 @@ class ChromeCryptAuthService
                              const std::string& username) override;
 
   void PerformEnrollmentAndDeviceSync();
+  bool IsEnrollmentAllowedByPolicy();
 
   std::unique_ptr<cryptauth::CryptAuthGCMManager> gcm_manager_;
   std::unique_ptr<cryptauth::CryptAuthEnrollmentManager> enrollment_manager_;

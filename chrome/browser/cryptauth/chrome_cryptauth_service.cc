@@ -313,6 +313,11 @@ void ChromeCryptAuthService::OnRefreshTokenAvailable(
 void ChromeCryptAuthService::PerformEnrollmentAndDeviceSync() {
   DCHECK(signin_manager_->IsAuthenticated());
   DCHECK(token_service_->RefreshTokenIsAvailable(GetAccountId()));
+
+  if (!IsEnrollmentAllowedByPolicy()) {
+    return;
+  }
+
   if (enrollment_manager_->IsEnrollmentValid()) {
     device_manager_->Start();
   } else {
@@ -324,4 +329,12 @@ void ChromeCryptAuthService::PerformEnrollmentAndDeviceSync() {
   // Even if enrollment was valid, CryptAuthEnrollmentManager must be started in
   // order to schedule the next enrollment attempt.
   enrollment_manager_->Start();
+}
+
+bool ChromeCryptAuthService::IsEnrollmentAllowedByPolicy() {
+  // We allow CryptAuth enrollments if at least one of the features which
+  // depends on CryptAuth is enabled by enterprise policy.
+  PrefService* pref_service = profile_->GetPrefs();
+  return pref_service->GetBoolean(prefs::kInstantTetheringAllowed) ||
+         pref_service->GetBoolean(prefs::kEasyUnlockAllowed);
 }
