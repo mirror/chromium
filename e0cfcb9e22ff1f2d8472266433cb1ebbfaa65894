@@ -22,6 +22,30 @@
       "revId": "e0cfcb9e22ff1f2d8472266433cb1ebbfaa65894",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28d4728_20adcf3a",
+        "filename": "cc/paint/paint_op_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-29T18:11:00Z",
+      "side": 1,
+      "message": "No, it shouldn\u0027t be possible in practice.  I\u0027ll just add a DCHECK.\n\nThe outer while loop starts over from the first op, and then inner while loop deserializes all the ops in serialized_data_ until it runs out of room.  I\u0027m not sure what you mean.  Is there a bug here that I\u0027m not spotting?",
+      "parentUuid": "ef070c56_f1477a3d",
+      "range": {
+        "startLine": 76,
+        "startChar": 33,
+        "endLine": 76,
+        "endChar": 35
+      },
+      "revId": "e0cfcb9e22ff1f2d8472266433cb1ebbfaa65894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
