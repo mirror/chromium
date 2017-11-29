@@ -5,6 +5,7 @@
 #ifndef BASE_RUN_LOOP_H_
 #define BASE_RUN_LOOP_H_
 
+#include <utility>
 #include <vector>
 
 #include "base/base_export.h"
@@ -157,23 +158,19 @@ class BASE_EXPORT RunLoop {
   // via RunLoop::RegisterDelegateForCurrentThread() before RunLoop instances
   // and RunLoop static methods can be used on it.
   class BASE_EXPORT Delegate {
-   protected:
+   public:
     Delegate();
-    ~Delegate();
+    virtual ~Delegate();
 
     // The client interface provided back to the caller who registers this
-    // Delegate via RegisterDelegateForCurrentThread.
+    // Delegate via RegisterDelegateForCurrentThread() or
+    // OverrideDelegateForCurrentThreadForTesting().
     class BASE_EXPORT Client {
      public:
       // Returns true if the Delegate should return from the topmost Run() when
       // it becomes idle. The Delegate is responsible for probing this when it
       // becomes idle.
       bool ShouldQuitWhenIdle() const;
-
-      // Returns true if this |outer_| is currently in nested runs. This is a
-      // shortcut for RunLoop::IsNestedOnCurrentThread() for the owner of this
-      // interface.
-      bool IsNested() const;
 
      private:
       // Only a Delegate can instantiate a Delegate::Client.
@@ -182,11 +179,6 @@ class BASE_EXPORT RunLoop {
 
       Delegate* outer_;
     };
-
-   private:
-    // While the state is owned by the Delegate subclass, only RunLoop can use
-    // it.
-    friend class RunLoop;
 
     // Used by RunLoop to inform its Delegate to Run/Quit. Implementations are
     // expected to keep on running synchronously from the Run() call until the
@@ -212,6 +204,11 @@ class BASE_EXPORT RunLoop {
     // system messages.
     virtual void EnsureWorkScheduled() = 0;
 
+   private:
+    // While the state is owned by the Delegate subclass, only RunLoop can use
+    // it.
+    friend class RunLoop;
+
     // A vector-based stack is more memory efficient than the default
     // deque-based stack as the active RunLoop stack isn't expected to ever
     // have more than a few entries.
@@ -220,6 +217,12 @@ class BASE_EXPORT RunLoop {
     bool allow_nesting_ = true;
     RunLoopStack active_run_loops_;
     ObserverList<RunLoop::NestingObserver> nesting_observers_;
+
+    // True if this Delegate was overriden through
+    // OverrideDelegateForCurrentThreadForTesting(). It will from then on always
+    // return from Run() when idle (i.e. its Client's ShouldQuitWhenIdle() will
+    // always be true).
+    bool was_overriden_ = false;
 
 #if DCHECK_IS_ON()
     bool allow_running_for_testing_ = true;
@@ -242,6 +245,15 @@ class BASE_EXPORT RunLoop {
   // on forever bound to that thread (including its destruction). The returned
   // Delegate::Client is valid as long as |delegate| is kept alive.
   static Delegate::Client* RegisterDelegateForCurrentThread(Delegate* delegate);
+
+  // Akin to RegisterDelegateForCurrentThread but overrides an existing Delegate
+  // (there must be one). Returning |delegate|'s client interface like
+  // RegisterDelegateForCurrentThread() as well as the overriden Delegate which
+  // the caller is now in charge of driving. The overriden Delegate's Run()
+  // method will always return when idle (or earlier if the Delegate's Quit()
+  // method is explicitly invoked).
+  static std::pair<Delegate::Client*, Delegate*>
+  OverrideDelegateForCurrentThreadForTesting(Delegate* delegate);
 
   // Quits the active RunLoop (when idle) -- there must be one. These were
   // introduced as prefered temporary replacements to the long deprecated
