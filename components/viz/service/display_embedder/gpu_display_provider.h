@@ -10,6 +10,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "build/build_config.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/service/display_embedder/display_provider.h"
 #include "components/viz/service/viz_service_export.h"
@@ -25,6 +26,7 @@ class ImageFactory;
 namespace viz {
 class CompositingModeReporterImpl;
 class Display;
+class OutputDeviceBacking;
 
 // In-process implementation of DisplayProvider.
 class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
@@ -36,10 +38,11 @@ class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
       CompositingModeReporterImpl* compositing_mode_reporter);
   ~GpuDisplayProvider() override;
 
-  // DisplayProvider:
+  // DisplayProvider implementation.
   std::unique_ptr<Display> CreateDisplay(
       const FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
+      bool force_software_compositing,
       const RendererSettings& renderer_settings,
       std::unique_ptr<SyntheticBeginFrameSource>* out_begin_frame_source)
       override;
@@ -50,6 +53,11 @@ class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
   std::unique_ptr<gpu::GpuMemoryBufferManager> gpu_memory_buffer_manager_;
   gpu::ImageFactory* const image_factory_;
   CompositingModeReporterImpl* const compositing_mode_reporter_;
+
+#if defined(OS_WIN)
+  // Used for software compositing output on Windows.
+  std::unique_ptr<OutputDeviceBacking> output_device_backing_;
+#endif
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 

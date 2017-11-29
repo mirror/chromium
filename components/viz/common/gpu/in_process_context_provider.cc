@@ -21,7 +21,6 @@
 #include "gpu/command_buffer/service/shader_translator_cache.h"
 #include "gpu/command_buffer/service/sync_point_manager.h"
 #include "gpu/config/gpu_feature_info.h"
-#include "gpu/ipc/common/surface_handle.h"
 #include "gpu/ipc/gl_in_process_context.h"
 #include "gpu/ipc/gpu_in_process_thread_service.h"
 #include "gpu/ipc/in_process_command_buffer.h"
@@ -52,7 +51,7 @@ gpu::gles2::ContextCreationAttribHelper CreateAttributes() {
 
 InProcessContextProvider::InProcessContextProvider(
     scoped_refptr<gpu::InProcessCommandBuffer::Service> service,
-    gpu::SurfaceHandle widget,
+    gfx::AcceleratedWidget widget,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     gpu::ImageFactory* image_factory,
     const gpu::SharedMemoryLimits& limits,
