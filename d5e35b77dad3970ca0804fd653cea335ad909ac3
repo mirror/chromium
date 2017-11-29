@@ -46,6 +46,30 @@
       "revId": "d5e35b77dad3970ca0804fd653cea335ad909ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51ad878b_73c77e96",
+        "filename": "ui/gfx/gpu_fence_passthrough.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-29T06:44:18Z",
+      "side": 1,
+      "message": "As discussed, I\u0027ve folded the GpuFencePassthrough functionality into GpuFence which is now a plain owning class for a GpuFenceHandle.",
+      "parentUuid": "32c0180b_e4f4f980",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "d5e35b77dad3970ca0804fd653cea335ad909ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
