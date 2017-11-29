@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "238146dd_9d8bd052",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-29T01:06:33Z",
+      "side": 1,
+      "message": "Discussed in person, but for posterity:\nThe bounds are still reported in global coordinates, even though the clipped bounds may be returned. Global makes sense in the function name.\n\nFor example, if a (20, 20) node A is in a div sized (10, 10) at location (5, 5), node A\u0027s global location is at (5, 5) also. It\u0027s clipped size is (15, 15), but it\u0027s unclipped size is (20, 20).",
+      "parentUuid": "2f324fd0_9d0f2f7c",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06f3ec3e_5043e31a",
         "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-28T23:34:49Z",
       "side": 1,
       "message": "I would unify terms here. Global \u003d\u003d unclipped and local \u003d\u003d clipped. Use either global/local or unclipped/clipped but not both.",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4a8f4ba_25a93b69",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-29T01:06:33Z",
+      "side": 1,
+      "message": "Based on discussion and comment above, leaving as-is here. I\u0027ll add _clipped to the name of the variable above in GetLocation. Let me know if that\u0027s not acceptable.",
+      "parentUuid": "06f3ec3e_5043e31a",
       "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2f6ce248_0dde8437",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-29T01:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7624706_10cb3f50",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19441b69_daf5e968",
         "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-28T23:34:49Z",
       "side": 1,
       "message": "TODO(katie):",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3c985b5_7ae3ad99",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-29T01:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19441b69_daf5e968",
       "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9b79e1a1_672db9e8",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-29T01:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ca399af_b28c0b59",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae30cbcd_e478d11b",
         "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-28T23:34:49Z",
       "side": 1,
       "message": "If GetUnclippedLocation returns undefined, fall back to location. There are tree sources that don\u0027t (yet) expose unclipped location like ARC++, PDF, etc.",
+      "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "897de89d_c3318788",
+        "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-29T01:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae30cbcd_e478d11b",
       "revId": "efc5e7fb51e62658213931a9fff16c4b65a7b73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
