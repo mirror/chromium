@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41abfd1d_d84db9de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-29T19:17:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d670e1f_c1be9e7c",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "c5a091f31cb48b652f56c2aa7033388afb19f550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0849224a_d93025b0",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c5a091f31cb48b652f56c2aa7033388afb19f550",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "572c5d23_e8bead56",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24730,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-29T19:17:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0849224a_d93025b0",
+      "range": {
+        "startLine": 24730,
+        "startChar": 53,
+        "endLine": 24730,
+        "endChar": 61
+      },
+      "revId": "c5a091f31cb48b652f56c2aa7033388afb19f550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
