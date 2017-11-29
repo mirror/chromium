@@ -50,8 +50,9 @@
 #endif
 
 #if defined(USE_AURA)
-#include "ui/aura/env.h"  // nogncheck
-#include "ui/aura/window.h"  // nogncheck
+#include "ui/aura/client/screen_position_client.h"  // nogncheck
+#include "ui/aura/env.h"                            // nogncheck
+#include "ui/aura/window.h"                         // nogncheck
 #include "ui/wm/core/window_modality_controller.h"  // nogncheck
 #endif
 
@@ -143,6 +144,40 @@ void OffsetX(int x_offset, std::vector<gfx::Rect>* rects) {
 
   for (size_t i = 0; i < rects->size(); ++i)
     (*rects)[i].set_x((*rects)[i].x() + x_offset);
+}
+
+// This sets the bounds of the widget based on the |cursor_location_in_screen|.
+// Calling Widget::SetBounds() directly in aura will change the widget's root
+// window when |bounds| has a bigger intersection with another display (even
+// though the mouse cursor didn't cross the original display boundary). This
+// causes the events' targets to have the root window of the other display,
+// while the locations of the native events are still sent relative to the
+// original display. crbug.com/714578.
+void SetWidgetBoundsWhileDragging(views::Widget* widget,
+                                  const gfx::Point& cursor_location_in_screen,
+                                  const gfx::Rect& bounds) {
+#if defined(USE_AURA)
+  auto* window = widget->GetNativeWindow();
+  if (!window)
+    return;
+
+  auto* root = window->GetRootWindow();
+  if (root) {
+    aura::client::ScreenPositionClient* screen_position_client =
+        aura::client::GetScreenPositionClient(root);
+    if (screen_position_client) {
+      display::Display dst_display =
+          display::Screen::GetScreen()->GetDisplayNearestPoint(
+              cursor_location_in_screen);
+      screen_position_client->SetBounds(window, bounds, dst_display);
+      return;
+    }
+  }
+
+  window->SetBounds(bounds);
+#else
+  widget->SetBounds(bounds);
+#endif
 }
 
 // EscapeTracker installs an event monitor and runs a callback when it receives
@@ -386,7 +421,7 @@ void TabDragController::Drag(const gfx::Point& point_in_screen) {
         gfx::Rect bounds = widget->GetWindowBoundsInScreen();
         bounds.Offset(point_in_screen.x() - start_point_in_screen_.x(),
                       point_in_screen.y() - start_point_in_screen_.y());
-        widget->SetBounds(bounds);
+        SetWidgetBoundsWhileDragging(widget, point_in_screen, bounds);
       }
       RunMoveLoop(GetWindowOffset(point_in_screen));
       return;
