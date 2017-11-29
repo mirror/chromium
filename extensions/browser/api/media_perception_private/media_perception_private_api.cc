@@ -52,6 +52,14 @@ MediaPerceptionPrivateSetStateFunction::Run() {
     return RespondNow(
         Error("Only provide deviceContext with SetState RUNNING."));
   }
+
+  // Check that video stream parameters are only provided with SetState RUNNING.
+  if (params->state.status != media_perception::STATUS_RUNNING &&
+      params->state.video_stream_param.get() != nullptr) {
+    return RespondNow(
+        Error("Only provide videoStreamParam with SetState RUNNING."));
+  }
+
   MediaPerceptionAPIManager* manager =
       MediaPerceptionAPIManager::Get(browser_context());
   manager->SetState(
