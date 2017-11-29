@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c67c07e0_e0847992",
+        "filename": "base/process/process_info_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-29T22:07:25Z",
+      "side": 1,
+      "message": "Something is failing in the wild: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d748431",
+      "parentUuid": "b66eb3e2_1bbbcd67",
+      "revId": "30adacbede8c1ad8805dd653b368f79b8be5c4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "352b8baf_e15e672a",
         "filename": "base/process/process_info_win.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T21:25:25Z",
       "side": 1,
       "message": "Can we split them into 2 checks, so we know which one failed? My rule of thumb is never write \u0026\u0026 in a check.\n\nCan it be DCHECK or is this going to fail in production?",
+      "revId": "30adacbede8c1ad8805dd653b368f79b8be5c4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2328a9_9e3083e1",
+        "filename": "base/process/process_info_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-29T22:07:25Z",
+      "side": 1,
+      "message": "Split in two.\n\nNote that something is failing in the wild: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d748431",
+      "parentUuid": "352b8baf_e15e672a",
       "revId": "30adacbede8c1ad8805dd653b368f79b8be5c4a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
