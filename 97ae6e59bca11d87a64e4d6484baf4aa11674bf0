@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4cb151d0_c3249f4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:30:40Z",
+      "side": 1,
+      "message": "Ooops.  Done.",
+      "parentUuid": "99c3af64_89fadc16",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 15
+      },
+      "revId": "97ae6e59bca11d87a64e4d6484baf4aa11674bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4e5ce1c_eba7ca26",
         "filename": "content/common/site_isolation_policy_unittest.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "97ae6e59bca11d87a64e4d6484baf4aa11674bf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198e2f1b_bd5ab23f",
+        "filename": "content/common/site_isolation_policy_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:30:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4e5ce1c_eba7ca26",
+      "range": {
+        "startLine": 38,
+        "startChar": 59,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "97ae6e59bca11d87a64e4d6484baf4aa11674bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

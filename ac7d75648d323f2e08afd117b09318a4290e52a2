@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "7b60a8d5_f4441e99",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:30:40Z",
+      "side": 0,
+      "message": "I see what you mean - thanks for the explanation.  I think your proposal 1) would detect duplicates that are present both in |origins_to_add| and in the old |isolated_origins_|, but 2) wouldn\u0027t detect duplicates present within |origins_to_add|.  Maybe case #1 is more important (but then note that after the follow-up CL we will only call AddIsolatedOrigins once so there will be no case #1 anymore - https://chromium-review.googlesource.com/c/chromium/src/+/794303).",
+      "parentUuid": "c8d9959b_a0ec3a29",
+      "range": {
+        "startLine": 1155,
+        "startChar": 4,
+        "endLine": 1155,
+        "endChar": 79
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1a2e76a_386efbeb",
         "filename": "content/browser/child_process_security_policy_impl.cc",
         "patchSetId": 7

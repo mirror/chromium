@@ -191,6 +191,29 @@
     },
     {
       "key": {
+        "uuid": "474e4e86_db23c399",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:30:40Z",
+      "side": 1,
+      "message": "So far we\u0027ve gathered 250+ origins that we might want to isolate during the planned field trials.  I guess looping over them here is not a great performance risk, but then this blocks browser startup.\n\nOTOH, I am not sure if we want to do something about it (later):\n\n- Option #1: Postpone validation until after the rush hour (until after the browser has started up).\n\n- Option #2: Don\u0027t do the validation\n\n- Option #3: Don\u0027t change anything",
+      "range": {
+        "startLine": 1150,
+        "startChar": 0,
+        "endLine": 1151,
+        "endChar": 61
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00ce2182_801ec479",
         "filename": "content/browser/child_process_security_policy_impl.cc",
         "patchSetId": 7
