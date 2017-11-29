@@ -63,6 +63,20 @@ enum StreamFormat {
   STREAM_FORMAT_MAX = 4,
 };
 
+std::string GetDeviceName(std::string real_name,
+                          const std::string& device_id,
+                          const std::string& real_default_device_id,
+                          const std::string& real_communications_device_id) {
+  std::string device_name = std::move(real_name);
+  if (device_id == real_default_device_id)
+    device_name = AudioDeviceDescription::GetDefaultDeviceName(device_name);
+  else if (device_id == real_communications_device_id)
+    device_name =
+        AudioDeviceDescription::GetCommunicationsDeviceName(device_name);
+
+  return device_name;
+}
+
 }  // namespace
 
 struct AudioManagerBase::DispatcherParams {
@@ -126,10 +140,14 @@ void AudioManagerBase::GetAudioInputDeviceDescriptions(
   CHECK(GetTaskRunner()->BelongsToCurrentThread());
   AudioDeviceNames device_names;
   GetAudioInputDeviceNames(&device_names);
+  std::string real_default_device_id = GetDefaultInputDeviceID();
+  std::string real_communications_device_id = GetCommunicationsInputDeviceID();
 
   for (const media::AudioDeviceName& name : device_names) {
-    device_descriptions->emplace_back(name.device_name, name.unique_id,
-                                      GetGroupIDInput(name.unique_id));
+    device_descriptions->emplace_back(
+        GetDeviceName(std::move(name.device_name), name.unique_id,
+                      real_default_device_id, real_communications_device_id),
+        name.unique_id, GetGroupIDInput(name.unique_id));
   }
 }
 
@@ -138,10 +156,14 @@ void AudioManagerBase::GetAudioOutputDeviceDescriptions(
   CHECK(GetTaskRunner()->BelongsToCurrentThread());
   AudioDeviceNames device_names;
   GetAudioOutputDeviceNames(&device_names);
+  std::string real_default_device_id = GetDefaultOutputDeviceID();
+  std::string real_communications_device_id = GetCommunicationsOutputDeviceID();
 
   for (const media::AudioDeviceName& name : device_names) {
-    device_descriptions->emplace_back(name.device_name, name.unique_id,
-                                      GetGroupIDOutput(name.unique_id));
+    device_descriptions->emplace_back(
+        GetDeviceName(std::move(name.device_name), name.unique_id,
+                      real_default_device_id, real_communications_device_id),
+        name.unique_id, GetGroupIDOutput(name.unique_id));
   }
 }
 
@@ -481,7 +503,19 @@ std::string AudioManagerBase::GetGroupIDInput(
   return GetGroupIDOutput(output_device_id);
 }
 
+std::string AudioManagerBase::GetDefaultInputDeviceID() {
+  return "";
+}
+
 std::string AudioManagerBase::GetDefaultOutputDeviceID() {
+  return "";
+}
+
+std::string AudioManagerBase::GetCommunicationsInputDeviceID() {
+  return "";
+}
+
+std::string AudioManagerBase::GetCommunicationsOutputDeviceID() {
   return "";
 }
 
