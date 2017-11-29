@@ -56,6 +56,7 @@
 - (void)setBackgroundToIncognitoNTPColorWithAlpha:(CGFloat)alpha;
 // Briefly animate the progress bar when a pre-rendered tab is displayed.
 - (void)showPrerenderingAnimation;
+- (CGRect)visibleOmniboxFrame;
 
 @end
 
