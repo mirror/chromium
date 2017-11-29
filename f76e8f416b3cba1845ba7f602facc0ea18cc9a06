@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c79dabe_73f2dc2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-29T16:34:53Z",
+      "side": 1,
+      "message": "This is all starting to get rather complicated.\n\nI suggest:\n\n1. Extract out a method for webApkTargetsAtLeastO()\n\n2. Change the API of NotificationBuilderBase to have a setChannelId method rather than taking a channel id in the constructor, given one is not always necessary.\n\n3. Have a shouldSetChannelId method that checks if the user is on O, or it\u0027s for a web apk and that web apk targets O.\n\nSo you end up with something like:\n\n  NotificationBuilderBase builder \u003d createNotificationBuilder(..);\n\n  if (shouldSetChannelId()) {\n    builder.setChannelId(...); // logic to set correct channel id\n  }\n\nDoes that make sense?\n\nSorry for asking you to change NotificationBuilderBase but I think it would make it a lot clearer what\u0027s going on. Feel free to push back if this change is urgent, and we can perhaps do it in a followup.",
+      "range": {
+        "startLine": 586,
+        "startChar": 0,
+        "endLine": 586,
+        "endChar": 49
+      },
+      "revId": "f76e8f416b3cba1845ba7f602facc0ea18cc9a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07acbda_6ddf1998",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 12
+      },
+      "lineNbr": 3013,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-29T16:34:53Z",
+      "side": 1,
+      "message": "s/visable/visible",
+      "revId": "f76e8f416b3cba1845ba7f602facc0ea18cc9a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
