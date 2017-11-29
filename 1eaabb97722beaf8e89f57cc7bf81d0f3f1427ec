@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a38b019_858d1404",
+        "filename": "cc/trees/layer_tree_frame_sink.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-29T20:16:08Z",
+      "side": 1,
+      "message": "We\u0027d need to do this for multiple implementations of LayerTreeFrameSink: ClientLTFS, SynchronousLTFS, and TestLTFS. And also perform casts in RenderThreadImpl (at least for TestLTFS).",
+      "parentUuid": "07f99058_2f47c4d9",
+      "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee2d385f_80be07e3",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T17:06:51Z",
       "side": 1,
       "message": "nit: this is more general than we need. You could give the RTI* instead and have it call the method directly? That\u0027s easier to follow than Callbacks.",
+      "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffa112d_83244e6c",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-29T20:16:08Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "ee2d385f_80be07e3",
       "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a3c98e9f_f91897af",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-29T20:16:08Z",
+      "side": 1,
+      "message": "Client would need to be weak-ptr\u0027d if we post directly to it from the main thread. We\u0027d also need a lock for the accessing the client on the main thread because BindToClient happens on the compositor thread.",
+      "parentUuid": "4009428d_4a0cc179",
+      "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09fd24bd_6828e710",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-29T17:06:51Z",
       "side": 1,
       "message": "Does this bool do anything for us that checking the status doesnt?",
+      "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56a0aaf_243d7280",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2481,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-29T20:16:08Z",
+      "side": 1,
+      "message": "We can check the bool without taking the lock. It may be out of date, so we might create an LTFS with a lost worker context whose context lost callback hasn\u0027t run yet, only to destroy it shortly after. piman@ WDYT about removing the status check and lock?",
+      "parentUuid": "09fd24bd_6828e710",
       "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "dc9290d7_a80d9383",
+        "filename": "content/renderer/render_thread_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-29T20:16:08Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "3ad8e938_a2699548",
+      "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85f18dfa_6fc35347",
         "filename": "content/renderer/render_thread_impl.h",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-29T17:06:51Z",
       "side": 1,
       "message": "nit: no blank lines in between every line esp when they logically belong together like this",
+      "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d624960f_8b58d61a",
+        "filename": "content/renderer/render_thread_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-29T20:16:08Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "85f18dfa_6fc35347",
       "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
