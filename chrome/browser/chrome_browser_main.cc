@@ -189,6 +189,7 @@
 #include "ui/base/resource/resource_bundle_android.h"
 #else
 #include "chrome/browser/feedback/feedback_profile_observer.h"
+#include "chrome/browser/ui/tabs/tab_activity_watcher.h"
 #endif  // defined(OS_ANDROID)
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
@@ -1364,6 +1365,10 @@ void ChromeBrowserMainParts::PostBrowserStart() {
         FROM_HERE, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
         base::BindOnce(&WebUsbDetector::Initialize,
                        base::Unretained(web_usb_detector_.get())));
+  }
+  if (base::FeatureList::IsEnabled(features::kTabMetricsLogging)) {
+    // Initialize the TabActivityWatcher to begin logging tab activity events.
+    TabActivityWatcher::GetInstance();
   }
 #endif
 
