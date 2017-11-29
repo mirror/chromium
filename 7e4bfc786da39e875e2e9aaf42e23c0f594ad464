@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79267eab_4f5f72d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-29T20:38:04Z",
+      "side": 1,
+      "message": "this link is ridiculously long and it doesn\u0027t work for me anyway, but I assume it\u0027s some attachment on the linked bug, so can we just remove it from the CL desc and assume it\u0027s discoverable enough?",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 587
+      },
+      "revId": "7e4bfc786da39e875e2e9aaf42e23c0f594ad464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
