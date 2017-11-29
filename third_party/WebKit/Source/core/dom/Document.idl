@@ -94,9 +94,9 @@ typedef (HTMLScriptElement or SVGScriptElement) HTMLOrSVGScriptElement;
     // resource metadata management
 
     [PutForwards=href, Unforgeable] readonly attribute Location? location;
-    [RaisesException=Setter] attribute DOMString domain;
-    readonly attribute DOMString referrer;
-    [RaisesException, RuntimeCallStatsCounter=DocumentCookie] attribute DOMString cookie;
+    [RaisesException=Setter] attribute USVString domain;
+    readonly attribute USVString referrer;
+    [RaisesException, RuntimeCallStatsCounter=DocumentCookie] attribute USVString cookie;
     readonly attribute DOMString lastModified;
     readonly attribute DocumentReadyState readyState;
 
