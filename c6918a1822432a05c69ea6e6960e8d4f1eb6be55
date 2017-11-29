@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "1864cb34_b8adc87e",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T15:34:33Z",
+      "side": 1,
+      "message": "It\u0027d be good to add additional context to this, perhaps as it works its way back through the recursive call stack. Otherwise, you could wind up with\n\n  \"expected PASS to be a dict\"\n\nwith no other context.",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d145c4a3_9dec632c",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 13
@@ -54,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "cd26a780_cedf22b0",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T15:34:33Z",
+      "side": 1,
+      "message": "A lot of the things in //build/android are either not specific to android, not related to the build, or both. Parts of it, along with parts of catapult, have evolved toward \"generic python stuff\" (e.g. https://codesearch.chromium.org/chromium/src/build/android/pylib/utils/decorators.py or https://codesearch.chromium.org/chromium/src/third_party/catapult/common/py_utils/py_utils/tempfile_ext.py). To my knowledge, there isn\u0027t a great home for such code in chromium/src.\n\nIIRC, google_storage_helper predates //third_party/depot_tools. At this point, I\u0027d use that here.",
+      "parentUuid": "da656c68_c1371c15",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29ef05ae_aadc9691",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 13
@@ -65,6 +100,131 @@
       "writtenOn": "2017-11-21T01:38:56Z",
       "side": 1,
       "message": "ick, don\u0027t use the same variable name, that\u0027s confusing :). Maybe change the function parameter to `local_data` or something?",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbcd9041_e48fee1b",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T15:34:33Z",
+      "side": 1,
+      "message": "Consider using https://codesearch.chromium.org/chromium/src/third_party/catapult/common/py_utils/py_utils/tempfile_ext.py?rcl\u003dcbba42a8e6eb4e5f35b02a1e1611e515e7f5013f\u0026l\u003d12 ?",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de307ebc_c06c8ef8",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T15:34:33Z",
+      "side": 1,
+      "message": "nit: maybe drop this onto its own line for easier scanning given the multiple function calls in the preceding param.",
+      "range": {
+        "startLine": 135,
+        "startChar": 49,
+        "endLine": 135,
+        "endChar": 73
+      },
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe7bd45_20ec3bef",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T15:34:33Z",
+      "side": 1,
+      "message": "nit: os.path.join(tempdir, \u0027*\u0027)?",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2561ea1_9d2f250f",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T15:34:33Z",
+      "side": 1,
+      "message": "Same os.path.realpath comment as below.",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a26841_c7dec3bb",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T15:34:33Z",
+      "side": 1,
+      "message": "type\u003dos.path.realpath will ensure that this is absolute and that symlinks are resolved.",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d219e13d_3e435f57",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T15:34:33Z",
+      "side": 1,
+      "message": "Is this really not an error? Are we actually ok w/ calling this w/ test results files that don\u0027t have artifact_type_info?",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c297721d_5539775e",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T15:34:33Z",
+      "side": 1,
+      "message": "args.dry_run",
       "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
