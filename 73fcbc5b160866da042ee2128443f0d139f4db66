@@ -22,6 +22,30 @@
       "revId": "73fcbc5b160866da042ee2128443f0d139f4db66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de8997e_b04778ab",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-29T17:22:47Z",
+      "side": 1,
+      "message": "You are right, and that\u0027s a valid point. I spent a bunch of time yesterday trying to figure this out with no luck. I created a new project and was unable to reproduce the problem there, so it might be related to something we\u0027re doing somewhere in the Chrome Cocoa code.\n\nI will take a fresh look at it today, but I\u0027m concerned about spending hours and hours on this.",
+      "parentUuid": "b7a45cde_a70e8611",
+      "range": {
+        "startLine": 329,
+        "startChar": 59,
+        "endLine": 329,
+        "endChar": 74
+      },
+      "revId": "73fcbc5b160866da042ee2128443f0d139f4db66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
