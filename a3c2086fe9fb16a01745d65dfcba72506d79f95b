@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d31c6b0e_06ccd6cc",
+        "filename": "ios/chrome/browser/tabs/tab_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-29T20:54:42Z",
+      "side": 1,
+      "message": "We can add a tab_model+private.h header, or define this initializer in tab_model.mm and redefine it in tab_model_unittest.mm. I slightly prefer the former. WDYT?",
+      "parentUuid": "e606857e_e169f09a",
+      "range": {
+        "startLine": 130,
+        "startChar": 25,
+        "endLine": 130,
+        "endChar": 37
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c10d5d99_06bc561d",
         "filename": "ios/chrome/browser/tabs/tab_model.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-29T19:14:40Z",
       "side": 1,
       "message": "In Objective-C the dependencies are normally injected via initializer or delegate. Do we need this factory? Would it be better to create TabModelDelegate?",
+      "range": {
+        "startLine": 136,
+        "startChar": 22,
+        "endLine": 136,
+        "endChar": 37
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7f3c11_55184945",
+        "filename": "ios/chrome/browser/tabs/tab_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-29T20:54:42Z",
+      "side": 1,
+      "message": "Injecting via initializer is not a good fit because tab_model may create multiple web states based on data in the SessionWindowIOS. I added the factory to group the two related factory methods, Create and CreateFromSession, which are both used in TabModel.\n\nIf delegate, is it just a matter of remaining webStateFactory to tabModelDelegate and move the definition into ios/chrome? I\u0027d imagine we want to expose exactly the same interface: i.e. Create and CreateFromSession.",
+      "parentUuid": "c10d5d99_06bc561d",
       "range": {
         "startLine": 136,
         "startChar": 22,
@@ -128,6 +176,30 @@
       "writtenOn": "2017-11-29T19:14:40Z",
       "side": 1,
       "message": "I don\u0027t think this should be a part of public web API. If ios/chrome needs a class for dependency injections, then that class should live in ios/chrome.",
+      "range": {
+        "startLine": 339,
+        "startChar": 6,
+        "endLine": 339,
+        "endChar": 29
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca016f5a_c084a5a1",
+        "filename": "ios/web/public/web_state/web_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-29T20:54:42Z",
+      "side": 1,
+      "message": "The reason why I put it here is so that all clients of //ios/web has a common pattern for creating WebStates. I don\u0027t feel strongly. Will move once we clarify the delegate decision.",
+      "parentUuid": "750aeb75_077e8dab",
       "range": {
         "startLine": 339,
         "startChar": 6,

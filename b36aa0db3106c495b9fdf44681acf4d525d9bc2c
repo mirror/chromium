@@ -16,6 +16,24 @@
       "revId": "b36aa0db3106c495b9fdf44681acf4d525d9bc2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b73dcd_710bb35b",
+        "filename": "ios/chrome/browser/snapshots/web_controller_snapshot_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-29T20:54:42Z",
+      "side": 0,
+      "message": "We can, if I can figure out a way to inject CRWWebController into TestWebState. [tab webController] assumes that the web state in tab is WebStateImpl. This is not the case in tests after this change. TabModelTest doesn\u0027t actually exercise anything in snapshotManager even though it initializes it.\n\nWhat about moving this DCHECK to the methods below that actually use web controller?",
+      "parentUuid": "e4aec616_d4d5b873",
+      "revId": "b36aa0db3106c495b9fdf44681acf4d525d9bc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
