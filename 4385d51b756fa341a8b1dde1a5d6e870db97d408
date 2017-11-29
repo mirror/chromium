@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "288d6be5_85175f57",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-29T21:34:39Z",
+      "side": 1,
+      "message": "unit_tests will pass a nullptr here. We could change DeviceDescriptionService not to create the SafeDialDeviceDescriptionParser, but I think it would make things more complicated with no clear benefits.",
+      "parentUuid": "0e9d4fcd_df936b72",
+      "revId": "4385d51b756fa341a8b1dde1a5d6e870db97d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3780ec9e_fac531f7",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "4385d51b756fa341a8b1dde1a5d6e870db97d408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08fef4cb_22eb1ee9",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-29T21:34:39Z",
+      "side": 1,
+      "message": "Very good point. I made the SafeXmlParser callback a class method and it is now bound it with a WeakPtr. I also removed the WeakPtr from DeviceDescriptionService.",
+      "parentUuid": "3780ec9e_fac531f7",
+      "revId": "4385d51b756fa341a8b1dde1a5d6e870db97d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
