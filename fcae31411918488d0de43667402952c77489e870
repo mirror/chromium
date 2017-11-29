@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eacd27c7_77275cbb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-29T05:04:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62b69c4d_b23f4bee",
+      "revId": "fcae31411918488d0de43667402952c77489e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3e5b244_a93fdfb5",
         "filename": "chrome/app/nibs/MainMenu.xib",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "fcae31411918488d0de43667402952c77489e870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7ee9a5_62bf3922",
+        "filename": "chrome/app/nibs/MainMenu.xib",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-29T05:04:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77fea1c6_62335cce",
+      "revId": "fcae31411918488d0de43667402952c77489e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
