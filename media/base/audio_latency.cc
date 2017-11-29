@@ -131,24 +131,9 @@ int AudioLatency::GetRtcBufferSize(int sample_rate, int hardware_buffer_size) {
 // static
 int AudioLatency::GetInteractiveBufferSize(int hardware_buffer_size) {
 #if defined(OS_ANDROID)
-  // The optimum low-latency hardware buffer size is usually too small on
-  // Android for WebAudio to render without glitching. So, if it is small, use
-  // a larger size.
-  //
-  // Since WebAudio renders in 128-frame blocks, the small buffer sizes (144 for
-  // a Galaxy Nexus), cause significant processing jitter. Sometimes multiple
-  // blocks will processed, but other times will not be since the WebAudio can't
-  // satisfy the request. By using a larger render buffer size, we smooth out
-  // the jitter.
-  const int kSmallBufferSize = 1024;
-  const int kDefaultCallbackBufferSize = 2048;
-
+  // Always log this because it's relatively hard to get this
+  // information out.
   LOG(INFO) << "audioHardwareBufferSize = " << hardware_buffer_size;
-
-  if (hardware_buffer_size <= kSmallBufferSize)
-    hardware_buffer_size = kDefaultCallbackBufferSize;
-
-  LOG(INFO) << "callbackBufferSize      = " << hardware_buffer_size;
 #endif
 
   return hardware_buffer_size;
@@ -159,8 +144,8 @@ int AudioLatency::GetExactBufferSize(base::TimeDelta duration,
                                      int hardware_buffer_size) {
   DCHECK_NE(0, hardware_buffer_size);
 
-// Other platforms do not currently support custom buffer sizes.
-#if !defined(OS_MACOSX) && !defined(USE_CRAS)
+#if !(defined(OS_MACOSX) || defined(OS_ANDROID) || defined(OS_LINUX) || \
+      defined(OS_WIN) || defined(USE_CRAS))
   return hardware_buffer_size;
 #else
   const double requested_buffer_size = duration.InSecondsF() * sample_rate;
@@ -171,8 +156,10 @@ int AudioLatency::GetExactBufferSize(base::TimeDelta duration,
 #if defined(OS_MACOSX)
   minimum_buffer_size =
       GetMinAudioBufferSizeMacOS(limits::kMinAudioBufferSize, sample_rate);
-#elif defined(USE_CRAS)
+#elif defined(USE_CRAS) || defined(OS_ANDROID) || defined(OS_LINUX)
   minimum_buffer_size = limits::kMinAudioBufferSize;
+#elif defined(OS_WIN)
+  minimum_buffer_size = hardware_buffer_size;
 #endif
 
   // Round the requested size to the nearest multiple of the hardware size
