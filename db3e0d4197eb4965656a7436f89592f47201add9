@@ -50,6 +50,24 @@
       "revId": "db3e0d4197eb4965656a7436f89592f47201add9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccbb68f_6a1cd034",
+        "filename": "third_party/WebKit/Source/platform/graphics/RecordingImageBufferSurface.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-29T14:26:20Z",
+      "side": 1,
+      "message": "It won\u0027t build if I don\u0027t do this (unhandled enum value in switch/case is a compiler error)",
+      "parentUuid": "5969fee0_39991b79",
+      "revId": "db3e0d4197eb4965656a7436f89592f47201add9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
