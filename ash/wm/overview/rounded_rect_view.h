@@ -22,6 +22,8 @@ class RoundedRectView : public views::View {
   RoundedRectView(int corner_radius, SkColor background);
   ~RoundedRectView() override;
 
+  void set_background(SkColor background) { background_ = background; }
+
   // views::View:
   void OnPaint(gfx::Canvas* canvas) override;
 
