@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2d40a03_eb27ffcf",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-29T19:51:18Z",
+      "side": 1,
+      "message": "Got reversed during a merge. Thanks for catching.",
+      "parentUuid": "d7780a86_304222a3",
+      "revId": "52cb8aceb812a60613613dcafb1765f0a6143bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae39e2cc_cfd1b19b",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "52cb8aceb812a60613613dcafb1765f0a6143bb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8902f70f_af684619",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-29T19:51:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae39e2cc_cfd1b19b",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 38
+      },
+      "revId": "52cb8aceb812a60613613dcafb1765f0a6143bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d49ae901_bb9e44a4",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-29T19:51:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40ba6b2f_1f1eec33",
+      "range": {
+        "startLine": 473,
+        "startChar": 0,
+        "endLine": 479,
+        "endChar": 3
+      },
+      "revId": "52cb8aceb812a60613613dcafb1765f0a6143bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98f85998_18afc472",
         "filename": "device/u2f/BUILD.gn",
         "patchSetId": 8
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "d9c2337e_0fbe00ff",
+        "filename": "device/u2f/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-29T19:51:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98f85998_18afc472",
+      "revId": "52cb8aceb812a60613613dcafb1765f0a6143bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "240cef3d_cb0880bf",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerTypeConverters.cpp",
         "patchSetId": 8
@@ -93,6 +177,24 @@
       "writtenOn": "2017-11-29T18:59:56Z",
       "side": 1,
       "message": "Could we remove blink::WebCredentialManagerError in favor of webauth::mojom::blink::AuthenticatorStatus?",
+      "revId": "52cb8aceb812a60613613dcafb1765f0a6143bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b055ebe2_6385ac72",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerTypeConverters.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-29T19:51:18Z",
+      "side": 1,
+      "message": "CredMan and WebAuth share WebCredentialManagerError conditions that dictate what DOMExceptions are returned by the renderer, but AuthenticatorStatus doesn\u0027t map 1:1 to the error conditions that CredMan handles.",
+      "parentUuid": "240cef3d_cb0880bf",
       "revId": "52cb8aceb812a60613613dcafb1765f0a6143bb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
