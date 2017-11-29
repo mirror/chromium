@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16ab0521_10866a1b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-29T18:37:01Z",
+      "side": 1,
+      "message": "I\u0027ve moved this code into LocalFrameView, which I think will alleviate the problem.",
+      "parentUuid": "f43ceead_9c9eff3d",
+      "revId": "9cc51f5d238bd5c2253788be0974790911a46918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "564b4af7_b9cad9db",
         "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "9cc51f5d238bd5c2253788be0974790911a46918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bcc31e_50d25ad4",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-29T18:37:01Z",
+      "side": 1,
+      "message": "This has all changed, as we now track dirtiness per LocalFrameView.",
+      "parentUuid": "564b4af7_b9cad9db",
+      "revId": "9cc51f5d238bd5c2253788be0974790911a46918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
