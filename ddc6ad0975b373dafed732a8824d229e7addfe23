@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5fcac49_3955e480",
+        "filename": "chrome/android/webapk/shell_apk/shell_apk_version.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-29T15:43:34Z",
+      "side": 1,
+      "message": "Hmm, I have an alternative proposal. Rather than building from source, we commit a generated instance of the runtime library. Then we can go back to not revving the shell every time the runtime library chanegs",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "ddc6ad0975b373dafed732a8824d229e7addfe23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
