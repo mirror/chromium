@@ -76,7 +76,7 @@ const DomainConstants* GetDomainConstantsForType(const std::string& type) {
 
 }  // namespace
 
-ComponentCloudPolicyStore::Delegate::~Delegate() {}
+ComponentCloudPolicyStore::Delegate::~Delegate() = default;
 
 ComponentCloudPolicyStore::ComponentCloudPolicyStore(Delegate* delegate,
                                                      ResourceCache* cache)

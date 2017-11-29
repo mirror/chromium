@@ -77,8 +77,7 @@ DownloadDatabase::DownloadDatabase(
       download_interrupt_reason_crash_(download_interrupt_reason_crash) {
 }
 
-DownloadDatabase::~DownloadDatabase() {
-}
+DownloadDatabase::~DownloadDatabase() = default;
 
 bool DownloadDatabase::EnsureColumnExists(const std::string& name,
                                           const std::string& type) {

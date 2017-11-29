@@ -9,7 +9,7 @@
 
 namespace policy {
 
-PolicyBundle::PolicyBundle() {}
+PolicyBundle::PolicyBundle() = default;
 
 PolicyBundle::~PolicyBundle() {
   Clear();

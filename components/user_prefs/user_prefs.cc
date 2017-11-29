@@ -41,7 +41,6 @@ void UserPrefs::Set(base::SupportsUserData* context, PrefService* prefs) {
 UserPrefs::UserPrefs(PrefService* prefs) : prefs_(prefs) {
 }
 
-UserPrefs::~UserPrefs() {
-}
+UserPrefs::~UserPrefs() = default;
 
 }  // namespace user_prefs

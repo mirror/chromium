@@ -32,8 +32,7 @@ DataReductionProxyInterceptor::DataReductionProxyInterceptor(
   DCHECK(event_creator_);
 }
 
-DataReductionProxyInterceptor::~DataReductionProxyInterceptor() {
-}
+DataReductionProxyInterceptor::~DataReductionProxyInterceptor() = default;
 
 net::URLRequestJob* DataReductionProxyInterceptor::MaybeInterceptRequest(
     net::URLRequest* request,

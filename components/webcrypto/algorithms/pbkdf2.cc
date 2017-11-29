@@ -26,7 +26,7 @@ const blink::WebCryptoKeyUsageMask kAllKeyUsages =
 
 class Pbkdf2Implementation : public AlgorithmImplementation {
  public:
-  Pbkdf2Implementation() {}
+  Pbkdf2Implementation() = default;
 
   Status ImportKey(blink::WebCryptoKeyFormat format,
                    const CryptoData& key_data,

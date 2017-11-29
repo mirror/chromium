@@ -28,8 +28,7 @@ RendererDnsPrefetch::RendererDnsPrefetch()
   Reset();
 }
 
-RendererDnsPrefetch::~RendererDnsPrefetch() {
-}
+RendererDnsPrefetch::~RendererDnsPrefetch() = default;
 
 void RendererDnsPrefetch::Reset() {
   domain_map_.clear();

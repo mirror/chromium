@@ -23,12 +23,12 @@ ModelTypeSet GetTypesFromErrorMap(
 
 }  // namespace
 
-DataTypeStatusTable::DataTypeStatusTable() {}
+DataTypeStatusTable::DataTypeStatusTable() = default;
 
 DataTypeStatusTable::DataTypeStatusTable(const DataTypeStatusTable& other) =
     default;
 
-DataTypeStatusTable::~DataTypeStatusTable() {}
+DataTypeStatusTable::~DataTypeStatusTable() = default;
 
 void DataTypeStatusTable::UpdateFailedDataTypes(const TypeErrorMap& errors) {
   DVLOG(1) << "Setting " << errors.size() << " new failed types.";

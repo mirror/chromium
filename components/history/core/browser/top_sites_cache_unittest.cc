@@ -24,8 +24,7 @@ namespace {
 
 class TopSitesCacheTest : public testing::Test {
  public:
-  TopSitesCacheTest() {
-  }
+  TopSitesCacheTest() = default;
 
  protected:
   // Initializes |top_sites_| on |spec|, which is a list of URL strings with

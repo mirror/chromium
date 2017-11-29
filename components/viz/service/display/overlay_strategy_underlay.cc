@@ -16,7 +16,7 @@ OverlayStrategyUnderlay::OverlayStrategyUnderlay(
   DCHECK(capability_checker);
 }
 
-OverlayStrategyUnderlay::~OverlayStrategyUnderlay() {}
+OverlayStrategyUnderlay::~OverlayStrategyUnderlay() = default;
 
 bool OverlayStrategyUnderlay::Attempt(
     cc::DisplayResourceProvider* resource_provider,

@@ -6,7 +6,6 @@
 
 namespace web_modal {
 
-WebContentsModalDialogHost::~WebContentsModalDialogHost() {
-}
+WebContentsModalDialogHost::~WebContentsModalDialogHost() = default;
 
 }  // namespace web_modal

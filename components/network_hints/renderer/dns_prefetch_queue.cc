@@ -20,8 +20,7 @@ DnsQueue::DnsQueue(BufferSize size)
   readable_ = writeable_ = 0;  // Buffer starts empty.
 }
 
-DnsQueue::~DnsQueue(void) {
-}
+DnsQueue::~DnsQueue(void) = default;
 
 void DnsQueue::Clear() {
   size_ = 0;

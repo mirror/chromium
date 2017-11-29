@@ -65,8 +65,8 @@ struct SyntheticForm {
   DISALLOW_COPY_AND_ASSIGN(SyntheticForm);
 };
 
-SyntheticForm::SyntheticForm() {}
-SyntheticForm::~SyntheticForm() {}
+SyntheticForm::SyntheticForm() = default;
+SyntheticForm::~SyntheticForm() = default;
 
 // Layout classification of password forms
 // A layout sequence of a form is the sequence of it's non-password and password

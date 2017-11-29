@@ -42,8 +42,8 @@ BrowserContextKeyedServiceFactory::BrowserContextKeyedServiceFactory(
     : KeyedServiceFactory(name, manager) {
 }
 
-BrowserContextKeyedServiceFactory::~BrowserContextKeyedServiceFactory() {
-}
+BrowserContextKeyedServiceFactory::~BrowserContextKeyedServiceFactory() =
+    default;
 
 KeyedService* BrowserContextKeyedServiceFactory::GetServiceForBrowserContext(
     content::BrowserContext* context,

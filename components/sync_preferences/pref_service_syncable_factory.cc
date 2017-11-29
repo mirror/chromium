@@ -21,9 +21,9 @@
 
 namespace sync_preferences {
 
-PrefServiceSyncableFactory::PrefServiceSyncableFactory() {}
+PrefServiceSyncableFactory::PrefServiceSyncableFactory() = default;
 
-PrefServiceSyncableFactory::~PrefServiceSyncableFactory() {}
+PrefServiceSyncableFactory::~PrefServiceSyncableFactory() = default;
 
 void PrefServiceSyncableFactory::SetManagedPolicies(
     policy::PolicyService* service,

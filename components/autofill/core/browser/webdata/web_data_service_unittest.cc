@@ -51,7 +51,7 @@ template <class T>
 class AutofillWebDataServiceConsumer: public WebDataServiceConsumer {
  public:
   AutofillWebDataServiceConsumer() : handle_(0) {}
-  virtual ~AutofillWebDataServiceConsumer() {}
+  virtual ~AutofillWebDataServiceConsumer() = default;
 
   virtual void OnWebDataServiceRequestDone(
       WebDataServiceBase::Handle handle,

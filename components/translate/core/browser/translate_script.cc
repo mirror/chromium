@@ -56,8 +56,7 @@ TranslateScript::TranslateScript()
       weak_method_factory_(this) {
 }
 
-TranslateScript::~TranslateScript() {
-}
+TranslateScript::~TranslateScript() = default;
 
 void TranslateScript::Request(const RequestCallback& callback) {
   script_fetch_start_time_ = base::Time::Now().ToJsTime();

@@ -108,14 +108,14 @@ ConfigurationParams::ConfigurationParams(
 }
 ConfigurationParams::ConfigurationParams(const ConfigurationParams& other) =
     default;
-ConfigurationParams::~ConfigurationParams() {}
+ConfigurationParams::~ConfigurationParams() = default;
 
 ClearParams::ClearParams(const base::Closure& report_success_task)
     : report_success_task(report_success_task) {
   DCHECK(!report_success_task.is_null());
 }
 ClearParams::ClearParams(const ClearParams& other) = default;
-ClearParams::~ClearParams() {}
+ClearParams::~ClearParams() = default;
 
 // Helper macros to log with the syncer thread name; useful when there
 // are multiple syncer threads involved.

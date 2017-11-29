@@ -79,8 +79,7 @@ class TestChangeProcessor : public syncer::SyncChangeProcessor {
 TestChangeProcessor::TestChangeProcessor() : erroneous_(false) {
 }
 
-TestChangeProcessor::~TestChangeProcessor() {
-}
+TestChangeProcessor::~TestChangeProcessor() = default;
 
 syncer::SyncError TestChangeProcessor::ProcessSyncChanges(
     const base::Location& from_here,
@@ -259,7 +258,7 @@ int GetFaviconId(const syncer::SyncChange change) {
 class SyncFaviconCacheTest : public testing::Test {
  public:
   SyncFaviconCacheTest();
-  ~SyncFaviconCacheTest() override {}
+  ~SyncFaviconCacheTest() override = default;
 
   void SetUpInitialSync(const syncer::SyncDataList& initial_image_data,
                         const syncer::SyncDataList& initial_tracking_data);

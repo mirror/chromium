@@ -18,9 +18,9 @@
 
 namespace bookmarks {
 
-TestBookmarkClient::TestBookmarkClient() {}
+TestBookmarkClient::TestBookmarkClient() = default;
 
-TestBookmarkClient::~TestBookmarkClient() {}
+TestBookmarkClient::~TestBookmarkClient() = default;
 
 // static
 std::unique_ptr<BookmarkModel> TestBookmarkClient::CreateModel() {

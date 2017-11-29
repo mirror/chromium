@@ -63,8 +63,7 @@ GoogleURLTracker::GoogleURLTracker(
   }
 }
 
-GoogleURLTracker::~GoogleURLTracker() {
-}
+GoogleURLTracker::~GoogleURLTracker() = default;
 
 // static
 void GoogleURLTracker::RegisterProfilePrefs(

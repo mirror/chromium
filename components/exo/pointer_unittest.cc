@@ -30,7 +30,7 @@ using PointerTest = test::ExoTestBase;
 
 class MockPointerDelegate : public PointerDelegate {
  public:
-  MockPointerDelegate() {}
+  MockPointerDelegate() = default;
 
   // Overridden from PointerDelegate:
   MOCK_METHOD1(OnPointerDestroying, void(Pointer*));

@@ -135,7 +135,7 @@ bool BypassBlacklistWildcardForURL(const GURL& url) {
 
 struct URLBlacklist::FilterComponents {
   FilterComponents() : port(0), match_subdomains(true), allow(true) {}
-  ~FilterComponents() {}
+  ~FilterComponents() = default;
 
   // Returns true if |this| represents the "*" filter in the blacklist.
   bool IsBlacklistWildcard() const {
@@ -156,7 +156,7 @@ struct URLBlacklist::FilterComponents {
 
 URLBlacklist::URLBlacklist() : id_(0), url_matcher_(new URLMatcher) {}
 
-URLBlacklist::~URLBlacklist() {}
+URLBlacklist::~URLBlacklist() = default;
 
 void URLBlacklist::AddFilters(bool allow,
                               const base::ListValue* list) {
@@ -459,8 +459,7 @@ void URLBlacklistManager::ShutdownOnUIThread() {
   pref_change_registrar_.RemoveAll();
 }
 
-URLBlacklistManager::~URLBlacklistManager() {
-}
+URLBlacklistManager::~URLBlacklistManager() = default;
 
 void URLBlacklistManager::ScheduleUpdate() {
   DCHECK(ui_task_runner_->RunsTasksInCurrentSequence());

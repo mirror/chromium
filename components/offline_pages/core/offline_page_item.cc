@@ -69,7 +69,7 @@ OfflinePageItem::OfflinePageItem(const GURL& url,
 
 OfflinePageItem::OfflinePageItem(const OfflinePageItem& other) = default;
 
-OfflinePageItem::~OfflinePageItem() {}
+OfflinePageItem::~OfflinePageItem() = default;
 
 bool OfflinePageItem::operator==(const OfflinePageItem& other) const {
   return url == other.url && offline_id == other.offline_id &&

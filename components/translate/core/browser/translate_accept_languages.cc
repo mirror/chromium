@@ -32,8 +32,7 @@ TranslateAcceptLanguages::TranslateAcceptLanguages(
                  prefs));
 }
 
-TranslateAcceptLanguages::~TranslateAcceptLanguages() {
-}
+TranslateAcceptLanguages::~TranslateAcceptLanguages() = default;
 
 // static
 bool TranslateAcceptLanguages::CanBeAcceptLanguage(

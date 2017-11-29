@@ -33,7 +33,7 @@ class PaymentsClientTest : public testing::Test,
                            public PaymentsClientSaveDelegate {
  public:
   PaymentsClientTest() : result_(AutofillClient::NONE) {}
-  ~PaymentsClientTest() override {}
+  ~PaymentsClientTest() override = default;
 
   void SetUp() override {
     // Silence the warning for mismatching sync and Payments servers.

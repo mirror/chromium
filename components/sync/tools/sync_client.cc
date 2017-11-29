@@ -84,7 +84,7 @@ class MyTestURLRequestContext : public net::TestURLRequestContext {
     Init();
   }
 
-  ~MyTestURLRequestContext() override {}
+  ~MyTestURLRequestContext() override = default;
 };
 
 class MyTestURLRequestContextGetter : public net::TestURLRequestContextGetter {
@@ -102,7 +102,7 @@ class MyTestURLRequestContextGetter : public net::TestURLRequestContextGetter {
   }
 
  private:
-  ~MyTestURLRequestContextGetter() override {}
+  ~MyTestURLRequestContextGetter() override = default;
 
   std::unique_ptr<MyTestURLRequestContext> context_;
 };
@@ -110,7 +110,7 @@ class MyTestURLRequestContextGetter : public net::TestURLRequestContextGetter {
 // TODO(akalin): Use system encryptor once it's moved to sync/.
 class NullEncryptor : public Encryptor {
  public:
-  ~NullEncryptor() override {}
+  ~NullEncryptor() override = default;
 
   bool EncryptString(const std::string& plaintext,
                      std::string* ciphertext) override {
@@ -133,7 +133,7 @@ std::string ValueToString(const base::Value& value) {
 
 class LoggingChangeDelegate : public SyncManager::ChangeDelegate {
  public:
-  ~LoggingChangeDelegate() override {}
+  ~LoggingChangeDelegate() override = default;
 
   void OnChangesApplied(ModelType model_type,
                         int64_t model_version,
@@ -164,7 +164,7 @@ class LoggingChangeDelegate : public SyncManager::ChangeDelegate {
 
 class LoggingUnrecoverableErrorHandler : public UnrecoverableErrorHandler {
  public:
-  ~LoggingUnrecoverableErrorHandler() override {}
+  ~LoggingUnrecoverableErrorHandler() override = default;
 
   void OnUnrecoverableError(const base::Location& from_here,
                             const std::string& message) override {
@@ -181,7 +181,7 @@ class LoggingJsEventHandler
     : public JsEventHandler,
       public base::SupportsWeakPtr<LoggingJsEventHandler> {
  public:
-  ~LoggingJsEventHandler() override {}
+  ~LoggingJsEventHandler() override = default;
 
   void HandleJsEvent(const std::string& name,
                      const JsEventDetails& details) override {
@@ -193,7 +193,7 @@ class InvalidationAdapter : public InvalidationInterface {
  public:
   explicit InvalidationAdapter(const Invalidation& invalidation)
       : invalidation_(invalidation) {}
-  ~InvalidationAdapter() override {}
+  ~InvalidationAdapter() override = default;
 
   bool IsUnknownVersion() const override {
     return invalidation_.is_unknown_version();

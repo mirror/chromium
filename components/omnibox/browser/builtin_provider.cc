@@ -132,7 +132,7 @@ void BuiltinProvider::Start(const AutocompleteInput& input,
   }
 }
 
-BuiltinProvider::~BuiltinProvider() {}
+BuiltinProvider::~BuiltinProvider() = default;
 
 void BuiltinProvider::AddMatch(const base::string16& match_string,
                                const base::string16& inline_completion,

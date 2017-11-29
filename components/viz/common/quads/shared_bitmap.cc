@@ -21,7 +21,7 @@ SharedBitmap::SharedBitmap(uint8_t* pixels,
                            uint32_t sequence_number)
     : pixels_(pixels), id_(id), sequence_number_(sequence_number) {}
 
-SharedBitmap::~SharedBitmap() {}
+SharedBitmap::~SharedBitmap() = default;
 
 // static
 bool SharedBitmap::SizeInBytes(const gfx::Size& size, size_t* size_in_bytes) {

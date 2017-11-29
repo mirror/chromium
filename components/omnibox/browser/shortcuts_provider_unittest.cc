@@ -242,7 +242,7 @@ ClassifyTest::ClassifyTest(const base::string16& text,
                            ACMatchClassifications matches)
     : text_(text), text_is_query_(text_is_query), matches_(matches) {}
 
-ClassifyTest::~ClassifyTest() {}
+ClassifyTest::~ClassifyTest() = default;
 
 ACMatchClassifications ClassifyTest::RunTest(const base::string16& find_text) {
   return ShortcutsProvider::ClassifyAllMatchesInString(
@@ -270,7 +270,7 @@ class ShortcutsProviderTest : public testing::Test {
   scoped_refptr<ShortcutsProvider> provider_;
 };
 
-ShortcutsProviderTest::ShortcutsProviderTest() {}
+ShortcutsProviderTest::ShortcutsProviderTest() = default;
 
 void ShortcutsProviderTest::SetUp() {
   client_ = std::make_unique<AnonFakeAutocompleteProviderClient>();

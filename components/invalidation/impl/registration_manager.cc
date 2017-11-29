@@ -21,7 +21,8 @@
 
 namespace syncer {
 
-RegistrationManager::PendingRegistrationInfo::PendingRegistrationInfo() {}
+RegistrationManager::PendingRegistrationInfo::PendingRegistrationInfo() =
+    default;
 
 RegistrationManager::RegistrationStatus::RegistrationStatus(
     const invalidation::ObjectId& id, RegistrationManager* manager)
@@ -32,7 +33,7 @@ RegistrationManager::RegistrationStatus::RegistrationStatus(
   DCHECK(registration_manager);
 }
 
-RegistrationManager::RegistrationStatus::~RegistrationStatus() {}
+RegistrationManager::RegistrationStatus::~RegistrationStatus() = default;
 
 void RegistrationManager::RegistrationStatus::DoRegister() {
   CHECK(enabled);

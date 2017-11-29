@@ -6,17 +6,15 @@
 
 namespace metrics {
 
-WifiAccessPointInfoProvider::WifiAccessPointInfo::WifiAccessPointInfo() {
-}
+WifiAccessPointInfoProvider::WifiAccessPointInfo::WifiAccessPointInfo() =
+    default;
 
-WifiAccessPointInfoProvider::WifiAccessPointInfo::~WifiAccessPointInfo() {
-}
+WifiAccessPointInfoProvider::WifiAccessPointInfo::~WifiAccessPointInfo() =
+    default;
 
-WifiAccessPointInfoProvider::WifiAccessPointInfoProvider() {
-}
+WifiAccessPointInfoProvider::WifiAccessPointInfoProvider() = default;
 
-WifiAccessPointInfoProvider::~WifiAccessPointInfoProvider() {
-}
+WifiAccessPointInfoProvider::~WifiAccessPointInfoProvider() = default;
 
 bool WifiAccessPointInfoProvider::GetInfo(WifiAccessPointInfo *info) {
   return false;

@@ -38,9 +38,9 @@ class BookmarkExpandedStateTrackerTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(BookmarkExpandedStateTrackerTest);
 };
 
-BookmarkExpandedStateTrackerTest::BookmarkExpandedStateTrackerTest() {}
+BookmarkExpandedStateTrackerTest::BookmarkExpandedStateTrackerTest() = default;
 
-BookmarkExpandedStateTrackerTest::~BookmarkExpandedStateTrackerTest() {}
+BookmarkExpandedStateTrackerTest::~BookmarkExpandedStateTrackerTest() = default;
 
 void BookmarkExpandedStateTrackerTest::SetUp() {
   prefs_.registry()->RegisterListPref(prefs::kBookmarkEditorExpandedNodes,

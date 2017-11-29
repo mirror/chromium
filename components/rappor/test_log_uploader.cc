@@ -8,7 +8,7 @@ namespace rappor {
 
 TestLogUploader::TestLogUploader() : is_running_(false) {}
 
-TestLogUploader::~TestLogUploader() {}
+TestLogUploader::~TestLogUploader() = default;
 
 void TestLogUploader::Start() {
   is_running_ = true;

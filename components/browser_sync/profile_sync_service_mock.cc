@@ -16,7 +16,7 @@ ProfileSyncServiceMock::ProfileSyncServiceMock(InitParams init_params)
 ProfileSyncServiceMock::ProfileSyncServiceMock(InitParams* init_params)
     : ProfileSyncServiceMock(std::move(*init_params)) {}
 
-ProfileSyncServiceMock::~ProfileSyncServiceMock() {}
+ProfileSyncServiceMock::~ProfileSyncServiceMock() = default;
 
 sync_sessions::OpenTabsUIDelegate*
 ProfileSyncServiceMock::GetOpenTabsUIDelegate() {

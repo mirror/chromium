@@ -11,7 +11,7 @@ namespace ukm {
 SyncDisableObserver::SyncDisableObserver()
     : sync_observer_(this), all_profiles_enabled_(false) {}
 
-SyncDisableObserver::~SyncDisableObserver() {}
+SyncDisableObserver::~SyncDisableObserver() = default;
 
 // static
 SyncDisableObserver::SyncState SyncDisableObserver::GetSyncState(

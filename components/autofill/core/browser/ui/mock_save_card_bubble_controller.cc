@@ -6,9 +6,9 @@
 
 namespace autofill {
 
-MockSaveCardBubbleController::MockSaveCardBubbleController() {}
+MockSaveCardBubbleController::MockSaveCardBubbleController() = default;
 
-MockSaveCardBubbleController::~MockSaveCardBubbleController() {}
+MockSaveCardBubbleController::~MockSaveCardBubbleController() = default;
 
 base::string16 MockSaveCardBubbleController::GetCvcEnteredByUser() const {
   return cvc_entered_by_user_;

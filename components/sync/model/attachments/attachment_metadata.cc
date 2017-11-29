@@ -9,7 +9,7 @@ namespace syncer {
 AttachmentMetadata::AttachmentMetadata(const AttachmentId& id, size_t size)
     : id_(id), size_(size) {}
 
-AttachmentMetadata::~AttachmentMetadata() {}
+AttachmentMetadata::~AttachmentMetadata() = default;
 
 const AttachmentId& AttachmentMetadata::GetId() const {
   return id_;

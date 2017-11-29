@@ -87,8 +87,7 @@ DataReductionProxyRequestOptions::DataReductionProxyRequestOptions(
   util::GetChromiumBuildAndPatch(version, &build_, &patch_);
 }
 
-DataReductionProxyRequestOptions::~DataReductionProxyRequestOptions() {
-}
+DataReductionProxyRequestOptions::~DataReductionProxyRequestOptions() = default;
 
 void DataReductionProxyRequestOptions::Init() {
   DCHECK(thread_checker_.CalledOnValidThread());

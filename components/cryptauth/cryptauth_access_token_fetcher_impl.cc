@@ -26,8 +26,7 @@ CryptAuthAccessTokenFetcherImpl::CryptAuthAccessTokenFetcherImpl(
       fetch_started_(false) {
 }
 
-CryptAuthAccessTokenFetcherImpl::~CryptAuthAccessTokenFetcherImpl() {
-}
+CryptAuthAccessTokenFetcherImpl::~CryptAuthAccessTokenFetcherImpl() = default;
 
 void CryptAuthAccessTokenFetcherImpl::FetchAccessToken(
     const AccessTokenCallback& callback) {

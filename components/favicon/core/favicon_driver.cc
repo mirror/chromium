@@ -14,11 +14,9 @@ void FaviconDriver::RemoveObserver(FaviconDriverObserver* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
-FaviconDriver::FaviconDriver() {
-}
+FaviconDriver::FaviconDriver() = default;
 
-FaviconDriver::~FaviconDriver() {
-}
+FaviconDriver::~FaviconDriver() = default;
 
 void FaviconDriver::NotifyFaviconUpdatedObservers(
     FaviconDriverObserver::NotificationIconType notification_icon_type,

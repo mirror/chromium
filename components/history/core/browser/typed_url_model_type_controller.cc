@@ -61,7 +61,7 @@ TypedURLModelTypeController::TypedURLModelTypeController(
           base::AsWeakPtr(this)));
 }
 
-TypedURLModelTypeController::~TypedURLModelTypeController() {}
+TypedURLModelTypeController::~TypedURLModelTypeController() = default;
 
 bool TypedURLModelTypeController::ReadyForStart() const {
   return !sync_client()->GetPrefService()->GetBoolean(

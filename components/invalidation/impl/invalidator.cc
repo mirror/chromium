@@ -6,10 +6,8 @@
 
 namespace syncer {
 
-Invalidator::Invalidator() {
-}
+Invalidator::Invalidator() = default;
 
-Invalidator::~Invalidator() {
-}
+Invalidator::~Invalidator() = default;
 
 }  // namespace syncer

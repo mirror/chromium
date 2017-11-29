@@ -33,4 +33,4 @@ OmniboxLog::OmniboxLog(
       result(result),
       providers_info() {}
 
-OmniboxLog::~OmniboxLog() {}
+OmniboxLog::~OmniboxLog() = default;

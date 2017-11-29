@@ -16,7 +16,7 @@ TestToolbarModel::TestToolbarModel()
       should_display_url_(true) {
 }
 
-TestToolbarModel::~TestToolbarModel() {}
+TestToolbarModel::~TestToolbarModel() = default;
 
 base::string16 TestToolbarModel::GetFormattedURL(size_t* prefix_end) const {
   return text_;

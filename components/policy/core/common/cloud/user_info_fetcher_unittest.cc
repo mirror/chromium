@@ -27,8 +27,8 @@ static const char kUserInfoResponse[] =
 
 class MockUserInfoFetcherDelegate : public UserInfoFetcher::Delegate {
  public:
-  MockUserInfoFetcherDelegate() {}
-  ~MockUserInfoFetcherDelegate() {}
+  MockUserInfoFetcherDelegate() = default;
+  ~MockUserInfoFetcherDelegate() = default;
   MOCK_METHOD1(OnGetUserInfoFailure,
                void(const GoogleServiceAuthError& error));
   MOCK_METHOD1(OnGetUserInfoSuccess, void(const base::DictionaryValue* result));
@@ -40,7 +40,7 @@ MATCHER_P(MatchDict, expected, "matches DictionaryValue") {
 
 class UserInfoFetcherTest : public testing::Test {
  public:
-  UserInfoFetcherTest() {}
+  UserInfoFetcherTest() = default;
   net::TestURLFetcherFactory url_factory_;
 };
 

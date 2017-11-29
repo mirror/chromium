@@ -81,8 +81,7 @@ InvalidatorStorage::InvalidatorStorage(PrefService* pref_service)
     pref_service_->ClearPref(kInvalidatorMaxInvalidationVersions);
 }
 
-InvalidatorStorage::~InvalidatorStorage() {
-}
+InvalidatorStorage::~InvalidatorStorage() = default;
 
 void InvalidatorStorage::ClearAndSetNewClientId(const std::string& client_id) {
   DCHECK(thread_checker_.CalledOnValidThread());

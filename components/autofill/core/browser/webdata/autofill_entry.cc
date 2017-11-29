@@ -11,7 +11,7 @@
 
 namespace autofill {
 
-AutofillKey::AutofillKey() {}
+AutofillKey::AutofillKey() = default;
 
 AutofillKey::AutofillKey(const base::string16& name,
                          const base::string16& value)
@@ -30,7 +30,7 @@ AutofillKey::AutofillKey(const AutofillKey& key)
       value_(key.value()) {
 }
 
-AutofillKey::~AutofillKey() {}
+AutofillKey::~AutofillKey() = default;
 
 bool AutofillKey::operator==(const AutofillKey& key) const {
   return name_ == key.name() && value_ == key.value();
@@ -40,7 +40,7 @@ bool AutofillKey::operator<(const AutofillKey& key) const {
   return std::tie(name_, value_) < std::tie(key.name(), key.value());
 }
 
-AutofillEntry::AutofillEntry() {}
+AutofillEntry::AutofillEntry() = default;
 
 AutofillEntry::AutofillEntry(const AutofillKey& key,
                              const base::Time& date_created,
@@ -49,7 +49,7 @@ AutofillEntry::AutofillEntry(const AutofillKey& key,
       date_created_(date_created),
       date_last_used_(date_last_used) {}
 
-AutofillEntry::~AutofillEntry() {}
+AutofillEntry::~AutofillEntry() = default;
 
 bool AutofillEntry::operator==(const AutofillEntry& entry) const {
   return key() == entry.key() &&

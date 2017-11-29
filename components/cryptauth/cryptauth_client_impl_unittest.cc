@@ -67,7 +67,7 @@ class MockCryptAuthApiCallFlow : public CryptAuthApiCallFlow {
   MockCryptAuthApiCallFlow() : CryptAuthApiCallFlow() {
     SetPartialNetworkTrafficAnnotation(PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
   }
-  virtual ~MockCryptAuthApiCallFlow() {}
+  virtual ~MockCryptAuthApiCallFlow() = default;
 
   MOCK_METHOD6(Start,
                void(const GURL&,

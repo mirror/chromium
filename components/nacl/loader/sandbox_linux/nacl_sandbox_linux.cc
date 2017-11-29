@@ -111,8 +111,7 @@ NaClSandbox::NaClSandbox()
   PCHECK(proc_fd_.is_valid());
 }
 
-NaClSandbox::~NaClSandbox() {
-}
+NaClSandbox::~NaClSandbox() = default;
 
 bool NaClSandbox::IsSingleThreaded() {
   CHECK(proc_fd_.is_valid());

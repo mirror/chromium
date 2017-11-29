@@ -52,7 +52,7 @@ class TestEulaAcceptedNotifier : public EulaAcceptedNotifier {
       : EulaAcceptedNotifier(nullptr),
         eula_accepted_(false) {
   }
-  ~TestEulaAcceptedNotifier() override {}
+  ~TestEulaAcceptedNotifier() override = default;
 
   bool IsEulaAccepted() override { return eula_accepted_; }
 
@@ -84,7 +84,7 @@ class ResourceRequestAllowedNotifierTest
     resource_request_allowed_notifier_.InitWithEulaAcceptNotifier(
         this, base::WrapUnique(eula_notifier_));
   }
-  ~ResourceRequestAllowedNotifierTest() override {}
+  ~ResourceRequestAllowedNotifierTest() override = default;
 
   bool was_notified() const { return was_notified_; }
 

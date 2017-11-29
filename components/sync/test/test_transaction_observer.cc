@@ -11,7 +11,7 @@ namespace syncable {
 TestTransactionObserver::TestTransactionObserver()
     : transactions_observed_(0) {}
 
-TestTransactionObserver::~TestTransactionObserver() {}
+TestTransactionObserver::~TestTransactionObserver() = default;
 
 int TestTransactionObserver::transactions_observed() {
   return transactions_observed_;

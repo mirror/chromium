@@ -96,8 +96,7 @@ DefaultSearchManager::DefaultSearchManager(
   LoadDefaultSearchEngineFromPrefs();
 }
 
-DefaultSearchManager::~DefaultSearchManager() {
-}
+DefaultSearchManager::~DefaultSearchManager() = default;
 
 // static
 void DefaultSearchManager::RegisterProfilePrefs(

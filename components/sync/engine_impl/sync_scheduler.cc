@@ -6,7 +6,7 @@
 
 namespace syncer {
 
-SyncScheduler::SyncScheduler() {}
-SyncScheduler::~SyncScheduler() {}
+SyncScheduler::SyncScheduler() = default;
+SyncScheduler::~SyncScheduler() = default;
 
 }  // namespace syncer

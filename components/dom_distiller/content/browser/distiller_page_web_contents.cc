@@ -77,8 +77,7 @@ DistillerPageWebContents::DistillerPageWebContents(
   }
 }
 
-DistillerPageWebContents::~DistillerPageWebContents() {
-}
+DistillerPageWebContents::~DistillerPageWebContents() = default;
 
 bool DistillerPageWebContents::StringifyOutput() {
  return false;

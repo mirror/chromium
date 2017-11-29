@@ -353,8 +353,7 @@ DownloadOperation::DownloadOperation(
       weak_ptr_factory_(this) {
 }
 
-DownloadOperation::~DownloadOperation() {
-}
+DownloadOperation::~DownloadOperation() = default;
 
 base::Closure DownloadOperation::EnsureFileDownloadedByLocalId(
     const std::string& local_id,

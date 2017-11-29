@@ -47,7 +47,7 @@ SyncCredentialsFilter::SyncCredentialsFilter(
       sync_service_factory_function_(sync_service_factory_function),
       signin_manager_factory_function_(signin_manager_factory_function) {}
 
-SyncCredentialsFilter::~SyncCredentialsFilter() {}
+SyncCredentialsFilter::~SyncCredentialsFilter() = default;
 
 std::vector<std::unique_ptr<PasswordForm>> SyncCredentialsFilter::FilterResults(
     std::vector<std::unique_ptr<PasswordForm>> results) const {

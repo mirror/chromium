@@ -29,7 +29,7 @@ namespace {
 
 class FakePaymentInstrumentDelegate : public PaymentInstrument::Delegate {
  public:
-  FakePaymentInstrumentDelegate() {}
+  FakePaymentInstrumentDelegate() = default;
 
   void OnInstrumentDetailsReady(
       const std::string& method_name,

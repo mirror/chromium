@@ -11,11 +11,9 @@
 
 namespace user_prefs {
 
-PrefRegistrySyncable::PrefRegistrySyncable() {
-}
+PrefRegistrySyncable::PrefRegistrySyncable() = default;
 
-PrefRegistrySyncable::~PrefRegistrySyncable() {
-}
+PrefRegistrySyncable::~PrefRegistrySyncable() = default;
 
 void PrefRegistrySyncable::SetSyncableRegistrationCallback(
     const SyncableRegistrationCallback& cb) {

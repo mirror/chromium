@@ -96,8 +96,7 @@ DataReductionProxyEventStore::DataReductionProxyEventStore()
       secure_proxy_check_state_(CHECK_UNKNOWN),
       expiration_ticks_(0) {}
 
-DataReductionProxyEventStore::~DataReductionProxyEventStore() {
-}
+DataReductionProxyEventStore::~DataReductionProxyEventStore() = default;
 
 std::unique_ptr<base::DictionaryValue>
 DataReductionProxyEventStore::GetSummaryValue() const {

@@ -18,8 +18,8 @@ namespace {
 
 class WebAppManifestSectionTableTest : public testing::Test {
  public:
-  WebAppManifestSectionTableTest() {}
-  ~WebAppManifestSectionTableTest() override {}
+  WebAppManifestSectionTableTest() = default;
+  ~WebAppManifestSectionTableTest() override = default;
 
  protected:
   void SetUp() override {

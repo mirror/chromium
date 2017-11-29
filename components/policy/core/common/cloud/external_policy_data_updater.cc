@@ -160,8 +160,7 @@ class ExternalPolicyDataUpdater::FetchJob
   DISALLOW_COPY_AND_ASSIGN(FetchJob);
 };
 
-ExternalPolicyDataUpdater::Request::Request() {
-}
+ExternalPolicyDataUpdater::Request::Request() = default;
 
 ExternalPolicyDataUpdater::Request::Request(const std::string& url,
                                             const std::string& hash,

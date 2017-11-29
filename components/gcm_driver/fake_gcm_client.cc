@@ -68,8 +68,7 @@ FakeGCMClient::FakeGCMClient(
       io_thread_(io_thread),
       weak_ptr_factory_(this) {}
 
-FakeGCMClient::~FakeGCMClient() {
-}
+FakeGCMClient::~FakeGCMClient() = default;
 
 void FakeGCMClient::Initialize(
     const ChromeBuildInfo& chrome_build_info,

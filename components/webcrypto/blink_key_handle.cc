@@ -37,7 +37,7 @@ class Key : public blink::WebCryptoKeyHandle {
             serialized_key_data.bytes(),
             serialized_key_data.bytes() + serialized_key_data.byte_length()) {}
 
-  ~Key() override {}
+  ~Key() override = default;
 
   // Helpers to add some safety to casting.
   virtual SymKey* AsSymKey() { return nullptr; }

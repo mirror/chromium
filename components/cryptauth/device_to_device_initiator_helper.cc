@@ -32,7 +32,7 @@ const int kD2DProtocolVersion = 1;
 DeviceToDeviceInitiatorHelper::DeviceToDeviceInitiatorHelper()
     : weak_ptr_factory_(this) {}
 
-DeviceToDeviceInitiatorHelper::~DeviceToDeviceInitiatorHelper() {}
+DeviceToDeviceInitiatorHelper::~DeviceToDeviceInitiatorHelper() = default;
 
 void DeviceToDeviceInitiatorHelper::CreateHelloMessage(
     const std::string& session_public_key,
@@ -144,19 +144,10 @@ DeviceToDeviceInitiatorHelper::ValidateResponderAuthMessageContext ::
 
 DeviceToDeviceInitiatorHelper::ValidateResponderAuthMessageContext ::
     ValidateResponderAuthMessageContext(
-        const ValidateResponderAuthMessageContext& other)
-    : responder_auth_message(other.responder_auth_message),
-      persistent_responder_public_key(other.persistent_responder_public_key),
-      persistent_symmetric_key(other.persistent_symmetric_key),
-      session_private_key(other.session_private_key),
-      hello_message(other.hello_message),
-      secure_message_delegate(other.secure_message_delegate),
-      callback(other.callback),
-      responder_session_public_key(other.responder_session_public_key),
-      session_symmetric_key(other.session_symmetric_key) {}
+        const ValidateResponderAuthMessageContext& other) = default;
 
 DeviceToDeviceInitiatorHelper::ValidateResponderAuthMessageContext ::
-    ~ValidateResponderAuthMessageContext() {}
+    ~ValidateResponderAuthMessageContext() = default;
 
 void DeviceToDeviceInitiatorHelper::OnInnerMessageCreatedForInitiatorAuth(
     const SessionKeys& session_keys,

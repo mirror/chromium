@@ -6,12 +6,12 @@
 
 namespace policy {
 
-MockCloudPolicyStore::MockCloudPolicyStore() {}
+MockCloudPolicyStore::MockCloudPolicyStore() = default;
 
-MockCloudPolicyStore::~MockCloudPolicyStore() {}
+MockCloudPolicyStore::~MockCloudPolicyStore() = default;
 
-MockCloudPolicyStoreObserver::MockCloudPolicyStoreObserver() {}
+MockCloudPolicyStoreObserver::MockCloudPolicyStoreObserver() = default;
 
-MockCloudPolicyStoreObserver::~MockCloudPolicyStoreObserver() {}
+MockCloudPolicyStoreObserver::~MockCloudPolicyStoreObserver() = default;
 
 }  // namespace policy

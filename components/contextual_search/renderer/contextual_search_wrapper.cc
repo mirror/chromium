@@ -60,7 +60,7 @@ ContextualSearchWrapper::ContextualSearchWrapper(
     content::RenderFrame* render_frame)
     : RenderFrameObserver(render_frame) {}
 
-ContextualSearchWrapper::~ContextualSearchWrapper() {}
+ContextualSearchWrapper::~ContextualSearchWrapper() = default;
 
 gin::ObjectTemplateBuilder ContextualSearchWrapper::GetObjectTemplateBuilder(
     v8::Isolate* isolate) {

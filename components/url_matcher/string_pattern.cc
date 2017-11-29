@@ -12,7 +12,7 @@ StringPattern::StringPattern(const std::string& pattern,
                              StringPattern::ID id)
     : pattern_(pattern), id_(id) {}
 
-StringPattern::~StringPattern() {}
+StringPattern::~StringPattern() = default;
 
 bool StringPattern::operator<(const StringPattern& rhs) const {
   return std::tie(id_, pattern_) < std::tie(rhs.id_, rhs.pattern_);

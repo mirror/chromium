@@ -91,7 +91,7 @@ class HistoryBackendMock : public HistoryBackend {
  private:
   friend class ProfileSyncServiceTypedUrlTest;
 
-  virtual ~HistoryBackendMock() {}
+  virtual ~HistoryBackendMock() = default;
 };
 
 class HistoryServiceMock : public history::HistoryService {
@@ -112,7 +112,7 @@ class HistoryServiceMock : public history::HistoryService {
     return base::CancelableTaskTracker::kBadTaskId;  // unused
   }
 
-  ~HistoryServiceMock() override {}
+  ~HistoryServiceMock() override = default;
 
   void set_task_runner(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner) {

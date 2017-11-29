@@ -48,7 +48,7 @@ class TestDataUseAggregator : public DataUseAggregator {
                         std::unique_ptr<DataUseAmortizer> amortizer)
       : DataUseAggregator(std::move(annotator), std::move(amortizer)) {}
 
-  ~TestDataUseAggregator() override {}
+  ~TestDataUseAggregator() override = default;
 
  private:
   friend class TestNetworkChangeNotifier;
@@ -91,7 +91,7 @@ class TestNetworkChangeNotifier : public net::NetworkChangeNotifier {
 class FakeDataUseAnnotator : public DataUseAnnotator {
  public:
   FakeDataUseAnnotator() : tab_id_(-1) {}
-  ~FakeDataUseAnnotator() override {}
+  ~FakeDataUseAnnotator() override = default;
 
   void Annotate(
       net::URLRequest* request,
@@ -112,8 +112,8 @@ class FakeDataUseAnnotator : public DataUseAnnotator {
 // Test DataUseAmortizer that doubles the bytes of all DataUse objects it sees.
 class DoublingAmortizer : public DataUseAmortizer {
  public:
-  DoublingAmortizer() {}
-  ~DoublingAmortizer() override {}
+  DoublingAmortizer() = default;
+  ~DoublingAmortizer() override = default;
 
   void AmortizeDataUse(std::unique_ptr<DataUse> data_use,
                        const AmortizationCompleteCallback& callback) override {
@@ -161,7 +161,7 @@ class ReportingNetworkDelegate : public net::NetworkDelegateImpl {
         fake_data_use_annotator_(fake_data_use_annotator),
         test_network_change_notifier_(test_network_change_notifier) {}
 
-  ~ReportingNetworkDelegate() override {}
+  ~ReportingNetworkDelegate() override = default;
 
   void set_data_use_context_map(const DataUseContextMap& data_use_context_map) {
     data_use_context_map_ = data_use_context_map;
@@ -234,8 +234,8 @@ class TestObserver : public DataUseAggregator::Observer {
 
 class DataUseAggregatorTest : public testing::Test {
  public:
-  DataUseAggregatorTest() {}
-  ~DataUseAggregatorTest() override {}
+  DataUseAggregatorTest() = default;
+  ~DataUseAggregatorTest() override = default;
 
   void Initialize(std::unique_ptr<FakeDataUseAnnotator> annotator,
                   std::unique_ptr<DataUseAmortizer> amortizer) {

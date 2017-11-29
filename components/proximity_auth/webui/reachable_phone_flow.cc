@@ -29,7 +29,7 @@ ReachablePhoneFlow::ReachablePhoneFlow(
     cryptauth::CryptAuthClientFactory* client_factory)
     : client_factory_(client_factory), weak_ptr_factory_(this) {}
 
-ReachablePhoneFlow::~ReachablePhoneFlow() {}
+ReachablePhoneFlow::~ReachablePhoneFlow() = default;
 
 void ReachablePhoneFlow::Run(const ReachablePhonesCallback& callback) {
   if (!callback_.is_null()) {

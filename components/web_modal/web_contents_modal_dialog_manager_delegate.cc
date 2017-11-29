@@ -22,7 +22,7 @@ bool WebContentsModalDialogManagerDelegate::IsWebContentsVisible(
   return true;
 }
 
-WebContentsModalDialogManagerDelegate::~WebContentsModalDialogManagerDelegate(
-) {}
+WebContentsModalDialogManagerDelegate::
+    ~WebContentsModalDialogManagerDelegate() = default;
 
 }  // namespace web_modal

@@ -109,7 +109,7 @@ gfx::Size ToTransformedSize(const gfx::Size& size, Transform transform) {
 class CustomWindowDelegate : public aura::WindowDelegate {
  public:
   explicit CustomWindowDelegate(Surface* surface) : surface_(surface) {}
-  ~CustomWindowDelegate() override {}
+  ~CustomWindowDelegate() override = default;
 
   // Overridden from aura::WindowDelegate:
   gfx::Size GetMinimumSize() const override { return gfx::Size(); }
@@ -157,8 +157,8 @@ class CustomWindowDelegate : public aura::WindowDelegate {
 
 class CustomWindowTargeter : public aura::WindowTargeter {
  public:
-  CustomWindowTargeter() {}
-  ~CustomWindowTargeter() override {}
+  CustomWindowTargeter() = default;
+  ~CustomWindowTargeter() override = default;
 
   // Overridden from aura::WindowTargeter:
   bool EventLocationInsideBounds(aura::Window* window,
@@ -712,7 +712,7 @@ bool Surface::State::operator==(const State& other) {
          other.blend_mode == blend_mode && other.alpha == alpha;
 }
 
-Surface::BufferAttachment::BufferAttachment() {}
+Surface::BufferAttachment::BufferAttachment() = default;
 
 Surface::BufferAttachment::~BufferAttachment() {
   if (buffer_)

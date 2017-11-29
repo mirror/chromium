@@ -172,7 +172,7 @@ Component::Component(const UpdateContext& update_context, const std::string& id)
       state_(base::MakeUnique<StateNew>(this)),
       update_context_(update_context) {}
 
-Component::~Component() {}
+Component::~Component() = default;
 
 void Component::Handle(CallbackHandleComplete callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -292,7 +292,7 @@ base::TimeDelta Component::GetUpdateDuration() const {
 Component::State::State(Component* component, ComponentState state)
     : state_(state), component_(*component) {}
 
-Component::State::~State() {}
+Component::State::~State() = default;
 
 void Component::State::Handle(CallbackNextState callback) {
   DCHECK(thread_checker_.CalledOnValidThread());

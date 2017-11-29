@@ -14,8 +14,8 @@ namespace metrics {
 
 class ComponentMetricsProviderTest : public testing::Test {
  public:
-  ComponentMetricsProviderTest() {}
-  ~ComponentMetricsProviderTest() override {}
+  ComponentMetricsProviderTest() = default;
+  ~ComponentMetricsProviderTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ComponentMetricsProviderTest);

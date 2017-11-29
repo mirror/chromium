@@ -137,8 +137,7 @@ CustomFakeGCMDriver::CustomFakeGCMDriver()
     : last_action_(NONE), registration_id_requested_(false) {
 }
 
-CustomFakeGCMDriver::~CustomFakeGCMDriver() {
-}
+CustomFakeGCMDriver::~CustomFakeGCMDriver() = default;
 
 void CustomFakeGCMDriver::UpdateAccountMapping(
     const AccountMapping& account_mapping) {
@@ -278,8 +277,7 @@ GCMAccountMapperTest::GCMAccountMapperTest() {
   Restart();
 }
 
-GCMAccountMapperTest::~GCMAccountMapperTest() {
-}
+GCMAccountMapperTest::~GCMAccountMapperTest() = default;
 
 void GCMAccountMapperTest::Restart() {
   if (account_mapper_)

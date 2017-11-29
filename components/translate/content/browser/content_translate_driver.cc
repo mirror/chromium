@@ -44,7 +44,7 @@ ContentTranslateDriver::ContentTranslateDriver(
   DCHECK(navigation_controller_);
 }
 
-ContentTranslateDriver::~ContentTranslateDriver() {}
+ContentTranslateDriver::~ContentTranslateDriver() = default;
 
 void ContentTranslateDriver::BindRequest(
     mojom::ContentTranslateDriverRequest request) {

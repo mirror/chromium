@@ -670,11 +670,11 @@ void AutofillProfileSyncableService::InjectStartSyncFlare(
   flare_ = flare;
 }
 
-AutofillProfileSyncableService::DataBundle::DataBundle() {}
+AutofillProfileSyncableService::DataBundle::DataBundle() = default;
 
 AutofillProfileSyncableService::DataBundle::DataBundle(
     const DataBundle& other) = default;
 
-AutofillProfileSyncableService::DataBundle::~DataBundle() {}
+AutofillProfileSyncableService::DataBundle::~DataBundle() = default;
 
 }  // namespace autofill

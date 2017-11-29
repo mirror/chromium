@@ -38,7 +38,7 @@ class FakeGeolocation : public device::mojom::GeolocationContext,
  public:
   explicit FakeGeolocation(device::mojom::Geoposition& position)
       : binding_context_(this), binding_(this), position_(position) {}
-  ~FakeGeolocation() override {}
+  ~FakeGeolocation() override = default;
 
   void Bind(mojo::ScopedMessagePipeHandle handle) {
     binding_context_.Bind(

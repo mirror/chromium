@@ -33,8 +33,8 @@ CrashReporterClient* GetCrashReporterClient() {
   return g_client;
 }
 
-CrashReporterClient::CrashReporterClient() {}
-CrashReporterClient::~CrashReporterClient() {}
+CrashReporterClient::CrashReporterClient() = default;
+CrashReporterClient::~CrashReporterClient() = default;
 
 #if !defined(OS_MACOSX) && !defined(OS_WIN)
 void CrashReporterClient::SetCrashReporterClientIdFromGUID(

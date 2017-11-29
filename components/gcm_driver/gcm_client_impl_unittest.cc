@@ -152,8 +152,7 @@ FakeMCSClient::FakeMCSClient(base::Clock* clock,
       last_message_tag_(kNumProtoTypes) {
 }
 
-FakeMCSClient::~FakeMCSClient() {
-}
+FakeMCSClient::~FakeMCSClient() = default;
 
 void FakeMCSClient::Login(uint64_t android_id, uint64_t security_token) {
   last_android_id_ = android_id;
@@ -191,8 +190,7 @@ AutoAdvancingTestClock::AutoAdvancingTestClock(
     : call_count_(0), auto_increment_time_delta_(auto_increment_time_delta) {
 }
 
-AutoAdvancingTestClock::~AutoAdvancingTestClock() {
-}
+AutoAdvancingTestClock::~AutoAdvancingTestClock() = default;
 
 base::Time AutoAdvancingTestClock::Now() {
   call_count_++;
@@ -231,7 +229,7 @@ FakeGCMInternalsBuilder::FakeGCMInternalsBuilder(base::TimeDelta clock_step)
     : clock_step_(clock_step) {
 }
 
-FakeGCMInternalsBuilder::~FakeGCMInternalsBuilder() {}
+FakeGCMInternalsBuilder::~FakeGCMInternalsBuilder() = default;
 
 std::unique_ptr<base::Clock> FakeGCMInternalsBuilder::BuildClock() {
   return base::WrapUnique<base::Clock>(new AutoAdvancingTestClock(clock_step_));
@@ -433,7 +431,7 @@ GCMClientImplTest::GCMClientImplTest()
           new net::TestURLRequestContextGetter(task_runner_)) {
 }
 
-GCMClientImplTest::~GCMClientImplTest() {}
+GCMClientImplTest::~GCMClientImplTest() = default;
 
 void GCMClientImplTest::SetUp() {
   testing::Test::SetUp();
@@ -1015,11 +1013,9 @@ class GCMClientImplCheckinTest : public GCMClientImplTest {
   void SetUp() override;
 };
 
-GCMClientImplCheckinTest::GCMClientImplCheckinTest() {
-}
+GCMClientImplCheckinTest::GCMClientImplCheckinTest() = default;
 
-GCMClientImplCheckinTest::~GCMClientImplCheckinTest() {
-}
+GCMClientImplCheckinTest::~GCMClientImplCheckinTest() = default;
 
 void GCMClientImplCheckinTest::SetUp() {
   testing::Test::SetUp();
@@ -1253,11 +1249,9 @@ class GCMClientImplStartAndStopTest : public GCMClientImplTest {
   void DefaultCompleteCheckin();
 };
 
-GCMClientImplStartAndStopTest::GCMClientImplStartAndStopTest() {
-}
+GCMClientImplStartAndStopTest::GCMClientImplStartAndStopTest() = default;
 
-GCMClientImplStartAndStopTest::~GCMClientImplStartAndStopTest() {
-}
+GCMClientImplStartAndStopTest::~GCMClientImplStartAndStopTest() = default;
 
 void GCMClientImplStartAndStopTest::SetUp() {
   testing::Test::SetUp();
@@ -1497,11 +1491,9 @@ class GCMClientInstanceIDTest : public GCMClientImplTest {
                    const std::string& scope) const;
 };
 
-GCMClientInstanceIDTest::GCMClientInstanceIDTest() {
-}
+GCMClientInstanceIDTest::GCMClientInstanceIDTest() = default;
 
-GCMClientInstanceIDTest::~GCMClientInstanceIDTest() {
-}
+GCMClientInstanceIDTest::~GCMClientInstanceIDTest() = default;
 
 void GCMClientInstanceIDTest::AddInstanceID(const std::string& app_id,
                                             const std::string& instance_id) {

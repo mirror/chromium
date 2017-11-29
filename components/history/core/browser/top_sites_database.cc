@@ -309,11 +309,9 @@ const int TopSitesDatabase::kRankOfForcedURL = -1;
 // static
 const int TopSitesDatabase::kRankOfNonExistingURL = -2;
 
-TopSitesDatabase::TopSitesDatabase() {
-}
+TopSitesDatabase::TopSitesDatabase() = default;
 
-TopSitesDatabase::~TopSitesDatabase() {
-}
+TopSitesDatabase::~TopSitesDatabase() = default;
 
 bool TopSitesDatabase::Init(const base::FilePath& db_name) {
   // Retry failed InitImpl() in case the recovery system fixed things.

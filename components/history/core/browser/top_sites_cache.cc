@@ -15,8 +15,7 @@ TopSitesCache::CanonicalURLQuery::CanonicalURLQuery(const GURL& url) {
   entry_.second = 0u;
 }
 
-TopSitesCache::CanonicalURLQuery::~CanonicalURLQuery() {
-}
+TopSitesCache::CanonicalURLQuery::~CanonicalURLQuery() = default;
 
 TopSitesCache::TopSitesCache() : num_forced_urls_(0) {
   clear_query_ref_.ClearQuery();
@@ -26,8 +25,7 @@ TopSitesCache::TopSitesCache() : num_forced_urls_(0) {
   clear_path_query_ref_.ClearPath();
 }
 
-TopSitesCache::~TopSitesCache() {
-}
+TopSitesCache::~TopSitesCache() = default;
 
 void TopSitesCache::SetTopSites(const MostVisitedURLList& top_sites) {
   top_sites_ = top_sites;

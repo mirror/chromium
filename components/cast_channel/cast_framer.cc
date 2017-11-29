@@ -20,7 +20,7 @@ MessageFramer::MessageFramer(scoped_refptr<net::GrowableIOBuffer> input_buffer)
   Reset();
 }
 
-MessageFramer::~MessageFramer() {}
+MessageFramer::~MessageFramer() = default;
 
 MessageFramer::MessageHeader::MessageHeader() : message_size(0) {}
 

@@ -12,7 +12,7 @@ BoundFakeInvalidationHandler::BoundFakeInvalidationHandler(
     : invalidator_(invalidator),
       last_retrieved_state_(DEFAULT_INVALIDATION_ERROR) {}
 
-BoundFakeInvalidationHandler::~BoundFakeInvalidationHandler() {}
+BoundFakeInvalidationHandler::~BoundFakeInvalidationHandler() = default;
 
 InvalidatorState BoundFakeInvalidationHandler::GetLastRetrievedState() const {
   return last_retrieved_state_;

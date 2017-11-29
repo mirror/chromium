@@ -16,7 +16,7 @@ InProcessGpuMemoryBufferManager::InProcessGpuMemoryBufferManager(
   weak_ptr_ = weak_factory_.GetWeakPtr();
 }
 
-InProcessGpuMemoryBufferManager::~InProcessGpuMemoryBufferManager() {}
+InProcessGpuMemoryBufferManager::~InProcessGpuMemoryBufferManager() = default;
 
 std::unique_ptr<gfx::GpuMemoryBuffer>
 InProcessGpuMemoryBufferManager::CreateGpuMemoryBuffer(

@@ -250,7 +250,7 @@ TEST_F(AsyncDocumentSubresourceFilterTest, FirstDisallowedLoadIsReported) {
 
 class SubresourceFilterComputeActivationStateTest : public ::testing::Test {
  public:
-  SubresourceFilterComputeActivationStateTest() {}
+  SubresourceFilterComputeActivationStateTest() = default;
 
  protected:
   void SetUp() override {

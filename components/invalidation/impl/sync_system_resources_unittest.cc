@@ -55,7 +55,7 @@ class SyncSystemResourcesTest : public testing::Test {
       : push_client_channel_(base::WrapUnique(new notifier::FakePushClient())),
         sync_system_resources_(&push_client_channel_, &mock_state_writer_) {}
 
-  ~SyncSystemResourcesTest() override {}
+  ~SyncSystemResourcesTest() override = default;
 
   void ScheduleShouldNotRun() {
     {
@@ -179,8 +179,8 @@ TEST_F(SyncSystemResourcesTest, WriteState) {
 
 class TestSyncNetworkChannel : public SyncNetworkChannel {
  public:
-  TestSyncNetworkChannel() {}
-  ~TestSyncNetworkChannel() override {}
+  TestSyncNetworkChannel() = default;
+  ~TestSyncNetworkChannel() override = default;
 
   using SyncNetworkChannel::NotifyNetworkStatusChange;
   using SyncNetworkChannel::NotifyChannelStateChange;

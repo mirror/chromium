@@ -18,8 +18,7 @@ DataReductionProxyMutableConfigValues::DataReductionProxyMutableConfigValues()
 }
 
 DataReductionProxyMutableConfigValues::
-    ~DataReductionProxyMutableConfigValues() {
-}
+    ~DataReductionProxyMutableConfigValues() = default;
 
 const std::vector<DataReductionProxyServer>&
 DataReductionProxyMutableConfigValues::proxies_for_http() const {

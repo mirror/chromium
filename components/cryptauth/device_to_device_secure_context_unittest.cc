@@ -37,7 +37,7 @@ class InvertedSessionKeys : public SessionKeys {
 
   InvertedSessionKeys() : SessionKeys() {}
 
-  InvertedSessionKeys(const InvertedSessionKeys& other) : SessionKeys(other) {}
+  InvertedSessionKeys(const InvertedSessionKeys& other) = default;
 
   std::string initiator_encode_key() const override {
     return SessionKeys::responder_encode_key();

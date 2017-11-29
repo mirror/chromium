@@ -64,7 +64,7 @@ gpu::VulkanDeviceQueue* VulkanInProcessContextProvider::GetDeviceQueue() {
 #endif
 }
 
-VulkanInProcessContextProvider::VulkanInProcessContextProvider() {}
+VulkanInProcessContextProvider::VulkanInProcessContextProvider() = default;
 
 VulkanInProcessContextProvider::~VulkanInProcessContextProvider() {
   Destroy();

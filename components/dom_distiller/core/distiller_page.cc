@@ -66,11 +66,11 @@ std::string GetDistillerScriptWithOptions(
 
 }
 
-DistillerPageFactory::~DistillerPageFactory() {}
+DistillerPageFactory::~DistillerPageFactory() = default;
 
 DistillerPage::DistillerPage() : ready_(true) {}
 
-DistillerPage::~DistillerPage() {}
+DistillerPage::~DistillerPage() = default;
 
 void DistillerPage::DistillPage(
     const GURL& gurl,

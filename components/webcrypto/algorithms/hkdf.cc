@@ -27,7 +27,7 @@ const blink::WebCryptoKeyUsageMask kValidUsages =
 
 class HkdfImplementation : public AlgorithmImplementation {
  public:
-  HkdfImplementation() {}
+  HkdfImplementation() = default;
 
   Status ImportKey(blink::WebCryptoKeyFormat format,
                    const CryptoData& key_data,

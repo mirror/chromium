@@ -245,7 +245,7 @@ RequestCoordinator::RequestCoordinator(
   queue_->CleanupRequestQueue();
 }
 
-RequestCoordinator::~RequestCoordinator() {}
+RequestCoordinator::~RequestCoordinator() = default;
 
 int64_t RequestCoordinator::SavePageLater(
     const SavePageLaterParams& save_page_later_params) {

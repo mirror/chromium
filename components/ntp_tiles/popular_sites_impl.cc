@@ -263,7 +263,7 @@ PopularSites::Site::Site(const base::string16& title,
 
 PopularSites::Site::Site(const Site& other) = default;
 
-PopularSites::Site::~Site() {}
+PopularSites::Site::~Site() = default;
 
 PopularSitesImpl::PopularSitesImpl(
     PrefService* prefs,
@@ -282,7 +282,7 @@ PopularSitesImpl::PopularSitesImpl(
                      prefs_->GetInteger(prefs::kPopularSitesVersionPref))),
       weak_ptr_factory_(this) {}
 
-PopularSitesImpl::~PopularSitesImpl() {}
+PopularSitesImpl::~PopularSitesImpl() = default;
 
 bool PopularSitesImpl::MaybeStartFetch(bool force_download,
                                        const FinishedCallback& callback) {

@@ -38,6 +38,6 @@ std::unique_ptr<AttachmentService> AttachmentService::CreateForTest() {
       base::TimeDelta());
 }
 
-AttachmentService::~AttachmentService() {}
+AttachmentService::~AttachmentService() = default;
 
 }  // namespace syncer

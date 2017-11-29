@@ -6,16 +6,12 @@
 
 namespace pairing_chromeos {
 
-ControllerPairingController::Observer::Observer() {
-}
+ControllerPairingController::Observer::Observer() = default;
 
-ControllerPairingController::Observer::~Observer() {
-}
+ControllerPairingController::Observer::~Observer() = default;
 
-ControllerPairingController::ControllerPairingController() {
-}
+ControllerPairingController::ControllerPairingController() = default;
 
-ControllerPairingController::~ControllerPairingController() {
-}
+ControllerPairingController::~ControllerPairingController() = default;
 
 }  // namespace pairing_chromeos

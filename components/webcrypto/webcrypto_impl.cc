@@ -177,7 +177,7 @@ struct BaseState {
  protected:
   // Since there is no virtual destructor, must not delete directly as a
   // BaseState.
-  ~BaseState() {}
+  ~BaseState() = default;
 };
 
 struct EncryptState : public BaseState {
@@ -620,11 +620,9 @@ void DoDeriveKey(std::unique_ptr<DeriveKeyState> passed_state) {
 
 }  // namespace
 
-WebCryptoImpl::WebCryptoImpl() {
-}
+WebCryptoImpl::WebCryptoImpl() = default;
 
-WebCryptoImpl::~WebCryptoImpl() {
-}
+WebCryptoImpl::~WebCryptoImpl() = default;
 
 void WebCryptoImpl::Encrypt(const blink::WebCryptoAlgorithm& algorithm,
                             const blink::WebCryptoKey& key,

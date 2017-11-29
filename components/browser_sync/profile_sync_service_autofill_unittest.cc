@@ -142,7 +142,7 @@ AutofillEntry MakeAutofillEntry(const std::string& name,
 
 class AutofillTableMock : public AutofillTable {
  public:
-  AutofillTableMock() {}
+  AutofillTableMock() = default;
   MOCK_METHOD2(RemoveFormElement,
                bool(const base::string16& name,
                     const base::string16& value));  // NOLINT
@@ -191,7 +191,7 @@ class MockAutofillBackend : public autofill::AutofillWebDataBackend {
         on_sync_started_(on_sync_started),
         ui_task_runner_(ui_task_runner) {}
 
-  ~MockAutofillBackend() override {}
+  ~MockAutofillBackend() override = default;
   WebDatabase* GetDatabase() override { return web_database_; }
   void AddObserver(
       autofill::AutofillWebDataServiceObserverOnDBSequence* observer) override {
@@ -256,7 +256,7 @@ class TokenWebDataServiceFake : public TokenWebData {
   }
 
  private:
-  ~TokenWebDataServiceFake() override {}
+  ~TokenWebDataServiceFake() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(TokenWebDataServiceFake);
 };
@@ -333,7 +333,7 @@ class WebDataServiceFake : public AutofillWebDataService {
   }
 
  private:
-  ~WebDataServiceFake() override {}
+  ~WebDataServiceFake() override = default;
 
   void CreateSyncableService(
       const base::Closure& on_changed_callback,
@@ -808,7 +808,7 @@ class FakeServerUpdater : public base::RefCountedThreadSafe<FakeServerUpdater> {
 
  private:
   friend class base::RefCountedThreadSafe<FakeServerUpdater>;
-  ~FakeServerUpdater() {}
+  ~FakeServerUpdater() = default;
 
   AutofillEntry entry_;
   TestProfileSyncService* service_;

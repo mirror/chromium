@@ -62,7 +62,7 @@ class WallpaperResizerTest : public testing::Test,
                              public WallpaperResizerObserver {
  public:
   WallpaperResizerTest() : worker_thread_("WallpaperResizerTest") {}
-  ~WallpaperResizerTest() override {}
+  ~WallpaperResizerTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(worker_thread_.Start());

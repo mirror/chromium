@@ -30,7 +30,7 @@ WebCacheImpl::WebCacheImpl() : clear_cache_state_(kInit) {
   }
 }
 
-WebCacheImpl::~WebCacheImpl() {}
+WebCacheImpl::~WebCacheImpl() = default;
 
 void WebCacheImpl::BindRequest(mojom::WebCacheRequest web_cache_request) {
   bindings_.AddBinding(this, std::move(web_cache_request));

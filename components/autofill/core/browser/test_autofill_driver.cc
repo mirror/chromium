@@ -10,7 +10,7 @@ namespace autofill {
 
 TestAutofillDriver::TestAutofillDriver() : url_request_context_(nullptr) {}
 
-TestAutofillDriver::~TestAutofillDriver() {}
+TestAutofillDriver::~TestAutofillDriver() = default;
 
 bool TestAutofillDriver::IsIncognito() const {
   return false;

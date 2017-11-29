@@ -60,8 +60,7 @@ ThumbnailScore::ThumbnailScore(double score,
       redirect_hops_from_dest(0) {
 }
 
-ThumbnailScore::~ThumbnailScore() {
-}
+ThumbnailScore::~ThumbnailScore() = default;
 
 bool ThumbnailScore::Equals(const ThumbnailScore& rhs) const {
   return boring_score == rhs.boring_score &&

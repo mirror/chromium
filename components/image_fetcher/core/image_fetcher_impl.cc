@@ -20,14 +20,14 @@ ImageFetcherImpl::ImageFetcherImpl(
       image_decoder_(std::move(image_decoder)),
       image_data_fetcher_(new ImageDataFetcher(url_request_context_.get())) {}
 
-ImageFetcherImpl::~ImageFetcherImpl() {}
+ImageFetcherImpl::~ImageFetcherImpl() = default;
 
-ImageFetcherImpl::ImageRequest::ImageRequest() {}
+ImageFetcherImpl::ImageRequest::ImageRequest() = default;
 
 ImageFetcherImpl::ImageRequest::ImageRequest(const ImageRequest& other) =
     default;
 
-ImageFetcherImpl::ImageRequest::~ImageRequest() {}
+ImageFetcherImpl::ImageRequest::~ImageRequest() = default;
 
 void ImageFetcherImpl::SetImageFetcherDelegate(ImageFetcherDelegate* delegate) {
   DCHECK(delegate);

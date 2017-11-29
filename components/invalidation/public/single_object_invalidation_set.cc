@@ -9,12 +9,12 @@
 
 namespace syncer {
 
-SingleObjectInvalidationSet::SingleObjectInvalidationSet() {}
+SingleObjectInvalidationSet::SingleObjectInvalidationSet() = default;
 
 SingleObjectInvalidationSet::SingleObjectInvalidationSet(
     const SingleObjectInvalidationSet& other) = default;
 
-SingleObjectInvalidationSet::~SingleObjectInvalidationSet() {}
+SingleObjectInvalidationSet::~SingleObjectInvalidationSet() = default;
 
 void SingleObjectInvalidationSet::Insert(const Invalidation& invalidation) {
   invalidations_.insert(invalidation);

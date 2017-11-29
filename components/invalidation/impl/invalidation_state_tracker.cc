@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-InvalidationStateTracker::InvalidationStateTracker() {}
+InvalidationStateTracker::InvalidationStateTracker() = default;
 
-InvalidationStateTracker::~InvalidationStateTracker() {}
+InvalidationStateTracker::~InvalidationStateTracker() = default;
 
 }  // namespace syncer

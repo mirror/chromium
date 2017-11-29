@@ -39,7 +39,7 @@ BluetoothLowEnergyCharacteristicsFinder::
 }
 
 BluetoothLowEnergyCharacteristicsFinder::
-    BluetoothLowEnergyCharacteristicsFinder() {}
+    BluetoothLowEnergyCharacteristicsFinder() = default;
 
 BluetoothLowEnergyCharacteristicsFinder::
     ~BluetoothLowEnergyCharacteristicsFinder() {

@@ -36,8 +36,8 @@ using ::testing::StrictMock;
 
 class TestSyncApiComponentFactory : public SyncApiComponentFactory {
  public:
-  TestSyncApiComponentFactory() {}
-  ~TestSyncApiComponentFactory() override {}
+  TestSyncApiComponentFactory() = default;
+  ~TestSyncApiComponentFactory() override = default;
 
   // SyncApiComponentFactory implementation.
   void RegisterDataTypes(

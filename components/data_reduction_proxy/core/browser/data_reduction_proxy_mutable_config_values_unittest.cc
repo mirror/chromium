@@ -21,8 +21,8 @@ namespace {
 
 class DataReductionProxyMutableConfigValuesTest : public testing::Test {
  public:
-  DataReductionProxyMutableConfigValuesTest() {}
-  ~DataReductionProxyMutableConfigValuesTest() override {}
+  DataReductionProxyMutableConfigValuesTest() = default;
+  ~DataReductionProxyMutableConfigValuesTest() override = default;
 
   void Init() {
     mutable_config_values_ =

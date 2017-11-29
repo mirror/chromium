@@ -95,8 +95,7 @@ ContentSettingsPref::ContentSettingsPref(
       base::Bind(&ContentSettingsPref::OnPrefChanged, base::Unretained(this)));
 }
 
-ContentSettingsPref::~ContentSettingsPref() {
-}
+ContentSettingsPref::~ContentSettingsPref() = default;
 
 std::unique_ptr<RuleIterator> ContentSettingsPref::GetRuleIterator(
     const ResourceIdentifier& resource_identifier,

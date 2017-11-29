@@ -37,9 +37,9 @@ std::string Escape(base::StringPiece id) {
 
 }  // namespace
 
-DependencyGraph::DependencyGraph() {}
+DependencyGraph::DependencyGraph() = default;
 
-DependencyGraph::~DependencyGraph() {}
+DependencyGraph::~DependencyGraph() = default;
 
 void DependencyGraph::AddNode(DependencyNode* node) {
   all_nodes_.push_back(node);

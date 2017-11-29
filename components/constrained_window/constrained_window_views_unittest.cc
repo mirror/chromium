@@ -29,8 +29,8 @@ namespace {
 
 class DialogContents : public views::DialogDelegateView {
  public:
-  DialogContents() {}
-  ~DialogContents() override {}
+  DialogContents() = default;
+  ~DialogContents() override = default;
 
   void set_modal_type(ui::ModalType modal_type) { modal_type_ = modal_type; }
 
@@ -51,7 +51,7 @@ class DialogContents : public views::DialogDelegateView {
 class TestConstrainedWindowViewsClient
     : public constrained_window::ConstrainedWindowViewsClient {
  public:
-  TestConstrainedWindowViewsClient() {}
+  TestConstrainedWindowViewsClient() = default;
 
   // ConstrainedWindowViewsClient:
   web_modal::ModalDialogHost* GetModalDialogHost(
@@ -71,7 +71,7 @@ class TestConstrainedWindowViewsClient
 // pass a null |context| argument to DialogDelegate::CreateDialogWidget().
 class TestViewsDelegateWithContext : public views::TestViewsDelegate {
  public:
-  TestViewsDelegateWithContext() {}
+  TestViewsDelegateWithContext() = default;
 
   void set_context(gfx::NativeWindow context) { context_ = context; }
 
@@ -93,7 +93,7 @@ class TestViewsDelegateWithContext : public views::TestViewsDelegate {
 class ConstrainedWindowViewsTest : public views::ViewsTestBase {
  public:
   ConstrainedWindowViewsTest() : contents_(nullptr), dialog_(nullptr) {}
-  ~ConstrainedWindowViewsTest() override {}
+  ~ConstrainedWindowViewsTest() override = default;
 
   void SetUp() override {
     std::unique_ptr<TestViewsDelegateWithContext> views_delegate(

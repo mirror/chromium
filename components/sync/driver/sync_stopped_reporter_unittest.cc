@@ -28,8 +28,8 @@ const char kAuthHeaderPrefix[] = "Bearer ";
 
 class SyncStoppedReporterTest : public testing::Test {
  public:
-  SyncStoppedReporterTest() {}
-  ~SyncStoppedReporterTest() override {}
+  SyncStoppedReporterTest() = default;
+  ~SyncStoppedReporterTest() override = default;
 
   void SetUp() override {
     request_context_ =

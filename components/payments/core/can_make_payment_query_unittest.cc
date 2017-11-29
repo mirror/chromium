@@ -20,7 +20,7 @@ struct TestCase {
         expected_second_origin_different_query_allowed(
             expected_second_origin_different_query_allowed) {}
 
-  ~TestCase() {}
+  ~TestCase() = default;
 
   const char* const first_origin;
   const char* const second_origin;

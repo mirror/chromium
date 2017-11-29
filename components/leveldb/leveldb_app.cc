@@ -17,7 +17,7 @@ LevelDBApp::LevelDBApp()
       base::Bind(&LevelDBApp::Create, base::Unretained(this)));
 }
 
-LevelDBApp::~LevelDBApp() {}
+LevelDBApp::~LevelDBApp() = default;
 
 void LevelDBApp::OnStart() {}
 

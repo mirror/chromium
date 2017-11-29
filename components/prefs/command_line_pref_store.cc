@@ -14,7 +14,7 @@ CommandLinePrefStore::CommandLinePrefStore(
     const base::CommandLine* command_line)
     : command_line_(command_line) {}
 
-CommandLinePrefStore::~CommandLinePrefStore() {}
+CommandLinePrefStore::~CommandLinePrefStore() = default;
 
 void CommandLinePrefStore::ApplyStringSwitches(
     const CommandLinePrefStore::SwitchToPreferenceMapEntry string_switch[],

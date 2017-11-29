@@ -17,7 +17,7 @@ SyncCycle::SyncCycle(SyncCycleContext* context, Delegate* delegate)
   status_controller_ = std::make_unique<StatusController>();
 }
 
-SyncCycle::~SyncCycle() {}
+SyncCycle::~SyncCycle() = default;
 
 SyncCycleSnapshot SyncCycle::TakeSnapshot() const {
   return TakeSnapshotWithSource(sync_pb::GetUpdatesCallerInfo::UNKNOWN);

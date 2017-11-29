@@ -295,7 +295,7 @@ SafeBrowsingUI::SafeBrowsingUI(content::WebUI* web_ui)
   content::WebUIDataSource::Add(browser_context, html_source);
 }
 
-SafeBrowsingUI::~SafeBrowsingUI() {}
+SafeBrowsingUI::~SafeBrowsingUI() = default;
 
 SafeBrowsingUIHandler::SafeBrowsingUIHandler(content::BrowserContext* context)
     : browser_context_(context) {

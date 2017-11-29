@@ -41,7 +41,7 @@ const int kChannelId = 0;
 // Mockable placeholder for write completion events.
 class CompleteHandler {
  public:
-  CompleteHandler() {}
+  CompleteHandler() = default;
   MOCK_METHOD1(Complete, void(int result));
 
  private:
@@ -65,7 +65,7 @@ CastMessage CreateCastMessage() {
 // Pop() in the same order as Push().
 class CompletionQueue {
  public:
-  CompletionQueue() {}
+  CompletionQueue() = default;
   ~CompletionQueue() { CHECK_EQ(0u, cb_queue_.size()); }
 
   // Enqueues a pending completion callback.
@@ -149,7 +149,7 @@ class CastTransportTest : public testing::Test {
                                            CreateIPEndPointForTest(), logger_));
     transport_->SetReadDelegate(base::WrapUnique(delegate_));
   }
-  ~CastTransportTest() override {}
+  ~CastTransportTest() override = default;
 
  protected:
   // Runs all pending tasks in the message loop.

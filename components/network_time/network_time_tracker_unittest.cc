@@ -45,7 +45,7 @@ const char kTimeBetweenFetchesHistogram[] =
 
 class NetworkTimeTrackerTest : public ::testing::Test {
  public:
-  ~NetworkTimeTrackerTest() override {}
+  ~NetworkTimeTrackerTest() override = default;
 
   NetworkTimeTrackerTest()
       : io_thread_("IO thread"),
@@ -826,8 +826,8 @@ namespace {
 // See comments inline for how to update the times that are returned.
 class MultipleGoodTimeResponseHandler {
  public:
-  MultipleGoodTimeResponseHandler() {}
-  ~MultipleGoodTimeResponseHandler() {}
+  MultipleGoodTimeResponseHandler() = default;
+  ~MultipleGoodTimeResponseHandler() = default;
 
   std::unique_ptr<net::test_server::HttpResponse> ResponseHandler(
       const net::test_server::HttpRequest& request);

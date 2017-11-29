@@ -92,7 +92,7 @@ void ContentSettingsRegistry::ResetForTest() {
   Init();
 }
 
-ContentSettingsRegistry::~ContentSettingsRegistry() {}
+ContentSettingsRegistry::~ContentSettingsRegistry() = default;
 
 const ContentSettingsInfo* ContentSettingsRegistry::Get(
     ContentSettingsType type) const {

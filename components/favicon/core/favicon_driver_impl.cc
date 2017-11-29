@@ -64,8 +64,7 @@ FaviconDriverImpl::FaviconDriverImpl(FaviconService* favicon_service,
   }
 }
 
-FaviconDriverImpl::~FaviconDriverImpl() {
-}
+FaviconDriverImpl::~FaviconDriverImpl() = default;
 
 void FaviconDriverImpl::FetchFavicon(const GURL& page_url,
                                      bool is_same_document) {

@@ -21,8 +21,7 @@ AutofillScanner::AutofillScanner(
   Init(non_owning_);
 }
 
-AutofillScanner::~AutofillScanner() {
-}
+AutofillScanner::~AutofillScanner() = default;
 
 void AutofillScanner::Advance() {
   DCHECK(!IsEnd());

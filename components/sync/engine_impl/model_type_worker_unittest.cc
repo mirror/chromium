@@ -149,7 +149,7 @@ class ModelTypeWorkerTest : public ::testing::Test {
             kModelType,
             &type_observers_)) {}
 
-  ~ModelTypeWorkerTest() override {}
+  ~ModelTypeWorkerTest() override = default;
 
   // One of these Initialize functions should be called at the beginning of
   // each test.

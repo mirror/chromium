@@ -8,7 +8,7 @@
 
 namespace syncer {
 
-AttachmentDownloader::~AttachmentDownloader() {}
+AttachmentDownloader::~AttachmentDownloader() = default;
 
 std::unique_ptr<AttachmentDownloader> AttachmentDownloader::Create(
     const GURL& sync_service_url,

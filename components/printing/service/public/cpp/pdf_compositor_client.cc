@@ -29,7 +29,7 @@ void OnCompositePdf(
 
 PdfCompositorClient::PdfCompositorClient() : compositor_(nullptr) {}
 
-PdfCompositorClient::~PdfCompositorClient() {}
+PdfCompositorClient::~PdfCompositorClient() = default;
 
 void PdfCompositorClient::Connect(service_manager::Connector* connector) {
   DCHECK(!compositor_.is_bound());

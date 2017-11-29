@@ -28,15 +28,15 @@ class FakeWebDataService : public autofill::AutofillWebDataService {
                                base::ThreadTaskRunnerHandle::Get()) {}
 
  protected:
-  ~FakeWebDataService() override {}
+  ~FakeWebDataService() override = default;
 };
 
 }  // namespace
 
 class BrowsingDataUtilsTest : public testing::Test {
  public:
-  BrowsingDataUtilsTest() {}
-  ~BrowsingDataUtilsTest() override {}
+  BrowsingDataUtilsTest() = default;
+  ~BrowsingDataUtilsTest() override = default;
 
   void SetUp() override {
     browsing_data::prefs::RegisterBrowserUserPrefs(prefs_.registry());

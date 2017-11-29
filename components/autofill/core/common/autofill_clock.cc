@@ -26,8 +26,10 @@ base::Time AutofillClock::Now() {
   return g_autofill_clock.Get().clock_->Now();
 }
 
-AutofillClock::AutofillClock(){};
-AutofillClock::~AutofillClock(){};
+AutofillClock::AutofillClock() = default;
+;
+AutofillClock::~AutofillClock() = default;
+;
 
 // static
 void AutofillClock::SetClock() {

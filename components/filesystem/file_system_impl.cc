@@ -31,8 +31,7 @@ FileSystemImpl::FileSystemImpl(const service_manager::Identity& remote_identity,
       lock_table_(std::move(lock_table)),
       persistent_dir_(persistent_dir) {}
 
-FileSystemImpl::~FileSystemImpl() {
-}
+FileSystemImpl::~FileSystemImpl() = default;
 
 void FileSystemImpl::OpenTempDirectory(mojom::DirectoryRequest directory,
                                        OpenTempDirectoryCallback callback) {

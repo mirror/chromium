@@ -19,11 +19,9 @@ const char kHttpStatusErrorPrefix[] = "HTTP status: ";
 
 }  // namespace
 
-CryptAuthApiCallFlow::CryptAuthApiCallFlow() {
-}
+CryptAuthApiCallFlow::CryptAuthApiCallFlow() = default;
 
-CryptAuthApiCallFlow::~CryptAuthApiCallFlow() {
-}
+CryptAuthApiCallFlow::~CryptAuthApiCallFlow() = default;
 
 void CryptAuthApiCallFlow::Start(const GURL& request_url,
                                  net::URLRequestContextGetter* context,

@@ -9,9 +9,9 @@
 
 namespace offline_pages {
 
-Task::Task() {}
+Task::Task() = default;
 
-Task::~Task() {}
+Task::~Task() = default;
 
 void Task::SetTaskCompletionCallbackForTesting(
     scoped_refptr<base::SingleThreadTaskRunner> task_completion_runner,

@@ -48,8 +48,8 @@ namespace {
 // HistoryBackend to work.
 class HistoryBackendDBTest : public HistoryBackendDBBaseTest {
  public:
-  HistoryBackendDBTest() {}
-  ~HistoryBackendDBTest() override {}
+  HistoryBackendDBTest() = default;
+  ~HistoryBackendDBTest() override = default;
 };
 
 TEST_F(HistoryBackendDBTest, ClearBrowsingData_Downloads) {

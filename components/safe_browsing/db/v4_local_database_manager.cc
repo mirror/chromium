@@ -198,7 +198,7 @@ V4LocalDatabaseManager::PendingCheck::PendingCheck(
   full_hash_threat_types.assign(full_hashes.size(), SB_THREAT_TYPE_SAFE);
 }
 
-V4LocalDatabaseManager::PendingCheck::~PendingCheck() {}
+V4LocalDatabaseManager::PendingCheck::~PendingCheck() = default;
 
 // static
 const V4LocalDatabaseManager*

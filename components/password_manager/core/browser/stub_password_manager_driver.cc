@@ -6,11 +6,9 @@
 
 namespace password_manager {
 
-StubPasswordManagerDriver::StubPasswordManagerDriver() {
-}
+StubPasswordManagerDriver::StubPasswordManagerDriver() = default;
 
-StubPasswordManagerDriver::~StubPasswordManagerDriver() {
-}
+StubPasswordManagerDriver::~StubPasswordManagerDriver() = default;
 
 void StubPasswordManagerDriver::FillPasswordForm(
     const autofill::PasswordFormFillData& form_data) {

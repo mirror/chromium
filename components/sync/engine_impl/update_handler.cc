@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-UpdateHandler::UpdateHandler() {}
+UpdateHandler::UpdateHandler() = default;
 
-UpdateHandler::~UpdateHandler() {}
+UpdateHandler::~UpdateHandler() = default;
 
 }  // namespace syncer

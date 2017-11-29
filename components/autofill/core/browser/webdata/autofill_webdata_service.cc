@@ -292,8 +292,7 @@ base::SingleThreadTaskRunner* AutofillWebDataService::GetDBTaskRunner() {
   return db_task_runner_.get();
 }
 
-AutofillWebDataService::~AutofillWebDataService() {
-}
+AutofillWebDataService::~AutofillWebDataService() = default;
 
 void AutofillWebDataService::NotifyAutofillMultipleChangedOnUISequence() {
   DCHECK(ui_task_runner_->RunsTasksInCurrentSequence());

@@ -55,8 +55,7 @@ class TokenWebDataBackend
   }
 
  protected:
-  virtual ~TokenWebDataBackend() {
-  }
+  virtual ~TokenWebDataBackend() = default;
 
  private:
   friend class base::RefCountedDeleteOnSequence<TokenWebDataBackend>;
@@ -66,7 +65,8 @@ class TokenWebDataBackend
 TokenResult::TokenResult()
     : db_result(TokenServiceTable::TOKEN_DB_RESULT_SQL_INVALID_STATEMENT) {}
 TokenResult::TokenResult(const TokenResult& other) = default;
-TokenResult::~TokenResult(){};
+TokenResult::~TokenResult() = default;
+;
 
 TokenWebData::TokenWebData(
     scoped_refptr<WebDatabaseService> wdbs,
@@ -107,5 +107,4 @@ TokenWebData::TokenWebData(
     : WebDataServiceBase(nullptr, ProfileErrorCallback(), ui_task_runner),
       token_backend_(new TokenWebDataBackend(db_task_runner)) {}
 
-TokenWebData::~TokenWebData() {
-}
+TokenWebData::~TokenWebData() = default;

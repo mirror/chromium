@@ -109,7 +109,7 @@ class AsyncDirectoryTypeControllerFake : public AsyncDirectoryTypeController {
         mock_(mock),
         change_processor_(change_processor),
         backend_task_runner_(backend_task_runner) {}
-  ~AsyncDirectoryTypeControllerFake() override {}
+  ~AsyncDirectoryTypeControllerFake() override = default;
 
   // Prevent tasks from being posted on the backend thread until
   // UnblockBackendTasks() is called.

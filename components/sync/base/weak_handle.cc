@@ -20,7 +20,7 @@ bool WeakHandleCoreBase::IsOnOwnerThread() const {
   return owner_loop_task_runner_->BelongsToCurrentThread();
 }
 
-WeakHandleCoreBase::~WeakHandleCoreBase() {}
+WeakHandleCoreBase::~WeakHandleCoreBase() = default;
 
 void WeakHandleCoreBase::PostToOwnerThread(const base::Location& from_here,
                                            const base::Closure& fn) const {

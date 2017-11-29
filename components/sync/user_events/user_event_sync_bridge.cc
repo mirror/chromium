@@ -81,7 +81,7 @@ UserEventSyncBridge::UserEventSyncBridge(
       &UserEventSyncBridge::HandleGlobalIdChange, base::AsWeakPtr(this)));
 }
 
-UserEventSyncBridge::~UserEventSyncBridge() {}
+UserEventSyncBridge::~UserEventSyncBridge() = default;
 
 std::unique_ptr<MetadataChangeList>
 UserEventSyncBridge::CreateMetadataChangeList() {

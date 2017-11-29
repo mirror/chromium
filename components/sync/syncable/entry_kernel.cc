@@ -27,7 +27,7 @@ EntryKernel::EntryKernel() : dirty_(false), memory_usage_(kMemoryUsageUnknown) {
 
 EntryKernel::EntryKernel(const EntryKernel& other) = default;
 
-EntryKernel::~EntryKernel() {}
+EntryKernel::~EntryKernel() = default;
 
 ModelType EntryKernel::GetModelType() const {
   ModelType specifics_type = GetModelTypeFromSpecifics(ref(SPECIFICS));

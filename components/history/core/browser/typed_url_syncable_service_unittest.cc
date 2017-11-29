@@ -149,7 +149,7 @@ class TestHistoryBackend;
 
 class TestHistoryBackendDelegate : public HistoryBackend::Delegate {
  public:
-  TestHistoryBackendDelegate() {}
+  TestHistoryBackendDelegate() = default;
 
   void NotifyProfileError(sql::InitStatus init_status,
                           const std::string& diagnostics) override {}
@@ -206,7 +206,7 @@ class TestHistoryBackend : public HistoryBackend {
   }
 
  private:
-  ~TestHistoryBackend() override {}
+  ~TestHistoryBackend() override = default;
 };
 
 }  // namespace
@@ -214,7 +214,7 @@ class TestHistoryBackend : public HistoryBackend {
 class TypedUrlSyncableServiceTest : public testing::Test {
  public:
   TypedUrlSyncableServiceTest() : typed_url_sync_service_(nullptr) {}
-  ~TypedUrlSyncableServiceTest() override {}
+  ~TypedUrlSyncableServiceTest() override = default;
 
   void SetUp() override {
     fake_history_backend_ = new TestHistoryBackend();

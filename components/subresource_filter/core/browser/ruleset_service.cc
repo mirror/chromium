@@ -239,7 +239,7 @@ RulesetService::RulesetService(
       base::Bind(&RulesetService::InitializeAfterStartup, AsWeakPtr()));
 }
 
-RulesetService::~RulesetService() {}
+RulesetService::~RulesetService() = default;
 
 void RulesetService::IndexAndStoreAndPublishRulesetIfNeeded(
     const UnindexedRulesetInfo& unindexed_ruleset_info) {

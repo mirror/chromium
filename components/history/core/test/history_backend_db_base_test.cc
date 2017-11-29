@@ -68,8 +68,7 @@ HistoryBackendDBBaseTest::HistoryBackendDBBaseTest()
       db_(nullptr),
       last_profile_error_(sql::INIT_OK) {}
 
-HistoryBackendDBBaseTest::~HistoryBackendDBBaseTest() {
-}
+HistoryBackendDBBaseTest::~HistoryBackendDBBaseTest() = default;
 
 void HistoryBackendDBBaseTest::SetUp() {
   ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());

@@ -29,8 +29,7 @@ InstanceIDDriver::InstanceIDDriver(gcm::GCMDriver* gcm_driver)
     : gcm_driver_(gcm_driver) {
 }
 
-InstanceIDDriver::~InstanceIDDriver() {
-}
+InstanceIDDriver::~InstanceIDDriver() = default;
 
 InstanceID* InstanceIDDriver::GetInstanceID(const std::string& app_id) {
   auto iter = instance_id_map_.find(app_id);

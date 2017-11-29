@@ -71,7 +71,7 @@ PageRenovatorTest::PageRenovatorTest() {
       GURL("example.com"));
 }
 
-PageRenovatorTest::~PageRenovatorTest() {}
+PageRenovatorTest::~PageRenovatorTest() = default;
 
 TEST_F(PageRenovatorTest, InjectsScript) {
   EXPECT_FALSE(script_injector_inject_called_);

@@ -18,7 +18,7 @@ UpdateCounters::UpdateCounters()
       num_server_overwrites(0),
       num_local_overwrites(0) {}
 
-UpdateCounters::~UpdateCounters() {}
+UpdateCounters::~UpdateCounters() = default;
 
 std::unique_ptr<base::DictionaryValue> UpdateCounters::ToValue() const {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());

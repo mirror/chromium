@@ -15,7 +15,7 @@
 
 namespace url_matcher {
 
-RegexSetMatcher::RegexSetMatcher() {}
+RegexSetMatcher::RegexSetMatcher() = default;
 
 RegexSetMatcher::~RegexSetMatcher() {
   DeleteSubstringPatterns();

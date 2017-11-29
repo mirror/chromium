@@ -21,8 +21,8 @@ namespace autofill {
 
 class CreditCardFieldTestBase {
  public:
-  CreditCardFieldTestBase() {}
-  ~CreditCardFieldTestBase() {}
+  CreditCardFieldTestBase() = default;
+  ~CreditCardFieldTestBase() = default;
 
  protected:
   std::vector<std::unique_ptr<AutofillField>> list_;
@@ -65,7 +65,7 @@ class CreditCardFieldTestBase {
 class CreditCardFieldTest : public CreditCardFieldTestBase,
                             public testing::Test {
  public:
-  CreditCardFieldTest() {}
+  CreditCardFieldTest() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CreditCardFieldTest);

@@ -14,7 +14,7 @@ CommitCounters::CommitCounters()
       num_commits_conflict(0),
       num_commits_error(0) {}
 
-CommitCounters::~CommitCounters() {}
+CommitCounters::~CommitCounters() = default;
 
 std::unique_ptr<base::DictionaryValue> CommitCounters::ToValue() const {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());

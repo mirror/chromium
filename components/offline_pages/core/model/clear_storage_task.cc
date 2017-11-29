@@ -232,7 +232,7 @@ ClearStorageTask::ClearStorageTask(OfflinePageMetadataStoreSQL* store,
       clearup_time_(clearup_time),
       weak_ptr_factory_(this) {}
 
-ClearStorageTask::~ClearStorageTask() {}
+ClearStorageTask::~ClearStorageTask() = default;
 
 void ClearStorageTask::Run() {
   archive_manager_->GetStorageStats(

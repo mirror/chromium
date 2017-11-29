@@ -116,8 +116,8 @@ MockDataReductionProxyRequestOptions::MockDataReductionProxyRequestOptions(
     DataReductionProxyConfig* config)
     : TestDataReductionProxyRequestOptions(client, "1.2.3.4", config) {}
 
-MockDataReductionProxyRequestOptions::~MockDataReductionProxyRequestOptions() {
-}
+MockDataReductionProxyRequestOptions::~MockDataReductionProxyRequestOptions() =
+    default;
 
 TestDataReductionProxyConfigServiceClient::
     TestDataReductionProxyConfigServiceClient(
@@ -146,8 +146,7 @@ TestDataReductionProxyConfigServiceClient::
 }
 
 TestDataReductionProxyConfigServiceClient::
-    ~TestDataReductionProxyConfigServiceClient() {
-}
+    ~TestDataReductionProxyConfigServiceClient() = default;
 
 void TestDataReductionProxyConfigServiceClient::SetNow(const base::Time& time) {
   tick_clock_.SetTime(time);
@@ -245,8 +244,7 @@ MockDataReductionProxyService::MockDataReductionProxyService(
                                 task_runner,
                                 base::TimeDelta()) {}
 
-MockDataReductionProxyService::~MockDataReductionProxyService() {
-}
+MockDataReductionProxyService::~MockDataReductionProxyService() = default;
 
 TestDataReductionProxyIOData::TestDataReductionProxyIOData(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
@@ -273,8 +271,7 @@ TestDataReductionProxyIOData::TestDataReductionProxyIOData(
   enabled_ = enabled;
 }
 
-TestDataReductionProxyIOData::~TestDataReductionProxyIOData() {
-}
+TestDataReductionProxyIOData::~TestDataReductionProxyIOData() = default;
 
 void TestDataReductionProxyIOData::SetPingbackReportingFraction(
     float pingback_reporting_fraction) {
@@ -290,9 +287,9 @@ void TestDataReductionProxyIOData::SetDataReductionProxyService(
   service_set_ = true;
 }
 
-TestDataStore::TestDataStore() {}
+TestDataStore::TestDataStore() = default;
 
-TestDataStore::~TestDataStore() {}
+TestDataStore::~TestDataStore() = default;
 
 DataStore::Status TestDataStore::Get(base::StringPiece key,
                                      std::string* value) {
@@ -335,7 +332,7 @@ DataReductionProxyTestContext::Builder::Builder()
       use_test_config_client_(false),
       skip_settings_initialization_(false) {}
 
-DataReductionProxyTestContext::Builder::~Builder() {}
+DataReductionProxyTestContext::Builder::~Builder() = default;
 
 DataReductionProxyTestContext::Builder&
 DataReductionProxyTestContext::Builder::WithURLRequestContext(

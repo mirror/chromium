@@ -21,7 +21,7 @@ using Link = LegalMessageLine::Link;
 // A legal message line that allows for modifications.
 class TestLegalMessageLine : public LegalMessageLine {
  public:
-  TestLegalMessageLine() {}
+  TestLegalMessageLine() = default;
 
   TestLegalMessageLine(const std::string& ascii_text) { set_text(ascii_text); }
 
@@ -31,7 +31,7 @@ class TestLegalMessageLine : public LegalMessageLine {
     set_links(links);
   }
 
-  ~TestLegalMessageLine() override {}
+  ~TestLegalMessageLine() override = default;
 
   void set_text(const std::string& ascii_text) {
     text_ = base::ASCIIToUTF16(ascii_text);
@@ -97,8 +97,8 @@ bool operator==(const LegalMessageLine& lhs, const LegalMessageLine& rhs) {
 
 class LegalMessageLineTest : public ::testing::TestWithParam<TestCase> {
  public:
-  LegalMessageLineTest() {}
-  ~LegalMessageLineTest() override {}
+  LegalMessageLineTest() = default;
+  ~LegalMessageLineTest() override = default;
 };
 
 // Verifies that legal message parsing is correct.

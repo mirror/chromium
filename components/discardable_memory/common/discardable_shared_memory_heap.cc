@@ -36,7 +36,7 @@ DiscardableSharedMemoryHeap::Span::Span(
       length_(length),
       is_locked_(false) {}
 
-DiscardableSharedMemoryHeap::Span::~Span() {}
+DiscardableSharedMemoryHeap::Span::~Span() = default;
 
 DiscardableSharedMemoryHeap::ScopedMemorySegment::ScopedMemorySegment(
     DiscardableSharedMemoryHeap* heap,

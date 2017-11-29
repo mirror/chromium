@@ -14,7 +14,7 @@ ClearServerDataRequestEvent::ClearServerDataRequestEvent(
     const sync_pb::ClientToServerMessage& request)
     : timestamp_(timestamp), request_(request) {}
 
-ClearServerDataRequestEvent::~ClearServerDataRequestEvent() {}
+ClearServerDataRequestEvent::~ClearServerDataRequestEvent() = default;
 
 base::Time ClearServerDataRequestEvent::GetTimestamp() const {
   return timestamp_;

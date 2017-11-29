@@ -111,7 +111,7 @@ class MockService : public AutofillWalletMetadataSyncableService {
             Invoke(this, &MockService::SendChangesToSyncServerConcrete));
   }
 
-  ~MockService() override {}
+  ~MockService() override = default;
 
   MOCK_METHOD1(UpdateAddressStats, bool(const AutofillProfile&));
   MOCK_METHOD1(UpdateCardStats, bool(const CreditCard&));
@@ -147,8 +147,8 @@ class MockService : public AutofillWalletMetadataSyncableService {
 
 class NoOpWebData : public AutofillWebDataBackend {
  public:
-  NoOpWebData() {}
-  ~NoOpWebData() override {}
+  NoOpWebData() = default;
+  ~NoOpWebData() override = default;
 
  private:
   // AutofillWebDataBackend implementation.
@@ -168,7 +168,7 @@ class AutofillWalletMetadataSyncableServiceTest : public Test {
  public:
   AutofillWalletMetadataSyncableServiceTest()
       : local_(&no_op_web_data_), remote_(&no_op_web_data_) {}
-  ~AutofillWalletMetadataSyncableServiceTest() override {}
+  ~AutofillWalletMetadataSyncableServiceTest() override = default;
 
   // Outlives local_ and remote_.
   NoOpWebData no_op_web_data_;

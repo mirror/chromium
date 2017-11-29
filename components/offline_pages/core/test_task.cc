@@ -8,9 +8,9 @@
 
 namespace offline_pages {
 
-ConsumedResource::ConsumedResource() {}
+ConsumedResource::ConsumedResource() = default;
 
-ConsumedResource::~ConsumedResource() {}
+ConsumedResource::~ConsumedResource() = default;
 
 void ConsumedResource::Step(const base::Closure& step_callback) {
   next_step_ = step_callback;
@@ -32,7 +32,7 @@ TestTask::TestTask(ConsumedResource* resource, bool leave_early)
       state_(TaskState::NOT_STARTED),
       leave_early_(leave_early) {}
 
-TestTask::~TestTask() {}
+TestTask::~TestTask() = default;
 
 // Run is Step 1 in our case.
 void TestTask::Run() {

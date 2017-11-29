@@ -42,7 +42,7 @@ bool ConvertCardTypeStringToEnum(const std::string& supported_type,
 
 }  // namespace
 
-PaymentMethodData::PaymentMethodData() {}
+PaymentMethodData::PaymentMethodData() = default;
 PaymentMethodData::PaymentMethodData(const PaymentMethodData& other) = default;
 PaymentMethodData::~PaymentMethodData() = default;
 

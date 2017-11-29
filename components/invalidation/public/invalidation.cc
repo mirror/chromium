@@ -81,8 +81,7 @@ std::unique_ptr<Invalidation> Invalidation::InitFromValue(
 
 Invalidation::Invalidation(const Invalidation& other) = default;
 
-Invalidation::~Invalidation() {
-}
+Invalidation::~Invalidation() = default;
 
 invalidation::ObjectId Invalidation::object_id() const {
   return id_;

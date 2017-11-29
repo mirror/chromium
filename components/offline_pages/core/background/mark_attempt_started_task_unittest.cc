@@ -47,7 +47,7 @@ MarkAttemptStartedTaskTest::MarkAttemptStartedTaskTest()
     : task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {}
 
-MarkAttemptStartedTaskTest::~MarkAttemptStartedTaskTest() {}
+MarkAttemptStartedTaskTest::~MarkAttemptStartedTaskTest() = default;
 
 void MarkAttemptStartedTaskTest::PumpLoop() {
   task_runner_->RunUntilIdle();

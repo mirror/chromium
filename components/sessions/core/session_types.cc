@@ -20,8 +20,7 @@ SessionTab::SessionTab()
       pinned(false) {
 }
 
-SessionTab::~SessionTab() {
-}
+SessionTab::~SessionTab() = default;
 
 void SessionTab::SetFromSyncData(const sync_pb::SessionTab& sync_data,
                                  base::Time timestamp) {
@@ -63,6 +62,6 @@ SessionWindow::SessionWindow()
       is_constrained(true),
       show_state(ui::SHOW_STATE_DEFAULT) {}
 
-SessionWindow::~SessionWindow() {}
+SessionWindow::~SessionWindow() = default;
 
 }  // namespace sessions

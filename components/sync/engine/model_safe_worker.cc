@@ -75,7 +75,7 @@ ModelSafeWorker::ModelSafeWorker()
     : work_done_or_abandoned_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                               base::WaitableEvent::InitialState::NOT_SIGNALED) {
 }
-ModelSafeWorker::~ModelSafeWorker() {}
+ModelSafeWorker::~ModelSafeWorker() = default;
 
 void ModelSafeWorker::RequestStop() {
   base::AutoLock auto_lock(lock_);

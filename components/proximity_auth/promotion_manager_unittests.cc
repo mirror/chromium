@@ -43,8 +43,8 @@ const bool kUnlockable1 = false;
 // Mock implementation of NotificationController.
 class MockNotificationController : public NotificationController {
  public:
-  MockNotificationController() {}
-  ~MockNotificationController() override {}
+  MockNotificationController() = default;
+  ~MockNotificationController() override = default;
 
   MOCK_METHOD0(ShowChromebookAddedNotification, void());
   MOCK_METHOD0(ShowPairingChangeNotification, void());
@@ -59,7 +59,7 @@ class MockNotificationController : public NotificationController {
 class MockProximityAuthPrefManager : public ProximityAuthProfilePrefManager {
  public:
   MockProximityAuthPrefManager() : ProximityAuthProfilePrefManager(nullptr) {}
-  ~MockProximityAuthPrefManager() override {}
+  ~MockProximityAuthPrefManager() override = default;
 
   MOCK_METHOD1(SetLastPromotionCheckTimestampMs, void(int64_t));
   MOCK_CONST_METHOD0(GetLastPromotionCheckTimestampMs, int64_t());

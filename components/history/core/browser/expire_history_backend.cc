@@ -141,12 +141,9 @@ const int kOnDemandFaviconIsOldAfterDays = 30;
 
 // ExpireHistoryBackend::DeleteEffects ----------------------------------------
 
-ExpireHistoryBackend::DeleteEffects::DeleteEffects() {
-}
+ExpireHistoryBackend::DeleteEffects::DeleteEffects() = default;
 
-ExpireHistoryBackend::DeleteEffects::~DeleteEffects() {
-}
-
+ExpireHistoryBackend::DeleteEffects::~DeleteEffects() = default;
 
 // ExpireHistoryBackend -------------------------------------------------------
 
@@ -163,8 +160,7 @@ ExpireHistoryBackend::ExpireHistoryBackend(
   DCHECK(notifier_);
 }
 
-ExpireHistoryBackend::~ExpireHistoryBackend() {
-}
+ExpireHistoryBackend::~ExpireHistoryBackend() = default;
 
 void ExpireHistoryBackend::SetDatabases(HistoryDatabase* main_db,
                                         ThumbnailDatabase* thumb_db) {

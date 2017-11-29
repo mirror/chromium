@@ -617,7 +617,7 @@ FieldFiller::FieldFiller(const std::string& app_locale,
                          AddressNormalizer* address_normalizer)
     : app_locale_(app_locale), address_normalizer_(address_normalizer) {}
 
-FieldFiller::~FieldFiller() {}
+FieldFiller::~FieldFiller() = default;
 
 bool FieldFiller::FillFormField(const AutofillField& field,
                                 const AutofillDataModel& data_model,

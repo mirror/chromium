@@ -12,8 +12,7 @@ namespace plugin {
 ModulePpapi::ModulePpapi() : pp::Module() {
 }
 
-ModulePpapi::~ModulePpapi() {
-}
+ModulePpapi::~ModulePpapi() = default;
 
 bool ModulePpapi::Init() {
   return true;

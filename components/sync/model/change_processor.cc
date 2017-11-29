@@ -12,7 +12,7 @@ ChangeProcessor::ChangeProcessor(
     std::unique_ptr<DataTypeErrorHandler> error_handler)
     : error_handler_(std::move(error_handler)), share_handle_(nullptr) {}
 
-ChangeProcessor::~ChangeProcessor() {}
+ChangeProcessor::~ChangeProcessor() = default;
 
 void ChangeProcessor::Start(UserShare* share_handle) {
   DCHECK(!share_handle_);

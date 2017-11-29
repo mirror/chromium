@@ -58,8 +58,8 @@ class MockTriggerManager : public TriggerManager {
 
 class AdSamplerTriggerTest : public content::RenderViewHostTestHarness {
  public:
-  AdSamplerTriggerTest() {}
-  ~AdSamplerTriggerTest() override {}
+  AdSamplerTriggerTest() = default;
+  ~AdSamplerTriggerTest() override = default;
 
   void SetUp() override {
     content::RenderViewHostTestHarness::SetUp();

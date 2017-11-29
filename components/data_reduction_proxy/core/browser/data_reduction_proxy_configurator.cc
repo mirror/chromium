@@ -27,8 +27,7 @@ DataReductionProxyConfigurator::DataReductionProxyConfigurator(
   thread_checker_.DetachFromThread();
 }
 
-DataReductionProxyConfigurator::~DataReductionProxyConfigurator() {
-}
+DataReductionProxyConfigurator::~DataReductionProxyConfigurator() = default;
 
 void DataReductionProxyConfigurator::Enable(
     bool secure_transport_restricted,

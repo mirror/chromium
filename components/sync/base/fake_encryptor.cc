@@ -8,7 +8,7 @@
 
 namespace syncer {
 
-FakeEncryptor::~FakeEncryptor() {}
+FakeEncryptor::~FakeEncryptor() = default;
 
 bool FakeEncryptor::EncryptString(const std::string& plaintext,
                                   std::string* ciphertext) {

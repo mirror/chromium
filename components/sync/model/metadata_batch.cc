@@ -8,8 +8,8 @@
 
 namespace syncer {
 
-MetadataBatch::MetadataBatch() {}
-MetadataBatch::~MetadataBatch() {}
+MetadataBatch::MetadataBatch() = default;
+MetadataBatch::~MetadataBatch() = default;
 
 EntityMetadataMap&& MetadataBatch::TakeAllMetadata() {
   return std::move(metadata_map_);

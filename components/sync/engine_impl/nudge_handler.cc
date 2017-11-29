@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-NudgeHandler::NudgeHandler() {}
+NudgeHandler::NudgeHandler() = default;
 
-NudgeHandler::~NudgeHandler() {}
+NudgeHandler::~NudgeHandler() = default;
 
 }  // namespace syncer

@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-SyncErrorFactory::SyncErrorFactory() {}
+SyncErrorFactory::SyncErrorFactory() = default;
 
-SyncErrorFactory::~SyncErrorFactory() {}
+SyncErrorFactory::~SyncErrorFactory() = default;
 
 }  // namespace syncer

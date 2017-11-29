@@ -14,8 +14,8 @@ namespace login {
 
 class ScreenContextTest : public testing::Test {
  public:
-  ScreenContextTest() {}
-  ~ScreenContextTest() override {}
+  ScreenContextTest() = default;
+  ~ScreenContextTest() override = default;
 
   void SetUp() override { context_.reset(new ScreenContext()); }
 

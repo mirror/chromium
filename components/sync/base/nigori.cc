@@ -59,9 +59,9 @@ class NigoriStream {
 // static
 const char Nigori::kSaltSalt[] = "saltsalt";
 
-Nigori::Nigori() {}
+Nigori::Nigori() = default;
 
-Nigori::~Nigori() {}
+Nigori::~Nigori() = default;
 
 bool Nigori::InitByDerivation(const std::string& hostname,
                               const std::string& username,

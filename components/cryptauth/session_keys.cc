@@ -41,9 +41,9 @@ SessionKeys::SessionKeys(const std::string& master_symmetric_key) {
   responder_encode_key_ = responder_encode.client_write_key().as_string();
 }
 
-SessionKeys::SessionKeys() {}
+SessionKeys::SessionKeys() = default;
 
-SessionKeys::~SessionKeys() {}
+SessionKeys::~SessionKeys() = default;
 
 std::string SessionKeys::initiator_encode_key() const {
   return initiator_encode_key_;

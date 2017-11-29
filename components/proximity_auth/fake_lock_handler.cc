@@ -6,9 +6,9 @@
 
 namespace proximity_auth {
 
-FakeLockHandler::FakeLockHandler() {}
+FakeLockHandler::FakeLockHandler() = default;
 
-FakeLockHandler::~FakeLockHandler() {}
+FakeLockHandler::~FakeLockHandler() = default;
 
 void FakeLockHandler::ShowBannerMessage(const base::string16& message) {}
 

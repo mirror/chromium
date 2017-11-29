@@ -9,4 +9,4 @@ ReadingListModelStorage::ReadingListModelStorage(
     syncer::ModelType type)
     : ModelTypeSyncBridge(change_processor_factory, type) {}
 
-ReadingListModelStorage::~ReadingListModelStorage() {}
+ReadingListModelStorage::~ReadingListModelStorage() = default;

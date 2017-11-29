@@ -197,7 +197,7 @@ SyncEncryptionHandlerImpl::Vault::Vault(Encryptor* encryptor,
       encrypted_types(encrypted_types),
       passphrase_type(passphrase_type) {}
 
-SyncEncryptionHandlerImpl::Vault::~Vault() {}
+SyncEncryptionHandlerImpl::Vault::~Vault() = default;
 
 SyncEncryptionHandlerImpl::SyncEncryptionHandlerImpl(
     UserShare* user_share,
@@ -221,7 +221,7 @@ SyncEncryptionHandlerImpl::SyncEncryptionHandlerImpl(
                                encryptor, &old_keystore_keys_, &keystore_key_);
 }
 
-SyncEncryptionHandlerImpl::~SyncEncryptionHandlerImpl() {}
+SyncEncryptionHandlerImpl::~SyncEncryptionHandlerImpl() = default;
 
 void SyncEncryptionHandlerImpl::AddObserver(Observer* observer) {
   DCHECK(thread_checker_.CalledOnValidThread());

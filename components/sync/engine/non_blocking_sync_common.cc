@@ -8,25 +8,25 @@
 
 namespace syncer {
 
-CommitRequestData::CommitRequestData() {}
+CommitRequestData::CommitRequestData() = default;
 
 CommitRequestData::CommitRequestData(const CommitRequestData& other) = default;
 
-CommitRequestData::~CommitRequestData() {}
+CommitRequestData::~CommitRequestData() = default;
 
-CommitResponseData::CommitResponseData() {}
+CommitResponseData::CommitResponseData() = default;
 
 CommitResponseData::CommitResponseData(const CommitResponseData& other) =
     default;
 
-CommitResponseData::~CommitResponseData() {}
+CommitResponseData::~CommitResponseData() = default;
 
-UpdateResponseData::UpdateResponseData() {}
+UpdateResponseData::UpdateResponseData() = default;
 
 UpdateResponseData::UpdateResponseData(const UpdateResponseData& other) =
     default;
 
-UpdateResponseData::~UpdateResponseData() {}
+UpdateResponseData::~UpdateResponseData() = default;
 
 size_t EstimateMemoryUsage(const CommitRequestData& value) {
   using base::trace_event::EstimateMemoryUsage;

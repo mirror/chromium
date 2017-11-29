@@ -6,9 +6,9 @@
 
 namespace syncer {
 
-SyncChangeProcessor::SyncChangeProcessor() {}
+SyncChangeProcessor::SyncChangeProcessor() = default;
 
-SyncChangeProcessor::~SyncChangeProcessor() {}
+SyncChangeProcessor::~SyncChangeProcessor() = default;
 
 SyncError SyncChangeProcessor::UpdateDataTypeContext(
     ModelType type,

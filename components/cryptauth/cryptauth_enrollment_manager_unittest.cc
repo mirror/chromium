@@ -54,8 +54,8 @@ const double kLastExpiredEnrollmentTimeSeconds =
 // Mocks out the actual enrollment flow.
 class MockCryptAuthEnroller : public CryptAuthEnroller {
  public:
-  MockCryptAuthEnroller() {}
-  ~MockCryptAuthEnroller() override {}
+  MockCryptAuthEnroller() = default;
+  ~MockCryptAuthEnroller() override = default;
 
   MOCK_METHOD5(Enroll,
                void(const std::string& user_public_key,
@@ -74,7 +74,7 @@ class MockCryptAuthEnrollerFactory : public CryptAuthEnrollerFactory {
  public:
   MockCryptAuthEnrollerFactory()
       : next_cryptauth_enroller_(new NiceMock<MockCryptAuthEnroller>()) {}
-  ~MockCryptAuthEnrollerFactory() override {}
+  ~MockCryptAuthEnrollerFactory() override = default;
 
   // CryptAuthEnrollerFactory:
   std::unique_ptr<CryptAuthEnroller> CreateInstance() override {
@@ -116,7 +116,7 @@ class TestCryptAuthEnrollmentManager : public CryptAuthEnrollmentManager {
     SetSyncSchedulerForTest(base::WrapUnique(scoped_sync_scheduler_));
   }
 
-  ~TestCryptAuthEnrollmentManager() override {}
+  ~TestCryptAuthEnrollmentManager() override = default;
 
   base::WeakPtr<MockSyncScheduler> GetSyncScheduler() {
     return weak_sync_scheduler_factory_.GetWeakPtr();

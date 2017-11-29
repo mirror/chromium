@@ -81,7 +81,7 @@ class MockBluetoothConnection : public BluetoothConnection {
 class TestWireMessage : public cryptauth::WireMessage {
  public:
   TestWireMessage() : cryptauth::WireMessage("payload", "feature") {}
-  ~TestWireMessage() override {}
+  ~TestWireMessage() override = default;
 
   std::string Serialize() const override { return kSerializedMessage; }
 

@@ -40,10 +40,10 @@ DataTypeStatusTable::TypeErrorMap GenerateCryptoErrorsForTypes(
 
 }  // namespace
 
-DataTypeManagerImpl::AssociationTypesInfo::AssociationTypesInfo() {}
+DataTypeManagerImpl::AssociationTypesInfo::AssociationTypesInfo() = default;
 DataTypeManagerImpl::AssociationTypesInfo::AssociationTypesInfo(
     const AssociationTypesInfo& other) = default;
-DataTypeManagerImpl::AssociationTypesInfo::~AssociationTypesInfo() {}
+DataTypeManagerImpl::AssociationTypesInfo::~AssociationTypesInfo() = default;
 
 DataTypeManagerImpl::DataTypeManagerImpl(
     SyncClient* sync_client,
@@ -71,7 +71,7 @@ DataTypeManagerImpl::DataTypeManagerImpl(
   DCHECK(observer_);
 }
 
-DataTypeManagerImpl::~DataTypeManagerImpl() {}
+DataTypeManagerImpl::~DataTypeManagerImpl() = default;
 
 void DataTypeManagerImpl::Configure(ModelTypeSet desired_types,
                                     ConfigureReason reason) {

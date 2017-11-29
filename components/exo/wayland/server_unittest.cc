@@ -33,8 +33,8 @@ std::string GetUniqueSocketName() {
 
 class ServerTest : public test::ExoTestBase {
  public:
-  ServerTest() {}
-  ~ServerTest() override {}
+  ServerTest() = default;
+  ~ServerTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(xdg_temp_dir_.CreateUniqueTempDir());

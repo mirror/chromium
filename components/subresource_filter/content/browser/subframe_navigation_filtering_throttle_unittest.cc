@@ -30,8 +30,8 @@ class SubframeNavigationFilteringThrottleTest
     : public content::RenderViewHostTestHarness,
       public content::WebContentsObserver {
  public:
-  SubframeNavigationFilteringThrottleTest() {}
-  ~SubframeNavigationFilteringThrottleTest() override {}
+  SubframeNavigationFilteringThrottleTest() = default;
+  ~SubframeNavigationFilteringThrottleTest() override = default;
 
   void SetUp() override {
     content::RenderViewHostTestHarness::SetUp();

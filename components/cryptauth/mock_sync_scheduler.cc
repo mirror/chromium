@@ -6,10 +6,8 @@
 
 namespace cryptauth {
 
-MockSyncScheduler::MockSyncScheduler() {
-}
+MockSyncScheduler::MockSyncScheduler() = default;
 
-MockSyncScheduler::~MockSyncScheduler() {
-}
+MockSyncScheduler::~MockSyncScheduler() = default;
 
 }  // namespace cryptauth

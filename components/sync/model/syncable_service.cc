@@ -6,7 +6,7 @@
 
 namespace syncer {
 
-SyncableService::~SyncableService() {}
+SyncableService::~SyncableService() = default;
 
 std::unique_ptr<AttachmentStoreForSync>
 SyncableService::GetAttachmentStoreForSync() {

@@ -8,9 +8,9 @@
 
 namespace syncer {
 
-SyncManagerFactory::SyncManagerFactory() {}
+SyncManagerFactory::SyncManagerFactory() = default;
 
-SyncManagerFactory::~SyncManagerFactory() {}
+SyncManagerFactory::~SyncManagerFactory() = default;
 
 std::unique_ptr<SyncManager> SyncManagerFactory::CreateSyncManager(
     const std::string& name) {

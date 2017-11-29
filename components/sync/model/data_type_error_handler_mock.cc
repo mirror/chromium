@@ -6,7 +6,7 @@
 
 namespace syncer {
 
-DataTypeErrorHandlerMock::DataTypeErrorHandlerMock() {}
+DataTypeErrorHandlerMock::DataTypeErrorHandlerMock() = default;
 
 DataTypeErrorHandlerMock::~DataTypeErrorHandlerMock() {
   DCHECK_EQ(SyncError::UNSET, expected_error_type_);

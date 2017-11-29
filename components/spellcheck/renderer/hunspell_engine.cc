@@ -52,8 +52,7 @@ HunspellEngine::HunspellEngine(
   // Wait till we check the first word before doing any initializing.
 }
 
-HunspellEngine::~HunspellEngine() {
-}
+HunspellEngine::~HunspellEngine() = default;
 
 void HunspellEngine::Init(base::File file) {
   initialized_ = true;

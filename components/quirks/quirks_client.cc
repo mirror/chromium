@@ -66,7 +66,7 @@ QuirksClient::QuirksClient(int64_t product_id,
       backoff_entry_(&kDefaultBackoffPolicy),
       weak_ptr_factory_(this) {}
 
-QuirksClient::~QuirksClient() {}
+QuirksClient::~QuirksClient() = default;
 
 void QuirksClient::StartDownload() {
   DCHECK(thread_checker_.CalledOnValidThread());

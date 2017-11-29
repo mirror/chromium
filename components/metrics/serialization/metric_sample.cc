@@ -28,8 +28,7 @@ MetricSample::MetricSample(MetricSample::SampleType sample_type,
       bucket_count_(bucket_count) {
 }
 
-MetricSample::~MetricSample() {
-}
+MetricSample::~MetricSample() = default;
 
 bool MetricSample::IsValid() const {
   return name().find(' ') == std::string::npos &&

@@ -92,8 +92,8 @@ class SortComparator {
 // Delegate that does nothing.
 class EmptyUndoDelegate : public BookmarkUndoDelegate {
  public:
-  EmptyUndoDelegate() {}
-  ~EmptyUndoDelegate() override {}
+  EmptyUndoDelegate() = default;
+  ~EmptyUndoDelegate() override = default;
 
  private:
   // BookmarkUndoDelegate:

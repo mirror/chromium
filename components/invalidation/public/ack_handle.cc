@@ -63,7 +63,6 @@ AckHandle::AckHandle(const std::string& state, base::Time timestamp)
     : state_(state), timestamp_(timestamp) {
 }
 
-AckHandle::~AckHandle() {
-}
+AckHandle::~AckHandle() = default;
 
 }  // namespace syncer

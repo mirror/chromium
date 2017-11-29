@@ -65,8 +65,7 @@ WaitForURLsDeletedObserver::WaitForURLsDeletedObserver(base::RunLoop* runner)
     : runner_(runner) {
 }
 
-WaitForURLsDeletedObserver::~WaitForURLsDeletedObserver() {
-}
+WaitForURLsDeletedObserver::~WaitForURLsDeletedObserver() = default;
 
 void WaitForURLsDeletedObserver::OnURLsDeleted(
     history::HistoryService* service,
@@ -106,7 +105,7 @@ class GetURLTask : public history::HistoryDBTask {
   }
 
  private:
-  ~GetURLTask() override {}
+  ~GetURLTask() override = default;
 
   bool* result_storage_;
   const GURL url_;

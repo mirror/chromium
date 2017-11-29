@@ -24,7 +24,7 @@ class GpuServiceTest : public testing::Test {
       : io_thread_("TestIOThread"),
         wait_(base::WaitableEvent::ResetPolicy::MANUAL,
               base::WaitableEvent::InitialState::NOT_SIGNALED) {}
-  ~GpuServiceTest() override {}
+  ~GpuServiceTest() override = default;
 
   GpuServiceImpl* gpu_service() { return gpu_service_.get(); }
 

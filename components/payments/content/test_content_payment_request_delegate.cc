@@ -12,7 +12,8 @@ TestContentPaymentRequestDelegate::TestContentPaymentRequestDelegate(
     autofill::PersonalDataManager* pdm)
     : core_delegate_(pdm) {}
 
-TestContentPaymentRequestDelegate::~TestContentPaymentRequestDelegate() {}
+TestContentPaymentRequestDelegate::~TestContentPaymentRequestDelegate() =
+    default;
 
 scoped_refptr<PaymentManifestWebDataService>
 TestContentPaymentRequestDelegate ::GetPaymentManifestWebDataService() const {

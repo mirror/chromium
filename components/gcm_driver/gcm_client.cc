@@ -11,15 +11,14 @@ GCMClient::ChromeBuildInfo::ChromeBuildInfo()
       channel(CHANNEL_UNKNOWN) {
 }
 
-GCMClient::ChromeBuildInfo::~ChromeBuildInfo() {
-}
+GCMClient::ChromeBuildInfo::~ChromeBuildInfo() = default;
 
 GCMClient::SendErrorDetails::SendErrorDetails() : result(UNKNOWN_ERROR) {}
 
 GCMClient::SendErrorDetails::SendErrorDetails(const SendErrorDetails& other) =
     default;
 
-GCMClient::SendErrorDetails::~SendErrorDetails() {}
+GCMClient::SendErrorDetails::~SendErrorDetails() = default;
 
 GCMClient::GCMStatistics::GCMStatistics()
     : is_recording(false),
@@ -32,13 +31,10 @@ GCMClient::GCMStatistics::GCMStatistics()
 
 GCMClient::GCMStatistics::GCMStatistics(const GCMStatistics& other) = default;
 
-GCMClient::GCMStatistics::~GCMStatistics() {
-}
+GCMClient::GCMStatistics::~GCMStatistics() = default;
 
-GCMClient::GCMClient() {
-}
+GCMClient::GCMClient() = default;
 
-GCMClient::~GCMClient() {
-}
+GCMClient::~GCMClient() = default;
 
 }  // namespace gcm

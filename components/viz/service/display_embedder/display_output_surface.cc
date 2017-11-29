@@ -39,7 +39,7 @@ DisplayOutputSurface::DisplayOutputSurface(
                  weak_ptr_factory_.GetWeakPtr()));
 }
 
-DisplayOutputSurface::~DisplayOutputSurface() {}
+DisplayOutputSurface::~DisplayOutputSurface() = default;
 
 void DisplayOutputSurface::BindToClient(OutputSurfaceClient* client) {
   DCHECK(client);

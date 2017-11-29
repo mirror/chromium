@@ -12,7 +12,7 @@ UnrecoverableErrorInfo::UnrecoverableErrorInfo(const base::Location& location,
                                                const std::string& message)
     : location_(location), message_(message), is_set_(true) {}
 
-UnrecoverableErrorInfo::~UnrecoverableErrorInfo() {}
+UnrecoverableErrorInfo::~UnrecoverableErrorInfo() = default;
 
 void UnrecoverableErrorInfo::Reset(const base::Location& location,
                                    const std::string& message) {

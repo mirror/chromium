@@ -387,7 +387,7 @@ void KeywordProvider::Stop(bool clear_cached_results,
     extensions_delegate_->MaybeEndExtensionKeywordMode();
 }
 
-KeywordProvider::~KeywordProvider() {}
+KeywordProvider::~KeywordProvider() = default;
 
 // static
 bool KeywordProvider::ExtractKeywordFromInput(

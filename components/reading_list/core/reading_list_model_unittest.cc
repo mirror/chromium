@@ -165,7 +165,7 @@ class ReadingListModelTest : public ReadingListModelObserver,
     ClearCounts();
     model_->AddObserver(this);
   }
-  ~ReadingListModelTest() override {}
+  ~ReadingListModelTest() override = default;
 
   void SetStorage(std::unique_ptr<TestReadingListStorage> storage,
                   std::unique_ptr<base::SimpleTestClock> clock) {

@@ -82,7 +82,7 @@ RequestSenderTest::RequestSenderTest()
     : scoped_task_environment_(
           base::test::ScopedTaskEnvironment::MainThreadType::IO) {}
 
-RequestSenderTest::~RequestSenderTest() {}
+RequestSenderTest::~RequestSenderTest() = default;
 
 void RequestSenderTest::SetUp() {
   config_ = base::MakeRefCounted<TestConfigurator>();

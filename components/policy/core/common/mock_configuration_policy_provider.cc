@@ -16,9 +16,9 @@ using testing::Invoke;
 
 namespace policy {
 
-MockConfigurationPolicyProvider::MockConfigurationPolicyProvider() {}
+MockConfigurationPolicyProvider::MockConfigurationPolicyProvider() = default;
 
-MockConfigurationPolicyProvider::~MockConfigurationPolicyProvider() {}
+MockConfigurationPolicyProvider::~MockConfigurationPolicyProvider() = default;
 
 void MockConfigurationPolicyProvider::UpdateChromePolicy(
     const PolicyMap& policy) {
@@ -41,8 +41,8 @@ void MockConfigurationPolicyProvider::RefreshWithSamePolicies() {
   UpdatePolicy(std::move(bundle));
 }
 
-MockConfigurationPolicyObserver::MockConfigurationPolicyObserver() {}
+MockConfigurationPolicyObserver::MockConfigurationPolicyObserver() = default;
 
-MockConfigurationPolicyObserver::~MockConfigurationPolicyObserver() {}
+MockConfigurationPolicyObserver::~MockConfigurationPolicyObserver() = default;
 
 }  // namespace policy

@@ -164,7 +164,7 @@ class MockTCPSocket : public net::TCPClientSocket {
 
 class CompleteHandler {
  public:
-  CompleteHandler() {}
+  CompleteHandler() = default;
   MOCK_METHOD1(OnCloseComplete, void(int result));
   MOCK_METHOD1(OnConnectComplete, void(CastSocket* socket));
   MOCK_METHOD1(OnWriteComplete, void(int result));
@@ -200,7 +200,7 @@ class TestCastSocketBase : public CastSocketImpl {
   void DisallowVerifyChallengeResult() { verify_challenge_disallow_ = true; }
 
  protected:
-  ~TestCastSocketBase() override {}
+  ~TestCastSocketBase() override = default;
 
   scoped_refptr<net::X509Certificate> ExtractPeerCert() override {
     return extract_cert_result_
@@ -243,7 +243,7 @@ class MockTestCastSocket : public TestCastSocketBase {
       : TestCastSocketBase(open_params, logger),
         mock_net_log_(open_params.net_log) {}
 
-  ~MockTestCastSocket() override {}
+  ~MockTestCastSocket() override = default;
 
   void SetupMockTransport() {
     mock_transport_ = new MockCastTransport;
@@ -358,7 +358,7 @@ class CastSocketTestBase : public testing::Test {
             CreateIPEndPointForTest(),
             capturing_net_log_.get(),
             base::TimeDelta::FromMilliseconds(kDistantTimeoutMillis)) {}
-  ~CastSocketTestBase() override {}
+  ~CastSocketTestBase() override = default;
 
   void SetUp() override { EXPECT_CALL(*observer_, OnMessage(_, _)).Times(0); }
 
@@ -381,7 +381,7 @@ class CastSocketTestBase : public testing::Test {
 
 class MockCastSocketTest : public CastSocketTestBase {
  protected:
-  MockCastSocketTest() {}
+  MockCastSocketTest() = default;
 
   void TearDown() override {
     if (socket_.get()) {
@@ -420,7 +420,7 @@ class MockCastSocketTest : public CastSocketTestBase {
 
 class SslCastSocketTest : public CastSocketTestBase {
  protected:
-  SslCastSocketTest() {}
+  SslCastSocketTest() = default;
 
   void TearDown() override {
     if (socket_.get()) {

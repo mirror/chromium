@@ -60,8 +60,7 @@ CleanExitBeacon::CleanExitBeacon(const base::string16& backup_registry_key,
 #endif
 }
 
-CleanExitBeacon::~CleanExitBeacon() {
-}
+CleanExitBeacon::~CleanExitBeacon() = default;
 
 // static
 void CleanExitBeacon::RegisterPrefs(PrefRegistrySimple* registry) {

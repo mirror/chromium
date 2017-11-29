@@ -85,7 +85,7 @@ ImportCleanupTask::ImportCleanupTask(PrefetchStore* prefetch_store,
       prefetch_importer_(prefetch_importer),
       weak_ptr_factory_(this) {}
 
-ImportCleanupTask::~ImportCleanupTask() {}
+ImportCleanupTask::~ImportCleanupTask() = default;
 
 void ImportCleanupTask::Run() {
   std::set<int64_t> outstanding_import_offline_ids =

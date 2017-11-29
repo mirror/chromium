@@ -224,7 +224,7 @@ void PendingProfiles::ResetToDefaultStateForTesting() {
 // CallStackProfileMetricsProvider.
 PendingProfiles::PendingProfiles() : collection_enabled_(true) {}
 
-PendingProfiles::~PendingProfiles() {}
+PendingProfiles::~PendingProfiles() = default;
 
 bool PendingProfiles::TryProfileMerge(const ProfilesState& profile_state,
                                       ProfilesState* to_profile_state) {
@@ -547,11 +547,9 @@ StackSamplingProfiler::CompletedCallback GetProfilerCallback(
 const base::Feature CallStackProfileMetricsProvider::kEnableReporting = {
     "SamplingProfilerReporting", base::FEATURE_DISABLED_BY_DEFAULT};
 
-CallStackProfileMetricsProvider::CallStackProfileMetricsProvider() {
-}
+CallStackProfileMetricsProvider::CallStackProfileMetricsProvider() = default;
 
-CallStackProfileMetricsProvider::~CallStackProfileMetricsProvider() {
-}
+CallStackProfileMetricsProvider::~CallStackProfileMetricsProvider() = default;
 
 StackSamplingProfiler::CompletedCallback
 CallStackProfileMetricsProvider::GetProfilerCallbackForBrowserProcessStartup() {

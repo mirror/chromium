@@ -133,9 +133,8 @@ void UpdateRecentVisitsFromHistoryDBTask::DoneRunOnMainThread() {
     private_data_->UpdateRecentVisits(url_id_, recent_visits_);
 }
 
-UpdateRecentVisitsFromHistoryDBTask::~UpdateRecentVisitsFromHistoryDBTask() {
-}
-
+UpdateRecentVisitsFromHistoryDBTask::~UpdateRecentVisitsFromHistoryDBTask() =
+    default;
 
 // URLIndexPrivateData ---------------------------------------------------------
 
@@ -482,7 +481,7 @@ void URLIndexPrivateData::Clear() {
   word_starts_map_.clear();
 }
 
-URLIndexPrivateData::~URLIndexPrivateData() {}
+URLIndexPrivateData::~URLIndexPrivateData() = default;
 
 HistoryIDVector URLIndexPrivateData::HistoryIDsFromWords(
     const String16Vector& unsorted_words) {
@@ -1298,8 +1297,7 @@ URLIndexPrivateData::SearchTermCacheItem::SearchTermCacheItem() : used_(true) {
 URLIndexPrivateData::SearchTermCacheItem::SearchTermCacheItem(
     const SearchTermCacheItem& other) = default;
 
-URLIndexPrivateData::SearchTermCacheItem::~SearchTermCacheItem() {
-}
+URLIndexPrivateData::SearchTermCacheItem::~SearchTermCacheItem() = default;
 
 // URLIndexPrivateData::HistoryItemFactorGreater -------------------------------
 
@@ -1308,8 +1306,8 @@ URLIndexPrivateData::HistoryItemFactorGreater::HistoryItemFactorGreater(
     : history_info_map_(history_info_map) {
 }
 
-URLIndexPrivateData::HistoryItemFactorGreater::~HistoryItemFactorGreater() {
-}
+URLIndexPrivateData::HistoryItemFactorGreater::~HistoryItemFactorGreater() =
+    default;
 
 bool URLIndexPrivateData::HistoryItemFactorGreater::operator()(
     const HistoryID h1,

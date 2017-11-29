@@ -16,7 +16,7 @@ namespace {
 
 class FakeInvalidatorTestDelegate {
  public:
-  FakeInvalidatorTestDelegate() {}
+  FakeInvalidatorTestDelegate() = default;
 
   ~FakeInvalidatorTestDelegate() {
     DestroyInvalidator();

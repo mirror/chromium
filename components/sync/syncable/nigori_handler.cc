@@ -7,8 +7,8 @@
 namespace syncer {
 namespace syncable {
 
-NigoriHandler::NigoriHandler() {}
-NigoriHandler::~NigoriHandler() {}
+NigoriHandler::NigoriHandler() = default;
+NigoriHandler::~NigoriHandler() = default;
 
 }  // namespace syncable
 }  // namespace syncer

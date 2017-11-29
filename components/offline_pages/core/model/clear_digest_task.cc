@@ -32,7 +32,8 @@ ClearDigestTask::ClearDigestTask(OfflinePageMetadataStoreSQL* store,
                                  int64_t offline_id)
     : store_(store), offline_id_(offline_id), weak_ptr_factory_(this) {}
 
-ClearDigestTask::~ClearDigestTask(){};
+ClearDigestTask::~ClearDigestTask() = default;
+;
 
 void ClearDigestTask::Run() {
   store_->Execute(base::BindOnce(&ClearDigestSync, offline_id_),

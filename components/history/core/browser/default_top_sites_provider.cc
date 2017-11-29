@@ -16,7 +16,7 @@ DefaultTopSitesProvider::DefaultTopSitesProvider(
     HistoryService* history_service)
     : history_service_(history_service) {}
 
-DefaultTopSitesProvider::~DefaultTopSitesProvider() {}
+DefaultTopSitesProvider::~DefaultTopSitesProvider() = default;
 
 void DefaultTopSitesProvider::ProvideTopSites(
     int result_count,

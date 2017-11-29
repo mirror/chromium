@@ -125,7 +125,7 @@ bool ThumbnailsAreEqual(base::RefCountedMemory* t1,
 
 class TopSitesImplTest : public HistoryUnitTestBase {
  public:
-  TopSitesImplTest() {}
+  TopSitesImplTest() = default;
 
   void SetUp() override {
     ASSERT_TRUE(scoped_temp_dir_.CreateUniqueTempDir());
@@ -396,7 +396,7 @@ TEST_F(TopSitesImplTest, GetCanonicalURL) {
 
 class MockTopSitesObserver : public TopSitesObserver {
  public:
-  MockTopSitesObserver() {}
+  MockTopSitesObserver() = default;
 
   // history::TopSitesObserver:
   void TopSitesLoaded(TopSites* top_sites) override {}

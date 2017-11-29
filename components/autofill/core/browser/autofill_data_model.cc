@@ -19,7 +19,7 @@ AutofillDataModel::AutofillDataModel(const std::string& guid,
       use_count_(1),
       use_date_(AutofillClock::Now()),
       modification_date_(AutofillClock::Now()) {}
-AutofillDataModel::~AutofillDataModel() {}
+AutofillDataModel::~AutofillDataModel() = default;
 
 bool AutofillDataModel::IsVerified() const {
   return !origin_.empty() && !GURL(origin_).is_valid();

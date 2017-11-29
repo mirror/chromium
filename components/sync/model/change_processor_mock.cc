@@ -10,6 +10,6 @@ namespace syncer {
 
 ChangeProcessorMock::ChangeProcessorMock() : ChangeProcessor(nullptr) {}
 
-ChangeProcessorMock::~ChangeProcessorMock() {}
+ChangeProcessorMock::~ChangeProcessorMock() = default;
 
 }  // namespace syncer

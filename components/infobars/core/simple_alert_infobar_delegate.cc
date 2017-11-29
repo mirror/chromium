@@ -33,8 +33,7 @@ SimpleAlertInfoBarDelegate::SimpleAlertInfoBarDelegate(
       message_(message),
       auto_expire_(auto_expire) {}
 
-SimpleAlertInfoBarDelegate::~SimpleAlertInfoBarDelegate() {
-}
+SimpleAlertInfoBarDelegate::~SimpleAlertInfoBarDelegate() = default;
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 SimpleAlertInfoBarDelegate::GetIdentifier() const {

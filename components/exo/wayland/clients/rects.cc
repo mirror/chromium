@@ -209,7 +209,7 @@ void FeedbackDiscarded(void* data,
 
 class RectsClient : public ClientBase {
  public:
-  RectsClient() {}
+  RectsClient() = default;
 
   // Initialize and run client main loop.
   int Run(const ClientBase::InitParams& params,

@@ -24,8 +24,7 @@ GuestViewAttachIframeRequest::GuestViewAttachIframeRequest(
       guest_instance_id_(guest_instance_id),
       params_(std::move(params)) {}
 
-GuestViewAttachIframeRequest::~GuestViewAttachIframeRequest() {
-}
+GuestViewAttachIframeRequest::~GuestViewAttachIframeRequest() = default;
 
 void GuestViewAttachIframeRequest::PerformRequest() {
   DCHECK(container()->render_frame());

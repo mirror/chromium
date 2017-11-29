@@ -41,8 +41,7 @@ JavaScriptAppModalDialogViews::JavaScriptAppModalDialogViews(
   }
 }
 
-JavaScriptAppModalDialogViews::~JavaScriptAppModalDialogViews() {
-}
+JavaScriptAppModalDialogViews::~JavaScriptAppModalDialogViews() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // JavaScriptAppModalDialogViews, NativeAppModalDialog implementation:

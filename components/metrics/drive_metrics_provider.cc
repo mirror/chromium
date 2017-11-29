@@ -22,7 +22,7 @@ namespace metrics {
 DriveMetricsProvider::DriveMetricsProvider(int local_state_path_key)
     : local_state_path_key_(local_state_path_key), weak_ptr_factory_(this) {}
 
-DriveMetricsProvider::~DriveMetricsProvider() {}
+DriveMetricsProvider::~DriveMetricsProvider() = default;
 
 void DriveMetricsProvider::ProvideSystemProfileMetrics(
     metrics::SystemProfileProto* system_profile_proto) {

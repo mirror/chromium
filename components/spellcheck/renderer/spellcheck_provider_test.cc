@@ -16,7 +16,7 @@
 FakeTextCheckingCompletion::FakeTextCheckingCompletion()
     : completion_count_(0), cancellation_count_(0) {}
 
-FakeTextCheckingCompletion::~FakeTextCheckingCompletion() {}
+FakeTextCheckingCompletion::~FakeTextCheckingCompletion() = default;
 
 void FakeTextCheckingCompletion::DidFinishCheckingText(
     const blink::WebVector<blink::WebTextCheckingResult>& results) {
@@ -123,5 +123,5 @@ bool TestingSpellCheckProvider::SatisfyRequestFromCache(
   return SpellCheckProvider::SatisfyRequestFromCache(text, completion);
 }
 
-SpellCheckProviderTest::SpellCheckProviderTest() {}
-SpellCheckProviderTest::~SpellCheckProviderTest() {}
+SpellCheckProviderTest::SpellCheckProviderTest() = default;
+SpellCheckProviderTest::~SpellCheckProviderTest() = default;

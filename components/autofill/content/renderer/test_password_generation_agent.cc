@@ -15,7 +15,7 @@ TestPasswordGenerationAgent::TestPasswordGenerationAgent(
   set_enabled(true);
 }
 
-TestPasswordGenerationAgent::~TestPasswordGenerationAgent() {}
+TestPasswordGenerationAgent::~TestPasswordGenerationAgent() = default;
 
 bool TestPasswordGenerationAgent::ShouldAnalyzeDocument() {
   return true;

@@ -26,7 +26,7 @@ ZoomEventManager* ZoomEventManager::GetForBrowserContext(
 
 ZoomEventManager::ZoomEventManager() : weak_ptr_factory_(this) {}
 
-ZoomEventManager::~ZoomEventManager() {}
+ZoomEventManager::~ZoomEventManager() = default;
 
 void ZoomEventManager::OnZoomLevelChanged(
     const content::HostZoomMap::ZoomLevelChange& change) {

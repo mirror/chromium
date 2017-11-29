@@ -9,9 +9,9 @@
 
 #include "base/values.h"
 
-InMemoryPrefStore::InMemoryPrefStore() {}
+InMemoryPrefStore::InMemoryPrefStore() = default;
 
-InMemoryPrefStore::~InMemoryPrefStore() {}
+InMemoryPrefStore::~InMemoryPrefStore() = default;
 
 bool InMemoryPrefStore::GetValue(const std::string& key,
                                  const base::Value** value) const {

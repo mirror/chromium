@@ -260,7 +260,7 @@ class TestPersonalDataManager : public PersonalDataManager {
 class TestFormStructure : public FormStructure {
  public:
   explicit TestFormStructure(const FormData& form) : FormStructure(form) {}
-  ~TestFormStructure() override {}
+  ~TestFormStructure() override = default;
 
   void SetFieldTypes(const std::vector<ServerFieldType>& heuristic_types,
                      const std::vector<ServerFieldType>& server_types) {
@@ -288,7 +288,7 @@ class TestAutofillManager : public AutofillManager {
                       TestPersonalDataManager* personal_manager)
       : AutofillManager(driver, autofill_client, personal_manager),
         autofill_enabled_(true) {}
-  ~TestAutofillManager() override {}
+  ~TestAutofillManager() override = default;
 
   bool IsAutofillEnabled() const override { return autofill_enabled_; }
 
@@ -483,7 +483,7 @@ void AppendFieldTypeUkm(const FormData& form,
 
 class MockAutofillClient : public TestAutofillClient {
  public:
-  MockAutofillClient() {}
+  MockAutofillClient() = default;
   MOCK_METHOD1(ExecuteCommand, void(int));
 };
 

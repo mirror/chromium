@@ -9,8 +9,7 @@
 
 namespace cryptauth {
 
-CryptAuthGCMManager::Observer::~Observer() {
-}
+CryptAuthGCMManager::Observer::~Observer() = default;
 
 void CryptAuthGCMManager::Observer::OnGCMRegistrationResult(bool success) {
 }

@@ -40,8 +40,7 @@ bool URLRequestAboutJob::GetMimeType(std::string* mime_type) const {
   return true;
 }
 
-URLRequestAboutJob::~URLRequestAboutJob() {
-}
+URLRequestAboutJob::~URLRequestAboutJob() = default;
 
 void URLRequestAboutJob::StartAsync() {
   NotifyHeadersComplete();

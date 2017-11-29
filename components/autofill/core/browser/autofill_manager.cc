@@ -204,7 +204,7 @@ AutofillManager::AutofillManager(
                       app_locale,
                       enable_download_manager) {}
 
-AutofillManager::~AutofillManager() {}
+AutofillManager::~AutofillManager() = default;
 
 // static
 void AutofillManager::RegisterProfilePrefs(

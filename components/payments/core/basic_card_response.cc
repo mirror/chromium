@@ -21,7 +21,7 @@ static const char kCardExpiryYear[] = "expiryYear";
 
 }  // namespace
 
-BasicCardResponse::BasicCardResponse() {}
+BasicCardResponse::BasicCardResponse() = default;
 BasicCardResponse::BasicCardResponse(const BasicCardResponse& other) = default;
 BasicCardResponse::~BasicCardResponse() = default;
 

@@ -44,7 +44,7 @@ class ContentFaviconDriverTest : public content::RenderViewHostTestHarness {
         .WillByDefault(PostReply<5>(kEmptyRawBitmapResult));
   }
 
-  ~ContentFaviconDriverTest() override {}
+  ~ContentFaviconDriverTest() override = default;
 
   // content::RenderViewHostTestHarness:
   void SetUp() override {

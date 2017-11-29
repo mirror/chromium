@@ -58,7 +58,7 @@ class FakeEidGenerator : public cryptauth::BackgroundEidGenerator {
  public:
   FakeEidGenerator(MockBluetoothLowEnergyConnectionFinder* connection_finder)
       : connection_finder_(connection_finder) {}
-  ~FakeEidGenerator() override {}
+  ~FakeEidGenerator() override = default;
 
   std::vector<cryptauth::DataWithTimestamp> GenerateNearestEids(
       const std::vector<cryptauth::BeaconSeed>& beacon_seed) const override;
@@ -78,7 +78,7 @@ class MockBluetoothLowEnergyConnectionFinder
             kBLEGattServiceUUID,
             base::MakeUnique<FakeEidGenerator>(this)) {}
 
-  ~MockBluetoothLowEnergyConnectionFinder() override {}
+  ~MockBluetoothLowEnergyConnectionFinder() override = default;
 
   // Mock methods don't support return type std::unique_ptr<>. This is a
   // possible workaround: mock a proxy method to be called by the target

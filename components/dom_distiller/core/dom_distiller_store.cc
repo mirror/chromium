@@ -67,7 +67,7 @@ DomDistillerStore::DomDistillerStore(
                              weak_ptr_factory_.GetWeakPtr()));
 }
 
-DomDistillerStore::~DomDistillerStore() {}
+DomDistillerStore::~DomDistillerStore() = default;
 
 // DomDistillerStoreInterface implementation.
 syncer::SyncableService* DomDistillerStore::GetSyncableService() {

@@ -240,8 +240,7 @@ AutofillProfile::AutofillProfile(const AutofillProfile& profile)
   operator=(profile);
 }
 
-AutofillProfile::~AutofillProfile() {
-}
+AutofillProfile::~AutofillProfile() = default;
 
 AutofillProfile& AutofillProfile::operator=(const AutofillProfile& profile) {
   set_use_count(profile.use_count());

@@ -172,7 +172,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
  public:
   SubresourceFilterSafeBrowsingActivationThrottleTest()
       : field_trial_list_(nullptr) {}
-  ~SubresourceFilterSafeBrowsingActivationThrottleTest() override {}
+  ~SubresourceFilterSafeBrowsingActivationThrottleTest() override = default;
 
   void SetUp() override {
     content::RenderViewHostTestHarness::SetUp();
@@ -384,8 +384,9 @@ class SubresourceFilterSafeBrowsingActivationThrottleParamTest
     : public SubresourceFilterSafeBrowsingActivationThrottleTest,
       public ::testing::WithParamInterface<ActivationListTestData> {
  public:
-  SubresourceFilterSafeBrowsingActivationThrottleParamTest() {}
-  ~SubresourceFilterSafeBrowsingActivationThrottleParamTest() override {}
+  SubresourceFilterSafeBrowsingActivationThrottleParamTest() = default;
+  ~SubresourceFilterSafeBrowsingActivationThrottleParamTest() override =
+      default;
 
   void Configure() override {
     const ActivationListTestData& test_data = GetParam();
@@ -417,7 +418,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTestWithCancelling
     std::tie(throttle_method_, result_sync_) = GetParam();
   }
   ~SubresourceFilterSafeBrowsingActivationThrottleTestWithCancelling()
-      override {}
+      override = default;
 
   void DidStartNavigation(content::NavigationHandle* handle) override {
     auto throttle = base::MakeUnique<content::TestNavigationThrottle>(handle);
@@ -467,8 +468,9 @@ class SubresourceFilterSafeBrowsingActivationThrottleScopeTest
     : public SubresourceFilterSafeBrowsingActivationThrottleTest,
       public ::testing::WithParamInterface<ActivationScopeTestData> {
  public:
-  SubresourceFilterSafeBrowsingActivationThrottleScopeTest() {}
-  ~SubresourceFilterSafeBrowsingActivationThrottleScopeTest() override {}
+  SubresourceFilterSafeBrowsingActivationThrottleScopeTest() = default;
+  ~SubresourceFilterSafeBrowsingActivationThrottleScopeTest() override =
+      default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(

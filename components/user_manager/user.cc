@@ -143,7 +143,7 @@ class PublicAccountUser : public DeviceLocalAccountUserBase {
 User::User(const AccountId& account_id)
     : account_id_(account_id), user_image_(new UserImage) {}
 
-User::~User() {}
+User::~User() = default;
 
 std::string User::GetDisplayEmail() const {
   return display_email();
@@ -315,10 +315,9 @@ RegularUser::RegularUser(const AccountId& account_id) : User(account_id) {
 ActiveDirectoryUser::ActiveDirectoryUser(const AccountId& account_id)
     : RegularUser(account_id) {}
 
-RegularUser::~RegularUser() {
-}
+RegularUser::~RegularUser() = default;
 
-ActiveDirectoryUser::~ActiveDirectoryUser() {}
+ActiveDirectoryUser::~ActiveDirectoryUser() = default;
 
 UserType RegularUser::GetType() const {
   return is_child_ ? user_manager::USER_TYPE_CHILD :
@@ -339,8 +338,7 @@ GuestUser::GuestUser(const AccountId& guest_account_id)
   set_display_email(std::string());
 }
 
-GuestUser::~GuestUser() {
-}
+GuestUser::~GuestUser() = default;
 
 UserType GuestUser::GetType() const {
   return user_manager::USER_TYPE_GUEST;
@@ -350,8 +348,7 @@ DeviceLocalAccountUserBase::DeviceLocalAccountUserBase(
     const AccountId& account_id) : User(account_id) {
 }
 
-DeviceLocalAccountUserBase::~DeviceLocalAccountUserBase() {
-}
+DeviceLocalAccountUserBase::~DeviceLocalAccountUserBase() = default;
 
 bool DeviceLocalAccountUserBase::IsAffiliated() const {
   return true;
@@ -372,8 +369,7 @@ KioskAppUser::KioskAppUser(const AccountId& kiosk_app_account_id)
   set_display_email(kiosk_app_account_id.GetUserEmail());
 }
 
-KioskAppUser::~KioskAppUser() {
-}
+KioskAppUser::~KioskAppUser() = default;
 
 UserType KioskAppUser::GetType() const {
   return user_manager::USER_TYPE_KIOSK_APP;
@@ -384,8 +380,7 @@ ArcKioskAppUser::ArcKioskAppUser(const AccountId& arc_kiosk_account_id)
   set_display_email(arc_kiosk_account_id.GetUserEmail());
 }
 
-ArcKioskAppUser::~ArcKioskAppUser() {
-}
+ArcKioskAppUser::~ArcKioskAppUser() = default;
 
 UserType ArcKioskAppUser::GetType() const {
   return user_manager::USER_TYPE_ARC_KIOSK_APP;
@@ -395,8 +390,7 @@ SupervisedUser::SupervisedUser(const AccountId& account_id) : User(account_id) {
   set_can_lock(true);
 }
 
-SupervisedUser::~SupervisedUser() {
-}
+SupervisedUser::~SupervisedUser() = default;
 
 UserType SupervisedUser::GetType() const {
   return user_manager::USER_TYPE_SUPERVISED;
@@ -409,8 +403,7 @@ std::string SupervisedUser::display_email() const {
 PublicAccountUser::PublicAccountUser(const AccountId& account_id)
     : DeviceLocalAccountUserBase(account_id) {}
 
-PublicAccountUser::~PublicAccountUser() {
-}
+PublicAccountUser::~PublicAccountUser() = default;
 
 UserType PublicAccountUser::GetType() const {
   return user_manager::USER_TYPE_PUBLIC_ACCOUNT;

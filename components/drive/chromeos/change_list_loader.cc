@@ -37,7 +37,7 @@ typedef base::Callback<void(FileError,
 
 class ChangeListLoader::FeedFetcher {
  public:
-  virtual ~FeedFetcher() {}
+  virtual ~FeedFetcher() = default;
   virtual void Run(const FeedFetcherCallback& callback) = 0;
 };
 
@@ -54,7 +54,7 @@ class FullFeedFetcher : public ChangeListLoader::FeedFetcher {
                                google_apis::TEAM_DRIVES_INTEGRATION_ENABLED),
         weak_ptr_factory_(this) {}
 
-  ~FullFeedFetcher() override {}
+  ~FullFeedFetcher() override = default;
 
   void Run(const FeedFetcherCallback& callback) override {
     DCHECK(thread_checker_.CalledOnValidThread());
@@ -152,7 +152,7 @@ class DeltaFeedFetcher : public ChangeListLoader::FeedFetcher {
         start_change_id_(start_change_id),
         weak_ptr_factory_(this) {}
 
-  ~DeltaFeedFetcher() override {}
+  ~DeltaFeedFetcher() override = default;
 
   void Run(const FeedFetcherCallback& callback) override {
     DCHECK(thread_checker_.CalledOnValidThread());
@@ -253,7 +253,7 @@ AboutResourceLoader::AboutResourceLoader(JobScheduler* scheduler)
       weak_ptr_factory_(this) {
 }
 
-AboutResourceLoader::~AboutResourceLoader() {}
+AboutResourceLoader::~AboutResourceLoader() = default;
 
 void AboutResourceLoader::GetAboutResource(
     const google_apis::AboutResourceCallback& callback) {

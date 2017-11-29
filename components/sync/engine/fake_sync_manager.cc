@@ -32,7 +32,7 @@ FakeSyncManager::FakeSyncManager(ModelTypeSet initial_sync_ended_types,
       last_configure_reason_(CONFIGURE_REASON_UNKNOWN),
       num_invalidations_received_(0) {}
 
-FakeSyncManager::~FakeSyncManager() {}
+FakeSyncManager::~FakeSyncManager() = default;
 
 ModelTypeSet FakeSyncManager::GetAndResetPurgedTypes() {
   ModelTypeSet purged_types = purged_types_;

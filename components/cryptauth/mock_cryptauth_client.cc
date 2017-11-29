@@ -10,18 +10,15 @@
 
 namespace cryptauth {
 
-MockCryptAuthClient::MockCryptAuthClient() {
-}
+MockCryptAuthClient::MockCryptAuthClient() = default;
 
-MockCryptAuthClient::~MockCryptAuthClient() {
-}
+MockCryptAuthClient::~MockCryptAuthClient() = default;
 
 MockCryptAuthClientFactory::MockCryptAuthClientFactory(MockType mock_type)
     : mock_type_(mock_type) {
 }
 
-MockCryptAuthClientFactory::~MockCryptAuthClientFactory() {
-}
+MockCryptAuthClientFactory::~MockCryptAuthClientFactory() = default;
 
 std::unique_ptr<CryptAuthClient> MockCryptAuthClientFactory::CreateInstance() {
   std::unique_ptr<MockCryptAuthClient> client;

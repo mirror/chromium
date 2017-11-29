@@ -89,7 +89,7 @@ class TestDataReductionProxyPingbackClient
 
 class DataReductionProxyPingbackClientTest : public testing::Test {
  public:
-  DataReductionProxyPingbackClientTest() {}
+  DataReductionProxyPingbackClientTest() = default;
 
   TestDataReductionProxyPingbackClient* pingback_client() const {
     return pingback_client_.get();

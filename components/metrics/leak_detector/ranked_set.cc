@@ -11,7 +11,7 @@ namespace leak_detector {
 
 RankedSet::RankedSet(size_t max_size) : max_size_(max_size) {}
 
-RankedSet::~RankedSet() {}
+RankedSet::~RankedSet() = default;
 
 RankedSet::RankedSet(RankedSet&& other) : max_size_(other.max_size_) {
   entries_ = std::move(other.entries_);

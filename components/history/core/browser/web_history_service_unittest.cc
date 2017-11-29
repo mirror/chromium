@@ -40,7 +40,7 @@ class TestingWebHistoryService : public WebHistoryService {
         expected_url_(GURL()),
         expected_audio_history_value_(false),
         current_expected_post_data_("") {}
-  ~TestingWebHistoryService() override {}
+  ~TestingWebHistoryService() override = default;
 
   WebHistoryService::Request* CreateRequest(
       const GURL& url,
@@ -118,7 +118,7 @@ class TestRequest : public WebHistoryService::Request {
                      ("}");
   }
 
-  ~TestRequest() override {}
+  ~TestRequest() override = default;
 
   // history::Request overrides
   bool IsPending() override { return is_pending_; }
@@ -224,7 +224,7 @@ class WebHistoryServiceTest : public testing::Test {
                              &signin_manager_,
                              url_request_context_) {}
 
-  ~WebHistoryServiceTest() override {}
+  ~WebHistoryServiceTest() override = default;
 
   void TearDown() override {
     base::RunLoop run_loop;

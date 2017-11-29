@@ -38,7 +38,7 @@ class MockFeedbackUploader : public FeedbackUploader {
   MockFeedbackUploader(content::BrowserContext* context)
       : FeedbackUploader(context,
                          FeedbackUploaderFactory::CreateUploaderTaskRunner()) {}
-  ~MockFeedbackUploader() override {}
+  ~MockFeedbackUploader() override = default;
 
   void RunMessageLoop() {
     if (ProcessingComplete())

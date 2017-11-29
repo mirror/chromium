@@ -10,7 +10,7 @@
 
 namespace syncer {
 
-SyncJsController::SyncJsController() {}
+SyncJsController::SyncJsController() = default;
 
 SyncJsController::~SyncJsController() {
   AttachJsBackend(WeakHandle<JsBackend>());

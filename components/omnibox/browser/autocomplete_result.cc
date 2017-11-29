@@ -44,7 +44,7 @@ AutocompleteResult::AutocompleteResult() {
   default_match_ = end();
 }
 
-AutocompleteResult::~AutocompleteResult() {}
+AutocompleteResult::~AutocompleteResult() = default;
 
 void AutocompleteResult::CopyOldMatches(
     const AutocompleteInput& input,

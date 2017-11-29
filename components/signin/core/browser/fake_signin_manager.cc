@@ -15,7 +15,7 @@ FakeSigninManagerBase::FakeSigninManagerBase(
     AccountTrackerService* account_tracker_service)
     : SigninManagerBase(client, account_tracker_service) {}
 
-FakeSigninManagerBase::~FakeSigninManagerBase() {}
+FakeSigninManagerBase::~FakeSigninManagerBase() = default;
 
 void FakeSigninManagerBase::SignIn(const std::string& account_id) {
   SetAuthenticatedAccountId(account_id);

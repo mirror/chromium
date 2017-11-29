@@ -10,7 +10,7 @@ namespace download {
 class InProgressConversionsTest : public testing::Test,
                                   public InProgressConversions {
  public:
-  ~InProgressConversionsTest() override {}
+  ~InProgressConversionsTest() override = default;
 };
 
 TEST_F(InProgressConversionsTest, DownloadEntry) {

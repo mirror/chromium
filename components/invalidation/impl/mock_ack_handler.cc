@@ -31,9 +31,9 @@ bool AckHandleMatcher::operator()(
 
 }  // namespace
 
-MockAckHandler::MockAckHandler() {}
+MockAckHandler::MockAckHandler() = default;
 
-MockAckHandler::~MockAckHandler() {}
+MockAckHandler::~MockAckHandler() = default;
 
 void MockAckHandler::RegisterInvalidation(Invalidation* invalidation) {
   unacked_invalidations_.push_back(*invalidation);

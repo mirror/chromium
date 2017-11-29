@@ -111,7 +111,7 @@ MockOAuth2TokenService::MockOAuth2TokenService()
       response_expiration_(base::Time::Max()),
       num_invalidate_token_(0) {}
 
-MockOAuth2TokenService::~MockOAuth2TokenService() {}
+MockOAuth2TokenService::~MockOAuth2TokenService() = default;
 
 void MockOAuth2TokenService::SetResponse(const GoogleServiceAuthError& error,
                                          const std::string& access_token,

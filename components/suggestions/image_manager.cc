@@ -97,14 +97,14 @@ ImageManager::ImageManager(
                              weak_ptr_factory_.GetWeakPtr()));
 }
 
-ImageManager::~ImageManager() {}
+ImageManager::~ImageManager() = default;
 
-ImageManager::ImageCacheRequest::ImageCacheRequest() {}
+ImageManager::ImageCacheRequest::ImageCacheRequest() = default;
 
 ImageManager::ImageCacheRequest::ImageCacheRequest(
     const ImageCacheRequest& other) = default;
 
-ImageManager::ImageCacheRequest::~ImageCacheRequest() {}
+ImageManager::ImageCacheRequest::~ImageCacheRequest() = default;
 
 void ImageManager::Initialize(const SuggestionsProfile& suggestions) {
   image_url_map_.clear();

@@ -14,11 +14,9 @@ using content::RenderThread;
 
 namespace network_hints {
 
-RendererPreconnect::RendererPreconnect() {
-}
+RendererPreconnect::RendererPreconnect() = default;
 
-RendererPreconnect::~RendererPreconnect() {
-}
+RendererPreconnect::~RendererPreconnect() = default;
 
 void RendererPreconnect::Preconnect(const GURL& url, bool allow_credentials) {
   if (!url.is_valid())

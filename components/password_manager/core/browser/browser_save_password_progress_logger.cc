@@ -75,7 +75,8 @@ BrowserSavePasswordProgressLogger::BrowserSavePasswordProgressLogger(
   DCHECK(log_manager_);
 }
 
-BrowserSavePasswordProgressLogger::~BrowserSavePasswordProgressLogger() {}
+BrowserSavePasswordProgressLogger::~BrowserSavePasswordProgressLogger() =
+    default;
 
 void BrowserSavePasswordProgressLogger::LogFormSignatures(
     SavePasswordProgressLogger::StringID label,

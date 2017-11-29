@@ -8,11 +8,9 @@
 
 namespace network_hints {
 
-PrescientNetworkingDispatcher::PrescientNetworkingDispatcher() {
-}
+PrescientNetworkingDispatcher::PrescientNetworkingDispatcher() = default;
 
-PrescientNetworkingDispatcher::~PrescientNetworkingDispatcher() {
-}
+PrescientNetworkingDispatcher::~PrescientNetworkingDispatcher() = default;
 
 void PrescientNetworkingDispatcher::PrefetchDNS(
     const blink::WebString& hostname) {

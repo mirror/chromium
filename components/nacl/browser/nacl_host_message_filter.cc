@@ -87,8 +87,7 @@ NaClHostMessageFilter::NaClHostMessageFilter(
       weak_ptr_factory_(this) {
 }
 
-NaClHostMessageFilter::~NaClHostMessageFilter() {
-}
+NaClHostMessageFilter::~NaClHostMessageFilter() = default;
 
 void NaClHostMessageFilter::OnChannelClosing() {
   pnacl::PnaclHost::GetInstance()->RendererClosing(render_process_id_);

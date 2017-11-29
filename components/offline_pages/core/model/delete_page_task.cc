@@ -396,7 +396,7 @@ DeletePageTask::DeletePageTask(OfflinePageMetadataStoreSQL* store,
       callback_(std::move(callback)),
       weak_ptr_factory_(this) {}
 
-DeletePageTask::~DeletePageTask() {}
+DeletePageTask::~DeletePageTask() = default;
 
 void DeletePageTask::Run() {
   store_->Execute(std::move(func_),

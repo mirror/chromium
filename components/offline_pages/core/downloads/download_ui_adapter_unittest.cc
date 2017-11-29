@@ -57,8 +57,8 @@ static const base::string16 kTestTitle = base::ASCIIToUTF16("test title");
 // Mock DownloadUIAdapter::Delegate
 class DownloadUIAdapterDelegate : public DownloadUIAdapter::Delegate {
  public:
-  DownloadUIAdapterDelegate() {}
-  ~DownloadUIAdapterDelegate() override {}
+  DownloadUIAdapterDelegate() = default;
+  ~DownloadUIAdapterDelegate() override = default;
 
   // DownloadUIAdapter::Delegate
   bool IsVisibleInUI(const ClientId& client_id) override { return is_visible; }
@@ -80,7 +80,7 @@ class MockOfflinePageModel : public StubOfflinePageModel {
         task_runner_(task_runner),
         policy_controller_(new ClientPolicyController()) {}
 
-  ~MockOfflinePageModel() override {}
+  ~MockOfflinePageModel() override = default;
 
   void AddInitialPage() {
     OfflinePageItem page(GURL(kTestUrl), kTestOfflineId1, kTestClientId1,
@@ -197,7 +197,7 @@ DownloadUIAdapterTest::DownloadUIAdapterTest()
       task_runner_(new base::TestMockTimeTaskRunner),
       task_runner_handle_(task_runner_) {}
 
-DownloadUIAdapterTest::~DownloadUIAdapterTest() {}
+DownloadUIAdapterTest::~DownloadUIAdapterTest() = default;
 
 void DownloadUIAdapterTest::SetUp() {
   model = base::MakeUnique<MockOfflinePageModel>(task_runner_.get());

@@ -54,7 +54,7 @@ BookmarkCodec::BookmarkCodec()
           BookmarkNode::kInvalidSyncTransactionVersion) {
 }
 
-BookmarkCodec::~BookmarkCodec() {}
+BookmarkCodec::~BookmarkCodec() = default;
 
 std::unique_ptr<base::Value> BookmarkCodec::Encode(BookmarkModel* model) {
   return Encode(model->bookmark_bar_node(),

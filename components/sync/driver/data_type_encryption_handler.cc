@@ -6,6 +6,6 @@
 
 namespace syncer {
 
-DataTypeEncryptionHandler::DataTypeEncryptionHandler() {}
-DataTypeEncryptionHandler::~DataTypeEncryptionHandler() {}
+DataTypeEncryptionHandler::DataTypeEncryptionHandler() = default;
+DataTypeEncryptionHandler::~DataTypeEncryptionHandler() = default;
 }

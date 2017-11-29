@@ -10,11 +10,9 @@
 
 namespace metrics {
 
-GPUMetricsProvider::GPUMetricsProvider() {
-}
+GPUMetricsProvider::GPUMetricsProvider() = default;
 
-GPUMetricsProvider::~GPUMetricsProvider() {
-}
+GPUMetricsProvider::~GPUMetricsProvider() = default;
 
 void GPUMetricsProvider::ProvideSystemProfileMetrics(
     SystemProfileProto* system_profile_proto) {

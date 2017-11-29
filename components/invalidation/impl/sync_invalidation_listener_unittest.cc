@@ -63,7 +63,7 @@ typedef std::set<AckHandle, AckHandleLessThan> AckHandleSet;
 class FakeInvalidationClient : public invalidation::InvalidationClient {
  public:
   FakeInvalidationClient() : started_(false) {}
-  ~FakeInvalidationClient() override {}
+  ~FakeInvalidationClient() override = default;
 
   const ObjectIdSet& GetRegisteredIds() const {
     return registered_ids_;
@@ -138,7 +138,7 @@ class FakeDelegate : public SyncInvalidationListener::Delegate {
  public:
   explicit FakeDelegate(SyncInvalidationListener* listener)
       : state_(TRANSIENT_INVALIDATION_ERROR) {}
-  ~FakeDelegate() override {}
+  ~FakeDelegate() override = default;
 
   size_t GetInvalidationCount(const ObjectId& id) const {
     Map::const_iterator it = invalidations_.find(id);

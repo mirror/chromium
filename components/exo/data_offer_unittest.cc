@@ -30,7 +30,7 @@ using DataOfferTest = test::ExoTestBase;
 
 class TestDataOfferDelegate : public DataOfferDelegate {
  public:
-  TestDataOfferDelegate() {}
+  TestDataOfferDelegate() = default;
 
   // Called at the top of the data device's destructor, to give observers a
   // chance to remove themselves.

@@ -49,7 +49,7 @@ FakeServer::FakeServer()
   loopback_server_->set_observer_for_tests(this);
 }
 
-FakeServer::~FakeServer() {}
+FakeServer::~FakeServer() = default;
 
 void FakeServer::HandleCommand(const string& request,
                                const base::Closure& completion_closure,

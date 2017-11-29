@@ -127,8 +127,7 @@ GCMChannelStatusSyncer::GCMChannelStatusSyncer(
       prefs_->GetInt64(prefs::kGCMChannelLastCheckTime));
 }
 
-GCMChannelStatusSyncer::~GCMChannelStatusSyncer() {
-}
+GCMChannelStatusSyncer::~GCMChannelStatusSyncer() = default;
 
 void GCMChannelStatusSyncer::EnsureStarted() {
   // Bail out if the request is already scheduled or started.

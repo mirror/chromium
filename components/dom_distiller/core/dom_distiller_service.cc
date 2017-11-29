@@ -52,8 +52,7 @@ DomDistillerService::DomDistillerService(
       distiller_page_factory_(std::move(distiller_page_factory)),
       distilled_page_prefs_(std::move(distilled_page_prefs)) {}
 
-DomDistillerService::~DomDistillerService() {
-}
+DomDistillerService::~DomDistillerService() = default;
 
 syncer::SyncableService* DomDistillerService::GetSyncableService() const {
   if (!store_) {

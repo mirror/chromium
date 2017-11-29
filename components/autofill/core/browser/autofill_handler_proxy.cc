@@ -14,7 +14,7 @@ AutofillHandlerProxy::AutofillHandlerProxy(AutofillDriver* driver,
                                            AutofillProvider* provider)
     : AutofillHandler(driver), provider_(provider), weak_ptr_factory_(this) {}
 
-AutofillHandlerProxy::~AutofillHandlerProxy() {}
+AutofillHandlerProxy::~AutofillHandlerProxy() = default;
 
 bool AutofillHandlerProxy::OnWillSubmitFormImpl(const FormData& form,
                                                 const TimeTicks timestamp) {

@@ -161,7 +161,7 @@ bool IsOriginAndPathRegexCriterion(URLMatcherCondition::Criterion criterion) {
 URLMatcherCondition::URLMatcherCondition()
     : criterion_(HOST_PREFIX), string_pattern_(nullptr) {}
 
-URLMatcherCondition::~URLMatcherCondition() {}
+URLMatcherCondition::~URLMatcherCondition() = default;
 
 URLMatcherCondition::URLMatcherCondition(
     Criterion criterion,
@@ -169,16 +169,11 @@ URLMatcherCondition::URLMatcherCondition(
     : criterion_(criterion),
       string_pattern_(string_pattern) {}
 
-URLMatcherCondition::URLMatcherCondition(const URLMatcherCondition& rhs)
-    : criterion_(rhs.criterion_),
-      string_pattern_(rhs.string_pattern_) {}
+URLMatcherCondition::URLMatcherCondition(const URLMatcherCondition& rhs) =
+    default;
 
 URLMatcherCondition& URLMatcherCondition::operator=(
-    const URLMatcherCondition& rhs) {
-  criterion_ = rhs.criterion_;
-  string_pattern_ = rhs.string_pattern_;
-  return *this;
-}
+    const URLMatcherCondition& rhs) = default;
 
 bool URLMatcherCondition::operator<(const URLMatcherCondition& rhs) const {
   if (criterion_ < rhs.criterion_) return true;
@@ -262,8 +257,7 @@ const char kQuerySeparator = '&';
 
 URLMatcherConditionFactory::URLMatcherConditionFactory() : id_counter_(0) {}
 
-URLMatcherConditionFactory::~URLMatcherConditionFactory() {
-}
+URLMatcherConditionFactory::~URLMatcherConditionFactory() = default;
 
 std::string URLMatcherConditionFactory::CanonicalizeURLForComponentSearches(
     const GURL& url) const {
@@ -612,7 +606,7 @@ URLQueryElementMatcherCondition::URLQueryElementMatcherCondition(
 URLQueryElementMatcherCondition::URLQueryElementMatcherCondition(
     const URLQueryElementMatcherCondition& other) = default;
 
-URLQueryElementMatcherCondition::~URLQueryElementMatcherCondition() {}
+URLQueryElementMatcherCondition::~URLQueryElementMatcherCondition() = default;
 
 bool URLQueryElementMatcherCondition::operator<(
     const URLQueryElementMatcherCondition& rhs) const {
@@ -679,7 +673,7 @@ URLMatcherSchemeFilter::URLMatcherSchemeFilter(
     const std::vector<std::string>& filters)
     : filters_(filters) {}
 
-URLMatcherSchemeFilter::~URLMatcherSchemeFilter() {}
+URLMatcherSchemeFilter::~URLMatcherSchemeFilter() = default;
 
 bool URLMatcherSchemeFilter::IsMatch(const GURL& url) const {
   return std::find(filters_.begin(), filters_.end(), url.scheme()) !=
@@ -694,7 +688,7 @@ URLMatcherPortFilter::URLMatcherPortFilter(
     const std::vector<URLMatcherPortFilter::Range>& ranges)
     : ranges_(ranges) {}
 
-URLMatcherPortFilter::~URLMatcherPortFilter() {}
+URLMatcherPortFilter::~URLMatcherPortFilter() = default;
 
 bool URLMatcherPortFilter::IsMatch(const GURL& url) const {
   int port = url.EffectiveIntPort();
@@ -721,7 +715,7 @@ URLMatcherPortFilter::Range URLMatcherPortFilter::CreateRange(int port) {
 // URLMatcherConditionSet
 //
 
-URLMatcherConditionSet::~URLMatcherConditionSet() {}
+URLMatcherConditionSet::~URLMatcherConditionSet() = default;
 
 URLMatcherConditionSet::URLMatcherConditionSet(
     ID id,
@@ -794,9 +788,9 @@ bool URLMatcherConditionSet::IsMatch(
 // URLMatcher
 //
 
-URLMatcher::URLMatcher() {}
+URLMatcher::URLMatcher() = default;
 
-URLMatcher::~URLMatcher() {}
+URLMatcher::~URLMatcher() = default;
 
 void URLMatcher::AddConditionSets(
     const URLMatcherConditionSet::Vector& condition_sets) {

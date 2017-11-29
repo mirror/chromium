@@ -6,11 +6,11 @@
 
 namespace pairing_chromeos {
 
-HostPairingController::HostPairingController() {}
+HostPairingController::HostPairingController() = default;
 
-HostPairingController::~HostPairingController() {}
+HostPairingController::~HostPairingController() = default;
 
-HostPairingController::Observer::Observer() {}
-HostPairingController::Observer::~Observer() {}
+HostPairingController::Observer::Observer() = default;
+HostPairingController::Observer::~Observer() = default;
 
 }  // namespace pairing_chromeos

@@ -89,8 +89,7 @@ OmniboxMetricsProvider::OmniboxMetricsProvider(
     const base::Callback<bool(void)>& is_off_the_record_callback)
     : is_off_the_record_callback_(is_off_the_record_callback) {}
 
-OmniboxMetricsProvider::~OmniboxMetricsProvider() {
-}
+OmniboxMetricsProvider::~OmniboxMetricsProvider() = default;
 
 void OmniboxMetricsProvider::OnRecordingEnabled() {
   subscription_ = OmniboxEventGlobalTracker::GetInstance()->RegisterCallback(

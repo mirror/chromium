@@ -110,8 +110,8 @@ EntityDataPtr SpecificsToEntity(const AutofillSpecifics& specifics) {
 
 class FakeAutofillBackend : public AutofillWebDataBackend {
  public:
-  FakeAutofillBackend() {}
-  ~FakeAutofillBackend() override {}
+  FakeAutofillBackend() = default;
+  ~FakeAutofillBackend() override = default;
   WebDatabase* GetDatabase() override { return db_; }
   void AddObserver(
       autofill::AutofillWebDataServiceObserverOnDBSequence* observer) override {
@@ -140,7 +140,7 @@ class AutocompleteSyncBridgeTest : public testing::Test {
       ResetBridge();
     }
   }
-  ~AutocompleteSyncBridgeTest() override {}
+  ~AutocompleteSyncBridgeTest() override = default;
 
   void ResetBridge(bool expect_error = false) {
     bridge_.reset(new AutocompleteSyncBridge(

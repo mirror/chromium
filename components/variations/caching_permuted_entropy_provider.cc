@@ -23,8 +23,7 @@ CachingPermutedEntropyProvider::CachingPermutedEntropyProvider(
   ReadFromLocalState();
 }
 
-CachingPermutedEntropyProvider::~CachingPermutedEntropyProvider() {
-}
+CachingPermutedEntropyProvider::~CachingPermutedEntropyProvider() = default;
 
 // static
 void CachingPermutedEntropyProvider::RegisterPrefs(

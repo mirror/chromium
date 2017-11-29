@@ -130,7 +130,7 @@ VariationsFieldTrialCreator::VariationsFieldTrialCreator(
       has_platform_override_(false),
       platform_override_(Study::PLATFORM_WINDOWS) {}
 
-VariationsFieldTrialCreator::~VariationsFieldTrialCreator() {}
+VariationsFieldTrialCreator::~VariationsFieldTrialCreator() = default;
 
 std::string VariationsFieldTrialCreator::GetLatestCountry() const {
   const std::string override_country =

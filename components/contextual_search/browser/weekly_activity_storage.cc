@@ -28,7 +28,7 @@ WeeklyActivityStorage::WeeklyActivityStorage(int weeks_needed) {
   weeks_needed_ = weeks_needed;
 }
 
-WeeklyActivityStorage::~WeeklyActivityStorage() {}
+WeeklyActivityStorage::~WeeklyActivityStorage() = default;
 
 int WeeklyActivityStorage::ReadClicks(int week_number) {
   std::string key = GetWeekClicksKey(week_number);

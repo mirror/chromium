@@ -29,7 +29,7 @@ WebsiteSettingsRegistry::WebsiteSettingsRegistry() {
   Init();
 }
 
-WebsiteSettingsRegistry::~WebsiteSettingsRegistry() {}
+WebsiteSettingsRegistry::~WebsiteSettingsRegistry() = default;
 
 void WebsiteSettingsRegistry::ResetForTest() {
   website_settings_info_.clear();

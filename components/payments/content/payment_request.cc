@@ -57,7 +57,7 @@ PaymentRequest::PaymentRequest(
       &PaymentRequest::OnConnectionTerminated, weak_ptr_factory_.GetWeakPtr()));
 }
 
-PaymentRequest::~PaymentRequest() {}
+PaymentRequest::~PaymentRequest() = default;
 
 void PaymentRequest::Init(mojom::PaymentRequestClientPtr client,
                           std::vector<mojom::PaymentMethodDataPtr> method_data,

@@ -64,7 +64,7 @@ PaymentResponseHelper::PaymentResponseHelper(
   selected_instrument_->InvokePaymentApp(this);
 }
 
-PaymentResponseHelper::~PaymentResponseHelper() {}
+PaymentResponseHelper::~PaymentResponseHelper() = default;
 
 // static
 mojom::PaymentAddressPtr

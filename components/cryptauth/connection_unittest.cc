@@ -25,7 +25,7 @@ namespace {
 class MockConnection : public Connection {
  public:
   MockConnection() : Connection(RemoteDevice()) {}
-  ~MockConnection() {}
+  ~MockConnection() = default;
 
   MOCK_METHOD1(SetPaused, void(bool paused));
   MOCK_METHOD0(Connect, void());
@@ -57,8 +57,8 @@ class MockConnection : public Connection {
 
 class MockConnectionObserver : public ConnectionObserver {
  public:
-  MockConnectionObserver() {}
-  virtual ~MockConnectionObserver() {}
+  MockConnectionObserver() = default;
+  virtual ~MockConnectionObserver() = default;
 
   MOCK_METHOD3(OnConnectionStatusChanged,
                void(Connection* connection,
@@ -79,7 +79,7 @@ class MockConnectionObserver : public ConnectionObserver {
 class TestWireMessage : public WireMessage {
  public:
   TestWireMessage() : WireMessage("payload", "feature") {}
-  ~TestWireMessage() override {}
+  ~TestWireMessage() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestWireMessage);
@@ -89,8 +89,8 @@ class TestWireMessage : public WireMessage {
 
 class CryptAuthConnectionTest : public testing::Test {
  protected:
-  CryptAuthConnectionTest() {}
-  ~CryptAuthConnectionTest() override {}
+  CryptAuthConnectionTest() = default;
+  ~CryptAuthConnectionTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CryptAuthConnectionTest);

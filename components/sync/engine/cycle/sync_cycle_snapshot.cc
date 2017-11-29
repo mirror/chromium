@@ -54,7 +54,7 @@ SyncCycleSnapshot::SyncCycleSnapshot(
 
 SyncCycleSnapshot::SyncCycleSnapshot(const SyncCycleSnapshot& other) = default;
 
-SyncCycleSnapshot::~SyncCycleSnapshot() {}
+SyncCycleSnapshot::~SyncCycleSnapshot() = default;
 
 std::unique_ptr<base::DictionaryValue> SyncCycleSnapshot::ToValue() const {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());

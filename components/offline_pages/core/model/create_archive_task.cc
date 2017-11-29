@@ -27,7 +27,7 @@ CreateArchiveTask::CreateArchiveTask(
       clock_(new base::DefaultClock()),
       skip_clearing_original_url_for_testing_(false) {}
 
-CreateArchiveTask::~CreateArchiveTask() {}
+CreateArchiveTask::~CreateArchiveTask() = default;
 
 void CreateArchiveTask::Run() {
   CreateArchive();

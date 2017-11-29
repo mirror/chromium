@@ -11,7 +11,7 @@ MockProvider::MockProvider() : read_only_(false) {}
 
 MockProvider::MockProvider(bool read_only) : read_only_(read_only) {}
 
-MockProvider::~MockProvider() {}
+MockProvider::~MockProvider() = default;
 
 std::unique_ptr<RuleIterator> MockProvider::GetRuleIterator(
     ContentSettingsType content_type,

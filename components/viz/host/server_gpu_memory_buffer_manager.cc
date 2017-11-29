@@ -42,7 +42,7 @@ ServerGpuMemoryBufferManager::ServerGpuMemoryBufferManager(
   weak_ptr_ = weak_factory_.GetWeakPtr();
 }
 
-ServerGpuMemoryBufferManager::~ServerGpuMemoryBufferManager() {}
+ServerGpuMemoryBufferManager::~ServerGpuMemoryBufferManager() = default;
 
 void ServerGpuMemoryBufferManager::AllocateGpuMemoryBuffer(
     gfx::GpuMemoryBufferId id,

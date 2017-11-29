@@ -33,7 +33,7 @@ class MockGamingSeatDelegate : public GamingSeatDelegate {
 
 class MockGamepadDelegate : public GamepadDelegate {
  public:
-  MockGamepadDelegate() {}
+  MockGamepadDelegate() = default;
 
   // Overridden from GamepadDelegate:
   MOCK_METHOD0(OnRemoved, void());
@@ -44,7 +44,7 @@ class MockGamepadDelegate : public GamepadDelegate {
 
 class GamingSeatTest : public test::ExoTestBase {
  public:
-  GamingSeatTest() {}
+  GamingSeatTest() = default;
   void InitializeGamingSeat(MockGamingSeatDelegate* delegate) {
     gaming_seat_.reset(new GamingSeat(delegate));
   }

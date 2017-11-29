@@ -19,8 +19,7 @@ PasswordGenerationActions::PasswordGenerationActions()
       password_regenerated(false) {
 }
 
-PasswordGenerationActions::~PasswordGenerationActions() {
-}
+PasswordGenerationActions::~PasswordGenerationActions() = default;
 
 void LogUserActions(PasswordGenerationActions actions) {
   UserAction action = IGNORE_FEATURE;

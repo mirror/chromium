@@ -13,7 +13,7 @@ MessageBuffer::MessageBuffer()
       total_buffer_size_(0) {
 }
 
-MessageBuffer::~MessageBuffer() {}
+MessageBuffer::~MessageBuffer() = default;
 
 int MessageBuffer::AvailableBytes() {
   return total_buffer_size_ - buffer_offset_;

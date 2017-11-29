@@ -42,7 +42,7 @@ using InstallError = update_client::InstallError;
 
 }  // namespace
 
-ComponentInstallerPolicy::~ComponentInstallerPolicy() {}
+ComponentInstallerPolicy::~ComponentInstallerPolicy() = default;
 
 ComponentInstaller::RegistrationInfo::RegistrationInfo()
     : version(kNullVersion) {}
@@ -56,7 +56,7 @@ ComponentInstaller::ComponentInstaller(
   installer_policy_ = std::move(installer_policy);
 }
 
-ComponentInstaller::~ComponentInstaller() {}
+ComponentInstaller::~ComponentInstaller() = default;
 
 void ComponentInstaller::Register(ComponentUpdateService* cus,
                                   base::OnceClosure callback) {

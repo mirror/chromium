@@ -72,8 +72,7 @@ TemplateURLData::TemplateURLData(const base::string16& name,
   }
 }
 
-TemplateURLData::~TemplateURLData() {
-}
+TemplateURLData::~TemplateURLData() = default;
 
 void TemplateURLData::SetShortName(const base::string16& short_name) {
   // Remove tabs, carriage returns, and the like, as they can corrupt

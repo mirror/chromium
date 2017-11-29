@@ -22,8 +22,8 @@ using base::TimeDelta;
 
 class KeywordTableTest : public testing::Test {
  public:
-  KeywordTableTest() {}
-  ~KeywordTableTest() override {}
+  KeywordTableTest() = default;
+  ~KeywordTableTest() override = default;
 
  protected:
   void SetUp() override {

@@ -6,9 +6,9 @@
 
 namespace cryptauth {
 
-FakeBleAdvertisementGenerator::FakeBleAdvertisementGenerator() {}
+FakeBleAdvertisementGenerator::FakeBleAdvertisementGenerator() = default;
 
-FakeBleAdvertisementGenerator::~FakeBleAdvertisementGenerator() {}
+FakeBleAdvertisementGenerator::~FakeBleAdvertisementGenerator() = default;
 
 std::unique_ptr<DataWithTimestamp>
 FakeBleAdvertisementGenerator::GenerateBleAdvertisementInternal(

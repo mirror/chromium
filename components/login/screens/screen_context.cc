@@ -27,8 +27,7 @@ base::ListValue* StringListToListValue(const StringListType& list) {
 
 }  // namespace
 
-ScreenContext::ScreenContext() {
-}
+ScreenContext::ScreenContext() = default;
 
 ScreenContext::~ScreenContext() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

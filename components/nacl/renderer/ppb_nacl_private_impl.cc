@@ -228,7 +228,7 @@ class ManifestServiceProxy : public ManifestServiceChannel::Delegate {
   ManifestServiceProxy(PP_Instance pp_instance, NaClAppProcessType process_type)
       : pp_instance_(pp_instance), process_type_(process_type) {}
 
-  ~ManifestServiceProxy() override {}
+  ~ManifestServiceProxy() override = default;
 
   void StartupInitializationComplete() override {
     if (StartPpapiProxy(pp_instance_) == PP_TRUE) {

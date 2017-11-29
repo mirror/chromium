@@ -15,7 +15,7 @@ CommitResponseEvent::CommitResponseEvent(
     const sync_pb::ClientToServerResponse& response)
     : timestamp_(timestamp), result_(result), response_(response) {}
 
-CommitResponseEvent::~CommitResponseEvent() {}
+CommitResponseEvent::~CommitResponseEvent() = default;
 
 base::Time CommitResponseEvent::GetTimestamp() const {
   return timestamp_;

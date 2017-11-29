@@ -24,7 +24,7 @@ WriteTransactionInfo::WriteTransactionInfo() : id(-1), writer(INVALID) {}
 WriteTransactionInfo::WriteTransactionInfo(const WriteTransactionInfo& other) =
     default;
 
-WriteTransactionInfo::~WriteTransactionInfo() {}
+WriteTransactionInfo::~WriteTransactionInfo() = default;
 
 std::unique_ptr<base::DictionaryValue> WriteTransactionInfo::ToValue(
     size_t max_mutations_size) const {

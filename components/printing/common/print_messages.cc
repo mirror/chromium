@@ -85,7 +85,7 @@ PrintMsg_Print_Params::PrintMsg_Print_Params()
 PrintMsg_Print_Params::PrintMsg_Print_Params(
     const PrintMsg_Print_Params& other) = default;
 
-PrintMsg_Print_Params::~PrintMsg_Print_Params() {}
+PrintMsg_Print_Params::~PrintMsg_Print_Params() = default;
 
 void PrintMsg_Print_Params::Reset() {
   page_size = gfx::Size();
@@ -118,7 +118,7 @@ PrintMsg_PrintPages_Params::PrintMsg_PrintPages_Params()
 PrintMsg_PrintPages_Params::PrintMsg_PrintPages_Params(
     const PrintMsg_PrintPages_Params& other) = default;
 
-PrintMsg_PrintPages_Params::~PrintMsg_PrintPages_Params() {}
+PrintMsg_PrintPages_Params::~PrintMsg_PrintPages_Params() = default;
 
 void PrintMsg_PrintPages_Params::Reset() {
   params.Reset();
@@ -135,7 +135,7 @@ PrintHostMsg_RequestPrintPreview_Params::
 }
 
 PrintHostMsg_RequestPrintPreview_Params::
-    ~PrintHostMsg_RequestPrintPreview_Params() {}
+    ~PrintHostMsg_RequestPrintPreview_Params() = default;
 
 PrintHostMsg_SetOptionsFromDocument_Params::
     PrintHostMsg_SetOptionsFromDocument_Params()
@@ -145,6 +145,5 @@ PrintHostMsg_SetOptionsFromDocument_Params::
 }
 
 PrintHostMsg_SetOptionsFromDocument_Params::
-    ~PrintHostMsg_SetOptionsFromDocument_Params() {
-}
+    ~PrintHostMsg_SetOptionsFromDocument_Params() = default;
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)

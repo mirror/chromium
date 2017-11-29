@@ -12,7 +12,7 @@ namespace autofill {
 TestPersonalDataManager::TestPersonalDataManager()
     : PersonalDataManager("en-US") {}
 
-TestPersonalDataManager::~TestPersonalDataManager() {}
+TestPersonalDataManager::~TestPersonalDataManager() = default;
 
 void TestPersonalDataManager::SetTestingPrefService(PrefService* pref_service) {
   SetPrefService(pref_service);

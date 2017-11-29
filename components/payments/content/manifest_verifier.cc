@@ -154,7 +154,7 @@ ManifestVerifier::DevToolsHelper::DevToolsHelper(
     content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents) {}
 
-ManifestVerifier::DevToolsHelper::~DevToolsHelper() {}
+ManifestVerifier::DevToolsHelper::~DevToolsHelper() = default;
 
 void ManifestVerifier::DevToolsHelper::WarnIfPossible(
     const std::string& message) {

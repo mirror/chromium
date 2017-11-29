@@ -443,7 +443,7 @@ GetLocalChangesRequest::GetLocalChangesRequest(
       response_accepted_(base::WaitableEvent::ResetPolicy::MANUAL,
                          base::WaitableEvent::InitialState::NOT_SIGNALED) {}
 
-GetLocalChangesRequest::~GetLocalChangesRequest() {}
+GetLocalChangesRequest::~GetLocalChangesRequest() = default;
 
 void GetLocalChangesRequest::OnSignalReceived() {
   response_accepted_.Signal();

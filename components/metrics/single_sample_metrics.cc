@@ -24,7 +24,7 @@ class MojoSingleSampleMetric : public mojom::SingleSampleMetric {
                          uint32_t bucket_count,
                          int32_t flags)
       : metric_(histogram_name, min, max, bucket_count, flags) {}
-  ~MojoSingleSampleMetric() override {}
+  ~MojoSingleSampleMetric() override = default;
 
  private:
   // mojom::SingleSampleMetric:
@@ -40,7 +40,7 @@ class MojoSingleSampleMetric : public mojom::SingleSampleMetric {
 class MojoSingleSampleMetricsProvider
     : public mojom::SingleSampleMetricsProvider {
  public:
-  MojoSingleSampleMetricsProvider() {}
+  MojoSingleSampleMetricsProvider() = default;
   ~MojoSingleSampleMetricsProvider() override {
     DCHECK(thread_checker_.CalledOnValidThread());
   }

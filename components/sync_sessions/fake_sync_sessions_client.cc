@@ -9,8 +9,8 @@
 
 namespace sync_sessions {
 
-FakeSyncSessionsClient::FakeSyncSessionsClient() {}
-FakeSyncSessionsClient::~FakeSyncSessionsClient() {}
+FakeSyncSessionsClient::FakeSyncSessionsClient() = default;
+FakeSyncSessionsClient::~FakeSyncSessionsClient() = default;
 
 bookmarks::BookmarkModel* FakeSyncSessionsClient::GetBookmarkModel() {
   return nullptr;

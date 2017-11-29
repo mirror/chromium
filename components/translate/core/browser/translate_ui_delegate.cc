@@ -113,7 +113,7 @@ TranslateUIDelegate::TranslateUIDelegate(
 
 }
 
-TranslateUIDelegate::~TranslateUIDelegate() {}
+TranslateUIDelegate::~TranslateUIDelegate() = default;
 
 void TranslateUIDelegate::OnErrorShown(TranslateErrors::Type error_type) {
   DCHECK_LE(TranslateErrors::NONE, error_type);

@@ -46,7 +46,7 @@ static constexpr FrameSinkId kAnotherFrameSinkId(4, 4);
 
 class TestSoftwareOutputDevice : public SoftwareOutputDevice {
  public:
-  TestSoftwareOutputDevice() {}
+  TestSoftwareOutputDevice() = default;
 
   gfx::Rect damage_rect() const { return damage_rect_; }
   gfx::Size viewport_pixel_size() const { return viewport_pixel_size_; }
@@ -62,7 +62,7 @@ class TestDisplayScheduler : public DisplayScheduler {
         has_new_root_surface(false),
         swapped(false) {}
 
-  ~TestDisplayScheduler() override {}
+  ~TestDisplayScheduler() override = default;
 
   void DisplayResized() override { display_resized_ = true; }
 

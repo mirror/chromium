@@ -72,13 +72,14 @@ LeakDetectorImpl::LeakReport::AllocationBreakdown::AllocationBreakdown()
 LeakDetectorImpl::LeakReport::AllocationBreakdown::AllocationBreakdown(
     const AllocationBreakdown& other) = default;
 
-LeakDetectorImpl::LeakReport::AllocationBreakdown::~AllocationBreakdown() {}
+LeakDetectorImpl::LeakReport::AllocationBreakdown::~AllocationBreakdown() =
+    default;
 
 LeakDetectorImpl::LeakReport::LeakReport() : alloc_size_bytes_(0) {}
 
 LeakDetectorImpl::LeakReport::LeakReport(const LeakReport& other) = default;
 
-LeakDetectorImpl::LeakReport::~LeakReport() {}
+LeakDetectorImpl::LeakReport::~LeakReport() = default;
 
 bool LeakDetectorImpl::LeakReport::operator<(const LeakReport& other) const {
   if (alloc_size_bytes_ != other.alloc_size_bytes_)
@@ -241,7 +242,7 @@ LeakDetectorImpl::AllocSizeEntry::AllocSizeEntry() : num_allocs(0),
                                                      num_frees(0),
                                                      stack_table(nullptr) {}
 
-LeakDetectorImpl::AllocSizeEntry::~AllocSizeEntry() {}
+LeakDetectorImpl::AllocSizeEntry::~AllocSizeEntry() = default;
 
 size_t LeakDetectorImpl::AddressHash::operator()(uintptr_t addr) const {
   return base::Hash(&addr, sizeof(addr));

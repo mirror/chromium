@@ -202,7 +202,7 @@ DiscardableSharedMemoryManager::MemorySegment::MemorySegment(
     std::unique_ptr<base::DiscardableSharedMemory> memory)
     : memory_(std::move(memory)) {}
 
-DiscardableSharedMemoryManager::MemorySegment::~MemorySegment() {}
+DiscardableSharedMemoryManager::MemorySegment::~MemorySegment() = default;
 
 DiscardableSharedMemoryManager::DiscardableSharedMemoryManager()
     : next_client_id_(1),

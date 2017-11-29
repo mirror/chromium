@@ -172,12 +172,12 @@ void MergeIntoPrepopulatedEngineData(const TemplateURL* original_turl,
   prepopulated_url->last_modified = original_turl->last_modified();
 }
 
-ActionsFromPrepopulateData::ActionsFromPrepopulateData() {}
+ActionsFromPrepopulateData::ActionsFromPrepopulateData() = default;
 
 ActionsFromPrepopulateData::ActionsFromPrepopulateData(
     const ActionsFromPrepopulateData& other) = default;
 
-ActionsFromPrepopulateData::~ActionsFromPrepopulateData() {}
+ActionsFromPrepopulateData::~ActionsFromPrepopulateData() = default;
 
 // This is invoked when the version of the prepopulate data changes.
 // If |removed_keyword_guids| is not NULL, the Sync GUID of each item removed

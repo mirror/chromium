@@ -26,7 +26,7 @@ const char kResponderKeyHex[] =
 
 class CryptAuthSessionKeysTest : public testing::Test {
  protected:
-  CryptAuthSessionKeysTest() {}
+  CryptAuthSessionKeysTest() = default;
 
   DISALLOW_COPY_AND_ASSIGN(CryptAuthSessionKeysTest);
 };

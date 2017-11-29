@@ -20,7 +20,7 @@ ContentSettingsInfo::ContentSettingsInfo(
       valid_settings_(valid_settings),
       incognito_behavior_(incognito_behavior) {}
 
-ContentSettingsInfo::~ContentSettingsInfo() {}
+ContentSettingsInfo::~ContentSettingsInfo() = default;
 
 ContentSetting ContentSettingsInfo::GetInitialDefaultSetting() const {
   const base::Value* initial_default =

@@ -31,7 +31,7 @@ class ClipboardURLProviderTest : public testing::Test {
     SetClipboardUrl(GURL(kClipboardURL));
   }
 
-  ~ClipboardURLProviderTest() override {}
+  ~ClipboardURLProviderTest() override = default;
 
   void ClearClipboard() { clipboard_content_.SuppressClipboardContent(); }
 

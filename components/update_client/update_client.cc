@@ -40,8 +40,7 @@ namespace update_client {
 
 CrxUpdateItem::CrxUpdateItem() : state(ComponentState::kNew) {}
 
-CrxUpdateItem::~CrxUpdateItem() {
-}
+CrxUpdateItem::~CrxUpdateItem() = default;
 
 CrxUpdateItem::CrxUpdateItem(const CrxUpdateItem& other) = default;
 
@@ -52,8 +51,7 @@ CrxComponent::CrxComponent()
 
 CrxComponent::CrxComponent(const CrxComponent& other) = default;
 
-CrxComponent::~CrxComponent() {
-}
+CrxComponent::~CrxComponent() = default;
 
 // It is important that an instance of the UpdateClient binds an unretained
 // pointer to itself. Otherwise, a life time circular dependency between this

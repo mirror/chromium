@@ -71,7 +71,7 @@ SyncData::SyncData(int64_t id,
 
 SyncData::SyncData(const SyncData& other) = default;
 
-SyncData::~SyncData() {}
+SyncData::~SyncData() = default;
 
 // Static.
 SyncData SyncData::CreateLocalDelete(const std::string& sync_tag,
@@ -186,7 +186,7 @@ SyncDataLocal::SyncDataLocal(const SyncData& sync_data) : SyncData(sync_data) {
   DCHECK(sync_data.IsLocal());
 }
 
-SyncDataLocal::~SyncDataLocal() {}
+SyncDataLocal::~SyncDataLocal() = default;
 
 const std::string& SyncDataLocal::GetTag() const {
   return immutable_entity_.Get().client_defined_unique_tag();
@@ -197,7 +197,7 @@ SyncDataRemote::SyncDataRemote(const SyncData& sync_data)
   DCHECK(!sync_data.IsLocal());
 }
 
-SyncDataRemote::~SyncDataRemote() {}
+SyncDataRemote::~SyncDataRemote() = default;
 
 const base::Time& SyncDataRemote::GetModifiedTime() const {
   return remote_modification_time_;

@@ -157,7 +157,7 @@ StoreAndHashPrefix::StoreAndHashPrefix(ListIdentifier list_id,
                                        const HashPrefix& hash_prefix)
     : list_id(list_id), hash_prefix(hash_prefix) {}
 
-StoreAndHashPrefix::~StoreAndHashPrefix() {}
+StoreAndHashPrefix::~StoreAndHashPrefix() = default;
 
 bool StoreAndHashPrefix::operator==(const StoreAndHashPrefix& other) const {
   return list_id == other.list_id && hash_prefix == other.hash_prefix;
@@ -235,7 +235,7 @@ V4ProtocolConfig::V4ProtocolConfig(const std::string& client_name,
 
 V4ProtocolConfig::V4ProtocolConfig(const V4ProtocolConfig& other) = default;
 
-V4ProtocolConfig::~V4ProtocolConfig() {}
+V4ProtocolConfig::~V4ProtocolConfig() = default;
 
 // static
 base::TimeDelta V4ProtocolManagerUtil::GetNextBackOffInterval(

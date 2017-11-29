@@ -56,7 +56,7 @@ RemoteDevice::RemoteDevice(const std::string& user_id,
 
 RemoteDevice::RemoteDevice(const RemoteDevice& other) = default;
 
-RemoteDevice::~RemoteDevice() {}
+RemoteDevice::~RemoteDevice() = default;
 
 void RemoteDevice::LoadBeaconSeeds(
     const std::vector<BeaconSeed>& beacon_seeds) {

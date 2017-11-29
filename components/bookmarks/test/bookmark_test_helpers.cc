@@ -41,7 +41,7 @@ class BookmarkLoadObserver : public BaseBookmarkModelObserver {
 BookmarkLoadObserver::BookmarkLoadObserver(const base::Closure& quit_task)
     : quit_task_(quit_task) {}
 
-BookmarkLoadObserver::~BookmarkLoadObserver() {}
+BookmarkLoadObserver::~BookmarkLoadObserver() = default;
 
 void BookmarkLoadObserver::BookmarkModelChanged() {}
 

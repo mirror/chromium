@@ -236,7 +236,7 @@ TEST(PrefServiceTest, GetValueAndGetRecommendedValue) {
 // values to it.
 class WriteFlagChecker : public TestingPrefStore {
  public:
-  WriteFlagChecker() {}
+  WriteFlagChecker() = default;
 
   void ReportValueChanged(const std::string& key, uint32_t flags) override {
     SetLastWriteFlags(flags);
@@ -269,7 +269,7 @@ class WriteFlagChecker : public TestingPrefStore {
   bool last_write_flags_set() { return last_write_flags_set_; }
 
  private:
-  ~WriteFlagChecker() override {}
+  ~WriteFlagChecker() override = default;
 
   void SetLastWriteFlags(uint32_t flags) {
     CHECK(!last_write_flags_set_);

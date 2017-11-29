@@ -21,8 +21,7 @@ PolicyHeaderIOHelper::PolicyHeaderIOHelper(
       policy_header_(initial_header_value) {
 }
 
-PolicyHeaderIOHelper::~PolicyHeaderIOHelper() {
-}
+PolicyHeaderIOHelper::~PolicyHeaderIOHelper() = default;
 
 // Sets any necessary policy headers on the passed request.
 void PolicyHeaderIOHelper::AddPolicyHeaders(const GURL& url,

@@ -77,7 +77,7 @@ PersistedLogs::PersistedLogs(std::unique_ptr<PersistedLogsMetrics> metrics,
   DCHECK(min_log_count_ > 0 || min_log_bytes_ > 0);
 }
 
-PersistedLogs::~PersistedLogs() {}
+PersistedLogs::~PersistedLogs() = default;
 
 bool PersistedLogs::has_unsent_logs() const {
   return !!size();

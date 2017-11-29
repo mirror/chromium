@@ -25,7 +25,7 @@ class MockTimer : public MockableTime::Timer {
     DCHECK(time);
   }
 
-  ~MockTimer() override {}
+  ~MockTimer() override = default;
 
   // MockableTime::Timer implementation:
   void Start(const base::Location& posted_from,
@@ -80,7 +80,7 @@ TestCallback::TestCallback()
                            base::Unretained(this))),
       called_(false) {}
 
-TestCallback::~TestCallback() {}
+TestCallback::~TestCallback() = default;
 
 void TestCallback::OnCalled() {
   EXPECT_FALSE(called_);
@@ -91,7 +91,7 @@ MockUploader::MockUploader(const UploadRequestCallback& callback)
     : callback_(callback),
       discard_uploads_(true) {}
 
-MockUploader::~MockUploader() {}
+MockUploader::~MockUploader() = default;
 
 bool MockUploader::discard_uploads() const { return discard_uploads_; }
 
@@ -118,7 +118,7 @@ MockTime::MockTime()
   VLOG(1) << "Creating mock time: T=" << elapsed_sec() << "s";
 }
 
-MockTime::~MockTime() {}
+MockTime::~MockTime() = default;
 
 base::Time MockTime::Now() { return now_; }
 base::TimeTicks MockTime::NowTicks() { return now_ticks_; }

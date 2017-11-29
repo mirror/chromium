@@ -133,7 +133,7 @@ FormFieldData::FormFieldData()
 
 FormFieldData::FormFieldData(const FormFieldData& other) = default;
 
-FormFieldData::~FormFieldData() {}
+FormFieldData::~FormFieldData() = default;
 
 bool FormFieldData::SameFieldAs(const FormFieldData& field) const {
   // A FormFieldData stores a value, but the value is not part of the identity

@@ -22,6 +22,6 @@ void DistillerPageNotifierServiceImpl::NotifyIsDistillerPage() {
   distiller_js_observer_->SetIsDistillerPage();
 }
 
-DistillerPageNotifierServiceImpl::~DistillerPageNotifierServiceImpl() {}
+DistillerPageNotifierServiceImpl::~DistillerPageNotifierServiceImpl() = default;
 
 }  // namespace dom_distiller

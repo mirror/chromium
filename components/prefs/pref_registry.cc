@@ -16,8 +16,7 @@
 PrefRegistry::PrefRegistry()
     : defaults_(base::MakeRefCounted<DefaultPrefStore>()) {}
 
-PrefRegistry::~PrefRegistry() {
-}
+PrefRegistry::~PrefRegistry() = default;
 
 uint32_t PrefRegistry::GetRegistrationFlags(
     const std::string& pref_name) const {

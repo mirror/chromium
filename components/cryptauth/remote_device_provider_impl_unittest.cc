@@ -32,7 +32,7 @@ const char kTestUserPrivateKey[] = "kTestUserPrivateKey";
 
 class MockCryptAuthDeviceManager : public cryptauth::CryptAuthDeviceManager {
  public:
-  ~MockCryptAuthDeviceManager() override {}
+  ~MockCryptAuthDeviceManager() override = default;
 
   void NotifySyncFinished(
       CryptAuthDeviceManager::SyncResult sync_result,
@@ -76,8 +76,8 @@ CreateExternalDeviceInfosForRemoteDevices(
 
 class TestObserver : public RemoteDeviceProvider::Observer {
  public:
-  TestObserver() {}
-  ~TestObserver() override {}
+  TestObserver() = default;
+  ~TestObserver() override = default;
 
   int num_times_device_list_changed() { return num_times_device_list_changed_; }
 
@@ -100,7 +100,7 @@ class FakeDeviceLoader final : public cryptauth::RemoteDeviceLoader {
           test_device_infos_(
               CreateExternalDeviceInfosForRemoteDevices(test_devices_)) {}
 
-    ~TestRemoteDeviceLoaderFactory() {}
+    ~TestRemoteDeviceLoaderFactory() = default;
 
     std::unique_ptr<RemoteDeviceLoader> BuildInstance(
         const std::vector<cryptauth::ExternalDeviceInfo>& device_info_list,
@@ -153,7 +153,7 @@ class FakeDeviceLoader final : public cryptauth::RemoteDeviceLoader {
             "",
             nullptr) {}
 
-  ~FakeDeviceLoader() override {}
+  ~FakeDeviceLoader() override = default;
 
   TestRemoteDeviceLoaderFactory* remote_device_loader_factory_;
 
@@ -165,7 +165,7 @@ class FakeDeviceLoader final : public cryptauth::RemoteDeviceLoader {
 
 class RemoteDeviceProviderImplTest : public testing::Test {
  public:
-  RemoteDeviceProviderImplTest() {}
+  RemoteDeviceProviderImplTest() = default;
 
   void SetUp() override {
     mock_device_manager_ =

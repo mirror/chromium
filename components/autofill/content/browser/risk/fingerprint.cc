@@ -197,7 +197,7 @@ class FingerprintDataLoader : public content::GpuDataManagerObserver {
       service_manager::Connector* connector);
 
  private:
-  ~FingerprintDataLoader() override {}
+  ~FingerprintDataLoader() override = default;
 
   // content::GpuDataManagerObserver:
   void OnGpuInfoUpdate() override;

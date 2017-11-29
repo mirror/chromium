@@ -40,8 +40,7 @@ OpenFileOperation::OpenFileOperation(
       weak_ptr_factory_(this) {
 }
 
-OpenFileOperation::~OpenFileOperation() {
-}
+OpenFileOperation::~OpenFileOperation() = default;
 
 void OpenFileOperation::OpenFile(const base::FilePath& file_path,
                                  OpenMode open_mode,

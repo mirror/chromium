@@ -61,7 +61,7 @@ class TestBaseSearchProvider : public BaseSearchProvider {
   }
 
  protected:
-  virtual ~TestBaseSearchProvider() {}
+  virtual ~TestBaseSearchProvider() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestBaseSearchProvider);
@@ -69,7 +69,7 @@ class TestBaseSearchProvider : public BaseSearchProvider {
 
 class BaseSearchProviderTest : public testing::Test {
  public:
-  ~BaseSearchProviderTest() override {}
+  ~BaseSearchProviderTest() override = default;
 
  protected:
   void SetUp() override {

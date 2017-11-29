@@ -145,6 +145,7 @@ SafeBrowsingDatabaseManager::SafeBrowsingApiCheck::SafeBrowsingApiCheck(
     Client* client)
     : url_(url), client_(client) {}
 
-SafeBrowsingDatabaseManager::SafeBrowsingApiCheck::~SafeBrowsingApiCheck() {}
+SafeBrowsingDatabaseManager::SafeBrowsingApiCheck::~SafeBrowsingApiCheck() =
+    default;
 
 }  // namespace safe_browsing

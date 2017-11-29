@@ -27,7 +27,7 @@ class SessionsSyncManagerWrapper : public ForeignSessionsProvider {
  public:
   explicit SessionsSyncManagerWrapper(SessionsSyncManager* manager)
       : manager_(manager) {}
-  ~SessionsSyncManagerWrapper() override {}
+  ~SessionsSyncManagerWrapper() override = default;
   bool GetAllForeignSessions(
       std::vector<const SyncedSession*>* sessions) override {
     return manager_->GetAllForeignSessions(sessions);
@@ -66,7 +66,7 @@ PageRevisitBroadcaster::PageRevisitBroadcaster(
   }
 }
 
-PageRevisitBroadcaster::~PageRevisitBroadcaster() {}
+PageRevisitBroadcaster::~PageRevisitBroadcaster() = default;
 
 void PageRevisitBroadcaster::OnPageVisit(const GURL& url,
                                          const ui::PageTransition transition) {

@@ -127,7 +127,7 @@ CancelationSignalTest::CancelationSignalTest()
                        base::WaitableEvent::InitialState::NOT_SIGNALED),
       blocking_task_(&signal_) {}
 
-CancelationSignalTest::~CancelationSignalTest() {}
+CancelationSignalTest::~CancelationSignalTest() = default;
 
 void CancelationSignalTest::StartBlockingTaskAsync() {
   blocking_task_.RunAsync(&task_start_event_, &task_done_event_);

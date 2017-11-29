@@ -40,7 +40,7 @@ ContentResourceTypeProvider::ContentResourceTypeProvider()
   thread_checker_.DetachFromThread();
 }
 
-ContentResourceTypeProvider::~ContentResourceTypeProvider() {}
+ContentResourceTypeProvider::~ContentResourceTypeProvider() = default;
 
 ResourceTypeProvider::ContentType ContentResourceTypeProvider::GetContentType(
     const GURL& url) const {

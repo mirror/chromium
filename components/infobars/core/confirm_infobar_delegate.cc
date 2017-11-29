@@ -11,8 +11,7 @@
 
 using infobars::InfoBarDelegate;
 
-ConfirmInfoBarDelegate::~ConfirmInfoBarDelegate() {
-}
+ConfirmInfoBarDelegate::~ConfirmInfoBarDelegate() = default;
 
 InfoBarDelegate::InfoBarAutomationType
     ConfirmInfoBarDelegate::GetInfoBarAutomationType() const {

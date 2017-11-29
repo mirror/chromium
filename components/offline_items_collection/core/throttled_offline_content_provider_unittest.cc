@@ -38,7 +38,7 @@ class TriggerSingleReentrantUpdateHelper
       : ScopedMockObserver(provider),
         wrapped_provider_(wrapped_provider),
         new_item_(new_item) {}
-  ~TriggerSingleReentrantUpdateHelper() override {}
+  ~TriggerSingleReentrantUpdateHelper() override = default;
 
   void OnItemUpdated(const OfflineItem& item) override {
     if (wrapped_provider_) {
@@ -61,7 +61,7 @@ class ThrottledOfflineContentProviderTest : public testing::Test {
         handle_(task_runner_),
         delay_(base::TimeDelta::FromSeconds(1)),
         provider_(delay_, &wrapped_provider_) {}
-  ~ThrottledOfflineContentProviderTest() override {}
+  ~ThrottledOfflineContentProviderTest() override = default;
 
  protected:
   base::TimeTicks GetTimeThatWillAllowAnUpdate() {

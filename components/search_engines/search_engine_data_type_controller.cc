@@ -24,7 +24,7 @@ SearchEngineDataTypeController::GetSubscriptionForTesting() {
   return template_url_subscription_.get();
 }
 
-SearchEngineDataTypeController::~SearchEngineDataTypeController() {}
+SearchEngineDataTypeController::~SearchEngineDataTypeController() = default;
 
 // We want to start the TemplateURLService before we begin associating.
 bool SearchEngineDataTypeController::StartModels() {

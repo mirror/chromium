@@ -16,7 +16,7 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(payments::PaymentRequestWebContentsManager);
 
 namespace payments {
 
-PaymentRequestWebContentsManager::~PaymentRequestWebContentsManager() {}
+PaymentRequestWebContentsManager::~PaymentRequestWebContentsManager() = default;
 
 PaymentRequestWebContentsManager*
 PaymentRequestWebContentsManager::GetOrCreateForWebContents(

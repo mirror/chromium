@@ -6,8 +6,8 @@
 
 namespace syncer {
 
-InMemoryMetadataChangeList::InMemoryMetadataChangeList() {}
-InMemoryMetadataChangeList::~InMemoryMetadataChangeList() {}
+InMemoryMetadataChangeList::InMemoryMetadataChangeList() = default;
+InMemoryMetadataChangeList::~InMemoryMetadataChangeList() = default;
 
 void InMemoryMetadataChangeList::UpdateModelTypeState(
     const sync_pb::ModelTypeState& model_type_state) {
