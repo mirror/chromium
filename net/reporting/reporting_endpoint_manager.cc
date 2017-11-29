@@ -38,8 +38,12 @@ class ReportingEndpointManagerImpl : public ReportingEndpointManager {
     std::vector<const ReportingClient*> clients;
     cache()->GetClientsForOriginAndGroup(origin, group, &clients);
 
-    // Filter out expired, pending, and backed-off endpoints.
+    // Highest-priority client(s) that are not expired, pending, failing, or
+    // forbidden for use by the ReportingDelegate.
     std::vector<const ReportingClient*> available_clients;
+    // Total weight of clients in available_clients.
+    int total_weight = 0;
+
     base::TimeTicks now = tick_clock()->NowTicks();
     for (const ReportingClient* client : clients) {
       if (client->expires < now)
@@ -52,7 +56,23 @@ class ReportingEndpointManagerImpl : public ReportingEndpointManager {
       }
       if (!delegate()->CanUseClient(client->origin, client->endpoint))
         continue;
+
+      // If this client is lower priority than the ones we've found, skip it.
+      if (!available_clients.empty() &&
+          client->priority > available_clients[0]->priority) {
+        continue;
+      }
+
+      // If this client is higher priority than the ones we've found (or we
+      // haven't found any), forget about those ones and remember this one.
+      if (available_clients.empty() ||
+          client->priority < available_clients[0]->priority) {
+        available_clients.clear();
+        total_weight = 0;
+      }
+
       available_clients.push_back(client);
+      total_weight += client->weight;
     }
 
     if (available_clients.empty()) {
@@ -60,9 +80,20 @@ class ReportingEndpointManagerImpl : public ReportingEndpointManager {
       return false;
     }
 
-    int random_index = base::RandInt(0, available_clients.size() - 1);
-    *endpoint_url_out = available_clients[random_index]->endpoint;
-    return true;
+    int random_index = base::RandInt(0, total_weight - 1);
+    int weight_so_far = 0;
+    for (size_t i = 0; i < available_clients.size(); ++i) {
+      const ReportingClient* client = available_clients[i];
+      weight_so_far += client->weight;
+      if (random_index < weight_so_far) {
+        *endpoint_url_out = client->endpoint;
+        return true;
+      }
+    }
+
+    // TODO(juliatuttle): Can we reach this in some weird overflow case?
+    NOTREACHED();
+    return false;
   }
 
   void SetEndpointPending(const GURL& endpoint) override {

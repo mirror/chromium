@@ -206,7 +206,9 @@ class ReportingPersisterImpl : public ReportingPersister {
     if (!DeserializeTicks(expires_string, &expires))
       return false;
 
-    cache()->SetClient(origin, endpoint, subdomains, group, expires);
+    cache()->SetClient(origin, endpoint, subdomains, group, expires,
+                       ReportingClient::kDefaultPriority,
+                       ReportingClient::kDefaultWeight);
     return true;
   }
 
