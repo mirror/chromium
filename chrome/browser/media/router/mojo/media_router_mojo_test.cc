@@ -66,48 +66,6 @@ class SinkResponseCallbackHandler {
 
 }  // namespace
 
-MockMediaRouteProvider::MockMediaRouteProvider() {}
-
-MockMediaRouteProvider::~MockMediaRouteProvider() {}
-
-void MockMediaRouteProvider::RouteRequestSuccess(RouteCallback& cb) const {
-  DCHECK(route_);
-  std::move(cb).Run(route_, std::string(), RouteRequestResult::OK);
-}
-
-void MockMediaRouteProvider::RouteRequestTimeout(RouteCallback& cb) const {
-  std::move(cb).Run(base::nullopt, std::string("error"),
-                    RouteRequestResult::TIMED_OUT);
-}
-
-void MockMediaRouteProvider::TerminateRouteSuccess(
-    TerminateRouteCallback& cb) const {
-  std::move(cb).Run(std::string(), RouteRequestResult::OK);
-}
-
-void MockMediaRouteProvider::SendRouteMessageSuccess(
-    SendRouteMessageCallback& cb) const {
-  std::move(cb).Run(true);
-}
-void MockMediaRouteProvider::SendRouteBinaryMessageSuccess(
-    SendRouteBinaryMessageCallback& cb) const {
-  std::move(cb).Run(true);
-}
-
-void MockMediaRouteProvider::SearchSinksSuccess(SearchSinksCallback& cb) const {
-  std::string sink_id = route_ ? route_->media_sink_id() : std::string();
-  std::move(cb).Run(sink_id);
-}
-
-void MockMediaRouteProvider::CreateMediaRouteControllerSuccess(
-    CreateMediaRouteControllerCallback& cb) const {
-  std::move(cb).Run(true);
-}
-
-void MockMediaRouteProvider::SetRouteToReturn(const MediaRoute& route) {
-  route_ = route;
-}
-
 MockEventPageTracker::MockEventPageTracker() {}
 
 MockEventPageTracker::~MockEventPageTracker() {}
