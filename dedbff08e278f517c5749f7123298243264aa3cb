@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d177b8a6_851a3b13",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1206959
+      },
+      "writtenOn": "2017-11-29T12:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9868e07a_766d36fc",
+      "revId": "dedbff08e278f517c5749f7123298243264aa3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e945040_095a774a",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7eb8977d_6a838003",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1206959
+      },
+      "writtenOn": "2017-11-29T12:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e945040_095a774a",
+      "range": {
+        "startLine": 130,
+        "startChar": 86,
+        "endLine": 130,
+        "endChar": 89
+      },
+      "revId": "dedbff08e278f517c5749f7123298243264aa3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5373016_eb169a2d",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/SmartClipCallback.java",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-28T22:30:11Z",
       "side": 1,
       "message": "\u003e I think this needs to be returned in dip as this Rect was present earlier and was being returned in dip which was serving the purpose fine.\n\nDocument this please.",
+      "range": {
+        "startLine": 14,
+        "startChar": 60,
+        "endLine": 14,
+        "endChar": 73
+      },
+      "revId": "dedbff08e278f517c5749f7123298243264aa3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caea2fa2_8cf07e3f",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SmartClipCallback.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1206959
+      },
+      "writtenOn": "2017-11-29T12:42:51Z",
+      "side": 1,
+      "message": "added java doc for this interface.",
+      "parentUuid": "f5373016_eb169a2d",
       "range": {
         "startLine": 14,
         "startChar": 60,
