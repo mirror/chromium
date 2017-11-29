@@ -1285,6 +1285,24 @@
       "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2107e106_dca1a5c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T18:55:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5329999c_9387d8d2",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
