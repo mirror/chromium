@@ -70,6 +70,30 @@
       "revId": "cd1eb24c886b4beabfe881360b8f78337f250738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7edb1f08_79a5109c",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-29T13:44:10Z",
+      "side": 1,
+      "message": "As clarified with Christos offline, what I was after already exists and is called PasswordCSVWriter.\n\nThat means that PasswordManagerExporter is not needed for mobile platforms.\nI don\u0027t see any issues with the current CL, it is a reasonable state of things after the recent design changes.",
+      "parentUuid": "166e0a5b_f76db417",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 76
+      },
+      "revId": "cd1eb24c886b4beabfe881360b8f78337f250738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
