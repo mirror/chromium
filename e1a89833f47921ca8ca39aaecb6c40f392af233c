@@ -16,6 +16,24 @@
       "revId": "e1a89833f47921ca8ca39aaecb6c40f392af233c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e1297e_3f22d5ee",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 59
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-29T22:59:23Z",
+      "side": 1,
+      "message": "Done, I also now treat an invalid ID as a fatal (loss of context) error at the caller sites.",
+      "parentUuid": "d1396bf0_d05526ab",
+      "revId": "e1a89833f47921ca8ca39aaecb6c40f392af233c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

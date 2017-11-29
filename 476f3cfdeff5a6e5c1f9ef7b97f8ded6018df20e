@@ -421,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "610389d6_8866fe30",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-29T22:59:23Z",
+      "side": 1,
+      "message": "Ah, so the client would insert a single fence, hang on to it while cycling through 2^32 IDs, and destroy it just before a CreateClientGpuFenceCHROMIUM. Then the resulting CreateGpuFence call would fail because GpuFenceManager::CreateDuplicateGpuFence returns false because the entry already exists, and GpuCommandBufferStub::OnSendGpuFenceHandle would detect this and kill the context with SetParseError(error::kLostContext).\n\nI still don\u0027t really see how this is a problem other than an extremely roundabout way for a client to shoot themselves in the foot. Keeping a fence alive for so long wouldn\u0027t have any useful application, and if it\u0027s a bug a context loss seems reasonable.\n\nAnyway, I can keep the CHECK, I just want to make sure I\u0027m not missing some bigger potential problem here.",
+      "parentUuid": "ee79c452_d1b96c51",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1e294e_b870ce42",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 46
