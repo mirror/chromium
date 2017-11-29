@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2286d758_adc44e5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-29T18:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "834bf171_cf205fe4",
+      "range": {
+        "startLine": 371,
+        "startChar": 28,
+        "endLine": 371,
+        "endChar": 31
+      },
+      "revId": "572f3d360ca2b853b520b682cb1c3275bdb78daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c7401b5_848eba74",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "572f3d360ca2b853b520b682cb1c3275bdb78daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186797c2_f218eef2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-29T18:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c7401b5_848eba74",
+      "revId": "572f3d360ca2b853b520b682cb1c3275bdb78daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "572f3d360ca2b853b520b682cb1c3275bdb78daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccafa188_5692c339",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-29T18:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84700cd9_2d62c26d",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 48
+      },
+      "revId": "572f3d360ca2b853b520b682cb1c3275bdb78daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
