@@ -78,10 +78,6 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_version_39, true)
 // reordering window for every spurious retransmit.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_fix_adaptive_time_loss, false)
 
-// If true, export a varz mapping QUIC non 0-rtt handshake with corresponding
-// frontend service.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_account_handshake, true)
-
 // Allows the 3RTO QUIC connection option to close a QUIC connection after
 // 3RTOs if there are no open streams.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_3rtos, false)
@@ -210,4 +206,4 @@ QUIC_FLAG(bool,
           false)
 
 // If true, use deframer from net/quic/http instead of net/http2.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_hq_deframer, true)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_hq_deframer, false)
