@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76be5596_77e3bb98",
+        "filename": "components/viz/service/display/output_surface_client.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-29T17:59:33Z",
+      "side": 1,
+      "message": "I had imagined longer documentation. If you hadn\u0027t written this, would you know under what circumstances this callback is invoked?",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5eb3d72_fdeed459",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-29T17:59:33Z",
+      "side": 1,
+      "message": "But which buffer? Future Chrome developers will appreciate if you explain these things in more detail.\n\nAnd: you could name it better? buffer_scanout_start_time is a better name?",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c05983b_8ac83137",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-29T17:59:33Z",
+      "side": 1,
+      "message": "From when? From timestamp I presume? If so, this belongs in a comment yes?",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b21ed11_cdd3c846",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-29T17:59:33Z",
+      "side": 1,
+      "message": "next_refresh_time?",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8255defc_4a45d191",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-29T17:59:33Z",
+      "side": 1,
+      "message": "Why is presentation_callback not a OnceCallback or RepeatingCallback? Being able to use a move-only type is conceivably desirable? Please consider doing this in a future CL?",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550f5e8c_ca194e5b",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-29T17:59:33Z",
+      "side": 1,
+      "message": "Why didn\u0027t you add a PresentationCallback here too? Wouldn\u0027t we want to know when the |image| parameter here is being used for scanout?\n\nYou should add that as part of implementing the internals for ozone.",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

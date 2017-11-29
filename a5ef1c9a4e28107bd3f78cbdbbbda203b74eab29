@@ -107,6 +107,23 @@
     },
     {
       "key": {
+        "uuid": "983515e0_467f80a0",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-29T17:59:33Z",
+      "side": 1,
+      "message": "clarifying question: kHWCompletion implies kVSync yes?",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81fd2b4a_dacd705d",
         "filename": "ui/gfx/presentation_feedback.h",
         "patchSetId": 36
@@ -177,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0e686845_99cdf321",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-29T17:59:33Z",
+      "side": 1,
+      "message": "Ah.\n\nIf you had made PresentationFeedback a class and an accessor, you could have provided an accessor / setter that would have enforced that only the members of the enum could be set. Perhaps you could consider this in a follow-up CL.",
+      "parentUuid": "0191b832_2d546e46",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52367762_df759b6f",
         "filename": "ui/gl/gl_surface.h",
         "patchSetId": 36
@@ -240,6 +275,24 @@
       "side": 1,
       "message": "Sorry. I don\u0027t understand. print what kind of timing info?",
       "parentUuid": "cebaaec7_001ac0da",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626adb8d_4bc9502e",
+        "filename": "ui/ozone/demo/gl_renderer.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-29T17:59:33Z",
+      "side": 1,
+      "message": "This is a demo. It could actually log the timing information collected by your API yes? i.e.: print out the values in feedback? I forget if TRACE works in ozone demo but if it does, that would be nicest.\n\nPlease update this when you update the ozone implementation per your TODO.",
+      "parentUuid": "1d082e2c_b917bfdc",
       "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
