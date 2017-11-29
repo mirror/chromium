@@ -22,6 +22,30 @@
       "revId": "e0bf6efed06acf61b1f03078bd154cdb8b93287a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1bcb5a_bb89b651",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-11-29T19:34:32Z",
+      "side": 0,
+      "message": "With account list caching, none of these calls should be expensive.\n\ntryGetGoogleAccountNames doesn\u0027t change any state, isSignedIn, getSyncLastAccountName and ChromePreferenceManager methods just read preferences, so it should be fine. Since all these methods are just state getters, ordering shouldn\u0027t matter.",
+      "parentUuid": "a449d0b1_33a63d0a",
+      "range": {
+        "startLine": 45,
+        "startChar": 36,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "e0bf6efed06acf61b1f03078bd154cdb8b93287a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
