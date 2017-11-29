@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29d5fff0_f40ccdb4",
+        "filename": "ios/web/web_state/ui/crw_web_view_scroll_view_proxy.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T19:37:52Z",
+      "side": 1,
+      "message": "Would it be better to use a unique_ptr\u003cUIScrollViewContentInsetAdjustmentBehavior\u003e for holding both the value and a boolean?",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "3cb8f05fb245268cbfef0b3475399f7e530ad395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2a05da_0c463f3f",
+        "filename": "ios/web/web_state/ui/crw_web_view_scroll_view_proxy_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T19:37:52Z",
+      "side": 1,
+      "message": "s/testScrollViewSetProperties/ScrollViewSetProperties\n\nExisting tests are not named correctly.",
+      "range": {
+        "startLine": 206,
+        "startChar": 38,
+        "endLine": 206,
+        "endChar": 65
+      },
+      "revId": "3cb8f05fb245268cbfef0b3475399f7e530ad395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
