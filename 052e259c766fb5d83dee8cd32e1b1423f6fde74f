@@ -22,6 +22,30 @@
       "revId": "052e259c766fb5d83dee8cd32e1b1423f6fde74f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc3bb57_eab13ed9",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-29T12:39:34Z",
+      "side": 1,
+      "message": "I see. Thanks for the added comments! Would the following work?\n\n- We make the util into a class called ScopedGeolocationOverrider. The class sets the override in its constructor and clears it in its destructor. The tests own an instance of this class and initialize it wherever the right place is for them to initialize it?\n\n- Wrt the test, could we make it a service test of the Device Service? That way we should have the necessary context to interact with the Service Manager.",
+      "parentUuid": "d8552e02_47fb1278",
+      "range": {
+        "startLine": 529,
+        "startChar": 6,
+        "endLine": 535,
+        "endChar": 65
+      },
+      "revId": "052e259c766fb5d83dee8cd32e1b1423f6fde74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
