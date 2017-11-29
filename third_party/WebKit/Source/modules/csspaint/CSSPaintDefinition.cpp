@@ -4,6 +4,7 @@
 
 #include "modules/csspaint/CSSPaintDefinition.h"
 
+#include <memory>
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/css/CSSComputedStyleDeclaration.h"
 #include "core/css/cssom/FilteredComputedStylePropertyMap.h"
@@ -17,7 +18,6 @@
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/PaintGeneratedImage.h"
 #include "platform/graphics/RecordingImageBufferSurface.h"
-#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -99,9 +99,9 @@ scoped_refptr<Image> CSSPaintDefinition::Paint(
   }
 
   PaintRenderingContext2D* rendering_context = PaintRenderingContext2D::Create(
-      ImageBuffer::Create(WTF::WrapUnique(new RecordingImageBufferSurface(
+      ImageBuffer::Create(std::make_unique<RecordingImageBufferSurface>(
           container_size, RecordingImageBufferSurface::kDisallowFallback,
-          color_params))),
+          color_params)),
       context_settings_, zoom);
   PaintSize* paint_size = PaintSize::Create(specified_size);
   StylePropertyMapReadonly* style_map =

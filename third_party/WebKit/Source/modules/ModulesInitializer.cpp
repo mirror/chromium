@@ -4,6 +4,8 @@
 
 #include "modules/ModulesInitializer.h"
 
+#include <memory>
+
 #include "bindings/modules/v8/ModuleBindingsInitializer.h"
 #include "core/css/CSSPaintImageGenerator.h"
 #include "core/dom/ContextFeaturesClientImpl.h"
@@ -84,7 +86,6 @@
 #include "modules/webgl/WebGLRenderingContext.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/mojo/MojoHelper.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/InterfaceRegistry.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/web/WebViewClient.h"
@@ -245,7 +246,7 @@ std::unique_ptr<WebMediaPlayer> ModulesInitializer::CreateWebMediaPlayer(
       HTMLMediaElementEncryptedMedia::From(html_media_element);
   WebString sink_id(
       HTMLMediaElementAudioOutputDevice::sinkId(html_media_element));
-  return WTF::WrapUnique(web_frame_client->CreateMediaPlayer(
+  return std::unique_ptr<WebMediaPlayer>(web_frame_client->CreateMediaPlayer(
       source, media_player_client, &encrypted_media,
       encrypted_media.ContentDecryptionModule(), sink_id, view));
 }

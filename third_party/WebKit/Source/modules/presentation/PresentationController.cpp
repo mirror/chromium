@@ -10,7 +10,6 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
 #include "modules/presentation/PresentationConnection.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/presentation/WebPresentationClient.h"

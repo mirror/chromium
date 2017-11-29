@@ -42,7 +42,6 @@
 #include "modules/filesystem/FileWriterBaseCallback.h"
 #include "modules/filesystem/FileWriterSync.h"
 #include "platform/FileMetadata.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebFileSystem.h"
 #include "public/platform/WebFileSystemCallbacks.h"
 
@@ -96,8 +95,9 @@ class CreateFileHelper final : public AsyncFileSystemCallbacks {
       const String& name,
       const KURL& url,
       FileSystemType type) {
-    return WTF::WrapUnique(static_cast<AsyncFileSystemCallbacks*>(
-        new CreateFileHelper(result, name, url, type)));
+    return std::unique_ptr<AsyncFileSystemCallbacks>(
+        static_cast<AsyncFileSystemCallbacks*>(
+            new CreateFileHelper(result, name, url, type)));
   }
 
   void DidFail(int code) override {

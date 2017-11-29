@@ -34,7 +34,6 @@
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "core/typed_arrays/DOMArrayBufferView.h"
 #include "modules/peerconnection/RTCPeerConnection.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebRTCPeerConnectionHandler.h"
 
@@ -71,7 +70,8 @@ RTCDataChannel* RTCDataChannel::Create(
     const WebRTCDataChannelInit& init,
     ExceptionState& exception_state) {
   std::unique_ptr<WebRTCDataChannelHandler> handler =
-      WTF::WrapUnique(peer_connection_handler->CreateDataChannel(label, init));
+      std::unique_ptr<WebRTCDataChannelHandler>(
+          peer_connection_handler->CreateDataChannel(label, init));
   if (!handler) {
     exception_state.ThrowDOMException(kNotSupportedError,
                                       "RTCDataChannel is not supported");

@@ -31,7 +31,6 @@
 #include "gin/public/v8_idle_task_runner.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/child/web_scheduler.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
 #include "public/platform/WebTraceLocation.h"
@@ -43,7 +42,8 @@ class V8IdleTaskAdapter : public WebThread::IdleTask {
   WTF_MAKE_NONCOPYABLE(V8IdleTaskAdapter);
 
  public:
-  V8IdleTaskAdapter(v8::IdleTask* task) : task_(WTF::WrapUnique(task)) {}
+  V8IdleTaskAdapter(v8::IdleTask* task)
+      : task_(std::unique_ptr<v8::IdleTask>(task)) {}
   ~V8IdleTaskAdapter() override {}
   void Run(double delay_seconds) override { task_->Run(delay_seconds); }
 
