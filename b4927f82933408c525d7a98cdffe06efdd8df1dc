@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4707ab95_4edc1795",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-11-29T00:48:05Z",
+      "side": 1,
+      "message": "Will probably have to add a macro guard here for iOS.",
+      "revId": "b4927f82933408c525d7a98cdffe06efdd8df1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1001dede_9b67ca56",
         "filename": "third_party/zlib/crc32.c",
         "patchSetId": 10
