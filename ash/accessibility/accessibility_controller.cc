@@ -14,6 +14,7 @@
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/system/tray/system_tray_notifier.h"
+#include "ash/wm/lock_state_controller.h"
 #include "chromeos/audio/cras_audio_handler.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_change_registrar.h"
@@ -137,6 +138,25 @@ void AccessibilityController::TriggerAccessibilityAlert(
     mojom::AccessibilityAlert alert) {
   if (client_)
     client_->TriggerAccessibilityAlert(alert);
+}
+
+void AccessibilityController::PlayEarcon(int32_t sound_key) {
+  if (!spoken_feedback_enabled_)
+    return;
+
+  if (client_)
+    client_->PlayEarcon(sound_key);
+}
+
+void AccessibilityController::PlayShutdownSound() {
+  if (!spoken_feedback_enabled_)
+    return;
+
+  if (client_) {
+    client_->PlayShutdownSound(
+        base::Bind(&AccessibilityController::OnGetShutdownSoundDuration,
+                   base::Unretained(this)));
+  }
 }
 
 void AccessibilityController::SetClient(
@@ -278,6 +298,14 @@ void AccessibilityController::UpdateSpokenFeedbackFromPref() {
   // TODO(warx): Chrome observes prefs change and turns on/off spoken feedback.
   // Define a mojo call to control toggling spoken feedback (ChromeVox) once
   // prefs ownership and registration is moved to ash.
+}
+
+void AccessibilityController::OnGetShutdownSoundDuration(
+    base::TimeDelta shutdown_sound_duration) {
+  Shell::Get()->lock_state_controller()->OnGetShutdownSoundDuration(
+      shutdown_sound_duration);
+
+  shutdown_sound_duration_for_test_ = shutdown_sound_duration;
 }
 
 }  // namespace ash
