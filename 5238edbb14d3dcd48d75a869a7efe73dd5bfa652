@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "531c33e7_d4566e7f",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-11-29T08:38:47Z",
+      "side": 1,
+      "message": "Now that the Android side will use a whitelist of schemes, we should do the same here for consistency and enforcement.",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 3
+      },
+      "revId": "5238edbb14d3dcd48d75a869a7efe73dd5bfa652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
