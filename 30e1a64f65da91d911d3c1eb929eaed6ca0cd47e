@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "06cd72f0_325cd514",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-29T03:09:54Z",
+      "side": 1,
+      "message": "I think there is no problem to check it here. Because ResourceLoader checks WasFallbackRequiredByServiceWorker() for other resources, so WasFallbackRequiredByServiceWorker() is true here only for RawResource.",
+      "parentUuid": "7a8cbe39_0e06ccd9",
+      "revId": "30e1a64f65da91d911d3c1eb929eaed6ca0cd47e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38fbd1d7_2c88e739",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 2
