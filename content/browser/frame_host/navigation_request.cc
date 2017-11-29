@@ -844,6 +844,8 @@ void NavigationRequest::OnResponseStarted(
     }
   }
 
+  LOG(ERROR) << "** WillProcessResponse: " << common_params_.url
+             << " is_download:" << is_download;
   // Check if the navigation should be allowed to proceed.
   navigation_handle_->WillProcessResponse(
       render_frame_host, response->head.headers.get(),
