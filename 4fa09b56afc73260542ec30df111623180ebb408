@@ -16,6 +16,24 @@
       "revId": "4fa09b56afc73260542ec30df111623180ebb408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59cb62b1_ee21aa82",
+        "filename": "ios/build/bots/scripts/find_xcode.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-29T22:45:25Z",
+      "side": 1,
+      "message": "Good point, thanks. Though if xcodebuild or xcode-select is not found, we\u0027re in a pretty bad shape from the start, and I don\u0027t mind it crashing early. Therefore, I\u0027m inclined to leave it as it is.",
+      "parentUuid": "0fb79284_e2056dc7",
+      "revId": "4fa09b56afc73260542ec30df111623180ebb408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
