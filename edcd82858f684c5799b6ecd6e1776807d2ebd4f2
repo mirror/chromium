@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63c3558d_8073c0fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-29T08:24:21Z",
+      "side": 1,
+      "message": "nit: update CL description",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c7b513_fa2f96b3",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-29T08:24:21Z",
+      "side": 1,
+      "message": "This is needed because we use ENABLE_MOJO_MEDIA_IN_GPU_PROCESS in AVDA, which is a hack. After we switch to MCVD, we should be able to remove this.\n\nCould you please add a TODO(crbug.com/789435) for removing this line?",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4ce0fe_94af485e",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-29T08:24:21Z",
+      "side": 1,
+      "message": "This seems unnecessary. In media/gpu, we should not care how MCVD is hosted. That\u0027s more like the responsibility of content/ layer. For example, in theory, we could have an application depending on this target, and host MCVD in the browser process directly, or host MCVD using some other mechanism than MojoVideoDecoder.",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95542b9_f1984f8e",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-29T08:24:21Z",
+      "side": 1,
+      "message": "nit: Also update this to use TODO(crbug.com/789435)",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d881e5ee_60ba15b6",
+        "filename": "media/mojo/clients/mojo_decoder_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-29T08:24:21Z",
+      "side": 1,
+      "message": "nit: add include for base::FeatureList",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056a2979_7a82c417",
+        "filename": "media/renderers/default_renderer_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-29T08:24:21Z",
+      "side": 1,
+      "message": "For discussion: Maybe we should use the decoder factory to create ALL decoders, including MojoVD, GVD, and the software decoders like VpxVD. The current code seems a bit fragmented.",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d964ecb_14739d36",
+        "filename": "media/renderers/default_renderer_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-29T08:24:21Z",
+      "side": 1,
+      "message": "As part of VDAv2 effort, does it make sense to say that on all platforms, if IsEnabled(media::kMojoVideoDecoder), then we do not use GVD? That will make this code simpler, and will work automatically on Windows.",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
