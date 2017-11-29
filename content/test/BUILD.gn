@@ -1949,7 +1949,10 @@ test("content_unittests") {
       "../browser/speech/speech_recognizer_impl_unittest.cc",
       "../browser/webauth/authenticator_impl_unittest.cc",
     ]
-    deps += [ "//third_party/libvpx" ]
+    deps += [
+      "//device/u2f:test_support",
+      "//third_party/libvpx",
+    ]
   }
 
   if (use_aura) {
