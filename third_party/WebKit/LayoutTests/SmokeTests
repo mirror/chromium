@@ -849,8 +849,8 @@ paint/invalidation/focus-layers.html
 paint/invalidation/selected-replaced.html
 paint/invalidation/selection/selection-in-composited-scrolling-container.html
 paint/invalidation/shadow-multiple.html
-paint/invalidation/svg/animated-svg-as-image-transformed-offscreen.html
-paint/invalidation/svg/invalid-clip-path-crash.html
+paint/invalidation/svg1/animated-svg-as-image-transformed-offscreen.html
+paint/invalidation/svg1/invalid-clip-path-crash.html
 paint/roundedrects/degenerate-radius-assert.html
 paint/selection/selection-drag-image-in-iframe.html
 payments/payment-request-in-iframe-allowed.html
