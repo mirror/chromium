@@ -81,7 +81,11 @@ def main():
   for output_format in args.output_format:
     rest_args.append('--output-format=' + output_format)
   isolated_out_dir = os.path.dirname(args.isolated_script_test_output)
-
+  print 'in run_multiple_telemetry_benchmarks_as_googletest'
+  print 'isolated script test output:'
+  print args.isolated_script_test_output
+  print 'isolated_out_dir:'
+  print isolated_out_dir
   with open(sharding_map_path()) as f:
     sharding_map = json.load(f)
   sharding = sharding_map[args.builder][args.bot]['benchmarks']
@@ -104,7 +108,8 @@ def main():
       json.dump(perf_results, f)
     with open(os.path.join(benchmark_path, 'test_results.json'), 'w') as f:
       json.dump(json_test_results, f)
-
+    with open(os.path.join(benchmark_path, 'output.json'), 'w') as f:
+      json.dump(json_test_results, f)
   return return_code
 
 
