@@ -1555,20 +1555,18 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                                  completion:nil];
 }
 
-// TODO(crbug.com/779791) : Remove show settings commands from MainController.
-- (void)showSyncPassphraseSettingsFromViewController:
-    (UIViewController*)baseViewController {
+- (void)showSyncPassphraseSettings {
   if (_settingsNavigationController) {
-    [_settingsNavigationController
-        showSyncPassphraseSettingsFromViewController:baseViewController];
+    [_settingsNavigationController showSyncPassphraseSettings];
     return;
   }
   _settingsNavigationController = [SettingsNavigationController
       newSyncEncryptionPassphraseController:_mainBrowserState
                                    delegate:self];
-  [baseViewController presentViewController:_settingsNavigationController
-                                   animated:YES
-                                 completion:nil];
+  [[self topPresentedViewController]
+      presentViewController:_settingsNavigationController
+                   animated:YES
+                 completion:nil];
 }
 
 #pragma mark - chromeExecuteCommand
