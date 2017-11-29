@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "7ac8f517_0dcbc87e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2957,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-29T12:14:07Z",
+      "side": 1,
+      "message": "Confirmed with jam@ and nasko@ that the mojo version is fine to use.",
+      "parentUuid": "3805a867_14ed2d15",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d88844f4_060d0277",
         "filename": "content/common/frame.mojom",
         "patchSetId": 16

@@ -16,6 +16,24 @@
       "revId": "3c8851642614a558b3460dbd6dcf65ab75bf87c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5bedf26_58b01dfb",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-29T12:14:07Z",
+      "side": 0,
+      "message": "Nope, just spotted a repetition from 2 lines above.",
+      "parentUuid": "cfc078d1_3b2488f8",
+      "revId": "3c8851642614a558b3460dbd6dcf65ab75bf87c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
