@@ -894,6 +894,13 @@ void ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
     case ExecuteScriptResult::kShouldFireNone:
       break;
   }
+
+  // ContainerNode::ParserAppendChild doesn't invalidate node caches itself and
+  // assumes that caches are invalidated after script is run during parsing.
+  if (IsParserInserted() && !WillExecuteWhenDocumentFinishedParsing()) {
+    Document& document = element_->GetDocument();
+    document.InvalidateAllNodeListCaches();
+  }
 }
 
 void ScriptLoader::PendingScriptFinished(PendingScript* pending_script) {

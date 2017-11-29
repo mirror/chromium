@@ -7019,6 +7019,21 @@ void Document::InvalidateNodeListCaches(const QualifiedName* attr_name) {
     list->InvalidateCacheForAttribute(attr_name);
 }
 
+void Document::InvalidateAllNodeListCaches() {
+  InvalidateNodeListCaches(nullptr);
+  for (Node& node : NodeTraversal::DescendantsOf(*this)) {
+    if (!node.IsContainerNode())
+      continue;
+    if (NodeListsNodeData* lists = node.NodeLists()) {
+      if (ChildNodeList* child_node_list =
+              lists->GetChildNodeList(ToContainerNode(node))) {
+        child_node_list->InvalidateCache();
+      }
+      lists->InvalidateCaches();
+    }
+  }
+}
+
 void Document::PlatformColorsChanged() {
   if (!IsActive())
     return;

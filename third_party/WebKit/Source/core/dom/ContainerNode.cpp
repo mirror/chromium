@@ -967,7 +967,8 @@ void ContainerNode::DetachLayoutTree(const AttachContext& context) {
 void ContainerNode::ChildrenChanged(const ChildrenChange& change) {
   GetDocument().IncDOMTreeVersion();
   GetDocument().NotifyChangeChildren(*this);
-  InvalidateNodeListCachesInAncestors(nullptr, nullptr, &change);
+  if (!change.by_parser)
+    InvalidateNodeListCachesInAncestors(nullptr, nullptr, &change);
   if (change.IsChildInsertion()) {
     if (!ChildNeedsStyleRecalc()) {
       SetChildNeedsStyleRecalc();
