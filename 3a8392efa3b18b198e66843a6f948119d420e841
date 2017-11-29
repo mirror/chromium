@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab6b1ba7_a0f22495",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-29T18:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22d3bfe1_efcc9d65",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 16
+      },
+      "revId": "3a8392efa3b18b198e66843a6f948119d420e841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a331e0c_9f7654ee",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-29T01:10:52Z",
       "side": 1,
       "message": "Nit: It is a bit odd to have a div (which has display block), within a span (which has display inline). Can we make them both divs or both spans? Also do those have to be nested?",
+      "revId": "3a8392efa3b18b198e66843a6f948119d420e841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2052d856_ee2cd7eb",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-29T18:31:49Z",
+      "side": 1,
+      "message": "Updated so they\u0027re siblings, but they still need a parent",
+      "parentUuid": "3a331e0c_9f7654ee",
       "revId": "3a8392efa3b18b198e66843a6f948119d420e841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
