@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2bbdf01f_13a911cc",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-29T18:53:01Z",
+      "side": 1,
+      "message": "Let\u0027s say that we want to add a new field \"QUIC Version\" to the metrics. In order for the clients to get access to the field, they will need to downcast the iOS metrics object to Cronet metrics object. In order to do that, the client needs to know how Cronet metrics is defined.\n\nI don\u0027t have very strong opinion about that. We can keep it here for now and move it later if needed.",
+      "parentUuid": "22cad064_59f298cd",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 4
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d406f67_1534bba8",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 20
