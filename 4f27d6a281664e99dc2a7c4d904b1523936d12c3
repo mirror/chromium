@@ -22,6 +22,30 @@
       "revId": "4f27d6a281664e99dc2a7c4d904b1523936d12c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed9dfec_277f9622",
+        "filename": "ash/wm/window_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-11-29T18:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f1de458_426279f2",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 9
+      },
+      "revId": "4f27d6a281664e99dc2a7c4d904b1523936d12c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
