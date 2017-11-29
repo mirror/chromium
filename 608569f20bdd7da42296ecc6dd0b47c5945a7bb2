@@ -68,6 +68,24 @@
       "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a68a7e_96721f77",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-11-29T10:17:26Z",
+      "side": 1,
+      "message": "How about having a method like IsServedFromCache() which returns a bool value instead of CacheStorageCacheName(). On V8 side in ScriptController it looks something like\n\nif (cache_handler \u0026\u0026 !cache_handler-\u003eIsServedFromCache())\n    return kV8CacheOptionsCodeWithoutHeatCheck;",
+      "parentUuid": "23059897_770913da",
+      "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
