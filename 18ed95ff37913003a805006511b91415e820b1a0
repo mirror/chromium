@@ -16,6 +16,24 @@
       "revId": "18ed95ff37913003a805006511b91415e820b1a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f62bea_f95a37c1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/payments/payment-instruments.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-29T17:10:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "85b3b6e8_7889fa25",
+      "revId": "18ed95ff37913003a805006511b91415e820b1a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
