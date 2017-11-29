@@ -62,6 +62,11 @@ struct BASE_EXPORT SharedMemoryCreateOptions {
 
   // If true, the file can be shared read-only to a process.
   bool share_read_only = false;
+
+#if defined(OS_LINUX)
+  // If true, use virtwl to allocate memory.
+  bool virtwl = false;
+#endif
 };
 
 // Platform abstraction for shared memory.

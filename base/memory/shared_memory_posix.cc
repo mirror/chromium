@@ -31,6 +31,49 @@
 #include "third_party/ashmem/ashmem.h"
 #endif
 
+#if defined(OS_LINUX)
+#include <sys/ioctl.h>
+#endif
+
+#ifndef _LINUX_VIRTWL_H
+#define _LINUX_VIRTWL_H
+
+#include <asm/ioctl.h>
+#include <linux/types.h>
+
+#define VIRTWL_SEND_MAX_ALLOCS 28
+
+#define VIRTWL_IOCTL_BASE 'w'
+#define VIRTWL_IO(nr) _IO(VIRTWL_IOCTL_BASE, nr)
+#define VIRTWL_IOR(nr, type) _IOR(VIRTWL_IOCTL_BASE, nr, type)
+#define VIRTWL_IOW(nr, type) _IOW(VIRTWL_IOCTL_BASE, nr, type)
+#define VIRTWL_IOWR(nr, type) _IOWR(VIRTWL_IOCTL_BASE, nr, type)
+
+enum virtwl_ioctl_new_type {
+  VIRTWL_IOCTL_NEW_CTX,   /* open a new wayland connection context */
+  VIRTWL_IOCTL_NEW_ALLOC, /* create a new virtwl shm allocation */
+};
+
+struct virtwl_ioctl_new {
+  __u32 type;  /* VIRTWL_IOCTL_NEW_* */
+  int fd;      /* return fd */
+  __u32 flags; /* currently always 0 */
+  __u32 size;  /* size of allocation if type == VIRTWL_IOCTL_NEW_ALLOC */
+};
+
+struct virtwl_ioctl_txn {
+  int fds[VIRTWL_SEND_MAX_ALLOCS];
+  __u32 len;
+  __u8 data[0];
+};
+
+#define VIRTWL_IOCTL_NEW VIRTWL_IOWR(0x00, struct virtwl_ioctl_new)
+#define VIRTWL_IOCTL_SEND VIRTWL_IOR(0x01, struct virtwl_ioctl_txn)
+#define VIRTWL_IOCTL_RECV VIRTWL_IOW(0x02, struct virtwl_ioctl_txn)
+#define VIRTWL_IOCTL_MAXNR 3
+
+#endif /* _LINUX_VIRTWL_H */
+
 namespace base {
 
 SharedMemory::SharedMemory() {}
@@ -93,6 +136,24 @@ bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
   // the temporary files we create will just go into the buffer cache
   // and be deleted before they ever make it out to disk.
   base::ThreadRestrictions::ScopedAllowIO allow_io;
+
+#if defined(OS_LINUX)
+  if (options.virtwl) {
+    virtwl_ioctl_new virtwl_ioctl_new = {.type = VIRTWL_IOCTL_NEW_ALLOC,
+                                         .fd = -1,
+                                         .flags = 0,
+                                         .size = options.size};
+    ScopedFD wl_fd(open("/dev/wl0", O_RDWR));
+    if (!wl_fd.is_valid())
+      return false;
+    if (ioctl(wl_fd.get(), VIRTWL_IOCTL_NEW, &virtwl_ioctl_new))
+      return false;
+    SetCloseOnExec(virtwl_ioctl_new.fd);
+    shm_ = SharedMemoryHandle(base::FileDescriptor(virtwl_ioctl_new.fd, false),
+                              options.size, UnguessableToken::Create());
+    return true;
+  }
+#endif
 
   ScopedFILE fp;
   bool fix_size = true;

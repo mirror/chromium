@@ -64,7 +64,12 @@ sk_sp<SkSurface> WaylandCanvasSurface::GetSurface() {
 
   size_t length = size_.width() * size_.height() * 4;
   auto shared_memory = base::WrapUnique(new base::SharedMemory);
-  if (!shared_memory->CreateAndMapAnonymous(length))
+  base::SharedMemoryCreateOptions options;
+  options.size = length;
+  options.virtwl = true;
+  if (!shared_memory->Create(options))
+    return nullptr;
+  if (!shared_memory->Map(length))
     return nullptr;
 
   wl::Object<wl_shm_pool> pool(wl_shm_create_pool(
