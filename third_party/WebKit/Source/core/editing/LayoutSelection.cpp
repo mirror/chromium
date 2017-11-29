@@ -32,6 +32,7 @@
 #include "core/layout/LayoutText.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/ng/inline/ng_offset_mapping.h"
 #include "core/paint/PaintLayer.h"
 
 namespace blink {
@@ -544,6 +545,37 @@ static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInTwoNodes(
           std::move(selected_objects)};
 }
 
+static WTF::Optional<unsigned> GetNGOffset(
+    LayoutObject* layout_object,
+    WTF::Optional<unsigned> legacy_offset,
+    const PositionInFlatTree& position) {
+  if (!layout_object->EnclosingNGBlockFlow())
+    return legacy_offset;
+  if (!layout_object->IsText())
+    return WTF::nullopt;
+  const Position& position_in_dom = ToPositionInDOMTree(position);
+  const NGOffsetMapping* const offset_mapping =
+      NGOffsetMapping::GetFor(position_in_dom);
+  const WTF::Optional<unsigned>& ng_offset =
+      offset_mapping->GetTextContentOffset(position_in_dom);
+  return ng_offset;
+}
+
+static NewPaintRangeAndSelectedLayoutObjects ComputeNewRangeForNG(
+    const NewPaintRangeAndSelectedLayoutObjects& new_range,
+    const EphemeralRangeInFlatTree& selection) {
+  LayoutObject* const start = new_range.PaintRange().StartLayoutObject();
+  const WTF::Optional<unsigned> start_offset = GetNGOffset(
+      start, new_range.PaintRange().StartOffset(), selection.StartPosition());
+
+  LayoutObject* const end = new_range.PaintRange().EndLayoutObject();
+  const WTF::Optional<unsigned> end_offset = GetNGOffset(
+      end, new_range.PaintRange().EndOffset(), selection.EndPosition());
+
+  return {{start, start_offset, end, end_offset},
+          std::move(new_range.LayoutObjects())};
+}
+
 static NewPaintRangeAndSelectedLayoutObjects
 CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
   const SelectionInDOMTree& selection_in_dom =
@@ -592,14 +624,18 @@ CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
   const WTF::Optional<unsigned> end_offset = ComputeEndOffset(
       *end_layout_object, selection.EndPosition().ToOffsetInAnchor());
 
-  if (start_layout_object == end_layout_object) {
-    return MarkStartAndEndInOneNode(std::move(selected_objects),
-                                    start_layout_object, start_offset,
-                                    end_offset);
-  }
-  return MarkStartAndEndInTwoNodes(std::move(selected_objects),
-                                   start_layout_object, start_offset,
-                                   end_layout_object, end_offset);
+  NewPaintRangeAndSelectedLayoutObjects new_range =
+      start_layout_object == end_layout_object
+          ? MarkStartAndEndInOneNode(std::move(selected_objects),
+                                     start_layout_object, start_offset,
+                                     end_offset)
+          : MarkStartAndEndInTwoNodes(std::move(selected_objects),
+                                      start_layout_object, start_offset,
+                                      end_layout_object, end_offset);
+
+  if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
+    return new_range;
+  return ComputeNewRangeForNG(new_range, selection);
 }
 
 void LayoutSelection::SetHasPendingSelection() {
