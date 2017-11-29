@@ -160,9 +160,10 @@ void SigninManager::SignOut(
 
 void SigninManager::SignOutAndRemoveAllAccounts(
     signin_metrics::ProfileSignout signout_source_metric,
-    signin_metrics::SignoutDelete signout_delete_metric) {
+    signin_metrics::SignoutDelete signout_delete_metric,
+    bool remove_all_accounts) {
   StartSignOut(signout_source_metric, signout_delete_metric,
-               true /* remove_all_tokens */);
+               remove_all_accounts);
 }
 
 void SigninManager::StartSignOut(

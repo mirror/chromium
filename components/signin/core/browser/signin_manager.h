@@ -107,7 +107,8 @@ class SigninManager : public SigninManagerBase,
   // tokens.
   void SignOutAndRemoveAllAccounts(
       signin_metrics::ProfileSignout signout_source_metric,
-      signin_metrics::SignoutDelete signout_delete_metric);
+      signin_metrics::SignoutDelete signout_delete_metric,
+      bool remove_all_accounts = true);
 
   // On platforms where SigninManager is responsible for dealing with
   // invalid username policy updates, we need to check this during
