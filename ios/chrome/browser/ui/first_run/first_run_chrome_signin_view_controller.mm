@@ -199,7 +199,7 @@ NSString* const kSignInSkipButtonAccessibilityIdentifier =
 }
 
 - (void)showSyncPassphraseSettings {
-  [self.dispatcher showSyncPassphraseSettingsFromViewController:self];
+  [self.dispatcher showSyncPassphraseSettings];
 }
 
 @end
