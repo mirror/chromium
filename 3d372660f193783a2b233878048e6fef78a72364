@@ -16,6 +16,24 @@
       "revId": "3d372660f193783a2b233878048e6fef78a72364",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024450c1_bf2516ce",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-29T08:10:26Z",
+      "side": 1,
+      "message": "Ahh, sorry, the comment was outdated. This patch originally didn\u0027t have the id comparison, but I\u0027ve added it to address the case where the base::TickClock is coarse (it\u0027s possible when the high resolution time is not available). Removed the comment.",
+      "parentUuid": "dafd6ae7_754dc558",
+      "revId": "3d372660f193783a2b233878048e6fef78a72364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
