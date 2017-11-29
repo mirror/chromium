@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3b08670_2e3d65a9",
+        "filename": "ios/web/web_state/ui/crw_web_view_scroll_view_proxy_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T19:41:29Z",
+      "side": 1,
+      "message": "UIView.subviews can not return nil, only an empty array",
+      "revId": "bb40574af857714f380da1f3c15e99a9faca2027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
