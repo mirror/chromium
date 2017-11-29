@@ -115,7 +115,8 @@ std::unique_ptr<content::DevToolsSocketFactory> CreateSocketFactory(
 #endif
 }
 
-std::string GetFrontendUrl() {
+// Get frontend url served on a public server.
+std::string GetPublicFrontendUrl() {
   return base::StringPrintf(kFrontEndURL, content::GetWebKitRevision().c_str());
 }
 
@@ -148,13 +149,15 @@ RemoteDebuggingServer::~RemoteDebuggingServer() {
 }
 
 void RemoteDebuggingServer::EnableWebContentsForDebugging(
-    content::WebContents* web_contents) {
+    content::WebContents* web_contents,
+    bool use_bundled_frontend) {
   DCHECK(web_contents);
 
   if (!is_started_) {
     content::DevToolsAgentHost::StartRemoteDebuggingServer(
-        CreateSocketFactory(port_), GetFrontendUrl(), base::FilePath(),
-        base::FilePath());
+        CreateSocketFactory(port_),
+        use_bundled_frontend ? std::string() : GetPublicFrontendUrl(),
+        base::FilePath(), base::FilePath());
     LOG(INFO) << "Devtools started: port=" << port_;
     is_started_ = true;
   }

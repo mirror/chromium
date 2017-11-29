@@ -24,7 +24,10 @@ class RemoteDebuggingServer {
   ~RemoteDebuggingServer();
 
   // Allows this WebContents to be debugged.
-  void EnableWebContentsForDebugging(content::WebContents* web_contents);
+  // |use_bundled_frontend| indicates whether to use frontend page bundled by
+  // remote browser.
+  void EnableWebContentsForDebugging(content::WebContents* web_contents,
+                                     bool use_bundled_frontend);
 
   // Disables remote debugging for this web contents.
   void DisableWebContentsForDebugging(content::WebContents* web_contents);
