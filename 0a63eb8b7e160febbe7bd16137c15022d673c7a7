@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a983d22_73d4f1d4",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-29T01:26:00Z",
+      "side": 1,
+      "message": "nit: remove this comment",
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204f73d8_30a8d694",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-29T01:26:00Z",
+      "side": 1,
+      "message": "i\u0027d rework this a bit so you don\u0027t need to call IsScreenLocked twice:\n\n  const bool was_locked \u003d screen_is_locked_;\n  screen_is_locked_ \u003d session_manager_-\u003eIsScreenLocked();\n  if (!was_locked \u0026\u0026 screen_is_locked_) {\n    MaybeLogEvent(...);\n  }",
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d35097_e17a02bb",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-29T01:26:00Z",
+      "side": 1,
+      "message": "nit: use activity_data.last_user_activity_time.is_null()",
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1bb7f4_7ab35b05",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-29T01:26:00Z",
+      "side": 1,
+      "message": "nit: is_null()",
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9543ce9e_76987888",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-29T01:26:00Z",
+      "side": 1,
+      "message": "nit: is_null()",
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8deb914e_a3cedd60",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-29T01:26:00Z",
+      "side": 1,
+      "message": "nit: Indicates whether the screen is locked.",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 10
+      },
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
