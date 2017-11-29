@@ -151,6 +151,30 @@
       "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fff2a708_3362d803",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-29T01:58:08Z",
+      "side": 1,
+      "message": "Oh, right.",
+      "parentUuid": "420f72a5_e97c886b",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 58
+      },
+      "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
