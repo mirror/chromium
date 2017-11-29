@@ -262,6 +262,7 @@ class FlashComponentInstallerPolicy : public ComponentInstallerPolicy {
   std::string GetName() const override;
   update_client::InstallerAttributes GetInstallerAttributes() const override;
   std::vector<std::string> GetMimeTypes() const override;
+  bool IsUninstallable() const override;
 
   DISALLOW_COPY_AND_ASSIGN(FlashComponentInstallerPolicy);
 };
@@ -361,6 +362,10 @@ std::vector<std::string> FlashComponentInstallerPolicy::GetMimeTypes() const {
   mime_types.push_back("application/x-shockwave-flash");
   mime_types.push_back("application/futuresplash");
   return mime_types;
+}
+
+bool FlashComponentInstallerPolicy::IsUninstallable() const {
+  return false;
 }
 #endif  // defined(GOOGLE_CHROME_BUILD)
 

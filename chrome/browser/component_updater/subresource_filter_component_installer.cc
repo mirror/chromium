@@ -149,6 +149,10 @@ SubresourceFilterComponentInstallerPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
 }
 
+bool SubresourceFilterComponentInstallerPolicy::IsUninstallable() const {
+  return true;
+}
+
 void RegisterSubresourceFilterComponent(ComponentUpdateService* cus) {
   if (!base::FeatureList::IsEnabled(
           subresource_filter::kSafeBrowsingSubresourceFilter)) {

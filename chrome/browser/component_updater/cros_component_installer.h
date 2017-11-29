@@ -70,12 +70,15 @@ class CrOSComponentInstallerPolicy : public ComponentInstallerPolicy {
   std::string GetName() const override;
   update_client::InstallerAttributes GetInstallerAttributes() const override;
   std::vector<std::string> GetMimeTypes() const override;
+  bool IsUninstallable() const override;
 
   virtual bool IsCompatible(const std::string& env_version_str,
                             const std::string& min_env_version_str);
   std::string name;
   std::string env_version;
   uint8_t kSha2Hash_[crypto::kSHA256Length] = {};
+
+  bool is_removable;
 
   DISALLOW_COPY_AND_ASSIGN(CrOSComponentInstallerPolicy);
 };

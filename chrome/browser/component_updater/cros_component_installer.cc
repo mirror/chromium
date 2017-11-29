@@ -134,6 +134,13 @@ void CrOSComponentInstallerPolicy::ComponentReady(
       g_browser_process->platform_part()->AddCompatibleCrOSComponent(GetName());
     }
   }
+
+  std::string is_removable;
+  if (manifest && manifest->GetString("is_removable", &is_removable)) {
+    this->is_removable = (is_removable == "true") ? true : false;
+  } else {
+    this->is_removable = false;
+  }
 }
 
 bool CrOSComponentInstallerPolicy::VerifyInstallation(
@@ -164,6 +171,10 @@ CrOSComponentInstallerPolicy::GetInstallerAttributes() const {
 std::vector<std::string> CrOSComponentInstallerPolicy::GetMimeTypes() const {
   std::vector<std::string> mime_types;
   return mime_types;
+}
+
+bool CrOSComponentInstallerPolicy::IsUninstallable() const {
+  return is_removable;
 }
 
 bool CrOSComponentInstallerPolicy::IsCompatible(

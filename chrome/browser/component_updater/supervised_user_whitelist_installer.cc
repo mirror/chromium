@@ -274,6 +274,7 @@ class SupervisedUserWhitelistComponentInstallerPolicy
   std::string GetName() const override;
   update_client::InstallerAttributes GetInstallerAttributes() const override;
   std::vector<std::string> GetMimeTypes() const override;
+  bool IsUninstallable() const override;
 
   std::string crx_id_;
   std::string name_;
@@ -350,6 +351,10 @@ SupervisedUserWhitelistComponentInstallerPolicy::GetInstallerAttributes()
 std::vector<std::string>
 SupervisedUserWhitelistComponentInstallerPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
+}
+
+bool SupervisedUserWhitelistComponentInstallerPolicy::IsUninstallable() const {
+  return true;
 }
 
 class SupervisedUserWhitelistInstallerImpl

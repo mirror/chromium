@@ -161,6 +161,8 @@ class FakeInstallerPolicy : public ComponentInstallerPolicy {
     return std::vector<std::string>();
   }
 
+  bool IsUninstallable() const override { return true; }
+
  private:
   static void GetPkHash(std::vector<uint8_t>* hash) {
     hash->assign(std::begin(kSha256Hash), std::end(kSha256Hash));

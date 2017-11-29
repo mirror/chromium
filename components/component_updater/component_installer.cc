@@ -197,10 +197,14 @@ bool ComponentInstaller::GetInstalledFile(const std::string& file,
 
 bool ComponentInstaller::Uninstall() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  task_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(&ComponentInstaller::UninstallOnTaskRunner, this));
-  return true;
+
+  if (installer_policy_->IsUninstallable()) {
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&ComponentInstaller::UninstallOnTaskRunner, this));
+    return true;
+  } else
+    return false;
 }
 
 bool ComponentInstaller::FindPreinstallation(
