@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90e662ab_1f1d2644",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-29T02:37:20Z",
+      "side": 1,
+      "message": "I tried it out and overall there\u0027s a removal of one line and addition of another line.\nWe discussed it offline and it seems to be a similar amount of overhead and such. So far both approaches seem fine. So leaving it as-is.",
+      "parentUuid": "87ed86b8_45323998",
+      "range": {
+        "startLine": 100,
+        "startChar": 24,
+        "endLine": 100,
+        "endChar": 48
+      },
+      "revId": "0fcdb085707260bfb04d7e8249db4f6654067b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4fd9e74_afaaf89c",
         "filename": "chrome/browser/resources/md_extensions/toolbar.js",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2f481968_1300f6b9",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-29T02:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4fd9e74_afaaf89c",
+      "revId": "0fcdb085707260bfb04d7e8249db4f6654067b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d054a2ad_6fef42f0",
         "filename": "chrome/browser/resources/md_extensions/toolbar.js",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "0fcdb085707260bfb04d7e8249db4f6654067b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f6e5ce8_0965faa7",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-29T02:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d054a2ad_6fef42f0",
+      "revId": "0fcdb085707260bfb04d7e8249db4f6654067b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
