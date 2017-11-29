@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "71670c88_9317045b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-29T22:38:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b652d2e_2dff3247",
+      "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7602e5ab_ad3a6e07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-29T22:38:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1086a2b6_da9d81cd",
+      "range": {
+        "startLine": 9,
+        "startChar": 129,
+        "endLine": 9,
+        "endChar": 153
+      },
+      "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1132e3a_447ba4f0",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 5
@@ -62,6 +104,30 @@
       "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f7d31a_2137fc45",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-29T22:38:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1132e3a_447ba4f0",
+      "range": {
+        "startLine": 210,
+        "startChar": 76,
+        "endLine": 210,
+        "endChar": 77
+      },
+      "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "efe345ca_9d89dceb",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-29T22:38:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a49cda28_023bd962",
+      "range": {
+        "startLine": 213,
+        "startChar": 41,
+        "endLine": 213,
+        "endChar": 42
+      },
+      "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13978747_a2b3d154",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 5
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "87c53f08_cbf71e94",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-29T22:38:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13978747_a2b3d154",
+      "range": {
+        "startLine": 353,
+        "startChar": 4,
+        "endLine": 353,
+        "endChar": 74
+      },
+      "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab97a243_fc56ed13",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 5
@@ -122,6 +236,30 @@
       "writtenOn": "2017-11-29T22:10:22Z",
       "side": 1,
       "message": "This seems to DCHECK, because ChromeNavigationBrowserTest::SetUpCommandLine already calls Start:\n\n[ RUN      ] CtrlClickShouldEndUpInSameProcessTest.NoTarget\nXlib:  extension \"RANDR\" missing on display \":99\".\n[18015:18151:1129/112323.797698:ERROR:bus.cc(394)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[18015:18015:1129/112323.809524:WARNING:password_store_factory.cc(241)] Using basic (unencrypted) store for password storage. See https://chromium.googlesource.com/chromium/src/+/master/docs/linux_password_storage.md for more information about password storage options.\n[18015:18142:1129/112323.842226:WARNING:child_process_launcher_helper_posix.cc(118)] Ignoring invalid file v8_context_snapshot.bin\n[18159:18159:1129/112323.896389:ERROR:gpu_info.cc(103)] No active GPU found, returning primary GPU.\n[18015:18015:1129/112323.966385:FATAL:embedded_test_server.cc(98)] Check failed: !Started().\n#0 0x0000051958dc base::debug::StackTrace::StackTrace()\n#1 0x0000051b5a0c logging::LogMessage::~LogMessage()\n#2 0x000005bd0d3c net::test_server::EmbeddedTestServer::InitializeAndListen()\n#3 0x000005bd0cae net::test_server::EmbeddedTestServer::Start()\n#4 0x0000020e4387 CtrlClickShouldEndUpInSameProcessTest::SetUpOnMainThread()\n#5 0x0000057f2bcb content::BrowserTestBase::ProxyRunTestOnMainThreadLoop()\n#6 0x0000052d618d ChromeBrowserMainParts::PreMainMessageLoopRunImpl()\n#7 0x0000052d4e6d ChromeBrowserMainParts::PreMainMessageLoopRun()\n#8 0x000003ae8ac1 content::BrowserMainLoop::PreMainMessageLoopRun()\n#9 0x000003f72355 content::StartupTaskRunner::RunAllTasksNow()\n#10 0x000003ae6fda content::BrowserMainLoop::CreateStartupTasks()\n#11 0x000003aec198 content::BrowserMainRunnerImpl::Initialize()\n#12 0x000003ae49a2 content::BrowserMain()\n#13 0x0000051747eb content::RunNamedProcessTypeMain()\n#14 0x0000051752c6 content::ContentMainRunnerImpl::Run()\n#15 0x0000071e4d14 service_manager::Main()\n#16 0x000005173b31 content::ContentMain()\n#17 0x0000057f2817 content::BrowserTestBase::SetUp()\n#18 0x00000526f75b InProcessBrowserTest::SetUp()\n#19 0x000003149691 testing::Test::Run()\n#20 0x00000314a1c0 testing::TestInfo::Run()\n#21 0x00000314a6a7 testing::TestCase::Run()\n#22 0x000003150cd7 testing::internal::UnitTestImpl::RunAllTests()\n#23 0x000003150957 testing::UnitTest::Run()\n#24 0x0000052858d2 base::TestSuite::Run()\n#25 0x000005188022 ChromeTestSuiteRunner::RunTestSuite()\n#26 0x00000582bd79 content::LaunchTests()\n#27 0x0000051883f1 LaunchChromeTests()\n#28 0x000005187f7e main\n#29 0x7fba92723f45 __libc_start_main\n#30 0x000001fab02a _start",
+      "range": {
+        "startLine": 358,
+        "startChar": 40,
+        "endLine": 358,
+        "endChar": 47
+      },
+      "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4debb2b_419d937f",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-29T22:38:06Z",
+      "side": 1,
+      "message": "Ah, I looked that it doesn\u0027t have SetUpOnMainThread, so I added it here, missing that the test server is started at the command line time. I\u0027m not sure if that is correct, but I will leave it as is for this CL.",
+      "parentUuid": "ab97a243_fc56ed13",
       "range": {
         "startLine": 358,
         "startChar": 40,
@@ -154,6 +292,30 @@
       "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0849aaa_0f8a64de",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-29T22:38:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1df81bec_5428a0b8",
+      "range": {
+        "startLine": 359,
+        "startChar": 2,
+        "endLine": 359,
+        "endChar": 3
+      },
+      "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "576c5778_dba944e2",
+        "filename": "chrome/browser/tab_contents/tab_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-29T22:38:06Z",
+      "side": 1,
+      "message": "I think these can indeed be inverted to return nullptr and rely on the fallback. However, I also like the idea you mentioned offline for folding the ShouldAssignSiteForURL logic into CreateForURL somehow and I think it will be useful to experiment with it in a follow up CL, which can also invert these checks.",
+      "parentUuid": "1473ff12_3e453375",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 6
+      },
+      "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d5cc3ac_7495e724",
         "filename": "content/browser/site_instance_impl.cc",
         "patchSetId": 5
@@ -214,6 +400,30 @@
       "writtenOn": "2017-11-29T22:10:22Z",
       "side": 1,
       "message": "nit: Can we remove SiteInstance*Impl*::ShouldAssignSiteForURL and only leave SiteInstance::ShouldAssignSiteForURL?",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 45
+      },
+      "revId": "2a2d23cc598dce79a625a204456e9ab1b6513ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341924a1_bb1c3b21",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-29T22:38:06Z",
+      "side": 1,
+      "message": "I would like to experiment with hiding it back after this CL lands based on your suggestion of folding it into a CreateForURL type method. If I remove the Impl version, then I will have to add churn to this CL and if I succeed hiding it, I will have to churn them back into the Impl version. I\u0027d rather not do it right now.",
+      "parentUuid": "8d5cc3ac_7495e724",
       "range": {
         "startLine": 72,
         "startChar": 5,
