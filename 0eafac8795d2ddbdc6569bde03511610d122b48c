@@ -16,6 +16,24 @@
       "revId": "0eafac8795d2ddbdc6569bde03511610d122b48c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c09c94_a927654f",
+        "filename": "chrome/browser/resources/md_extensions/item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T18:42:53Z",
+      "side": 1,
+      "message": "Agreed. I added a TODO for this (have not been able to reach Alan). Since this bug is fixing a P1 blocker, I\u0027d like to land this, and follow up with the updated icon later (which I don\u0027t consider a blocker).",
+      "parentUuid": "43d038f9_2faa52ff",
+      "revId": "0eafac8795d2ddbdc6569bde03511610d122b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
