@@ -90,7 +90,6 @@ define('media_router_bindings', [
       'description': route.description,
       'icon_url': route.iconUrl,
       'is_local': route.isLocal,
-      'custom_controller_path': route.customControllerPath || '',
       'for_display': route.forDisplay,
       'is_incognito': route.offTheRecord,
       'is_local_presentation': route.isOffscreenPresentation,
