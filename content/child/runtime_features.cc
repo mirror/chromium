@@ -285,6 +285,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnablePaymentRequest(
       base::FeatureList::IsEnabled(features::kWebPayments));
 
+  WebRuntimeFeatures::EnableAllowWebPaymentsLocalhostUrls(
+      command_line.HasSwitch(switches::kAllowWebPaymentsLocalhostUrls));
+
   if (base::FeatureList::IsEnabled(features::kServiceWorkerPaymentApps))
     WebRuntimeFeatures::EnablePaymentApp(true);
 

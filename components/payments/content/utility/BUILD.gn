@@ -14,6 +14,7 @@ static_library("utility") {
   deps = [
     "//base",
     "//components/payments/content:content_common",
+    "//components/payments/content:origin_security_checker",
     "//content/public/common",
     "//net",
     "//services/data_decoder/public/cpp",
@@ -30,6 +31,7 @@ source_set("unit_tests") {
   deps = [
     ":utility",
     "//base",
+    "//content/public/common",
     "//testing/gtest",
     "//url",
   ]

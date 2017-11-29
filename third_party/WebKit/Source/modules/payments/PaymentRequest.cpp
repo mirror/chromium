@@ -484,8 +484,19 @@ bool IsValidMethodFormat(const String& identifier) {
   if (url.IsValid()) {
     // URL PMI validation rules:
     // https://www.w3.org/TR/payment-method-id/#dfn-validate-a-url-based-payment-method-identifier
-    return url.Protocol() == "https" && url.User().IsEmpty() &&
-           url.Pass().IsEmpty();
+    if (!url.User().IsEmpty() || !url.Pass().IsEmpty())
+      return false;
+    if (url.Protocol() != "https") {
+      // Allow http localhost with command line flag.
+      bool is_allowed_localhost_http =
+          RuntimeEnabledFeatures::AllowWebPaymentsLocalhostUrlsEnabled() &&
+          url.Protocol() == "http" &&
+          (url.Host() == "localhost" || url.Host() == "127.0.0.1" ||
+           url.Host() == "[::1]");
+      if (!is_allowed_localhost_http)
+        return false;
+    }
+    return true;
   } else {
     // Syntax for a valid standardized PMI:
     // https://www.w3.org/TR/payment-method-id/#dfn-syntax-of-a-standardized-payment-method-identifier
