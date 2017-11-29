@@ -747,6 +747,30 @@
     },
     {
       "key": {
+        "uuid": "26cac8e8_23a423c9",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-29T06:10:23Z",
+      "side": 1,
+      "message": "I\u0027m a little lost, sorry :) All I wanted to make sure is that this CL doesn\u0027t regress the existing CI in offline mode. If it does, we IMHO cannot land. If it didn\u0027t regress I\u0027m happy to land.",
+      "parentUuid": "5c6174d3_f3c28407",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 69
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59b50ba7_f2f00b7c",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
