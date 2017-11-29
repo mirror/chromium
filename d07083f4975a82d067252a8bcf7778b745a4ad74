@@ -16,6 +16,24 @@
       "revId": "d07083f4975a82d067252a8bcf7778b745a4ad74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f95a577_ce19a77a",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T23:15:11Z",
+      "side": 1,
+      "message": "That would pass the flag in to GLRenderer, which sounds odd.",
+      "parentUuid": "a4eab10e_43a03658",
+      "revId": "d07083f4975a82d067252a8bcf7778b745a4ad74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
