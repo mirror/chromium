@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97bacc64_ade8e76a",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-29T08:03:31Z",
+      "side": 1,
+      "message": "Alternatively we can add a library config section in gpu/vulkan/BUILD.gn. So that just adding gpu/vulkan to deps will be enough.",
+      "parentUuid": "f6854aa9_f5c2b7a7",
+      "revId": "59aaf7107aab598249b5b42cec55b8344d049419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d2a9606_cbbde98d",
         "filename": "skia/BUILD.gn",
         "patchSetId": 30
