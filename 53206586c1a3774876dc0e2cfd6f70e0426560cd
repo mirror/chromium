@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0333004f_095ec8e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T23:28:26Z",
+      "side": 1,
+      "message": "\u003e Would it say \"Rated 1.0 by 345 users\"?\n\n(that comment was a bit unclear - just pointing out that the string `stars` doesn\u0027t seem to appear in the .grd and wanted to check that\u0027s intentional)",
+      "parentUuid": "c7075f09_636488a6",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a954a7de_69fc04c3",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Wild!  I\u0027ve never seen MessageFormatter before - that\u0027s super nifty.\n\nDone, but note that number of ratings had to be {1, plural, \u003d1{one user}other {# users}, because I don\u0027t think that number, integer + options is allowed by the syntax.  Also, went with {0, number, 0.0} for average rating rather than {0, number, #.#} so that we always specify a decimal place (i.e., 1.0 rather than 1).",
       "parentUuid": "a954a7de_69fc04c3",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b8dc2a9_63d1dfd9",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 3472,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T23:28:26Z",
+      "side": 1,
+      "message": "Ack -yeah I haven\u0027t used it much - thanks for checking my example!",
+      "parentUuid": "0f0be3f4_ac16d0dc",
       "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -293,6 +329,24 @@
       "side": 1,
       "message": "Hmm... I totally understand the motivation here, but I\u0027m not sure I agree with returning the string, for a couple reasons.  For one, it seems very arbitrary to return a single value from a method that performs numerous EXPECTs - what if an assertion about the role failed?  For another, I\u0027d disagree that we don\u0027t have all the context we need about what failed.  If we compare a string to another string and they don\u0027t match, we get a warning about \"expected \u0027foo\u0027, but found \u0027bar\u0027\".  Since all the strings we test are unique, that seems pretty definitive?\n\nWe also, in this patch set, only had a single dialog per test, which meant that there would only be a single string assertion.  I\u0027ve restructured the test to put all the cases in a single test, and to avoid any confusion, have added a SCOPED_TRACE with the information about the prompt we\u0027re showing.\n\nTake a look, and lemme know what you think - or if I totally missed your point. :)\n\nRe getting the string from the resource bundle, ack, now just using the en-US version.",
       "parentUuid": "58562541_521bcaa4",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eca00f4_99733897",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T23:28:26Z",
+      "side": 1,
+      "message": "looks good! usually the SCOPED_TRACE is in the caller, not the callee. You can also do\n\nEXPECT_NO_FATAL_FAILURES(TestRatingsSectionA11y(400, 3.297, \"Rated 3.3 by 400 users.\"));\n\neither of those approaches just mean that you get a line number reported will be unique. But there\u0027s plenty of context in your SCOPED_TRACE, so I don\u0027t think any changes are necessary.",
+      "parentUuid": "928d7505_6b6c0857",
       "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

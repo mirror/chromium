@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b90321fe_820969f8",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 3472,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T23:28:26Z",
+      "side": 1,
+      "message": "nit: space between `user}other` ?",
+      "revId": "b7d6b48af5e0d3e0146621b09ff9918307cd2e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cdff674_3c143e14",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 3492,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T23:28:26Z",
+      "side": 1,
+      "message": ".. or even a newline like this one :)",
+      "revId": "b7d6b48af5e0d3e0146621b09ff9918307cd2e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
