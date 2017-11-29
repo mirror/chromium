@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f9b11b7_0612fc67",
+        "filename": "headless/public/util/generic_url_request_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-29T17:41:38Z",
+      "side": 1,
+      "message": "typo: Initialized",
+      "range": {
+        "startLine": 177,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 22
+      },
+      "revId": "420d2cbe4dbadc2cae67537d633d5d435ece6c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
