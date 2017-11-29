@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f5b58b2_6c69f145",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T22:30:17Z",
+      "side": 1,
+      "message": "Good point, changed to iterate backwards over indices like below.",
+      "parentUuid": "2efc588d_e12aef4c",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 49
+      },
+      "revId": "09e8f2efcf5ba095984044717736f5b8f2abd8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "533055d2_c19d4e89",
         "filename": "services/ui/ws/platform_display_mirror.h",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "09e8f2efcf5ba095984044717736f5b8f2abd8f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f87820d_79a7aea5",
+        "filename": "services/ui/ws/platform_display_mirror.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T22:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "533055d2_c19d4e89",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 58
+      },
+      "revId": "09e8f2efcf5ba095984044717736f5b8f2abd8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "94a5b2a9_af7e20cf",
+        "filename": "services/ui/ws/platform_display_mirror.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T22:30:17Z",
+      "side": 1,
+      "message": "set_display modifies this value, used on config changes",
+      "parentUuid": "ea97edb1_3545b679",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "09e8f2efcf5ba095984044717736f5b8f2abd8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2b80f59_5bf81749",
         "filename": "services/ui/ws/platform_display_mirror.h",
         "patchSetId": 17
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-29T20:52:00Z",
       "side": 1,
       "message": "const?",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 18
+      },
+      "revId": "09e8f2efcf5ba095984044717736f5b8f2abd8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe110a21_a26f628d",
+        "filename": "services/ui/ws/platform_display_mirror.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T22:30:17Z",
+      "side": 1,
+      "message": "The value is assigned in the constructor body",
+      "parentUuid": "a2b80f59_5bf81749",
       "range": {
         "startLine": 90,
         "startChar": 2,
