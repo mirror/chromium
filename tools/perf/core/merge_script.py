@@ -17,8 +17,14 @@ def MergeJson(output_json, jsons_to_merge, print_input=True):
     jsons_to_merge: A list of paths to JSON files that should be merged.
   """
   shard_results_list = []
-  for j in jsons_to_merge:
-    with open(j) as f:
+
+  for file_name in jsons_to_merge:
+    # Temporary name change to grab the perftest files instead of the json
+    # test results files. Will be removed as soon as we pass in the correct
+    # paths from the infra side.
+    file_name.replace('output.json', 'perftest-output.json')
+
+    with open(file_name) as f:
       shard_results_list.append(json.load(f))
 
   if print_input:
