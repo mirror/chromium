@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb5df49b_c8ee7424",
+        "filename": "chrome/renderer/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T19:11:49Z",
+      "side": 0,
+      "message": "This is actually needed by a test in chrome/browser. Nothing in chrome/renderer use chrome/service.",
+      "revId": "6e564ca3aecf12d61bc2b88ecf7e2c4934411709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779a75a3_0e81f173",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T19:11:49Z",
+      "side": 0,
+      "message": "Listed 3X before, sigh.",
+      "revId": "6e564ca3aecf12d61bc2b88ecf7e2c4934411709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
