@@ -55,13 +55,6 @@ api::cookies::CookieStore CreateCookieStore(
     Profile* profile,
     std::unique_ptr<base::ListValue> tab_ids);
 
-// Retrieves all cookies from the given cookie store corresponding to the given
-// URL. If the URL is empty, all cookies in the cookie store are retrieved.
-// This can only be called on the IO thread.
-void GetCookieListFromStore(net::CookieStore* cookie_store,
-                            const GURL& url,
-                            net::CookieMonster::GetCookieListCallback callback);
-
 // Constructs a URL from a cookie's information for use in checking
 // a cookie against the extension's host permissions. The Secure
 // property of the cookie defines the URL scheme, and the cookie's

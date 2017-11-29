@@ -117,6 +117,12 @@ struct CookieDeletionFilter {
   // Deletes cookies whose domains are listed.
   array<string>? including_domains;
 
+  // Delete cookies with a particular name.
+  string? cookie_name;
+
+  // Delete cookies that path and domain match the given URL.
+  url.mojom.Url? url;
+
   // Delete session/persistent cookies.
   CookieDeletionSessionControl session_control = IGNORE_CONTROL;
 };
@@ -130,9 +136,16 @@ interface CookieManager {
   // TODO(rdsmith): Worthwhile specifying a sort order for the getters?
 
   // Get all the cookies known to the service.
+  // Returned cookie list is sorted first by path length (longest first)
+  // and second by creation time.
+  // TODO(rdsmith): There are consumers that rely on this behavior, but
+  // for this function it doesn't make a lot of sense not to also sort
+  // on origin.  Should the returned cookies also be sorted by origin?
   GetAllCookies() => (array<CanonicalCookie> cookies);
 
   // Get all cookies for the specified URL and cookie options.
+  // Returned cookie list is sorted first by path length (longest first)
+  // and second by creation time.
   GetCookieList(url.mojom.Url url, CookieOptions cookie_options) =>
       (array<CanonicalCookie> cookies);
 
