@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3d174b52_51b29c70",
+        "filename": "ui/file_manager/file_manager/background/js/drive_sync_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-29T04:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34e3e5fe_43afc339",
+      "range": {
+        "startLine": 233,
+        "startChar": 12,
+        "endLine": 233,
+        "endChar": 16
+      },
+      "revId": "5ac9a721910400f423018a3fe5028760bf438f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "997717d1_d1987ee8",
         "filename": "ui/file_manager/file_manager/background/js/drive_sync_handler.js",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d2399ca1_60d7808a",
+        "filename": "ui/file_manager/file_manager/background/js/drive_sync_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-29T04:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "997717d1_d1987ee8",
+      "range": {
+        "startLine": 234,
+        "startChar": 20,
+        "endLine": 234,
+        "endChar": 24
+      },
+      "revId": "5ac9a721910400f423018a3fe5028760bf438f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aafc7ba_d3bc9a27",
         "filename": "ui/file_manager/file_manager/background/js/drive_sync_handler.js",
         "patchSetId": 2
@@ -85,6 +133,24 @@
       "revId": "5ac9a721910400f423018a3fe5028760bf438f30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93bfefe7_bdf28479",
+        "filename": "ui/file_manager/file_manager/background/js/drive_sync_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-29T04:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aafc7ba_d3bc9a27",
+      "revId": "5ac9a721910400f423018a3fe5028760bf438f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
