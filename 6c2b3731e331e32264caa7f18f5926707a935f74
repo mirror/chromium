@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2822a01_427ba148",
+        "filename": "extensions/common/manifest_handlers/requirements_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T06:05:42Z",
+      "side": 1,
+      "message": "This will result in a load failure for any extensions that specified npapi: true, even though we haven\u0027t actually allowed plugins for a long time now.  I wonder if it would be better to just let this fail gracefully (with the same warning as above) until/unless we know exactly how many this extensions this will affect.  I wouldn\u0027t be surprised if there are a good number that have been silently (half?)functioning since npapi was deprecated, and it might be alarming to suddenly break them...\n\nIt would also be worth seeing what the UX is like when this rolls out, if we went with this stronger approach.  I know that we at least used to pop up install errors for added extensions in an alert box on startup, which would be bad if there are any such extensions installed.",
+      "revId": "6c2b3731e331e32264caa7f18f5926707a935f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
