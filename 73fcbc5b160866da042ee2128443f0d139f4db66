@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7a45cde_a70e8611",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-29T04:16:33Z",
+      "side": 1,
+      "message": "\"For some reason\" says we don\u0027t fully understand the problem, and setting the autoresizing mask then seems like a bandaid. What\u0027s really happening here? We shouldn\u0027t be doing something completely different in RTL vs LTR.",
+      "range": {
+        "startLine": 329,
+        "startChar": 59,
+        "endLine": 329,
+        "endChar": 74
+      },
+      "revId": "73fcbc5b160866da042ee2128443f0d139f4db66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
