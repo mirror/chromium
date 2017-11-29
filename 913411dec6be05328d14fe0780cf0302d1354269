@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7312780_af7b0e6f",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-29T21:00:37Z",
+      "side": 0,
+      "message": "Previously, I guess this would this try to show expected as well if the result was MISSING?",
+      "revId": "913411dec6be05328d14fe0780cf0302d1354269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
