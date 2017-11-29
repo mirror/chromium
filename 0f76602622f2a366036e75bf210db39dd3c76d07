@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55b78445_f50a28e4",
+        "filename": "remoting/ios/app/remoting_theme.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-29T02:12:49Z",
+      "side": 1,
+      "message": "This is the reply I got from Scott:\n\n\u003e Because you will pay for creating those colors on app launch\n\u003e Dispatch once allows you to have the performance of static but allows delayed creation\n\u003e It is not cleaner to be dynamic nor just plain static. What we have is the most performant\n\nI\u0027ve CC\u0027d him the CL too.",
+      "parentUuid": "9de01026_a3fc7053",
+      "range": {
+        "startLine": 75,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "0f76602622f2a366036e75bf210db39dd3c76d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d9c5837_6e335867",
         "filename": "remoting/ios/app/settings/remoting_settings_view_controller.mm",
         "patchSetId": 2
