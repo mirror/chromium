@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b36f470_b0baa986",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T17:05:43Z",
+      "side": 1,
+      "message": "done by changing interface in mojom.",
+      "parentUuid": "6d807543_bd014dbe",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d107262f_b53ed736",
         "filename": "ash/accessibility/accessibility_controller.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "4b9d07ab_bedf0ee3",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T17:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b25fe5d2_17b8d4ea",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bee91185_ce543cad",
         "filename": "ash/public/interfaces/accessibility_controller.mojom",
         "patchSetId": 3
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "99640ba2_344a00bd",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T17:05:43Z",
+      "side": 1,
+      "message": "No strong opinion. We could do that. Thanks",
+      "parentUuid": "bee91185_ce543cad",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "223c10da_a6347d04",
         "filename": "ash/public/interfaces/accessibility_controller.mojom",
         "patchSetId": 3
@@ -81,6 +135,24 @@
       "writtenOn": "2017-11-16T18:31:49Z",
       "side": 1,
       "message": "nit: I would also mention here that the method exists because the browser owns all media playback.",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbef6fa8_a6fdf58f",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T17:05:43Z",
+      "side": 1,
+      "message": "Done. Also documents on PlayShutdownSound().",
+      "parentUuid": "223c10da_a6347d04",
       "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -140,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "a717fb44_e40b084d",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T17:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97e139c2_acb0ee4e",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d62133b9_0cfc96ec",
         "filename": "ash/public/interfaces/accessibility_controller.mojom",
         "patchSetId": 3
@@ -154,6 +244,24 @@
       "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b76ca21_aefbc372",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T17:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d62133b9_0cfc96ec",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "65d17f67_6b99fba6",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T17:05:43Z",
+      "side": 1,
+      "message": "agree, done",
+      "parentUuid": "7c41ad35_2e0c99aa",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d8f5358_6d670160",
         "filename": "ash/wm/lock_state_controller_unittest.cc",
         "patchSetId": 3
@@ -185,6 +311,24 @@
       "writtenOn": "2017-11-16T18:31:49Z",
       "side": 1,
       "message": "nit: 0 ms looks a little odd. Can this be a non-zero number?",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee2f226_03b86918",
+        "filename": "ash/wm/lock_state_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T17:05:43Z",
+      "side": 1,
+      "message": "done. In reality, it is ~1300 ms on caroline device. I used 1000 to somewhat match the reality.",
+      "parentUuid": "4d8f5358_6d670160",
       "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -241,6 +385,24 @@
       "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9606c0_e161ce4a",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T17:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cfaba37_9576adda",
+      "revId": "e032bb4a37be73da3c82260ca316a6fc69219593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
