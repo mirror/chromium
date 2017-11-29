@@ -24,6 +24,7 @@
 
 namespace net {
 class IOBuffer;
+class UploadElementReader;
 }  // namespace net
 
 namespace content {
@@ -172,6 +173,9 @@ class HEADLESS_EXPORT GenericURLRequestJob
                           const std::string& method,
                           const net::CookieList& cookie_list);
 
+  const std::vector<std::unique_ptr<net::UploadElementReader>>*
+  GetInitalizedReaders() const;
+
   std::unique_ptr<URLFetcher> url_fetcher_;
   net::HttpRequestHeaders extra_request_headers_;
   scoped_refptr<net::HttpResponseHeaders> response_headers_;
@@ -182,6 +186,7 @@ class HEADLESS_EXPORT GenericURLRequestJob
   const char* body_ = nullptr;  // Not owned.
   size_t body_size_ = 0;
   size_t read_offset_ = 0;
+  // mutable bool stream_init_done_ = false;
   net::LoadTimingInfo load_timing_info_;
 
   base::WeakPtrFactory<GenericURLRequestJob> weak_factory_;
