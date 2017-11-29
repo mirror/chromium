@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
+#include "chrome/browser/android/webapk/webapk_install_space_manager.h"
 #include "components/infobars/core/confirm_infobar_delegate.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
@@ -53,6 +54,11 @@ class AppBannerInfoBarDelegateAndroid : public ConfirmInfoBarDelegate {
       const std::string& referrer);
 
   ~AppBannerInfoBarDelegateAndroid() override;
+
+  // Create WebApkInstallSpaceManager instance. This function must be called
+  // before accessing |space_manager_|.
+  jlong InitializeSpaceManager(JNIEnv* env,
+                               const base::android::JavaParamRef<jobject>& obj);
 
   // Called when the AppBannerInfoBarAndroid's button needs to be updated.
   void UpdateInstallState(JNIEnv* env,
@@ -129,6 +135,10 @@ class AppBannerInfoBarDelegateAndroid : public ConfirmInfoBarDelegate {
   bool has_user_interaction_;
 
   bool is_webapk_;
+
+  // Check if there is enough space to install WebApk and free cache if
+  // necessary.
+  WebApkInstallSpaceManager* space_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(AppBannerInfoBarDelegateAndroid);
 };

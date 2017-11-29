@@ -50,6 +50,13 @@ jlong JNI_AddToHomescreenManager_InitializeAndStart(
   return reinterpret_cast<intptr_t>(manager);
 }
 
+jlong AddToHomescreenManager::InitializeSpaceManager(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  space_manager_ = new WebApkInstallSpaceManager();
+  return reinterpret_cast<intptr_t>(space_manager_);
+}
+
 AddToHomescreenManager::AddToHomescreenManager(JNIEnv* env, jobject obj)
     : is_webapk_compatible_(false) {
   java_ref_.Reset(env, obj);
@@ -69,12 +76,17 @@ void AddToHomescreenManager::AddShortcut(
     return;
 
   RecordAddToHomescreen();
-  if (is_webapk_compatible_) {
-    WebApkInstallService::Get(web_contents->GetBrowserContext())
-        ->InstallAsync(web_contents, data_fetcher_->shortcut_info(),
-                       data_fetcher_->primary_icon(),
-                       data_fetcher_->badge_icon(),
-                       webapk::INSTALL_SOURCE_MENU);
+  if (is_webapk_compatible_ && space_manager_->EnoughSpaceToInstall()) {
+    space_manager_->Initialize(
+        data_fetcher_->web_contents()->GetBrowserContext(), [this]() {
+          WebApkInstallService::Get(
+              data_fetcher_->web_contents()->GetBrowserContext())
+              ->InstallAsync(
+                  data_fetcher_->web_contents(), data_fetcher_->shortcut_info(),
+                  data_fetcher_->primary_icon(), data_fetcher_->badge_icon(),
+                  webapk::INSTALL_SOURCE_MENU);
+        });
+    space_manager_->InstallAndFreeCacheIfNecessary();
   } else {
     base::string16 user_title =
         base::android::ConvertJavaStringToUTF16(env, j_user_title);
@@ -143,7 +155,8 @@ void AddToHomescreenManager::OnUserTitleAvailable(
       base::android::ConvertUTF8ToJavaString(env, trimmed_url);
   Java_AddToHomescreenManager_onUserTitleAvailable(
       env, java_ref_, j_user_title, j_url,
-      !is_webapk_compatible_ /* isTitleEditable */);
+      !(is_webapk_compatible_ &&
+        space_manager_->EnoughSpaceToInstall()) /* isTitleEditable */);
 }
 
 void AddToHomescreenManager::OnDataAvailable(const ShortcutInfo& info,

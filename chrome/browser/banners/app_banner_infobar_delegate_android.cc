@@ -95,6 +95,13 @@ AppBannerInfoBarDelegateAndroid::~AppBannerInfoBarDelegateAndroid() {
   java_delegate_.Reset();
 }
 
+jlong AppBannerInfoBarDelegateAndroid::InitializeSpaceManager(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  space_manager_ = new WebApkInstallSpaceManager();
+  return reinterpret_cast<intptr_t>(space_manager_);
+}
+
 void AppBannerInfoBarDelegateAndroid::UpdateInstallState(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
@@ -165,8 +172,9 @@ bool AppBannerInfoBarDelegateAndroid::Accept() {
   if (!native_app_data_.is_null())
     return AcceptNativeApp(web_contents);
 
-  if (is_webapk_)
+  if (is_webapk_ && space_manager_ && space_manager_->EnoughSpaceToInstall()) {
     return AcceptWebApk(web_contents);
+  }
 
   return AcceptWebApp(web_contents);
 }
@@ -256,9 +264,13 @@ bool AppBannerInfoBarDelegateAndroid::AcceptWebApk(
   AppBannerSettingsHelper::RecordBannerInstallEvent(
       web_contents, shortcut_info_->url.spec(), AppBannerSettingsHelper::WEB);
 
-  WebApkInstallService::Get(web_contents->GetBrowserContext())
-      ->InstallAsync(web_contents, *shortcut_info_, primary_icon_, badge_icon_,
-                     webapk::INSTALL_SOURCE_BANNER);
+  space_manager_->Initialize(
+      web_contents->GetBrowserContext(), [this, web_contents]() {
+        WebApkInstallService::Get(web_contents->GetBrowserContext())
+            ->InstallAsync(web_contents, *shortcut_info_, primary_icon_,
+                           badge_icon_, webapk::INSTALL_SOURCE_BANNER);
+      });
+  space_manager_->InstallAndFreeCacheIfNecessary();
   SendBannerAccepted();
   return true;
 }

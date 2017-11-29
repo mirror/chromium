@@ -50,6 +50,10 @@ public class AddToHomescreenManager {
         if (mNativeAddToHomescreenManager != 0 || TextUtils.isEmpty(mTab.getUrl())) return;
 
         mNativeAddToHomescreenManager = nativeInitializeAndStart(mTab.getWebContents());
+
+        long nativeWebApkInstallSpaceManager =
+                nativeInitializeSpaceManager(mNativeAddToHomescreenManager);
+        WebApkInstallSpaceManager.setSpaceStatus(nativeWebApkInstallSpaceManager);
     }
 
     /** Sets the add-to-homescreen observer tracking the add-to-homescreen data fetch. */
@@ -99,6 +103,7 @@ public class AddToHomescreenManager {
     }
 
     private native long nativeInitializeAndStart(WebContents webContents);
+    private native long nativeInitializeSpaceManager(long nativeAddToHomescreenManager);
     private native void nativeAddShortcut(
             long nativeAddToHomescreenManager, String userRequestedTitle);
     private native void nativeDestroy(long nativeAddToHomescreenManager);

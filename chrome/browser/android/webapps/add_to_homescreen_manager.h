@@ -10,6 +10,7 @@
 #include "base/android/jni_android.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
+#include "chrome/browser/android/webapk/webapk_install_space_manager.h"
 #include "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.h"
 
 namespace content {
@@ -35,6 +36,11 @@ class AddToHomescreenManager : public AddToHomescreenDataFetcher::Observer {
                    const base::android::JavaParamRef<jobject>& obj,
                    const base::android::JavaParamRef<jstring>& title);
 
+  // Create WebApkInstallSpaceManager instance. This function must be called
+  // before accessing |space_manager_|.
+  jlong InitializeSpaceManager(JNIEnv* env,
+                               const base::android::JavaParamRef<jobject>& obj);
+
   // Starts the add-to-homescreen process.
   void Start(content::WebContents* web_contents);
 
@@ -56,6 +62,10 @@ class AddToHomescreenManager : public AddToHomescreenDataFetcher::Observer {
 
   // Whether the site is WebAPK-compatible.
   bool is_webapk_compatible_;
+
+  // Check if there is enough space to install WebApk and free cache if
+  // necessary.
+  WebApkInstallSpaceManager* space_manager_;
 
   // Fetches data required to add a shortcut.
   std::unique_ptr<AddToHomescreenDataFetcher> data_fetcher_;

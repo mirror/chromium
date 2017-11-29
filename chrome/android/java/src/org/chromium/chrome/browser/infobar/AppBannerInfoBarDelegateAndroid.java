@@ -11,6 +11,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.banners.AppData;
 import org.chromium.chrome.browser.banners.InstallerDelegate;
 import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.webapps.WebApkInstallSpaceManager;
 
 /**
  * Handles the promotion and installation of an app specified by the current web page. This object
@@ -27,6 +28,8 @@ public class AppBannerInfoBarDelegateAndroid implements InstallerDelegate.Observ
     private AppBannerInfoBarDelegateAndroid(long nativePtr) {
         mNativePointer = nativePtr;
         mInstallerDelegate = new InstallerDelegate(Looper.getMainLooper(), this);
+        long nativeWebApkInstallSpaceManager = nativeInitializeSpaceManager(nativePtr);
+        WebApkInstallSpaceManager.setSpaceStatus(nativeWebApkInstallSpaceManager);
     }
 
     @Override
@@ -78,5 +81,6 @@ public class AppBannerInfoBarDelegateAndroid implements InstallerDelegate.Observ
             long nativeAppBannerInfoBarDelegateAndroid, boolean isInstalling);
     private native void nativeOnInstallFinished(
             long nativeAppBannerInfoBarDelegateAndroid, boolean success);
+    private native long nativeInitializeSpaceManager(long nativeAppBannerInfoBarDelegateAndroid);
     private native void nativeUpdateInstallState(long nativeAppBannerInfoBarDelegateAndroid);
 }
