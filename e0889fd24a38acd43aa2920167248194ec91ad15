@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b929581_b181de39",
+        "filename": "services/network/public/cpp/mutable_network_traffic_annotation_tag_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-29T16:21:17Z",
+      "side": 1,
+      "message": "Perhaps this should be named services/network/public/cpp/mutable_network_traffic_annotation_tag_struct_traits_unittests.cc, and this header up top?  Same for the other.  Don\u0027t feel too strongly about it.",
+      "range": {
+        "startLine": 8,
+        "startChar": 38,
+        "endLine": 8,
+        "endChar": 90
+      },
+      "revId": "e0889fd24a38acd43aa2920167248194ec91ad15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b72ae87_3b09fbc9",
+        "filename": "services/network/public/cpp/mutable_network_traffic_annotation_tag_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-29T16:21:17Z",
+      "side": 1,
+      "message": "can remove this and the anonymous namespace, and just use TEST(MutableNetworkTrafficAnnottionTagsTest, BasicTest) instead of TEST_F (Which means no test fixture)",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 45
+      },
+      "revId": "e0889fd24a38acd43aa2920167248194ec91ad15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfb6343_a352883e",
+        "filename": "services/network/public/cpp/mutable_partial_network_traffic_annotation_tag_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-29T16:21:17Z",
+      "side": 1,
+      "message": "Per other comment, TEST(...) and remove the MutablePartialNetworkTrafficAnnottionTagsTest class",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 6
+      },
+      "revId": "e0889fd24a38acd43aa2920167248194ec91ad15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d780e5f8_7eedfa57",
+        "filename": "services/network/public/cpp/mutable_partial_network_traffic_annotation_tag_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-29T16:21:17Z",
+      "side": 1,
+      "message": "Should include base/logging for these macros.",
+      "range": {
+        "startLine": 30,
+        "startChar": 12,
+        "endLine": 30,
+        "endChar": 13
+      },
+      "revId": "e0889fd24a38acd43aa2920167248194ec91ad15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
