@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4022f44_2ec4eb26",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T23:11:25Z",
+      "side": 1,
+      "message": "Do we have a guarantee that the InProcessCommandBuffer\u0027s SetChildSurface message is done and processed at this point? Otherwise this would cause GpuProcessHost to kill the GPU process upon receiving the straggler.\n\nI /think/ on GpuProcessTransportFactory we have that guarantee because we call RemoveCompositor after we close the LTH which has the side effect of destroying the LTFS and the ContextProvider which calls a Finish. I\u0027m not sure if we have such a guarantee here?",
+      "revId": "aa513bc59b42f8fbb5146ec6111d977892c0f7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d43bddc_a9104174",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T23:11:25Z",
+      "side": 1,
+      "message": "nit: info_.emplace(parent, EmbeddingInfo()); ?",
+      "revId": "aa513bc59b42f8fbb5146ec6111d977892c0f7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
