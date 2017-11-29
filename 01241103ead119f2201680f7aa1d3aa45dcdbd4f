@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d54b0e35_96d5ba3d",
+        "filename": "chrome/browser/background/background_contents_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-29T21:36:30Z",
+      "side": 1,
+      "message": "no longer part of this patch",
+      "parentUuid": "41983a6a_31aea2e9",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 68
+      },
+      "revId": "01241103ead119f2201680f7aa1d3aa45dcdbd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0162906_83fa3589",
         "filename": "chrome/browser/sync/sync_error_notifier_ash.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b4886ded_23e1e09c",
+        "filename": "chrome/browser/sync/sync_error_notifier_ash.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-29T21:36:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0162906_83fa3589",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 68
+      },
+      "revId": "01241103ead119f2201680f7aa1d3aa45dcdbd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03126782_d13202b4",
         "filename": "ui/message_center/notification_delegate.h",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "01241103ead119f2201680f7aa1d3aa45dcdbd4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbe1245_ee8eb3de",
+        "filename": "ui/message_center/notification_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-29T21:36:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03126782_d13202b4",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 10
+      },
+      "revId": "01241103ead119f2201680f7aa1d3aa45dcdbd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

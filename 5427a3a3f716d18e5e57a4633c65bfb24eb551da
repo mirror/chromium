@@ -22,6 +22,30 @@
       "revId": "5427a3a3f716d18e5e57a4633c65bfb24eb551da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fbf2cb_1ca56875",
+        "filename": "chrome/browser/background/background_contents_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-29T21:36:30Z",
+      "side": 0,
+      "message": "no longer part of this patch",
+      "parentUuid": "1ec26a9f_bfcf00eb",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 134,
+        "endChar": 71
+      },
+      "revId": "5427a3a3f716d18e5e57a4633c65bfb24eb551da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
