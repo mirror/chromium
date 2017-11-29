@@ -70,7 +70,6 @@ void ExtensionOptionsGuest::CreateWebContents(
     callback.Run(nullptr);
     return;
   }
-
   std::string embedder_extension_id = GetOwnerSiteURL().host();
   if (crx_file::id_util::IdIsValid(embedder_extension_id) &&
       extension_id != embedder_extension_id) {
@@ -85,24 +84,44 @@ void ExtensionOptionsGuest::CreateWebContents(
     callback.Run(nullptr);
     return;
   }
+  LOG(ERROR) << "------ExtensionOptionsGuest::CreateWebContents 3";
+  LOG(ERROR) << "------lookup id: " << extension_id;
 
   // Get the options page URL for later use.
   extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(browser_context());
+  LOG(ERROR) << "-----------enabled size: " << registry->enabled_extensions().size();
+  for (auto extension : registry->enabled_extensions()) {
+    LOG(ERROR) << "-----enabled id: " << extension->id();
+  }
+  LOG(ERROR) << "-----------disabled size: " << registry->disabled_extensions().size();
+  for (auto extension : registry->disabled_extensions()) {
+    LOG(ERROR) << "-----disabled id: " << extension->id();
+  }
+
+  std::unique_ptr<ExtensionSet> installed = registry->GenerateInstalledExtensionsSet();
+  LOG(ERROR) << "-----------installed size: " << installed->size();
+  for (auto extension : *installed) {
+    LOG(ERROR) << "-----installed id: " << extension->id();
+  }
   const extensions::Extension* extension =
       registry->enabled_extensions().GetByID(extension_id);
+
+
   if (!extension) {
     // The ID was valid but the extension didn't exist. Typically this will
     // happen when an extension is disabled.
     callback.Run(nullptr);
     return;
   }
+  LOG(ERROR) << "------ExtensionOptionsGuest::CreateWebContents 4";
 
   options_page_ = extensions::OptionsPageInfo::GetOptionsPage(extension);
   if (!options_page_.is_valid()) {
     callback.Run(nullptr);
     return;
   }
+  LOG(ERROR) << "------ExtensionOptionsGuest::CreateWebContents 5";
 
   // Create a WebContents using the extension URL. The options page's
   // WebContents should live in the same process as its parent extension's
@@ -114,6 +133,7 @@ void ExtensionOptionsGuest::CreateWebContents(
   WebContents* wc = WebContents::Create(params);
   SetViewType(wc, VIEW_TYPE_EXTENSION_GUEST);
   callback.Run(wc);
+  LOG(ERROR) << "------ExtensionOptionsGuest::CreateWebContents 6";
 }
 
 void ExtensionOptionsGuest::DidInitialize(
@@ -144,6 +164,7 @@ bool ExtensionOptionsGuest::IsPreferredSizeModeEnabled() const {
 }
 
 void ExtensionOptionsGuest::OnPreferredSizeChanged(const gfx::Size& pref_size) {
+  LOG(ERROR) << "------ExtensionOptionsGuest::OnPreferredSizeChanged";
   extension_options_internal::PreferredSizeChangedOptions options;
   // Convert the size from physical pixels to logical pixels.
   options.width = PhysicalPixelsToLogicalPixels(pref_size.width());

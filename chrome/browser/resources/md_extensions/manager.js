@@ -310,6 +310,8 @@ cr.define('extensions', function() {
         list.push(i);
       }
 
+      console.log('------a:' + JSON.stringify(apps, null, 2));
+      console.log('------e:' + JSON.stringify(extensions, null ,2));
       this.apps_ = apps;
       this.extensions_ = extensions;
     },
