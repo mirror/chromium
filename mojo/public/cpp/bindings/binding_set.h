@@ -185,7 +185,7 @@ class BindingSetBase {
            const std::string& error) {
           std::move(error_callback).Run(error);
           if (binding_set)
-            binding_set->RemoveBinding(binding_id);
+            binding_set->OnConnectionError(binding_id, 0, std::string());
         },
         mojo::GetBadMessageCallback(), weak_ptr_factory_.GetWeakPtr(),
         dispatch_binding());
@@ -290,7 +290,8 @@ class BindingSetBase {
                          uint32_t custom_reason,
                          const std::string& description) {
     auto it = bindings_.find(id);
-    DCHECK(it != bindings_.end());
+    if (it == bindings_.end())
+      return;
 
     // We keep the Entry alive throughout error dispatch.
     std::unique_ptr<Entry> entry = std::move(it->second);
