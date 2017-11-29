@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc7768da_629415ec",
+        "filename": "components/crash/core/common/crash_key_base_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-29T18:49:37Z",
+      "side": 1,
+      "message": "\u003d default is kosher too, if you’re into it.",
+      "revId": "6f4e8d4b26decbfd51456d70db91628202744ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb23406_09dc7e58",
+        "filename": "components/crash/core/common/crash_key_base_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-29T18:49:37Z",
+      "side": 1,
+      "message": "This looks really freaky, but OK.\n\nThe whole implementation’s kind of odd, with the three size classes. I guess you were trying to balance “do something reasonable” against “don’t reimplement the world.”",
+      "revId": "6f4e8d4b26decbfd51456d70db91628202744ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
