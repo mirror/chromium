@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "13fbd407_63b6d136",
+        "filename": "chrome/android/java/res/layout/list_menu_item.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T17:04:31Z",
+      "side": 1,
+      "message": "We use listPreferredItemPaddingStart in other places in our code base and android:paddingStart/End so I expect that the support library is handling conversions for us. Can you please swap this for listPreferredItemPaddingStart and PaddingEnd and test on a JellyBean device?",
+      "parentUuid": "fb71a8d0_b4eae8bd",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 68
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "844f7940_9effd7f4",
         "filename": "chrome/android/java/res/xml/languages_preferences.xml",
         "patchSetId": 11
@@ -272,6 +296,30 @@
       "side": 1,
       "message": "Also a transitive code, there is removed in new CL.",
       "parentUuid": "9300f41e_d0955506",
+      "range": {
+        "startLine": 918,
+        "startChar": 54,
+        "endLine": 918,
+        "endChar": 65
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225eb778_f1b9edaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T17:04:31Z",
+      "side": 1,
+      "message": "Can it be removed in this CL if it\u0027s not needed?",
+      "parentUuid": "75416383_4d9016f7",
       "range": {
         "startLine": 918,
         "startChar": 54,
@@ -422,6 +470,30 @@
       "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a62b9b55_64d45d05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T17:04:31Z",
+      "side": 1,
+      "message": "Will you please update the comment to mention this expectation so that it\u0027s obvious what\u0027s happening and why.",
+      "parentUuid": "bb4e219c_34534bc3",
+      "range": {
+        "startLine": 172,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 82
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
