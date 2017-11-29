@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b7ac6395_de4e932f",
+        "filename": "tools/bisect-builds.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-29T19:21:51Z",
+      "side": 1,
+      "message": "This is somewhat confusing. First, you are using globs, but it looks like you only expect this to be called with single files. Second, it\u0027s not clear why you wouldn\u0027t expect them to exist, or why it\u0027s okay to not copy soemthing if it doesn\u0027t. \n\nThird, I\u0027d use shutil.copy2. I\u0027d probably also use os.path.exists, unless there\u0027s a specific reason you need access\u0027s semantics? If there is, I\u0027d add a comment explaining why.\n\nI do realize you\u0027re just refactoring things and may not know the answers ...",
+      "revId": "2933c9f775871d61db9a7adef402177439deb268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49dbd5e2_6c45539a",
         "filename": "tools/bisect-builds.py",
         "patchSetId": 1
@@ -19,6 +36,40 @@
         "endLine": 542,
         "endChar": 3
       },
+      "revId": "2933c9f775871d61db9a7adef402177439deb268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ce583c_3f54091c",
+        "filename": "tools/bisect-builds.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-29T19:21:51Z",
+      "side": 1,
+      "message": "Do we know why this is and why we don\u0027t just fix it?",
+      "revId": "2933c9f775871d61db9a7adef402177439deb268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c4c018_b866a046",
+        "filename": "tools/bisect-builds.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-29T19:21:51Z",
+      "side": 1,
+      "message": "Do we know why this is and why we don\u0027t just fix it?",
       "revId": "2933c9f775871d61db9a7adef402177439deb268",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
