@@ -16,6 +16,24 @@
       "revId": "22b3f6263f68687203d88804f9ceac7edd6ec0dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d9ce2c_3336f999",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-11-29T18:46:08Z",
+      "side": 0,
+      "message": "unfortunately there was a presubmit saying nothing was using it so we\u0027ve got to toss it",
+      "parentUuid": "e663a801_a5d99588",
+      "revId": "22b3f6263f68687203d88804f9ceac7edd6ec0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
