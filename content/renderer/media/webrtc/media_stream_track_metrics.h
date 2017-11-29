@@ -12,7 +12,13 @@
 
 #include "base/sequence_checker.h"
 #include "content/common/content_export.h"
+
+// Both webrtc and libyuv leak a macro named FOURCC and those collide if
+// a compilation unit includes headers from both of them. To avoid that,
+// carefully clear away that macro. https://crbug.com/789520
+#undef FOURCC
 #include "third_party/webrtc/api/peerconnectioninterface.h"
+#undef FOURCC
 
 namespace webrtc {
 class MediaStreamInterface;
