@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c593b5d_4ce4b980",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-29T03:05:36Z",
+      "side": 1,
+      "message": "Yerg, didn\u0027t realise this would be so nasty. Would be good to get a second opinion on whether this is the blessed way to do this.",
+      "revId": "0a504db97658f61ab4efea6be081be868537b283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
