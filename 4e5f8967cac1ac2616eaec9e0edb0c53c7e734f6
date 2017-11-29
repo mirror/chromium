@@ -117,6 +117,23 @@
       "revId": "4e5f8967cac1ac2616eaec9e0edb0c53c7e734f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4b5cc4a_589797a7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 92552,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-29T16:52:56Z",
+      "side": 1,
+      "message": "nit: VR.AssetsComponent.LoadStatus to be consistent with other UMA name?",
+      "revId": "4e5f8967cac1ac2616eaec9e0edb0c53c7e734f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
