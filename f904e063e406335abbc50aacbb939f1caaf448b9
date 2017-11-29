@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc10694a_e1ed7fae",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-29T17:35:36Z",
+      "side": 1,
+      "message": "Can this be called ArcUsbHostBridge, for consistency?",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 15
+      },
+      "revId": "f904e063e406335abbc50aacbb939f1caaf448b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055c6401_a801b6cc",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-29T17:35:36Z",
+      "side": 1,
+      "message": "nit: This should be called UsbHostHost. By convention all our interfaces have a XxxHost and an XxxInterface, and the Xxx part must match.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "f904e063e406335abbc50aacbb939f1caaf448b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
