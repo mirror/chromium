@@ -12,9 +12,12 @@
 namespace blink {
 namespace scheduler {
 
+class WorkerScheduler;
+
 class PLATFORM_EXPORT WorkerSchedulerHelper : public SchedulerHelper {
  public:
-  explicit WorkerSchedulerHelper(std::unique_ptr<TaskQueueManager> manager);
+  WorkerSchedulerHelper(std::unique_ptr<TaskQueueManager> manager,
+                        WorkerScheduler* worker_scheduler);
   ~WorkerSchedulerHelper() override;
 
   scoped_refptr<WorkerTaskQueue> NewTaskQueue(const TaskQueue::Spec& spec);
@@ -27,6 +30,8 @@ class PLATFORM_EXPORT WorkerSchedulerHelper : public SchedulerHelper {
   scoped_refptr<TaskQueue> ControlTaskQueue() override;
 
  protected:
+  // Not owned.
+  WorkerScheduler* worker_scheduler_;
   const scoped_refptr<WorkerTaskQueue> default_task_queue_;
   const scoped_refptr<WorkerTaskQueue> control_task_queue_;
 
