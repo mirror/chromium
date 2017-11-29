@@ -135,6 +135,22 @@ if (enable_vr) {
   }
 }
 
+if (enable_openvr) {
+  shared_library("openvr_mock") {
+    output_name = "mock_vr_clients/bin/vrclient"
+
+    #todo: vrclient_x64 on x64 windows
+
+    sources = [
+      "openvr/test/fake_openvr_impl_api.cc",
+    ]
+
+    deps = [
+      "//base",
+    ]
+  }
+}
+
 if (enable_gvr_services) {
   java_sources_needing_jni =
       [ "android/java/src/org/chromium/device/vr/NonPresentingGvrContext.java" ]
