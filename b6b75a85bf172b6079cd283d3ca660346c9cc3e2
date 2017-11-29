@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d283ad7d_d2af0c7c",
+        "filename": "ios/web/interstitials/web_interstitial_impl_inttest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T19:24:33Z",
+      "side": 1,
+      "message": "Is this an an actual integration test? Can we have a unit test instead?",
+      "revId": "b6b75a85bf172b6079cd283d3ca660346c9cc3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae62c67_b792d94b",
+        "filename": "ios/web/interstitials/web_interstitial_impl_inttest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T19:24:33Z",
+      "side": 1,
+      "message": "This does not look like a Fake object. Fake objects are used for fake dependencies. This one is used straight for testing. Can we test web::WebInterstitialImpl instead of this class? Real app uses web::WebInterstitialImpl, so it is better to test web::WebInterstitialImpl.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "b6b75a85bf172b6079cd283d3ca660346c9cc3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c77d652_cc7b5a34",
+        "filename": "ios/web/interstitials/web_interstitial_impl_inttest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T19:24:33Z",
+      "side": 1,
+      "message": "We should not return raw unowned pointers per C++ Style Guide.",
+      "range": {
+        "startLine": 81,
+        "startChar": 21,
+        "endLine": 81,
+        "endChar": 46
+      },
+      "revId": "b6b75a85bf172b6079cd283d3ca660346c9cc3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde57a45_4163fbee",
+        "filename": "ios/web/interstitials/web_interstitial_impl_inttest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T19:24:33Z",
+      "side": 1,
+      "message": "All non trivial methods need comments. Here the comment could explain the purpose of the test.",
+      "range": {
+        "startLine": 162,
+        "startChar": 32,
+        "endLine": 162,
+        "endChar": 49
+      },
+      "revId": "b6b75a85bf172b6079cd283d3ca660346c9cc3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
