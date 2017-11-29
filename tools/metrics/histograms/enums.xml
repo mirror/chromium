@@ -17091,6 +17091,7 @@ Called by update_net_error_codes.py.-->
       label="HTMLAnchorElementDownloadInSandboxWithoutUserGesture"/>
   <int value="2247" label="WindowOpenRealmMismatch"/>
   <int value="2248" label="GridRowTrackPercentIndefiniteHeight"/>
+  <int value="2249" label="InDisableHwNoiseSuppressionTrial"/>
 </enum>
 
 <enum name="FeedbackSource">

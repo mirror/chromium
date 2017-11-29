@@ -36,6 +36,8 @@
 #include "content/renderer/media/webrtc/processed_local_audio_source.h"
 #include "content/renderer/media/webrtc_logging.h"
 #include "content/renderer/media/webrtc_uma_histograms.h"
+#include "core/frame/UseCounter.h"
+#include "core/origin_trials/origin_trials.h"
 #include "media/base/audio_parameters.h"
 #include "media/capture/video_capture_types.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -44,6 +46,7 @@
 #include "third_party/WebKit/public/platform/WebMediaStreamSource.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamTrack.h"
 #include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/public/web/WebDocument.h"
 #include "url/origin.h"
 
 namespace content {
@@ -403,9 +406,17 @@ void UserMediaProcessor::SelectAudioSettings(
   if (!IsCurrentRequestInfo(web_request))
     return;
 
+  blink::ExecutionContext* context =
+      web_request.OwnerDocument().ExecutionContext();
+  const bool in_disable_hw_noise_suppressor_trial =
+      blink::OriginTrials::disableHwNoiseSuppressionEnabled(context);
+  blink::UseCounter::Count(
+      context, blink::mojom::WebFeature::kInDisableHwNoiseSuppressionTrial);
+
   DCHECK(current_request_info_->stream_controls()->audio.requested);
   auto settings = SelectSettingsAudioCapture(
-      std::move(audio_input_capabilities), web_request.AudioConstraints());
+      std::move(audio_input_capabilities), web_request.AudioConstraints(),
+      in_disable_hw_noise_suppressor_trial);
   if (!settings.HasValue()) {
     blink::WebString failed_constraint_name =
         blink::WebString::FromASCII(settings.failed_constraint_name());

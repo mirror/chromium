@@ -48,6 +48,7 @@ class Local;
 namespace blink {
 
 class Document;
+class ExecutionContext;
 class WebElement;
 class WebFormElement;
 class WebElementCollection;
@@ -136,6 +137,8 @@ class WebDocument : public WebNode {
   BLINK_EXPORT WebURL CanonicalUrlForSharing() const;
 
   BLINK_EXPORT WebDistillabilityFeatures DistillabilityFeatures();
+
+  BLINK_EXPORT ExecutionContext* ExecutionContext() const;
 
 #if INSIDE_BLINK
   BLINK_EXPORT WebDocument(Document*);
