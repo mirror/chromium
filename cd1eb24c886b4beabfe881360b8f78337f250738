@@ -22,6 +22,30 @@
       "revId": "cd1eb24c886b4beabfe881360b8f78337f250738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e223e47_a99d049f",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-29T13:18:47Z",
+      "side": 1,
+      "message": "Thanks! I hadn\u0027t noticed that detail in the DD.\n\nI don\u0027t agree with the design. It clearly implies that the callback is for when serialisation is completed, but on desktop we use it for export completion.\n\nI think the callback should be set either on construction or with a third setter SetOnExportCompleted(...). I prefer the constructor.",
+      "parentUuid": "a7551cf9_90a81f2c",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 76
+      },
+      "revId": "cd1eb24c886b4beabfe881360b8f78337f250738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
