@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43853b62_21c6deab",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-29T06:07:12Z",
+      "side": 1,
+      "message": "Please abstract this to a TestAppActionOpensForegroundWindow (very similar to TAAOFTab). Or, perhaps better, de-duplicate the logic with TAAOFT. Even if you don\u0027t de-duplicate, it will show that those two are peers next to each other in the test file with similar name.",
+      "revId": "9361296365503204367f6f13ea86b63df93db035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
