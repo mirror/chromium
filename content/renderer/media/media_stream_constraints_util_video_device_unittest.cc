@@ -15,8 +15,7 @@
 #include "third_party/WebKit/public/platform/WebMediaConstraints.h"
 
 namespace content {
-
-namespace {
+namespace media_stream_constraints_util_video_device_unittest {
 
 const char kDeviceID1[] = "fake_device_1";
 const char kDeviceID2[] = "fake_device_2";
@@ -63,8 +62,6 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
       MediaStreamVideoSource::kDefaultHeight,
       MediaStreamVideoSource::kDefaultFrameRate);
 }
-
-}  // namespace
 
 class MediaStreamConstraintsUtilVideoDeviceTest : public testing::Test {
  public:
@@ -188,10 +185,10 @@ class MediaStreamConstraintsUtilVideoDeviceTest : public testing::Test {
   }
 
   VideoDeviceCaptureCapabilities capabilities_;
-  const mojom::VideoInputDeviceCapabilities* default_device_;
-  const mojom::VideoInputDeviceCapabilities* low_res_device_;
-  const mojom::VideoInputDeviceCapabilities* high_res_device_;
-  const mojom::VideoInputDeviceCapabilities* invalid_frame_rate_device_;
+  const ::mojom::VideoInputDeviceCapabilities* default_device_;
+  const ::mojom::VideoInputDeviceCapabilities* low_res_device_;
+  const ::mojom::VideoInputDeviceCapabilities* high_res_device_;
+  const ::mojom::VideoInputDeviceCapabilities* invalid_frame_rate_device_;
   // Closest formats to the default settings.
   const media::VideoCaptureFormat* default_closest_format_;
   const media::VideoCaptureFormat* low_res_closest_format_;
@@ -2305,4 +2302,5 @@ TEST_F(MediaStreamConstraintsUtilVideoDeviceTest, InvertedDefaultResolution) {
   EXPECT_EQ(result.Height(), MediaStreamVideoSource::kDefaultHeight);
 }
 
+}  // namespace media_stream_constraints_util_video_device_unittest
 }  // namespace content

@@ -25,7 +25,15 @@
 #include "content/renderer/media/webrtc_audio_device_impl.h"
 #include "media/base/audio_converter.h"
 #include "third_party/webrtc/api/mediastreaminterface.h"
+#ifdef _USE_MATH_DEFINES
+// Header breaks if this is defined because it tried to define it itself.
+#undef _USE_MATH_DEFINES
 #include "third_party/webrtc/modules/audio_processing/include/audio_processing.h"
+#undef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES 1
+#else
+#include "third_party/webrtc/modules/audio_processing/include/audio_processing.h"
+#endif  // _USE_MATH_DEFINES
 #include "third_party/webrtc/rtc_base/task_queue.h"
 
 // The audio repetition detector is by default only used on non-official

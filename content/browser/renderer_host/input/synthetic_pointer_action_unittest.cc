@@ -18,8 +18,7 @@ using blink::WebMouseEvent;
 using blink::WebTouchPoint;
 
 namespace content {
-
-namespace {
+namespace synthetic_pointer_action_unittest {
 
 WebTouchPoint::State ToWebTouchPointState(
     SyntheticPointerActionParams::PointerActionType action_type) {
@@ -718,6 +717,5 @@ TEST_F(SyntheticPointerActionTest, EmptyParams) {
   EXPECT_EQ(0, num_failure_);
 }
 
-}  // namespace
-
+}  // namespace synthetic_pointer_action_unittest
 }  // namespace content
