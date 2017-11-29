@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc77b531_4486e075",
+        "filename": "chrome/browser/media/media_engagement_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T21:49:34Z",
+      "side": 1,
+      "message": "Will have a look at these after these and check if this is why the UKM recording unit test you had are failing.",
+      "parentUuid": "9d3b5134_96985019",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 65
+      },
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38d8ca81_a2abf960",
         "filename": "chrome/browser/media/media_engagement_session.cc",
         "patchSetId": 2
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "095d62ae_ef3ba2e0",
+        "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T21:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "364e75ad_df3815fe",
+      "range": {
+        "startLine": 72,
+        "startChar": 14,
+        "endLine": 72,
+        "endChar": 53
+      },
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35e89b2b_aa633ab0",
         "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
         "patchSetId": 2
@@ -79,6 +127,24 @@
       "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fef8f1_2d6e1745",
+        "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T21:49:34Z",
+      "side": 1,
+      "message": "Actually, 90% through I realised that the static methods are actually nicer :) It makes it clearer what\u0027s happening.",
+      "parentUuid": "35e89b2b_aa633ab0",
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +171,30 @@
     },
     {
       "key": {
+        "uuid": "d1d45ba1_a18a83bc",
+        "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T21:49:34Z",
+      "side": 1,
+      "message": "Done. Thanks! Fun fact: Media Engagement is the only place where this new API is used. (though I remember reviewing a CL where the full codebase was updated...)",
+      "parentUuid": "536ce54e_ee6410b8",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 66
+      },
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3326252_456fb9b9",
         "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
         "patchSetId": 2
@@ -128,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "930498a0_d0dc370f",
+        "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T21:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3326252_456fb9b9",
+      "range": {
+        "startLine": 196,
+        "startChar": 15,
+        "endLine": 196,
+        "endChar": 28
+      },
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e761b0d8_7865ffbf",
         "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
         "patchSetId": 2
@@ -148,6 +262,30 @@
       "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23265b3d_82b6d492",
+        "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T21:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e761b0d8_7865ffbf",
+      "range": {
+        "startLine": 490,
+        "startChar": 4,
+        "endLine": 503,
+        "endChar": 11
+      },
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
