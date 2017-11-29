@@ -22,6 +22,30 @@
       "revId": "b10043acbec0e4d0912cad4e5adbcd1f59f0dd09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d11ebb5_50d18944",
+        "filename": "chrome/utility/importer/firefox_importer_unittest_utils_mac.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-29T23:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e698cded_e1a6d09c",
+      "range": {
+        "startLine": 16,
+        "startChar": 86,
+        "endLine": 16,
+        "endChar": 87
+      },
+      "revId": "b10043acbec0e4d0912cad4e5adbcd1f59f0dd09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
