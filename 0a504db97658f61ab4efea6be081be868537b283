@@ -16,6 +16,24 @@
       "revId": "0a504db97658f61ab4efea6be081be868537b283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a8e922_2f94fce7",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-29T03:23:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7c593b5d_4ce4b980",
+      "revId": "0a504db97658f61ab4efea6be081be868537b283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
