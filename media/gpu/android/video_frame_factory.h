@@ -15,7 +15,7 @@
 #include "ui/gfx/geometry/size.h"
 
 namespace gpu {
-class GpuCommandBufferStub;
+class GLES2CommandBufferStub;
 struct SyncToken;
 }  // namespace gpu
 
@@ -30,7 +30,7 @@ class VideoFrame;
 // safe. Virtual for testing; see VideoFrameFactoryImpl.
 class MEDIA_GPU_EXPORT VideoFrameFactory {
  public:
-  using GetStubCb = base::Callback<gpu::GpuCommandBufferStub*()>;
+  using GetStubCb = base::Callback<gpu::GLES2CommandBufferStub*()>;
   using InitCb = base::Callback<void(scoped_refptr<SurfaceTextureGLOwner>)>;
 
   // These mirror types from MojoVideoDecoderService.
