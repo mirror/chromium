@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f85619d_1196508e",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-29T16:30:26Z",
+      "side": 1,
+      "message": "Are there any timing issues with these notifications? Is it ever\npossible that we\u0027ll get a callback inside this stack frame, like\nwe do on Windows when AT injects a DLL in-process?\n\nI\u0027m sure Linux ATK can\u0027t inject in-process, but I\u0027m more wondering\nif the ATK library ever makes calls back into the object in response\nto a notification, for example.\n\nThe potential concern is that this function may be called while we\u0027re\nin the middle of deleting a subtree, so there could be some dangling\npointers.\n\nIf we don\u0027t get any callbacks in this exact stack frame we\u0027re fine.\nIf we do, a short-term fix would be to retain the object a bit longer\nand notify in OnAtomicUpdateFinished(). Even better, I\u0027m hoping to\nadd a preprocessing step to identify all nodes that *will be* deleted\nbefore the tree changes, to make firing notifications like this\nmuch simpler.",
+      "revId": "6efaed1c7cced640daa29fde3df177b69349c42f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
