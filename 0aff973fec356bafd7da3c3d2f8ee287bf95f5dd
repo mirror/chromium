@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25ae6a68_88dce02e",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-11-29T22:57:54Z",
+      "side": 1,
+      "message": "Naming is hard, but can we do something different here?  It seems odd to have both\n\nPrinter::PpdReference\n\nand PrinterPpdReference\n\nas distinct types.",
+      "range": {
+        "startLine": 94,
+        "startChar": 9,
+        "endLine": 94,
+        "endChar": 28
+      },
+      "revId": "0aff973fec356bafd7da3c3d2f8ee287bf95f5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5e779b_85891d0b",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-11-29T22:57:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure I like putting the onus on the client to handle filtering of entries based on restrictions properly; it seems to me like this should just be an internal implementation detail of PpdResolver.\n\nThe alternative is to tell the PpdResolver about the Version and have it filter appropriately before returning information to the PpdResolver API user.  \n\nThe only reason I can see *not* to do it that way is if we want to do clever things on the client side with data that will ultimately remain hidden, but that seems unlikely to me.  \n\nThoughts?",
+      "revId": "0aff973fec356bafd7da3c3d2f8ee287bf95f5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
