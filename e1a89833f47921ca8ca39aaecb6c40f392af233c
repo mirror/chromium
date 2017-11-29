@@ -34,6 +34,24 @@
       "revId": "e1a89833f47921ca8ca39aaecb6c40f392af233c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f57b0c8_fccdc1e0",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 59
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T23:33:43Z",
+      "side": 1,
+      "message": "I meant simplifying all the way :) Unless I\u0027m missing something, now you only ever insert GpuFenceEntry that have a valid gl_fence_, so GpuFenceEntry::AddCallback will always run the callback immediately, so you don\u0027t need callbacks_/AddCallback/RunCallbacks, and you can also simplify CreateNewGpuFence to always fail if the entry already exists (and a few other places you can remove tests for gl_fence_/gpu_fence_ which is always valid if the entry exists).",
+      "parentUuid": "85e1297e_3f22d5ee",
+      "revId": "e1a89833f47921ca8ca39aaecb6c40f392af233c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

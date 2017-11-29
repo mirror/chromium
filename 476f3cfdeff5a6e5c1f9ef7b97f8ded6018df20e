@@ -439,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "72742ef7_bab959df",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T23:33:43Z",
+      "side": 1,
+      "message": "\u003e Ah, so the client would insert a single fence, hang on to it while cycling through 2^32 IDs, and destroy it just before a CreateClientGpuFenceCHROMIUM. Then the resulting CreateGpuFence call would fail because GpuFenceManager::CreateDuplicateGpuFence returns false because the entry already exists, and GpuCommandBufferStub::OnSendGpuFenceHandle would detect this and kill the context with SetParseError(error::kLostContext).\n\u003e \n\u003e I still don\u0027t really see how this is a problem other than an extremely roundabout way for a client to shoot themselves in the foot. Keeping a fence alive for so long wouldn\u0027t have any useful application, and if it\u0027s a bug a context loss seems reasonable.\n\nTBH I wouldn\u0027t presume what the client might do. It might keep around a resource to recycle, with an associated fence, in a resource pool. Maybe it got one extra on one particular frame because of a latency spike. Maybe the next latency spike which causes it to reuse that one happens after wraparound.\nThe client never did anything wrong. We just failed to handle the case.\n\n\u003e Anyway, I can keep the CHECK, I just want to make sure I\u0027m not missing some bigger potential problem here.",
+      "parentUuid": "610389d6_8866fe30",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1e294e_b870ce42",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 46
