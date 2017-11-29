@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9366e32f_82beb61d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/waterfall-images-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-29T18:53:35Z",
+      "side": 0,
+      "message": "Let\u0027s also delete https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/platform/linux/http/tests/devtools/network/waterfall-images-expected.png?q\u003dwaterfall-images\u0026sq\u003dpackage:chromium\u0026dr\n\n(it\u0027s a platform-specific image expectation).",
+      "revId": "bd6c5b4bb4fa6b5e8da90ae2c328028d56c6b071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
