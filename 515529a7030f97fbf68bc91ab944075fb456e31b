@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de0dfddc_32062688",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-29T13:31:51Z",
+      "side": 1,
+      "message": "Note: Instead of introducing FakeShillServiceClient::AddServiceToProfile, calling this looks much simpler, so I did. Does this work for you?",
+      "revId": "515529a7030f97fbf68bc91ab944075fb456e31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
