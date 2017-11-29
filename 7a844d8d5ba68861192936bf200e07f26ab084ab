@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e3e5835_d0f80c49",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-29T09:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46c7e6d2_d29b0e0b",
+      "revId": "7a844d8d5ba68861192936bf200e07f26ab084ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7818b24a_7adaed9a",
         "filename": "components/arc/usb/usb_host_bridge.cc",
         "patchSetId": 12
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-27T20:30:36Z",
       "side": 1,
       "message": "You shouldn\u0027t need this after letting the ConnectionHolder deal with it :)",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 40
+      },
+      "revId": "7a844d8d5ba68861192936bf200e07f26ab084ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5c8706_142afdd3",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-29T09:17:01Z",
+      "side": 1,
+      "message": "Indeed, removed",
+      "parentUuid": "7818b24a_7adaed9a",
       "range": {
         "startLine": 215,
         "startChar": 0,
