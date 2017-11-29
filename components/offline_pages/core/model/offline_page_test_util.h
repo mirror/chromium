@@ -24,6 +24,8 @@ namespace test_util {
 // Get number of files in the given |dir|.
 size_t GetFileCountInDirectory(const base::FilePath& directory);
 
+void IterateDirFiles(const base::FilePath& dir);
+
 }  // namespace test_util
 
 }  // namespace offline_pages

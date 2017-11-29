@@ -282,12 +282,27 @@ bool DirectoryExists(const FilePath& path) {
 bool GetTempDir(FilePath* path) {
   wchar_t temp_path[MAX_PATH + 1];
   DWORD path_len = ::GetTempPath(MAX_PATH, temp_path);
+  DLOG(ERROR) << "ROMAX GetTempPath - path_len: " << path_len
+              << " temp_path: " << temp_path;
   if (path_len >= MAX_PATH || path_len <= 0)
+    return false;
+  wchar_t temp_long_path[MAX_PATH + 1];
+  DWORD long_path_len = ::GetLongPathName(temp_path, temp_long_path, MAX_PATH);
+  DLOG(ERROR) << "ROMAX GetLongPathName - path_len: " << long_path_len
+              << " temp_long_path: " << temp_long_path;
+  if (long_path_len >= MAX_PATH || long_path_len <= 0)
+    return false;
+
+  wchar_t temp_full_path[MAX_PATH + 1];
+  DWORD full_path_len = ::GetFullPathName(temp_path, temp_full_path, MAX_PATH);
+  DLOG(ERROR) << "ROMAX GetFullPathName - path_len: " << full_path_len
+              << " temp_full_path: " << temp_full_path;
+  if (full_path_len >= MAX_PATH || full_path_len <= 0)
     return false;
   // TODO(evanm): the old behavior of this function was to always strip the
   // trailing slash.  We duplicate this here, but it shouldn't be necessary
   // when everyone is using the appropriate FilePath APIs.
-  *path = FilePath(temp_path).StripTrailingSeparators();
+  *path = FilePath(temp_long_path).StripTrailingSeparators();
   return true;
 }
 
