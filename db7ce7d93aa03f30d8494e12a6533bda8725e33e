@@ -22,6 +22,30 @@
       "revId": "db7ce7d93aa03f30d8494e12a6533bda8725e33e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc8ec3b_82f842dd",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-29T03:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d34709d_4804d5e4",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "db7ce7d93aa03f30d8494e12a6533bda8725e33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
