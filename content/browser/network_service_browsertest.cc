@@ -149,8 +149,11 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceBrowserTest, WebUIBindingsNoHttp) {
 // Verifies that WebUI pages without WebUI bindings can make network requests.
 IN_PROC_BROWSER_TEST_F(NetworkServiceBrowserTest, NoWebUIBindingsHttp) {
   GURL test_url("chrome://webui/nobinding/");
+  RenderProcessKilledObserver killed_observer(shell()->web_contents());
   NavigateToURL(shell(), test_url);
-  ASSERT_TRUE(CheckCanLoadHttp());
+  LOG(ERROR) << "@@@ CheckCanLoadHttp == " <<  CheckCanLoadHttp();
+  ASSERT_TRUE(killed_observer.killed()) << "The process is killed1";
+  ASSERT_TRUE(false);
 }
 
 }  // namespace
