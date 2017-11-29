@@ -38,6 +38,12 @@ class X11_WINDOW_EXPORT X11WindowOzone : public X11WindowBase,
   bool DispatchXEvent(XEvent* event) override;
 
  private:
+  // Calls OnLostCapture().
+  friend X11WindowManagerOzone;
+
+  // Called by |window_manager_| once capture is set to another X11WindowOzone.
+  void OnLostCapture();
+
   // PlatformEventDispatcher:
   bool CanDispatchEvent(const PlatformEvent& event) override;
   uint32_t DispatchEvent(const PlatformEvent& event) override;
