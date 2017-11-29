@@ -206,6 +206,7 @@ void ResetPlatform(EGLDisplay display) {
   base::UnsanitizedCfiCall(g_angle_reset_platform)(
       static_cast<EGLDisplayType>(display));
   ResetCacheProgramCallback();
+  *g_angle_reset_platform = nullptr;
 }
 
 void SetCacheProgramCallback(CacheProgramCallback callback) {
