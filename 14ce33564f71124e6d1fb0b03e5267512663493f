@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "959f2980_4cbcc01f",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T21:03:57Z",
+      "side": 1,
+      "message": "nit: and -\u003e an",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e36056_931e95fb",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T21:03:57Z",
+      "side": 1,
+      "message": "should this be:\n  if (closure)\n    std::move(closure).Run();\ni don\u0027t remember whether or not Run() is valid on an empty callback.",
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc02de1_94bde74e",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T21:03:57Z",
+      "side": 1,
+      "message": "to get around the problem with ...AndReply and an empty reply, how about:\n  base::TaskTraits task_traits \u003d {base::MayBlock(), base::TaskPriority::BACKGROUND};\n  if (on_load_closure_) {\n    base::PostTaskWithTraitsAndReply(FROM_HERE, task_traits, ..., std::move(on_load_closure_));\n  } else {\n    base::PostTaskWithTraits(FROM_HERE, task_traits, ...);\n  }\nand then you can do away with OnDataLoaded and the extra task posting outside of tests.",
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cd4c8d_fe15b0fb",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T21:03:57Z",
+      "side": 1,
+      "message": "is this the only place where MediaEngagementPreloadComponentInstallerPolicy is instantiated? how about making the closure an arg to the ctor (which will become \"explicit\" since it\u0027ll have one arg) and doing away with SetOnLoadClosure?",
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb871187_d59592c5",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T21:03:57Z",
+      "side": 1,
+      "message": "nit: std::move(on_load)",
+      "range": {
+        "startLine": 137,
+        "startChar": 27,
+        "endLine": 137,
+        "endChar": 34
+      },
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43993395_73eed887",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T21:03:57Z",
+      "side": 1,
+      "message": "nit: OnceClosure seems like a good fit here (and right on down the line). will it work?\n\nalso, please document |on_load|.",
+      "range": {
+        "startLine": 68,
+        "startChar": 51,
+        "endLine": 68,
+        "endChar": 58
+      },
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c5aeba_8e9af2a2",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T21:03:57Z",
+      "side": 1,
+      "message": "short and sweet! i love it.",
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
