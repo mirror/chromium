@@ -82,7 +82,9 @@ PrinterInfo GetEmptyPrinterInfo() {
 base::Value GetPrintTicket(printing::PrinterType type, bool cloud) {
   bool is_privet_printer = !cloud && type == printing::kPrivetPrinter;
   bool is_extension_printer = !cloud && type == printing::kExtensionPrinter;
+
   base::Value ticket(base::Value::Type::DICTIONARY);
+  ticket.SetKey(kSettingPageRange, base::Value());  // entire document
 
   // Letter
   base::Value media_size(base::Value::Type::DICTIONARY);
@@ -597,8 +599,8 @@ TEST_F(PrintPreviewHandlerTest, Print) {
     handler()->HandlePrint(list_args.get());
 
     // Verify correct PrinterHandler was called or that no handler was requested
-    // for local and cloud printers.
-    if (cloud || type == printing::kLocalPrinter) {
+    // for cloud printers.
+    if (cloud) {
       EXPECT_TRUE(handler()->NotCalled());
     } else {
       EXPECT_TRUE(handler()->CalledOnlyForType(type));
@@ -607,18 +609,6 @@ TEST_F(PrintPreviewHandlerTest, Print) {
     // Verify print promise was resolved successfully.
     const content::TestWebUI::CallData& data = *web_ui()->call_data().back();
     CheckWebUIResponse(data, callback_id_in, true);
-
-    // For local printers, the Print Preview UI will respond to the resolution
-    // by sending a "hidePreview" message, which should prompt an IPC message
-    // to the renderer.
-    if (type == printing::kLocalPrinter) {
-      base::Value hide_args(base::Value::Type::LIST);
-      std::unique_ptr<base::ListValue> hide_args_ptr = base::ListValue::From(
-          base::Value::ToUniquePtrValue(std::move(hide_args)));
-      handler()->HandleHidePreview(hide_args_ptr.get());
-      EXPECT_TRUE(preview_sink().GetUniqueMessageMatching(
-          PrintMsg_PrintForPrintPreview::ID));
-    }
 
     // For cloud print, should also get the encoded data back as a string.
     if (cloud) {
