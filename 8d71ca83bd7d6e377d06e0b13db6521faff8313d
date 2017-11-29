@@ -51,6 +51,24 @@
       "revId": "8d71ca83bd7d6e377d06e0b13db6521faff8313d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac930c9_3bfe272c",
+        "filename": "third_party/WebKit/Source/core/style/ClipPathOperation.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-29T22:57:47Z",
+      "side": 0,
+      "message": "Ah. LOL.",
+      "parentUuid": "2184c30f_da1c28c4",
+      "revId": "8d71ca83bd7d6e377d06e0b13db6521faff8313d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

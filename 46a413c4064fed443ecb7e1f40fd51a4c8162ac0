@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ed68ca02_2e103333",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-29T22:57:47Z",
+      "side": 1,
+      "message": "Ok please make a comment to this effect.",
+      "parentUuid": "64023cad_ba7237e0",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aeaa3c7_07a46c8b",
         "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceClipper.cpp",
         "patchSetId": 13
