@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/chromeos/file_system_provider/fake_extension_provider.h"
 #include "chrome/browser/chromeos/file_system_provider/fake_provided_file_system.h"
+#include "chrome/browser/chromeos/file_system_provider/fake_registry.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/service.h"
 #include "chrome/browser/chromeos/file_system_provider/service_factory.h"
@@ -25,6 +26,7 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/common/manifest_constants.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/browser/fileapi/isolated_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -59,6 +61,45 @@ storage::FileSystemURL CreateFileSystemURL(
       base::FilePath(mount_path.BaseName().Append(relative_path)));
 }
 
+scoped_refptr<extensions::Extension> CreateFakeExtension(
+    const std::string& extension_id,
+    bool should_have_api_permission) {
+  base::DictionaryValue manifest;
+  std::string error;
+  manifest.SetKey(extensions::manifest_keys::kVersion, base::Value("1.0.0.0"));
+  manifest.SetKey(extensions::manifest_keys::kName, base::Value("unused"));
+
+  if (should_have_api_permission) {
+    auto permissions = base::MakeUnique<base::ListValue>();
+    permissions->AppendString("fileSystemProvider");
+    manifest.Set(extensions::manifest_keys::kPermissions,
+                 std::move(permissions));
+
+    auto capabilities = base::MakeUnique<base::DictionaryValue>();
+    capabilities->SetString("source", "network");
+    manifest.Set(extensions::manifest_keys::kFileSystemProviderCapabilities,
+                 std::move(capabilities));
+  }
+
+  auto ext = extensions::Extension::Create(
+      base::FilePath(), extensions::Manifest::UNPACKED, manifest,
+      extensions::Extension::NO_FLAGS, extension_id, &error);
+
+  LOG(ERROR) << error;
+  return ext;
+}
+
+std::unique_ptr<KeyedService> CreateService(content::BrowserContext* context) {
+  extensions::ExtensionRegistry* const extension_registry =
+      extensions::ExtensionRegistry::Get(context);
+  std::unique_ptr<Service> service = std::make_unique<Service>(
+      static_cast<Profile*>(context), extension_registry);
+  service->SetRegistryForTesting(std::make_unique<FakeRegistry>());
+  service->SetExtensionProviderForTesting(
+      base::MakeUnique<FakeExtensionProvider>());
+  return std::move(service);
+}
+
 }  // namespace
 
 class FileSystemProviderMountPathUtilTest : public testing::Test {
@@ -76,9 +117,15 @@ class FileSystemProviderMountPathUtilTest : public testing::Test {
         base::WrapUnique(user_manager_));
     user_manager_->AddUser(
         AccountId::FromUserEmail(profile_->GetProfileUserName()));
-    file_system_provider_service_ = Service::Get(profile_);
-    file_system_provider_service_->SetExtensionProviderForTesting(
-        base::MakeUnique<FakeExtensionProvider>());
+
+    extensions::ExtensionRegistry* extension_registry =
+        extensions::ExtensionRegistry::Get(profile_);
+    extension_ = CreateFakeExtension(kExtensionId, true);
+    extension_registry->AddEnabled(extension_);
+
+    file_system_provider_service_ = static_cast<Service*>(
+        ServiceFactory::GetInstance()->SetTestingFactoryAndUse(profile_,
+                                                               &CreateService));
   }
 
   content::TestBrowserThreadBundle thread_bundle_;
@@ -87,6 +134,7 @@ class FileSystemProviderMountPathUtilTest : public testing::Test {
   std::unique_ptr<user_manager::ScopedUserManager> user_manager_enabler_;
   FakeChromeUserManager* user_manager_;
   Service* file_system_provider_service_;  // Owned by its factory.
+  scoped_refptr<extensions::Extension> extension_;
 };
 
 TEST_F(FileSystemProviderMountPathUtilTest, GetMountPath) {
