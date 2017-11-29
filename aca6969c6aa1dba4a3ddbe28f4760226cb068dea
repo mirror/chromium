@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65c4dc2a_ffe176c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-29T19:34:06Z",
+      "side": 1,
+      "message": "A general comment about this: This seems a very WebAPK specific change shrouded as a general change (which worries me, because other code paths may run this and crash without realizing). We are also taking away the call to show Lightweight FRE from anywhere other than Webapps if I am understanding this right. (which I don\u0027t think is the current long term plan).\n\nEssentially we are trying to get a readable name for the client for this activity here. I would say almost all the code in this file belongs to the webapp namespace somewhere.\n\nCan we extract this name from a generic static IntentHandler call that takes the intent? Checking the Intent ACTION and seeing MAIN, it returns empty or Chrome(not sure which one is appropriate), on VIEW intent for custom tabs it returns the client name if there is a session (CustomTabsSessionToken.getSessionTokenFromIntent()) and we can get the client name from CustomTabConnection.getClientPackageNameFor...), and there is a WebappInfo (maybe) static call that does what you do here and return the name we need if the VIEW intent class name is WebApp/WebAPK...\n\nIf we are bound on time, feel free to skip all the MAIN and custom tabs ones with TODOs for now, but I think it would be best if we get the structure in from the start. I feel like the current FREData will stay very specific to WebAPK stuff so might as well have most of the code live inside webapp namespace and not introduce it at all.",
+      "range": {
+        "startLine": 314,
+        "startChar": 35,
+        "endLine": 314,
+        "endChar": 50
+      },
+      "revId": "aca6969c6aa1dba4a3ddbe28f4760226cb068dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3990e563_587c5bc8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-29T19:34:06Z",
+      "side": 1,
+      "message": "I believe this will crash if someone tries to create a LightweigtFRE for anything other than WebAPK activity.",
+      "range": {
+        "startLine": 364,
+        "startChar": 34,
+        "endLine": 364,
+        "endChar": 35
+      },
+      "revId": "aca6969c6aa1dba4a3ddbe28f4760226cb068dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
