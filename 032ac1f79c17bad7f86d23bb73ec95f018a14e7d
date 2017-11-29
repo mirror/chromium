@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23318c81_af444524",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-29T19:02:59Z",
+      "side": 1,
+      "message": "nit: Adding this is kind of overkill since we only expect to change the property for tests where we can be sure to change it before we make any requests.",
+      "revId": "032ac1f79c17bad7f86d23bb73ec95f018a14e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
