@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "93fb7de1_632d8737",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-29T21:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e47f3a27_7483f7eb",
+      "revId": "3144e5fb6db4f8b50ecf2a1f1cdf3b6d4e995d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b373b57_9316f490",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
         "patchSetId": 3
