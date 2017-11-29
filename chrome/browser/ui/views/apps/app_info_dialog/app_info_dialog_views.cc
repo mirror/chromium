@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/lazy_instance.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile.h"
@@ -42,6 +43,9 @@
 #endif
 
 namespace {
+
+base::LazyInstance<base::OnceClosure>::DestructorAtExit
+    g_dialog_created_callback = LAZY_INSTANCE_INITIALIZER;
 
 // The color of the separator used inside the dialog - should match the app
 // list's app_list::kDialogSeparatorColor
@@ -104,6 +108,13 @@ void ShowAppInfoInNativeDialog(content::WebContents* web_contents,
         constrained_window::CreateBrowserModalDialogViews(dialog, window);
     dialog_widget->Show();
   }
+  if (g_dialog_created_callback.Get())
+    std::move(g_dialog_created_callback.Get()).Run();
+}
+
+// static
+void SetAppInfoDialogCreatedCallbackForTesting(base::OnceClosure callback) {
+  g_dialog_created_callback.Get() = std::move(callback);
 }
 
 AppInfoDialog::AppInfoDialog(gfx::NativeWindow parent_window,
