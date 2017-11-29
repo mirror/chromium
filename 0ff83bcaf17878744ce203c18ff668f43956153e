@@ -46,6 +46,30 @@
       "revId": "0ff83bcaf17878744ce203c18ff668f43956153e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33dfb892_58d2bdb3",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/filter-matches.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-29T01:35:12Z",
+      "side": 1,
+      "message": "True, but a single \n\n setUpHealthThermometerAndHeartRateDevices()\n\nreduces complexity from the test, and then it scans for just the health thermometer.  It reduces the number of places we ever setup devices.  Over time as we improve how they are setup and cause them to be more realistic simulated devices I\u0027d like to have fewer places any devices are defined. \n\nSince we have a well known setUpHealthThermometerAndHeartRateDevices that is a superset of what is needed it seems reasonable to just use it.\n\nI\u0027ll LGTM anyway and let you all make the call.",
+      "parentUuid": "0ce4d44d_d5f317b4",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 44
+      },
+      "revId": "0ff83bcaf17878744ce203c18ff668f43956153e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
