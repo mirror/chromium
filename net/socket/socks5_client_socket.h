@@ -60,6 +60,7 @@ class NET_EXPORT_PRIVATE SOCKS5ClientSocket : public StreamSocket {
   void ClearConnectionAttempts() override {}
   void AddConnectionAttempts(const ConnectionAttempts& attempts) override {}
   int64_t GetTotalReceivedBytes() const override;
+  void Tag(const SocketTag& tag) override;
 
   // Socket implementation.
   int Read(IOBuffer* buf,
