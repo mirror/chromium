@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36a041c9_b4ead53b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-29T03:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23e9476c_cee88363",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e20dc885_150fbdcd",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a7ac6f_f659db2e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-29T03:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e20dc885_150fbdcd",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "c7c47d31_f8a45739",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-29T03:28:13Z",
+      "side": 1,
+      "message": "I tried refactoring this code to have a consistent way of notifying AppBannerManager of the outcome of an installation prompt (i.e. whether it was accepted, and if so, whether the installation was successful) for both android and desktop. It was painful, so I\u0027ve abandoned it for now, but I\u0027ve added a TODO and bug to plumb more information through.\n \nFor now, since extension\u003d\u003dnull is primarily used to signal that the user clicked cancel in the confirmation dialog, I think it\u0027s correct to reprompt here.",
+      "parentUuid": "6c4308ca_f64e0524",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a9028bc_684b6c1f",
         "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
         "patchSetId": 1
@@ -153,6 +225,30 @@
       "writtenOn": "2017-11-22T05:59:46Z",
       "side": 1,
       "message": "Should this still call Terminate() if ExperimentalAppBanners is off?",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 14
+      },
+      "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a82af2a_c1369480",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-29T03:28:13Z",
+      "side": 1,
+      "message": "Yes. Fixed.",
+      "parentUuid": "5a9028bc_684b6c1f",
       "range": {
         "startLine": 56,
         "startChar": 6,
