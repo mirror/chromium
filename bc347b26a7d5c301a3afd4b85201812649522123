@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64f31974_f6f66784",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-29T00:02:01Z",
+      "side": 1,
+      "message": "Is this the right bug?",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "bc347b26a7d5c301a3afd4b85201812649522123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe1b3a6_e8decb58",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-29T00:02:01Z",
+      "side": 1,
+      "message": "Not sure if IsRendererInitiated is the right thing here. What if the site redirects to a different origin? In that case we should probably hide page info.",
+      "revId": "bc347b26a7d5c301a3afd4b85201812649522123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
