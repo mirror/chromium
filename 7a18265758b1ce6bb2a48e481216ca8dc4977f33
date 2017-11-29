@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "a184c315_d7db574f",
+        "filename": "ash/system/audio/volume_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-29T21:00:04Z",
+      "side": 1,
+      "message": "I am confused. Do you want me to set the slider to default focus painter with color kColorId_FocusedBorderColor and opacity \n1) 0x99 - ash\n2) 0x66 - focus ring\n\nIf you want 2) i\u0027ll have to override the tray sliders color to match the rest of the tray focus rectangles.\n\nSorry for the confusion.",
+      "parentUuid": "57657aaf_416bab49",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "7a18265758b1ce6bb2a48e481216ca8dc4977f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51cd90c9_10c9a8f5",
         "filename": "ui/views/controls/slider.cc",
         "patchSetId": 4
