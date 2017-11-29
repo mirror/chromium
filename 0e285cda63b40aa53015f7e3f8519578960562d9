@@ -218,6 +218,30 @@
       "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ba937e4_8915c2a6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/task_queue_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-29T14:36:04Z",
+      "side": 1,
+      "message": "To me ActiveTimeDomain sounds like it should apply to all queues.  It doesn\u0027t so maybe we should rename it, perhaps to GetTimerQueueTimeDomain.",
+      "parentUuid": "54b8e801_86cc62f2",
+      "range": {
+        "startLine": 90,
+        "startChar": 53,
+        "endLine": 90,
+        "endChar": 72
+      },
+      "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
