@@ -21,6 +21,7 @@
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/command_buffer/service/image_factory.h"
 #include "gpu/ipc/service/gpu_channel_manager.h"
+#include "gpu/ipc/service/gpu_channel_manager_delegate.h"
 #include "gpu/ipc/service/gpu_memory_buffer_factory.h"
 #include "ui/base/ui_base_switches.h"
 
@@ -46,6 +47,7 @@ GpuDisplayProvider::GpuDisplayProvider(
     gpu::GpuChannelManager* gpu_channel_manager)
     : restart_id_(restart_id),
       gpu_service_(std::move(gpu_service)),
+      gpu_channel_manager_delegate_(gpu_channel_manager->delegate()),
       gpu_memory_buffer_manager_(
           base::MakeUnique<InProcessGpuMemoryBufferManager>(
               gpu_channel_manager)),
@@ -67,10 +69,10 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
           restart_id_);
 
   scoped_refptr<InProcessContextProvider> context_provider =
-      new InProcessContextProvider(gpu_service_, surface_handle,
-                                   gpu_memory_buffer_manager_.get(),
-                                   image_factory_, gpu::SharedMemoryLimits(),
-                                   nullptr /* shared_context */);
+      base::MakeRefCounted<InProcessContextProvider>(
+          gpu_service_, surface_handle, gpu_memory_buffer_manager_.get(),
+          image_factory_, gpu_channel_manager_delegate_,
+          gpu::SharedMemoryLimits(), nullptr /* shared_context */);
 
   // TODO(rjkroege): If there is something better to do than CHECK, add it.
   // TODO(danakj): Should retry if the result is kTransientFailure.

@@ -16,22 +16,33 @@ RenderingWindowManager* RenderingWindowManager::GetInstance() {
 void RenderingWindowManager::RegisterParent(HWND parent) {
   base::AutoLock lock(lock_);
 
-  info_[parent] = nullptr;
+  info_[parent] = EmeddingInfo();
 }
 
-bool RenderingWindowManager::RegisterChild(HWND parent, HWND child_window) {
-  if (!child_window)
+bool RenderingWindowManager::RegisterChild(HWND parent, HWND child) {
+  if (!child)
     return false;
 
-  base::AutoLock lock(lock_);
+  bool call_set_parent;
+  {
+    base::AutoLock lock(lock_);
 
-  auto it = info_.find(parent);
-  if (it == info_.end())
-    return false;
-  if (it->second)
-    return false;
+    auto it = info_.find(parent);
+    if (it == info_.end())
+      return false;
 
-  info_[parent] = child_window;
+    EmeddingInfo& info = it->second;
+    if (info.child)
+      return false;
+
+    info.child = child;
+    call_set_parent = info.call_set_parent;
+  }
+
+  // DoSetParentOnChild() was called already, so call SetParent() now.
+  if (call_set_parent)
+    ::SetParent(child, parent);
+
   return true;
 }
 
@@ -43,9 +54,17 @@ void RenderingWindowManager::DoSetParentOnChild(HWND parent) {
     auto it = info_.find(parent);
     if (it == info_.end())
       return;
-    if (!it->second)
+
+    EmeddingInfo& info = it->second;
+
+    DCHECK(!info.call_set_parent);
+    info.call_set_parent = true;
+
+    // Call SetParent() later if child isn't known yet.
+    if (!info.child)
       return;
-    child = it->second;
+
+    child = info.child;
   }
 
   ::SetParent(child, parent);
@@ -61,7 +80,7 @@ bool RenderingWindowManager::HasValidChildWindow(HWND parent) {
   auto it = info_.find(parent);
   if (it == info_.end())
     return false;
-  return !!it->second && ::IsWindow(it->second);
+  return !!it->second.child && ::IsWindow(it->second.child);
 }
 
 RenderingWindowManager::RenderingWindowManager() {}
