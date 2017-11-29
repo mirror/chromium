@@ -166,6 +166,30 @@
       "revId": "b2275545c639d2143edecc7986054342774008ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed714819_d9f7de18",
+        "filename": "components/arc/arc_bridge_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-29T14:54:45Z",
+      "side": 1,
+      "message": "I tried this again and currently base::debug::StackTrace().Print() acts as a no-op. (I think it used to be unsymbolized stack).",
+      "parentUuid": "10cea11a_666bf6f1",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
