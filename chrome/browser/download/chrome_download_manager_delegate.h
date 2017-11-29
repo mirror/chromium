@@ -186,6 +186,10 @@ class ChromeDownloadManagerDelegate
       bool storage_permission_granted,
       bool allow);
 
+  // Run after in-progress cache is initialized to notify observers that the
+  // in-progress cache is initialized.
+  void OnInProgressCacheInitialized();
+
   Profile* profile_;
 
   std::unique_ptr<download::InProgressCache> download_metadata_cache_;
