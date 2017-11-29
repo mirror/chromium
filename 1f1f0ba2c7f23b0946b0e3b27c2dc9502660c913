@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47b3bc1e_924977f2",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-29T00:15:42Z",
+      "side": 1,
+      "message": "That\u0027s my bad, thanks for pointing out o/",
+      "parentUuid": "6aaa9ac5_5849ba37",
+      "revId": "1f1f0ba2c7f23b0946b0e3b27c2dc9502660c913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38b20795_79287bbe",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "1f1f0ba2c7f23b0946b0e3b27c2dc9502660c913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2da19ea_7c368460",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-29T00:15:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38b20795_79287bbe",
+      "revId": "1f1f0ba2c7f23b0946b0e3b27c2dc9502660c913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "1f1f0ba2c7f23b0946b0e3b27c2dc9502660c913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9610567_5cf6eaef",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-29T00:15:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09b8d0c0_71b6ea25",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 10
+      },
+      "revId": "1f1f0ba2c7f23b0946b0e3b27c2dc9502660c913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
