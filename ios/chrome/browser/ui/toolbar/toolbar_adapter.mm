@@ -64,7 +64,7 @@
 }
 
 - (void)showPrerenderingAnimation {
-  return;
+  [self.toolbarCoordinator showPrerenderingAnimation];
 }
 
 - (void)currentPageLoadStarted {
