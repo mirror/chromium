@@ -52,9 +52,18 @@ struct MEDIA_EXPORT AudioDeviceDescription {
   // Returns the localized name of the generic "default" device.
   static std::string GetDefaultDeviceName();
 
+  // Returns a localized version of name of the generic "default" device that
+  // includes the given |real_device_name|.
+  static std::string GetDefaultDeviceName(const std::string& real_device_name);
+
   // Returns the localized name of the generic default communications device.
   // This device is not supported on all platforms.
   static std::string GetCommunicationsDeviceName();
+
+  // Returns a localized version of name of the generic communications device
+  // that includes the given |real_device_name|.
+  static std::string GetCommunicationsDeviceName(
+      const std::string& real_device_name);
 
   AudioDeviceDescription(const AudioDeviceDescription& other) = default;
   AudioDeviceDescription(const std::string& device_name,
