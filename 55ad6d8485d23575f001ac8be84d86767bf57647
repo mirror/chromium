@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59d6fdea_e09e13a9",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T21:13:14Z",
+      "side": 1,
+      "message": "DISALLOW... (same comment in other files).",
+      "range": {
+        "startLine": 917,
+        "startChar": 0,
+        "endLine": 917,
+        "endChar": 2
+      },
+      "revId": "55ad6d8485d23575f001ac8be84d86767bf57647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
