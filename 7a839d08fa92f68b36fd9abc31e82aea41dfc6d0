@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d7003452_f605f935",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-29T20:56:07Z",
+      "side": 1,
+      "message": "If there are multiple sessions, then we might just report the first or last value (if we don\u0027t report them all).",
+      "parentUuid": "8fd3103d_8f031387",
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6eb4633_a91e2729",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39db6410_6aef61fc",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-29T20:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "882f07fc_d633debc",
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -166,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "cd08f1b1_a58314c8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 92697,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-29T20:56:07Z",
+      "side": 1,
+      "message": "I can\u0027t think of a better way to phrase this, so I guess I\u0027ll just leave it. Suggestions welcome.",
+      "parentUuid": "a333093a_98f6585f",
+      "range": {
+        "startLine": 92697,
+        "startChar": 43,
+        "endLine": 92697,
+        "endChar": 50
+      },
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cf9f19e_dbbba386",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -198,6 +258,24 @@
       "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b18bf2_8ab96cd7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 92710,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-29T20:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11d63aad_78ab9157",
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
