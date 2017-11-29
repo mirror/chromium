@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5d63a1f_80f0dff3",
+        "filename": "ui/base/cocoa/bubble_closer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T23:00:12Z",
+      "side": 1,
+      "message": "\u003e aside: I thought it might be nice if there were a cross-platform solution that would also close for clicks outside Win/Linux/CrOS bubbles that don\u0027t activate (that has come up a few times lately). I\u0027d suggest PointerWatcher, but that\u0027s aura-specific and only works on the basis of mus WindowTreeClients... haha I\u0027ve been in mus+ash land too long. I guess we need this class!\n\nYah - I first tried exploring a solution with views::EventMonitor, which could redirect clicks to the bubble, but there\u0027s a lot of mac-specific logic in the .mm with window levels and things. There\u0027s also some logic in ui/views/controls/menu/menu_controller.cc (using Widget::SetCapture), but that has huge chunks of #if (OS_WIN) and (OS_AURA), and a disjoint set of use-cases (submenus, no child dialogs). So, I ended up with this.",
+      "parentUuid": "e74fe08b_259b1c87",
+      "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41a704cd_259af66a",
         "filename": "ui/base/cocoa/bubble_closer.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6742134f_cf75e4d7",
+        "filename": "ui/base/cocoa/bubble_closer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T23:00:12Z",
+      "side": 1,
+      "message": "\u003e Shouldn\u0027t there always be an event_tap_ ?\n\nwhoops - yes. (this was from an earlier dead-end where I tried to use OnceCallbacks..). Done.",
+      "parentUuid": "41a704cd_259af66a",
+      "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "48c3683d_4d61f807",
+        "filename": "ui/base/cocoa/bubble_closer_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T23:00:12Z",
+      "side": 1,
+      "message": "\u003e Maybe just write this as a lambda?\n\nDone.",
+      "parentUuid": "d3b6b14a_e32e21f0",
+      "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfb6aa19_feee0d91",
         "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-29T21:48:26Z",
       "side": 1,
       "message": "Should this only happen if close_on_deactivate() is true?",
+      "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916ae6a3_9f305610",
+        "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T23:00:12Z",
+      "side": 1,
+      "message": "\u003e Should this only happen if close_on_deactivate() is true?\n\nI considered that - the concern was that client code could activate their widget, then call set_close_on_deactivate(true) (after having it false). Unlikely I suppose, since that is default. But that thinking led me towards either this approach, or updating to SetCloseOnDeactivate(..) and adding logic there as well - but that seemed more complex.\n\nAlso, a more likely use case (particularly in tests..) would be that \nset_close_on_deactivate(false) was called after activation. Which would mean we couldn\u0027t rely _only_ on checking close_on_deactivate() here (i.e. we\u0027d need the check in OnDeactivate regardless, so better to have that check just in one place).",
+      "parentUuid": "bfb6aa19_feee0d91",
       "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
