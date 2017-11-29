@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0f0be3f4_ac16d0dc",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 3472,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T21:56:06Z",
+      "side": 1,
+      "message": "Wild!  I\u0027ve never seen MessageFormatter before - that\u0027s super nifty.\n\nDone, but note that number of ratings had to be {1, plural, \u003d1{one user}other {# users}, because I don\u0027t think that number, integer + options is allowed by the syntax.  Also, went with {0, number, 0.0} for average rating rather than {0, number, #.#} so that we always specify a decimal place (i.e., 1.0 rather than 1).",
+      "parentUuid": "a954a7de_69fc04c3",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd63b570_7d9d9ba5",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 5
@@ -50,6 +68,24 @@
       "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf25c6f1_1fdf0ce0",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd63b570_7d9d9ba5",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "d40ca4e4_a3fb8fe0",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af7cf7f4_6ddfb9cc",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05d2c32a_bff335b6",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 5
@@ -84,6 +138,24 @@
       "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d234dca_39bf02eb",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05d2c32a_bff335b6",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "f0d79d63_b1b2b505",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2100411a_8fc629ab",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59d28ab7_7a372d17",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
         "patchSetId": 5
@@ -118,6 +208,24 @@
       "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4feddae9_57ed8a90",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d28ab7_7a372d17",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "74e12ed1_2d95ca0c",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T21:56:06Z",
+      "side": 1,
+      "message": "See comment below.",
+      "parentUuid": "f5391e7d_7cfa63ce",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58562541_521bcaa4",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
         "patchSetId": 5
@@ -149,6 +275,24 @@
       "writtenOn": "2017-11-28T00:55:47Z",
       "side": 1,
       "message": "I\u0027d try to structure these so that a failure creates a log with all the info about what failed. (and I don\u0027t usually bother fetching the strings from the resource bundle -- what the test is testing is often clearer if we just assume US-english). E.g.\n\nEXPECT_EQ(\"Rated 3.3 by 400 users.\", TestRatingsSectionA11y(400, 3.3333));\nEXPECT_EQ(\"Rated 1.0 by 1 user.\", TestRatingsSectionA11y(1, 1.0));\nEXPECT_EQ(\"Not yet rated by any users.\", TestRatingsSectionA11y(0, 0.0));",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928d7505_6b6c0857",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T21:56:06Z",
+      "side": 1,
+      "message": "Hmm... I totally understand the motivation here, but I\u0027m not sure I agree with returning the string, for a couple reasons.  For one, it seems very arbitrary to return a single value from a method that performs numerous EXPECTs - what if an assertion about the role failed?  For another, I\u0027d disagree that we don\u0027t have all the context we need about what failed.  If we compare a string to another string and they don\u0027t match, we get a warning about \"expected \u0027foo\u0027, but found \u0027bar\u0027\".  Since all the strings we test are unique, that seems pretty definitive?\n\nWe also, in this patch set, only had a single dialog per test, which meant that there would only be a single string assertion.  I\u0027ve restructured the test to put all the cases in a single test, and to avoid any confusion, have added a SCOPED_TRACE with the information about the prompt we\u0027re showing.\n\nTake a look, and lemme know what you think - or if I totally missed your point. :)\n\nRe getting the string from the resource bundle, ack, now just using the en-US version.",
+      "parentUuid": "58562541_521bcaa4",
       "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
