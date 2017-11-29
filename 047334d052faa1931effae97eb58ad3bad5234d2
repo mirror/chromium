@@ -723,6 +723,30 @@
     },
     {
       "key": {
+        "uuid": "5c6174d3_f3c28407",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-29T04:33:04Z",
+      "side": 1,
+      "message": "Sorry for not having updated this last message last night, my bad.\nThe proposed fix has since been adjusted, and the current state is:\n\n* The proposed fix should be completely independent of Drive being online now (though some changes may be pending, could you please jump in on the discussion on PS 15? The one about the position of the cancel logic).\n* I have raised the issue of checking Drive quota before starting the import to UX to see what they say should happen in the case of no internet connection is present and will adjust the code based on their input.",
+      "parentUuid": "bb12a803_b0de5d7d",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 69
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59b50ba7_f2f00b7c",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
