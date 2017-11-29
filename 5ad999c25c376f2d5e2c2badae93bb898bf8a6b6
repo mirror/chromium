@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74a5e6b7_6123a25f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T04:19:58Z",
+      "side": 1,
+      "message": "RegisterOptions -\u003e RegistrationOptions",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e632e63_2e7e9c29",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T04:19:58Z",
+      "side": 1,
+      "message": "You can remove lines 9-17 since it\u0027s the same as the previous patch crrev.com/f47e86d3b1166586f5e2cae7",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d61703_4c286dc2",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T04:19:58Z",
+      "side": 1,
+      "message": "In the future I\u0027d encourage you to change these `new`s to `base::MakeRefCounted` when editing code that\u0027s not yet using it, but you don\u0027t have to fix them all in this patch.",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032fd9fc_979279d5",
+        "filename": "content/browser/service_worker/service_worker_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T04:19:58Z",
+      "side": 1,
+      "message": "This whole block 408-424 is pretty long.\n\nCan we rewrite like this\n\n{\n  blink::mojom::ServiceWorkerRegistrationOptions options;\n  ptions.scope \u003d origin1_p1;\n  context()-\u003eRegisterServiceWorker(\n        GURL(\"http://www.example.com/service_worker.js\"), options1_p1, nullptr,\n        MakeRegisteredCallback(\u0026called, \u0026registration_id1));\n  ASSERT_FALSE(called);\n  base::RunLoop().RunUntilIdle();\n  ASSERT_TRUE(called);\n}\n\nThis way we don\u0027t need to introduce all the new options variables.\n\nOtherwise we could eliminate origin1_p1 etc and just call them blink::mojom::ServiceWorkerRegistrationOptions origin1_p1;\norigin1_p1.scope \u003d GURL(\"http://...\")\n\n (keeping the \"origin\" naming to make clear the relationship between them)",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b231064_cb1eb1c7",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T04:19:58Z",
+      "side": 1,
+      "message": "options_to_pass is a bit more natural to me than \"simplified\", as we\u0027re not simplifying all the options and are just creating the options to pass.",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f242c9a_e271d6bc",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T04:19:58Z",
+      "side": 1,
+      "message": "Since this is taking a pattern and a update_via_cache, can you change it to accept a ServiceWorkerRegistrationOptions instead? This will also eliminate the default parameter which is generally discouraged.",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83620cab_a04d8042",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T04:19:58Z",
+      "side": 1,
+      "message": "I see this patch used this pattern a lot, but could we just eliminate pattern1 and pattern2 instead:\n \nblink::mojom::ServiceWorkerRegistrationOptions options1;\noptions1.scope \u003d GURL(\"...\");\nblink::mojom::ServiceWorkerRegistrationOptions options2;\noptions2.scope \u003d GURL(\"...\");\n\nThen refer to options1.scope instead of pattern1.\n\n(I\u0027d generally prefer this instead of keeping both \"pattern\" and \"options\" variables, but it\u0027s OK to keep the others. This one caught my eye because the comma separated declarations aren\u0027t so common.)",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb56ee96_5dc665e2",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T04:19:58Z",
+      "side": 1,
+      "message": "This can just say (script_url, options) now that scope and update_via_cache were folded into options.",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7544a864_63678def",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T04:19:58Z",
+      "side": 1,
+      "message": "Can this just take RegistrationOptions instead of both pattern and update_via_cache?",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de5c126_9a08486f",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T04:19:58Z",
+      "side": 1,
+      "message": "As mentioned in a previous patchset, I would just remove this TODO.",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

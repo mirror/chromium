@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f58ebaa_f54944c2",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T04:19:58Z",
+      "side": 1,
+      "message": "We don\u0027t usually need TODOs for missing members like this. The bug is already filed and the TODO isn\u0027t really needed to guide the implementation. I prefer to just remove this TODO.",
+      "revId": "f82be16ff9d73888c3e4af96f67c10848cb0e4c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
