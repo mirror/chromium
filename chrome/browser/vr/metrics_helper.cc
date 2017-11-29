@@ -20,6 +20,8 @@ static constexpr char kLatencyVrBrowsing[] =
     "VR.AssetsComponent.ReadyLatency.OnEnter.VRBrowsing";
 static constexpr char kLatencyWebVr[] =
     "VR.AssetsComponent.ReadyLatency.OnEnter.WebVR";
+constexpr char kLatencyLaunchBrowser[] =
+    "VR.AssetsComponent.ReadyLatency.OnLaunchBrowser";
 static const auto kMinLatency = base::TimeDelta::FromMilliseconds(500);
 static const auto kMaxLatency = base::TimeDelta::FromHours(1);
 static constexpr size_t kLatencyBucketCount = 100;
@@ -86,6 +88,15 @@ void MetricsHelper::OnComponentReady() {
   auto now = base::Time::Now();
   LogLatencyIfWaited(Mode::kVrBrowsing, now);
   LogLatencyIfWaited(Mode::kWebVr, now);
+
+  if (logged_ready_latency_on_launch_browser_) {
+    return;
+  }
+  DCHECK(launch_browser_time_);
+  auto ready_latency = now - *launch_browser_time_;
+  UMA_HISTOGRAM_CUSTOM_TIMES(kLatencyLaunchBrowser, ready_latency, kMinLatency,
+                             kMaxLatency, kLatencyBucketCount);
+  logged_ready_latency_on_launch_browser_ = true;
 }
 
 void MetricsHelper::OnEnter(Mode mode) {
@@ -102,6 +113,12 @@ void MetricsHelper::OnEnter(Mode mode) {
   if (!component_ready_) {
     enter_time = base::Time::Now();
   }
+}
+
+void MetricsHelper::OnLaunchedBrowser() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(!launch_browser_time_);
+  launch_browser_time_ = base::Time::Now();
 }
 
 base::Optional<base::Time>& MetricsHelper::GetEnterTime(Mode mode) {

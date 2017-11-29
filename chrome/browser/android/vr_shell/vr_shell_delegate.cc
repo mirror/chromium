@@ -12,6 +12,8 @@
 #include "chrome/browser/android/vr_shell/vr_shell.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/component_updater/vr_assets_component_installer.h"
+#include "chrome/browser/vr/assets.h"
+#include "chrome/browser/vr/metrics_helper.h"
 #include "chrome/browser/vr/service/vr_device_manager.h"
 #include "chrome/browser/vr/service/vr_service_impl.h"
 #include "content/public/browser/webvr_service_provider.h"
@@ -275,6 +277,7 @@ static void JNI_VrShellDelegate_OnLibraryAvailable(
     const JavaParamRef<jclass>& clazz) {
   device::GvrDelegateProviderFactory::Install(
       new VrShellDelegateProviderFactory);
+  vr::Assets::GetInstance()->GetMetricsHelper()->OnLaunchedBrowser();
 }
 
 static void JNI_VrShellDelegate_RegisterVrAssetsComponent(

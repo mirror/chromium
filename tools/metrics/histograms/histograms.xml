@@ -92834,6 +92834,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="VR.AssetsComponent.ReadyLatency.OnLaunchBrowser" units="ms">
+  <owner>tiborg@chromium.org</owner>
+  <summary>
+    Duration from starting Chrome until VR assets component is ready to use.
+  </summary>
+</histogram>
+
 <histogram base="true" name="VR.AssetsComponent.Status.OnEnter"
     enum="VRAssetsComponentEnterStatus">
   <owner>tiborg@chromium.org</owner>
