@@ -281,6 +281,30 @@
       "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad389200_c63d343f",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-29T01:32:24Z",
+      "side": 1,
+      "message": "Can you at least make -wasHidden/-wasShown part of the public API for TabSwitcherPanelOverlayView?\nOne question: I see that ObjCCast was used on line 324 previously to cast to TabSwitcherPanelOverlayView. What has changed that it can now be either a TabSwitcherPanelView or TabSwitcherPanelOverlayView?",
+      "parentUuid": "b26fb793_90e4130b",
+      "range": {
+        "startLine": 340,
+        "startChar": 2,
+        "endLine": 341,
+        "endChar": 54
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
