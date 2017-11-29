@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "577afb8a_eebf1839",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "Hrm, how does this work? \nI\u0027d think that it will try to invoke \n|+(void) swizzleSessionWithConfiguration| on |NSURLSession| class, but where is that method added to NSURLSession?",
+      "range": {
+        "startLine": 346,
+        "startChar": 5,
+        "endLine": 346,
+        "endChar": 17
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c9b417_98aa8fc4",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "nit: public class needs comment. Also, consider putting it into \"namespace cronet\".",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0f5249_ea86f38c",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "nit: Can this take \"const NSURLSessionTask*\" as parameter? \nWe don\u0027t need to modify task, do we?",
+      "range": {
+        "startLine": 67,
+        "startChar": 54,
+        "endLine": 67,
+        "endChar": 70
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6bb6958_d19ce771",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "Do this and MetricsForTask have to be static? \nWe have a singleton MetricsDelegate anyway.",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 12
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7875099_1140b91a",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "Could this and above come from iOS TransactionMetrics object that Cronet is substituting?\nWe could populate (some) missing fields later in  didFinishCollectingMetrics when we have object that is created by iOS.",
+      "range": {
+        "startLine": 92,
+        "startChar": 49,
+        "endLine": 92,
+        "endChar": 50
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286027fd_53db42d3",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "It looks like it should be set to \u0027YES\u0027 unless Cronet establishes new connection for this request, in which case it would have meaningful connect_timing info.",
+      "range": {
+        "startLine": 121,
+        "startChar": 5,
+        "endLine": 121,
+        "endChar": 24
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f611b0_4b6cb7cb",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "https://developer.apple.com/documentation/foundation/urlsessiontaskmetrics.resourcefetchtype\nI think we have \u0027was_cached\u0027 flag or somesuch.",
+      "range": {
+        "startLine": 122,
+        "startChar": 25,
+        "endLine": 122,
+        "endChar": 49
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c527a8f_693fce79",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "This methods and one below should be synchronized as they modify |task_metrics_map_| from different threads.",
+      "range": {
+        "startLine": 139,
+        "startChar": 17,
+        "endLine": 139,
+        "endChar": 18
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5f913d_e20fed00",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "nit: I think the swizzle is further down. This is delegate proxy, and it would be useful to have comments on its methods (as to why and what are they doing).",
+      "range": {
+        "startLine": 156,
+        "startChar": 13,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c3aaec_bcce6dff",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "I think this comment is intended for else {} block, so it should move there.",
+      "range": {
+        "startLine": 197,
+        "startChar": 15,
+        "endLine": 197,
+        "endChar": 16
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d4b27a_80fa92ec",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "Thanks for the comment!",
+      "range": {
+        "startLine": 231,
+        "startChar": 21,
+        "endLine": 231,
+        "endChar": 27
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d78a1edd_1d05f2b0",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "For NotQuic test it would be interesting to see how the difference between Cronet and platform metrics. \n\nWhat timing info is populated for first / subsequent request in both cases?",
+      "range": {
+        "startLine": 142,
+        "startChar": 26,
+        "endLine": 142,
+        "endChar": 43
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab50df74_75acf523",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "I think we base it on the alternative protocol that is negotiated. \nIn case of not-quic it may be not set. See https://cs.chromium.org/chromium/src/components/cronet/android/api/src/org/chromium/net/UrlResponseInfo.java?rcl\u003de01bcb5c471f31277d081f010df12e5d7b09fc19\u0026l\u003d92\n\nShould we default to \"http/1.1\" to match platform?",
+      "range": {
+        "startLine": 167,
+        "startChar": 7,
+        "endLine": 167,
+        "endChar": 10
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d116199_684595b8",
+        "filename": "components/cronet/ios/test/test_server.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "nit: I think Urls are expected to be case-insensitive. \nMaybe use the same pattern as EchoResponseBody() and others for consistency?",
+      "range": {
+        "startLine": 122,
+        "startChar": 30,
+        "endLine": 122,
+        "endChar": 41
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26494e98_50ca7e73",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "nit: I think this could be inner class of MetricsDelegate.",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 14
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c526df_b7bc2650",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "Add \n#include \"base/macros.h\"\n...\n\n private: \n  DISALLOW_COPY_AND_ASSIGN(Metrics);",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 18
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc18f32a_533c052d",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "Per previous discussion - is constructor with NSURLSessionTask sufficient, or do we need to keep one with NSURLRequest as well?",
+      "range": {
+        "startLine": 149,
+        "startChar": 26,
+        "endLine": 149,
+        "endChar": 42
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4706ae9f_8faefbb5",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "Can we call GetLoadTimingInfo with \u0026metrics-\u003eload_timing_info below to avoid temporary allocation on the stack and extra copy?",
+      "range": {
+        "startLine": 740,
+        "startChar": 18,
+        "endLine": 740,
+        "endChar": 35
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98531873_fb6a6659",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-29T21:36:35Z",
+      "side": 1,
+      "message": "Hrm, I wonder how expensive is copying of the response_info?",
+      "range": {
+        "startLine": 744,
+        "startChar": 57,
+        "endLine": 744,
+        "endChar": 70
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
