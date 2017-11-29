@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "755ae091_42e81764",
+        "filename": "third_party/WebKit/Source/core/frame/Frame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-29T19:33:27Z",
+      "side": 1,
+      "message": "Done, through splitting the recursions into separate functions.",
+      "parentUuid": "642357c8_4f8ff795",
+      "revId": "b32343c9dbcf74bcb9c3d12f11dc7a6f84e56f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "794be77c_fe3ee290",
         "filename": "third_party/WebKit/Source/core/frame/UserActivationState.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "b32343c9dbcf74bcb9c3d12f11dc7a6f84e56f8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3844661_b2cfe5ab",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-29T19:33:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "794be77c_fe3ee290",
+      "revId": "b32343c9dbcf74bcb9c3d12f11dc7a6f84e56f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
