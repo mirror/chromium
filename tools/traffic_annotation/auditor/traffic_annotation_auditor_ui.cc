@@ -2,7 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/process/launch.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -69,6 +71,27 @@ const base::FilePath kDownstreamUpdater =
 const std::string kCodeSearchLink("https://cs.chromium.org/chromium/src/");
 
 }  // namespace
+
+std::string GetGit(base::FilePath& source_path) {
+  base::FilePath original_path;
+  base::GetCurrentDirectory(&original_path);
+  base::SetCurrentDirectory(source_path);
+
+  std::string git_list;
+  const base::CommandLine::CharType* args[] = {"git", "log"};
+  base::CommandLine cmdline(2, args);
+
+  // Get list of files from git.
+  if (!base::GetAppOutput(cmdline, &git_list)) {
+    LOG(ERROR) << "Could not get files from git.";
+    git_list.clear();
+  }
+
+  git_list = git_list.substr(0, 2000);
+
+  base::SetCurrentDirectory(original_path);
+  return git_list;
+}
 
 // Calls |kDownstreamUpdater| script to update files that depend on
 // annotations.xml.
@@ -288,6 +311,8 @@ int wmain(int argc, wchar_t* argv[]) {
 #else
 int main(int argc, char* argv[]) {
 #endif
+  LOG(ERROR) << "STARTING.";
+
   // Parse switches.
   base::CommandLine command_line = base::CommandLine(argc, argv);
   if (command_line.HasSwitch("help") || command_line.HasSwitch("h") ||
@@ -349,9 +374,15 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  LOG(ERROR) << "GETING GIT...";
+  LOG(ERROR) << GetGit(source_path);
+  LOG(ERROR) << "GIT GOT!";
+  return 1;
+
   TrafficAnnotationAuditor auditor(source_path, build_path, tool_path);
 
   // Extract annotations.
+  LOG(ERROR) << "STARTING EXTRACT.";
   if (extractor_input.empty()) {
     if (!auditor.RunClangTool(path_filters, full_run)) {
       LOG(ERROR) << "Failed to run clang tool.";
@@ -375,15 +406,18 @@ int main(int argc, char* argv[]) {
     }
   }
 
+  LOG(ERROR) << "STARTING PROCESS.";
   // Process extractor output.
   if (!auditor.ParseClangToolRawOutput())
     return 1;
 
+  LOG(ERROR) << "STARTING CHECKS.";
   // Perform checks.
   if (!auditor.RunAllChecks()) {
     LOG(ERROR) << "Running checks failed.";
     return 1;
   }
+  LOG(ERROR) << "END OF CHECKS.";
 
   // Write the summary file.
   if (!summary_file.empty() &&
