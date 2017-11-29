@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfb5fc38_8202c7c8",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-29T00:10:57Z",
+      "side": 1,
+      "message": "The crash was because the authenticator mojom implementation doesn\u0027t exist when the webauth feature flag is off. In this case, we could return \"kWebCredentialManagerNotImplementedError\".",
+      "range": {
+        "startLine": 84,
+        "startChar": 35,
+        "endLine": 84,
+        "endChar": 68
+      },
+      "revId": "8dd8718605b0673c737ee4b0344a6d84b7e2fc9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
