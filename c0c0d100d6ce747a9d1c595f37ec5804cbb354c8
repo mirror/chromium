@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "477b478e_5138451a",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-29T17:18:09Z",
+      "side": 0,
+      "message": "Curious why you deleted this? I guess it wasn\u0027t needed because we never access ssl_info_ after OnComplete?",
+      "range": {
+        "startLine": 728,
+        "startChar": 2,
+        "endLine": 728,
+        "endChar": 30
+      },
+      "revId": "c0c0d100d6ce747a9d1c595f37ec5804cbb354c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

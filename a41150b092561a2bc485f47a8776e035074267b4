@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7e1f9183_73e34b9e",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-29T17:18:09Z",
+      "side": 1,
+      "message": "Yeah, I think this is fine as written. |cert_status| will default to 0 and we\u0027ll return on line 39 in the case of a non-valid SSLInfo. Maybe just add a comment to say as much?",
+      "parentUuid": "5adea43b_e3de6f78",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9daf431_1b7d3dd6",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 4

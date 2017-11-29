@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1521ce1_1d2c55b2",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-29T17:18:09Z",
+      "side": 1,
+      "message": "nit: doesn\u0027t really matter but this might clearer as EXPECT_FALSE(handle_-\u003eGetSSLInfo().is_valid());",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 45
+      },
+      "revId": "6e562c3a01dc98f8d4b1dc7828216b5fd814ae86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
