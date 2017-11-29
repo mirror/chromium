@@ -27,6 +27,12 @@ class BASE_EXPORT SingleThreadTaskRunner : public SequencedTaskRunner {
   // A more explicit alias to RunsTasksInCurrentSequence().
   bool BelongsToCurrentThread() const { return RunsTasksInCurrentSequence(); }
 
+  // A helper method to save metadata from ThreadTaskRunnerHandle::Get.
+  // Subclasses might return a new SingleThreadTaskRunner object containing
+  // the captured metadata. Returns the same object by default.
+  virtual scoped_refptr<SingleThreadTaskRunner> Clone(
+      const Location& from_here);
+
  protected:
   ~SingleThreadTaskRunner() override {}
 };

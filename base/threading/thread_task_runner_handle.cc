@@ -33,6 +33,13 @@ scoped_refptr<SingleThreadTaskRunner> ThreadTaskRunnerHandle::Get() {
 }
 
 // static
+scoped_refptr<SingleThreadTaskRunner> ThreadTaskRunnerHandle::Get(
+    const Location& from_here) {
+  scoped_refptr<SingleThreadTaskRunner> task_runner = Get();
+  return task_runner ? task_runner->Clone(from_here) : nullptr;
+}
+
+// static
 bool ThreadTaskRunnerHandle::IsSet() {
   return !!thread_task_runner_tls.Pointer()->Get();
 }

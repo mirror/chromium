@@ -61,13 +61,15 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
                base::Location posted_from,
                base::TimeDelta delay = base::TimeDelta(),
                base::Nestable nestable = base::Nestable::kNestable,
-               base::Optional<TaskType> task_type = base::nullopt);
+               base::Optional<TaskType> task_type = base::nullopt,
+               base::Optional<base::Location> location = base::nullopt);
 
     base::OnceClosure callback;
     base::Location posted_from;
     base::TimeDelta delay;
     base::Nestable nestable;
     base::Optional<TaskType> task_type;
+    base::Optional<base::Location> location;
   };
 
   // Unregisters the task queue after which no tasks posted to it will run and
@@ -262,6 +264,8 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   bool PostNonNestableDelayedTask(const base::Location& from_here,
                                   base::OnceClosure task,
                                   base::TimeDelta delay) override;
+  scoped_refptr<base::SingleThreadTaskRunner> Clone(
+      const base::Location& from_here) override;
 
   bool PostTaskWithMetadata(PostedTask task);
 
