@@ -46,6 +46,30 @@
       "revId": "166d81dbeda118eb4c874b98de1a190b940f1361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68971dc_f82a8503",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-11-29T12:35:39Z",
+      "side": 1,
+      "message": "All I was suggesting is that if we don\u0027t know the particular alignment of the 2, 4, or 8 byte chunks we\u0027re loading in the other methods below, we need to make sure we\u0027re using unaligned (i.e. 1-byte aligned) load methods.  Those would be the ones ending in _u8, the ones taking a const uint8_t* argument.  For instance, all the vld1_*() methods load 8 bytes (a single d-register), but vld1_u8() loads with no alignment requirement, vld1_u16() with 2 byte, vld1_u32() with 4, vld1_u64() with 8.\n\nmemcpy() can\u0027t make any assumptions about the alignment of its src and dst buffers, and I believe __builtin_memcpy() won\u0027t do that as long as we pass it void*, char*, uint8_t*, etc.  I would expect that letting the compiler generate these 16-byte loads and stores is going to end up with single unaligned 16-byte load or store instructions, just as if we\u0027d used vld1q_u8/_mm_loadu_si128 and vst1q_u8/_mm_storeu_si128.\n\nIn our experience, both here patching zlib and elsewhere (like, me in Skia), we\u0027ve found that it\u0027s generally not worth the bother and extra code complexity to align up to 4, 8, or 16 bytes before operating at full width, but rather to just get into it.  If you\u0027re used to thinking in this sort of pattern\n\n   while (not aligned)\n      small step\n   while (big step available)\n      big step\n   while (some left over)\n      small step\n\nwe have found that we can with no speed loss or sometimes speed gain just do\n\n    while (big step available)\n        big step\n    while (some left over)\n        small step",
+      "parentUuid": "a3d91f6f_4c4dd2c4",
+      "range": {
+        "startLine": 61,
+        "startChar": 39,
+        "endLine": 61,
+        "endChar": 54
+      },
+      "revId": "166d81dbeda118eb4c874b98de1a190b940f1361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
