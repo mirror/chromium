@@ -1698,6 +1698,7 @@ test("content_unittests") {
     "//storage/common",
     "//testing/gmock",
     "//testing/gtest",
+    "//third_party/WebKit/common:media_devices",
     "//third_party/WebKit/public:blink",
     "//third_party/icu",
     "//third_party/leveldatabase",
