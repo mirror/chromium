@@ -21,6 +21,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.AppWebMessagePort;
+import org.chromium.content.browser.GestureListenerManagerImpl;
 import org.chromium.content.browser.MediaSessionImpl;
 import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content.browser.framehost.RenderFrameHostDelegate;
@@ -29,6 +30,7 @@ import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
 import org.chromium.content_public.browser.AccessibilitySnapshotNode;
 import org.chromium.content_public.browser.ChildProcessImportance;
 import org.chromium.content_public.browser.ContentBitmapCallback;
+import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.ImageDownloadCallback;
 import org.chromium.content_public.browser.JavaScriptCallback;
 import org.chromium.content_public.browser.MessagePort;
@@ -168,6 +170,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     private static class WebContentsInternalsImpl implements WebContentsInternals {
         public HashSet<Object> retainedObjects;
         public HashMap<String, Pair<Object, Class>> injectedObjects;
+        public GestureListenerManagerImpl gestureListenerManager;
     }
 
     private WebContentsImpl(
@@ -181,7 +184,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
         WebContentsInternalsImpl internals = new WebContentsInternalsImpl();
         internals.retainedObjects = new HashSet<Object>();
         internals.injectedObjects = new HashMap<String, Pair<Object, Class>>();
-
+        internals.gestureListenerManager = new GestureListenerManagerImpl(this);
         mRenderCoordinates = new RenderCoordinates();
         mRenderCoordinates.reset();
 
@@ -266,6 +269,13 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     @Override
     public boolean isDestroyed() {
         return mNativeWebContentsAndroid == 0;
+    }
+
+    @Override
+    public GestureListenerManager getGestureListenerManager() {
+        WebContentsInternals internals = mInternalsHolder.get();
+        if (internals == null) return null;
+        return ((WebContentsInternalsImpl) internals).gestureListenerManager;
     }
 
     @Override

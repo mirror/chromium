@@ -18,12 +18,12 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
 import org.chromium.chrome.browser.util.MathUtils;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.GestureStateListener;
+import org.chromium.content_public.browser.WebContents;
 
 /**
  * View that slides up from the bottom of the page and slides away as the user scrolls the page.
- * Meant to be tacked onto the {@link org.chromium.content.browser.ContentViewCore}'s view and
+ * Meant to be tacked onto the {@link org.chromium.content_public.browser.WebContents}'s view and
  * alerted when either the page scroll position or viewport size changes.
  *
  * GENERAL BEHAVIOR
@@ -47,7 +47,7 @@ public abstract class SwipableOverlayView extends FrameLayout {
 
     private static final long ANIMATION_DURATION_MS = 250;
 
-    /** Detects when the user is dragging the ContentViewCore. */
+    /** Detects when the user is dragging the WebContents. */
     private final GestureStateListener mGestureStateListener;
 
     /** Listens for changes in the layout. */
@@ -74,8 +74,8 @@ public abstract class SwipableOverlayView extends FrameLayout {
     /** Whether or not the View ever been fully displayed. */
     private boolean mIsBeingDisplayedForFirstTime;
 
-    /** The ContentViewCore to which the overlay is added. */
-    private ContentViewCore mContentViewCore;
+    /** The WebContents to which the overlay is added. */
+    private WebContents mWebContents;
 
     /**
      * Creates a SwipableOverlayView.
@@ -94,24 +94,17 @@ public abstract class SwipableOverlayView extends FrameLayout {
     }
 
     /**
-     * Watches the given ContentViewCore for scrolling changes.
+     * Set the given WebContents for scrolling changes.
      */
-    public void setContentViewCore(ContentViewCore contentViewCore) {
-        if (mContentViewCore != null) {
-            mContentViewCore.removeGestureStateListener(mGestureStateListener);
+    public void setWebContents(WebContents webContents) {
+        if (mWebContents != null) {
+            mWebContents.getGestureListenerManager().removeListener(mGestureStateListener);
         }
 
-        mContentViewCore = contentViewCore;
-        if (mContentViewCore != null) {
-            mContentViewCore.addGestureStateListener(mGestureStateListener);
+        mWebContents = webContents;
+        if (mWebContents != null) {
+            mWebContents.getGestureListenerManager().addListener(mGestureStateListener);
         }
-    }
-
-    /**
-     * @return the ContentViewCore that this View is monitoring.
-     */
-    protected ContentViewCore getContentViewCore() {
-        return mContentViewCore;
     }
 
     protected void addToParentView(ViewGroup parentView) {
@@ -125,7 +118,7 @@ public abstract class SwipableOverlayView extends FrameLayout {
     }
 
     /**
-     * Removes the SwipableOverlayView from its parent and stops monitoring the ContentViewCore.
+     * Removes the SwipableOverlayView from its parent and stops monitoring the WebContents.
      * @return Whether the View was removed from its parent.
      */
     public boolean removeFromParentView() {
@@ -179,9 +172,9 @@ public abstract class SwipableOverlayView extends FrameLayout {
     }
 
     /**
-     * Creates a listener than monitors the ContentViewCore for scrolls and flings.
+     * Creates a listener than monitors the WebContents for scrolls and flings.
      * The listener updates the location of this View to account for the user's gestures.
-     * @return GestureStateListener to send to the ContentViewCore.
+     * @return GestureStateListener to send to the WebContents.
      */
     private GestureStateListener createGestureStateListener() {
         return new GestureStateListener() {

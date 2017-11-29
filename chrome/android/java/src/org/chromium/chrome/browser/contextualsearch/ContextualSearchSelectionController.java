@@ -78,7 +78,7 @@ public class ContextualSearchSelectionController {
     // The duration of the last tap gesture in milliseconds, or 0 if not set.
     private int mTapDurationMs = INVALID_DURATION;
 
-    private class ContextualSearchGestureStateListener extends GestureStateListener {
+    private class ContextualSearchGestureStateListener implements GestureStateListener {
         @Override
         public void onScrollStarted(int scrollOffsetY, int scrollExtentY) {
             mHandler.handleScroll();
