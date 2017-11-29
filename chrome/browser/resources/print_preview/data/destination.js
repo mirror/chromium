@@ -87,6 +87,14 @@ print_preview.DestinationProvisionalType = {
  *         custom_display_name: (string|undefined),
  *         is_default: (boolean|undefined)
  *       }>
+ *     }|undefined),
+ *     dpi: ({
+ *       option: !Array<{
+ *         vendor_id: (string|undefined),
+ *         height_microns: number,
+ *         width_microns: number,
+ *         is_default: (boolean|undefined)
+ *       }>
  *     }|undefined)
  *   }
  * }}

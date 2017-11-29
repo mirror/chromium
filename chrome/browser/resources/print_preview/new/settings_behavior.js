@@ -30,7 +30,6 @@ const SettingsBehavior = {
    */
   setSetting: function(settingName, value) {
     const setting = this.getSetting(settingName);
-    assert(setting.available, 'Setting is not available: ' + settingName);
     this.set(`settings.${settingName}.value`, value);
   },
 
@@ -40,7 +39,8 @@ const SettingsBehavior = {
    */
   setSettingValid: function(settingName, valid) {
     const setting = this.getSetting(settingName);
-    assert(setting.available, 'Setting is not available: ' + settingName);
+    if (!valid)
+      assert(setting.available, 'Setting is not available: ' + settingName);
     this.set(`settings.${settingName}.valid`, valid);
   }
 };
