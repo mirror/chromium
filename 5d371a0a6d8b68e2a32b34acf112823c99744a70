@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2b3c453_f1b59317",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-29T09:08:02Z",
+      "side": 1,
+      "message": "I don\u0027t fully understand this comment. Would you elaborate?",
+      "revId": "5d371a0a6d8b68e2a32b34acf112823c99744a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9afdf76_5e9f541d",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-29T09:08:02Z",
+      "side": 0,
+      "message": "Why can you remove this branch?",
+      "revId": "b2dddf21ab7194245aec3888663abe04ad73b12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bc140e_f6d8ad09",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-29T09:08:02Z",
+      "side": 0,
+      "message": "Why can you remove the branch?",
+      "revId": "b2dddf21ab7194245aec3888663abe04ad73b12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4086794f_07584568",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-29T09:08:02Z",
+      "side": 0,
+      "message": "Ditto.",
+      "revId": "b2dddf21ab7194245aec3888663abe04ad73b12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
