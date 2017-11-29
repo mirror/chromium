@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc74e430_4b2f8bc5",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-11-29T22:08:46Z",
+      "side": 1,
+      "message": "super optional nit: dunno if y\u0027all started adopting more curlies or whatever, but in theory this is simple enough to omit them",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "6a3bd2dc6527dff479f4e7775a08542723215a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
