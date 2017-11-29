@@ -359,9 +359,11 @@ bool LayoutBlockFlow::CheckIfIsSelfCollapsingBlock() const {
   // text control are known, so they don't get layout until their parent has had
   // layout - this is unique in the layout tree and means when we call
   // isSelfCollapsingBlock on them we find that they still need layout.
-  DCHECK(!NeedsLayout() || (GetNode() && GetNode()->IsElementNode() &&
-                            ToElement(GetNode())->ShadowPseudoId() ==
-                                "-webkit-input-placeholder"));
+  if (NeedsLayout()) {
+    DCHECK_EQ(ToElement(GetNode())->ShadowPseudoId(),
+              "-webkit-input-placeholder")
+        << GetNode();
+  }
 
   if (LogicalHeight() > LayoutUnit() || BorderAndPaddingLogicalHeight() ||
       Style()->LogicalMinHeight().IsPositive() ||
