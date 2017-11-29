@@ -48,7 +48,7 @@ class EmptyClassTakingPolicy : public bpf_dsl::Policy {
     BPF_ASSERT(fourty_two);
     BPF_ASSERT(FourtyTwo::kMagicValue == fourty_two->value());
   }
-  ~EmptyClassTakingPolicy() override {}
+  ~EmptyClassTakingPolicy() override = default;
 
   ResultExpr EvaluateSyscall(int sysno) const override {
     DCHECK(SandboxBPF::IsValidSyscallNumber(sysno));
@@ -111,8 +111,8 @@ class EnosysPtracePolicy : public bpf_dsl::Policy {
 
 class BasicBPFTesterDelegate : public BPFTesterDelegate {
  public:
-  BasicBPFTesterDelegate() {}
-  ~BasicBPFTesterDelegate() override {}
+  BasicBPFTesterDelegate() = default;
+  ~BasicBPFTesterDelegate() override = default;
 
   std::unique_ptr<bpf_dsl::Policy> GetSandboxBPFPolicy() override {
     return std::unique_ptr<bpf_dsl::Policy>(new EnosysPtracePolicy());

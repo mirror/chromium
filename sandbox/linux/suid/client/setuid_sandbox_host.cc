@@ -107,8 +107,7 @@ SetuidSandboxHost::SetuidSandboxHost(std::unique_ptr<base::Environment> env)
   DCHECK(env_);
 }
 
-SetuidSandboxHost::~SetuidSandboxHost() {
-}
+SetuidSandboxHost::~SetuidSandboxHost() = default;
 
 // Check if CHROME_DEVEL_SANDBOX is set but empty. This currently disables
 // the setuid sandbox. TODO(jln): fix this (crbug.com/245376).

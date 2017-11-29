@@ -46,8 +46,8 @@ using sandbox::bpf_dsl::ResultExpr;
 
 class RestrictClockIdPolicy : public bpf_dsl::Policy {
  public:
-  RestrictClockIdPolicy() {}
-  ~RestrictClockIdPolicy() override {}
+  RestrictClockIdPolicy() = default;
+  ~RestrictClockIdPolicy() override = default;
 
   ResultExpr EvaluateSyscall(int sysno) const override {
     switch (sysno) {
@@ -114,8 +114,8 @@ BPF_DEATH_TEST_C(ParameterRestrictions,
 
 class RestrictSchedPolicy : public bpf_dsl::Policy {
  public:
-  RestrictSchedPolicy() {}
-  ~RestrictSchedPolicy() override {}
+  RestrictSchedPolicy() = default;
+  ~RestrictSchedPolicy() override = default;
 
   ResultExpr EvaluateSyscall(int sysno) const override {
     switch (sysno) {
@@ -182,8 +182,8 @@ BPF_DEATH_TEST_C(ParameterRestrictions,
 
 class RestrictPrlimit64Policy : public bpf_dsl::Policy {
  public:
-  RestrictPrlimit64Policy() {}
-  ~RestrictPrlimit64Policy() override {}
+  RestrictPrlimit64Policy() = default;
+  ~RestrictPrlimit64Policy() override = default;
 
   ResultExpr EvaluateSyscall(int sysno) const override {
     switch (sysno) {
@@ -211,8 +211,8 @@ BPF_DEATH_TEST_C(ParameterRestrictions,
 
 class RestrictGetrusagePolicy : public bpf_dsl::Policy {
  public:
-  RestrictGetrusagePolicy() {}
-  ~RestrictGetrusagePolicy() override {}
+  RestrictGetrusagePolicy() = default;
+  ~RestrictGetrusagePolicy() override = default;
 
   ResultExpr EvaluateSyscall(int sysno) const override {
     switch (sysno) {

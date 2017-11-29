@@ -74,8 +74,7 @@ SetuidSandboxClient::SetuidSandboxClient(std::unique_ptr<base::Environment> env)
   DCHECK(env_);
 }
 
-SetuidSandboxClient::~SetuidSandboxClient() {
-}
+SetuidSandboxClient::~SetuidSandboxClient() = default;
 
 void SetuidSandboxClient::CloseDummyFile() {
   // When we're launched through the setuid sandbox, SetupLaunchOptions
