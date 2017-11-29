@@ -71,6 +71,8 @@ class ChromeAutofillClientIOS : public AutofillClientIOS {
   void DidInteractWithNonsecureCreditCardInput() override;
 
  private:
+  // Never null and outlives this object.
+  ios::ChromeBrowserState* browser_state_;
   infobars::InfoBarManager* infobar_manager_;
   password_manager::PasswordGenerationManager* password_generation_manager_;
   std::unique_ptr<IdentityProvider> identity_provider_;

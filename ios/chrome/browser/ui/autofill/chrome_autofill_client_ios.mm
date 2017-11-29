@@ -21,6 +21,7 @@
 #include "components/prefs/pref_service.h"
 #include "google_apis/gaia/identity_provider.h"
 #include "ios/chrome/browser/application_context.h"
+#include "ios/chrome/browser/autofill/address_normalizer_factory.h"
 #include "ios/chrome/browser/autofill/personal_data_manager_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/infobars/infobar_utils.h"
@@ -53,6 +54,7 @@ ChromeAutofillClientIOS::ChromeAutofillClientIOS(
           ios::WebDataServiceFactory::GetAutofillWebDataForBrowserState(
               browser_state,
               ServiceAccessType::EXPLICIT_ACCESS)),
+      browser_state_(browser_state),
       infobar_manager_(infobar_manager),
       password_generation_manager_(password_generation_manager),
       unmask_controller_(browser_state->GetPrefs(),
@@ -65,8 +67,7 @@ ukm::UkmRecorder* ChromeAutofillClientIOS::GetUkmRecorder() {
 }
 
 AddressNormalizer* ChromeAutofillClientIOS::GetAddressNormalizer() {
-  // TODO(crbug.com/788229): Supply an AddressNormalizer instance.
-  return nullptr;
+  return autofill::AddressNormalizerFactory::GetForBrowserState(browser_state_);
 }
 
 void ChromeAutofillClientIOS::ShowUnmaskPrompt(
