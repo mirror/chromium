@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22e5ba43_30439e81",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-29T07:28:14Z",
+      "side": 1,
+      "message": "Wow, that\u0027s much better, thanks!",
+      "parentUuid": "e22375b4_aec21b3d",
+      "revId": "69420e5a930a65f8193b14b0dbaf8abaa9751139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c1eade7_fa02149b",
         "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "69420e5a930a65f8193b14b0dbaf8abaa9751139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3e29e9_7b23da7e",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-29T07:28:14Z",
+      "side": 1,
+      "message": "It\u0027s because std::set\u003c\u003e::iterator is actually a const iterator. In this case we can use (and that means extracting out the callback) the callback safely since we don\u0027t modify id and expiration time.",
+      "parentUuid": "5c1eade7_fa02149b",
+      "revId": "69420e5a930a65f8193b14b0dbaf8abaa9751139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d2e08165_9de397de",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-29T07:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08399150_f31999d0",
+      "revId": "69420e5a930a65f8193b14b0dbaf8abaa9751139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "544248da_23976255",
         "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "69420e5a930a65f8193b14b0dbaf8abaa9751139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f0bb9d_b04dfb21",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-29T07:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "544248da_23976255",
+      "revId": "69420e5a930a65f8193b14b0dbaf8abaa9751139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
