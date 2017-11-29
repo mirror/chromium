@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43ca8001_bca52431",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-29T06:02:03Z",
+      "side": 1,
+      "message": "Your",
+      "range": {
+        "startLine": 636,
+        "startChar": 4,
+        "endLine": 636,
+        "endChar": 10
+      },
+      "revId": "01f8dbffa3e7dd38f80174e3bf2fb050910db62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee1a92b_7bc62526",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-29T06:02:03Z",
+      "side": 1,
+      "message": "This should be a single space.",
+      "range": {
+        "startLine": 636,
+        "startChar": 60,
+        "endLine": 636,
+        "endChar": 62
+      },
+      "revId": "01f8dbffa3e7dd38f80174e3bf2fb050910db62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f92fa2_6a552d2d",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-29T06:02:03Z",
+      "side": 1,
+      "message": "Is this message from UX?\nI think we should use consistent terms (e.g. \"drive quota\" should be \"Google Drive quota\" to be consistent).",
+      "range": {
+        "startLine": 641,
+        "startChar": 4,
+        "endLine": 641,
+        "endChar": 36
+      },
+      "revId": "01f8dbffa3e7dd38f80174e3bf2fb050910db62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2650890_29c1f484",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-29T06:02:03Z",
+      "side": 1,
+      "message": "Is it intentional that it is not \"Not enough space available in local storage.\" which is used in the message above?",
+      "range": {
+        "startLine": 651,
+        "startChar": 4,
+        "endLine": 651,
+        "endChar": 45
+      },
+      "revId": "01f8dbffa3e7dd38f80174e3bf2fb050910db62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
