@@ -680,10 +680,10 @@ inline bool ComputeFloatOffsetForFloatLayoutAdapter<
 template <FloatingObject::Type FloatTypeValue>
 LayoutUnit ComputeFloatOffsetForFloatLayoutAdapter<
     FloatTypeValue>::HeightRemaining() const {
-  return this->outermost_float_ ? this->layout_object_->LogicalBottomForFloat(
-                                      *this->outermost_float_) -
-                                      this->line_top_
-                                : LayoutUnit(1);
+  return outermost_float_
+             ? layout_object_->LogicalBottomForFloat(*outermost_float_) -
+                   line_top_
+             : LayoutUnit(1);
 }
 
 template <FloatingObject::Type FloatTypeValue>
