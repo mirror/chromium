@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af37b3d4_0ffca06f",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T21:50:47Z",
+      "side": 1,
+      "message": "UpdateAfterChange already calls OnCaretBoundsChanged(), SchedulePaint(), and NotifyAccessibilityEvent(ui::AX_EVENT_VALUE_CHANGED, true), so remove those extra calls here.",
+      "revId": "eb202e9541e75bee792781ddff1aeeead4ddf858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50ce352_deae826a",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T21:50:47Z",
+      "side": 1,
+      "message": "Please follow the same pattern here.",
+      "revId": "eb202e9541e75bee792781ddff1aeeead4ddf858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
