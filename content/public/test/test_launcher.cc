@@ -597,8 +597,10 @@ int LaunchTests(TestLauncherDelegate* launcher_delegate,
   g_launcher_delegate = launcher_delegate;
 
   base::CommandLine::Init(argc, argv);
-  const base::CommandLine* command_line =
+  base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
+
+  command_line->AppendSwitch(switches::kNoSandbox);
 
   if (command_line->HasSwitch(kHelpFlag)) {
     PrintUsage();
