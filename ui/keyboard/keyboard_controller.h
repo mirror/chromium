@@ -98,6 +98,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   KeyboardUI* ui() { return ui_.get(); }
 
+  // Resets KeyboardUI. If the virtual keyboard is already shown, it will be
+  // hidden. This method is used for reloading IME.
+  void ResetKeyboardUI(std::unique_ptr<KeyboardUI> new_ui);
+
   void set_keyboard_locked(bool lock) { keyboard_locked_ = lock; }
 
   bool keyboard_locked() const { return keyboard_locked_; }
