@@ -217,6 +217,20 @@ bool IsValidState(const base::string16& text) {
          !state_names::GetNameForAbbreviation(text).empty();
 }
 
+bool IsPossiblePhoneNumber(const base::string16& text,
+                           const std::string& country_code) {
+  ::i18n::phonenumbers::PhoneNumber parsed_number;
+  ::i18n::phonenumbers::PhoneNumberUtil* phone_number_util =
+      ::i18n::phonenumbers::PhoneNumberUtil::GetInstance();
+  if (phone_number_util->Parse(base::UTF16ToUTF8(text), country_code,
+                               &parsed_number) !=
+      ::i18n::phonenumbers::PhoneNumberUtil::NO_PARSING_ERROR) {
+    return false;
+  }
+
+  return phone_number_util->IsPossibleNumber(parsed_number);
+}
+
 bool IsValidPhoneNumber(const base::string16& text,
                         const std::string& country_code) {
   ::i18n::phonenumbers::PhoneNumber parsed_number;
