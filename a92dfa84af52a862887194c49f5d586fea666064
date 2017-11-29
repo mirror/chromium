@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70897e8f_cdba4fb6",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-29T22:05:04Z",
+      "side": 1,
+      "message": "nit: same order as in the parent class\n\nditto implementation",
+      "revId": "a92dfa84af52a862887194c49f5d586fea666064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4eedd7a_38fffa2a",
+        "filename": "components/omnibox/browser/mock_autocomplete_provider_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-29T22:05:04Z",
+      "side": 1,
+      "message": "nit: same order as parent class",
+      "range": {
+        "startLine": 76,
+        "startChar": 46,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "a92dfa84af52a862887194c49f5d586fea666064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d2e34c1_b98663a9",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-29T22:05:04Z",
+      "side": 1,
+      "message": "nit: consider moving this template_url_service check lower further inside, as it doesn\u0027t need to guard usage of |is_authenticated|\n\n(template_url_service is usually set, so it doesn\u0027t matter much, but I think it\u0027s probably better the way I suggest)",
+      "revId": "a92dfa84af52a862887194c49f5d586fea666064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d19daec_a435faa1",
+        "filename": "ios/chrome/browser/autocomplete/autocomplete_provider_client_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-29T22:05:04Z",
+      "side": 1,
+      "message": "nit: please keep same order as parent class\nditto implementation",
+      "revId": "a92dfa84af52a862887194c49f5d586fea666064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
