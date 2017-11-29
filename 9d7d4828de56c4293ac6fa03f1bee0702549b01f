@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64d0f688_0e361fa1",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-29T09:31:15Z",
+      "side": 1,
+      "message": "rsesek: okay, given crash_reporter::InitializeCrashKeys() is a no-op if g_storage is non-null, this \"should\" work. So that in unit test, this will actually initialize crash keys, but in Chrome, where crash keys is already initialized, this should do nothing.\n\nWDYT?",
+      "revId": "9d7d4828de56c4293ac6fa03f1bee0702549b01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
