@@ -22,6 +22,30 @@
       "revId": "972203110756dc72dfcada0c9d86beeea46819e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05cac9ed_c0dd423d",
+        "filename": "third_party/WebKit/Source/modules/fetch/DataConsumerHandleTestUtil.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-11-29T23:48:38Z",
+      "side": 1,
+      "message": "Yeah, on this condition I\u0027m switching to std::unique_ptr\u003c\u003e(new PrivateConstructor(...)) instead, which is pretty much what WrapUnique does.\n\nHowever WTF::WrapUnique has a static_assert for GCed types, which Stuart pointed out on crbug.com/781645, so this CL will wait until he\u0027s back.",
+      "parentUuid": "f75fb4c6_0ff02b7f",
+      "range": {
+        "startLine": 215,
+        "startChar": 20,
+        "endLine": 215,
+        "endChar": 31
+      },
+      "revId": "972203110756dc72dfcada0c9d86beeea46819e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
