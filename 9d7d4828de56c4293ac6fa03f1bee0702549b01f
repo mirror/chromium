@@ -16,6 +16,47 @@
       "revId": "9d7d4828de56c4293ac6fa03f1bee0702549b01f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c947a950_67992d2f",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-29T18:27:57Z",
+      "side": 1,
+      "message": "I think it\u0027d be better to do this within the unit test setup. But I expect this may come up again, so I think I may change crash keys to auto-initialize instead.",
+      "parentUuid": "64d0f688_0e361fa1",
+      "revId": "9d7d4828de56c4293ac6fa03f1bee0702549b01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b761aee0_dffa35aa",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-29T18:27:57Z",
+      "side": 1,
+      "message": "optional: just inline this rather than using a local",
+      "range": {
+        "startLine": 172,
+        "startChar": 14,
+        "endLine": 172,
+        "endChar": 25
+      },
+      "revId": "9d7d4828de56c4293ac6fa03f1bee0702549b01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
