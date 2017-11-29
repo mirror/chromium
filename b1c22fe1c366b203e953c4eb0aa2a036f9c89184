@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b54f26c_27ef991f",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T16:28:44Z",
+      "side": 1,
+      "message": "I like the idea of IsCreated.  It seems more natural to say that a LazyInstance got created than to say that it is empty or non-empty.\n\nI went with IsCreated (rather than is_created) for consistency with other methods of LazyInstance.\n\nI went with IsCreated (rather than Created) because I like the \"precede boolean values with words like \"is\" and \"did\"\" rule from the New Blink Style Guide (https://docs.google.com/document/d/1ZQLiQKw9hCOyDDhDS4JhckhuiJmLqSbw9FLfySMyxgU/edit#heading\u003dh.cbz5mwdbybli).\n\n\nFWIW, I did some searching inside lang:cpp file:^src/base file:\\.h$, and I see:\n\n0 hits: bool IsCreated()\n0 hits: bool is_created()\n1 hit: bool is_empty()\n1 hit: bool initialized()\n1 hit: bool is_initialized()\n2 hits: bool created() [File and FileProxy]\n3 hits: bool IsEmpty()\n5 hits: bool is_null()\n11 hits: bool empty() [slightly skewed by containers, but there are other examples here as well]\n\nhttps://cs.chromium.org/search/?q\u003dlang:cpp+file:%5Esrc/base+file:%5C.h$+%22bool+empty()%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "2805b19f_f4cd5d4f",
+      "revId": "b1c22fe1c366b203e953c4eb0aa2a036f9c89184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fb7cd3c_04afe5af",
         "filename": "content/test/layouttest_support.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b1c22fe1c366b203e953c4eb0aa2a036f9c89184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6a6493_a0b85a06",
+        "filename": "content/test/layouttest_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T16:28:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fb7cd3c_04afe5af",
+      "revId": "b1c22fe1c366b203e953c4eb0aa2a036f9c89184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

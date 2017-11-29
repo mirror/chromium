@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a52db1d7_c117cfc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T16:28:44Z",
+      "side": 1,
+      "message": "Should be good enough - this is the bug associated with the previous CL (https://crrev.com/c/775060) where I initially wanted to tweak base/lazy_instance.h",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "1cce5295859ac21375296daaeb353ade4eb6e60e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00187162_24bbebe2",
+        "filename": "chrome/browser/devtools/devtools_ui_bindings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T16:28:44Z",
+      "side": 1,
+      "message": "|git cl format| made me do it :-)",
+      "range": {
+        "startLine": 552,
+        "startChar": 1,
+        "endLine": 552,
+        "endChar": 2
+      },
+      "revId": "1cce5295859ac21375296daaeb353ade4eb6e60e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
