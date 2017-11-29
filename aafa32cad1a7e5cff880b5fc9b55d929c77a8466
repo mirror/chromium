@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8816bcef_2a6b4b0f",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T17:40:14Z",
+      "side": 1,
+      "message": "might as well discuss this here, I suppose, so hangouts doesn\u0027t eat it.\n\nI\u0027m sympathetic to this idea because I do suspect it\u0027d drive down the rate at which we see this issue, but it\u0027d be good to first expose logcats in this scenario s.t. we can better diagnose the underlying issue when we do see this.",
+      "revId": "aafa32cad1a7e5cff880b5fc9b55d929c77a8466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
