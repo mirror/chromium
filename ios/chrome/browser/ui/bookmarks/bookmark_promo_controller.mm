@@ -118,16 +118,6 @@ class SignInObserver : public SigninManagerBase::Observer {
   }
 }
 
-- (void)showSignInFromViewController:(UIViewController*)baseViewController {
-  base::RecordAction(
-      base::UserMetricsAction("Signin_Signin_FromBookmarkManager"));
-  ShowSigninCommand* command = [[ShowSigninCommand alloc]
-      initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
-            accessPoint:signin_metrics::AccessPoint::
-                            ACCESS_POINT_BOOKMARK_MANAGER];
-  [self.presenter showSignin:command];
-}
-
 - (void)hidePromoCell {
   DCHECK(!_isIncognito);
   DCHECK(_browserState);
