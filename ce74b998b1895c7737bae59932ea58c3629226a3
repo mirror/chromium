@@ -69,6 +69,30 @@
       "revId": "ce74b998b1895c7737bae59932ea58c3629226a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91aae4d5_5d95ac57",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-11-29T10:36:52Z",
+      "side": 1,
+      "message": "I see. How about rename this to MojoJpegDecodeAcceleratorFactoryCB then?",
+      "parentUuid": "679c3496_fdd7d8de",
+      "range": {
+        "startLine": 50,
+        "startChar": 34,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "ce74b998b1895c7737bae59932ea58c3629226a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
