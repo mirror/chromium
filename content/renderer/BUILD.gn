@@ -909,6 +909,7 @@ target(link_target_type, "renderer") {
     deps += [
       "//crypto",
       "//jingle:jingle_glue",
+      "//third_party/WebKit/common:media_devices",
       "//third_party/libvpx",
       "//third_party/opus",
       "//third_party/webrtc/api:libjingle_peerconnection",

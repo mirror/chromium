@@ -47,4 +47,8 @@ blink_modules_sources("mediastream") {
     "UserMediaRequest.cpp",
     "UserMediaRequest.h",
   ]
+
+  deps = [
+    "//third_party/WebKit/common:media_devices_blink",
+  ]
 }
