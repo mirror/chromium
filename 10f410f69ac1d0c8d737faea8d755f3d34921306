@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2c07112_5243052c",
+        "filename": "ios/web/interstitials/html_web_interstitial_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T23:38:26Z",
+      "side": 1,
+      "message": "Putting everything into web namespace will make |web::| usage unnecessary.",
+      "revId": "10f410f69ac1d0c8d737faea8d755f3d34921306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90344fcf_bb9d3d52",
+        "filename": "ios/web/interstitials/html_web_interstitial_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T23:38:26Z",
+      "side": 1,
+      "message": "Do we even need TearDown?",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "10f410f69ac1d0c8d737faea8d755f3d34921306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59bf87a8_5be6a44e",
+        "filename": "ios/web/interstitials/html_web_interstitial_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T23:38:26Z",
+      "side": 1,
+      "message": "Please add comment to explain when |interstitial| is deleted. Same for other places.",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 44
+      },
+      "revId": "10f410f69ac1d0c8d737faea8d755f3d34921306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
