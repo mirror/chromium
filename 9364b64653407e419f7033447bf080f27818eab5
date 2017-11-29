@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a05f42b_8f9a4bc8",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-29T19:10:32Z",
+      "side": 1,
+      "message": "Nit: enum class, but if it\u0027s not possible to compare enum class members (you\u0027re doing it a lot) I\u0027m ok with old-style enum",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 4
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3859877b_558e2ce0",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-29T19:10:32Z",
+      "side": 1,
+      "message": "Nit: no need in else-clause, just \nreturn nullptr;",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 10
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9e5fc5_a8a1a003",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-29T19:10:32Z",
+      "side": 1,
+      "message": "Nit: you can write, something like\nreturn form_util::IsWebElementVisible(element) ? VISIBILITY : NO_FILTER",
+      "range": {
+        "startLine": 350,
+        "startChar": 10,
+        "endLine": 354,
+        "endChar": 3
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41d121f_73f14745",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-29T19:10:32Z",
+      "side": 1,
+      "message": "In PasswordManager non password fields might be only usernames. Wouldn\u0027t it be better to name this variable something like username_fields_level?",
+      "range": {
+        "startLine": 502,
+        "startChar": 22,
+        "endLine": 502,
+        "endChar": 47
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f10196_44c9c8fd",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-29T19:10:32Z",
+      "side": 1,
+      "message": "As far as I understand the problem that was reported on a bug, Invisible username field was skipped. Here this case is not tested (\"cached username\" is from visible field). Could you please test it.\nMy feeling that the same choosing of username/password fields would be even without this patch. Is it right?",
+      "range": {
+        "startLine": 1562,
+        "startChar": 28,
+        "endLine": 1562,
+        "endChar": 49
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273f4389_b5bddc2e",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1565,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-29T19:10:32Z",
+      "side": 1,
+      "message": "Nit: base::string16()",
+      "range": {
+        "startLine": 1565,
+        "startChar": 12,
+        "endLine": 1565,
+        "endChar": 33
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
