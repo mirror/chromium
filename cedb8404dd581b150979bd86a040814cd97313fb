@@ -16,6 +16,24 @@
       "revId": "cedb8404dd581b150979bd86a040814cd97313fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f3f8b7_e922a171",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-11-29T18:00:39Z",
+      "side": 1,
+      "message": "I would recommend an approach which calls the generated method, OriginTrials::disableHwNoiseSuppressionEnabled(). First, that method encapsulates the check for the runtime flag as well. Second, the generated methods are the hooks for the OT framework to add any other logic as needed. The OriginTrialContext::IsTrialEnabled() method is meant for internal use.\n\nAs for the plumbing, this would be the first case where the origin trial check is happening outside Blink code. I\u0027ll have to think about that a little more. In the meantime, I would still definitely recommend to call the generated OriginTrials method.",
+      "parentUuid": "632a4f0d_05c6028e",
+      "revId": "cedb8404dd581b150979bd86a040814cd97313fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
