@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed4ecccc_5b91f954",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-29T21:06:00Z",
+      "side": 1,
+      "message": "I think the id just needs to be unique per trace name. Traces render correctly for me locally at least.\n\nI\u0027m tempted to make this a non-default category though since traces are getting a bit noisy already.",
+      "parentUuid": "d3db341f_cfe76c67",
+      "range": {
+        "startLine": 1819,
+        "startChar": 18,
+        "endLine": 1819,
+        "endChar": 33
+      },
+      "revId": "f78b9454da0b35d997c9e59cb3062d55af35afb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "974e2a78_d7bb2ad3",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 5
