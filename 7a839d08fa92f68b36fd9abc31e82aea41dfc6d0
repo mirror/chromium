@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fd3103d_8f031387",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-29T18:31:25Z",
+      "side": 1,
+      "message": "I am not quite sure when Chrome decide to upload UMA. I would guess that it might upload multiple values per upload. But I am not sure there is a problem here.",
+      "parentUuid": "d5b8b6fd_f4dfd64f",
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6eb4633_a91e2729",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T00:42:14Z",
       "side": 1,
       "message": "This breaks with the other VRSession... metrics and doesn\u0027t include an indication that this is per-session. I found it hard to add \"PerSession\" to the latter part of the name. Maybe these should all be \"VR.Session.\" (I wouldn\u0027t rename the legacy ones, though we could duplicate and replace them.) Then this would be VR.Session.VoiceSearch.StartedCount.",
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882f07fc_d633debc",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-29T18:31:25Z",
+      "side": 1,
+      "message": "It would be nice to keep per session UMA histogram grouped under a similar name pattern. VR.Session.* makes a lot sense in that sense and it also group all VR related UMA under vr.* namespace. If it is easy to duplicate and replace legacy ones, it would be great if we could migrate everything to VR.Session.* namespace later. The current inconsistency worries me a little bit but I can live with it.",
+      "parentUuid": "c6eb4633_a91e2729",
       "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c3768b9a_58a45902",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3325,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-29T18:31:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "31b00973_edc4ef46",
+      "range": {
+        "startLine": 3325,
+        "startChar": 19,
+        "endLine": 3325,
+        "endChar": 27
+      },
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aabeff5_2e6174ab",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a333093a_98f6585f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 92697,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-29T18:31:25Z",
+      "side": 1,
+      "message": "Sorry for mixed terminology. Yes. Started \u003d\u003d request. I would be fine with either one in UMA name.",
+      "parentUuid": "8aabeff5_2e6174ab",
+      "range": {
+        "startLine": 92697,
+        "startChar": 43,
+        "endLine": 92697,
+        "endChar": 50
+      },
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cf9f19e_dbbba386",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -93,6 +177,24 @@
       "writtenOn": "2017-11-29T00:42:14Z",
       "side": 1,
       "message": "As mentioned above, this should have some indication of \"per session.\"",
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d63aad_78ab9157",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 92710,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-29T18:31:25Z",
+      "side": 1,
+      "message": "Your suggestion about VR.Session.* sounds good to me.",
+      "parentUuid": "2cf9f19e_dbbba386",
       "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
