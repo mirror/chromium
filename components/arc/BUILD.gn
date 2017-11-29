@@ -50,6 +50,8 @@ static_library("arc") {
     "rotation_lock/arc_rotation_lock_bridge.h",
     "storage_manager/arc_storage_manager.cc",
     "storage_manager/arc_storage_manager.h",
+    "usb/usb_host_bridge.cc",
+    "usb/usb_host_bridge.h",
     "volume_mounter/arc_volume_mounter_bridge.cc",
     "volume_mounter/arc_volume_mounter_bridge.h",
   ]
