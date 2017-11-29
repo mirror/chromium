@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd9f7872_2be04c02",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-29T18:29:53Z",
+      "side": 1,
+      "message": "Do we know what is the length limit for tracing? I\u0027d prefer something like Scheduler.BackgroundBudgetMs for readability.",
+      "range": {
+        "startLine": 31,
+        "startChar": 47,
+        "endLine": 31,
+        "endChar": 60
+      },
+      "revId": "7ac6d27275b57bf5056d50b1f3d267220a01bc13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9283c4e6_bbec9503",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-29T18:29:53Z",
+      "side": 1,
+      "message": "I thought that implicit cast should work here. Doesn\u0027t it?",
+      "range": {
+        "startLine": 116,
+        "startChar": 60,
+        "endLine": 116,
+        "endChar": 66
+      },
+      "revId": "7ac6d27275b57bf5056d50b1f3d267220a01bc13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c07aa3eb_98a104ce",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-29T18:29:53Z",
+      "side": 1,
+      "message": "Shall we define mathematical operators for our TraceCounter? That should enable us to get rid of these .get() calls.",
+      "range": {
+        "startLine": 118,
+        "startChar": 29,
+        "endLine": 118,
+        "endChar": 37
+      },
+      "revId": "7ac6d27275b57bf5056d50b1f3d267220a01bc13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
