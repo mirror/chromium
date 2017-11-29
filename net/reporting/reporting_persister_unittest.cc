@@ -46,9 +46,10 @@ TEST_F(ReportingPersisterTest, DISABLED_Test) {
 
   cache()->AddReport(kUrl_, kGroup_, kType_, body.CreateDeepCopy(),
                      tick_clock()->NowTicks(), kAttempts);
-  cache()->SetClient(kOrigin_, kEndpoint_, ReportingClient::Subdomains::EXCLUDE,
-                     kGroup_,
-                     tick_clock()->NowTicks() + base::TimeDelta::FromDays(1));
+  cache()->SetClient(
+      kOrigin_, kEndpoint_, ReportingClient::Subdomains::EXCLUDE, kGroup_,
+      tick_clock()->NowTicks() + base::TimeDelta::FromDays(1),
+      ReportingClient::kDefaultPriority, ReportingClient::kDefaultWeight);
 
   // TODO: Actually save data, once it's possible.
 
