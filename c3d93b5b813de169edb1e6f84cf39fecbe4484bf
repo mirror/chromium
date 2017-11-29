@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77b7db4f_81996542",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-29T14:03:32Z",
+      "side": 1,
+      "message": "I have updated the comment.",
+      "parentUuid": "17fe95c2_b4cec970",
+      "range": {
+        "startLine": 114,
+        "startChar": 36,
+        "endLine": 114,
+        "endChar": 45
+      },
+      "revId": "c3d93b5b813de169edb1e6f84cf39fecbe4484bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "996bf118_4f1610aa",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8700639b_9ee1396f",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-29T14:03:32Z",
+      "side": 1,
+      "message": "The background color\u0027s alpha can be changed setBackgroundAlpha:. In the incognito NTP, the background of the toolbar is depending of the scroll position. To do that two background are added, one above the other. The top-most one\u0027s alpha is changed to let the other appear.",
+      "parentUuid": "996bf118_4f1610aa",
+      "range": {
+        "startLine": 116,
+        "startChar": 75,
+        "endLine": 116,
+        "endChar": 78
+      },
+      "revId": "c3d93b5b813de169edb1e6f84cf39fecbe4484bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e13b08_472de1c2",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "c3d93b5b813de169edb1e6f84cf39fecbe4484bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc05c92e_b111137c",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-29T14:03:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90e13b08_472de1c2",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 21
+      },
+      "revId": "c3d93b5b813de169edb1e6f84cf39fecbe4484bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
