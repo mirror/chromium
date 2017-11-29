@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "de765283_ac81506c",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a0cc063_4c3583c6",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 16
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a95e5759_4ee90577",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 10
@@ -68,6 +92,30 @@
       "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbea6f81_f84171fd",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a95e5759_4ee90577",
+      "range": {
+        "startLine": 134,
+        "startChar": 22,
+        "endLine": 134,
+        "endChar": 38
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "7238f012_18e92ca7",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bebf8ae4_def901d9",
+      "range": {
+        "startLine": 169,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 34
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3369fff8_ffd9ad87",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 10
@@ -114,6 +186,30 @@
       "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc9930d_38a72553",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3369fff8_ffd9ad87",
+      "range": {
+        "startLine": 300,
+        "startChar": 24,
+        "endLine": 300,
+        "endChar": 54
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "ac10878a_1927499e",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66799dc7_7990c156",
+      "range": {
+        "startLine": 320,
+        "startChar": 22,
+        "endLine": 320,
+        "endChar": 48
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d1aa3d2_243b24c5",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 10
@@ -154,6 +274,24 @@
       "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c428a2_5e29c171",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d1aa3d2_243b24c5",
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "f5c3d970_c61d7beb",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e322c50b_25d29c99",
+      "range": {
+        "startLine": 40,
+        "startChar": 75,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40424175_76ca76f9",
         "filename": "cc/animation/animation_player.h",
         "patchSetId": 10
@@ -200,6 +362,30 @@
       "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f79d51_79b09e6a",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40424175_76ca76f9",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "de1f123c_09e8fe7e",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fcb2f0d_d8e46ae5",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 52
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "197b0302_4e705f7d",
         "filename": "cc/animation/animation_player.h",
         "patchSetId": 10
@@ -237,6 +447,30 @@
       "writtenOn": "2017-11-27T21:41:39Z",
       "side": 1,
       "message": "why is this event need to be exposed?",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 30
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796deaac_be77bb59",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "It\u0027s currently used in AnimationPlayerTest. Two elements may have two tickers each and all the 4 tickers are stored in one AnimationPlayer. Therefore when we attach an element we need to specify which ticker.",
+      "parentUuid": "197b0302_4e705f7d",
       "range": {
         "startLine": 77,
         "startChar": 7,
@@ -272,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "51fd7e3a_61caa687",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fa60794_67163724",
+      "range": {
+        "startLine": 85,
+        "startChar": 22,
+        "endLine": 85,
+        "endChar": 26
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8994f71c_0f72a9ee",
         "filename": "cc/animation/animation_player.h",
         "patchSetId": 10
@@ -292,6 +550,30 @@
       "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69290af2_9222a6db",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8994f71c_0f72a9ee",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +600,30 @@
     },
     {
       "key": {
+        "uuid": "d652bc0b_e8839cc5",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "As discussed, player_ now has type SingleAnimationPlayer instead of AnimationPlayer.",
+      "parentUuid": "23559281_862a2e67",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c584d2d1_2bc2d2c2",
         "filename": "cc/animation/animation_ticker.cc",
         "patchSetId": 10
@@ -338,6 +644,30 @@
       "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7208c1_45ccd4af",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c584d2d1_2bc2d2c2",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 58
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -364,6 +694,30 @@
     },
     {
       "key": {
+        "uuid": "f787adc6_3e8d1e19",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b06284a4_6754649b",
+      "range": {
+        "startLine": 716,
+        "startChar": 60,
+        "endLine": 716,
+        "endChar": 64
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62284aa9_3f8332a6",
         "filename": "cc/animation/animation_ticker.cc",
         "patchSetId": 10
@@ -387,6 +741,30 @@
     },
     {
       "key": {
+        "uuid": "9c4d52c1_fe800b2c",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62284aa9_3f8332a6",
+      "range": {
+        "startLine": 721,
+        "startChar": 48,
+        "endLine": 721,
+        "endChar": 61
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b751c54_6e61490f",
         "filename": "cc/animation/animation_ticker.h",
         "patchSetId": 10
@@ -407,6 +785,30 @@
       "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601db307_e485ff0a",
+        "filename": "cc/animation/animation_ticker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-11-29T01:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b751c54_6e61490f",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
