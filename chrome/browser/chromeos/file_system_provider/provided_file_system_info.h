@@ -40,7 +40,6 @@ class ProviderId {
   const std::string& GetExtensionId() const;
   const std::string& GetNativeId() const;
   std::string ToString() const;
-
   ProviderType GetType() const;
 
   bool operator==(const ProviderId& other) const;
