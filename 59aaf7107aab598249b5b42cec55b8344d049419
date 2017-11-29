@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b20db73c_aef373f2",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T20:33:23Z",
+      "side": 1,
+      "message": "I think it would be preferable to explicitly add the dependency to the vulkan lib, since we directly use its functions.\nI would go with your second suggestion, with one modification: create that config in third_party/vulkan/BUILD.gn, and use it both here and in //gpu/vulkan.",
+      "parentUuid": "97bacc64_ade8e76a",
+      "revId": "59aaf7107aab598249b5b42cec55b8344d049419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d2a9606_cbbde98d",
         "filename": "skia/BUILD.gn",
         "patchSetId": 30
