@@ -1571,10 +1571,17 @@ bool RenderFrameHostManager::IsCurrentlySameSite(RenderFrameHostImpl* candidate,
   BrowserContext* browser_context =
       delegate_->GetControllerForRenderManager().GetBrowserContext();
 
+  // Don't compare effective URLs for subframe navigations, since we don't want
+  // to create OOPIFs based on that mechanism (e.g., for hosted apps).
+  // TODO(creis): This should eventually call out to embedder to help decide, if
+  // we can find a way to make decisions about popups based on their opener.
+  bool should_compare_effective_urls = frame_tree_node_->IsMainFrame();
+
   // If the process type is incorrect, reject the candidate even if |dest_url|
   // is same-site.  (The URL may have been installed as an app since
   // the last time we visited it.)
-  if (candidate->GetSiteInstance()->HasWrongProcessForURL(dest_url))
+  if (should_compare_effective_urls &&
+      candidate->GetSiteInstance()->HasWrongProcessForURL(dest_url))
     return false;
 
   // If we don't have a last successful URL, we can't trust the origin or URL
@@ -1583,17 +1590,27 @@ bool RenderFrameHostManager::IsCurrentlySameSite(RenderFrameHostImpl* candidate,
   // processes for transfer navigations. Note: browser-initiated net errors do
   // swap processes, but the frame's last successful URL will still be empty in
   // that case.
+  // TODO(creis): Update comment, since it covers newly created frames as well.
   if (candidate->last_successful_url().is_empty()) {
-    // TODO(creis): GetSiteURL() is not 100% accurate. Eliminate this fallback.
-    return SiteInstance::IsSameWebSite(
-        browser_context, candidate->GetSiteInstance()->GetSiteURL(), dest_url);
+    bool use_iframe_parent_url =
+        candidate->last_committed_url().is_empty() &&
+        !frame_tree_node_->IsMainFrame() &&
+        !candidate->GetParent()->last_successful_url().is_empty();
+    // TODO(creis): Use first ancestor with a successful URL.
+    // TODO(creis): GetSiteURL() is not 100% accurate. Eliminate that fallback.
+    const GURL& src_url = use_iframe_parent_url
+                              ? candidate->GetParent()->last_successful_url()
+                              : candidate->GetSiteInstance()->GetSiteURL();
+    return SiteInstanceImpl::IsSameWebSite(browser_context, src_url, dest_url,
+                                           should_compare_effective_urls);
   }
 
   // In the common case, we use the RenderFrameHost's last successful URL. Thus,
   // we compare against the last successful commit when deciding whether to swap
   // this time.
-  if (SiteInstance::IsSameWebSite(browser_context,
-                                  candidate->last_successful_url(), dest_url)) {
+  if (SiteInstanceImpl::IsSameWebSite(
+          browser_context, candidate->last_successful_url(), dest_url,
+          should_compare_effective_urls)) {
     return true;
   }
 
@@ -1601,9 +1618,10 @@ bool RenderFrameHostManager::IsCurrentlySameSite(RenderFrameHostImpl* candidate,
   // example, "about:blank"). If so, examine the replicated origin to determine
   // the site.
   if (!candidate->GetLastCommittedOrigin().unique() &&
-      SiteInstance::IsSameWebSite(
+      SiteInstanceImpl::IsSameWebSite(
           browser_context,
-          GURL(candidate->GetLastCommittedOrigin().Serialize()), dest_url)) {
+          GURL(candidate->GetLastCommittedOrigin().Serialize()), dest_url,
+          should_compare_effective_urls)) {
     return true;
   }
 
