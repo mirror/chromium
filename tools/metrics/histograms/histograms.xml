@@ -92676,6 +92676,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="VR.Session.VoiceSearch.StartedCount" units="searches">
+  <owner>bshe@chromium.org</owner>
+  <summary>
+    Number of times voice search is started in a single VR session. Recorded
+    when a new disjoint session has begun or when the session has ended in a
+    non-continuable way.
+  </summary>
+</histogram>
+
 <histogram name="VR.Shell.EncounteredSuppressedUI" enum="VRSuppressedElement">
   <owner>asimjour@chromium.org</owner>
   <summary>
@@ -92692,8 +92701,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="VR.VoiceSearch.EndState" enum="VRVoiceSearchEndState">
+  <owner>bshe@chromium.org</owner>
+  <summary>The end state of a voice search request in VR.</summary>
+</histogram>
+
 <histogram name="VR.VoiceSearch.RecordAudioOsPermissionPromptChoice"
-    enum="BooleanChoice">
+    enum="BooleanContinueChoice">
   <owner>bshe@chromium.org</owner>
   <summary>
     Chrome shows a prompt when the OS's record audio permission is needed for
@@ -92764,23 +92778,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="VRSessionVoiceSearchCount" units="searches">
-  <owner>bshe@chromium.org</owner>
-  <summary>
-    Number of times voice search is started while in a VR session.  Logged when
-    a new disjoint session has begun, or when the session has ended in a
-    non-continuable way.
-  </summary>
-</histogram>
-
 <histogram name="VRViewerType" enum="VRViewerType">
   <owner>billorr@chromium.org</owner>
   <summary>The type of headset being used for VR.</summary>
-</histogram>
-
-<histogram name="VRVoiceSearchEndState" enum="VRVoiceSearchEndState">
-  <owner>bshe@chromium.org</owner>
-  <summary>The end state of voice search request in VR.</summary>
 </histogram>
 
 <histogram name="Wallet.ApiCallDuration.AcceptLegalDocuments" units="ms">
