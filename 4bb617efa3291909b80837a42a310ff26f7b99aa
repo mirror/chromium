@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a50f31f_d4036a9c",
+        "filename": "ui/keyboard/keyboard_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-11-29T03:25:34Z",
+      "side": 1,
+      "message": "`git cl format` removes the space.",
+      "parentUuid": "b2734d77_3e92de31",
+      "revId": "4bb617efa3291909b80837a42a310ff26f7b99aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f467c7eb_1cc76ed1",
         "filename": "ui/keyboard/keyboard_controller_observer.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "4bb617efa3291909b80837a42a310ff26f7b99aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ab58af_949283a3",
+        "filename": "ui/keyboard/keyboard_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-11-29T03:25:34Z",
+      "side": 1,
+      "message": "same",
+      "parentUuid": "f467c7eb_1cc76ed1",
+      "revId": "4bb617efa3291909b80837a42a310ff26f7b99aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
