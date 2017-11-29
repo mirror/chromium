@@ -16,6 +16,8 @@
 #include "google_apis/gaia/gaia_auth_fetcher.h"
 #include "google_apis/gaia/gaia_constants.h"
 
+// TODO(maroun): Clean up this file.
+
 namespace {
 
 const char kFetcherId[] = "ChildAccountInfoFetcherImpl";
