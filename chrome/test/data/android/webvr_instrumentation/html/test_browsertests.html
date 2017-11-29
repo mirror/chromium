@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <body>
+    <script src="../../../../../../third_party/WebKit/LayoutTests/resources/testharness.js"></script>
+    <script src="../resources/webvr_e2e.js"></script>
+    <script>
+      var t = async_test("asdf");
+
+      function someTestFunction() {
+        finishJavaScriptStep();
+      }
+
+      function someOtherTestFunction() {
+        window.setTimeout(() => {t.done();}, 5000);
+      }
+    </script>
+  </body>
+</html>
