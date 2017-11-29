@@ -16,6 +16,24 @@
       "revId": "913411dec6be05328d14fe0780cf0302d1354269",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d13fc9e_c650f403",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-29T21:55:30Z",
+      "side": 0,
+      "message": "Previously, this code would not have been called with MISSING.\nIf it was, you are correct.",
+      "parentUuid": "d7312780_af7b0e6f",
+      "revId": "913411dec6be05328d14fe0780cf0302d1354269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
