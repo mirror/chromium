@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a449d0b1_33a63d0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-29T00:01:39Z",
+      "side": 0,
+      "message": "are any of these calls expensive?\n\nWe used to not call tryGetGoogleAccountNames if isSignedIn, and not call getSyncLastAccountName if there were no accounts.  Now we call all of these regardless, just want to make sure the previous ordering didn\u0027t actually matter.",
+      "range": {
+        "startLine": 45,
+        "startChar": 36,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "e0bf6efed06acf61b1f03078bd154cdb8b93287a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

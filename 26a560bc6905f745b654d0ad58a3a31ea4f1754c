@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2541e4bf_f5de8c6a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-29T00:01:39Z",
+      "side": 1,
+      "message": "should this be package visible since it is only for testing?",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 10
+      },
+      "revId": "26a560bc6905f745b654d0ad58a3a31ea4f1754c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77eccf3_8b16d2b9",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/signin/SigninPromoUtilTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-29T00:01:39Z",
+      "side": 1,
+      "message": "should we verify setSigninPromoLastShownVersion is not called in any of these?",
+      "revId": "26a560bc6905f745b654d0ad58a3a31ea4f1754c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
