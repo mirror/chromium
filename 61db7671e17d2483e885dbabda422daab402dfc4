@@ -123,6 +123,24 @@
       "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a29069_b5d1865b",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-29T14:14:15Z",
+      "side": 1,
+      "message": "I can move ::SetParent() outside the lock in both functions, which removes any risk of deadlock. If there is a chance that ::SetParent() will cause a sync call (from the IO thread) to the parent window that doesn\u0027t seem great. Would a worker thread not have the same issue with the sync call (from the worker thread) to the parent window though?\n\nI\u0027ll read through what I can find on MSDN today so I understand this a bit better.",
+      "parentUuid": "e82e7f61_9a400ada",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
