@@ -268,6 +268,19 @@ String GetTextForInlineCollection<NGOffsetMappingBuilder>(
   return ToText(node)->data();
 }
 
+bool CanUseNewLayout(const LayoutObject& node) {
+  if (node.IsAtomicInlineLevel())
+    return true;
+  const ComputedStyle& style = node.StyleRef();
+  if (style.UserModify() != EUserModify::kReadOnly)
+    return false;
+
+  if (node.IsRuby())
+    return false;
+
+  return true;
+}
+
 // The function is templated to indicate the purpose of collected inlines:
 // - With EmptyOffsetMappingBuilder: updating layout;
 // - With NGOffsetMappingBuilder: building offset mapping on clean layout.
@@ -279,12 +292,14 @@ String GetTextForInlineCollection<NGOffsetMappingBuilder>(
 // There are also performance considerations, since template saves the overhead
 // for condition checking and branching.
 template <typename OffsetMappingBuilder>
-void CollectInlinesInternal(
+bool CollectInlinesInternal(
     LayoutBlockFlow* block,
     NGInlineItemsBuilderTemplate<OffsetMappingBuilder>* builder) {
   builder->EnterBlock(block->Style());
   LayoutObject* node = GetLayoutObjectForFirstChildNode(block);
   while (node) {
+    if (!CanUseNewLayout(*node))
+      return false;
     if (node->IsText()) {
       LayoutText* layout_text = ToLayoutText(node);
       if (UNLIKELY(layout_text->IsWordBreak())) {
@@ -360,6 +375,7 @@ void CollectInlinesInternal(
     }
   }
   builder->ExitBlock();
+  return true;
 }
 
 void PlaceLineBoxChildren(const Vector<NGInlineItem>& items,
@@ -440,6 +456,16 @@ NGInlineNode::NGInlineNode(LayoutBlockFlow* block)
     block->ResetNGInlineNodeData();
 }
 
+bool NGInlineNode::CanUseNewLayout() const {
+  DCHECK(IsPrepareLayoutFinished());
+  return ToLayoutBlockFlow(box_)->GetNGInlineNodeData()->can_use_new_layout_;
+}
+
+bool NGInlineNode::CanUseNewLayout() {
+  PrepareLayoutIfNeeded();
+  return ToLayoutBlockFlow(box_)->GetNGInlineNodeData()->can_use_new_layout_;
+}
+
 bool NGInlineNode::InLineHeightQuirksMode() const {
   return GetDocument().InLineHeightQuirksMode();
 }
@@ -455,7 +481,7 @@ bool NGInlineNode::IsPrepareLayoutFinished() const {
 
 const NGInlineNodeData& NGInlineNode::Data() const {
   DCHECK(IsPrepareLayoutFinished() &&
-         !GetLayoutBlockFlow()->NeedsCollectInlines());
+         !GetLayoutBlockFlow()->NeedsCollectInlines() && CanUseNewLayout());
   return *ToLayoutBlockFlow(box_)->GetNGInlineNodeData();
 }
 
@@ -488,9 +514,10 @@ void NGInlineNode::PrepareLayoutIfNeeded() {
   // NGInlineNode represent a collection of adjacent non-atomic inlines.
   NGInlineNodeData* data = MutableData();
   DCHECK(data);
-  CollectInlines(data);
-  SegmentText(data);
-  ShapeText(data);
+  if (CollectInlines(data)) {
+    SegmentText(data);
+    ShapeText(data);
+  }
   DCHECK_EQ(data, MutableData());
 
   block_flow->ClearNeedsCollectInlines();
@@ -503,6 +530,8 @@ const NGInlineNodeData& NGInlineNode::EnsureData() {
 
 const NGOffsetMapping* NGInlineNode::ComputeOffsetMappingIfNeeded() {
   DCHECK(!GetLayoutBlockFlow()->GetDocument().NeedsLayoutTreeUpdate());
+  if (!CanUseNewLayout())
+    return nullptr;
 
   if (!Data().offset_mapping_) {
     // TODO(xiaochengh): ComputeOffsetMappingIfNeeded() discards the
@@ -529,18 +558,19 @@ const NGOffsetMapping* NGInlineNode::ComputeOffsetMappingIfNeeded() {
 // NGInlineNode object. Collects LayoutText items, merging them up into the
 // parent LayoutInline where possible, and joining all text content in a single
 // string to allow bidi resolution and shaping of the entire block.
-void NGInlineNode::CollectInlines(NGInlineNodeData* data) {
+bool NGInlineNode::CollectInlines(NGInlineNodeData* data) {
   DCHECK(data->text_content_.IsNull());
   DCHECK(data->items_.IsEmpty());
   LayoutBlockFlow* block = GetLayoutBlockFlow();
   block->WillCollectInlines();
   NGInlineItemsBuilder builder(&data->items_);
-  CollectInlinesInternal(block, &builder);
+  data->can_use_new_layout_ = CollectInlinesInternal(block, &builder);
   data->text_content_ = builder.ToString();
   data->is_bidi_enabled_ =
       !data->text_content_.IsEmpty() &&
       !(data->text_content_.Is8Bit() && !builder.HasBidiControls());
   data->is_empty_inline_ = builder.IsEmptyInline();
+  return data->can_use_new_layout_;
 }
 
 void NGInlineNode::SegmentText(NGInlineNodeData* data) {
@@ -651,6 +681,7 @@ scoped_refptr<NGLayoutResult> NGInlineNode::Layout(
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token) {
   PrepareLayoutIfNeeded();
+  DCHECK(CanUseNewLayout());
 
   NGInlineLayoutAlgorithm algorithm(*this, constraint_space,
                                     ToNGInlineBreakToken(break_token));
@@ -700,6 +731,7 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
 
 MinMaxSize NGInlineNode::ComputeMinMaxSize() {
   PrepareLayoutIfNeeded();
+  DCHECK(CanUseNewLayout());
 
   // Run line breaking with 0 and indefinite available width.
 
@@ -727,6 +759,7 @@ MinMaxSize NGInlineNode::ComputeMinMaxSize() {
 void NGInlineNode::CopyFragmentDataToLayoutBox(
     const NGConstraintSpace& constraint_space,
     const NGLayoutResult& layout_result) {
+  DCHECK(CanUseNewLayout());
   LayoutBlockFlow* block_flow = GetLayoutBlockFlow();
   bool descend_into_fragmentainers = false;
 
@@ -767,6 +800,7 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
 // tree.
 void NGInlineNode::GetLayoutTextOffsets(
     Vector<unsigned, 32>* text_offsets_out) {
+  DCHECK(CanUseNewLayout());
   LayoutText* current_text = nullptr;
   unsigned current_offset = 0;
   const Vector<NGInlineItem>& items = Data().items_;

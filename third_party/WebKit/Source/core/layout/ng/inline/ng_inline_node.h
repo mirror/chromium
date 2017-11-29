@@ -40,6 +40,11 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   }
   NGLayoutInputNode NextSibling() { return nullptr; }
 
+  // Returns true if this node can use new layout otherwise false.
+  // This function may update |NGInlineNodeData|.
+  bool CanUseNewLayout() const;
+  bool CanUseNewLayout();
+
   // True in quirks mode or limited-quirks mode, which require line-height
   // quirks.
   // https://quirks.spec.whatwg.org/#the-line-height-calculation-quirk
@@ -94,7 +99,8 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   // calling the Layout method.
   void PrepareLayoutIfNeeded();
 
-  void CollectInlines(NGInlineNodeData*);
+  // Returns true if all descendants of block box are able to use new layout.
+  bool CollectInlines(NGInlineNodeData*);
   void SegmentText(NGInlineNodeData*);
   void ShapeText(NGInlineNodeData*);
   void ShapeText(const String&, Vector<NGInlineItem>*);
