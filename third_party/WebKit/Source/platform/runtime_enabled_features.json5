@@ -862,6 +862,10 @@
       status: "experimental",
     },
     {
+      name: "RequireCSSExtensionForFile",
+      status: "stable",
+    },
+    {
       name: "ResizeObserver",
       status: "stable",
     },
