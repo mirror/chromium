@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "78b58f72_d8728c79",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T19:01:10Z",
+      "side": 1,
+      "message": "Good question.  Another related issue I\u0027m worried about here is if the enterprise policy specifies an invalid origin in the list by mistake, everyone\u0027s Chrome starts to crash on startup.  Let\u0027s discuss what to do about this CHECK in a followup.",
+      "parentUuid": "474e4e86_db23c399",
+      "range": {
+        "startLine": 1150,
+        "startChar": 0,
+        "endLine": 1151,
+        "endChar": 61
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00ce2182_801ec479",
         "filename": "content/browser/child_process_security_policy_impl.cc",
         "patchSetId": 7
