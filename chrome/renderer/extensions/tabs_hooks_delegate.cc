@@ -6,6 +6,7 @@
 
 #include "base/strings/stringprintf.h"
 #include "content/public/renderer/v8_value_converter.h"
+#include "content/public/renderer/worker_thread.h"
 #include "extensions/common/api/messaging/message.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest.h"
@@ -15,6 +16,7 @@
 #include "extensions/renderer/native_renderer_messaging_service.h"
 #include "extensions/renderer/script_context.h"
 #include "extensions/renderer/script_context_set.h"
+#include "extensions/renderer/worker_thread_dispatcher.h"
 #include "gin/converter.h"
 
 namespace extensions {
@@ -26,6 +28,15 @@ using RequestResult = APIBindingHooks::RequestResult;
 constexpr char kConnect[] = "tabs.connect";
 constexpr char kSendMessage[] = "tabs.sendMessage";
 constexpr char kSendRequest[] = "tabs.sendRequest";
+
+ScriptContext* GetScriptContext(v8::Local<v8::Context> context) {
+  ScriptContext* script_context =
+      content::WorkerThread::GetCurrentId() > 0
+          ? WorkerThreadDispatcher::GetScriptContext()
+          : ScriptContextSet::GetContextByV8Context(context);
+  DCHECK(!script_context || script_context->v8_context() == context);
+  return script_context;
+}
 
 }  // namespace
 
@@ -53,8 +64,7 @@ RequestResult TabsHooksDelegate::HandleRequest(
       {&TabsHooksDelegate::HandleConnect, kConnect},
   };
 
-  ScriptContext* script_context =
-      ScriptContextSet::GetContextByV8Context(context);
+  ScriptContext* script_context = GetScriptContext(context);
   DCHECK(script_context);
 
   Handler handler = nullptr;

@@ -23,7 +23,9 @@ const char kScriptSuppliedValueKey[] = "script_supplied_value";
 // accessor which marks the error as accessed.
 class LastErrorObject final : public gin::Wrappable<LastErrorObject> {
  public:
-  explicit LastErrorObject(const std::string& error) : error_(error) {}
+  explicit LastErrorObject(const std::string& error) : error_(error) {
+    LOG(WARNING) << "Last error objcet";
+  }
 
   static gin::WrapperInfo kWrapperInfo;
 
@@ -216,6 +218,7 @@ bool APILastError::HasError(v8::Local<v8::Context> context) {
 void APILastError::SetErrorOnPrimaryParent(v8::Local<v8::Context> context,
                                            v8::Local<v8::Object> parent,
                                            const std::string& error) {
+  LOG(WARNING) << "Setting on primary parent";
   if (parent.IsEmpty())
     return;
   v8::Isolate* isolate = context->GetIsolate();
@@ -231,6 +234,7 @@ void APILastError::SetErrorOnPrimaryParent(v8::Local<v8::Context> context,
     return;
 
   if (!v8_error->IsUndefined()) {
+    LOG(WARNING) << "Not undefined";
     // There may be an existing last error to overwrite.
     LastErrorObject* last_error = nullptr;
     if (!gin::Converter<LastErrorObject*>::FromV8(isolate, v8_error,
@@ -243,8 +247,11 @@ void APILastError::SetErrorOnPrimaryParent(v8::Local<v8::Context> context,
     }
     last_error->Reset(error);
   } else {
+    LOG(WARNING) << "Undefined";
+    LOG(WARNING) << "Isolate: " << isolate;
     v8::Local<v8::Value> last_error =
         gin::CreateHandle(isolate, new LastErrorObject(error)).ToV8();
+    LOG(WARNING) << "Created handle";
     v8::Maybe<bool> set_private = parent->SetPrivate(
         context, v8::Private::ForApi(isolate, key), last_error);
     if (!set_private.IsJust() || !set_private.FromJust()) {

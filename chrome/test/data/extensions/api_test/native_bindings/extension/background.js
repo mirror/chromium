@@ -63,9 +63,11 @@ var tests = [
       var port = chrome.tabs.connect(tabId);
       chrome.test.assertTrue(!!port, 'Port does not exist');
       port.onMessage.addListener(message => {
+        console.warn('Port on message');
         chrome.test.assertEq('content script', message);
         port.disconnect();
         chrome.tabs.sendMessage(tabId, 'async bounce', function(response) {
+          console.warn('Message sent');
           chrome.test.assertEq('bounced', response);
           chrome.test.succeed();
         });
@@ -75,15 +77,18 @@ var tests = [
 
     chrome.runtime.onMessage.addListener(function listener(
         message, sender, sendResponse) {
+      console.warn('On message');
       chrome.test.assertEq('startFlow', message);
       createPort();
       sendResponse('started');
       chrome.runtime.onMessage.removeListener(listener);
     });
 
+    console.warn('Create tab');
     var url = 'http://localhost:' + portNumber +
               '/native_bindings/extension/messaging_test.html';
     chrome.tabs.create({url: url}, function(tab) {
+      console.warn('tab created');
       chrome.test.assertNoLastError();
       chrome.test.assertTrue(!!tab);
       chrome.test.assertTrue(!!tab.id && tab.id >= 0);
