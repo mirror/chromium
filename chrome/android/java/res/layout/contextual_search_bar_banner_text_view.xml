@@ -17,7 +17,8 @@
     <TextView
         android:id="@+id/contextual_search_iph_tap_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_height="@dimen/contextual_search_bar_banner_height"
         android:textAppearance="@style/WhiteBody"
         android:text="@string/contextual_search_iph_tap"
         />
