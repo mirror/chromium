@@ -70,6 +70,24 @@
       "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075b3f4d_beec4ac3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-29T12:25:17Z",
+      "side": 1,
+      "message": "Hmm I see, ok I think I understand this now.\n\nThis is the right thing to do but it needs a comment explaining that:\n\n1. A task on either queue may own |this|\n2. C++ is perfectly fine about |this| getting deleted while running a function, _but_ you can\u0027t access member variable any more.",
+      "parentUuid": "ffff55af_b2e8c6ee",
+      "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
