@@ -262,6 +262,30 @@
       "revId": "b2275545c639d2143edecc7986054342774008ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "647932ee_72f71b19",
+        "filename": "components/arc/arc_bridge_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-29T19:17:13Z",
+      "side": 1,
+      "message": "Here\u0027s stack trace (I had to switch to regular CHECK, since neither dcheck_always_on nor debug work at the moment):\n#0 0x000002a3d8d0 base::debug::StackTrace::StackTrace()\n#1 0x000002a4deb8 logging::LogMessage::~LogMessage()\n#2 0x00000421abf2 arc::(anonymous namespace)::MojoChannelImpl\u003c\u003e::OnVersionReady()\n#3 0x000002af5258 _ZN4base8internal7InvokerINS0_9BindStateIPFvRKNS_17RepeatingCallbackIFvjEEEN4mojo9StructPtrINS8_17interface_control24RunResponseMessageParamsEEEEJS5_EEEFvSC_EE3RunEPNS0_13BindStateBaseEOSC_\n#4 0x000002af5204 mojo::internal::(anonymous namespace)::RunResponseForwardToCallback::Accept()\n#5 0x000002aeb7e0 mojo::InterfaceEndpointClient::HandleValidatedMessage()\n#6 0x000002aefca0 mojo::internal::MultiplexRouter::ProcessIncomingMessage()\n#7 0x000002aef74e mojo::internal::MultiplexRouter::Accept()\n#8 0x000002aeaf1c mojo::Connector::ReadSingleMessage()\n#9 0x000002aeb3e4 mojo::Connector::ReadAllAvailableMessages()\n#10 0x000002af82ac mojo::SimpleWatcher::OnHandleReady()\n#11 0x000002a3dea0 base::debug::TaskAnnotator::RunTask()\n#12 0x000002a52194 base::MessageLoop::RunTask()\n#13 0x000002a52506 base::MessageLoop::DoWork()\n#14 0x000002a5322c base::MessagePumpLibevent::Run()\n#15 0x000002a6a868 base::RunLoop::Run()\n#16 0x000002812948 ChromeBrowserMainParts::MainMessageLoopRun()\n#17 0x00000193dbce content::BrowserMainLoop::RunMainMessageLoopParts()\n#18 0x00000193ff80 content::BrowserMainRunnerImpl::Run()\n#19 0x00000193ac70 content::BrowserMain()\n#20 0x0000028043b0 content::ContentMainRunnerImpl::Run()\n#21 0x00000280a468 service_manager::Main()\n#22 0x000002803460 content::ContentMain()\n#23 0x0000014c8702 ChromeMain\n#24 0x0000b3bcc8a0 __libc_start_main",
+      "parentUuid": "d60d8f23_c14d88d4",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
