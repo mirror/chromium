@@ -34,6 +34,24 @@
       "revId": "b7ada056d91a800e98facb98d55718da83117025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32ed5fb_a7e5ce19",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T18:24:22Z",
+      "side": 1,
+      "message": "Correct, the use case is valid (the condition is that the WeakPtr must be dereferenced/checked on the same thread as where the factory is invalidated/destroyed, in this case the IO thread for both).\n\nThat said it is true that the WeakPtr is technically not needed, so we could Unretained(this) instead. We can add a DCHECK_CURRENTLY_ON(BrowserThread::IO) in the destructor to help clarifying lifetime/threading.",
+      "parentUuid": "2a272a00_e82619f3",
+      "revId": "b7ada056d91a800e98facb98d55718da83117025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
