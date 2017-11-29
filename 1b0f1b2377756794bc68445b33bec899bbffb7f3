@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb17657b_418a6783",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T05:42:44Z",
+      "side": 1,
+      "message": "CreateMouseEvent?",
+      "range": {
+        "startLine": 83,
+        "startChar": 21,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "1b0f1b2377756794bc68445b33bec899bbffb7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587141d1_3d2b70cd",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T05:42:44Z",
+      "side": 1,
+      "message": "Did you plan to remove this?\nI don\u0027t know the best way to simulate other events.",
+      "range": {
+        "startLine": 319,
+        "startChar": 2,
+        "endLine": 328,
+        "endChar": 4
+      },
+      "revId": "1b0f1b2377756794bc68445b33bec899bbffb7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
