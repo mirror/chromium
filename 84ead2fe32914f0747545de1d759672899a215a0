@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "08f2fc20_fabd8f10",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "optional: I think the style guide prefers to declare ivars on the @implementation section now.",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04128e1a_2dadd174",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "Would you mind making these all constexpr (even though you only touched some of them)?",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86dd2a4c_ab75e86b",
         "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
         "patchSetId": 11
@@ -22,6 +56,63 @@
       "revId": "84ead2fe32914f0747545de1d759672899a215a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32087143_6cbbbafe",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "nit: format",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7686b735_9c24f9ae",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "nix this ivar (@synthesize takes care of it)",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec45e15b_bce970da",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "ditto (ivars -\u003e @implementation)",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -89,6 +180,195 @@
         "startChar": 0,
         "endLine": 22,
         "endChar": 50
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7eec66_f23ad9d9",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "optional: I generally find it easier to set frame instead of bounds and position:\n\n    [iconLayer_ setFrame:bounds];",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c33df1_0fefa945",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "Probably prefer [icon_ layerContentsForContentsScale:]. See \"Using Images with CALayer Objects\" here:\n\nhttps://developer.apple.com/documentation/appkit/nsimage?language\u003dobjc",
+      "range": {
+        "startLine": 42,
+        "startChar": 26,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75325e5f_4fc359bb",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "Maybe +[NSImage imageWithSize:flipped:drawingHandler:]?",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338e66eb_8552a5ca",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "You might be able to do the sad tab animation like this and forgo the animation key, the ivar, and the delegate:\n\n    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context) {\n      context.duration \u003d [iconLayer_ contents] ? kSadTabAnimationTime : 0;\n      const CGFloat offset \u003d self.bounds.size.height;\n      [iconLayer_ setValue:@(-offset) forKeyPath:@\"transform.translation.y\"];\n    } completionHandler:^{\n      iconLayer_.contents \u003d\n          [[self class] sadTabIconForDarkTheme:[self hasDarkTheme]];\n      [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context) {\n        context.duration \u003d kSadTabAnimationTime;\n        [iconLayer_ setValue:@0 forKeyPath:@\"transform.translation.y\"];\n      } completionHandler:nil];\n    }];",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395153ec_1fa2db90",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "I thought that contentsScale didn\u0027t affect CAShapeLayer, but might have missed something. It looks the same to me (on a rMBP) when I remove these lines.",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 52
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfc7842_43b97e08",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "You might be able to simplify this a little, here\u0027s what I came up with (it just adds the animations directly, which may not work for you):\n\n  // Create the arc animation.\n  CABasicAnimation* arcAnimation \u003d\n      [CABasicAnimation animationWithKeyPath:@\"lineDashPhase\"];\n  CGFloat scaleFactor \u003d [self scaleFactor];\n  arcAnimation.fromValue \u003d @(-[self arcLength] * scaleFactor);\n  arcAnimation.toValue \u003d @0;\n  arcAnimation.timingFunction \u003d\n      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];\n  arcAnimation.duration \u003d reverseArcAnimationTime;\n  [shapeLayer_ addAnimation:arcAnimation forKey:nil];\n\n  // Finally, create an animation that rotates the entire spinner layer.\n  CABasicAnimation* rotationAnimation \u003d\n      [CABasicAnimation animationWithKeyPath:@\"transform.rotation\"];\n  rotationAnimation.byValue \u003d @(kDegrees360);\n\n  // Start the rotation once the stroke animation has completed.\n  rotationAnimation.beginTime \u003d CACurrentMediaTime() + reverseArcAnimationTime;\n  rotationAnimation.duration \u003d forwardArcRotationTime;\n  rotationAnimation.repeatCount \u003d HUGE_VALF;\n  [[shapeLayer_ addAnimation:rotationAnimation forKey:nil];",
+      "range": {
+        "startLine": 197,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 30
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb23af68_e1676f6a",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "You can use [CAKeyframeAnimation animationWithKeyPath:].",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 40
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33a4a4f_4c00455b",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "I think that `removedOnCompletion \u003d NO` is usually a bad sign. Is it necessary here?",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 38
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a3b8b4_27ce4073",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-29T02:43:29Z",
+      "side": 1,
+      "message": "Hmm, is there any way you could avoid making this group? Or storing the animation in a @protected ivar?",
+      "range": {
+        "startLine": 217,
+        "startChar": 2,
+        "endLine": 217,
+        "endChar": 41
       },
       "revId": "84ead2fe32914f0747545de1d759672899a215a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
