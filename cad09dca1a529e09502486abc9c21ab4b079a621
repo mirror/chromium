@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f345294d_0e3b6d7e",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-29T17:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa605bef_07c54c53",
+      "range": {
+        "startLine": 269,
+        "startChar": 4,
+        "endLine": 270,
+        "endChar": 44
+      },
+      "revId": "cad09dca1a529e09502486abc9c21ab4b079a621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "032caf2e_cf22a481",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 9
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "d9750f0d_6a898de6",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-29T17:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "388b3877_77d4859b",
+      "range": {
+        "startLine": 278,
+        "startChar": 54,
+        "endLine": 278,
+        "endChar": 66
+      },
+      "revId": "cad09dca1a529e09502486abc9c21ab4b079a621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e34a3335_05ae3f72",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-29T17:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "032caf2e_cf22a481",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 278,
+        "endChar": 14
+      },
+      "revId": "cad09dca1a529e09502486abc9c21ab4b079a621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04f43ec8_63ac9195",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e9dc4863_68641d81",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-29T17:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04f43ec8_63ac9195",
+      "range": {
+        "startLine": 281,
+        "startChar": 9,
+        "endLine": 281,
+        "endChar": 78
+      },
+      "revId": "cad09dca1a529e09502486abc9c21ab4b079a621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77d19ffa_97ab5f18",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-29T02:31:37Z",
       "side": 1,
       "message": "We need to use:\n\n  command.replace(binary_path, rebased_binary_path, 1)\n\nbecause the command may have `binary_path` substring among its arguments (e.g. \"my_fuzzer -runs\u003d0 ./my_fuzzer_corpus\"), and we shouldn\u0027t replace those.",
+      "range": {
+        "startLine": 302,
+        "startChar": 57,
+        "endLine": 302,
+        "endChar": 58
+      },
+      "revId": "cad09dca1a529e09502486abc9c21ab4b079a621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af65782_51efb82b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-29T17:06:47Z",
+      "side": 1,
+      "message": "This actually bothers me, and I think it might be also confusing to users. For example, let\u0027s say I have a binary that takes an input file, then we have the following options:\n\n1. All paths are relative to root of checkout:\n-c \"out/Coverage/binary_name -i data/files/input_file_name.txt\"\n\n2. Only the binary is relative to the build directory, others are relative to the root of checkout:\n-c \"binary_name -i data/files/input_file_name.txt\"\n\n3. All paths are relative to the build directory:\n-c \"binary_name -i ../../data/files/input_file_name.txt\"\n\nDue to inconsistency, option 2 is off the table. Looks like we\u0027re going with option 3, we\u0027ve talked about the advantage: To avoid unnecessary complications that binaries are in different build directories.\n\nHowever, my concerns are:\n\na. It\u0027s counter intuitive. This script is called from the root of checkout, however, to specify the command, one needs to assume the current working directory is the BUILD directory, which seems a little bit weird.\n\nb. When writing command, users lose the autocompletes of \u0027tab\u0027, which may be error-prone if one needs to type a long path with complicate names.\n\nAfter putting some thoughts into this, I actually become slightly prefer option 1, and with option 1, we can add some checks to make sure all the paths to the binaries match BUILD directory specified via -b. WDYT?",
+      "parentUuid": "77d19ffa_97ab5f18",
       "range": {
         "startLine": 302,
         "startChar": 57,
