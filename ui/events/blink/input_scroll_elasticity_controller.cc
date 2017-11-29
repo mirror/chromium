@@ -135,6 +135,13 @@ void InputScrollElasticityController::ObserveGestureEventAndResult(
     case blink::WebInputEvent::kGestureScrollUpdate: {
       gfx::Vector2dF event_delta(-gesture_event.data.scroll_update.delta_x,
                                  -gesture_event.data.scroll_update.delta_y);
+      gfx::Vector2dF unused_scroll_delta = scroll_result.unused_scroll_delta;
+      if (scroll_result.scroll_boundary_behavior.x ==
+          cc::ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeNone)
+        unused_scroll_delta.set_x(0);
+      if (scroll_result.scroll_boundary_behavior.y ==
+          cc::ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeNone)
+        unused_scroll_delta.set_y(0);
       switch (state_) {
         case kStateMomentumAnimated:
         case kStateInactive:
@@ -142,7 +149,7 @@ void InputScrollElasticityController::ObserveGestureEventAndResult(
         case kStateActiveScroll:
         case kStateMomentumScroll:
           UpdateVelocity(event_delta, event_timestamp);
-          Overscroll(event_delta, scroll_result.unused_scroll_delta);
+          Overscroll(event_delta, unused_scroll_delta);
           if (gesture_event.data.scroll_update.inertial_phase ==
                   blink::WebGestureEvent::kMomentumPhase &&
               !helper_->StretchAmount().IsZero()) {
