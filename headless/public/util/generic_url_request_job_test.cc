@@ -64,7 +64,7 @@ class MockFetcher : public URLFetcher {
         fetch_request_(fetch_request),
         on_request_callback_(on_request_callback) {}
 
-  ~MockFetcher() override {}
+  ~MockFetcher() override = default;
 
   void StartFetch(const Request* request,
                   ResultListener* result_listener) override {
