@@ -70,6 +70,9 @@ class WebState;
 - (void)setToolsMenuIsVisibleForToolsMenuButton:(BOOL)isVisible;
 // Triggers the animation of the tools menu button.
 - (void)triggerToolsMenuButtonAnimation;
+// Sets background color of the Toolbar to the IncognitoNTP's one with an
+// |alpha|.
+- (void)setBackgroundToIncognitoNTPColorWithAlpha:(CGFloat)alpha;
 
 @end
 
