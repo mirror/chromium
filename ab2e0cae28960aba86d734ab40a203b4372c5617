@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e649758_911b72b7",
+        "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-29T23:00:49Z",
+      "side": 1,
+      "message": "Will there be any issues accessing the service if enrollment/syncing does not occur? The EasyUnlock/Instant Tethering code will still have access to the ChromeCryptAuthService object even if we return early.",
+      "range": {
+        "startLine": 313,
+        "startChar": 29,
+        "endLine": 313,
+        "endChar": 59
+      },
+      "revId": "ab2e0cae28960aba86d734ab40a203b4372c5617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c10b793_0af5dfa4",
+        "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-29T23:00:49Z",
+      "side": 1,
+      "message": "nit: No curlies needed for single-line if().",
+      "range": {
+        "startLine": 317,
+        "startChar": 38,
+        "endLine": 317,
+        "endChar": 39
+      },
+      "revId": "ab2e0cae28960aba86d734ab40a203b4372c5617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab61692_c2ab50bf",
+        "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-29T23:00:49Z",
+      "side": 1,
+      "message": "This isn\u0027t very easily discoverable and thus doesn\u0027t scale very well for new multi-device features. Should we make a new file which contains all requires prefs instead of using this private function in the .cc?",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 338,
+        "endChar": 69
+      },
+      "revId": "ab2e0cae28960aba86d734ab40a203b4372c5617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
