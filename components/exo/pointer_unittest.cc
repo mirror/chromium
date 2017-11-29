@@ -9,6 +9,7 @@
 #include "ash/shell_port.h"
 #include "ash/wm/window_positioning_utils.h"
 #include "components/exo/buffer.h"
+#include "components/exo/client_controlled_shell_surface.h"
 #include "components/exo/pointer_delegate.h"
 #include "components/exo/shell_surface.h"
 #include "components/exo/sub_surface.h"
@@ -201,8 +202,9 @@ TEST_F(PointerTest, OnPointerMotion) {
 
   std::unique_ptr<Surface> child_surface(new Surface);
   std::unique_ptr<ShellSurface> child_shell_surface(new ShellSurface(
-      child_surface.get(), shell_surface.get(), ShellSurface::BoundsMode::FIXED,
-      gfx::Point(9, 9), true, false, ash::kShellWindowId_DefaultContainer));
+      child_surface.get(), ShellSurface::BoundsMode::FIXED, gfx::Point(9, 9),
+      true, false, ash::kShellWindowId_DefaultContainer));
+  child_shell_surface->SetParent(shell_surface.get());
   gfx::Size child_buffer_size(15, 15);
   std::unique_ptr<Buffer> child_buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(child_buffer_size)));
@@ -319,7 +321,8 @@ TEST_F(PointerTest, OnPointerScrollDiscrete) {
 
 TEST_F(PointerTest, IgnorePointerEventDuringModal) {
   std::unique_ptr<Surface> surface(new Surface);
-  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  auto shell_surface =
+      exo_test_helper()->CreateClientControlledShellSurface(surface.get());
   std::unique_ptr<Buffer> buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(gfx::Size(10, 10))));
   surface->Attach(buffer.get());
@@ -332,9 +335,9 @@ TEST_F(PointerTest, IgnorePointerEventDuringModal) {
 
   // Create surface for modal window.
   std::unique_ptr<Surface> surface2(new Surface);
-  std::unique_ptr<ShellSurface> shell_surface2(new ShellSurface(
-      surface2.get(), nullptr, ShellSurface::BoundsMode::FIXED, gfx::Point(),
-      true, false, ash::kShellWindowId_SystemModalContainer));
+
+  auto shell_surface2 = exo_test_helper()->CreateClientControlledShellSurface(
+      surface2.get(), /*is_modal=*/true);
   std::unique_ptr<Buffer> buffer2(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(gfx::Size(5, 5))));
   surface2->Attach(buffer2.get());
