@@ -52,6 +52,24 @@
       "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffff55af_b2e8c6ee",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-29T12:06:47Z",
+      "side": 1,
+      "message": "Isn\u0027t it more like we\u0027re moving the pointers to {immediate,delayed}_work_queue on the stack so that we don\u0027t have to access any members after clearing one of them. I can see the point of doing that, but the ownership model seems a little wonky: essentially whoever is calling UnregisterTaskQueue doesn\u0027t have a clear idea of the lifetime of this object. What\u0027s preventing them from calling another method on it? Is there a way to straighten this out?",
+      "parentUuid": "b4385893_ad6e62f1",
+      "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
