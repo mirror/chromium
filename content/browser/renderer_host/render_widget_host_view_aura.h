@@ -102,7 +102,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
 
   // RenderWidgetHostView implementation.
   void InitAsChild(gfx::NativeView parent_view) override;
-  RenderWidgetHost* GetRenderWidgetHost() const override;
   void SetSize(const gfx::Size& size) override;
   void SetBounds(const gfx::Rect& rect) override;
   gfx::Vector2dF GetLastScrollOffset() const override;
@@ -186,6 +185,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void ClearCompositorFrame() override;
   void DidStopFlinging() override;
   void OnDidNavigateMainFrameToNewPage() override;
+  RenderWidgetHostImpl* GetRenderWidgetHostImpl() const override;
   viz::FrameSinkId GetFrameSinkId() override;
   viz::LocalSurfaceId GetLocalSurfaceId() const override;
   viz::FrameSinkId FrameSinkIdAtPoint(viz::SurfaceHittestDelegate* delegate,

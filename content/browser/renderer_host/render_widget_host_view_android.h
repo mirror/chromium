@@ -172,6 +172,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       override;
   void OnDidNavigateMainFrameToNewPage() override;
   void SetNeedsBeginFrames(bool needs_begin_frames) override;
+  RenderWidgetHostImpl* GetRenderWidgetHostImpl() const override;
   viz::FrameSinkId GetFrameSinkId() override;
   viz::FrameSinkId FrameSinkIdAtPoint(viz::SurfaceHittestDelegate* delegate,
                                       const gfx::PointF& point,
