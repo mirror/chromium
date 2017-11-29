@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "12d41958_ff272a72",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-29T02:37:11Z",
+      "side": 1,
+      "message": "The \"print STDERR\" lines are now removed as the correct propagation of environment variables ahs been verified on non-Windows hosts.",
+      "parentUuid": "707a5128_3faa8f4b",
+      "revId": "606a14812c3f20f34ae68cbf9ac1245121907d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "071b361e_a388c7ce",
         "filename": "third_party/WebKit/Tools/Scripts/apache_config/win-httpd.conf",
         "patchSetId": 20
