@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fe01851_16d2291d",
+        "filename": "chrome/browser/android/compositor/layer/contextual_search_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T00:46:30Z",
+      "side": 1,
+      "message": "My preference here would be to set the search_bar_banner_height size dynamically based on the height of the (bar_banner_text_resource-\u003esize() + 2 * search_bar_banner_padding). Would that work?",
+      "range": {
+        "startLine": 211,
+        "startChar": 52,
+        "endLine": 211,
+        "endChar": 56
+      },
+      "revId": "52f7e7b5bfc642aac6467a20927387db91577e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
