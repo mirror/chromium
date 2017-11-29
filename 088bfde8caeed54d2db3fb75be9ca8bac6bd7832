@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e0b549d_5f3fecd1",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller_observer_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T14:24:40Z",
+      "side": 1,
+      "message": "Having an object whose job is to manage the object(s) that observe the object(s) that control fullscreen makes me vaguely nervous. If FullscreenModel is observable, why can\u0027t it manage these observers?",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 41
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9eea388_41e4eeea",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller_observer_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T14:24:40Z",
+      "side": 1,
+      "message": "I believe this is now.",
+      "range": {
+        "startLine": 65,
+        "startChar": 54,
+        "endLine": 65,
+        "endChar": 77
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8e2369_beb564f1",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animation_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T14:24:40Z",
+      "side": 1,
+      "message": "\"AnimationController\" really sounds like a peer to a view controller or a presentation controller, so it\u0027s surprising to see this as a C++ class.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 44
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d768bd_3748748f",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animation_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T14:24:40Z",
+      "side": 1,
+      "message": "This seems like an odd API (one call to create a new value for a member variable, which requires another getter call to retrieve). What\u0027s the rationale?",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec30449_af18bf56",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T14:24:40Z",
+      "side": 1,
+      "message": "This is confusing. StopAnimation is called by the completion block, which is run when the animation stops. I understand that passing YES here will not re-induce a call to the completion block, but I don\u0027t understand from reading the code why this is being done.\n\nCan you add more comments to describe what\u0027s going on here?",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
