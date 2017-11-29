@@ -16,6 +16,24 @@
       "revId": "52f9e41587deea0a67b2fecd3f6df0ccbad480a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e048c23_fc4df924",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-29T19:06:16Z",
+      "side": 1,
+      "message": "As we have discussed offline, I have update the call to IsPositiveScaleOrTranslation():\n - if it\u0027s positive scale (scale\u003e0) -\u003e inverse is 1/scale\n - if it\u0027s translation -\u003e inverse is the reversed vector translation\n\nThis matrix will always be invertible",
+      "parentUuid": "1bc99672_0b21325d",
+      "revId": "52f9e41587deea0a67b2fecd3f6df0ccbad480a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
