@@ -1261,7 +1261,7 @@ enum class SnapshotViewOption {
 }
 
 - (void)showSyncPassphraseSettings {
-  [self.dispatcher showSyncPassphraseSettingsFromViewController:self];
+  [self.dispatcher showSyncPassphraseSettings];
 }
 
 #pragma mark - SigninPresenter

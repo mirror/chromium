@@ -1041,7 +1041,7 @@ enum CellType {
 }
 
 - (void)showSyncPassphraseSettings {
-  [self.dispatcher showSyncPassphraseSettingsFromViewController:self];
+  [self.dispatcher showSyncPassphraseSettings];
 }
 
 #pragma mark - SigninPresenter
