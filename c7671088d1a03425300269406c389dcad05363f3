@@ -16,6 +16,24 @@
       "revId": "c7671088d1a03425300269406c389dcad05363f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f210b617_bc973a3c",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_struct_traits.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-11-29T02:27:17Z",
+      "side": 1,
+      "message": "Thanks I wasn\u0027t particularly happy with those 2 big \"switches\", since they\u0027re one-liners, I moved to .h with the static assert too.\n\nPTAL.",
+      "parentUuid": "3a790cf9_f16b6be2",
+      "revId": "c7671088d1a03425300269406c389dcad05363f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
