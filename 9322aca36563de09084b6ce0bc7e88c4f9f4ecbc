@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "409bc956_442dc76e",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-29T19:35:33Z",
+      "side": 1,
+      "message": "Oh right. I forgot that we weren\u0027t making a copy of the maps! :)",
+      "parentUuid": "c438d490_45d9cd90",
+      "revId": "9322aca36563de09084b6ce0bc7e88c4f9f4ecbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02d2a93c_81a8a4b6",
         "filename": "net/http/http_server_properties_manager.cc",
         "patchSetId": 2
@@ -84,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "dd34eccb_cccf12e2",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-29T19:35:33Z",
+      "side": 1,
+      "message": "Hm. Sounds like an old bug :\u003e\n\nIf GetSupportsQuic returns false, then I think last_quic_addr will not contain a valid IP address so I suspect we should not attempt to save.",
+      "parentUuid": "d81baf8b_6a6e9a5a",
+      "range": {
+        "startLine": 1120,
+        "startChar": 65,
+        "endLine": 1120,
+        "endChar": 0
+      },
+      "revId": "9322aca36563de09084b6ce0bc7e88c4f9f4ecbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "555622c4_168b0f07",
         "filename": "net/http/http_server_properties_manager.cc",
         "patchSetId": 2
@@ -119,6 +161,30 @@
       "side": 1,
       "message": "I have a check at the very start of this method that checks if either broken or recently_broken is non-empty.",
       "parentUuid": "555622c4_168b0f07",
+      "range": {
+        "startLine": 1299,
+        "startChar": 30,
+        "endLine": 1299,
+        "endChar": 0
+      },
+      "revId": "9322aca36563de09084b6ce0bc7e88c4f9f4ecbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "887f6edb_9edfc4f6",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-29T19:35:33Z",
+      "side": 1,
+      "message": "Hah!",
+      "parentUuid": "b8a876e9_db1704b3",
       "range": {
         "startLine": 1299,
         "startChar": 30,
