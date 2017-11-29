@@ -38,9 +38,9 @@ class InspectorResourceContentLoader::ResourceClient final
 
   void WaitForResource(Resource* resource) {
     if (resource->GetType() == Resource::kRaw)
-      resource->AddClient(static_cast<RawResourceClient*>(this));
+      RawResourceClient::SetResource(resource);
     else
-      resource->AddClient(static_cast<StyleSheetResourceClient*>(this));
+      StyleSheetResourceClient::SetResource(resource);
   }
 
   void Trace(blink::Visitor* visitor) override {
@@ -72,9 +72,9 @@ void InspectorResourceContentLoader::ResourceClient::ResourceFinished(
     loader_->ResourceFinished(this);
 
   if (resource->GetType() == Resource::kRaw)
-    resource->RemoveClient(static_cast<RawResourceClient*>(this));
+    RawResourceClient::ClearResource();
   else
-    resource->RemoveClient(static_cast<StyleSheetResourceClient*>(this));
+    StyleSheetResourceClient::ClearResource();
 }
 
 void InspectorResourceContentLoader::ResourceClient::SetCSSStyleSheet(

@@ -264,9 +264,8 @@ CSSPreloaderResourceClient::CSSPreloaderResourceClient(
                       ->GetCSSExternalScannerPreload()
                   ? kScanAndPreload
                   : kScanOnly),
-      preloader_(preloader),
-      resource_(ToCSSStyleSheetResource(resource)) {
-  resource_->AddClient(this);
+      preloader_(preloader) {
+  SetResource(resource);
 }
 
 CSSPreloaderResourceClient::~CSSPreloaderResourceClient() {}
@@ -353,19 +352,16 @@ void CSSPreloaderResourceClient::ClearResource() {
   // Note: Speculative preloads which remain unused for their lifetime will
   // never have this client removed. This should be fine because we only hold
   // weak references to the resource.
-  if (resource_ && resource_->IsUnusedPreload() &&
-      !resource_->IsLinkPreload()) {
+  if (GetResource() && GetResource()->IsUnusedPreload() &&
+      !GetResource()->IsLinkPreload()) {
     return;
   }
 
-  if (resource_)
-    resource_->RemoveClient(this);
-  resource_.Clear();
+  ResourceClient::ClearResource();
 }
 
 void CSSPreloaderResourceClient::Trace(blink::Visitor* visitor) {
   visitor->Trace(preloader_);
-  visitor->Trace(resource_);
   StyleSheetResourceClient::Trace(visitor);
 }
 

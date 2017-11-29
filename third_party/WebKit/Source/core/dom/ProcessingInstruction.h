@@ -26,7 +26,6 @@
 #include "core/dom/CharacterData.h"
 #include "core/loader/resource/StyleSheetResource.h"
 #include "core/loader/resource/StyleSheetResourceClient.h"
-#include "platform/loader/fetch/ResourceOwner.h"
 
 namespace blink {
 
@@ -34,7 +33,7 @@ class StyleSheet;
 class EventListener;
 
 class ProcessingInstruction final : public CharacterData,
-                                    private ResourceOwner<StyleSheetResource> {
+                                    private StyleSheetResourceClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(ProcessingInstruction);
 
