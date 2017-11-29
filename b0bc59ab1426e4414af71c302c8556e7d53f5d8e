@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bff556d1_c734c09d",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-29T03:40:31Z",
+      "side": 1,
+      "message": "FYI std::shared_ptr is currently banned by the Chromium C++11 style guide (https://chromium-cpp.appspot.com/)",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 19
+      },
+      "revId": "b0bc59ab1426e4414af71c302c8556e7d53f5d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
