@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c25c0d_ac7857e7",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T21:08:17Z",
+      "side": 1,
+      "message": "I wonder if SetText (and AppendText) should be calling UpdateAfterChange(true, true), like InsertOrReplaceText, to be more consistent. Can you try that instead?",
+      "revId": "a19d5dbd1a8cfb3836a983a4db7c57af9894b86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
