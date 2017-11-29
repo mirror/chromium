@@ -3,6 +3,16 @@
 // found in the LICENSE file.
 
 /**
+ * The status of the application's window.
+ * @enum {string}
+ */
+var AppWindowState = {
+  INACTIVE: 'Inactive',
+  OPENING: 'Opening',
+  OPENED: 'Opened'
+};
+
+/**
  * Wrapper for an app window.
  *
  * Expects the following from the app scripts:
@@ -27,7 +37,8 @@ function AppWindowWrapper(url, id, options) {
       JSON.parse(JSON.stringify(options)));
   this.window_ = null;
   this.appState_ = null;
-  this.openingOrOpened_ = false;
+  /** @type {AppWindowState} */
+  this.appWindowState_ = AppWindowState.INACTIVE;
   this.queue = new AsyncUtil.Queue();
 }
 
@@ -81,13 +92,19 @@ AppWindowWrapper.prototype.setIcon = function(iconPath) {
  */
 AppWindowWrapper.prototype.launch = function(appState, reopen, opt_callback) {
   // Check if the window is opened or not.
-  if (this.openingOrOpened_) {
+  if (this.appWindowState_ == AppWindowState.OPENED) {
     console.error('The window is already opened.');
     if (opt_callback)
       opt_callback();
     return;
   }
-  this.openingOrOpened_ = true;
+  if (this.appWindowState_ == AppWindowState.OPENING) {
+    console.error('The window is being opened.');
+    if (opt_callback)
+      opt_callback();
+    return;
+  }
+  this.appWindowState_ = AppWindowState.OPENING;
 
   // Save application state.
   this.appState_ = appState;
@@ -205,6 +222,7 @@ AppWindowWrapper.prototype.launch = function(appState, reopen, opt_callback) {
     if (opt_callback)
       opt_callback();
     callback();
+    this.appWindowState_ = AppWindowState.OPENED;
   }.bind(this));
 };
 
@@ -224,7 +242,7 @@ AppWindowWrapper.prototype.onClosed_ = function() {
   if (contentWindow.unload)
     contentWindow.unload();
   this.window_ = null;
-  this.openingOrOpened_ = false;
+  this.appWindowState_ = AppWindowState.INACTIVE;
 
   // Updates preferences.
   if (contentWindow.saveOnExit) {
@@ -285,7 +303,7 @@ SingletonAppWindowWrapper.prototype = {__proto__: AppWindowWrapper.prototype};
 SingletonAppWindowWrapper.prototype.launch =
     function(appState, reopen, opt_callback) {
   // If the window is not opened yet, just call the parent method.
-  if (!this.openingOrOpened_) {
+  if (!this.appWindowState_ != AppWindowState.OPENED) {
     AppWindowWrapper.prototype.launch.call(
         this, appState, reopen, opt_callback);
     return;
