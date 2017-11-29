@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0698f621_b7ac24b4",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T05:25:07Z",
+      "side": 1,
+      "message": "Should this be gated by a feature flag?",
+      "range": {
+        "startLine": 1370,
+        "startChar": 2,
+        "endLine": 1370,
+        "endChar": 36
+      },
+      "revId": "fc996e7144fc0bce36059db4e54af40fadfc7874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022aedfd_7f574be0",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T05:25:07Z",
+      "side": 1,
+      "message": "Correct me if I\u0027m wrong, but might this log data for tabs in incognito windows? That doesn\u0027t seem right.",
+      "range": {
+        "startLine": 122,
+        "startChar": 25,
+        "endLine": 122,
+        "endChar": 36
+      },
+      "revId": "fc996e7144fc0bce36059db4e54af40fadfc7874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3a883d_51807647",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T05:25:07Z",
+      "side": 1,
+      "message": "This is no longer necessary.",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "fc996e7144fc0bce36059db4e54af40fadfc7874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
