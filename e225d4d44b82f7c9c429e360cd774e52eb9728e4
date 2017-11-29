@@ -69,6 +69,24 @@
       "revId": "e225d4d44b82f7c9c429e360cd774e52eb9728e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82d760f_6387a5c8",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-29T16:43:03Z",
+      "side": 1,
+      "message": "\u003e the binary checks done for checking if the resulting binary would be runnable in Trusty fail.\n\nWhere are those checks? I\u0027d like to better understand that.\n\nI\u0027m surprised there isn\u0027t a way around that, since on every other\nplatform we make use of tons of APIs from the latest OS versions\nwhen available, with fallbacks for older OS versions.",
+      "parentUuid": "5a31b04f_7729637a",
+      "revId": "e225d4d44b82f7c9c429e360cd774e52eb9728e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
