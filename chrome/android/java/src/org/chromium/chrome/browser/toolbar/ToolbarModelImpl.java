@@ -82,7 +82,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
         // TODO(dtrainor, tedchoc): Remove the isInitialized() check when we no longer wait for
         // TAB_CLOSED events to remove this tab.  Otherwise there is a chance we use this tab after
         // {@link ChromeTab#destroy()} is called.
-        return mTab != null && mTab.isInitialized();
+        return mTab != null && mTab.isInitialized() && !mBottomSheet.isSheetOpen();
     }
 
     @Override
@@ -103,6 +103,8 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
 
     @Override
     public String getText() {
+        if (mBottomSheet.isSheetOpen()) return "";
+
         String displayText = super.getText();
 
         if (!hasTab() || mTab.isFrozen()) return displayText;
