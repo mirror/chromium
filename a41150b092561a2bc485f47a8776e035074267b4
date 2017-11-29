@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09695750_70822fd1",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-29T15:51:46Z",
+      "side": 1,
+      "message": "The reason I made it not optional are 2-fold:\n-it\u0027s returned to replace SSLStatus, which wasn\u0027t using optional\n-SSLInfo::is_valid() tells callers if it\u0027s valid or not\n-callers have to check valid() regardless, because for example in the common success case we always have it but it\u0027ll be empty for non-secure schemes",
+      "parentUuid": "c9daf431_1b7d3dd6",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e0fd955_5f70d9ca",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T14:07:41Z",
       "side": 1,
       "message": "Are we ok adding one more copy of SSLInfo?\n\nNote: once we can get rid of the old navigation code and have extended NavigationRequest lifetime, I do plan to simplify NavigationHandle by having it query its navigation parameters from the NavigationRequest instead of storing them. So this might be fine to have in the meantime.",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7e1e9c_faabb9b7",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-29T15:51:46Z",
+      "side": 1,
+      "message": "The expensive parts of it are the certs, which are refcounted so it\u0027s not extra memory (net/ holds on to them). Also before, we were still holding on to a cert refcount in SSLStatus",
+      "parentUuid": "2e0fd955_5f70d9ca",
       "revId": "a41150b092561a2bc485f47a8776e035074267b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "75aaa26a_1bc6752e",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-29T15:51:46Z",
+      "side": 1,
+      "message": "My other comment addresses this (but let me know if you think it doesn\u0027t).",
+      "parentUuid": "f8ffd659_9fec2910",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "002b8dd7_6e42ec1d",
         "filename": "content/public/browser/navigation_handle.h",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-29T14:07:41Z",
       "side": 1,
       "message": "Can you still get a base::nullopt if your return type is no longer base::Optional\u003cfoo\u003e?\n\nAlso side-question: we discussed the usage of const in the public content/ API. We agree that returning a const value from a function is ok right? (here the caller really shouldn\u0027t be allowed to modify it).",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f40ff63_267543b1",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-29T15:51:46Z",
+      "side": 1,
+      "message": "oops, the comment wasn\u0027t updated correctly. Fixed, thanks.\n\nRe const in public; that\u0027s just for the method itself. but we return const references often.",
+      "parentUuid": "002b8dd7_6e42ec1d",
       "revId": "a41150b092561a2bc485f47a8776e035074267b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
