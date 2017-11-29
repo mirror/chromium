@@ -13,6 +13,7 @@
 #include "ash/public/interfaces/accessibility_controller.mojom.h"
 #include "ash/session/session_observer.h"
 #include "base/macros.h"
+#include "base/time/time.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
 class PrefChangeRegistrar;
@@ -57,6 +58,14 @@ class ASH_EXPORT AccessibilityController
   // Triggers an accessibility alert to give the user feedback.
   void TriggerAccessibilityAlert(mojom::AccessibilityAlert alert);
 
+  // Plays an earcon. Earcons are brief and distinctive sounds that indicate
+  // when their mapped event has occurred. The sound key enums can be found in
+  // chromeos/audio/chromeos_sounds.h.
+  void PlayEarcon(int32_t sound_key);
+
+  // Initiates play of shutdown sound.
+  void PlayShutdownSound();
+
   // mojom::AccessibilityController:
   void SetClient(mojom::AccessibilityControllerClientPtr client) override;
 
@@ -69,6 +78,9 @@ class ASH_EXPORT AccessibilityController
 
   // Test helpers:
   void FlushMojoForTest();
+  base::TimeDelta shutdown_sound_duration_for_test() const {
+    return shutdown_sound_duration_for_test_;
+  }
 
  private:
   // Observes either the signin screen prefs or active user prefs and loads
@@ -83,6 +95,9 @@ class ASH_EXPORT AccessibilityController
   void UpdateLargeCursorFromPref();
   void UpdateMonoAudioFromPref();
   void UpdateSpokenFeedbackFromPref();
+
+  // Called when |client_|'s PlayShutdownSound callback runs.
+  void OnGetShutdownSoundDuration(base::TimeDelta shutdown_sound_duration);
 
   service_manager::Connector* connector_ = nullptr;
   std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
@@ -103,6 +118,8 @@ class ASH_EXPORT AccessibilityController
       A11Y_NOTIFICATION_NONE;
 
   PrefService* pref_service_for_test_ = nullptr;
+
+  base::TimeDelta shutdown_sound_duration_for_test_;
 
   DISALLOW_COPY_AND_ASSIGN(AccessibilityController);
 };
