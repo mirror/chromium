@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "57657aaf_416bab49",
+        "filename": "ash/system/audio/volume_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-29T18:38:29Z",
+      "side": 1,
+      "message": "I don\u0027t think the opacity should be different in ash. The appearance of the focus outline is a property common to all sliders. If sliders need to have a different opacity than some other control\u0027s focus outline, that\u0027s a little weird to me but it\u0027s still part of the slider and not specific to Ash. As far as I know, none of the controls in Ash are intentionally different from the (theoretical) standard set of Views controls.\n\n\u003e I already put the native theme color as the default.\n\nI don\u0027t know which lines you\u0027re referring to exactly, but this patch uses kFocusBorderColor for the slider which is not part of the native theme.",
+      "parentUuid": "73a3971e_811bb0d7",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "7a18265758b1ce6bb2a48e481216ca8dc4977f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51cd90c9_10c9a8f5",
         "filename": "ui/views/controls/slider.cc",
         "patchSetId": 4
