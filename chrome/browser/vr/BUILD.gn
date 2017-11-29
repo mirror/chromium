@@ -119,6 +119,8 @@ static_library("vr_common") {
     "gltf_parser.cc",
     "gltf_parser.h",
     "macros.h",
+    "metrics_helper.cc",
+    "metrics_helper.h",
     "model/color_scheme.cc",
     "model/color_scheme.h",
     "model/controller_model.h",
