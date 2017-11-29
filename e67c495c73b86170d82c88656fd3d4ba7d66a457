@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74ac3904_60387688",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-29T01:20:24Z",
+      "side": 1,
+      "message": "nit: This makes it sound like a threading issue. It should be something like ensuring correct recording scale factor when updating the DisplayItemList on a layer right?",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "e67c495c73b86170d82c88656fd3d4ba7d66a457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65e8233_3b348d20",
+        "filename": "cc/layers/picture_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-29T01:20:24Z",
+      "side": 1,
+      "message": "I\u0027d suggest adding this as a param to UpdateDisplayItemList. Leaves less room for a bug like this again.",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 53
+      },
+      "revId": "e67c495c73b86170d82c88656fd3d4ba7d66a457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f624d5d_628da737",
+        "filename": "cc/layers/picture_layer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-29T01:20:24Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this. You can create a FakePictureLayer with just the ContentLayerClient for this test.",
+      "range": {
+        "startLine": 460,
+        "startChar": 0,
+        "endLine": 462,
+        "endChar": 71
+      },
+      "revId": "e67c495c73b86170d82c88656fd3d4ba7d66a457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8934f9ea_356a652c",
+        "filename": "cc/layers/picture_layer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-29T01:20:24Z",
+      "side": 1,
+      "message": "Can you do this twice, first without setting the recording scale and next with setting it on LayerTreeHost. So its clear that setting the scale results in correct analysis?",
+      "range": {
+        "startLine": 499,
+        "startChar": 2,
+        "endLine": 499,
+        "endChar": 51
+      },
+      "revId": "e67c495c73b86170d82c88656fd3d4ba7d66a457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
