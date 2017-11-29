@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "base/process/process.h"
 #include "content/public/common/content_features.h"
 #include "content/public/test/test_host_resolver.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -38,14 +39,21 @@ class NetworkServiceTestHelper::NetworkServiceTestImpl
 
   void SimulateNetworkChange(network::mojom::ConnectionType type,
                              SimulateNetworkChangeCallback callback) override {
+    LOG(ERROR) << "Begin NetworkServiceTestHelper::NetworkServiceTestImpl::SimulateNetworkChange()";
+    LOG(ERROR) << "base::Process::Current().Pid() = " << base::Process::Current().Pid();
     DCHECK(net::NetworkChangeNotifier::HasNetworkChangeNotifier());
     net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
         net::NetworkChangeNotifier::ConnectionType(type));
     std::move(callback).Run();
+    LOG(ERROR) << "Finished NetworkServiceTestHelper::NetworkServiceTestImpl::SimulateNetworkChange()";
   }
 
-  void SimulateCrash() override {
+  void SimulateCrash(SimulateCrashCallback callback) override {
+    LOG(ERROR) << "Begin NetworkServiceTestHelper::NetworkServiceTestImpl::SimulateCrash()";
+    LOG(ERROR) << "base::Process::Current().Pid() = " << base::Process::Current().Pid();
+    std::move(callback).Run((int32_t)base::Process::Current().Pid());
     CHECK(false) << "Crash NetworkService process for testing.";
+    LOG(ERROR) << "Finished NetworkServiceTestHelper::NetworkServiceTestImpl::SimulateCrash()";
   }
 
   void BindRequest(content::mojom::NetworkServiceTestRequest request) {
