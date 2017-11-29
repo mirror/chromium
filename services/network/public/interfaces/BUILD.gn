@@ -11,8 +11,11 @@ mojom("interfaces") {
     "fetch_api.mojom",
     "http_request_headers.mojom",
     "mutable_network_traffic_annotation_tag.mojom",
+    "net_address.mojom",
     "network_change_manager.mojom",
+    "network_error.mojom",
     "restricted_cookie_manager.mojom",
+    "udp_socket.mojom",
   ]
 
   public_deps = [
