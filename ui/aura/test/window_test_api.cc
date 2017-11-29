@@ -27,5 +27,9 @@ bool WindowTestApi::ContainsMouse() const {
              host->dispatcher()->GetLastMouseLocationInRoot());
 }
 
+void WindowTestApi::SetOccluded(bool occluded) {
+  window_->SetOccluded(occluded);
+}
+
 }  // namespace test
 }  // namespace aura

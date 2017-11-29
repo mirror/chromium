@@ -21,6 +21,12 @@ class WindowTestApi {
 
   bool ContainsMouse() const;
 
+  // Sets the occlusion state of the window and notifies the delegate if it is
+  // different from the previous state. Note: Any change to this window or
+  // another window with the same root can cause occlusion states to be
+  // recomputed and the value set by this method to be overridden.
+  void SetOccluded(bool occluded);
+
  private:
   Window* window_;
 
