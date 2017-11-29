@@ -16,6 +16,24 @@
       "revId": "7161fe861da83c7125b5826766649bc47128ff02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51134ed6_dd667dcc",
+        "filename": "tools/grit/pak_util.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-29T02:09:21Z",
+      "side": 1,
+      "message": "First part: Like it! Done.\n\nSecond part: Meh, the numbers are small enough (and our client base small enough :P) that i think it\u0027s fine.",
+      "parentUuid": "aa87a53c_ce75fe7c",
+      "revId": "7161fe861da83c7125b5826766649bc47128ff02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
