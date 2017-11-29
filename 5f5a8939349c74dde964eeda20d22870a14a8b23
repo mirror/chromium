@@ -22,6 +22,30 @@
       "revId": "5f5a8939349c74dde964eeda20d22870a14a8b23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8cb929a_7a7b27dc",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-29T07:35:38Z",
+      "side": 1,
+      "message": "\u003e If you have to explicitly call WasHidden, do you need to also call WasShown?\n\nNot need, but should. Done.\n\n\u003e That said, what is the test mocking that doesn\u0027t result in the WasHidden/WasShown being called?\n\nthe test is using TestWebContents, which isn\u0027t backed by views or aura::Windows as I understand it.",
+      "parentUuid": "fdf23ef7_74d02871",
+      "range": {
+        "startLine": 131,
+        "startChar": 21,
+        "endLine": 131,
+        "endChar": 30
+      },
+      "revId": "5f5a8939349c74dde964eeda20d22870a14a8b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
