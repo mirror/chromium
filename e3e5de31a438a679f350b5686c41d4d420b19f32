@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e2cb401_e686d92c",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-29T21:31:03Z",
+      "side": 1,
+      "message": "These lines are unnecessary. (more from the bad merge)",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 36
+      },
+      "revId": "e3e5de31a438a679f350b5686c41d4d420b19f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe1efed_317d45f0",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-29T21:31:03Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this header.",
+      "revId": "e3e5de31a438a679f350b5686c41d4d420b19f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90d4723_de091476",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-29T21:31:03Z",
+      "side": 1,
+      "message": "This returns a unique_ptr so this value will be freed after this statement is evaluated. I would follow the example of SuggestionsServiceImpl and have the AuthenticatorImpl own the TickClock.",
+      "range": {
+        "startLine": 702,
+        "startChar": 6,
+        "endLine": 702,
+        "endChar": 37
+      },
+      "revId": "e3e5de31a438a679f350b5686c41d4d420b19f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
