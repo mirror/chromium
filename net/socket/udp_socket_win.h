@@ -118,8 +118,9 @@ class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
              const CompletionCallback& callback);
 
   // Sets the receive buffer size (in bytes) for the socket.
-  // Returns a net error code.
-  int SetReceiveBufferSize(int32_t size);
+    // Returns a net error code.
+      int
+      SetReceiveBufferSize(int32_t size);
 
   // Sets the send buffer size (in bytes) for the socket.
   // Returns a net error code.
@@ -199,6 +200,9 @@ class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
   // This class by default uses overlapped IO. Call this method before Open()
   // to switch to non-blocking IO.
   void UseNonBlockingIO();
+
+  // Apply |tag| to this socket.
+  void Tag(const SocketTag& tag);
 
  private:
   enum SocketOptions {

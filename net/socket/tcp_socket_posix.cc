@@ -36,6 +36,7 @@
 #include "net/socket/socket_net_log_params.h"
 #include "net/socket/socket_options.h"
 #include "net/socket/socket_posix.h"
+#include "net/socket/socket_tag.h"
 
 // If we don't have a definition for TCPI_OPT_SYN_DATA, create one.
 #if !defined(TCPI_OPT_SYN_DATA)
@@ -523,6 +524,11 @@ SocketDescriptor TCPSocketPosix::ReleaseSocketDescriptorForTesting() {
   SocketDescriptor socket_descriptor = socket_->ReleaseConnectedSocket();
   socket_.reset();
   return socket_descriptor;
+}
+
+void TCPSocketPosix::Tag(const SocketTag& tag) {
+  DCHECK(socket_);
+  tag.Apply(socket_->socket_fd());
 }
 
 void TCPSocketPosix::AcceptCompleted(
