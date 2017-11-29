@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4903b46b_35d14426",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-29T12:33:10Z",
+      "side": 1,
+      "message": "This value is not set in AutofillManagerTest ion M63.\nThis cause unittests to fail on branch.",
+      "range": {
+        "startLine": 395,
+        "startChar": 61,
+        "endLine": 395,
+        "endChar": 75
+      },
+      "revId": "1dd4a899fd513524a77939c893e2a067baf649af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
