@@ -577,6 +577,16 @@ bool RenderThreadImpl::HistogramCustomizer::IsAlexaTop10NonGoogleSite(
   return false;
 }
 
+RenderThreadImpl::ContextLostObserver::ContextLostObserver(
+    const base::Closure& callback)
+    : callback_(callback) {}
+
+RenderThreadImpl::ContextLostObserver::~ContextLostObserver() = default;
+
+void RenderThreadImpl::ContextLostObserver::OnContextLost() {
+  callback_.Run();
+}
+
 // static
 RenderThreadImpl* RenderThreadImpl::Create(
     const InProcessChildThreadParams& params) {
@@ -644,6 +654,9 @@ RenderThreadImpl::RenderThreadImpl(
               .Build()),
       renderer_scheduler_(std::move(scheduler)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
+      shared_worker_context_lost_observer_(
+          base::Bind(&RenderThreadImpl::OnSharedWorkerContextLost,
+                     base::Unretained(this))),
       renderer_binding_(this),
       client_id_(1),
       compositing_mode_watcher_binding_(this) {
@@ -662,6 +675,9 @@ RenderThreadImpl::RenderThreadImpl(
       renderer_scheduler_(std::move(scheduler)),
       main_message_loop_(std::move(main_message_loop)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
+      shared_worker_context_lost_observer_(
+          base::Bind(&RenderThreadImpl::OnSharedWorkerContextLost,
+                     base::Unretained(this))),
       is_scroll_animator_enabled_(false),
       renderer_binding_(this),
       compositing_mode_watcher_binding_(this) {
@@ -1129,6 +1145,7 @@ void RenderThreadImpl::AddRoute(int32_t routing_id, IPC::Listener* listener) {
 }
 
 void RenderThreadImpl::RemoveRoute(int32_t routing_id) {
+  frame_sinks_.erase(routing_id);
   ChildThreadImpl::GetRouter()->RemoveRoute(routing_id);
 }
 
@@ -2141,34 +2158,39 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
           limits, attributes, share_context,
           ui::command_buffer_metrics::RENDER_COMPOSITOR_CONTEXT));
 
-  if (layout_test_deps_) {
-    callback.Run(layout_test_deps_->CreateLayerTreeFrameSink(
-        routing_id, std::move(gpu_channel_host), std::move(context_provider),
-        std::move(worker_context_provider), GetGpuMemoryBufferManager(), this));
-    return;
-  }
+  std::unique_ptr<cc::LayerTreeFrameSink> frame_sink;
 
+  if (layout_test_deps_) {
+    frame_sink = layout_test_deps_->CreateLayerTreeFrameSink(
+        routing_id, std::move(gpu_channel_host), std::move(context_provider),
+        std::move(worker_context_provider), GetGpuMemoryBufferManager(), this);
+  }
 #if defined(OS_ANDROID)
-  if (sync_compositor_message_filter_) {
+  else if (sync_compositor_message_filter_) {
     std::unique_ptr<viz::BeginFrameSource> begin_frame_source =
         params.synthetic_begin_frame_source
             ? std::move(params.synthetic_begin_frame_source)
             : CreateExternalBeginFrameSource(routing_id);
-    callback.Run(std::make_unique<SynchronousLayerTreeFrameSink>(
+    frame_sink = std::make_unique<SynchronousLayerTreeFrameSink>(
         std::move(context_provider), std::move(worker_context_provider),
         GetGpuMemoryBufferManager(), shared_bitmap_manager(), routing_id,
         g_next_layer_tree_frame_sink_id++, std::move(begin_frame_source),
         sync_compositor_message_filter_.get(),
-        std::move(frame_swap_message_queue)));
-    return;
+        std::move(frame_swap_message_queue));
   }
 #endif
-  frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
-                                        std::move(client));
-  params.gpu_memory_buffer_manager = GetGpuMemoryBufferManager();
-  callback.Run(std::make_unique<viz::ClientLayerTreeFrameSink>(
-      std::move(context_provider), std::move(worker_context_provider),
-      &params));
+  else {
+    frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
+                                          std::move(client));
+    params.gpu_memory_buffer_manager = GetGpuMemoryBufferManager();
+    frame_sink = std::make_unique<viz::ClientLayerTreeFrameSink>(
+        std::move(context_provider), std::move(worker_context_provider),
+        &params);
+  }
+
+  frame_sinks_.insert(std::make_pair(routing_id, frame_sink->GetWeakPtr()));
+
+  callback.Run(std::move(frame_sink));
 }
 
 AssociatedInterfaceRegistry*
@@ -2438,6 +2460,15 @@ base::TaskRunner* RenderThreadImpl::GetWorkerTaskRunner() {
   return categorized_worker_pool_.get();
 }
 
+void RenderThreadImpl::OnSharedWorkerContextLost() {
+  is_shared_worker_context_lost_ = true;
+  for (const auto& kv : frame_sinks_) {
+    compositor_task_runner_->PostTask(
+        FROM_HERE,
+        base::Bind(&cc::LayerTreeFrameSink::OnWorkerContextLost, kv.second));
+  }
+}
+
 scoped_refptr<ui::ContextProviderCommandBuffer>
 RenderThreadImpl::SharedCompositorWorkerContextProvider() {
   DCHECK(IsMainThread());
@@ -2446,9 +2477,15 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
     // Note: If context is lost, delete reference after releasing the lock.
     viz::ContextProvider::ScopedContextLock lock(
         shared_worker_context_provider_.get());
-    if (shared_worker_context_provider_->ContextGL()
-            ->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
+
+    if (!is_shared_worker_context_lost_ &&
+        shared_worker_context_provider_->ContextGL()
+                ->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
       return shared_worker_context_provider_;
+
+    shared_worker_context_provider_->RemoveObserver(
+        &shared_worker_context_lost_observer_);
+    is_shared_worker_context_lost_ = false;
   }
 
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_host(
@@ -2474,6 +2511,8 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
       support_oop_rasterization,
       ui::command_buffer_metrics::RENDER_WORKER_CONTEXT, stream_id,
       stream_priority);
+  shared_worker_context_provider_->AddObserver(
+      &shared_worker_context_lost_observer_);
   auto result = shared_worker_context_provider_->BindToCurrentThread();
   if (result != gpu::ContextResult::kSuccess)
     shared_worker_context_provider_ = nullptr;
