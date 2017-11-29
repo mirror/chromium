@@ -343,6 +343,9 @@ InProgressDownloadObserver::~InProgressDownloadObserver() = default;
 void InProgressDownloadObserver::OnDownloadUpdated(DownloadItem* download) {
   // TODO(crbug.com/778425): Properly handle fail/resume/retry for downloads
   // that are in the INTERRUPTED state for a long time.
+  if (!in_progress_cache_)
+    return;
+
   switch (download->GetState()) {
     case DownloadItem::DownloadState::COMPLETE:
     case DownloadItem::DownloadState::CANCELLED:
@@ -359,6 +362,9 @@ void InProgressDownloadObserver::OnDownloadUpdated(DownloadItem* download) {
 }
 
 void InProgressDownloadObserver::OnDownloadRemoved(DownloadItem* download) {
+  if (!in_progress_cache_)
+    return;
+
   in_progress_cache_->RemoveEntry(download->GetGuid());
 }
 
@@ -886,11 +892,31 @@ DownloadItem* DownloadManagerImpl::CreateDownloadItem(
   return item;
 }
 
-void DownloadManagerImpl::PostInitialization() {
+void DownloadManagerImpl::PostInitialization(bool history_db_init,
+                                             bool in_progress_cache_init) {
   DCHECK(!initialized_);
-  initialized_ = true;
-  for (auto& observer : observers_)
-    observer.OnManagerInitialized();
+
+  switch (dependency) {
+    case DOWNLOAD_INITIALIZATION_DEPENDENCY_HISTORY_DB:
+      history_db_initialized_ = true;
+      break;
+    case DOWNLOAD_INITIALIZATION_DEPENDENCY_IN_PROGRESS_CACHE:
+      in_progress_cache_initialized_ = true;
+      break;
+    case DOWNLOAD_INITIALIZATION_DEPENDENCY_NONE:
+    default:
+      NOTREACHED();
+      break;
+  }
+
+  // Download manager is only intialized if both history db and in progress
+  // cache are intialized.
+  initialized_ = history_db_initialized_ && in_progress_cache_initialized_;
+
+  if (initialized_) {
+    for (auto& observer : observers_)
+      observer.OnManagerInitialized();
+  }
 }
 
 bool DownloadManagerImpl::IsManagerInitialized() const {

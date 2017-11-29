@@ -37,6 +37,25 @@ class DownloadItemImpl;
 class DownloadRequestHandleInterface;
 class ResourceContext;
 
+// Responsible for persisting the in-progress metadata associated with a
+// download.
+class InProgressDownloadObserver : public DownloadItem::Observer {
+ public:
+  explicit InProgressDownloadObserver(
+      active_downloads::InProgressMetadataCache* metadata_cache);
+  ~InProgressDownloadObserver() override;
+
+ private:
+  // DownloadItem::Observer
+  void OnDownloadUpdated(DownloadItem* download) override;
+  void OnDownloadRemoved(DownloadItem* download) override;
+
+  // The persistent cache to store in-progress metadata.
+  active_downloads::InProgressMetadataCache* metadata_cache_;
+
+  DISALLOW_COPY_AND_ASSIGN(InProgressDownloadObserver);
+};
+
 class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
                                            public UrlDownloadHandler::Delegate,
                                            private DownloadItemImplDelegate {
@@ -105,7 +124,8 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       base::Time last_access_time,
       bool transient,
       const std::vector<DownloadItem::ReceivedSlice>& received_slices) override;
-  void PostInitialization() override;
+  void PostInitialization(bool history_db_init,
+                          bool in_progress_cache_init) override;
   bool IsManagerInitialized() const override;
   int InProgressCount() const override;
   int NonMaliciousInProgressCount() const override;
@@ -252,6 +272,10 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
 
   // True if the download manager has been initialized and loaded all the data.
   bool initialized_;
+
+  // Whether the history db and/or in progress cache are initialized.
+  bool history_db_initialized_;
+  bool in_progress_initialized_;
 
   // Observers that want to be notified of changes to the set of downloads.
   base::ObserverList<Observer> observers_;
