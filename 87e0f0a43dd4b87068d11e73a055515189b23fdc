@@ -16,6 +16,24 @@
       "revId": "87e0f0a43dd4b87068d11e73a055515189b23fdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9241a377_d3f4bb7c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 27
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-29T18:26:00Z",
+      "side": 1,
+      "message": "I agree with the aspiration, but please read on for why I have not yet made such\nsimplifications.\n\nI think rel2abs is still a good idea here because it adds a drive letter on Windows, and otherwise (if current drive for the browser process !\u003d current drive for the CGI) the tests will die when they try to attack the file but fail to find it, even though other uses of TMP/TMPDIR/TEMP still work fine because they don\u0027t send the pathname across that process\nboundary. Relative TMPDIR support is also still there because run-webkit-tests takes TMPDIR\nfrom the containing environment (e.g. your shell), and when it\u0027s set to a relative path (e.g.\n./out/tmp) most things work but there is strange brokenness inside the CGIs and specifically in\nthe upload parts, because non-\"file:\" (that is, non-\"/local/\") layout tests require absolute\npathnames for drag-and-drop operations.\n\nTechnically tmpdir() does still work in taint mode, and provides an OS-specific \"sane default\" without reference to environment variables. On Windows that default is not great (effectively \"\u003ccurrentdrive\u003e:\\\" I believe), but at least works; on Linux it\u0027s \"/tmp\" which is usually fine.\n\nHow confident are we that all chromium layout tests are always run with an Apache that uses one of the bundled configurations? If the answer is \"close enough to 100% that we don\u0027t care about the rest\" then indeed the simplification is the best way forward now that all those configurations include PassEnv. If layout test environments we care about still use web\nservers other than Apache I\u0027m more hesitant to remove the fallback since it might cause.",
+      "parentUuid": "6646fd70_dbe93700",
+      "revId": "87e0f0a43dd4b87068d11e73a055515189b23fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
