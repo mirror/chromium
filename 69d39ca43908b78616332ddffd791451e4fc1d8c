@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c13f1345_f721eda3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T07:29:41Z",
+      "side": 1,
+      "message": "I\u0027d remove this as the current CL isn\u0027t just for OOPIFs.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "69d39ca43908b78616332ddffd791451e4fc1d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c9dd45_1e09d510",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T07:29:41Z",
+      "side": 1,
+      "message": "nit: { not necessary",
+      "range": {
+        "startLine": 851,
+        "startChar": 25,
+        "endLine": 851,
+        "endChar": 26
+      },
+      "revId": "69d39ca43908b78616332ddffd791451e4fc1d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
