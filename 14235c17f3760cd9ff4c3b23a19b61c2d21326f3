@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4a0b14c_868928a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-29T22:46:10Z",
+      "side": 1,
+      "message": "so I think this is still problematic. Consider the case of chrome being started as a background service - browserprovider or even cct.\n\nIn that case, you will get ChromeApplication.onCreate set nice and early as expected (yay). However, if a request for navigation doesn\u0027t come in until seconds, minutes or even hours later, I believe this metric isn\u0027t actually capturing what you want since it\u0027ll look like a terribly long time has elapsed. I think the same is true for some other activities - say you launch into first run, the clock will be running the whole time.\n\nAlso, I see that ChromeTabbedActivity.preInflationStartup resets \"running application start\" which really means this number could be off.\n\nI guess the fundamental thing I see missing is that we want to ensure this really is the first activity launch and what caused the app to come to foreground. Unless that\u0027s captured somewhere and I\u0027m just missing it.",
+      "range": {
+        "startLine": 212,
+        "startChar": 27,
+        "endLine": 212,
+        "endChar": 28
+      },
+      "revId": "14235c17f3760cd9ff4c3b23a19b61c2d21326f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
