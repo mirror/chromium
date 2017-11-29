@@ -12,11 +12,12 @@
 #include "base/time/time.h"
 #include "net/ssl/ssl_info.h"
 #include "services/network/public/cpp/cors_error_status.h"
+#include "services/network/public/cpp/export.h"
 #include "services/network/public/interfaces/cors.mojom-shared.h"
 
 namespace network {
 
-struct URLLoaderCompletionStatus {
+struct NETWORK_PUBLIC_CPP_EXPORT URLLoaderCompletionStatus {
   URLLoaderCompletionStatus();
   URLLoaderCompletionStatus(const URLLoaderCompletionStatus& status);
 
