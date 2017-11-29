@@ -16,12 +16,34 @@
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
 #include "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h"
 #include "components/viz/service/frame_sinks/video_capture/capturable_frame_sink.h"
+#include "ui/gl/gl_switches.h"
+
+#if defined(OS_WIN)
+#include "base/feature_list.h"
+#include "base/win/windows_version.h"
+#include "components/viz/service/gl/thread_vsync_begin_frame_source.h"
+#endif
 
 #if DCHECK_IS_ON()
 #include <sstream>
 #endif
 
 namespace viz {
+
+namespace {
+
+bool IsGpuVSyncSignalSupported() {
+#if defined(OS_WIN)
+  // TODO(stanisc): http://crbug.com/467617 Limit to Windows 8.1+ for now
+  // because of locking issue caused by waiting for VSync on Win7 and Win 8.0.
+  return base::win::GetVersion() >= base::win::VERSION_WIN8_1 &&
+         base::FeatureList::IsEnabled(features::kD3DVsync);
+#else
+  return false;
+#endif  // defined(OS_WIN)
+}
+
+}  // namespace
 
 FrameSinkManagerImpl::FrameSinkSourceMapping::FrameSinkSourceMapping() =
     default;
@@ -112,14 +134,29 @@ void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
   DCHECK(display_provider_);
 
-  std::unique_ptr<SyntheticBeginFrameSource> begin_frame_source;
+  std::unique_ptr<ExternalBeginFrameSource> external_begin_frame_source;
+  if (IsGpuVSyncSignalSupported()) {
+#if defined(OS_WIN)
+    LOG(ERROR) << "Create GPU begin frame source";
+    external_begin_frame_source =
+        std::make_unique<ThreadVSyncBeginFrameSource>(nullptr, surface_handle);
+#endif
+  } else {
+#if defined(OS_WIN)
+    LOG(ERROR) << "GPU begin frame source not supported.";
+#endif
+  }
+
+  std::unique_ptr<SyntheticBeginFrameSource> synthetic_begin_frame_source;
   auto display = display_provider_->CreateDisplay(
-      frame_sink_id, surface_handle, renderer_settings, &begin_frame_source);
+      frame_sink_id, surface_handle, renderer_settings,
+      external_begin_frame_source.get(), &synthetic_begin_frame_source);
 
   auto frame_sink = std::make_unique<RootCompositorFrameSinkImpl>(
-      this, frame_sink_id, std::move(display), std::move(begin_frame_source),
-      std::move(request), std::move(client),
-      std::move(display_private_request));
+      this, frame_sink_id, std::move(display),
+      std::move(synthetic_begin_frame_source),
+      std::move(external_begin_frame_source), std::move(request),
+      std::move(client), std::move(display_private_request));
   SinkAndSupport& entry = compositor_frame_sinks_[frame_sink_id];
   entry.support = frame_sink->support();
   entry.sink = std::move(frame_sink);

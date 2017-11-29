@@ -6,7 +6,9 @@
 
 #include <memory>
 
+#include "base/command_line.h"
 #include "base/win/windows_version.h"
+#include "components/viz/common/switches.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/ipc/service/direct_composition_surface_win.h"
 #include "gpu/ipc/service/gpu_vsync_provider_win.h"
@@ -27,7 +29,9 @@ bool IsGpuVSyncSignalSupported() {
   // TODO(stanisc): http://crbug.com/467617 Limit to Windows 8.1+ for now
   // because of locking issue caused by waiting for VSync on Win7 and Win 8.0.
   return base::win::GetVersion() >= base::win::VERSION_WIN8_1 &&
-         base::FeatureList::IsEnabled(features::kD3DVsync);
+         base::FeatureList::IsEnabled(features::kD3DVsync) &&
+         !base::CommandLine::ForCurrentProcess()->HasSwitch(
+             switches::kEnableViz);
 }
 
 }  // namespace

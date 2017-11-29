@@ -5,4 +5,5 @@ include_rules = [
   "+components/viz/service/surfaces",
   "+gpu/ipc/common",
   "+mojo/public/cpp/bindings",
+  "+ui/gl/gl_switches.h",
 ]

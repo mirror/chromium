@@ -152,9 +152,11 @@ void DisplayOutputSurface::OnVSyncParametersUpdated(base::TimeTicks timebase,
                                                     base::TimeDelta interval) {
   client_->DidUpdateVSyncParameters(timebase, interval);
   // TODO(brianderson): We should not be receiving 0 intervals.
-  synthetic_begin_frame_source_->OnUpdateVSyncParameters(
-      timebase,
-      interval.is_zero() ? BeginFrameArgs::DefaultInterval() : interval);
+  if (synthetic_begin_frame_source_) {
+    synthetic_begin_frame_source_->OnUpdateVSyncParameters(
+        timebase,
+        interval.is_zero() ? BeginFrameArgs::DefaultInterval() : interval);
+  }
 }
 
 }  // namespace viz

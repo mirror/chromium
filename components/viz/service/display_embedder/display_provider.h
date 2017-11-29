@@ -11,6 +11,7 @@
 
 namespace viz {
 
+class BeginFrameSource;
 class Display;
 class FrameSinkId;
 class RendererSettings;
@@ -27,6 +28,7 @@ class DisplayProvider {
       const FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
       const RendererSettings& renderer_settings,
+      BeginFrameSource* begin_frame_source,
       std::unique_ptr<SyntheticBeginFrameSource>* out_begin_frame_source) = 0;
 };
 

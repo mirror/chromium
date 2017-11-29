@@ -40,6 +40,7 @@ class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
       const FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
       const RendererSettings& renderer_settings,
+      BeginFrameSource* begin_frame_source,
       std::unique_ptr<SyntheticBeginFrameSource>* out_begin_frame_source)
       override;
 

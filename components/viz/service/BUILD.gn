@@ -234,7 +234,15 @@ viz_component("service") {
       "display_embedder/compositor_overlay_candidate_validator_win.h",
       "display_embedder/software_output_device_win.cc",
       "display_embedder/software_output_device_win.h",
+      "gl/thread_vsync_begin_frame_source.cc",
+      "gl/thread_vsync_begin_frame_source.h",
     ]
+
+    libs = [
+      "dxgi.lib",
+      "dwmapi.lib",
+    ]
+    ldflags = [ "/DELAYLOAD:dxgi.dll" ]
   }
 
   if (enable_vulkan) {

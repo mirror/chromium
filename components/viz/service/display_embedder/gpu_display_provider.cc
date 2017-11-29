@@ -62,11 +62,16 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
     const FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
     const RendererSettings& renderer_settings,
+    BeginFrameSource* begin_frame_source,
     std::unique_ptr<SyntheticBeginFrameSource>* out_begin_frame_source) {
-  auto synthetic_begin_frame_source =
-      base::MakeUnique<DelayBasedBeginFrameSource>(
-          base::MakeUnique<DelayBasedTimeSource>(task_runner_.get()),
-          restart_id_);
+  SyntheticBeginFrameSource* synthetic_begin_frame_source = nullptr;
+  if (!begin_frame_source) {
+    *out_begin_frame_source = base::MakeUnique<DelayBasedBeginFrameSource>(
+        base::MakeUnique<DelayBasedTimeSource>(task_runner_.get()),
+        restart_id_);
+    begin_frame_source = (*out_begin_frame_source).get();
+    synthetic_begin_frame_source = (*out_begin_frame_source).get();
+  }
 
   scoped_refptr<InProcessContextProvider> context_provider =
       base::MakeRefCounted<InProcessContextProvider>(
@@ -84,14 +89,14 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
 #if defined(USE_OZONE)
     display_output_surface = base::MakeUnique<DisplayOutputSurfaceOzone>(
         std::move(context_provider), surface_handle,
-        synthetic_begin_frame_source.get(), gpu_memory_buffer_manager_.get(),
+        synthetic_begin_frame_source, gpu_memory_buffer_manager_.get(),
         GL_TEXTURE_2D, GL_RGB);
 #else
     NOTREACHED();
 #endif
   } else {
     display_output_surface = base::MakeUnique<DisplayOutputSurface>(
-        std::move(context_provider), synthetic_begin_frame_source.get());
+        std::move(context_provider), synthetic_begin_frame_source);
   }
 
   int max_frames_pending =
@@ -99,11 +104,7 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
   DCHECK_GT(max_frames_pending, 0);
 
   auto scheduler = base::MakeUnique<DisplayScheduler>(
-      synthetic_begin_frame_source.get(), task_runner_.get(),
-      max_frames_pending);
-
-  // The ownership of the BeginFrameSource is transfered to the caller.
-  *out_begin_frame_source = std::move(synthetic_begin_frame_source);
+      begin_frame_source, task_runner_.get(), max_frames_pending);
 
   return base::MakeUnique<Display>(
       ServerSharedBitmapManager::current(), gpu_memory_buffer_manager_.get(),
