@@ -16,6 +16,24 @@
       "revId": "7e3a5e4d1c653595aed00322a61e47fdbb678c54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b068671a_1063b1b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-29T10:20:54Z",
+      "side": 1,
+      "message": "Oh, thanks, I misunderstood and thought we had a current tab reparenting case. Comment tweaked.\n\nThe reparenting tests all pass.",
+      "parentUuid": "96113422_7722abaf",
+      "revId": "7e3a5e4d1c653595aed00322a61e47fdbb678c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
