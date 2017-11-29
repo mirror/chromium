@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "a7170111_4737d002",
+        "filename": "chrome/android/java/res/layout/list_menu_item.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T23:51:42Z",
+      "side": 1,
+      "message": "Updated, but I doesn\u0027t have a JellyBean device around. I believe it should be tested if they are used by the others.",
+      "parentUuid": "13fbd407_63b6d136",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 68
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "844f7940_9effd7f4",
         "filename": "chrome/android/java/res/xml/languages_preferences.xml",
         "patchSetId": 11
@@ -329,6 +353,30 @@
       "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400dd593_9f14a58c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T23:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "225eb778_f1b9edaf",
+      "range": {
+        "startLine": 918,
+        "startChar": 54,
+        "endLine": 918,
+        "endChar": 65
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -497,6 +545,30 @@
     },
     {
       "key": {
+        "uuid": "c0772278_63bb9aef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T23:51:42Z",
+      "side": 1,
+      "message": "Sure, Done.",
+      "parentUuid": "a62b9b55_64d45d05",
+      "range": {
+        "startLine": 172,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 82
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b165841f_a40979b4",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 11
@@ -568,6 +640,30 @@
     },
     {
       "key": {
+        "uuid": "161ba086_6197fd84",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T23:51:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "07d94886_d393ac59",
+      "range": {
+        "startLine": 922,
+        "startChar": 65,
+        "endLine": 922,
+        "endChar": 126
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cac0bad_69cc9cee",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 11
@@ -618,6 +714,24 @@
       "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609ee017_c8cbf955",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T23:51:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "94213e07_f92f65a6",
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
