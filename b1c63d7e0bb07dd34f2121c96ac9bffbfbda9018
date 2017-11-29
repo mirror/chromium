@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "e56e30c6_3f8c9f1f",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-29T02:48:37Z",
+      "side": 1,
+      "message": "Okay, that makes sense to me.  I\u0027m changing it to boolean in this CL.",
+      "parentUuid": "63d7f9a6_adb4e5e0",
+      "range": {
+        "startLine": 1746,
+        "startChar": 0,
+        "endLine": 1746,
+        "endChar": 70
+      },
+      "revId": "b1c63d7e0bb07dd34f2121c96ac9bffbfbda9018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "348c9c1f_0e98a0ac",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 1
