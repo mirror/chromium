@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5b8b6fd_f4dfd64f",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-29T00:42:14Z",
+      "side": 1,
+      "message": "Will multiple values be reported per user per UMA upload period?",
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6eb4633_a91e2729",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-29T00:42:14Z",
+      "side": 1,
+      "message": "This breaks with the other VRSession... metrics and doesn\u0027t include an indication that this is per-session. I found it hard to add \"PerSession\" to the latter part of the name. Maybe these should all be \"VR.Session.\" (I wouldn\u0027t rename the legacy ones, though we could duplicate and replace them.) Then this would be VR.Session.VoiceSearch.StartedCount.",
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b00973_edc4ef46",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3325,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-29T00:42:14Z",
+      "side": 1,
+      "message": "I renamed this because this isn\u0027t the only possible \"Boolean Choice.\"",
+      "range": {
+        "startLine": 3325,
+        "startChar": 19,
+        "endLine": 3325,
+        "endChar": 27
+      },
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aabeff5_2e6174ab",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 92697,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-29T00:42:14Z",
+      "side": 1,
+      "message": "\"Request\" does not appear in the histogram name currently nor in the StartedCount below. Should it? Is started a request or is there a difference?",
+      "range": {
+        "startLine": 92697,
+        "startChar": 43,
+        "endLine": 92697,
+        "endChar": 50
+      },
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf9f19e_dbbba386",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 92710,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-29T00:42:14Z",
+      "side": 1,
+      "message": "As mentioned above, this should have some indication of \"per session.\"",
+      "revId": "7a839d08fa92f68b36fd9abc31e82aea41dfc6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
