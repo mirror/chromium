@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/work/chrome/src/storage/browser/blob'
+let g:netrw_dirhist_2='/work/chrome/src/services/network'
+let g:netrw_dirhist_3='/work/chrome/src/services/network/public'
+let g:netrw_dirhist_4='/work/chrome/src/services/network/public/interfaces'
+let g:netrw_dirhist_5='/work/chrome/src/third_party/WebKit/LayoutTests/external/wpt/fetch/api/redirect'
+let g:netrw_dirhist_6='/work/chrome/src/third_party/WebKit/LayoutTests/external/wpt/fetch/api'
+let g:netrw_dirhist_7='/work/chrome/src/third_party/WebKit/LayoutTests/external/wpt/fetch/api/resources'
