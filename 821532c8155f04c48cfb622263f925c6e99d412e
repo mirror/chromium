@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b46d411_05a78e78",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 2322,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-29T07:55:23Z",
+      "side": 1,
+      "message": "Can we just warn here instead of making this error for now?",
+      "range": {
+        "startLine": 2322,
+        "startChar": 33,
+        "endLine": 2322,
+        "endChar": 47
+      },
+      "revId": "821532c8155f04c48cfb622263f925c6e99d412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
