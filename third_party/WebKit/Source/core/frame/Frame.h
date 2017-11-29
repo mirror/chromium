@@ -154,14 +154,6 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
     return user_activation_state_.HasBeenActive();
   }
 
-  bool HasTransientUserActivation() {
-    return user_activation_state_.IsActive();
-  }
-
-  bool ConsumeTransientUserActivation() {
-    return user_activation_state_.ConsumeIfActive();
-  }
-
   void ClearActivation() { user_activation_state_.Clear(); }
 
   void SetDocumentHasReceivedUserGestureBeforeNavigation(bool value) {
@@ -235,6 +227,22 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
  private:
   // Activates the user activation state of this frame and all its ancestors.
   void NotifyUserActivation();
+
+  bool HasTransientUserActivation() {
+    return user_activation_state_.IsActive();
+  }
+
+  // Consumes the transient user activation of ancestor frames excluding the
+  // current frame.
+  void ConsumeTransientUserActivationInAncestors();
+
+  // Consumes the transient user activation of descendant frames excluding the
+  // current frame.
+  void ConsumeTransientUserActivationInDescendants();
+
+  // Consumes and returns the transient user activation of current Frame, after
+  // updating all ancestor/descendant frames.
+  bool ConsumeTransientUserActivation();
 
   Member<FrameClient> client_;
   const Member<WindowProxyManager> window_proxy_manager_;
