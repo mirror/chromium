@@ -185,7 +185,7 @@ class BindingSetBase {
            const std::string& error) {
           std::move(error_callback).Run(error);
           if (binding_set)
-            binding_set->RemoveBinding(binding_id);
+            binding_set->OnConnectionError(binding_id, 0, std::string());
         },
         mojo::GetBadMessageCallback(), weak_ptr_factory_.GetWeakPtr(),
         dispatch_binding());
