@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0afbab81_6c4b9f1e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T06:35:49Z",
+      "side": 1,
+      "message": "inside",
+      "range": {
+        "startLine": 12,
+        "startChar": 48,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80b2898_9bdfe818",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T06:35:49Z",
+      "side": 1,
+      "message": "Missing period after frame?",
+      "range": {
+        "startLine": 12,
+        "startChar": 32,
+        "endLine": 12,
+        "endChar": 37
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa8c0b1_e3b7d142",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2174,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T06:35:49Z",
+      "side": 1,
+      "message": "Was that necessary for this refactor, or was it a separate cleanup to match this check being done in other similar places?",
+      "range": {
+        "startLine": 2174,
+        "startChar": 21,
+        "endLine": 2174,
+        "endChar": 60
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5720840_5d0f7081",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T06:35:49Z",
+      "side": 1,
+      "message": "Do we need to set |params.is_anchor_first| to false when |focused_frame| is null to match previous behavior?  Maybe just initialize it to false before your if check for clarity?",
+      "range": {
+        "startLine": 2202,
+        "startChar": 8,
+        "endLine": 2202,
+        "endChar": 30
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc038e9_ae5c0248",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2581,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T06:35:49Z",
+      "side": 1,
+      "message": "It\u0027s a bit sad to have to implement this again, given that we already have FocusedLocalFrameInWidget() on WebFrameWidgetImpl.  WDYT about exposing something like that publicly from WebFrameWidget?  Would Blink owners be ok with that?",
+      "range": {
+        "startLine": 2578,
+        "startChar": 0,
+        "endLine": 2581,
+        "endChar": 76
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b7221d_cc8dd5c0",
+        "filename": "content/renderer/render_widget.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T06:35:49Z",
+      "side": 1,
+      "message": "Let\u0027s document what this does in a comment.",
+      "range": {
+        "startLine": 886,
+        "startChar": 0,
+        "endLine": 886,
+        "endChar": 64
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f21262_99e531a0",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T06:35:49Z",
+      "side": 1,
+      "message": "would it be useful to preserve this WebViewImpl.cpp comment on this line, and another in IsSelectionAnchorFirst?\n// plugins/mouse-capture-inside-shadow.html reaches here.",
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
