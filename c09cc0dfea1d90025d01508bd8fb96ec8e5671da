@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ab60e23_00c19a1a",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-29T17:19:35Z",
+      "side": 1,
+      "message": "Can you comment that this means the user is signed in?  I can imagine other ways of being authenticated...  Optional: rename the function.\n\nAlso, it probably goes closer to TabSyncEnabledAndUnencrypted(), as they\u0027re both about authentication in some way.",
+      "revId": "c09cc0dfea1d90025d01508bd8fb96ec8e5671da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
