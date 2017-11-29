@@ -71,8 +71,7 @@ using testing::SizeIs;
 using testing::WithArgs;
 
 namespace content {
-
-namespace {
+namespace browsing_data_remover_impl_unittest {
 
 const char kTestOrigin1[] = "http://host1.com:1/";
 const char kTestRegisterableDomain1[] = "host1.com";
@@ -260,8 +259,6 @@ inline Matcher<const base::Callback<bool(const GURL&)>&> ProbablySameFilter(
 base::Time AnHourAgo() {
   return base::Time::Now() - base::TimeDelta::FromHours(1);
 }
-
-}  // namespace
 
 // Testers -------------------------------------------------------------------
 
@@ -1627,4 +1624,5 @@ TEST_F(BrowsingDataRemoverImplTest, MultipleTasksInQuickSuccession) {
   EXPECT_FALSE(remover->is_removing());
 }
 
+}  // namespace browsing_data_remover_impl_unittest
 }  // namespace content
