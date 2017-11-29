@@ -92,6 +92,7 @@ Document* XSLTProcessor::CreateDocumentFromSource(
                                                     force_xhtml);
 
     if (old_document) {
+      CHECK(false);
       DocumentXSLT::From(*result).SetTransformSourceDocument(old_document);
       result->UpdateSecurityOrigin(old_document->GetSecurityOrigin());
       result->SetCookieURL(old_document->CookieURL());
