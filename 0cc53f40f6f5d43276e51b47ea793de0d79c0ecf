@@ -22,6 +22,30 @@
       "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c60ca48_487063a9",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-29T19:38:00Z",
+      "side": 1,
+      "message": "I just realized in the case you gave, where field_1 is area code, and field_2 is whole number. If user put a whole number in field_1, this will be logged as a type mismatch and RATIONALIZATION_OK cuz we would have got it wrong without rationalization anyways.\n\nSo technically DuplicatedFilling is not triggered. \n\nI am still keeping the break statement removed, since it does no harm and maybe it\u0027s better to be thorough.",
+      "parentUuid": "de6aac92_756e85ab",
+      "range": {
+        "startLine": 336,
+        "startChar": 2,
+        "endLine": 336,
+        "endChar": 51
+      },
+      "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
