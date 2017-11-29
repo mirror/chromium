@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "642357c8_4f8ff795",
+        "filename": "third_party/WebKit/Source/core/frame/Frame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-29T17:21:06Z",
+      "side": 1,
+      "message": "Could this be a simple bit set? I think it would make the callsites more readable.",
+      "revId": "b32343c9dbcf74bcb9c3d12f11dc7a6f84e56f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794be77c_fe3ee290",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-29T17:21:06Z",
+      "side": 1,
+      "message": "Can you quote a crbug indicating what the experiment is?",
+      "revId": "b32343c9dbcf74bcb9c3d12f11dc7a6f84e56f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
