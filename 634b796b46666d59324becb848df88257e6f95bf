@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2cadcb5b_c0efbd30",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-29T23:43:30Z",
+      "side": 1,
+      "message": "Sorry, I did not understand what you mean the first time. It\u0027s updated now.",
+      "parentUuid": "9c3104f1_a618d36b",
+      "revId": "634b796b46666d59324becb848df88257e6f95bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e49bbdc4_5b1823db",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f2ab13da_1716926d",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-29T23:43:30Z",
+      "side": 1,
+      "message": "I tried to make the comment a little bit more obvious that we are using map with a inversed transfrom.",
+      "parentUuid": "e49bbdc4_5b1823db",
+      "revId": "634b796b46666d59324becb848df88257e6f95bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5287bd6a_bbb10e5b",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-29T19:36:12Z",
       "side": 1,
       "message": "Can you leave a comment explaining the above if statement\u0027s intent, cuz it\u0027s not entirely obvious to read.",
+      "revId": "634b796b46666d59324becb848df88257e6f95bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50d32dc_0031545a",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-29T23:43:30Z",
+      "side": 1,
+      "message": "I have updated the comments. I hope it\u0027s clear now.",
+      "parentUuid": "5287bd6a_bbb10e5b",
       "revId": "634b796b46666d59324becb848df88257e6f95bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
