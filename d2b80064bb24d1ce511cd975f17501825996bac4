@@ -76,6 +76,30 @@
     },
     {
       "key": {
+        "uuid": "c228b5e8_28699d80",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-29T16:15:56Z",
+      "side": 1,
+      "message": "This is okay not since FlushEvents() are called for immediately, and will be okay later on (when moved to upstream) since pointerup/touchend would be fired immediately in all cases.  However, the scope\u0027s set/reset being split into two different \"levels\" event handling later on would not look like a sane design.\n\nAs I mentioned offline last week, splitting TE/PE tokens into two is cleaner.  But I learned that you are concerned about not regressing in this CL.  I am fine with it in this CL but please file a bug + add a TODO.",
+      "parentUuid": "de563454_200eabe9",
+      "range": {
+        "startLine": 234,
+        "startChar": 18,
+        "endLine": 234,
+        "endChar": 38
+      },
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b81ba46b_7dc297bd",
         "filename": "third_party/WebKit/Source/platform/WebPointerEvent.cpp",
         "patchSetId": 7
