@@ -16,6 +16,24 @@
       "revId": "032ac1f79c17bad7f86d23bb73ec95f018a14e7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b46456f_f1c52bde",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T19:51:44Z",
+      "side": 1,
+      "message": "I add this because to open a subpage in the test, we need to power on the adapter first(by bluetoothApi_.setEnabled(true)). And this will trigger an adapter state change event and make a request to update the device list before we set the listUpdateFrequencyMs to 0.\nPlease let me know if I have missed anything.",
+      "parentUuid": "23318c81_af444524",
+      "revId": "032ac1f79c17bad7f86d23bb73ec95f018a14e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
