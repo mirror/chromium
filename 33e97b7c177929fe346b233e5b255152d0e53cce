@@ -170,6 +170,24 @@
       "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abac6356_878a80da",
+        "filename": "third_party/WebKit/Source/core/xml/XSLTProcessor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-29T19:52:47Z",
+      "side": 1,
+      "message": "Not sure.\nCurrently the sandbox flag is inherited via\nDocument::InitSecurityContext() -\u003e DocumentInit::GetSandboxFlags() -\u003e FrameLoader::EffectiveSandboxFlags() -\u003e ...?",
+      "parentUuid": "2cc5001f_03e34f17",
+      "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
