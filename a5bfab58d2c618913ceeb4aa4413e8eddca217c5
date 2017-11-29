@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5589365b_5a0fe9e0",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-29T00:53:40Z",
+      "side": 1,
+      "message": "Since this logic is very specific to page info, I\u0027m thinking we should just move everything into PageInfo. It\u0027s already a WebContentsObserver, so we should be able to listen for DidStartNavigation there too..",
+      "revId": "a5bfab58d2c618913ceeb4aa4413e8eddca217c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc798ba2_805acb2c",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-29T00:53:40Z",
+      "side": 1,
+      "message": "Since these are not setters/getters they should probably be moved to the implementation (.cc file) and the function names should be in CamelCase",
+      "revId": "a5bfab58d2c618913ceeb4aa4413e8eddca217c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ecd374_2cdd98f8",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-29T00:53:40Z",
+      "side": 1,
+      "message": "Would it be simpler to just always add the permission to this map whenever it changes (regardless of what value it changes too)?",
+      "revId": "a5bfab58d2c618913ceeb4aa4413e8eddca217c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
