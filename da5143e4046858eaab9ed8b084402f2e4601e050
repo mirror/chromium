@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e69c3d13_dbcc0852",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-29T10:17:00Z",
+      "side": 1,
+      "message": "This is the only change from the previous CL (https://crrev.com/519227).\nDCHECK does not run its internal statement, so SetPrototype() is not called on \u0027dcheck_always_on\u003dfalse\u0027 build.",
+      "revId": "da5143e4046858eaab9ed8b084402f2e4601e050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
