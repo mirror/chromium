@@ -34,6 +34,24 @@
       "revId": "308834fdb273202288d12f9a8aa8fd4bb91ec67b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7cff8d5_baa6e26b",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_interactive_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:54:37Z",
+      "side": 1,
+      "message": "Thanks for the info. It\u0027s entirely possible that my changes have reduced the flake rate on Windows to an acceptable level. I\u0027ll keep an eye on this test for a day or two to see how it\u0027s going.",
+      "parentUuid": "02b32ae1_e2ab7715",
+      "revId": "308834fdb273202288d12f9a8aa8fd4bb91ec67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
