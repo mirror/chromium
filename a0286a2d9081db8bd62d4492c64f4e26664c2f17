@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3880de3f_a75760ef",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkTransferableMessage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T22:05:49Z",
+      "side": 1,
+      "message": "sender_call_stack_id",
+      "range": {
+        "startLine": 26,
+        "startChar": 31,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "a0286a2d9081db8bd62d4492c64f4e26664c2f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "573a0ea4_7dbb754c",
         "filename": "third_party/WebKit/Source/core/dom/BlinkTransferableMessageStructTraits.cpp",
         "patchSetId": 3
@@ -34,6 +57,40 @@
       "revId": "a0286a2d9081db8bd62d4492c64f4e26664c2f17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbe35e2a_c7a85520",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T22:05:49Z",
+      "side": 1,
+      "message": "Make the parameter const StringView\u0026.",
+      "revId": "a0286a2d9081db8bd62d4492c64f4e26664c2f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097b0565_24553566",
+        "filename": "third_party/WebKit/common/message_port/message_port.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T22:05:49Z",
+      "side": 1,
+      "message": "Add a comment with explanation.",
+      "revId": "a0286a2d9081db8bd62d4492c64f4e26664c2f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
