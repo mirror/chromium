@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "670c2253_dc779a45",
+        "filename": "components/signin/ios/browser/ios_signin_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-29T21:23:59Z",
+      "side": 0,
+      "message": "I\u0027m pretty sure these methods are actually not needed at all. Sylvain, can you confirm?",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 1
+      },
+      "revId": "9b10783b6731e3ba8156e1a05645a1dca10f59b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
