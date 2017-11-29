@@ -58,7 +58,7 @@ TEST_F(SecurityOriginTest, InvalidPortsCreateUniqueOrigins) {
 
   for (size_t i = 0; i < WTF_ARRAY_LENGTH(ports); ++i) {
     scoped_refptr<SecurityOrigin> origin =
-        SecurityOrigin::Create("http", "example.com", ports[i]);
+        SecurityOrigin::Create("http", "example.com", ports[i], String());
     EXPECT_TRUE(origin->IsUnique())
         << "Port " << ports[i] << " should have generated a unique origin.";
   }
@@ -450,36 +450,6 @@ TEST_F(SecurityOriginTest, CreateFromTuple) {
   for (const auto& test : cases) {
     scoped_refptr<SecurityOrigin> origin =
         SecurityOrigin::Create(test.scheme, test.host, test.port);
-    EXPECT_EQ(test.origin, origin->ToString()) << test.origin;
-  }
-}
-
-TEST_F(SecurityOriginTest, CreateFromTupleWithSuborigin) {
-  struct TestCase {
-    const char* scheme;
-    const char* host;
-    unsigned short port;
-    const char* suborigin;
-    const char* origin;
-  } cases[] = {
-      {"http", "example.com", 80, "", "http://example.com"},
-      {"http", "example.com", 81, "", "http://example.com:81"},
-      {"https", "example.com", 443, "", "https://example.com"},
-      {"https", "example.com", 444, "", "https://example.com:444"},
-      {"file", "", 0, "", "file://"},
-      {"file", "example.com", 0, "", "file://"},
-      {"http", "example.com", 80, "foobar", "http-so://foobar.example.com"},
-      {"http", "example.com", 81, "foobar", "http-so://foobar.example.com:81"},
-      {"https", "example.com", 443, "foobar", "https-so://foobar.example.com"},
-      {"https", "example.com", 444, "foobar",
-       "https-so://foobar.example.com:444"},
-      {"file", "", 0, "foobar", "file://"},
-      {"file", "example.com", 0, "foobar", "file://"},
-  };
-
-  for (const auto& test : cases) {
-    scoped_refptr<SecurityOrigin> origin = SecurityOrigin::Create(
-        test.scheme, test.host, test.port, test.suborigin);
     EXPECT_EQ(test.origin, origin->ToString()) << test.origin;
   }
 }

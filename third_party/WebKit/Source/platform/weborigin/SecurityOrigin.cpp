@@ -535,8 +535,8 @@ scoped_refptr<SecurityOrigin> SecurityOrigin::CreateFromString(
 scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
                                                      const String& host,
                                                      int port) {
-  if (port < 0 || port > kMaxAllowedPort)
-    return CreateUnique();
+  DCHECK_GE(port, 0);
+  DCHECK_LE(port, kMaxAllowedPort);
 
   DCHECK_EQ(host, DecodeURLEscapeSequences(host));
 
@@ -548,6 +548,9 @@ scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
                                                      const String& host,
                                                      int port,
                                                      const String& suborigin) {
+  DCHECK_GE(port, 0);
+  DCHECK_LE(port, kMaxAllowedPort);
+
   scoped_refptr<SecurityOrigin> origin = Create(protocol, host, port);
   if (!suborigin.IsEmpty())
     origin->suborigin_.SetName(suborigin);
