@@ -33,8 +33,8 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLImageLoader.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/PluginDocument.h"
 #include "core/html_names.h"
 #include "core/input/EventHandler.h"
@@ -677,7 +677,7 @@ bool HTMLPlugInElement::AllowedToLoadPlugin(const KURL& url,
 }
 
 void HTMLPlugInElement::DidAddUserAgentShadowRoot(ShadowRoot&) {
-  UserAgentShadowRoot()->AppendChild(HTMLContentElement::Create(GetDocument()));
+  UserAgentShadowRoot()->AppendChild(HTMLSlotElement::Create(GetDocument()));
 }
 
 bool HTMLPlugInElement::HasFallbackContent() const {
