@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dafd6ae7_754dc558",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T07:40:49Z",
+      "side": 1,
+      "message": "Why must the TimeTicks be different? The EventInfo operator\u003c() is handling when expiration time is the same (and I think we\u0027ll have to handle that when we introduce custom timeout times like SWVersion has).",
+      "revId": "3d372660f193783a2b233878048e6fef78a72364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
