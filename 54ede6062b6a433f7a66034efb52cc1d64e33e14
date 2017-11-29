@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42c0623d_884bbb04",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-29T19:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "456dbf9a_7e2fe1ff",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "54ede6062b6a433f7a66034efb52cc1d64e33e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b22efc93_83b71c4d",
         "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-28T19:06:23Z",
       "side": 1,
       "message": "Should the variable name be changed only when we handle crbug.com/786964? The mismatch between the variable and the feature name seems unusual.",
+      "range": {
+        "startLine": 83,
+        "startChar": 76,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "54ede6062b6a433f7a66034efb52cc1d64e33e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c94a793_29e5b7b3",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-29T19:46:13Z",
+      "side": 1,
+      "message": "DownloadCleanupToolByBitness already uses a different constant name. I think this constant name better matches what the feature is actually doing, so it makes the code clearer while we are waiting to make the config changes needed to update the feature.",
+      "parentUuid": "b22efc93_83b71c4d",
       "range": {
         "startLine": 83,
         "startChar": 76,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "14542915_cc911274",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-29T19:46:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2cadfcd_e7b0bfbd",
+      "revId": "54ede6062b6a433f7a66034efb52cc1d64e33e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fe4b3dc_c46e45a5",
         "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
         "patchSetId": 11
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "941598a9_399cba02",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-29T19:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fe4b3dc_c46e45a5",
+      "range": {
+        "startLine": 83,
+        "startChar": 24,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "54ede6062b6a433f7a66034efb52cc1d64e33e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb9d2827_74d3f584",
         "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
         "patchSetId": 11
@@ -108,6 +198,30 @@
       "revId": "54ede6062b6a433f7a66034efb52cc1d64e33e14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0ee023_2e8fcb93",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-29T19:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb9d2827_74d3f584",
+      "range": {
+        "startLine": 91,
+        "startChar": 75,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "54ede6062b6a433f7a66034efb52cc1d64e33e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
