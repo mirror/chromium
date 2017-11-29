@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/sequence_checker.h"
 
 namespace re2 {
 class RE2;
@@ -34,6 +35,8 @@ class AnonymizerTool {
 
   // Returns an anonymized version of |input|. PII-sensitive data (such as MAC
   // addresses) in |input| is replaced with unique identifiers.
+  // This is an expensive operation. Make sure not to execute this on the UI
+  // thread.
   std::string Anonymize(const std::string& input);
 
  private:
@@ -69,6 +72,8 @@ class AnonymizerTool {
   // Cache to prevent the repeated compilation of the same regular expression
   // pattern. Key is the string representation of the RegEx.
   std::map<std::string, std::unique_ptr<re2::RE2>> regexp_cache_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(AnonymizerTool);
 };
