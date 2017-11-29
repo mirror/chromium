@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "034290b9_5a5c9fbc",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-29T17:14:46Z",
+      "side": 1,
+      "message": "Done, and commented expanded to make that clearer.",
+      "parentUuid": "8e6f29ae_6e42e84f",
+      "range": {
+        "startLine": 195,
+        "startChar": 19,
+        "endLine": 195,
+        "endChar": 27
+      },
+      "revId": "a02e68f39ef02aec3d800caad93153755af0b474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bf1354a_10d738a8",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "a02e68f39ef02aec3d800caad93153755af0b474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b9a12a_7a696138",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-29T17:14:46Z",
+      "side": 1,
+      "message": "Good suggestion, thanks.\n\nDone.",
+      "parentUuid": "0bf1354a_10d738a8",
+      "revId": "a02e68f39ef02aec3d800caad93153755af0b474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
