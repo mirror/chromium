@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d18517d_b14f4578",
+        "filename": "AUTHORS",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-29T00:10:42Z",
+      "side": 1,
+      "message": "Why is this not sorting by the other \"Francois\"s?\n\nWhat are you using to do this diacritic-insensitive sort? I\u0027m trying BBEdit and it handles this OK.",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 17
+      },
+      "revId": "77b5dd41acc9d5aab372beb61bf183f76ab1ee9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ea6f2f_5681d5bb",
+        "filename": "AUTHORS",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-29T00:10:42Z",
+      "side": 1,
+      "message": "Ignoring the ¨ on the E, Za should sort before Zu.",
+      "range": {
+        "startLine": 544,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 13
+      },
+      "revId": "77b5dd41acc9d5aab372beb61bf183f76ab1ee9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
