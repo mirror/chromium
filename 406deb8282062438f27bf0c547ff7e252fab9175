@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74e83563_2e4fbc06",
+        "filename": "ash/shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-29T16:30:19Z",
+      "side": 1,
+      "message": "Is it possible to require shell_port to be non-null and initialize it in the various places that construct a ShellInitParams? It seems like those call sites know which mode they are in, and I think it would be clearer to do it there.",
+      "revId": "406deb8282062438f27bf0c547ff7e252fab9175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f72a54_c50c7459",
+        "filename": "ash/shell/content/client/shell_browser_main_parts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-29T16:30:19Z",
+      "side": 1,
+      "message": "nit: Is BrowserMainParts() needed?",
+      "revId": "406deb8282062438f27bf0c547ff7e252fab9175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61585ac1_32229c8f",
+        "filename": "ash/shell/content/client/shell_browser_main_parts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-29T16:30:19Z",
+      "side": 1,
+      "message": "Can this be inlined below? ShellDelegateImpl doesn\u0027t seem to have side effects in its constructor.",
+      "revId": "406deb8282062438f27bf0c547ff7e252fab9175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e066811_bb0d7098",
+        "filename": "ash/shell_init_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-29T16:30:19Z",
+      "side": 1,
+      "message": "nit: \u003d nullptr not needed",
+      "revId": "406deb8282062438f27bf0c547ff7e252fab9175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
