@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e08ae9d_85e70cf2",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T23:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a34d76b9_97c9f794",
+      "revId": "2bfe721200ee4e540a6139165deb2e96997170ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c23881ef_33651850",
         "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "2bfe721200ee4e540a6139165deb2e96997170ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f228886c_6789cfc0",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T23:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c23881ef_33651850",
+      "revId": "2bfe721200ee4e540a6139165deb2e96997170ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0ddc652b_6b32f1fb",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T23:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df53274c_8c8450be",
+      "revId": "2bfe721200ee4e540a6139165deb2e96997170ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5ba39cb_98ac4ca3",
         "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "2bfe721200ee4e540a6139165deb2e96997170ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022b972a_326a5b2b",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T23:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5ba39cb_98ac4ca3",
+      "revId": "2bfe721200ee4e540a6139165deb2e96997170ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
