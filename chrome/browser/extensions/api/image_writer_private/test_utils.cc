@@ -12,6 +12,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/api/image_writer_private/error_messages.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 #if defined(OS_CHROMEOS)
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -86,7 +87,9 @@ SimulateProgressInfo::~SimulateProgressInfo() {}
 SimulateProgressInfo::SimulateProgressInfo(const SimulateProgressInfo&) =
     default;
 
-FakeImageWriterClient::FakeImageWriterClient() {}
+FakeImageWriterClient::FakeImageWriterClient(
+    std::unique_ptr<service_manager::Connector> connector)
+    : ImageWriterUtilityClient(std::move(connector)) {}
 FakeImageWriterClient::~FakeImageWriterClient() {}
 
 void FakeImageWriterClient::SimulateProgressAndCompletion(
@@ -180,7 +183,7 @@ void FakeImageWriterClient::Cancel() {
 #if !defined(OS_CHROMEOS)
 scoped_refptr<ImageWriterUtilityClient> CreateFakeImageWriterUtilityClient(
     ImageWriterTestUtils* utils) {
-  auto* client = new FakeImageWriterClient();
+  auto* client = new FakeImageWriterClient(/*connector=*/nullptr);
   utils->OnUtilityClientCreated(client);
   return base::WrapRefCounted(client);
 }
