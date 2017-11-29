@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08dc2692_18c5ffd6",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-29T17:14:02Z",
+      "side": 1,
+      "message": "nit: AnnotationsExtractor -\u003e AnnotationExtractor (no \"s\").",
+      "revId": "9c9af8d29081f74071d9f13fd1d4694e12f39490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9455e6d_106a8034",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-29T17:14:02Z",
+      "side": 1,
+      "message": "Super nit: no need to define visibility for a private inner class.",
+      "range": {
+        "startLine": 162,
+        "startChar": 17,
+        "endLine": 162,
+        "endChar": 26
+      },
+      "revId": "9c9af8d29081f74071d9f13fd1d4694e12f39490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6960ed5c_3e37c529",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-29T17:14:02Z",
+      "side": 1,
+      "message": "a bit odd to call a class \"FromDescription\". Two options:\n\n1. Make them methods that return inner classes (would need to add getType()) to replace instanceof though.\n\n2. Call them \"DescriptionNode\", \"ClassNode\", ...",
+      "revId": "9c9af8d29081f74071d9f13fd1d4694e12f39490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b2877e_f3d45abd",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-29T17:14:02Z",
+      "side": 1,
+      "message": "I know this already existed, but it has only one use so far, so I\u0027m going to ask you to rename it.\n\nAn \"Annotation Processor\" is already concept in java, so it\u0027s confusing to have this class be called \"AnnotationProcessor\" when it is not a javac Annotation Processor. Any other name would be fine. \"AnnotationAnalyzer\" \"AnnotationApplier\", \"AnnotationMasterOfTheUniverse\"",
+      "range": {
+        "startLine": 75,
+        "startChar": 22,
+        "endLine": 75,
+        "endChar": 41
+      },
+      "revId": "9c9af8d29081f74071d9f13fd1d4694e12f39490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cd71ba_f702b785",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-29T17:14:02Z",
+      "side": 1,
+      "message": "nit: no need for the if here (addAll empty list is fine)",
+      "revId": "9c9af8d29081f74071d9f13fd1d4694e12f39490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a75b69c_7747045c",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-29T17:14:02Z",
+      "side": 1,
+      "message": "AnnotationsExtractor returns null for empty list, should this do likewise? (if not, fine how it is)",
+      "revId": "9c9af8d29081f74071d9f13fd1d4694e12f39490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
