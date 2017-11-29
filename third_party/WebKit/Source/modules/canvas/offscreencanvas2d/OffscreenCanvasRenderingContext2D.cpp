@@ -202,11 +202,11 @@ void OffscreenCanvasRenderingContext2D::DidDraw(const SkIRect& dirty_rect) {
 }
 
 bool OffscreenCanvasRenderingContext2D::StateHasFilter() {
-  return GetState().HasFilterForOffscreenCanvas(Host()->Size());
+  return GetState().HasFilterForOffscreenCanvas(Host()->Size(), this);
 }
 
 sk_sp<PaintFilter> OffscreenCanvasRenderingContext2D::StateGetFilter() {
-  return GetState().GetFilterForOffscreenCanvas(Host()->Size());
+  return GetState().GetFilterForOffscreenCanvas(Host()->Size(), this);
 }
 
 void OffscreenCanvasRenderingContext2D::ValidateStateStack() const {
