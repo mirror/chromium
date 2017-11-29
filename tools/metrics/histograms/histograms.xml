@@ -92584,6 +92584,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="VRSessionWhenWebVrAutopresentedTime" units="ms">
+  <owner>ymalik@chromium.org</owner>
+  <summary>
+    The duration of a single VR session initiated via WebVr auto-presentation.
+    Logged when a new disjoint session has begun, or when the session has ended
+    in a non-continuable way.
+  </summary>
+</histogram>
+
 <histogram name="VRViewerType" enum="VRViewerType">
   <owner>billorr@chromium.org</owner>
   <summary>The type of headset being used for VR.</summary>
@@ -108566,6 +108575,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
              displaying WebVR contents."/>
   <affected-histogram name="VRSessionTime"/>
   <affected-histogram name="VRSessionVideoTime"/>
+  <affected-histogram name="VRSessionWhenWebVrAutopresentedTime"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="WebApkType" separator=".">
