@@ -16,6 +16,24 @@
       "revId": "415134991d4d1bb64aa1d58b7ca98d818198a936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a905bad0_d4d2049e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-29T22:40:15Z",
+      "side": 1,
+      "message": "With RLS, the FrameView still tracks position:fixed, but the root layer tracks position:sticky.\n\nSo frame_view-\u003eHasViewportConstrainedObjects() will return false if there are top-level sticky objects.",
+      "parentUuid": "62b21528_66a86577",
+      "revId": "415134991d4d1bb64aa1d58b7ca98d818198a936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
