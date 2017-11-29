@@ -795,7 +795,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest, GoesThroughAllTheMotions) {
 TEST_F(WebContentsVideoCaptureDeviceTest, VariableResolution_FixedAspectRatio) {
   media::VideoCaptureParams capture_params = DefaultCaptureParams();
   capture_params.resolution_change_policy =
-      media::RESOLUTION_POLICY_FIXED_ASPECT_RATIO;
+      media::ResolutionChangePolicy::FIXED_ASPECT_RATIO;
   std::unique_ptr<StubClient> client = client_observer()->PassClient();
   EXPECT_CALL(*client, OnStarted());
   device()->AllocateAndStart(capture_params, std::move(client));
@@ -843,7 +843,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest, VariableResolution_FixedAspectRatio) {
 TEST_F(WebContentsVideoCaptureDeviceTest, VariableResolution_AnyWithinLimits) {
   media::VideoCaptureParams capture_params = DefaultCaptureParams();
   capture_params.resolution_change_policy =
-      media::RESOLUTION_POLICY_ANY_WITHIN_LIMIT;
+      media::ResolutionChangePolicy::ANY_WITHIN_LIMIT;
   std::unique_ptr<StubClient> client = client_observer()->PassClient();
   EXPECT_CALL(*client, OnStarted());
   device()->AllocateAndStart(capture_params, std::move(client));
@@ -907,8 +907,9 @@ TEST_F(WebContentsVideoCaptureDeviceTest,
     // variable-resolution cases, the |standard_size| is the expected size.
     // Also, adjust to account for the device scale factor.
     gfx::Size capture_preferred_size = gfx::ScaleToFlooredSize(
-        policy == media::RESOLUTION_POLICY_FIXED_RESOLUTION ? oddball_size
-                                                            : standard_size,
+        policy == media::ResolutionChangePolicy::FIXED_RESOLUTION
+            ? oddball_size
+            : standard_size,
         1.0f / GetDeviceScaleFactor());
     ASSERT_NE(capture_preferred_size, web_contents()->GetPreferredSize());
 
@@ -932,9 +933,9 @@ TEST_F(WebContentsVideoCaptureDeviceTest,
   };
 
   const media::ResolutionChangePolicy policies[3] = {
-    media::RESOLUTION_POLICY_FIXED_RESOLUTION,
-    media::RESOLUTION_POLICY_FIXED_ASPECT_RATIO,
-    media::RESOLUTION_POLICY_ANY_WITHIN_LIMIT,
+      media::ResolutionChangePolicy::FIXED_RESOLUTION,
+      media::ResolutionChangePolicy::FIXED_ASPECT_RATIO,
+      media::ResolutionChangePolicy::ANY_WITHIN_LIMIT,
   };
 
   for (size_t i = 0; i < arraysize(policies); ++i) {
