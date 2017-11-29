@@ -239,6 +239,7 @@ void SimpleWatcher::ArmOrNotify() {
   MojoResult ready_result;
   HandleSignalsState ready_state;
   MojoResult rv = Arm(&ready_result, &ready_state);
+  //fprintf(stderr, "SimpleWatcher::ArmOrNotify rv %d\n", rv);
   if (rv == MOJO_RESULT_OK)
     return;
 
@@ -258,6 +259,8 @@ void SimpleWatcher::OnHandleReady(int watch_id,
   // we just ignore it.
   if (watch_id != watch_id_)
     return;
+    
+  //fprintf(stderr, "SimpleWatcher::OnHandleReady %d\n", watch_id);
 
   ReadyCallbackWithState callback = callback_;
   if (result == MOJO_RESULT_CANCELLED) {
@@ -273,6 +276,7 @@ void SimpleWatcher::OnHandleReady(int watch_id,
     TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION event(heap_profiler_tag_);
 
     base::WeakPtr<SimpleWatcher> weak_self = weak_factory_.GetWeakPtr();
+  //fprintf(stderr, "Run cb\n");
     callback.Run(result, state);
     if (!weak_self)
       return;

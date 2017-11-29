@@ -22,7 +22,6 @@
       "build/util/lib/common/unittest_util.py",
       "infra/scripts/.*",
       "DEPS",
-      "testing/buildbot/.*json",
       "testing/buildbot/.*pyl",
       "testing/scripts/.*",
       "testing/test_env.py",

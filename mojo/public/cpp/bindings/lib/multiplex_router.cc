@@ -8,6 +8,8 @@
 
 #include <utility>
 
+#include "base/debug/stack_trace.h"
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/macros.h"
@@ -127,6 +129,8 @@ class MultiplexRouter::InterfaceEndpoint
   // AttachClient() call. They are called outside of the router's lock.
 
   bool SendMessage(Message* message) override {
+    fprintf(stderr, "><><>< MultiplexRouter::SendMessage %d:%d\n", message->interface_id(), message->name());
+
     DCHECK(task_runner_->RunsTasksInCurrentSequence());
     message->set_interface_id(id_);
     return router_->connector_.Accept(message);

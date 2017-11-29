@@ -185,6 +185,7 @@ void LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld() {
 }
 
 void LocalFrameClientImpl::DocumentElementAvailable() {
+  fprintf(stderr, "LocalFrameClientImpl::DocumentElementAvailable\n");
   if (web_frame_->Client())
     web_frame_->Client()->DidCreateDocumentElement();
 }
@@ -273,6 +274,7 @@ void LocalFrameClientImpl::DidChangeScrollOffset() {
 }
 
 void LocalFrameClientImpl::DidUpdateCurrentHistoryItem() {
+  fprintf(stderr, "LocalFrameClientImpl::DidUpdateCurrentHistoryItem\n");
   if (web_frame_->Client())
     web_frame_->Client()->DidUpdateCurrentHistoryItem();
 }
@@ -358,6 +360,8 @@ void LocalFrameClientImpl::DispatchWillSendRequest(ResourceRequest& request) {
 
 void LocalFrameClientImpl::DispatchDidReceiveResponse(
     const ResourceResponse& response) {
+  fprintf(stderr, "[%p] LocalFrameClientImpl::DispatchDidReceiveResponse\n", this);
+  virtual_time_pauser_.PauseVirtualTime(false);
   if (web_frame_->Client()) {
     WrappedResourceResponse webresp(response);
     web_frame_->Client()->DidReceiveResponse(webresp);
@@ -365,6 +369,7 @@ void LocalFrameClientImpl::DispatchDidReceiveResponse(
 }
 
 void LocalFrameClientImpl::DispatchDidFinishDocumentLoad() {
+  fprintf(stderr, "LocalFrameClientImpl::DispatchDidFinishDocumentLoad\n");
   // TODO(dglazkov): Sadly, workers are WebFrameClients, and they can totally
   // destroy themselves when didFinishDocumentLoad is invoked, and in turn
   // destroy the fake WebLocalFrame that they create, which means that you
@@ -383,12 +388,14 @@ void LocalFrameClientImpl::DispatchDidLoadResourceFromMemoryCache(
 }
 
 void LocalFrameClientImpl::DispatchDidHandleOnloadEvents() {
+  fprintf(stderr, "LocalFrameClientImpl::DispatchDidHandleOnloadEvents\n");
   if (web_frame_->Client())
     web_frame_->Client()->DidHandleOnloadEvents();
 }
 
 void LocalFrameClientImpl::
     DispatchDidReceiveServerRedirectForProvisionalLoad() {
+  fprintf(stderr, "LocalFrameClientImpl::DispatchDidReceiveServerRedirectForProvisionalLoad\n");
   if (web_frame_->Client()) {
     web_frame_->Client()->DidReceiveServerRedirectForProvisionalLoad();
   }
@@ -398,6 +405,7 @@ void LocalFrameClientImpl::DispatchDidNavigateWithinPage(
     HistoryItem* item,
     HistoryCommitType commit_type,
     bool content_initiated) {
+  fprintf(stderr, "[%p] LocalFrameClientImpl::DispatchDidNavigateWithinPage\n", this);
   bool should_create_history_entry = commit_type == kStandardCommit;
   // TODO(dglazkov): Does this need to be called for subframes?
   web_frame_->ViewImpl()->DidCommitLoad(should_create_history_entry, true);
@@ -410,6 +418,7 @@ void LocalFrameClientImpl::DispatchDidNavigateWithinPage(
 }
 
 void LocalFrameClientImpl::DispatchWillCommitProvisionalLoad() {
+  fprintf(stderr, "[%p] LocalFrameClientImpl::DispatchWillCommitProvisionalLoad\n", this);
   if (web_frame_->Client())
     web_frame_->Client()->WillCommitProvisionalLoad();
 }
@@ -417,6 +426,7 @@ void LocalFrameClientImpl::DispatchWillCommitProvisionalLoad() {
 void LocalFrameClientImpl::DispatchDidStartProvisionalLoad(
     DocumentLoader* loader,
     ResourceRequest& request) {
+  fprintf(stderr, "[%p] LocalFrameClientImpl::DispatchDidStartProvisionalLoad\n", this);
   if (web_frame_->Client()) {
     WrappedResourceRequest wrapped_request(request);
     web_frame_->Client()->DidStartProvisionalLoad(
@@ -442,6 +452,7 @@ void LocalFrameClientImpl::DispatchDidChangeIcons(IconType type) {
 void LocalFrameClientImpl::DispatchDidCommitLoad(
     HistoryItem* item,
     HistoryCommitType commit_type) {
+  fprintf(stderr, "[%p] LocalFrameClientImpl::DispatchDidCommitLoad\n", this);
   if (!web_frame_->Parent()) {
     web_frame_->ViewImpl()->DidCommitLoad(commit_type == kStandardCommit,
                                           false);
@@ -464,16 +475,19 @@ void LocalFrameClientImpl::DispatchDidCommitLoad(
 void LocalFrameClientImpl::DispatchDidFailProvisionalLoad(
     const ResourceError& error,
     HistoryCommitType commit_type) {
+  fprintf(stderr, "[%p] LocalFrameClientImpl::DispatchDidFailProvisionalLoad\n", this);
   web_frame_->DidFail(error, true, commit_type);
   virtual_time_pauser_.PauseVirtualTime(false);
 }
 
 void LocalFrameClientImpl::DispatchDidFailLoad(const ResourceError& error,
                                                HistoryCommitType commit_type) {
+  fprintf(stderr, "LocalFrameClientImpl::DispatchDidFailLoad\n");
   web_frame_->DidFail(error, false, commit_type);
 }
 
 void LocalFrameClientImpl::DispatchDidFinishLoad() {
+  fprintf(stderr, "LocalFrameClientImpl::DispatchDidFinishLoad\n");
   web_frame_->DidFinish();
 }
 
@@ -623,6 +637,7 @@ void LocalFrameClientImpl::DispatchWillSubmitForm(HTMLFormElement* form) {
 }
 
 void LocalFrameClientImpl::DidStartLoading(LoadStartType load_start_type) {
+  fprintf(stderr, "LocalFrameClientImpl::DidStartLoading\n");
   if (web_frame_->Client()) {
     web_frame_->Client()->DidStartLoading(load_start_type ==
                                           kNavigationToDifferentDocument);
@@ -635,6 +650,7 @@ void LocalFrameClientImpl::ProgressEstimateChanged(double progress_estimate) {
 }
 
 void LocalFrameClientImpl::DidStopLoading() {
+  fprintf(stderr, "LocalFrameClientImpl::DidStopLoading\n");
   if (web_frame_->Client())
     web_frame_->Client()->DidStopLoading();
 }
@@ -649,11 +665,13 @@ void LocalFrameClientImpl::DownloadURL(const ResourceRequest& request,
 }
 
 void LocalFrameClientImpl::LoadErrorPage(int reason) {
+  fprintf(stderr, "LocalFrameClientImpl::LoadErrorPage\n");
   if (web_frame_->Client())
     web_frame_->Client()->LoadErrorPage(reason);
 }
 
 bool LocalFrameClientImpl::NavigateBackForward(int offset) const {
+  fprintf(stderr, "LocalFrameClientImpl::NavigateBackForward\n");
   WebViewImpl* webview = web_frame_->ViewImpl();
   if (!webview->Client())
     return false;

@@ -96,5 +96,15 @@ WebSchedulerImpl::PauseScheduler() {
   return nullptr;
 }
 
+void WebSchedulerImpl::MaybeDeferTaskForVirtualTimeDeterminism(
+    const WebTraceLocation& from_here,
+    WTF::Closure task) {
+  std::move(task).Run();
+}
+
+bool WebSchedulerImpl::IsVirtualTimeEnabled() {
+  return false;
+}
+
 }  // namespace scheduler
 }  // namespace blink

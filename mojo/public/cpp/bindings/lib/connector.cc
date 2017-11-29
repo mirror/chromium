@@ -261,6 +261,7 @@ bool Connector::PrefersSerializedMessages() {
 }
 
 bool Connector::Accept(Message* message) {
+  fprintf(stderr, "Connector::Accept %d:%d\n", message->interface_id(), message->name());
   if (!lock_)
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
@@ -421,6 +422,7 @@ bool Connector::ReadSingleMessage(MojoResult* read_result) {
   *read_result = rv;
 
   if (rv == MOJO_RESULT_OK) {
+    fprintf(stderr, "Connector::ReadSingleMessage %d\n", message.name());
     base::Optional<ActiveDispatchTracker> dispatch_tracker;
     if (!is_dispatching_ && nesting_observer_) {
       is_dispatching_ = true;

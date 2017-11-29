@@ -127,15 +127,17 @@ HTMLDocumentParser::HTMLDocumentParser(Document& document,
     : ScriptableDocumentParser(document, content_policy),
       options_(&document),
       reentry_permit_(HTMLParserReentryPermit::Create()),
-      token_(sync_policy == kForceSynchronousParsing
-                 ? WTF::WrapUnique(new HTMLToken)
-                 : nullptr),
-      tokenizer_(sync_policy == kForceSynchronousParsing
-                     ? HTMLTokenizer::Create(options_)
-                     : nullptr),
+      should_use_threading_(sync_policy == kAllowAsynchronousParsing &&
+                            !Platform::Current()
+                                 ->CurrentThread()
+                                 ->Scheduler()
+                                 ->IsVirtualTimeEnabled()),
+      token_(should_use_threading_ ? nullptr : WTF::WrapUnique(new HTMLToken)),
+      tokenizer_(should_use_threading_ ? nullptr
+                                       : HTMLTokenizer::Create(options_)),
       loading_task_runner_(document.GetTaskRunner(TaskType::kNetworking)),
       parser_scheduler_(
-          sync_policy == kAllowAsynchronousParsing
+          should_use_threading_
               ? HTMLParserScheduler::Create(this, loading_task_runner_.get())
               : nullptr),
       xss_auditor_delegate_(&document),
@@ -143,7 +145,6 @@ HTMLDocumentParser::HTMLDocumentParser(Document& document,
       preloader_(HTMLResourcePreloader::Create(document)),
       tokenized_chunk_queue_(TokenizedChunkQueue::Create()),
       pending_csp_meta_token_(nullptr),
-      should_use_threading_(sync_policy == kAllowAsynchronousParsing),
       end_was_delayed_(false),
       have_background_parser_(false),
       tasks_were_paused_(false),
@@ -159,13 +160,6 @@ HTMLDocumentParser::HTMLDocumentParser(Document& document,
 }
 
 HTMLDocumentParser::~HTMLDocumentParser() {}
-
-void HTMLDocumentParser::Dispose() {
-  // In Oilpan, HTMLDocumentParser can die together with Document, and detach()
-  // is not called in this case.
-  if (have_background_parser_)
-    StopBackgroundParser();
-}
 
 void HTMLDocumentParser::Trace(blink::Visitor* visitor) {
   visitor->Trace(tree_builder_);
@@ -797,15 +791,6 @@ void HTMLDocumentParser::StartBackgroundParser() {
   DCHECK(GetDocument());
   have_background_parser_ = true;
 
-  if (GetDocument()->GetFrame() &&
-      GetDocument()->GetFrame()->FrameScheduler()) {
-    virtual_time_pauser_ = GetDocument()
-                               ->GetFrame()
-                               ->FrameScheduler()
-                               ->CreateWebScopedVirtualTimePauser();
-    virtual_time_pauser_.PauseVirtualTime(true);
-  }
-
   // Make sure that a resolver is set up, so that the correct viewport
   // dimensions will be fed to the background parser and preload scanner.
   if (GetDocument()->Loader())
@@ -856,7 +841,6 @@ void HTMLDocumentParser::StopBackgroundParser() {
   DCHECK(ShouldUseThreading());
   DCHECK(have_background_parser_);
 
-  virtual_time_pauser_.PauseVirtualTime(false);
   have_background_parser_ = false;
 
   // Make this sync, as lsan triggers on some unittests if the task runner is

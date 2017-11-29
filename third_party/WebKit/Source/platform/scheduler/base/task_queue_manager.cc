@@ -523,7 +523,15 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
   internal::TaskQueueImpl* prev_executing_task_queue =
       currently_executing_task_queue_;
   currently_executing_task_queue_ = queue;
+  fprintf(stderr, "[%s:%s] Run %s %s %d\n", queue->GetName(), work_queue->name(),
+      pending_task.posted_from.function_name(),
+      pending_task.posted_from.file_name(),
+      pending_task.posted_from.line_number());
   task_annotator_.RunTask("TaskQueueManager::PostTask", &pending_task);
+  fprintf(stderr, "[%s:%s] Run %s %s %d - done\n", queue->GetName(), work_queue->name(),
+      pending_task.posted_from.function_name(),
+      pending_task.posted_from.file_name(),
+      pending_task.posted_from.line_number());
   // Detect if the TaskQueueManager just got deleted.  If this happens we must
   // not access any member variables after this point.
   if (!protect)

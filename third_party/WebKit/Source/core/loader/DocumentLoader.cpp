@@ -710,6 +710,7 @@ void DocumentLoader::CommitData(const char* bytes, size_t length) {
 void DocumentLoader::DataReceived(Resource* resource,
                                   const char* data,
                                   size_t length) {
+  fprintf(stderr, "DocumentLoader::DataReceived\n");
   DCHECK(data);
   DCHECK(length);
   DCHECK_EQ(resource, main_resource_);

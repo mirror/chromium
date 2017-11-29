@@ -158,6 +158,7 @@ class RenderFrameDevToolsAgentHost::FrameHostHolder {
     void DispatchProtocolMessage(int call_id,
                                  const std::string& method,
                                  const std::string& message) {
+      fprintf(stderr, "##### SessionHost::DispatchProtocolMessage %s\n", method.c_str());
       if (DevToolsSession::ShouldSendOnIO(method))
         io_session_ptr_->DispatchProtocolMessage(call_id, method, message);
       else

@@ -11,6 +11,8 @@
 #include <utility>
 #include <vector>
 
+#include "base/debug/stack_trace.h"
+
 #include "base/callback.h"
 #include "base/containers/queue.h"
 #include "base/logging.h"
@@ -388,6 +390,7 @@ class ChannelAssociatedGroupController
     }
 
     uint32_t EnqueueSyncMessage(MessageWrapper message) {
+      fprintf(stderr, "><><>< EnqueueSyncMessage\n");
       controller_->lock_.AssertAcquired();
       uint32_t id = GenerateSyncMessageId();
       sync_messages_.emplace(id, std::move(message));
@@ -403,6 +406,7 @@ class ChannelAssociatedGroupController
     }
 
     MessageWrapper PopSyncMessage(uint32_t id) {
+      fprintf(stderr, "><><>< PopSyncMessage\n");
       controller_->lock_.AssertAcquired();
       if (sync_messages_.empty() || sync_messages_.front().first != id)
         return MessageWrapper();
@@ -582,6 +586,7 @@ class ChannelAssociatedGroupController
   }
 
   bool SendMessage(mojo::Message* message) {
+    fprintf(stderr, "><><>< SendMessage %d:%d\n", message->interface_id(), message->name());
     if (task_runner_->BelongsToCurrentThread()) {
       DCHECK(thread_checker_.CalledOnValidThread());
       if (!connector_ || paused_) {
@@ -602,6 +607,7 @@ class ChannelAssociatedGroupController
   }
 
   void SendMessageOnMasterThread(mojo::Message message) {
+    fprintf(stderr, "><><>< SendMessageOnMasterThread %d:%d\n", message.interface_id(), message.name());
     DCHECK(thread_checker_.CalledOnValidThread());
     if (!SendMessage(&message))
       RaiseError();
@@ -747,6 +753,11 @@ class ChannelAssociatedGroupController
         return true;
       }
 
+      fprintf(stderr, "#### mojo Accept post %u\n", message->name());
+
+ //     if (message->name() == 105240356)
+ // base::debug::StackTrace().Print();
+
       proxy_task_runner_->PostTask(
           FROM_HERE,
           base::Bind(&ChannelAssociatedGroupController::AcceptOnProxyThread,
@@ -784,16 +795,19 @@ class ChannelAssociatedGroupController
     DCHECK(!message.has_flag(mojo::Message::kFlagIsSync));
 
     bool result = false;
+    fprintf(stderr, "#### mojo AcceptOnProxyThread %u\n", message.name());
     {
       base::AutoUnlock unlocker(lock_);
       result = client->HandleIncomingMessage(&message);
     }
+    fprintf(stderr, "#### mojo AcceptOnProxyThread %u -- done\n", message.name());
 
     if (!result)
       RaiseError();
   }
 
   void AcceptSyncMessage(mojo::InterfaceId interface_id, uint32_t message_id) {
+    fprintf(stderr, "><><>< AcceptSyncMessage\n");
     DCHECK(proxy_task_runner_->BelongsToCurrentThread());
 
     base::AutoLock locker(lock_);

@@ -420,9 +420,10 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTaskQueue(
   if (task_queue->CanBeThrottled())
     AddQueueToWakeUpBudgetPool(task_queue.get());
 
-  if (queue_class == MainThreadTaskQueue::QueueClass::kTimer) {
-    if (main_thread_only().virtual_time_stopped)
-      task_queue->InsertFence(TaskQueue::InsertFencePosition::kNow);
+  if (main_thread_only().virtual_time_stopped && (
+      queue_class == MainThreadTaskQueue::QueueClass::kTimer ||
+      queue_class == MainThreadTaskQueue::QueueClass::kLoading)) {
+    task_queue->InsertFence(TaskQueue::InsertFencePosition::kNow);
   }
 
   return task_queue;
@@ -1524,6 +1525,10 @@ base::TimeTicks RendererSchedulerImpl::EnableVirtualTime() {
   return main_thread_only().initial_virtual_time;
 }
 
+bool RendererSchedulerImpl::IsVirualTimeEnabled() const {
+  return main_thread_only().use_virtual_time;
+}
+
 void RendererSchedulerImpl::DisableVirtualTimeForTesting() {
   if (!main_thread_only().use_virtual_time)
     return;
@@ -1553,6 +1558,7 @@ void RendererSchedulerImpl::SetVirtualTimeStopped(bool virtual_time_stopped) {
   if (!main_thread_only().use_virtual_time)
     return;
 
+  fprintf(stderr, "# RendererSchedulerImpl::SetVirtualTimeStopped %d\n", virtual_time_stopped);
   virtual_time_domain_->SetCanAdvanceVirtualTime(!virtual_time_stopped);
 
   if (virtual_time_stopped) {
@@ -1564,7 +1570,8 @@ void RendererSchedulerImpl::SetVirtualTimeStopped(bool virtual_time_stopped) {
 
 void RendererSchedulerImpl::VirtualTimePaused() {
   for (const auto& pair : task_runners_) {
-    if (pair.first->queue_class() == MainThreadTaskQueue::QueueClass::kTimer) {
+    if (pair.first->queue_class() == MainThreadTaskQueue::QueueClass::kTimer ||
+        pair.first->queue_class() == MainThreadTaskQueue::QueueClass::kTimer) {
       DCHECK(!task_queue_throttler_->IsThrottled(pair.first.get()));
       DCHECK(!pair.first->HasActiveFence());
       pair.first->InsertFence(TaskQueue::InsertFencePosition::kNow);
@@ -1578,7 +1585,8 @@ void RendererSchedulerImpl::VirtualTimePaused() {
 
 void RendererSchedulerImpl::VirtualTimeResumed() {
   for (const auto& pair : task_runners_) {
-    if (pair.first->queue_class() == MainThreadTaskQueue::QueueClass::kTimer) {
+    if (pair.first->queue_class() == MainThreadTaskQueue::QueueClass::kTimer ||
+        pair.first->queue_class() == MainThreadTaskQueue::QueueClass::kTimer) {
       DCHECK(!task_queue_throttler_->IsThrottled(pair.first.get()));
       DCHECK(pair.first->HasActiveFence());
       pair.first->RemoveFence();
@@ -1592,16 +1600,21 @@ bool RendererSchedulerImpl::VirtualTimeAllowedToAdvance() const {
 
 void RendererSchedulerImpl::IncrementVirtualTimePauseCount() {
   main_thread_only().virtual_time_pause_count++;
+  fprintf(stderr, "RendererSchedulerImpl::IncrementVirtualTimePauseCount %d\n", main_thread_only().virtual_time_pause_count);
+ // base::debug::StackTrace().Print();
   ApplyVirtualTimePolicy();
 }
 
 void RendererSchedulerImpl::DecrementVirtualTimePauseCount() {
   main_thread_only().virtual_time_pause_count--;
+  fprintf(stderr, "RendererSchedulerImpl::DecrementVirtualTimePauseCount %d\n", main_thread_only().virtual_time_pause_count);
+ // base::debug::StackTrace().Print();
   DCHECK_GE(main_thread_only().virtual_time_pause_count, 0);
   ApplyVirtualTimePolicy();
 }
 
 void RendererSchedulerImpl::SetVirtualTimePolicy(VirtualTimePolicy policy) {
+  fprintf(stderr, "# RendererSchedulerImpl::SetVirtualTimePolicy\n");
   main_thread_only().virtual_time_policy = policy;
 
   switch (policy) {
@@ -1641,6 +1654,7 @@ void RendererSchedulerImpl::OnVirtualTimeAdvanced() {
 void RendererSchedulerImpl::ApplyVirtualTimePolicy() {
   switch (main_thread_only().virtual_time_policy) {
     case VirtualTimePolicy::kAdvance:
+        fprintf(stderr, "# kAdvance\n");
       if (virtual_time_domain_) {
         virtual_time_domain_->SetMaxVirtualTimeTaskStarvationCount(
             main_thread_only().nested_runloop
@@ -1650,6 +1664,7 @@ void RendererSchedulerImpl::ApplyVirtualTimePolicy() {
       SetVirtualTimeStopped(false);
       break;
     case VirtualTimePolicy::kPause:
+        fprintf(stderr, "# kPause\n");
       if (virtual_time_domain_)
         virtual_time_domain_->SetMaxVirtualTimeTaskStarvationCount(0);
       SetVirtualTimeStopped(true);
@@ -1662,6 +1677,8 @@ void RendererSchedulerImpl::ApplyVirtualTimePolicy() {
                 : main_thread_only().max_virtual_time_task_starvation_count);
       }
 
+        fprintf(stderr, "# kDeterministicLoading ApplyVirtualTimePolicy %d %d\n",
+        main_thread_only().virtual_time_pause_count, main_thread_only().nested_runloop);
       // We pause virtual time while the run loop is nested because that implies
       // something modal is happening such as the DevTools debugger pausing the
       // system. We also pause while the renderer is waiting for various

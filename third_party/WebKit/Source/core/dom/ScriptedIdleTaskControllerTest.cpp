@@ -50,6 +50,14 @@ class MockScriptedIdleTaskControllerScheduler final : public WebScheduler {
   void RemovePendingNavigation(
       scheduler::RendererScheduler::NavigatingFrameType) override {}
 
+  void MaybeDeferTaskForVirtualTimeDeterminism(
+      const WebTraceLocation& from_here,
+      WTF::Closure task) override {
+    std::move(task).Run();
+  }
+
+  bool IsVirtualTimeEnabled() override { return false; }
+
   void RunIdleTask() {
     auto idle_task = std::move(idle_task_);
     idle_task->Run(0);

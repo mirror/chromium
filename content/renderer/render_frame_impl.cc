@@ -5505,6 +5505,7 @@ void RenderFrameImpl::OnFailedNavigation(
     bool has_stale_copy_in_cache,
     int error_code,
     const base::Optional<std::string>& error_page_content) {
+  fprintf(stderr, "RenderFrameImpl::OnFailedNavigation\n");
   DCHECK(IsBrowserSideNavigationEnabled());
   bool is_reload =
       FrameMsg_Navigate_Type::IsReload(common_params.navigation_type);
@@ -5624,6 +5625,7 @@ void RenderFrameImpl::OnReportContentSecurityPolicyViolation(
 
 WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
     const NavigationPolicyInfo& info) {
+  fprintf(stderr, "RenderFrameImpl::DecidePolicyForNavigation\n");
   // A content initiated navigation may have originated from a link-click,
   // script, drag-n-drop operation, etc.
   // info.extraData is only non-null if this is a redirect. Use the extraData
@@ -6277,6 +6279,7 @@ void RenderFrameImpl::NavigateInternal(
     std::unique_ptr<StreamOverrideParameters> stream_params,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
     const base::UnguessableToken& devtools_navigation_token) {
+  fprintf(stderr, "RenderFrameImpl::NavigateInternal\n");
   bool browser_side_navigation = IsBrowserSideNavigationEnabled();
 
   // First, check if this is a Debug URL. If so, handle it and stop the
@@ -6832,6 +6835,7 @@ void RenderFrameImpl::LoadDataURL(
     blink::WebHistoryItem item_for_history_navigation,
     blink::WebHistoryLoadType history_load_type,
     bool is_client_redirect) {
+  fprintf(stderr, "RenderFrameImpl::LoadDataURL\n");
   // A loadData request with a specified base URL.
   GURL data_url = params.url;
 #if defined(OS_ANDROID)
@@ -6880,6 +6884,7 @@ void RenderFrameImpl::SendFailedProvisionalLoad(
     const blink::WebURLRequest& request,
     const WebURLError& error,
     blink::WebLocalFrame* frame) {
+  fprintf(stderr, "RenderFrameImpl::SendFailedProvisionalLoad\n");
   bool show_repost_interstitial =
       (error.reason() == net::ERR_CACHE_MISS &&
        base::EqualsASCII(request.HttpMethod().Utf16(), "POST"));
@@ -6896,6 +6901,7 @@ void RenderFrameImpl::SendFailedProvisionalLoad(
 bool RenderFrameImpl::ShouldDisplayErrorPageForFailedLoad(
     int error_code,
     const GURL& unreachable_url) {
+  fprintf(stderr, "RenderFrameImpl::ShouldDisplayErrorPageForFailedLoad\n");
   // Don't display an error page if this is simply a cancelled load.  Aside
   // from being dumb, Blink doesn't expect it and it will cause a crash.
   if (error_code == net::ERR_ABORTED)
@@ -6972,6 +6978,7 @@ NavigationState* RenderFrameImpl::CreateNavigationStateFromPending() {
 void RenderFrameImpl::UpdateNavigationState(DocumentState* document_state,
                                             bool was_within_same_document,
                                             bool content_initiated) {
+  fprintf(stderr, "RenderFrameImpl::UpdateNavigationState\n");
   // If this was a browser-initiated navigation, then there could be pending
   // navigation params, so use them. Otherwise, just reset the document state
   // here, since if pending navigation params exist they are for some other

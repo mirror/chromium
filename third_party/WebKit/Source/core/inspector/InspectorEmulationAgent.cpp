@@ -4,6 +4,8 @@
 
 #include "core/inspector/InspectorEmulationAgent.h"
 
+#include "base/debug/stack_trace.h"
+
 #include "core/exported/WebViewImpl.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
@@ -141,6 +143,7 @@ Response InspectorEmulationAgent::setVirtualTimePolicy(
     Maybe<double> budget,
     protocol::Maybe<int> max_virtual_time_task_starvation_count,
     double* virtual_time_base_ms) {
+  fprintf(stderr, "################## InspectorEmulationAgent::setVirtualTimePolicy\n");
   if (protocol::Emulation::VirtualTimePolicyEnum::Advance == policy) {
     web_local_frame_->View()->Scheduler()->SetVirtualTimePolicy(
         WebViewScheduler::VirtualTimePolicy::kAdvance);

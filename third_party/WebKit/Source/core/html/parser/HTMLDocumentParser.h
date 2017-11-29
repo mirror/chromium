@@ -70,7 +70,6 @@ class TokenizedChunkQueue;
 class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
                                        private HTMLParserScriptRunnerHost {
   USING_GARBAGE_COLLECTED_MIXIN(HTMLDocumentParser);
-  USING_PRE_FINALIZER(HTMLDocumentParser, Dispose);
 
  public:
   static HTMLDocumentParser* Create(
@@ -81,9 +80,6 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   ~HTMLDocumentParser() override;
   void Trace(blink::Visitor*) override;
   void TraceWrappers(const ScriptWrappableVisitor*) const override;
-
-  // TODO(alexclarke): Remove when background parser goes away.
-  void Dispose();
 
   // Exposed for HTMLParserScheduler
   void ResumeParsingAfterYield();
@@ -235,6 +231,10 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   HTMLInputStream input_;
   scoped_refptr<HTMLParserReentryPermit> reentry_permit_;
 
+  // Background parsing is disabled if virtual time is enabled for
+  // determinism.
+  bool should_use_threading_;
+
   std::unique_ptr<HTMLToken> token_;
   std::unique_ptr<HTMLTokenizer> tokenizer_;
   TraceWrapperMember<HTMLParserScriptRunner> script_runner_;
@@ -275,7 +275,6 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
 
   TaskHandle resume_parsing_task_handle_;
 
-  bool should_use_threading_;
   bool end_was_delayed_;
   bool have_background_parser_;
   bool tasks_were_paused_;
@@ -285,8 +284,6 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   bool tried_loading_link_headers_;
   bool added_pending_stylesheet_in_body_;
   bool is_waiting_for_stylesheets_;
-
-  WebScopedVirtualTimePauser virtual_time_pauser_;
 };
 
 }  // namespace blink

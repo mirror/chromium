@@ -165,6 +165,10 @@ bool TaskQueueImpl::PostDelayedTask(TaskQueue::PostedTask task) {
 bool TaskQueueImpl::PostImmediateTaskImpl(TaskQueue::PostedTask task) {
   // Use CHECK instead of DCHECK to crash earlier. See http://crbug.com/711167
   // for details.
+  fprintf(stderr, "# %s PostImmediateTaskImpl %s %s %d\n", GetName(),
+      task.posted_from.function_name(),
+      task.posted_from.file_name(),
+      task.posted_from.line_number());
   CHECK(task.callback);
   base::AutoLock lock(any_thread_lock_);
   if (!any_thread().task_queue_manager)
@@ -180,6 +184,10 @@ bool TaskQueueImpl::PostImmediateTaskImpl(TaskQueue::PostedTask task) {
 }
 
 bool TaskQueueImpl::PostDelayedTaskImpl(TaskQueue::PostedTask task) {
+  fprintf(stderr, "# %s PostDelayedTaskImpl %s %s %d\n", GetName(),
+      task.posted_from.function_name(),
+      task.posted_from.file_name(),
+      task.posted_from.line_number());
   // Use CHECK instead of DCHECK to crash earlier. See http://crbug.com/711167
   // for details.
   CHECK(task.callback);

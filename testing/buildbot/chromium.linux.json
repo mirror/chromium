@@ -3844,6 +3844,9 @@
         "test": "gpu_unittests"
       },
       {
+        "args": [
+          "--gtest_filter=DeferredLoadDoesntBlockVirtualTimeTest.RunAsyncTest"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4463,6 +4466,9 @@
         "test": "gpu_unittests"
       },
       {
+        "args": [
+          "--gtest_filter=DeferredLoadDoesntBlockVirtualTimeTest.RunAsyncTest"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true
         },

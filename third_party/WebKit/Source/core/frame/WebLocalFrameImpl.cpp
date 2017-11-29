@@ -2025,6 +2025,8 @@ void WebLocalFrameImpl::LoadData(const WebData& data,
                                  bool is_client_redirect) {
   DCHECK(GetFrame());
 
+fprintf(stderr, "WebLocalFrameImpl::LoadData\n");
+
   // If we are loading substitute data to replace an existing load, then
   // inherit all of the properties of that original request. This way,
   // reload will re-attempt the original request. It is essential that
