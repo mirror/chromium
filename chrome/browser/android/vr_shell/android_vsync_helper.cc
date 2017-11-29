@@ -11,9 +11,19 @@
 using base::android::AttachCurrentThread;
 using base::android::JavaParamRef;
 
+namespace {
+// Assume 60fps as the initial VSync interval if we haven't collected
+// any data yet. This will be replaced with measured values once
+// available.
+static constexpr base::TimeDelta kInitialVSyncIntervalEstimate =
+    base::TimeDelta::FromMillisecondsD(1000.0 / 60.0);
+static constexpr int kSlidingAverageSize = 5;
+}  // namespace
+
 namespace vr_shell {
 
-AndroidVSyncHelper::AndroidVSyncHelper() {
+AndroidVSyncHelper::AndroidVSyncHelper()
+    : intervals_(new vr::HeuristicVSyncAverage(kSlidingAverageSize)) {
   JNIEnv* env = AttachCurrentThread();
   j_object_.Reset(
       Java_AndroidVSyncHelper_create(env, reinterpret_cast<jlong>(this)));
@@ -21,6 +31,10 @@ AndroidVSyncHelper::AndroidVSyncHelper() {
 
 AndroidVSyncHelper::~AndroidVSyncHelper() {
   CancelVSyncRequest();
+}
+
+base::TimeDelta AndroidVSyncHelper::AverageVSyncInterval() {
+  return intervals_->GetAverageOrDefault(kInitialVSyncIntervalEstimate);
 }
 
 void AndroidVSyncHelper::OnVSync(JNIEnv* env,
@@ -35,6 +49,7 @@ void AndroidVSyncHelper::OnVSync(JNIEnv* env,
       base::TimeDelta::FromMicroseconds(time_nanos /
                                         base::Time::kNanosecondsPerMicrosecond);
   last_interval_ = frame_time - last_vsync_;
+  intervals_->AddSample(last_interval_);
   last_vsync_ = frame_time;
   base::ResetAndReturn(&callback_).Run(frame_time);
 }

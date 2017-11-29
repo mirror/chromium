@@ -63,9 +63,37 @@ class SlidingAverage {
   void AddSample(int64_t value);
   int64_t GetAverageOrDefault(int64_t default_value) const;
   int64_t GetAverage() const { return GetAverageOrDefault(0); }
+  size_t GetCount() const { return values_.GetCount(); }
 
  private:
   SampleQueue values_;
+};
+
+class SlidingTimeDeltaAverage {
+ public:
+  explicit SlidingTimeDeltaAverage(size_t window_size);
+  virtual ~SlidingTimeDeltaAverage();
+
+  virtual void AddSample(base::TimeDelta value);
+  base::TimeDelta GetAverageOrDefault(base::TimeDelta default_value) const;
+  base::TimeDelta GetAverage() const {
+    return GetAverageOrDefault(base::TimeDelta());
+  }
+  size_t GetCount() const { return sample_microseconds_.GetCount(); }
+
+ private:
+  SlidingAverage sample_microseconds_;
+};
+
+class HeuristicVSyncAverage : public SlidingTimeDeltaAverage {
+ public:
+  explicit HeuristicVSyncAverage(size_t window_size);
+  ~HeuristicVSyncAverage() override;
+
+  void AddSample(base::TimeDelta value) override;
+
+ private:
+  size_t min_samples_;
 };
 
 }  // namespace vr
