@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51304c59_d06bcdab",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-29T00:31:28Z",
+      "side": 1,
+      "message": "Oh C. :)\nAt first I thought \"This comment should probably be removed.\"\nBut then I realized it actually did help me.",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "5a3621979b9c1dd9d0c40ad34f18e2f7c34e9078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1001dede_9b67ca56",
+        "filename": "third_party/zlib/crc32.c",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-29T00:31:28Z",
+      "side": 1,
+      "message": "This could potentially be a function pointer to get rid of the branch.\nThe pointer could be initialized to an init function which feature detects and updates the function pointer (then calls it). Or the call to arm_check_features() could set the function pointer.\n\nHowever, that would make the code much more complex for something that would provide very little value. So I prefer the way you have it.",
+      "range": {
+        "startLine": 250,
+        "startChar": 4,
+        "endLine": 253,
+        "endChar": 34
+      },
+      "revId": "b4927f82933408c525d7a98cdffe06efdd8df1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
