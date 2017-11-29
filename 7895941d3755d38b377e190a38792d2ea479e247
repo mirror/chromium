@@ -16,6 +16,24 @@
       "revId": "7895941d3755d38b377e190a38792d2ea479e247",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095e4c9c_f279fe5e",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-29T14:54:00Z",
+      "side": 0,
+      "message": "Done (in MigrateObsolete*Profile*Prefs).",
+      "parentUuid": "f30ba110_ba507b50",
+      "revId": "7895941d3755d38b377e190a38792d2ea479e247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
