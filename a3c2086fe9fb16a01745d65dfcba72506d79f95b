@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f23b723b_448c08e2",
+        "filename": "ios/chrome/browser/tabs/tab_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T21:47:00Z",
+      "side": 1,
+      "message": "I think we can keep one initializer if we use TabModelDelegate instead of WebStateCreationFactory.",
+      "parentUuid": "d31c6b0e_06ccd6cc",
+      "range": {
+        "startLine": 130,
+        "startChar": 25,
+        "endLine": 130,
+        "endChar": 37
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c10d5d99_06bc561d",
         "filename": "ios/chrome/browser/tabs/tab_model.h",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Injecting via initializer is not a good fit because tab_model may create multiple web states based on data in the SessionWindowIOS. I added the factory to group the two related factory methods, Create and CreateFromSession, which are both used in TabModel.\n\nIf delegate, is it just a matter of remaining webStateFactory to tabModelDelegate and move the definition into ios/chrome? I\u0027d imagine we want to expose exactly the same interface: i.e. Create and CreateFromSession.",
       "parentUuid": "c10d5d99_06bc561d",
+      "range": {
+        "startLine": 136,
+        "startChar": 22,
+        "endLine": 136,
+        "endChar": 37
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edabaafd_b8bc3d84",
+        "filename": "ios/chrome/browser/tabs/tab_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T21:47:00Z",
+      "side": 1,
+      "message": "Yes. TabModelDelegate could look like this:\n\n@protocol TabModelDelegate\n- (std::unique_ptr\u003cWebState\u003e)tabModel:(TabModel*)tabModel\n    createWebStateWithParams:(const WebState::CreateParams\u0026 params)params;\n... \n@end\n\nAnd BrowserViewWrangler will implement this delegate. This way we also don\u0027t need 2 initializers.",
+      "parentUuid": "0b7f3c11_55184945",
       "range": {
         "startLine": 136,
         "startChar": 22,

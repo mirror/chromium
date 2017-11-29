@@ -34,6 +34,24 @@
       "revId": "b36aa0db3106c495b9fdf44681acf4d525d9bc2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7d1dbf_5fa9ef25",
+        "filename": "ios/chrome/browser/snapshots/web_controller_snapshot_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T21:47:00Z",
+      "side": 0,
+      "message": "\"Moving DCHECK to the methods below that actually use web controller\" sounds like a great idea!",
+      "parentUuid": "a3b73dcd_710bb35b",
+      "revId": "b36aa0db3106c495b9fdf44681acf4d525d9bc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
