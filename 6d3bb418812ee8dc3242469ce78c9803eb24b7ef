@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ad796658_6c5a0039",
+        "filename": "third_party/WebKit/LayoutTests/media/video-error-networkState.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T15:11:55Z",
+      "side": 1,
+      "message": "I tested locally and the test passes in Firefox. Because of this I uploaded it in https://mounirlamouri.github.io/sandbox/bugs/674716.html and it seems that it passes in Firefox but fails in Safari and Edge. For Safari, not surprisingly, they have the same error as us. Edge simply reads the video O_o",
+      "parentUuid": "ddc7375f_e2f2b6ab",
+      "revId": "6d3bb418812ee8dc3242469ce78c9803eb24b7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "822e48fd_9912095d",
         "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
         "patchSetId": 4

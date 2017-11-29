@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25358699_ae48dd60",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T15:11:55Z",
+      "side": 1,
+      "message": "Can you open a follow-up bug to fix because we might want to close the crash bug :)",
+      "revId": "49c665caaf8c3e905f6b6521a6fa9bb23519f905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8698bc_b2209d46",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T15:11:55Z",
+      "side": 1,
+      "message": "Could you add a UseCounter to check how common it is? Probably just in an `else` statement.",
+      "revId": "49c665caaf8c3e905f6b6521a6fa9bb23519f905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
