@@ -54,7 +54,7 @@ class CastMediaSinkServiceImpl
 
   void SetTaskRunnerForTest(
       scoped_refptr<base::SequencedTaskRunner> task_runner);
-  void SetClockForTest(std::unique_ptr<base::Clock> clock);
+  void SetClockForTest(base::Clock* clock);
 
   // MediaSinkService implementation
   void Start() override;
@@ -302,7 +302,7 @@ class CastMediaSinkServiceImpl
   // NetworkService.
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
 
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
