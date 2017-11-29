@@ -19,6 +19,42 @@
     },
     {
       "key": {
+        "uuid": "f9cf1e25_baf87390",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-29T22:49:48Z",
+      "side": 1,
+      "message": "I would go the opposite way: functions should prefer to take a StringPiece (or really, a span\u003cconst uint8_t\u003e) unless they have some reason to care about crypto-buffer-ness.\n\nThe main reasons to use a CRYPTO_BUFFER are ref-counting and de-duping, but a simple parsing function like this doesn\u0027t care about either, so I think it makes more sense to just take a stringpiece or span.",
+      "parentUuid": "c4b67208_86a276ff",
+      "revId": "68a2499069861e24eacd6b9c4d3056d5903d4012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a207492a_79335b28",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-29T22:49:48Z",
+      "side": 1,
+      "message": "I would go the opposite way: functions should prefer to take a StringPiece (or really, a span\u003cconst uint8_t\u003e) unless they have some reason to care about crypto-buffer-ness.\n\nThe main reasons to use a CRYPTO_BUFFER are ref-counting and de-duping, but a simple parsing function like this doesn\u0027t care about either, so I think it makes more sense to just take a stringpiece or span.",
+      "parentUuid": "c4b67208_86a276ff",
+      "revId": "68a2499069861e24eacd6b9c4d3056d5903d4012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18232634_9cbd9db4",
         "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api.cc",
         "patchSetId": 7
@@ -36,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9de627bf_6a54bba9",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-29T22:49:48Z",
+      "side": 1,
+      "message": "It turns out that for base::Value a string type is assumed to be UTF-8. To handle arbitrary data you need to use the (deprecated) CreateWithCopiedBuffer or the BlobStorage constructor.",
+      "parentUuid": "18232634_9cbd9db4",
+      "revId": "68a2499069861e24eacd6b9c4d3056d5903d4012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93d98fc6_31c69f51",
         "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.cc",
         "patchSetId": 7
@@ -47,6 +101,24 @@
       "writtenOn": "2017-11-28T20:11:51Z",
       "side": 1,
       "message": "Bah, we should fix base::SHA1HashString to use a StringPiece to avoid this spurious copy.",
+      "revId": "68a2499069861e24eacd6b9c4d3056d5903d4012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0fb1ff_cf98c203",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-29T22:49:48Z",
+      "side": 1,
+      "message": "indeed. I\u0027ll do that separately.",
+      "parentUuid": "93d98fc6_31c69f51",
       "revId": "68a2499069861e24eacd6b9c4d3056d5903d4012",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
