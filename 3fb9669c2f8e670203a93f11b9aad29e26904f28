@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fade0c9_00060ded",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/autoplay-test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-29T17:50:17Z",
+      "side": 1,
+      "message": "typo: its",
+      "range": {
+        "startLine": 2,
+        "startChar": 32,
+        "endLine": 2,
+        "endChar": 36
+      },
+      "revId": "3fb9669c2f8e670203a93f11b9aad29e26904f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ddd045_9eb5fca1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/autoplay-test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-29T17:50:17Z",
+      "side": 1,
+      "message": "nit: This is clicking on the top-left corner of the frame. Would it be safer to click in the middle to avoid off-by-one errors?",
+      "revId": "3fb9669c2f8e670203a93f11b9aad29e26904f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
