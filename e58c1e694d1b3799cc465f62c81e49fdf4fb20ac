@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "108bc82c_72754225",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-11-29T23:42:45Z",
+      "side": 1,
+      "message": "The other lines that access WebappRegistry don\u0027t seem safe, either.\nCan you run everything in evaluate() on the UI thread? Failing that, can you do that only when accessing WebappRegistry?",
+      "range": {
+        "startLine": 124,
+        "startChar": 28,
+        "endLine": 124,
+        "endChar": 49
+      },
+      "revId": "e58c1e694d1b3799cc465f62c81e49fdf4fb20ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
