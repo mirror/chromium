@@ -54,6 +54,7 @@
 #include "core/layout/api/LayoutAPIShim.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/loader/DocumentLoader.h"
+#include "core/origin_trials/OriginTrialContext.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/WebDistillability.h"
@@ -274,6 +275,12 @@ WebURL WebDocument::CanonicalUrlForSharing() const {
 
 WebDistillabilityFeatures WebDocument::DistillabilityFeatures() {
   return DocumentStatisticsCollector::CollectStatistics(*Unwrap<Document>());
+}
+
+bool WebDocument::IsOriginTrialEnabled(const char* trialName) const {
+  const Document* document = ToDocument(private_.Get());
+  const OriginTrialContext* context = OriginTrialContext::From(document);
+  return context && context->IsTrialEnabled(trialName);
 }
 
 WebDocument::WebDocument(Document* elem) : WebNode(elem) {}

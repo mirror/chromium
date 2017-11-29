@@ -1,5 +1,7 @@
 include_rules = [
   "+components/viz/common/resources",
+  "+core/origin_trials",
+  "+platform/runtime_enabled_features.h",
   "+third_party/libyuv",
   '+third_party/webrtc_overrides',
 ]

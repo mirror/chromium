@@ -42,6 +42,7 @@
 #include "core/dom/SpaceSplitString.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/HostsUsingFeatures.h"
+#include "core/origin_trials/origin_trials.h"
 #include "modules/mediastream/MediaConstraintsImpl.h"
 #include "modules/mediastream/MediaStream.h"
 #include "modules/mediastream/MediaStreamConstraints.h"

@@ -36,14 +36,17 @@
 #include "content/renderer/media/webrtc/processed_local_audio_source.h"
 #include "content/renderer/media/webrtc_logging.h"
 #include "content/renderer/media/webrtc_uma_histograms.h"
+#include "core/origin_trials/origin_trials.h"
 #include "media/base/audio_parameters.h"
 #include "media/capture/video_capture_types.h"
+#include "platform/runtime_enabled_features.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/platform/WebMediaConstraints.h"
 #include "third_party/WebKit/public/platform/WebMediaStream.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamSource.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamTrack.h"
 #include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/public/web/WebDocument.h"
 #include "url/origin.h"
 
 namespace content {
@@ -403,9 +406,34 @@ void UserMediaProcessor::SelectAudioSettings(
   if (!IsCurrentRequestInfo(web_request))
     return;
 
+// If I were to plumb this down here, I'd envision one these two
+// implementations:
+#if 0
+  // This one only requires a call to the generated OriginTrials code.  It will
+  // do the RuntimeEnabledFeatures check for us. It does, however, require us to
+  // expose the ExecutionContext, which may or may not be bad.
+  const ExecutionContext* context =
+      web_request->OwnerDocument().ExecutionContext();
+  const bool in_disable_hw_noise_suppressor_trial =
+      blink::OriginTrials::disableHwNoiseSuppressionEnabled(context);
+  // Going down this path would allow us to do this here:
+  UseCounter::Count(context, WebFeature::kInDisableHwNoiseSuppressionTrial);
+#else
+  // This one requires two manual checks, but hands the responsibility of
+  // dealing with the ExecutionContext to WebDocument.
+  const bool in_disable_hw_noise_suppressor_trial =
+      blink::RuntimeEnabledFeatures::DisableHwNoiseSuppressionEnabled() ||
+      web_request.OwnerDocument().IsOriginTrialEnabled(
+          blink::OriginTrials::kDisableHwNoiseSuppressionTrialName);
+// Also no idea how to get a useful context for the UseCounter - could move
+// that functionality into IsOriginTrialEnabled, but that makes no semantic
+// sense.
+#endif
+
   DCHECK(current_request_info_->stream_controls()->audio.requested);
   auto settings = SelectSettingsAudioCapture(
-      std::move(audio_input_capabilities), web_request.AudioConstraints());
+      std::move(audio_input_capabilities), web_request.AudioConstraints(),
+      in_disable_hw_noise_suppressor_trial);
   if (!settings.HasValue()) {
     blink::WebString failed_constraint_name =
         blink::WebString::FromASCII(settings.failed_constraint_name());
