@@ -206,6 +206,10 @@ class ConfigSingleton {
   const std::string MatchKnownMITMSoftware(
       const scoped_refptr<net::X509Certificate> cert);
 
+  // Returns an UrgentInterstitial object if the certificates in |ssl_info|
+  // matches any of urgent interstitials. Returns null if there is no match.
+  UrgentInterstitial* MatchUrgentInterstitial(const net::SSLInfo& ssl_info);
+
   // Testing methods:
   void ResetForTesting();
   void SetInterstitialDelayForTesting(const base::TimeDelta& delay);
@@ -381,6 +385,11 @@ const std::string ConfigSingleton::MatchKnownMITMSoftware(
   return ssl_error_assistant_->MatchKnownMITMSoftware(cert);
 }
 
+UrgentInterstitial* ConfigSingleton::MatchUrgentInterstitial(
+    const net::SSLInfo& ssl_info) {
+  return ssl_error_assistant_->MatchUrgentInterstitial(ssl_info);
+}
+
 class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
  public:
   SSLErrorHandlerDelegateImpl(
@@ -418,7 +427,8 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
   void ShowCaptivePortalInterstitial(const GURL& landing_url) override;
   void ShowMITMSoftwareInterstitial(const std::string& mitm_software_name,
                                     bool is_enterprise_managed) override;
-  void ShowSSLInterstitial() override;
+  void ShowSSLInterstitial(bool is_urgent_interstitial,
+                           const GURL& support_url) override;
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state) override;
 
@@ -491,7 +501,8 @@ bool SSLErrorHandlerDelegateImpl::IsErrorOverridable() const {
 
 void SSLErrorHandlerDelegateImpl::ShowCaptivePortalInterstitial(
     const GURL& landing_url) {
-  // Show captive portal blocking page. The interstitial owns the blocking page.
+  // Show captive portal blocking page. The interstitial owns the blocking
+  // page.interstitial_ui.cc
   (new CaptivePortalBlockingPage(web_contents_, request_url_, landing_url,
                                  std::move(ssl_cert_reporter_), ssl_info_,
                                  callback_))
@@ -508,12 +519,18 @@ void SSLErrorHandlerDelegateImpl::ShowMITMSoftwareInterstitial(
       ->Show();
 }
 
-void SSLErrorHandlerDelegateImpl::ShowSSLInterstitial() {
+void SSLErrorHandlerDelegateImpl::ShowSSLInterstitial(
+    bool is_urgent_interstitial,
+    const GURL& support_url) {
+  int options_mask = options_mask_;
+  if (is_urgent_interstitial)
+    options_mask |= security_interstitials::SSLErrorUI::HARD_OVERRIDE_DISABLED;
+
   // Show SSL blocking page. The interstitial owns the blocking page.
   (SSLBlockingPage::Create(web_contents_, cert_error_, ssl_info_, request_url_,
-                           options_mask_, base::Time::NowFromSystemTime(),
-                           std::move(ssl_cert_reporter_), is_superfish_,
-                           callback_))
+                           options_mask, base::Time::NowFromSystemTime(),
+                           support_url, std::move(ssl_cert_reporter_),
+                           is_superfish_, callback_))
       ->Show();
 }
 
@@ -688,6 +705,13 @@ void SSLErrorHandler::StartHandlingError() {
     return;
   }
 
+  UrgentInterstitial* urgent_interstitial =
+      g_config.Pointer()->MatchUrgentInterstitial(ssl_info_);
+  if (urgent_interstitial) {
+    ShowUrgentInterstitial(urgent_interstitial);
+    return;
+  }
+
   // Ideally, a captive portal interstitial should only be displayed if the only
   // SSL error is a name mismatch error. However, captive portal detector always
   // opens a new tab if it detects a portal ignoring the types of SSL errors. To
@@ -821,7 +845,7 @@ void SSLErrorHandler::ShowSSLInterstitial() {
   RecordUMA(delegate_->IsErrorOverridable()
                 ? SHOW_SSL_INTERSTITIAL_OVERRIDABLE
                 : SHOW_SSL_INTERSTITIAL_NONOVERRIDABLE);
-  delegate_->ShowSSLInterstitial();
+  delegate_->ShowSSLInterstitial(false, GURL());
   // Once an interstitial is displayed, no need to keep the handler around.
   // This is the equivalent of "delete this".
   web_contents_->RemoveUserData(UserDataKey());
@@ -835,6 +859,24 @@ void SSLErrorHandler::ShowBadClockInterstitial(
   // Once an interstitial is displayed, no need to keep the handler around.
   // This is the equivalent of "delete this".
   web_contents_->RemoveUserData(UserDataKey());
+}
+
+void SSLErrorHandler::ShowUrgentInterstitial(
+    UrgentInterstitial* urgent_interstitial) {
+  switch (urgent_interstitial->interstitial_type()) {
+    case UrgentInterstitialPageType::NONE:
+      NOTREACHED();
+    case UrgentInterstitialPageType::SSL:
+      delegate_->ShowSSLInterstitial(true, urgent_interstitial->support_url());
+      return;
+    case UrgentInterstitialPageType::CAPTIVE_PORTAL:
+      delegate_->ShowCaptivePortalInterstitial(GURL());
+      return;
+    case UrgentInterstitialPageType::MITM_SOFTWARE:
+      // TODO(spqchan): Implement support for MitM urgent interstitials.
+      NOTREACHED();
+      return;
+  }
 }
 
 void SSLErrorHandler::CommonNameMismatchHandlerCallback(
