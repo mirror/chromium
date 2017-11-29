@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40051e1c_9b74adb5",
+        "filename": "ui/base/class_property.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T20:38:04Z",
+      "side": 1,
+      "message": "nit: // namespace ui",
+      "revId": "8aa719565098fbc91ea5396a539df5c1f950262b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662f8373_d84f8e51",
+        "filename": "ui/base/class_property.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T20:38:04Z",
+      "side": 1,
+      "message": "ditto nit: // namespace ui",
+      "revId": "8aa719565098fbc91ea5396a539df5c1f950262b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abdf9136_6086d764",
+        "filename": "ui/views/view_constants_aura.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T20:38:04Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m having a bit of trouble understanding the exact problem with the old pattern in jumbo builds, and how this fixes it, ie. there don\u0027t seem to be multiple CC files using DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(VIEWS_EXPORT, views::View*). Would it help to use ui::ClassProperty and include ui/base/class_property.h here, instead of using aura::WindowProperty via ui/aura/window.h? I also wonder about possibly just defining the type in this header and relying on include guards to prevent redefinition? I\u0027m CC\u0027ing some extra folks that know C++ build behavior a bit better than myself.",
+      "revId": "8aa719565098fbc91ea5396a539df5c1f950262b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
