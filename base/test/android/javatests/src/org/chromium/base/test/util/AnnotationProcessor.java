@@ -4,13 +4,16 @@
 
 package org.chromium.base.test.util;
 
-import android.support.annotation.Nullable;
-
 import org.junit.rules.ExternalResource;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Test rule that is activated when a test or its class has a specific annotation.
@@ -22,7 +25,7 @@ import java.lang.annotation.Annotation;
  * <pre>
  * public class Test {
  *    &#64;Rule
- *    public AnnotationProcessor<Foo> rule = new AnnotationProcessor(Foo.class) {
+ *    public AnnotationProcessor rule = new AnnotationProcessor(Foo.class) {
  *          &#64;Override
  *          protected void before() { ... }
  *
@@ -36,29 +39,59 @@ import java.lang.annotation.Annotation;
  * }
  * </pre>
  *
- * @param <T> type of the annotation to match on the test case.
+ * It can also be used to trigger for multiple annotations:
+ *
+ * <pre>
+ * &#64;DisableFoo
+ * public class Test {
+ *    &#64;Rule
+ *    public AnnotationProcessor rule = new AnnotationProcessor(EnableFoo.class, DisableFoo.class) {
+ *          &#64;Override
+ *          protected void before() {
+ *            // Loops through all the picked up annotations. For myTest(), it would process
+ *            // DisableFoo first, then EnableFoo.
+ *            for (Annotation annotation : getAnnotations()) {
+ *                if (annotation instanceof EnableFoo) { ... }
+ *                else if (annotation instanceof DisableFoo) { ... }
+ *            }
+ *          }
+ *
+ *          &#64;Override
+ *          protected void after() {
+ *            // For myTest(), would return EnableFoo as it's directly set on the method.
+ *            Annotation a = getClosestAnnotation();
+ *            ...
+ *          }
+ *    };
+ *
+ *    &#64;Test
+ *    &#64;EnableFoo
+ *    public void myTest() { ... }
+ * }
+ * </pre>
+ *
+ * @see org.chromium.base.test.util.AnnotationProcessingUtils.AnnotationsExtractor
  */
-public abstract class AnnotationProcessor<T extends Annotation> extends ExternalResource {
-    private final Class<T> mAnnotationClass;
+public abstract class AnnotationProcessor extends ExternalResource {
+    private final AnnotationProcessingUtils.AnnotationsExtractor mAnnotationExtractor;
+    private List<Annotation> mCollectedAnnotations;
     private Description mTestDescription;
 
-    @Nullable
-    private T mClassAnnotation;
-
-    @Nullable
-    private T mTestAnnotation;
-
-    public AnnotationProcessor(Class<T> annotationClass) {
-        mAnnotationClass = annotationClass;
+    @SafeVarargs
+    public AnnotationProcessor(Class<? extends Annotation> firstAnnotationType,
+            Class<? extends Annotation>... additionalTypes) {
+        List<Class<? extends Annotation>> mAnnotationTypes = new ArrayList<>();
+        mAnnotationTypes.add(firstAnnotationType);
+        if (additionalTypes.length > 0) mAnnotationTypes.addAll(Arrays.asList(additionalTypes));
+        mAnnotationExtractor = new AnnotationProcessingUtils.AnnotationsExtractor(mAnnotationTypes);
     }
 
     @Override
     public Statement apply(Statement base, Description description) {
         mTestDescription = description;
-        mClassAnnotation = description.getTestClass().getAnnotation(mAnnotationClass);
-        mTestAnnotation = description.getAnnotation(mAnnotationClass);
 
-        if (mClassAnnotation == null && mTestAnnotation == null) return base;
+        mCollectedAnnotations = mAnnotationExtractor.getMatchingAnnotations(description);
+        if (mCollectedAnnotations.isEmpty()) return base;
 
         // Return the wrapped statement to execute before() and after().
         return super.apply(base, description);
@@ -69,15 +102,32 @@ public abstract class AnnotationProcessor<T extends Annotation> extends External
         return mTestDescription;
     }
 
-    /** @return the annotation on the test class. */
-    @Nullable
-    protected T getClassAnnotation() {
-        return mClassAnnotation;
+    /**
+     * @return The collected annotations that match the declared type(s).
+     * @throws NullPointerException if this is called before annotations have been collected,
+     * which happens when the rule is applied to the {@link Statement}.
+     */
+    protected List<Annotation> getAnnotations() {
+        return Collections.unmodifiableList(mCollectedAnnotations);
     }
 
-    /** @return the annotation on the test method. */
-    @Nullable
-    protected T getTestAnnotation() {
-        return mTestAnnotation;
+    /**
+     * @return The closest annotation matching the provided type, or {@code null} if there is none.
+     */
+    @SuppressWarnings("unchecked")
+    protected <A extends Annotation> A getAnnotation(Class<A> annnotationType) {
+        ListIterator<Annotation> iteratorFromEnd =
+                mCollectedAnnotations.listIterator(mCollectedAnnotations.size());
+        while (iteratorFromEnd.hasPrevious()) {
+            Annotation annotation = iteratorFromEnd.previous();
+            if (annnotationType.isAssignableFrom(annotation.annotationType())) {
+                return (A) annotation;
+            }
+        }
+        return null;
+    }
+
+    protected Annotation getClosestAnnotation() {
+        return mCollectedAnnotations.get(mCollectedAnnotations.size() - 1);
     }
 }
