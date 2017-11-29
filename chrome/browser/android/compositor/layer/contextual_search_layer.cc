@@ -208,8 +208,7 @@ void ContextualSearchLayer::SetProperties(
       bar_banner_text_->SetUIResourceId(
           bar_banner_text_resource->ui_resource()->id());
       bar_banner_text_->SetBounds(bar_banner_text_resource->size());
-      bar_banner_text_->SetPosition(
-          gfx::PointF(0.f, search_bar_banner_padding));
+      bar_banner_text_->SetPosition(gfx::PointF(0.f, 0.f));
       bar_banner_text_->SetOpacity(search_bar_banner_text_opacity);
     }
   } else {
