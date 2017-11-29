@@ -11,7 +11,7 @@
 
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
-#include "base/strings/string_piece.h"
+#include "base/strings/string_piece_forward.h"
 #include "content/common/content_export.h"
 
 namespace content {
@@ -21,6 +21,7 @@ namespace content {
 //  * Negative integers.
 //  * Floating-point numbers.
 //  * Indefinite-length encodings.
+//  * Map value with array, map, and negative integer type keys.
 class CONTENT_EXPORT CBORValue {
  public:
   struct CTAPLess {
@@ -29,26 +30,19 @@ class CONTENT_EXPORT CBORValue {
     //
     // The sort order defined in CTAP is:
     //   • If the major types are different, the one with the lower value in
-    //     numerical order sorts earlier. (Moot in this code because all keys
-    //     are strings.)
+    //     numerical order sorts earlier.
     //   • If two keys have different lengths, the shorter one sorts earlier.
     //   • If two keys have the same length, the one with the lower value in
     //     (byte-wise) lexical order sorts earlier.
     //
     // See section 6 of https://fidoalliance.org/specs/fido-v2.0-rd-20170927/
-    // fido-client-to-authenticator-protocol-v2.0-rd-20170927.html.
-    //
-    // The sort order defined in
-    // https://tools.ietf.org/html/rfc7049#section-3.9 is similar to the CTAP
-    // order implemented here, but it sorts purely by serialised key and
-    // doesn't specify that major types are compared first. Thus the shortest
-    // key sorts first by the RFC rules (irrespective of the major type), but
-    // may not by CTAP rules.
-    bool operator()(const base::StringPiece& a,
-                    const base::StringPiece& b) const {
-      const size_t a_size = a.size();
-      const size_t b_size = b.size();
-      return std::tie(a_size, a) < std::tie(b_size, b);
+    // fido-client-to-authenticator-protocol-v2.0-rd-20170927.html and
+    // https://tools.ietf.org/html/rfc7049#section-3.9 also.
+    bool operator()(const CBORValue& a, const CBORValue& b) const {
+      std::vector<uint8_t> serialized_a = a.GetByteRepresentation();
+      std::vector<uint8_t> serialized_b = b.GetByteRepresentation();
+      return (std::make_tuple(serialized_a.size(), serialized_a) <
+              std::make_tuple(serialized_b.size(), serialized_b));
     }
 
     using is_transparent = void;
@@ -56,7 +50,7 @@ class CONTENT_EXPORT CBORValue {
 
   using BinaryValue = std::vector<uint8_t>;
   using ArrayValue = std::vector<CBORValue>;
-  using MapValue = base::flat_map<std::string, CBORValue, CTAPLess>;
+  using MapValue = base::flat_map<CBORValue, CBORValue, CTAPLess>;
 
   enum class Type {
     UNSIGNED = 0,
@@ -107,11 +101,15 @@ class CONTENT_EXPORT CBORValue {
   bool is_map() const { return type() == Type::MAP; }
 
   // These will all fatally assert if the type doesn't match.
-  uint64_t GetUnsigned() const;
+  const uint64_t& GetUnsigned() const;
   const BinaryValue& GetBytestring() const;
   const std::string& GetString() const;
   const ArrayValue& GetArray() const;
   const MapValue& GetMap() const;
+
+  // Returns serialized representation of itself in order to sort CBOR map keys
+  // of different type.
+  std::vector<uint8_t> GetByteRepresentation() const;
 
  private:
   Type type_;

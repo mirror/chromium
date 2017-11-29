@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/strings/string_util.h"
+#include "content/browser/webauth/cbor/cbor_writer.h"
 
 namespace content {
 
@@ -73,8 +74,10 @@ CBORValue::CBORValue(ArrayValue&& in_array) noexcept
 
 CBORValue::CBORValue(const MapValue& in_map) : type_(Type::MAP), map_value_() {
   map_value_.reserve(in_map.size());
-  for (const auto& it : in_map)
-    map_value_.emplace_hint(map_value_.end(), it.first, it.second.Clone());
+  for (const auto& it : in_map) {
+    map_value_.emplace_hint(map_value_.end(), it.first.Clone(),
+                            it.second.Clone());
+  }
 }
 
 CBORValue::CBORValue(MapValue&& in_map) noexcept
@@ -111,7 +114,7 @@ CBORValue CBORValue::Clone() const {
   return CBORValue();
 }
 
-uint64_t CBORValue::GetUnsigned() const {
+const uint64_t& CBORValue::GetUnsigned() const {
   CHECK(is_unsigned());
   return unsigned_value_;
 }
@@ -134,6 +137,12 @@ const CBORValue::ArrayValue& CBORValue::GetArray() const {
 const CBORValue::MapValue& CBORValue::GetMap() const {
   CHECK(is_map());
   return map_value_;
+}
+
+std::vector<uint8_t> CBORValue::GetByteRepresentation() const {
+  auto cbor_byte_data = CBORWriter::Write(*this);
+  CHECK(cbor_byte_data.has_value());
+  return cbor_byte_data.value();
 }
 
 void CBORValue::InternalMoveConstructFrom(CBORValue&& that) {
