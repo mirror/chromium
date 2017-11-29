@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<body>
+<script>
+  promise_test(() => {
+    return new Promise((resolve, reject) => {
+      frame = document.body.appendChild(document.createElement("iframe"));
+      frame.src = "about:blank";
+      frame.onload = () => {
+        var wnd = frame.contentWindow;
+        var objConstructor = WebAssembly.compileStreaming.call(wnd).__proto__.__proto__.constructor;
+        var promiseConstructor = Promise.__proto__.__proto__.constructor;
+        if (objConstructor === promiseConstructor) {
+          resolve();
+        } else {
+          reject();
+        }
+      }
+    });
+  }, "wasm compileStreaming does not leak foreign contexts");
+
+  promise_test(() => {
+    return new Promise((resolve, reject) => {
+      frame = document.body.appendChild(document.createElement("iframe"));
+      frame.src = "about:blank";
+      frame.onload = () => {
+        var wnd = frame.contentWindow;
+        var objConstructor = WebAssembly.instantiateStreaming.call(wnd).__proto__.__proto__.constructor;
+        var promiseConstructor = Promise.__proto__.__proto__.constructor;
+        if (objConstructor === promiseConstructor) {
+          resolve();
+        } else {
+          reject();
+        }
+      }
+    });
+  }, "wasm instantiateStreaming APIs does not leak foreign contexts");
+</script>
+</body>
