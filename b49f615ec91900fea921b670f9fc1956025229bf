@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6857fc35_6a4cf392",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-29T20:17:51Z",
+      "side": 1,
+      "message": "nit: \"allows\" -\u003e \"enforces\" ?",
+      "range": {
+        "startLine": 519,
+        "startChar": 27,
+        "endLine": 519,
+        "endChar": 33
+      },
+      "revId": "b49f615ec91900fea921b670f9fc1956025229bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "536e2032_ef0d615f",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_event_queue.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-29T20:17:51Z",
+      "side": 1,
+      "message": "I\u0027m guessing that we don\u0027t ever want to ever turn on async wheel events without latching? If so, is that documented in a comment somewhere (including *why* async wheels require latching)? Perhaps it should be mentioned in content_features.h/cc.",
+      "range": {
+        "startLine": 47,
+        "startChar": 49,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "b49f615ec91900fea921b670f9fc1956025229bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
