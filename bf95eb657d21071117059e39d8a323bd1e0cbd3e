@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13776d46_fc61d41b",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-29T19:08:22Z",
+      "side": 1,
+      "message": "nit: can you add a comment with a link to: https://android-developers.googleblog.com/2017/09/introducing-android-native-development.html",
+      "revId": "bf95eb657d21071117059e39d8a323bd1e0cbd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
