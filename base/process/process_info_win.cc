@@ -17,8 +17,11 @@ namespace {
 
 base::win::ScopedHandle GetCurrentProcessToken() {
   HANDLE process_token;
-  OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &process_token);
-  DCHECK(process_token != NULL && process_token != INVALID_HANDLE_VALUE);
+  BOOL result =
+      OpenProcessToken(::GetCurrentProcess(), TOKEN_QUERY, &process_token);
+  PCHECK(result);
+  CHECK(process_token != NULL);
+  CHECK(process_token != INVALID_HANDLE_VALUE);
   return base::win::ScopedHandle(process_token);
 }
 
