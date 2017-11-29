@@ -139,6 +139,24 @@
       "revId": "0eb18318b3e12782ef439c3df2185c06986affa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a94b21_5ec70a15",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-29T08:41:55Z",
+      "side": 1,
+      "message": "Agree.\nIt seems editing/ has many |return {}| in these days.\nLet\u0027s avoid to use |return {}| in editing/ too.",
+      "parentUuid": "bac53a27_5976d360",
+      "revId": "0eb18318b3e12782ef439c3df2185c06986affa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
