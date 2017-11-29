@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "23200493_a45459d7",
+        "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-29T02:45:12Z",
+      "side": 1,
+      "message": "Oops, fixed.",
+      "parentUuid": "e422f3b6_8daa7b20",
+      "revId": "d1a14d2701232aae2954a1bd8e1b46f42704f67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5d05698_91a76920",
         "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
         "patchSetId": 1
