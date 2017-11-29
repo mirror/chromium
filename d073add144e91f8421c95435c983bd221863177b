@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff93946c_5a30ae96",
+        "filename": "components/sync/user_events/trial_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-29T01:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c6890c9_7568a85a",
+      "range": {
+        "startLine": 24,
+        "startChar": 22,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "d073add144e91f8421c95435c983bd221863177b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4229792_8672b2c8",
         "filename": "components/sync/user_events/trial_recorder.cc",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T22:41:13Z",
       "side": 1,
       "message": "This activates the trial, which doesn\u0027t seem optimal. Marking trials as active unnecessarily pollutes metrics, since now the state is tagged with those trials even if no client code (besides this) checked their state - so you\u0027ll get UMA data from users who don\u0027t interact with the relevant features.\n\nI think it would be better to use GetActiveFieldTrialGroups() and check the existence of the trial there.\n\nAlso, to double check, is the event_trial_deps_ association needed - or could we log all CHROME_SYNC_SERVICE variation ids here?\n\nSeparately, let\u0027s rename CHROME_SYNC_SERVICE to CHROME_SYNC_EVENT_LOGGER.",
+      "range": {
+        "startLine": 87,
+        "startChar": 48,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "d073add144e91f8421c95435c983bd221863177b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eada75d_5c43e2bf",
+        "filename": "components/sync/user_events/trial_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-29T01:24:29Z",
+      "side": 1,
+      "message": "Alright, done all of this, I think. Let me know what you think. Created the VariationsIdCollection class in component/variations code that almost seems like it could help do part of VariationsHttpHeaderProvider\u0027s job, except that class has to deal with threading that I haven\u0027t tried to understand.\n\nI don\u0027t actually call GetActiveFieldTrialGroups() anywhere but I don\u0027t think anything I do finalizes trails now.\n\nAlso created crbug.com/788004 to rename the field.",
+      "parentUuid": "a4229792_8672b2c8",
       "range": {
         "startLine": 87,
         "startChar": 48,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7a2684ef_5c13e329",
+        "filename": "components/sync/user_events/trial_recorder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-29T01:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d8afab9_98104956",
+      "range": {
+        "startLine": 20,
+        "startChar": 21,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "d073add144e91f8421c95435c983bd221863177b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e336010_11734eec",
         "filename": "components/sync/user_events/trial_recorder.h",
         "patchSetId": 12
@@ -85,6 +157,24 @@
       "revId": "d073add144e91f8421c95435c983bd221863177b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6fd9fc_cb4e61bd",
+        "filename": "components/sync/user_events/trial_recorder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-29T01:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e336010_11734eec",
+      "revId": "d073add144e91f8421c95435c983bd221863177b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
