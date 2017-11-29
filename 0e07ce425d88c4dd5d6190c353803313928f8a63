@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7f9f679_23a7f00e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-29T21:34:42Z",
+      "side": 1,
+      "message": "nit: format comment \n/**\n * blah blah\n */",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 17
+      },
+      "revId": "0e07ce425d88c4dd5d6190c353803313928f8a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c9b0f0_256ca65a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-29T21:34:42Z",
+      "side": 1,
+      "message": "if that\u0027s the only reason this is public, please mark @VisibleForTesting on top of the const",
+      "range": {
+        "startLine": 19,
+        "startChar": 30,
+        "endLine": 19,
+        "endChar": 31
+      },
+      "revId": "0e07ce425d88c4dd5d6190c353803313928f8a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f6d2bf_a9c828d8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-29T21:34:42Z",
+      "side": 1,
+      "message": "nit: use {} around if else blocks",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "0e07ce425d88c4dd5d6190c353803313928f8a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b987d65_8ba872d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-29T21:34:42Z",
+      "side": 1,
+      "message": "nit: please use parenthesis around subtraction for clarity",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 25
+      },
+      "revId": "0e07ce425d88c4dd5d6190c353803313928f8a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
