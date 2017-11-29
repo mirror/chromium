@@ -11,11 +11,15 @@
 
 namespace bluetooth {
 
+// TODO Remove this
+//
+//
 // Implementation of Mojo AdapterFactory located in
 // device/bluetooth/public/interfaces/adapter.mojom.
 // It handles requests for Mojo Adapter instances
 // and strongly binds the Adapter instance to the system's
-// Bluetooth adapter.
+// Bluetooth adapter. 
+/* 
 class AdapterFactory : public mojom::AdapterFactory {
  public:
   AdapterFactory();
@@ -35,7 +39,7 @@ class AdapterFactory : public mojom::AdapterFactory {
 
   DISALLOW_COPY_AND_ASSIGN(AdapterFactory);
 };
-
+*/
 }  // namespace bluetooth
 
 #endif  // DEVICE_BLUETOOTH_ADAPTER_FACTORY_H_
