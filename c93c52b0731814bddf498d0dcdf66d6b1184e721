@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0c3288a_8a9bd02c",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-29T14:42:35Z",
+      "side": 1,
+      "message": "One had to go in the .h file.",
+      "parentUuid": "b029cbd4_9c6fcace",
+      "revId": "c93c52b0731814bddf498d0dcdf66d6b1184e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec1de60c_0ba8df41",
         "filename": "components/omnibox/browser/fake_autocomplete_provider_client.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "c93c52b0731814bddf498d0dcdf66d6b1184e721",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ce6192_9f86b853",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-29T14:42:35Z",
+      "side": 1,
+      "message": "I made them the same as AutocompleteProviderClient, so that when Mock... is fixed, they\u0027ll be identical.",
+      "parentUuid": "ec1de60c_0ba8df41",
+      "revId": "c93c52b0731814bddf498d0dcdf66d6b1184e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a85ef9d0_9e81111a",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-29T14:42:35Z",
+      "side": 1,
+      "message": "Well, clearly \"nothing\" is /sufficient/. ;) So I added a forward declaration. The .cc file needed the include.",
+      "parentUuid": "cb6e37a9_8becb906",
+      "revId": "c93c52b0731814bddf498d0dcdf66d6b1184e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20d3c2c7_b5f2b1e5",
         "filename": "components/omnibox/browser/shortcuts_provider_unittest.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "c93c52b0731814bddf498d0dcdf66d6b1184e721",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10995ad6_5595721d",
+        "filename": "components/omnibox/browser/shortcuts_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-29T14:42:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20d3c2c7_b5f2b1e5",
+      "revId": "c93c52b0731814bddf498d0dcdf66d6b1184e721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
