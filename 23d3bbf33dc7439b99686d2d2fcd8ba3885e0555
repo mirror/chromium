@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9e29273_a48b3ba4",
+        "filename": "components/component_updater/component_installer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-29T12:35:32Z",
+      "side": 1,
+      "message": "The policy should have already had an opportunity to read the manifest in ComponentReady and can remember any value it needs from that, right?",
+      "range": {
+        "startLine": 110,
+        "startChar": 79,
+        "endLine": 110,
+        "endChar": 80
+      },
+      "revId": "23d3bbf33dc7439b99686d2d2fcd8ba3885e0555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
