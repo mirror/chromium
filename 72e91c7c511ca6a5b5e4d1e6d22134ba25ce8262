@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df92628e_7ca43e46",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-29T02:17:54Z",
+      "side": 1,
+      "message": "nit: switch the order (to match the class member vars)\n\n(and update the order in cc file too)",
+      "revId": "72e91c7c511ca6a5b5e4d1e6d22134ba25ce8262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3ea219_22b344d9",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_delegate.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-29T02:17:54Z",
+      "side": 1,
+      "message": "typo: to",
+      "range": {
+        "startLine": 16,
+        "startChar": 78,
+        "endLine": 16,
+        "endChar": 79
+      },
+      "revId": "72e91c7c511ca6a5b5e4d1e6d22134ba25ce8262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50abdea3_eaac44dc",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-29T02:17:54Z",
+      "side": 1,
+      "message": "can you file a bug for this and link it here (it\u0027s generally a good practice to associate todos with a bug).",
+      "revId": "72e91c7c511ca6a5b5e4d1e6d22134ba25ce8262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
