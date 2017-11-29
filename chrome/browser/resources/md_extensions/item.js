@@ -222,6 +222,7 @@ cr.define('extensions', function() {
         case SourceType.POLICY:
           return 'communication:business';
         case SourceType.SIDELOADED:
+        case SourceType.UNKNOWN:
           return 'input';
         case SourceType.UNPACKED:
           return 'extensions-icons:unpacked';
@@ -236,6 +237,9 @@ cr.define('extensions', function() {
      * @private
      */
     computeSourceIndicatorText_: function() {
+      if (this.data.locationText)
+        return this.data.locationText;
+
       const sourceType = extensions.getItemSource(this.data);
       return sourceType == SourceType.WEBSTORE ?
           '' :
