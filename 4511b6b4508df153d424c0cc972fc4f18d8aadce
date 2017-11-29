@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cb60036_d669b965",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 3896,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-29T22:58:34Z",
+      "side": 1,
+      "message": "You don\u0027t need this special case. Line 3901 works even if the current frame is the local root.",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205e14f9_044ecb7a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 3910,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-29T22:58:34Z",
+      "side": 1,
+      "message": "It might be better to move this check into SetScrollGestureRegionIsDirty(), and instead check whether the local frame root needs layout. It is possible that layout is dirty for the root but not the current Frame, and in that case it seems consistent with the comment above to not set the flag.",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9a7060_6477e10d",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 5289,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-29T22:58:34Z",
+      "side": 1,
+      "message": "This used to set scroll_gesture_region_is_dirty_ in ScrollingCoordinator, but no longer does that. I don\u0027t know -- does that matter?",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cfdffa_842750f2",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-29T22:58:34Z",
+      "side": 1,
+      "message": "These should have comments. In particular, make sure to call out that they are only used on local frame roots, and also that they might be subject to change when bug 680606 is fixed.",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d482e5_c1eb9c4b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-29T22:58:34Z",
+      "side": 1,
+      "message": "I know there are lots of places that we do this, but do you know if there is current guidance on DCHECKing pointers right before we dereference them? It doesn\u0027t seem to have a point, since we will have an obvious crash one line later anyway.",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d55efb_421b06d8",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-29T22:58:34Z",
+      "side": 1,
+      "message": "This method assumes that the frame is a local root, correct? It might make sense to add DCHECK(frame-\u003eIsLocalRoot());",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17848a30_58666e04",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-29T22:58:34Z",
+      "side": 1,
+      "message": "This doesn\u0027t guarantee that we aren\u0027t in an OOPIF, since OOPIFs can be in the same process as the main frame. Instead, compare the local root (which I think is just |frame| at this point, if I am right about it always being the local root) to the main frame to see if they are different.",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
