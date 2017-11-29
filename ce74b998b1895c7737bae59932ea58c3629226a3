@@ -45,6 +45,30 @@
       "revId": "ce74b998b1895c7737bae59932ea58c3629226a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679c3496_fdd7d8de",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-11-29T09:53:01Z",
+      "side": 1,
+      "message": "I think we should keep Mojo here for mojo interface.\nOtherwise it may be confused with the GpuJpegDecodeAcceleratorFactory.",
+      "parentUuid": "d7bc146f_4ad92a42",
+      "range": {
+        "startLine": 50,
+        "startChar": 34,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "ce74b998b1895c7737bae59932ea58c3629226a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
