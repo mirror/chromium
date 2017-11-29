@@ -12,7 +12,7 @@
 class Browser;
 
 // Implementation of ToolbarModelDelegate which uses an instance of
-// Browser in order to fulfil its duties.
+// Browser in order to fulfill its duties.
 class BrowserToolbarModelDelegate : public ChromeToolbarModelDelegate {
  public:
   explicit BrowserToolbarModelDelegate(Browser* browser);
@@ -22,7 +22,7 @@ class BrowserToolbarModelDelegate : public ChromeToolbarModelDelegate {
   content::WebContents* GetActiveWebContents() const override;
 
  private:
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
 
   DISALLOW_COPY_AND_ASSIGN(BrowserToolbarModelDelegate);
 };

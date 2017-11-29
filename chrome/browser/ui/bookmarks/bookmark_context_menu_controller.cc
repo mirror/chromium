@@ -54,18 +54,17 @@ BookmarkContextMenuController::BookmarkContextMenuController(
       parent_(parent),
       selection_(selection),
       model_(BookmarkModelFactory::GetForBrowserContext(profile)),
+      menu_model_(std::make_unique<ui::SimpleMenuModel>(this)),
       weak_factory_(this) {
   DCHECK(profile_);
   DCHECK(model_->loaded());
-  menu_model_.reset(new ui::SimpleMenuModel(this));
   model_->AddObserver(this);
 
   BuildMenu();
 }
 
 BookmarkContextMenuController::~BookmarkContextMenuController() {
-  if (model_)
-    model_->RemoveObserver(this);
+  model_->RemoveObserver(this);
 }
 
 void BookmarkContextMenuController::BuildMenu() {

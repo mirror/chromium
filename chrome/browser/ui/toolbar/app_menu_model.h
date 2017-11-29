@@ -222,9 +222,9 @@ class AppMenuModel : public ui::SimpleMenuModel,
   // Recent Tabs submenu.
   std::unique_ptr<RecentTabsSubMenuModel> recent_tabs_sub_menu_model_;
 
-  ui::AcceleratorProvider* provider_;  // weak
+  ui::AcceleratorProvider* const provider_;  // weak, never nullptr.
 
-  Browser* const browser_;  // weak
+  Browser* const browser_;  // wea, never nullptr.
 
   std::unique_ptr<content::HostZoomMap::Subscription>
       browser_zoom_subscription_;

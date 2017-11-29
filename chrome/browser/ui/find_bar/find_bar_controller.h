@@ -12,8 +12,8 @@
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 
-class FindBar;
 class Browser;
+class FindBar;
 
 namespace content {
 class WebContents;
@@ -41,9 +41,7 @@ class FindBarController : public content::NotificationObserver {
     kKeepResultsInFindBox,   // Leave the results untouched.
   };
 
-  // FindBar takes ownership of |find_bar_view|.
-  FindBarController(FindBar* find_bar, Browser* browser);
-
+  FindBarController(std::unique_ptr<FindBar> find_bar, Browser* browser);
   ~FindBarController() override;
 
   // Shows the find bar. Any previous search string will again be visible.
@@ -95,12 +93,12 @@ class FindBarController : public content::NotificationObserver {
 
   content::NotificationRegistrar registrar_;
 
-  std::unique_ptr<FindBar> find_bar_;
+  std::unique_ptr<FindBar> find_bar_;  // Never nullptr.
 
   // The WebContents we are currently associated with.  Can be NULL.
   content::WebContents* web_contents_ = nullptr;
 
-  // The Browser creating this controller.
+  // The Browser creating this controller. Never nullptr.
   Browser* const browser_;
 
   // The last match count we reported to the user. This is used by
