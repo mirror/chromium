@@ -8,27 +8,20 @@ import json
 import sys
 
 
-def MergeJson(output_json, jsons_to_merge, print_input=True):
-  """Merge the contents of one or more results JSONs into a single JSON.
+def UploadJson(jsons_to_upload, debug=True):
+  """Upload the contents of one or more results JSONs to the perf dashboard.
 
   Args:
-    output_json: A path to a JSON file to which the merged results should be
-      written.
-    jsons_to_merge: A list of paths to JSON files that should be merged.
+    jsons_to_upload: A list of paths to JSON files that should be uploaded.
   """
   shard_results_list = []
-  for j in jsons_to_merge:
+  for j in jsons_to_upload:
     with open(j) as f:
       shard_results_list.append(json.load(f))
 
-  if print_input:
+  if debug:
     print "Outputing the shard_results_list:"
     print shard_results_list
-
-  merged_results = shard_results_list[0]
-
-  with open(output_json, 'w') as f:
-    json.dump(merged_results, f)
 
   return 0
 
@@ -42,7 +35,7 @@ def main():
   parser.add_argument('jsons_to_merge', nargs='*')
 
   args = parser.parse_args()
-  return MergeJson(args.output_json, args.jsons_to_merge)
+  return UploadJson(args.jsons_to_merge)
 
 
 if __name__ == '__main__':
