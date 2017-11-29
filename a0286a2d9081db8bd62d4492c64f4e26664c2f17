@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "573a0ea4_7dbb754c",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-29T00:59:25Z",
+      "side": 1,
+      "message": "Are you ok with getting distinct ids when the message is transferred between LSB and MSB architectures?",
+      "revId": "a0286a2d9081db8bd62d4492c64f4e26664c2f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
