@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "974e2a78_d7bb2ad3",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-29T19:23:51Z",
+      "side": 1,
+      "message": "This change is a bit tangential, so I might split it out.\n\nIf there\u0027s a frame with a latency info that doesn\u0027t have damage, the latency info currently gets tacked onto the next frame with damage. Maybe there\u0027s a reason for this I\u0027m not aware of, but it seems wrong since the latency info will be associated with the wrong frame. It\u0027s also inconsistent with what we do with a swap promises in the Renderer.\n\nTim: Think it\u0027s okay to just terminate the latency infos here? It\u0027ll discard a small set of samples reflected in UMAs that weren\u0027t discarded before, but it should be more accurate in the end.",
+      "revId": "f78b9454da0b35d997c9e59cb3062d55af35afb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eef7678_b8f2a558",
+        "filename": "ui/latency/latency_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-29T19:23:51Z",
+      "side": 1,
+      "message": "Still need to hook up this component.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 50
+      },
+      "revId": "f78b9454da0b35d997c9e59cb3062d55af35afb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
