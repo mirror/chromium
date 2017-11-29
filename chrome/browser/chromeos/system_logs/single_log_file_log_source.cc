@@ -10,6 +10,7 @@
 #include "base/process/process_info.h"
 #include "base/strings/string_split.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/time/time.h"
 #include "content/public/browser/browser_thread.h"
 
@@ -83,9 +84,15 @@ SingleLogFileLogSource::SingleLogFileLogSource(SupportedSource source_type)
       log_file_dir_path_(kDefaultSystemLogDirPath),
       num_bytes_read_(0),
       file_inode_(0),
+      anonymizer_(new feedback::AnonymizerTool),
+      task_runner_for_anonymizer_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})),
       weak_ptr_factory_(this) {}
 
-SingleLogFileLogSource::~SingleLogFileLogSource() {}
+SingleLogFileLogSource::~SingleLogFileLogSource() {
+  task_runner_for_anonymizer_->DeleteSoon(FROM_HERE, std::move(anonymizer_));
+}
 
 // static
 void SingleLogFileLogSource::SetChromeStartTimeForTesting(
@@ -99,9 +106,8 @@ void SingleLogFileLogSource::Fetch(const SysLogsSourceCallback& callback) {
 
   auto response = std::make_unique<SystemLogsResponse>();
   auto* response_ptr = response.get();
-  base::PostTaskWithTraitsAndReply(
+  task_runner_for_anonymizer_->PostTaskAndReply(
       FROM_HERE,
-      base::TaskTraits(base::MayBlock(), base::TaskPriority::BACKGROUND),
       base::BindOnce(&SingleLogFileLogSource::ReadFile,
                      weak_ptr_factory_.GetWeakPtr(),
                      kMaxNumAllowedLogRotationsDuringFileRead, response_ptr),
@@ -170,7 +176,7 @@ void SingleLogFileLogSource::ReadFile(size_t num_rotations_allowed,
 
   // Pass it back to the callback.
   AppendToSystemLogsResponse(result, source_name(),
-                             anonymizer_.Anonymize(result_string));
+                             anonymizer_->Anonymize(result_string));
 
   // If the file was rotated, close the file handle and call this function
   // again, to read from the new file.

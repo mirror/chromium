@@ -8,9 +8,12 @@
 #include <stddef.h>
 #include <sys/types.h>
 
+#include <memory>
+
 #include "base/files/file.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/sequenced_task_runner.h"
 #include "components/feedback/anonymizer_tool.h"
 #include "components/feedback/system_logs/system_logs_source.h"
 
@@ -98,7 +101,8 @@ class SingleLogFileLogSource : public SystemLogsSource {
   ino_t file_inode_;
 
   // For removing PII from log results.
-  feedback::AnonymizerTool anonymizer_;
+  std::unique_ptr<feedback::AnonymizerTool> anonymizer_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_for_anonymizer_;
 
   base::WeakPtrFactory<SingleLogFileLogSource> weak_ptr_factory_;
 
