@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f917219_1b3580bc",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 7487,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T19:24:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by \u0027current\u0027 here? Is \u0027current\u0027 needed?",
+      "range": {
+        "startLine": 7487,
+        "startChar": 70,
+        "endLine": 7487,
+        "endChar": 78
+      },
+      "revId": "8b9c154f7f94dbaa9e8a28d2572ceddbcb835a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d0b46f_9c44e761",
+        "filename": "chrome/app/vector_icons/sync_circle.icon",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T19:24:32Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "8b9c154f7f94dbaa9e8a28d2572ceddbcb835a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
