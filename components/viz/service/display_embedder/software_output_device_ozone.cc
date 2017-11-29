@@ -14,16 +14,6 @@
 
 namespace viz {
 
-// static
-std::unique_ptr<SoftwareOutputDeviceOzone> SoftwareOutputDeviceOzone::Create(
-    gfx::AcceleratedWidget widget) {
-  std::unique_ptr<SoftwareOutputDeviceOzone> result(
-      new SoftwareOutputDeviceOzone(widget));
-  if (!result->surface_ozone_)
-    return nullptr;
-  return result;
-}
-
 SoftwareOutputDeviceOzone::SoftwareOutputDeviceOzone(
     gfx::AcceleratedWidget widget) {
   ui::SurfaceFactoryOzone* factory =

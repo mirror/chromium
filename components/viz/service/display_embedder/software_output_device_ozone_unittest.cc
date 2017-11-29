@@ -22,6 +22,8 @@
 #include "ui/platform_window/platform_window.h"
 #include "ui/platform_window/platform_window_delegate.h"
 
+namespace viz {
+
 namespace {
 
 class TestPlatformWindowDelegate : public ui::PlatformWindowDelegate {
@@ -63,7 +65,7 @@ class SoftwareOutputDeviceOzoneTest : public testing::Test {
   void TearDown() override;
 
  protected:
-  std::unique_ptr<viz::SoftwareOutputDeviceOzone> output_device_;
+  std::unique_ptr<SoftwareOutputDeviceOzone> output_device_;
   bool enable_pixel_output_ = false;
 
  private:
@@ -84,7 +86,7 @@ void SoftwareOutputDeviceOzoneTest::SetUp() {
 
   const gfx::Size size(500, 400);
   compositor_.reset(
-      new ui::Compositor(viz::FrameSinkId(1, 1), context_factory, nullptr,
+      new ui::Compositor(FrameSinkId(1, 1), context_factory, nullptr,
                          base::ThreadTaskRunnerHandle::Get(),
                          false /* enable_surface_synchronization */,
                          false /* enable_pixel_canvas */));
@@ -92,7 +94,7 @@ void SoftwareOutputDeviceOzoneTest::SetUp() {
   compositor_->SetScaleAndSize(1.0f, size);
 
   output_device_ =
-      viz::SoftwareOutputDeviceOzone::Create(compositor_->widget());
+      std::make_unique<SoftwareOutputDeviceOzone>(compositor_->widget());
   if (output_device_)
     output_device_->Resize(size, 1.f);
 }
@@ -138,3 +140,5 @@ TEST_F(SoftwareOutputDeviceOzoneTest, CheckCorrectResizeBehavior) {
                       canvas->getBaseLayerSize().height());
   EXPECT_EQ(size.ToString(), canvas_size.ToString());
 }
+
+}  // namespace viz

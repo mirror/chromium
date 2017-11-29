@@ -12,7 +12,7 @@
 #include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/gpu/in_process_context_provider.h"
 #include "components/viz/service/display/output_surface.h"
-#include "components/viz/service/display_embedder/display_output_surface.h"
+#include "components/viz/service/display_embedder/gl_output_surface.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/swap_result.h"
@@ -31,7 +31,7 @@ class SyntheticBeginFrameSource;
 // "surfaceless" surface (aka one backed by a buffer managed explicitly in
 // mus/ozone. This class is adapted from
 // GpuSurfacelessBrowserCompositorOutputSurface.
-class DisplayOutputSurfaceOzone : public DisplayOutputSurface {
+class DisplayOutputSurfaceOzone : public GLOutputSurface {
  public:
   DisplayOutputSurfaceOzone(
       scoped_refptr<InProcessContextProvider> context_provider,
