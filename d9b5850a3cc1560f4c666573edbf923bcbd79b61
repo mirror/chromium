@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d705447b_607bdb4c",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T19:22:08Z",
+      "side": 1,
+      "message": "This rule is no longer applied to any element it seems. Let\u0027s remove if that\u0027s the case.",
+      "revId": "d9b5850a3cc1560f4c666573edbf923bcbd79b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
