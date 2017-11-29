@@ -28,4 +28,12 @@ void RoundedRectView::OnPaint(gfx::Canvas* canvas) {
   canvas->DrawColor(background_);
 }
 
+void RoundedRectView::SetBackground(SkColor background) {
+  if (background_ == background)
+    return;
+
+  background_ = background;
+  SchedulePaint();
+}
+
 }  // namespace ash
