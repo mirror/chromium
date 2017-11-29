@@ -561,9 +561,12 @@ void InputMethodManagerImpl::StateImpl::RemoveInputMethodExtension(
   // Remove the active input methods with |extension_id|.
   std::vector<std::string> new_active_input_method_ids;
   for (size_t i = 0; i < active_input_method_ids.size(); ++i) {
+    LOG(ERROR) << "Check the old list:" << active_input_method_ids[i];
     if (extension_id != extension_ime_util::GetExtensionIDFromInputMethodID(
-                            active_input_method_ids[i]))
+                            active_input_method_ids[i])) {
+      LOG(ERROR) << "Add to new list:" << active_input_method_ids[i];
       new_active_input_method_ids.push_back(active_input_method_ids[i]);
+    }
   }
   active_input_method_ids.swap(new_active_input_method_ids);
 
