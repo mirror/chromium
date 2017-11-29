@@ -1,0 +1,27 @@
+
+
+                            MrBayes pre-3.2.7 x86_64
+
+                      (Bayesian Analysis of Phylogeny)
+
+              Distributed under the GNU General Public License
+
+
+               Type "help" or "help <command>" for information
+                     on the commands that are available.
+
+                   Type "about" for authorship and general
+                       information about the program.
+
+
+
+   Executing file "gerrit-buildbucket-config"
+   Could not open file "gerrit-buildbucket-config"
+
+   Returning execution to command line ...
+
+   Error in command "Execute"
+   Will exit with signal 1 (error) because quitonerror is set to yes
+   If you want control to be returned to the command line on error,
+   use 'mb -i <filename>' (i is for interactive) or use 'set quitonerror=no'
+
