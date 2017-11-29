@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6ed80c2_918bc7c9",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_event_router.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-29T18:14:08Z",
+      "side": 1,
+      "message": "This isn\u0027t a field in this class.",
+      "range": {
+        "startLine": 48,
+        "startChar": 69,
+        "endLine": 48,
+        "endChar": 78
+      },
+      "revId": "6415565618264d88138d7cc13cc46ea795a9eeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669c1f6d_5e165139",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-29T18:14:08Z",
+      "side": 1,
+      "message": "Any reason not to use a OnceCallback? OnPasswordsSerialised() should only be called once since it is bound to a OnceCallback.",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 25
+      },
+      "revId": "6415565618264d88138d7cc13cc46ea795a9eeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
