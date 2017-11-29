@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b693275_1c7aa77b",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T06:21:46Z",
+      "side": 1,
+      "message": "Added a note for it.",
+      "parentUuid": "3e5fb4b3_bb503229",
+      "revId": "0eb18318b3e12782ef439c3df2185c06986affa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c176f1d6_a6749781",
         "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "0eb18318b3e12782ef439c3df2185c06986affa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f699e75f_08cda3b5",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T06:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c176f1d6_a6749781",
+      "revId": "0eb18318b3e12782ef439c3df2185c06986affa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fb9681f9_9260724a",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T06:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a374400_f91f2958",
+      "revId": "0eb18318b3e12782ef439c3df2185c06986affa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7469fab2_fd06b7a3",
         "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-29T04:10:29Z",
       "side": 1,
       "message": "nit: s/return .../return {}/\nfor shorter.",
+      "revId": "0eb18318b3e12782ef439c3df2185c06986affa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac53a27_5976d360",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T06:21:46Z",
+      "side": 1,
+      "message": "In one review, eae@ suggested not using {} as return value for better specificity. I\u0027m taking that.",
+      "parentUuid": "7469fab2_fd06b7a3",
       "revId": "0eb18318b3e12782ef439c3df2185c06986affa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
