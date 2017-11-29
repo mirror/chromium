@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faacf781_388b99a3",
+        "filename": "content/public/browser/download_manager.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-29T01:37:16Z",
+      "side": 1,
+      "message": "nit: move comment about method to right before the method (instead of the enum).",
+      "revId": "d692363f03dfadf7886599a4705177df935672bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
