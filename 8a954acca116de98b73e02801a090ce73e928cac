@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a0785ed_9ca491a9",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-29T08:56:52Z",
+      "side": 1,
+      "message": "There is no problem in offline-\u003eonline cases.\nThis is needed to avoid aborting jobs when switching from one connection to another (e.g. wifi -\u003e ethernet).",
+      "range": {
+        "startLine": 1150,
+        "startChar": 5,
+        "endLine": 1150,
+        "endChar": 29
+      },
+      "revId": "8a954acca116de98b73e02801a090ce73e928cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aafd6be_481f1b06",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-29T08:56:52Z",
+      "side": 1,
+      "message": "The \"prevents the the device from\" part is misleading as the said behavior is totally controlled by this code, not by another software or the hardware.\n\nAlso, to follow the style guide, please write implementation comments in imperative form.\nhttps://google.github.io/styleguide/cppguide.html#Implementation_Comments\n\nIn this case, you can write something like \"Ignore such signals to avoid aborting jobs\".",
+      "range": {
+        "startLine": 1152,
+        "startChar": 5,
+        "endLine": 1152,
+        "endChar": 56
+      },
+      "revId": "8a954acca116de98b73e02801a090ce73e928cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4511876_f6e41085",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-29T08:56:52Z",
+      "side": 1,
+      "message": "What is \"Observers\"?\nThis class\u0027s observers (i.e. JobListObserver class) have nothing to do with the said behavior.\n\nAlso, it\u0027s difficult to understand what \"constructive action\" here means.\n\nI think it\u0027s OK to get rid of this part.",
+      "range": {
+        "startLine": 1162,
+        "startChar": 34,
+        "endLine": 1162,
+        "endChar": 77
+      },
+      "revId": "8a954acca116de98b73e02801a090ce73e928cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
