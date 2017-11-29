@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a6766e0_e1be9bcb",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9545272_c9a7bf07",
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34f8ba0d_d51ff551",
         "filename": "components/exo/data_source.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "05c3a5b7_cafae3b2",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34f8ba0d_d51ff551",
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bc08b99_fe6c37e3",
         "filename": "components/exo/data_source.h",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2017-11-28T17:45:29Z",
       "side": 1,
       "message": "why virtual?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bebe5568_140e3fdb",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "0bc08b99_fe6c37e3",
       "range": {
         "startLine": 26,
         "startChar": 2,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "2bd1912f_96507f1d",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "cc294ce6_e5854a7e",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ac4495c_92abd03b",
         "filename": "components/exo/data_source.h",
         "patchSetId": 4
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "a35b513d_6ad1ca85",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ac4495c_92abd03b",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbb33cc8_d350779c",
         "filename": "components/exo/data_source.h",
         "patchSetId": 4
@@ -116,6 +224,30 @@
       "writtenOn": "2017-11-28T17:45:29Z",
       "side": 1,
       "message": "Can we avoid having virtual functions for testing here? that\u0027s a pattern we\u0027ve tried hard to avoid throughout exo code. standard classes like DataSource should be testable without that.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f169bb_c8456389",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Currently Cancelled and ReadData is not implemented. So removed DataSeat unittests which relies on the two methods\u0027 behaviors. The removed tests will be added again in the next CL.",
+      "parentUuid": "fbb33cc8_d350779c",
       "range": {
         "startLine": 45,
         "startChar": 2,
@@ -168,6 +300,30 @@
     },
     {
       "key": {
+        "uuid": "4676e4c8_dcef36b0",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "No, this must be non-null. Added DCHECK.",
+      "parentUuid": "76d11c16_3b1658c5",
+      "range": {
+        "startLine": 68,
+        "startChar": 36,
+        "endLine": 68,
+        "endChar": 42
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5569d45_81494ad4",
         "filename": "components/exo/seat.cc",
         "patchSetId": 4
@@ -182,6 +338,24 @@
       "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef163b9_4ba32240",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5569d45_81494ad4",
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +382,30 @@
     },
     {
       "key": {
+        "uuid": "9ea4e0ec_cb168205",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e5c5076_5dc9cac1",
+      "range": {
+        "startLine": 77,
+        "startChar": 11,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36a666aa_49cfe9d2",
         "filename": "components/exo/seat.cc",
         "patchSetId": 4
@@ -222,6 +420,24 @@
       "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4bba4cb_42641e19",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36a666aa_49cfe9d2",
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -245,6 +461,30 @@
       "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24bed8c2_30c074f1",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c36da7_0a00da04",
+      "range": {
+        "startLine": 59,
+        "startChar": 25,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -285,6 +525,48 @@
       "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad83b136_8261b557",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38d24abd_7ab01f86",
+      "range": {
+        "startLine": 79,
+        "startChar": 29,
+        "endLine": 79,
+        "endChar": 46
+      },
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5597efff_bbcd7347",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae2e5c5f_67868d7e",
+      "revId": "d2951c7574c4fe549f2a8e6e5a9ac11556ae3d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
