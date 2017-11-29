@@ -62,7 +62,7 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
     return new ResourceLoadScheduler(context ? context
                                              : &FetchContext::NullInstance());
   }
-  ~ResourceLoadScheduler() {}
+  ~ResourceLoadScheduler();
   void Trace(blink::Visitor*);
 
   // Stops all operations including observing throttling signals.
@@ -79,7 +79,7 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   // ResourceLoadSchedulerClient should call this method when the loading is
   // finished, or canceled. This method can be called in a pre-finalization
   // step, bug the ReleaseOption must be kReleaseOnly in such a case.
-  bool Release(ClientId, ReleaseOption);
+  bool Release(ClientId, ReleaseOption, int64_t decoded_body_length);
 
   // Sets outstanding limit for testing.
   void SetOutstandingLimitForTesting(size_t limit);
@@ -90,6 +90,8 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   void OnThrottlingStateChanged(WebFrameScheduler::ThrottlingState) override;
 
  private:
+  class TrafficMonitor;
+
   class ClientIdWithPriority {
    public:
     ClientIdWithPriority(ClientId client_id,
@@ -168,6 +170,9 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
       pending_request_map_;
   // We use std::set here because WTF doesn't have its counterpart.
   std::set<ClientIdWithPriority> pending_requests_;
+
+  // Holds an internal class instance to monitor and report traffic.
+  std::unique_ptr<TrafficMonitor> traffic_monitor_;
 
   // Holds FetchContext reference to contact WebFrameScheduler.
   Member<FetchContext> context_;
