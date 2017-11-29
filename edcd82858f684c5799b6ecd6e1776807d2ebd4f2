@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e903eb6b_8d0ec2e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-29T17:47:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63c3558d_8073c0fd",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29c7b513_fa2f96b3",
         "filename": "media/gpu/BUILD.gn",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f76b0e_7cd02a28",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-29T17:47:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c7b513_fa2f96b3",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7b6b98e0_f43cf155",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-29T17:47:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b4ce0fe_94af485e",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d95542b9_f1984f8e",
         "filename": "media/gpu/BUILD.gn",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2855ef4a_f0d33825",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-29T17:47:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d95542b9_f1984f8e",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "5716b878_893f6f5e",
+        "filename": "media/mojo/clients/mojo_decoder_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-29T17:47:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d881e5ee_60ba15b6",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "056a2979_7a82c417",
         "filename": "media/renderers/default_renderer_factory.cc",
         "patchSetId": 6
@@ -104,6 +200,24 @@
       "writtenOn": "2017-11-29T08:24:21Z",
       "side": 1,
       "message": "For discussion: Maybe we should use the decoder factory to create ALL decoders, including MojoVD, GVD, and the software decoders like VpxVD. The current code seems a bit fragmented.",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17810b7e_788f21d0",
+        "filename": "media/renderers/default_renderer_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-29T17:47:29Z",
+      "side": 1,
+      "message": "a similar thought crossed my mind as i was doing this.   i assumed that the decoder factory idea was just to separate build-time deps on mojo.  i didn\u0027t want to try to untangle that as part of this CL.\n\nsimilarly, i don\u0027t like that we exclude GVD, below, without really knowing if |decoder_factory_| added MojoVideoDecoder.  it could be any random factory.\n\nmaking one big default_decoder_factory in content/ (or similar) would fix both concerns.\n\ni\u0027ll add a TODO -- seems out of scope for this CL.",
+      "parentUuid": "056a2979_7a82c417",
       "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +238,24 @@
       "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac237fa_dcaf5add",
+        "filename": "media/renderers/default_renderer_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-29T17:47:29Z",
+      "side": 1,
+      "message": "i\u0027m not sure that we want this behavior on windows, if there are driver issues that make dxva more reliable.  that\u0027s why i made it opt-in.\n\nthat said, a fallback like that wouldn\u0027t be structured like this code anyway; it\u0027d be a runtime blacklist.  so, i agree.  let\u0027s just make them mutually exclusive on all platforms by default.",
+      "parentUuid": "6d964ecb_14739d36",
+      "revId": "edcd82858f684c5799b6ecd6e1776807d2ebd4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
