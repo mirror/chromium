@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f6b9a20_c4d5af32",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngineTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-29T02:27:17Z",
+      "side": 1,
+      "message": "Are we going to need to add another member for each ribbonised method? Why not use GetCSSPropertyColor() everywhere directly below?",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba144f89_ef132939",
+        "filename": "third_party/WebKit/Source/core/css/properties/ReneesParserStuff.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-29T02:27:17Z",
+      "side": 1,
+      "message": "Lol maybe you should put a DO NOT SUBMIT line here also for clarity.",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb80f3cc_4da748da",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/BackgroundColor.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-29T02:27:17Z",
+      "side": 1,
+      "message": "So these ones don\u0027t need to worry about whether we\u0027re allowing visited style like CSSValueFromComputedStyle?",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c799bd7e_b3277cb9",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/BorderLeftColor.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-29T02:27:17Z",
+      "side": 1,
+      "message": "This looks very similar to BorderBottomColor::ColorIncludingFallback. Should you be pulling this out into a util to avoid duplicate code?",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57d71b6_9b78c11e",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/BorderRightColor.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-29T02:27:17Z",
+      "side": 1,
+      "message": "Dito",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
