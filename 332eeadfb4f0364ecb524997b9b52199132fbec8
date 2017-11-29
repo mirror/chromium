@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c6d29d79_002283d3",
+        "filename": "content/browser/notifications/blink_notification_service_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-29T14:42:01Z",
+      "side": 1,
+      "message": "\u003e Would you mind updating this too? In a separate CL if you wish.\n\nno longer applies",
+      "parentUuid": "8a0a186b_d43921c9",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f41d262_92d57d10",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
         "patchSetId": 8
@@ -231,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "256cd4a8_cc928ec3",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-29T14:42:01Z",
+      "side": 1,
+      "message": "Done - Changed to execution_context-\u003eGetInterfaceProvider()",
+      "parentUuid": "49f3fe23_3f52194c",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f77cbe4_20031ace",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
         "patchSetId": 8
@@ -281,6 +317,24 @@
       "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2813ed89_96092a6a",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-29T14:42:01Z",
+      "side": 1,
+      "message": "Done - Removed origin parameter from the interface method, now it is a parameter constructor from the browser-side thanks to Peter\u0027s patch.",
+      "parentUuid": "6d824265_59845953",
+      "revId": "332eeadfb4f0364ecb524997b9b52199132fbec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
