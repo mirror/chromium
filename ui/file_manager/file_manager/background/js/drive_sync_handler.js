@@ -231,7 +231,7 @@ DriveSyncHandler.prototype.onDriveSyncError_ = function(event) {
         item.message = strf('SYNC_NO_SERVER_SPACE', entry.name);
         break;
       case 'misc':
-        item.message = strf('SYNC_MISC_ERROR', entry.name);
+        console.log(strf('SYNC_MISC_ERROR', entry.name));
         break;
     }
     this.progressCenter_.updateItem(item);
