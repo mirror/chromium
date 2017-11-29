@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eac0d2b_3544f83e",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 2189,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-11-29T05:04:56Z",
+      "side": 1,
+      "message": "double check: is 2s good enough to avoid flaky test? Like on Android as well.",
+      "range": {
+        "startLine": 2189,
+        "startChar": 42,
+        "endLine": 2189,
+        "endChar": 43
+      },
+      "revId": "7ae3d934ef7aa0aff13334324c5e90e33b5a2c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
