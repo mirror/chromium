@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6646fd70_dbe93700",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 27
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-29T09:23:16Z",
+      "side": 1,
+      "message": "I was hoping this CL would make the Perl CGIs simpler, not more complicated :)\n\nGiven the new Apache configs, I think you can remove all the $local_appdata_temp logic, and stick to my \"$system_tempdir \u003d $ENV{TEMP} || $ENV{TMPDIR};\", with a comment that tmpdir() doesn\u0027t work in taint mode.\n\nI don\u0027t think having a relative TEMP is ever corect, so the rel2abs here shouldn\u0027t be necessary either?",
+      "revId": "87e0f0a43dd4b87068d11e73a055515189b23fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
