@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "364772a9_888f11d9",
+        "filename": "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-11-29T15:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ceea368_bd15a9f0",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 42
+      },
+      "revId": "590f56606ab42a8b5d80dd92b514bf84fbd26616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92cfc13e_c5ff19ae",
         "filename": "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_api.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "590f56606ab42a8b5d80dd92b514bf84fbd26616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a274d65a_3b9518a8",
+        "filename": "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-11-29T15:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92cfc13e_c5ff19ae",
+      "range": {
+        "startLine": 142,
+        "startChar": 28,
+        "endLine": 142,
+        "endChar": 54
+      },
+      "revId": "590f56606ab42a8b5d80dd92b514bf84fbd26616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "72b931e6_c74bcbde",
+        "filename": "extensions/common/api/virtual_keyboard_private.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-11-29T15:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6db69d64_66c979b2",
+      "range": {
+        "startLine": 208,
+        "startChar": 60,
+        "endLine": 208,
+        "endChar": 69
+      },
+      "revId": "590f56606ab42a8b5d80dd92b514bf84fbd26616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "852dac20_76b4b564",
         "filename": "extensions/common/api/virtual_keyboard_private.json",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "590f56606ab42a8b5d80dd92b514bf84fbd26616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1299b700_30f1645d",
+        "filename": "extensions/common/api/virtual_keyboard_private.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-11-29T15:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "852dac20_76b4b564",
+      "range": {
+        "startLine": 212,
+        "startChar": 21,
+        "endLine": 212,
+        "endChar": 25
+      },
+      "revId": "590f56606ab42a8b5d80dd92b514bf84fbd26616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
