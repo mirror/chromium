@@ -270,4 +270,9 @@ void Ui::InitializeModel(const UiInitialState& ui_initial_state) {
       ui_initial_state.skips_redraw_when_not_dirty;
 }
 
+void Ui::OnKeyboardTextChanged(const base::string16& string, int position) {
+  model_->input_text = string;
+  model_->input_cursor = position;
+}
+
 }  // namespace vr

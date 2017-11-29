@@ -180,7 +180,10 @@ bool UiElement::IsHitTestable() const {
 void UiElement::SetSize(float width, float height) {
   animation_player_.TransitionSizeTo(last_frame_time_, BOUNDS, size_,
                                      gfx::SizeF(width, height));
+  OnSetSize(gfx::SizeF(width, height));
 }
+
+void UiElement::OnSetSize(gfx::SizeF size) {}
 
 void UiElement::SetVisible(bool visible) {
   SetOpacity(visible ? opacity_when_visible_ : 0.0);
@@ -195,7 +198,7 @@ bool UiElement::IsVisible() const {
 }
 
 gfx::SizeF UiElement::size() const {
-  DCHECK_LE(kUpdatedTexturesAndSizes, phase_);
+  // DCHECK_LE(kUpdatedTexturesAndSizes, phase_);
   return size_;
 }
 

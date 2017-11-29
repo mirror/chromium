@@ -140,6 +140,10 @@ void VrTestContext::HandleInput(ui::Event* event) {
       case ui::DomCode::US_S:
         ToggleSplashScreen();
         break;
+      case ui::DomCode::US_A: {
+        CreateFakeTextInput();
+        break;
+      }
       default:
         break;
     }
@@ -298,6 +302,15 @@ unsigned int VrTestContext::CreateFakeContentTexture() {
   return texture_id;
 }
 
+void VrTestContext::CreateFakeTextInput() {
+  // Every time this method is called, change the number of suggestions shown.
+  const std::string text = "wikipedia.com";
+
+  static int len = 0;
+  len = (len + 1) % text.size();
+  ui_->OnKeyboardTextChanged(base::UTF8ToUTF16(text.substr(0, len)), len);
+}
+
 void VrTestContext::CreateFakeOmniboxSuggestions() {
   // Every time this method is called, change the number of suggestions shown.
   static int num_suggestions = 0;
@@ -307,7 +320,8 @@ void VrTestContext::CreateFakeOmniboxSuggestions() {
   for (int i = 0; i < num_suggestions; i++) {
     result->suggestions.emplace_back(OmniboxSuggestion(
         base::UTF8ToUTF16("Suggestion ") + base::IntToString16(i + 1),
-        base::UTF8ToUTF16("Description text"),
+        base::UTF8ToUTF16("Description text that is very long and should "
+                          "probably wrap onto the next line"),
         AutocompleteMatch::Type::VOICE_SUGGEST, GURL("http://www.test.com/")));
   }
   ui_->SetOmniboxSuggestions(std::move(result));
@@ -385,5 +399,6 @@ void VrTestContext::OnExitVrPromptResult(vr::ExitVrPromptChoice choice,
 void VrTestContext::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {}
 void VrTestContext::StartAutocomplete(const base::string16& string) {}
 void VrTestContext::StopAutocomplete() {}
+void VrTestContext::ShowKeyboard(bool show) {}
 
 }  // namespace vr

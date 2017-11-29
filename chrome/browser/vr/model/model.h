@@ -67,6 +67,9 @@ struct Model {
   bool experimental_features_enabled = false;
   bool skips_redraw_when_not_dirty = false;
   bool exiting_vr = false;
+
+  base::string16 input_text;
+  int input_cursor;
 };
 
 }  // namespace vr

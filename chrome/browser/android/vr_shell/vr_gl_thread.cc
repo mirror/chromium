@@ -305,6 +305,11 @@ void VrGLThread::SetOmniboxSuggestions(
                             browser_ui_, base::Passed(std::move(suggestions))));
 }
 
+void VrGLThread::ShowKeyboard(bool show) {
+  DCHECK(OnGlThread());
+  vr_shell_gl_->ShowKeyboard(show);
+}
+
 bool VrGLThread::OnMainThread() const {
   return main_thread_task_runner_->BelongsToCurrentThread();
 }

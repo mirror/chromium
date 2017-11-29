@@ -49,17 +49,21 @@ void TexturedElement::SetRerenderIfNotDirtyForTesting() {
   g_rerender_if_not_dirty_for_testing_ = true;
 }
 
-bool TexturedElement::UpdateTexture() {
+bool TexturedElement::PrepareToDraw() {
   if (!initialized_ ||
       !(GetTexture()->dirty() || g_rerender_if_not_dirty_for_testing_) ||
       !IsVisible())
     return false;
+  LOG(INFO) << "  Before drawing texture, element size is: "
+            << size().ToString();
   surface_ = provider_->MakeSurface(texture_size_);
   DCHECK(surface_.get());
   GetTexture()->DrawAndLayout(surface_->getCanvas(), texture_size_);
   texture_handle_ = provider_->FlushSurface(surface_.get(), texture_handle_);
   // Update the element size's aspect ratio to match the texture.
   UpdateElementSize();
+  LOG(INFO) << "  After drawing texture, element size is: "
+            << size().ToString();
   return true;
 }
 
@@ -100,10 +104,6 @@ void TexturedElement::Render(UiElementRenderer* renderer,
       texture_handle_, UiElementRenderer::kTextureLocationLocal,
       model.view_proj_matrix * world_space_transform(), copy_rect,
       computed_opacity(), size(), corner_radius());
-}
-
-bool TexturedElement::PrepareToDraw() {
-  return UpdateTexture();
 }
 
 }  // namespace vr

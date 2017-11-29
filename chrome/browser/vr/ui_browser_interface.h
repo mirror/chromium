@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_VR_UI_BROWSER_INTERFACE_H_
 #define CHROME_BROWSER_VR_UI_BROWSER_INTERFACE_H_
 
+#include "base/strings/string16.h"
 #include "chrome/browser/vr/exit_vr_prompt_choice.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "ui/gfx/geometry/size_f.h"
@@ -30,6 +31,8 @@ class UiBrowserInterface {
   virtual void SetVoiceSearchActive(bool active) = 0;
   virtual void StartAutocomplete(const base::string16& string) = 0;
   virtual void StopAutocomplete() = 0;
+
+  virtual void ShowKeyboard(bool show) = 0;
 };
 
 }  // namespace vr

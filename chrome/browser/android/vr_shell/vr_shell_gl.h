@@ -115,7 +115,11 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   void OnSwapContents(int new_content_id);
 
+  void ShowKeyboard(bool show);
+
  private:
+  void OnKeyboardEvent(void*, int32_t event);
+
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
   // Returns true if successfully resized.
