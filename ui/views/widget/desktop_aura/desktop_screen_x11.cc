@@ -338,8 +338,7 @@ std::vector<display::Display> DesktopScreenX11::BuildDisplaysFromXRandRInfo() {
                     gfx::XObjectDeleter<XRROutputInfo, void, XRRFreeOutputInfo>>
         output_info(XRRGetOutputInfo(xdisplay_, resources.get(), output_id));
 
-    bool is_connected = (output_info->connection == RR_Connected);
-    if (!is_connected)
+    if (!output_info || output_info->connection != RR_Connected)
       continue;
 
     bool is_primary_display = output_id == primary_display_id;
