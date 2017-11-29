@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c53f44b_acbd98e5",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-29T18:45:05Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll rebase and use your constant instead.",
+      "parentUuid": "2c1fa7dc_63890f8b",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 32
+      },
+      "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4252d37_f4a0dbf7",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-29T15:54:05Z",
       "side": 1,
       "message": "I\u0027m unsure how this will pan out in the future. IIUC, if the VR session was initiated by autopresentation we use these histograms instead of the one above. Do you anticipate that we switch back and forth between VR modes in an autopresent VR session. I\u0027m unsure what this will tell us. We can also discuss this offline.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31257c08_3eaf5aac",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-29T18:45:05Z",
+      "side": 1,
+      "message": "Discussed this offline. We will be moving to using a CTA soon and will care about these modes then. For example, a user that enters VR via auto-presentation in Chrome may spend more time in the WebVR browsing and not go back into VR browsing, which may influence UX decisions.",
+      "parentUuid": "f4252d37_f4a0dbf7",
       "range": {
         "startLine": 52,
         "startChar": 0,
