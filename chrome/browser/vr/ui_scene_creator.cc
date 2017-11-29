@@ -444,8 +444,7 @@ void UiSceneCreator::CreateSplashScreenForDirectWebVrLaunch() {
   transient_parent->SetTransitionedProperties({OPACITY});
   transient_parent->AddBinding(VR_BIND_FUNC(
       bool, Model, model_,
-      web_vr_show_splash_screen &&
-          model->web_vr_timeout_state == kWebVrNoTimeoutPending,
+      web_vr_show_splash_screen && model->received_web_vr_frame(),
       ShowUntilSignalTransientElement, transient_parent.get(), Signal));
   scene_->AddUiElement(kSplashScreenViewportAwareRoot,
                        std::move(transient_parent));
@@ -1071,10 +1070,11 @@ void UiSceneCreator::CreateWebVrUrlToast() {
   auto* parent =
       AddTransientParent(kWebVrUrlToastTransientParent, kWebVrViewportAwareRoot,
                          kWebVrUrlToastTimeoutSeconds, true, scene_);
-  parent->AddBinding(VR_BIND_FUNC(
-      bool, Model, model_,
-      web_vr_started_for_autopresentation && !model->web_vr_show_splash_screen,
-      UiElement, parent, SetVisible));
+  parent->AddBinding(VR_BIND_FUNC(bool, Model, model_,
+                                  web_vr_started_for_autopresentation &&
+                                      !model->web_vr_show_splash_screen &&
+                                      model->received_web_vr_frame(),
+                                  UiElement, parent, SetVisible));
 
   auto element = base::MakeUnique<WebVrUrlToast>(
       512, base::Bind(&UiBrowserInterface::OnUnsupportedMode,
@@ -1311,11 +1311,9 @@ void UiSceneCreator::CreateToasts() {
   // When we first get a web vr frame, we switch states to
   // kWebVrNoTimeoutPending, when that happens, we want to SetVisible(true) to
   // kick the visibility of this element.
-  parent->AddBinding(
-      VR_BIND_FUNC(bool, Model, model_,
-                   web_vr_timeout_state == kWebVrNoTimeoutPending &&
-                       model->web_vr_mode && model->web_vr_show_toast,
-                   UiElement, parent, SetVisible));
+  parent->AddBinding(VR_BIND_FUNC(
+      bool, Model, model_, received_web_vr_frame() && model->web_vr_show_toast,
+      UiElement, parent, SetVisible));
 
   element = base::MakeUnique<ExclusiveScreenToast>(512);
   element->set_name(kExclusiveScreenToastViewportAware);
