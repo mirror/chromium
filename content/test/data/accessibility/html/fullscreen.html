@@ -1,0 +1,20 @@
+<!--
+@WAIT-FOR:done
+-->
+<!DOCTYPE html>
+<div id="before"><input value="before"></div>
+<div id="target"><input value="waiting"></div>
+<div id="after"><input value="after"></div>
+<button>Click to enter fullscreen</button>
+<script>
+const target = document.getElementById('target');
+
+const button = document.querySelector('button');
+button.addEventListener('click', function() {
+  target.webkitRequestFullscreen();
+});
+
+document.onwebkitfullscreenchange = function() {
+  target.firstChild.value = 'Done';
+}
+</script>
