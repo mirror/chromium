@@ -91,16 +91,20 @@ constexpr char kArbitraryInsecureUrlString[] = "http://www.google.com/";
 // This is true in either of these two cases:
 //   1. The user is in zero suggest most visited field trial.
 //   2. The user is in zero suggest field trial that enables search-for
-//      queries as suggestions and the user does not have Google set up as
-//      their default search engine
+//      queries as suggestions and the user is either not signed-in or they
+//      do not have Google set up as their default search engine.
 bool DisplayZeroSuggestMostVisitedURLs(
     PrefService* prefs,
+    bool is_authenticated,
     const TemplateURLService* template_url_service) {
   if (OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial(prefs))
     return true;
 
   if (OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial(prefs) &&
       template_url_service != nullptr) {
+    if (!is_authenticated)
+      return true;
+
     const TemplateURL* default_provider =
         template_url_service->GetDefaultSearchProvider();
     return default_provider == nullptr ||
@@ -197,6 +201,7 @@ void ZeroSuggestProvider::Start(const AutocompleteInput& input,
   MaybeUseCachedSuggestions();
 
   if (DisplayZeroSuggestMostVisitedURLs(client()->GetPrefs(),
+                                        client()->IsAuthenticated(),
                                         template_url_service)) {
     most_visited_urls_.clear();
     scoped_refptr<history::TopSites> ts = client()->GetTopSites();
@@ -469,6 +474,7 @@ void ZeroSuggestProvider::ConvertResultsToAutocompleteMatches() {
 
   // Show Most Visited results after ZeroSuggest response is received.
   if (DisplayZeroSuggestMostVisitedURLs(client()->GetPrefs(),
+                                        client()->IsAuthenticated(),
                                         template_url_service)) {
     if (!current_url_match_.destination_url.is_valid())
       return;
