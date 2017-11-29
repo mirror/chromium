@@ -10,27 +10,31 @@
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_constants.h"
 #include "net/cookies/cookie_options.h"
+#include "services/network/public/cpp/export.h"
 #include "services/network/public/interfaces/cookie_manager.mojom.h"
 
 namespace mojo {
 
 template <>
-struct EnumTraits<network::mojom::CookiePriority, net::CookiePriority> {
+struct NETWORK_PUBLIC_CPP_EXPORT
+    EnumTraits<network::mojom::CookiePriority, net::CookiePriority> {
   static network::mojom::CookiePriority ToMojom(net::CookiePriority input);
   static bool FromMojom(network::mojom::CookiePriority input,
                         net::CookiePriority* output);
 };
 
 template <>
-struct EnumTraits<network::mojom::CookieSameSite, net::CookieSameSite> {
+struct NETWORK_PUBLIC_CPP_EXPORT
+    EnumTraits<network::mojom::CookieSameSite, net::CookieSameSite> {
   static network::mojom::CookieSameSite ToMojom(net::CookieSameSite input);
   static bool FromMojom(network::mojom::CookieSameSite input,
                         net::CookieSameSite* output);
 };
 
 template <>
-struct EnumTraits<network::mojom::CookieSameSiteFilter,
-                  net::CookieOptions::SameSiteCookieMode> {
+struct NETWORK_PUBLIC_CPP_EXPORT
+    EnumTraits<network::mojom::CookieSameSiteFilter,
+               net::CookieOptions::SameSiteCookieMode> {
   static network::mojom::CookieSameSiteFilter ToMojom(
       net::CookieOptions::SameSiteCookieMode input);
 
@@ -39,7 +43,8 @@ struct EnumTraits<network::mojom::CookieSameSiteFilter,
 };
 
 template <>
-struct StructTraits<network::mojom::CookieOptionsDataView, net::CookieOptions> {
+struct NETWORK_PUBLIC_CPP_EXPORT
+    StructTraits<network::mojom::CookieOptionsDataView, net::CookieOptions> {
   static bool exclude_httponly(const net::CookieOptions& o) {
     return o.exclude_httponly();
   }
@@ -61,8 +66,9 @@ struct StructTraits<network::mojom::CookieOptionsDataView, net::CookieOptions> {
 };
 
 template <>
-struct StructTraits<network::mojom::CanonicalCookieDataView,
-                    net::CanonicalCookie> {
+struct NETWORK_PUBLIC_CPP_EXPORT
+    StructTraits<network::mojom::CanonicalCookieDataView,
+                 net::CanonicalCookie> {
   static const std::string& name(const net::CanonicalCookie& c) {
     return c.Name();
   }
