@@ -42,6 +42,8 @@
      {"sha2hashstr",                                                         \
       "6d24de30f671da5aee6d463d9e446cafe9ddac672800a9defe86877dcde6c466"}}}};
 
+#define COMPONENTS_ROOT_PATH "cros-components"
+
 using content::BrowserThread;
 
 namespace component_updater {
@@ -143,7 +145,8 @@ bool CrOSComponentInstallerPolicy::VerifyInstallation(
 }
 
 base::FilePath CrOSComponentInstallerPolicy::GetRelativeInstallDir() const {
-  return base::FilePath(name);
+  base::FilePath path = base::FilePath(COMPONENTS_ROOT_PATH);
+  return path.Append(name);
 }
 
 void CrOSComponentInstallerPolicy::GetHash(std::vector<uint8_t>* hash) const {
@@ -268,6 +271,7 @@ std::vector<ComponentConfig> CrOSComponent::GetInstalledComponents() {
   if (!PathService::Get(DIR_COMPONENT_USER, &root))
     return configs;
 
+  root = root.Append(COMPONENTS_ROOT_PATH);
   const ConfigMap components = CONFIG_MAP_CONTENT;
   for (auto it : components) {
     const std::string& name = it.first;
