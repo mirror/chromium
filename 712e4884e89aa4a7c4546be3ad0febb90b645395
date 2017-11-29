@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a86e169_31248819",
+        "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-29T16:23:58Z",
+      "side": 1,
+      "message": "Tiny nit: this is probably better described as a Fake rather than a Mock.\nSee go/mocks for Google\u0027s preferred usage of those two terms.\n\nI\u0027d also be happy with something like SimpleFullscreenDelegate or just\nFullscreenDelegate.",
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ced336ff_462f04f7",
         "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
         "patchSetId": 10
@@ -19,6 +36,23 @@
         "endLine": 67,
         "endChar": 51
       },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a838a6f6_22b0f4ed",
+        "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-29T16:23:58Z",
+      "side": 1,
+      "message": "Nit: Initially",
       "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -151,6 +185,23 @@
       "writtenOn": "2017-11-29T14:45:17Z",
       "side": 1,
       "message": "Would it make sense to add navigateFocusBackward() too if that\u0027s even a thing?",
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db6ff8c_a4f7e1f1",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-29T16:23:58Z",
+      "side": 1,
+      "message": "This may not do the right thing if you have both a modal dialog and\na fullscreen element both showing.\n\nPresumably calling showModal on an element that\u0027s outside of a fullscreen\nroot should fail, and calling *requestFullScreen on an element that\u0027s\noutside of a modal dialog should similarly fail. But one nested inside\nthe other would be allowed, right?\n\nI think it\u0027d be fine to leave that as a TODO for now - that\u0027s quite a\ncorner case. Maybe it\u0027d make sense to solve that when switching\nfullscreen to use top layer.\n\nTODO and a bug?",
       "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
