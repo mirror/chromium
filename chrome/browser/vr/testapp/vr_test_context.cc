@@ -14,6 +14,7 @@
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/model/toolbar_state.h"
+#include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/test/constants.h"
 #include "chrome/browser/vr/ui.h"
 #include "chrome/browser/vr/ui_element_renderer.h"
@@ -137,7 +138,9 @@ void VrTestContext::HandleInput(ui::Event* event) {
         ui_->Dump();
         break;
       case ui::DomCode::US_V:
-        ui_->SetVideoCaptureEnabled(!model_->permissions.video_capture_enabled);
+        ui_->SetRecognitionResult(
+            base::UTF8ToUTF16("I would like to see cat videos, please."));
+        SetVoiceSearchActive(false);
         break;
       case ui::DomCode::US_W:
         CycleWebVrModes();
@@ -364,8 +367,15 @@ gfx::Transform VrTestContext::ViewProjectionMatrix() const {
 }
 
 void VrTestContext::SetVoiceSearchActive(bool active) {
-  OnUnsupportedMode(UiUnsupportedMode::kAndroidPermissionNeeded);
+  if (!voice_search_enabled_for_test_) {
+    OnUnsupportedMode(UiUnsupportedMode::kAndroidPermissionNeeded);
+    return;
+  }
+  ui_->SetSpeechRecognitionEnabled(active);
+  if (active)
+    ui_->OnSpeechRecognitionStateChanged(SPEECH_RECOGNITION_RECOGNIZING);
 }
+
 void VrTestContext::ExitPresent() {}
 void VrTestContext::ExitFullscreen() {}
 
@@ -384,9 +394,14 @@ void VrTestContext::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
     ui_->SetExitVrPromptEnabled(true, mode);
   }
 }
+
 void VrTestContext::OnExitVrPromptResult(vr::ExitVrPromptChoice choice,
                                          vr::UiUnsupportedMode reason) {
   LOG(ERROR) << "exit prompt result: " << choice;
+  if (reason == UiUnsupportedMode::kAndroidPermissionNeeded &&
+      choice == CHOICE_EXIT) {
+    voice_search_enabled_for_test_ = true;
+  }
   ui_->SetExitVrPromptEnabled(false, UiUnsupportedMode::kCount);
 }
 

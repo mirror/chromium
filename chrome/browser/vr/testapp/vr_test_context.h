@@ -81,6 +81,7 @@ class VrTestContext : public vr::UiBrowserInterface {
   bool incognito_ = false;
 
   bool show_web_vr_splash_screen_ = false;
+  bool voice_search_enabled_for_test_ = false;
 
   ControllerModel last_controller_model_;
 
