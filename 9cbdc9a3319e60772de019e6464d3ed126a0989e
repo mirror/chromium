@@ -34,6 +34,24 @@
       "revId": "9cbdc9a3319e60772de019e6464d3ed126a0989e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42a26cc_95d275ac",
+        "filename": "third_party/WebKit/LayoutTests/fast/lists/list-and-margin-collapse.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-11-29T03:38:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "946b7660_fdfc92a8",
+      "revId": "9cbdc9a3319e60772de019e6464d3ed126a0989e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
