@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b81f4c98_c9e84b5b",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGShape.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-29T17:05:05Z",
+      "side": 1,
+      "message": "Maybe comment that the first time through we always have needs_transform_update_ true so it doesn\u0027t matter that transform_uses_bounding_box_ is not true, even when the transform does use the bounding box. This had me confused for a minute.",
+      "range": {
+        "startLine": 266,
+        "startChar": 34,
+        "endLine": 266,
+        "endChar": 63
+      },
+      "revId": "7cab3055dca75223755b2ef4d1c4b126a70d563a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
