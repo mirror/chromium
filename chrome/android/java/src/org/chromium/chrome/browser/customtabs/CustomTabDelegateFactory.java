@@ -175,6 +175,21 @@ public class CustomTabDelegateFactory extends TabDelegateFactory {
 
             super.openNewTab(url, extraHeaders, postData, disposition, isRendererInitiated);
         }
+
+        @Override
+        public int getTopControlsHeight() {
+            return 0;
+        }
+
+        @Override
+        public int getBottomControlsHeight() {
+            return 0;
+        }
+
+        @Override
+        public boolean controlsResizeView() {
+            return false;
+        }
     }
 
     private final boolean mShouldHideBrowserControls;

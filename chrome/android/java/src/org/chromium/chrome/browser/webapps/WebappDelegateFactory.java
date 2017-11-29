@@ -61,6 +61,20 @@ public class WebappDelegateFactory extends TabDelegateFactory {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             IntentUtils.safeStartActivity(ContextUtils.getApplicationContext(), intent);
         }
+        @Override
+        public int getTopControlsHeight() {
+            return 0;
+        }
+
+        @Override
+        public int getBottomControlsHeight() {
+            return 0;
+        }
+
+        @Override
+        public boolean controlsResizeView() {
+            return false;
+        }
     }
 
     private final WebappActivity mActivity;
