@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "834658ab_ae2ff3c5",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-29T00:12:43Z",
+      "side": 1,
+      "message": "Nit: if possible, also mention where this lives (I assume this in the renderer, since the renderer is submitting the frames in WebVR)",
+      "revId": "b1007cf24e68851c9ae9ae405f8d44d05057b68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
