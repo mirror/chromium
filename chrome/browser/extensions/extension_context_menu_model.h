@@ -108,21 +108,22 @@ class ExtensionContextMenuModel : public ui::SimpleMenuModel,
   void AppendExtensionItems();
 
   // A copy of the extension's id.
-  std::string extension_id_;
+  const std::string extension_id_;
 
   // Whether the menu is for a component extension.
-  bool is_component_;
+  const bool is_component_;
 
   // The extension action of the extension we are displaying the menu for (if
-  // it has one, otherwise NULL).
-  ExtensionAction* extension_action_;
+  // it has one, otherwise nullptr).
+  ExtensionAction* extension_action_ = nullptr;
 
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
 
-  Profile* profile_;
+  Profile* const profile_;  // Never nullptr.
 
-  // The delegate which handles the 'inspect popup' menu command (or NULL).
-  PopupDelegate* delegate_;
+  // The delegate that handles the 'inspect popup' menu command.
+  // May be nullptr in unit tests.
+  PopupDelegate* const delegate_;
 
   // The type of extension action to which this context menu is attached.
   ActionType action_type_;
