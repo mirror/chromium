@@ -22,6 +22,30 @@
       "revId": "19119b15b9a36d6eb34562f9766df5a663c74611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a7b2e54_73611ab3",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-29T19:21:58Z",
+      "side": 1,
+      "message": "DCHECKed that it should exist. We don\u0027t want to add it here.",
+      "parentUuid": "683b6c3b_6017ba97",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 39
+      },
+      "revId": "19119b15b9a36d6eb34562f9766df5a663c74611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
