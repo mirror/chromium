@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c419a91_742271ef",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T01:02:34Z",
+      "side": 1,
+      "message": "This is also something that is only available on the GPU thread. I think doing this in SendGpuFenceOnGpuThread would work.\n\nAlternatively, you can look at capabilities_.chromium_gpu_fence on the client thread if you want to early exit without queueing the task - but in that case, you can\u0027t access command_buffer_ to lose the context.\n\n\nA good rule-of-thumb is that the things on the client thread should look similar to the things in CommandBufferProxyImpl, whereas the things on the GPU thread should look similar to things in GpuCommandBufferStub.",
+      "revId": "036f79f675ffc6336693fe14dea578f4463a46c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e450c7a9_ba47a13b",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T01:02:34Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "036f79f675ffc6336693fe14dea578f4463a46c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67fe70a_d742007a",
+        "filename": "ui/gl/gl_fence_egl.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T01:02:34Z",
+      "side": 1,
+      "message": "nit: there\u0027s no such thing as an \"EGL context\". EGL is essentially a singleton. You could say \"The EGLDisplay is still valid\".",
+      "revId": "036f79f675ffc6336693fe14dea578f4463a46c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

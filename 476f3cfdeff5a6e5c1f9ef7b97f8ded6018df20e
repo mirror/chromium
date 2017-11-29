@@ -367,6 +367,24 @@
     },
     {
       "key": {
+        "uuid": "dd3ccd4e_94b307f8",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T01:02:34Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer a clear CHECK so that:\n1- we don\u0027t have to make incorrect assumptions all over the code, possibly causing (if not now, maybe in the future) security issues\n2- we don\u0027t have to debug a very strange bug that takes months to reproduce\n3- we\u0027ll get crash reports if we messed up our estimate assumptions.",
+      "parentUuid": "cd1352a5_0e4c252e",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1e294e_b870ce42",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 46
