@@ -84,6 +84,14 @@ namespace mediaPerceptionPrivate {
     ComponentStatus status;
   };
 
+  // The parameters for processing a particular video stream.
+  dictionary VideoStreamParam {
+    DOMString? id;
+    long? width;
+    long? height;
+    long? frameRate;
+  };
+
   // The system and configuration state of the analytics process.
   dictionary State {
     Status status;
@@ -96,6 +104,8 @@ namespace mediaPerceptionPrivate {
     // Return parameter for $(ref:setState) or $(ref:getState) that
     // specifies the error type for failure cases.
     ServiceError? serviceError;
+
+    VideoStreamParam[]? videoStreamParam;
   };
 
   dictionary Point {
