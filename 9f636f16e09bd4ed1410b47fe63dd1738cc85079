@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "076e4242_b0d995f0",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-29T05:27:27Z",
+      "side": 1,
+      "message": "This seems a little hokey, but should be fine.\n\nMaybe a TODO here to eventually build a mapping by using the Build ID by parsing the output of readelf? Those should always correspond, right?\n\nscottmg@around:/work/cr/src$ eu-readelf -n out/fuch/base_unittests \n...\n  GNU                    8  GNU_BUILD_ID\n    Build ID: f2078645ddb7a737\n\nscottmg@around:/work/cr/src$ eu-readelf -n out/fuch/exe.unstripped/base_unittests \n...\n  GNU                    8  GNU_BUILD_ID\n    Build ID: f2078645ddb7a737",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 157,
+        "endChar": 8
+      },
+      "revId": "9f636f16e09bd4ed1410b47fe63dd1738cc85079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319dcf65_a07c650e",
+        "filename": "build/toolchain/fuchsia/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-29T05:27:27Z",
+      "side": 1,
+      "message": "How convenient!",
+      "revId": "9f636f16e09bd4ed1410b47fe63dd1738cc85079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
