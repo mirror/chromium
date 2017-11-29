@@ -9,13 +9,21 @@
 
 namespace mojo {
 
+base::span<const uint8_t>
+StructTraits<blink::mojom::TransferableMessage::DataView,
+             blink::TransferableMessage>::
+    sender_call_stack_id(blink::TransferableMessage& input) {
+  return input.sender_call_stack_id;
+}
+
 bool StructTraits<blink::mojom::TransferableMessage::DataView,
                   blink::TransferableMessage>::
     Read(blink::mojom::TransferableMessage::DataView data,
          blink::TransferableMessage* out) {
   std::vector<mojo::ScopedMessagePipeHandle> ports;
   if (!data.ReadMessage(static_cast<blink::CloneableMessage*>(out)) ||
-      !data.ReadPorts(&ports)) {
+      !data.ReadPorts(&ports) ||
+      !data.ReadSenderCallStackId(&out->sender_call_stack_id)) {
     return false;
   }
 

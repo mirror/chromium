@@ -31,6 +31,13 @@ struct StructTraits<blink::mojom::blink::TransferableMessage::DataView,
     return result;
   }
 
+  static base::span<const uint8_t> sender_call_stack_id(
+      blink::BlinkTransferableMessage& input) {
+    return base::make_span(
+        reinterpret_cast<const uint8_t*>(&input.sender_call_stack_id),
+        sizeof(input.sender_call_stack_id));
+  }
+
   static bool Read(blink::mojom::blink::TransferableMessage::DataView,
                    blink::BlinkTransferableMessage* out);
 };

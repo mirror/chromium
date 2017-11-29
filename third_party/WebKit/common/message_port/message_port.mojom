@@ -28,6 +28,8 @@ struct TransferableMessage {
   CloneableMessage message;
   // Any ports being transfered as part of this message.
   array<handle<message_pipe>> ports;
+  // Sender JavaScript call stack if available.
+  array<uint8> sender_call_stack_id;
 };
 
 // Struct wrapping a Blob interface pointer.

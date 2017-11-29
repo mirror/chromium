@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "core/dom/BlinkTransferableMessageStructTraits.h"
+#include "v8/include/v8-inspector.h"
 
 namespace mojo {
 
@@ -19,6 +20,13 @@ bool StructTraits<blink::mojom::blink::TransferableMessage::DataView,
   out->ports.ReserveInitialCapacity(ports.size());
   out->ports.AppendRange(std::make_move_iterator(ports.begin()),
                          std::make_move_iterator(ports.end()));
+
+  mojo::ArrayDataView<uint8_t> sender_call_stack_id_data;
+  data.GetSenderCallStackIdDataView(&sender_call_stack_id_data);
+  out->sender_call_stack_id =
+      *(reinterpret_cast<const v8_inspector::V8StackTraceId*>(
+          sender_call_stack_id_data.data()));
+
   return true;
 }
 
