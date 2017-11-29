@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a37a6d61_43c7d094",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-29T18:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b8b20dd_084f9a0c",
+      "range": {
+        "startLine": 153,
+        "startChar": 22,
+        "endLine": 153,
+        "endChar": 42
+      },
+      "revId": "0a484b27ba0ab1acc42fe11b440d03cfbab32d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68a5fcc5_47baf8a5",
         "filename": "chrome/browser/vr/service/vr_device_manager.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "0a484b27ba0ab1acc42fe11b440d03cfbab32d8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38409875_65b14fa3",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-29T18:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68a5fcc5_47baf8a5",
+      "range": {
+        "startLine": 155,
+        "startChar": 9,
+        "endLine": 155,
+        "endChar": 32
+      },
+      "revId": "0a484b27ba0ab1acc42fe11b440d03cfbab32d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0f502565_a4992b0c",
+        "filename": "chrome/browser/vr/service/vr_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-29T18:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab26461f_c32e4a47",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 12
+      },
+      "revId": "0a484b27ba0ab1acc42fe11b440d03cfbab32d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc722adb_db9094e3",
         "filename": "device/vr/openvr/openvr_device_provider.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "0a484b27ba0ab1acc42fe11b440d03cfbab32d8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ff786b_eaf8a31e",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-29T18:51:49Z",
+      "side": 1,
+      "message": "We can worry about that when we actually implement device removing here.",
+      "parentUuid": "dc722adb_db9094e3",
+      "range": {
+        "startLine": 38,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "0a484b27ba0ab1acc42fe11b440d03cfbab32d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
