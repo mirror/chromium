@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "27d1cd74_eb77d5ac",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-29T04:11:00Z",
+      "side": 1,
+      "message": "This will trigger some callbacks.\nIt will be safer to call it asynchronously.\ne.g.\nsetTimeout(function() {\n  this.notify...\n  this.tracker_.send...\n  this.sendImportStats_\n}.bind(this));",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47237251_da1cc200",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-29T04:11:00Z",
+      "side": 1,
+      "message": "I guess there is a reason to have these cancel logic in importOne_.\nSteve, do you know background?",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5968511f_9c5df2a2",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 15
