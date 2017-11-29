@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e8e12b2_e2b65994",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-29T15:36:37Z",
+      "side": 1,
+      "message": "this is behind the switch kDisableMojoLocalStorage. You probably want to move it to line 499. [sorry!, I linked the wrong line].",
+      "revId": "b4ad0878000d4a7fd5baadc8907a2ef228c9e4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
