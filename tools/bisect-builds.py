@@ -72,6 +72,7 @@ CREDENTIAL_ERROR_MESSAGE = ('You are attempting to access protected data with '
 
 ###############################################################################
 
+import glob
 import httplib
 import json
 import optparse
@@ -531,6 +532,13 @@ def FetchRevision(context, rev, filename, quit_event=None, progress_event=None):
     pass
 
 
+def CopyMissingFileFromCurrentSource(src_glob, dst):
+  """Work around missing files in archives."""
+  if not os.access(dst, os.F_OK):
+    matches = glob.glob(src_glob)
+    if matches:
+      os.system('cp %s %s' % (matches[0], dst))
+
 def RunRevision(context, revision, zip_file, profile, num_runs, command, args):
   """Given a zipped revision, unzip it and run the test."""
   print 'Trying revision %s...' % str(revision)
@@ -540,17 +548,13 @@ def RunRevision(context, revision, zip_file, profile, num_runs, command, args):
   tempdir = tempfile.mkdtemp(prefix='bisect_tmp')
   UnzipFilenameToDir(zip_file, tempdir)
 
-  # Hack: Chrome OS archives are missing icudtl.dat; try to copy it from
-  # the local directory.
+  # Hack: Some Chrome OS archives are missing some files; try to copy them
+  # from the local directory.
   if context.platform == 'chromeos':
-    if not os.access('%s/chrome-linux/icudtl.dat' % tempdir, os.F_OK):
-      icudtl_path = 'third_party/icu/common/icudtl.dat'
-      if not os.access(icudtl_path, os.F_OK):
-        print 'Couldn\'t find: ' + icudtl_path
-        print ('The path might have changed. Please look for the data under '
-               'third_party/icu and update bisect-build.py')
-        sys.exit()
-      os.system('cp %s %s/chrome-linux/' % (icudtl_path, tempdir))
+    CopyMissingFileFromCurrentSource('third_party/icu/common/icudtl.dat',
+                                     '%s/chrome-linux/icudtl.dat' % tempdir)
+    CopyMissingFileFromCurrentSource('*out*/*/libminigbm.so',
+                                     '%s/chrome-linux/libminigbm.so' % tempdir)
 
   os.chdir(tempdir)
 
