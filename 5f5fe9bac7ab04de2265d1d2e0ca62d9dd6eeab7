@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc78b376_7145f757",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T05:11:09Z",
+      "side": 1,
+      "message": "Does it need alpha? (can it be premultiplied instead?). I think an inverted color scheme on Windows makes the dialog background black, which will make these black on black (i.e. invisible)",
+      "revId": "5f5fe9bac7ab04de2265d1d2e0ca62d9dd6eeab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
