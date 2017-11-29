@@ -70,6 +70,8 @@ class WebState;
 - (void)setToolsMenuIsVisibleForToolsMenuButton:(BOOL)isVisible;
 // Triggers the animation of the tools menu button.
 - (void)triggerToolsMenuButtonAnimation;
+// Sets the alpha for the background of the toolbar.
+- (void)setBackgroundAlpha:(CGFloat)alpha;
 
 @end
 
