@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "52c27dc1_397aa585",
+        "filename": "components/arc/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-29T03:22:22Z",
+      "side": 1,
+      "message": "Optional: can we refactor these a bit, as these look similar?\n\ndef _CheckPattern(input_api, output_api, pattern, replacement):\n  \"\"\"... comment ...\"\"\"\n  errors \u003d []\n  def SourceFilter(affected_file):\n    return ...\n  for f in ...:\n    for line_number, line in ...:\n      if input_api.re.search(pattern, line):\n        errors.append(...)\n  return errors\n\n\ndef CheckBind(input_api, output_api):\n  return _CheckPattern(input_api, output_api, r\u0027\\bbase::Bind(\u0027, \u0027base::Bind{Once,Repeating}\u0027)\n\n...",
+      "revId": "cc6893b2363bb7b5ec27f064aea678b70a67af86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9119739d_137e71d9",
         "filename": "components/arc/PRESUBMIT.py",
         "patchSetId": 3
