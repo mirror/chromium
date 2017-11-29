@@ -273,6 +273,10 @@
   return frame;
 }
 
+- (void)setBackgroundAlpha:(CGFloat)alpha {
+  [self.toolbarViewController setBackgroundAlpha:alpha];
+}
+
 #pragma mark - LocationBarDelegate
 
 - (void)loadGURLFromLocationBar:(const GURL&)url
