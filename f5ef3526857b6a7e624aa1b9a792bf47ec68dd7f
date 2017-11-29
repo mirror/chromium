@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3de81ac3_0587528b",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-29T19:34:49Z",
+      "side": 0,
+      "message": "here and @808, the write lock does a wait anyway.",
+      "revId": "f5ef3526857b6a7e624aa1b9a792bf47ec68dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36535b4c_58507f3a",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-29T19:34:49Z",
+      "side": 0,
+      "message": "i\u0027m not sure that this is safe to omit.  didn\u0027t see anything obviously wrong with it, but wasn\u0027t able to prove it to myself either.",
+      "revId": "f5ef3526857b6a7e624aa1b9a792bf47ec68dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
