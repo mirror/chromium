@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fcc952d_0c016f08",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-29T19:41:42Z",
+      "side": 0,
+      "message": "Better move those tests to the anonymizer tool tests than removing them all together.",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 79
+      },
+      "revId": "5f56deb44521c891ed8093cadd3ba8cc52a168a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

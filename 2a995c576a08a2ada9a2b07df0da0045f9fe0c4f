@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df9f7e50_26f318b0",
+        "filename": "components/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-29T19:41:42Z",
+      "side": 1,
+      "message": "Can you do this in the destructor and add a comment why this object must be deleted on this task runner?",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 77
+      },
+      "revId": "2a995c576a08a2ada9a2b07df0da0045f9fe0c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
