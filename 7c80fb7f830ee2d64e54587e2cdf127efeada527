@@ -16,6 +16,24 @@
       "revId": "7c80fb7f830ee2d64e54587e2cdf127efeada527",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3a2800_68f308e0",
+        "filename": "third_party/libwebp/README.chromium",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2017-11-29T01:01:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae8ed67e_beebafef",
+      "revId": "7c80fb7f830ee2d64e54587e2cdf127efeada527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
