@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbf322b2_2ffa1a35",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 6983,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-29T00:28:03Z",
+      "side": 1,
+      "message": "Since it\u0027s marking something to happen in the future, maybe this should be \"Clear on Exit\"? I know technically \"Allowed\" and \"Blocked\" don\u0027t do anything till the future either, but they\u0027re an ongoing state so it feels a bit different.",
+      "range": {
+        "startLine": 6983,
+        "startChar": 8,
+        "endLine": 6983,
+        "endChar": 23
+      },
+      "revId": "dfc06d453474ae65747d7d33c8b58c416ab5ddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042c2675_674a4fcd",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-29T00:28:03Z",
+      "side": 1,
+      "message": "NOTREACHED?",
+      "range": {
+        "startLine": 97,
+        "startChar": 13,
+        "endLine": 97,
+        "endChar": 27
+      },
+      "revId": "dfc06d453474ae65747d7d33c8b58c416ab5ddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c676d783_d26c97fa",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-29T00:28:03Z",
+      "side": 1,
+      "message": "\"have their auxiliary text\"\nand delete \"in the TreeView\"",
+      "range": {
+        "startLine": 105,
+        "startChar": 56,
+        "endLine": 106,
+        "endChar": 21
+      },
+      "revId": "dfc06d453474ae65747d7d33c8b58c416ab5ddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
