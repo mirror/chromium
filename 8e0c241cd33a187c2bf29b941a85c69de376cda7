@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bb8863c_d208ee27",
+        "filename": "net/quic/chromium/quic_chromium_client_session_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-29T16:35:34Z",
+      "side": 1,
+      "message": "nit: this line and 235 can be EXPECT_\n(ASSERT_ is usually used when the test would crash if the assert failed or if it otherwise just doesn\u0027t make sense to continue the test on failure)",
+      "range": {
+        "startLine": 229,
+        "startChar": 2,
+        "endLine": 229,
+        "endChar": 14
+      },
+      "revId": "8e0c241cd33a187c2bf29b941a85c69de376cda7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed434b5_156dd69c",
+        "filename": "net/socket/ssl_client_socket_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2732,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-29T16:35:34Z",
+      "side": 1,
+      "message": "nit: surround variable names with | in comments",
+      "range": {
+        "startLine": 2732,
+        "startChar": 14,
+        "endLine": 2732,
+        "endChar": 33
+      },
+      "revId": "8e0c241cd33a187c2bf29b941a85c69de376cda7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3045c529_f98d18f1",
+        "filename": "net/socket/ssl_client_socket_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2744,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-29T16:35:34Z",
+      "side": 1,
+      "message": "ditto about EXPECT_ here and line 2750",
+      "range": {
+        "startLine": 2744,
+        "startChar": 2,
+        "endLine": 2744,
+        "endChar": 14
+      },
+      "revId": "8e0c241cd33a187c2bf29b941a85c69de376cda7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
