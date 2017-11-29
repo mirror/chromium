@@ -1,0 +1,312 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bebba293_6a8a965c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 37
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "PDF",
+      "range": {
+        "startLine": 10,
+        "startChar": 28,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41a0d86_c8721735",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "Use DCHECK_CURRENTLY_ON() to help document and enforce what thread this method runs on.",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be2a1d9_90ffcfbc",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "just: Invalid metafile ?",
+      "range": {
+        "startLine": 154,
+        "startChar": 23,
+        "endLine": 154,
+        "endChar": 46
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa311ead_56c11112",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "This is dead code (#else on line 186 means !OS_WIN) that has already removed, but still lives on here because this CL started before the removal.",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7246f7d_47a6cb21",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "So should we also clean up OnDidPrintPage() and friends before this CL? Now that all platforms do the same thing, we know the first \"page\" has all the pages, and the remaining pages are all fake. This silly dance can stop now.",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a2ea745_0a6a09e8",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "base::MakeRefCounted",
+      "range": {
+        "startLine": 353,
+        "startChar": 12,
+        "endLine": 353,
+        "endChar": 16
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f2d374_ab4d826e",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "|callback|",
+      "range": {
+        "startLine": 57,
+        "startChar": 26,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8b6b73_3100b165",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "|rph| is gone.",
+      "range": {
+        "startLine": 58,
+        "startChar": 70,
+        "endLine": 58,
+        "endChar": 75
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef16909e_04c213d7",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "Out of date comment.",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad9d107_9355741d",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "When this was originally added, the IDs were based on |render_process_id_| and reply_msg-\u003erouting_id(). I wonder what\u0027s the right value here.\n\nWhatever the correct values are, we can fold them into the CreatePrinterQuery() call and drop the variables.",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1931e76f_2eca9804",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_default.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "New #includes are not needed?",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b13608_cf37f6bb",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "Why do we handle the cloud printer UMAs separately?",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f1f96b_6a612ce2",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "Should we do these checks earlier in PrintPreviewHandler::HandlePrint() for all printer types?",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3139feda_4946cd1b",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "Can you run |callback| and then bind it to SystemDialogDone() ? Then PrintForPrintPreview() won\u0027t need to check again.",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9633995e_acbdd4be",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "Does this need to be its own parameter, or can PrintForPrintPreview() just extract it from |job_settings| when it needs the page count?",
+      "range": {
+        "startLine": 337,
+        "startChar": 31,
+        "endLine": 337,
+        "endChar": 43
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd44327_8735e150",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T06:14:00Z",
+      "side": 1,
+      "message": "Out of date comment.",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
