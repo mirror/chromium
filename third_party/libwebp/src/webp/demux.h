@@ -85,8 +85,10 @@ typedef enum WebPDemuxState {
 } WebPDemuxState;
 
 // Internal, version-checked, entry point
-WEBP_EXTERN WebPDemuxer* WebPDemuxInternal(
-    const WebPData*, int, WebPDemuxState*, int);
+WEBP_EXTERN WebPDemuxer* WebPDemuxInternal(const WebPData*,
+                                           int,
+                                           WebPDemuxState*,
+                                           int);
 
 // Parses the full WebP file given by 'data'. For single images the WebP file
 // header alone or the file header and the chunk header may be absent.
@@ -115,8 +117,8 @@ WEBP_EXTERN void WebPDemuxDelete(WebPDemuxer* dmux);
 // Data/information extraction.
 
 typedef enum WebPFormatFeature {
-  WEBP_FF_FORMAT_FLAGS,      // bit-wise combination of WebPFeatureFlags
-                             // corresponding to the 'VP8X' chunk (if present).
+  WEBP_FF_FORMAT_FLAGS,  // bit-wise combination of WebPFeatureFlags
+                         // corresponding to the 'VP8X' chunk (if present).
   WEBP_FF_CANVAS_WIDTH,
   WEBP_FF_CANVAS_HEIGHT,
   WEBP_FF_LOOP_COUNT,        // only relevant for animated file
@@ -134,8 +136,8 @@ typedef enum WebPFormatFeature {
 // combination of WebPFeatureFlags values.
 // If 'feature' is WEBP_FF_LOOP_COUNT, WEBP_FF_BACKGROUND_COLOR, the returned
 // value is only meaningful if the bitstream is animated.
-WEBP_EXTERN uint32_t WebPDemuxGetI(
-    const WebPDemuxer* dmux, WebPFormatFeature feature);
+WEBP_EXTERN uint32_t WebPDemuxGetI(const WebPDemuxer* dmux,
+                                   WebPFormatFeature feature);
 
 //------------------------------------------------------------------------------
 // Frame iteration.
@@ -164,8 +166,9 @@ struct WebPIterator {
 // Returns false if 'dmux' is NULL or frame 'frame_number' is not present.
 // Call WebPDemuxReleaseIterator() when use of the iterator is complete.
 // NOTE: 'dmux' must persist for the lifetime of 'iter'.
-WEBP_EXTERN int WebPDemuxGetFrame(
-    const WebPDemuxer* dmux, int frame_number, WebPIterator* iter);
+WEBP_EXTERN int WebPDemuxGetFrame(const WebPDemuxer* dmux,
+                                  int frame_number,
+                                  WebPIterator* iter);
 
 // Sets 'iter->fragment' to point to the next ('iter->frame_num' + 1) or
 // previous ('iter->frame_num' - 1) frame. These functions do not loop.
@@ -203,7 +206,8 @@ struct WebPChunkIterator {
 // Call WebPDemuxReleaseChunkIterator() when use of the iterator is complete.
 // NOTE: 'dmux' must persist for the lifetime of the iterator.
 WEBP_EXTERN int WebPDemuxGetChunk(const WebPDemuxer* dmux,
-                                  const char fourcc[4], int chunk_number,
+                                  const char fourcc[4],
+                                  int chunk_number,
                                   WebPChunkIterator* iter);
 
 // Sets 'iter->chunk' to point to the next ('iter->chunk_num' + 1) or previous
@@ -257,8 +261,8 @@ struct WebPAnimDecoderOptions {
 };
 
 // Internal, version-checked, entry point.
-WEBP_EXTERN int WebPAnimDecoderOptionsInitInternal(
-    WebPAnimDecoderOptions*, int);
+WEBP_EXTERN int WebPAnimDecoderOptionsInitInternal(WebPAnimDecoderOptions*,
+                                                   int);
 
 // Should always be called, to initialize a fresh WebPAnimDecoderOptions
 // structure before modification. Returns false in case of version mismatch.
@@ -271,8 +275,8 @@ static WEBP_INLINE int WebPAnimDecoderOptionsInit(
 }
 
 // Internal, version-checked, entry point.
-WEBP_EXTERN WebPAnimDecoder* WebPAnimDecoderNewInternal(
-    const WebPData*, const WebPAnimDecoderOptions*, int);
+WEBP_EXTERN WebPAnimDecoder*
+WebPAnimDecoderNewInternal(const WebPData*, const WebPAnimDecoderOptions*, int);
 
 // Creates and initializes a WebPAnimDecoder object.
 // Parameters:
@@ -322,7 +326,8 @@ WEBP_EXTERN int WebPAnimDecoderGetInfo(const WebPAnimDecoder* dec,
 //   False if any of the arguments are NULL, or if there is a parsing or
 //   decoding error, or if there are no more frames. Otherwise, returns true.
 WEBP_EXTERN int WebPAnimDecoderGetNext(WebPAnimDecoder* dec,
-                                       uint8_t** buf, int* timestamp);
+                                       uint8_t** buf,
+                                       int* timestamp);
 
 // Check if there are more frames left to decode.
 // Parameters:

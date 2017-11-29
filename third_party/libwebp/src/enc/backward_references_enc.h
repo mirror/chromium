@@ -15,8 +15,8 @@
 
 #include <assert.h>
 #include <stdlib.h>
-#include "src/webp/types.h"
 #include "src/webp/format_constants.h"
+#include "src/webp/types.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -209,11 +209,7 @@ static WEBP_INLINE void VP8LRefsCursorNext(VP8LRefsCursor* const c) {
 // -----------------------------------------------------------------------------
 // Main entry points
 
-enum VP8LLZ77Type {
-  kLZ77Standard = 1,
-  kLZ77RLE = 2,
-  kLZ77Box = 4
-};
+enum VP8LLZ77Type { kLZ77Standard = 1, kLZ77RLE = 2, kLZ77Box = 4 };
 
 // Evaluates best possible backward references for specified quality.
 // The input cache_bits to 'VP8LGetBackwardReferences' sets the maximum cache
@@ -222,9 +218,15 @@ enum VP8LLZ77Type {
 // The return value is the pointer to the best of the two backward refs viz,
 // refs[0] or refs[1].
 VP8LBackwardRefs* VP8LGetBackwardReferences(
-    int width, int height, const uint32_t* const argb, int quality,
-    int low_effort, int lz77_types_to_try, int* const cache_bits,
-    const VP8LHashChain* const hash_chain, VP8LBackwardRefs* const refs_tmp1,
+    int width,
+    int height,
+    const uint32_t* const argb,
+    int quality,
+    int low_effort,
+    int lz77_types_to_try,
+    int* const cache_bits,
+    const VP8LHashChain* const hash_chain,
+    VP8LBackwardRefs* const refs_tmp1,
     VP8LBackwardRefs* const refs_tmp2);
 
 #ifdef __cplusplus

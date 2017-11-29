@@ -15,8 +15,8 @@
 #ifndef WEBP_DSP_LOSSLESS_H_
 #define WEBP_DSP_LOSSLESS_H_
 
-#include "src/webp/types.h"
 #include "src/webp/decode.h"
+#include "src/webp/types.h"
 
 #include "src/enc/histogram_enc.h"
 #include "src/utils/utils.h"
@@ -124,7 +124,8 @@ void VP8LDspInit(void);
 typedef void (*VP8LProcessEncBlueAndRedFunc)(uint32_t* dst, int num_pixels);
 extern VP8LProcessEncBlueAndRedFunc VP8LSubtractGreenFromBlueAndRed;
 typedef void (*VP8LTransformColorFunc)(const VP8LMultipliers* const m,
-                                       uint32_t* dst, int num_pixels);
+                                       uint32_t* dst,
+                                       int num_pixels);
 extern VP8LTransformColorFunc VP8LTransformColor;
 typedef void (*VP8LCollectColorBlueTransformsFunc)(
     const uint32_t* argb, int stride,

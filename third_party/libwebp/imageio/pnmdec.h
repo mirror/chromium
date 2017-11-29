@@ -26,12 +26,14 @@ struct WebPPicture;
 // Returns true on success.
 // 'metadata' has no effect, but is kept for coherence with other signatures
 // for image readers.
-int ReadPNM(const uint8_t* const data, size_t data_size,
-            struct WebPPicture* const pic, int keep_alpha,
+int ReadPNM(const uint8_t* const data,
+            size_t data_size,
+            struct WebPPicture* const pic,
+            int keep_alpha,
             struct Metadata* const metadata);
 
 #ifdef __cplusplus
-}    // extern "C"
+}  // extern "C"
 #endif
 
 #endif  // WEBP_IMAGEIO_PNMDEC_H_

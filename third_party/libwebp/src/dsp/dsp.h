@@ -39,12 +39,12 @@ extern "C" {
 #endif
 
 #if defined(__clang__)
-# define LOCAL_CLANG_VERSION ((__clang_major__ << 8) | __clang_minor__)
-# define LOCAL_CLANG_PREREQ(maj, min) \
-    (LOCAL_CLANG_VERSION >= (((maj) << 8) | (min)))
+#define LOCAL_CLANG_VERSION ((__clang_major__ << 8) | __clang_minor__)
+#define LOCAL_CLANG_PREREQ(maj, min) \
+  (LOCAL_CLANG_VERSION >= (((maj) << 8) | (min)))
 #else
-# define LOCAL_CLANG_VERSION 0
-# define LOCAL_CLANG_PREREQ(maj, min) 0
+#define LOCAL_CLANG_VERSION 0
+#define LOCAL_CLANG_PREREQ(maj, min) 0
 #endif
 
 #ifndef __has_builtin
@@ -82,8 +82,8 @@ extern "C" {
 
 // The intrinsics currently cause compiler errors with arm-nacl-gcc and the
 // inline assembly would need to be modified for use with Native Client.
-#if (defined(__ARM_NEON__) || \
-     defined(__aarch64__) || defined(WEBP_HAVE_NEON)) && \
+#if (defined(__ARM_NEON__) || defined(__aarch64__) || \
+     defined(WEBP_HAVE_NEON)) &&                      \
     !defined(__native_client__)
 #define WEBP_USE_NEON
 #endif
@@ -114,7 +114,7 @@ extern "C" {
 #define WEBP_USE_MSA
 #endif
 
-#endif  /* EMSCRIPTEN */
+#endif /* EMSCRIPTEN */
 
 #ifndef WEBP_DSP_OMIT_C_CODE
 #define WEBP_DSP_OMIT_C_CODE 1
@@ -126,7 +126,8 @@ extern "C" {
 #define WEBP_NEON_OMIT_C_CODE 0
 #endif
 
-#if !(LOCAL_CLANG_PREREQ(3,8) || LOCAL_GCC_PREREQ(4,8) || defined(__aarch64__))
+#if !(LOCAL_CLANG_PREREQ(3, 8) || LOCAL_GCC_PREREQ(4, 8) || \
+      defined(__aarch64__))
 #define WEBP_NEON_WORK_AROUND_GCC 1
 #else
 #define WEBP_NEON_WORK_AROUND_GCC 0
@@ -574,13 +575,19 @@ void WebPMultRows(uint8_t* ptr, int stride,
                   int width, int num_rows, int inverse);
 
 // Plain-C versions, used as fallback by some implementations.
-void WebPMultRow_C(uint8_t* const ptr, const uint8_t* const alpha,
-                   int width, int inverse);
+void WebPMultRow_C(uint8_t* const ptr,
+                   const uint8_t* const alpha,
+                   int width,
+                   int inverse);
 void WebPMultARGBRow_C(uint32_t* const ptr, int width, int inverse);
 
 // RGB packing function. 'step' can be 3 or 4. r/g/b input is rgb or bgr order.
-extern void (*WebPPackRGB)(const uint8_t* r, const uint8_t* g, const uint8_t* b,
-                           int len, int step, uint32_t* out);
+extern void (*WebPPackRGB)(const uint8_t* r,
+                           const uint8_t* g,
+                           const uint8_t* b,
+                           int len,
+                           int step,
+                           uint32_t* out);
 
 // This function returns true if src[i] contains a value different from 0xff.
 extern int (*WebPHasAlpha8b)(const uint8_t* src, int length);

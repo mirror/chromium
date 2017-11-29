@@ -505,4 +505,4 @@ void WebPCleanupTransparentAreaLossless(WebPPicture* const pic);
 }    // extern "C"
 #endif
 
-#endif  /* WEBP_ENC_VP8I_ENC_H_ */
+#endif /* WEBP_ENC_VP8I_ENC_H_ */
