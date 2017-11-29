@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8efa09e_93391c3e",
+        "filename": "media/audio/win/audio_low_latency_input_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-29T10:35:46Z",
+      "side": 1,
+      "message": "This is a const ref to be consistent with AudioManagers and the Mac implementation. Should ideally be changed to value here and elsewhere in the code path, and pass using move(). I\u0027d prefer to keep it like this in this CL and then possibly make a follow-up to change.",
+      "revId": "28a1caf48252881a17909ee290a7494609c64c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
