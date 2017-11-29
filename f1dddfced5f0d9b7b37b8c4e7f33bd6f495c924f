@@ -93,6 +93,52 @@
       "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c2a0c6_9b75b296",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-29T19:02:05Z",
+      "side": 1,
+      "message": "I worry a bit about the scalability of this if we want to later measure other variations.  I guess we can worry about that later.",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72438f16_06dc56dc",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-29T19:02:05Z",
+      "side": 1,
+      "message": "nit: consider an enum or flags, so we don\u0027t have callsite passing in just true/false.  This makes it easier to read later on without jumping to the definition to know what the boolean means",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 23
+      },
+      "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
