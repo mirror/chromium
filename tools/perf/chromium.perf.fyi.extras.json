@@ -150,7 +150,7 @@
           "args": [
             "--verbose"
           ],
-          "script": "//tools/perf/core/merge_script.py"
+          "script": "//tools/perf/upload_perf_results.py"
         },
         "swarming": {
           "can_use_on_swarming_builders": true,

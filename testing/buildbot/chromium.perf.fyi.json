@@ -178,7 +178,7 @@
           "args": [
             "--verbose"
           ],
-          "script": "//tools/perf/core/merge_script.py"
+          "script": "//tools/perf/upload_perf_results.py"
         },
         "name": "benchmarks for bot 1",
         "override_compile_targets": [
