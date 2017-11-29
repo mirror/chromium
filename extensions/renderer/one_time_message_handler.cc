@@ -18,10 +18,12 @@
 #include "extensions/renderer/bindings/api_request_handler.h"
 #include "extensions/renderer/gc_callback.h"
 #include "extensions/renderer/ipc_message_sender.h"
+#include "extensions/renderer/message_target.h"
 #include "extensions/renderer/messaging_util.h"
 #include "extensions/renderer/native_extension_bindings_system.h"
 #include "extensions/renderer/script_context.h"
 #include "gin/arguments.h"
+#include "gin/dictionary.h"
 #include "gin/handle.h"
 #include "gin/per_context_data.h"
 #include "ipc/ipc_message.h"
@@ -105,6 +107,43 @@ void OneTimeMessageResponseHelper(
   std::move(*callback).Run(&arguments);
 }
 
+// Called with the results of dispatching an onMessage event to listeners.
+// Returns true if any of the listeners responded with `true`, indicating they
+// will respond to the call asynchronously.
+bool WillListenerReplyAsync(v8::Local<v8::Context> context,
+                            v8::Local<v8::Value> results) {
+  if (results.IsEmpty() || !results->IsObject())
+    return false;
+
+  // Suppress any script errors, but bail out if they happen (in theory, we
+  // shouldn't have any).
+  v8::TryCatch try_catch(context->GetIsolate());
+  // We expect results in the form of an object with an array of results as
+  // a `results` property.
+  v8::Isolate* isolate = context->GetIsolate();
+  v8::Local<v8::Value> results_property;
+  if (!results.As<v8::Object>()
+           ->Get(context, gin::StringToSymbol(isolate, "results"))
+           .ToLocal(&results_property) ||
+      !results_property->IsArray()) {
+    return false;
+  }
+
+  // Check if any of the results is `true`.
+  v8::Local<v8::Array> array = results_property.As<v8::Array>();
+  uint32_t length = array->Length();
+  for (uint32_t i = 0; i < length; ++i) {
+    v8::Local<v8::Value> val;
+    if (!array->Get(context, i).ToLocal(&val))
+      return false;
+
+    if (val->IsBoolean() && val->BooleanValue())
+      return true;
+  }
+
+  return false;
+}
+
 }  // namespace
 
 OneTimeMessageHandler::OneTimeMessageHandler(
@@ -159,7 +198,7 @@ void OneTimeMessageHandler::SendMessage(
                                      method_name, include_tls_channel_id);
   ipc_sender->SendPostMessageToPort(routing_id, new_port_id, message);
 
-  if (!wants_response) {
+  if (!wants_response && target.type != MessageTarget::NATIVE_APP) {
     bool close_channel = true;
     ipc_sender->SendCloseMessagePort(routing_id, new_port_id, close_channel);
   }
@@ -267,9 +306,18 @@ bool OneTimeMessageHandler::DeliverMessageToReceiver(
   std::vector<v8::Local<v8::Value>> args = {v8_message, v8_sender,
                                             response_function};
 
+  JSRunner::ResultCallback dispatch_callback;
+  // For runtime.onMessage, we require that the listener return `true` if they
+  // intend to respond asynchronously. Check the results of the listeners.
+  if (port.event_name == messaging_util::kOnMessageEvent) {
+    dispatch_callback =
+        base::BindOnce(&OneTimeMessageHandler::OnEventFired,
+                       weak_factory_.GetWeakPtr(), target_port_id);
+  }
+
   data->pending_callbacks.push_back(std::move(callback));
   bindings_system_->api_system()->event_handler()->FireEventInContext(
-      port.event_name, context, &args, nullptr);
+      port.event_name, context, &args, nullptr, std::move(dispatch_callback));
 
   return handled;
 }
@@ -348,7 +396,8 @@ bool OneTimeMessageHandler::DisconnectOpener(ScriptContext* script_context,
   DCHECK_NE(-1, port.request_id);
 
   bindings_system_->api_system()->request_handler()->CompleteRequest(
-      port.request_id, std::vector<v8::Local<v8::Value>>(), error_message);
+      port.request_id, std::vector<v8::Local<v8::Value>>(),
+      error_message.empty() ? "The message port closed before a response was received." : error_message);
 
   data->openers.erase(iter);
   return handled;
@@ -359,19 +408,28 @@ void OneTimeMessageHandler::OnOneTimeMessageResponse(
     gin::Arguments* arguments) {
   v8::Isolate* isolate = arguments->isolate();
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
+
+  // The listener may try replying after the context or the channel has been
+  // closed. Fail gracefully.
+  // TODO(devlin): At least in the case of the channel being closed (e.g.
+  // because the listener did not return `true`), it might be good to surface an
+  // error.
   OneTimeMessageContextData* data = GetPerContextData(context, false);
-  DCHECK(data);
+  if (!data)
+    return;
+
   auto iter = data->receivers.find(port_id);
-  DCHECK(iter != data->receivers.end());
+  if (iter == data->receivers.end())
+    return;
+
   int routing_id = iter->second.routing_id;
   data->receivers.erase(iter);
 
-  if (arguments->Length() < 1) {
-    arguments->ThrowTypeError("Required argument 'message' is missing");
-    return;
-  }
   v8::Local<v8::Value> value;
-  CHECK(arguments->GetNext(&value));
+  if (arguments->Length() > 0)
+    CHECK(arguments->GetNext(&value));
+  else
+    value = v8::Undefined(isolate);
 
   std::string error;
   std::unique_ptr<Message> message =
@@ -411,6 +469,34 @@ void OneTimeMessageHandler::OnResponseCallbackCollected(
 
   // Close the message port. There's no way to send a reply anymore. Don't
   // close the channel because another listener may reply.
+  IPCMessageSender* ipc_sender = bindings_system_->GetIPCMessageSender();
+  bool close_channel = false;
+  ipc_sender->SendCloseMessagePort(routing_id, port_id, close_channel);
+}
+
+void OneTimeMessageHandler::OnEventFired(const PortId& port_id,
+                                         v8::Local<v8::Context> context,
+                                         v8::Local<v8::Value> result) {
+  // The context could be tearing down by the time the event is fully
+  // dispatched.
+  OneTimeMessageContextData* data = GetPerContextData(context, false);
+  if (!data)
+    return;
+
+  if (WillListenerReplyAsync(context, result))
+    return;  // The listener will reply later; leave the channel open.
+
+  auto iter = data->receivers.find(port_id);
+  // The channel may already be closed (if the listener replied).
+  if (iter == data->receivers.end())
+    return;
+
+  int routing_id = iter->second.routing_id;
+  data->receivers.erase(iter);
+
+  // The listener did not reply and did not return `true` from any of its
+  // listeners. Close the message port. Don't close the channel because another
+  // listener (in a separate context) may reply.
   IPCMessageSender* ipc_sender = bindings_system_->GetIPCMessageSender();
   bool close_channel = false;
   ipc_sender->SendCloseMessagePort(routing_id, port_id, close_channel);

@@ -2,21 +2,28 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-JSON.parse = function() {
-  return "JSON.parse clobbered by content script.";
-};
+function clobberJSON() {
+  JSON.parse = function() {
+    return "JSON.parse clobbered by content script.";
+  };
 
-JSON.stringify = function() {
-  return "JSON.stringify clobbered by content script.";
-};
+  JSON.stringify = function() {
+    return "JSON.stringify clobbered by content script.";
+  };
 
-Array.prototype.toJSON = function() {
-  return "Array.prototype.toJSON clobbered by content script.";
-};
+  Array.prototype.toJSON = function() {
+    return "Array.prototype.toJSON clobbered by content script.";
+  };
 
-Object.prototype.toJSON = function() {
-  return "Object.prototype.toJSON clobbered by content script.";
-};
+  Object.prototype.toJSON = function() {
+    return "Object.prototype.toJSON clobbered by content script.";
+  };
+}
+
+chrome.test.getConfig((config) => {
+  if (!config.nativeCrxBindingsEnabled)
+    clobberJSON();
+});
 
 // For complex connect tests.
 chrome.runtime.onConnect.addListener(function onConnect(port) {
@@ -99,10 +106,12 @@ function testConnectChildFrameAndNavigateSetup() {
   // Test will continue in frame.js
 }
 
+var fakeExtensionId = 'c'.repeat(32);
+
 // Tests sendMessage to an invalid extension.
 function testSendMessageFromTabError() {
   // try sending a request to a bad extension id
-  chrome.runtime.sendMessage("bad-extension-id", {m: 1}, function(response) {
+  chrome.runtime.sendMessage(fakeExtensionId, {m: 1}, function(response) {
     var success = (response === undefined && chrome.runtime.lastError);
     chrome.runtime.sendMessage({success: success});
   });
@@ -110,7 +119,7 @@ function testSendMessageFromTabError() {
 
 // Tests connecting to an invalid extension.
 function testConnectFromTabError() {
-  var port = chrome.runtime.connect("bad-extension-id");
+  var port = chrome.runtime.connect(fakeExtensionId);
   port.onDisconnect.addListener(function() {
     var success = (chrome.runtime.lastError ? true : false);
     chrome.runtime.sendMessage({success: success});
@@ -120,5 +129,6 @@ function testConnectFromTabError() {
 // For test sendMessage.
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   chrome.test.assertEq({id: chrome.runtime.id}, sender);
+  console.warn('Received message: ' + JSON.stringify(request));
   sendResponse({success: (request.step2 == 1)});
 });

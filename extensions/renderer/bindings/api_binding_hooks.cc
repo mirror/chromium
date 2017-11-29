@@ -215,6 +215,7 @@ APIBindingHooks::RequestResult APIBindingHooks::RunHooks(
     const APISignature* signature,
     std::vector<v8::Local<v8::Value>>* arguments,
     const APITypeReferenceMap& type_refs) {
+  LOG(WARNING) << "Running hooks for: " << method_name << ", delegate: " << delegate_.get();
   // Easy case: a native custom hook.
   if (delegate_) {
     RequestResult result = delegate_->HandleRequest(

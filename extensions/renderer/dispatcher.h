@@ -55,6 +55,7 @@ namespace extensions {
 class ContentWatcher;
 class DispatcherDelegate;
 class ExtensionBindingsSystem;
+class IPCMessageSender;
 class ScriptContext;
 class ScriptInjectionManager;
 struct EventFilteringInfo;
@@ -133,6 +134,10 @@ class Dispatcher : public content::RenderThreadObserver,
                                 const std::string& function_name,
                                 const base::ListValue& args);
 
+  std::unique_ptr<ExtensionBindingsSystem> CreateBindingsSystem(
+      std::unique_ptr<IPCMessageSender> ipc_sender,
+      ResourceBundleSourceMap* source_map);
+
   struct JsResourceInfo {
     const char* name = nullptr;
     int id = 0;
@@ -140,6 +145,7 @@ class Dispatcher : public content::RenderThreadObserver,
   };
   // Returns a list of resources for the JS modules to add to the source map.
   static std::vector<JsResourceInfo> GetJsResources();
+
   static void RegisterNativeHandlers(ModuleSystem* module_system,
                                      ScriptContext* context,
                                      Dispatcher* dispatcher,
