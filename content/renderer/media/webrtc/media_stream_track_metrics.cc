@@ -10,6 +10,7 @@
 
 #include "base/md5.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "content/child/child_thread_impl.h"
 #include "content/common/media/media_stream_track_metrics_host_messages.h"
 #include "content/renderer/render_thread_impl.h"
 #include "third_party/webrtc/api/mediastreaminterface.h"
@@ -266,7 +267,8 @@ void MediaStreamTrackMetricsObserver::ReportTracks(
 }
 
 MediaStreamTrackMetrics::MediaStreamTrackMetrics()
-    : ice_state_(webrtc::PeerConnectionInterface::kIceConnectionNew) {}
+    : track_metrics_host_(nullptr),
+      ice_state_(webrtc::PeerConnectionInterface::kIceConnectionNew) {}
 
 MediaStreamTrackMetrics::~MediaStreamTrackMetrics() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -351,11 +353,9 @@ void MediaStreamTrackMetrics::SendLifetimeMessage(const std::string& track_id,
   // |of a unit test.
   if (render_thread) {
     if (event == CONNECTED) {
-      RenderThreadImpl::current()->Send(
-          new MediaStreamTrackMetricsHost_AddTrack(
-              MakeUniqueId(track_id, stream_type),
-              track_type == AUDIO_TRACK,
-              stream_type == RECEIVED_STREAM));
+      GetMediaStreamTrackMetricsHost()->AddTrack(
+          MakeUniqueId(track_id, stream_type), track_type == AUDIO_TRACK,
+          stream_type == RECEIVED_STREAM);
     } else {
       DCHECK_EQ(DISCONNECTED, event);
       RenderThreadImpl::current()->Send(
@@ -398,5 +398,15 @@ uint64_t MediaStreamTrackMetrics::MakeUniqueId(const std::string& track_id,
       reinterpret_cast<uint64_t>(reinterpret_cast<void*>(this)), track_id,
       stream_type);
 }
+
+mojom::MediaStreamTrackMetricsHost*
+MediaStreamTrackMetrics::GetMediaStreamTrackMetricsHost() {
+  if (!track_metrics_host_) {
+    ChildThreadImpl::current()->channel()->GetRemoteAssociatedInterface(
+        &track_metrics_host_ptr_);
+    track_metrics_host_ = track_metrics_host_ptr_.get();
+  }
+  return track_metrics_host_;
+};
 
 }  // namespace content

@@ -11,6 +11,8 @@
 #include <string>
 
 #include "base/time/time.h"
+#include "content/common/media/media_stream.mojom.h"
+#include "content/public/browser/browser_associated_interface.h"
 #include "content/public/browser/browser_message_filter.h"
 
 namespace content {
@@ -28,7 +30,9 @@ namespace content {
 // tracks were removed, this class instead infers that the tracks were
 // removed.
 class MediaStreamTrackMetricsHost
-    : public BrowserMessageFilter {
+    : public BrowserMessageFilter,
+      public BrowserAssociatedInterface<mojom::MediaStreamTrackMetricsHost>,
+      public mojom::MediaStreamTrackMetricsHost {
  public:
   explicit MediaStreamTrackMetricsHost();
 
@@ -39,7 +43,7 @@ class MediaStreamTrackMetricsHost
   bool OnMessageReceived(const IPC::Message& message) override;
 
  private:
-  void OnAddTrack(uint64_t id, bool is_audio, bool is_remote);
+  void AddTrack(uint64_t id, bool is_audio, bool is_remote) override;
   void OnRemoveTrack(uint64_t id);
 
   // Information for a track we're keeping in |tracks_|. |is_audio|

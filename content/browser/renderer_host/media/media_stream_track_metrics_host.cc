@@ -18,8 +18,9 @@
 namespace content {
 
 MediaStreamTrackMetricsHost::MediaStreamTrackMetricsHost()
-    : BrowserMessageFilter(MediaStreamTrackMetricsHostMsgStart) {
-}
+    : BrowserMessageFilter(MediaStreamTrackMetricsHostMsgStart),
+      BrowserAssociatedInterface<mojom::MediaStreamTrackMetricsHost>(this,
+                                                                     this) {}
 
 MediaStreamTrackMetricsHost::~MediaStreamTrackMetricsHost() {
   // Our render process has exited. We won't receive any more IPC
@@ -37,8 +38,8 @@ bool MediaStreamTrackMetricsHost::OnMessageReceived(
     const IPC::Message& message) {
   bool handled = true;
 
+  // TODO(mck.giri): Port the remaining IPCs to mojo (https://crbug.com/787422)
   IPC_BEGIN_MESSAGE_MAP(MediaStreamTrackMetricsHost, message)
-    IPC_MESSAGE_HANDLER(MediaStreamTrackMetricsHost_AddTrack, OnAddTrack)
     IPC_MESSAGE_HANDLER(MediaStreamTrackMetricsHost_RemoveTrack, OnRemoveTrack)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -46,9 +47,9 @@ bool MediaStreamTrackMetricsHost::OnMessageReceived(
   return handled;
 }
 
-void MediaStreamTrackMetricsHost::OnAddTrack(uint64_t id,
-                                             bool is_audio,
-                                             bool is_remote) {
+void MediaStreamTrackMetricsHost::AddTrack(uint64_t id,
+                                           bool is_audio,
+                                           bool is_remote) {
   if (tracks_.find(id) != tracks_.end())
     return;
 
