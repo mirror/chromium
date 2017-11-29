@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b5f417a_82b53e26",
+        "filename": "tools/cygprofile/delayed_dumper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-29T09:38:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2ae3fc6_d57983d2",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "8742d3b3c858925bd7208e19c55580099f112459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ac23814_d67ce811",
         "filename": "tools/cygprofile/delayed_dumper.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "8742d3b3c858925bd7208e19c55580099f112459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d799d531_df309d06",
+        "filename": "tools/cygprofile/delayed_dumper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-29T09:38:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ac23814_d67ce811",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 43
+      },
+      "revId": "8742d3b3c858925bd7208e19c55580099f112459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
