@@ -34,6 +34,24 @@
       "revId": "c889b8020b5399e6e600548b984d8703ac428ea0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9be59b0_049dcc0e",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-29T21:30:38Z",
+      "side": 1,
+      "message": "To make it clear: this |else| part has never been called until https://crrev.com/c/688035  landed. I think it was a mistake to let the flow continue to run these code. So it doesn\u0027t really _depend_ on the presence of |manager|.",
+      "parentUuid": "27b6eb43_6a95270b",
+      "revId": "c889b8020b5399e6e600548b984d8703ac428ea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
