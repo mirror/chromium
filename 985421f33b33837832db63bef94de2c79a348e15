@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1309a930_f24e860e",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-29T20:23:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b06698d3_42d66eb9",
+      "revId": "985421f33b33837832db63bef94de2c79a348e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8235aa8e_99d8f343",
         "filename": "ash/shelf/shelf_controller_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "985421f33b33837832db63bef94de2c79a348e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8149e6aa_25ee7b14",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-29T20:23:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8235aa8e_99d8f343",
+      "revId": "985421f33b33837832db63bef94de2c79a348e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
