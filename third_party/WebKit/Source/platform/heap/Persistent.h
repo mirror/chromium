@@ -206,6 +206,7 @@ class PersistentBase {
     static_assert(IsGarbageCollectedType<T>::value,
                   "T needs to be a garbage collected object");
     if (weaknessConfiguration == kWeakPersistentConfiguration) {
+      //LOG(ERROR) << "PersistentBase::TracePersistent RegisterWeakCallback this " << reinterpret_cast<const void*>(this) << " raw_ " << reinterpret_cast<const void*>(raw_);
       visitor->RegisterWeakCallback(this, HandleWeakPersistent);
     } else {
       visitor->Mark(raw_);

@@ -70,6 +70,10 @@ void AssertObjectHasGCInfo(const void* payload, size_t gc_info_index) {
 #if !defined(COMPONENT_BUILD)
   // On component builds we cannot compare the gcInfos as they are statically
   // defined in each of the components and hence will not match.
+  DCHECK(HeapObjectHeader::FromPayload(payload)->IsValid());
+  if (HeapObjectHeader::FromPayload(payload)->GcInfoIndex() != gc_info_index) {
+    LOG(ERROR) << "AssertObjectHasGCInfo payload " << payload << " gc_info_index " << gc_info_index;
+  }
   DCHECK_EQ(HeapObjectHeader::FromPayload(payload)->GcInfoIndex(),
             gc_info_index);
 #endif
