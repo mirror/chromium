@@ -52,6 +52,24 @@
       "revId": "87e0f0a43dd4b87068d11e73a055515189b23fdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b6de20_0c7bea4d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 27
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-29T18:54:35Z",
+      "side": 1,
+      "message": "... and \"since it might cause *mysterious breakage*.\"",
+      "parentUuid": "837bf274_adfbc074",
+      "revId": "87e0f0a43dd4b87068d11e73a055515189b23fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
