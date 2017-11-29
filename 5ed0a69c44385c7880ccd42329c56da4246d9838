@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a6b74b9_f6c48efe",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-29T22:01:17Z",
+      "side": 1,
+      "message": "default_value",
+      "range": {
+        "startLine": 55,
+        "startChar": 40,
+        "endLine": 55,
+        "endChar": 53
+      },
+      "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f9aaf6_2e1b4f82",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-29T22:01:17Z",
+      "side": 1,
+      "message": "Move below feature check.",
+      "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f166f59_1bb6cdbc",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-29T22:01:17Z",
+      "side": 1,
+      "message": "remove \"via finch\"",
+      "range": {
+        "startLine": 178,
+        "startChar": 34,
+        "endLine": 178,
+        "endChar": 43
+      },
+      "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d6f27f_0545817a",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-29T22:01:17Z",
+      "side": 1,
+      "message": "Can\u0027t we remove this block without changing behavior, because the pref has a default \"true\" value?",
+      "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7918ee9_abb7b4a3",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-29T22:01:17Z",
+      "side": 1,
+      "message": "Can you merge this test with the disabled by policy test?",
+      "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
