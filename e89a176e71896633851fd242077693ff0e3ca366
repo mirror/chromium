@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c99a44f_78d5efe1",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T04:53:33Z",
+      "side": 1,
+      "message": "do you need this? browseR_command_controller.cc isn\u0027t compiled on android. I think that leaves only TOOLKIT_VIEWS platforms using this",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed28b53_a71ffcd6",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T04:53:33Z",
+      "side": 1,
+      "message": "likewise here - if it\u0027s not required, I don\u0027t think we should bother with these",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89c313f_1f981fa9",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T04:53:33Z",
+      "side": 1,
+      "message": "is this used?",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63267bfe_5ff9e678",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T04:53:33Z",
+      "side": 1,
+      "message": "omit?",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df9c76c_d3f37d4b",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T04:53:33Z",
+      "side": 1,
+      "message": "can you steal some ideas from PlatformAppBrowserTest, MAYBE_ConstrainedWindowRequest)?\n\n  WebContentsModalDialogManager* web_contents_modal_dialog_manager \u003d\n      WebContentsModalDialogManager::FromWebContents(web_contents);\n  WebContentsModalDialogManager::TestApi test_api(\n      web_contents_modal_dialog_manager);\n\n(and use IsDialogActive() or update WebContentsModalDialogManager::TestApi  to extract the `gfx::NativeWindow dialog;` from |child_dialogs_|",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3849162c_7be7bc45",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_views.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T04:53:33Z",
+      "side": 1,
+      "message": "we don\u0027t want the expense of calling the destructor. But LazyInstance is effectively deprecated since we got threadsafe statics.\n\nI had to do something similar recently -- see https://chromium-review.googlesource.com/c/chromium/src/+/734381/15/chrome/browser/first_run/first_run_internal_posix.cc",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
