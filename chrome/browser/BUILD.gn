@@ -1530,12 +1530,19 @@ split_static_library("browser") {
     ]
   }
 
+  if (enable_native_notifications) {
+    sources += [
+      "chrome_native_notification_install_helper_win.cc",
+      "chrome_native_notification_install_helper_win.h",
+    ]
+  }
+
   configs += [
     "//build/config/compiler:wexit_time_destructors",
     "//build/config:precompiled_headers",
   ]
   defines = []
-  libs = []
+  libs = [ "runtimeobject.lib" ]
   ldflags = []
 
   allow_circular_includes_from = [ "//chrome/browser/ui" ]

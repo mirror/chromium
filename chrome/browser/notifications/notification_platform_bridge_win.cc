@@ -4,6 +4,7 @@
 
 #include "chrome/browser/notifications/notification_platform_bridge_win.h"
 
+#include <NotificationActivationCallback.h>
 #include <activation.h>
 #include <wrl/client.h>
 #include <wrl/event.h>
@@ -20,7 +21,9 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/win/core_winrt_util.h"
 #include "base/win/scoped_hstring.h"
+#include "base/win/scoped_winrt_initializer.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chrome_native_notification_install_helper_win.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/notifications/notification_image_retainer.h"
@@ -41,6 +44,36 @@ namespace winxml = ABI::Windows::Data::Xml;
 
 using base::win::ScopedHString;
 using message_center::RichNotificationData;
+
+// The three macros below are redefinitions of CoCreatableClass,
+// CoCreatableClassWithFactory, and InternalWrlCreateCreatorMap in
+// winrt/wrl/module.h
+//
+// The original definitions caused win_clang compile errors. To fix the errors,
+// we removed __declspec(selectany) in InternalWrlCreateCreatorMap, and added
+// braces to "0" and "runtimeClassName" in InternalWrlCreateCreatorMap.
+
+#define CoCreatableClass2(className) \
+  CoCreatableClassWithFactory2(className, mswr::SimpleClassFactory<className>)
+
+#define CoCreatableClassWithFactory2(className, factory)                       \
+  InternalWrlCreateCreatorMap2(className##_COM, &__uuidof(className), nullptr, \
+                               mswr::Details::CreateClassFactory<factory>,     \
+                               "minATL$__f")
+
+#define InternalWrlCreateCreatorMap2(className, runtimeClassName, trustLevel, \
+                                     creatorFunction, section)                \
+  mswr::Details::FactoryCache __objectFactory__##className = {nullptr, {0}};  \
+  extern const mswr::Details::CreatorMap __object_##className = {             \
+      creatorFunction,                                                        \
+      {runtimeClassName},                                                     \
+      trustLevel,                                                             \
+      &__objectFactory__##className,                                          \
+      nullptr};                                                               \
+  extern "C" __declspec(allocate(section))                                    \
+      const mswr::Details::CreatorMap* const __minATLObjMap_##className =     \
+          &__object_##className;                                              \
+  WrlCreatorMapIncludePragma(className)
 
 namespace {
 
@@ -100,6 +133,51 @@ void ForwardNotificationOperationOnUiThread(
 }
 
 }  // namespace
+
+// A Win32 component that participates with Action Center will need to create a
+// COM component that exposes the INotificationActivationCallback interface.
+
+class DECLSPEC_UUID(CLSID_KEY) NotificationActivator
+    : public mswr::RuntimeClass<mswr::RuntimeClassFlags<mswr::ClassicCom>,
+                                INotificationActivationCallback> {
+ public:
+  HRESULT STDMETHODCALLTYPE
+  Activate(_In_ LPCWSTR,                         // appUserModelId.
+           _In_ LPCWSTR,                         // invokedArgs.
+           const NOTIFICATION_USER_INPUT_DATA*,  // data.
+           ULONG) override {                     // dataCount.
+    // By returning S_OK, control is passed to OnActivated inside
+    // NotificationPlatformBridgeWinImpl.
+    return S_OK;
+  }
+};
+CoCreatableClass2(NotificationActivator);
+
+class ActivatorRegister {
+ public:
+  ActivatorRegister() {}
+  ~ActivatorRegister() {
+    if (has_registered_) {
+      mswr::Module<mswr::OutOfProc>::GetModule().UnregisterObjects();
+      mswr::Module<mswr::OutOfProc>::GetModule().DecrementObjectCount();
+      has_registered_ = false;
+    }
+  }
+
+  HRESULT Run() {
+    mswr::Module<mswr::OutOfProc>::Create([] {});
+    mswr::Module<mswr::OutOfProc>::GetModule().IncrementObjectCount();
+    HRESULT hr = mswr::Module<mswr::OutOfProc>::GetModule().RegisterObjects();
+    if (SUCCEEDED(hr))
+      has_registered_ = true;
+    return hr;
+  }
+
+ private:
+  bool has_registered_ = false;
+};
+
+ActivatorRegister* NotificationPlatformBridgeWin::activator_register_ = nullptr;
 
 // static
 NotificationPlatformBridge* NotificationPlatformBridge::Create() {
@@ -471,7 +549,33 @@ NotificationPlatformBridgeWin::NotificationPlatformBridgeWin() {
   impl_ = base::MakeRefCounted<NotificationPlatformBridgeWinImpl>(task_runner_);
 }
 
-NotificationPlatformBridgeWin::~NotificationPlatformBridgeWin() = default;
+NotificationPlatformBridgeWin::~NotificationPlatformBridgeWin() {
+  if (activator_register_ != nullptr) {
+    delete activator_register_;
+    activator_register_ = nullptr;
+  }
+}
+
+// static
+void NotificationPlatformBridgeWin::PrepareForNativeNotification() {
+  if (activator_register_ != nullptr)
+    return;
+
+  base::win::ScopedWinrtInitializer scoped_winrt_initializer;
+  if (!scoped_winrt_initializer.Succeeded()) {
+    LOG(ERROR) << "Failed initializing win RT.";
+    return;
+  }
+
+  // TODO(finnur): Remove this function call. It is only here for local testing
+  // purposes (only needs to run once, and can then be deleted locally). Under
+  // normal circumstances this will be done by the installer.
+  if (!InstallShortcutAndRegisterComService(__uuidof(NotificationActivator)))
+    LOG(ERROR) << "Failed performing install tasks.";
+
+  activator_register_ = new ActivatorRegister();
+  activator_register_->Run();
+}
 
 void NotificationPlatformBridgeWin::Display(
     NotificationCommon::Type notification_type,
