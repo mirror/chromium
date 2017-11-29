@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41d69aaf_d1b33222",
+        "filename": "ui/file_manager/file_manager/background/js/background.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-29T14:18:43Z",
+      "side": 1,
+      "message": "It returns a volume (VolumeInfo). Corrected the function return type and names.",
+      "parentUuid": "dd98a4b1_cd6b40ea",
+      "range": {
+        "startLine": 213,
+        "startChar": 7,
+        "endLine": 213,
+        "endChar": 29
+      },
+      "revId": "fc0b12c05478c86d2fc3080fbece1f792f4cb26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c914d056_ba590b23",
         "filename": "ui/file_manager/file_manager/background/js/background.js",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-29T04:03:10Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 63
+      },
+      "revId": "fc0b12c05478c86d2fc3080fbece1f792f4cb26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "145fadeb_2aa6d7a3",
+        "filename": "ui/file_manager/file_manager/background/js/background.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-29T14:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c914d056_ba590b23",
       "range": {
         "startLine": 228,
         "startChar": 7,
@@ -68,6 +116,30 @@
       "revId": "fc0b12c05478c86d2fc3080fbece1f792f4cb26e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00cbc5e3_f70bb9ac",
+        "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-29T14:18:43Z",
+      "side": 1,
+      "message": "As noted in the last comment (launcher.js), here is the other place where we extend the Event class by the same pattern.\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/list_thumbnail_loader.js?q\u003dfile:file_manager++%22@extends+%7BEvent%7D%22\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d328\n\nOn the other hand, here is the example of CustomEvent in the Files app.\nhttps://cs.chromium.org/chromium/src/ui/file_manager/image_loader/piex_loader_unittest.js?q\u003dfile:file_manager+CustomEvent\u0026sq\u003dpackage:chromium\u0026l\u003d32\nBut this is only for a unit test.\n\nSince I could only find one example each above, I am not so confident about it with other places in the Files app. I could not find it in the style guide (https://google.github.io/styleguide/jsguide.html) neither.\nI think a downside of using CustomEvent might be that we cannot assure the contents in the \u0027detail\u0027 field by the type system.\n\nHaving said that, since we have migration to ES6 as a work item (crbug/778674), I am getting to think that the cleanest solution would be to use class extends keywords like this Patchset 10.\nWDYT?",
+      "parentUuid": "13025a72_8c350391",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 15
+      },
+      "revId": "fc0b12c05478c86d2fc3080fbece1f792f4cb26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
