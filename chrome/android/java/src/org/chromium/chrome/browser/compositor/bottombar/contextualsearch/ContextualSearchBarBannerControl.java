@@ -83,10 +83,13 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
 
         final float dpToPx = context.getResources().getDisplayMetrics().density;
 
-        mDefaultHeightPx = context.getResources().getDimensionPixelOffset(
-                R.dimen.contextual_search_bar_banner_height);
         mPaddingPx = context.getResources().getDimensionPixelOffset(
                 R.dimen.contextual_search_bar_banner_padding);
+
+        // Calculate the default height based on the measured height of the TextView.
+        inflate();
+        layout();
+        mDefaultHeightPx = getMeasuredHeight() + (2 * mPaddingPx);
 
         mRippleMinimumWidthPx = RIPPLE_MINIMUM_WIDTH_DP * dpToPx;
         mRippleMaximumWidthPx = panel.getMaximumWidthPx();
