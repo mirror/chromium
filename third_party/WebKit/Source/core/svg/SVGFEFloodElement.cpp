@@ -41,8 +41,10 @@ bool SVGFEFloodElement::SetFilterEffectAttribute(
   const ComputedStyle& style = layout_object->StyleRef();
   FEFlood* flood = static_cast<FEFlood*>(effect);
 
-  if (attr_name == SVGNames::flood_colorAttr)
-    return flood->SetFloodColor(style.SvgStyle().FloodColor());
+  if (attr_name == SVGNames::flood_colorAttr) {
+    return flood->SetFloodColor(
+        style.VisitedDependentColor(CSSPropertyFloodColor));
+  }
   if (attr_name == SVGNames::flood_opacityAttr)
     return flood->SetFloodOpacity(style.SvgStyle().FloodOpacity());
 
@@ -56,10 +58,10 @@ FilterEffect* SVGFEFloodElement::Build(SVGFilterBuilder*, Filter* filter) {
     return nullptr;
 
   DCHECK(layout_object->Style());
-  const SVGComputedStyle& svg_style = layout_object->Style()->SvgStyle();
+  const ComputedStyle& style = layout_object->StyleRef();
 
-  Color color = svg_style.FloodColor();
-  float opacity = svg_style.FloodOpacity();
+  Color color = style.VisitedDependentColor(CSSPropertyFloodColor);
+  float opacity = style.SvgStyle().FloodOpacity();
 
   return FEFlood::Create(filter, color, opacity);
 }

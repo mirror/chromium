@@ -70,13 +70,14 @@ bool SVGFEDropShadowElement::SetFilterEffectAttribute(
   DCHECK(GetLayoutObject());
   FEDropShadow* drop_shadow = static_cast<FEDropShadow*>(effect);
 
-  const SVGComputedStyle& svg_style = GetLayoutObject()->StyleRef().SvgStyle();
+  const ComputedStyle& style = GetLayoutObject()->StyleRef();
   if (attr_name == SVGNames::flood_colorAttr) {
-    drop_shadow->SetShadowColor(svg_style.FloodColor());
+    drop_shadow->SetShadowColor(
+        style.VisitedDependentColor(CSSPropertyFloodColor));
     return true;
   }
   if (attr_name == SVGNames::flood_opacityAttr) {
-    drop_shadow->SetShadowOpacity(svg_style.FloodOpacity());
+    drop_shadow->SetShadowOpacity(style.SvgStyle().FloodOpacity());
     return true;
   }
   return SVGFilterPrimitiveStandardAttributes::SetFilterEffectAttribute(
@@ -103,10 +104,10 @@ FilterEffect* SVGFEDropShadowElement::Build(SVGFilterBuilder* filter_builder,
     return nullptr;
 
   DCHECK(layout_object->Style());
-  const SVGComputedStyle& svg_style = layout_object->Style()->SvgStyle();
+  const ComputedStyle& style = layout_object->StyleRef();
 
-  Color color = svg_style.FloodColor();
-  float opacity = svg_style.FloodOpacity();
+  Color color = style.VisitedDependentColor(CSSPropertyFloodColor);
+  float opacity = style.SvgStyle().FloodOpacity();
 
   FilterEffect* input1 = filter_builder->GetEffectById(
       AtomicString(in1_->CurrentValue()->Value()));

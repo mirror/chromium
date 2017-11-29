@@ -2387,8 +2387,8 @@ class ComputedStyle : public ComputedStyleBase,
                                bool visited_link) const;
 
   Color StopColor() const { return SvgStyle().StopColor(); }
-  Color FloodColor() const { return SvgStyle().FloodColor(); }
-  Color LightingColor() const { return SvgStyle().LightingColor(); }
+  const StyleColor& FloodColor() const { return SvgStyle().FloodColor(); }
+  const StyleColor& LightingColor() const { return SvgStyle().LightingColor(); }
 
   void AddAppliedTextDecoration(const AppliedTextDecoration&);
   void OverrideTextDecorationColors(Color propagated_color);

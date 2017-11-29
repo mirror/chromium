@@ -273,12 +273,12 @@ class SVGComputedStyle : public RefCounted<SVGComputedStyle> {
       misc.Access()->flood_opacity = obj;
   }
 
-  void SetFloodColor(const Color& obj) {
+  void SetFloodColor(const StyleColor& obj) {
     if (!(misc->flood_color == obj))
       misc.Access()->flood_color = obj;
   }
 
-  void SetLightingColor(const Color& obj) {
+  void SetLightingColor(const StyleColor& obj) {
     if (!(misc->lighting_color == obj))
       misc.Access()->lighting_color = obj;
   }
@@ -362,8 +362,8 @@ class SVGComputedStyle : public RefCounted<SVGComputedStyle> {
   float StopOpacity() const { return stops->opacity; }
   const Color& StopColor() const { return stops->color; }
   float FloodOpacity() const { return misc->flood_opacity; }
-  const Color& FloodColor() const { return misc->flood_color; }
-  const Color& LightingColor() const { return misc->lighting_color; }
+  const StyleColor& FloodColor() const { return misc->flood_color; }
+  const StyleColor& LightingColor() const { return misc->lighting_color; }
   const Length& BaselineShiftValue() const {
     return misc->baseline_shift_value;
   }

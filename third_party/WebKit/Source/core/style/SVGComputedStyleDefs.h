@@ -30,6 +30,7 @@
 
 #include "base/memory/scoped_refptr.h"
 #include "core/CoreExport.h"
+#include "core/css/StyleColor.h"
 #include "core/style/StylePath.h"
 #include "platform/Length.h"
 #include "platform/graphics/Color.h"
@@ -239,11 +240,11 @@ class CORE_EXPORT StyleMiscData : public RefCounted<StyleMiscData> {
     return !(*this == other);
   }
 
-  Color flood_color;
-  float flood_opacity;
-  Color lighting_color;
+  StyleColor flood_color;
+  StyleColor lighting_color;
 
   Length baseline_shift_value;
+  float flood_opacity;
 
  private:
   StyleMiscData();
