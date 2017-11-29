@@ -3098,14 +3098,14 @@ const GraphicsLayerPaintInfo* CompositedLayerMapping::ContainingSquashedLayer(
       layout_object, squashed_layers_, max_squashed_layer_index);
 }
 
-IntRect CompositedLayerMapping::LocalClipRectForSquashedLayer(
+ClipRect CompositedLayerMapping::LocalClipRectForSquashedLayer(
     const PaintLayer& reference_layer,
     const GraphicsLayerPaintInfo& paint_info,
     const Vector<GraphicsLayerPaintInfo>& layers) {
   const LayoutObject* clipping_container =
       paint_info.paint_layer->ClippingContainer();
   if (clipping_container == reference_layer.ClippingContainer())
-    return LayoutRect::InfiniteIntRect();
+    return ClipRect(LayoutRect(LayoutRect::InfiniteIntRect()));
 
   DCHECK(clipping_container);
 
@@ -3124,16 +3124,12 @@ IntRect CompositedLayerMapping::LocalClipRectForSquashedLayer(
   paint_info.paint_layer->Clipper(PaintLayer::kDoNotUseGeometryMapper)
       .CalculateBackgroundClipRect(clip_rects_context, parent_clip_rect);
 
-  IntRect snapped_parent_clip_rect(
-      PixelSnappedIntRect(parent_clip_rect.Rect()));
-  DCHECK(snapped_parent_clip_rect != LayoutRect::InfiniteIntRect());
-
   // Convert from ancestor to local coordinates.
   IntSize ancestor_to_local_offset =
       paint_info.offset_from_layout_object -
       ancestor_paint_info->offset_from_layout_object;
-  snapped_parent_clip_rect.Move(ancestor_to_local_offset);
-  return snapped_parent_clip_rect;
+  parent_clip_rect.Move(ancestor_to_local_offset);
+  return parent_clip_rect;
 }
 
 void CompositedLayerMapping::DoPaintTask(
@@ -3208,10 +3204,14 @@ void CompositedLayerMapping::DoPaintTask(
     // CompositedLayerMapping::localClipRectForSquashedLayer()).
     // FIXME: Is it correct to clip to dirtyRect in slimming paint mode?
     // FIXME: Combine similar code here and LayerClipRecorder.
-    dirty_rect.Intersect(paint_info.local_clip_rect_for_squashed_layer);
-    ClipRecorder clip_recorder(context, graphics_layer,
-                               DisplayItem::kClipLayerOverflowControls,
-                               dirty_rect);
+    ClipRect clip_rect = paint_info.local_clip_rect_for_squashed_layer;
+    clip_rect.Intersect(LayoutRect(dirty_rect));
+
+    LayerClipRecorder layer_clip_recorder(
+        context, *paint_info.paint_layer,
+        DisplayItem::kClipLayerOverflowControls, clip_rect, &owning_layer_,
+        LayoutPoint(), paint_layer_flags, graphics_layer,
+        LayerClipRecorder::kDoNotIncludeSelfForBorderRadius);
     PaintLayerPainter(*paint_info.paint_layer)
         .Paint(context, painting_info, paint_layer_flags);
   }
