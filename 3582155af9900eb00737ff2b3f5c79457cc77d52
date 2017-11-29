@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c200d4d_bdf460a5",
+        "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-29T00:48:32Z",
+      "side": 1,
+      "message": "I\u0027m happy to. holte@ wdyt?",
+      "parentUuid": "d2c72027_c59fddda",
+      "revId": "3582155af9900eb00737ff2b3f5c79457cc77d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0841dbea_434614ba",
         "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-29T00:38:03Z",
       "side": 1,
       "message": "Maybe make this a constexpr function?",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 207,
+        "endChar": 14
+      },
+      "revId": "3582155af9900eb00737ff2b3f5c79457cc77d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15479b76_56eefa45",
+        "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-29T00:48:32Z",
+      "side": 1,
+      "message": "I\u0027m not totally sure what that would look like, but std::log() can\u0027t be used in a constexpr (I had tried to make log_base a constexpr). Since network_bytes is variable, I\u0027m not sure what other optimizations could be put into a constexpr, but I\u0027m not super familiar with them, so maybe there is something else I could try. I used static const for log_base to save some repeated work at runtime, but I think the log of network bytes, and the pow with exp_base can\u0027t be simpler with a variable network bytes.",
+      "parentUuid": "0841dbea_434614ba",
       "range": {
         "startLine": 204,
         "startChar": 6,
