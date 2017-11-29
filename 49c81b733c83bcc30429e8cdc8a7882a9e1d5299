@@ -16,6 +16,24 @@
       "revId": "49c81b733c83bcc30429e8cdc8a7882a9e1d5299",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2629d5ee_67e9acbb",
+        "filename": "components/app_modal/javascript_dialog_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-29T00:02:29Z",
+      "side": 1,
+      "message": "I\u0027m trying to codify what\u0027s already going on. I\u0027d like to unify across all platforms, to not have the split that is there right now, but I want this CL to not be a change in functionality.\n\n(As a note, the split was added in https://crrev.com/1676693002 due to hostname abuse; perhaps we can add eliding to url_formatter::FormatUrlForSecurityDisplay?)",
+      "parentUuid": "88d2250a_bfcda11e",
+      "revId": "49c81b733c83bcc30429e8cdc8a7882a9e1d5299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
