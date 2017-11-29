@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a73a85c1_24e02b3a",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/templates/StylePropertyShorthand.cpp.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-29T03:14:50Z",
+      "side": 1,
+      "message": "Oh yeah. We\u0027re still planning on merging this with the shorthand CSSProperty subclasses right? Should we do that sooner rather than later then?",
+      "parentUuid": "5be3b79e_d3b09bef",
+      "revId": "803a74041c1eec3a1dd699f1348fef15c6003215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7001208b_07922f55",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
         "patchSetId": 8
