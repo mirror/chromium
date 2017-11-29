@@ -33,6 +33,24 @@
       "revId": "cefff97ec894bf62b3aef00196550b286f0ac399",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d9db8c_e4d4cf4d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-29T20:46:02Z",
+      "side": 1,
+      "message": "I think it\u0027s safe, because containingBlock skips more ancestors than container.\n\nNote also that the layout tree walk (as opposed to this special layout tree walk for\njust recomputing overflow) uses container() to walk up, and as far as I can tell, uses\nthe same recursion as my CL to walk down.",
+      "parentUuid": "78151ed7_c95b66a9",
+      "revId": "cefff97ec894bf62b3aef00196550b286f0ac399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
