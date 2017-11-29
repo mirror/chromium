@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3d2bea4_0d7d0102",
+        "filename": "chrome/browser/chromeos/login/screens/update_required_screen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-29T00:22:40Z",
+      "side": 1,
+      "message": "Do you need this include?",
+      "revId": "03b3b8eac7b709b1a793d196c10026c23b298567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86df4d9c_89fef73f",
+        "filename": "chrome/browser/chromeos/login/screens/update_required_screen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-29T00:22:40Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "03b3b8eac7b709b1a793d196c10026c23b298567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57ded2e_412636b7",
+        "filename": "chrome/browser/chromeos/login/screens/update_required_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-29T00:22:40Z",
+      "side": 1,
+      "message": "Do you need this include?",
+      "revId": "03b3b8eac7b709b1a793d196c10026c23b298567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
