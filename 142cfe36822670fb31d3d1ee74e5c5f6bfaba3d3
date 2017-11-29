@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4894922_52dc6479",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 3896,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-29T21:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62afcaa7_f826d70f",
+      "range": {
+        "startLine": 3896,
+        "startChar": 7,
+        "endLine": 3896,
+        "endChar": 18
+      },
+      "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1bf8d28_c5cf8da4",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4e4bee_0baff564",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-29T21:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1bf8d28_c5cf8da4",
+      "range": {
+        "startLine": 927,
+        "startChar": 7,
+        "endLine": 927,
+        "endChar": 37
+      },
+      "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bdccae66_3de873b7",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-29T21:19:47Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ed83a4a2_69f4f57e",
+      "range": {
+        "startLine": 178,
+        "startChar": 8,
+        "endLine": 178,
+        "endChar": 13
+      },
+      "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca6cc5a5_5ce451db",
         "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
         "patchSetId": 12
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d229a448_c639640f",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-29T21:19:47Z",
+      "side": 1,
+      "message": "Ooops, this is a stale comment, removed. \n\nThat being said, I just realized we weren\u0027t clearing the sub-frame bits, so I\u0027ve moved the clearing into ComputeShouldHandleScrollGestureOnMainThreadRegion().\n\nState-tracking should now be state-of-the-art.",
+      "parentUuid": "ca6cc5a5_5ce451db",
+      "range": {
+        "startLine": 203,
+        "startChar": 22,
+        "endLine": 204,
+        "endChar": 66
+      },
+      "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91bd0b8c_868e128d",
         "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
         "patchSetId": 12
@@ -114,6 +210,30 @@
       "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163ad015_7fca4a91",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-29T21:19:47Z",
+      "side": 1,
+      "message": "Yes, I believe so.",
+      "parentUuid": "91bd0b8c_868e128d",
+      "range": {
+        "startLine": 257,
+        "startChar": 28,
+        "endLine": 257,
+        "endChar": 49
+      },
+      "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
