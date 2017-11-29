@@ -128,8 +128,8 @@ bool TestReportingDelegate::CanUseClient(const url::Origin& origin,
 
 TestReportingContext::TestReportingContext(const ReportingPolicy& policy)
     : ReportingContext(policy,
-                       std::make_unique<base::SimpleTestClock>(),
-                       std::make_unique<base::SimpleTestTickClock>(),
+                       &clock_,
+                       &tick_clock_,
                        std::make_unique<TestReportingUploader>(),
                        std::make_unique<TestReportingDelegate>()),
       delivery_timer_(new base::MockTimer(/* retain_user_task= */ false,
