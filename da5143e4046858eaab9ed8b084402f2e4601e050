@@ -34,6 +34,24 @@
       "revId": "da5143e4046858eaab9ed8b084402f2e4601e050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364d2f46_814ef39b",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-29T12:12:05Z",
+      "side": 1,
+      "message": "Agreed.\n\nPlus, if you chose CHECK instead of DCHECK just because of that reason, it sounds unreasonable.  We should choose the best thing based on what we\u0027d like to do.  CHECK or DCHECK is a *design* choice and the implementation must follow it.",
+      "parentUuid": "5a4c22de_b15f574d",
+      "revId": "da5143e4046858eaab9ed8b084402f2e4601e050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
