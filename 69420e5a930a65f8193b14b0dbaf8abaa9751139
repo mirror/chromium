@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e22375b4_aec21b3d",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T06:01:27Z",
+      "side": 1,
+      "message": "Prefer the pattern:\n\niter \u003d erase(iter);",
+      "revId": "69420e5a930a65f8193b14b0dbaf8abaa9751139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1eade7_fa02149b",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T06:01:27Z",
+      "side": 1,
+      "message": "why mutable? It\u0027s not common in Chromium codebase.",
+      "revId": "69420e5a930a65f8193b14b0dbaf8abaa9751139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08399150_f31999d0",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T06:01:27Z",
+      "side": 1,
+      "message": "not sure we need to say \"contains inflight events\" since the member is called inflight_events_ and we no longer have anything containing both inflight and settled events.\n\nSuggest just saying \"Ordered by expiration time.\"",
+      "revId": "69420e5a930a65f8193b14b0dbaf8abaa9751139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544248da_23976255",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T06:01:27Z",
+      "side": 1,
+      "message": "ditto: don\u0027t need to mention \"contains inflight events\".",
+      "revId": "69420e5a930a65f8193b14b0dbaf8abaa9751139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
