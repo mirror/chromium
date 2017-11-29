@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "83f39b50_24496fcc",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T23:38:14Z",
+      "side": 1,
+      "message": "I usually don\u0027t bother. If you crash on the next line, it\u0027s pretty obvious what went wrong.",
+      "revId": "f4028eaae0b76bb690e8058ec7352ee725e9192c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a319aa98_e0a5ced4",
         "filename": "chrome/common/interstitial_page.mojom",
         "patchSetId": 5
