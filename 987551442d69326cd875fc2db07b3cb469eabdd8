@@ -22,6 +22,57 @@
       "revId": "987551442d69326cd875fc2db07b3cb469eabdd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f733428_6d96bc4b",
+        "filename": "third_party/WebKit/Source/core/input/EventHandlerTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-29T15:28:30Z",
+      "side": 1,
+      "message": "Have you considered testing preventing these default behavior?",
+      "revId": "987551442d69326cd875fc2db07b3cb469eabdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de363dcd_4ee9f06d",
+        "filename": "ui/events/blink/web_input_event_builders_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-29T15:28:30Z",
+      "side": 1,
+      "message": "Isn\u0027t it better to pick kBack only when HIWORD(wparam) \u0026 XBUTTON2?  If some hardware with a 3rd+ X button fires these events, leaving button \u003d\u003d kNoButton would be safer I believe.",
+      "revId": "987551442d69326cd875fc2db07b3cb469eabdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ecdd6b_6112e578",
+        "filename": "ui/events/blink/web_input_event_builders_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-29T15:28:30Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "987551442d69326cd875fc2db07b3cb469eabdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
