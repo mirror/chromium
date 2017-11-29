@@ -5,14 +5,22 @@
 #ifndef IOS_WEB_VIEW_INTERNAL_SIGNIN_IOS_WEB_VIEW_SIGNIN_CLIENT_H_
 #define IOS_WEB_VIEW_INTERNAL_SIGNIN_IOS_WEB_VIEW_SIGNIN_CLIENT_H_
 
-#include "components/signin/ios/browser/ios_signin_client.h"
+#include <memory>
 
 #include "base/ios/weak_nsobject.h"
+#include "base/macros.h"
+#include "components/content_settings/core/browser/cookie_settings.h"
+#include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/signin/core/browser/signin_client.h"
+#include "components/signin/core/browser/signin_error_controller.h"
+#include "components/signin/ios/browser/delay_callback_helper.h"
+#include "net/url_request/url_request_context_getter.h"
 
 @class CWVAuthenticationController;
 
 // iOS WebView specific signin client.
-class IOSWebViewSigninClient : public IOSSigninClient {
+class IOSWebViewSigninClient : public SigninClient,
+                               public SigninErrorController::Observer {
  public:
   IOSWebViewSigninClient(
       PrefService* pref_service,
@@ -24,10 +32,34 @@ class IOSWebViewSigninClient : public IOSSigninClient {
 
   ~IOSWebViewSigninClient() override;
 
+  // KeyedService implementation.
+  void Shutdown() override;
+
   // SigninClient implementation.
-  void OnSignedOut() override;
   std::string GetProductVersion() override;
   base::Time GetInstallDate() override;
+  scoped_refptr<TokenWebData> GetDatabase() override;
+  PrefService* GetPrefs() override;
+  net::URLRequestContextGetter* GetURLRequestContext() override;
+  void DoFinalInit() override;
+  bool CanRevokeCredentials() override;
+  std::string GetSigninScopedDeviceId() override;
+  bool ShouldMergeSigninCredentialsIntoCookieJar() override;
+  bool IsFirstRun() const override;
+  bool AreSigninCookiesAllowed() override;
+  void AddContentSettingsObserver(
+      content_settings::Observer* observer) override;
+  void RemoveContentSettingsObserver(
+      content_settings::Observer* observer) override;
+  std::unique_ptr<CookieChangedSubscription> AddCookieChangedCallback(
+      const GURL& url,
+      const std::string& name,
+      const net::CookieStore::CookieChangedCallback& callback) override;
+  void DelayNetworkCall(const base::Closure& callback) override;
+  std::unique_ptr<GaiaAuthFetcher> CreateGaiaAuthFetcher(
+      GaiaAuthConsumer* consumer,
+      const std::string& source,
+      net::URLRequestContextGetter* getter) override;
 
   // SigninErrorController::Observer implementation.
   void OnErrorChanged() override;
@@ -38,6 +70,17 @@ class IOSWebViewSigninClient : public IOSSigninClient {
   CWVAuthenticationController* GetAuthenticationController();
 
  private:
+  // SigninClient private implementation.
+  void OnSignedOut() override;
+
+  std::unique_ptr<DelayCallbackHelper> delay_callback_helper_;
+  PrefService* pref_service_;
+  net::URLRequestContextGetter* url_request_context_;
+  SigninErrorController* signin_error_controller_;
+  scoped_refptr<content_settings::CookieSettings> cookie_settings_;
+  scoped_refptr<HostContentSettingsMap> host_content_settings_map_;
+  scoped_refptr<TokenWebData> token_web_data_;
+
   base::WeakNSObject<CWVAuthenticationController> authentication_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(IOSWebViewSigninClient);
