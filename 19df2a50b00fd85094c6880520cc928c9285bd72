@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bf2fdc5_dfcbbf1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T18:01:01Z",
+      "side": 1,
+      "message": "nit: Please re-format with shorter subject and wrap lins around 80 chars.\n\nSee \"Writing commit descriptions\"\nhttps://www.chromium.org/developers/contributing-code",
+      "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffff9da_da43a041",
+        "filename": "components/signin/core/browser/account_tracker_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T18:01:01Z",
+      "side": 1,
+      "message": "nit: wrong indent",
+      "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
