@@ -33,6 +33,8 @@ struct Config {
   bool should_use_preference;
   // Preferences are stored in a separate file in the user data directory.
   base::FilePath user_data_path;
+  // KWallet uses dbus, which requires to be called on a specific thread.
+  scoped_refptr<base::SequencedTaskRunner> dbus_task_runner;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Config);
