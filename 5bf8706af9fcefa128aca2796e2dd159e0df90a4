@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aaf4f49_e05f941c",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-29T10:24:58Z",
+      "side": 1,
+      "message": "I\u0027ll do this change in a separate CL, as some more changes are actually needed to nicely bind this so it fits the callback signature.",
+      "revId": "5bf8706af9fcefa128aca2796e2dd159e0df90a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
