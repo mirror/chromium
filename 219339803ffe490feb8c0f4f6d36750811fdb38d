@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d4a5bf3_aa370fdb",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-29T20:14:48Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 433,
+        "startChar": 9,
+        "endLine": 433,
+        "endChar": 16
+      },
+      "revId": "219339803ffe490feb8c0f4f6d36750811fdb38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
