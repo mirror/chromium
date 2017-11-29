@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef5313dd_0fa59627",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T15:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4884b97_8cdd13a1",
+      "range": {
+        "startLine": 713,
+        "startChar": 38,
+        "endLine": 713,
+        "endChar": 40
+      },
+      "revId": "70d4171d5bff4bb26abafc93663b82e3b00c609a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7eb6827_a203b9e5",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "70d4171d5bff4bb26abafc93663b82e3b00c609a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae74faf_b0335c70",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T15:22:19Z",
+      "side": 1,
+      "message": "ASSERT_TRUE will not work here because AutoplayAllowed needs to return a bool.",
+      "parentUuid": "a7eb6827_a203b9e5",
+      "range": {
+        "startLine": 730,
+        "startChar": 6,
+        "endLine": 730,
+        "endChar": 12
+      },
+      "revId": "70d4171d5bff4bb26abafc93663b82e3b00c609a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "67e6de54_a157bec5",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T15:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24009b94_a1e3013c",
+      "range": {
+        "startLine": 1085,
+        "startChar": 72,
+        "endLine": 1085,
+        "endChar": 80
+      },
+      "revId": "70d4171d5bff4bb26abafc93663b82e3b00c609a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "665fdfff_a8efdeb7",
         "filename": "content/common/frame_messages.h",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "70d4171d5bff4bb26abafc93663b82e3b00c609a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49518669_2f25a38a",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T15:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "665fdfff_a8efdeb7",
+      "range": {
+        "startLine": 1509,
+        "startChar": 29,
+        "endLine": 1509,
+        "endChar": 37
+      },
+      "revId": "70d4171d5bff4bb26abafc93663b82e3b00c609a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
