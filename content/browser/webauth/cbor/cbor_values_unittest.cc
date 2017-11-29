@@ -108,6 +108,14 @@ TEST(CBORValuesTest, ConstructMap) {
   }
 }
 
+TEST(CBORValuesTest, ConstructCBORWithTag) {
+  CBORValue tagged_CBOR = CBORValue(37, 0);
+  EXPECT_EQ(CBORValue::Type::UNSIGNED, tagged_CBOR.type());
+  EXPECT_EQ(37u, tagged_CBOR.GetUnsigned());
+  ASSERT_TRUE(tagged_CBOR.GetTag().has_value());
+  EXPECT_EQ(tagged_CBOR.GetTag().value(), 0u);
+}
+
 // Test copy constructors
 TEST(CBORValuesTest, CopyUnsigned) {
   CBORValue value(74);
@@ -182,6 +190,22 @@ TEST(CBORValuesTest, CopyMap) {
   ASSERT_EQ(copied_value.GetMap().count("unsigned"), 1u);
   EXPECT_EQ(value.GetMap().find("unsigned")->second.GetUnsigned(),
             copied_value.GetMap().find("unsigned")->second.GetUnsigned());
+}
+
+TEST(CBORValuesTest, CopyTaggedCBOR) {
+  CBORValue tagged_CBOR = CBORValue(37, 0);
+  CBORValue copied_value(tagged_CBOR.Clone());
+  EXPECT_EQ(tagged_CBOR.type(), copied_value.type());
+  EXPECT_EQ(tagged_CBOR.GetUnsigned(), copied_value.GetUnsigned());
+  ASSERT_TRUE(copied_value.GetTag().has_value());
+  EXPECT_EQ(copied_value.GetTag().value(), 0u);
+
+  CBORValue blank;
+  blank = tagged_CBOR.Clone();
+  EXPECT_EQ(tagged_CBOR.type(), blank.type());
+  EXPECT_EQ(tagged_CBOR.GetUnsigned(), blank.GetUnsigned());
+  ASSERT_TRUE(blank.GetTag().has_value());
+  EXPECT_EQ(blank.GetTag().value(), 0u);
 }
 
 // Test move constructors and move-assignment
@@ -259,6 +283,18 @@ TEST(CBORValuesTest, MoveArray) {
   blank = CBORValue(std::move(array));
   EXPECT_EQ(CBORValue::Type::ARRAY, blank.type());
   EXPECT_EQ(123u, blank.GetArray().back().GetUnsigned());
+}
+
+TEST(CBORValuesTest, MoveTaggedCBOR) {
+  CBORValue::ArrayValue array;
+  array.emplace_back(123);
+  CBORValue value(array, 0);
+
+  CBORValue moved_value(std::move(value));
+  EXPECT_EQ(CBORValue::Type::ARRAY, moved_value.type());
+  EXPECT_EQ(123u, moved_value.GetArray().back().GetUnsigned());
+  ASSERT_TRUE(moved_value.GetTag().has_value());
+  EXPECT_EQ(moved_value.GetTag().value(), 0u);
 }
 
 TEST(CBORValuesTest, SelfSwap) {

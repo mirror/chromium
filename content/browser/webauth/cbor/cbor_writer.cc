@@ -27,9 +27,17 @@ base::Optional<std::vector<uint8_t>> CBORWriter::Write(
 
 CBORWriter::CBORWriter(std::vector<uint8_t>* cbor) : encoded_cbor_(cbor) {}
 
+void CBORWriter::EncodeTag(const CBORValue& node) {
+  if (node.GetTag().has_value()) {
+    StartItem(CBORValue::Type::TAG, node.GetTag().value());
+  }
+}
+
 bool CBORWriter::EncodeCBOR(const CBORValue& node, int max_nesting_level) {
   if (max_nesting_level < 0)
     return false;
+
+  EncodeTag(node);
 
   switch (node.type()) {
     case CBORValue::Type::NONE: {
