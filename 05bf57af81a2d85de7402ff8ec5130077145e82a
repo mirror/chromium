@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "841aa1f7_f20830d0",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-29T05:57:02Z",
+      "side": 1,
+      "message": "This exposes an implementation detail. How can users tell that the closing operation is over? I think they usually cannot.\n\nFinally, the message repeats the title.\n\nSo I\u0027d just simplify:\n\n\"The volume is busy. Please close all the opened files from it, then try again after a few seconds.\"\n\nWDYT?",
+      "range": {
+        "startLine": 313,
+        "startChar": 81,
+        "endLine": 313,
+        "endChar": 113
+      },
+      "revId": "05bf57af81a2d85de7402ff8ec5130077145e82a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46af291c_740df3d2",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-29T05:57:02Z",
+      "side": 1,
+      "message": "(Not a native speaker, but feels more natural?)\nnit: Cannot",
+      "range": {
+        "startLine": 313,
+        "startChar": 3,
+        "endLine": 313,
+        "endChar": 12
+      },
+      "revId": "05bf57af81a2d85de7402ff8ec5130077145e82a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
