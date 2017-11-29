@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c813596_5ed48cb4",
+        "filename": "ui/views/controls/slider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-29T14:47:10Z",
+      "side": 1,
+      "message": "Can it be possible that pending_accessibility_value_changed_ is also set here? If not, can there be a DCHECK here?\n\nMaybe the DCHECK should live in NotifyAccessibilityEvent()? (with the order of resetting pending_accessibility_value_change_ changed below in lines 342:343)",
+      "revId": "3d1ad8237c6a5c133d5a52947e288f4951b71862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
