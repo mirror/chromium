@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ebcd02df_70fd3662",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2081,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-29T19:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f4913e5_02640ae1",
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fdefc7c_ee676606",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "822f6b12_03ed26f5",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2092,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-29T19:50:00Z",
+      "side": 1,
+      "message": "index? :) it was just a copy paste from before. I replaced it with index now.",
+      "parentUuid": "7fdefc7c_ee676606",
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6cb4e5b_2d9f3077",
         "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b14edc2_362d3fe5",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-29T19:50:00Z",
+      "side": 1,
+      "message": "Right now it resets the shared gesture token between pointerevents and touch events. If we decide to go with one token per each of these then I can remove that gesture token shenanigans from this function in PointerEventManager and just keep a stack variable version of that like before one in PointerEventManager and one in TouchEventManager.",
+      "parentUuid": "c6cb4e5b_2d9f3077",
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "49f11d5a_b5035b58",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-29T19:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c228b5e8_28699d80",
+      "range": {
+        "startLine": 234,
+        "startChar": 18,
+        "endLine": 234,
+        "endChar": 38
+      },
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b81ba46b_7dc297bd",
         "filename": "third_party/WebKit/Source/platform/WebPointerEvent.cpp",
         "patchSetId": 7
@@ -114,6 +192,24 @@
       "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a8309e_dc58e998",
+        "filename": "third_party/WebKit/Source/platform/WebPointerEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-29T19:50:00Z",
+      "side": 1,
+      "message": "It is not a function of pointer type. It is a function of whether the event has come from the mouse event path or touch event path (with the current design). A stylus event can come from both of these paths. At the end of the day us sending an event from mouse event or touch event is just about whether we want the event to go through gesture detection and scrolling stuff or not. So I chose this name for that. Maybe as I move up this WebPointerEvent path we can come up with a better name?",
+      "parentUuid": "b81ba46b_7dc297bd",
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +233,30 @@
       "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b47650d_a224153f",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-29T19:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6231c7f7_58109e93",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "d2b80064bb24d1ce511cd975f17501825996bac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
