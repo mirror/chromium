@@ -163,9 +163,16 @@ ScopedCERTCertificate CreateCERTCertificateFromBytes(const uint8_t* data,
   der_cert.type = siDERCertBuffer;
 
   // Parse into a certificate structure.
-  return ScopedCERTCertificate(CERT_NewTempCertificate(
+  ScopedCERTCertificate nss_cert(CERT_NewTempCertificate(
       CERT_GetDefaultCertDB(), &der_cert, nullptr /* nickname */,
       PR_FALSE /* is_perm */, PR_TRUE /* copyDER */));
+  if (!nss_cert) {
+    const PRErrorCode error_code = PR_GetError();
+    const char* error_name = PR_ErrorToName(error_code);
+    LOG(ERROR) << "error creating certificate, NSS error: "
+               << (error_name ? error_name : std::to_string(error_code));
+  }
+  return nss_cert;
 }
 
 ScopedCERTCertificate CreateCERTCertificateFromX509Certificate(
