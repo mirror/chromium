@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab48f787_79a5453a",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-29T14:14:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f2502e3_6cbb2028",
+      "range": {
+        "startLine": 36,
+        "startChar": 50,
+        "endLine": 36,
+        "endChar": 61
+      },
+      "revId": "67dd12839d9e4b5c4a73a51ccbd19e44bb6fdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7202e29d_bfdcd930",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a6a59ba7_dba7f527",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-29T14:14:22Z",
+      "side": 1,
+      "message": "Thanks, that was carried over from old code. removed.",
+      "parentUuid": "7202e29d_bfdcd930",
+      "range": {
+        "startLine": 152,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 28
+      },
+      "revId": "67dd12839d9e4b5c4a73a51ccbd19e44bb6fdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e092ebda_f16fb507",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessor.java",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-29T11:12:40Z",
       "side": 1,
       "message": "I\u0027m perfectly fine with this code (looking through the list backwards and returning the first item you find), though I\u0027m wondering if the following would be more readable:\n\nA ret \u003d null;\nfor (annotation: mCollectedAnnotations) { \n  if (annnotationType.isAssignableFrom(annotation.annotationType())) {\n    ret \u003d (A) annotation;\n  }\n}\n\nreturn ret;",
+      "range": {
+        "startLine": 120,
+        "startChar": 38,
+        "endLine": 120,
+        "endChar": 80
+      },
+      "revId": "67dd12839d9e4b5c4a73a51ccbd19e44bb6fdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb1427f_3d0ed9fd",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-29T14:14:22Z",
+      "side": 1,
+      "message": "But then we\u0027re iterating more than needed :/\n\nAlso my instinct there would be to go \"why are we not returning as soon as we got one?... oh right we only want the last one\"\n\nI can rename the iterator for readability maybe, does it now work better?",
+      "parentUuid": "e092ebda_f16fb507",
       "range": {
         "startLine": 120,
         "startChar": 38,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "21e22fdd_be645f16",
+        "filename": "base/test/android/junit/src/org/chromium/base/test/util/SkipCheckTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-29T14:14:22Z",
+      "side": 1,
+      "message": "Ah, thanks! Removed.",
+      "parentUuid": "38db16c4_94ea1042",
+      "range": {
+        "startLine": 120,
+        "startChar": 19,
+        "endLine": 120,
+        "endChar": 26
+      },
+      "revId": "67dd12839d9e4b5c4a73a51ccbd19e44bb6fdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff77a4f2_06610b61",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/ChromeHome.java",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-29T11:12:40Z",
       "side": 1,
       "message": "How does this work?\n\nAnnotationProcessor.getAnnotation(class) returns a \u003cA extends Annotation\u003e. Surely this should be a null check?",
+      "range": {
+        "startLine": 53,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "67dd12839d9e4b5c4a73a51ccbd19e44bb6fdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6960b8_e655fd6e",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/ChromeHome.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-29T14:14:22Z",
+      "side": 1,
+      "message": "ChromeHome.class is passed as argument for type \u003cA extends Annotation\u003e, so the call returns a ChromeHome instance.\n\nAlso, because Annotation[Processor|Rule] parses the annotation at apply() time, if it does not find any eligible annotation, it does not wrap the statement and the before() and after() will not run at all when there is no annotation. So no need for null check.\n\nOr did I misunderstand the issue?",
+      "parentUuid": "ff77a4f2_06610b61",
       "range": {
         "startLine": 53,
         "startChar": 30,
