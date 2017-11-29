@@ -52,6 +52,24 @@
       "revId": "110c56e7d9eddd2af2fb6b4c067b3691afe4ce12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205f1af6_d4a87a7a",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-29T05:54:54Z",
+      "side": 1,
+      "message": "A side-effect of moving banners to a modal, developer-triggered flow would be that ignores are eliminated. Based on that I\u0027d say this ratio change is expected behaviour. :)",
+      "parentUuid": "c52c0668_4b704a14",
+      "revId": "110c56e7d9eddd2af2fb6b4c067b3691afe4ce12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
