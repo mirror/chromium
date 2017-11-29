@@ -86,10 +86,11 @@ RenderWidgetHost* GetRenderWidgetHost(
 
 // Determines if the RenderWidgetHostView associated with a given
 // NavigationController is visible.
-bool IsShowing(NavigationController* tab) {
+bool IsVisible(NavigationController* tab) {
   content::RenderWidgetHostView* render_widget_host_view =
       GetRenderWidgetHostView(tab);
-  return render_widget_host_view && render_widget_host_view->IsShowing();
+  return render_widget_host_view && render_widget_host_view->GetVisibility() ==
+                                        content::Visibility::VISIBLE;
 }
 
 }  // namespace
@@ -227,7 +228,7 @@ void SessionRestoreStatsCollector::Observe(
 
       // Update statistics for foreground tabs.
       base::TimeDelta time_to_load = tick_clock_->NowTicks() - restore_started_;
-      if (!got_first_foreground_load_ && IsShowing(tab_state->controller)) {
+      if (!got_first_foreground_load_ && IsVisible(tab_state->controller)) {
         got_first_foreground_load_ = true;
         DCHECK(!done_tracking_non_deferred_tabs_);
         tab_loader_stats_.foreground_tab_first_loaded = time_to_load;
@@ -257,7 +258,8 @@ void SessionRestoreStatsCollector::Observe(
       RenderWidgetHost* render_widget_host =
           Source<RenderWidgetHost>(source).ptr();
       if (!got_first_paint_ && render_widget_host->GetView() &&
-          render_widget_host->GetView()->IsShowing()) {
+          render_widget_host->GetView()->GetVisibility() ==
+              content::Visibility::VISIBLE) {
         got_first_paint_ = true;
         TabState* tab_state = GetTabState(render_widget_host);
         if (tab_state) {

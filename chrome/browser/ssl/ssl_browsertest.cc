@@ -3806,22 +3806,26 @@ IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
   ASSERT_TRUE(https_server_.Start());
 
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
-  EXPECT_TRUE(tab->GetRenderWidgetHostView()->IsShowing());
+  EXPECT_NE(content::Visibility::HIDDEN,
+            tab->GetRenderWidgetHostView()->GetVisibility());
   ui_test_utils::NavigateToURL(
       browser(), https_server_expired_.GetURL("/ssl/google.html"));
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
                                  AuthState::SHOWING_INTERSTITIAL);
-  EXPECT_TRUE(tab->GetRenderWidgetHostView()->IsShowing());
+  EXPECT_NE(content::Visibility::HIDDEN,
+            tab->GetRenderWidgetHostView()->GetVisibility());
 
   AddTabAtIndex(0, https_server_.GetURL("/ssl/google.html"),
                 ui::PAGE_TRANSITION_TYPED);
   EXPECT_EQ(2, browser()->tab_strip_model()->count());
   EXPECT_EQ(0, browser()->tab_strip_model()->active_index());
   EXPECT_EQ(tab, browser()->tab_strip_model()->GetWebContentsAt(1));
-  EXPECT_FALSE(tab->GetRenderWidgetHostView()->IsShowing());
+  EXPECT_EQ(content::Visibility::HIDDEN,
+            tab->GetRenderWidgetHostView()->GetVisibility());
 
   browser()->tab_strip_model()->ActivateTabAt(1, true);
-  EXPECT_TRUE(tab->GetRenderWidgetHostView()->IsShowing());
+  EXPECT_NE(content::Visibility::HIDDEN,
+            tab->GetRenderWidgetHostView()->GetVisibility());
 }
 
 // Verifies that if a bad certificate is seen for a host and the user proceeds

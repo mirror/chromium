@@ -833,6 +833,10 @@ void RenderWidgetHostImpl::WasResized() {
     delegate_->RenderWidgetWasResized(this, width_changed);
 }
 
+bool RenderWidgetHostImpl::IsCaptured() const {
+  return delegate_ && delegate_->IsCaptured();
+}
+
 void RenderWidgetHostImpl::GotFocus() {
   Focus();
   if (owner_delegate_)

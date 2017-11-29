@@ -95,7 +95,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
                        const SkColorType color_type) override;
   void Show() override;
   void Hide() override;
-  bool IsShowing() override;
+  Visibility GetVisibility() const override;
   gfx::Rect GetViewBounds() const override;
   gfx::Size GetVisibleViewportSize() const override;
   gfx::Vector2dF GetLastScrollOffset() const override;
@@ -138,6 +138,8 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   bool LockMouse() override;
   void UnlockMouse() override;
   RenderWidgetHostImpl* GetRenderWidgetHostImpl() const override;
+  void WasShown() override;
+  void WasHidden() override;
   viz::FrameSinkId GetFrameSinkId() override;
   viz::LocalSurfaceId GetLocalSurfaceId() const override;
   void ProcessKeyboardEvent(const NativeWebKeyboardEvent& event,

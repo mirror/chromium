@@ -75,6 +75,10 @@ RenderWidgetHost* RenderWidgetHostViewBase::GetRenderWidgetHost() const {
   return GetRenderWidgetHostImpl();
 }
 
+void RenderWidgetHostViewBase::CaptureStateChanged() {
+  VisibilityOrCaptureStateChanged();
+}
+
 void RenderWidgetHostViewBase::NotifyObserversAboutShutdown() {
   // Note: RenderWidgetHostInputEventRouter is an observer, and uses the
   // following notification to remove this view from its surface owners map.
@@ -82,6 +86,17 @@ void RenderWidgetHostViewBase::NotifyObserversAboutShutdown() {
     observer.OnRenderWidgetHostViewBaseDestroyed(this);
   // All observers are required to disconnect after they are notified.
   DCHECK(!observers_.might_have_observers());
+}
+
+void RenderWidgetHostViewBase::VisibilityOrCaptureStateChanged() {
+  RenderWidgetHostImpl* host = GetRenderWidgetHostImpl();
+  const bool is_visible =
+      (GetVisibility() == Visibility::VISIBLE) ||
+      (host && host->delegate() && host->delegate()->IsCaptured());
+  if (is_visible)
+    WasShown();
+  else
+    WasHidden();
 }
 
 bool RenderWidgetHostViewBase::OnMessageReceived(const IPC::Message& msg){

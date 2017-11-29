@@ -106,10 +106,9 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   // RenderWidgetHostView implementation.
   RenderWidgetHost* GetRenderWidgetHost() const final;
+  void CaptureStateChanged() override;
   void SetBackgroundColorToDefault() final;
   ui::TextInputClient* GetTextInputClient() override;
-  void WasUnOccluded() override {}
-  void WasOccluded() override {}
   void SetIsInVR(bool is_in_vr) override;
   base::string16 GetSelectedText() override;
   bool IsMouseLocked() override;
@@ -455,6 +454,14 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // Returns the associated RenderWidgetHostImpl.
   virtual RenderWidgetHostImpl* GetRenderWidgetHostImpl() const;
 
+  // Invoked when the view becomes visible and/or captured. Should enable
+  // rendering and adjust the priority of the process hosting this view.
+  virtual void WasShown() = 0;
+
+  // Invoked when the view becomes non-visible and non-captured. Should disable
+  // rendering and adjust the priority of the process hosting this view.
+  virtual void WasHidden() = 0;
+
   // Process swap messages sent before |frame_token| in RenderWidgetHostImpl.
   void OnFrameTokenChangedForView(uint32_t frame_token);
 
@@ -503,6 +510,11 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   RenderWidgetHostViewBase();
 
   void NotifyObserversAboutShutdown();
+
+  // Invoked when the visibility or capture state of the view changes.
+  // Enables/disables rendering and adjusts the priority of the process hosting
+  // the view.
+  void VisibilityOrCaptureStateChanged();
 
 #if defined(USE_AURA)
   virtual void ScheduleEmbed(

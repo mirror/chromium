@@ -59,7 +59,6 @@ class NavigationControllerDelegate {
   virtual WebContents* GetWebContents() = 0;
 
   // Methods needed by InterstitialPageImpl.
-  virtual bool IsHidden() = 0;
   virtual void RenderFrameForInterstitialPageCreated(
       RenderFrameHost* render_frame_host) = 0;
   virtual void AttachInterstitialPage(

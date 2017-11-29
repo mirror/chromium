@@ -65,7 +65,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessPaymentsBrowserTest,
       https_server_->GetURL("b.com", "/payment_request_iframe.html");
   EXPECT_TRUE(content::NavigateIframeToURL(tab, "test", iframe_url));
 
-  EXPECT_TRUE(tab->GetRenderWidgetHostView()->IsShowing());
+  EXPECT_NE(content::Visibility::HIDDEN,
+            tab->GetRenderWidgetHostView()->GetVisibility());
   content::RenderFrameHost* frame = ChildFrameAt(tab->GetMainFrame(), 0);
   EXPECT_TRUE(frame);
   EXPECT_NE(frame->GetSiteInstance(), tab->GetMainFrame()->GetSiteInstance());

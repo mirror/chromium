@@ -109,7 +109,8 @@ IN_PROC_BROWSER_TEST_F(CrashRecoveryBrowserTest, Reload) {
   ASSERT_TRUE(ui_test_utils::GetCurrentTabTitle(browser(),
                                                 &title_after_crash));
   EXPECT_NE(title_before_crash, title_after_crash);
-  ASSERT_TRUE(GetActiveWebContents()->GetMainFrame()->GetView()->IsShowing());
+  ASSERT_NE(content::Visibility::HIDDEN,
+            GetActiveWebContents()->GetMainFrame()->GetView()->GetVisibility());
   ASSERT_FALSE(GetActiveWebContents()
                    ->GetMainFrame()
                    ->GetProcess()

@@ -7,6 +7,7 @@
 #include <set>
 #include <utility>
 
+#include "base/debug/stack_trace.h"
 #include "base/auto_reset.h"
 #include "base/bind.h"
 #include "base/callback_helpers.h"
@@ -78,6 +79,7 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_observer.h"
+#include "ui/aura/window_occlusion_tracker.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/clipboard/scoped_clipboard_writer.h"
 #include "ui/base/hit_test.h"
@@ -395,6 +397,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
       enable_surface_synchronization_(enable_surface_synchronization),
       is_mus_browser_plugin_guest_(is_mus_browser_plugin_guest),
       window_(nullptr),
+      was_shown_once_(false),
       in_shutdown_(false),
       in_bounds_changed_(false),
       popup_parent_host_view_(nullptr),
@@ -545,7 +548,6 @@ void RenderWidgetHostViewAura::Show() {
     return;
 
   window_->Show();
-  WasUnOccluded();
 }
 
 void RenderWidgetHostViewAura::Hide() {
@@ -553,7 +555,6 @@ void RenderWidgetHostViewAura::Hide() {
     return;
 
   window_->Hide();
-  WasOccluded();
 }
 
 void RenderWidgetHostViewAura::SetSize(const gfx::Size& size) {
@@ -687,63 +688,12 @@ bool RenderWidgetHostViewAura::IsSurfaceAvailableForCopy() const {
   return delegated_frame_host_->CanCopyFromCompositingSurface();
 }
 
-bool RenderWidgetHostViewAura::IsShowing() {
-  return window_->IsVisible();
-}
-
-void RenderWidgetHostViewAura::WasUnOccluded() {
-  if (!host_->is_hidden())
-    return;
-
-  bool has_saved_frame =
-      delegated_frame_host_ ? delegated_frame_host_->HasSavedFrame() : false;
-  ui::LatencyInfo renderer_latency_info, browser_latency_info;
-  if (has_saved_frame) {
-    browser_latency_info.AddLatencyNumber(ui::TAB_SHOW_COMPONENT,
-                                          host_->GetLatencyComponentId(), 0);
-  } else {
-    renderer_latency_info.AddLatencyNumber(ui::TAB_SHOW_COMPONENT,
-                                           host_->GetLatencyComponentId(), 0);
-  }
-  host_->WasShown(renderer_latency_info);
-
-  aura::Window* root = window_->GetRootWindow();
-  if (root) {
-    aura::client::CursorClient* cursor_client =
-        aura::client::GetCursorClient(root);
-    if (cursor_client)
-      NotifyRendererOfCursorVisibilityState(cursor_client->IsCursorVisible());
-  }
-
-  if (delegated_frame_host_)
-    delegated_frame_host_->WasShown(browser_latency_info);
-
-#if defined(OS_WIN)
-  UpdateLegacyWin();
-#endif
-}
-
-void RenderWidgetHostViewAura::WasOccluded() {
-  if (!host_->is_hidden()) {
-    host_->WasHidden();
-    if (delegated_frame_host_)
-      delegated_frame_host_->WasHidden();
-
-#if defined(OS_WIN)
-    aura::WindowTreeHost* host = window_->GetHost();
-    if (host) {
-      // We reparent the legacy Chrome_RenderWidgetHostHWND window to the global
-      // hidden window on the same lines as Windowed plugin windows.
-      if (legacy_render_widget_host_HWND_)
-        legacy_render_widget_host_HWND_->UpdateParent(ui::GetHiddenWindow());
-    }
-#endif
-  }
-
-#if defined(OS_WIN)
-  if (legacy_render_widget_host_HWND_)
-    legacy_render_widget_host_HWND_->Hide();
-#endif
+Visibility RenderWidgetHostViewAura::GetVisibility() const {
+  if (!window_->IsVisible())
+    return Visibility::HIDDEN;
+  if (window_->occlusion_state() == aura::Window::OcclusionState::OCCLUDED)
+    return Visibility::OCCLUDED;
+  return Visibility::VISIBLE;
 }
 
 gfx::Rect RenderWidgetHostViewAura::GetViewBounds() const {
@@ -1621,6 +1571,10 @@ void RenderWidgetHostViewAura::OnWindowDestroyed(aura::Window* window) {
 void RenderWidgetHostViewAura::OnWindowTargetVisibilityChanged(bool visible) {
 }
 
+void RenderWidgetHostViewAura::OnWindowOcclusionChanged(bool is_occluded) {
+  VisibilityOrCaptureStateChanged();
+}
+
 bool RenderWidgetHostViewAura::HasHitTestMask() const {
   return false;
 }
@@ -1952,6 +1906,8 @@ void RenderWidgetHostViewAura::CreateAuraWindow(aura::client::WindowType type) {
   window_->SetType(type);
   window_->Init(ui::LAYER_SOLID_COLOR);
   window_->layer()->SetColor(background_color_);
+
+  aura::WindowOcclusionTracker::Track(window_);
 
   if (!IsUsingMus())
     return;
@@ -2355,6 +2311,73 @@ void RenderWidgetHostViewAura::OnDidNavigateMainFrameToNewPage() {
 RenderWidgetHostImpl* RenderWidgetHostViewAura::GetRenderWidgetHostImpl()
     const {
   return host_;
+}
+
+void RenderWidgetHostViewAura::WasShown() {
+  was_shown_once_ = true;
+
+  //LOG(ERROR) << ">>>>>>>> WasShown  " << this;
+
+  if (!host_->is_hidden())
+    return;
+
+  bool has_saved_frame =
+      delegated_frame_host_ ? delegated_frame_host_->HasSavedFrame() : false;
+  ui::LatencyInfo renderer_latency_info, browser_latency_info;
+  if (has_saved_frame) {
+    browser_latency_info.AddLatencyNumber(ui::TAB_SHOW_COMPONENT,
+                                          host_->GetLatencyComponentId(), 0);
+  } else {
+    renderer_latency_info.AddLatencyNumber(ui::TAB_SHOW_COMPONENT,
+                                           host_->GetLatencyComponentId(), 0);
+  }
+  host_->WasShown(renderer_latency_info);
+
+  aura::Window* root = window_->GetRootWindow();
+  if (root) {
+    aura::client::CursorClient* cursor_client =
+        aura::client::GetCursorClient(root);
+    if (cursor_client)
+      NotifyRendererOfCursorVisibilityState(cursor_client->IsCursorVisible());
+  }
+
+  if (delegated_frame_host_)
+    delegated_frame_host_->WasShown(browser_latency_info);
+
+#if defined(OS_WIN)
+  UpdateLegacyWin();
+#endif
+}
+
+void RenderWidgetHostViewAura::WasHidden() {
+  if (!was_shown_once_) {
+    // WasHidden() is called when a view that has never been shown is added to
+    // an hidden window. Do not
+    return;
+  }
+
+  //LOG(ERROR) << ">>>>>>>> WasHidden " << this;
+  //base::debug::StackTrace().Print();
+  if (!host_->is_hidden()) {
+    host_->WasHidden();
+    if (delegated_frame_host_)
+      delegated_frame_host_->WasHidden();
+
+#if defined(OS_WIN)
+    aura::WindowTreeHost* host = window_->GetHost();
+    if (host) {
+      // We reparent the legacy Chrome_RenderWidgetHostHWND window to the global
+      // hidden window on the same lines as Windowed plugin windows.
+      if (legacy_render_widget_host_HWND_)
+        legacy_render_widget_host_HWND_->UpdateParent(ui::GetHiddenWindow());
+    }
+#endif
+  }
+
+#if defined(OS_WIN)
+  if (legacy_render_widget_host_HWND_)
+    legacy_render_widget_host_HWND_->Hide();
+#endif
 }
 
 viz::FrameSinkId RenderWidgetHostViewAura::GetFrameSinkId() {

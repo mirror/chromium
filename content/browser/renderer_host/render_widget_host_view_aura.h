@@ -111,9 +111,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   bool HasFocus() const override;
   void Show() override;
   void Hide() override;
-  bool IsShowing() override;
-  void WasUnOccluded() override;
-  void WasOccluded() override;
+  Visibility GetVisibility() const override;
   gfx::Rect GetViewBounds() const override;
   void SetBackgroundColor(SkColor color) override;
   SkColor background_color() const override;
@@ -186,6 +184,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void DidStopFlinging() override;
   void OnDidNavigateMainFrameToNewPage() override;
   RenderWidgetHostImpl* GetRenderWidgetHostImpl() const override;
+  void WasShown() override;
+  void WasHidden() override;
   viz::FrameSinkId GetFrameSinkId() override;
   viz::LocalSurfaceId GetLocalSurfaceId() const override;
   viz::FrameSinkId FrameSinkIdAtPoint(viz::SurfaceHittestDelegate* delegate,
@@ -267,6 +267,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void OnWindowDestroying(aura::Window* window) override;
   void OnWindowDestroyed(aura::Window* window) override;
   void OnWindowTargetVisibilityChanged(bool visible) override;
+  void OnWindowOcclusionChanged(bool is_occluded) override;
   bool HasHitTestMask() const override;
   void GetHitTestMask(gfx::Path* mask) const override;
 
@@ -527,6 +528,9 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
 
   // Tracks the ancestors of the RWHVA window for window location changes.
   std::unique_ptr<WindowAncestorObserver> ancestor_window_observer_;
+
+  // Whether the view was shown at least once.
+  bool was_shown_once_;
 
   // Are we in the process of closing?  Tracked so fullscreen views can avoid
   // sending a second shutdown request to the host when they lose the focus

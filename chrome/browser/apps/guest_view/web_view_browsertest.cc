@@ -1828,10 +1828,11 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, MAYBE_InterstitialPage) {
       GetGuestViewManager()->WaitForSingleGuestCreated();
 
   EXPECT_TRUE(guest_web_contents->ShowingInterstitialPage());
-  EXPECT_TRUE(guest_web_contents->GetInterstitialPage()
-                  ->GetMainFrame()
-                  ->GetView()
-                  ->IsShowing());
+  EXPECT_NE(content::Visibility::HIDDEN,
+            guest_web_contents->GetInterstitialPage()
+                ->GetMainFrame()
+                ->GetView()
+                ->GetVisibility());
   EXPECT_TRUE(content::IsInnerInterstitialPageConnected(
       guest_web_contents->GetInterstitialPage()));
 }

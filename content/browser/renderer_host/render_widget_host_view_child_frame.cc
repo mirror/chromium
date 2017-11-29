@@ -248,8 +248,9 @@ void RenderWidgetHostViewChildFrame::Hide() {
     frame_connector_->SetVisibilityForChildViews(false);
 }
 
-bool RenderWidgetHostViewChildFrame::IsShowing() {
-  return !host_->is_hidden();
+Visibility RenderWidgetHostViewChildFrame::GetVisibility() const {
+  NOTREACHED();
+  return Visibility::VISIBLE;
 }
 
 gfx::Rect RenderWidgetHostViewChildFrame::GetViewBounds() const {
@@ -683,6 +684,14 @@ bool RenderWidgetHostViewChildFrame::IsMouseLocked() {
 RenderWidgetHostImpl* RenderWidgetHostViewChildFrame::GetRenderWidgetHostImpl()
     const {
   return host_;
+}
+
+void RenderWidgetHostViewChildFrame::WasShown() {
+  NOTREACHED();
+}
+
+void RenderWidgetHostViewChildFrame::WasHidden() {
+  NOTREACHED();
 }
 
 viz::FrameSinkId RenderWidgetHostViewChildFrame::GetFrameSinkId() {

@@ -379,14 +379,16 @@ IN_PROC_BROWSER_TEST_F(InterstitialPageImplTest, UnderlyingSubframeCommit) {
   // Show an interstitial. The underlying RenderWidgetHostView should not be
   // showing.
   SetUpInterstitialPage();
-  EXPECT_FALSE(web_contents->GetMainFrame()->GetView()->IsShowing());
+  EXPECT_NE(Visibility::HIDDEN,
+            web_contents->GetMainFrame()->GetView()->GetVisibility());
   EXPECT_TRUE(web_contents->GetMainFrame()->GetRenderWidgetHost()->is_hidden());
 
   // Allow the subframe to commit.
   subframe_delayer.WaitForNavigationFinished();
 
   // The underlying RenderWidgetHostView should still not be showing.
-  EXPECT_FALSE(web_contents->GetMainFrame()->GetView()->IsShowing());
+  EXPECT_NE(Visibility::HIDDEN,
+            web_contents->GetMainFrame()->GetView()->GetVisibility());
   EXPECT_TRUE(web_contents->GetMainFrame()->GetRenderWidgetHost()->is_hidden());
 
   TearDownInterstitialPage();

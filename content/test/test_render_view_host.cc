@@ -63,7 +63,6 @@ void InitNavigateParams(FrameHostMsg_DidCommitProvisionalLoad_Params* params,
 TestRenderWidgetHostView::TestRenderWidgetHostView(RenderWidgetHost* rwh)
     : rwh_(RenderWidgetHostImpl::From(rwh)),
       is_showing_(false),
-      is_occluded_(false),
       did_swap_compositor_frame_(false),
       background_color_(SK_ColorWHITE) {
 #if defined(OS_ANDROID)
@@ -123,23 +122,16 @@ bool TestRenderWidgetHostView::HasFocus() const {
 
 void TestRenderWidgetHostView::Show() {
   is_showing_ = true;
-  is_occluded_ = false;
+  VisibilityOrCaptureStateChanged();
 }
 
 void TestRenderWidgetHostView::Hide() {
   is_showing_ = false;
+  VisibilityOrCaptureStateChanged();
 }
 
-bool TestRenderWidgetHostView::IsShowing() {
-  return is_showing_;
-}
-
-void TestRenderWidgetHostView::WasUnOccluded() {
-  is_occluded_ = false;
-}
-
-void TestRenderWidgetHostView::WasOccluded() {
-  is_occluded_ = true;
+Visibility TestRenderWidgetHostView::GetVisibility() const {
+  return is_showing_ ? Visibility::VISIBLE : Visibility::HIDDEN;
 }
 
 void TestRenderWidgetHostView::RenderProcessGone(base::TerminationStatus status,
@@ -221,6 +213,14 @@ void TestRenderWidgetHostView::UnlockMouse() {
 RenderWidgetHostImpl* TestRenderWidgetHostView::GetRenderWidgetHostImpl()
     const {
   return rwh_;
+}
+
+void TestRenderWidgetHostView::WasShown() {
+  rwh_->WasShown(ui::LatencyInfo());
+}
+
+void TestRenderWidgetHostView::WasHidden() {
+  rwh_->WasHidden();
 }
 
 viz::FrameSinkId TestRenderWidgetHostView::GetFrameSinkId() {
