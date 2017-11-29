@@ -31,13 +31,13 @@ AutofillClock::~AutofillClock(){};
 
 // static
 void AutofillClock::SetClock() {
-  g_autofill_clock.Get().clock_.reset(new base::DefaultClock());
+  g_autofill_clock.Get().clock_ = base::DefaultClock::GetInstance();
 }
 
 // static
-void AutofillClock::SetTestClock(std::unique_ptr<base::Clock> clock) {
+void AutofillClock::SetTestClock(base::Clock* clock) {
   DCHECK(clock);
-  g_autofill_clock.Get().clock_ = std::move(clock);
+  g_autofill_clock.Get().clock_ = clock;
 }
 
 }  // namespace autofill

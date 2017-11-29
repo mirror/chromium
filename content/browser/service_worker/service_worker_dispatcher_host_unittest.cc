@@ -413,9 +413,9 @@ TEST_F(ServiceWorkerDispatcherHostTest, DispatchExtendableMessageEvent) {
   const int ref_count = sender_worker_handle->ref_count();
 
   // Set mock clock on version_ to check timeout behavior.
-  base::SimpleTestTickClock* tick_clock = new base::SimpleTestTickClock();
-  tick_clock->SetNowTicks(base::TimeTicks::Now());
-  version_->SetTickClockForTesting(base::WrapUnique(tick_clock));
+  base::SimpleTestTickClock tick_clock;
+  tick_clock.SetNowTicks(base::TimeTicks::Now());
+  version_->SetTickClockForTesting(&tick_clock);
 
   // Make sure worker has a non-zero timeout.
   bool called = false;
@@ -431,7 +431,7 @@ TEST_F(ServiceWorkerDispatcherHostTest, DispatchExtendableMessageEvent) {
       base::TimeDelta::FromSeconds(10), ServiceWorkerVersion::KILL_ON_TIMEOUT);
 
   // Advance clock by a couple seconds.
-  tick_clock->Advance(base::TimeDelta::FromSeconds(4));
+  tick_clock.Advance(base::TimeDelta::FromSeconds(4));
   base::TimeDelta remaining_time = version_->remaining_timeout();
   EXPECT_EQ(base::TimeDelta::FromSeconds(6), remaining_time);
 

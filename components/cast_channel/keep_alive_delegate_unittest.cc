@@ -225,13 +225,12 @@ TEST_F(KeepAliveDelegateTest, TestPassthroughMessagesAfterError) {
 TEST_F(KeepAliveDelegateTest, TestLivenessTimerResetAfterSendingMessage) {
   scoped_refptr<base::TestMockTimeTaskRunner> mock_time_task_runner(
       new base::TestMockTimeTaskRunner());
-  std::unique_ptr<base::TickClock> tick_clock =
-      mock_time_task_runner->GetMockTickClock();
+  base::TickClock* tick_clock = mock_time_task_runner->GetMockTickClock();
 
   std::unique_ptr<base::Timer> liveness_timer =
-      base::MakeUnique<base::Timer>(true, false, tick_clock.get());
+      base::MakeUnique<base::Timer>(true, false, tick_clock);
   std::unique_ptr<base::Timer> ping_timer =
-      base::MakeUnique<base::Timer>(true, false, tick_clock.get());
+      base::MakeUnique<base::Timer>(true, false, tick_clock);
   ping_timer->SetTaskRunner(mock_time_task_runner);
   liveness_timer->SetTaskRunner(mock_time_task_runner);
   keep_alive_->SetTimersForTest(std::move(ping_timer),

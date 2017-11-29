@@ -7,6 +7,7 @@
 
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
+#include "base/lazy_instance.h"
 #include "base/time/clock.h"
 
 namespace base {
@@ -21,6 +22,11 @@ class BASE_EXPORT DefaultClock : public Clock {
 
   // Returns a shared instance of DefaultClock. This is thread-safe.
   static DefaultClock* GetInstance();
+
+ private:
+  friend struct LazyInstanceTraitsBase<DefaultClock>;
+
+  DefaultClock();
 };
 
 }  // namespace base

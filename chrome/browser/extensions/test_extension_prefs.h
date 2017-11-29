@@ -18,6 +18,7 @@ class ExtensionPrefValueMap;
 class PrefService;
 
 namespace base {
+class Clock;
 class DictionaryValue;
 class SequencedTaskRunner;
 }
@@ -101,6 +102,7 @@ class TestExtensionPrefs {
   std::unique_ptr<sync_preferences::PrefServiceSyncable> pref_service_;
   std::unique_ptr<ExtensionPrefValueMap> extension_pref_value_map_;
   const scoped_refptr<base::SequencedTaskRunner> task_runner_;
+  std::unique_ptr<base::Clock> clock_;
 
  private:
   TestingProfile profile_;

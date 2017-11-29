@@ -158,8 +158,7 @@ class VIZ_SERVICE_EXPORT FrameSinkVideoCapturerImpl final
 
   // Use the default base::TimeTicks clock; but allow unit tests to provide a
   // replacement.
-  base::DefaultTickClock default_tick_clock_;
-  base::TickClock* clock_ = &default_tick_clock_;
+  base::TickClock* clock_;
 
   // Current image format.
   media::VideoPixelFormat pixel_format_ = kDefaultPixelFormat;

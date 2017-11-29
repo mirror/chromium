@@ -31,9 +31,9 @@ namespace battor {
 class TestableBattOrConnection : public BattOrConnectionImpl {
  public:
   TestableBattOrConnection(BattOrConnection::Listener* listener,
-                           std::unique_ptr<base::TickClock> tick_clock)
+                           base::TickClock* tick_clock)
       : BattOrConnectionImpl("/dev/test", listener, nullptr) {
-    tick_clock_ = std::move(tick_clock);
+    tick_clock_ = tick_clock;
   }
   scoped_refptr<device::SerialIoHandler> CreateIoHandler() override {
     return device::TestSerialIoHandler::Create();

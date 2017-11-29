@@ -136,7 +136,7 @@ class ManagePasswordsBubbleModel {
   // returns false and leaves the current state.
   bool ReplaceToShowPromotionIfNeeded();
 
-  void SetClockForTesting(std::unique_ptr<base::Clock> clock);
+  void SetClockForTesting(base::Clock* clock);
 
  private:
   enum UserBehaviorOnUpdateBubble {

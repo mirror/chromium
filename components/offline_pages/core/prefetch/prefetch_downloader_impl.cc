@@ -34,7 +34,7 @@ void NotifyDispatcher(PrefetchService* service, PrefetchDownloadResult result) {
 PrefetchDownloaderImpl::PrefetchDownloaderImpl(
     download::DownloadService* download_service,
     version_info::Channel channel)
-    : clock_(new base::DefaultClock()),
+    : clock_(base::DefaultClock::GetInstance()),
       download_service_(download_service),
       channel_(channel),
       weak_ptr_factory_(this) {
@@ -180,9 +180,8 @@ void PrefetchDownloaderImpl::OnDownloadFailed(const std::string& download_id) {
   NotifyDispatcher(prefetch_service_, result);
 }
 
-void PrefetchDownloaderImpl::SetClockForTesting(
-    std::unique_ptr<base::Clock> clock) {
-  clock_ = std::move(clock);
+void PrefetchDownloaderImpl::SetClockForTesting(base::Clock* clock) {
+  clock_ = clock;
 }
 
 void PrefetchDownloaderImpl::OnStartDownload(

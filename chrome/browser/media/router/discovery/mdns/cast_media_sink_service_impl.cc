@@ -178,7 +178,7 @@ CastMediaSinkServiceImpl::CastMediaSinkServiceImpl(
       network_monitor_(network_monitor),
       task_runner_(task_runner),
       url_request_context_getter_(std::move(url_request_context_getter)),
-      clock_(new base::DefaultClock()) {
+      clock_(base::DefaultClock::GetInstance()) {
   DETACH_FROM_SEQUENCE(sequence_checker_);
   DCHECK(cast_socket_service_);
   DCHECK(network_monitor_);
@@ -231,9 +231,8 @@ void CastMediaSinkServiceImpl::SetTaskRunnerForTest(
   task_runner_ = task_runner;
 }
 
-void CastMediaSinkServiceImpl::SetClockForTest(
-    std::unique_ptr<base::Clock> clock) {
-  clock_ = std::move(clock);
+void CastMediaSinkServiceImpl::SetClockForTest(base::Clock* clock) {
+  clock_ = clock;
 }
 
 // MediaSinkService implementation

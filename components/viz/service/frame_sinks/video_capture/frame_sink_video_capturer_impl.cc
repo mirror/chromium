@@ -33,6 +33,7 @@ FrameSinkVideoCapturerImpl::FrameSinkVideoCapturerImpl(
     FrameSinkVideoCapturerManager* frame_sink_manager)
     : frame_sink_manager_(frame_sink_manager),
       copy_request_source_(base::UnguessableToken::Create()),
+      clock_(base::DefaultTickClock::GetInstance()),
       oracle_(true /* enable_auto_throttling */),
       frame_pool_(kDesignLimitMaxFrames),
       feedback_weak_factory_(&oracle_),

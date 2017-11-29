@@ -185,9 +185,8 @@ class PasswordSyncableServiceWrapper {
     password_store_->Init(syncer::SyncableService::StartSyncFlare(), nullptr);
     service_.reset(
         new PasswordSyncableService(password_store_->GetSyncInterface()));
-    auto clock = std::make_unique<base::SimpleTestClock>();
-    clock->SetNow(time());
-    service_->set_clock(std::move(clock));
+    clock_.SetNow(time());
+    service_->set_clock(&clock_);
     ON_CALL(*password_store_, AddLoginImpl(HasDateSynced(time())))
         .WillByDefault(Return(PasswordStoreChangeList()));
     ON_CALL(*password_store_, RemoveLoginImpl(_))
@@ -211,6 +210,7 @@ class PasswordSyncableServiceWrapper {
   }
 
  private:
+  base::SimpleTestClock clock_;
   scoped_refptr<MockPasswordStore> password_store_;
   std::unique_ptr<PasswordSyncableService> service_;
 

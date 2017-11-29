@@ -710,11 +710,9 @@ TEST_F(ServiceWorkerURLRequestJobTest, CustomTimeout) {
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
   // Set mock clock on version_ to check timeout behavior.
-  {
-    auto tick_clock = std::make_unique<base::SimpleTestTickClock>();
-    tick_clock->SetNowTicks(base::TimeTicks::Now());
-    version_->SetTickClockForTesting(std::move(tick_clock));
-  }
+  base::SimpleTestTickClock tick_clock;
+  tick_clock.SetNowTicks(base::TimeTicks::Now());
+  version_->SetTickClockForTesting(&tick_clock);
 
   protocol_handler_->set_custom_timeout(base::TimeDelta::FromSeconds(5));
   TestRequest(200, "OK", std::string(), true /* expect_valid_ssl */);

@@ -54,7 +54,7 @@ BudgetDatabase::BudgetDatabase(Profile* profile,
           base::CreateSequencedTaskRunnerWithTraits(
               {base::MayBlock(), base::TaskPriority::BACKGROUND,
                base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN}))),
-      clock_(base::WrapUnique(new base::DefaultClock)),
+      clock_(base::DefaultClock::GetInstance()),
       weak_ptr_factory_(this) {
   db_->Init(kDatabaseUMAName, database_dir,
             leveldb_proto::CreateSimpleOptions(),
@@ -79,8 +79,8 @@ void BudgetDatabase::SpendBudget(const url::Origin& origin,
                                    amount, base::Passed(&callback)));
 }
 
-void BudgetDatabase::SetClockForTesting(std::unique_ptr<base::Clock> clock) {
-  clock_ = std::move(clock);
+void BudgetDatabase::SetClockForTesting(base::Clock* clock) {
+  clock_ = clock;
 }
 
 void BudgetDatabase::OnDatabaseInit(bool success) {
