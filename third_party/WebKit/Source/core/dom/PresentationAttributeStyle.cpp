@@ -34,6 +34,7 @@
 
 #include "base/macros.h"
 #include "core/css/CSSPropertyValueSet.h"
+#include "core/css/MutableCSSPropertyValueSet.h"
 #include "core/dom/Attribute.h"
 #include "core/dom/Element.h"
 #include "core/html/forms/HTMLInputElement.h"
