@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee1ec98b_2961a397",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-29T11:04:47Z",
+      "side": 1,
+      "message": "Scratch that - if we don\u0027t specify an seperate snapshot we use the default one which was already initialized in v8_initializer.",
+      "parentUuid": "88a1436f_2fc0dfdb",
+      "revId": "5d371a0a6d8b68e2a32b34acf112823c99744a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2b3c453_f1b59317",
         "filename": "gin/isolate_holder.cc",
         "patchSetId": 10
@@ -48,6 +66,29 @@
       "side": 1,
       "message": "+1. Also we shouldn\u0027t mention Blink here since gin can be embedded from other users.\n\nAlso, as an aside - this was added before I started looking at this code, but it seems really confusing to me to have a separate IsolateHolder constructor which is no-args and is only used for creating the blink snapshot. Can we not move the snapshot creation code somewhere outside of gin (into v8_context_snapshot_generator or similar)",
       "parentUuid": "b2b3c453_f1b59317",
+      "revId": "5d371a0a6d8b68e2a32b34acf112823c99744a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ad7288_5c903fdf",
+        "filename": "gin/public/isolate_holder.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-29T11:04:47Z",
+      "side": 1,
+      "message": "Can we give this a specific name to specify it is an additional snapshot (i.e., context_snapshot_blob). Also could we put it behind USE_V8_CONTEXT_SNAPSHOT ifdef",
+      "range": {
+        "startLine": 125,
+        "startChar": 18,
+        "endLine": 125,
+        "endChar": 32
+      },
       "revId": "5d371a0a6d8b68e2a32b34acf112823c99744a70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
