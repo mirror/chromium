@@ -118,6 +118,30 @@
       "revId": "b2275545c639d2143edecc7986054342774008ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5f5b725_302f4a0d",
+        "filename": "components/arc/arc_bridge_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-29T14:14:25Z",
+      "side": 1,
+      "message": "Could you give it a try to deploy chrome without stripping symbols?\nhttps://chromium.googlesource.com/chromiumos/docs/+/master/simple_chrome_workflow.md#Deploying-debug-build-without-stripping-symbols",
+      "parentUuid": "be7274dd_629b0f35",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
