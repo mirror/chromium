@@ -179,6 +179,7 @@ class PLATFORM_EXPORT ResourceRequest final {
   void SetAllowStoredCredentials(bool allow_credentials);
 
   ResourceLoadPriority Priority() const;
+  int IntraPriorityValue() const;
   void SetPriority(ResourceLoadPriority, int intra_priority_value = 0);
 
   bool IsConditional() const;
