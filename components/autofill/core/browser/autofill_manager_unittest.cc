@@ -982,9 +982,11 @@ class AutofillManagerTest : public testing::Test {
     if (is_https) {
       form->origin = GURL("https://myform.com/form.html");
       form->action = GURL("https://myform.com/submit.html");
+      form->main_frame_origin = GURL("https://myform.com/");
     } else {
       form->origin = GURL("http://myform.com/form.html");
       form->action = GURL("http://myform.com/submit.html");
+      form->main_frame_origin = GURL("http://myform.com/");
     }
 
     FormFieldData field;
