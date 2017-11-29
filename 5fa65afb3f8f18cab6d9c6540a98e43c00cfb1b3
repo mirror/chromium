@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e999891e_0950d695",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-29T02:49:47Z",
+      "side": 1,
+      "message": "Somehow you\u0027re reading an earlier patch of this cl. :)",
+      "parentUuid": "7d91c556_80ad61da",
+      "revId": "5fa65afb3f8f18cab6d9c6540a98e43c00cfb1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "242e32e5_968ace94",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
         "patchSetId": 8
@@ -75,6 +93,30 @@
       "revId": "5fa65afb3f8f18cab6d9c6540a98e43c00cfb1b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee833cb_48211dde",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-29T02:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "242e32e5_968ace94",
+      "range": {
+        "startLine": 34,
+        "startChar": 60,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "5fa65afb3f8f18cab6d9c6540a98e43c00cfb1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
