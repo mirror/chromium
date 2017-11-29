@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f7fd297_bdb8300b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-29T18:22:04Z",
+      "side": 1,
+      "message": "Maybe clarify that a replaced object (LayoutReplaced) is a LayoutBox, not a LayoutBlock -- I found that explanation in the bug but not in this comment. Thanks!",
+      "revId": "cefff97ec894bf62b3aef00196550b286f0ac399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78151ed7_c95b66a9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-29T18:22:04Z",
+      "side": 1,
+      "message": "I\u0027m a little worried about this change due to the documented differences at https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutObject.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1003 -- are you sure this is safe? I\u0027m not so familiar with this code myself.",
+      "revId": "cefff97ec894bf62b3aef00196550b286f0ac399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
