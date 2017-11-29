@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "352b8baf_e15e672a",
+        "filename": "base/process/process_info_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T21:25:25Z",
+      "side": 1,
+      "message": "Can we split them into 2 checks, so we know which one failed? My rule of thumb is never write \u0026\u0026 in a check.\n\nCan it be DCHECK or is this going to fail in production?",
+      "revId": "30adacbede8c1ad8805dd653b368f79b8be5c4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
