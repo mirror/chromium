@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0f0e2b6_5ba609c8",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-29T01:22:27Z",
+      "side": 1,
+      "message": "Can we document why the order matters here?",
+      "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3976039_fa18ca9c",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-29T01:22:27Z",
+      "side": 1,
+      "message": "Document why we need both WasAlmostIdle and IsAlmostIdle.",
+      "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7397bf2_b9b14c59",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-29T01:22:27Z",
+      "side": 1,
+      "message": "This function feels to be const, but it actually updates was_almost_idle_. Can we decouple the check and the update?",
+      "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12059691_4501e190",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-29T01:22:27Z",
+      "side": 1,
+      "message": "The ordering here matters, i.e., we cannot use:\n\nif (!page_cu-\u003eIsAlmostIdle() || page_cu-\u003eWasAlmostIdle())\n\nbecause IsAlmostIdle() will update was_almost_idle_.\n\nI think it may be better to use the following:\n\nif (page_cu-\u003eWasAlmostIdle())\n  return;\n\nif (!page_cu-\u003eIsAlmostIdle())\n  return;\n\npage_cu-\u003eSetWasAlmostIdle();\n\nDISPATCH...",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 58
+      },
+      "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
