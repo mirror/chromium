@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73ce3af4_890cf7ee",
+        "filename": "services/network/public/interfaces/net_address.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-29T19:15:00Z",
+      "side": 1,
+      "message": "This seems more work than its worth, and requires the consumer know about all supported address schemes just to use this interface.  Admittedly, I don\u0027t see ipv8 coming around in the forseeable future, but could we just make this match IPEndPoint instead?\n\nWe already have a typemap for that, too, though we should probably move it to the network service at some point (https://cs.chromium.org/chromium/src/net/interfaces/ip_address.mojom)",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc1a8dc_9605faf0",
+        "filename": "services/network/public/interfaces/network_error.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-29T19:15:00Z",
+      "side": 1,
+      "message": "Do we need this?  URLLoaderCompletionStatus just uses integer error codes (And, admittedly, some metadata), but no text description.",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e172a7ee_4e3f48b3",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-29T19:15:00Z",
+      "side": 1,
+      "message": "Mention that using a number too high could result in high memory usage, as a lot of datagrams could end up queued in the Mojo buffer.  (i.e., just using ReceiveMore(-1) probably isn\u0027t a great idea).",
+      "range": {
+        "startLine": 71,
+        "startChar": 36,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d86780b_1bad76ec",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-29T19:15:00Z",
+      "side": 1,
+      "message": "datagram_number -\u003e num_additional_datagrams?",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 36
+      },
+      "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe117c57_16b1e751",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-29T19:15:00Z",
+      "side": 1,
+      "message": "We\u0027re using net error codes, so I don\u0027t think we need this TODO?",
+      "range": {
+        "startLine": 82,
+        "startChar": 29,
+        "endLine": 82,
+        "endChar": 33
+      },
+      "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b308d2d8_9f45b878",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-29T19:15:00Z",
+      "side": 1,
+      "message": "Can we only send one packet at a time?  That\u0027s the API UdpSocket supports.  If so, that potentially limits throughput, due to IPC latency.  If not, there\u0027s no back pressure mechanism.  Either way, behavior needs to be documented.",
+      "range": {
+        "startLine": 83,
+        "startChar": 37,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
