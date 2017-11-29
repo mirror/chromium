@@ -313,6 +313,30 @@
     },
     {
       "key": {
+        "uuid": "5f690b13_6ce67847",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-29T16:12:10Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned that such a test wouldn\u0027t work with the histogram code out of process, though there may be some way to force it to be sent to the main process.  Regardless, I think such a test would be a vast improvement over not having any integration test.",
+      "parentUuid": "5230aa05_f8c63257",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
