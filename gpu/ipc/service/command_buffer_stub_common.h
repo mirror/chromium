@@ -50,13 +50,13 @@ struct WaitForCommandState;
 class GpuChannel;
 class SyncPointClientState;
 
-class GPU_EXPORT GpuCommandBufferStub
+class GPU_EXPORT CommandBufferStubCommon
     : public IPC::Listener,
       public IPC::Sender,
       public CommandBufferServiceClient,
       public gles2::GLES2DecoderClient,
       public ImageTransportSurfaceDelegate,
-      public base::SupportsWeakPtr<GpuCommandBufferStub> {
+      public base::SupportsWeakPtr<CommandBufferStubCommon> {
  public:
   class DestructionObserver {
    public:
@@ -67,20 +67,20 @@ class GPU_EXPORT GpuCommandBufferStub
     virtual ~DestructionObserver() {}
   };
 
-  GpuCommandBufferStub(GpuChannel* channel,
-                       const GPUCreateCommandBufferConfig& init_params,
-                       CommandBufferId command_buffer_id,
-                       SequenceId sequence_id,
-                       int32_t stream_id,
-                       int32_t route_id);
+  CommandBufferStubCommon(GpuChannel* channel,
+                          const GPUCreateCommandBufferConfig& init_params,
+                          CommandBufferId command_buffer_id,
+                          SequenceId sequence_id,
+                          int32_t stream_id,
+                          int32_t route_id);
 
-  ~GpuCommandBufferStub() override;
+  ~CommandBufferStubCommon() override;
 
   // This must leave the GL context associated with the newly-created
-  // GpuCommandBufferStub current, so the GpuChannel can initialize
+  // CommandBufferStubCommon current, so the GpuChannel can initialize
   // the gpu::Capabilities.
   gpu::ContextResult Initialize(
-      GpuCommandBufferStub* share_group,
+      CommandBufferStubCommon* share_group,
       const GPUCreateCommandBufferConfig& init_params,
       std::unique_ptr<base::SharedMemory> shared_state_shm);
 
@@ -205,8 +205,8 @@ class GPU_EXPORT GpuCommandBufferStub
                                        const GpuFeatureInfo& gpu_feature_info);
 
   // The lifetime of objects of this class is managed by a GpuChannel. The
-  // GpuChannels destroy all the GpuCommandBufferStubs that they own when they
-  // are destroyed. So a raw pointer is safe.
+  // GpuChannels destroy all the CommandBufferStubCommons that they own when
+  // they are destroyed. So a raw pointer is safe.
   GpuChannel* const channel_;
 
   // The group of contexts that share namespaces with this context.
@@ -244,7 +244,7 @@ class GPU_EXPORT GpuCommandBufferStub
   std::unique_ptr<WaitForCommandState> wait_for_get_offset_;
   uint32_t wait_set_get_buffer_count_;
 
-  DISALLOW_COPY_AND_ASSIGN(GpuCommandBufferStub);
+  DISALLOW_COPY_AND_ASSIGN(CommandBufferStubCommon);
 };
 
 }  // namespace gpu
