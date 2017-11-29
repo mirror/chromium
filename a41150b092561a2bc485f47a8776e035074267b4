@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9daf431_1b7d3dd6",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-29T14:07:41Z",
+      "side": 1,
+      "message": "I would prefer if we kept this as a base::Optional\u003cnet::SSLInfo\u003e, as it make it pretty clear to callers whether the object returned by this function is valid. I think there\u0027s less chance of them inadvertently using an invalid SSLInfo this way.",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0fd955_5f70d9ca",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-29T14:07:41Z",
+      "side": 1,
+      "message": "Are we ok adding one more copy of SSLInfo?\n\nNote: once we can get rid of the old navigation code and have extended NavigationRequest lifetime, I do plan to simplify NavigationHandle by having it query its navigation parameters from the NavigationRequest instead of storing them. So this might be fine to have in the meantime.",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ffd659_9fec2910",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-29T14:07:41Z",
+      "side": 1,
+      "message": "Doesn\u0027t this result in more copying of the SSLInfo vs leaving it as a base::Optional and properly moving it around?",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002b8dd7_6e42ec1d",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-29T14:07:41Z",
+      "side": 1,
+      "message": "Can you still get a base::nullopt if your return type is no longer base::Optional\u003cfoo\u003e?\n\nAlso side-question: we discussed the usage of const in the public content/ API. We agree that returning a const value from a function is ok right? (here the caller really shouldn\u0027t be allowed to modify it).",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
