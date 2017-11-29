@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
+#include "components/crx_file/id_util.h"
 #include "extensions/common/api/messaging/message.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest.h"
@@ -219,12 +220,20 @@ bool GetTargetExtensionId(ScriptContext* script_context,
       return false;
     }
 
-    *target_out = script_context->extension()->id();
+    target_id = script_context->extension()->id();
+    // An extension should never have an invalid id.
+    DCHECK(crx_file::id_util::IdIsValid(target_id));
   } else {
     DCHECK(v8_target_id->IsString());
-    *target_out = gin::V8ToString(v8_target_id);
+    target_id = gin::V8ToString(v8_target_id);
+    if (!crx_file::id_util::IdIsValid(target_id)) {
+      *error_out =
+          base::StringPrintf("Invalid extension id: '%s'", target_id.c_str());
+      return false;
+    }
   }
 
+  *target_out = std::move(target_id);
   return true;
 }
 
@@ -296,6 +305,7 @@ void MassageSendMessageArguments(
 
 bool IsSendRequestDisabled(ScriptContext* script_context) {
   const Extension* extension = script_context->extension();
+  LOG(WARNING) << "Background info? " << BackgroundInfo::HasLazyBackgroundPage(extension);
   return extension && Manifest::IsUnpackedLocation(extension->location()) &&
          BackgroundInfo::HasLazyBackgroundPage(extension);
 }
