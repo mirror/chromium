@@ -16,6 +16,24 @@
       "revId": "ebb92497e38ff5308f0ad678aabd980b84c1f746",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec6383e_d264721b",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-29T01:58:20Z",
+      "side": 0,
+      "message": "It is, but the failed tasks will get chances at retries which might resolve the error. That\u0027s why when the whole process is done, the failed items are collected and each item will get an error message displayed, as opposed to displaying premature error messages that might turn out to be solved without the user needing to do anything.",
+      "parentUuid": "bc27c8c7_318d384e",
+      "revId": "ebb92497e38ff5308f0ad678aabd980b84c1f746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

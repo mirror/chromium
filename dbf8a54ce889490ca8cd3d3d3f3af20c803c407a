@@ -16,6 +16,24 @@
       "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137f2ce0_b4a4589a",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-29T01:58:20Z",
+      "side": 1,
+      "message": "The MediaImportHandler / ImportTask only know after all retries have happened that the process is done, they don\u0027t know about the time a try is done and waiting for the next retry to happen - there is a test case testing the behavior if there was an error during the process, but because we mock the DriveSyncHandler in that test, the signal for the new retry to start will never happen, leading to time out in the test. Introducing this makes it possible to fire the DriveSyncHandler.COMPLETED_EVENT to trigger the retry, letting the test continue on without getting stuck.",
+      "parentUuid": "5968511f_9c5df2a2",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
