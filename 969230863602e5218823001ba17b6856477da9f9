@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74a464de_9d93dca5",
+        "filename": "mojo/public/cpp/bindings/binding_set.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-29T14:03:46Z",
+      "side": 1,
+      "message": "In addition to removing the binding, OnConnectionError() fires connection error handler. This is necessary to us because our ServiceWorkerRegistrationObjectHost class will destroy itself only when it found its binding set has become empty, see \nhttps://chromium-review.googlesource.com/c/chromium/src/+/778360/13/content/browser/service_worker/service_worker_registration_object_host.cc#302\n\nI think this change makes sense in general, as this binding connection is being closed due to receiving a bad message, this scenario should also be considered as one type of connection error and should fire error handler to notify user of this binding set.",
+      "range": {
+        "startLine": 188,
+        "startChar": 24,
+        "endLine": 188,
+        "endChar": 42
+      },
+      "revId": "969230863602e5218823001ba17b6856477da9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2151d0de_97dedae8",
+        "filename": "mojo/public/cpp/bindings/binding_set.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-29T14:03:46Z",
+      "side": 1,
+      "message": "Two possible cases CAN trigger OnConnectionError() for the given binding id now:\n - the endpoint in client side has reset: https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/tests/binding_set_unittest.cc?rcl\u003d70baccadfc23bd160016f46f62463ebdced89b2d\u0026l\u003d268\n - GetBadMessageCallback().Run(): https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/tests/binding_set_unittest.cc?rcl\u003d70baccadfc23bd160016f46f62463ebdced89b2d\u0026l\u003d279",
+      "range": {
+        "startLine": 293,
+        "startChar": 3,
+        "endLine": 294,
+        "endChar": 13
+      },
+      "revId": "969230863602e5218823001ba17b6856477da9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
