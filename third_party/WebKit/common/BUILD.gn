@@ -95,6 +95,18 @@ test("blink_common_unittests") {
   ]
 }
 
+mojom("media_devices") {
+  sources = [
+    "media/media_devices.mojom",
+  ]
+
+  public_deps = [
+    "//media/capture/mojo:capture_types",
+    "//media/mojo/interfaces",
+    "//ui/gfx/geometry/mojo",
+  ]
+}
+
 # This target includes all mojom interfaces which can be used from
 # Source/platform. In particular these mojom interfaces can't use types that
 # are typemapped to a type in Source/core.
