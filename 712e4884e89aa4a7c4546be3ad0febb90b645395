@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ced336ff_462f04f7",
+        "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T14:45:17Z",
+      "side": 1,
+      "message": "style: this is usually at the end (ie. after variables)",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e5dda6_f75298de",
+        "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T14:45:17Z",
+      "side": 1,
+      "message": "EXPECT, same for all the ones below. ASSERT_* will stop the tests while EXPECT_* will continue. You should do ASSERT_* when it means things can\u0027t run further or went terribly wrong.",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 8
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcc26b2_6e60ebe6",
+        "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T14:45:17Z",
+      "side": 1,
+      "message": "Actually, this is a good use of ASSERT_NE() but the arguments should be swapped I believe `ASSERT_NE(nullptr, button);`",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 11
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e54f8e_a75fcca2",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/keyboard-focus.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T14:45:17Z",
+      "side": 1,
+      "message": "element",
+      "range": {
+        "startLine": 14,
+        "startChar": 36,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fead778f_390f6338",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/keyboard-focus.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T14:45:17Z",
+      "side": 1,
+      "message": "nit/style: here and below, we usually require comments to start with an uppercase and finish with a period.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844dd38b_e06b244a",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/keyboard-focus.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T14:45:17Z",
+      "side": 1,
+      "message": "`step_func_done` so you can drop the `done()` at the end.",
+      "range": {
+        "startLine": 28,
+        "startChar": 34,
+        "endLine": 28,
+        "endChar": 43
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a4d557_4c91f806",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/keyboard-focus.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T14:45:17Z",
+      "side": 1,
+      "message": "Would it make sense to add navigateFocusBackward() too if that\u0027s even a thing?",
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
