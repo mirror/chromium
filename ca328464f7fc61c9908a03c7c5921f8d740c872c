@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "42c4c850_3069f4c7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-29T07:17:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2815a48e_425aac83",
+      "range": {
+        "startLine": 1773,
+        "startChar": 22,
+        "endLine": 1773,
+        "endChar": 31
+      },
+      "revId": "ca328464f7fc61c9908a03c7c5921f8d740c872c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "957840cc_4aec89b1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-29T07:17:41Z",
+      "side": 1,
+      "message": "There was indeed an issue with Unicode handling, affecting only request body. Surrogate pairs are handled properly in the patchset 5.",
+      "parentUuid": "1cb6afa1_1a37736c",
+      "range": {
+        "startLine": 1773,
+        "startChar": 86,
+        "endLine": 1773,
+        "endChar": 104
+      },
+      "revId": "ca328464f7fc61c9908a03c7c5921f8d740c872c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "553e32e6_177dede1",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
         "patchSetId": 2
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d0572973_ba014cbf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1781,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-29T07:17:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "553e32e6_177dede1",
+      "range": {
+        "startLine": 1781,
+        "startChar": 19,
+        "endLine": 1781,
+        "endChar": 40
+      },
+      "revId": "ca328464f7fc61c9908a03c7c5921f8d740c872c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37f8c686_f37a2984",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
         "patchSetId": 2
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "39ec8e48_a0b278e8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-29T07:17:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37f8c686_f37a2984",
+      "revId": "ca328464f7fc61c9908a03c7c5921f8d740c872c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dfadec6_c48b54f2",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
         "patchSetId": 2
@@ -102,6 +192,24 @@
       "revId": "ca328464f7fc61c9908a03c7c5921f8d740c872c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2267a3_986b3fb8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1788,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-29T07:17:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dfadec6_c48b54f2",
+      "revId": "ca328464f7fc61c9908a03c7c5921f8d740c872c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
