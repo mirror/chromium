@@ -16,6 +16,24 @@
       "revId": "83db178635010de2ae7ee2ff09555c997cfbd25b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6eaf266_900ac176",
+        "filename": "ui/base/class_property.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-29T16:06:05Z",
+      "side": 1,
+      "message": "That would be better. Mostly just trying to keep the size of the change down. I\u0027ll try to upload a patch that renames this as well but it will be larger so maybe I should do that in a separate CL.",
+      "parentUuid": "418d105c_d515b012",
+      "revId": "83db178635010de2ae7ee2ff09555c997cfbd25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
