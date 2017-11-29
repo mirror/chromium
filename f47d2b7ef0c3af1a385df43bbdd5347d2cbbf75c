@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "443df8de_8c5893ae",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-29T22:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aec1010b_88b0e0a4",
+      "range": {
+        "startLine": 50,
+        "startChar": 53,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "f47d2b7ef0c3af1a385df43bbdd5347d2cbbf75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce93057b_32895a57",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "f47d2b7ef0c3af1a385df43bbdd5347d2cbbf75c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7885d5a0_d08be309",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-29T22:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce93057b_32895a57",
+      "range": {
+        "startLine": 1939,
+        "startChar": 2,
+        "endLine": 1943,
+        "endChar": 11
+      },
+      "revId": "f47d2b7ef0c3af1a385df43bbdd5347d2cbbf75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
