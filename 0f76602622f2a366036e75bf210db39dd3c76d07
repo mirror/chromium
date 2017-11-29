@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0f33feee_df55437e",
+        "filename": "remoting/ios/app/remoting_theme.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-11-29T19:07:36Z",
+      "side": 1,
+      "message": "I still think it\u0027s overkill for this particular method, which must surely be cheap and thread-safe, but that rationale makes a lot of sense for expensive things. I don\u0027t think you need to change these instances, but be wary of using this pattern where it doesn\u0027t buy much, because there is a readability cost to it.",
+      "parentUuid": "55b78445_f50a28e4",
+      "range": {
+        "startLine": 75,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "0f76602622f2a366036e75bf210db39dd3c76d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d9c5837_6e335867",
         "filename": "remoting/ios/app/settings/remoting_settings_view_controller.mm",
         "patchSetId": 2
