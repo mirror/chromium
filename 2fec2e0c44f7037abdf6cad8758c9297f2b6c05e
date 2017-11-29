@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "436e2345_6a37ed31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-11-29T12:48:39Z",
+      "side": 1,
+      "message": "I\u0027m adding the rationale here. It\u0027s also described in the attached bug.\n\nThe current metric doesn\u0027t cover the important part of the startup latency because the ForegroundStartTime is measured after the native library is loaded. That\u0027s a lot of important data missed. We\u0027re exploring various ways to speed up the startup including the time of native library initialization. We want to have a metric that will show us these improvements.\n\nInitially, this metric was measuring cold startups from the application start but then it was changed. We would like to return to the initial meaning. pasko@ described an evolution of the metric in https://goo.gl/NyvX39",
+      "parentUuid": "33b36205_d2a54a88",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2209e134_a47b392b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d26c83a_5c117d0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-11-29T12:48:39Z",
+      "side": 1,
+      "message": "I switched because UmaUtils.getMainEntryPointWallTime returns wall clock time. I\u0027ve added a new UmaUtils.getApplicationStartTimeMs() method for our case.\nDone",
+      "parentUuid": "2209e134_a47b392b",
+      "range": {
+        "startLine": 217,
+        "startChar": 28,
+        "endLine": 217,
+        "endChar": 94
+      },
+      "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f18b286b_0ec53de2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-11-29T12:48:39Z",
+      "side": 1,
+      "message": "Ok, I\u0027m putting it as experimental now because I\u0027m not sure how much noise will it have due to variety of ways how the application could be started.\nDone",
+      "parentUuid": "62a6638e_58b981e8",
+      "range": {
+        "startLine": 219,
+        "startChar": 29,
+        "endLine": 219,
+        "endChar": 55
+      },
+      "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "141a0adb_b25d2b90",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac7150f_400c7d45",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-11-29T12:48:39Z",
+      "side": 1,
+      "message": "The CCT test uses startCustomTabActivityWithIntent() that indeed returns after a tab is initialized. However, these tests use the startMainActivity* methods that return after the load is completed.\nFrom a comment for ChromeActivityTestRule: \"This method waits for DEFERRED_STARTUP to fire as well as a subsequent idle-sync of the main looper thread, and the initial tab must either complete its load or it must crash before this method will return.\" (https://cs.chromium.org/chromium/src/chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestRule.java?rcl\u003df2d55a253ceb67d8c2218e35a449d7b4abc003df\u0026l\u003d385)\nApparently, loadUrl() has the same guarantees as startMainActivityWithIntent().",
+      "parentUuid": "141a0adb_b25d2b90",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 42
+      },
+      "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
