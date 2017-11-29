@@ -16,6 +16,24 @@
       "revId": "6cc27a9ad1af3bd276d3071a531b14baac7648de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e8af61_f12bac07",
+        "filename": "components/os_crypt/key_storage_linux.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-29T09:01:10Z",
+      "side": 1,
+      "message": "KeyStorageLinux isn\u0027t the public API for OSCrypt. That would be https://cs.chromium.org/chromium/src/components/os_crypt/os_crypt.h?q\u003dos_crypt.h\n\nAn async method here will never be used unless I also create an async implementation for the rest of OSCrypt, which I would be happy to do in separate CL.",
+      "parentUuid": "19156b99_817efc76",
+      "revId": "6cc27a9ad1af3bd276d3071a531b14baac7648de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
