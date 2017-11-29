@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eabf895d_0719484f",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-29T16:47:05Z",
+      "side": 1,
+      "message": "Right now, the check is literally \".css\".",
+      "range": {
+        "startLine": 267,
+        "startChar": 50,
+        "endLine": 267,
+        "endChar": 58
+      },
+      "revId": "852ef29761b24bba37b187b240a1c6a9a074841e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2994a7f8_d4b2eec4",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-29T16:47:05Z",
+      "side": 1,
+      "message": "Should we use GetMimeTypeFromExtension to look for a text/css MIME?",
+      "range": {
+        "startLine": 213,
+        "startChar": 39,
+        "endLine": 213,
+        "endChar": 66
+      },
+      "revId": "852ef29761b24bba37b187b240a1c6a9a074841e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
