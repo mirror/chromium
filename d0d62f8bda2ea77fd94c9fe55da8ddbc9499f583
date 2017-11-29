@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b73336ba_f25e249f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-29T05:12:42Z",
+      "side": 1,
+      "message": "can you call this function in OnIdleEventObserved after the ExtractFeatures function?",
+      "revId": "d0d62f8bda2ea77fd94c9fe55da8ddbc9499f583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72ed4b9_5220dd77",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-29T05:12:42Z",
+      "side": 1,
+      "message": "nit: it seems we can just use TEST and put original_values and buckets inside the test",
+      "revId": "d0d62f8bda2ea77fd94c9fe55da8ddbc9499f583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
