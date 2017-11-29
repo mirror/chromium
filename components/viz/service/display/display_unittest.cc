@@ -2077,6 +2077,78 @@ TEST_F(DisplayTest, CompositorFrameWithMultipleDrawQuadInSharedQuadState) {
   TearDownDisplay();
 }
 
+TEST_F(DisplayTest, CompositorFrameWithNonInvertibleTransform) {
+  SetUpDisplay(RendererSettings(), cc::TestWebGraphicsContext3D::Create());
+
+  StubDisplayClient client;
+  display_->Initialize(&client, manager_.surface_manager());
+  CompositorFrame frame = test::MakeCompositorFrame();
+  gfx::Rect rect1(0, 0, 100, 100);
+  gfx::Rect rect2(10, 10, 50, 50);
+  gfx::Rect rect3(0, 0, 10, 10);
+
+  gfx::Transform invertible;
+  gfx::Transform non_invertible(10, 10, 0, 0,  // row 1
+                                10, 10, 0, 0,  // row 2
+                                0, 0, 1, 0,    // row 3
+                                0, 0, 0, 1);   // row 4
+  bool is_clipped = false;
+  bool opaque_content = true;
+  float opacity = 1.f;
+  auto* quad1 = frame.render_pass_list.front()
+                    ->quad_list.AllocateAndConstruct<SolidColorDrawQuad>();
+  auto* quad2 = frame.render_pass_list.front()
+                    ->quad_list.AllocateAndConstruct<SolidColorDrawQuad>();
+  auto* quad3 = frame.render_pass_list.front()
+                    ->quad_list.AllocateAndConstruct<SolidColorDrawQuad>();
+  SharedQuadState* shared_quad_state1 =
+      frame.render_pass_list.front()->CreateAndAppendSharedQuadState();
+  SharedQuadState* shared_quad_state2 =
+      frame.render_pass_list.front()->CreateAndAppendSharedQuadState();
+  SharedQuadState* shared_quad_state3 =
+      frame.render_pass_list.front()->CreateAndAppendSharedQuadState();
+
+  {
+    // in quad content space:        in target space:
+    // +-+---------+                 +-----------+----+
+    // +-+   q1    |                 |        q1 | q3 |
+    // | +----+    |                 | +----+    |    |
+    // | | q2 |    |                 | | q2 |    |    |
+    // | +----+    |                 | +----+    |    |
+    // |           |                 |           |    |
+    // +-----------+                 +-----------+    |
+    //                               |                |
+    //                               +----------------+
+    // |quad1| forms an occlusion rect; |quad2| follows a invertible transform
+    // and is hiding behind quad1; |quad3| follows a non-invertible transform
+    // and it is not covered by the occlusion rect.
+    shared_quad_state1->SetAll(invertible, rect1, rect1, rect1, is_clipped,
+                               opaque_content, opacity, SkBlendMode::kSrcOver,
+                               0);
+    shared_quad_state2->SetAll(invertible, rect2, rect2, rect2, is_clipped,
+                               opaque_content, opacity, SkBlendMode::kSrcOver,
+                               0);
+    shared_quad_state3->SetAll(non_invertible, rect3, rect3, rect3, is_clipped,
+                               opaque_content, opacity, SkBlendMode::kSrcOver,
+                               0);
+    quad1->SetNew(shared_quad_state1, rect1, rect1, SK_ColorBLACK, false);
+    quad2->SetNew(shared_quad_state2, rect2, rect2, SK_ColorBLACK, false);
+    quad3->SetNew(shared_quad_state3, rect3, rect3, SK_ColorBLACK, false);
+
+    EXPECT_EQ(3u, frame.render_pass_list.front()->quad_list.size());
+    display_->RemoveOverdrawQuads(&frame);
+    // |quad2| is removed because it is not shown on screen in the target space.
+    EXPECT_EQ(2u, frame.render_pass_list.front()->quad_list.size());
+    EXPECT_EQ(rect1.ToString(), frame.render_pass_list.front()
+                                    ->quad_list.ElementAt(0)
+                                    ->rect.ToString());
+    EXPECT_EQ(rect3.ToString(), frame.render_pass_list.front()
+                                    ->quad_list.ElementAt(1)
+                                    ->rect.ToString());
+  }
+  TearDownDisplay();
+}
+
 TEST_F(DisplayTest, CompositorFrameWithPresentationToken) {
   RendererSettings settings;
   const LocalSurfaceId local_surface_id(id_allocator_.GenerateId());
