@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9de01026_a3fc7053",
+        "filename": "remoting/ios/app/remoting_theme.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-11-29T00:00:09Z",
+      "side": 1,
+      "message": "As discussed off-line, this is consistent with other examples in this file and therefore fine for this CL, but please try to find out why it needs to be this complex.",
+      "range": {
+        "startLine": 75,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "0f76602622f2a366036e75bf210db39dd3c76d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d9c5837_6e335867",
+        "filename": "remoting/ios/app/settings/remoting_settings_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-11-29T00:00:09Z",
+      "side": 1,
+      "message": "Take a look at https://jaanus.com/how-to-add-a-custom-separator-supplementary-view-to-uicollectionview/ and see if you think that would be a cleaner design for implementing separators. It\u0027s fine if you don\u0027t--it seems a lot more heavyweight, for example--but it might make interesting reading nonetheless.\n\nUsing a footer to implement separators is fine, but it confused me for a while because you need to set the height of the final section to zero (which you are doing, but further down in the code, so you have to look in two places to understand what\u0027s going on). It would suffice to add a comment here explaining that the final footer height is set to zero in \u003cinsert-function-name-here\u003e--I can\u0027t work out what counts as a \"name\" in  ObjC :(",
+      "range": {
+        "startLine": 77,
+        "startChar": 50,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "0f76602622f2a366036e75bf210db39dd3c76d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881594aa_28010db2",
+        "filename": "remoting/ios/app/settings/remoting_settings_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-11-29T00:00:09Z",
+      "side": 1,
+      "message": "Presumably this hides separators between items, which suggests that there is already a concept of a separator. Could that be used to implement separators between sections by making the UI into a UiCollectionView (with separators), each element of which is itself a UiCollectionView (without separators)? As above, feel free to ignore if this is not the right approach.",
+      "range": {
+        "startLine": 90,
+        "startChar": 41,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "0f76602622f2a366036e75bf210db39dd3c76d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873bce29_be4733b3",
+        "filename": "remoting/ios/app/settings/remoting_settings_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-11-29T00:00:09Z",
+      "side": 1,
+      "message": "The formatting looks off here (and above, though you haven\u0027t changed that).",
+      "range": {
+        "startLine": 239,
+        "startChar": 36,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "0f76602622f2a366036e75bf210db39dd3c76d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
