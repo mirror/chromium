@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "62fb287f_a407d3af",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-29T18:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e1f9183_73e34b9e",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9daf431_1b7d3dd6",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 4

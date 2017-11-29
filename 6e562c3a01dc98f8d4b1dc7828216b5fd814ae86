@@ -22,6 +22,30 @@
       "revId": "6e562c3a01dc98f8d4b1dc7828216b5fd814ae86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a765fe6f_9bda84d5",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-29T18:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1521ce1_1d2c55b2",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 45
+      },
+      "revId": "6e562c3a01dc98f8d4b1dc7828216b5fd814ae86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
