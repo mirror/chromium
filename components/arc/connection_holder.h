@@ -130,8 +130,6 @@ class ConnectionHolderImpl {
   // Sets (or resets if |instance| is nullptr) the instance.
   void SetInstance(InstanceType* instance,
                    uint32_t version = InstanceType::version_) {
-    DCHECK(instance == nullptr || instance_ == nullptr);
-
     // Note: This can be called with nullptr even if |instance_| is still
     // nullptr for just in case clean up purpose. No-op in such a case.
     if (instance == instance_)
@@ -143,29 +141,30 @@ class ConnectionHolderImpl {
   }
 
  private:
-  // Called when |instance_| or |host_| is updated from null to non-null or
-  // from non-null to null.
+  // Called when |instance_| or |host_| are updated.
   void OnChanged() {
-    if (instance_ && host_) {
-      // When both get ready, start connection.
-      // TODO(crbug.com/750563): Fix the race issue.
-      binding_ = std::make_unique<mojo::Binding<HostType>>(host_);
-      mojo::InterfacePtr<HostType> host_proxy;
-      binding_->Bind(mojo::MakeRequest(&host_proxy));
-      // Note: because the callback will be destroyed with |binding_|,
-      // base::Unretained() can be safely used.
-      binding_->set_connection_error_handler(base::BindOnce(
-          &mojo::Binding<HostType>::Close, base::Unretained(binding_.get())));
-
-      // Call the appropriate version of Init().
-      CallInstanceInit<InstanceType>(std::move(host_proxy),
-                                     HasInitDeprecated<InstanceType>());
-    } else if (binding_.get()) {
-      // Otherwise, the connection is closed. If it was connected,
-      // reset the host binding and notify.
-      binding_.reset();
-      connection_notifier_->NotifyConnectionClosed();
+    if (binding_.get()) {
+      // Regardless of what has changed, the old connection is now stale. Reset
+      // the current binding and notify any listeners.
+      if (instance_ && host_)
+        LOG(ERROR) << "Unbinding instance of a stale connection";
+      OnConnectionClosed();
     }
+    if (!instance_ || !host_)
+      return;
+    // When both the instance and host are ready, start connection.
+    // TODO(crbug.com/750563): Fix the race issue.
+    binding_ = std::make_unique<mojo::Binding<HostType>>(host_);
+    mojo::InterfacePtr<HostType> host_proxy;
+    binding_->Bind(mojo::MakeRequest(&host_proxy));
+    // Note: because the callback will be destroyed with |binding_|,
+    // base::Unretained() can be safely used.
+    binding_->set_connection_error_handler(base::BindOnce(
+        &ConnectionHolderImpl::OnConnectionClosed, base::Unretained(this)));
+
+    // Call the appropriate version of Init().
+    CallInstanceInit<InstanceType>(std::move(host_proxy),
+                                   HasInitDeprecated<InstanceType>());
   }
 
   // Dispatches the correct version of Init(). The template type is needed
@@ -216,6 +215,15 @@ class ConnectionHolderImpl {
     // If InitDeprecated does not exists, ARC container must support
     // Init() with callback, already. Thus, this should not be called.
     NOTREACHED();
+  }
+
+  // Resets the binding and notifies all the observers that the connection is
+  // closed.
+  void OnConnectionClosed() {
+    instance_ = nullptr;
+    instance_version_ = 0;
+    binding_.reset();
+    connection_notifier_->NotifyConnectionClosed();
   }
 
   // Notifies all the observers that the connection is ready.
