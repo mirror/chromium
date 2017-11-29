@@ -133,6 +133,17 @@ BookmarkAppNavigationThrottle::ProcessNavigation() {
     return content::NavigationThrottle::PROCEED;
   }
 
+  int32_t transition_qualifier = PageTransitionGetQualifier(transition_type);
+  if (transition_qualifier & ui::PAGE_TRANSITION_FORWARD_BACK) {
+    DVLOG(1) << "Don't intercept: Forward or back navigation.";
+    return content::NavigationThrottle::PROCEED;
+  }
+
+  if (transition_qualifier & ui::PAGE_TRANSITION_FROM_ADDRESS_BAR) {
+    DVLOG(1) << "Don't intercept: Address bar navigation.";
+    return content::NavigationThrottle::PROCEED;
+  }
+
   auto app_for_window_ref = GetAppForWindow();
   auto target_app_ref = GetTargetApp();
 
