@@ -1250,6 +1250,7 @@ const int kExternalFilesCleanupDelaySeconds = 60;
       [[WelcomeToChromeViewController alloc]
           initWithBrowserState:_mainBrowserState
                       tabModel:self.mainTabModel
+                     presenter:self.mainBVC
                     dispatcher:self.mainBVC.dispatcher];
   UINavigationController* navController =
       [[OrientationLimitingNavigationController alloc]
