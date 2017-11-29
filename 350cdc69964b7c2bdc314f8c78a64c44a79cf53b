@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "44a46b84_95e27f72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T02:09:34Z",
+      "side": 1,
+      "message": "The width can also be change when entering/exiting multi-window. If that edge case doesn\u0027t work, I think that\u0027s probably OK for now.",
+      "parentUuid": "36afc47e_3cbdb6b6",
+      "range": {
+        "startLine": 135,
+        "startChar": 33,
+        "endLine": 135,
+        "endChar": 41
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0fed70e_6b0db99e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
         "patchSetId": 6
@@ -313,6 +337,30 @@
       "side": 1,
       "message": "Can we add a width check here? So we can avoid the popup is wider than screen or its container.",
       "parentUuid": "56ae7180_ffb57f0b",
+      "range": {
+        "startLine": 179,
+        "startChar": 7,
+        "endLine": 181,
+        "endChar": 91
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77a9346_e03706e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T02:09:34Z",
+      "side": 1,
+      "message": "Yes, that would be good.",
+      "parentUuid": "194a9102_4a95c19f",
       "range": {
         "startLine": 179,
         "startChar": 7,
