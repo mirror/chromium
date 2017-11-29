@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "aec1010b_88b0e0a4",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-29T22:16:13Z",
+      "side": 1,
+      "message": "UKM is only allowed to record HTTP or HTTPS URLs.\n\nPlease add \"if (url.SchemeIsHTTPOrHTTPS())\" here. Not sure if you still want to create the source_id in this case or just skip it altogether.",
+      "range": {
+        "startLine": 50,
+        "startChar": 53,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "f47d2b7ef0c3af1a385df43bbdd5347d2cbbf75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce93057b_32895a57",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 14
