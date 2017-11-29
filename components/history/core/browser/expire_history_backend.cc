@@ -262,13 +262,27 @@ void ExpireHistoryBackend::ExpireVisits(const VisitVector& visits) {
   if (visits.empty())
     return;
 
+  VisitVector visits_and_redirects;
+  for (auto v : visits) {
+    VisitRow from_visit = v;
+    VisitID from_id;
+    bool has_redirect = true;
+    while (has_redirect) {
+      visits_and_redirects.push_back(from_visit);
+      has_redirect = has_redirect &&
+                     main_db_->GetRedirectToVisit(from_visit.visit_id, &from_id,
+                                                  nullptr) &&
+                     main_db_->GetRowForVisit(from_id, &from_visit);
+    }
+  }
+
   DeleteEffects effects;
-  DeleteVisitRelatedInfo(visits, &effects);
+  DeleteVisitRelatedInfo(visits_and_redirects, &effects);
 
   // Delete or update the URLs affected. We want to update the visit counts
   // since this is called by the user who wants to delete their recent history,
   // and we don't want to leave any evidence.
-  ExpireURLsForVisits(visits, &effects);
+  ExpireURLsForVisits(visits_and_redirects, &effects);
   DeleteFaviconsIfPossible(&effects);
   BroadcastNotifications(&effects, DELETION_USER_INITIATED);
 
