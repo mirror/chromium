@@ -187,6 +187,10 @@ class NetworkAnnotationTagCallback : public MatchFinder::MatchCallback {
       location->file_path =
           location->file_path.substr(3, location->file_path.length() - 3);
     }
+
+    if (location->file_path.empty()) {
+      location->file_path = result.SourceManager->getFilename(source_location);
+    }
   }
 
   // Stores a function call that should be monitored.
