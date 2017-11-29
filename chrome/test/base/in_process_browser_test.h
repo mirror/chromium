@@ -135,6 +135,10 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   // Returns the browser created by BrowserMain().
   Browser* browser() const { return browser_; }
 
+  base::test::ScopedFeatureList* feature_list() {
+    return &scoped_feature_list_;
+  }
+
   // Closes the given browser and waits for it to release all its resources.
   void CloseBrowserSynchronously(Browser* browser);
 

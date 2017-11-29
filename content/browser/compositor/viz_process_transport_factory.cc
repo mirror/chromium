@@ -11,8 +11,8 @@
 #include "cc/raster/single_thread_task_graph_runner.h"
 #include "components/viz/client/client_layer_tree_frame_sink.h"
 #include "components/viz/client/local_surface_id_provider.h"
+#include "components/viz/common/features.h"
 #include "components/viz/common/gpu/context_provider.h"
-#include "components/viz/common/switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/host/renderer_settings_creation.h"
 #include "content/browser/browser_main_loop.h"
@@ -336,8 +336,7 @@ void VizProcessTransportFactory::CreateLayerTreeFrameSinkForGpuChannel(
   params.local_surface_id_provider =
       std::make_unique<viz::DefaultLocalSurfaceIdProvider>();
   params.enable_surface_synchronization =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableSurfaceSynchronization);
+      features::IsSurfaceSynchronizationEnabled();
 
   compositor->SetLayerTreeFrameSink(
       std::make_unique<viz::ClientLayerTreeFrameSink>(
