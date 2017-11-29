@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3515db6_5ef72024",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T21:43:36Z",
+      "side": 1,
+      "message": "I went back to |std::vector\u003c...\u003e| (rather than |const std::vector\u003c...\u003e\u0026|), because I want std::remove_if to be able to move elements around.",
+      "range": {
+        "startLine": 1149,
+        "startChar": 4,
+        "endLine": 1149,
+        "endChar": 28
+      },
+      "revId": "60826ad34835322d881262d1f8c084a42a1be9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
