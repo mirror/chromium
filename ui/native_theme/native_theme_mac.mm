@@ -16,6 +16,12 @@
 #include "ui/gfx/skia_util.h"
 #include "ui/native_theme/common_theme.h"
 
+@interface NSWorkspace (Redeclarations)
+
+@property(readonly) BOOL accessibilityDisplayShouldIncreaseContrast;
+
+@end
+
 namespace {
 
 // Values calculated by reading pixels and solving simultaneous equations
@@ -281,6 +287,17 @@ void NativeThemeMac::PaintMenuItemBackground(
       NOTREACHED();
       break;
   }
+}
+
+bool NativeThemeMac::UsesHighContrastColors() const {
+  NSWorkspace* workspace = [NSWorkspace sharedWorkspace];
+  bool system_setting = false;
+  if ([workspace respondsToSelector:@selector
+                 (accessibilityDisplayShouldIncreaseContrast)]) {
+    system_setting = workspace.accessibilityDisplayShouldIncreaseContrast;
+  }
+
+  return NativeThemeBase::UsesHighContrastColors() || system_setting;
 }
 
 NativeThemeMac::NativeThemeMac() {
