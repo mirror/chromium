@@ -73,18 +73,25 @@ MediaRouterDesktop::GetProviderIdForPresentation(
   return MediaRouterMojoImpl::GetProviderIdForPresentation(presentation_id);
 }
 
-MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
-                                       FirewallCheck check_firewall)
-    : MediaRouterMojoImpl(context),
-      weak_factory_(this) {
+MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context)
+    : MediaRouterMojoImpl(context), weak_factory_(this) {
   InitializeMediaRouteProviders();
 #if defined(OS_WIN)
-  if (check_firewall == FirewallCheck::RUN) {
-    CanFirewallUseLocalPorts(
-        base::BindOnce(&MediaRouterDesktop::OnFirewallCheckComplete,
-                       weak_factory_.GetWeakPtr()));
-  }
+  CanFirewallUseLocalPorts(
+      base::BindOnce(&MediaRouterDesktop::OnFirewallCheckComplete,
+                     weak_factory_.GetWeakPtr()));
 #endif
+}
+
+MediaRouterDesktop::MediaRouterDesktop(
+    content::BrowserContext* context,
+    scoped_refptr<DialMediaSinkServiceProxy> dial_media_sink_service,
+    scoped_refptr<CastMediaSinkService> cast_media_sink_service)
+    : MediaRouterMojoImpl(context),
+      dial_media_sink_service_proxy_(std::move(dial_media_sink_service)),
+      cast_media_sink_service_(std::move(cast_media_sink_service)),
+      weak_factory_(this) {
+  InitializeMediaRouteProviders();
 }
 
 void MediaRouterDesktop::RegisterMediaRouteProvider(

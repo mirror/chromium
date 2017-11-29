@@ -65,14 +65,15 @@ class DialMediaSinkServiceProxy
   void SetDialMediaSinkServiceForTest(
       std::unique_ptr<DialMediaSinkServiceImpl> dial_media_sink_service);
 
+ protected:
+  ~DialMediaSinkServiceProxy() override;
+
  private:
   friend class DialMediaSinkServiceProxyTest;
   friend class base::DeleteHelper<DialMediaSinkServiceProxy>;
   friend struct content::BrowserThread::DeleteOnThread<
       content::BrowserThread::IO>;
   friend class base::RefCountedThreadSafe<DialMediaSinkServiceProxy>;
-
-  ~DialMediaSinkServiceProxy() override;
 
   // Starts DIAL discovery.
   void StartOnIOThread();

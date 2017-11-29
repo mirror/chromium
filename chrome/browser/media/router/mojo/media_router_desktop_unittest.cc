@@ -12,7 +12,10 @@
 #include "chrome/browser/media/router/mojo/media_router_desktop.h"
 
 #include "base/run_loop.h"
+#include "base/test/test_simple_task_runner.h"
 #include "build/build_config.h"
+#include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_proxy.h"
+#include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h"
 #include "chrome/browser/media/router/event_page_request_manager.h"
 #include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/media_router_factory.h"
@@ -45,6 +48,47 @@ class NullMessageObserver : public RouteMessageObserver {
       final {}
 };
 
+class MockDialMediaSinkService : public DialMediaSinkServiceProxy {
+ public:
+  explicit MockDialMediaSinkService(content::BrowserContext* context)
+      : DialMediaSinkServiceProxy(
+            base::BindRepeating(&MockDialMediaSinkService::OnSinksDiscovered,
+                                base::Unretained(this)),
+            context) {
+    EXPECT_CALL(*this, ForceSinkDiscoveryCallback());
+  }
+
+ protected:
+  ~MockDialMediaSinkService() override {}
+
+  MOCK_METHOD0(Start, void());
+  MOCK_METHOD0(Stop, void());
+  MOCK_METHOD0(ForceSinkDiscoveryCallback, void());
+  MOCK_METHOD0(OnUserGesture, void());
+
+  MOCK_METHOD1(OnSinksDiscovered, void(std::vector<MediaSinkInternal>));
+};
+
+class MockCastMediaSinkService : public CastMediaSinkService {
+ public:
+  explicit MockCastMediaSinkService(content::BrowserContext* context)
+      : CastMediaSinkService(
+            base::BindRepeating(&MockCastMediaSinkService::OnSinksDiscovered,
+                                base::Unretained(this)),
+            context,
+            base::MakeRefCounted<base::TestSimpleTaskRunner>()) {}
+
+ protected:
+  ~MockCastMediaSinkService() override {}
+
+  MOCK_METHOD0(Start, void());
+  MOCK_METHOD0(Stop, void());
+  MOCK_METHOD0(ForceSinkDiscoveryCallback, void());
+  MOCK_METHOD0(OnUserGesture, void());
+
+  MOCK_METHOD1(OnSinksDiscovered, void(std::vector<MediaSinkInternal>));
+};
+
 }  // namespace
 
 class MediaRouterDesktopTest : public MediaRouterMojoTest {
@@ -59,11 +103,11 @@ class MediaRouterDesktopTest : public MediaRouterMojoTest {
             profile(), &CreateMediaRouter));
   }
 
- private:
   static std::unique_ptr<KeyedService> CreateMediaRouter(
       content::BrowserContext* context) {
     return std::unique_ptr<KeyedService>(new MediaRouterDesktop(
-        context, MediaRouterDesktop::FirewallCheck::SKIP_FOR_TESTING));
+        context, base::MakeRefCounted<MockDialMediaSinkService>(context),
+        base::MakeRefCounted<MockCastMediaSinkService>(context)));
   }
 };
 
