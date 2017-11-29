@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9d3b5134_96985019",
+        "filename": "chrome/browser/media/media_engagement_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T17:22:33Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this be the new time since IncrementMediaPlaybacks() will update the time on the score.",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 65
+      },
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38d8ca81_a2abf960",
         "filename": "chrome/browser/media/media_engagement_session.cc",
         "patchSetId": 2
@@ -19,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "364e75ad_df3815fe",
+        "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T17:22:33Z",
+      "side": 1,
+      "message": "SetSignificantPlaybackRecordedForSession",
+      "range": {
+        "startLine": 72,
+        "startChar": 14,
+        "endLine": 72,
+        "endChar": 53
+      },
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35e89b2b_aa633ab0",
         "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
         "patchSetId": 2
@@ -30,6 +76,75 @@
       "writtenOn": "2017-11-29T16:49:27Z",
       "side": 1,
       "message": "FWIW, I will make `session` a member variable of the test class to simplify a bit these methods (ie. they wouldn\u0027t need the `session`).",
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "536ce54e_ee6410b8",
+        "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T17:22:33Z",
+      "side": 1,
+      "message": "It may be worth converting these to the new UKM testing API:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/media/media_engagement_contents_observer_unittest.cc?q\u003dmedia_engagement_contents_observer_unittest+package:%5Echromium$\u0026dr\u0026l\u003d243",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 66
+      },
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3326252_456fb9b9",
+        "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T17:22:33Z",
+      "side": 1,
+      "message": "GetUkmRecorder",
+      "range": {
+        "startLine": 196,
+        "startChar": 15,
+        "endLine": 196,
+        "endChar": 28
+      },
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e761b0d8_7865ffbf",
+        "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T17:22:33Z",
+      "side": 1,
+      "message": "It may be worth converting these to the new UKM testing API.",
+      "range": {
+        "startLine": 490,
+        "startChar": 4,
+        "endLine": 503,
+        "endChar": 11
+      },
       "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
