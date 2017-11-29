@@ -16,6 +16,24 @@
       "revId": "53c2e22e692996e734d4d61fad0c54a119b18214",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87df2af_3cfc4c98",
+        "filename": "base/process/process_info_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-29T21:14:45Z",
+      "side": 1,
+      "message": "The point of the PCHECK is to emit ::GetLastError() on error. Theoretically, if |result| is true, then the latter two conditions should also be true. The latter two are just a sanity check and should be separated into their own check.",
+      "parentUuid": "a39957bf_846e02f2",
+      "revId": "53c2e22e692996e734d4d61fad0c54a119b18214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
