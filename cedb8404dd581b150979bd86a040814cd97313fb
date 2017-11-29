@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "632a4f0d_05c6028e",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-29T17:12:30Z",
+      "side": 1,
+      "message": "This looks like the most reasonable place to act on whether the Origin Trial is enabled or not - it\u0027s got access to a WebUserMediaRequest which could carry this information. It sort-of does, through its connection to a Document etc. I\u0027ve added a couple of proposals on how this could be done, but neither is very pretty. The one that\u0027s currently enabled does seem to work, but it also does cut through a number of layers of abstraction to do so.\n\nPlease advise!",
+      "revId": "cedb8404dd581b150979bd86a040814cd97313fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
