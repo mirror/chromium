@@ -288,10 +288,9 @@ config("compiler") {
       ldflags += [ "-Wl,--build-id=sha1" ]
     }
 
-    defines += [ "_FILE_OFFSET_BITS=64" ]
-
     if (!is_android) {
       defines += [
+        "_FILE_OFFSET_BITS=64",
         "_LARGEFILE_SOURCE",
         "_LARGEFILE64_SOURCE",
       ]
