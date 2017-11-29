@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74afec7f_cf075945",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-11-29T13:35:21Z",
+      "side": 1,
+      "message": "We can avoid this local variable by making it anonymous",
+      "range": {
+        "startLine": 532,
+        "startChar": 24,
+        "endLine": 532,
+        "endChar": 28
+      },
+      "revId": "4c5b45672b8d44e2e95a6181138224fd2c9b5214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
