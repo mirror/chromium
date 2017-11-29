@@ -14,10 +14,10 @@
           "--browser=release",
           "--xvfb"
         ],
-        "isolate_name": "telemetry_perf_tests",
+        "isolate_name": "telemetry_perf_tests_new",
         "name": "loading.desktop.network_service",
         "override_compile_targets": [
-          "telemetry_perf_tests"
+          "telemetry_perf_tests_new"
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -141,14 +141,13 @@
           "--xvfb",
           "--browser=release"
         ],
-        "isolate_name": "telemetry_perf_tests_new",
+        "isolate_name": "telemetry_perf_tests",
         "name": "benchmarks for bot 1",
         "override_compile_targets": [
-          "telemetry_perf_tests_new"
+          "telemetry_perf_tests"
         ],
         "merge": {
           "args": [
-            "--verbose"
           ],
           "script": "//tools/perf/core/merge_script.py"
         },

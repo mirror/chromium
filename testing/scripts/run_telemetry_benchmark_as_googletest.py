@@ -79,6 +79,8 @@ def main():
       with open(filename, 'w') as perf_results_output_file:
         json.dump(perf_results, perf_results_output_file)
 
+  print 'args.isolated_script_test_ouput will have json_test_results dumped in it'
+  print args.isolated_script_test_output
   json.dump(json_test_results, args.isolated_script_test_output)
 
   return rc
@@ -119,17 +121,20 @@ def run_benchmark(args, rest_args):
     # If we have also output chartjson read it in and return it.
     # results-chart.json is the file name output by telemetry when the
     # chartjson output format is included
+    print 'in run_telemetry_benchmark_as_googletest'
     if histogram_results_present:
       tempfile_name = os.path.join(tempfile_dir, 'histograms.json')
     elif chartjson_results_present:
       tempfile_name = os.path.join(tempfile_dir, 'results-chart.json')
     else:
       tempfile_name = None
-
+    print 'tempfile_name:'
+    print tempfile_name
     if tempfile_name is not None:
       with open(tempfile_name) as f:
         perf_results = json.load(f)
-
+    print 'perf_results:'
+    print perf_results
     # test-results.json is the file name output by telemetry when the
     # json-test-results format is included
     tempfile_name = os.path.join(tempfile_dir, 'test-results.json')
@@ -137,7 +142,8 @@ def run_benchmark(args, rest_args):
       json_test_results = json.load(f)
     num_failures = json_test_results['num_failures_by_type'].get('FAIL', 0)
     valid = bool(rc == 0 or num_failures != 0)
-
+    print 'test-results:'
+    print json_test_results
   except Exception:
     traceback.print_exc()
     if results:
