@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d89971ae_5ff14eef",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-29T00:13:37Z",
+      "side": 1,
+      "message": "can we just use region.ToString() here and below?",
+      "range": {
+        "startLine": 258,
+        "startChar": 15,
+        "endLine": 258,
+        "endChar": 41
+      },
+      "revId": "789e01841ad3b94d14c2865f2fc4e330d4d1d34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
