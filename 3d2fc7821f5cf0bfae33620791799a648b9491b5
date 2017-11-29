@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "6cf2fbf2_a0d12c14",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T00:50:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "042c8696_10e6918f",
+      "range": {
+        "startLine": 1154,
+        "startChar": 20,
+        "endLine": 1154,
+        "endChar": 26
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1406c42_2136f0bf",
         "filename": "content/browser/child_process_security_policy_impl.h",
         "patchSetId": 7
@@ -332,6 +356,30 @@
       "side": 1,
       "message": "base/containers/README.md has some good info on selecting the best map container.  In particular, it says that base::flat_set \"supports efficient construction from a vector of items which avoids the O(n^2) insertion time of each element separately.\".  I think that inserting N elements into std::set (black/red tree - each insertion amortizes to O(log N)) and into base::flat_set (sorting a batch of inserted elements is O(M log M) + merging with old set is O(N)) has similar performance.  Additionally, base::flat_set can avoid extra allocations (base::flat_set with contiguous vector with zero overhead VS std::set with separate black/red tree nodes with overhead of pointers to other nodes).\n\nFWIW, I talked with Daniel and he thinks we should just go ahead and switch (so this is what I\u0027ve done in the latest patchset).",
       "parentUuid": "c8c359b4_9c321f70",
+      "range": {
+        "startLine": 374,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 58
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22c12a98_2ffa2327",
+        "filename": "content/browser/child_process_security_policy_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T00:50:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "482dc8b5_b96e34da",
       "range": {
         "startLine": 374,
         "startChar": 0,
@@ -579,6 +627,30 @@
     },
     {
       "key": {
+        "uuid": "f649ae78_c12dd288",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T00:50:28Z",
+      "side": 1,
+      "message": "Sure, let\u0027s go with this.  isolated_origin_util.cc would make more sense if we needed to use this outside SiteIsolationPolicy, but that\u0027s not the case today other than the unit test, for which it\u0027s fine to use FRIEND_TEST_ALL_PREFIXES.",
+      "parentUuid": "d946c3e1_60ae231a",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 67
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "923885c5_84629d5e",
         "filename": "content/common/site_isolation_policy.h",
         "patchSetId": 7
@@ -655,6 +727,24 @@
       "side": 1,
       "message": "Done (added a test verification that duplicates are included in the result).",
       "parentUuid": "122ab74c_b189ea97",
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c714623_4ff6cedf",
+        "filename": "content/common/site_isolation_policy_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T00:50:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7bcdd9b6_1434f698",
       "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

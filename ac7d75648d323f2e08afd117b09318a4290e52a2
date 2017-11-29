@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "c8d9959b_a0ec3a29",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-29T00:50:28Z",
+      "side": 0,
+      "message": "\u003e \u003e Seems you\u0027re already walking through all origins to check for IsValidIsolatedOrigin(), so you could just move this warning into that loop.  (And let it ignore the duplicate when doing the insert() below rather than returning early.)\n\u003e \n\u003e This would require inserting one-by-one (see my other comment why batch insertion might be preferrable).\n\nNot exactly - what I was thinking of is to keep \n  isolated_origins_.insert(origins_to_add.begin(), origins_to_add.end());\nwhich would auto-remove the duplicates, but just warn about them in the for loop above (by checking isolated_origins_.count(origin) inside it).  I\u0027m fine either way :)",
+      "parentUuid": "c1322989_0e8acae3",
+      "range": {
+        "startLine": 1155,
+        "startChar": 4,
+        "endLine": 1155,
+        "endChar": 79
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1a2e76a_386efbeb",
         "filename": "content/browser/child_process_security_policy_impl.cc",
         "patchSetId": 7
