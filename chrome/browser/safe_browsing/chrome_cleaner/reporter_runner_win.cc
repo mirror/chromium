@@ -624,6 +624,7 @@ class ReporterRunner {
     // itself once all invocations finish.
     instance_ = new ReporterRunner(invocation_type, std::move(invocations),
                                    std::move(time_info));
+    ChromeCleanerController::GetInstance()->OnReporterSequenceStarted();
     instance_->PostNextInvocation();
 
     // The reporter sequence has been scheduled to run, so don't notify that
@@ -1034,6 +1035,7 @@ void SwReporterInvocationSequence::operator=(
 
 void SwReporterInvocationSequence::NotifySequenceDone(
     SwReporterInvocationResult result) {
+  ChromeCleanerController::GetInstance()->OnReporterSequenceDone(result);
   if (on_sequence_done_)
     std::move(on_sequence_done_).Run(result);
 }
@@ -1055,8 +1057,8 @@ SwReporterInvocationSequence::mutable_container() {
 void RunSwReporters(SwReporterInvocationType invocation_type,
                     SwReporterInvocationSequence&& invocations) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
   DCHECK(!invocations.container().empty());
+
   ReporterRunner::MaybeStartInvocations(invocation_type,
                                         std::move(invocations));
 }
