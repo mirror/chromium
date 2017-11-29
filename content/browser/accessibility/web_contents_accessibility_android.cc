@@ -399,8 +399,10 @@ void WebContentsAccessibilityAndroid::UpdateEnabledState(bool enabled) {
     // Remove accessibility from the BrowserAccessibilityManager or it may
     // continue to reference this object which is no longer active (and may be
     // about to be destroyed).
-    if (manager)
+    if (manager) {
       manager->set_web_contents_accessibility(nullptr);
+      return;
+    }
     // Note that disabling part is not useful at this moment since the mode will
     // be enabled again almost immediately for the renderer process that just
     // got swapped in. This boolean enable/disable logic will be expanded
