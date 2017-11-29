@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e14e949_a50a72a3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30341,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-29T20:52:11Z",
+      "side": 1,
+      "message": "nit: Please define a custom enum in enums.xml, with labels like \"Frame\" and \"Subresource\", and use it here.",
+      "range": {
+        "startLine": 30341,
+        "startChar": 70,
+        "endLine": 30341,
+        "endChar": 77
+      },
+      "revId": "b72b9b2862f4c6488c14388311ed897dc565beef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
