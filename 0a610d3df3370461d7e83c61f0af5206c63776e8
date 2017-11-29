@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c8e4be0_a5f93755",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-29T02:17:05Z",
+      "side": 1,
+      "message": "This is not technically correct. Maybe:\n\nSimulates a system connected device. The device will be discovered by the UA when listing system connected devices.\n\nI initially proposed that this method be called setUpSystemConnectedDevice which I believe is more accurate.",
+      "revId": "0a610d3df3370461d7e83c61f0af5206c63776e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
