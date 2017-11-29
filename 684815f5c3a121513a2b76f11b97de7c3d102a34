@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47e91e72_d6220daa",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-29T19:28:57Z",
+      "side": 1,
+      "message": "Should we have a DCHECK() about not enabling both v1 and v2? (perhaps this suggests we should switch these 4 booleans into an enum of some sort)",
+      "range": {
+        "startLine": 766,
+        "startChar": 50,
+        "endLine": 766,
+        "endChar": 0
+      },
+      "revId": "684815f5c3a121513a2b76f11b97de7c3d102a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97fa7567_f3f3e3d5",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-29T19:28:57Z",
+      "side": 1,
+      "message": "I wonder if we could do this dance differently.\n\nbool migrate_sessions_on_network_change_v2 \u003d false;\nbool migrate_sessions_early_v2 \u003d false;\nbool migrate_sessions_on_network_change \u003d false;\nbool migrate_sessions_early \u003d false;\n\nmigrate_sessions_on_network_change_v2 \u003d data_provider.ConsumeBool();\nif (migrate_sessions_on_network_change_v2) {\n  migrate_sessions_early_v2 \u003d data_provider.ConsumeBool();\n} else {\n  migrate_sessions_on_network_change \u003d data_provider.ConsumeBool();\n  if (migrate_sessions_on_network_change) {\n    migrate_sessions_early_v2 \u003d data_provider.ConsumeBool();\n  }\n}\n\nThis way we make it clear that we\u0027re only setting the right combination of flags.",
+      "revId": "684815f5c3a121513a2b76f11b97de7c3d102a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
