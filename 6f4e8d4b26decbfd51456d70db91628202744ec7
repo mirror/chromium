@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36943716_78d4fa15",
+        "filename": "components/crash/core/common/crash_key_base_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-29T21:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc7768da_629415ec",
+      "revId": "6f4e8d4b26decbfd51456d70db91628202744ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edb23406_09dc7e58",
         "filename": "components/crash/core/common/crash_key_base_support.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T18:49:37Z",
       "side": 1,
       "message": "This looks really freaky, but OK.\n\nThe whole implementation’s kind of odd, with the three size classes. I guess you were trying to balance “do something reasonable” against “don’t reimplement the world.”",
+      "revId": "6f4e8d4b26decbfd51456d70db91628202744ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72d733f_94c5d95a",
+        "filename": "components/crash/core/common/crash_key_base_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-29T21:51:00Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m not super happy with it, but I\u0027m not excited about adding the //base API either (though //content crash keys I think necessitate it).\n\nThese basically map to the old size classes: https://cs.chromium.org/chromium/src/components/crash/core/common/crash_keys.h. I couldn\u0027t think of a way to provide totally variable-sized crash keys from //base at present. Once we\u0027re in a post-Breakpad world, we can define a custom crashpad::Annotation subclass that heap-allocates its buffer instead, so this would be able to go away then.\n\nI thought this macro was at least better than a switch statement repeated 3 times that varies in small ways (more error prone to read/review).",
+      "parentUuid": "edb23406_09dc7e58",
       "revId": "6f4e8d4b26decbfd51456d70db91628202744ec7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
