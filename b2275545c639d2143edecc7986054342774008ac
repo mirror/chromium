@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "083c2af3_df220cd0",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-29T21:54:09Z",
+      "side": 1,
+      "message": "thought about it a bit more. What you need to do is roughly the following:\n\n* Make a Closeable concept:\n\n template \u003ctypename T, typename HostType\u003e\n class Closeable {\n  public:\n   void Close() { binding_.Close(); }\n   void SetBinding(mojo::StrongBindingPtr\u003cHostInterfaceType\u003e binding) {\n     binding_ \u003d std::move(binding);\n   }\n \n   WeakPtr\u003cT\u003e GetWeakPtr() { return weak_ptr_factory_.GetWeakPtr(); }\n \n  private:\n   mojo::StrongBindingPtr\u003cHostInterfaceType\u003e binding_;\n   base::WeakPtrFactory\u003cT\u003e weak_ptr_factory_;\n };\n\n* Make both PrinterDiscoverySessionHostImpl and PrintJobHostImpl implement the concept:\n\n class PrintJobHostImpl\n    : public Closeable\u003cPrintJobHostImpl, mojom::PrinterDiscoverySessionHost\u003e,\n      ... {\n };\n\n* When you create the objects, store a *weak* reference to them if you only expect one object to be alive at the same time:\n\n  // Manages its own lifetime.\n  auto print_job \u003d new PrintJobHostImpl(\n      std::move(instance), std::move(settings),\n      base::File(scoped_handle.release().handle), print_job-\u003edata_size);\n  print_job-\u003eSetBinding(\n      mojo::MakeStrongBinding(std::move(host), std::move(request)));\n  if (print_job_)\n    print_job_-\u003eClose();\n  print_job_ \u003d print_job.GetWeakPtr();\n  std::move(callback).Run(std::move(host_proxy));\n\n* In the OnConnectionClosed(), close any remaining weak references:\n\n  void OnConnectionClosed() {\n    if (print_job_)\n      print_job_-\u003eClose();\n    ...\n  }\n\nNote that if you expect more than one object to be alive at the same time, you\u0027ll need to store the list of such objects, and prune the list from dead objects every time you touch it, which should prevent the list of stale objects to potentially grow unbounded.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 41
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d4f22c4_45b16b4a",
         "filename": "components/arc/arc_bridge_host_impl.cc",
         "patchSetId": 28
@@ -277,6 +300,30 @@
       "side": 1,
       "message": "Here\u0027s stack trace (I had to switch to regular CHECK, since neither dcheck_always_on nor debug work at the moment):\n#0 0x000002a3d8d0 base::debug::StackTrace::StackTrace()\n#1 0x000002a4deb8 logging::LogMessage::~LogMessage()\n#2 0x00000421abf2 arc::(anonymous namespace)::MojoChannelImpl\u003c\u003e::OnVersionReady()\n#3 0x000002af5258 _ZN4base8internal7InvokerINS0_9BindStateIPFvRKNS_17RepeatingCallbackIFvjEEEN4mojo9StructPtrINS8_17interface_control24RunResponseMessageParamsEEEEJS5_EEEFvSC_EE3RunEPNS0_13BindStateBaseEOSC_\n#4 0x000002af5204 mojo::internal::(anonymous namespace)::RunResponseForwardToCallback::Accept()\n#5 0x000002aeb7e0 mojo::InterfaceEndpointClient::HandleValidatedMessage()\n#6 0x000002aefca0 mojo::internal::MultiplexRouter::ProcessIncomingMessage()\n#7 0x000002aef74e mojo::internal::MultiplexRouter::Accept()\n#8 0x000002aeaf1c mojo::Connector::ReadSingleMessage()\n#9 0x000002aeb3e4 mojo::Connector::ReadAllAvailableMessages()\n#10 0x000002af82ac mojo::SimpleWatcher::OnHandleReady()\n#11 0x000002a3dea0 base::debug::TaskAnnotator::RunTask()\n#12 0x000002a52194 base::MessageLoop::RunTask()\n#13 0x000002a52506 base::MessageLoop::DoWork()\n#14 0x000002a5322c base::MessagePumpLibevent::Run()\n#15 0x000002a6a868 base::RunLoop::Run()\n#16 0x000002812948 ChromeBrowserMainParts::MainMessageLoopRun()\n#17 0x00000193dbce content::BrowserMainLoop::RunMainMessageLoopParts()\n#18 0x00000193ff80 content::BrowserMainRunnerImpl::Run()\n#19 0x00000193ac70 content::BrowserMain()\n#20 0x0000028043b0 content::ContentMainRunnerImpl::Run()\n#21 0x00000280a468 service_manager::Main()\n#22 0x000002803460 content::ContentMain()\n#23 0x0000014c8702 ChromeMain\n#24 0x0000b3bcc8a0 __libc_start_main",
       "parentUuid": "d60d8f23_c14d88d4",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "475b6e01_545034a5",
+        "filename": "components/arc/arc_bridge_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-29T21:54:09Z",
+      "side": 1,
+      "message": "Ah thanks! That\u0027s something we should fix globally instead of just in this one case. Can you try cherry-picking https://chromium-review.googlesource.com/#/c/chromium/src/+/797970 and see if it fixes your error?",
+      "parentUuid": "647932ee_72f71b19",
       "range": {
         "startLine": 39,
         "startChar": 0,
