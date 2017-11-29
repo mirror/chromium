@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c3104f1_a618d36b",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:36:12Z",
+      "side": 1,
+      "message": "We still have production code inside a DCHECK which will be compiled away in release builds\n\nAlso can you comment on why this DCHECK will hold, ie relationship to above if statement",
+      "revId": "634b796b46666d59324becb848df88257e6f95bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49bbdc4_5b1823db",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:36:12Z",
+      "side": 1,
+      "message": "its to the quad content space not the target space, but I guess what is rly interesting here is that it\u0027s using an inverted matrix and not projecting.",
+      "revId": "634b796b46666d59324becb848df88257e6f95bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5287bd6a_bbb10e5b",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:36:12Z",
+      "side": 1,
+      "message": "Can you leave a comment explaining the above if statement\u0027s intent, cuz it\u0027s not entirely obvious to read.",
+      "revId": "634b796b46666d59324becb848df88257e6f95bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
