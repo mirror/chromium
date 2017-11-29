@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b06698d3_42d66eb9",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T18:18:51Z",
+      "side": 1,
+      "message": "optional nit:\n  // The shelf should always be bottom-aligned and not hidden in tablet mode;\n  // alignment and auto-hide are assigned from prefs when tablet mode is exited.",
+      "revId": "985421f33b33837832db63bef94de2c79a348e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8235aa8e_99d8f343",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T18:18:51Z",
+      "side": 1,
+      "message": "optional nit: // Verify that screen rotation does not change alignment or auto-hide.",
+      "revId": "985421f33b33837832db63bef94de2c79a348e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
