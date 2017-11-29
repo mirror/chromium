@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19156b99_817efc76",
+        "filename": "components/os_crypt/key_storage_linux.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-29T07:58:46Z",
+      "side": 1,
+      "message": "what about adding an async GetKey() as well, and update the comment that the async version is preferred?",
+      "revId": "6cc27a9ad1af3bd276d3071a531b14baac7648de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
