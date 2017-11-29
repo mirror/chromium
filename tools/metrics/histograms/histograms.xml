@@ -37713,6 +37713,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true"
+    name="MobileStartup.Experimental.Cold.TimeToFirstNavigationCommit"
+    units="ms">
+  <owner>pasko@chromium.org</owner>
+  <owner>alexilin@chromium.org</owner>
+  <summary>
+    Android: The time from the earliest entry point in the browser process to
+    the moment the first navigation is committed, i.e. when renderer gets the
+    first byte of the document. It excludes all navigations to non http(s) pages
+    like chrome error pages, a new tab page, a blank page.
+  </summary>
+</histogram>
+
 <histogram name="MobileStartup.IntentToCreationTime" units="ms">
   <owner>twellington@chromium.org</owner>
   <summary>
@@ -82641,6 +82654,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Startup.FirstCommitNavigationTime3" units="ms">
+  <obsolete>
+    Replaced with MobileStartup.Experimental.Cold.TimeToFirstNavigationCommit on
+    11/2017
+  </obsolete>
   <owner>pasko@chromium.org</owner>
   <owner>wnwen@chromium.org</owner>
   <summary>
@@ -101455,6 +101472,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="CustomTabs.IntentToFirstCommitNavigationTime2"/>
   <affected-histogram name="CustomTabs.IntentToFirstCommitNavigationTime3"/>
   <affected-histogram name="CustomTabs.IntentToFirstNavigationStartTime"/>
+  <affected-histogram
+      name="MobileStartup.Experimental.Cold.TimeToFirstNavigationCommit"/>
   <affected-histogram name="Startup.FirstCommitNavigationTime2"/>
   <affected-histogram name="Startup.FirstCommitNavigationTime3"/>
 </histogram_suffixes>
