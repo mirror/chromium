@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8d27227_b31cdea4",
+        "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T18:48:24Z",
+      "side": 0,
+      "message": "nit: I think it\u0027s preferable to test that load-path is *not* displayed for extensions that aren\u0027t unpacked, so I\u0027d like to leave this in somewhere.",
+      "revId": "c0c0d100d6ce747a9d1c595f37ec5804cbb354c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
