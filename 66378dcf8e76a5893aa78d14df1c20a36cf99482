@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcf3b514_3f72e3df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-29T22:40:48Z",
+      "side": 1,
+      "message": "I like Dominick\u0027s idea.\n\nWe would call\nWebApkInstallService::Get()-\u003eTriggerFreeSpaceCheck()\nhere\n\n- In WebApkInstallService we would delay WebApkInstallService::InstallAsync() calls till the free space check has completed (and potentially the user\u0027s cached data has been cleared).\n- If WebApkInstallService::InstallAsync() is called after the free space check has completed, we will use the last computed value as long the last computation occurred recently (e.g within the last 10 minutes)\n- Once a free space check has started it proceeds till completion. For instance, the check cannot be stopped if the web page being added to the homescreen does not have a web manifest\n- WebApkInstallService already has handling for adding a shortcut if the install failed\n\nI think that WebApkInstallSpaceManager can be merged into WebApkInstallService (Note that WebApkInstallService already has a Java counterpart)\n\nIn my proposed world, the memory state checking would be initiated from C++ instead of from Java",
+      "revId": "66378dcf8e76a5893aa78d14df1c20a36cf99482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
