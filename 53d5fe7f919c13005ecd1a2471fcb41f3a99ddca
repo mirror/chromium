@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaa07e8f_215ffee6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-29T15:22:29Z",
+      "side": 1,
+      "message": "Might be able to remove?",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "53d5fe7f919c13005ecd1a2471fcb41f3a99ddca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9865316e_9d432f54",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-29T15:22:29Z",
+      "side": 1,
+      "message": "Still used? Same below.",
+      "range": {
+        "startLine": 16,
+        "startChar": 63,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "53d5fe7f919c13005ecd1a2471fcb41f3a99ddca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706e6b59_9757e0d9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-29T15:22:29Z",
+      "side": 1,
+      "message": "Still useful? Now that you pass it directly to the mediator, do you still need to keep it in a property here?",
+      "range": {
+        "startLine": 35,
+        "startChar": 67,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "53d5fe7f919c13005ecd1a2471fcb41f3a99ddca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
