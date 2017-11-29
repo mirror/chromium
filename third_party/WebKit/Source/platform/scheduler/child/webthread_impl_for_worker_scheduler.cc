@@ -43,7 +43,7 @@ void WebThreadImplForWorkerScheduler::Init() {
 }
 
 WebThreadImplForWorkerScheduler::~WebThreadImplForWorkerScheduler() {
-  if (worker_scheduler_) {
+  if (!was_shutdown_on_thread_.Set()) {
     base::WaitableEvent completion(
         base::WaitableEvent::ResetPolicy::AUTOMATIC,
         base::WaitableEvent::InitialState::NOT_SIGNALED);
@@ -60,6 +60,10 @@ void WebThreadImplForWorkerScheduler::InitOnThread(
     base::WaitableEvent* completion) {
   // TODO(alexclarke): Do we need to unify virtual time for workers and the
   // main thread?
+  {
+    base::AutoLock lock(needs_shutdown_on_thread_lock_);
+    needs_shutdown_on_thread_.SetWhileLocked(true);
+  }
   worker_scheduler_ = CreateWorkerScheduler();
   worker_scheduler_->Init();
   task_queue_ = worker_scheduler_->DefaultTaskQueue();
@@ -76,6 +80,8 @@ void WebThreadImplForWorkerScheduler::InitOnThread(
 
 void WebThreadImplForWorkerScheduler::ShutdownOnThread(
     base::WaitableEvent* completion) {
+  was_shutdown_on_thread_.Set();
+
   task_queue_ = nullptr;
   idle_task_runner_ = nullptr;
   web_scheduler_ = nullptr;
