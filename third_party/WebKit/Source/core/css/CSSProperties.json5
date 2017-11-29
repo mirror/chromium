@@ -1455,7 +1455,7 @@
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       svg: true,
-      converter: "ConvertColor",
+      converter: "ConvertStyleColor",
     },
     {
       name: "flood-opacity",
@@ -1703,7 +1703,7 @@
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       svg: true,
-      converter: "ConvertColor",
+      converter: "ConvertStyleColor",
     },
     {
       name: "line-height",
