@@ -74,6 +74,6 @@ DragDetails::DragDetails(aura::Window* window,
   }
 }
 
-DragDetails::~DragDetails() = default;
+DragDetails::~DragDetails() {}
 
 }  // namespace ash

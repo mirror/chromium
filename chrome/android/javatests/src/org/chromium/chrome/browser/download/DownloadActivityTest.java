@@ -139,6 +139,7 @@ public class DownloadActivityTest {
 
     @Test
     @MediumTest
+    @RetryOnFailure(message = "crbug.com/751492")
     public void testSpaceDisplay() throws Exception {
         // This first check is a Criteria because initialization of the Adapter is asynchronous.
         CriteriaHelper.pollUiThread(new Criteria() {
@@ -155,14 +156,7 @@ public class DownloadActivityTest {
         ThreadUtils.runOnUiThread(() -> mAdapter.onDownloadItemCreated(updateItem));
         mAdapterObserver.onChangedCallback.waitForCallback(callCount, 2);
         mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(spaceDisplayCallCount);
-        // Use Criteria here because the text for SpaceDisplay is updated through an AsyncTask.
-        // Same for the checks below.
-        CriteriaHelper.pollUiThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                return TextUtils.equals("6.50 GB downloaded", mSpaceUsedDisplay.getText());
-            }
-        });
+        Assert.assertEquals("6.50 GB downloaded", mSpaceUsedDisplay.getText());
 
         // Mark one download as deleted on disk, which should prevent it from being counted.
         callCount = mAdapterObserver.onChangedCallback.getCallCount();
@@ -172,12 +166,7 @@ public class DownloadActivityTest {
         ThreadUtils.runOnUiThread(() -> mAdapter.onDownloadItemUpdated(deletedItem));
         mAdapterObserver.onChangedCallback.waitForCallback(callCount, 2);
         mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(spaceDisplayCallCount);
-        CriteriaHelper.pollUiThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                return TextUtils.equals("5.50 GB downloaded", mSpaceUsedDisplay.getText());
-            }
-        });
+        Assert.assertEquals("5.50 GB downloaded", mSpaceUsedDisplay.getText());
 
         // Say that the offline page has been deleted.
         callCount = mAdapterObserver.onChangedCallback.getCallCount();
@@ -189,12 +178,7 @@ public class DownloadActivityTest {
                                 deletedPage.id));
         mAdapterObserver.onChangedCallback.waitForCallback(callCount, 2);
         mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(spaceDisplayCallCount);
-        CriteriaHelper.pollUiThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                return TextUtils.equals("512.00 MB downloaded", mSpaceUsedDisplay.getText());
-            }
-        });
+        Assert.assertEquals("512.00 MB downloaded", mSpaceUsedDisplay.getText());
     }
 
     /** Clicking on filters affects various things in the UI. */

@@ -10,7 +10,6 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h"
-#include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_scanner_results.h"
 #include "chrome/browser/ui/webui/settings/settings_page_ui_handler.h"
 
 class Profile;
@@ -34,10 +33,8 @@ class ChromeCleanupHandler
   void OnIdle(
       safe_browsing::ChromeCleanerController::IdleReason idle_reason) override;
   void OnScanning() override;
-  void OnInfected(const safe_browsing::ChromeCleanerScannerResults&
-                      reported_results) override;
-  void OnCleaning(const safe_browsing::ChromeCleanerScannerResults&
-                      reported_results) override;
+  void OnInfected(const std::set<base::FilePath>& files) override;
+  void OnCleaning(const std::set<base::FilePath>& files) override;
   void OnRebootRequired() override;
   void OnLogsEnabledChanged(bool logs_enabled) override;
 

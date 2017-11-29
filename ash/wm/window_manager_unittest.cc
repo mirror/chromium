@@ -41,7 +41,7 @@ class CustomEventHandler : public ui::test::TestEventHandler {
   CustomEventHandler()
       : key_result_(ui::ER_UNHANDLED), mouse_result_(ui::ER_UNHANDLED) {}
 
-  ~CustomEventHandler() override = default;
+  ~CustomEventHandler() override {}
 
   void set_key_event_handling_result(ui::EventResult result) {
     key_result_ = result;
@@ -83,7 +83,7 @@ using WindowManagerTest = AshTestBase;
 
 class NonFocusableDelegate : public aura::test::TestWindowDelegate {
  public:
-  NonFocusableDelegate() = default;
+  NonFocusableDelegate() {}
 
  private:
   bool CanFocus() override { return false; }
@@ -94,7 +94,7 @@ class NonFocusableDelegate : public aura::test::TestWindowDelegate {
 class HitTestWindowDelegate : public aura::test::TestWindowDelegate {
  public:
   HitTestWindowDelegate() : hittest_code_(HTNOWHERE) {}
-  ~HitTestWindowDelegate() override = default;
+  ~HitTestWindowDelegate() override {}
   void set_hittest_code(int hittest_code) { hittest_code_ = hittest_code; }
 
  private:

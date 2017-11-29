@@ -53,7 +53,7 @@ class ModalWindow : public views::WidgetDelegateView,
     ++g_color_index %= arraysize(g_colors);
     AddChildView(open_button_);
   }
-  ~ModalWindow() override = default;
+  ~ModalWindow() override {}
 
   static void OpenModalWindow(aura::Window* parent, ui::ModalType modal_type) {
     views::Widget* widget = views::Widget::CreateWindowWithParent(
@@ -102,7 +102,7 @@ class NonModalTransient : public views::WidgetDelegateView {
   NonModalTransient() : color_(g_colors[g_color_index]) {
     ++g_color_index %= arraysize(g_colors);
   }
-  ~NonModalTransient() override = default;
+  ~NonModalTransient() override {}
 
   static void OpenNonModalTransient(aura::Window* parent) {
     views::Widget* widget =
@@ -231,7 +231,7 @@ WindowTypeLauncher::WindowTypeLauncher(
   set_context_menu_controller(this);
 }
 
-WindowTypeLauncher::~WindowTypeLauncher() = default;
+WindowTypeLauncher::~WindowTypeLauncher() {}
 
 void WindowTypeLauncher::OnPaint(gfx::Canvas* canvas) {
   canvas->FillRect(GetLocalBounds(), SK_ColorWHITE);

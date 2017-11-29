@@ -61,7 +61,7 @@ NegotiatingAuthenticatorBase::NegotiatingAuthenticatorBase(
     Authenticator::State initial_state)
     : state_(initial_state) {}
 
-NegotiatingAuthenticatorBase::~NegotiatingAuthenticatorBase() = default;
+NegotiatingAuthenticatorBase::~NegotiatingAuthenticatorBase() {}
 
 Authenticator::State NegotiatingAuthenticatorBase::state() const {
   return state_;

@@ -11,7 +11,6 @@
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
-#include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_scanner_results.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h"
 #include "components/chrome_cleaner/public/interfaces/chrome_prompt.mojom.h"
 
@@ -92,10 +91,8 @@ class ChromeCleanerController {
    public:
     virtual void OnIdle(IdleReason idle_reason) {}
     virtual void OnScanning() {}
-    virtual void OnInfected(
-        const ChromeCleanerScannerResults& scanner_results) {}
-    virtual void OnCleaning(
-        const ChromeCleanerScannerResults& scanner_results) {}
+    virtual void OnInfected(const std::set<base::FilePath>& files_to_delete) {}
+    virtual void OnCleaning(const std::set<base::FilePath>& files_to_delete) {}
     virtual void OnRebootRequired() {}
     virtual void OnRebootFailed() {}
     virtual void OnLogsEnabledChanged(bool logs_enabled) {}

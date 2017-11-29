@@ -37,7 +37,7 @@
 
 namespace blink {
 
-void SetCaretBlinkInterval(base::TimeDelta interval) {
+void SetCaretBlinkInterval(double interval) {
   LayoutTheme::GetTheme().SetCaretBlinkInterval(interval);
 }
 

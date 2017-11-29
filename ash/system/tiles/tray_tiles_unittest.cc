@@ -22,8 +22,8 @@ namespace ash {
 // Tests manually control their session state.
 class TrayTilesTest : public NoSessionAshTestBase {
  public:
-  TrayTilesTest() = default;
-  ~TrayTilesTest() override = default;
+  TrayTilesTest() {}
+  ~TrayTilesTest() override {}
 
   void SetUp() override {
     // Explicitly enable the NightLight feature for the tests.

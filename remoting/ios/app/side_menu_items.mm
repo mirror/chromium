@@ -20,6 +20,14 @@ static NSString* const kFeedbackContext = @"SideMenuFeedbackContext";
 
 #pragma mark - SideMenuItem
 
+@interface SideMenuItem ()
+
+- (instancetype)initWithTitle:(NSString*)title
+                         icon:(UIImage*)icon
+                       action:(SideMenuItemAction)action;
+
+@end
+
 @implementation SideMenuItem
 
 @synthesize title = _title;

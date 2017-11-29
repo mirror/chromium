@@ -1895,8 +1895,7 @@ void AXObject::SetScrollOffset(const IntPoint& offset) const {
 
 void AXObject::GetRelativeBounds(AXObject** out_container,
                                  FloatRect& out_bounds_in_container,
-                                 SkMatrix44& out_container_transform,
-                                 bool* clips_children) const {
+                                 SkMatrix44& out_container_transform) const {
   *out_container = nullptr;
   out_bounds_in_container = FloatRect();
   out_container_transform.setIdentity();
@@ -1916,13 +1915,6 @@ void AXObject::GetRelativeBounds(AXObject** out_container,
   LayoutObject* layout_object = LayoutObjectForRelativeBounds();
   if (!layout_object)
     return;
-
-  if (clips_children) {
-    if (IsWebArea())
-      *clips_children = true;
-    else
-      *clips_children = layout_object->HasOverflowClip();
-  }
 
   if (IsWebArea()) {
     if (layout_object->GetFrame()->View()) {

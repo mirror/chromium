@@ -16,7 +16,8 @@ ClipboardEchoFilter::ClipboardEchoFilter()
     host_filter_(this) {
 }
 
-ClipboardEchoFilter::~ClipboardEchoFilter() = default;
+ClipboardEchoFilter::~ClipboardEchoFilter() {
+}
 
 void ClipboardEchoFilter::set_client_stub(ClipboardStub* client_stub) {
   client_stub_ = client_stub;

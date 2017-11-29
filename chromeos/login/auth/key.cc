@@ -26,7 +26,12 @@ const int kKeySizeInBits = 256;
 Key::Key() : key_type_(KEY_TYPE_PASSWORD_PLAIN) {
 }
 
-Key::Key(const Key& other) = default;
+Key::Key(const Key& other)
+    : key_type_(other.key_type_),
+      salt_(other.salt_),
+      secret_(other.secret_),
+      label_(other.label_) {
+}
 
 Key::Key(const std::string& plain_text_password)
     : key_type_(KEY_TYPE_PASSWORD_PLAIN), secret_(plain_text_password) {
@@ -36,7 +41,8 @@ Key::Key(KeyType key_type, const std::string& salt, const std::string& secret)
     : key_type_(key_type), salt_(salt), secret_(secret) {
 }
 
-Key::~Key() = default;
+Key::~Key() {
+}
 
 bool Key::operator==(const Key& other) const {
   return other.key_type_ == key_type_ && other.salt_ == salt_ &&

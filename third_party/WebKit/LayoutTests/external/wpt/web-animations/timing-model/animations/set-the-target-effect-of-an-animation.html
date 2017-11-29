@@ -13,7 +13,7 @@
 promise_test(t => {
   const anim = createDiv(t).animate({ marginLeft: [ '0px', '100px' ] },
                                     100 * MS_PER_SEC);
-  assert_true(anim.pending);
+  assert_equals(anim.playState, 'pending');
 
   const retPromise = anim.ready.then(() => {
     assert_unreached('ready promise is fulfilled');
@@ -23,9 +23,7 @@ promise_test(t => {
   });
 
   anim.effect = null;
-  // This is a bit odd, see: https://github.com/w3c/web-animations/issues/207
   assert_equals(anim.playState, 'paused');
-  assert_false(anim.pending);
 
   return retPromise;
 }, 'If new effect is null and old effect is not null, we reset the pending ' +
@@ -34,15 +32,14 @@ promise_test(t => {
 promise_test(t => {
   const anim = new Animation();
   anim.pause();
-  assert_true(anim.pending);
+  assert_equals(anim.playState, 'pending');
 
   anim.effect = new KeyframeEffectReadOnly(createDiv(t),
                                            { marginLeft: [ '0px', '100px' ] },
                                            100 * MS_PER_SEC);
-  assert_true(anim.pending);
+  assert_equals(anim.playState, 'pending');
 
   return anim.ready.then(() => {
-    assert_false(anim.pending);
     assert_equals(anim.playState, 'paused');
   });
 }, 'If animation has a pending pause task, reschedule that task to run ' +
@@ -51,15 +48,14 @@ promise_test(t => {
 promise_test(t => {
   const anim = new Animation();
   anim.play();
-  assert_true(anim.pending);
+  assert_equals(anim.playState, 'pending');
 
   anim.effect = new KeyframeEffectReadOnly(createDiv(t),
                                            { marginLeft: [ '0px', '100px' ] },
                                            100 * MS_PER_SEC);
-  assert_true(anim.pending);
+  assert_equals(anim.playState, 'pending');
 
   return anim.ready.then(() => {
-    assert_false(anim.pending);
     assert_equals(anim.playState, 'running');
   });
 }, 'If animation has a pending play task, reschedule that task to run ' +

@@ -68,8 +68,8 @@ namespace {
 // Base class for all create note ash tests.
 class CreateNoteTest : public AshTestBase {
  public:
-  CreateNoteTest() = default;
-  ~CreateNoteTest() override = default;
+  CreateNoteTest() {}
+  ~CreateNoteTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

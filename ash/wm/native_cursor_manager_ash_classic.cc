@@ -55,7 +55,7 @@ void NotifyMouseEventsEnableStateChange(bool enabled) {
 NativeCursorManagerAshClassic::NativeCursorManagerAshClassic()
     : native_cursor_enabled_(true), image_cursors_(new ui::ImageCursors) {}
 
-NativeCursorManagerAshClassic::~NativeCursorManagerAshClassic() = default;
+NativeCursorManagerAshClassic::~NativeCursorManagerAshClassic() {}
 
 void NativeCursorManagerAshClassic::SetNativeCursorEnabled(bool enabled) {
   native_cursor_enabled_ = enabled;

@@ -8,8 +8,8 @@
 
 namespace ash {
 
-WallpaperDelegateMus::WallpaperDelegateMus() = default;
-WallpaperDelegateMus::~WallpaperDelegateMus() = default;
+WallpaperDelegateMus::WallpaperDelegateMus() {}
+WallpaperDelegateMus::~WallpaperDelegateMus() {}
 
 int WallpaperDelegateMus::GetAnimationType() {
   return ::wm::WINDOW_VISIBILITY_ANIMATION_TYPE_FADE;

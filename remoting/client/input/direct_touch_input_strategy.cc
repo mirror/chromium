@@ -15,9 +15,9 @@ const float kDragFeedbackRadius = 55.f;
 
 }  // namespace
 
-DirectTouchInputStrategy::DirectTouchInputStrategy() = default;
+DirectTouchInputStrategy::DirectTouchInputStrategy() {}
 
-DirectTouchInputStrategy::~DirectTouchInputStrategy() = default;
+DirectTouchInputStrategy::~DirectTouchInputStrategy() {}
 
 void DirectTouchInputStrategy::HandleZoom(const ViewMatrix::Point& pivot,
                                           float scale,

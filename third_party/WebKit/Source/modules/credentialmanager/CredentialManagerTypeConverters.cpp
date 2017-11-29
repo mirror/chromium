@@ -5,10 +5,10 @@
 #include "modules/credentialmanager/CredentialManagerTypeConverters.h"
 
 #include "bindings/core/v8/array_buffer_or_array_buffer_view.h"
-#include "modules/credentialmanager/MakePublicKeyCredentialOptions.h"
+#include "modules/credentialmanager/MakeCredentialOptions.h"
 #include "modules/credentialmanager/PublicKeyCredential.h"
+#include "modules/credentialmanager/PublicKeyCredentialEntity.h"
 #include "modules/credentialmanager/PublicKeyCredentialParameters.h"
-#include "modules/credentialmanager/PublicKeyCredentialRpEntity.h"
 #include "modules/credentialmanager/PublicKeyCredentialUserEntity.h"
 #include "platform/wtf/Time.h"
 
@@ -21,11 +21,9 @@ constexpr TimeDelta kAdjustedTimeoutUpper = TimeDelta::FromMinutes(2);
 namespace mojo {
 
 using webauth::mojom::blink::AuthenticatorStatus;
-using webauth::mojom::blink::MakePublicKeyCredentialOptionsPtr;
-using webauth::mojom::blink::PublicKeyCredentialRpEntity;
-using webauth::mojom::blink::PublicKeyCredentialRpEntityPtr;
-using webauth::mojom::blink::PublicKeyCredentialUserEntity;
-using webauth::mojom::blink::PublicKeyCredentialUserEntityPtr;
+using webauth::mojom::blink::MakeCredentialOptionsPtr;
+using webauth::mojom::blink::PublicKeyCredentialEntity;
+using webauth::mojom::blink::PublicKeyCredentialEntityPtr;
 using webauth::mojom::blink::PublicKeyCredentialParameters;
 using webauth::mojom::blink::PublicKeyCredentialParametersPtr;
 using webauth::mojom::blink::PublicKeyCredentialType;
@@ -72,12 +70,18 @@ AuthenticatorTransport TypeConverter<AuthenticatorTransport, String>::Convert(
 }
 
 // static
-PublicKeyCredentialUserEntityPtr
-TypeConverter<PublicKeyCredentialUserEntityPtr,
+PublicKeyCredentialEntityPtr
+TypeConverter<PublicKeyCredentialEntityPtr,
               blink::PublicKeyCredentialUserEntity>::
     Convert(const blink::PublicKeyCredentialUserEntity& user) {
-  auto entity = webauth::mojom::blink::PublicKeyCredentialUserEntity::New();
-  entity->id = ConvertTo<Vector<uint8_t>>(user.id());
+  // These manual checks are here because while these aspects are required,
+  // the IDL itself doesn't mark them as required to allow for future
+  // types of entities where these params may not be required.
+  if (!(user.hasId() && user.hasName() && user.hasDisplayName())) {
+    return nullptr;
+  }
+  auto entity = webauth::mojom::blink::PublicKeyCredentialEntity::New();
+  entity->id = user.id();
   entity->name = user.name();
   if (user.hasIcon()) {
     entity->icon = blink::KURL(blink::KURL(), user.icon());
@@ -87,11 +91,13 @@ TypeConverter<PublicKeyCredentialUserEntityPtr,
 }
 
 // static
-PublicKeyCredentialRpEntityPtr
-TypeConverter<PublicKeyCredentialRpEntityPtr,
-              blink::PublicKeyCredentialRpEntity>::
-    Convert(const blink::PublicKeyCredentialRpEntity& rp) {
-  auto entity = webauth::mojom::blink::PublicKeyCredentialRpEntity::New();
+PublicKeyCredentialEntityPtr
+TypeConverter<PublicKeyCredentialEntityPtr, blink::PublicKeyCredentialEntity>::
+    Convert(const blink::PublicKeyCredentialEntity& rp) {
+  if (!rp.hasName()) {
+    return nullptr;
+  }
+  auto entity = webauth::mojom::blink::PublicKeyCredentialEntity::New();
   entity->id = rp.id();
   entity->name = rp.name();
   if (rp.hasIcon()) {
@@ -112,19 +118,17 @@ TypeConverter<PublicKeyCredentialParametersPtr,
   // A COSEAlgorithmIdentifier's value is a number identifying a cryptographic
   // algorithm. Values are registered in the IANA COSE Algorithms registry.
   // https://www.iana.org/assignments/cose/cose.xhtml#algorithms
-  mojo_parameter->algorithm_identifier = parameter.alg();
+  mojo_parameter->algorithm_identifier = parameter.algorithm();
   return mojo_parameter;
 }
 
 // static
-MakePublicKeyCredentialOptionsPtr
-TypeConverter<MakePublicKeyCredentialOptionsPtr,
-              blink::MakePublicKeyCredentialOptions>::
-    Convert(const blink::MakePublicKeyCredentialOptions& options) {
-  auto mojo_options =
-      webauth::mojom::blink::MakePublicKeyCredentialOptions::New();
-  mojo_options->relying_party = PublicKeyCredentialRpEntity::From(options.rp());
-  mojo_options->user = PublicKeyCredentialUserEntity::From(options.user());
+MakeCredentialOptionsPtr
+TypeConverter<MakeCredentialOptionsPtr, blink::MakeCredentialOptions>::Convert(
+    const blink::MakeCredentialOptions& options) {
+  auto mojo_options = webauth::mojom::blink::MakeCredentialOptions::New();
+  mojo_options->relying_party = PublicKeyCredentialEntity::From(options.rp());
+  mojo_options->user = PublicKeyCredentialEntity::From(options.user());
   if (!mojo_options->relying_party | !mojo_options->user) {
     return nullptr;
   }
@@ -144,7 +148,7 @@ TypeConverter<MakePublicKeyCredentialOptionsPtr,
   // Steps 8 and 9 of
   // https://www.w3.org/TR/2017/WD-webauthn-20170505/#createCredential
   Vector<PublicKeyCredentialParametersPtr> parameters;
-  for (const auto& parameter : options.pubKeyCredParams()) {
+  for (const auto& parameter : options.parameters()) {
     PublicKeyCredentialParametersPtr normalized_parameter =
         PublicKeyCredentialParameters::From(parameter);
     if (normalized_parameter) {
@@ -152,16 +156,16 @@ TypeConverter<MakePublicKeyCredentialOptionsPtr,
     }
   }
 
-  if (parameters.IsEmpty() && options.hasPubKeyCredParams()) {
+  if (parameters.IsEmpty() && options.hasParameters()) {
     return nullptr;
   }
 
-  mojo_options->public_key_parameters = std::move(parameters);
+  mojo_options->crypto_parameters = std::move(parameters);
 
-  if (options.hasExcludeCredentials()) {
-    // Adds the excludeCredentials members
+  if (options.hasExcludeList()) {
+    // Adds the excludeList members
     for (const blink::PublicKeyCredentialDescriptor& descriptor :
-         options.excludeCredentials()) {
+         options.excludeList()) {
       auto mojo_descriptor =
           webauth::mojom::blink::PublicKeyCredentialDescriptor::New();
       mojo_descriptor->type =

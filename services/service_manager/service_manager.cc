@@ -275,9 +275,8 @@ class ServiceManager::Instance
     runner_ = service_manager_->service_process_launcher_factory_->Create(path);
     if (!runner_)
       return false;
-    // TODO(tsepez): use actual sandbox type. https://crbug.com/788778
     mojom::ServicePtr service = runner_->Start(
-        identity_, SANDBOX_TYPE_NO_SANDBOX,
+        identity_, sandbox_type,
         base::Bind(&Instance::PIDAvailable, weak_factory_.GetWeakPtr()));
     StartWithService(std::move(service));
     return true;

@@ -12,7 +12,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/manifest.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
-#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 
 namespace content {
 
@@ -65,12 +64,13 @@ void ManifestManagerHost::OnConnectionError() {
     callback.Run(GURL(), Manifest());
 }
 
-void ManifestManagerHost::OnRequestManifestResponse(int request_id,
-                                                    const GURL& url,
-                                                    const Manifest& manifest) {
+void ManifestManagerHost::OnRequestManifestResponse(
+    int request_id,
+    const GURL& url,
+    const base::Optional<Manifest>& manifest) {
   auto callback = std::move(*callbacks_.Lookup(request_id));
   callbacks_.Remove(request_id);
-  callback.Run(url, manifest);
+  callback.Run(url, manifest.value_or(Manifest()));
 }
 
 void ManifestManagerHost::ManifestUrlChanged(

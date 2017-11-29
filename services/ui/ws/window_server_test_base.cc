@@ -5,7 +5,6 @@
 #include "services/ui/ws/window_server_test_base.h"
 
 #include "base/bind.h"
-#include "base/command_line.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
@@ -16,7 +15,6 @@
 #include "ui/aura/env.h"
 #include "ui/aura/mus/window_tree_client.h"
 #include "ui/aura/mus/window_tree_host_mus.h"
-#include "ui/base/ui_base_switches.h"
 #include "ui/display/display.h"
 #include "ui/display/display_list.h"
 #include "ui/wm/core/capture_controller.h"
@@ -93,8 +91,6 @@ WindowServerTestBase::ReleaseMostRecentClient() {
 }
 
 void WindowServerTestBase::SetUp() {
-  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kMus, switches::kMusHostVizValue);
   WindowServerServiceTestBase::SetUp();
 
   env_ = aura::Env::CreateInstance(aura::Env::Mode::MUS);

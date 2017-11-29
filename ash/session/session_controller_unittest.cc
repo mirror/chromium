@@ -40,7 +40,7 @@ namespace {
 class TestSessionObserver : public SessionObserver {
  public:
   TestSessionObserver() : active_account_id_(EmptyAccountId()) {}
-  ~TestSessionObserver() override = default;
+  ~TestSessionObserver() override {}
 
   // SessionObserver:
   void OnActiveUserSessionChanged(const AccountId& account_id) override {
@@ -94,8 +94,8 @@ void FillDefaultSessionInfo(mojom::SessionInfo* info) {
 
 class SessionControllerTest : public testing::Test {
  public:
-  SessionControllerTest() = default;
-  ~SessionControllerTest() override = default;
+  SessionControllerTest() {}
+  ~SessionControllerTest() override {}
 
   // testing::Test:
   void SetUp() override {
@@ -552,8 +552,8 @@ class CanSwitchUserTest : public AshTestBase {
     ACCEPT_DIALOG,   // A dialog should be shown and we should accept it.
     DECLINE_DIALOG,  // A dialog should be shown and we do not accept it.
   };
-  CanSwitchUserTest() = default;
-  ~CanSwitchUserTest() override = default;
+  CanSwitchUserTest() {}
+  ~CanSwitchUserTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

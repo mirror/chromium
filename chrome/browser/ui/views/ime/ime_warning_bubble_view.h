@@ -74,7 +74,7 @@ class ImeWarningBubbleView : public views::BubbleDialogDelegateView,
   // Saves the Browser instance of the browser view, which will be used in
   // OnBrowserRemoved(), as browser_view_->browser() may be null when
   // OnBrowserRemoved() is called.
-  Browser* const browser_;
+  Browser* browser_;
 
   // True if bubble anchors to the action of the extension.
   bool anchor_to_action_;

@@ -41,7 +41,7 @@ void AudibleContentsTracker::TabChangedAt(content::WebContents* web_contents,
                                           int index,
                                           TabChangeType change_type) {
   // Ignore 'loading' and 'title' changes.
-  if (change_type != TabChangeType::kAll)
+  if (change_type != TabStripModelObserver::ALL)
     return;
 
   if (web_contents->WasRecentlyAudible())

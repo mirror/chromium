@@ -8,6 +8,7 @@ blink_core_sources("fileapi") {
   sources = [
     "Blob.cpp",
     "Blob.h",
+    "BlobCallback.h",
     "File.cpp",
     "File.h",
     "FileError.cpp",

@@ -135,7 +135,8 @@ TokenValidatorFactoryImpl::TokenValidatorFactoryImpl(
       request_context_getter_(request_context_getter) {
 }
 
-TokenValidatorFactoryImpl::~TokenValidatorFactoryImpl() = default;
+TokenValidatorFactoryImpl::~TokenValidatorFactoryImpl() {
+}
 
 std::unique_ptr<protocol::TokenValidator>
 TokenValidatorFactoryImpl::CreateTokenValidator(const std::string& local_jid,

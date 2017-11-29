@@ -23,7 +23,6 @@
 #include "base/macros.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/process/launch.h"
-#include "base/third_party/dynamic_annotations/dynamic_annotations.h"
 #include "base/third_party/valgrind/valgrind.h"
 #include "build/build_config.h"
 #include "sandbox/linux/services/namespace_utils.h"
@@ -36,6 +35,8 @@
 namespace sandbox {
 
 namespace {
+
+bool IsRunningOnValgrind() { return RUNNING_ON_VALGRIND; }
 
 const int kExitSuccess = 0;
 
@@ -258,7 +259,7 @@ bool Credentials::HasCapability(Capability cap) {
 bool Credentials::CanCreateProcessInNewUserNS() {
   // Valgrind will let clone(2) pass-through, but doesn't support unshare(),
   // so always consider UserNS unsupported there.
-  if (RunningOnValgrind()) {
+  if (IsRunningOnValgrind()) {
     return false;
   }
 

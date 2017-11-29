@@ -46,7 +46,7 @@
     function advance() {
       var next = current + 1;
 
-      if (next == total)
+      if (next == total.description)
         finish();
       else
         loopOverGlobals(next, total);

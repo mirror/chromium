@@ -47,8 +47,8 @@ namespace {
 
 class MockDaemonListener : public IPC::Listener {
  public:
-  MockDaemonListener() = default;
-  ~MockDaemonListener() override = default;
+  MockDaemonListener() {}
+  ~MockDaemonListener() override {}
 
   bool OnMessageReceived(const IPC::Message& message) override;
 
@@ -62,8 +62,8 @@ class MockDaemonListener : public IPC::Listener {
 
 class MockNetworkListener : public IPC::Listener {
  public:
-  MockNetworkListener() = default;
-  ~MockNetworkListener() override = default;
+  MockNetworkListener() {}
+  ~MockNetworkListener() override {}
 
   bool OnMessageReceived(const IPC::Message& message) override;
 
@@ -164,9 +164,10 @@ class DesktopProcessTest : public testing::Test {
   mojo::ScopedMessagePipeHandle desktop_process_channel_;
 };
 
-DesktopProcessTest::DesktopProcessTest() = default;
+DesktopProcessTest::DesktopProcessTest() {}
 
-DesktopProcessTest::~DesktopProcessTest() = default;
+DesktopProcessTest::~DesktopProcessTest() {
+}
 
 void DesktopProcessTest::ConnectNetworkChannel(
     const IPC::ChannelHandle& channel_handle) {

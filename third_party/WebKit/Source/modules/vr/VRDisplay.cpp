@@ -983,7 +983,9 @@ void VRDisplay::OnMagicWindowVSync(double timestamp) {
   pending_vsync_ = false;
   pending_vsync_id_ = -1;
   vr_frame_id_ = -1;
-  ProcessScheduledAnimations(timestamp);
+  Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
+      BLINK_FROM_HERE, WTF::Bind(&VRDisplay::ProcessScheduledAnimations,
+                                 WrapWeakPersistent(this), timestamp));
 }
 
 void VRDisplay::OnMagicWindowPose(device::mojom::blink::VRPosePtr pose) {

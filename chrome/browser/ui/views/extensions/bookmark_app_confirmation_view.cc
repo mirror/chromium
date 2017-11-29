@@ -155,9 +155,10 @@ namespace chrome {
 void ShowBookmarkAppDialog(content::WebContents* web_contents,
                            const WebApplicationInfo& web_app_info,
                            AppInstallationAcceptanceCallback callback) {
-  constrained_window::ShowWebModalDialogViews(
+  constrained_window::CreateWebModalDialogViews(
       new BookmarkAppConfirmationView(web_app_info, std::move(callback)),
-      web_contents);
+      web_contents)
+      ->Show();
 }
 
 }  // namespace chrome

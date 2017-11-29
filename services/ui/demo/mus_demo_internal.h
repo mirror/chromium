@@ -32,9 +32,6 @@ class MusDemoInternal : public MusDemo, public aura::WindowManagerDelegate {
 
   // aura::WindowManagerDelegate:
   void SetWindowManagerClient(aura::WindowManagerClient* client) final;
-  void OnWmAcceleratedWidgetAvailableForDisplay(
-      int64_t display_id,
-      gfx::AcceleratedWidget widget) final {}
   void OnWmSetBounds(aura::Window* window, const gfx::Rect& bounds) final;
   bool OnWmSetProperty(aura::Window* window,
                        const std::string& name,

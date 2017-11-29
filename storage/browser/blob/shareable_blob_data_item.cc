@@ -23,7 +23,8 @@ ShareableBlobDataItem::ShareableBlobDataItem(
   DCHECK_NE(item_->type(), DataElement::TYPE_BLOB);
 }
 
-ShareableBlobDataItem::~ShareableBlobDataItem() = default;
+ShareableBlobDataItem::~ShareableBlobDataItem() {
+}
 
 void ShareableBlobDataItem::set_item(scoped_refptr<BlobDataItem> item) {
   item_ = std::move(item);

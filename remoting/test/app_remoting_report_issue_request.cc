@@ -22,9 +22,11 @@ const char kRequestTestOrigin[] =
 namespace remoting {
 namespace test {
 
-AppRemotingReportIssueRequest::AppRemotingReportIssueRequest() = default;
+AppRemotingReportIssueRequest::AppRemotingReportIssueRequest() {
+}
 
-AppRemotingReportIssueRequest::~AppRemotingReportIssueRequest() = default;
+AppRemotingReportIssueRequest::~AppRemotingReportIssueRequest() {
+}
 
 bool AppRemotingReportIssueRequest::Start(
     const std::string& application_id,

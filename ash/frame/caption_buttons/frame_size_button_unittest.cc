@@ -26,8 +26,8 @@ namespace {
 
 class TestWidgetDelegate : public views::WidgetDelegateView {
  public:
-  TestWidgetDelegate() = default;
-  ~TestWidgetDelegate() override = default;
+  TestWidgetDelegate() {}
+  ~TestWidgetDelegate() override {}
 
   // Overridden from views::WidgetDelegate:
   bool CanResize() const override { return true; }
@@ -79,8 +79,8 @@ class TestWidgetDelegate : public views::WidgetDelegateView {
 
 class FrameSizeButtonTest : public AshTestBase {
  public:
-  FrameSizeButtonTest() = default;
-  ~FrameSizeButtonTest() override = default;
+  FrameSizeButtonTest() {}
+  ~FrameSizeButtonTest() override {}
 
   // Returns the center point of |view| in screen coordinates.
   gfx::Point CenterPointInScreen(views::View* view) {
@@ -391,8 +391,8 @@ TEST_F(FrameSizeButtonTest, SizeButtonPressedWhenSnapButtonHovered) {
 
 class FrameSizeButtonTestRTL : public FrameSizeButtonTest {
  public:
-  FrameSizeButtonTestRTL() = default;
-  ~FrameSizeButtonTestRTL() override = default;
+  FrameSizeButtonTestRTL() {}
+  ~FrameSizeButtonTestRTL() override {}
 
   void SetUp() override {
     original_locale_ = base::i18n::GetConfiguredLocale();

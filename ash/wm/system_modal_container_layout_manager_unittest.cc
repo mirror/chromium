@@ -68,7 +68,7 @@ bool AllRootWindowsHaveModalBackgrounds() {
 class TestWindow : public views::WidgetDelegateView {
  public:
   explicit TestWindow(bool modal) : modal_(modal) {}
-  ~TestWindow() override = default;
+  ~TestWindow() override {}
 
   // The window needs be closed from widget in order for
   // aura::client::kModalKey property to be reset.
@@ -95,7 +95,7 @@ class TestWindow : public views::WidgetDelegateView {
 class EventTestWindow : public TestWindow {
  public:
   explicit EventTestWindow(bool modal) : TestWindow(modal), mouse_presses_(0) {}
-  ~EventTestWindow() override = default;
+  ~EventTestWindow() override {}
 
   aura::Window* OpenTestWindowWithContext(aura::Window* context) {
     views::Widget* widget =
@@ -128,7 +128,7 @@ class EventTestWindow : public TestWindow {
 class TransientWindowObserver : public aura::WindowObserver {
  public:
   TransientWindowObserver() : destroyed_(false) {}
-  ~TransientWindowObserver() override = default;
+  ~TransientWindowObserver() override {}
 
   bool destroyed() const { return destroyed_; }
 
@@ -822,8 +822,8 @@ namespace {
 
 class InputTestDelegate : public aura::test::TestWindowDelegate {
  public:
-  InputTestDelegate() = default;
-  ~InputTestDelegate() override = default;
+  InputTestDelegate() {}
+  ~InputTestDelegate() override {}
 
   void RunTest(AshTestBase* test_base) {
     std::unique_ptr<aura::Window> window(

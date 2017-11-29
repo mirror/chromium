@@ -44,7 +44,8 @@ FileSystemDirURLRequestJob::FileSystemDirURLRequestJob(
       weak_factory_(this) {
 }
 
-FileSystemDirURLRequestJob::~FileSystemDirURLRequestJob() = default;
+FileSystemDirURLRequestJob::~FileSystemDirURLRequestJob() {
+}
 
 int FileSystemDirURLRequestJob::ReadRawData(net::IOBuffer* dest,
                                             int dest_size) {

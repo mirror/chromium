@@ -140,11 +140,7 @@ ClientDiscardableHandle::Id ClientDiscardableManager::CreateHandle(
   scoped_refptr<Buffer> buffer;
   int32_t shm_id;
   uint32_t offset = 0;
-  if (!FindAllocation(command_buffer, &buffer, &shm_id, &offset)) {
-    // This can fail if we've lost context, return an invalid Id.
-    return ClientDiscardableHandle::Id();
-  }
-
+  FindAllocation(command_buffer, &buffer, &shm_id, &offset);
   DCHECK_LT(offset * element_size_, std::numeric_limits<uint32_t>::max());
   uint32_t byte_offset = static_cast<uint32_t>(offset * element_size_);
   ClientDiscardableHandle handle(std::move(buffer), byte_offset, shm_id);
@@ -182,7 +178,7 @@ ClientDiscardableHandle ClientDiscardableManager::GetHandle(
   return found->second;
 }
 
-bool ClientDiscardableManager::FindAllocation(CommandBuffer* command_buffer,
+void ClientDiscardableManager::FindAllocation(CommandBuffer* command_buffer,
                                               scoped_refptr<Buffer>* buffer,
                                               int32_t* shm_id,
                                               uint32_t* offset) {
@@ -195,21 +191,18 @@ bool ClientDiscardableManager::FindAllocation(CommandBuffer* command_buffer,
     *offset = allocation->free_offsets.TakeFreeOffset();
     *shm_id = allocation->shm_id;
     *buffer = allocation->buffer;
-    return true;
+    return;
   }
 
   // We couldn't find an existing free entry. Allocate more space.
   auto allocation = std::make_unique<Allocation>(elements_per_allocation_);
   allocation->buffer = command_buffer->CreateTransferBuffer(
       allocation_size_, &allocation->shm_id);
-  if (!allocation->buffer)
-    return false;
 
   *offset = allocation->free_offsets.TakeFreeOffset();
   *shm_id = allocation->shm_id;
   *buffer = allocation->buffer;
   allocations_.push_back(std::move(allocation));
-  return true;
 }
 
 void ClientDiscardableManager::ReturnAllocation(

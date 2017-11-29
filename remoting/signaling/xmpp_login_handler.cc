@@ -56,7 +56,8 @@ XmppLoginHandler::XmppLoginHandler(const std::string& server,
       state_(State::INIT) {
 }
 
-XmppLoginHandler::~XmppLoginHandler() = default;
+XmppLoginHandler::~XmppLoginHandler() {
+}
 
 void XmppLoginHandler::Start() {
   switch (tls_mode_) {

@@ -144,7 +144,7 @@ WindowTypeShelfItem::WindowTypeShelfItem(const std::string& id, Type type)
   SetName(title);
 }
 
-WindowTypeShelfItem::~WindowTypeShelfItem() = default;
+WindowTypeShelfItem::~WindowTypeShelfItem() {}
 
 // ExampleSearchResult is an app list search result. It provides what icon to
 // show, what should title and details text look like. It also carries the

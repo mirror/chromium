@@ -93,7 +93,7 @@ class BookmarkContextMenuController
 
   gfx::NativeWindow parent_window_;
   BookmarkContextMenuControllerDelegate* delegate_;
-  Browser* const browser_;
+  Browser* browser_;
   Profile* profile_;
   content::PageNavigator* navigator_;
   const bookmarks::BookmarkNode* parent_;

@@ -10,13 +10,13 @@
 namespace remoting {
 namespace protocol {
 
-InputEventTracker::InputEventTracker() = default;
+InputEventTracker::InputEventTracker() {}
 
 InputEventTracker::InputEventTracker(InputStub* input_stub)
     : input_stub_(input_stub) {
 }
 
-InputEventTracker::~InputEventTracker() = default;
+InputEventTracker::~InputEventTracker() {}
 
 bool InputEventTracker::IsKeyPressed(ui::DomCode usb_keycode) const {
   return pressed_keys_.find(usb_keycode) != pressed_keys_.end();

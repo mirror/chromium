@@ -25,7 +25,6 @@ typedef void (^PassKitCompletionHandler)(NSData*);
 
 // CRWPassKitDownloader downloads PassKit data and passes it to a completion
 // handler.
-// DEPRECATED - Do not use this class. http://crbug.com/787943
 @interface CRWPassKitDownloader : NSObject
 
 // Initializes the CRWPassKitDownloader. |getter| must not be null and

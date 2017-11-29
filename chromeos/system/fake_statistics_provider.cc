@@ -7,9 +7,11 @@
 namespace chromeos {
 namespace system {
 
-FakeStatisticsProvider::FakeStatisticsProvider() = default;
+FakeStatisticsProvider::FakeStatisticsProvider() {
+}
 
-FakeStatisticsProvider::~FakeStatisticsProvider() = default;
+FakeStatisticsProvider::~FakeStatisticsProvider() {
+}
 
 void FakeStatisticsProvider::StartLoadingMachineStatistics(
     bool load_oem_manifest) {

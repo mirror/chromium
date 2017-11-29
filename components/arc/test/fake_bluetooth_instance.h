@@ -68,9 +68,8 @@ class FakeBluetoothInstance : public mojom::BluetoothInstance {
   FakeBluetoothInstance();
   ~FakeBluetoothInstance() override;
 
-  // mojom::BluetoothInstance overrides:
-  void InitDeprecated(mojom::BluetoothHostPtr host_ptr) override;
-  void Init(mojom::BluetoothHostPtr host_ptr, InitCallback callback) override;
+  // interface BluetoothInstance
+  void Init(mojom::BluetoothHostPtr host_ptr) override;
   void OnAdapterProperties(
       mojom::BluetoothStatus status,
       std::vector<mojom::BluetoothPropertyPtr> properties) override;

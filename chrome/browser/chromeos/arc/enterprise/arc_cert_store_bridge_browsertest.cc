@@ -6,8 +6,6 @@
 #include <tuple>
 #include <vector>
 
-#include "base/bind.h"
-#include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/json/json_writer.h"
 #include "base/run_loop.h"
@@ -63,14 +61,7 @@ namespace arc {
 class FakeArcCertStoreInstance : public mojom::CertStoreInstance {
  public:
   // mojom::CertStoreInstance:
-  void InitDeprecated(mojom::CertStoreHostPtr host) override {
-    Init(std::move(host), base::BindOnce(&base::DoNothing));
-  }
-
-  void Init(mojom::CertStoreHostPtr host, InitCallback callback) override {
-    host_ = std::move(host);
-    std::move(callback).Run();
-  }
+  void Init(mojom::CertStoreHostPtr host) override { host_ = std::move(host); }
 
   void OnKeyPermissionsChanged(
       const std::vector<std::string>& permissions) override {

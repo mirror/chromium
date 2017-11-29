@@ -28,9 +28,11 @@ class VlogNetLog::Observer : public net::NetLog::ThreadSafeObserver {
   DISALLOW_COPY_AND_ASSIGN(Observer);
 };
 
-VlogNetLog::Observer::Observer() = default;
+VlogNetLog::Observer::Observer() {
+}
 
-VlogNetLog::Observer::~Observer() = default;
+VlogNetLog::Observer::~Observer() {
+}
 
 void VlogNetLog::Observer::OnAddEntry(const net::NetLogEntry& entry) {
   if (VLOG_IS_ON(4)) {

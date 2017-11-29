@@ -35,7 +35,8 @@ BlobDataSnapshot::BlobDataSnapshot(const BlobDataSnapshot& other)
       items_(other.items_) {
 }
 
-BlobDataSnapshot::~BlobDataSnapshot() = default;
+BlobDataSnapshot::~BlobDataSnapshot() {
+}
 
 size_t BlobDataSnapshot::GetMemoryUsage() const {
   int64_t memory = 0;

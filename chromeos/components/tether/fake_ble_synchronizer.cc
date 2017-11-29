@@ -8,9 +8,9 @@ namespace chromeos {
 
 namespace tether {
 
-FakeBleSynchronizer::FakeBleSynchronizer() = default;
+FakeBleSynchronizer::FakeBleSynchronizer() {}
 
-FakeBleSynchronizer::~FakeBleSynchronizer() = default;
+FakeBleSynchronizer::~FakeBleSynchronizer() {}
 
 size_t FakeBleSynchronizer::GetNumCommands() {
   return command_queue().size();

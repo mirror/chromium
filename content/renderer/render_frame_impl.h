@@ -73,7 +73,6 @@
 #include "third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
 #include "third_party/WebKit/public/platform/media_engagement.mojom.h"
-#include "third_party/WebKit/public/platform/modules/manifest/manifest_manager.mojom.h"
 #include "third_party/WebKit/public/platform/site_engagement.mojom.h"
 #include "third_party/WebKit/public/web/WebAXObject.h"
 #include "third_party/WebKit/public/web/WebDocumentLoader.h"
@@ -462,8 +461,8 @@ class CONTENT_EXPORT RenderFrameImpl
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle interface_pipe) override;
   service_manager::InterfaceProvider* GetRemoteInterfaces() override;
-  blink::AssociatedInterfaceRegistry* GetAssociatedInterfaceRegistry() override;
-  blink::AssociatedInterfaceProvider* GetRemoteAssociatedInterfaces() override;
+  AssociatedInterfaceRegistry* GetAssociatedInterfaceRegistry() override;
+  AssociatedInterfaceProvider* GetRemoteAssociatedInterfaces() override;
 #if BUILDFLAG(ENABLE_PLUGINS)
   void RegisterPeripheralPlugin(
       const url::Origin& content_origin,
@@ -553,8 +552,6 @@ class CONTENT_EXPORT RenderFrameImpl
   std::unique_ptr<blink::WebServiceWorkerProvider> CreateServiceWorkerProvider()
       override;
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
-  blink::AssociatedInterfaceProvider* GetRemoteNavigationAssociatedInterfaces()
-      override;
   void DidAccessInitialDocument() override;
   blink::WebLocalFrame* CreateChildFrame(
       blink::WebLocalFrame* parent,
@@ -765,7 +762,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void BindFrameNavigationControl(
       mojom::FrameNavigationControlAssociatedRequest request);
 
-  blink::mojom::ManifestManager& GetManifestManager();
+  ManifestManager* manifest_manager();
 
   // TODO(creis): Remove when the only caller, the HistoryController, is no
   // more.
@@ -1441,7 +1438,7 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // The Manifest Manager handles the manifest requests from the browser
   // process.
-  std::unique_ptr<ManifestManager> manifest_manager_;
+  ManifestManager* manifest_manager_;
 
   // The current accessibility mode.
   ui::AXMode accessibility_mode_;

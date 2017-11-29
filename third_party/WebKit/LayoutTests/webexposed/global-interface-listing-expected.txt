@@ -409,7 +409,6 @@ interface AuthenticatorAssertionResponse : AuthenticatorResponse
     attribute @@toStringTag
     getter authenticatorData
     getter signature
-    getter userHandle
     method constructor
 interface AuthenticatorAttestationResponse : AuthenticatorResponse
     attribute @@toStringTag
@@ -2792,11 +2791,11 @@ interface HTMLImageElement : HTMLElement
     attribute @@toStringTag
     getter align
     getter alt
+    getter async
     getter border
     getter complete
     getter crossOrigin
     getter currentSrc
-    getter decoding
     getter height
     getter hspace
     getter isMap
@@ -2818,9 +2817,9 @@ interface HTMLImageElement : HTMLElement
     method decode
     setter align
     setter alt
+    setter async
     setter border
     setter crossOrigin
-    setter decoding
     setter height
     setter hspace
     setter isMap
@@ -2973,6 +2972,7 @@ interface HTMLLinkElement : HTMLElement
     getter rel
     getter relList
     getter rev
+    getter scope
     getter sheet
     getter sizes
     getter target
@@ -2990,6 +2990,7 @@ interface HTMLLinkElement : HTMLElement
     setter rel
     setter relList
     setter rev
+    setter scope
     setter sizes
     setter target
     setter type
@@ -3814,11 +3815,11 @@ interface Image
     attribute @@toStringTag
     getter align
     getter alt
+    getter async
     getter border
     getter complete
     getter crossOrigin
     getter currentSrc
-    getter decoding
     getter height
     getter hspace
     getter isMap
@@ -3840,9 +3841,9 @@ interface Image
     method decode
     setter align
     setter alt
+    setter async
     setter border
     setter crossOrigin
-    setter decoding
     setter height
     setter hspace
     setter isMap
@@ -6057,7 +6058,7 @@ interface SVGGraphicsElement : SVGElement
     method getScreenCTM
 interface SVGImageElement : SVGGraphicsElement
     attribute @@toStringTag
-    getter decoding
+    getter async
     getter height
     getter href
     getter preserveAspectRatio
@@ -6066,7 +6067,7 @@ interface SVGImageElement : SVGGraphicsElement
     getter y
     method constructor
     method decode
-    setter decoding
+    setter async
 interface SVGLength
     attribute @@toStringTag
     attribute SVG_LENGTHTYPE_CM

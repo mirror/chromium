@@ -48,7 +48,6 @@ class WindowTreeClient;
 namespace aura {
 namespace test {
 class EnvTestHelper;
-class EnvWindowTreeClientSetter;
 }
 
 class EnvInputStateController;
@@ -138,7 +137,6 @@ class AURA_EXPORT Env : public ui::EventTarget,
 
  private:
   friend class test::EnvTestHelper;
-  friend class test::EnvWindowTreeClientSetter;
   friend class EventInjector;
   friend class MusMouseLocationUpdater;
   friend class Window;

@@ -9,13 +9,15 @@
 namespace remoting {
 namespace protocol {
 
-MouseInputFilter::MouseInputFilter() = default;
+MouseInputFilter::MouseInputFilter() {
+}
 
 MouseInputFilter::MouseInputFilter(InputStub* input_stub)
     : InputFilter(input_stub) {
 }
 
-MouseInputFilter::~MouseInputFilter() = default;
+MouseInputFilter::~MouseInputFilter() {
+}
 
 void MouseInputFilter::InjectMouseEvent(const MouseEvent& event) {
   if (input_max_.is_empty() || output_max_.is_empty())

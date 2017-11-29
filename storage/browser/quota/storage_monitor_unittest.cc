@@ -98,7 +98,7 @@ class UsageMockQuotaManager : public QuotaManager {
   }
 
  protected:
-  ~UsageMockQuotaManager() override = default;
+  ~UsageMockQuotaManager() override {}
 
  private:
   int64_t callback_usage_;

@@ -26,7 +26,6 @@
 #define StylePropertyShorthand_h
 
 #include "CSSPropertyNames.h"
-#include "core/css/properties/CSSProperty.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
@@ -40,18 +39,18 @@ class StylePropertyShorthand {
         m_shorthandID(CSSPropertyInvalid) {}
 
   constexpr StylePropertyShorthand(CSSPropertyID id,
-                                   const CSSProperty** properties,
+                                   const CSSPropertyID* properties,
                                    unsigned numProperties)
       : m_properties(properties),
         m_length(numProperties),
         m_shorthandID(id) {}
 
-  const CSSProperty** properties() const { return m_properties; }
+  const CSSPropertyID* properties() const { return m_properties; }
   unsigned length() const { return m_length; }
   CSSPropertyID id() const { return m_shorthandID; }
 
  private:
-  const CSSProperty** m_properties;
+  const CSSPropertyID* m_properties;
   unsigned m_length;
   CSSPropertyID m_shorthandID;
 };

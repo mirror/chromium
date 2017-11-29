@@ -154,9 +154,5 @@ void GetDnsServers(std::vector<IPEndPoint>* dns_servers) {
   }
 }
 
-void TagSocket(SocketDescriptor socket, uid_t uid, int32_t tag) {
-  Java_AndroidNetworkLibrary_tagSocket(AttachCurrentThread(), socket, uid, tag);
-}
-
 }  // namespace android
 }  // namespace net

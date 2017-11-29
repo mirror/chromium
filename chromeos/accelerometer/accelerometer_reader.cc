@@ -188,7 +188,7 @@ class AccelerometerFileReader
     std::vector<ReadingData> reading_data;
   };
 
-  ~AccelerometerFileReader() = default;
+  ~AccelerometerFileReader() {}
 
   // When accelerometers are presented as separate iio_devices this will perform
   // the initialize for one of the devices, at the given |iio_path| and the
@@ -508,7 +508,8 @@ AccelerometerFileReader::ConfigurationData::ConfigurationData() : count(0) {
   }
 }
 
-AccelerometerFileReader::ConfigurationData::~ConfigurationData() = default;
+AccelerometerFileReader::ConfigurationData::~ConfigurationData() {
+}
 
 // static
 AccelerometerReader* AccelerometerReader::GetInstance() {
@@ -538,6 +539,7 @@ AccelerometerReader::AccelerometerReader()
     : accelerometer_file_reader_(new AccelerometerFileReader()) {
 }
 
-AccelerometerReader::~AccelerometerReader() = default;
+AccelerometerReader::~AccelerometerReader() {
+}
 
 }  // namespace chromeos

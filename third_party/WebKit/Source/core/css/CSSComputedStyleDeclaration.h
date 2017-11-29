@@ -51,7 +51,7 @@ class CORE_EXPORT CSSComputedStyleDeclaration final
                                            pseudo_element_name);
   }
 
-  static const Vector<const CSSProperty*>& ComputableProperties();
+  static const Vector<CSSPropertyID>& ComputableProperties();
   ~CSSComputedStyleDeclaration() override;
 
   String GetPropertyValue(CSSPropertyID) const;
@@ -68,7 +68,7 @@ class CORE_EXPORT CSSComputedStyleDeclaration final
   bool IsMonospaceFont() const;
 
   MutableCSSPropertyValueSet* CopyPropertiesInSet(
-      const Vector<const CSSProperty*>&) const;
+      const Vector<CSSPropertyID>&) const;
 
   // CSSOM functions.
   unsigned length() const override;

@@ -32,8 +32,8 @@ namespace ash {
 
 class PanelWindowResizerTest : public AshTestBase {
  public:
-  PanelWindowResizerTest() = default;
-  ~PanelWindowResizerTest() override = default;
+  PanelWindowResizerTest() {}
+  ~PanelWindowResizerTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();
@@ -179,7 +179,7 @@ class PanelWindowResizerTextDirectionTest
       public testing::WithParamInterface<bool> {
  public:
   PanelWindowResizerTextDirectionTest() : is_rtl_(GetParam()) {}
-  virtual ~PanelWindowResizerTextDirectionTest() = default;
+  virtual ~PanelWindowResizerTextDirectionTest() {}
 
   void SetUp() override {
     original_locale_ = base::i18n::GetConfiguredLocale();
@@ -209,7 +209,7 @@ class PanelWindowResizerTransientTest
       public testing::WithParamInterface<aura::client::WindowType> {
  public:
   PanelWindowResizerTransientTest() : transient_window_type_(GetParam()) {}
-  virtual ~PanelWindowResizerTransientTest() = default;
+  virtual ~PanelWindowResizerTransientTest() {}
 
  protected:
   aura::client::WindowType transient_window_type_;

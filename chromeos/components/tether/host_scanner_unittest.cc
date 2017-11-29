@@ -50,7 +50,7 @@ class TestObserver final : public HostScanner::Observer {
 class FakeHostScanDevicePrioritizer : public HostScanDevicePrioritizer {
  public:
   FakeHostScanDevicePrioritizer() : HostScanDevicePrioritizer() {}
-  ~FakeHostScanDevicePrioritizer() override = default;
+  ~FakeHostScanDevicePrioritizer() override {}
 
   // Simply leave |remote_devices| as-is.
   void SortByHostScanOrder(
@@ -69,7 +69,7 @@ class FakeHostScannerOperation : public HostScannerOperation {
                              host_scan_device_prioritizer,
                              tether_host_response_recorder) {}
 
-  ~FakeHostScannerOperation() override = default;
+  ~FakeHostScannerOperation() override {}
 
   void SendScannedDeviceListUpdate(
       const std::vector<HostScannerOperation::ScannedDeviceInfo>&
@@ -85,7 +85,7 @@ class FakeHostScannerOperationFactory : public HostScannerOperation::Factory {
   FakeHostScannerOperationFactory(
       const std::vector<cryptauth::RemoteDevice>& test_devices)
       : expected_devices_(test_devices) {}
-  virtual ~FakeHostScannerOperationFactory() = default;
+  virtual ~FakeHostScannerOperationFactory() {}
 
   std::vector<FakeHostScannerOperation*>& created_operations() {
     return created_operations_;

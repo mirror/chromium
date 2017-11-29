@@ -32,8 +32,8 @@ ScreenPositionController* GetScreenPositionController() {
 
 class ScreenPositionControllerTest : public AshTestBase {
  public:
-  ScreenPositionControllerTest() = default;
-  ~ScreenPositionControllerTest() override = default;
+  ScreenPositionControllerTest() {}
+  ~ScreenPositionControllerTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

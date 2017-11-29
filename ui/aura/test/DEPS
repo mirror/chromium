@@ -1,8 +1,5 @@
 include_rules = [
-  "+cc/test",
-  "+components/viz/test",
   "+mojo/edk/embedder/embedder.h",
-  "+services/ui/public/cpp/input_devices",
   "+ui/gl",
   "+ui/wm/core/wm_state.h",
 ]

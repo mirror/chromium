@@ -129,7 +129,7 @@ void DownloadUrlSBClient::IdentifyReferrerChain() {
   if (!item_)
     return;
 
-  item_->SetUserData(ReferrerChainData::kDownloadReferrerChainDataKey,
+  item_->SetUserData(kDownloadReferrerChainDataKey,
                      base::MakeUnique<ReferrerChainData>(
                          service_->IdentifyReferrerChain(*item_)));
 }

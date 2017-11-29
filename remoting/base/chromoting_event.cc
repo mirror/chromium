@@ -66,7 +66,7 @@ ChromotingEvent::ChromotingEvent(ChromotingEvent&& other) {
   values_map_ = std::move(other.values_map_);
 }
 
-ChromotingEvent::~ChromotingEvent() = default;
+ChromotingEvent::~ChromotingEvent() {}
 
 ChromotingEvent& ChromotingEvent::operator=(const ChromotingEvent& other) {
   if (this != &other) {

@@ -57,8 +57,8 @@ ACTION_P(QuitRunLoop, run_loop) {
 class MockConnectionToHostEventCallback
     : public ConnectionToHost::HostEventCallback {
  public:
-  MockConnectionToHostEventCallback() = default;
-  ~MockConnectionToHostEventCallback() override = default;
+  MockConnectionToHostEventCallback() {}
+  ~MockConnectionToHostEventCallback() override {}
 
   MOCK_METHOD2(OnConnectionState,
                void(ConnectionToHost::State state, ErrorCode error));
@@ -70,8 +70,8 @@ class MockConnectionToHostEventCallback
 
 class TestScreenCapturer : public webrtc::DesktopCapturer {
  public:
-  TestScreenCapturer() = default;
-  ~TestScreenCapturer() override = default;
+  TestScreenCapturer() {}
+  ~TestScreenCapturer() override {}
 
   // webrtc::DesktopCapturer interface.
   void Start(Callback* callback) override {
@@ -133,8 +133,8 @@ static const int kTestAudioSignalFrequencyRightHz = 2000;
 
 class TestAudioSource : public AudioSource {
  public:
-  TestAudioSource() = default;
-  ~TestAudioSource() override = default;
+  TestAudioSource() {}
+  ~TestAudioSource() override {}
 
   // AudioSource interface.
   bool Start(const PacketCapturedCallback& callback) override {
@@ -182,7 +182,7 @@ class TestAudioSource : public AudioSource {
 class FakeAudioPlayer : public AudioStub {
  public:
   FakeAudioPlayer() : weak_factory_(this) {}
-  ~FakeAudioPlayer() override = default;
+  ~FakeAudioPlayer() override {}
 
   // AudioStub interface.
   void ProcessAudioPacket(std::unique_ptr<AudioPacket> packet,

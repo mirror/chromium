@@ -75,8 +75,9 @@ bool ContextualSearchWrapper::EnsureServiceConnected() {
     render_frame()->GetRemoteInterfaces()->GetInterface(
         &contextual_search_js_api_service_);
     return true;
+  } else {
+    return false;
   }
-  return false;
 }
 
 void ContextualSearchWrapper::OnDestruct() {}

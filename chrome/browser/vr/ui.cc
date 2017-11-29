@@ -116,7 +116,6 @@ void Ui::SetLocationAccess(bool enabled) {
 
 void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
   if (!enabled) {
-    DCHECK_EQ(reason, UiUnsupportedMode::kCount);
     model_->active_modal_prompt_type = kModalPromptTypeNone;
     return;
   }
@@ -128,22 +127,16 @@ void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
   }
 
   switch (reason) {
-    case UiUnsupportedMode::kUnhandledCodePoint:
-      NOTREACHED();  // This mode does not prompt.
-      return;
     case UiUnsupportedMode::kUnhandledPageInfo:
       model_->active_modal_prompt_type = kModalPromptTypeExitVRForSiteInfo;
-      return;
+      break;
     case UiUnsupportedMode::kAndroidPermissionNeeded:
       model_->active_modal_prompt_type =
           kModalPromptTypeExitVRForAudioPermission;
-      return;
-    case UiUnsupportedMode::kCount:
-      NOTREACHED();  // Should never be used as a mode (when |enabled| is true).
-      return;
+      break;
+    default:
+      NOTREACHED();
   }
-
-  NOTREACHED();
 }
 
 void Ui::SetSpeechRecognitionEnabled(bool enabled) {

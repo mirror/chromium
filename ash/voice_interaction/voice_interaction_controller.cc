@@ -10,7 +10,7 @@ namespace ash {
 
 VoiceInteractionController::VoiceInteractionController() : binding_(this) {}
 
-VoiceInteractionController::~VoiceInteractionController() = default;
+VoiceInteractionController::~VoiceInteractionController() {}
 
 void VoiceInteractionController::BindRequest(
     mojom::VoiceInteractionControllerRequest request) {

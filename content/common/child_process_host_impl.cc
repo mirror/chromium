@@ -22,6 +22,7 @@
 #include "base/third_party/dynamic_annotations/dynamic_annotations.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "content/common/child_process_messages.h"
 #include "content/public/common/bind_interface_helpers.h"
 #include "content/public/common/child_process_host_delegate.h"
 #include "content/public/common/content_paths.h"
@@ -36,6 +37,8 @@
 
 #if defined(OS_LINUX)
 #include "base/linux_util.h"
+#elif defined(OS_WIN)
+#include "content/common/font_cache_dispatcher_win.h"
 #endif  // OS_LINUX
 
 namespace {
@@ -77,7 +80,12 @@ base::FilePath ChildProcessHost::GetChildPath(int flags) {
 }
 
 ChildProcessHostImpl::ChildProcessHostImpl(ChildProcessHostDelegate* delegate)
-    : delegate_(delegate), opening_channel_(false) {}
+    : delegate_(delegate),
+      opening_channel_(false) {
+#if defined(OS_WIN)
+  AddFilter(new FontCacheDispatcher());
+#endif
+}
 
 ChildProcessHostImpl::~ChildProcessHostImpl() {
   // If a channel was never created than it wasn't registered and the filters
@@ -112,9 +120,8 @@ void ChildProcessHostImpl::ForceShutdown() {
 void ChildProcessHostImpl::CreateChannelMojo() {
   mojo::MessagePipe pipe;
   BindInterface(IPC::mojom::ChannelBootstrap::Name_, std::move(pipe.handle1));
-  channel_ = IPC::ChannelMojo::Create(
-      std::move(pipe.handle0), IPC::Channel::MODE_SERVER, this,
-      base::ThreadTaskRunnerHandle::Get(), base::ThreadTaskRunnerHandle::Get());
+  channel_ = IPC::ChannelMojo::Create(std::move(pipe.handle0),
+                                      IPC::Channel::MODE_SERVER, this);
   DCHECK(channel_);
 
   bool initialized = InitChannel();

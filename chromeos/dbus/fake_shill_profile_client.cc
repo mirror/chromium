@@ -40,9 +40,9 @@ void PassDictionary(
 
 }  // namespace
 
-FakeShillProfileClient::FakeShillProfileClient() = default;
+FakeShillProfileClient::FakeShillProfileClient() {}
 
-FakeShillProfileClient::~FakeShillProfileClient() = default;
+FakeShillProfileClient::~FakeShillProfileClient() {}
 
 void FakeShillProfileClient::Init(dbus::Bus* bus) {}
 

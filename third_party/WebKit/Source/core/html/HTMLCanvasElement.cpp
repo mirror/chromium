@@ -841,7 +841,7 @@ String HTMLCanvasElement::toDataURL(const String& mime_type,
   return ToDataURLInternal(mime_type, quality, kBackBuffer);
 }
 
-void HTMLCanvasElement::toBlob(V8BlobCallback* callback,
+void HTMLCanvasElement::toBlob(BlobCallback* callback,
                                const String& mime_type,
                                const ScriptValue& quality_argument,
                                ExceptionState& exception_state) {
@@ -855,9 +855,8 @@ void HTMLCanvasElement::toBlob(V8BlobCallback* callback,
     GetDocument()
         .GetTaskRunner(TaskType::kCanvasBlobSerialization)
         ->PostTask(BLINK_FROM_HERE,
-                   WTF::Bind(&V8BlobCallback::InvokeAndReportException,
-                             WrapPersistentCallbackFunction(callback), nullptr,
-                             nullptr));
+                   WTF::Bind(&BlobCallback::handleEvent,
+                             WrapPersistent(callback), nullptr));
     return;
   }
 
@@ -880,9 +879,8 @@ void HTMLCanvasElement::toBlob(V8BlobCallback* callback,
     GetDocument()
         .GetTaskRunner(TaskType::kCanvasBlobSerialization)
         ->PostTask(BLINK_FROM_HERE,
-                   WTF::Bind(&V8BlobCallback::InvokeAndReportException,
-                             WrapPersistentCallbackFunction(callback), nullptr,
-                             nullptr));
+                   WTF::Bind(&BlobCallback::handleEvent,
+                             WrapPersistent(callback), nullptr));
     return;
   }
 

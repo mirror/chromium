@@ -10,7 +10,6 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/bind_helpers.h"
 #include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -280,17 +279,11 @@ void FakeFileSystemInstance::GetRecentDocuments(
                                 base::make_optional(std::move(recents))));
 }
 
-void FakeFileSystemInstance::InitDeprecated(mojom::FileSystemHostPtr host) {
-  Init(std::move(host), base::BindOnce(&base::DoNothing));
-}
-
-void FakeFileSystemInstance::Init(mojom::FileSystemHostPtr host,
-                                  InitCallback callback) {
+void FakeFileSystemInstance::Init(mojom::FileSystemHostPtr host) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(host);
   DCHECK(!host_);
   host_ = std::move(host);
-  std::move(callback).Run();
 }
 
 void FakeFileSystemInstance::RemoveWatcher(int64_t watcher_id,

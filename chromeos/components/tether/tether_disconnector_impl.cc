@@ -33,7 +33,7 @@ TetherDisconnectorImpl::TetherDisconnectorImpl(
       device_id_tether_network_guid_map_(device_id_tether_network_guid_map),
       weak_ptr_factory_(this) {}
 
-TetherDisconnectorImpl::~TetherDisconnectorImpl() = default;
+TetherDisconnectorImpl::~TetherDisconnectorImpl() {}
 
 void TetherDisconnectorImpl::DisconnectFromNetwork(
     const std::string& tether_network_guid,

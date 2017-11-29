@@ -36,12 +36,13 @@ void BasicLogSource::Fetch(const SysLogsSourceCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(!callback.is_null());
 
-  auto response = std::make_unique<SystemLogsResponse>();
+  std::unique_ptr<SystemLogsResponse> response =
+      std::make_unique<SystemLogsResponse>();
 
   PopulateVersionStrings(response.get());
   PopulateExtensionInfoLogs(response.get());
 
-  callback.Run(std::move(response));
+  callback.Run(response.get());
 }
 
 void BasicLogSource::PopulateVersionStrings(SystemLogsResponse* response) {

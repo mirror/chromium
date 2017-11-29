@@ -215,7 +215,7 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver,
   void OnClose();
 
   // A weak pointer to the Browser we are associated with. Not owned by us.
-  Browser* const browser_;
+  Browser* browser_;
 
   // The associated ToolbarActionsModel. Not owned.
   ToolbarActionsModel* model_;

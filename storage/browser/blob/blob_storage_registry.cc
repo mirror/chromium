@@ -36,7 +36,8 @@ GURL ClearBlobUrlRef(const GURL& url) {
 
 }  // namespace
 
-BlobStorageRegistry::BlobStorageRegistry() = default;
+
+BlobStorageRegistry::BlobStorageRegistry() {}
 
 BlobStorageRegistry::~BlobStorageRegistry() {
   // Note: We don't bother calling the construction complete callbacks, as we

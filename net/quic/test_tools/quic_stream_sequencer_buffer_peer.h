@@ -51,8 +51,6 @@ class QuicStreamSequencerBufferPeer {
 
   bool IsBufferAllocated();
 
-  size_t block_count();
-
  private:
   QuicStreamSequencerBuffer* buffer_;
   DISALLOW_COPY_AND_ASSIGN(QuicStreamSequencerBufferPeer);

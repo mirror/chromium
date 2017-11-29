@@ -32,9 +32,11 @@ namespace remoting {
 
 using protocol::PairingRegistry;
 
-PairingRegistryDelegateLinux::PairingRegistryDelegateLinux() = default;
+PairingRegistryDelegateLinux::PairingRegistryDelegateLinux() {
+}
 
-PairingRegistryDelegateLinux::~PairingRegistryDelegateLinux() = default;
+PairingRegistryDelegateLinux::~PairingRegistryDelegateLinux() {
+}
 
 std::unique_ptr<base::ListValue> PairingRegistryDelegateLinux::LoadAll() {
   std::unique_ptr<base::ListValue> pairings(new base::ListValue());

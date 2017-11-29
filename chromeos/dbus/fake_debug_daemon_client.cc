@@ -35,7 +35,7 @@ FakeDebugDaemonClient::FakeDebugDaemonClient()
       service_is_available_(true) {
 }
 
-FakeDebugDaemonClient::~FakeDebugDaemonClient() = default;
+FakeDebugDaemonClient::~FakeDebugDaemonClient() {}
 
 void FakeDebugDaemonClient::Init(dbus::Bus* bus) {}
 

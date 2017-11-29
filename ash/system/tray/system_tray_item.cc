@@ -14,7 +14,7 @@ namespace ash {
 SystemTrayItem::SystemTrayItem(SystemTray* system_tray, UmaType uma_type)
     : system_tray_(system_tray), uma_type_(uma_type), restore_focus_(false) {}
 
-SystemTrayItem::~SystemTrayItem() = default;
+SystemTrayItem::~SystemTrayItem() {}
 
 views::View* SystemTrayItem::CreateTrayView(LoginStatus status) {
   return nullptr;

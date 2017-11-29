@@ -285,7 +285,8 @@ void AsyncResourceHandler::OnReadCompleted(
       return;
     }
     filter->Send(new ResourceMsg_SetDataBuffer(
-        GetRequestID(), handle, buffer_->GetSharedMemory().mapped_size()));
+        GetRequestID(), handle, buffer_->GetSharedMemory().mapped_size(),
+        filter->peer_pid()));
     sent_data_buffer_msg_ = true;
   }
 

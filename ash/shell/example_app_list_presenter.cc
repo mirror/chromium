@@ -18,7 +18,7 @@ class ExampleAppListViewDelegateFactory
  public:
   ExampleAppListViewDelegateFactory()
       : app_list_view_delegate_(ash::shell::CreateAppListViewDelegate()) {}
-  ~ExampleAppListViewDelegateFactory() override = default;
+  ~ExampleAppListViewDelegateFactory() override {}
 
   // app_list::AppListViewDelegateFactory:
   app_list::AppListViewDelegate* GetDelegate() override {
@@ -45,7 +45,7 @@ ExampleAppListPresenter::ExampleAppListPresenter()
   // changes to the app_list::mojom::AppList implementation owned by ShellPort.
 }
 
-ExampleAppListPresenter::~ExampleAppListPresenter() = default;
+ExampleAppListPresenter::~ExampleAppListPresenter() {}
 
 app_list::mojom::AppListPresenterPtr
 ExampleAppListPresenter::CreateInterfacePtrAndBind() {

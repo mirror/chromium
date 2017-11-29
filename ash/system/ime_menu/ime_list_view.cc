@@ -101,7 +101,7 @@ class ImeListItemView : public ActionableView {
     SetAccessibleName(label_view->text());
   }
 
-  ~ImeListItemView() override = default;
+  ~ImeListItemView() override {}
 
   // ActionableView:
   bool PerformAction(const ui::Event& event) override {
@@ -141,8 +141,8 @@ class ImeListItemView : public ActionableView {
 // attached and the user is in TabletMode mode.
 class KeyboardStatusRow : public views::View {
  public:
-  KeyboardStatusRow() = default;
-  ~KeyboardStatusRow() override = default;
+  KeyboardStatusRow() {}
+  ~KeyboardStatusRow() override {}
 
   views::ToggleButton* toggle() const { return toggle_; }
   bool is_toggled() const { return toggle_->is_on(); }
@@ -189,7 +189,7 @@ ImeListView::ImeListView(SystemTrayItem* owner)
       should_focus_ime_after_selection_with_keyboard_(false),
       current_ime_view_(nullptr) {}
 
-ImeListView::~ImeListView() = default;
+ImeListView::~ImeListView() {}
 
 void ImeListView::Init(bool show_keyboard_toggle,
                        SingleImeBehavior single_ime_behavior) {
@@ -361,7 +361,7 @@ void ImeListView::FocusCurrentImeIfNeeded() {
 ImeListViewTestApi::ImeListViewTestApi(ImeListView* ime_list_view)
     : ime_list_view_(ime_list_view) {}
 
-ImeListViewTestApi::~ImeListViewTestApi() = default;
+ImeListViewTestApi::~ImeListViewTestApi() {}
 
 views::View* ImeListViewTestApi::GetToggleView() const {
   return ime_list_view_->keyboard_status_row_->toggle();

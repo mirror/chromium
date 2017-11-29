@@ -59,8 +59,8 @@ void ExpectNotFocused(views::View* view) {
 
 class LoginShelfViewTest : public LoginTestBase {
  public:
-  LoginShelfViewTest() = default;
-  ~LoginShelfViewTest() override = default;
+  LoginShelfViewTest() {}
+  ~LoginShelfViewTest() override {}
 
   void SetUp() override {
     action_background_controller_factory_ =

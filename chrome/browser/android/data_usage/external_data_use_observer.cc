@@ -16,6 +16,8 @@
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/browser_thread.h"
 
+namespace chrome {
+
 namespace android {
 
 namespace {
@@ -28,7 +30,8 @@ const int kDefaultFetchMatchingRulesDurationSeconds = 60 * 15;  // 15 minutes.
 int32_t GetFetchMatchingRulesDurationSeconds() {
   int32_t duration_seconds = -1;
   const std::string variation_value = variations::GetVariationParamValue(
-      android::ExternalDataUseObserver::kExternalDataUseObserverFieldTrial,
+      chrome::android::ExternalDataUseObserver::
+          kExternalDataUseObserverFieldTrial,
       "fetch_matching_rules_duration_seconds");
   if (!variation_value.empty() &&
       base::StringToInt(variation_value, &duration_seconds)) {
@@ -239,3 +242,5 @@ void ExternalDataUseObserver::SetProfileSigninStatus(bool signin_status) {
 }
 
 }  // namespace android
+
+}  // namespace chrome

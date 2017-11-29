@@ -14,7 +14,6 @@
 #include "base/macros.h"
 #include "content/common/push_messaging.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
-#include "third_party/WebKit/public/platform/modules/manifest/manifest.mojom.h"
 #include "third_party/WebKit/public/platform/modules/push_messaging/WebPushClient.h"
 #include "third_party/WebKit/public/platform/modules/push_messaging/WebPushPermissionStatus.h"
 
@@ -31,6 +30,7 @@ enum class PushRegistrationStatus;
 }
 
 struct Manifest;
+struct ManifestDebugInfo;
 struct PushSubscriptionOptions;
 
 class PushMessagingClient : public RenderFrameObserver,
@@ -56,7 +56,8 @@ class PushMessagingClient : public RenderFrameObserver,
       bool user_gesture,
       std::unique_ptr<blink::WebPushSubscriptionCallbacks> callbacks,
       const GURL& manifest_url,
-      const Manifest& manifest);
+      const Manifest& manifest,
+      const ManifestDebugInfo&);
 
   void DoSubscribe(
       blink::WebServiceWorkerRegistration* service_worker_registration,

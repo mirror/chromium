@@ -51,7 +51,7 @@ class DefaultTracingView : public ActionableView {
     SetInkDropMode(InkDropHostView::InkDropMode::ON);
   }
 
-  ~DefaultTracingView() override = default;
+  ~DefaultTracingView() override {}
 
  private:
   bool PerformAction(const ui::Event& event) override {

@@ -121,7 +121,7 @@ class BluetoothDefaultView : public TrayItemMore {
   explicit BluetoothDefaultView(SystemTrayItem* owner) : TrayItemMore(owner) {
     set_id(VIEW_ID_BLUETOOTH_DEFAULT_VIEW);
   }
-  ~BluetoothDefaultView() override = default;
+  ~BluetoothDefaultView() override {}
 
   void Update() {
     TrayBluetoothHelper* helper = Shell::Get()->tray_bluetooth_helper();

@@ -11,7 +11,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "media/base/media_export.h"
 #include "media/base/media_log.h"
 #include "media/formats/webm/webm_colour_parser.h"
 #include "media/formats/webm/webm_parser.h"
@@ -21,7 +20,7 @@ class EncryptionScheme;
 class VideoDecoderConfig;
 
 // Helper class used to parse a Video element inside a TrackEntry element.
-class MEDIA_EXPORT WebMVideoClient : public WebMParserClient {
+class WebMVideoClient : public WebMParserClient {
  public:
   explicit WebMVideoClient(MediaLog* media_log);
   ~WebMVideoClient() override;
@@ -42,8 +41,6 @@ class MEDIA_EXPORT WebMVideoClient : public WebMParserClient {
                         VideoDecoderConfig* config);
 
  private:
-  friend class WebMVideoClientTest;
-
   // WebMParserClient implementation.
   WebMParserClient* OnListStart(int id) override;
   bool OnListEnd(int id) override;

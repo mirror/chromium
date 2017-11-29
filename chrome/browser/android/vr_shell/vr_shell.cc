@@ -32,11 +32,14 @@
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/vr/toolbar_helper.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/browser/vr/web_contents_event_forwarder.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
+#include "components/search_engines/template_url_service.h"
+#include "components/search_engines/util.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
@@ -153,7 +156,7 @@ VrShell::VrShell(JNIEnv* env,
       ui_initial_state, reprojected_rendering_, HasDaydreamSupport(env));
   ui_ = gl_thread_.get();
   toolbar_ = base::MakeUnique<vr::ToolbarHelper>(ui_, this);
-  autocomplete_controller_ = base::MakeUnique<AutocompleteController>(ui_);
+  autocomplete_controller_ = base::MakeUnique<vr::AutocompleteController>(ui_);
 
   gl_thread_->Start();
 
@@ -667,26 +670,20 @@ content::WebContents* VrShell::GetNonNativePageWebContents() const {
 
 void VrShell::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
   switch (mode) {
-    case vr::UiUnsupportedMode::kUnhandledCodePoint:
-      ExitVrDueToUnsupportedMode(mode);
-      return;
-    case vr::UiUnsupportedMode::kUnhandledPageInfo: {
-      JNIEnv* env = base::android::AttachCurrentThread();
-      Java_VrShellImpl_onUnhandledPageInfo(env, j_vr_shell_);
-      return;
-    }
     case vr::UiUnsupportedMode::kAndroidPermissionNeeded: {
       JNIEnv* env = base::android::AttachCurrentThread();
       Java_VrShellImpl_onUnhandledPermissionPrompt(env, j_vr_shell_);
-      return;
+      break;
     }
-    case vr::UiUnsupportedMode::kCount:
-      NOTREACHED();  // Should never be used as a mode.
-      return;
+    case vr::UiUnsupportedMode::kUnhandledPageInfo: {
+      JNIEnv* env = base::android::AttachCurrentThread();
+      Java_VrShellImpl_onUnhandledPageInfo(env, j_vr_shell_);
+      break;
+    }
+    default:
+      ExitVrDueToUnsupportedMode(mode);
+      break;
   }
-
-  NOTREACHED();
-  ExitVrDueToUnsupportedMode(mode);
 }
 
 void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
@@ -701,17 +698,6 @@ void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
     case vr::ExitVrPromptChoice::CHOICE_EXIT:
       should_exit = true;
       break;
-  }
-
-  if (reason == vr::UiUnsupportedMode::kAndroidPermissionNeeded) {
-    // Note that we already measure the number of times user exit VR because of
-    // audio permission through VR.Shell.EncounteredUnsupportedMode histogram.
-    // The reason we introduce this new histogram is to measure how likely user
-    // chose to not give audio permission through the reported true and false.
-    // Its purpose is different from EncounteredUnsupportedMode so we added
-    // this new histogram instead of plumbing the information into existing one.
-    UMA_HISTOGRAM_BOOLEAN("VR.Shell.AudioPermission.ExitVRChoice",
-                          choice == vr::ExitVrPromptChoice::CHOICE_EXIT);
   }
 
   JNIEnv* env = base::android::AttachCurrentThread();
@@ -768,8 +754,6 @@ void VrShell::SetVoiceSearchActive(bool active) {
   }
   if (active) {
     speech_recognizer_->Start();
-    if (metrics_helper_)
-      metrics_helper_->RecordVoiceSearchStarted();
   } else {
     speech_recognizer_->Stop();
   }
@@ -930,11 +914,14 @@ bool VrShell::ShouldDisplayURL() const {
 }
 
 void VrShell::OnVoiceResults(const base::string16& result) {
+  TemplateURLService* template_url_service =
+      TemplateURLServiceFactory::GetForProfile(
+          ProfileManager::GetActiveUserProfile());
+  GURL url(GetDefaultSearchURLForSearchTerms(template_url_service, result));
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_loadUrl(
       env, j_vr_shell_,
-      base::android::ConvertUTF8ToJavaString(
-          env, autocomplete_controller_->GetUrlFromVoiceInput(result).spec()));
+      base::android::ConvertUTF8ToJavaString(env, url.spec()));
 }
 
 // ----------------------------------------------------------------------------

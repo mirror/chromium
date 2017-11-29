@@ -15,7 +15,8 @@
 
 namespace storage {
 
-DatabaseConnections::DatabaseConnections() = default;
+DatabaseConnections::DatabaseConnections() {
+}
 
 DatabaseConnections::~DatabaseConnections() {
   DCHECK(connections_.empty());
@@ -123,9 +124,11 @@ bool DatabaseConnections::RemoveConnectionsHelper(
   return true;
 }
 
-DatabaseConnectionsWrapper::DatabaseConnectionsWrapper() = default;
+DatabaseConnectionsWrapper::DatabaseConnectionsWrapper() {
+}
 
-DatabaseConnectionsWrapper::~DatabaseConnectionsWrapper() = default;
+DatabaseConnectionsWrapper::~DatabaseConnectionsWrapper() {
+}
 
 bool DatabaseConnectionsWrapper::HasOpenConnections() {
   base::AutoLock auto_lock(open_connections_lock_);

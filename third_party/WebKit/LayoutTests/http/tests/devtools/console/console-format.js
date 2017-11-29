@@ -127,7 +127,7 @@
   function loopOverGlobals(current, total) {
     function advance() {
       var next = current + 1;
-      if (next == total)
+      if (next == total.description)
         ConsoleTestRunner.waitForRemoteObjectsConsoleMessages(onRemoteObjectsLoaded);
       else
         loopOverGlobals(next, total);

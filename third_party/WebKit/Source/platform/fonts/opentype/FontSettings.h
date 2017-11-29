@@ -5,7 +5,6 @@
 #ifndef FontSettings_h
 #define FontSettings_h
 
-#include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
@@ -39,6 +38,8 @@ class FontTagValuePair {
 
 template <typename T>
 class FontSettings {
+  WTF_MAKE_NONCOPYABLE(FontSettings);
+
  public:
   void Append(const T& feature) { list_.push_back(feature); }
   size_t size() const { return list_.size(); }
@@ -62,12 +63,10 @@ class FontSettings {
   }
 
  protected:
-  FontSettings() = default;
+  FontSettings(){};
 
  private:
   Vector<T, 0> list_;
-
-  DISALLOW_COPY_AND_ASSIGN(FontSettings);
 };
 
 using FontFeature = FontTagValuePair<int>;
@@ -76,7 +75,7 @@ using FontVariationAxis = FontTagValuePair<float>;
 class PLATFORM_EXPORT FontFeatureSettings
     : public FontSettings<FontFeature>,
       public RefCounted<FontFeatureSettings> {
-  DISALLOW_COPY_AND_ASSIGN(FontFeatureSettings);
+  WTF_MAKE_NONCOPYABLE(FontFeatureSettings);
 
  public:
   static scoped_refptr<FontFeatureSettings> Create() {
@@ -90,7 +89,7 @@ class PLATFORM_EXPORT FontFeatureSettings
 class PLATFORM_EXPORT FontVariationSettings
     : public FontSettings<FontVariationAxis>,
       public RefCounted<FontVariationSettings> {
-  DISALLOW_COPY_AND_ASSIGN(FontVariationSettings);
+  WTF_MAKE_NONCOPYABLE(FontVariationSettings);
 
  public:
   static scoped_refptr<FontVariationSettings> Create() {

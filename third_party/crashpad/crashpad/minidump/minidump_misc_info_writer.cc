@@ -108,8 +108,6 @@ std::string MinidumpMiscInfoDebugBuildString() {
   static constexpr char kOS[] = "linux";
 #elif defined(OS_WIN)
   static constexpr char kOS[] = "win";
-#elif defined(OS_FUCHSIA)
-  static constexpr char kOS[] = "fuchsia";
 #else
 #error define kOS for this operating system
 #endif

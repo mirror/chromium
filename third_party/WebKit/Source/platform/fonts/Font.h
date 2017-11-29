@@ -81,12 +81,12 @@ class PLATFORM_EXPORT Font {
     kDoNotPaintIfFontNotReady,
     kUseFallbackIfFontNotReady
   };
-  void DrawText(PaintCanvas*,
+  bool DrawText(PaintCanvas*,
                 const TextRunPaintInfo&,
                 const FloatPoint&,
                 float device_scale_factor,
                 const PaintFlags&) const;
-  void DrawText(PaintCanvas*,
+  bool DrawText(PaintCanvas*,
                 const NGTextFragmentPaintInfo&,
                 const FloatPoint&,
                 float device_scale_factor,

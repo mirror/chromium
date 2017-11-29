@@ -57,7 +57,7 @@ public class ChromeHomeIphMenuHeader extends LinearLayout implements OnClickList
                 .notifyEvent(EventConstants.CHROME_HOME_MENU_HEADER_CLICKED);
 
         mActivity.getBottomSheet().getBottomSheetMetrics().recordInProductHelpMenuItemClicked();
-        mActivity.getBottomSheet().maybeShowHelpBubble(true, false);
+        mActivity.getBottomSheet().showHelpBubble(true);
 
         mActivity.getAppMenuHandler().hideAppMenu();
 

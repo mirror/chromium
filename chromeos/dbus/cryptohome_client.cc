@@ -1266,9 +1266,9 @@ class CryptohomeClientImpl : public CryptohomeClient {
 ////////////////////////////////////////////////////////////////////////////////
 // CryptohomeClient
 
-CryptohomeClient::CryptohomeClient() = default;
+CryptohomeClient::CryptohomeClient() {}
 
-CryptohomeClient::~CryptohomeClient() = default;
+CryptohomeClient::~CryptohomeClient() {}
 
 // static
 CryptohomeClient* CryptohomeClient::Create() {

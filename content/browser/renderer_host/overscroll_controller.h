@@ -37,13 +37,13 @@ enum class OverscrollSource {
 // overscroll gesture. This controller receives the events that are dispatched
 // to the renderer, and the ACKs of events, and updates the overscroll gesture
 // status accordingly.
-class CONTENT_EXPORT OverscrollController {
+class OverscrollController {
  public:
   // Exported for testing.
   // TODO(mcnee): Tests needing CONTENT_EXPORT are BrowserPlugin specific.
   // Remove after removing BrowserPlugin (crbug.com/533069).
-  OverscrollController();
-  virtual ~OverscrollController();
+  CONTENT_EXPORT OverscrollController();
+  CONTENT_EXPORT virtual ~OverscrollController();
 
   // This must be called when dispatching any event from the
   // RenderWidgetHostView so that the state of the overscroll gesture can be
@@ -56,8 +56,9 @@ class CONTENT_EXPORT OverscrollController {
   // Virtual and exported for testing.
   // TODO(mcnee): Tests needing CONTENT_EXPORT and virtual are BrowserPlugin
   // specific. Remove after removing BrowserPlugin (crbug.com/533069).
-  virtual void ReceivedEventACK(const blink::WebInputEvent& event,
-                                bool processed);
+  CONTENT_EXPORT virtual void ReceivedEventACK(
+      const blink::WebInputEvent& event,
+      bool processed);
 
   OverscrollMode overscroll_mode() const { return overscroll_mode_; }
 

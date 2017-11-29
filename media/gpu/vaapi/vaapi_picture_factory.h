@@ -11,7 +11,6 @@
 #include "base/memory/ref_counted.h"
 #include "media/gpu/vaapi/vaapi_picture.h"
 #include "ui/gfx/geometry/size.h"
-#include "ui/gl/gl_implementation.h"
 
 namespace media {
 
@@ -20,12 +19,6 @@ class VaapiWrapper;
 // Factory of platform dependent VaapiPictures.
 class MEDIA_GPU_EXPORT VaapiPictureFactory {
  public:
-  enum VaapiImplementation {
-    kVaapiImplementationNone = 0,
-    kVaapiImplementationDrm,
-    kVaapiImplementationX11
-  };
-
   VaapiPictureFactory();
   virtual ~VaapiPictureFactory();
 
@@ -40,10 +33,6 @@ class MEDIA_GPU_EXPORT VaapiPictureFactory {
       const gfx::Size& size,
       uint32_t texture_id,
       uint32_t client_texture_id);
-
-  // Return the type of the VaapiPicture implementation for the given GL
-  // implementation.
-  VaapiImplementation GetVaapiImplementation(gl::GLImplementation gl_impl);
 
   // Gets the texture target used to bind EGLImages (either GL_TEXTURE_2D on X11
   // or GL_TEXTURE_EXTERNAL_OES on DRM).

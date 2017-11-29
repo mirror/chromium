@@ -104,7 +104,7 @@ class ShelfFocusSearch : public views::FocusSearch {
  public:
   explicit ShelfFocusSearch(views::ViewModel* view_model)
       : FocusSearch(nullptr, true, true), view_model_(view_model) {}
-  ~ShelfFocusSearch() override = default;
+  ~ShelfFocusSearch() override {}
 
   // views::FocusSearch overrides:
   View* FindNextFocusableView(View* starting_view,
@@ -140,7 +140,7 @@ class ShelfFocusSearch : public views::FocusSearch {
 class FadeInAnimationDelegate : public gfx::AnimationDelegate {
  public:
   explicit FadeInAnimationDelegate(views::View* view) : view_(view) {}
-  ~FadeInAnimationDelegate() override = default;
+  ~FadeInAnimationDelegate() override {}
 
   // AnimationDelegate overrides:
   void AnimationProgressed(const Animation* animation) override {
@@ -193,7 +193,7 @@ class ShelfView::FadeOutAnimationDelegate : public gfx::AnimationDelegate {
  public:
   FadeOutAnimationDelegate(ShelfView* host, views::View* view)
       : shelf_view_(host), view_(view) {}
-  ~FadeOutAnimationDelegate() override = default;
+  ~FadeOutAnimationDelegate() override {}
 
   // AnimationDelegate overrides:
   void AnimationProgressed(const Animation* animation) override {
@@ -219,7 +219,7 @@ class ShelfView::StartFadeAnimationDelegate : public gfx::AnimationDelegate {
  public:
   StartFadeAnimationDelegate(ShelfView* host, views::View* view)
       : shelf_view_(host), view_(view) {}
-  ~StartFadeAnimationDelegate() override = default;
+  ~StartFadeAnimationDelegate() override {}
 
   // AnimationDelegate overrides:
   void AnimationEnded(const Animation* animation) override {

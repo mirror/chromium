@@ -72,7 +72,7 @@ ConnectTetheringOperation::ConnectTetheringOperation(
           ConnectTetheringResponse_ResponseCode::
               ConnectTetheringResponse_ResponseCode_UNKNOWN_ERROR) {}
 
-ConnectTetheringOperation::~ConnectTetheringOperation() = default;
+ConnectTetheringOperation::~ConnectTetheringOperation() {}
 
 void ConnectTetheringOperation::AddObserver(Observer* observer) {
   observer_list_.AddObserver(observer);

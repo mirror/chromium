@@ -82,9 +82,7 @@ AddPageTask::AddPageTask(OfflinePageMetadataStoreSQL* store,
     : store_(store),
       offline_page_(offline_page),
       callback_(std::move(callback)),
-      weak_ptr_factory_(this) {
-  DCHECK(!callback_.is_null());
-}
+      weak_ptr_factory_(this) {}
 
 AddPageTask::~AddPageTask() {}
 

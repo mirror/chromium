@@ -1031,10 +1031,8 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
                         bool enable_vendor_privileged,
                         bool native_bridge_experiment,
                         StartArcInstanceCallback callback) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(std::move(callback),
-                                  StartArcInstanceResult::UNKNOWN_ERROR,
-                                  std::string(), base::ScopedFD()));
+    std::move(callback).Run(StartArcInstanceResult::UNKNOWN_ERROR,
+                            std::string(), base::ScopedFD());
   }
 
   void SetArcCpuRestriction(
@@ -1071,9 +1069,11 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
   DISALLOW_COPY_AND_ASSIGN(SessionManagerClientStubImpl);
 };
 
-SessionManagerClient::SessionManagerClient() = default;
+SessionManagerClient::SessionManagerClient() {
+}
 
-SessionManagerClient::~SessionManagerClient() = default;
+SessionManagerClient::~SessionManagerClient() {
+}
 
 SessionManagerClient* SessionManagerClient::Create(
     DBusClientImplementationType type) {

@@ -22,7 +22,7 @@ BlobItemBytesResponse::BlobItemBytesResponse(uint32_t request_number)
 BlobItemBytesResponse::BlobItemBytesResponse(
     const BlobItemBytesResponse& other) = default;
 
-BlobItemBytesResponse::~BlobItemBytesResponse() = default;
+BlobItemBytesResponse::~BlobItemBytesResponse() {}
 
 void PrintTo(const BlobItemBytesResponse& response, ::std::ostream* os) {
   const size_t kMaxDataPrintLength = 40;

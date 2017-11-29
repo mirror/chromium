@@ -11,7 +11,8 @@
 namespace remoting {
 namespace protocol {
 
-ClipboardThreadProxy::~ClipboardThreadProxy() = default;
+ClipboardThreadProxy::~ClipboardThreadProxy() {
+}
 
 ClipboardThreadProxy::ClipboardThreadProxy(
     const base::WeakPtr<ClipboardStub>& clipboard_stub,

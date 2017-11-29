@@ -21,8 +21,8 @@ namespace {
 // An activation delegate which disables activating the drag and drop window.
 class CaptureWindowActivationDelegate : public ::wm::ActivationDelegate {
  public:
-  CaptureWindowActivationDelegate() = default;
-  ~CaptureWindowActivationDelegate() override = default;
+  CaptureWindowActivationDelegate() {}
+  ~CaptureWindowActivationDelegate() override {}
 
   // wm::ActivationDelegate overrides:
   bool ShouldActivate() const override { return false; }

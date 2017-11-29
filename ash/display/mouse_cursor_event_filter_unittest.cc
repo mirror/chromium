@@ -17,8 +17,8 @@ namespace ash {
 
 class MouseCursorEventFilterTest : public AshTestBase {
  public:
-  MouseCursorEventFilterTest() = default;
-  ~MouseCursorEventFilterTest() override = default;
+  MouseCursorEventFilterTest() {}
+  ~MouseCursorEventFilterTest() override {}
 
  protected:
   MouseCursorEventFilter* event_filter() {

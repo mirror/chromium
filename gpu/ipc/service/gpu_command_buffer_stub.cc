@@ -841,7 +841,6 @@ gpu::ContextResult GpuCommandBufferStub::Initialize(
     }
   }
 
-  manager->delegate()->DidCreateContextSuccessfully();
   initialized_ = true;
   return gpu::ContextResult::kSuccess;
 #endif  // defined(OS_FUCHSIA)

@@ -32,7 +32,7 @@ TeleportWarningDialog::TeleportWarningDialog(OnAcceptCallback callback)
   never_show_again_checkbox_->SetChecked(true);
 }
 
-TeleportWarningDialog::~TeleportWarningDialog() = default;
+TeleportWarningDialog::~TeleportWarningDialog() {}
 
 // static
 void TeleportWarningDialog::Show(OnAcceptCallback callback) {

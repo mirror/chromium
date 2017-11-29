@@ -13,7 +13,9 @@
 #include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/task_scheduler/post_task.h"
+#include "base/single_thread_task_runner.h"
+#include "base/threading/sequenced_task_runner_handle.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "components/update_client/component.h"
 #include "components/update_client/task_traits.h"
 #include "components/update_client/update_client.h"
@@ -35,9 +37,8 @@ void ActionRunner::Run(Callback run_complete) {
 
   run_complete_ = std::move(run_complete);
 
-  base::CreateSequencedTaskRunnerWithTraits(kTaskTraits)
-      ->PostTask(FROM_HERE,
-                 base::BindOnce(&ActionRunner::Unpack, base::Unretained(this)));
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(&ActionRunner::Unpack, base::Unretained(this)));
 }
 
 void ActionRunner::Unpack() {

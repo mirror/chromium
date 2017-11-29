@@ -285,10 +285,7 @@ QuickUnlockPrivateGetCredentialRequirementsFunction::Run() {
 QuickUnlockPrivateSetModesFunction::QuickUnlockPrivateSetModesFunction()
     : chrome_details_(this) {}
 
-QuickUnlockPrivateSetModesFunction::~QuickUnlockPrivateSetModesFunction() {
-  if (extended_authenticator_)
-    extended_authenticator_->SetConsumer(nullptr);
-}
+QuickUnlockPrivateSetModesFunction::~QuickUnlockPrivateSetModesFunction() {}
 
 void QuickUnlockPrivateSetModesFunction::SetAuthenticatorAllocatorForTesting(
     const QuickUnlockPrivateSetModesFunction::AuthenticatorAllocator&
@@ -350,7 +347,6 @@ ExtensionFunction::ResponseAction QuickUnlockPrivateSetModesFunction::Run() {
 
   // Lazily allocate the authenticator. We do this here, instead of in the ctor,
   // so that tests can install a fake.
-  DCHECK(!extended_authenticator_);
   if (authenticator_allocator_.is_null())
     extended_authenticator_ = chromeos::ExtendedAuthenticator::Create(this);
   else

@@ -18,10 +18,9 @@ TEST_F(InProgressConversionsTest, DownloadEntry) {
   DownloadEntry entry;
   EXPECT_EQ(entry, DownloadEntryFromProto(DownloadEntryToProto(entry)));
 
-  // Entry with guid, request origin and download source.
+  // Entry with guid and request origin.
   entry.guid = "guid";
   entry.request_origin = "request origin";
-  entry.download_source = DownloadSource::DRAG_AND_DROP;
   EXPECT_EQ(entry, DownloadEntryFromProto(DownloadEntryToProto(entry)));
 }
 
@@ -31,29 +30,12 @@ TEST_F(InProgressConversionsTest, DownloadEntries) {
   EXPECT_EQ(entries, DownloadEntriesFromProto(DownloadEntriesToProto(entries)));
 
   // Entries vector with one entry.
-  entries.push_back(
-      DownloadEntry("guid", "request origin", DownloadSource::UNKNOWN));
+  entries.push_back(DownloadEntry("guid", "request origin"));
   EXPECT_EQ(entries, DownloadEntriesFromProto(DownloadEntriesToProto(entries)));
 
   // Entries vector with multiple entries.
-  entries.push_back(
-      DownloadEntry("guid2", "request origin", DownloadSource::UNKNOWN));
+  entries.push_back(DownloadEntry("guid2", "request origin"));
   EXPECT_EQ(entries, DownloadEntriesFromProto(DownloadEntriesToProto(entries)));
-}
-
-TEST_F(InProgressConversionsTest, DownloadSource) {
-  DownloadSource sources[] = {
-      DownloadSource::UNKNOWN,         DownloadSource::NAVIGATION,
-      DownloadSource::DRAG_AND_DROP,   DownloadSource::MANUAL_RESUMPTION,
-      DownloadSource::AUTO_RESUMPTION, DownloadSource::FROM_RENDERER,
-      DownloadSource::EXTENSION_API,   DownloadSource::EXTENSION_INSTALLER,
-      DownloadSource::PLUGIN,          DownloadSource::PLUGIN_INSTALLER,
-      DownloadSource::INTERNAL_API,    DownloadSource::SAVE_PACKAGE,
-      DownloadSource::OFFLINE_PAGE};
-
-  for (auto source : sources) {
-    EXPECT_EQ(source, DownloadSourceFromProto(DownloadSourceToProto(source)));
-  }
 }
 
 }  // namespace download

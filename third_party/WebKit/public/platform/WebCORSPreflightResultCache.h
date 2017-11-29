@@ -30,35 +30,26 @@
 #include <memory>
 #include <string>
 #include "base/containers/flat_set.h"
-#include "base/time/time.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "public/platform/WebHTTPHeaderMap.h"
 #include "public/platform/WebHTTPHeaderSet.h"
+#include "public/platform/WebNonCopyable.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebURLResponse.h"
 
-namespace base {
-class TickClock;
-}
-
 namespace blink {
 
 // Represents an entry of the CORS-preflight cache.
 // See https://fetch.spec.whatwg.org/#concept-cache.
-class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCacheItem {
+class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCacheItem
+    : public WebNonCopyable {
  public:
-  WebCORSPreflightResultCacheItem(const WebCORSPreflightResultCacheItem&) =
-      delete;
-  WebCORSPreflightResultCacheItem& operator=(
-      const WebCORSPreflightResultCacheItem&) = delete;
-
   static std::unique_ptr<WebCORSPreflightResultCacheItem> Create(
       const network::mojom::FetchCredentialsMode,
       const WebHTTPHeaderMap&,
-      WebString& error_description,
-      base::TickClock* = nullptr);
+      WebString& error_description);
 
   bool AllowsCrossOriginMethod(const WebString& method,
                                WebString& error_description) const;
@@ -69,8 +60,8 @@ class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCacheItem {
                      const WebHTTPHeaderMap& request_headers) const;
 
  private:
-  WebCORSPreflightResultCacheItem(network::mojom::FetchCredentialsMode,
-                                  base::TickClock*);
+  explicit WebCORSPreflightResultCacheItem(
+      network::mojom::FetchCredentialsMode);
 
   bool Parse(const WebHTTPHeaderMap& response_header,
              WebString& error_description);
@@ -78,21 +69,17 @@ class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCacheItem {
   // FIXME: A better solution to holding onto the absolute expiration time might
   // be to start a timer for the expiration delta that removes this from the
   // cache when it fires.
-  base::TimeTicks absolute_expiry_time_;
+  double absolute_expiry_time_;
 
   // Corresponds to the fields of the CORS-preflight cache with the same name.
   bool credentials_;
   base::flat_set<std::string> methods_;
   WebHTTPHeaderSet headers_;
-  base::TickClock* clock_;
 };
 
-class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCache {
+class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCache
+    : public WebNonCopyable {
  public:
-  WebCORSPreflightResultCache(const WebCORSPreflightResultCache&) = delete;
-  WebCORSPreflightResultCache& operator=(const WebCORSPreflightResultCache&) =
-      delete;
-
   // Returns a WebCORSPreflightResultCache which is shared in the same thread.
   static WebCORSPreflightResultCache& Shared();
 

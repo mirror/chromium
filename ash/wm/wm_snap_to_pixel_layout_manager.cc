@@ -12,9 +12,9 @@
 namespace ash {
 namespace wm {
 
-WmSnapToPixelLayoutManager::WmSnapToPixelLayoutManager() = default;
+WmSnapToPixelLayoutManager::WmSnapToPixelLayoutManager() {}
 
-WmSnapToPixelLayoutManager::~WmSnapToPixelLayoutManager() = default;
+WmSnapToPixelLayoutManager::~WmSnapToPixelLayoutManager() {}
 
 // static
 void WmSnapToPixelLayoutManager::InstallOnContainers(aura::Window* window) {

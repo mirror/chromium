@@ -26,8 +26,8 @@ class InactiveUserNotificationBlockerTest
     : public NoSessionAshTestBase,
       public message_center::NotificationBlocker::Observer {
  public:
-  InactiveUserNotificationBlockerTest() = default;
-  ~InactiveUserNotificationBlockerTest() override = default;
+  InactiveUserNotificationBlockerTest() {}
+  ~InactiveUserNotificationBlockerTest() override {}
 
   // AshTestBase overrides:
   void SetUp() override {

@@ -80,9 +80,9 @@ void LocaleNotificationDelegate::ButtonClick(int button_index) {
 
 }  // namespace
 
-LocaleNotificationController::LocaleNotificationController() = default;
+LocaleNotificationController::LocaleNotificationController() {}
 
-LocaleNotificationController::~LocaleNotificationController() = default;
+LocaleNotificationController::~LocaleNotificationController() {}
 
 void LocaleNotificationController::BindRequest(
     mojom::LocaleNotificationControllerRequest request) {

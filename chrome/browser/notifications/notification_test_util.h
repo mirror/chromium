@@ -79,7 +79,7 @@ class FullscreenStateWaiter {
   void Wait();
 
  private:
-  Browser* const browser_;
+  Browser* browser_;
   bool desired_state_;
 
   DISALLOW_COPY_AND_ASSIGN(FullscreenStateWaiter);

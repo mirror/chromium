@@ -191,9 +191,9 @@ void LogUnimplementedPropertyID(CSSPropertyID property_id) {
 
 }  // namespace
 
-const Vector<const CSSProperty*>&
+const Vector<CSSPropertyID>&
 CSSComputedStyleDeclaration::ComputableProperties() {
-  DEFINE_STATIC_LOCAL(Vector<const CSSProperty*>, properties, ());
+  DEFINE_STATIC_LOCAL(Vector<CSSPropertyID>, properties, ());
   if (properties.IsEmpty()) {
     CSSProperty::FilterEnabledCSSPropertiesIntoVector(
         kComputedPropertyArray, WTF_ARRAY_LENGTH(kComputedPropertyArray),
@@ -215,14 +215,14 @@ CSSComputedStyleDeclaration::~CSSComputedStyleDeclaration() = default;
 
 String CSSComputedStyleDeclaration::cssText() const {
   StringBuilder result;
-  static const Vector<const CSSProperty*>& properties = ComputableProperties();
+  const Vector<CSSPropertyID>& properties = ComputableProperties();
 
   for (unsigned i = 0; i < properties.size(); i++) {
     if (i)
       result.Append(' ');
-    result.Append(getPropertyName(properties[i]->PropertyID()));
+    result.Append(getPropertyName(properties[i]));
     result.Append(": ");
-    result.Append(GetPropertyValue(properties[i]->PropertyID()));
+    result.Append(GetPropertyValue(properties[i]));
     result.Append(';');
   }
 
@@ -384,7 +384,7 @@ String CSSComputedStyleDeclaration::item(unsigned i) const {
   if (i >= length())
     return "";
 
-  return getPropertyNameString(ComputableProperties()[i]->PropertyID());
+  return getPropertyNameString(ComputableProperties()[i]);
 }
 
 bool CSSComputedStyleDeclaration::CssPropertyMatches(
@@ -415,11 +415,11 @@ MutableCSSPropertyValueSet* CSSComputedStyleDeclaration::CopyProperties()
 }
 
 MutableCSSPropertyValueSet* CSSComputedStyleDeclaration::CopyPropertiesInSet(
-    const Vector<const CSSProperty*>& properties) const {
+    const Vector<CSSPropertyID>& properties) const {
   HeapVector<CSSPropertyValue, 256> list;
   list.ReserveInitialCapacity(properties.size());
   for (unsigned i = 0; i < properties.size(); ++i) {
-    const CSSProperty& property = *properties[i];
+    const CSSProperty& property = CSSProperty::Get(properties[i]);
     const CSSValue* value = GetPropertyCSSValue(property);
     if (value)
       list.push_back(CSSPropertyValue(property, *value, false));

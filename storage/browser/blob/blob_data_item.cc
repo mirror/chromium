@@ -11,7 +11,8 @@
 
 namespace storage {
 
-BlobDataItem::DataHandle::~DataHandle() = default;
+BlobDataItem::DataHandle::~DataHandle() {
+}
 
 BlobDataItem::BlobDataItem(std::unique_ptr<DataElement> item)
     : item_(std::move(item)),
@@ -56,7 +57,7 @@ BlobDataItem::BlobDataItem(std::unique_ptr<DataElement> item,
   DCHECK_EQ(item_->type(), DataElement::TYPE_FILE_FILESYSTEM);
 }
 
-BlobDataItem::~BlobDataItem() = default;
+BlobDataItem::~BlobDataItem() {}
 
 void PrintTo(const BlobDataItem& x, ::std::ostream* os) {
   DCHECK(os);

@@ -62,7 +62,7 @@ bool CursorShapeIsValid(const CursorShapeInfo& cursor_shape) {
 
 ClientControlDispatcher::ClientControlDispatcher()
     : ChannelDispatcherBase(kControlChannelName) {}
-ClientControlDispatcher::~ClientControlDispatcher() = default;
+ClientControlDispatcher::~ClientControlDispatcher() {}
 
 void ClientControlDispatcher::InjectClipboardEvent(
     const ClipboardEvent& event) {

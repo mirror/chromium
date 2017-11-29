@@ -34,7 +34,7 @@ class TestDetailsView : public TrayDetailsView {
     CreateTitleRow(IDS_ASH_STATUS_TRAY_BLUETOOTH);
   }
 
-  ~TestDetailsView() override = default;
+  ~TestDetailsView() override {}
 
   TrayPopupHeaderButton* tray_popup_header_button() {
     return tray_popup_header_button_;
@@ -95,8 +95,8 @@ class TestItem : public SystemTrayItem {
 
 class TrayDetailsViewTest : public AshTestBase {
  public:
-  TrayDetailsViewTest() = default;
-  ~TrayDetailsViewTest() override = default;
+  TrayDetailsViewTest() {}
+  ~TrayDetailsViewTest() override {}
 
   TrayPopupHeaderButton* CreateAndShowTrayPopupHeaderButton() {
     SystemTray* tray = GetPrimarySystemTray();

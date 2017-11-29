@@ -129,7 +129,7 @@ void DrawBlobs(PaintCanvas* canvas,
 
 }  // anonymous ns
 
-void Font::DrawText(PaintCanvas* canvas,
+bool Font::DrawText(PaintCanvas* canvas,
                     const TextRunPaintInfo& run_info,
                     const FloatPoint& point,
                     float device_scale_factor,
@@ -137,7 +137,7 @@ void Font::DrawText(PaintCanvas* canvas,
   // Don't draw anything while we are using custom fonts that are in the process
   // of loading.
   if (ShouldSkipDrawing())
-    return;
+    return false;
 
   ShapeResultBloberizer bloberizer(*this, device_scale_factor);
   CachingWordShaper word_shaper(*this);
@@ -145,9 +145,10 @@ void Font::DrawText(PaintCanvas* canvas,
   word_shaper.FillResultBuffer(run_info, &buffer);
   bloberizer.FillGlyphs(run_info, buffer);
   DrawBlobs(canvas, flags, bloberizer.Blobs(), point);
+  return true;
 }
 
-void Font::DrawText(PaintCanvas* canvas,
+bool Font::DrawText(PaintCanvas* canvas,
                     const NGTextFragmentPaintInfo& text_info,
                     const FloatPoint& point,
                     float device_scale_factor,
@@ -155,12 +156,13 @@ void Font::DrawText(PaintCanvas* canvas,
   // Don't draw anything while we are using custom fonts that are in the process
   // of loading.
   if (ShouldSkipDrawing())
-    return;
+    return false;
 
   ShapeResultBloberizer bloberizer(*this, device_scale_factor);
   bloberizer.FillGlyphs(text_info.text, text_info.from, text_info.to,
                         text_info.shape_result);
   DrawBlobs(canvas, flags, bloberizer.Blobs(), point);
+  return true;
 }
 
 bool Font::DrawBidiText(PaintCanvas* canvas,

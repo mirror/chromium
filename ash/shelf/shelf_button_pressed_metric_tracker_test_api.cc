@@ -14,7 +14,7 @@ ShelfButtonPressedMetricTrackerTestAPI::ShelfButtonPressedMetricTrackerTestAPI(
           shelf_button_pressed_metric_tracker) {}
 
 ShelfButtonPressedMetricTrackerTestAPI::
-    ~ShelfButtonPressedMetricTrackerTestAPI() = default;
+    ~ShelfButtonPressedMetricTrackerTestAPI() {}
 
 void ShelfButtonPressedMetricTrackerTestAPI::SetTickClock(
     std::unique_ptr<base::TickClock> tick_clock) {

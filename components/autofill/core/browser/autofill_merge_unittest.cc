@@ -297,9 +297,7 @@ ServerFieldType AutofillMergeTest::StringToFieldType(const std::string& str) {
 }
 
 TEST_P(AutofillMergeTest, DataDrivenMergeProfiles) {
-  const bool kIsExpectedToPass = true;
-  RunOneDataDrivenTest(GetParam(), GetOutputDirectory(kTestName),
-                       kIsExpectedToPass);
+  RunOneDataDrivenTest(GetParam(), GetOutputDirectory(kTestName));
 }
 
 INSTANTIATE_TEST_CASE_P(, AutofillMergeTest, testing::ValuesIn(GetTestFiles()));

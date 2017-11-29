@@ -19,7 +19,7 @@
 
 namespace ash {
 
-AshWindowTreeHost::AshWindowTreeHost() = default;
+AshWindowTreeHost::AshWindowTreeHost() {}
 
 AshWindowTreeHost::~AshWindowTreeHost() = default;
 

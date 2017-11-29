@@ -65,7 +65,7 @@
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
 #include "content/public/common/appcache_info.h"
-#include "content/public/common/bind_interface_helpers.h"
+#include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_constants.h"
@@ -174,7 +174,6 @@
 #include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/data_element.h"
-#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "third_party/WebKit/common/frame_policy.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
@@ -1308,6 +1307,7 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
       presentation_dispatcher_(nullptr),
       push_messaging_client_(nullptr),
       screen_orientation_dispatcher_(nullptr),
+      manifest_manager_(nullptr),
       render_accessibility_(nullptr),
       previews_state_(PREVIEWS_UNSPECIFIED),
       effective_connection_type_(
@@ -1361,7 +1361,7 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
   plugin_power_saver_helper_ = new PluginPowerSaverHelper(this);
 #endif
 
-  manifest_manager_ = std::make_unique<ManifestManager>(this);
+  manifest_manager_ = new ManifestManager(this);
   memset(&peak_memory_metrics_, 0,
          sizeof(RenderThreadImpl::RendererMemoryMetrics));
 }
@@ -1891,8 +1891,8 @@ void RenderFrameImpl::BindFrameNavigationControl(
   frame_navigation_control_binding_.Bind(std::move(request));
 }
 
-blink::mojom::ManifestManager& RenderFrameImpl::GetManifestManager() {
-  return *manifest_manager_;
+ManifestManager* RenderFrameImpl::manifest_manager() {
+  return manifest_manager_;
 }
 
 void RenderFrameImpl::SetPendingNavigationParams(
@@ -2901,12 +2901,12 @@ service_manager::InterfaceProvider* RenderFrameImpl::GetRemoteInterfaces() {
   return &remote_interfaces_;
 }
 
-blink::AssociatedInterfaceRegistry*
+AssociatedInterfaceRegistry*
 RenderFrameImpl::GetAssociatedInterfaceRegistry() {
   return &associated_interfaces_;
 }
 
-blink::AssociatedInterfaceProvider*
+AssociatedInterfaceProvider*
 RenderFrameImpl::GetRemoteAssociatedInterfaces() {
   if (!remote_associated_interfaces_) {
     ChildThreadImpl* thread = ChildThreadImpl::current();
@@ -3379,11 +3379,6 @@ RenderFrameImpl::CreateServiceWorkerProvider() {
 
 service_manager::InterfaceProvider* RenderFrameImpl::GetInterfaceProvider() {
   return &remote_interfaces_;
-}
-
-blink::AssociatedInterfaceProvider*
-RenderFrameImpl::GetRemoteNavigationAssociatedInterfaces() {
-  return GetRemoteAssociatedInterfaces();
 }
 
 void RenderFrameImpl::DidAccessInitialDocument() {
@@ -4931,7 +4926,7 @@ blink::WebPushClient* RenderFrameImpl::PushClient() {
 
 blink::WebRelatedAppsFetcher* RenderFrameImpl::GetRelatedAppsFetcher() {
   if (!related_apps_fetcher_)
-    related_apps_fetcher_.reset(new RelatedAppsFetcher(&GetManifestManager()));
+    related_apps_fetcher_.reset(new RelatedAppsFetcher(manifest_manager_));
 
   return related_apps_fetcher_.get();
 }
@@ -7089,9 +7084,8 @@ void RenderFrameImpl::RegisterMojoInterfaces() {
         &RenderFrameImpl::OnHostZoomClientRequest, weak_factory_.GetWeakPtr()));
 
     // Web manifests are only requested for main frames.
-    registry_.AddInterface(
-        base::Bind(&ManifestManager::BindToRequest,
-                   base::Unretained(manifest_manager_.get())));
+    registry_.AddInterface(base::Bind(&ManifestManager::BindToRequest,
+                                      base::Unretained(manifest_manager_)));
   }
 }
 

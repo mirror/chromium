@@ -44,7 +44,7 @@ ShelfApplicationMenuModel::ShelfApplicationMenuModel(
     AddSeparator(ui::SPACING_SEPARATOR);
 }
 
-ShelfApplicationMenuModel::~ShelfApplicationMenuModel() = default;
+ShelfApplicationMenuModel::~ShelfApplicationMenuModel() {}
 
 bool ShelfApplicationMenuModel::IsCommandIdChecked(int command_id) const {
   return false;

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 8
+// Next MinVersion: 7
 
 module arc.mojom;
 
@@ -403,13 +403,9 @@ interface BluetoothHost {
       => (BluetoothGattStatus status);
 };
 
-// Next Method ID: 19
+// Next Method ID: 18
 interface BluetoothInstance {
-  // DEPRECATED: Please use Init@18 instead.
-  InitDeprecated@0(BluetoothHost host_ptr);
-
-  // Establishes full-duplex communication with the host.
-  [MinVersion=7] Init@18(BluetoothHost host_ptr) => ();
+  Init@0(BluetoothHost host_ptr);
 
   OnAdapterProperties@1(BluetoothStatus status,
                         array<BluetoothProperty> properties);

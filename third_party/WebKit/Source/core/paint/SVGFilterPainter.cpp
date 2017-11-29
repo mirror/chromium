@@ -25,7 +25,7 @@ GraphicsContext* SVGFilterRecordingContext::BeginContent() {
   // independent property tree set.
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     paint_controller_->UpdateCurrentPaintChunkProperties(
-        WTF::nullopt, PropertyTreeState::Root());
+        nullptr, PropertyTreeState::Root());
   }
   return context_.get();
 }

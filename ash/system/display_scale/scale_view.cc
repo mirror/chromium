@@ -74,7 +74,7 @@ ScaleView::ScaleView(SystemTrayItem* owner, bool is_default_view)
   Layout();
 }
 
-ScaleView::~ScaleView() = default;
+ScaleView::~ScaleView() {}
 
 void ScaleView::ButtonPressed(views::Button* sender, const ui::Event& event) {
   if (sender == more_button_)

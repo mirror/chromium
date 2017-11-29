@@ -249,7 +249,7 @@ WindowGrid::WindowGrid(aura::Window* root_window,
   }
 }
 
-WindowGrid::~WindowGrid() = default;
+WindowGrid::~WindowGrid() {}
 
 void WindowGrid::Shutdown() {
   for (const auto& window : window_list_)

@@ -69,8 +69,7 @@ class ChildProcessTaskTest
 
   bool AreProviderContainersEmpty(
       const ChildProcessTaskProvider& provider) const {
-    return provider.tasks_by_handle_.empty() &&
-           provider.tasks_by_child_id_.empty();
+    return provider.tasks_by_handle_.empty() && provider.tasks_by_pid_.empty();
   }
 
  protected:
@@ -133,13 +132,15 @@ TEST_F(ChildProcessTaskTest, TestAll) {
   EXPECT_FALSE(task->ReportsV8Memory());
   EXPECT_FALSE(task->ReportsWebCacheStats());
 
-  // Make sure that indexing by child_id works properly.
-  ASSERT_EQ(task, provider.GetTaskOfUrlRequest(unique_id, 0));
-  ASSERT_EQ(task, provider.GetTaskOfUrlRequest(unique_id, 1));
-
+  // Make sure that the conversion from PID to Handle inside
+  // |GetTaskOfUrlRequest()| is working properly.
+  Task* found_task =
+      provider.GetTaskOfUrlRequest(base::GetCurrentProcId(), 0, 0);
+  ASSERT_EQ(task, found_task);
   const int64_t bytes_read = 1024;
-  task->OnNetworkBytesRead(bytes_read);
-  task->Refresh(base::TimeDelta::FromSeconds(1), REFRESH_TYPE_NETWORK_USAGE);
+  found_task->OnNetworkBytesRead(bytes_read);
+  found_task->Refresh(base::TimeDelta::FromSeconds(1),
+                      REFRESH_TYPE_NETWORK_USAGE);
 
   EXPECT_EQ(bytes_read, task->network_usage_rate());
 
@@ -179,3 +180,4 @@ TEST_F(ChildProcessTaskTest, ProcessTypeToTaskType) {
 }
 
 }  // namespace task_manager
+

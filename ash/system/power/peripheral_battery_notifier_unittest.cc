@@ -29,8 +29,8 @@ namespace ash {
 
 class PeripheralBatteryNotifierTest : public ash::AshTestBase {
  public:
-  PeripheralBatteryNotifierTest() = default;
-  ~PeripheralBatteryNotifierTest() override = default;
+  PeripheralBatteryNotifierTest() {}
+  ~PeripheralBatteryNotifierTest() override {}
 
   void SetUp() override {
     ash::AshTestBase::SetUp();
@@ -167,8 +167,7 @@ TEST_F(PeripheralBatteryNotifierTest, ExtractBluetoothAddress) {
   EXPECT_TRUE(non_bluetooth_device_info.bluetooth_address.empty());
 }
 
-// TODO(crbug.com/765794): Flaky on ash_unittests --mus.
-TEST_F(PeripheralBatteryNotifierTest, DISABLED_DeviceRemove) {
+TEST_F(PeripheralBatteryNotifierTest, DeviceRemove) {
   message_center::MessageCenter* message_center =
       message_center::MessageCenter::Get();
 

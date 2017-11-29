@@ -10,6 +10,6 @@ NetworkingConfigDelegate::ExtensionInfo::ExtensionInfo(const std::string& id,
                                                        const std::string& name)
     : extension_id(id), extension_name(name) {}
 
-NetworkingConfigDelegate::ExtensionInfo::~ExtensionInfo() = default;
+NetworkingConfigDelegate::ExtensionInfo::~ExtensionInfo() {}
 
 }  // namespace ash

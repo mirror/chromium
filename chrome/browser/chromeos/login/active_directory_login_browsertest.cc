@@ -26,7 +26,6 @@
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_auth_policy_client.h"
-#include "chromeos/login/auth/authpolicy_login_helper.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user_names.h"
 #include "content/public/test/browser_test_utils.h"
@@ -78,17 +77,16 @@ class TestAuthPolicyClient : public FakeAuthPolicyClient {
  public:
   TestAuthPolicyClient() { FakeAuthPolicyClient::set_started(true); }
 
-  void AuthenticateUser(const authpolicy::AuthenticateUserRequest& request,
+  void AuthenticateUser(const std::string& user_principal_name,
+                        const std::string& object_guid,
                         int password_fd,
                         AuthCallback callback) override {
     authpolicy::ActiveDirectoryAccountInfo account_info;
     if (auth_error_ == authpolicy::ERROR_NONE) {
-      if (request.account_id().empty()) {
-        account_info.set_account_id(
-            base::MD5String(request.user_principal_name()));
-      } else {
-        account_info.set_account_id(request.account_id());
-      }
+      if (object_guid.empty())
+        account_info.set_account_id(base::MD5String(user_principal_name));
+      else
+        account_info.set_account_id(object_guid);
     }
     base::SequencedTaskRunnerHandle::Get()->PostNonNestableTask(
         FROM_HERE,
@@ -138,9 +136,9 @@ class ActiveDirectoryLoginTest : public LoginManagerTest {
   void MarkAsActiveDirectoryEnterprise() {
     StartupUtils::MarkOobeCompleted();
     base::RunLoop loop;
-    AuthPolicyLoginHelper().JoinAdDomain(
+    fake_auth_policy_client()->JoinAdDomain(
         kAdMachineName, kTestActiveDirectoryUser + ("@" + test_realm_),
-        "" /* password */, base::BindOnce(&OnJoinedDomain));
+        -1 /* password_fd */, base::BindOnce(&OnJoinedDomain));
 
     fake_auth_policy_client()->RefreshDevicePolicy(
         base::BindOnce(&OnRefreshedPolicy, loop.QuitClosure()));

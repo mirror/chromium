@@ -102,7 +102,7 @@ class MockDatabaseTracker : public DatabaseTracker {
   void set_async_delete(bool async) { async_delete_ = async; }
 
  protected:
-  ~MockDatabaseTracker() override = default;
+  ~MockDatabaseTracker() override {}
 
  private:
   class MockOriginInfo : public OriginInfo {

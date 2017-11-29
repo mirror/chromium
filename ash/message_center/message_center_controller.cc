@@ -53,7 +53,7 @@ MessageCenterController::MessageCenterController()
       login_notification_blocker_(MessageCenter::Get()),
       binding_(this) {}
 
-MessageCenterController::~MessageCenterController() = default;
+MessageCenterController::~MessageCenterController() {}
 
 void MessageCenterController::BindRequest(
     mojom::AshMessageCenterControllerRequest request) {

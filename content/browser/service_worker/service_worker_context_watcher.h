@@ -14,7 +14,6 @@
 #include "content/browser/service_worker/service_worker_context_core_observer.h"
 #include "content/browser/service_worker/service_worker_info.h"
 #include "content/common/content_export.h"
-#include "third_party/WebKit/common/service_worker/service_worker_provider_type.mojom.h"
 
 namespace content {
 
@@ -109,7 +108,7 @@ class CONTENT_EXPORT ServiceWorkerContextWatcher
       int process_id,
       int route_id,
       const base::Callback<WebContents*(void)>& web_contents_getter,
-      blink::mojom::ServiceWorkerProviderType type) override;
+      ServiceWorkerProviderType type) override;
   void OnControlleeRemoved(int64_t version_id,
                            const std::string& uuid) override;
   void OnRegistrationStored(int64_t registration_id,

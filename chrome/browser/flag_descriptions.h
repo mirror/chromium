@@ -372,6 +372,9 @@ extern const char kExperimentalExtensionApisDescription[];
 extern const char kExperimentalFullscreenExitUIName[];
 extern const char kExperimentalFullscreenExitUIDescription[];
 
+extern const char kExperimentalHotwordHardwareName[];
+extern const char kExperimentalHotwordHardwareDescription[];
+
 extern const char kExperimentalKeyboardLockUiName[];
 extern const char kExperimentalKeyboardLockUiDescription[];
 
@@ -540,6 +543,9 @@ extern const char kNewAudioRenderingMixingStrategyDescription[];
 
 extern const char kNewBookmarkAppsName[];
 extern const char kNewBookmarkAppsDescription[];
+
+extern const char kNewOmniboxAnswerTypesName[];
+extern const char kNewOmniboxAnswerTypesDescription[];
 
 extern const char kNewRemotePlaybackPipelineName[];
 extern const char kNewRemotePlaybackPipelineDescription[];
@@ -1027,14 +1033,8 @@ extern const char kBackgroundLoaderForDownloadsDescription[];
 extern const char kChromeHomeBottomNavLabelsName[];
 extern const char kChromeHomeBottomNavLabelsDescription[];
 
-extern const char kChromeHomeInactivitySheetExpansionName[];
-extern const char kChromeHomeInactivitySheetExpansionDescription[];
-
 extern const char kChromeHomeOptOutSnackbarName[];
 extern const char kChromeHomeOptOutSnackbarDescription[];
-
-extern const char kChromeHomePersistentIphName[];
-extern const char kChromeHomePersistentIphDescription[];
 
 extern const char kChromeHomePersonalizedOmniboxSuggestionsName[];
 extern const char kChromeHomePersonalizedOmniboxSuggestionsDescription[];

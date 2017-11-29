@@ -152,8 +152,6 @@ WindowServer::WindowServer(WindowServerDelegate* delegate, bool should_host_viz)
           std::make_unique<VizHostProxyImpl>(host_frame_sink_manager_.get())),
       video_detector_(host_frame_sink_manager_.get()),
       display_creation_config_(DisplayCreationConfig::UNKNOWN) {
-  if (host_frame_sink_manager_)
-    host_frame_sink_manager_->WillAssignTemporaryReferencesExternally();
   user_id_tracker_.AddObserver(this);
   OnUserIdAdded(user_id_tracker_.active_id());
 }
@@ -911,12 +909,16 @@ void WindowServer::OnWindowHierarchyChanged(ServerWindow* window,
       pending_system_modal_windows_.Remove(system_modal_window);
   }
 
+  // This |window| is being removed, EventDispatcher::WindowNoLongerValidTarget
+  // is going to be notified to do the necessary update.
+  if (!new_parent)
+    return;
+
   WindowManagerDisplayRoot* old_display_root =
       old_parent ? display_manager_->GetWindowManagerDisplayRoot(old_parent)
                  : nullptr;
   WindowManagerDisplayRoot* new_display_root =
-      new_parent ? display_manager_->GetWindowManagerDisplayRoot(new_parent)
-                 : nullptr;
+      display_manager_->GetWindowManagerDisplayRoot(new_parent);
   UpdateNativeCursorFromMouseLocation(new_display_root);
   if (old_display_root != new_display_root)
     UpdateNativeCursorFromMouseLocation(old_display_root);

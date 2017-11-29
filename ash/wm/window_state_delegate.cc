@@ -7,9 +7,9 @@
 namespace ash {
 namespace wm {
 
-WindowStateDelegate::WindowStateDelegate() = default;
+WindowStateDelegate::WindowStateDelegate() {}
 
-WindowStateDelegate::~WindowStateDelegate() = default;
+WindowStateDelegate::~WindowStateDelegate() {}
 
 bool WindowStateDelegate::ToggleFullscreen(WindowState* window_state) {
   return false;

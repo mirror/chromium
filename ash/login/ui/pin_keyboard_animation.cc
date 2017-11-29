@@ -27,7 +27,7 @@ PinKeyboardAnimation::PinKeyboardAnimation(bool grow,
       gfx::Point3F(1, start_opacity_, 1), gfx::Point3F(1, end_opacity_, 1));
 }
 
-PinKeyboardAnimation::~PinKeyboardAnimation() = default;
+PinKeyboardAnimation::~PinKeyboardAnimation() {}
 
 void PinKeyboardAnimation::OnStart(ui::LayerAnimationDelegate* delegate) {}
 

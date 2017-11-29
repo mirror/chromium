@@ -55,9 +55,7 @@ WindowTreeHost* TestScreen::CreateHostForPrimaryDisplay() {
   // Makes sure InputMethod is default focused so that IME basics can work.
   host_->GetInputMethod()->OnFocus();
   host_->window()->AddObserver(this);
-  // Other test code may have already initialized the compositor.
-  if (!host_->compositor()->root_layer())
-    host_->InitHost();
+  host_->InitHost();
   host_->window()->Show();
   return host_;
 }

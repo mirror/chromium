@@ -15,7 +15,7 @@ namespace remoting {
 
 FakeMouseCursorMonitor::FakeMouseCursorMonitor() : callback_(nullptr) {}
 
-FakeMouseCursorMonitor::~FakeMouseCursorMonitor() = default;
+FakeMouseCursorMonitor::~FakeMouseCursorMonitor() {}
 
 void FakeMouseCursorMonitor::Init(
     webrtc::MouseCursorMonitor::Callback* callback,

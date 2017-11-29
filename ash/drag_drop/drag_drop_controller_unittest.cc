@@ -303,7 +303,7 @@ void DispatchGesture(ui::EventType gesture_type, gfx::Point location) {
 class DragDropControllerTest : public AshTestBase {
  public:
   DragDropControllerTest() : AshTestBase() {}
-  ~DragDropControllerTest() override = default;
+  ~DragDropControllerTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

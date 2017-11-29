@@ -12,7 +12,7 @@ ErrorTolerantBleAdvertisement::ErrorTolerantBleAdvertisement(
     const std::string& device_id)
     : device_id_(device_id) {}
 
-ErrorTolerantBleAdvertisement::~ErrorTolerantBleAdvertisement() = default;
+ErrorTolerantBleAdvertisement::~ErrorTolerantBleAdvertisement() {}
 
 }  // namespace tether
 

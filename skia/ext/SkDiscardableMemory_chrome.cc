@@ -11,7 +11,7 @@
 #include "base/memory/discardable_memory.h"
 #include "base/memory/discardable_memory_allocator.h"
 
-SkDiscardableMemoryChrome::~SkDiscardableMemoryChrome() = default;
+SkDiscardableMemoryChrome::~SkDiscardableMemoryChrome() {}
 
 bool SkDiscardableMemoryChrome::lock() {
   return discardable_->Lock();

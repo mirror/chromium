@@ -48,8 +48,8 @@ void ClickButtonWithFlags(ui::test::EventGenerator* generator,
 
 class WorkspaceEventHandlerTest : public AshTestBase {
  public:
-  WorkspaceEventHandlerTest() = default;
-  ~WorkspaceEventHandlerTest() override = default;
+  WorkspaceEventHandlerTest() {}
+  ~WorkspaceEventHandlerTest() override {}
 
  protected:
   aura::Window* CreateTestWindow(aura::WindowDelegate* delegate,

@@ -48,7 +48,7 @@ class LayerFillBackgroundPainter : public views::Background {
   explicit LayerFillBackgroundPainter(std::unique_ptr<views::Painter> painter)
       : painter_(std::move(painter)) {}
 
-  ~LayerFillBackgroundPainter() override = default;
+  ~LayerFillBackgroundPainter() override {}
 
   void Paint(gfx::Canvas* canvas, views::View* view) const override {
     views::Painter::PaintPainterAt(canvas, painter_.get(),
@@ -100,7 +100,7 @@ class WindowPreviewView : public views::View, public aura::WindowObserver {
 
     SetFocusBehavior(FocusBehavior::ALWAYS);
   }
-  ~WindowPreviewView() override = default;
+  ~WindowPreviewView() override {}
 
   // views::View:
   gfx::Size CalculatePreferredSize() const override {
@@ -263,7 +263,7 @@ class WindowCycleView : public views::WidgetDelegateView {
     AddChildView(mirror_container_);
   }
 
-  ~WindowCycleView() override = default;
+  ~WindowCycleView() override {}
 
   void SetTargetWindow(aura::Window* target) {
     target_window_ = target;

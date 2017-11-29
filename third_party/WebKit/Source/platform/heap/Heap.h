@@ -32,8 +32,6 @@
 #define Heap_h
 
 #include <memory>
-
-#include "base/macros.h"
 #include "build/build_config.h"
 #include "platform/PlatformExport.h"
 #include "platform/heap/GCInfo.h"
@@ -592,6 +590,7 @@ struct IsEagerlyFinalizedType {
 template <typename T>
 class GarbageCollected {
   IS_GARBAGE_COLLECTED_TYPE();
+  WTF_MAKE_NONCOPYABLE(GarbageCollected);
 
   // For now direct allocation of arrays on the heap is not allowed.
   void* operator new[](size_t size);
@@ -620,9 +619,7 @@ class GarbageCollected {
   void operator delete(void* p) { NOTREACHED(); }
 
  protected:
-  GarbageCollected() = default;
-
-  DISALLOW_COPY_AND_ASSIGN(GarbageCollected);
+  GarbageCollected() {}
 };
 
 // Assigning class types to their arenas.

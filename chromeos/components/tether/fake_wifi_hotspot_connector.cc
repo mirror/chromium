@@ -17,7 +17,7 @@ FakeWifiHotspotConnector::FakeWifiHotspotConnector(
     : WifiHotspotConnector(network_state_handler,
                            nullptr /* network_connect */) {}
 
-FakeWifiHotspotConnector::~FakeWifiHotspotConnector() = default;
+FakeWifiHotspotConnector::~FakeWifiHotspotConnector() {}
 
 void FakeWifiHotspotConnector::CallMostRecentCallback(
     const std::string& wifi_guid) {

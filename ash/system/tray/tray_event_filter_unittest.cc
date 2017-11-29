@@ -19,8 +19,8 @@ namespace {
 
 class TrayEventFilterTest : public AshTestBase {
  public:
-  TrayEventFilterTest() = default;
-  ~TrayEventFilterTest() override = default;
+  TrayEventFilterTest() {}
+  ~TrayEventFilterTest() override {}
 
   gfx::Point outside_point() {
     gfx::Rect tray_bounds = GetPrimarySystemTray()->GetBoundsInScreen();

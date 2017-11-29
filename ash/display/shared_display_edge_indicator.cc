@@ -23,8 +23,8 @@ const int kIndicatorAnimationDurationMs = 1000;
 
 class IndicatorView : public views::View {
  public:
-  IndicatorView() = default;
-  ~IndicatorView() override = default;
+  IndicatorView() {}
+  ~IndicatorView() override {}
 
   void SetColor(SkColor color) {
     color_ = color;

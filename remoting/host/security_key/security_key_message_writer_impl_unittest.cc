@@ -59,9 +59,9 @@ class SecurityKeyMessageWriterImplTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(SecurityKeyMessageWriterImplTest);
 };
 
-SecurityKeyMessageWriterImplTest::SecurityKeyMessageWriterImplTest() = default;
+SecurityKeyMessageWriterImplTest::SecurityKeyMessageWriterImplTest() {}
 
-SecurityKeyMessageWriterImplTest::~SecurityKeyMessageWriterImplTest() = default;
+SecurityKeyMessageWriterImplTest::~SecurityKeyMessageWriterImplTest() {}
 
 std::string SecurityKeyMessageWriterImplTest::ReadMessage(
     int payload_length_bytes) {

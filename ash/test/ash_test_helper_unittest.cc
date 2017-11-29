@@ -15,8 +15,8 @@ namespace ash {
 // the tests?
 class AshTestHelperTest : public testing::Test {
  public:
-  AshTestHelperTest() = default;
-  ~AshTestHelperTest() override = default;
+  AshTestHelperTest() {}
+  ~AshTestHelperTest() override {}
 
   void SetUp() override {
     testing::Test::SetUp();

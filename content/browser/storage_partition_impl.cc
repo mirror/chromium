@@ -357,10 +357,10 @@ struct StoragePartitionImpl::QuotaManagedDataDeletionHelper {
 struct StoragePartitionImpl::DataDeletionHelper {
   DataDeletionHelper(uint32_t remove_mask,
                      uint32_t quota_storage_remove_mask,
-                     base::OnceClosure callback)
+                     const base::Closure& callback)
       : remove_mask(remove_mask),
         quota_storage_remove_mask(quota_storage_remove_mask),
-        callback(std::move(callback)),
+        callback(callback),
         task_count(0) {}
 
   void IncrementTaskCountOnUI();
@@ -392,7 +392,7 @@ struct StoragePartitionImpl::DataDeletionHelper {
   uint32_t quota_storage_remove_mask;
 
   // Accessed on UI thread.
-  base::OnceClosure callback;
+  const base::Closure callback;
   // Accessed on UI thread.
   int task_count;
 };
@@ -729,10 +729,11 @@ void StoragePartitionImpl::ClearDataImpl(
     net::URLRequestContextGetter* rq_context,
     const base::Time begin,
     const base::Time end,
-    base::OnceClosure callback) {
+    const base::Closure& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DataDeletionHelper* helper = new DataDeletionHelper(
-      remove_mask, quota_storage_remove_mask, std::move(callback));
+  DataDeletionHelper* helper = new DataDeletionHelper(remove_mask,
+                                                      quota_storage_remove_mask,
+                                                      callback);
   // |helper| deletes itself when done in
   // DataDeletionHelper::DecrementTaskCountOnUI().
   helper->ClearDataOnUIThread(
@@ -863,7 +864,7 @@ void StoragePartitionImpl::DataDeletionHelper::DecrementTaskCountOnUI() {
   DCHECK_GT(task_count, 0);
   --task_count;
   if (!task_count) {
-    std::move(callback).Run();
+    callback.Run();
     delete this;
   }
 }
@@ -958,12 +959,12 @@ void StoragePartitionImpl::ClearDataForOrigin(
     uint32_t quota_storage_remove_mask,
     const GURL& storage_origin,
     net::URLRequestContextGetter* request_context_getter,
-    base::OnceClosure callback) {
+    const base::Closure& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ClearDataImpl(remove_mask, quota_storage_remove_mask, storage_origin,
                 OriginMatcherFunction(), CookieMatcherFunction(),
                 request_context_getter, base::Time(), base::Time::Max(),
-                std::move(callback));
+                callback);
 }
 
 void StoragePartitionImpl::ClearData(
@@ -973,10 +974,10 @@ void StoragePartitionImpl::ClearData(
     const OriginMatcherFunction& origin_matcher,
     const base::Time begin,
     const base::Time end,
-    base::OnceClosure callback) {
+    const base::Closure& callback) {
   ClearDataImpl(remove_mask, quota_storage_remove_mask, storage_origin,
                 origin_matcher, CookieMatcherFunction(), GetURLRequestContext(),
-                begin, end, std::move(callback));
+                begin, end, callback);
 }
 
 void StoragePartitionImpl::ClearData(
@@ -986,25 +987,24 @@ void StoragePartitionImpl::ClearData(
     const CookieMatcherFunction& cookie_matcher,
     const base::Time begin,
     const base::Time end,
-    base::OnceClosure callback) {
+    const base::Closure& callback) {
   ClearDataImpl(remove_mask, quota_storage_remove_mask, GURL(), origin_matcher,
-                cookie_matcher, GetURLRequestContext(), begin, end,
-                std::move(callback));
+                cookie_matcher, GetURLRequestContext(), begin, end, callback);
 }
 
 void StoragePartitionImpl::ClearHttpAndMediaCaches(
     const base::Time begin,
     const base::Time end,
     const base::Callback<bool(const GURL&)>& url_matcher,
-    base::OnceClosure callback) {
+    const base::Closure& callback) {
   // StoragePartitionHttpCacheDataRemover deletes itself when it is done.
   if (url_matcher.is_null()) {
     StoragePartitionHttpCacheDataRemover::CreateForRange(this, begin, end)
-        ->Remove(std::move(callback));
+        ->Remove(callback);
   } else {
     StoragePartitionHttpCacheDataRemover::CreateForURLsAndRange(
         this, url_matcher, begin, end)
-        ->Remove(std::move(callback));
+        ->Remove(callback);
   }
 }
 

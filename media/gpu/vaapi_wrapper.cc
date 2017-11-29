@@ -117,9 +117,8 @@ static const VAConfigAttrib kCommonVAConfigAttribs[] = {
     {VAConfigAttribRTFormat, VA_RT_FORMAT_YUV420},
 };
 
-// Attributes required for encode. This only applies to video encode, not JPEG
-// encode.
-static const VAConfigAttrib kVideoEncodeVAConfigAttribs[] = {
+// Attributes required for encode.
+static const VAConfigAttrib kEncodeVAConfigAttribs[] = {
     {VAConfigAttribRateControl, VA_RC_CBR},
     {VAConfigAttribEncPackedHeaders,
      VA_ENC_PACKED_HEADER_SEQUENCE | VA_ENC_PACKED_HEADER_PICTURE},
@@ -149,6 +148,8 @@ class VADisplayState {
 
   // Initialize static data before sandbox is enabled.
   static void PreSandboxInitialization();
+  // Returns false on init failure.
+  static bool PostSandboxInitialization();
 
   VADisplayState();
   ~VADisplayState() = delete;
@@ -163,9 +164,6 @@ class VADisplayState {
   void SetDrmFd(base::PlatformFile fd) { drm_fd_.reset(HANDLE_EINTR(dup(fd))); }
 
  private:
-  // Returns false on init failure.
-  static bool PostSandboxInitialization();
-
   // Protected by |va_lock_|.
   int refcount_;
 
@@ -206,11 +204,12 @@ bool VADisplayState::PostSandboxInitialization() {
   StubPathMap paths;
 
   paths[kModuleVa].push_back(std::string("libva.so.") + va_suffix);
-  paths[kModuleVa_drm].push_back(std::string("libva-drm.so.") + va_suffix);
 #if defined(USE_X11)
   // libva-x11 does not exist on libva >= 2
   if (VA_MAJOR_VERSION == 0)
     paths[kModuleVa_x11].push_back("libva-x11.so.1");
+#elif defined(USE_OZONE)
+  paths[kModuleVa_drm].push_back(std::string("libva-drm.so.") + va_suffix);
 #endif
 
   const bool success = InitializeStubs(paths);
@@ -232,11 +231,6 @@ VADisplayState::VADisplayState()
 
 bool VADisplayState::Initialize() {
   va_lock_.AssertAcquired();
-
-  static bool result = PostSandboxInitialization();
-  if (!result)
-    return false;
-
   if (refcount_++ > 0)
     return true;
 
@@ -307,34 +301,17 @@ void VADisplayState::Deinitialize(VAStatus* status) {
 }
 
 static std::vector<VAConfigAttrib> GetRequiredAttribs(
-    VaapiWrapper::CodecMode mode,
-    VAProfile profile) {
+    VaapiWrapper::CodecMode mode) {
   std::vector<VAConfigAttrib> required_attribs;
   required_attribs.insert(
       required_attribs.end(), kCommonVAConfigAttribs,
       kCommonVAConfigAttribs + arraysize(kCommonVAConfigAttribs));
-  if (mode == VaapiWrapper::kEncode && profile != VAProfileJPEGBaseline) {
+  if (mode == VaapiWrapper::kEncode) {
     required_attribs.insert(
-        required_attribs.end(), kVideoEncodeVAConfigAttribs,
-        kVideoEncodeVAConfigAttribs + arraysize(kVideoEncodeVAConfigAttribs));
+        required_attribs.end(), kEncodeVAConfigAttribs,
+        kEncodeVAConfigAttribs + arraysize(kEncodeVAConfigAttribs));
   }
   return required_attribs;
-}
-
-static VAEntrypoint GetVaEntryPoint(VaapiWrapper::CodecMode mode,
-                                    VAProfile profile) {
-  switch (mode) {
-    case VaapiWrapper::kDecode:
-      return VAEntrypointVLD;
-    case VaapiWrapper::kEncode:
-      if (profile == VAProfileJPEGBaseline)
-        return VAEntrypointEncPicture;
-      else
-        return VAEntrypointEncSlice;
-    case VaapiWrapper::kCodecModeMax:
-      NOTREACHED();
-      return VAEntrypointVLD;
-  }
 }
 
 // This class encapsulates reading and giving access to the list of supported
@@ -417,6 +394,10 @@ VASupportedProfiles::VASupportedProfiles()
       report_error_to_uma_cb_(base::Bind(&base::DoNothing)) {
   static_assert(arraysize(supported_profiles_) == VaapiWrapper::kCodecModeMax,
                 "The array size of supported profile is incorrect.");
+
+  static bool result = VADisplayState::PostSandboxInitialization();
+  if (!result)
+    return;
   {
     base::AutoLock auto_lock(*va_lock_);
     if (!VADisplayState::Get()->Initialize())
@@ -448,11 +429,12 @@ VASupportedProfiles::GetSupportedProfileInfosForCodecModeInternal(
   if (!GetSupportedVAProfiles(&va_profiles))
     return supported_profile_infos;
 
+  std::vector<VAConfigAttrib> required_attribs = GetRequiredAttribs(mode);
+  VAEntrypoint entrypoint =
+      (mode == VaapiWrapper::kEncode ? VAEntrypointEncSlice : VAEntrypointVLD);
+
   base::AutoLock auto_lock(*va_lock_);
   for (const auto& va_profile : va_profiles) {
-    VAEntrypoint entrypoint = GetVaEntryPoint(mode, va_profile);
-    std::vector<VAConfigAttrib> required_attribs =
-        GetRequiredAttribs(mode, va_profile);
     if (!IsEntrypointSupported_Locked(va_profile, entrypoint))
       continue;
     if (!AreAttribsSupported_Locked(va_profile, entrypoint, required_attribs))
@@ -724,12 +706,6 @@ bool VaapiWrapper::IsJpegDecodeSupported() {
                                                         VAProfileJPEGBaseline);
 }
 
-// static
-bool VaapiWrapper::IsJpegEncodeSupported() {
-  return VASupportedProfiles::Get()->IsProfileSupported(kEncode,
-                                                        VAProfileJPEGBaseline);
-}
-
 void VaapiWrapper::TryToSetVADisplayAttributeToLocalGPU() {
   base::AutoLock auto_lock(*va_lock_);
   VADisplayAttribute item = {VADisplayAttribRenderMode,
@@ -759,9 +735,9 @@ bool VaapiWrapper::VaInitialize(const base::Closure& report_error_to_uma_cb) {
 bool VaapiWrapper::Initialize(CodecMode mode, VAProfile va_profile) {
   TryToSetVADisplayAttributeToLocalGPU();
 
-  VAEntrypoint entrypoint = GetVaEntryPoint(mode, va_profile);
-  std::vector<VAConfigAttrib> required_attribs =
-      GetRequiredAttribs(mode, va_profile);
+  VAEntrypoint entrypoint =
+      (mode == kEncode ? VAEntrypointEncSlice : VAEntrypointVLD);
+  std::vector<VAConfigAttrib> required_attribs = GetRequiredAttribs(mode);
   base::AutoLock auto_lock(*va_lock_);
   VAStatus va_res =
       vaCreateConfig(va_display_, va_profile, entrypoint, &required_attribs[0],
@@ -1197,11 +1173,11 @@ bool VaapiWrapper::UploadVideoFrameToSurface(
   return ret == 0;
 }
 
-bool VaapiWrapper::DownloadFromCodedBuffer(VABufferID buffer_id,
-                                           VASurfaceID sync_surface_id,
-                                           uint8_t* target_ptr,
-                                           size_t target_size,
-                                           size_t* coded_data_size) {
+bool VaapiWrapper::DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
+                                                 VASurfaceID sync_surface_id,
+                                                 uint8_t* target_ptr,
+                                                 size_t target_size,
+                                                 size_t* coded_data_size) {
   base::AutoLock auto_lock(*va_lock_);
 
   VAStatus va_res = vaSyncSurface(va_display_, sync_surface_id);
@@ -1238,23 +1214,14 @@ bool VaapiWrapper::DownloadFromCodedBuffer(VABufferID buffer_id,
 
   va_res = vaUnmapBuffer(va_display_, buffer_id);
   VA_LOG_ON_ERROR(va_res, "vaUnmapBuffer failed");
-  return buffer_segment == NULL;
-}
 
-bool VaapiWrapper::DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
-                                                 VASurfaceID sync_surface_id,
-                                                 uint8_t* target_ptr,
-                                                 size_t target_size,
-                                                 size_t* coded_data_size) {
-  bool result = DownloadFromCodedBuffer(buffer_id, sync_surface_id, target_ptr,
-                                        target_size, coded_data_size);
-
-  VAStatus va_res = vaDestroyBuffer(va_display_, buffer_id);
+  va_res = vaDestroyBuffer(va_display_, buffer_id);
   VA_LOG_ON_ERROR(va_res, "vaDestroyBuffer failed");
+
   const auto was_found = coded_buffers_.erase(buffer_id);
   DCHECK(was_found);
 
-  return result;
+  return buffer_segment == NULL;
 }
 
 bool VaapiWrapper::BlitSurface(

@@ -102,7 +102,7 @@ HostScannerOperation::ScannedDeviceInfo::ScannedDeviceInfo(
       device_status(device_status),
       setup_required(setup_required) {}
 
-HostScannerOperation::ScannedDeviceInfo::~ScannedDeviceInfo() = default;
+HostScannerOperation::ScannedDeviceInfo::~ScannedDeviceInfo() {}
 
 bool operator==(const HostScannerOperation::ScannedDeviceInfo& first,
                 const HostScannerOperation::ScannedDeviceInfo& second) {
@@ -123,7 +123,7 @@ HostScannerOperation::HostScannerOperation(
       tether_host_response_recorder_(tether_host_response_recorder),
       clock_(base::MakeUnique<base::DefaultClock>()) {}
 
-HostScannerOperation::~HostScannerOperation() = default;
+HostScannerOperation::~HostScannerOperation() {}
 
 void HostScannerOperation::AddObserver(Observer* observer) {
   observer_list_.AddObserver(observer);

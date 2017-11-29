@@ -105,7 +105,7 @@ void CycleSnap(WindowState* window_state, WMEventType event) {
 DefaultState::DefaultState(mojom::WindowStateType initial_state_type)
     : BaseState(initial_state_type), stored_window_state_(nullptr) {}
 
-DefaultState::~DefaultState() = default;
+DefaultState::~DefaultState() {}
 
 void DefaultState::AttachState(WindowState* window_state,
                                WindowState::State* state_in_previous_mode) {

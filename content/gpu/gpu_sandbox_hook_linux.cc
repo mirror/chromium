@@ -183,7 +183,7 @@ void AddStandardGpuWhiteList(std::vector<BrokerFilePermission>* permissions) {
 
   // For shared memory.
   permissions->push_back(
-      BrokerFilePermission::ReadWriteCreateTemporaryRecursive(kDevShm));
+      BrokerFilePermission::ReadWriteCreateUnlinkRecursive(kDevShm));
 
   // For DRI cards.
   for (int i = 0; i <= 9; ++i) {
@@ -238,12 +238,7 @@ bool LoadAmdGpuLibraries() {
     LOG(ERROR) << "dlopen(libglapi.so) failed with error: " << dlerror();
     return false;
   }
-
-  const char* radeonsi_lib = "/usr/lib64/dri/radeonsi_dri.so";
-#if defined(DRI_DRIVER_DIR)
-  radeonsi_lib = DRI_DRIVER_DIR "/radeonsi_dri.so";
-#endif
-  if (nullptr == dlopen(radeonsi_lib, dlopen_flag)) {
+  if (nullptr == dlopen("/usr/lib64/dri/radeonsi_dri.so", dlopen_flag)) {
     LOG(ERROR) << "dlopen(radeonsi_dri.so) failed with error: " << dlerror();
     return false;
   }
@@ -342,9 +337,7 @@ bool GpuProcessPreSandboxHook(service_manager::BPFBasePolicy* policy,
   if (!LoadLibrariesForGpu(options))
     return false;
 
-  // TODO(tsepez): enable once we can proxy the stat(), readlink() syscalls.
-  if (!IsChromeOS() || !options.use_amd_specific_policies)
-    instance->EngageNamespaceSandbox(false /* from_zygote */);
+  instance->EngageNamespaceSandbox(false /* from_zygote */);
 
   errno = 0;
   return true;

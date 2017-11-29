@@ -43,18 +43,17 @@ void DataDrivenTest::RunDataDrivenTest(
                                    false,
                                    base::FileEnumerator::FILES,
                                    file_name_pattern);
-  const bool kIsExpectedToPass = true;
+
   for (base::FilePath input_file = input_files.Next();
        !input_file.empty();
        input_file = input_files.Next()) {
-    RunOneDataDrivenTest(input_file, output_directory, kIsExpectedToPass);
+    RunOneDataDrivenTest(input_file, output_directory);
   }
 }
 
 void DataDrivenTest::RunOneDataDrivenTest(
     const base::FilePath& test_file_name,
-    const base::FilePath& output_directory,
-    bool is_expected_to_pass) {
+    const base::FilePath& output_directory) {
   base::ScopedAllowBlockingForTesting allow_blocking;
   // iOS doesn't get rid of removed test files. TODO(estade): remove this after
   // all iOS bots are clobbered.
@@ -77,30 +76,28 @@ void DataDrivenTest::RunOneDataDrivenTest(
           FILE_PATH_LITERAL(".out")));
 
   std::string output_file_contents;
-  if (!ReadFile(output_file, &output_file_contents)) {
-    ASSERT_TRUE(WriteFile(output_file, output));
-    return;
-  }
-
-  if (is_expected_to_pass) {
+  if (ReadFile(output_file, &output_file_contents))
     EXPECT_EQ(output_file_contents, output);
-  } else {
-    EXPECT_NE(output_file_contents, output);
-  }
+  else
+    ASSERT_TRUE(WriteFile(output_file, output));
 }
 
 base::FilePath DataDrivenTest::GetInputDirectory(
     const base::FilePath::StringType& test_name) {
-  return test_data_directory_.AppendASCII("autofill")
-      .Append(test_name)
-      .AppendASCII("input");
+  base::FilePath dir;
+  dir = test_data_directory_.AppendASCII("autofill")
+                            .Append(test_name)
+                            .AppendASCII("input");
+  return dir;
 }
 
 base::FilePath DataDrivenTest::GetOutputDirectory(
     const base::FilePath::StringType& test_name) {
-  return test_data_directory_.AppendASCII("autofill")
-      .Append(test_name)
-      .AppendASCII("output");
+  base::FilePath dir;
+  dir = test_data_directory_.AppendASCII("autofill")
+                            .Append(test_name)
+                            .AppendASCII("output");
+  return dir;
 }
 
 DataDrivenTest::DataDrivenTest(const base::FilePath& test_data_directory)

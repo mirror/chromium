@@ -625,15 +625,14 @@ void LayoutTheme::PlatformColorsDidChange() {
   Page::PlatformColorsChanged();
 }
 
-void LayoutTheme::SetCaretBlinkInterval(TimeDelta interval) {
+void LayoutTheme::SetCaretBlinkInterval(double interval) {
   caret_blink_interval_ = interval;
 }
 
-TimeDelta LayoutTheme::CaretBlinkInterval() const {
+double LayoutTheme::CaretBlinkInterval() const {
   // Disable the blinking caret in layout test mode, as it introduces
   // a race condition for the pixel tests. http://b/1198440
-  return LayoutTestSupport::IsRunningLayoutTest() ? TimeDelta()
-                                                  : caret_blink_interval_;
+  return LayoutTestSupport::IsRunningLayoutTest() ? 0 : caret_blink_interval_;
 }
 
 static FontDescription& GetCachedFontDescription(CSSValueID system_font_id) {

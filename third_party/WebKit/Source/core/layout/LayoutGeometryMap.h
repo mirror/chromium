@@ -26,7 +26,6 @@
 #ifndef LayoutGeometryMap_h
 #define LayoutGeometryMap_h
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/layout/LayoutGeometryMapStep.h"
 #include "core/layout/MapCoordinatesFlags.h"
@@ -49,6 +48,7 @@ class TransformState;
 // transforms.
 class CORE_EXPORT LayoutGeometryMap {
   DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(LayoutGeometryMap);
 
  public:
   LayoutGeometryMap(MapCoordinatesFlags = kUseTransforms);
@@ -120,8 +120,6 @@ class CORE_EXPORT LayoutGeometryMap {
   LayoutGeometryMapSteps mapping_;
   LayoutSize accumulated_offset_;
   MapCoordinatesFlags map_coordinates_flags_;
-
-  DISALLOW_COPY_AND_ASSIGN(LayoutGeometryMap);
 };
 
 }  // namespace blink

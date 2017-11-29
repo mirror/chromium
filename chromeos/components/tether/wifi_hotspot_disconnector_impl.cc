@@ -45,7 +45,7 @@ WifiHotspotDisconnectorImpl::WifiHotspotDisconnectorImpl(
   }
 }
 
-WifiHotspotDisconnectorImpl::~WifiHotspotDisconnectorImpl() = default;
+WifiHotspotDisconnectorImpl::~WifiHotspotDisconnectorImpl() {}
 
 void WifiHotspotDisconnectorImpl::DisconnectFromWifiHotspot(
     const std::string& wifi_network_guid,

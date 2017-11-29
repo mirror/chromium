@@ -169,7 +169,7 @@ ScopedOverviewAnimationSettings::ScopedOverviewAnimationSettings(
       GetMetricsReporter(animation_type));
 }
 
-ScopedOverviewAnimationSettings::~ScopedOverviewAnimationSettings() = default;
+ScopedOverviewAnimationSettings::~ScopedOverviewAnimationSettings() {}
 
 void ScopedOverviewAnimationSettings::AddObserver(
     ui::ImplicitAnimationObserver* observer) {

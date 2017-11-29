@@ -43,7 +43,7 @@ class TestWindowDelegate : public aura::test::TestWindowDelegate {
   explicit TestWindowDelegate(int hittest_code) {
     set_window_component(hittest_code);
   }
-  ~TestWindowDelegate() override = default;
+  ~TestWindowDelegate() override {}
 
  private:
   // Overridden from aura::Test::TestWindowDelegate:
@@ -54,8 +54,8 @@ class TestWindowDelegate : public aura::test::TestWindowDelegate {
 
 class ToplevelWindowEventHandlerTest : public AshTestBase {
  public:
-  ToplevelWindowEventHandlerTest() = default;
-  ~ToplevelWindowEventHandlerTest() override = default;
+  ToplevelWindowEventHandlerTest() {}
+  ~ToplevelWindowEventHandlerTest() override {}
 
  protected:
   aura::Window* CreateWindow(int hittest_code) {

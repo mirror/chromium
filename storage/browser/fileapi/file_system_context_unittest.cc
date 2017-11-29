@@ -52,7 +52,7 @@ GURL CreateRawFileSystemURL(const std::string& type_str,
 
 class FileSystemContextTest : public testing::Test {
  public:
-  FileSystemContextTest() = default;
+  FileSystemContextTest() {}
 
   void SetUp() override {
     ASSERT_TRUE(data_dir_.CreateUniqueTempDir());

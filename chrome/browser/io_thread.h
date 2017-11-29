@@ -41,8 +41,10 @@ class PrefRegistrySimple;
 class SystemNetworkContextManager;
 
 #if defined(OS_ANDROID)
+namespace chrome {
 namespace android {
 class ExternalDataUseObserver;
+}
 }
 #endif  // defined(OS_ANDROID)
 
@@ -130,7 +132,7 @@ class IOThread : public content::BrowserThreadDelegate {
     std::unique_ptr<data_usage::DataUseAggregator> data_use_aggregator;
 #if defined(OS_ANDROID)
     // An external observer of data use.
-    std::unique_ptr<android::ExternalDataUseObserver>
+    std::unique_ptr<chrome::android::ExternalDataUseObserver>
         external_data_use_observer;
 #endif  // defined(OS_ANDROID)
     std::vector<scoped_refptr<const net::CTLogVerifier>> ct_logs;

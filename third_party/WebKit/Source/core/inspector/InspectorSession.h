@@ -5,7 +5,6 @@
 #ifndef InspectorSession_h
 #define InspectorSession_h
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/inspector/protocol/Forward.h"
 #include "platform/heap/Handle.h"
@@ -24,6 +23,8 @@ class CORE_EXPORT InspectorSession
     : public GarbageCollectedFinalized<InspectorSession>,
       public protocol::FrontendChannel,
       public v8_inspector::V8Inspector::Channel {
+  WTF_MAKE_NONCOPYABLE(InspectorSession);
+
  public:
   class Client {
    public:
@@ -86,8 +87,6 @@ class CORE_EXPORT InspectorSession
   class Notification;
   Vector<std::unique_ptr<Notification>> notification_queue_;
   String last_sent_state_;
-
-  DISALLOW_COPY_AND_ASSIGN(InspectorSession);
 };
 
 }  // namespace blink

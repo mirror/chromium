@@ -17,7 +17,8 @@ FakeRefreshTokenStore::FakeRefreshTokenStore()
       refresh_token_write_attempted_(false) {
 }
 
-FakeRefreshTokenStore::~FakeRefreshTokenStore() = default;
+FakeRefreshTokenStore::~FakeRefreshTokenStore() {
+}
 
 std::string FakeRefreshTokenStore::FetchRefreshToken() {
   return refresh_token_value_;

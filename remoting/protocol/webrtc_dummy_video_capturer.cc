@@ -7,8 +7,8 @@
 namespace remoting {
 namespace protocol {
 
-WebrtcDummyVideoCapturer::WebrtcDummyVideoCapturer() = default;
-WebrtcDummyVideoCapturer::~WebrtcDummyVideoCapturer() = default;
+WebrtcDummyVideoCapturer::WebrtcDummyVideoCapturer() {}
+WebrtcDummyVideoCapturer::~WebrtcDummyVideoCapturer() {}
 
 cricket::CaptureState WebrtcDummyVideoCapturer::Start(
     const cricket::VideoFormat& capture_format) {

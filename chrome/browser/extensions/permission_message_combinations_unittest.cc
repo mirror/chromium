@@ -1130,8 +1130,9 @@ TEST_F(PermissionMessageCombinationsUnittest, PermissionMessageCombos) {
 
 }
 
-// Tests that the deprecated 'plugins' manifest key produces no permission.
+// Tests that the 'plugin' manifest key produces the correct permission.
 TEST_F(PermissionMessageCombinationsUnittest, PluginPermission) {
+  // Extensions can have plugins.
   CreateAndInstall(
       "{"
       "  'plugins': ["
@@ -1139,6 +1140,26 @@ TEST_F(PermissionMessageCombinationsUnittest, PluginPermission) {
       "  ]"
       "}");
 
+#ifdef OS_CHROMEOS
+  ASSERT_TRUE(CheckManifestProducesPermissions());
+#else
+  ASSERT_TRUE(CheckManifestProducesPermissions(
+      "Read and change all your data on your computer and the websites you "
+      "visit"));
+#endif
+
+  // Apps can't have plugins.
+  CreateAndInstall(
+      "{"
+      "  'app': {"
+      "    'background': {"
+      "      'scripts': ['background.js']"
+      "    }"
+      "  },"
+      "  'plugins': ["
+      "    { 'path': 'extension_plugin.dll' }"
+      "  ]"
+      "}");
   ASSERT_TRUE(CheckManifestProducesPermissions());
 }
 

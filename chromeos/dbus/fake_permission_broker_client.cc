@@ -47,9 +47,9 @@ void OpenPath(const std::string& path,
 
 }  // namespace
 
-FakePermissionBrokerClient::FakePermissionBrokerClient() = default;
+FakePermissionBrokerClient::FakePermissionBrokerClient() {}
 
-FakePermissionBrokerClient::~FakePermissionBrokerClient() = default;
+FakePermissionBrokerClient::~FakePermissionBrokerClient() {}
 
 void FakePermissionBrokerClient::Init(dbus::Bus* bus) {}
 

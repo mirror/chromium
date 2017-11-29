@@ -30,8 +30,6 @@
 #define DatabaseTracker_h
 
 #include <memory>
-
-#include "base/macros.h"
 #include "modules/ModulesExport.h"
 #include "modules/webdatabase/DatabaseError.h"
 #include "platform/heap/Handle.h"
@@ -50,6 +48,7 @@ class Page;
 class SecurityOrigin;
 
 class MODULES_EXPORT DatabaseTracker {
+  WTF_MAKE_NONCOPYABLE(DatabaseTracker);
   USING_FAST_MALLOC(DatabaseTracker);
 
  public:
@@ -99,8 +98,6 @@ class MODULES_EXPORT DatabaseTracker {
   Mutex open_database_map_guard_;
 
   mutable std::unique_ptr<DatabaseOriginMap> open_database_map_;
-
-  DISALLOW_COPY_AND_ASSIGN(DatabaseTracker);
 };
 
 }  // namespace blink

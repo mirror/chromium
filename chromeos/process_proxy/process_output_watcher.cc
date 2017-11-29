@@ -61,7 +61,7 @@ ProcessOutputWatcher::ProcessOutputWatcher(
   read_buffer_capacity_ = arraysize(read_buffer_) - 1;
 }
 
-ProcessOutputWatcher::~ProcessOutputWatcher() = default;
+ProcessOutputWatcher::~ProcessOutputWatcher() {}
 
 void ProcessOutputWatcher::Start() {
   WatchProcessOutput();

@@ -32,7 +32,6 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_provider_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace blink {
@@ -193,8 +192,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // loads for.
   ServiceWorkerVersion* running_hosted_version() const {
     DCHECK(!running_hosted_version_ ||
-           info_.type ==
-               blink::mojom::ServiceWorkerProviderType::kForServiceWorker);
+           info_.type == SERVICE_WORKER_PROVIDER_FOR_SERVICE_WORKER);
     return running_hosted_version_.get();
   }
 
@@ -207,9 +205,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   void SetTopmostFrameUrl(const GURL& url);
   const GURL& topmost_frame_url() const { return topmost_frame_url_; }
 
-  blink::mojom::ServiceWorkerProviderType provider_type() const {
-    return info_.type;
-  }
+  ServiceWorkerProviderType provider_type() const { return info_.type; }
   bool IsProviderForClient() const;
   blink::mojom::ServiceWorkerClientType client_type() const;
 

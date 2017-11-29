@@ -160,13 +160,10 @@ public abstract class ChromeFeatureList {
     public static final String CCT_REDIRECT_PRECONNECT = "CCTRedirectPreconnect";
     public static final String CHROME_HOME = "ChromeHome";
     public static final String CHROME_HOME_BOTTOM_NAV_LABELS = "ChromeHomeBottomNavLabels";
-    public static final String CHROME_HOME_INACTIVITY_SHEET_EXPANSION =
-            "ChromeHomeInactivitySheetExpansion";
     public static final String CHROME_HOME_DESTROY_SUGGESTIONS = "ChromeHomeDestroySuggestions";
     public static final String CHROME_HOME_DROP_ALL_BUT_FIRST_THUMBNAIL =
             "ChromeHomeDropAllButFirstThumbnail";
     public static final String CHROME_HOME_OPT_OUT_SNACKBAR = "ChromeHomeOptOutSnackbar";
-    public static final String CHROME_HOME_PERSISTENT_IPH = "ChromeHomePersistentIph";
     public static final String CHROME_HOME_PERSONALIZED_OMNIBOX_SUGGESTIONS =
             "ChromeHomePersonalizedOmniboxSuggestions";
     public static final String CHROME_HOME_PROMO = "ChromeHomePromo";
@@ -186,7 +183,6 @@ public abstract class ChromeFeatureList {
             "ContentSuggestionsThumbnailDominantColor";
     public static final String CONTEXTUAL_SEARCH_ML_TAP_SUPPRESSION =
             "ContextualSearchMlTapSuppression";
-    public static final String CONTEXTUAL_SEARCH_RANKER_QUERY = "ContextualSearchRankerQuery";
     public static final String CONTEXTUAL_SUGGESTIONS_CAROUSEL = "ContextualSuggestionsCarousel";
     public static final String COPYLESS_PASTE = "CopylessPaste";
     public static final String CUSTOM_CONTEXT_MENU = "CustomContextMenu";

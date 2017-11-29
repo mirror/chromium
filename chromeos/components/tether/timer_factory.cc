@@ -8,7 +8,7 @@ namespace chromeos {
 
 namespace tether {
 
-TimerFactory::~TimerFactory() = default;
+TimerFactory::~TimerFactory() {}
 
 std::unique_ptr<base::Timer> TimerFactory::CreateOneShotTimer() {
   return base::MakeUnique<base::OneShotTimer>();

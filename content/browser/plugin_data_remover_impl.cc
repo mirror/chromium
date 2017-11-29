@@ -195,8 +195,7 @@ class PluginDataRemoverImpl::Context
       return;
 
     DCHECK(!channel_.get());
-    channel_ = IPC::Channel::CreateClient(handle, this,
-                                          base::ThreadTaskRunnerHandle::Get());
+    channel_ = IPC::Channel::CreateClient(handle, this);
     if (!channel_->Connect()) {
       NOTREACHED() << "Couldn't connect to plugin";
       SignalDone();

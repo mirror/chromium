@@ -5,8 +5,6 @@
 mojom = "//content/common/service_worker/embedded_worker.mojom"
 public_headers =
     [ "//content/common/service_worker/embedded_worker_start_params.h" ]
-traits_headers = [ "//content/common/service_worker/embedded_worker_start_params_struct_traits.h" ]
-sources = [
-  "//content/common/service_worker/embedded_worker_start_params_struct_traits.cc",
-]
+traits_headers =
+    [ "//content/common/service_worker/embedded_worker_messages.h" ]
 type_mappings = [ "content.mojom.EmbeddedWorkerStartParams=::content::EmbeddedWorkerStartParams" ]

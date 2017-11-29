@@ -1584,13 +1584,8 @@ IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest,
 //   1. Fill form using a saved profile.
 //   2. Reset the form.
 //   3. Fill form using a saved profile.
-// Tests using PopulateForm() are flaky on CrOS; see https://crbug.com/516052.
-#if defined(OS_CHROMEOS)
-#define MAYBE_FormFillableOnReset DISABLED_FormFillableOnReset
-#else
-#define MAYBE_FormFillableOnReset FormFillableOnReset
-#endif
-IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, FormFillableOnReset) {
+// Flakily times out: http://crbug.com/270341
+IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, DISABLED_FormFillableOnReset) {
   CreateTestProfile();
 
   GURL url =
@@ -1615,16 +1610,9 @@ IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, FormFillableOnReset) {
 }
 
 // Test Autofill distinguishes a middle initial in a name.
-// Tests using PopulateForm() are flaky on CrOS; see https://crbug.com/516052.
-#if defined(OS_CHROMEOS)
-#define MAYBE_DistinguishMiddleInitialWithinName \
-  DISABLED_DistinguishMiddleInitialWithinName
-#else
-#define MAYBE_DistinguishMiddleInitialWithinName \
-  DistinguishMiddleInitialWithinName
-#endif
+// Flakily times out: http://crbug.com/270341
 IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest,
-                       MAYBE_DistinguishMiddleInitialWithinName) {
+                       DISABLED_DistinguishMiddleInitialWithinName) {
   CreateTestProfile();
 
   GURL url =
@@ -1637,8 +1625,9 @@ IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest,
 
 // Test forms with multiple email addresses are filled properly.
 // Entire form should be filled with one user gesture.
+// Flakily times out: http://crbug.com/270341
 IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest,
-                       MultipleEmailFilledByOneUserGesture) {
+                       DISABLED_MultipleEmailFilledByOneUserGesture) {
   std::string email("bsmith@gmail.com");
 
   AutofillProfile profile;

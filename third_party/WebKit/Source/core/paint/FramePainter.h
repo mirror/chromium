@@ -5,7 +5,6 @@
 #ifndef FramePainter_h
 #define FramePainter_h
 
-#include "base/macros.h"
 #include "core/paint/PaintPhase.h"
 #include "platform/heap/Handle.h"
 
@@ -19,6 +18,7 @@ class Scrollbar;
 
 class FramePainter {
   STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(FramePainter);
 
  public:
   explicit FramePainter(const LocalFrameView& frame_view)
@@ -36,8 +36,6 @@ class FramePainter {
 
   Member<const LocalFrameView> frame_view_;
   static bool in_paint_contents_;
-
-  DISALLOW_COPY_AND_ASSIGN(FramePainter);
 };
 
 }  // namespace blink

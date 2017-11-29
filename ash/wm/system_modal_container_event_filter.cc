@@ -14,7 +14,7 @@ SystemModalContainerEventFilter::SystemModalContainerEventFilter(
     SystemModalContainerEventFilterDelegate* delegate)
     : delegate_(delegate) {}
 
-SystemModalContainerEventFilter::~SystemModalContainerEventFilter() = default;
+SystemModalContainerEventFilter::~SystemModalContainerEventFilter() {}
 
 void SystemModalContainerEventFilter::OnEvent(ui::Event* event) {
   // Only filter modal events if a modal window is open.

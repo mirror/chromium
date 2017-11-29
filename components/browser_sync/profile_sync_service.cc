@@ -32,6 +32,7 @@
 #include "components/prefs/json_pref_store.h"
 #include "components/reading_list/features/reading_list_enable_flags.h"
 #include "components/signin/core/browser/about_signin_internals.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_metrics.h"
@@ -1286,18 +1287,18 @@ void ProfileSyncService::OnConfigureStart() {
 ProfileSyncService::SyncStatusSummary
 ProfileSyncService::QuerySyncStatusSummary() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  if (HasUnrecoverableError())
+  if (HasUnrecoverableError()) {
     return UNRECOVERABLE_ERROR;
-  if (!engine_)
+  } else if (!engine_) {
     return NOT_ENABLED;
-  if (engine_ && !IsFirstSetupComplete())
+  } else if (engine_ && !IsFirstSetupComplete()) {
     return SETUP_INCOMPLETE;
-  if (engine_ && IsFirstSetupComplete() && data_type_manager_ &&
-      data_type_manager_->state() == DataTypeManager::STOPPED) {
+  } else if (engine_ && IsFirstSetupComplete() && data_type_manager_ &&
+             data_type_manager_->state() == DataTypeManager::STOPPED) {
     return DATATYPES_NOT_INITIALIZED;
-  }
-  if (IsSyncActive())
+  } else if (IsSyncActive()) {
     return INITIALIZED;
+  }
   return UNKNOWN_ERROR;
 }
 
@@ -1341,11 +1342,12 @@ bool ProfileSyncService::QueryDetailedSyncStatus(SyncEngine::Status* result) {
   if (engine_ && engine_initialized_) {
     *result = engine_->GetDetailedStatus();
     return true;
+  } else {
+    SyncEngine::Status status;
+    status.sync_protocol_error = last_actionable_error_;
+    *result = status;
+    return false;
   }
-  SyncEngine::Status status;
-  status.sync_protocol_error = last_actionable_error_;
-  *result = status;
-  return false;
 }
 
 const AuthError& ProfileSyncService::GetAuthError() const {
@@ -1833,10 +1835,11 @@ bool ProfileSyncService::SetDecryptionPassphrase(
     bool result = crypto_->SetDecryptionPassphrase(passphrase);
     UMA_HISTOGRAM_BOOLEAN("Sync.PassphraseDecryptionSucceeded", result);
     return result;
+  } else {
+    NOTREACHED() << "SetDecryptionPassphrase must not be called when "
+                    "IsPassphraseRequired() is false.";
+    return false;
   }
-  NOTREACHED() << "SetDecryptionPassphrase must not be called when "
-                  "IsPassphraseRequired() is false.";
-  return false;
 }
 
 bool ProfileSyncService::IsEncryptEverythingAllowed() const {
@@ -1890,8 +1893,13 @@ void ProfileSyncService::GoogleSigninSucceeded(const std::string& account_id,
     is_auth_in_progress_ = true;
   }
 
-  if (oauth2_token_service_->RefreshTokenIsAvailable(account_id))
+  if (signin::IsDicePrepareMigrationEnabled() &&
+      oauth2_token_service_->RefreshTokenIsAvailable(account_id)) {
+    // When Dice is enabled, the refresh token may be available before the user
+    // enables sync. Start sync if the refresh token is already available in the
+    // token service when the authenticated account is set.
     OnRefreshTokenAvailable(account_id);
+  }
 }
 
 void ProfileSyncService::GoogleSignedOut(const std::string& account_id,
@@ -2263,7 +2271,11 @@ base::FilePath ProfileSyncService::GetDirectoryPathForTest() const {
 
 base::MessageLoop* ProfileSyncService::GetSyncLoopForTest() const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  return sync_thread_ ? sync_thread_->message_loop() : nullptr;
+  if (sync_thread_) {
+    return sync_thread_->message_loop();
+  } else {
+    return nullptr;
+  }
 }
 
 syncer::SyncEncryptionHandler::Observer*

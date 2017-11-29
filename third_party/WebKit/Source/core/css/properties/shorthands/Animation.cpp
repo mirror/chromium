@@ -76,9 +76,8 @@ bool Animation::ParseShorthand(
 
   for (size_t i = 0; i < longhand_count; ++i) {
     CSSPropertyParserHelpers::AddProperty(
-        shorthand.properties()[i]->PropertyID(), shorthand.id(), *longhands[i],
-        important, CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit,
-        properties);
+        shorthand.properties()[i], shorthand.id(), *longhands[i], important,
+        CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit, properties);
   }
   return range.AtEnd();
 }

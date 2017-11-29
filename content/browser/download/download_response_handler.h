@@ -39,8 +39,7 @@ class DownloadResponseHandler : public mojom::URLLoaderClient {
                           std::unique_ptr<DownloadSaveInfo> save_info,
                           bool is_parallel_request,
                           bool is_transient,
-                          bool fetch_error_body,
-                          std::vector<GURL> url_chain);
+                          bool fetch_error_body);
   ~DownloadResponseHandler() override;
 
   // mojom::URLLoaderClient
@@ -58,6 +57,9 @@ class DownloadResponseHandler : public mojom::URLLoaderClient {
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override;
   void OnComplete(const network::URLLoaderCompletionStatus& status) override;
+
+  // Sets the URL chain when the download is intercepted from navigation.
+  void SetURLChain(std::vector<GURL> url_chain);
 
  private:
   std::unique_ptr<DownloadCreateInfo> CreateDownloadCreateInfo(

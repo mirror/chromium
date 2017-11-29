@@ -10,7 +10,7 @@ MockOAuthClient::MockOAuthClient(const std::string& user_email,
                                  const std::string& refresh_token)
     : user_email_(user_email), refresh_token_(refresh_token) {}
 
-MockOAuthClient::~MockOAuthClient() = default;
+MockOAuthClient::~MockOAuthClient() {}
 
 void MockOAuthClient::GetCredentialsFromAuthCode(
     const gaia::OAuthClientInfo& oauth_client_info,

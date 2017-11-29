@@ -20,7 +20,7 @@ namespace {
 
 class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
  public:
-  StructTraitsTest() = default;
+  StructTraitsTest() {}
 
  protected:
   mojom::TraitsTestServicePtr GetTraitsTestProxy() {

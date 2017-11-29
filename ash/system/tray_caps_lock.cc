@@ -140,7 +140,7 @@ class CapsLockDefaultView : public ActionableView {
             0, 0, 0, kCaptionRightPadding + kTrayPopupLabelRightPadding));
   }
 
-  ~CapsLockDefaultView() override = default;
+  ~CapsLockDefaultView() override {}
 
   // Updates the label text and the shortcut text.
   void Update(bool caps_lock_enabled) {

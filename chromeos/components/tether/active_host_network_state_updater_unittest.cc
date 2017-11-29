@@ -42,7 +42,7 @@ std::string CreateWifiConfigurationJsonString(const std::string& guid) {
 class ActiveHostNetworkStateUpdaterTest : public NetworkStateTest {
  protected:
   ActiveHostNetworkStateUpdaterTest() : NetworkStateTest() {}
-  ~ActiveHostNetworkStateUpdaterTest() override = default;
+  ~ActiveHostNetworkStateUpdaterTest() override {}
 
   void SetUp() override {
     DBusThreadManager::Initialize();

@@ -70,7 +70,7 @@ class BlobRegistryImpl::BlobUnderConstruction {
   // collection in the blob service.
   void StartTransportation();
 
-  ~BlobUnderConstruction() = default;
+  ~BlobUnderConstruction() {}
 
   const std::string& uuid() const { return builder_.uuid(); }
 
@@ -482,7 +482,7 @@ BlobRegistryImpl::BlobRegistryImpl(
       file_system_context_(std::move(file_system_context)),
       weak_ptr_factory_(this) {}
 
-BlobRegistryImpl::~BlobRegistryImpl() = default;
+BlobRegistryImpl::~BlobRegistryImpl() {}
 
 void BlobRegistryImpl::Bind(blink::mojom::BlobRegistryRequest request,
                             std::unique_ptr<Delegate> delegate) {

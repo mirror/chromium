@@ -28,7 +28,11 @@ bluetooth_test(() => setUpHealthThermometerAndHeartRateDevices()
   .then(() => new Promise(async (resolve) => {
     let numMessages = 0;
     window.onmessage = messageEvent => {
-      assert_equals(messageEvent.data, 'Success');
+      if (messageEvent.data !== 'Success') {
+        assert_unreached('Bad message, expected "Success": ' +
+          messageEvent.data);
+      }
+
       if (++numMessages === iframes.length) {
         resolve();
       }

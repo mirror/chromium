@@ -21,9 +21,9 @@ namespace {
 
 class ImageLoaderClientImpl : public ImageLoaderClient {
  public:
-  ImageLoaderClientImpl() = default;
+  ImageLoaderClientImpl() {}
 
-  ~ImageLoaderClientImpl() override = default;
+  ~ImageLoaderClientImpl() override {}
 
   void RegisterComponent(const std::string& name,
                          const std::string& version,
@@ -122,9 +122,9 @@ class ImageLoaderClientImpl : public ImageLoaderClient {
 
 }  // namespace
 
-ImageLoaderClient::ImageLoaderClient() = default;
+ImageLoaderClient::ImageLoaderClient() {}
 
-ImageLoaderClient::~ImageLoaderClient() = default;
+ImageLoaderClient::~ImageLoaderClient() {}
 
 // static
 ImageLoaderClient* ImageLoaderClient::Create() {

@@ -25,8 +25,8 @@ namespace {
 // views::WidgetDelegate which uses ash::CustomFrameViewAsh.
 class TestWidgetDelegate : public views::WidgetDelegateView {
  public:
-  TestWidgetDelegate() = default;
-  ~TestWidgetDelegate() override = default;
+  TestWidgetDelegate() {}
+  ~TestWidgetDelegate() override {}
 
   // views::WidgetDelegateView overrides:
   bool CanResize() const override { return true; }
@@ -47,8 +47,8 @@ class TestWidgetDelegate : public views::WidgetDelegateView {
 // are shown when the mouse is hovered over the window edge.
 class ResizeShadowAndCursorTest : public AshTestBase {
  public:
-  ResizeShadowAndCursorTest() = default;
-  ~ResizeShadowAndCursorTest() override = default;
+  ResizeShadowAndCursorTest() {}
+  ~ResizeShadowAndCursorTest() override {}
 
   // AshTestBase override:
   void SetUp() override {

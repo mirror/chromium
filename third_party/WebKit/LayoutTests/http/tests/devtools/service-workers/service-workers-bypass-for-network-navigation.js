@@ -28,7 +28,7 @@
           return TestRunner.callFunctionInPageAsync('getIframeBodyText', [frame_id]);
         })
         .then((data) => {
-          TestRunner.addResult(' body: ' + data);
+          TestRunner.addResult(' body: ' + data.value);
         });
   }
 

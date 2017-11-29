@@ -24,7 +24,7 @@ TestAppListPresenterImpl::TestAppListPresenterImpl()
   SetAppList(std::move(app_list_ptr));
 }
 
-TestAppListPresenterImpl::~TestAppListPresenterImpl() = default;
+TestAppListPresenterImpl::~TestAppListPresenterImpl() {}
 
 void TestAppListPresenterImpl::ShowAndRunLoop(int64_t display_id) {
   Show(display_id);

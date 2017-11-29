@@ -189,7 +189,7 @@ CircularThrobberView::CircularThrobberView(int width,
   SchedulePaint();
 }
 
-CircularThrobberView::~CircularThrobberView() = default;
+CircularThrobberView::~CircularThrobberView() {}
 
 void CircularThrobberView::OnPaint(gfx::Canvas* canvas) {
   canvas->DrawCircle(center_, outer_radius_, outer_circle_flags_);
@@ -244,7 +244,7 @@ TouchTargetThrobberView::TouchTargetThrobberView(
   hand_icon_ = gfx::CreateVectorIcon(kTouchCalibrationHandIcon, kHandIconColor);
 }
 
-TouchTargetThrobberView::~TouchTargetThrobberView() = default;
+TouchTargetThrobberView::~TouchTargetThrobberView() {}
 
 void TouchTargetThrobberView::OnPaint(gfx::Canvas* canvas) {
   CircularThrobberView::OnPaint(canvas);
@@ -347,7 +347,7 @@ HintBox::HintBox(const gfx::Rect& bounds, int border_radius)
                                 label_height);
 }
 
-HintBox::~HintBox() = default;
+HintBox::~HintBox() {}
 
 void HintBox::UpdateWidth(int updated_width) {
   SetSize(gfx::Size(updated_width + 2 * base_border_ + arrow_width_, height()));
@@ -450,7 +450,7 @@ CompletionMessageView::CompletionMessageView(const gfx::Rect& bounds,
   flags_.setAntiAlias(true);
 }
 
-CompletionMessageView::~CompletionMessageView() = default;
+CompletionMessageView::~CompletionMessageView() {}
 
 void CompletionMessageView::OnPaint(gfx::Canvas* canvas) {
   canvas->DrawImageInt(check_icon_, 0, 0);

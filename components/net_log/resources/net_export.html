@@ -37,7 +37,7 @@
        * Has controls to start logging.
       =========================================================================
     -->
-    <div id="state-initial" hidden>
+    <div id="state-initial">
       <h2>Capture Network Log</h2>
       <button id="start-logging">Start Logging to Disk</button>
 
@@ -87,7 +87,7 @@
        * Has controls to stop logging
       =========================================================================
     -->
-    <div id="state-logging" hidden>
+    <div id="state-logging">
       <h2>Saving network events to disk...</h2>
 
       <button id="stop-logging">Stop Logging</button>
@@ -113,7 +113,7 @@
        * Has controls to email the log (mobile)
       =========================================================================
     -->
-    <div id="state-stopped" hidden>
+    <div id="state-stopped">
       <h2>Log file written</h2>
 
       <if expr="is_ios or is_android">

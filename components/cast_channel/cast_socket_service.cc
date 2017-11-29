@@ -5,7 +5,6 @@
 #include "components/cast_channel/cast_socket_service.h"
 
 #include "base/memory/ptr_util.h"
-#include "components/cast_channel/cast_channel_util.h"
 #include "components/cast_channel/cast_socket.h"
 #include "components/cast_channel/logger.h"
 #include "content/public/browser/browser_thread.h"
@@ -76,14 +75,11 @@ CastSocket* CastSocketService::GetSocket(
   return it == sockets_.end() ? nullptr : it->second.get();
 }
 
-void CastSocketService::OpenSocket(const CastSocketOpenParams& open_params,
-                                   CastSocket::OnOpenCallback open_cb) {
+int CastSocketService::OpenSocket(const CastSocketOpenParams& open_params,
+                                  CastSocket::OnOpenCallback open_cb) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  auto* socket = GetSocket(open_params.ip_endpoint);
 
-  const net::IPEndPoint& ip_endpoint = open_params.ip_endpoint;
-  CHECK(IsValidCastIPAddress(ip_endpoint.address()));
-
-  auto* socket = GetSocket(ip_endpoint);
   if (!socket) {
     // If cast socket does not exist.
     if (socket_for_test_) {
@@ -98,6 +94,8 @@ void CastSocketService::OpenSocket(const CastSocketOpenParams& open_params,
     socket->AddObserver(&observer);
 
   socket->Connect(std::move(open_cb));
+
+  return socket->id();
 }
 
 void CastSocketService::AddObserver(CastSocket::Observer* observer) {

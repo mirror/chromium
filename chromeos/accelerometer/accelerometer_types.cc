@@ -9,10 +9,13 @@ namespace chromeos {
 AccelerometerReading::AccelerometerReading() : present(false) {
 }
 
-AccelerometerReading::~AccelerometerReading() = default;
+AccelerometerReading::~AccelerometerReading() {
+}
 
-AccelerometerUpdate::AccelerometerUpdate() = default;
+AccelerometerUpdate::AccelerometerUpdate() {
+}
 
-AccelerometerUpdate::~AccelerometerUpdate() = default;
+AccelerometerUpdate::~AccelerometerUpdate() {
+}
 
 }  // namespace chromeos

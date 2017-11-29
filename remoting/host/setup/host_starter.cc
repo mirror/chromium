@@ -37,7 +37,7 @@ HostStarter::HostStarter(
   main_task_runner_ = base::ThreadTaskRunnerHandle::Get();
 }
 
-HostStarter::~HostStarter() = default;
+HostStarter::~HostStarter() {}
 
 std::unique_ptr<HostStarter> HostStarter::Create(
     const std::string& chromoting_hosts_url,

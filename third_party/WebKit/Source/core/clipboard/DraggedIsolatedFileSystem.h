@@ -5,7 +5,6 @@
 #ifndef DraggedIsolatedFileSystem_h
 #define DraggedIsolatedFileSystem_h
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
@@ -15,9 +14,11 @@ namespace blink {
 class DataObject;
 
 class CORE_EXPORT DraggedIsolatedFileSystem {
+  WTF_MAKE_NONCOPYABLE(DraggedIsolatedFileSystem);
+
  public:
-  DraggedIsolatedFileSystem() = default;
-  virtual ~DraggedIsolatedFileSystem() = default;
+  DraggedIsolatedFileSystem() {}
+  virtual ~DraggedIsolatedFileSystem() {}
 
   using FileSystemIdPreparationCallback = void (*)(DataObject*);
   static void Init(FileSystemIdPreparationCallback);
@@ -26,8 +27,6 @@ class CORE_EXPORT DraggedIsolatedFileSystem {
 
  private:
   static FileSystemIdPreparationCallback prepare_callback_;
-
-  DISALLOW_COPY_AND_ASSIGN(DraggedIsolatedFileSystem);
 };
 
 }  // namespace blink

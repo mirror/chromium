@@ -18,7 +18,7 @@ namespace ash {
 FastInkPoints::FastInkPoints(base::TimeDelta life_duration)
     : life_duration_(life_duration) {}
 
-FastInkPoints::~FastInkPoints() = default;
+FastInkPoints::~FastInkPoints() {}
 
 void FastInkPoints::AddPoint(const gfx::PointF& point,
                              const base::TimeTicks& time) {

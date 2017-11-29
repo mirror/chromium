@@ -22,8 +22,8 @@ namespace ash {
 
 class ScreenRotationAnimationTest : public AshTestBase {
  public:
-  ScreenRotationAnimationTest() = default;
-  ~ScreenRotationAnimationTest() override = default;
+  ScreenRotationAnimationTest() {}
+  ~ScreenRotationAnimationTest() override {}
 
   // AshTestBase:
   void SetUp() override;

@@ -61,8 +61,8 @@ void DidGetUsageBreakdown(
 
 class MockQuotaClient : public QuotaClient {
  public:
-  MockQuotaClient() = default;
-  ~MockQuotaClient() override = default;
+  MockQuotaClient() {}
+  ~MockQuotaClient() override {}
 
   ID id() const override { return kFileSystem; }
 
@@ -147,7 +147,7 @@ class UsageTrackerTest : public testing::Test {
                        storage_policy_.get(), NULL) {
   }
 
-  ~UsageTrackerTest() override = default;
+  ~UsageTrackerTest() override {}
 
   UsageTracker* usage_tracker() {
     return &usage_tracker_;

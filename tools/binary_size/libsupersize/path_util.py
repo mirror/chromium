@@ -108,11 +108,9 @@ class ToolPrefixFinder(_PathFinder):
         if os.path.isfile(ret + _SAMPLE_TOOL_SUFFIX):
           return ret
         else:
-          err_lines = ['tool-prefix not found: %s' % ret]
-          if ret.endswith('llvm-'):
-            err_lines.append('Probably need to run: '
-                             'tools/clang/scripts/download_objdump.py')
-          raise Exception('\n'.join(err_lines))
+          logging.warn('Invalid default tool-prefix: %s', ret)
+          # TODO(huangs): For LLD, print more instruction on how to download
+          # or build the required tools.
     from_path = distutils.spawn.find_executable(_SAMPLE_TOOL_SUFFIX)
     if from_path:
       return from_path[:-7]

@@ -23,8 +23,8 @@ namespace ash {
 
 class ShelfTooltipManagerTest : public AshTestBase {
  public:
-  ShelfTooltipManagerTest() = default;
-  ~ShelfTooltipManagerTest() override = default;
+  ShelfTooltipManagerTest() {}
+  ~ShelfTooltipManagerTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

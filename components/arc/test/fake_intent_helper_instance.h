@@ -79,10 +79,7 @@ class FakeIntentHelperInstance : public mojom::IntentHelperInstance {
                      mojom::ActivityNamePtr activity,
                      mojom::ActionType action) override;
 
-  void InitDeprecated(mojom::IntentHelperHostPtr host_ptr) override;
-
-  void Init(mojom::IntentHelperHostPtr host_ptr,
-            InitCallback callback) override;
+  void Init(mojom::IntentHelperHostPtr host_ptr) override;
 
   void OpenFileToReadDeprecated(
       const std::string& url,

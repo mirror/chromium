@@ -14,7 +14,7 @@ namespace blink {
 
 namespace {
 
-inline bool FullyClipsContents(const Node* node) {
+inline bool FullyClipsContents(Node* node) {
   LayoutObject* layout_object = node->GetLayoutObject();
   if (!layout_object || !layout_object->IsBox() ||
       !layout_object->HasOverflowClip() || layout_object->IsLayoutView())
@@ -22,7 +22,7 @@ inline bool FullyClipsContents(const Node* node) {
   return ToLayoutBox(layout_object)->Size().IsEmpty();
 }
 
-inline bool IgnoresContainerClip(const Node* node) {
+inline bool IgnoresContainerClip(Node* node) {
   LayoutObject* layout_object = node->GetLayoutObject();
   if (!layout_object || layout_object->IsText())
     return false;
@@ -48,7 +48,7 @@ FullyClippedStateStackAlgorithm<Strategy>::~FullyClippedStateStackAlgorithm() {}
 
 template <typename Strategy>
 void FullyClippedStateStackAlgorithm<Strategy>::PushFullyClippedState(
-    const Node* node) {
+    Node* node) {
   DCHECK_EQ(size(), DepthCrossingShadowBoundaries<Strategy>(*node));
 
   // FIXME: m_fullyClippedStack was added in response to
@@ -72,7 +72,7 @@ void FullyClippedStateStackAlgorithm<Strategy>::PushFullyClippedState(
 
 template <typename Strategy>
 void FullyClippedStateStackAlgorithm<Strategy>::SetUpFullyClippedStack(
-    const Node* node) {
+    Node* node) {
   // Put the nodes in a vector so we can iterate in reverse order.
   HeapVector<Member<ContainerNode>, 100> ancestry;
   for (ContainerNode* parent = ParentCrossingShadowBoundaries<Strategy>(*node);

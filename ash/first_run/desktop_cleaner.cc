@@ -79,7 +79,7 @@ class NotificationBlocker : public message_center::NotificationBlocker {
     NotifyBlockingStateChanged();
   }
 
-  ~NotificationBlocker() override = default;
+  ~NotificationBlocker() override {}
 
  private:
   // Overriden from message_center::NotificationBlocker.
@@ -102,7 +102,7 @@ DesktopCleaner::DesktopCleaner() {
   notification_blocker_.reset(new NotificationBlocker());
 }
 
-DesktopCleaner::~DesktopCleaner() = default;
+DesktopCleaner::~DesktopCleaner() {}
 
 // static
 std::vector<int> DesktopCleaner::GetContainersToHideForTest() {

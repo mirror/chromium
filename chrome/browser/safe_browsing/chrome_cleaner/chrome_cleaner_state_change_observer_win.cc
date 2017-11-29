@@ -54,12 +54,12 @@ void ChromeCleanerStateChangeObserver::OnScanning() {
 }
 
 void ChromeCleanerStateChangeObserver::OnInfected(
-    const ChromeCleanerScannerResults& reported_results) {
+    const std::set<base::FilePath>& files) {
   OnCleanupStateChange();
 }
 
 void ChromeCleanerStateChangeObserver::OnCleaning(
-    const ChromeCleanerScannerResults& reported_results) {
+    const std::set<base::FilePath>& files) {
   OnCleanupStateChange();
 }
 

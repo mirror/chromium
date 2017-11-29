@@ -47,7 +47,7 @@ class ChromeExtensionTestNotificationObserver
   // ExtensionActionAPI::Observer:
   void OnPageActionsUpdated(content::WebContents* contents) override;
 
-  Browser* const browser_;
+  Browser* browser_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeExtensionTestNotificationObserver);
 };

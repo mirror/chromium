@@ -25,7 +25,8 @@ AudioSilenceDetector::AudioSilenceDetector(int threshold)
   DCHECK_GE(threshold_, 0);
 }
 
-AudioSilenceDetector::~AudioSilenceDetector() = default;
+AudioSilenceDetector::~AudioSilenceDetector() {
+}
 
 void AudioSilenceDetector::Reset(int sampling_rate, int channels) {
   DCHECK_GT(sampling_rate, 0);

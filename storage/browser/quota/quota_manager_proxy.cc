@@ -163,6 +163,7 @@ QuotaManagerProxy::QuotaManagerProxy(
     : manager_(manager), io_thread_(io_thread) {
 }
 
-QuotaManagerProxy::~QuotaManagerProxy() = default;
+QuotaManagerProxy::~QuotaManagerProxy() {
+}
 
 }  // namespace storage

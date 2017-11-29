@@ -552,14 +552,14 @@ public class ToolbarTablet
 
     @Override
     public boolean useLightDrawables() {
-        return mUseLightColorAssets != null && mUseLightColorAssets;
+        return mUseLightColorAssets;
     }
 
     @Override
     public void showAppMenuUpdateBadge() {
         super.showAppMenuUpdateBadge();
         if (!mIsInTabSwitcherMode) {
-            if (mUseLightColorAssets != null && mUseLightColorAssets) {
+            if (mUseLightColorAssets) {
                 setAppMenuUpdateBadgeDrawable(mUseLightColorAssets);
             }
             setAppMenuUpdateBadgeToVisible(true);

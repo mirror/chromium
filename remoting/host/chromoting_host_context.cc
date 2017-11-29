@@ -44,7 +44,8 @@ ChromotingHostContext::ChromotingHostContext(
       url_request_context_getter_(url_request_context_getter),
       system_input_injector_factory_(system_input_injector_factory) {}
 
-ChromotingHostContext::~ChromotingHostContext() = default;
+ChromotingHostContext::~ChromotingHostContext() {
+}
 
 std::unique_ptr<ChromotingHostContext> ChromotingHostContext::Copy() {
   return base::WrapUnique(new ChromotingHostContext(

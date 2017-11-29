@@ -96,7 +96,7 @@ class HomedirMethodsImpl : public HomedirMethods {
  public:
   HomedirMethodsImpl() : weak_ptr_factory_(this) {}
 
-  ~HomedirMethodsImpl() override = default;
+  ~HomedirMethodsImpl() override {}
 
   void GetKeyDataEx(const Identification& id,
                     const cryptohome::AuthorizationRequest& auth,
@@ -173,6 +173,15 @@ class HomedirMethodsImpl : public HomedirMethods {
     DBusThreadManager::Get()->GetCryptohomeClient()->GetAccountDiskUsage(
         id, base::BindOnce(&HomedirMethodsImpl::OnGetAccountDiskUsageCallback,
                            weak_ptr_factory_.GetWeakPtr(), callback));
+  }
+
+  void MigrateToDircrypto(const Identification& id,
+                          const cryptohome::MigrateToDircryptoRequest& request,
+                          const DBusResultCallback& callback) override {
+    DBusThreadManager::Get()->GetCryptohomeClient()->MigrateToDircrypto(
+        id, request,
+        base::Bind(&HomedirMethodsImpl::OnDBusResultCallback,
+                   weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
  private:
@@ -317,6 +326,10 @@ class HomedirMethodsImpl : public HomedirMethods {
       return;
     }
     callback.Run(true, MOUNT_ERROR_NONE);
+  }
+
+  void OnDBusResultCallback(const DBusResultCallback& callback, bool result) {
+    callback.Run(result);
   }
 
   base::WeakPtrFactory<HomedirMethodsImpl> weak_ptr_factory_;

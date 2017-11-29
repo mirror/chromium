@@ -59,7 +59,7 @@ class CORE_EXPORT V8AbstractEventListener : public EventListener {
   static const V8AbstractEventListener* Cast(const EventListener* listener) {
     return listener->GetType() == kJSEventListenerType
                ? static_cast<const V8AbstractEventListener*>(listener)
-               : nullptr;
+               : 0;
   }
 
   static V8AbstractEventListener* Cast(EventListener* listener) {

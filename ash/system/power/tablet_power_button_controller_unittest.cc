@@ -35,8 +35,8 @@ constexpr int kNonZeroBrightness = 10;
 
 class TabletPowerButtonControllerTest : public PowerButtonTestBase {
  public:
-  TabletPowerButtonControllerTest() = default;
-  ~TabletPowerButtonControllerTest() override = default;
+  TabletPowerButtonControllerTest() {}
+  ~TabletPowerButtonControllerTest() override {}
 
   void SetUp() override {
     PowerButtonTestBase::SetUp();

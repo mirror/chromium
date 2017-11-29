@@ -85,8 +85,7 @@ BluetoothPairingNotificationDelegate::BluetoothPairingNotificationDelegate(
     const std::string& address)
     : adapter_(adapter), address_(address) {}
 
-BluetoothPairingNotificationDelegate::~BluetoothPairingNotificationDelegate() =
-    default;
+BluetoothPairingNotificationDelegate::~BluetoothPairingNotificationDelegate() {}
 
 void BluetoothPairingNotificationDelegate::Close(bool by_user) {
   VLOG(1) << "Pairing notification closed. by_user = " << by_user;

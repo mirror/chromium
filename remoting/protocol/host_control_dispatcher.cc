@@ -20,7 +20,7 @@ namespace protocol {
 
 HostControlDispatcher::HostControlDispatcher()
     : ChannelDispatcherBase(kControlChannelName) {}
-HostControlDispatcher::~HostControlDispatcher() = default;
+HostControlDispatcher::~HostControlDispatcher() {}
 
 void HostControlDispatcher::SetCapabilities(
     const Capabilities& capabilities) {

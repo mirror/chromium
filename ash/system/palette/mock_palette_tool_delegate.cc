@@ -6,8 +6,8 @@
 
 namespace ash {
 
-MockPaletteToolDelegate::MockPaletteToolDelegate() = default;
+MockPaletteToolDelegate::MockPaletteToolDelegate() {}
 
-MockPaletteToolDelegate::~MockPaletteToolDelegate() = default;
+MockPaletteToolDelegate::~MockPaletteToolDelegate() {}
 
 }  // namespace ash

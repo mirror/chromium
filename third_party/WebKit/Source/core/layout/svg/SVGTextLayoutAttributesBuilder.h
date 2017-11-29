@@ -20,7 +20,6 @@
 #ifndef SVGTextLayoutAttributesBuilder_h
 #define SVGTextLayoutAttributesBuilder_h
 
-#include "base/macros.h"
 #include "core/layout/svg/SVGCharacterData.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
@@ -43,6 +42,7 @@ class SVGTextPositioningElement;
 // The second layout phase is carried out by SVGTextLayoutEngine.
 class SVGTextLayoutAttributesBuilder {
   STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(SVGTextLayoutAttributesBuilder);
 
  public:
   explicit SVGTextLayoutAttributesBuilder(LayoutSVGText&);
@@ -75,8 +75,6 @@ class SVGTextLayoutAttributesBuilder {
   unsigned character_count_;
   HeapVector<TextPosition> text_positions_;
   SVGCharacterDataMap character_data_map_;
-
-  DISALLOW_COPY_AND_ASSIGN(SVGTextLayoutAttributesBuilder);
 };
 
 }  // namespace blink

@@ -15,7 +15,7 @@
 import("//testing/test.gni")
 
 config("crashpad_config") {
-  include_dirs = [ "." ]
+  include_dirs = [ "//third_party/crashpad/crashpad" ]
 }
 
 test("crashpad_tests") {

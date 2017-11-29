@@ -822,7 +822,6 @@ var stringAttributes = [
 
 var boolAttributes = [
     'busy',
-    'clickable',
     'containerLiveAtomic',
     'containerLiveBusy',
     'liveAtomic',

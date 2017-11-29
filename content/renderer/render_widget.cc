@@ -585,7 +585,8 @@ void RenderWidget::SetPopupOriginAdjustmentsForEmulation(
   popup_origin_scale_for_emulation_ = emulator->scale();
   popup_view_origin_for_emulation_ = emulator->applied_widget_rect().origin();
   popup_screen_origin_for_emulation_ =
-      emulator->original_screen_rect().origin();
+      gfx::Point(emulator->original_screen_rect().origin().x(),
+                 emulator->original_screen_rect().origin().y());
   screen_info_ = emulator->original_screen_info();
   device_scale_factor_ = screen_info_.device_scale_factor;
 }
@@ -813,7 +814,7 @@ void RenderWidget::OnSetLocalSurfaceIdForAutoResize(
 }
 
 void RenderWidget::OnEnableDeviceEmulation(
-    const blink::WebDeviceEmulationParams& params) {
+   const blink::WebDeviceEmulationParams& params) {
   if (!screen_metrics_emulator_) {
     ResizeParams resize_params;
     resize_params.screen_info = screen_info_;
@@ -1133,10 +1134,8 @@ void RenderWidget::ClearEditCommands() {
 
 void RenderWidget::OnDidOverscroll(const ui::DidOverscrollParams& params) {
   if (widget_input_handler_manager_) {
-    if (mojom::WidgetInputHandlerHost* host =
-            widget_input_handler_manager_->GetWidgetInputHandlerHost()) {
-      host->DidOverscroll(params);
-    }
+    widget_input_handler_manager_->GetWidgetInputHandlerHost()->DidOverscroll(
+        params);
   } else {
     Send(new InputHostMsg_DidOverscroll(routing_id_, params));
   }
@@ -1739,10 +1738,8 @@ void RenderWidget::OnImeSetComposition(
     // process to cancel the input method's ongoing composition session, to make
     // sure we are in a consistent state.
     if (widget_input_handler_manager_) {
-      if (mojom::WidgetInputHandlerHost* host =
-              widget_input_handler_manager_->GetWidgetInputHandlerHost()) {
-        host->ImeCancelComposition();
-      }
+      widget_input_handler_manager_->GetWidgetInputHandlerHost()
+          ->ImeCancelComposition();
     } else {
       Send(new InputHostMsg_ImeCancelComposition(routing_id()));
     }
@@ -2007,11 +2004,9 @@ void RenderWidget::UpdateCompositionInfo(bool immediate_request) {
   composition_character_bounds_ = character_bounds;
   composition_range_ = range;
   if (widget_input_handler_manager_) {
-    if (mojom::WidgetInputHandlerHost* host =
-            widget_input_handler_manager_->GetWidgetInputHandlerHost()) {
-      host->ImeCompositionRangeChanged(composition_range_,
-                                       composition_character_bounds_);
-    }
+    widget_input_handler_manager_->GetWidgetInputHandlerHost()
+        ->ImeCompositionRangeChanged(composition_range_,
+                                     composition_character_bounds_);
   } else {
     Send(new InputHostMsg_ImeCompositionRangeChanged(
         routing_id(), composition_range_, composition_character_bounds_));
@@ -2097,9 +2092,8 @@ void RenderWidget::SetHidden(bool hidden) {
   if (is_hidden_) {
     RenderThreadImpl::current()->WidgetHidden();
     first_update_visual_state_after_hidden_ = true;
-  } else {
+  } else
     RenderThreadImpl::current()->WidgetRestored();
-  }
 
   if (render_widget_scheduling_state_)
     render_widget_scheduling_state_->SetHidden(hidden);
@@ -2428,11 +2422,6 @@ void RenderWidget::HasTouchEventHandlers(bool has_handlers) {
 void RenderWidget::SetNeedsLowLatencyInput(bool needs_low_latency) {
   if (input_event_queue_)
     input_event_queue_->SetNeedsLowLatency(needs_low_latency);
-}
-
-void RenderWidget::RequestUnbufferedInputEvents() {
-  if (input_event_queue_)
-    input_event_queue_->RequestUnbufferedInputEvents();
 }
 
 void RenderWidget::SetTouchAction(cc::TouchAction touch_action) {

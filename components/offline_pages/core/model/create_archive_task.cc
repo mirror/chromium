@@ -25,9 +25,7 @@ CreateArchiveTask::CreateArchiveTask(
       archiver_(archiver),
       callback_(callback),
       clock_(new base::DefaultClock()),
-      skip_clearing_original_url_for_testing_(false) {
-  DCHECK(!callback_.is_null());
-}
+      skip_clearing_original_url_for_testing_(false) {}
 
 CreateArchiveTask::~CreateArchiveTask() {}
 

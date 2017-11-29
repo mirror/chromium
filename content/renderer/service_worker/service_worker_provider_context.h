@@ -14,10 +14,10 @@
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_container.mojom.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
+#include "content/common/service_worker/service_worker_types.h"
 #include "content/public/renderer/child_url_loader_factory_getter.h"
 #include "content/renderer/service_worker/web_service_worker_provider_impl.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
-#include "third_party/WebKit/common/service_worker/service_worker_provider_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
@@ -67,14 +67,12 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // e.g. a frame, provides the default URLLoaderFactoryGetter.
   ServiceWorkerProviderContext(
       int provider_id,
-      blink::mojom::ServiceWorkerProviderType provider_type,
+      ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerContainerAssociatedRequest request,
       mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
 
-  blink::mojom::ServiceWorkerProviderType provider_type() const {
-    return provider_type_;
-  }
+  ServiceWorkerProviderType provider_type() const { return provider_type_; }
 
   int provider_id() const { return provider_id_; }
 
@@ -204,7 +202,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   void RemoveServiceWorkerRegistration(int64_t registration_id);
   bool ContainsServiceWorkerRegistrationForTesting(int64_t registration_id);
 
-  const blink::mojom::ServiceWorkerProviderType provider_type_;
+  const ServiceWorkerProviderType provider_type_;
   const int provider_id_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
 

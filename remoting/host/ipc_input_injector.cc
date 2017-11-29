@@ -15,7 +15,8 @@ IpcInputInjector::IpcInputInjector(
     : desktop_session_proxy_(desktop_session_proxy) {
 }
 
-IpcInputInjector::~IpcInputInjector() = default;
+IpcInputInjector::~IpcInputInjector() {
+}
 
 void IpcInputInjector::InjectClipboardEvent(
     const protocol::ClipboardEvent& event) {

@@ -125,7 +125,7 @@ class BorderlessLabelButton : public views::LabelButton {
     TrayPopupUtils::ConfigureTrayPopupButton(this);
   }
 
-  ~BorderlessLabelButton() override = default;
+  ~BorderlessLabelButton() override {}
 
   // views::LabelButton:
   int GetHeightForWidth(int width) const override { return kMenuButtonSize; }

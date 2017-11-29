@@ -54,9 +54,9 @@ class NativeMessagingReaderTest : public testing::Test {
   std::unique_ptr<base::RunLoop> run_loop_;
 };
 
-NativeMessagingReaderTest::NativeMessagingReaderTest() = default;
+NativeMessagingReaderTest::NativeMessagingReaderTest() {}
 
-NativeMessagingReaderTest::~NativeMessagingReaderTest() = default;
+NativeMessagingReaderTest::~NativeMessagingReaderTest() {}
 
 void NativeMessagingReaderTest::SetUp() {
   ASSERT_TRUE(MakePipe(&read_file_, &write_file_));

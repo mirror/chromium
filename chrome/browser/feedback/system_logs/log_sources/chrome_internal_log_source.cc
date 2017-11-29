@@ -115,7 +115,7 @@ void ChromeInternalLogSource::Fetch(const SysLogsSourceCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(!callback.is_null());
 
-  auto response = std::make_unique<SystemLogsResponse>();
+  std::unique_ptr<SystemLogsResponse> response(new SystemLogsResponse());
 
   response->emplace(kChromeVersionTag, chrome::GetVersionString());
 
@@ -152,14 +152,14 @@ void ChromeInternalLogSource::Fetch(const SysLogsSourceCallback& callback) {
 
   // Get the entries that should be retrieved on the blocking pool and invoke
   // the callback later when done.
-  SystemLogsResponse* response_ptr = response.get();
+  SystemLogsResponse* response_ptr = response.release();
   base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::BindOnce(&GetEntriesAsync, response_ptr),
-      base::BindOnce(callback, std::move(response)));
+      base::Bind(&GetEntriesAsync, response_ptr),
+      base::Bind(callback, base::Owned(response_ptr)));
 #else
   // On other platforms, we're done. Invoke the callback.
-  callback.Run(std::move(response));
+  callback.Run(response.get());
 #endif  // defined(OS_CHROMEOS)
 }
 

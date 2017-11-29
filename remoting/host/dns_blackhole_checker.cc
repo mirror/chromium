@@ -26,7 +26,8 @@ DnsBlackholeChecker::DnsBlackholeChecker(
       talkgadget_prefix_(talkgadget_prefix) {
 }
 
-DnsBlackholeChecker::~DnsBlackholeChecker() = default;
+DnsBlackholeChecker::~DnsBlackholeChecker() {
+}
 
 // This is called in response to the TalkGadget http request initiated from
 // CheckStatus().

@@ -23,7 +23,7 @@ namespace tether {
 
 class DeviceStatusUtilTest : public testing::Test {
  public:
-  DeviceStatusUtilTest() = default;
+  DeviceStatusUtilTest() {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DeviceStatusUtilTest);

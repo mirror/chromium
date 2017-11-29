@@ -601,7 +601,7 @@ void EncryptionMigrationScreenHandler::OnMountExistingVault(
   cryptohome::MigrateToDircryptoRequest request;
   request.set_minimal_migration(IsMinimalMigration());
   DBusThreadManager::Get()->GetCryptohomeClient()->AddObserver(this);
-  DBusThreadManager::Get()->GetCryptohomeClient()->MigrateToDircrypto(
+  cryptohome::HomedirMethods::GetInstance()->MigrateToDircrypto(
       cryptohome::Identification(user_context_.GetAccountId()), request,
       base::Bind(&EncryptionMigrationScreenHandler::OnMigrationRequested,
                  weak_ptr_factory_.GetWeakPtr()));

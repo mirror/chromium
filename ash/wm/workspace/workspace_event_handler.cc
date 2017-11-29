@@ -18,7 +18,7 @@ namespace ash {
 
 WorkspaceEventHandler::WorkspaceEventHandler() : click_component_(HTNOWHERE) {}
 
-WorkspaceEventHandler::~WorkspaceEventHandler() = default;
+WorkspaceEventHandler::~WorkspaceEventHandler() {}
 
 void WorkspaceEventHandler::OnMouseEvent(ui::MouseEvent* event,
                                          aura::Window* target) {

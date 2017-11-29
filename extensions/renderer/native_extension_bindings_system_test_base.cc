@@ -41,16 +41,10 @@ NativeExtensionBindingsSystemUnittest::GetV8ExtensionConfiguration() {
 void NativeExtensionBindingsSystemUnittest::SetUp() {
   render_thread_ = std::make_unique<content::MockRenderThread>();
   script_context_set_ = std::make_unique<ScriptContextSet>(&extension_ids_);
-  std::unique_ptr<TestIPCMessageSender> message_sender;
-  if (UseStrictIPCMessageSender()) {
-    message_sender =
-        std::make_unique<testing::StrictMock<TestIPCMessageSender>>();
-  } else {
-    message_sender = std::make_unique<TestIPCMessageSender>();
-  }
-  ipc_message_sender_ = message_sender.get();
+  auto ipc_message_sender = std::make_unique<TestIPCMessageSender>();
+  ipc_message_sender_ = ipc_message_sender.get();
   bindings_system_ = std::make_unique<NativeExtensionBindingsSystem>(
-      std::move(message_sender));
+      std::move(ipc_message_sender));
   APIBindingTest::SetUp();
 }
 
@@ -97,13 +91,6 @@ void NativeExtensionBindingsSystemUnittest::OnWillDisposeContext(
   bindings_system_->WillReleaseScriptContext(*iter);
   script_context_set_->Remove(*iter);
   raw_script_contexts_.erase(iter);
-}
-
-std::unique_ptr<TestJSRunner::Scope>
-NativeExtensionBindingsSystemUnittest::CreateTestJSRunner() {
-  // The NativeExtensionBindingsSystem handles setting the JSRunner for each
-  // context, so we don't need to fake one.
-  return nullptr;
 }
 
 void NativeExtensionBindingsSystemUnittest::RegisterExtension(

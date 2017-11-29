@@ -41,7 +41,9 @@ class APIEventHandler {
                           bool update_lazy_listeners,
                           v8::Local<v8::Context>)>;
 
-  APIEventHandler(const EventListenersChangedMethod& listeners_changed,
+  APIEventHandler(const binding::RunJSFunction& call_js,
+                  const binding::RunJSFunctionSync& call_js_sync,
+                  const EventListenersChangedMethod& listeners_changed,
                   ExceptionHandler* exception_handler);
   ~APIEventHandler();
 
@@ -104,6 +106,10 @@ class APIEventHandler {
                                         v8::Local<v8::Context> context);
 
  private:
+  // Method to run a given v8::Function. Curried in for testing.
+  binding::RunJSFunction call_js_;
+  binding::RunJSFunctionSync call_js_sync_;
+
   EventListenersChangedMethod listeners_changed_;
 
   // The associated EventFilter; shared across all contexts and events.

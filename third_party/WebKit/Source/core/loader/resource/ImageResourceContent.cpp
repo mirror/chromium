@@ -419,12 +419,7 @@ ImageResourceContent::UpdateImageResult ImageResourceContent::UpdateImage(
         }
       }
 
-      // As per spec, zero intrinsic size SVG is a valid image so do not
-      // consider such an image as DecodeError.
-      // https://www.w3.org/TR/SVG/struct.html#SVGElementWidthAttribute
-      if (!image_ ||
-          (image_->IsNull() && (!image_->IsSVGImage() ||
-                                size_available_ == Image::kSizeUnavailable))) {
+      if (!image_ || image_->IsNull()) {
         ClearImage();
         return UpdateImageResult::kShouldDecodeError;
       }

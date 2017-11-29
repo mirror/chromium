@@ -25,7 +25,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
  public:
   CrasAudioClientImpl() : cras_proxy_(NULL), weak_ptr_factory_(this) {}
 
-  ~CrasAudioClientImpl() override = default;
+  ~CrasAudioClientImpl() override {}
 
   // CrasAudioClient overrides:
   void AddObserver(Observer* observer) override {
@@ -515,7 +515,8 @@ class CrasAudioClientImpl : public CrasAudioClient {
   DISALLOW_COPY_AND_ASSIGN(CrasAudioClientImpl);
 };
 
-CrasAudioClient::Observer::~Observer() = default;
+CrasAudioClient::Observer::~Observer() {
+}
 
 void CrasAudioClient::Observer::AudioClientRestarted() {
 }
@@ -540,9 +541,11 @@ void CrasAudioClient::Observer::OutputNodeVolumeChanged(uint64_t node_id,
 void CrasAudioClient::Observer::HotwordTriggered(uint64_t tv_sec,
                                                  uint64_t tv_nsec) {}
 
-CrasAudioClient::CrasAudioClient() = default;
+CrasAudioClient::CrasAudioClient() {
+}
 
-CrasAudioClient::~CrasAudioClient() = default;
+CrasAudioClient::~CrasAudioClient() {
+}
 
 // static
 CrasAudioClient* CrasAudioClient::Create() {

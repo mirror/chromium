@@ -27,8 +27,8 @@ namespace ash {
 
 class AshPopupAlignmentDelegateTest : public AshTestBase {
  public:
-  AshPopupAlignmentDelegateTest() = default;
-  ~AshPopupAlignmentDelegateTest() override = default;
+  AshPopupAlignmentDelegateTest() {}
+  ~AshPopupAlignmentDelegateTest() override {}
 
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(

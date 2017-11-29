@@ -59,7 +59,7 @@ void SynchronousShutdownObjectContainerImpl::Factory::SetInstanceForTesting(
   factory_instance_ = factory;
 }
 
-SynchronousShutdownObjectContainerImpl::Factory::~Factory() = default;
+SynchronousShutdownObjectContainerImpl::Factory::~Factory() {}
 
 std::unique_ptr<SynchronousShutdownObjectContainer>
 SynchronousShutdownObjectContainerImpl::Factory::BuildInstance(

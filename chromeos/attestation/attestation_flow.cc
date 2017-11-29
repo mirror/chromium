@@ -110,7 +110,8 @@ AttestationFlow::AttestationFlow(cryptohome::AsyncMethodCaller* async_caller,
           base::TimeDelta::FromMilliseconds(kRetryDelayInMilliseconds)),
       weak_factory_(this) {}
 
-AttestationFlow::~AttestationFlow() = default;
+AttestationFlow::~AttestationFlow() {
+}
 
 void AttestationFlow::GetCertificate(
     AttestationCertificateProfile certificate_profile,
@@ -323,7 +324,7 @@ void AttestationFlow::CheckAttestationReadyAndReschedule(
   }
 }
 
-ServerProxy::~ServerProxy() = default;
+ServerProxy::~ServerProxy() {}
 
 PrivacyCAType ServerProxy::GetType() {
   return DEFAULT_PCA;

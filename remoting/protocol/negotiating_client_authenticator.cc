@@ -46,7 +46,7 @@ NegotiatingClientAuthenticator::NegotiatingClientAuthenticator(
   AddMethod(Method::SHARED_SECRET_PLAIN_SPAKE2_P224);
 }
 
-NegotiatingClientAuthenticator::~NegotiatingClientAuthenticator() = default;
+NegotiatingClientAuthenticator::~NegotiatingClientAuthenticator() {}
 
 void NegotiatingClientAuthenticator::ProcessMessage(
     const buzz::XmlElement* message,

@@ -71,6 +71,8 @@ class GinPortTest : public APIBindingTest {
   void SetUp() override {
     APIBindingTest::SetUp();
     event_handler_ = std::make_unique<APIEventHandler>(
+        base::Bind(&RunFunctionOnGlobalAndIgnoreResult),
+        base::Bind(&RunFunctionOnGlobalAndReturnHandle),
         base::Bind(&DoNothingOnEventListenersChanged), nullptr);
     delegate_ = std::make_unique<testing::StrictMock<TestPortDelegate>>();
   }

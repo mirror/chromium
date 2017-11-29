@@ -43,7 +43,7 @@ class TestFileUtil : public storage::LocalFileUtil {
  public:
   explicit TestFileUtil(const base::FilePath& base_path)
       : base_path_(base_path) {}
-  ~TestFileUtil() override = default;
+  ~TestFileUtil() override {}
 
   // LocalFileUtil overrides.
   base::File::Error GetLocalFilePath(FileSystemOperationContext* context,
@@ -64,7 +64,7 @@ class TestFileSystemBackend::QuotaUtil : public storage::FileSystemQuotaUtil,
                                          public storage::FileUpdateObserver {
  public:
   QuotaUtil() : usage_(0) {}
-  ~QuotaUtil() override = default;
+  ~QuotaUtil() override {}
 
   // FileSystemQuotaUtil overrides.
   base::File::Error DeleteOriginDataOnFileTaskRunner(
@@ -127,7 +127,7 @@ TestFileSystemBackend::TestFileSystemBackend(
       update_observers_.AddObserver(quota_util_.get(), task_runner_.get());
 }
 
-TestFileSystemBackend::~TestFileSystemBackend() = default;
+TestFileSystemBackend::~TestFileSystemBackend() {}
 
 bool TestFileSystemBackend::CanHandleType(storage::FileSystemType type) const {
   return (type == storage::kFileSystemTypeTest);

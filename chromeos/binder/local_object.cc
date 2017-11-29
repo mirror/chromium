@@ -13,7 +13,7 @@ namespace binder {
 LocalObject::LocalObject(std::unique_ptr<TransactionHandler> handler)
     : handler_(std::move(handler)) {}
 
-LocalObject::~LocalObject() = default;
+LocalObject::~LocalObject() {}
 
 Object::Type LocalObject::GetType() const {
   return TYPE_LOCAL;

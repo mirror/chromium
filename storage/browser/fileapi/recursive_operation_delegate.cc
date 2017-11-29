@@ -23,7 +23,8 @@ RecursiveOperationDelegate::RecursiveOperationDelegate(
       failed_some_operations_(false) {
 }
 
-RecursiveOperationDelegate::~RecursiveOperationDelegate() = default;
+RecursiveOperationDelegate::~RecursiveOperationDelegate() {
+}
 
 void RecursiveOperationDelegate::Cancel() {
   canceled_ = true;

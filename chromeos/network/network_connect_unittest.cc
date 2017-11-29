@@ -44,8 +44,8 @@ const char kTetherGuid[] = "tether_guid";
 
 class MockDelegate : public NetworkConnect::Delegate {
  public:
-  MockDelegate() = default;
-  ~MockDelegate() override = default;
+  MockDelegate() {}
+  ~MockDelegate() override {}
 
   MOCK_METHOD1(ShowNetworkConfigure, void(const std::string& network_id));
   MOCK_METHOD1(ShowNetworkSettings, void(const std::string& network_id));
@@ -59,8 +59,8 @@ class MockDelegate : public NetworkConnect::Delegate {
 
 class FakeTetherDelegate : public NetworkConnectionHandler::TetherDelegate {
  public:
-  FakeTetherDelegate() = default;
-  ~FakeTetherDelegate() override = default;
+  FakeTetherDelegate() {}
+  ~FakeTetherDelegate() override {}
 
   std::string last_connected_tether_network_guid() {
     return last_connected_tether_network_guid_;
@@ -87,8 +87,8 @@ class FakeTetherDelegate : public NetworkConnectionHandler::TetherDelegate {
 
 class NetworkConnectTest : public testing::Test {
  public:
-  NetworkConnectTest() = default;
-  ~NetworkConnectTest() override = default;
+  NetworkConnectTest() {}
+  ~NetworkConnectTest() override {}
 
   void SetUp() override {
     testing::Test::SetUp();

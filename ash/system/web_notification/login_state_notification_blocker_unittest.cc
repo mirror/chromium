@@ -26,8 +26,8 @@ class LoginStateNotificationBlockerTest
     : public NoSessionAshTestBase,
       public message_center::NotificationBlocker::Observer {
  public:
-  LoginStateNotificationBlockerTest() = default;
-  ~LoginStateNotificationBlockerTest() override = default;
+  LoginStateNotificationBlockerTest() {}
+  ~LoginStateNotificationBlockerTest() override {}
 
   // tests::AshTestBase overrides:
   void SetUp() override {

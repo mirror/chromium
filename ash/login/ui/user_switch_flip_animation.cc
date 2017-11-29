@@ -57,7 +57,7 @@ UserSwitchFlipAnimation::UserSwitchFlipAnimation(int width,
                                          true /*horizontal_flip*/);
 }
 
-UserSwitchFlipAnimation::~UserSwitchFlipAnimation() = default;
+UserSwitchFlipAnimation::~UserSwitchFlipAnimation() {}
 
 void UserSwitchFlipAnimation::OnStart(ui::LayerAnimationDelegate* delegate) {}
 

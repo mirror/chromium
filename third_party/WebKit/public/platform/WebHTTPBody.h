@@ -33,6 +33,7 @@
 
 #include "WebBlobData.h"
 #include "WebData.h"
+#include "WebNonCopyable.h"
 #include "WebString.h"
 #include "WebURL.h"
 

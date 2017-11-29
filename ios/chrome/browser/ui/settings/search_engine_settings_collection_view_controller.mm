@@ -11,7 +11,6 @@
 #include "components/search_engines/template_url_service.h"
 #include "components/search_engines/template_url_service_observer.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
-#import "ios/chrome/browser/search_engines/search_engine_observer_bridge.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
@@ -23,6 +22,10 @@
 #error "This file requires ARC support."
 #endif
 
+@interface SearchEngineSettingsCollectionViewController ()
+- (void)onChange;
+@end
+
 namespace {
 
 typedef NS_ENUM(NSInteger, SectionIdentifier) {
@@ -33,15 +36,42 @@ typedef NS_ENUM(NSInteger, ItemType) {
   ItemTypeSearchEnginesEngine = kItemTypeEnumZero,
 };
 
-}  // namespace
+// Observer used to reload the Search Engine collection view once the
+// TemplateURLService changes, either on first load or due to a
+// policy change.
+class SearchEngineObserver : public TemplateURLServiceObserver {
+ public:
+  SearchEngineObserver(SearchEngineSettingsCollectionViewController* owner,
+                       TemplateURLService* urlService);
+  ~SearchEngineObserver() override;
+  void OnTemplateURLServiceChanged() override;
 
-@interface SearchEngineSettingsCollectionViewController ()<
-    SearchEngineObserving>
-@end
+ private:
+  __weak SearchEngineSettingsCollectionViewController* owner_;
+  TemplateURLService* templateURLService_;  // weak
+};
+
+SearchEngineObserver::SearchEngineObserver(
+    SearchEngineSettingsCollectionViewController* owner,
+    TemplateURLService* urlService)
+    : owner_(owner), templateURLService_(urlService) {
+  templateURLService_->AddObserver(this);
+}
+
+SearchEngineObserver::~SearchEngineObserver() {
+  templateURLService_->RemoveObserver(this);
+}
+
+void SearchEngineObserver::OnTemplateURLServiceChanged() {
+  SearchEngineSettingsCollectionViewController* strongOwner = owner_;
+  [strongOwner onChange];
+}
+
+}  // namespace
 
 @implementation SearchEngineSettingsCollectionViewController {
   TemplateURLService* templateURLService_;  // weak
-  std::unique_ptr<SearchEngineObserverBridge> observer_;
+  std::unique_ptr<SearchEngineObserver> observer_;
   // Prevent unnecessary notifications when we write to the setting.
   BOOL updatingBackend_;
 }
@@ -56,8 +86,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   if (self) {
     templateURLService_ =
         ios::TemplateURLServiceFactory::GetForBrowserState(browserState);
-    observer_ =
-        std::make_unique<SearchEngineObserverBridge>(self, templateURLService_);
+    observer_.reset(new SearchEngineObserver(self, templateURLService_));
     templateURLService_->Load();
     [self setTitle:l10n_util::GetNSString(IDS_IOS_SEARCH_ENGINE_SETTING_TITLE)];
     [self setCollectionViewAccessibilityIdentifier:@"Search Engine"];
@@ -170,7 +199,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   updatingBackend_ = NO;
 }
 
-- (void)searchEngineChanged {
+- (void)onChange {
   if (!updatingBackend_)
     [self reloadData];
 }

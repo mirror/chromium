@@ -4,9 +4,6 @@
 
 #include "device/u2f/u2f_ble_discovery.h"
 
-#include <string>
-#include <utility>
-
 #include "base/bind.h"
 #include "base/stl_util.h"
 #include "base/strings/string_piece.h"
@@ -32,18 +29,18 @@ class U2fFakeBleDevice : public U2fDevice {
     return result;
   }
 
-  explicit U2fFakeBleDevice(base::StringPiece address)
+  U2fFakeBleDevice(base::StringPiece address)
       : id_(GetId(address)), weak_factory_(this) {}
 
   ~U2fFakeBleDevice() override = default;
 
-  void TryWink(WinkCallback callback) override {}
+  void TryWink(const WinkCallback& callback) override {}
   std::string GetId() const override { return id_; }
 
  protected:
   void DeviceTransact(std::unique_ptr<U2fApduCommand> command,
-                      DeviceCallback callback) override {
-    std::move(callback).Run(false, nullptr);
+                      const DeviceCallback& callback) override {
+    callback.Run(false, nullptr);
   }
 
   base::WeakPtr<U2fDevice> GetWeakPtr() override {

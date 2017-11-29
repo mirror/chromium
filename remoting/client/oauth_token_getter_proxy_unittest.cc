@@ -83,8 +83,8 @@ void FakeOAuthTokenGetter::InvalidateCache() {
 
 class OAuthTokenGetterProxyTest : public testing::Test {
  public:
-  OAuthTokenGetterProxyTest() = default;
-  ~OAuthTokenGetterProxyTest() override = default;
+  OAuthTokenGetterProxyTest() {}
+  ~OAuthTokenGetterProxyTest() override {}
 
   // testing::Test overrides.
   void SetUp() override;

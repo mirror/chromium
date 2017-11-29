@@ -150,23 +150,17 @@ void WidgetInputHandlerManager::DidOverscroll(
     const gfx::Vector2dF& current_fling_velocity,
     const gfx::PointF& causal_event_viewport_point,
     const cc::ScrollBoundaryBehavior& scroll_boundary_behavior) {
-  mojom::WidgetInputHandlerHost* host = GetWidgetInputHandlerHost();
-  if (!host)
-    return;
   ui::DidOverscrollParams params;
   params.accumulated_overscroll = accumulated_overscroll;
   params.latest_overscroll_delta = latest_overscroll_delta;
   params.current_fling_velocity = current_fling_velocity;
   params.causal_event_viewport_point = causal_event_viewport_point;
   params.scroll_boundary_behavior = scroll_boundary_behavior;
-  host->DidOverscroll(params);
+  GetWidgetInputHandlerHost()->DidOverscroll(params);
 }
 
 void WidgetInputHandlerManager::DidStopFlinging() {
-  mojom::WidgetInputHandlerHost* host = GetWidgetInputHandlerHost();
-  if (!host)
-    return;
-  host->DidStopFlinging();
+  GetWidgetInputHandlerHost()->DidStopFlinging();
 }
 
 void WidgetInputHandlerManager::DidAnimateForInput() {
@@ -195,22 +189,17 @@ void WidgetInputHandlerManager::SetWhiteListedTouchAction(
     cc::TouchAction touch_action,
     uint32_t unique_touch_event_id,
     ui::InputHandlerProxy::EventDisposition event_disposition) {
-  mojom::WidgetInputHandlerHost* host = GetWidgetInputHandlerHost();
-  if (!host)
-    return;
   InputEventAckState ack_state = InputEventDispositionToAck(event_disposition);
-  host->SetWhiteListedTouchAction(touch_action, unique_touch_event_id,
-                                  ack_state);
+  GetWidgetInputHandlerHost()->SetWhiteListedTouchAction(
+      touch_action, unique_touch_event_id, ack_state);
 }
 
 void WidgetInputHandlerManager::ProcessTouchAction(
     cc::TouchAction touch_action) {
   // Cancel the touch timeout on TouchActionNone since it is a good hint
   // that author doesn't want scrolling.
-  if (touch_action == cc::TouchAction::kTouchActionNone) {
-    if (mojom::WidgetInputHandlerHost* host = GetWidgetInputHandlerHost())
-      host->CancelTouchTimeout();
-  }
+  if (touch_action == cc::TouchAction::kTouchActionNone)
+    GetWidgetInputHandlerHost()->CancelTouchTimeout();
 }
 
 mojom::WidgetInputHandlerHost*
@@ -290,11 +279,8 @@ void WidgetInputHandlerManager::BindAssociatedChannel(
     mojom::WidgetInputHandlerAssociatedRequest request) {
   if (!request.is_pending())
     return;
-  // Don't pass the |input_event_queue_| on if we don't have a
-  // |compositor_task_runner_| as events might get out of order.
   WidgetInputHandlerImpl* handler = new WidgetInputHandlerImpl(
-      this, main_thread_task_runner_,
-      compositor_task_runner_ ? input_event_queue_ : nullptr, render_widget_);
+      this, main_thread_task_runner_, input_event_queue_, render_widget_);
   handler->SetAssociatedBinding(std::move(request));
 }
 
@@ -302,11 +288,8 @@ void WidgetInputHandlerManager::BindChannel(
     mojom::WidgetInputHandlerRequest request) {
   if (!request.is_pending())
     return;
-  // Don't pass the |input_event_queue_| on if we don't have a
-  // |compositor_task_runner_| as events might get out of order.
   WidgetInputHandlerImpl* handler = new WidgetInputHandlerImpl(
-      this, main_thread_task_runner_,
-      compositor_task_runner_ ? input_event_queue_ : nullptr, render_widget_);
+      this, main_thread_task_runner_, input_event_queue_, render_widget_);
   handler->SetBinding(std::move(request));
 }
 

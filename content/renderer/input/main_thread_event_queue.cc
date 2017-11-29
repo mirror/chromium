@@ -520,8 +520,9 @@ bool MainThreadEventQueue::IsRafAlignedEvent(
   switch (event->event().GetType()) {
     case blink::WebInputEvent::kMouseMove:
     case blink::WebInputEvent::kMouseWheel:
+      return !needs_low_latency_;
     case blink::WebInputEvent::kTouchMove:
-      return !needs_low_latency_ && !needs_low_latency_until_pointer_up_;
+      return !needs_low_latency_;
     default:
       return false;
   }
@@ -533,21 +534,6 @@ void MainThreadEventQueue::HandleEventOnMainThread(
     HandledEventCallback handled_callback) {
   if (client_)
     client_->HandleInputEvent(event, latency, std::move(handled_callback));
-
-  if (needs_low_latency_until_pointer_up_) {
-    // Reset the needs low latency until pointer up mode if necessary.
-    switch (event.Event().GetType()) {
-      case blink::WebInputEvent::kMouseUp:
-      case blink::WebInputEvent::kTouchCancel:
-      case blink::WebInputEvent::kTouchEnd:
-      case blink::WebInputEvent::kPointerCancel:
-      case blink::WebInputEvent::kPointerUp:
-        needs_low_latency_until_pointer_up_ = false;
-        break;
-      default:
-        break;
-    }
-  }
 }
 
 void MainThreadEventQueue::SetNeedsMainFrame() {
@@ -574,10 +560,6 @@ void MainThreadEventQueue::ClearClient() {
 
 void MainThreadEventQueue::SetNeedsLowLatency(bool low_latency) {
   needs_low_latency_ = low_latency;
-}
-
-void MainThreadEventQueue::RequestUnbufferedInputEvents() {
-  needs_low_latency_until_pointer_up_ = true;
 }
 
 }  // namespace content

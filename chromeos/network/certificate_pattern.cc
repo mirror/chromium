@@ -45,12 +45,14 @@ IssuerSubjectPattern::IssuerSubjectPattern(
       organizational_unit_(organizational_unit) {
 }
 
-IssuerSubjectPattern::IssuerSubjectPattern() = default;
+IssuerSubjectPattern::IssuerSubjectPattern() {
+}
 
 IssuerSubjectPattern::IssuerSubjectPattern(const IssuerSubjectPattern& other) =
     default;
 
-IssuerSubjectPattern::~IssuerSubjectPattern() = default;
+IssuerSubjectPattern::~IssuerSubjectPattern() {
+}
 
 bool IssuerSubjectPattern::Empty() const {
   return common_name_.empty() && locality_.empty() && organization_.empty() &&
@@ -80,12 +82,14 @@ void IssuerSubjectPattern::ReadFromONCDictionary(
 ////////////////////////////////////////////////////////////////////////////////
 // CertificatePattern
 
-CertificatePattern::CertificatePattern() = default;
+CertificatePattern::CertificatePattern() {
+}
 
 CertificatePattern::CertificatePattern(const CertificatePattern& other) =
     default;
 
-CertificatePattern::~CertificatePattern() = default;
+CertificatePattern::~CertificatePattern() {
+}
 
 bool CertificatePattern::Empty() const {
   return issuer_ca_pems_.empty() && issuer_.Empty() && subject_.Empty();

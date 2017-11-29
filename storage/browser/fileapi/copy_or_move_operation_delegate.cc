@@ -32,13 +32,13 @@ const int64_t kFlushIntervalInBytes = 10 << 20;  // 10MB.
 
 class CopyOrMoveOperationDelegate::CopyOrMoveImpl {
  public:
-  virtual ~CopyOrMoveImpl() = default;
+  virtual ~CopyOrMoveImpl() {}
   virtual void Run(
       const CopyOrMoveOperationDelegate::StatusCallback& callback) = 0;
   virtual void Cancel() = 0;
 
  protected:
-  CopyOrMoveImpl() = default;
+  CopyOrMoveImpl() {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CopyOrMoveImpl);
@@ -618,7 +618,8 @@ CopyOrMoveOperationDelegate::StreamCopyHelper::StreamCopyHelper(
       cancel_requested_(false),
       weak_factory_(this) {}
 
-CopyOrMoveOperationDelegate::StreamCopyHelper::~StreamCopyHelper() = default;
+CopyOrMoveOperationDelegate::StreamCopyHelper::~StreamCopyHelper() {
+}
 
 void CopyOrMoveOperationDelegate::StreamCopyHelper::Run(
     const StatusCallback& callback) {
@@ -760,7 +761,8 @@ CopyOrMoveOperationDelegate::CopyOrMoveOperationDelegate(
   same_file_system_ = src_root_.IsInSameFileSystem(dest_root_);
 }
 
-CopyOrMoveOperationDelegate::~CopyOrMoveOperationDelegate() = default;
+CopyOrMoveOperationDelegate::~CopyOrMoveOperationDelegate() {
+}
 
 void CopyOrMoveOperationDelegate::Run() {
   // Not supported; this should never be called.

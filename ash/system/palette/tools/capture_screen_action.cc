@@ -16,7 +16,7 @@ namespace ash {
 CaptureScreenAction::CaptureScreenAction(Delegate* delegate)
     : CommonPaletteTool(delegate) {}
 
-CaptureScreenAction::~CaptureScreenAction() = default;
+CaptureScreenAction::~CaptureScreenAction() {}
 
 PaletteGroup CaptureScreenAction::GetGroup() const {
   return PaletteGroup::ACTION;

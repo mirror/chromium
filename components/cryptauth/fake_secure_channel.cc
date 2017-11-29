@@ -33,28 +33,25 @@ void FakeSecureChannel::ReceiveMessage(const std::string& feature,
                                        const std::string& payload) {
   // Copy to prevent channel from being removed during handler.
   std::vector<Observer*> observers_copy = observers_;
-  for (auto* observer : observers_copy)
+  for (auto* observer : observers_copy) {
     observer->OnMessageReceived(this, feature, payload);
+  }
 }
 
 void FakeSecureChannel::CompleteSendingMessage(int sequence_number) {
   DCHECK(next_sequence_number_ > sequence_number);
   // Copy to prevent channel from being removed during handler.
   std::vector<Observer*> observers_copy = observers_;
-  for (auto* observer : observers_copy)
+  for (auto* observer : observers_copy) {
     observer->OnMessageSent(this, sequence_number);
+  }
 }
 
 void FakeSecureChannel::NotifyGattCharacteristicsNotAvailable() {
-  // Copy to prevent channel from being removed during handler.
-  std::vector<Observer*> observers_copy = observers_;
-  for (auto* observer : observers_copy)
-    observer->OnGattCharacteristicsNotAvailable();
+  SecureChannel::NotifyGattCharacteristicsNotAvailable();
 }
 
-void FakeSecureChannel::Initialize() {
-  ChangeStatus(Status::CONNECTING);
-}
+void FakeSecureChannel::Initialize() {}
 
 int FakeSecureChannel::SendMessage(const std::string& feature,
                                    const std::string& payload) {

@@ -24,7 +24,7 @@ ThirdPartyHostAuthenticator::ThirdPartyHostAuthenticator(
       create_base_authenticator_callback_(create_base_authenticator_callback),
       token_validator_(std::move(token_validator)) {}
 
-ThirdPartyHostAuthenticator::~ThirdPartyHostAuthenticator() = default;
+ThirdPartyHostAuthenticator::~ThirdPartyHostAuthenticator() {}
 
 void ThirdPartyHostAuthenticator::ProcessTokenMessage(
     const buzz::XmlElement* message,

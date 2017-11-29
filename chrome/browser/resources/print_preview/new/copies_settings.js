@@ -5,9 +5,13 @@
 Polymer({
   is: 'print-preview-copies-settings',
 
-  behaviors: [SettingsBehavior],
-
   properties: {
+    /** @type {!print_preview_new.Model} */
+    model: {
+      type: Object,
+      notify: true,
+    },
+
     /** @private {string} */
     inputString_: String,
 
@@ -15,35 +19,17 @@ Polymer({
     inputValid_: Boolean,
   },
 
-  /** @private {boolean} */
-  isInitialized_: false,
-
-  observers: [
-    'onInputChanged_(inputString_, inputValid_)',
-    'onInitialized_(settings.copies.value)'
-  ],
-
-  /**
-   * Updates the input string when the setting has been initialized.
-   * @private
-   */
-  onInitialized_: function() {
-    if (this.isInitialized_)
-      return;
-    this.isInitialized_ = true;
-    const copies = this.getSetting('copies');
-    this.set('inputString_', copies.value);
-  },
+  observers: ['onCopiesChanged_(inputString_, inputValid_)'],
 
   /**
    * Updates model.copies and model.copiesInvalid based on the validity
    * and current value of the copies input.
    * @private
    */
-  onInputChanged_: function() {
-    this.setSetting(
-        'copies', this.inputValid_ ? parseInt(this.inputString_, 10) : 1);
-    this.setSettingValid('copies', this.inputValid_);
+  onCopiesChanged_: function() {
+    this.set(
+        'model.copies', this.inputValid_ ? parseInt(this.inputString_, 10) : 1);
+    this.set('model.copiesInvalid', !this.inputValid_);
   },
 
   /**

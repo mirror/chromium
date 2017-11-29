@@ -27,8 +27,7 @@ namespace mojo {
 
 class AssociatedGroupController;
 
-using ReportBadMessageCallback =
-    base::OnceCallback<void(const std::string& error)>;
+using ReportBadMessageCallback = base::Callback<void(const std::string& error)>;
 
 // Message is a holder for the data and handles to be sent over a MessagePipe.
 // Message owns its data and handles, but a consumer of Message is free to
@@ -329,13 +328,14 @@ class MOJO_CPP_BINDINGS_EXPORT SyncMessageResponseContext {
 
   void ReportBadMessage(const std::string& error);
 
-  ReportBadMessageCallback GetBadMessageCallback();
+  const ReportBadMessageCallback& GetBadMessageCallback();
 
  private:
   friend class internal::SyncMessageResponseSetup;
 
   SyncMessageResponseContext* outer_context_;
   Message response_;
+  ReportBadMessageCallback bad_message_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(SyncMessageResponseContext);
 };

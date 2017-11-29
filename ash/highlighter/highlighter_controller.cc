@@ -55,7 +55,7 @@ float GetScreenshotScale(aura::Window* window) {
 HighlighterController::HighlighterController()
     : binding_(this), weak_factory_(this) {}
 
-HighlighterController::~HighlighterController() = default;
+HighlighterController::~HighlighterController() {}
 
 void HighlighterController::SetExitCallback(base::OnceClosure exit_callback,
                                             bool require_success) {

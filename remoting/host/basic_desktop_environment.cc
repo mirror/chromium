@@ -114,7 +114,7 @@ BasicDesktopEnvironmentFactory::BasicDesktopEnvironmentFactory(
       ui_task_runner_(ui_task_runner),
       system_input_injector_factory_(system_input_injector_factory) {}
 
-BasicDesktopEnvironmentFactory::~BasicDesktopEnvironmentFactory() = default;
+BasicDesktopEnvironmentFactory::~BasicDesktopEnvironmentFactory() {}
 
 bool BasicDesktopEnvironmentFactory::SupportsAudioCapture() const {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());

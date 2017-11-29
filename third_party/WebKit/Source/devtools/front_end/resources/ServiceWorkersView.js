@@ -10,7 +10,6 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     this.registerRequiredCSS('resources/serviceWorkersView.css');
 
     this._currentWorkersView = new UI.ReportView(Common.UIString('Service Workers'));
-    this._currentWorkersView.setBodyScrollable(false);
     this.contentElement.classList.add('service-worker-list');
     this._currentWorkersView.show(this.contentElement);
     this._currentWorkersView.element.classList.add('service-workers-this-origin');
@@ -44,7 +43,6 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     toolbar.appendToolbarItem(this._filter);
 
     this._otherWorkersView = new UI.ReportView();
-    this._otherWorkersView.setBodyScrollable(false);
     this._otherWorkersView.show(this._otherWorkers);
     this._otherWorkersView.element.classList.add('service-workers-for-other-origins');
 

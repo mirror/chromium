@@ -18,38 +18,30 @@
         let shaper = context.createWaveShaper();
 
         // Verify default values are correct.
-        should(shaper.curve, 'Initial WaveShaper.curve').beEqualTo(null);
-        should(shaper.oversample, 'Initial WaveShaper.oversample')
-            .beEqualTo('none');
+        should(shaper.curve, 'WaveShaper.curve').beEqualTo(null);
+        should(shaper.oversample, 'WaveShaper.oversample').beEqualTo('none');
 
         // Set oversample and verify that it is set correctly.
-        should(() => shaper.oversample = '2x', 'Setting oversample to "2x"')
-            .notThrow();
+        shaper.oversample = '2x';
         should(shaper.oversample, 'Waveshaper.oversample = "2x"')
             .beEqualTo('2x');
 
-        should(() => shaper.oversample = '4x', 'Setting oversample to "4x"')
-            .notThrow();
+        shaper.oversample = '4x';
         should(shaper.oversample, 'Waveshaper.oversample = "4x"')
             .beEqualTo('4x');
 
-        should(
-            () => shaper.oversample = 'invalid',
-            'Setting oversample to "invalid"')
-            .notThrow();
+        shaper.oversample = 'invalid';
         should(shaper.oversample, 'Waveshaper.oversample = "invalid"')
             .beEqualTo('4x');
 
         // Set the curve and verify that the returned curve is the same as what
         // it was set to.
         let curve = Float32Array.from([-1, 0.25, .75]);
-        should(() => shaper.curve = curve, 'Setting curve to [' + curve + ']')
-            .notThrow();
+        shaper.curve = curve;
         should(shaper.curve, 'WaveShaper.curve').beEqualToArray(curve);
 
         // Verify setting the curve to null works.
-        should(() => shaper.curve = null, 'Setting curve back to null')
-            .notThrow();
+        shaper.curve = null;
         should(shaper.curve, 'Waveshaper.curve = null').beEqualTo(null);
 
         task.done();

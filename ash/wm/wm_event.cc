@@ -12,7 +12,7 @@ WMEvent::WMEvent(WMEventType type) : type_(type) {
          IsTransitionEvent());
 }
 
-WMEvent::~WMEvent() = default;
+WMEvent::~WMEvent() {}
 
 bool WMEvent::IsWorkspaceEvent() const {
   switch (type_) {
@@ -85,7 +85,7 @@ bool WMEvent::IsTransitionEvent() const {
 SetBoundsEvent::SetBoundsEvent(WMEventType type, const gfx::Rect& bounds)
     : WMEvent(type), requested_bounds_(bounds) {}
 
-SetBoundsEvent::~SetBoundsEvent() = default;
+SetBoundsEvent::~SetBoundsEvent() {}
 
 }  // namespace wm
 }  // namespace ash

@@ -68,7 +68,8 @@ SandboxOriginDatabase::SandboxOriginDatabase(
       env_override_(env_override) {
 }
 
-SandboxOriginDatabase::~SandboxOriginDatabase() = default;
+SandboxOriginDatabase::~SandboxOriginDatabase() {
+}
 
 bool SandboxOriginDatabase::Init(InitOption init_option,
                                  RecoveryOption recovery_option) {

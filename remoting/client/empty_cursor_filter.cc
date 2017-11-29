@@ -31,7 +31,7 @@ EmptyCursorFilter::EmptyCursorFilter(protocol::CursorShapeStub* cursor_stub)
     : cursor_stub_(cursor_stub) {
 }
 
-EmptyCursorFilter::~EmptyCursorFilter() = default;
+EmptyCursorFilter::~EmptyCursorFilter() {}
 
 namespace {
 

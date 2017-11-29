@@ -104,7 +104,7 @@ struct ServiceWorkerProviderContext::ProviderStateForServiceWorker {
 
 ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     int provider_id,
-    blink::mojom::ServiceWorkerProviderType provider_type,
+    ServiceWorkerProviderType provider_type,
     mojom::ServiceWorkerContainerAssociatedRequest request,
     mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
     scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
@@ -114,8 +114,7 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
       binding_(this, std::move(request)),
       weak_factory_(this) {
   container_host_.Bind(std::move(host_ptr_info));
-  if (provider_type ==
-      blink::mojom::ServiceWorkerProviderType::kForServiceWorker) {
+  if (provider_type == SERVICE_WORKER_PROVIDER_FOR_SERVICE_WORKER) {
     state_for_service_worker_ =
         std::make_unique<ProviderStateForServiceWorker>();
   } else {
@@ -148,8 +147,7 @@ void ServiceWorkerProviderContext::SetRegistrationForServiceWorkerGlobalScope(
 scoped_refptr<WebServiceWorkerRegistrationImpl>
 ServiceWorkerProviderContext::TakeRegistrationForServiceWorkerGlobalScope(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner) {
-  DCHECK_EQ(blink::mojom::ServiceWorkerProviderType::kForServiceWorker,
-            provider_type_);
+  DCHECK_EQ(SERVICE_WORKER_PROVIDER_FOR_SERVICE_WORKER, provider_type_);
   ProviderStateForServiceWorker* state = state_for_service_worker_.get();
   DCHECK(state);
   DCHECK(state->registration);
@@ -219,8 +217,7 @@ ServiceWorkerProviderContext::subresource_loader_factory() {
 
 mojom::ServiceWorkerContainerHost*
 ServiceWorkerProviderContext::container_host() const {
-  DCHECK_EQ(blink::mojom::ServiceWorkerProviderType::kForWindow,
-            provider_type_);
+  DCHECK_EQ(SERVICE_WORKER_PROVIDER_FOR_WINDOW, provider_type_);
   return container_host_.get();
 }
 
@@ -262,8 +259,7 @@ ServiceWorkerProviderContext::CloneContainerHostPtrInfo() {
 scoped_refptr<WebServiceWorkerRegistrationImpl>
 ServiceWorkerProviderContext::GetOrCreateRegistrationForServiceWorkerClient(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
-  DCHECK_EQ(blink::mojom::ServiceWorkerProviderType::kForWindow,
-            provider_type_);
+  DCHECK_EQ(SERVICE_WORKER_PROVIDER_FOR_WINDOW, provider_type_);
   DCHECK(state_for_client_);
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();

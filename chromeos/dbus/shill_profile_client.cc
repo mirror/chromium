@@ -129,9 +129,9 @@ void ShillProfileClientImpl::DeleteEntry(
 
 }  // namespace
 
-ShillProfileClient::ShillProfileClient() = default;
+ShillProfileClient::ShillProfileClient() {}
 
-ShillProfileClient::~ShillProfileClient() = default;
+ShillProfileClient::~ShillProfileClient() {}
 
 // static
 ShillProfileClient* ShillProfileClient::Create() {

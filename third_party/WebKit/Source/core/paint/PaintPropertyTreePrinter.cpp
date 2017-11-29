@@ -80,12 +80,10 @@ class PropertyTreePrinter {
   }
 
   void CollectPropertyNodes(const LayoutObject& object) {
-    for (const auto* fragment = &object.FirstFragment(); fragment;
-         fragment = fragment->NextFragment()) {
-      if (const auto* properties = fragment->PaintProperties())
-        Traits::AddObjectPaintProperties(object, *properties, *this);
-    }
-    for (const auto* child = object.SlowFirstChild(); child;
+    if (const ObjectPaintProperties* properties =
+            object.FirstFragment().PaintProperties())
+      Traits::AddObjectPaintProperties(object, *properties, *this);
+    for (LayoutObject* child = object.SlowFirstChild(); child;
          child = child->NextSibling())
       CollectPropertyNodes(*child);
   }

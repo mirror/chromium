@@ -47,8 +47,7 @@ DownloadUrlParameters::DownloadUrlParameters(
       do_not_prompt_for_login_(false),
       fetch_error_body_(false),
       transient_(false),
-      traffic_annotation_(traffic_annotation),
-      download_source_(DownloadSource::UNKNOWN) {}
+      traffic_annotation_(traffic_annotation) {}
 
 DownloadUrlParameters::~DownloadUrlParameters() {
 }

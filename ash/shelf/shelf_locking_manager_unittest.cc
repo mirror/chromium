@@ -13,7 +13,7 @@ namespace {
 // Tests the shelf behavior when the screen or session is locked.
 class ShelfLockingManagerTest : public AshTestBase {
  public:
-  ShelfLockingManagerTest() = default;
+  ShelfLockingManagerTest() {}
 
   ShelfLockingManager* GetShelfLockingManager() {
     return GetPrimaryShelf()->GetShelfLockingManagerForTesting();

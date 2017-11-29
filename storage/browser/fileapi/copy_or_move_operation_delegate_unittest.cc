@@ -59,8 +59,8 @@ void ExpectOk(const GURL& origin_url,
 class TestValidatorFactory : public storage::CopyOrMoveFileValidatorFactory {
  public:
   // A factory that creates validators that accept everything or nothing.
-  TestValidatorFactory() = default;
-  ~TestValidatorFactory() override = default;
+  TestValidatorFactory() {}
+  ~TestValidatorFactory() override {}
 
   storage::CopyOrMoveFileValidator* CreateCopyOrMoveFileValidator(
       const FileSystemURL& /*src_url*/,
@@ -81,7 +81,7 @@ class TestValidatorFactory : public storage::CopyOrMoveFileValidatorFactory {
                                           base::File::FILE_ERROR_SECURITY),
           reject_string_(reject_string) {
     }
-    ~TestValidator() override = default;
+    ~TestValidator() override {}
 
     void StartPreWriteValidation(
         const ResultCallback& result_callback) override {

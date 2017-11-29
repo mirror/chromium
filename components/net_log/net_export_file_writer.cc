@@ -293,26 +293,31 @@ void NetExportFileWriter::GetFilePathToCompletedLog(
 
 std::string NetExportFileWriter::CaptureModeToString(
     net::NetLogCaptureMode capture_mode) {
-  if (capture_mode == net::NetLogCaptureMode::Default())
+  if (capture_mode == net::NetLogCaptureMode::Default()) {
     return "STRIP_PRIVATE_DATA";
-  if (capture_mode == net::NetLogCaptureMode::IncludeCookiesAndCredentials())
+  } else if (capture_mode ==
+             net::NetLogCaptureMode::IncludeCookiesAndCredentials()) {
     return "NORMAL";
-  if (capture_mode == net::NetLogCaptureMode::IncludeSocketBytes())
+  } else if (capture_mode == net::NetLogCaptureMode::IncludeSocketBytes()) {
     return "LOG_BYTES";
-  NOTREACHED();
-  return "STRIP_PRIVATE_DATA";
+  } else {
+    NOTREACHED();
+    return "STRIP_PRIVATE_DATA";
+  }
 }
 
 net::NetLogCaptureMode NetExportFileWriter::CaptureModeFromString(
     const std::string& capture_mode_string) {
-  if (capture_mode_string == "STRIP_PRIVATE_DATA")
+  if (capture_mode_string == "STRIP_PRIVATE_DATA") {
     return net::NetLogCaptureMode::Default();
-  if (capture_mode_string == "NORMAL")
+  } else if (capture_mode_string == "NORMAL") {
     return net::NetLogCaptureMode::IncludeCookiesAndCredentials();
-  if (capture_mode_string == "LOG_BYTES")
+  } else if (capture_mode_string == "LOG_BYTES") {
     return net::NetLogCaptureMode::IncludeSocketBytes();
-  NOTREACHED();
-  return net::NetLogCaptureMode::Default();
+  } else {
+    NOTREACHED();
+    return net::NetLogCaptureMode::Default();
+  }
 }
 
 void NetExportFileWriter::SetDefaultLogBaseDirectoryGetterForTest(

@@ -22,9 +22,9 @@ StorageObserverList::ObserverState::ObserverState()
     : requires_update(false) {
 }
 
-StorageObserverList::StorageObserverList() = default;
+StorageObserverList::StorageObserverList() {}
 
-StorageObserverList::~StorageObserverList() = default;
+StorageObserverList::~StorageObserverList() {}
 
 void StorageObserverList::AddObserver(
     StorageObserver* observer, const StorageObserver::MonitorParams& params) {
@@ -141,7 +141,7 @@ HostStorageObservers::HostStorageObservers(QuotaManager* quota_manager)
       weak_factory_(this) {
 }
 
-HostStorageObservers::~HostStorageObservers() = default;
+HostStorageObservers::~HostStorageObservers() {}
 
 void HostStorageObservers::AddObserver(
     StorageObserver* observer,
@@ -246,7 +246,8 @@ StorageTypeObservers::StorageTypeObservers(QuotaManager* quota_manager)
     : quota_manager_(quota_manager) {
 }
 
-StorageTypeObservers::~StorageTypeObservers() = default;
+StorageTypeObservers::~StorageTypeObservers() {
+}
 
 void StorageTypeObservers::AddObserver(
     StorageObserver* observer, const StorageObserver::MonitorParams& params) {
@@ -303,7 +304,8 @@ StorageMonitor::StorageMonitor(QuotaManager* quota_manager)
     : quota_manager_(quota_manager) {
 }
 
-StorageMonitor::~StorageMonitor() = default;
+StorageMonitor::~StorageMonitor() {
+}
 
 void StorageMonitor::AddObserver(
     StorageObserver* observer, const StorageObserver::MonitorParams& params) {

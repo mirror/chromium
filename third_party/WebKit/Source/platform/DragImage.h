@@ -27,8 +27,6 @@
 #define DragImage_h
 
 #include <memory>
-
-#include "base/macros.h"
 #include "platform/geometry/FloatSize.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/GraphicsTypes.h"
@@ -48,6 +46,7 @@ class KURL;
 
 class PLATFORM_EXPORT DragImage {
   USING_FAST_MALLOC(DragImage);
+  WTF_MAKE_NONCOPYABLE(DragImage);
 
  public:
   static std::unique_ptr<DragImage> Create(
@@ -87,8 +86,6 @@ class PLATFORM_EXPORT DragImage {
   SkBitmap bitmap_;
   float resolution_scale_;
   InterpolationQuality interpolation_quality_;
-
-  DISALLOW_COPY_AND_ASSIGN(DragImage);
 };
 
 }  // namespace blink

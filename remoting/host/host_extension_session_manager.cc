@@ -19,7 +19,7 @@ HostExtensionSessionManager::HostExtensionSessionManager(
       client_stub_(nullptr),
       extensions_(extensions) {}
 
-HostExtensionSessionManager::~HostExtensionSessionManager() = default;
+HostExtensionSessionManager::~HostExtensionSessionManager() {}
 
 std::string HostExtensionSessionManager::GetCapabilities() const {
   std::string capabilities;

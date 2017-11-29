@@ -55,10 +55,8 @@ struct SessionStartupPref {
   static SessionStartupPref GetStartupPref(Profile* profile);
   static SessionStartupPref GetStartupPref(PrefService* prefs);
 
-  // Whether the startup type and URLs are managed via either mandatory or
-  // recommended policy.
+  // Whether the startup type and URLs are managed via policy.
   static bool TypeIsManaged(PrefService* prefs);
-  static bool TypeIsRecommended(PrefService* prefs);
   static bool URLsAreManaged(PrefService* prefs);
 
   // Whether the startup type has not been overridden from its default.

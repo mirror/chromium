@@ -91,7 +91,7 @@ AccessibilityFocusRingLayer::AccessibilityFocusRingLayer(
     AccessibilityLayerDelegate* delegate)
     : FocusRingLayer(delegate) {}
 
-AccessibilityFocusRingLayer::~AccessibilityFocusRingLayer() = default;
+AccessibilityFocusRingLayer::~AccessibilityFocusRingLayer() {}
 
 void AccessibilityFocusRingLayer::Set(const AccessibilityFocusRing& ring) {
   ring_ = ring;

@@ -41,7 +41,8 @@ SandboxFileSystemBackend::SandboxFileSystemBackend(
       enable_temporary_file_system_in_incognito_(false) {
 }
 
-SandboxFileSystemBackend::~SandboxFileSystemBackend() = default;
+SandboxFileSystemBackend::~SandboxFileSystemBackend() {
+}
 
 bool SandboxFileSystemBackend::CanHandleType(FileSystemType type) const {
   return type == kFileSystemTypeTemporary ||

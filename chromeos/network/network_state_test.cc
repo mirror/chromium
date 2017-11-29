@@ -26,7 +26,7 @@ const char NetworkStateTest::kUserHash[] = "user_hash";
 NetworkStateTest::NetworkStateTest()
     : test_manager_client_(nullptr), weak_ptr_factory_(this) {}
 
-NetworkStateTest::~NetworkStateTest() = default;
+NetworkStateTest::~NetworkStateTest() {}
 
 void NetworkStateTest::SetUp() {
   DBusThreadManager* dbus_manager = DBusThreadManager::Get();

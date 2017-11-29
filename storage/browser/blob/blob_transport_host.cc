@@ -68,11 +68,11 @@ BlobTransportHost::TransportState::TransportState(
 BlobTransportHost::TransportState& BlobTransportHost::TransportState::operator=(
     BlobTransportHost::TransportState&&) = default;
 
-BlobTransportHost::TransportState::~TransportState() = default;
+BlobTransportHost::TransportState::~TransportState() {}
 
 BlobTransportHost::BlobTransportHost() : ptr_factory_(this) {}
 
-BlobTransportHost::~BlobTransportHost() = default;
+BlobTransportHost::~BlobTransportHost() {}
 
 std::unique_ptr<BlobDataHandle> BlobTransportHost::StartBuildingBlob(
     const std::string& uuid,

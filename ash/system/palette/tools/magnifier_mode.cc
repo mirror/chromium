@@ -16,7 +16,7 @@ namespace ash {
 MagnifierMode::MagnifierMode(Delegate* delegate)
     : CommonPaletteTool(delegate) {}
 
-MagnifierMode::~MagnifierMode() = default;
+MagnifierMode::~MagnifierMode() {}
 
 PaletteGroup MagnifierMode::GetGroup() const {
   return PaletteGroup::MODE;

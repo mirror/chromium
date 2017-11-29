@@ -30,9 +30,7 @@ bool ClearDigestSync(int64_t offline_id, sql::Connection* db) {
 
 ClearDigestTask::ClearDigestTask(OfflinePageMetadataStoreSQL* store,
                                  int64_t offline_id)
-    : store_(store), offline_id_(offline_id), weak_ptr_factory_(this) {
-  DCHECK(store_);
-}
+    : store_(store), offline_id_(offline_id), weak_ptr_factory_(this) {}
 
 ClearDigestTask::~ClearDigestTask(){};
 

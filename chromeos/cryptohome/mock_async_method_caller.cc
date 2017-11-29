@@ -21,7 +21,7 @@ MockAsyncMethodCaller::MockAsyncMethodCaller()
     : success_(false), return_code_(cryptohome::MOUNT_ERROR_NONE) {
 }
 
-MockAsyncMethodCaller::~MockAsyncMethodCaller() = default;
+MockAsyncMethodCaller::~MockAsyncMethodCaller() {}
 
 void MockAsyncMethodCaller::SetUp(bool success, MountError return_code) {
   success_ = success;

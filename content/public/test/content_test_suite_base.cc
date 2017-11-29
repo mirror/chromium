@@ -50,10 +50,6 @@ void ContentTestSuiteBase::Initialize() {
   gin::V8Initializer::LoadV8Natives();
 #endif
 
-#if defined(USE_V8_CONTEXT_SNAPSHOT)
-  gin::V8Initializer::LoadV8ContextSnapshot();
-#endif
-
 #if defined(OS_ANDROID) && !defined(USE_AURA)
   content::Compositor::Initialize();
 #endif

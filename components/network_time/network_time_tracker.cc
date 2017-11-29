@@ -306,12 +306,13 @@ bool NetworkTimeTracker::AreTimeFetchesEnabled() const {
 NetworkTimeTracker::FetchBehavior NetworkTimeTracker::GetFetchBehavior() const {
   const std::string param = variations::GetVariationParamValueByFeature(
       kNetworkTimeServiceQuerying, kVariationsServiceFetchBehavior);
-  if (param == "background-only")
+  if (param == "background-only") {
     return FETCHES_IN_BACKGROUND_ONLY;
-  if (param == "on-demand-only")
+  } else if (param == "on-demand-only") {
     return FETCHES_ON_DEMAND_ONLY;
-  if (param == "background-and-on-demand")
+  } else if (param == "background-and-on-demand") {
     return FETCHES_IN_BACKGROUND_AND_ON_DEMAND;
+  }
   return FETCHES_ON_DEMAND_ONLY;
 }
 

@@ -5,7 +5,6 @@
 #ifndef SVGTreeScopeResources_h
 #define SVGTreeScopeResources_h
 
-#include "base/macros.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashMap.h"
@@ -23,6 +22,8 @@ class LayoutSVGResourceContainer;
 // element's id (which is used to identify a resource.)
 class SVGTreeScopeResources
     : public GarbageCollectedFinalized<SVGTreeScopeResources> {
+  WTF_MAKE_NONCOPYABLE(SVGTreeScopeResources);
+
  public:
   explicit SVGTreeScopeResources(TreeScope*);
   ~SVGTreeScopeResources();
@@ -58,8 +59,6 @@ class SVGTreeScopeResources
   // Resources that are pending.
   HeapHashMap<AtomicString, Member<SVGPendingElements>> pending_resources_;
   Member<TreeScope> tree_scope_;
-
-  DISALLOW_COPY_AND_ASSIGN(SVGTreeScopeResources);
 };
 
 }  // namespace blink

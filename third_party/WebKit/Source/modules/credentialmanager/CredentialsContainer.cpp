@@ -26,7 +26,7 @@
 #include "modules/credentialmanager/CredentialRequestOptions.h"
 #include "modules/credentialmanager/FederatedCredential.h"
 #include "modules/credentialmanager/FederatedCredentialRequestOptions.h"
-#include "modules/credentialmanager/MakePublicKeyCredentialOptions.h"
+#include "modules/credentialmanager/MakeCredentialOptions.h"
 #include "modules/credentialmanager/PasswordCredential.h"
 #include "modules/credentialmanager/PublicKeyCredential.h"
 #include "platform/credentialmanager/PlatformFederatedCredential.h"
@@ -192,13 +192,8 @@ class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
 
     std::unique_ptr<WebCredential> credential =
         WTF::WrapUnique(web_credential.release());
-    if (!frame) {
+    if (!credential || !frame) {
       resolver_->Resolve();
-      return;
-    }
-
-    if (!credential) {
-      resolver_->Resolve(v8::Null(resolver_->GetScriptState()->GetIsolate()));
       return;
     }
 
@@ -241,14 +236,14 @@ class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
     Frame* frame = ToDocument(context)->GetFrame();
     SECURITY_CHECK(!frame || frame == frame->Tree().Top());
 
-    if (!frame) {
+    if (!credential || !frame) {
       resolver_->Resolve();
       return;
     }
 
-    if (!credential || credential->client_data_json.IsEmpty() ||
+    if (credential->client_data_json.IsEmpty() ||
         credential->response->attestation_object.IsEmpty()) {
-      resolver_->Resolve(v8::Null(resolver_->GetScriptState()->GetIsolate()));
+      resolver_->Resolve();
       return;
     }
 
@@ -355,13 +350,6 @@ ScriptPromise CredentialsContainer::store(ScriptState* script_state,
 
   if (!CheckBoilerplate(resolver))
     return promise;
-
-  if (!(credential->GetPlatformCredential()->IsFederated() ||
-        credential->GetPlatformCredential()->IsPassword())) {
-    resolver->Reject(DOMException::Create(
-        kNotSupportedError,
-        "Store operation not permitted for PublicKey credentials."));
-  }
 
   if (IsIconURLInsecure(credential)) {
     resolver->Reject(DOMException::Create(kSecurityError,

@@ -8,9 +8,9 @@ namespace chromeos {
 
 namespace tether {
 
-FakeCrashRecoveryManager::FakeCrashRecoveryManager() = default;
+FakeCrashRecoveryManager::FakeCrashRecoveryManager() {}
 
-FakeCrashRecoveryManager::~FakeCrashRecoveryManager() = default;
+FakeCrashRecoveryManager::~FakeCrashRecoveryManager() {}
 
 void FakeCrashRecoveryManager::RestorePreCrashStateIfNecessary(
     const base::Closure& on_restoration_finished) {

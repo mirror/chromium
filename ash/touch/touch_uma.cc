@@ -130,9 +130,9 @@ void TouchUMA::RecordTouchEvent(aura::Window* target,
   }
 }
 
-TouchUMA::TouchUMA() = default;
+TouchUMA::TouchUMA() {}
 
-TouchUMA::~TouchUMA() = default;
+TouchUMA::~TouchUMA() {}
 
 GestureActionType TouchUMA::FindGestureActionType(
     aura::Window* window,

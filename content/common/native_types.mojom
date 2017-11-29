@@ -29,9 +29,6 @@ enum ScrollbarButtonsPlacement;
 enum ScrollerStyle;
 
 [Native]
-enum V8CacheOptions;
-
-[Native]
 struct WebPreferences;
 
 // TODO(rockot): This should most likely be defined by network service mojom,

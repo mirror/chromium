@@ -29,12 +29,11 @@
 #define HTMLCanvasElement_h
 
 #include <memory>
-
 #include "bindings/core/v8/ScriptValue.h"
-#include "bindings/core/v8/v8_blob_callback.h"
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/Document.h"
+#include "core/fileapi/BlobCallback.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/canvas/CanvasDrawListener.h"
 #include "core/html/canvas/CanvasImageSource.h"
@@ -121,11 +120,11 @@ class CORE_EXPORT HTMLCanvasElement final
     return toDataURL(mime_type, ScriptValue(), exception_state);
   }
 
-  void toBlob(V8BlobCallback*,
+  void toBlob(BlobCallback*,
               const String& mime_type,
               const ScriptValue& quality_argument,
               ExceptionState&);
-  void toBlob(V8BlobCallback* callback,
+  void toBlob(BlobCallback* callback,
               const String& mime_type,
               ExceptionState& exception_state) {
     return toBlob(callback, mime_type, ScriptValue(), exception_state);
@@ -277,12 +276,6 @@ class CORE_EXPORT HTMLCanvasElement final
     gpu_readback_invoked_in_current_frame_ = true;
   }
 
-  bool NeedsUnbufferedInputEvents() const { return needs_unbuffered_input_; }
-
-  void SetNeedsUnbufferedInputEvents(bool value) {
-    needs_unbuffered_input_ = value;
-  }
-
  protected:
   void DidMoveToNewDocument(Document& old_document) override;
 
@@ -337,7 +330,6 @@ class CORE_EXPORT HTMLCanvasElement final
   FloatRect dirty_rect_;
 
   bool origin_clean_;
-  bool needs_unbuffered_input_ = false;
 
   // It prevents HTMLCanvasElement::buffer() from continuously re-attempting to
   // allocate an imageBuffer after the first attempt failed.

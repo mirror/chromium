@@ -13,6 +13,8 @@
 namespace extensions {
 
 APIBindingsSystem::APIBindingsSystem(
+    const binding::RunJSFunction& call_js,
+    const binding::RunJSFunctionSync& call_js_sync,
     const GetAPISchemaMethod& get_api_schema,
     const BindingAccessChecker::AvailabilityCallback& is_available,
     const APIRequestHandler::SendRequestMethod& send_request,
@@ -22,12 +24,18 @@ APIBindingsSystem::APIBindingsSystem(
     APILastError last_error)
     : type_reference_map_(base::Bind(&APIBindingsSystem::InitializeType,
                                      base::Unretained(this))),
-      exception_handler_(add_console_error),
+      exception_handler_(add_console_error, call_js),
       request_handler_(send_request,
+                       call_js,
                        std::move(last_error),
                        &exception_handler_),
-      event_handler_(event_listeners_changed, &exception_handler_),
+      event_handler_(call_js,
+                     call_js_sync,
+                     event_listeners_changed,
+                     &exception_handler_),
       access_checker_(is_available),
+      call_js_(call_js),
+      call_js_sync_(call_js_sync),
       get_api_schema_(get_api_schema),
       on_silent_request_(on_silent_request) {}
 
@@ -68,7 +76,7 @@ std::unique_ptr<APIBinding> APIBindingsSystem::CreateNewAPIBinding(
     hooks = std::move(iter->second);
     binding_hooks_.erase(iter);
   } else {
-    hooks = std::make_unique<APIBindingHooks>(api_name);
+    hooks = std::make_unique<APIBindingHooks>(api_name, call_js_sync_);
   }
 
   return std::make_unique<APIBinding>(
@@ -117,7 +125,7 @@ APIBindingHooks* APIBindingsSystem::GetHooksForAPI(
       << "Hook registration must happen before creating any binding instances.";
   std::unique_ptr<APIBindingHooks>& hooks = binding_hooks_[api_name];
   if (!hooks)
-    hooks = std::make_unique<APIBindingHooks>(api_name);
+    hooks = std::make_unique<APIBindingHooks>(api_name, call_js_sync_);
   return hooks.get();
 }
 

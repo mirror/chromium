@@ -40,8 +40,8 @@ namespace {
 
 class ResizableWidgetDelegate : public views::WidgetDelegateView {
  public:
-  ResizableWidgetDelegate() = default;
-  ~ResizableWidgetDelegate() override = default;
+  ResizableWidgetDelegate() {}
+  ~ResizableWidgetDelegate() override {}
 
  private:
   bool CanResize() const override { return true; }
@@ -55,7 +55,7 @@ class ResizableWidgetDelegate : public views::WidgetDelegateView {
 // Support class for testing windows with a maximum size.
 class MaxSizeNCFV : public views::NonClientFrameView {
  public:
-  MaxSizeNCFV() = default;
+  MaxSizeNCFV() {}
 
  private:
   gfx::Size GetMaximumSize() const override { return gfx::Size(200, 200); }
@@ -82,8 +82,8 @@ class MaxSizeNCFV : public views::NonClientFrameView {
 
 class MaxSizeWidgetDelegate : public views::WidgetDelegateView {
  public:
-  MaxSizeWidgetDelegate() = default;
-  ~MaxSizeWidgetDelegate() override = default;
+  MaxSizeWidgetDelegate() {}
+  ~MaxSizeWidgetDelegate() override {}
 
  private:
   bool CanResize() const override { return true; }
@@ -103,7 +103,7 @@ class MaxSizeWidgetDelegate : public views::WidgetDelegateView {
 class SystemGestureEventFilterTest : public AshTestBase {
  public:
   SystemGestureEventFilterTest() : AshTestBase() {}
-  ~SystemGestureEventFilterTest() override = default;
+  ~SystemGestureEventFilterTest() override {}
 
   // Overridden from AshTestBase:
   void SetUp() override {

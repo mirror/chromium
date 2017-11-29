@@ -68,9 +68,9 @@ const CSSValue* ComputedStylePropertyMap::GetCustomProperty(
 
 Vector<String> ComputedStylePropertyMap::getProperties() {
   Vector<String> result;
-  for (const CSSProperty* property :
+  for (CSSPropertyID property_id :
        CSSComputedStyleDeclaration::ComputableProperties()) {
-    result.push_back(getPropertyNameString(property->PropertyID()));
+    result.push_back(getPropertyNameString(property_id));
   }
   return result;
 }

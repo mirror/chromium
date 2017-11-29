@@ -909,7 +909,7 @@ bool ShellSurface::CanResize() const {
 
 bool ShellSurface::CanMaximize() const {
   // Shell surfaces in system modal container cannot be maximized.
-  if (container_ != ash::kShellWindowId_DefaultContainer)
+  if (container_ == ash::kShellWindowId_SystemModalContainer)
     return false;
 
   // Non-transient shell surfaces can be maximized.

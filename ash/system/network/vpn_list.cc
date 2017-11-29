@@ -10,7 +10,7 @@
 
 namespace ash {
 
-VPNProvider::VPNProvider() = default;
+VPNProvider::VPNProvider() {}
 
 VPNProvider VPNProvider::CreateBuiltInVPNProvider() {
   VPNProvider vpn_provider;
@@ -64,13 +64,13 @@ bool VPNProvider::operator==(const VPNProvider& other) const {
          package_name == other.package_name;
 }
 
-VpnList::Observer::~Observer() = default;
+VpnList::Observer::~Observer() {}
 
 VpnList::VpnList() {
   AddBuiltInProvider();
 }
 
-VpnList::~VpnList() = default;
+VpnList::~VpnList() {}
 
 bool VpnList::HaveThirdPartyOrArcVPNProviders() const {
   for (const VPNProvider& extension_provider : extension_vpn_providers_) {

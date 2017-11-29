@@ -76,7 +76,7 @@ ServiceUrls::ServiceUrls()
   ice_config_url_ = directory_base_url_ + kDirectoryIceConfigSuffix;
 }
 
-ServiceUrls::~ServiceUrls() = default;
+ServiceUrls::~ServiceUrls() {}
 
 ServiceUrls* remoting::ServiceUrls::GetInstance() {
   return base::Singleton<ServiceUrls>::get();

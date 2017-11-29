@@ -37,7 +37,8 @@ class APIBindingJSUtilUnittest : public APIBindingsSystemTest {
         new APIBindingJSUtil(bindings_system()->type_reference_map(),
                              bindings_system()->request_handler(),
                              bindings_system()->event_handler(),
-                             bindings_system()->exception_handler()));
+                             bindings_system()->exception_handler(),
+                             base::Bind(&RunFunctionOnGlobalAndIgnoreResult)));
   }
 
   v8::Local<v8::Object> GetLastErrorParent(

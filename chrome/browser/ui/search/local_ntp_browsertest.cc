@@ -45,7 +45,7 @@ class LocalNTPTest : public InProcessBrowserTest {
         browser()->tab_strip_model()->GetActiveWebContents();
 
     // Attach a message queue *before* navigating to the NTP, to make sure we
-    // don't miss the 'loaded' message due to some race condition.
+    // don't miss the 'loaded' message.
     content::DOMMessageQueue msg_queue(active_tab);
 
     // Navigate to the NTP.
@@ -54,39 +54,19 @@ class LocalNTPTest : public InProcessBrowserTest {
     ASSERT_EQ(GURL(chrome::kChromeSearchLocalNtpUrl),
               active_tab->GetController().GetVisibleEntry()->GetURL());
 
-    // At this point, the MV iframe may or may not have been fully loaded. Once
-    // it loads, it sends a 'loaded' postMessage to the page. Check if the page
-    // has already received that, and if not start listening for it. It's
-    // important that these two things happen in the same JS invocation, since
-    // otherwise we might miss the message.
-    bool mv_tiles_loaded = false;
-    ASSERT_TRUE(instant_test_utils::GetBoolFromJS(active_tab,
-                                                  R"js(
-        (function() {
-          if (tilesAreLoaded) {
-            return true;
-          }
-          window.addEventListener('message', function(event) {
-            if (event.data.cmd == 'loaded') {
-              domAutomationController.send('NavigateToNTPAndWaitUntilLoaded');
-            }
-          });
-          return false;
-        })()
-                                                  )js",
-                                                  &mv_tiles_loaded));
-
+    // When the iframe has loaded all the tiles, it sends a 'loaded' postMessage
+    // to the page. Wait for that message to arrive.
+    ASSERT_TRUE(content::ExecuteScript(active_tab, R"js(
+      window.addEventListener('message', function(event) {
+        if (event.data.cmd == 'loaded') {
+          domAutomationController.send('NavigateToNTPAndWaitUntilLoaded');
+        }
+      });
+    )js"));
     std::string message;
-    // Get rid of the message that the GetBoolFromJS call produces.
+    // First get rid of a message produced by the ExecuteScript call above.
     ASSERT_TRUE(msg_queue.PopMessage(&message));
-
-    if (mv_tiles_loaded) {
-      // The tiles are already loaded, i.e. we missed the 'loaded' message. All
-      // is well.
-      return;
-    }
-
-    // Not loaded yet. Wait for the "NavigateToNTPAndWaitUntilLoaded" message.
+    // Now wait for the "NavigateToNTPAndWaitUntilLoaded" message.
     ASSERT_TRUE(msg_queue.WaitForMessage(&message));
     ASSERT_EQ("\"NavigateToNTPAndWaitUntilLoaded\"", message);
     // There shouldn't be any other messages.
@@ -542,10 +522,26 @@ content::RenderFrameHost* GetMostVisitedIframe(content::WebContents* tab) {
 
 }  // namespace
 
-IN_PROC_BROWSER_TEST_F(LocalNTPTest, LoadsIframe) {
-  content::WebContents* active_tab =
-      local_ntp_test_utils::OpenNewTab(browser(), GURL("about:blank"));
-  NavigateToNTPAndWaitUntilLoaded();
+IN_PROC_BROWSER_TEST_F(LocalNTPJavascriptTest, LoadsIframe) {
+  content::WebContents* active_tab = local_ntp_test_utils::OpenNewTab(
+      browser(), GURL(chrome::kChromeUINewTabURL));
+  ASSERT_TRUE(search::IsInstantNTP(active_tab));
+
+  content::DOMMessageQueue msg_queue;
+
+  bool result = false;
+  ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+      active_tab, "!!setupAdvancedTest(true)", &result));
+  ASSERT_TRUE(result);
+
+  // Wait for the MV iframe to load.
+  std::string message;
+  // First get rid of the "true" message from the GetBoolFromJS call above.
+  ASSERT_TRUE(msg_queue.PopMessage(&message));
+  ASSERT_EQ("true", message);
+  // Now wait for the "loaded" message.
+  ASSERT_TRUE(msg_queue.WaitForMessage(&message));
+  ASSERT_EQ("\"loaded\"", message);
 
   // Get the iframe and check that the tiles loaded correctly.
   content::RenderFrameHost* iframe = GetMostVisitedIframe(active_tab);

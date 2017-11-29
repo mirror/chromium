@@ -63,6 +63,7 @@
 #include "content/child/memory/child_memory_coordinator_impl.h"
 #include "content/child/runtime_features.h"
 #include "content/child/thread_safe_sender.h"
+#include "content/common/child_process_messages.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/dom_storage/dom_storage_messages.h"
 #include "content/common/features.h"
@@ -123,6 +124,7 @@
 #include "content/renderer/notifications/notification_dispatcher.h"
 #include "content/renderer/p2p/socket_dispatcher.h"
 #include "content/renderer/quota_dispatcher.h"
+#include "content/renderer/quota_message_filter.h"
 #include "content/renderer/render_frame_proxy.h"
 #include "content/renderer/render_process_impl.h"
 #include "content/renderer/render_view_impl.h"
@@ -185,7 +187,6 @@
 #include "third_party/skia/include/core/SkGraphics.h"
 #include "ui/base/layout.h"
 #include "ui/base/ui_base_switches.h"
-#include "ui/base/ui_base_switches_util.h"
 #include "ui/display/display_switches.h"
 #include "ui/gl/gl_switches.h"
 
@@ -328,6 +329,16 @@ void* CreateHistogram(
 void AddHistogramSample(void* hist, int sample) {
   base::Histogram* histogram = static_cast<base::Histogram*>(hist);
   histogram->Add(sample);
+}
+
+bool IsMusHostingViz() {
+#if BUILDFLAG(ENABLE_MUS)
+  const auto* cmdline = base::CommandLine::ForCurrentProcess();
+  return cmdline->GetSwitchValueASCII(switches::kMus) ==
+         switches::kMusHostVizValue;
+#else
+  return false;
+#endif
 }
 
 class FrameFactoryImpl : public mojom::FrameFactory {
@@ -685,11 +696,10 @@ void RenderThreadImpl::Init(
       base::BindRepeating(&CreateSingleSampleMetricsProvider,
                           message_loop()->task_runner(), GetConnector()));
 
-  gpu_ =
-      ui::Gpu::Create(GetConnector(),
-                      switches::IsMusHostingViz() ? ui::mojom::kServiceName
-                                                  : mojom::kBrowserServiceName,
-                      GetIOTaskRunner());
+  gpu_ = ui::Gpu::Create(
+      GetConnector(),
+      IsMusHostingViz() ? ui::mojom::kServiceName : mojom::kBrowserServiceName,
+      GetIOTaskRunner());
 
   viz::mojom::SharedBitmapAllocationNotifierPtr
       shared_bitmap_allocation_notifier_ptr;
@@ -710,7 +720,12 @@ void RenderThreadImpl::Init(
   resource_message_filter_ =
       new ChildResourceMessageFilter(resource_dispatcher_.get());
   AddFilter(resource_message_filter_.get());
-  quota_dispatcher_.reset(new QuotaDispatcher(message_loop()->task_runner()));
+  quota_message_filter_ =
+      new QuotaMessageFilter(thread_safe_sender());
+  quota_dispatcher_.reset(new QuotaDispatcher(thread_safe_sender(),
+                                              quota_message_filter_.get()));
+
+  AddFilter(quota_message_filter_->GetFilter());
 
   auto registry = std::make_unique<service_manager::BinderRegistry>();
   BlinkInterfaceRegistryImpl interface_registry(
@@ -2017,7 +2032,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   }
 
 #if defined(USE_AURA)
-  if (switches::IsMusHostingViz()) {
+  if (IsMusHostingViz()) {
     if (!RendererWindowTreeClient::Get(routing_id)) {
       callback.Run(nullptr);
       return;
@@ -2156,7 +2171,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       &params));
 }
 
-blink::AssociatedInterfaceRegistry*
+AssociatedInterfaceRegistry*
 RenderThreadImpl::GetAssociatedInterfaceRegistry() {
   return &associated_interfaces_;
 }

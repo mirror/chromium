@@ -45,7 +45,7 @@ class DummyTetherDisconnector : public FakeTetherDisconnector {
 class TestNetworkConnectionHandler : public NetworkConnectionHandler {
  public:
   TestNetworkConnectionHandler() : NetworkConnectionHandler() {}
-  ~TestNetworkConnectionHandler() override = default;
+  ~TestNetworkConnectionHandler() override {}
 
   void CallTetherConnect(const std::string& tether_network_guid,
                          const base::Closure& success_callback,
@@ -89,7 +89,7 @@ class TestNetworkConnectionHandler : public NetworkConnectionHandler {
 
 class NetworkConnectionHandlerTetherDelegateTest : public testing::Test {
  protected:
-  NetworkConnectionHandlerTetherDelegateTest() = default;
+  NetworkConnectionHandlerTetherDelegateTest() {}
 
   void SetUp() override {
     result_.clear();

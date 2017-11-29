@@ -23,7 +23,7 @@ class ResolutionNotificationControllerTest : public AshTestBase {
  public:
   ResolutionNotificationControllerTest() : accept_count_(0) {}
 
-  ~ResolutionNotificationControllerTest() override = default;
+  ~ResolutionNotificationControllerTest() override {}
 
   base::string16 ExpectedNotificationMessage(int64_t display_id,
                                              const gfx::Size& new_resolution) {

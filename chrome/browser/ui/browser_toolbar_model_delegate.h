@@ -22,7 +22,7 @@ class BrowserToolbarModelDelegate : public ChromeToolbarModelDelegate {
   content::WebContents* GetActiveWebContents() const override;
 
  private:
-  Browser* const browser_;
+  Browser* browser_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserToolbarModelDelegate);
 };

@@ -5,7 +5,6 @@
 #include "chrome/browser/vr/ui_scene_creator.h"
 
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/numerics/ranges.h"
 #include "base/stl_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -37,19 +36,14 @@ const std::set<UiElementName> kFloorCeilingBackgroundElements = {
     kBackgroundFront, kBackgroundLeft,   kBackgroundBack, kBackgroundRight,
     kBackgroundTop,   kBackgroundBottom, kCeiling,        kFloor};
 const std::set<UiElementName> kElementsVisibleInBrowsing = {
-    kBackgroundFront,   kBackgroundLeft, kBackgroundBack,
-    kBackgroundRight,   kBackgroundTop,  kBackgroundBottom,
-    kCeiling,           kFloor,          kContentQuad,
-    kBackplane,         kUrlBar,         kUnderDevelopmentNotice,
-    kController,        kReticle,        kLaser,
-    kVoiceSearchButton,
-};
+    kBackgroundFront, kBackgroundLeft, kBackgroundBack,
+    kBackgroundRight, kBackgroundTop,  kBackgroundBottom,
+    kCeiling,         kFloor,          kContentQuad,
+    kBackplane,       kUrlBar,         kUnderDevelopmentNotice};
 const std::set<UiElementName> kElementsVisibleWithExitPrompt = {
-    kBackgroundFront, kBackgroundLeft,      kBackgroundBack, kBackgroundRight,
-    kBackgroundTop,   kBackgroundBottom,    kCeiling,        kFloor,
-    kExitPrompt,      kExitPromptBackplane, kController,     kReticle,
-    kLaser,
-};
+    kBackgroundFront, kBackgroundLeft,     kBackgroundBack, kBackgroundRight,
+    kBackgroundTop,   kBackgroundBottom,   kCeiling,        kFloor,
+    kExitPrompt,      kExitPromptBackplane};
 const std::set<UiElementName> kHitTestableElements = {
     kFloor,
     kCeiling,
@@ -84,76 +78,61 @@ const std::set<UiElementName> kSpecialHitTestableElements = {
 const std::set<UiElementName> kElementsVisibleWithExitWarning = {
     kScreenDimmer, kExitWarning,
 };
-const std::vector<std::string> kElementsInDrawOrder = {
-    "kBackgroundFront",
-    "kBackgroundLeft",
-    "kBackgroundBack",
-    "kBackgroundRight",
-    "kBackgroundTop",
-    "kBackgroundBottom",
-    "kScreenDimmer",
-    "kSplashScreenBackground",
-    "kWebVrTimeoutSpinnerBackground",
-    "kFloor",
-    "kCeiling",
-    "kBackplane",
-    "kContentQuad",
-    "kAudioCaptureIndicator",
-    "kVideoCaptureIndicator",
-    "kScreenCaptureIndicator",
-    "kBluetoothConnectedIndicator",
-    "kLocationAccessIndicator",
-    "kUrlBar",
-    "kLoadingIndicator",
-    "kLoadingIndicatorForeground",
-    "kUnderDevelopmentNotice",
-    "kVoiceSearchButton",
-    "kVoiceSearchButton:kTypeButtonBackground",
-    "kVoiceSearchButton:kTypeButtonForeground",
-    "kVoiceSearchButton:kTypeButtonHitTarget",
-    "kCloseButton",
-    "kCloseButton:kTypeButtonBackground",
-    "kCloseButton:kTypeButtonForeground",
-    "kCloseButton:kTypeButtonHitTarget",
-    "kExclusiveScreenToast",
-    "kExitPromptBackplane",
-    "kExitPrompt",
-    "kAudioPermissionPromptBackplane",
-    "kAudioPermissionPromptShadow",
-    "kAudioPermissionPrompt",
-    "kOmniboxContainer",
-    "kOmniboxTextField",
-    "kOmniboxCloseButton",
-    "kOmniboxCloseButton:kTypeButtonBackground",
-    "kOmniboxCloseButton:kTypeButtonForeground",
-    "kOmniboxCloseButton:kTypeButtonHitTarget",
-    "kSpeechRecognitionResultText",
-    "kSpeechRecognitionResultCircle",
-    "kSpeechRecognitionResultMicrophoneIcon",
-    "kSpeechRecognitionResultBackplane",
-    "kSpeechRecognitionListeningGrowingCircle",
-    "kSpeechRecognitionListeningInnerCircle",
-    "kSpeechRecognitionListeningMicrophoneIcon",
-    "kSpeechRecognitionListeningCloseButton",
-    "kSpeechRecognitionListeningCloseButton:kTypeButtonBackground",
-    "kSpeechRecognitionListeningCloseButton:kTypeButtonForeground",
-    "kSpeechRecognitionListeningCloseButton:kTypeButtonHitTarget",
-    "kController",
-    "kLaser",
-    "kReticle",
-    "kExitWarning",
-    "kWebVrUrlToast",
-    "kExclusiveScreenToastViewportAware",
-    "kSplashScreenText",
-    "kWebVrTimeoutSpinner",
-    "kWebVrTimeoutMessage",
-    "kWebVrTimeoutMessageIcon",
-    "kWebVrTimeoutMessageText",
-    "kWebVrTimeoutMessageButton",
-    "kWebVrTimeoutMessageButton:kTypeButtonBackground",
-    "kWebVrTimeoutMessageButton:kTypeButtonForeground",
-    "kWebVrTimeoutMessageButton:kTypeButtonHitTarget",
-    "kWebVrTimeoutMessageButtonText",
+const std::vector<UiElementName> kElementsInDrawOrder = {
+    kBackgroundFront,
+    kBackgroundLeft,
+    kBackgroundBack,
+    kBackgroundRight,
+    kBackgroundTop,
+    kBackgroundBottom,
+    kScreenDimmer,
+    kSplashScreenBackground,
+    kWebVrTimeoutSpinnerBackground,
+    kFloor,
+    kCeiling,
+    kBackplane,
+    kContentQuad,
+    kAudioCaptureIndicator,
+    kVideoCaptureIndicator,
+    kScreenCaptureIndicator,
+    kBluetoothConnectedIndicator,
+    kLocationAccessIndicator,
+    kUrlBar,
+    kLoadingIndicator,
+    kLoadingIndicatorForeground,
+    kUnderDevelopmentNotice,
+    kVoiceSearchButton,
+    kCloseButton,
+    kExclusiveScreenToast,
+    kExitPromptBackplane,
+    kExitPrompt,
+    kAudioPermissionPromptBackplane,
+    kAudioPermissionPromptShadow,
+    kAudioPermissionPrompt,
+    kOmniboxContainer,
+    kOmniboxTextField,
+    kOmniboxCloseButton,
+    kSpeechRecognitionResultText,
+    kSpeechRecognitionResultCircle,
+    kSpeechRecognitionResultMicrophoneIcon,
+    kSpeechRecognitionResultBackplane,
+    kSpeechRecognitionListeningGrowingCircle,
+    kSpeechRecognitionListeningInnerCircle,
+    kSpeechRecognitionListeningMicrophoneIcon,
+    kSpeechRecognitionListeningCloseButton,
+    kController,
+    kLaser,
+    kReticle,
+    kExitWarning,
+    kWebVrUrlToast,
+    kExclusiveScreenToastViewportAware,
+    kSplashScreenText,
+    kWebVrTimeoutSpinner,
+    kWebVrTimeoutMessage,
+    kWebVrTimeoutMessageIcon,
+    kWebVrTimeoutMessageText,
+    kWebVrTimeoutMessageButton,
+    kWebVrTimeoutMessageButtonText,
 };
 
 static constexpr float kTolerance = 1e-5f;
@@ -367,7 +346,7 @@ TEST_F(UiTest, WebVrAutopresented) {
   auto initial_elements = std::set<UiElementName>();
   initial_elements.insert(kSplashScreenText);
   initial_elements.insert(kSplashScreenBackground);
-  VerifyOnlyElementsVisible("Initial", initial_elements);
+  VerifyVisible("Initial", initial_elements);
 
   // Enter WebVR with autopresentation.
   ui_->SetWebVrMode(true, false);
@@ -375,8 +354,7 @@ TEST_F(UiTest, WebVrAutopresented) {
   // The splash screen should go away.
   RunFor(
       MsToDelta(1000 * (kSplashScreenMinDurationSeconds + kSmallDelaySeconds)));
-  VerifyOnlyElementsVisible("Autopresented",
-                            std::set<UiElementName>{kWebVrUrlToast});
+  VerifyVisible("Autopresented", std::set<UiElementName>{kWebVrUrlToast});
 
   // Make sure the transient URL bar times out.
   RunFor(MsToDelta(1000 * (kWebVrUrlToastTimeoutSeconds + kSmallDelaySeconds)));
@@ -404,16 +382,13 @@ TEST_F(UiTest, UiUpdatesForFullscreenChanges) {
   visible_in_fullscreen.insert(kBackplane);
   visible_in_fullscreen.insert(kCloseButton);
   visible_in_fullscreen.insert(kExclusiveScreenToast);
-  visible_in_fullscreen.insert(kController);
-  visible_in_fullscreen.insert(kLaser);
-  visible_in_fullscreen.insert(kReticle);
 
   CreateScene(kNotInCct, kNotInWebVr);
 
   // Hold onto the background color to make sure it changes.
   SkColor initial_background = SK_ColorBLACK;
   GetBackgroundColor(&initial_background);
-  VerifyOnlyElementsVisible("Initial", kElementsVisibleInBrowsing);
+  VerifyVisible("Initial", kElementsVisibleInBrowsing);
   UiElement* content_quad = scene_->GetUiElementByName(kContentQuad);
   UiElement* content_group =
       scene_->GetUiElementByName(k2dBrowsingContentGroup);
@@ -423,7 +398,7 @@ TEST_F(UiTest, UiUpdatesForFullscreenChanges) {
   // In fullscreen mode, content elements should be visible, control elements
   // should be hidden.
   ui_->SetFullscreen(true);
-  VerifyOnlyElementsVisible("In fullscreen", visible_in_fullscreen);
+  VerifyVisible("In fullscreen", visible_in_fullscreen);
   // Make sure background has changed for fullscreen.
   SkColor fullscreen_background = SK_ColorBLACK;
   GetBackgroundColor(&fullscreen_background);
@@ -442,7 +417,7 @@ TEST_F(UiTest, UiUpdatesForFullscreenChanges) {
 
   // Everything should return to original state after leaving fullscreen.
   ui_->SetFullscreen(false);
-  VerifyOnlyElementsVisible("Restore initial", kElementsVisibleInBrowsing);
+  VerifyVisible("Restore initial", kElementsVisibleInBrowsing);
   SkColor no_longer_fullscreen_background = SK_ColorBLACK;
   GetBackgroundColor(&no_longer_fullscreen_background);
   EXPECT_EQ(
@@ -463,24 +438,24 @@ TEST_F(UiTest, SecurityIconClickTriggersUnsupportedMode) {
   CreateScene(kNotInCct, kNotInWebVr);
 
   // Initial state.
-  VerifyOnlyElementsVisible("Initial", kElementsVisibleInBrowsing);
+  VerifyVisible("Initial", kElementsVisibleInBrowsing);
 
   // Clicking on security icon should trigger unsupported mode.
   EXPECT_CALL(*browser_,
               OnUnsupportedMode(UiUnsupportedMode::kUnhandledPageInfo));
   browser_->OnUnsupportedMode(UiUnsupportedMode::kUnhandledPageInfo);
-  VerifyOnlyElementsVisible("Prompt invisible", kElementsVisibleInBrowsing);
+  VerifyVisible("Prompt invisible", kElementsVisibleInBrowsing);
 }
 
 TEST_F(UiTest, UiUpdatesForShowingExitPrompt) {
   CreateScene(kNotInCct, kNotInWebVr);
 
   // Initial state.
-  VerifyOnlyElementsVisible("Initial", kElementsVisibleInBrowsing);
+  VerifyVisible("Initial", kElementsVisibleInBrowsing);
 
   // Showing exit VR prompt should make prompt visible.
   model_->active_modal_prompt_type = kModalPromptTypeExitVRForSiteInfo;
-  VerifyOnlyElementsVisible("Prompt visible", kElementsVisibleWithExitPrompt);
+  VerifyVisible("Prompt visible", kElementsVisibleWithExitPrompt);
 }
 
 TEST_F(UiTest, UiUpdatesForHidingExitPrompt) {
@@ -488,22 +463,20 @@ TEST_F(UiTest, UiUpdatesForHidingExitPrompt) {
 
   // Initial state.
   model_->active_modal_prompt_type = kModalPromptTypeExitVRForSiteInfo;
-  VerifyOnlyElementsVisible("Initial", kElementsVisibleWithExitPrompt);
+  VerifyVisible("Initial", kElementsVisibleWithExitPrompt);
 
   // Hiding exit VR prompt should make prompt invisible.
   model_->active_modal_prompt_type = kModalPromptTypeNone;
   EXPECT_TRUE(RunFor(MsToDelta(1000)));
-  VerifyOnlyElementsVisible("Prompt invisible", kElementsVisibleInBrowsing);
+  VerifyVisible("Prompt invisible", kElementsVisibleInBrowsing);
 }
 
 TEST_F(UiTest, BackplaneClickTriggersOnExitPrompt) {
   CreateScene(kNotInCct, kNotInWebVr);
 
   // Initial state.
-  VerifyOnlyElementsVisible("Initial", kElementsVisibleInBrowsing);
-  ui_->SetExitVrPromptEnabled(true, UiUnsupportedMode::kUnhandledPageInfo);
-
-  VerifyOnlyElementsVisible("Prompt visible", kElementsVisibleWithExitPrompt);
+  VerifyVisible("Initial", kElementsVisibleInBrowsing);
+  model_->active_modal_prompt_type = kModalPromptTypeExitVRForSiteInfo;
 
   // Click on backplane should trigger UI browser interface but not close
   // prompt.
@@ -511,19 +484,14 @@ TEST_F(UiTest, BackplaneClickTriggersOnExitPrompt) {
               OnExitVrPromptResult(ExitVrPromptChoice::CHOICE_NONE,
                                    UiUnsupportedMode::kUnhandledPageInfo));
   scene_->GetUiElementByName(kExitPromptBackplane)->OnButtonUp(gfx::PointF());
-
-  // This would usually get called by the browser, but since it is mocked we
-  // will call it explicitly here and check that the UI responds as we would
-  // expect.
-  ui_->SetExitVrPromptEnabled(false, UiUnsupportedMode::kCount);
-  VerifyOnlyElementsVisible("Prompt cleared", kElementsVisibleInBrowsing);
+  VerifyVisible("Prompt still visible", kElementsVisibleWithExitPrompt);
 }
 
 TEST_F(UiTest, PrimaryButtonClickTriggersOnExitPrompt) {
   CreateScene(kNotInCct, kNotInWebVr);
 
   // Initial state.
-  VerifyOnlyElementsVisible("Initial", kElementsVisibleInBrowsing);
+  VerifyVisible("Initial", kElementsVisibleInBrowsing);
   model_->active_modal_prompt_type = kModalPromptTypeExitVRForSiteInfo;
   OnBeginFrame();
 
@@ -533,15 +501,14 @@ TEST_F(UiTest, PrimaryButtonClickTriggersOnExitPrompt) {
                                    UiUnsupportedMode::kUnhandledPageInfo));
   static_cast<ExitPrompt*>(scene_->GetUiElementByName(kExitPrompt))
       ->ClickPrimaryButtonForTesting();
-  VerifyOnlyElementsVisible("Prompt still visible",
-                            kElementsVisibleWithExitPrompt);
+  VerifyVisible("Prompt still visible", kElementsVisibleWithExitPrompt);
 }
 
 TEST_F(UiTest, SecondaryButtonClickTriggersOnExitPrompt) {
   CreateScene(kNotInCct, kNotInWebVr);
 
   // Initial state.
-  VerifyOnlyElementsVisible("Initial", kElementsVisibleInBrowsing);
+  VerifyVisible("Initial", kElementsVisibleInBrowsing);
   model_->active_modal_prompt_type = kModalPromptTypeExitVRForSiteInfo;
   OnBeginFrame();
 
@@ -553,8 +520,7 @@ TEST_F(UiTest, SecondaryButtonClickTriggersOnExitPrompt) {
 
   static_cast<ExitPrompt*>(scene_->GetUiElementByName(kExitPrompt))
       ->ClickSecondaryButtonForTesting();
-  VerifyOnlyElementsVisible("Prompt still visible",
-                            kElementsVisibleWithExitPrompt);
+  VerifyVisible("Prompt still visible", kElementsVisibleWithExitPrompt);
 }
 
 TEST_F(UiTest, UiUpdatesForWebVR) {
@@ -575,7 +541,7 @@ TEST_F(UiTest, UiUpdatesForWebVR) {
   }
 
   // All elements should be hidden.
-  VerifyOnlyElementsVisible("Elements hidden", std::set<UiElementName>{});
+  VerifyVisible("Elements hidden", std::set<UiElementName>{});
 }
 
 TEST_F(UiTest, UiUpdateTransitionToWebVR) {
@@ -588,10 +554,9 @@ TEST_F(UiTest, UiUpdateTransitionToWebVR) {
 
   // Transition to WebVR mode
   ui_->SetWebVrMode(true, false);
-  ui_->OnWebVrFrameAvailable();
 
   // All elements should be hidden.
-  VerifyOnlyElementsVisible("Elements hidden", std::set<UiElementName>{});
+  VerifyVisible("Elements hidden", std::set<UiElementName>{});
 }
 
 TEST_F(UiTest, CaptureIndicatorsVisibility) {
@@ -995,44 +960,6 @@ TEST_F(UiTest, ExitPresentAndFullscreenOnAppButtonClick) {
   ui_->OnAppButtonClicked();
 }
 
-TEST(UiReticleTest, ReticleRenderedOnPlanarChildren) {
-  UiScene scene;
-  Model model;
-
-  auto reticle = base::MakeUnique<Reticle>(&scene, &model);
-  reticle->set_draw_phase(kPhaseNone);
-  scene.root_element().AddChild(std::move(reticle));
-
-  auto element = base::MakeUnique<UiElement>();
-  UiElement* parent = element.get();
-  parent->set_draw_phase(kPhaseForeground);
-  parent->set_name(k2dBrowsingRoot);
-  scene.root_element().AddChild(std::move(element));
-  model.reticle.target_element_id = parent->id();
-
-  // Add 4 children to the parent:
-  // - Parent (hit element, initially having reticle)
-  //   - Planar
-  //   - Planar but offset (should receive reticle)
-  //   - Parallel
-  //   - Rotated
-  for (int i = 0; i < 4; i++) {
-    element = base::MakeUnique<UiElement>();
-    element->set_draw_phase(kPhaseForeground);
-    parent->AddChild(std::move(element));
-  }
-  parent->children()[1]->SetTranslate(1, 0, 0);
-  parent->children()[2]->SetTranslate(0, 0, -1);
-  parent->children()[3]->SetRotate(1, 0, 0, 1);
-  scene.OnBeginFrame(MsToTicks(0), kForwardVector);
-
-  // Sorted set should have 1 parent, 4 children and 1 reticle.
-  UiScene::Elements sorted = scene.GetVisible2dBrowsingElements();
-  EXPECT_EQ(6u, sorted.size());
-  // Reticle should be after the parent and first two children.
-  EXPECT_EQ(sorted[3]->name(), kReticle);
-}
-
 // This test ensures that the render order matches the expected tree state. All
 // phases are merged, as the order is the same. Unnamed and unrenderable
 // elements are skipped.
@@ -1040,83 +967,18 @@ TEST_F(UiTest, UiRendererSortingTest) {
   CreateScene(kNotInCct, kNotInWebVr);
   auto unsorted = scene_->GetPotentiallyVisibleElements();
   auto sorted = UiRenderer::GetElementsInDrawOrder(unsorted);
-  EXPECT_EQ(kElementsInDrawOrder.size(), sorted.size());
+
+  // Filter elements with no name. These elements usually created in ctor of
+  // their root element. See button.cc for example.
+  // We shouldn't need this once crbug.com/782395 is fixed.
+  base::EraseIf(sorted, [](const UiElement*& e) { return e->name() == kNone; });
+
+  const std::vector<UiElementName>& expected_order = kElementsInDrawOrder;
+  EXPECT_EQ(expected_order.size(), sorted.size());
   for (size_t i = 0; i < sorted.size(); ++i) {
-    ASSERT_EQ(kElementsInDrawOrder[i], sorted[i]->DebugName());
+    ASSERT_NE(0, sorted[i]->name());
+    ASSERT_EQ(UiElementNameToString(expected_order[i]), sorted[i]->DebugName());
   }
-}
-
-TEST_F(UiTest, ReticleStacking) {
-  CreateScene(kNotInCct, kNotInWebVr);
-  UiElement* content = scene_->GetUiElementByName(kContentQuad);
-  EXPECT_TRUE(content);
-  model_->reticle.target_element_id = content->id();
-  auto unsorted = scene_->GetVisible2dBrowsingElements();
-  auto sorted = UiRenderer::GetElementsInDrawOrder(unsorted);
-  bool saw_target = false;
-  for (auto* e : sorted) {
-    if (e == content) {
-      saw_target = true;
-    } else if (saw_target) {
-      EXPECT_EQ(kReticle, e->name());
-      break;
-    }
-  }
-
-  EXPECT_TRUE(saw_target);
-
-  auto controller_elements = scene_->GetVisibleControllerElements();
-  bool saw_reticle = false;
-  for (auto* e : controller_elements) {
-    if (e->name() == kReticle) {
-      saw_reticle = true;
-    }
-  }
-  EXPECT_FALSE(saw_reticle);
-}
-
-TEST_F(UiTest, ReticleStackingAtopForeground) {
-  CreateScene(kNotInCct, kNotInWebVr);
-  UiElement* element = scene_->GetUiElementByName(kContentQuad);
-  EXPECT_TRUE(element);
-  element->set_draw_phase(kPhaseOverlayForeground);
-  model_->reticle.target_element_id = element->id();
-  auto unsorted = scene_->GetVisible2dBrowsingOverlayElements();
-  auto sorted = UiRenderer::GetElementsInDrawOrder(unsorted);
-  bool saw_target = false;
-  for (auto* e : sorted) {
-    if (e == element) {
-      saw_target = true;
-    } else if (saw_target) {
-      EXPECT_EQ(kReticle, e->name());
-      break;
-    }
-  }
-  EXPECT_TRUE(saw_target);
-
-  auto controller_elements = scene_->GetVisibleControllerElements();
-  bool saw_reticle = false;
-  for (auto* e : controller_elements) {
-    if (e->name() == kReticle) {
-      saw_reticle = true;
-    }
-  }
-  EXPECT_FALSE(saw_reticle);
-}
-
-TEST_F(UiTest, ReticleStackingWithControllerElements) {
-  CreateScene(kNotInCct, kNotInWebVr);
-  UiElement* element = scene_->GetUiElementByName(kReticle);
-  EXPECT_TRUE(element);
-  element->set_draw_phase(kPhaseBackground);
-  EXPECT_NE(scene_->GetUiElementByName(kLaser)->draw_phase(),
-            element->draw_phase());
-  model_->reticle.target_element_id = 0;
-  auto unsorted = scene_->GetVisibleControllerElements();
-  auto sorted = UiRenderer::GetElementsInDrawOrder(unsorted);
-  EXPECT_EQ(element->DebugName(), sorted.back()->DebugName());
-  EXPECT_EQ(scene_->GetUiElementByName(kLaser)->draw_phase(),
-            element->draw_phase());
 }
 
 }  // namespace vr

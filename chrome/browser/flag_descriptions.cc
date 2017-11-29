@@ -580,6 +580,12 @@ const char kExperimentalFullscreenExitUIDescription[] =
     "Displays experimental UI to allow mouse and touch input methods to exit "
     "fullscreen mode.";
 
+const char kExperimentalHotwordHardwareName[] =
+    "Simulated hardware 'Ok Google' features";
+const char kExperimentalHotwordHardwareDescription[] =
+    "Enables an experimental version of 'Ok Google' hotword detection features "
+    "that have a hardware dependency.";
+
 const char kExperimentalKeyboardLockUiName[] = "Experimental keyboard lock UI.";
 const char kExperimentalKeyboardLockUiDescription[] =
     "An experimental full screen with keyboard lock mode requiring users to "
@@ -860,6 +866,13 @@ const char kNewAudioRenderingMixingStrategyDescription[] =
 const char kNewBookmarkAppsName[] = "The new bookmark app system";
 const char kNewBookmarkAppsDescription[] =
     "Enables the new system for creating bookmark apps.";
+
+const char kNewOmniboxAnswerTypesName[] =
+    "New omnibox answers in suggest types";
+const char kNewOmniboxAnswerTypesDescription[] =
+    "Enables new types of answers in the omnibox suggest drop-down: currency "
+    "conversions, dictionary definitions, sports scores, translations, and "
+    "when is.";
 
 const char kNewRemotePlaybackPipelineName[] =
     "Enable the new remote playback pipeline.";
@@ -1663,11 +1676,6 @@ const char kChromeHomeOptOutSnackbarDescription[] =
     "Show a snackbar prompting users to take a survey the first time they"
     " opt-out of Chrome Home";
 
-const char kChromeHomePersistentIphName[] = "Chrome Home Persistent Iph";
-const char kChromeHomePersistentIphDescription[] =
-    "Wait to dismiss the Chrome Home IPH until the user inteacts with the "
-    "toolbar or a timer expires.";
-
 const char kChromeHomePersonalizedOmniboxSuggestionsName[] =
     "Chrome Home Personalized Omnibox Suggestions";
 const char kChromeHomePersonalizedOmniboxSuggestionsDescription[] =
@@ -1687,12 +1695,6 @@ const char kChromeHomeBottomNavLabelsName[] =
     "Chrome Home bottom navigation menu item labels.";
 const char kChromeHomeBottomNavLabelsDescription[] =
     "Enables text labels for Chrome Home bottom navigation menu items.";
-
-const char kChromeHomeInactivitySheetExpansionName[] =
-    "Expansion of Chrome Home bottom sheet on startup";
-const char kChromeHomeInactivitySheetExpansionDescription[] =
-    "Expand bottom sheet on startup in Chrome Home after a period of"
-    " inactivity.";
 
 const char kChromeHomeName[] = "Chrome Home";
 const char kChromeHomeDescription[] =

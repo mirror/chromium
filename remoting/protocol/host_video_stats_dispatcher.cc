@@ -23,7 +23,7 @@ HostVideoStatsDispatcher::HostVideoStatsDispatcher(
     const std::string& stream_name)
     : ChannelDispatcherBase(kVideoStatsChannelNamePrefix + stream_name) {}
 
-HostVideoStatsDispatcher::~HostVideoStatsDispatcher() = default;
+HostVideoStatsDispatcher::~HostVideoStatsDispatcher() {}
 
 void HostVideoStatsDispatcher::OnVideoFrameStats(uint32_t frame_id,
                                                  const HostFrameStats& stats) {

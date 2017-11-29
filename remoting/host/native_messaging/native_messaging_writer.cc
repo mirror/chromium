@@ -35,7 +35,8 @@ namespace remoting {
 NativeMessagingWriter::NativeMessagingWriter(base::File file)
     : write_stream_(std::move(file)), fail_(false) {}
 
-NativeMessagingWriter::~NativeMessagingWriter() = default;
+NativeMessagingWriter::~NativeMessagingWriter() {
+}
 
 bool NativeMessagingWriter::WriteMessage(const base::Value& message) {
   if (fail_) {

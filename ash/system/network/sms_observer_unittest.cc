@@ -42,8 +42,8 @@ std::unique_ptr<base::DictionaryValue> CreateMessage(
 
 class SmsObserverTest : public AshTestBase {
  public:
-  SmsObserverTest() = default;
-  ~SmsObserverTest() override = default;
+  SmsObserverTest() {}
+  ~SmsObserverTest() override {}
 
   SmsObserver* GetSmsObserver() { return Shell::Get()->sms_observer_.get(); }
 

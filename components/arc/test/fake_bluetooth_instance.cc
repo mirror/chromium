@@ -4,8 +4,6 @@
 
 #include <utility>
 
-#include "base/bind.h"
-#include "base/bind_helpers.h"
 #include "components/arc/test/fake_bluetooth_instance.h"
 
 namespace arc {
@@ -28,14 +26,7 @@ FakeBluetoothInstance::LEDeviceFoundData::LEDeviceFoundData(
 
 FakeBluetoothInstance::LEDeviceFoundData::~LEDeviceFoundData() {}
 
-void FakeBluetoothInstance::InitDeprecated(mojom::BluetoothHostPtr host_ptr) {
-  Init(std::move(host_ptr), base::BindOnce(&base::DoNothing));
-}
-
-void FakeBluetoothInstance::Init(mojom::BluetoothHostPtr host_ptr,
-                                 InitCallback callback) {
-  std::move(callback).Run();
-}
+void FakeBluetoothInstance::Init(mojom::BluetoothHostPtr host_ptr) {}
 
 void FakeBluetoothInstance::OnAdapterProperties(
     mojom::BluetoothStatus status,

@@ -105,11 +105,6 @@
 @synthesize tabSwitcher = _tabSwitcher;
 @synthesize bvcContainer = _bvcContainer;
 
-- (void)viewDidLoad {
-  // Set a white background color to avoid flickers of black during startup.
-  self.view.backgroundColor = [UIColor whiteColor];
-}
-
 - (UIViewController*)activeViewController {
   if (self.bvcContainer) {
     DCHECK_EQ(self.bvcContainer, self.presentedViewController);

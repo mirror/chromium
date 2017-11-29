@@ -124,7 +124,7 @@ class ChromeCleanerRunner
       chrome_cleaner::mojom::ChromePromptRequest chrome_prompt_request);
 
   // Callbacks received from the Mojo interface.
-  void OnPromptUser(ChromeCleanerScannerResults&& scanner_results,
+  void OnPromptUser(std::unique_ptr<std::set<base::FilePath>> files_to_delete,
                     chrome_cleaner::mojom::ChromePrompt::PromptUserCallback
                         prompt_user_callback);
   void OnConnectionClosed();

@@ -12,9 +12,9 @@
 
 namespace binder {
 
-WritableTransactionData::WritableTransactionData() = default;
+WritableTransactionData::WritableTransactionData() {}
 
-WritableTransactionData::~WritableTransactionData() = default;
+WritableTransactionData::~WritableTransactionData() {}
 
 uintptr_t WritableTransactionData::GetCookie() const {
   return 0;

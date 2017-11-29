@@ -82,7 +82,6 @@
 #include "ui/base/hit_test.h"
 #include "ui/base/ime/input_method.h"
 #include "ui/base/ui_base_switches.h"
-#include "ui/base/ui_base_switches_util.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/compositor/compositor_vsync_manager.h"
 #include "ui/compositor/dip_util.h"
@@ -414,7 +413,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
       is_guest_view_hack_(is_guest_view_hack),
       device_scale_factor_(0.0f),
       event_handler_(new RenderWidgetHostViewEventHandler(host_, this, this)),
-      frame_sink_id_(switches::IsMusHostingViz()
+      frame_sink_id_(IsMusHostingViz()
                          ? viz::FrameSinkId()
                          : host_->AllocateFrameSinkId(is_guest_view_hack_)),
       weak_ptr_factory_(this) {
@@ -615,8 +614,8 @@ gfx::NativeViewAccessible RenderWidgetHostViewAura::GetNativeViewAccessible() {
 #elif defined(USE_X11)
   BrowserAccessibilityManager* manager =
       host_->GetOrCreateRootBrowserAccessibilityManager();
-  if (manager && manager->GetRoot())
-    return manager->GetRoot()->GetNativeViewAccessible();
+  if (manager)
+    return ToBrowserAccessibilityAuraLinux(manager->GetRoot())->GetAtkObject();
 #endif
 
   NOTIMPLEMENTED();
@@ -636,7 +635,7 @@ void RenderWidgetHostViewAura::OnBeginFrame() {
   UpdateNeedsBeginFramesInternal();
 }
 
-RenderFrameHostImpl* RenderWidgetHostViewAura::GetFocusedFrame() const {
+RenderFrameHostImpl* RenderWidgetHostViewAura::GetFocusedFrame() {
   RenderViewHost* rvh = RenderViewHost::From(host_);
   if (!rvh)
     return nullptr;
@@ -1495,10 +1494,6 @@ bool RenderWidgetHostViewAura::IsTextEditCommandEnabled(
 
 void RenderWidgetHostViewAura::SetTextEditCommandForNextKeyEvent(
     ui::TextEditCommand command) {}
-
-const std::string& RenderWidgetHostViewAura::GetClientSourceInfo() const {
-  return GetFocusedFrame()->GetLastCommittedURL().spec();
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewAura, display::DisplayObserver implementation:

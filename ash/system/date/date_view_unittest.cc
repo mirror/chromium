@@ -12,8 +12,8 @@ namespace tray {
 
 class TimeViewTest : public AshTestBase {
  public:
-  TimeViewTest() = default;
-  ~TimeViewTest() override = default;
+  TimeViewTest() {}
+  ~TimeViewTest() override {}
 
   TimeView* time_view() { return time_view_.get(); }
 

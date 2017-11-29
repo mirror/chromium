@@ -71,7 +71,7 @@ function test() {
   }
 
   function onStyleFetched(result) {
-    Formatter.formatterWorkerPool().parseCSS(result, onRulesParsed);
+    Formatter.formatterWorkerPool().parseCSS(result.value, onRulesParsed);
   }
 
   TestRunner.evaluateInPage('getCSS()', onStyleFetched);

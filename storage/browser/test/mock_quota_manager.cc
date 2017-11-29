@@ -28,11 +28,11 @@ MockQuotaManager::OriginInfo::OriginInfo(
       modified(modified) {
 }
 
-MockQuotaManager::OriginInfo::~OriginInfo() = default;
+MockQuotaManager::OriginInfo::~OriginInfo() {}
 
 MockQuotaManager::StorageInfo::StorageInfo()
     : usage(0), quota(std::numeric_limits<int64_t>::max()) {}
-MockQuotaManager::StorageInfo::~StorageInfo() = default;
+MockQuotaManager::StorageInfo::~StorageInfo() {}
 
 MockQuotaManager::MockQuotaManager(
     bool is_incognito,
@@ -124,7 +124,7 @@ void MockQuotaManager::DeleteOriginData(
                  weak_factory_.GetWeakPtr(), callback, kQuotaStatusOk));
 }
 
-MockQuotaManager::~MockQuotaManager() = default;
+MockQuotaManager::~MockQuotaManager() {}
 
 void MockQuotaManager::UpdateUsage(const GURL& origin,
                                    StorageType type,

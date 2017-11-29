@@ -62,7 +62,7 @@ DesktopSessionClipboardStub::DesktopSessionClipboardStub(
     scoped_refptr<DesktopSessionAgent> desktop_session_agent)
     : desktop_session_agent_(desktop_session_agent) {}
 
-DesktopSessionClipboardStub::~DesktopSessionClipboardStub() = default;
+DesktopSessionClipboardStub::~DesktopSessionClipboardStub() {}
 
 void DesktopSessionClipboardStub::InjectClipboardEvent(
     const protocol::ClipboardEvent& event) {
@@ -154,7 +154,7 @@ class SharedMemoryFactoryImpl : public webrtc::SharedMemoryFactory {
 
 }  // namespace
 
-DesktopSessionAgent::Delegate::~Delegate() = default;
+DesktopSessionAgent::Delegate::~Delegate() {}
 
 DesktopSessionAgent::DesktopSessionAgent(
     scoped_refptr<AutoThreadTaskRunner> audio_capture_task_runner,

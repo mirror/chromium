@@ -8,9 +8,9 @@ namespace chromeos {
 
 namespace tether {
 
-BleScanner::BleScanner() = default;
+BleScanner::BleScanner() {}
 
-BleScanner::~BleScanner() = default;
+BleScanner::~BleScanner() {}
 
 void BleScanner::AddObserver(Observer* observer) {
   observer_list_.AddObserver(observer);

@@ -31,7 +31,7 @@ class UpstartClientImpl : public UpstartClient {
  public:
   UpstartClientImpl() : weak_ptr_factory_(this) {}
 
-  ~UpstartClientImpl() override = default;
+  ~UpstartClientImpl() override {}
 
   // UpstartClient override.
   void StartAuthPolicyService() override {
@@ -130,9 +130,9 @@ class UpstartClientImpl : public UpstartClient {
 
 }  // namespace
 
-UpstartClient::UpstartClient() = default;
+UpstartClient::UpstartClient() {}
 
-UpstartClient::~UpstartClient() = default;
+UpstartClient::~UpstartClient() {}
 
 // static
 UpstartClient* UpstartClient::Create() {

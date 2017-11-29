@@ -5,7 +5,6 @@
 #ifndef NavigationPreloadCallbacks_h
 #define NavigationPreloadCallbacks_h
 
-#include "base/macros.h"
 #include "platform/heap/Persistent.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
 
@@ -27,7 +26,7 @@ class EnableNavigationPreloadCallbacks final
 
  private:
   Persistent<ScriptPromiseResolver> resolver_;
-  DISALLOW_COPY_AND_ASSIGN(EnableNavigationPreloadCallbacks);
+  WTF_MAKE_NONCOPYABLE(EnableNavigationPreloadCallbacks);
 };
 
 class GetNavigationPreloadStateCallbacks final
@@ -43,7 +42,7 @@ class GetNavigationPreloadStateCallbacks final
 
  private:
   Persistent<ScriptPromiseResolver> resolver_;
-  DISALLOW_COPY_AND_ASSIGN(GetNavigationPreloadStateCallbacks);
+  WTF_MAKE_NONCOPYABLE(GetNavigationPreloadStateCallbacks);
 };
 
 class SetNavigationPreloadHeaderCallbacks final
@@ -59,7 +58,7 @@ class SetNavigationPreloadHeaderCallbacks final
 
  private:
   Persistent<ScriptPromiseResolver> resolver_;
-  DISALLOW_COPY_AND_ASSIGN(SetNavigationPreloadHeaderCallbacks);
+  WTF_MAKE_NONCOPYABLE(SetNavigationPreloadHeaderCallbacks);
 };
 
 }  // namespace blink

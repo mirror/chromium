@@ -158,7 +158,8 @@ AsyncFileUtilAdapter::AsyncFileUtilAdapter(
   DCHECK(sync_file_util_.get());
 }
 
-AsyncFileUtilAdapter::~AsyncFileUtilAdapter() = default;
+AsyncFileUtilAdapter::~AsyncFileUtilAdapter() {
+}
 
 void AsyncFileUtilAdapter::CreateOrOpen(
     std::unique_ptr<FileSystemOperationContext> context,

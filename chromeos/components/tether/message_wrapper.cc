@@ -146,7 +146,7 @@ MessageWrapper::MessageWrapper(
     std::shared_ptr<google::protobuf::MessageLite> proto)
     : type_(type), proto_(proto) {}
 
-MessageWrapper::~MessageWrapper() = default;
+MessageWrapper::~MessageWrapper() {}
 
 std::shared_ptr<google::protobuf::MessageLite> MessageWrapper::GetProto()
     const {

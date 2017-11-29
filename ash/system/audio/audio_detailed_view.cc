@@ -63,7 +63,7 @@ AudioDetailedView::AudioDetailedView(SystemTrayItem* owner)
   Update();
 }
 
-AudioDetailedView::~AudioDetailedView() = default;
+AudioDetailedView::~AudioDetailedView() {}
 
 void AudioDetailedView::Update() {
   UpdateAudioDevices();

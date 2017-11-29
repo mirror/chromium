@@ -36,7 +36,6 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
-#include "platform/wtf/Time.h"
 
 namespace blink {
 
@@ -86,9 +85,7 @@ class PLATFORM_EXPORT Theme {
   virtual Color SystemColor(ThemeColor) const { return Color(); }
 
   // How fast the caret blinks in text fields.
-  virtual TimeDelta CaretBlinkInterval() const {
-    return TimeDelta::FromMilliseconds(500);
-  }
+  virtual double CaretBlinkInterval() const { return 0.5; }
 
   // Methods used to adjust the ComputedStyles of controls.
 

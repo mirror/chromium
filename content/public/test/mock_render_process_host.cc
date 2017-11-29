@@ -416,6 +416,12 @@ bool MockRenderProcessHost::StopWebRTCEventLog() {
 
 void MockRenderProcessHost::SetEchoCanceller3(bool enable) {}
 
+void MockRenderProcessHost::SetWebRtcLogMessageCallback(
+    base::Callback<void(const std::string&)> callback) {
+}
+
+void MockRenderProcessHost::ClearWebRtcLogMessageCallback() {}
+
 RenderProcessHost::WebRtcStopRtpDumpCallback
 MockRenderProcessHost::StartRtpDump(
     bool incoming,

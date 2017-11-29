@@ -16,7 +16,6 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "mojo/common/time.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_provider_type.mojom.h"
 
 namespace content {
 namespace {
@@ -142,7 +141,7 @@ class RespondWithCallbacks
     std::vector<std::pair<int, int>> ids;
     for (const auto& controllee : service_worker_version_->controllee_map()) {
       if (controllee.second->provider_type() ==
-          blink::mojom::ServiceWorkerProviderType::kForWindow) {
+          SERVICE_WORKER_PROVIDER_FOR_WINDOW) {
         ids.emplace_back(std::make_pair(controllee.second->process_id(),
                                         controllee.second->frame_id()));
       }

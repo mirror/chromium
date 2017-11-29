@@ -229,19 +229,13 @@ base::string16 CardUnmaskPromptControllerImpl::GetWindowTitle() const {
 }
 
 base::string16 CardUnmaskPromptControllerImpl::GetInstructionsMessage() const {
-// The prompt for server cards should reference Google Payments, whereas the
-// prompt for local cards should not.
 #if defined(OS_IOS)
   int ids;
   if (reason_ == AutofillClient::UNMASK_FOR_AUTOFILL &&
       ShouldRequestExpirationDate()) {
-    ids = card_.record_type() == autofill::CreditCard::LOCAL_CARD
-              ? IDS_AUTOFILL_CARD_UNMASK_PROMPT_INSTRUCTIONS_EXPIRED_LOCAL_CARD
-              : IDS_AUTOFILL_CARD_UNMASK_PROMPT_INSTRUCTIONS_EXPIRED;
+    ids = IDS_AUTOFILL_CARD_UNMASK_PROMPT_INSTRUCTIONS_EXPIRED;
   } else {
-    ids = card_.record_type() == autofill::CreditCard::LOCAL_CARD
-              ? IDS_AUTOFILL_CARD_UNMASK_PROMPT_INSTRUCTIONS_LOCAL_CARD
-              : IDS_AUTOFILL_CARD_UNMASK_PROMPT_INSTRUCTIONS;
+    ids = IDS_AUTOFILL_CARD_UNMASK_PROMPT_INSTRUCTIONS;
   }
   // The iOS UI shows the card details in the instructions text since they
   // don't fit in the title.
@@ -249,9 +243,7 @@ base::string16 CardUnmaskPromptControllerImpl::GetInstructionsMessage() const {
                                     card_.NetworkOrBankNameAndLastFourDigits());
 #else
   return l10n_util::GetStringUTF16(
-      card_.record_type() == autofill::CreditCard::LOCAL_CARD
-          ? IDS_AUTOFILL_CARD_UNMASK_PROMPT_INSTRUCTIONS_LOCAL_CARD
-          : IDS_AUTOFILL_CARD_UNMASK_PROMPT_INSTRUCTIONS);
+      IDS_AUTOFILL_CARD_UNMASK_PROMPT_INSTRUCTIONS);
 #endif
 }
 

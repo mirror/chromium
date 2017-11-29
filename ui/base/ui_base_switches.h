@@ -57,7 +57,7 @@ UI_BASE_EXPORT extern const char kUseSkiaRenderer[];
 UI_BASE_EXPORT extern const char kDisallowNonExactResourceReuse[];
 UI_BASE_EXPORT extern const char kMangleLocalizedStrings[];
 
-#if defined(USE_AURA)
+#if BUILDFLAG(ENABLE_MUS)
 UI_BASE_EXPORT extern const char kMus[];
 UI_BASE_EXPORT extern const char kMusHostVizValue[];
 #endif

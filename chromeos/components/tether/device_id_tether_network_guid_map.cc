@@ -8,9 +8,9 @@ namespace chromeos {
 
 namespace tether {
 
-DeviceIdTetherNetworkGuidMap::DeviceIdTetherNetworkGuidMap() = default;
+DeviceIdTetherNetworkGuidMap::DeviceIdTetherNetworkGuidMap() {}
 
-DeviceIdTetherNetworkGuidMap::~DeviceIdTetherNetworkGuidMap() = default;
+DeviceIdTetherNetworkGuidMap::~DeviceIdTetherNetworkGuidMap() {}
 
 std::string DeviceIdTetherNetworkGuidMap::GetDeviceIdForTetherNetworkGuid(
     const std::string& tether_network_guid) {

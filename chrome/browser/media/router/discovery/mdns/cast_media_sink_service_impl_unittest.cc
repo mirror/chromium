@@ -121,6 +121,7 @@ class CastMediaSinkServiceImplTest : public ::testing::Test {
         .WillOnce(Invoke(
             [socket](const auto& ip_endpoint, auto* net_log, auto open_cb) {
               std::move(open_cb).Run(socket);
+              return socket->id();
             }));
   }
 
@@ -345,6 +346,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestOpenChannelFails) {
       .WillRepeatedly(
           Invoke([&](const auto& ip_endpoint1, auto* net_log, auto open_cb) {
             std::move(open_cb).Run(&socket);
+            return socket.id();
           }));
   media_sink_service_impl_.OpenChannel(
       ip_endpoint, cast_sink, nullptr,
@@ -482,6 +484,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelErrorMayRetryForCastSink) {
       .WillRepeatedly(
           Invoke([&](const auto& ip_endpoint, auto* net_log, auto open_cb) {
             std::move(open_cb).Run(&socket);
+            return socket.id();
           }));
 
   media_sink_service_impl_.OnError(
@@ -531,14 +534,18 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnDialSinkAdded) {
   // Channel 1, 2 opened.
   EXPECT_CALL(*mock_cast_socket_service_,
               OpenSocketInternal(ip_endpoint1, _, _))
-      .WillOnce(WithArgs<2>(Invoke(
-          [&](const base::Callback<void(cast_channel::CastSocket * socket)>&
-                  callback) { std::move(callback).Run(&socket1); })));
+      .WillOnce(DoAll(
+          WithArgs<2>(Invoke(
+              [&](const base::Callback<void(cast_channel::CastSocket * socket)>&
+                      callback) { std::move(callback).Run(&socket1); })),
+          Return(1)));
   EXPECT_CALL(*mock_cast_socket_service_,
               OpenSocketInternal(ip_endpoint2, _, _))
-      .WillOnce(WithArgs<2>(Invoke(
-          [&](const base::Callback<void(cast_channel::CastSocket * socket)>&
-                  callback) { std::move(callback).Run(&socket2); })));
+      .WillOnce(DoAll(
+          WithArgs<2>(Invoke(
+              [&](const base::Callback<void(cast_channel::CastSocket * socket)>&
+                      callback) { std::move(callback).Run(&socket2); })),
+          Return(2)));
 
   // Invoke CastSocketService::OpenSocket on the IO thread.
   media_sink_service_impl_.OnDialSinkAdded(dial_sink1);
@@ -563,10 +570,12 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnDialSinkAddedSkipsIfNonCastDevice) {
   EXPECT_CALL(*mock_cast_socket_service_,
               OpenSocketInternal(ip_endpoint1, _, _))
       .Times(1)
-      .WillOnce(WithArgs<2>(Invoke(
-          [&socket1](
-              const base::Callback<void(cast_channel::CastSocket * socket)>&
-                  callback) { std::move(callback).Run(&socket1); })));
+      .WillOnce(DoAll(
+          WithArgs<2>(Invoke(
+              [&socket1](
+                  const base::Callback<void(cast_channel::CastSocket * socket)>&
+                      callback) { std::move(callback).Run(&socket1); })),
+          Return(1)));
   media_sink_service_impl_.OnDialSinkAdded(dial_sink1);
 
   // We don't trigger retries, thus each iteration will only increment the
@@ -576,10 +585,13 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnDialSinkAddedSkipsIfNonCastDevice) {
     EXPECT_CALL(*mock_cast_socket_service_,
                 OpenSocketInternal(ip_endpoint1, _, _))
         .Times(1)
-        .WillOnce(WithArgs<2>(Invoke(
-            [&socket1](
-                const base::Callback<void(cast_channel::CastSocket * socket)>&
-                    callback) { std::move(callback).Run(&socket1); })));
+        .WillOnce(DoAll(
+            WithArgs<2>(Invoke(
+                [&socket1](const base::Callback<void(cast_channel::CastSocket *
+                                                     socket)>& callback) {
+                  std::move(callback).Run(&socket1);
+                })),
+            Return(1)));
     media_sink_service_impl_.OnDialSinkAdded(dial_sink1);
   }
 

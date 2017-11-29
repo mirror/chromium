@@ -55,6 +55,7 @@
 #include "chrome/browser/printing/cloud_print/cloud_print_proxy_service_factory.h"
 #include "chrome/browser/profiles/gaia_info_update_service_factory.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_service_factory.h"
+#include "chrome/browser/search/instant_service_factory.h"
 #include "chrome/browser/search/suggestions/suggestions_service_factory.h"
 #include "chrome/browser/search_engines/template_url_fetcher_factory.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
@@ -91,6 +92,7 @@
 #include "chrome/browser/extensions/api/networking_private/networking_private_ui_delegate_factory_impl.h"
 #include "chrome/browser/extensions/browser_context_keyed_service_factories.h"
 #include "chrome/browser/extensions/extension_management.h"
+#include "chrome/browser/search/hotword_service_factory.h"
 #include "chrome/browser/signin/easy_unlock_service_factory.h"
 #include "chrome/browser/ui/bookmarks/enhanced_bookmark_key_service_factory.h"
 #include "extensions/browser/api/networking_private/networking_private_delegate_factory.h"
@@ -135,7 +137,6 @@
 #else
 #include "chrome/browser/cryptauth/chrome_cryptauth_service_factory.h"
 #include "chrome/browser/media/router/media_router_ui_service_factory.h"
-#include "chrome/browser/search/instant_service_factory.h"
 #include "chrome/browser/ui/global_error/global_error_service_factory.h"
 #include "chrome/browser/usb/usb_chooser_context_factory.h"
 #endif
@@ -215,7 +216,7 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
 #endif
   CertificateReportingServiceFactory::GetInstance();
 #if defined(OS_ANDROID)
-  android::DataUseUITabModelFactory::GetInstance();
+  chrome::android::DataUseUITabModelFactory::GetInstance();
 #endif
   ChromeBrowsingDataRemoverDelegateFactory::GetInstance();
 #if !defined(OS_ANDROID)
@@ -254,12 +255,13 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
 #endif
   GoogleURLTrackerFactory::GetInstance();
   HistoryServiceFactory::GetInstance();
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  HotwordServiceFactory::GetInstance();
+#endif
   HostContentSettingsMapFactory::GetInstance();
   InMemoryURLIndexFactory::GetInstance();
   invalidation::ProfileInvalidationProviderFactory::GetInstance();
-#if !defined(OS_ANDROID)
   InstantServiceFactory::GetInstance();
-#endif
 #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   cloud_print::PrivetNotificationServiceFactory::GetInstance();
 #endif

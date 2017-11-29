@@ -47,41 +47,29 @@ class TryFlag(object):
         self._path_finder = PathFinder(self._filesystem)
         self._git = self._host.git()
 
-    def _force_flag_for_test_runner(self):
-        flag = self._args.flag
+    def _set_flag(self, flag):
         path = self._path_finder.path_from_layout_tests(FLAG_FILE)
         self._filesystem.write_text_file(path, flag + '\n')
         self._git.add_list([path])
         self._git.commit_locally_with_message(
             'Flag try job: force %s for run-webkit-tests.' % flag)
 
-    def _flag_expectations_path(self):
-        return self._path_finder.path_from_layout_tests(
-            'FlagExpectations', self._args.flag.lstrip('-'))
-
-    def _clear_expectations(self):
-        path = self._flag_expectations_path()
+    def _clear_expectations(self, flag):
+        path = self._path_finder.path_from_layout_tests(
+            'FlagExpectations', flag.lstrip('-'))
         self._filesystem.write_text_file(path, '')
         self._git.add_list([path])
         self._git.commit_locally_with_message(
-            'Flag try job: clear expectations for %s.' % self._args.flag)
-
-    def _tests_in_flag_expectations(self):
-        result = set()
-        path = self._flag_expectations_path()
-        for line in self._filesystem.read_text_file(path).split('\n'):
-            expectation_line = TestExpectationLine.tokenize_line(path, line, 0)
-            test_name = expectation_line.name
-            if test_name:
-                result.add(test_name)
-        return result
+            'Flag try job: clear expectations for %s.' % flag)
 
     def trigger(self):
-        self._force_flag_for_test_runner()
-        if self._args.regenerate:
-            self._clear_expectations()
-        self._git_cl.run(['upload', '--bypass-hooks', '-f',
-                          '-m', 'Flag try job for %s.' % self._args.flag])
+        flag = self._args.flag
+        if flag:
+            self._set_flag(flag)
+            if self._args.regenerate:
+                self._clear_expectations(flag)
+            self._git_cl.run(['upload', '--bypass-hooks', '-f',
+                              '-m', 'Flag try job for %s.' % flag])
         for builder in sorted(BUILDER_MASTERS.keys()):
             master = BUILDER_MASTERS[builder]
             self._git_cl.trigger_try_jobs([builder], master)
@@ -118,7 +106,7 @@ class TryFlag(object):
         # TODO: Get jobs from the _tryflag branch. Current branch for now.
         jobs = self._git_cl.latest_try_jobs(BUILDER_CONFIGS.keys())
         buildbot = self._host.buildbot
-        for build in sorted(jobs):
+        for build in sorted(jobs.keys()):
             self._host.print_('-- %s: %s/results.html' % (
                 BUILDER_CONFIGS[build.builder_name].version,
                 buildbot.results_url(build.builder_name, build.build_number)))
@@ -129,14 +117,11 @@ class TryFlag(object):
         # TODO: Write to flag expectations file. For now, stdout. :)
         unexpected_failures = []
         unexpected_passes = []
-        tests_in_flag_expectations = self._tests_in_flag_expectations()
         for line in self._expectations_model.all_lines():
-            is_pass = (TestExpectations.EXPECTATIONS['pass'] in
-                       line.parsed_expectations)
-            if not is_pass:
-                unexpected_failures.append(line)
-            elif line.name in tests_in_flag_expectations:
+            if TestExpectations.EXPECTATIONS['pass'] in line.parsed_expectations:
                 unexpected_passes.append(line)
+            else:
+                unexpected_failures.append(line)
 
         self._print_all(unexpected_passes, 'unexpected passes')
         self._print_all(unexpected_failures, 'unexpected failures')
@@ -165,7 +150,7 @@ def parse_args(argv):
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('action', help='"trigger" or "update"')
     parser.add_argument('--bug', help='crbug number for expectation lines')
-    parser.add_argument('--flag', required=True,
+    parser.add_argument('--flag',
                         help='flag to force-enable in run-webkit-tests')
     parser.add_argument('--regenerate', action='store_true',
                         help='clear the flag expectations before triggering')

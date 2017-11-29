@@ -5,7 +5,6 @@
 #ifndef MediaListDirective_h
 #define MediaListDirective_h
 
-#include "base/macros.h"
 #include "core/frame/csp/CSPDirective.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
 #include "platform/wtf/HashSet.h"
@@ -16,6 +15,8 @@ namespace blink {
 class ContentSecurityPolicy;
 
 class CORE_EXPORT MediaListDirective final : public CSPDirective {
+  WTF_MAKE_NONCOPYABLE(MediaListDirective);
+
  public:
   MediaListDirective(const String& name,
                      const String& value,
@@ -37,8 +38,6 @@ class CORE_EXPORT MediaListDirective final : public CSPDirective {
   HashSet<String> GetIntersect(const HashSet<String>& other) const;
 
   HashSet<String> plugin_types_;
-
-  DISALLOW_COPY_AND_ASSIGN(MediaListDirective);
 };
 
 }  // namespace blink

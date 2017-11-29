@@ -65,7 +65,7 @@ FolderImageSource::FolderImageSource(const Icons& icons, const gfx::Size& size)
   DCHECK(icons.size() <= FolderImage::kNumFolderTopItems);
 }
 
-FolderImageSource::~FolderImageSource() = default;
+FolderImageSource::~FolderImageSource() {}
 
 void FolderImageSource::DrawIcon(gfx::Canvas* canvas,
                                  const gfx::ImageSkia& icon,

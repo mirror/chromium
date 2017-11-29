@@ -48,19 +48,14 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
                               const GlyphData& emphasis_data,
                               const ShapeResult*);
 
-  void Add(Glyph glyph,
-           const SimpleFontData* font_data,
-           CanvasRotationInVertical canvas_rotation,
-           float h_offset) {
+  void Add(Glyph glyph, const SimpleFontData* font_data, float h_offset) {
     // cannot mix x-only/xy offsets
     DCHECK(!HasPendingVerticalOffsets());
 
-    if (UNLIKELY(font_data != pending_font_data_) ||
-        UNLIKELY(canvas_rotation != pending_canvas_rotation_)) {
+    if (UNLIKELY(font_data != pending_font_data_)) {
       CommitPendingRun();
       pending_font_data_ = font_data;
-      pending_canvas_rotation_ = canvas_rotation;
-      DCHECK_EQ(GetBlobRotation(canvas_rotation), BlobRotation::kNoRotation);
+      DCHECK_EQ(GetBlobRotation(font_data), BlobRotation::kNoRotation);
     }
 
     pending_glyphs_.push_back(glyph);
@@ -69,18 +64,15 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
 
   void Add(Glyph glyph,
            const SimpleFontData* font_data,
-           CanvasRotationInVertical canvas_rotation,
            const FloatPoint& offset) {
     // cannot mix x-only/xy offsets
     DCHECK(pending_glyphs_.IsEmpty() || HasPendingVerticalOffsets());
 
-    if (UNLIKELY(font_data != pending_font_data_) ||
-        UNLIKELY(canvas_rotation != pending_canvas_rotation_)) {
+    if (UNLIKELY(font_data != pending_font_data_)) {
       CommitPendingRun();
       pending_font_data_ = font_data;
-      pending_canvas_rotation_ = canvas_rotation;
       pending_vertical_baseline_x_offset_ =
-          GetBlobRotation(canvas_rotation) == BlobRotation::kNoRotation
+          GetBlobRotation(font_data) == BlobRotation::kNoRotation
               ? 0
               : font_data->GetFontMetrics().FloatAscent() -
                     font_data->GetFontMetrics().FloatAscent(
@@ -142,7 +134,7 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
   void CommitPendingBlob();
 
   bool HasPendingVerticalOffsets() const;
-  static BlobRotation GetBlobRotation(const CanvasRotationInVertical);
+  static BlobRotation GetBlobRotation(const SimpleFontData*);
 
   const Font& font_;
   const float device_scale_factor_;
@@ -155,8 +147,6 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
 
   // Current run state.
   const SimpleFontData* pending_font_data_ = nullptr;
-  CanvasRotationInVertical pending_canvas_rotation_ =
-      CanvasRotationInVertical::kRegular;
   Vector<Glyph, 1024> pending_glyphs_;
   Vector<float, 1024> pending_offsets_;
   float pending_vertical_baseline_x_offset_ = 0;

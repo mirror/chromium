@@ -111,8 +111,8 @@ crbug.com/451577 virtual/mojo-loading/http/tests/devtools/console [ Slow ]
 crbug.com/450493 http/tests/devtools/sources/ [ Slow ]
 crbug.com/450493 virtual/mojo-loading/http/tests/devtools/sources/ [ Slow ]
 crbug.com/450493 http/tests/devtools/startup/sources/ [ Slow ]
-crbug.com/450493 http/tests/devtools/csp/ [ Slow ]
-crbug.com/450493 virtual/mojo-loading/http/tests/devtools/csp/ [ Slow ]
+crbug.com/450493 http/tests/devtools/stacktraces/ [ Slow ]
+crbug.com/450493 virtual/mojo-loading/http/tests/devtools/stacktraces/ [ Slow ]
 crbug.com/450493 http/tests/devtools/profiler/ [ Slow ]
 crbug.com/450493 virtual/mojo-loading/http/tests/devtools/profiler/ [ Slow ]
 crbug.com/420008 http/tests/devtools/tracing/ [ Slow ]
@@ -155,8 +155,8 @@ crbug.com/451577 [ Mac ] http/tests/devtools/extensions/extensions-resources.htm
 crbug.com/451577 [ Win10 ] http/tests/devtools/extensions/extensions-sidebar.html [ Slow ]
 crbug.com/451577 [ Mac ] http/tests/devtools/layers/layer-canvas-log.js [ Slow ]
 crbug.com/667560 [ Mac ] virtual/mojo-loading/http/tests/devtools/layers/layer-canvas-log.js [ Slow ]
-crbug.com/451577 [ Mac ] http/tests/devtools/network/network-domain-filter.js [ Slow ]
-crbug.com/667560 [ Mac ] virtual/mojo-loading/http/tests/devtools/network/network-domain-filter.js [ Slow ]
+crbug.com/451577 [ Mac ] http/tests/devtools/network/network-domain-filter.html [ Slow ]
+crbug.com/667560 [ Mac ] virtual/mojo-loading/http/tests/devtools/network/network-domain-filter.html [ Slow ]
 
 # Random slow tests
 crbug.com/763197 [ Linux Mac ] virtual/gpu-rasterization/images/color-profile-border-radius.html [ Slow ]
@@ -176,6 +176,11 @@ crbug.com/73609 virtual/mojo-loading/http/tests/media/video-play-stall.html [ Sl
 crbug.com/330389 [ Debug ] css-parser/color3_hsl.html [ Slow ]
 
 # Many of the virtual animations tests are slow.
+crbug.com/248938 virtual/threaded/animations/direction-and-fill/animation-direction-reverse-hardware.html [ Slow ]
+crbug.com/248938 virtual/threaded/animations/cross-fade-background-image.html [ Slow ]
+crbug.com/248938 virtual/threaded/animations/cross-fade-border-image-source.html [ Slow ]
+crbug.com/248938 virtual/threaded/animations/cross-fade-webkit-mask-box-image.html [ Slow ]
+crbug.com/248938 virtual/threaded/animations/cross-fade-webkit-mask-image.html [ Slow ]
 crbug.com/311482 virtual/threaded/animations/prefixed/keyframes-unprefixed-03.html [ Slow ]
 crbug.com/243871 virtual/threaded/fast/scroll-behavior/ [ Slow ]
 crbug.com/243871 virtual/threaded/fast/idle-callback/idle_periods.html [ Slow ]

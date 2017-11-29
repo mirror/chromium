@@ -57,7 +57,7 @@ MagnetismEdgeMatcher::MagnetismEdgeMatcher(const gfx::Rect& bounds,
   ranges_.push_back(GetSecondaryRange(bounds_));
 }
 
-MagnetismEdgeMatcher::~MagnetismEdgeMatcher() = default;
+MagnetismEdgeMatcher::~MagnetismEdgeMatcher() {}
 
 bool MagnetismEdgeMatcher::ShouldAttach(const gfx::Rect& bounds) {
   if (is_edge_obscured())
@@ -138,7 +138,7 @@ MagnetismMatcher::MagnetismMatcher(const gfx::Rect& bounds, uint32_t edges)
   }
 }
 
-MagnetismMatcher::~MagnetismMatcher() = default;
+MagnetismMatcher::~MagnetismMatcher() {}
 
 bool MagnetismMatcher::ShouldAttach(const gfx::Rect& bounds,
                                     MatchedEdge* edge) {

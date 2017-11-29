@@ -52,7 +52,6 @@ class HtmlCheckerTest(SuperMoxTestBase):
       ' class="abc" ',
       'class="foo-bar"',
       '<div class="foo-bar" id="classBar"',
-      '<div class="foo $i18n{barBazQux}" id="classBar"',
     ]
     for line in lines:
       self.ShouldPassCheck(line, self.checker.ClassesUseDashFormCheck)

@@ -232,7 +232,7 @@ class NetworkIconImageSource : public gfx::CanvasImageSource {
     return gfx::ImageSkia(base::WrapUnique(source), source->size());
   }
 
-  ~NetworkIconImageSource() override = default;
+  ~NetworkIconImageSource() override {}
 
   // gfx::CanvasImageSource:
   void Draw(gfx::Canvas* canvas) override {
@@ -674,7 +674,7 @@ SignalStrengthImageSource::SignalStrengthImageSource(ImageType image_type,
                                 GetSizeForIconType(icon_type),
                                 signal_strength) {}
 
-SignalStrengthImageSource::~SignalStrengthImageSource() = default;
+SignalStrengthImageSource::~SignalStrengthImageSource() {}
 
 void SignalStrengthImageSource::set_color(SkColor color) {
   color_ = color;

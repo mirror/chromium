@@ -16,7 +16,7 @@ TouchHudProjection::TouchHudProjection(aura::Window* initial_root)
     : TouchObserverHUD(initial_root, "TouchHud"),
       touch_hud_renderer_(new TouchHudRenderer(widget())) {}
 
-TouchHudProjection::~TouchHudProjection() = default;
+TouchHudProjection::~TouchHudProjection() {}
 
 void TouchHudProjection::Clear() {
   touch_hud_renderer_->Clear();

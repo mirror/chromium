@@ -13,7 +13,7 @@ namespace {
 void SetDefaultValues(ServiceWorkerProviderHostInfo* info) {
   info->provider_id = kInvalidServiceWorkerProviderId;
   info->route_id = MSG_ROUTING_NONE;
-  info->type = blink::mojom::ServiceWorkerProviderType::kUnknown;
+  info->type = SERVICE_WORKER_PROVIDER_UNKNOWN;
   info->is_parent_frame_secure = false;
 }
 
@@ -22,7 +22,7 @@ void SetDefaultValues(ServiceWorkerProviderHostInfo* info) {
 ServiceWorkerProviderHostInfo::ServiceWorkerProviderHostInfo()
     : provider_id(kInvalidServiceWorkerProviderId),
       route_id(MSG_ROUTING_NONE),
-      type(blink::mojom::ServiceWorkerProviderType::kUnknown),
+      type(SERVICE_WORKER_PROVIDER_UNKNOWN),
       is_parent_frame_secure(false) {}
 
 ServiceWorkerProviderHostInfo::ServiceWorkerProviderHostInfo(
@@ -54,7 +54,7 @@ ServiceWorkerProviderHostInfo::ServiceWorkerProviderHostInfo(
 ServiceWorkerProviderHostInfo::ServiceWorkerProviderHostInfo(
     int provider_id,
     int route_id,
-    blink::mojom::ServiceWorkerProviderType type,
+    ServiceWorkerProviderType type,
     bool is_parent_frame_secure)
     : provider_id(provider_id),
       route_id(route_id),

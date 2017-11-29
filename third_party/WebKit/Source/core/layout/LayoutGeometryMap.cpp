@@ -32,6 +32,12 @@
 
 #define LAYOUT_GEOMETRY_MAP_LOGGING 0
 
+#if LAYOUT_GEOMETRY_MAP_LOGGING
+#define LAYOUT_GEOMETRY_MAP_LOG(...) WTFLogAlways(__VA_ARGS__)
+#else
+#define LAYOUT_GEOMETRY_MAP_LOG(...) ((void)0)
+#endif
+
 namespace blink {
 
 LayoutGeometryMap::LayoutGeometryMap(MapCoordinatesFlags flags)
@@ -248,11 +254,11 @@ void LayoutGeometryMap::PushMappingsToAncestor(
           ? CanMapBetweenLayoutObjects(layout_object,
                                        ancestor_layer->GetLayoutObject())
           : false;
-#if LAYOUT_GEOMETRY_MAP_LOGGING
-  DLOG(INFO) << "LayoutGeometryMap::pushMappingsToAncestor from layer " << layer
-             << " to layer " << ancestor_layer
-             << ", canConvertInLayerTree=" << can_convert_in_layer_tree;
-#endif
+
+  LAYOUT_GEOMETRY_MAP_LOG(
+      "LayoutGeometryMap::pushMappingsToAncestor from layer %p to layer %p, "
+      "canConvertInLayerTree=%d\n",
+      layer, ancestorLayer, canConvertInLayerTree);
 
   if (can_convert_in_layer_tree) {
     LayoutPoint layer_offset;
@@ -281,12 +287,9 @@ void LayoutGeometryMap::Push(const LayoutObject* layout_object,
                              const LayoutSize& offset_from_container,
                              GeometryInfoFlags flags,
                              LayoutSize offset_for_fixed_position) {
-#if LAYOUT_GEOMETRY_MAP_LOGGING
-  DLOG(INFO) << "LayoutGeometryMap::push" << layout_object << " "
-             << offset_from_container.Width().ToInt() << ","
-             << offset_from_container.Height().ToInt()
-             << " isNonUniform=" << kIsNonUniform;
-#endif
+  LAYOUT_GEOMETRY_MAP_LOG("LayoutGeometryMap::push %p %d,%d isNonUniform=%d\n",
+                          layoutObject, offsetFromContainer.width().toInt(),
+                          offsetFromContainer.height().toInt(), isNonUniform);
 
   DCHECK_NE(insertion_position_, kNotFound);
   DCHECK(!layout_object->IsLayoutView() || !insertion_position_ ||

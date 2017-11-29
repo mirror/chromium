@@ -24,8 +24,8 @@ namespace ash {
 
 class TrayIMETest : public AshTestBase {
  public:
-  TrayIMETest() = default;
-  ~TrayIMETest() override = default;
+  TrayIMETest() {}
+  ~TrayIMETest() override {}
 
   views::View* default_view() const { return default_view_.get(); }
 

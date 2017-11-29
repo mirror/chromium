@@ -140,11 +140,15 @@ void OnEventLogCollected(
     const std::vector<base::FilePath>& log_paths) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  system_logs::SystemLogsResponse* response_ptr = response.get();
+  // We cannot eliminate these temporaries and inline these closures because the
+  // compiler may call release() before get().
+  const base::Closure pack_closure =
+      base::Bind(&PackEventLog, base::Unretained(response.get()), log_paths);
+  const base::Closure callback_closure =
+      base::Bind(callback, base::Owned(response.release()));
   base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::BindOnce(&PackEventLog, response_ptr, log_paths),
-      base::BindOnce(callback, std::move(response)));
+      pack_closure, callback_closure);
 }
 
 // Callback for handing the outcome of GetTouchDeviceStatus().
@@ -164,7 +168,7 @@ void OnStatusLogCollected(
       g_browser_process->platform_part()->GetInputDeviceControllerClient();
   input_device_controller_client->GetTouchEventLog(
       kBaseLogPath,
-      base::BindOnce(&OnEventLogCollected, std::move(response), callback));
+      base::BindOnce(&OnEventLogCollected, base::Passed(&response), callback));
 }
 
 // Collect touch HUD debug logs. This needs to be done on the UI thread.
@@ -188,14 +192,15 @@ void TouchLogSource::Fetch(const SysLogsSourceCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!callback.is_null());
 
-  auto response = std::make_unique<SystemLogsResponse>();
+  std::unique_ptr<SystemLogsResponse> response =
+      base::MakeUnique<SystemLogsResponse>();
   CollectTouchHudDebugLog(response.get());
 
   // Collect touch device status logs.
   ui::InputDeviceControllerClient* input_device_controller_client =
       g_browser_process->platform_part()->GetInputDeviceControllerClient();
   input_device_controller_client->GetTouchDeviceStatus(
-      base::BindOnce(&OnStatusLogCollected, std::move(response), callback));
+      base::BindOnce(&OnStatusLogCollected, base::Passed(&response), callback));
 }
 
 }  // namespace system_logs

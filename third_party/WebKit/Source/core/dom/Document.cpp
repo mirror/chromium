@@ -6022,8 +6022,7 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
 
   if (IsSandboxed(kSandboxOrigin)) {
     cookie_url_ = url_;
-    scoped_refptr<SecurityOrigin> security_origin =
-        SecurityOrigin::CreateUnique();
+    SetSecurityOrigin(SecurityOrigin::CreateUnique());
     // If we're supposed to inherit our security origin from our
     // owner, but we're also sandboxed, the only things we inherit are
     // the origin's potential trustworthiness and the ability to
@@ -6033,12 +6032,11 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
     Document* owner = initializer.OwnerDocument();
     if (owner) {
       if (owner->GetSecurityOrigin()->IsPotentiallyTrustworthy())
-        security_origin->SetUniqueOriginIsPotentiallyTrustworthy(true);
+        GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(true);
       if (owner->GetSecurityOrigin()->CanLoadLocalResources())
-        security_origin->GrantLoadLocalResources();
+        GetSecurityOrigin()->GrantLoadLocalResources();
       policy_to_inherit = owner->GetContentSecurityPolicy();
     }
-    SetSecurityOrigin(std::move(security_origin));
   } else if (Document* owner = initializer.OwnerDocument()) {
     cookie_url_ = owner->CookieURL();
     // We alias the SecurityOrigins to match Firefox, see Bug 15313
@@ -6079,6 +6077,9 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
     InitContentSecurityPolicy(nullptr, policy_to_inherit);
   }
 
+  if (GetSecurityOrigin()->HasSuborigin())
+    EnforceSuborigin(*GetSecurityOrigin()->GetSuborigin());
+
   if (Settings* settings = initializer.GetSettings()) {
     if (!settings->GetWebSecurityEnabled()) {
       // Web security is turned off. We should let this document access every
@@ -6101,6 +6102,9 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
   if (GetSecurityOrigin()->IsUnique() &&
       SecurityOrigin::Create(url_)->IsPotentiallyTrustworthy())
     GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(true);
+
+  if (GetSecurityOrigin()->HasSuborigin())
+    EnforceSuborigin(*GetSecurityOrigin()->GetSuborigin());
 
   ApplyFeaturePolicy({});
 

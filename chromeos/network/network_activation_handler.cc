@@ -17,8 +17,8 @@ namespace chromeos {
 // static
 const char NetworkActivationHandler::kErrorShillError[] = "shill-error";
 
-NetworkActivationHandler::NetworkActivationHandler() = default;
-NetworkActivationHandler::~NetworkActivationHandler() = default;
+NetworkActivationHandler::NetworkActivationHandler() {}
+NetworkActivationHandler::~NetworkActivationHandler() {}
 
 void NetworkActivationHandler::Activate(
     const std::string& service_path,

@@ -68,7 +68,7 @@ class FakeConnectTetheringOperation : public ConnectTetheringOperation {
                                   setup_required),
         setup_required_(setup_required) {}
 
-  ~FakeConnectTetheringOperation() override = default;
+  ~FakeConnectTetheringOperation() override {}
 
   void NotifyConnectTetheringRequestSent() {
     ConnectTetheringOperation::NotifyConnectTetheringRequestSent();
@@ -97,8 +97,8 @@ class FakeConnectTetheringOperation : public ConnectTetheringOperation {
 class FakeConnectTetheringOperationFactory
     : public ConnectTetheringOperation::Factory {
  public:
-  FakeConnectTetheringOperationFactory() = default;
-  virtual ~FakeConnectTetheringOperationFactory() = default;
+  FakeConnectTetheringOperationFactory() {}
+  virtual ~FakeConnectTetheringOperationFactory() {}
 
   std::vector<FakeConnectTetheringOperation*>& created_operations() {
     return created_operations_;
@@ -129,7 +129,7 @@ class TetherConnectorImplTest : public NetworkStateTest {
  public:
   TetherConnectorImplTest()
       : test_devices_(cryptauth::GenerateTestRemoteDevices(2u)) {}
-  ~TetherConnectorImplTest() override = default;
+  ~TetherConnectorImplTest() override {}
 
   void SetUp() override {
     DBusThreadManager::Initialize();

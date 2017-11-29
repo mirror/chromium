@@ -126,7 +126,7 @@ class TouchTrace {
   typedef std::vector<TouchPointLog>::const_reverse_iterator
       const_reverse_iterator;
 
-  TouchTrace() = default;
+  TouchTrace() {}
 
   void AddTouchPoint(const ui::TouchEvent& touch) {
     log_.push_back(TouchPointLog(touch));
@@ -228,7 +228,7 @@ class TouchHudCanvas : public views::View {
     flags_.setStyle(cc::PaintFlags::kFill_Style);
   }
 
-  ~TouchHudCanvas() override = default;
+  ~TouchHudCanvas() override {}
 
   void SetScale(int scale) {
     if (scale_ == scale)
@@ -334,7 +334,7 @@ TouchHudDebug::TouchHudDebug(aura::Window* initial_root)
   content->AddChildView(label_container_);
 }
 
-TouchHudDebug::~TouchHudDebug() = default;
+TouchHudDebug::~TouchHudDebug() {}
 
 // static
 std::unique_ptr<base::DictionaryValue> TouchHudDebug::GetAllAsDictionary() {

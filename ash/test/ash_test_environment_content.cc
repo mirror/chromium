@@ -16,8 +16,8 @@ namespace {
 
 class AshTestViewsDelegateContent : public AshTestViewsDelegate {
  public:
-  AshTestViewsDelegateContent() = default;
-  ~AshTestViewsDelegateContent() override = default;
+  AshTestViewsDelegateContent() {}
+  ~AshTestViewsDelegateContent() override {}
 
   // AshTestViewsDelegate:
   content::WebContents* CreateWebContents(
@@ -46,7 +46,7 @@ std::string AshTestEnvironment::Get100PercentResourceFileName() {
 AshTestEnvironmentContent::AshTestEnvironmentContent()
     : thread_bundle_(std::make_unique<content::TestBrowserThreadBundle>()) {}
 
-AshTestEnvironmentContent::~AshTestEnvironmentContent() = default;
+AshTestEnvironmentContent::~AshTestEnvironmentContent() {}
 
 void AshTestEnvironmentContent::SetUp() {
   ShellContentState* content_state = content_state_;

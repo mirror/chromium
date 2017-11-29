@@ -6,11 +6,9 @@
 
 namespace chromeos {
 
-SimpleGeolocationRequestTestMonitor::SimpleGeolocationRequestTestMonitor() =
-    default;
+SimpleGeolocationRequestTestMonitor::SimpleGeolocationRequestTestMonitor() {}
 
-SimpleGeolocationRequestTestMonitor::~SimpleGeolocationRequestTestMonitor() =
-    default;
+SimpleGeolocationRequestTestMonitor::~SimpleGeolocationRequestTestMonitor() {}
 
 void SimpleGeolocationRequestTestMonitor::OnRequestCreated(
     SimpleGeolocationRequest* request) {}

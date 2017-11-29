@@ -146,8 +146,7 @@ AnimatingWallpaperWidgetController::AnimatingWallpaperWidgetController(
     WallpaperWidgetController* controller)
     : controller_(controller) {}
 
-AnimatingWallpaperWidgetController::~AnimatingWallpaperWidgetController() =
-    default;
+AnimatingWallpaperWidgetController::~AnimatingWallpaperWidgetController() {}
 
 void AnimatingWallpaperWidgetController::StopAnimating() {
   if (controller_)

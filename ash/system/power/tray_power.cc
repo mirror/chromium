@@ -51,7 +51,7 @@ class UsbNotificationDelegate : public message_center::NotificationDelegate {
   }
 
  private:
-  ~UsbNotificationDelegate() override = default;
+  ~UsbNotificationDelegate() override {}
 
   TrayPower* tray_power_;
 
@@ -100,7 +100,7 @@ class PowerTrayView : public TrayItemView {
     UpdateImage();
   }
 
-  ~PowerTrayView() override = default;
+  ~PowerTrayView() override {}
 
   // Overridden from views::View.
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {

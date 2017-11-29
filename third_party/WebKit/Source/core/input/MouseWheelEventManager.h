@@ -5,7 +5,6 @@
 #ifndef MouseWheelEventManager_h
 #define MouseWheelEventManager_h
 
-#include "base/macros.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/Visitor.h"
 #include "public/platform/WebInputEventResult.h"
@@ -20,6 +19,8 @@ class WebMouseWheelEvent;
 
 class MouseWheelEventManager final
     : public GarbageCollectedFinalized<MouseWheelEventManager> {
+  WTF_MAKE_NONCOPYABLE(MouseWheelEventManager);
+
  public:
   explicit MouseWheelEventManager(LocalFrame&);
   void Trace(blink::Visitor*);
@@ -37,8 +38,6 @@ class MouseWheelEventManager final
 
   const Member<LocalFrame> frame_;
   Member<Node> wheel_target_;
-
-  DISALLOW_COPY_AND_ASSIGN(MouseWheelEventManager);
 };
 
 }  // namespace blink

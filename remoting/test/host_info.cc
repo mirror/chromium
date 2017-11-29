@@ -9,10 +9,10 @@
 namespace remoting {
 namespace test {
 
-HostInfo::HostInfo() = default;
+HostInfo::HostInfo() {}
 HostInfo::HostInfo(const HostInfo& other) = default;
 
-HostInfo::~HostInfo() = default;
+HostInfo::~HostInfo() {}
 
 bool HostInfo::ParseHostInfo(const base::DictionaryValue& host_info) {
   const base::ListValue* list_value = nullptr;

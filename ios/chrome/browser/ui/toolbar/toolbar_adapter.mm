@@ -98,7 +98,7 @@
 }
 
 - (void)triggerToolsMenuButtonAnimation {
-  [self.toolbarCoordinator triggerToolsMenuButtonAnimation];
+  return;
 }
 
 - (void)adjustToolbarHeight {
@@ -121,8 +121,13 @@
   return;
 }
 
+- (void)setToolsMenuStateProvider:
+    (id<ToolsMenuPresentationStateProvider>)provider {
+  return;
+}
+
 - (void)setToolsMenuIsVisibleForToolsMenuButton:(BOOL)isVisible {
-  [self.toolbarCoordinator setToolsMenuIsVisibleForToolsMenuButton:isVisible];
+  return;
 }
 
 - (void)start {

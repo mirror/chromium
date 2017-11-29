@@ -27,7 +27,8 @@ XServerClipboard::XServerClipboard()
       large_selection_property_(None) {
 }
 
-XServerClipboard::~XServerClipboard() = default;
+XServerClipboard::~XServerClipboard() {
+}
 
 void XServerClipboard::Init(Display* display,
                             const ClipboardChangedCallback& callback) {

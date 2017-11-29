@@ -32,8 +32,6 @@
 #define ServiceWorkerGlobalScopeProxy_h
 
 #include <memory>
-
-#include "base/macros.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/HeapAllocator.h"
@@ -70,6 +68,8 @@ class ServiceWorkerGlobalScopeProxy final
     : public GarbageCollectedFinalized<ServiceWorkerGlobalScopeProxy>,
       public WebServiceWorkerContextProxy,
       public WorkerReportingProxy {
+  WTF_MAKE_NONCOPYABLE(ServiceWorkerGlobalScopeProxy);
+
  public:
   static ServiceWorkerGlobalScopeProxy* Create(WebEmbeddedWorkerImpl&,
                                                WebServiceWorkerContextClient&);
@@ -201,8 +201,6 @@ class ServiceWorkerGlobalScopeProxy final
   WebServiceWorkerContextClient* client_;
 
   CrossThreadPersistent<ServiceWorkerGlobalScope> worker_global_scope_;
-
-  DISALLOW_COPY_AND_ASSIGN(ServiceWorkerGlobalScopeProxy);
 };
 
 }  // namespace blink

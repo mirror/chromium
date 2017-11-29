@@ -47,7 +47,7 @@ class TestEventHandler : public ui::EventHandler {
         scroll_y_offset_(0.0),
         scroll_x_offset_ordinal_(0.0),
         scroll_y_offset_ordinal_(0.0) {}
-  ~TestEventHandler() override = default;
+  ~TestEventHandler() override {}
 
   void OnMouseEvent(ui::MouseEvent* event) override {
     if (event->flags() & ui::EF_IS_SYNTHESIZED)
@@ -115,8 +115,8 @@ class TestEventHandler : public ui::EventHandler {
 
 class RootWindowTransformersTest : public AshTestBase {
  public:
-  RootWindowTransformersTest() = default;
-  ~RootWindowTransformersTest() override = default;
+  RootWindowTransformersTest() {}
+  ~RootWindowTransformersTest() override {}
 
   float GetStoredUIScale(int64_t id) {
     return display_manager()->GetDisplayInfo(id).GetEffectiveUIScale();

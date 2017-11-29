@@ -70,8 +70,8 @@ class DisplayManagerTest : public AshTestBase,
                            public display::DisplayObserver,
                            public aura::WindowObserver {
  public:
-  DisplayManagerTest() = default;
-  ~DisplayManagerTest() override = default;
+  DisplayManagerTest() {}
+  ~DisplayManagerTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();
@@ -2175,7 +2175,7 @@ TEST_F(DisplayManagerTest, UpdateMouseCursorAfterRotateZoom) {
 class TestDisplayObserver : public display::DisplayObserver {
  public:
   TestDisplayObserver() : changed_(false) {}
-  ~TestDisplayObserver() override = default;
+  ~TestDisplayObserver() override {}
 
   // display::DisplayObserver overrides:
   void OnDisplayMetricsChanged(const display::Display&, uint32_t) override {}
@@ -3119,8 +3119,8 @@ TEST_F(DisplayManagerTest, DontRegisterBadConfig) {
 
 class ScreenShutdownTest : public AshTestBase {
  public:
-  ScreenShutdownTest() = default;
-  ~ScreenShutdownTest() override = default;
+  ScreenShutdownTest() {}
+  ~ScreenShutdownTest() override {}
 
   void TearDown() override {
     display::Screen* orig_screen = display::Screen::GetScreen();
@@ -3518,8 +3518,8 @@ namespace {
 
 class DisplayManagerOrientationTest : public DisplayManagerTest {
  public:
-  DisplayManagerOrientationTest() = default;
-  ~DisplayManagerOrientationTest() override = default;
+  DisplayManagerOrientationTest() {}
+  ~DisplayManagerOrientationTest() override {}
 
   void SetUp() override {
     DisplayManagerTest::SetUp();
@@ -3542,8 +3542,8 @@ class DisplayManagerOrientationTest : public DisplayManagerTest {
 
 class TestObserver : public ScreenOrientationController::Observer {
  public:
-  TestObserver() = default;
-  ~TestObserver() override = default;
+  TestObserver() {}
+  ~TestObserver() override {}
 
   void OnUserRotationLockChanged() override { count_++; }
 

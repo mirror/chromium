@@ -32,8 +32,16 @@
 
 namespace blink {
 
+class XSLImportRule;
+
 class XSLStyleSheet final : public StyleSheet {
  public:
+  static XSLStyleSheet* Create(XSLImportRule* parent_import,
+                               const String& original_url,
+                               const KURL& final_url) {
+    DCHECK(RuntimeEnabledFeatures::XSLTEnabled());
+    return new XSLStyleSheet(parent_import, original_url, final_url);
+  }
   static XSLStyleSheet* Create(ProcessingInstruction* parent_node,
                                const String& original_url,
                                const KURL& final_url) {
@@ -65,10 +73,16 @@ class XSLStyleSheet final : public StyleSheet {
 
   void CheckLoaded();
 
+  const KURL& FinalURL() const { return final_url_; }
+
+  void LoadChildSheets();
+  void LoadChildSheet(const String& href);
+
   Document* OwnerDocument();
   XSLStyleSheet* parentStyleSheet() const override {
     return parent_style_sheet_;
   }
+  void SetParentStyleSheet(XSLStyleSheet*);
 
   xmlDocPtr GetDocument();
   xsltStylesheetPtr CompileStyleSheet();
@@ -89,7 +103,7 @@ class XSLStyleSheet final : public StyleSheet {
 
   void ClearOwnerNode() override { owner_node_ = nullptr; }
   KURL BaseURL() const override { return final_url_; }
-  bool IsLoading() const override { return false; }
+  bool IsLoading() const override;
 
   virtual void Trace(blink::Visitor*);
 
@@ -103,19 +117,16 @@ class XSLStyleSheet final : public StyleSheet {
                 const String& original_url,
                 const KURL& final_url,
                 bool embedded);
-  XSLStyleSheet(XSLStyleSheet* parent_style_sheet,
+  XSLStyleSheet(XSLImportRule* parent_import,
                 const String& original_url,
                 const KURL& final_url);
-
-  void LoadChildSheets();
-  void LoadChildSheet(const String& href);
 
   Member<Node> owner_node_;
   String original_url_;
   KURL final_url_;
   bool is_disabled_;
 
-  HeapVector<Member<XSLStyleSheet>> children_;
+  HeapVector<Member<XSLImportRule>> children_;
 
   bool embedded_;
   bool processed_;

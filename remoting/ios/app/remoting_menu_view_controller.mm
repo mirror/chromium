@@ -11,12 +11,10 @@
 #import "ios/third_party/material_components_ios/src/components/AppBar/src/MaterialAppBar.h"
 #import "ios/third_party/material_components_ios/src/components/Buttons/src/MaterialButtons.h"
 #import "remoting/ios/app/remoting_theme.h"
-#import "remoting/ios/app/side_menu_items.h"
 #import "remoting/ios/facade/remoting_authentication.h"
 #import "remoting/ios/facade/remoting_service.h"
 
 #include "base/strings/stringprintf.h"
-#include "base/strings/sys_string_conversions.h"
 #include "google_apis/google_api_keys.h"
 #include "net/base/escape.h"
 #include "remoting/base/string_resources.h"
@@ -30,7 +28,6 @@ static UIColor* kBackgroundColor =
     [UIColor colorWithRed:0.f green:0.67f blue:0.55f alpha:1.f];
 
 namespace {
-
 const char kChromotingAuthScopeValues[] =
     "https://www.googleapis.com/auth/chromoting "
     "https://www.googleapis.com/auth/googletalk "
@@ -59,18 +56,23 @@ std::string GetAuthorizationCodeUri() {
 
 @interface RemotingMenuViewController () {
   MDCAppBar* _appBar;
-  NSArray<NSArray<SideMenuItem*>*>* _content;
+  NSMutableArray* _content;
 }
 @end
 
 // This is the chromium version of the menu view controller. This will
 // launch a web view to login and collect an oauth token to be able to login to
-// the app without the standard google login flow. It also loads and shows all
-// other menu items from SideMenuItemsProvider.
+// the app without the standard google login flow.
 //
-// The official app's implementation is in //ios_internal.
+// This class is majority boiler plate code to get a collection view.
+// It will be replaced with a sidebar-like view in the future, but in
+// chromium this is how we get an oauth token to login to the app.
 //
 // Note: this class is not localized, it will not be shipped to production.
+//
+// TODO(nicholss): This class needs to be split into a shareable view
+// for chromium and prod to share.
+//
 @implementation RemotingMenuViewController
 
 - (id)init {
@@ -115,38 +117,23 @@ std::string GetAuthorizationCodeUri() {
 
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
 
-  // Add the account management section to the beginning of the content.
-  __weak __typeof(self) weakSelf = self;
-  NSArray<SideMenuItem*>* accountManagementSection = @[
-    [[SideMenuItem alloc]
-        initWithTitle:l10n_util::GetNSString(IDS_SIGN_IN_BUTTON)
-                 icon:nil
-               action:^{
-                 [weakSelf didTapGetAccessCode];
-               }],
-    [[SideMenuItem alloc]
-        initWithTitle:l10n_util::GetNSString(IDS_SIGN_OUT_BUTTON)
-                 icon:nil
-               action:^{
-                 [weakSelf didTapLogout];
-               }]
-  ];
-  NSMutableArray<NSArray<SideMenuItem*>*>* mutableContent =
-      [NSMutableArray arrayWithArray:SideMenuItemsProvider.sideMenuItems];
-  [mutableContent insertObject:accountManagementSection atIndex:0];
-  _content = mutableContent;
+  _content = [NSMutableArray array];
+  [_content addObject:@[
+    l10n_util::GetNSString(IDS_SIGN_IN_BUTTON),
+    l10n_util::GetNSString(IDS_SIGN_OUT_BUTTON)
+  ]];
 }
 
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:
     (UICollectionView*)collectionView {
-  return _content.count;
+  return (NSInteger)[_content count];
 }
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return _content[section].count;
+  return (NSInteger)[_content[(NSUInteger)section] count];
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
@@ -154,9 +141,30 @@ std::string GetAuthorizationCodeUri() {
   MDCCollectionViewTextCell* cell = [collectionView
       dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                 forIndexPath:indexPath];
-  SideMenuItem* item = _content[indexPath.section][indexPath.item];
-  cell.textLabel.text = item.title;
-  cell.imageView.image = item.icon;
+  cell.textLabel.text =
+      _content[(NSUInteger)indexPath.section][(NSUInteger)indexPath.item];
+
+  if (indexPath.section == 0 && indexPath.item == 0) {
+    MDCRaisedButton* accessCodeButton = [[MDCRaisedButton alloc] init];
+    [accessCodeButton setTitle:@"Get Access Code"
+                      forState:UIControlStateNormal];
+    [accessCodeButton sizeToFit];
+    [accessCodeButton addTarget:self
+                         action:@selector(didTapGetAccessCode:)
+               forControlEvents:UIControlEventTouchUpInside];
+    accessCodeButton.translatesAutoresizingMaskIntoConstraints = NO;
+    cell.accessoryView = accessCodeButton;
+  } else if (indexPath.section == 0 && indexPath.item == 1) {
+    MDCRaisedButton* logoutButton = [[MDCRaisedButton alloc] init];
+    [logoutButton setTitle:l10n_util::GetNSString(IDS_SIGN_OUT_BUTTON)
+                  forState:UIControlStateNormal];
+    [logoutButton sizeToFit];
+    [logoutButton addTarget:self
+                     action:@selector(didTapLogout:)
+           forControlEvents:UIControlEventTouchUpInside];
+    logoutButton.translatesAutoresizingMaskIntoConstraints = NO;
+    cell.accessoryView = logoutButton;
+  }
 
   return cell;
 }
@@ -177,24 +185,12 @@ std::string GetAuthorizationCodeUri() {
   return supplementaryView;
 }
 
-#pragma mark - UICollectionViewDelegate
-
-- (void)collectionView:(UICollectionView*)collectionView
-    didSelectItemAtIndexPath:(NSIndexPath*)indexPath {
-  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
-  _content[indexPath.section][indexPath.item].action();
-}
-
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
                              layout:
                                  (UICollectionViewLayout*)collectionViewLayout
     referenceSizeForHeaderInSection:(NSInteger)section {
-  // Only show the title if it's the account manangement section.
-  if (section != 0) {
-    return CGSizeZero;
-  }
   return CGSizeMake(collectionView.bounds.size.width,
                     MDCCellDefaultOneLineHeight);
 }
@@ -205,8 +201,10 @@ std::string GetAuthorizationCodeUri() {
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didTapGetAccessCode {
-  NSString* authUri = base::SysUTF8ToNSString(GetAuthorizationCodeUri());
+- (void)didTapGetAccessCode:(id)sender {
+  NSString* authUri =
+      [NSString stringWithCString:GetAuthorizationCodeUri().c_str()
+                         encoding:[NSString defaultCStringEncoding]];
   if (@available(iOS 10, *)) {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:authUri]
                                        options:@{}
@@ -219,7 +217,7 @@ std::string GetAuthorizationCodeUri() {
 #endif
 }
 
-- (void)didTapLogout {
+- (void)didTapLogout:(id)sender {
   [RemotingService.instance.authentication logout];
 }
 

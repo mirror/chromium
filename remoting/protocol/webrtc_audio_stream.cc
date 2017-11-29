@@ -21,7 +21,7 @@ namespace protocol {
 const char kAudioStreamLabel[] = "audio_stream";
 const char kAudioTrackLabel[] = "system_audio";
 
-WebrtcAudioStream::WebrtcAudioStream() = default;
+WebrtcAudioStream::WebrtcAudioStream() {}
 
 WebrtcAudioStream::~WebrtcAudioStream() {
   if (stream_) {

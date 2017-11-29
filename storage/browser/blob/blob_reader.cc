@@ -69,7 +69,7 @@ int ConvertBlobErrorToNetError(BlobStatus reason) {
 }
 }  // namespace
 
-BlobReader::FileStreamReaderProvider::~FileStreamReaderProvider() = default;
+BlobReader::FileStreamReaderProvider::~FileStreamReaderProvider() {}
 
 BlobReader::BlobReader(const BlobDataHandle* blob_handle)
     : file_task_runner_(base::CreateTaskRunnerWithTraits(
@@ -85,7 +85,8 @@ BlobReader::BlobReader(const BlobDataHandle* blob_handle)
   }
 }
 
-BlobReader::~BlobReader() = default;
+BlobReader::~BlobReader() {
+}
 
 BlobReader::Status BlobReader::CalculateSize(
     const net::CompletionCallback& done) {

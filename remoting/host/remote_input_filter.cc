@@ -30,7 +30,8 @@ RemoteInputFilter::RemoteInputFilter(protocol::InputEventTracker* event_tracker)
       expect_local_echo_(true) {
 }
 
-RemoteInputFilter::~RemoteInputFilter() = default;
+RemoteInputFilter::~RemoteInputFilter() {
+}
 
 void RemoteInputFilter::LocalMouseMoved(
     const webrtc::DesktopVector& mouse_pos) {

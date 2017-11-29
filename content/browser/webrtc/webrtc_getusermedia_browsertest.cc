@@ -435,10 +435,16 @@ IN_PROC_BROWSER_TEST_F(WebRtcGetUserMediaBrowserTest,
                                                   expected_result);
 }
 
-// Test fails under MSan, http://crbug.com/445745.
-// Flaky everywhere: https://crbug.com/789121.
+// Test fails under MSan, http://crbug.com/445745
+#if defined(MEMORY_SANITIZER)
+#define MAYBE_TwoGetUserMediaAndVerifyFrameRate \
+  DISABLED_TwoGetUserMediaAndVerifyFrameRate
+#else
+#define MAYBE_TwoGetUserMediaAndVerifyFrameRate \
+  TwoGetUserMediaAndVerifyFrameRate
+#endif
 IN_PROC_BROWSER_TEST_F(WebRtcGetUserMediaBrowserTest,
-                       DISABLED_TwoGetUserMediaAndVerifyFrameRate) {
+                       MAYBE_TwoGetUserMediaAndVerifyFrameRate) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   GURL url(embedded_test_server()->GetURL("/media/getusermedia.html"));

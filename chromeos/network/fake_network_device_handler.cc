@@ -6,9 +6,9 @@
 
 namespace chromeos {
 
-FakeNetworkDeviceHandler::FakeNetworkDeviceHandler() = default;
+FakeNetworkDeviceHandler::FakeNetworkDeviceHandler() {}
 
-FakeNetworkDeviceHandler::~FakeNetworkDeviceHandler() = default;
+FakeNetworkDeviceHandler::~FakeNetworkDeviceHandler() {}
 
 void FakeNetworkDeviceHandler::GetDeviceProperties(
     const std::string& device_path,

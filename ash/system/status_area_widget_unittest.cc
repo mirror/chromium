@@ -66,8 +66,8 @@ TEST_F(StatusAreaWidgetTest, Basics) {
 
 class SystemTrayFocusTestObserver : public SystemTrayFocusObserver {
  public:
-  SystemTrayFocusTestObserver() = default;
-  ~SystemTrayFocusTestObserver() override = default;
+  SystemTrayFocusTestObserver() {}
+  ~SystemTrayFocusTestObserver() override {}
 
   int focus_out_count() { return focus_out_count_; }
   int reverse_focus_out_count() { return reverse_focus_out_count_; }
@@ -87,8 +87,8 @@ class SystemTrayFocusTestObserver : public SystemTrayFocusObserver {
 
 class StatusAreaWidgetFocusTest : public AshTestBase {
  public:
-  StatusAreaWidgetFocusTest() = default;
-  ~StatusAreaWidgetFocusTest() override = default;
+  StatusAreaWidgetFocusTest() {}
+  ~StatusAreaWidgetFocusTest() override {}
 
   // AshTestBase:
   void SetUp() override {

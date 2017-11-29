@@ -55,8 +55,8 @@ ACTION_P(QuitThreadOnCounter, counter) {
 
 class SslHmacChannelAuthenticatorTest : public testing::Test {
  public:
-  SslHmacChannelAuthenticatorTest() = default;
-  ~SslHmacChannelAuthenticatorTest() override = default;
+  SslHmacChannelAuthenticatorTest() {}
+  ~SslHmacChannelAuthenticatorTest() override {}
 
  protected:
   void SetUp() override {

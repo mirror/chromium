@@ -19,6 +19,8 @@
 #include "third_party/re2/src/re2/re2.h"
 #include "url/gurl.h"
 
+namespace chrome {
+
 namespace android {
 
 DataUseMatcher::DataUseMatcher(
@@ -202,3 +204,5 @@ const base::TimeTicks& DataUseMatcher::MatchingRule::expiration() const {
 }
 
 }  // namespace android
+
+}  // namespace chrome

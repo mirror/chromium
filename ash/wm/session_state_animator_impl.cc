@@ -291,7 +291,7 @@ class CallbackAnimationObserver : public ui::LayerAnimationObserver {
  public:
   explicit CallbackAnimationObserver(base::Closure callback)
       : callback_(callback) {}
-  ~CallbackAnimationObserver() override = default;
+  ~CallbackAnimationObserver() override {}
 
  private:
   // Overridden from ui::LayerAnimationObserver:
@@ -457,7 +457,7 @@ class SessionStateAnimatorImpl::AnimationSequence
   }
 
  private:
-  ~AnimationSequence() override = default;
+  ~AnimationSequence() override {}
 
   // ui::LayerAnimationObserver:
   void OnLayerAnimationEnded(ui::LayerAnimationSequence* sequence) override {
@@ -513,9 +513,9 @@ bool SessionStateAnimatorImpl::TestApi::RootWindowIsAnimated(
   return IsLayerAnimated(layer, type);
 }
 
-SessionStateAnimatorImpl::SessionStateAnimatorImpl() = default;
+SessionStateAnimatorImpl::SessionStateAnimatorImpl() {}
 
-SessionStateAnimatorImpl::~SessionStateAnimatorImpl() = default;
+SessionStateAnimatorImpl::~SessionStateAnimatorImpl() {}
 
 // Fills |containers| with the containers described by |container_mask|.
 void SessionStateAnimatorImpl::GetContainers(

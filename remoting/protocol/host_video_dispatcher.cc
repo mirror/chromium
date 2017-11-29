@@ -20,7 +20,7 @@ namespace protocol {
 
 HostVideoDispatcher::HostVideoDispatcher()
     : ChannelDispatcherBase(kVideoChannelName) {}
-HostVideoDispatcher::~HostVideoDispatcher() = default;
+HostVideoDispatcher::~HostVideoDispatcher() {}
 
 void HostVideoDispatcher::ProcessVideoPacket(
     std::unique_ptr<VideoPacket> packet,

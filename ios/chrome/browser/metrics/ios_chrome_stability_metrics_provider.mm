@@ -13,13 +13,9 @@
 #error "This file requires ARC support."
 #endif
 
-// Name of the UMA enum histogram that counts DidStartNavigation events by type.
-const char IOSChromeStabilityMetricsProvider::kPageLoadCountMetric[] =
-    "IOS.PageLoadCount.Counts";
-// Name of the UMA enum history that counts DidStartLoading events.
 const char
-    IOSChromeStabilityMetricsProvider::kPageLoadCountLoadingStartedMetric[] =
-        "IOS.PageLoadCount.LoadingStarted";
+    IOSChromeStabilityMetricsProvider::kPageLoadCountMigrationEventKey[] =
+        "IOS.PageLoadCountMigration.Counts";
 
 IOSChromeStabilityMetricsProvider::IOSChromeStabilityMetricsProvider(
     PrefService* local_state)
@@ -62,7 +58,9 @@ void IOSChromeStabilityMetricsProvider::WebStateDidStartLoading(
   if (!recording_enabled_)
     return;
 
-  UMA_HISTOGRAM_BOOLEAN(kPageLoadCountLoadingStartedMetric, true);
+  UMA_HISTOGRAM_ENUMERATION(kPageLoadCountMigrationEventKey,
+                            StabilityMetricEventType::LOADING_STARTED,
+                            StabilityMetricEventType::COUNT);
   helper_.LogLoadStarted();
 }
 
@@ -72,17 +70,17 @@ void IOSChromeStabilityMetricsProvider::WebStateDidStartNavigation(
   if (!recording_enabled_)
     return;
 
-  PageLoadCountNavigationType type =
-      PageLoadCountNavigationType::PAGE_LOAD_NAVIGATION;
+  StabilityMetricEventType type =
+      StabilityMetricEventType::PAGE_LOAD_NAVIGATION;
   if (navigation_context->GetUrl().SchemeIs(kChromeUIScheme)) {
-    type = PageLoadCountNavigationType::CHROME_URL_NAVIGATION;
+    type = StabilityMetricEventType::CHROME_URL_NAVIGATION;
   } else if (navigation_context->IsSameDocument()) {
-    type = PageLoadCountNavigationType::SAME_DOCUMENT_WEB_NAVIGATION;
+    type = StabilityMetricEventType::SAME_DOCUMENT_WEB_NAVIGATION;
   } else {
     // TODO(crbug.com/786547): Move helper_.LogLoadStarted() here.
   }
-  UMA_HISTOGRAM_ENUMERATION(kPageLoadCountMetric, type,
-                            PageLoadCountNavigationType::COUNT);
+  UMA_HISTOGRAM_ENUMERATION(kPageLoadCountMigrationEventKey, type,
+                            StabilityMetricEventType::COUNT);
 }
 
 void IOSChromeStabilityMetricsProvider::RenderProcessGone(

@@ -60,8 +60,8 @@ using aura::test::WindowIsAbove;
 
 class PanelLayoutManagerTest : public AshTestBase {
  public:
-  PanelLayoutManagerTest() = default;
-  ~PanelLayoutManagerTest() override = default;
+  PanelLayoutManagerTest() {}
+  ~PanelLayoutManagerTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();
@@ -116,7 +116,7 @@ class PanelLayoutManagerTest : public AshTestBase {
 
   void PanelInScreen(aura::Window* panel) {
     gfx::Rect panel_bounds = panel->GetBoundsInRootWindow();
-    gfx::Point root_point = panel_bounds.origin();
+    gfx::Point root_point = gfx::Point(panel_bounds.x(), panel_bounds.y());
     display::Display display =
         display::Screen::GetScreen()->GetDisplayNearestPoint(root_point);
 
@@ -265,7 +265,7 @@ class PanelLayoutManagerTextDirectionTest
       public testing::WithParamInterface<bool> {
  public:
   PanelLayoutManagerTextDirectionTest() : is_rtl_(GetParam()) {}
-  virtual ~PanelLayoutManagerTextDirectionTest() = default;
+  virtual ~PanelLayoutManagerTextDirectionTest() {}
 
   void SetUp() override {
     original_locale_ = base::i18n::GetConfiguredLocale();

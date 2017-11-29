@@ -9,7 +9,8 @@
 
   var fileSystemPath = 'file:///tmp/';
 
-  var {isolatedFileSystem, project} = await createFileSystem();
+  var fileSystem = await createFileSystem();
+  var project = Workspace.workspace.project(fileSystem.fileSystemPath);
   // Using data url because about:blank does not trigger onload.
   await TestRunner.addIframe('data:,', { id: 'test-iframe' });
 
@@ -55,10 +56,17 @@
   }
 
   async function createFileSystem() {
-    var {isolatedFileSystem, project} = await BindingsTestRunner.createOverrideProject(fileSystemPath);
+    var project = await BindingsTestRunner.createOverrideProject(fileSystemPath);
     BindingsTestRunner.setOverridesEnabled(true);
     Persistence.networkPersistenceManager.addFileSystemOverridesProject(
         Persistence.NetworkPersistenceManager.inspectedPageDomain(), project);
-    return {isolatedFileSystem, project};
+
+    var fileSystem = InspectorFrontendHost.isolatedFileSystem(fileSystemPath);
+    if (!fileSystem) {
+      testRunner.addResult('ERROR: Expected filesystem with path: ' + fileSystemPath);
+      testRunner.completeTest();
+      return;
+    }
+    return fileSystem;
   }
 })();

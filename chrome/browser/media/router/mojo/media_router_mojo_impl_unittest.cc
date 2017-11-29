@@ -325,7 +325,7 @@ TEST_F(MediaRouterMojoImplTest, IncognitoRoutesTerminatedOnProfileShutdown) {
 }
 
 TEST_F(MediaRouterMojoImplTest, JoinRoute) {
-  TestJoinRoute(kPresentationId);
+  TestJoinRoute();
   ExpectResultBucketCount("JoinRoute", RouteRequestResult::OK, 1);
 }
 

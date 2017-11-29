@@ -74,6 +74,7 @@ source_set("common") {
     "cache_storage/cache_storage_types.h",
     "child_process_host_impl.cc",
     "child_process_host_impl.h",
+    "child_process_messages.h",
     "clipboard_format.h",
     "common_sandbox_support_linux.cc",
     "content_constants_internal.cc",
@@ -263,6 +264,7 @@ source_set("common") {
     "quarantine/quarantine_linux.cc",
     "quarantine/quarantine_mac.mm",
     "quarantine/quarantine_win.cc",
+    "quota_messages.h",
     "render_widget_surface_properties.cc",
     "render_widget_surface_properties.h",
     "resize_params.cc",
@@ -586,7 +588,6 @@ mojom("mojo_bindings") {
     "native_types.mojom",
     "page_state.mojom",
     "push_messaging.mojom",
-    "quota_dispatcher_host.mojom",
     "render_frame_message_filter.mojom",
     "render_message_filter.mojom",
     "render_widget_window_tree_client_factory.mojom",
@@ -600,6 +601,7 @@ mojom("mojo_bindings") {
     "service_worker/service_worker_fetch_response_callback.mojom",
     "service_worker/service_worker_installed_scripts_manager.mojom",
     "service_worker/service_worker_provider.mojom",
+    "service_worker/service_worker_types.mojom",
     "shared_worker/shared_worker.mojom",
     "shared_worker/shared_worker_client.mojom",
     "shared_worker/shared_worker_connector.mojom",
@@ -611,10 +613,6 @@ mojom("mojo_bindings") {
     "video_capture.mojom",
     "widget.mojom",
   ]
-
-  if (is_win) {
-    sources += [ "font_cache_win.mojom" ]
-  }
 
   import_dirs = [ "//mojo/services" ]
 
@@ -631,7 +629,6 @@ mojom("mojo_bindings") {
     "//services/video_capture/public/interfaces",
     "//services/viz/public/interfaces",
     "//skia/public/interfaces",
-    "//storage/common:mojo_bindings",
     "//third_party/WebKit/public:mojo_bindings",
     "//ui/base/clipboard/mojom:mojo_bindings",
     "//ui/base/mojo:mojo_bindings",

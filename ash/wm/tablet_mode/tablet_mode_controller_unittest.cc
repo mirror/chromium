@@ -68,8 +68,8 @@ extern const size_t kAccelerometerVerticalHingeUnstableAnglesTestDataLength;
 
 class TabletModeControllerTest : public AshTestBase {
  public:
-  TabletModeControllerTest() = default;
-  ~TabletModeControllerTest() override = default;
+  TabletModeControllerTest() {}
+  ~TabletModeControllerTest() override {}
 
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(

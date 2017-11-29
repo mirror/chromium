@@ -18,9 +18,9 @@
 
 namespace ash {
 
-ImmersiveContextAsh::ImmersiveContextAsh() = default;
+ImmersiveContextAsh::ImmersiveContextAsh() {}
 
-ImmersiveContextAsh::~ImmersiveContextAsh() = default;
+ImmersiveContextAsh::~ImmersiveContextAsh() {}
 
 void ImmersiveContextAsh::InstallResizeHandleWindowTargeter(
     ImmersiveFullscreenController* controller) {

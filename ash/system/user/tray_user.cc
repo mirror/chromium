@@ -38,7 +38,7 @@ namespace ash {
 TrayUser::TrayUser(SystemTray* system_tray)
     : SystemTrayItem(system_tray, UMA_USER), scoped_session_observer_(this) {}
 
-TrayUser::~TrayUser() = default;
+TrayUser::~TrayUser() {}
 
 TrayUser::TestState TrayUser::GetStateForTest() const {
   if (!user_)

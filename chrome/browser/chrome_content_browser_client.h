@@ -98,7 +98,6 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       bool* in_memory) override;
   content::WebContentsViewDelegate* GetWebContentsViewDelegate(
       content::WebContents* web_contents) override;
-  bool AllowGpuLaunchRetryOnIOThread() override;
   void RenderProcessWillLaunch(content::RenderProcessHost* host) override;
   GURL GetEffectiveURL(content::BrowserContext* browser_context,
                        const GURL& url,
@@ -171,12 +170,6 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       const GURL& first_party,
       content::ResourceContext* context,
       const base::Callback<content::WebContents*(void)>& wc_getter) override;
-  bool AllowSharedWorker(const GURL& worker_url,
-                         const GURL& main_frame_url,
-                         const std::string& name,
-                         content::BrowserContext* context,
-                         int render_process_id,
-                         int render_frame_id) override;
   bool AllowGetCookie(const GURL& url,
                       const GURL& first_party,
                       const net::CookieList& cookie_list,
@@ -309,7 +302,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
 #endif
   void ExposeInterfacesToRenderer(
       service_manager::BinderRegistry* registry,
-      blink::AssociatedInterfaceRegistry* associated_registry,
+      content::AssociatedInterfaceRegistry* associated_registry,
       content::RenderProcessHost* render_process_host) override;
   void ExposeInterfacesToMediaService(
       service_manager::BinderRegistry* registry,

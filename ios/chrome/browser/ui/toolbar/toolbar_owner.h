@@ -5,7 +5,7 @@
 #ifndef IOS_CHROME_BROWSER_UI_TOOLBAR_TOOLBAR_OWNER_H_
 #define IOS_CHROME_BROWSER_UI_TOOLBAR_TOOLBAR_OWNER_H_
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 @class ToolbarController;
 @protocol ToolbarSnapshotProviding;

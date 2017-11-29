@@ -21,8 +21,8 @@ namespace ash {
 
 class MultiProfileMediaTrayItemTest : public AshTestBase {
  public:
-  MultiProfileMediaTrayItemTest() = default;
-  ~MultiProfileMediaTrayItemTest() override = default;
+  MultiProfileMediaTrayItemTest() {}
+  ~MultiProfileMediaTrayItemTest() override {}
 
   void SetMediaCaptureState(mojom::MediaCaptureState state) {
     // Create the fake update.

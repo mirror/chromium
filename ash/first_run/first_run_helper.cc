@@ -6,8 +6,8 @@
 
 namespace ash {
 
-FirstRunHelper::FirstRunHelper() = default;
-FirstRunHelper::~FirstRunHelper() = default;
+FirstRunHelper::FirstRunHelper() {}
+FirstRunHelper::~FirstRunHelper() {}
 
 void FirstRunHelper::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);

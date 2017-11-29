@@ -497,7 +497,7 @@ void BrowserTabStripController::TabMoved(WebContents* contents,
 void BrowserTabStripController::TabChangedAt(WebContents* contents,
                                              int model_index,
                                              TabChangeType change_type) {
-  if (change_type == TabChangeType::kTitleNotLoading) {
+  if (change_type == TITLE_NOT_LOADING) {
     tabstrip_->TabTitleChangedNotLoading(model_index);
     // We'll receive another notification of the change asynchronously.
     return;

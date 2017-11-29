@@ -18,9 +18,6 @@ class BASE_EXPORT DefaultClock : public Clock {
 
   // Simply returns Time::Now().
   Time Now() override;
-
-  // Returns a shared instance of DefaultClock. This is thread-safe.
-  static DefaultClock* GetInstance();
 };
 
 }  // namespace base

@@ -172,7 +172,8 @@ void Notification::PrepareShow() {
     return;
   }
 
-  if (NotificationManager::From(GetExecutionContext())->GetPermissionStatus() !=
+  if (NotificationManager::From(GetExecutionContext())
+          ->GetPermissionStatus(GetExecutionContext()) !=
       mojom::blink::PermissionStatus::GRANTED) {
     DispatchErrorEvent();
     return;
@@ -379,7 +380,7 @@ String Notification::permission(ExecutionContext* context) {
     return PermissionString(mojom::blink::PermissionStatus::DENIED);
 
   mojom::blink::PermissionStatus status =
-      NotificationManager::From(context)->GetPermissionStatus();
+      NotificationManager::From(context)->GetPermissionStatus(context);
 
   // Permission can only be requested from top-level frames and same-origin
   // iframes. This should be reflected in calls getting permission status.

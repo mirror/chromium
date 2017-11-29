@@ -21,7 +21,7 @@ class KeyboardOverlayDelegateTest
       public testing::WithParamInterface<ShelfAlignment> {
  public:
   KeyboardOverlayDelegateTest() : shelf_alignment_(GetParam()) {}
-  virtual ~KeyboardOverlayDelegateTest() = default;
+  virtual ~KeyboardOverlayDelegateTest() {}
   ShelfAlignment shelf_alignment() const { return shelf_alignment_; }
 
  private:

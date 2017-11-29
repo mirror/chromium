@@ -10,7 +10,6 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_style.h"
 
 @class ToolbarButton;
-@class ToolbarToolsMenuButton;
 @class ToolbarConfiguration;
 
 // ToolbarButton Factory protocol to create ToolbarButton objects with certain
@@ -35,17 +34,15 @@
 // Tab Switcher Grid ToolbarButton.
 - (ToolbarButton*)tabSwitcherGridToolbarButton;
 // Tools Menu ToolbarButton.
-- (ToolbarToolsMenuButton*)toolsMenuToolbarButton;
+- (ToolbarButton*)toolsMenuToolbarButton;
 // Share ToolbarButton.
 - (ToolbarButton*)shareToolbarButton;
 // Reload ToolbarButton.
 - (ToolbarButton*)reloadToolbarButton;
 // Stop ToolbarButton.
 - (ToolbarButton*)stopToolbarButton;
-// Bookmark ToolbarButton.
-- (ToolbarButton*)bookmarkToolbarButton;
-// VoiceSearch ToolbarButton.
-- (ToolbarButton*)voiceSearchButton;
+// Star ToolbarButton.
+- (ToolbarButton*)starToolbarButton;
 
 // Returns images for Voice Search in an array representing the NORMAL/PRESSED
 // state

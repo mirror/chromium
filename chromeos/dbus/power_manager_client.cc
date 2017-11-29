@@ -1008,9 +1008,11 @@ class PowerManagerClientImpl : public PowerManagerClient {
   DISALLOW_COPY_AND_ASSIGN(PowerManagerClientImpl);
 };
 
-PowerManagerClient::PowerManagerClient() = default;
+PowerManagerClient::PowerManagerClient() {
+}
 
-PowerManagerClient::~PowerManagerClient() = default;
+PowerManagerClient::~PowerManagerClient() {
+}
 
 // static
 PowerManagerClient* PowerManagerClient::Create(

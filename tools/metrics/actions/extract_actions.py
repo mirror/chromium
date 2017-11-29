@@ -286,6 +286,9 @@ def AddExtensionActions(actions):
   actions.add('ConnectivityDiagnostics.UA.TestResultExpanded')
   actions.add('ConnectivityDiagnostics.UA.TestSuiteRun')
 
+  # Actions sent by 'Ok Google' Hotwording.
+  actions.add('Hotword.HotwordTrigger')
+
 
 class InvalidStatementException(Exception):
   """Indicates an invalid statement was found."""

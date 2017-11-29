@@ -39,15 +39,13 @@ ACTION_P(QuitThreadOnCounter, counter) {
 
 }  // namespace
 
-AuthenticatorTestBase::MockChannelDoneCallback::MockChannelDoneCallback() =
-    default;
+AuthenticatorTestBase::MockChannelDoneCallback::MockChannelDoneCallback() {}
 
-AuthenticatorTestBase::MockChannelDoneCallback::~MockChannelDoneCallback() =
-    default;
+AuthenticatorTestBase::MockChannelDoneCallback::~MockChannelDoneCallback() {}
 
-AuthenticatorTestBase::AuthenticatorTestBase() = default;
+AuthenticatorTestBase::AuthenticatorTestBase() {}
 
-AuthenticatorTestBase::~AuthenticatorTestBase() = default;
+AuthenticatorTestBase::~AuthenticatorTestBase() {}
 
 void AuthenticatorTestBase::SetUp() {
   base::FilePath certs_dir(net::GetTestCertsDirectory());

@@ -17,7 +17,7 @@
 namespace remoting {
 
 FakeInputInjector::FakeInputInjector() : weak_factory_(this) {}
-FakeInputInjector::~FakeInputInjector() = default;
+FakeInputInjector::~FakeInputInjector() {}
 
 void FakeInputInjector::Start(
     std::unique_ptr<protocol::ClipboardStub> client_clipboard) {}
@@ -48,8 +48,8 @@ void FakeInputInjector::InjectClipboardEvent(
     clipboard_events_->push_back(event);
 }
 
-FakeScreenControls::FakeScreenControls() = default;
-FakeScreenControls::~FakeScreenControls() = default;
+FakeScreenControls::FakeScreenControls() {}
+FakeScreenControls::~FakeScreenControls() {}
 
 void FakeScreenControls::SetScreenResolution(
     const ScreenResolution& resolution) {

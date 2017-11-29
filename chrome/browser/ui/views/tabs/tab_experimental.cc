@@ -94,16 +94,9 @@ void TabExperimental::SetSelected(bool selected) {
   }
 }
 
-void TabExperimental::DataUpdated(TabChangeType change_type) {
-  if (change_type == TabChangeType::kLoadingOnly)
-    return;  // TODO(brettw) need to add throbber support.
-
-  title_->SetText(data_->GetTitle());
-  if (change_type == TabChangeType::kTitleNotLoading)
-    return;  // Don't need to update anything else.
-
+void TabExperimental::DataUpdated() {
   type_ = data_->type();
-  SchedulePaint();
+  title_->SetText(data_->GetTitle());
 }
 
 void TabExperimental::SetGroupLayoutParams(int first_child_begin_x) {

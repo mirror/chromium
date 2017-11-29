@@ -6,7 +6,7 @@
 
 namespace mojo {
 
-ImageFilterBuffer::ImageFilterBuffer() = default;
+ImageFilterBuffer::ImageFilterBuffer() {}
 
 ImageFilterBuffer::ImageFilterBuffer(const ImageFilterBuffer& other) = default;
 

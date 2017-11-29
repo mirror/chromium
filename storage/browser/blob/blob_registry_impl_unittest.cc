@@ -64,8 +64,8 @@ class MockBlob : public blink::mojom::Blob {
 
 class MockDelegate : public BlobRegistryImpl::Delegate {
  public:
-  MockDelegate() = default;
-  ~MockDelegate() override = default;
+  MockDelegate() {}
+  ~MockDelegate() override {}
 
   bool CanReadFile(const base::FilePath& file) override {
     return can_read_file_result;

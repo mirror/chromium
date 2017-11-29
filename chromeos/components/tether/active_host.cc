@@ -60,9 +60,17 @@ ActiveHost::ActiveHostChangeInfo::ActiveHostChangeInfo(
       old_wifi_network_guid(old_wifi_network_guid) {}
 
 ActiveHost::ActiveHostChangeInfo::ActiveHostChangeInfo(
-    const ActiveHostChangeInfo& other) = default;
+    const ActiveHostChangeInfo& other)
+    : new_status(other.new_status),
+      old_status(other.old_status),
+      new_active_host(other.new_active_host),
+      old_active_host_id(other.old_active_host_id),
+      new_tether_network_guid(other.new_tether_network_guid),
+      old_tether_network_guid(other.old_tether_network_guid),
+      new_wifi_network_guid(other.new_wifi_network_guid),
+      old_wifi_network_guid(other.old_wifi_network_guid) {}
 
-ActiveHost::ActiveHostChangeInfo::~ActiveHostChangeInfo() = default;
+ActiveHost::ActiveHostChangeInfo::~ActiveHostChangeInfo() {}
 
 ActiveHost::ActiveHost(TetherHostFetcher* tether_host_fetcher,
                        PrefService* pref_service)
@@ -70,7 +78,7 @@ ActiveHost::ActiveHost(TetherHostFetcher* tether_host_fetcher,
       pref_service_(pref_service),
       weak_ptr_factory_(this) {}
 
-ActiveHost::~ActiveHost() = default;
+ActiveHost::~ActiveHost() {}
 
 // static
 void ActiveHost::RegisterPrefs(PrefRegistrySimple* registry) {

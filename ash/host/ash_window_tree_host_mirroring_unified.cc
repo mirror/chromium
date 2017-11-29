@@ -21,8 +21,7 @@ AshWindowTreeHostMirroringUnified::AshWindowTreeHostMirroringUnified(
   DCHECK(delegate_);
 }
 
-AshWindowTreeHostMirroringUnified::~AshWindowTreeHostMirroringUnified() =
-    default;
+AshWindowTreeHostMirroringUnified::~AshWindowTreeHostMirroringUnified() {}
 
 gfx::Transform
 AshWindowTreeHostMirroringUnified::GetRootTransformForLocalEventCoordinates()

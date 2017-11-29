@@ -204,7 +204,7 @@ class GeolocationReceiver {
 
 class WirelessTestMonitor : public SimpleGeolocationRequestTestMonitor {
  public:
-  WirelessTestMonitor() = default;
+  WirelessTestMonitor() {}
 
   void OnRequestCreated(SimpleGeolocationRequest* request) override {}
   void OnStart(SimpleGeolocationRequest* request) override {
@@ -343,7 +343,7 @@ class SimpleGeolocationWirelessTest : public ::testing::TestWithParam<bool> {
  public:
   SimpleGeolocationWirelessTest() : manager_test_(nullptr) {}
 
-  ~SimpleGeolocationWirelessTest() override = default;
+  ~SimpleGeolocationWirelessTest() override {}
 
   void SetUp() override {
     // This initializes DBusThreadManager and markes it "for tests only".

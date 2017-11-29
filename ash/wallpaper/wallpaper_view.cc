@@ -98,8 +98,8 @@ SkColor GetWallpaperDarkenColor() {
 //   - Disabling overview mode on mouse release.
 class PreEventDispatchHandler : public ui::EventHandler {
  public:
-  PreEventDispatchHandler() = default;
-  ~PreEventDispatchHandler() override = default;
+  PreEventDispatchHandler() {}
+  ~PreEventDispatchHandler() override {}
 
  private:
   // ui::EventHandler:

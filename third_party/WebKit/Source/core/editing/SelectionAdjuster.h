@@ -19,7 +19,6 @@ class CORE_EXPORT SelectionAdjuster final {
   STATIC_ONLY(SelectionAdjuster);
 
  public:
-  // TODO(editing-dev): Move these functions to ShadowBoundaryAdjuster.
   static Position AdjustSelectionStartToAvoidCrossingShadowBoundaries(
       const EphemeralRange&);
   static Position AdjustSelectionEndToAvoidCrossingShadowBoundaries(
@@ -34,10 +33,6 @@ class CORE_EXPORT SelectionAdjuster final {
   static SelectionInFlatTree AdjustSelectionRespectingGranularity(
       const SelectionInFlatTree&,
       TextGranularity);
-  static SelectionInDOMTree AdjustSelectionToAvoidCrossingShadowBoundaries(
-      const SelectionInDOMTree&);
-  static SelectionInFlatTree AdjustSelectionToAvoidCrossingShadowBoundaries(
-      const SelectionInFlatTree&);
 };
 
 }  // namespace blink

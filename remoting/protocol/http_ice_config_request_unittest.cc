@@ -44,7 +44,7 @@ class FakeUrlRequest : public UrlRequest {
  public:
   FakeUrlRequest(const Result& result, bool expect_oauth_token)
       : result_(result), expect_oauth_token_(expect_oauth_token) {}
-  ~FakeUrlRequest() override = default;
+  ~FakeUrlRequest() override {}
 
   // UrlRequest interface.
   void AddHeader(const std::string& value) override {
@@ -71,8 +71,8 @@ class FakeUrlRequest : public UrlRequest {
 
 class FakeUrlRequestFactory : public UrlRequestFactory {
  public:
-  FakeUrlRequestFactory() = default;
-  ~FakeUrlRequestFactory() override = default;
+  FakeUrlRequestFactory() {}
+  ~FakeUrlRequestFactory() override {}
 
   void SetResult(const std::string& url, const UrlRequest::Result& result) {
     results_[url] = result;

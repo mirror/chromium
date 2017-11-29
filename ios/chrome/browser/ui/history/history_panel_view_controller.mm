@@ -188,11 +188,6 @@ CGFloat kShadowOpacity = 0.2f;
   return NO;
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)orient {
-  [super didRotateFromInterfaceOrientation:orient];
-  [_clearBrowsingBar updateHeight];
-}
-
 #pragma mark - Status bar
 
 - (BOOL)modalPresentationCapturesStatusBarAppearance {

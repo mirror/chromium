@@ -51,7 +51,7 @@ ShellBrowserMainParts::ShellBrowserMainParts(
     const content::MainFunctionParams& parameters)
     : BrowserMainParts(), delegate_(nullptr) {}
 
-ShellBrowserMainParts::~ShellBrowserMainParts() = default;
+ShellBrowserMainParts::~ShellBrowserMainParts() {}
 
 void ShellBrowserMainParts::PreMainMessageLoopStart() {}
 

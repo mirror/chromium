@@ -39,7 +39,7 @@ WindowRotation::WindowRotation(int degrees, ui::Layer* layer)
   InitTransform(layer);
 }
 
-WindowRotation::~WindowRotation() = default;
+WindowRotation::~WindowRotation() {}
 
 void WindowRotation::InitTransform(ui::Layer* layer) {
   // No rotation required, use the identity transform.

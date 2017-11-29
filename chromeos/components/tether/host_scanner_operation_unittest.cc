@@ -38,7 +38,7 @@ constexpr base::TimeDelta kTetherAvailabilityResponseTime =
 class TestHostScanDevicePrioritizer : public HostScanDevicePrioritizer {
  public:
   TestHostScanDevicePrioritizer() : HostScanDevicePrioritizer() {}
-  ~TestHostScanDevicePrioritizer() override = default;
+  ~TestHostScanDevicePrioritizer() override {}
 
   // HostScanDevicePrioritizer:
   void SortByHostScanOrder(

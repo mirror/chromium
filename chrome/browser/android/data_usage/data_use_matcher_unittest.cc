@@ -60,7 +60,7 @@ class NowTestTickClock : public base::TickClock {
 };
 
 class TestExternalDataUseObserverBridge
-    : public android::ExternalDataUseObserverBridge {
+    : public chrome::android::ExternalDataUseObserverBridge {
  public:
   TestExternalDataUseObserverBridge() {}
   void FetchMatchingRules() const override {}
@@ -68,6 +68,8 @@ class TestExternalDataUseObserverBridge
 };
 
 }  // namespace
+
+namespace chrome {
 
 namespace android {
 
@@ -552,3 +554,5 @@ TEST_F(DataUseMatcherTest, MatchesIgnoresExpiredRules) {
 }
 
 }  // namespace android
+
+}  // namespace chrome

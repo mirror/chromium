@@ -58,9 +58,9 @@ std::unique_ptr<BleScanner> BleScannerImpl::Factory::BuildInstance(
                                           ble_synchronizer);
 }
 
-BleScannerImpl::ServiceDataProviderImpl::ServiceDataProviderImpl() = default;
+BleScannerImpl::ServiceDataProviderImpl::ServiceDataProviderImpl() {}
 
-BleScannerImpl::ServiceDataProviderImpl::~ServiceDataProviderImpl() = default;
+BleScannerImpl::ServiceDataProviderImpl::~ServiceDataProviderImpl() {}
 
 const std::vector<uint8_t>*
 BleScannerImpl::ServiceDataProviderImpl::GetServiceDataForUUID(

@@ -41,7 +41,7 @@ void MockStorageClient::Populate(
   }
 }
 
-MockStorageClient::~MockStorageClient() = default;
+MockStorageClient::~MockStorageClient() {}
 
 void MockStorageClient::AddOriginAndNotify(const GURL& origin_url,
                                            StorageType type,

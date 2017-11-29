@@ -58,7 +58,7 @@ OverviewButtonTray* GetTray() {
 
 class AnimationObserver : public ScreenRotationAnimatorObserver {
  public:
-  AnimationObserver() = default;
+  AnimationObserver() {}
 
   bool notified() const { return notified_; }
 
@@ -78,7 +78,7 @@ class TestScreenRotationAnimator : public ScreenRotationAnimator {
   TestScreenRotationAnimator(aura::Window* root_window,
                              const base::Closure& before_callback,
                              const base::Closure& after_callback);
-  ~TestScreenRotationAnimator() override = default;
+  ~TestScreenRotationAnimator() override {}
 
  private:
   CopyCallback CreateAfterCopyCallbackBeforeRotation(
@@ -143,8 +143,8 @@ void TestScreenRotationAnimator::IntersectAfter(
 
 class ScreenRotationAnimatorSlowAnimationTest : public AshTestBase {
  public:
-  ScreenRotationAnimatorSlowAnimationTest() = default;
-  ~ScreenRotationAnimatorSlowAnimationTest() override = default;
+  ScreenRotationAnimatorSlowAnimationTest() {}
+  ~ScreenRotationAnimatorSlowAnimationTest() override {}
 
   // AshTestBase:
   void SetUp() override;
@@ -183,8 +183,8 @@ void ScreenRotationAnimatorSlowAnimationTest::SetUp() {
 
 class ScreenRotationAnimatorSmoothAnimationTest : public AshTestBase {
  public:
-  ScreenRotationAnimatorSmoothAnimationTest() = default;
-  ~ScreenRotationAnimatorSmoothAnimationTest() override = default;
+  ScreenRotationAnimatorSmoothAnimationTest() {}
+  ~ScreenRotationAnimatorSmoothAnimationTest() override {}
 
   // AshTestBase:
   void SetUp() override;

@@ -279,7 +279,7 @@ NGLayoutInputNode NGBlockNode::NextSibling() const {
   return nullptr;
 }
 
-NGLayoutInputNode NGBlockNode::FirstChild() const {
+NGLayoutInputNode NGBlockNode::FirstChild() {
   auto* block = ToLayoutBlockFlow(box_);
   auto* child = GetLayoutObjectForFirstChildNode(block);
   if (!child)

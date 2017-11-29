@@ -26,7 +26,7 @@ SdpMessage::SdpMessage(const std::string& sdp) {
   }
 }
 
-SdpMessage::~SdpMessage() = default;
+SdpMessage::~SdpMessage() {}
 
 std::string SdpMessage::ToString() const {
   return base::JoinString(sdp_lines_, "\n") + "\n";

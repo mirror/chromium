@@ -46,7 +46,7 @@ const storage::FileSystemType kFileSystemType = storage::kFileSystemTypeTest;
 
 class LocalFileUtilTest : public testing::Test {
  public:
-  LocalFileUtilTest() = default;
+  LocalFileUtilTest() {}
 
   void SetUp() override {
     ASSERT_TRUE(data_dir_.CreateUniqueTempDir());

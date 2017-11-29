@@ -378,14 +378,16 @@ bool AutofillManager::OnFormSubmitted(const FormData& form) {
 
   CreditCard credit_card =
       form_data_importer_->ExtractCreditCardFromForm(*submitted_form);
-  AutofillMetrics::CardNumberStatus card_number_status =
-      GetCardNumberStatus(credit_card);
+  if (IsValidCreditCardNumber(credit_card.number())) {
+    credit_card_form_event_logger_->DetectedCardInSubmittedForm();
+    if (personal_data_->IsKnownCard(credit_card)) {
+      credit_card_form_event_logger_->SubmittedKnownCard();
+    }
+  }
 
-  address_form_event_logger_->OnFormSubmitted(/*force_logging=*/false,
-                                              card_number_status);
+  address_form_event_logger_->OnFormSubmitted(/*force_logging=*/false);
   if (IsCreditCardAutofillEnabled())
-    credit_card_form_event_logger_->OnFormSubmitted(enable_ablation_logging_,
-                                                    card_number_status);
+    credit_card_form_event_logger_->OnFormSubmitted(enable_ablation_logging_);
 
   // Update Personal Data with the form's submitted data.
   // Also triggers offering local/upload credit card save, if applicable.
@@ -1082,7 +1084,11 @@ bool AutofillManager::IsCreditCardAutofillEnabled() {
 
 bool AutofillManager::ShouldUploadForm(const FormStructure& form) {
   return IsAutofillEnabled() && !driver()->IsIncognito() &&
-         form.ShouldBeUploaded();
+         form.ShouldBeParsed() &&
+         (form.active_field_count() >= kRequiredFieldsForUpload ||
+          (form.all_fields_are_passwords() &&
+           form.active_field_count() >=
+               kRequiredFieldsForFormsWithOnlyPasswordFields));
 }
 
 // Note that |submitted_form| is passed as a pointer rather than as a reference
@@ -1095,14 +1101,11 @@ void AutofillManager::UploadFormDataAsyncCallback(
     const TimeTicks& interaction_time,
     const TimeTicks& submission_time,
     bool observed_submission) {
-  if (submitted_form->ShouldRunHeuristics() ||
-      submitted_form->ShouldBeQueried()) {
-    submitted_form->LogQualityMetrics(
-        load_time, interaction_time, submission_time,
-        form_interactions_ukm_logger_.get(), did_show_suggestions_,
-        observed_submission);
-  }
-  if (submitted_form->ShouldBeUploaded())
+  submitted_form->LogQualityMetrics(load_time, interaction_time,
+                                    submission_time,
+                                    form_interactions_ukm_logger_.get(),
+                                    did_show_suggestions_, observed_submission);
+  if (submitted_form->ShouldBeCrowdsourced())
     UploadFormData(*submitted_form, observed_submission);
 }
 
@@ -1212,6 +1215,9 @@ AutofillManager::AutofillManager(
   CountryNames::SetLocaleString(app_locale_);
   if (personal_data_ && client_)
     personal_data_->OnSyncServiceInitialized(client_->GetSyncService());
+
+  if (personal_data_ && driver)
+    personal_data_->SetURLRequestContextGetter(driver->GetURLRequestContext());
 }
 
 bool AutofillManager::RefreshDataModels() {
@@ -1348,9 +1354,8 @@ void AutofillManager::FillOrPreviewDataModelForm(
       continue;
 
     if (form_structure->field(i)->only_fill_when_focused() &&
-        !form_structure->field(i)->SameFieldAs(field)) {
+        !form_structure->field(i)->SameFieldAs(field))
       continue;
-    }
 
     DCHECK(form_structure->field(i)->SameFieldAs(result.fields[i]));
 
@@ -1598,7 +1603,7 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
     form_types.insert(current_form_types.begin(), current_form_types.end());
     // Set aside forms with method GET or author-specified types, so that they
     // are not included in the query to the server.
-    if (form_structure->ShouldBeQueried())
+    if (form_structure->ShouldBeCrowdsourced())
       queryable_forms.push_back(form_structure);
     else
       non_queryable_forms.push_back(form_structure);
@@ -1919,8 +1924,6 @@ void AutofillManager::FillFieldWithValue(AutofillField* autofill_field,
     // it. This allows the renderer to distinguish autofilled fields from
     // fields with non-empty values, such as select-one fields.
     field_data->is_autofilled = true;
-    AutofillMetrics::LogUserHappinessMetric(
-        AutofillMetrics::FIELD_WAS_AUTOFILLED, autofill_field->Type().group());
 
     if (should_notify) {
       client_->DidFillOrPreviewField(
@@ -1929,21 +1932,6 @@ void AutofillManager::FillFieldWithValue(AutofillField* autofill_field,
                                                    app_locale_));
     }
   }
-}
-
-AutofillMetrics::CardNumberStatus AutofillManager::GetCardNumberStatus(
-    CreditCard& credit_card) {
-  base::string16 number = credit_card.number();
-  if (number.empty())
-    return AutofillMetrics::EMPTY_CARD;
-  else if (!HasCorrectLength(number))
-    return AutofillMetrics::WRONG_SIZE_CARD;
-  else if (!PassesLuhnCheck(number))
-    return AutofillMetrics::FAIL_LUHN_CHECK_CARD;
-  else if (personal_data_->IsKnownCard(credit_card))
-    return AutofillMetrics::KNOWN_CARD;
-  else
-    return AutofillMetrics::UNKNOWN_CARD;
 }
 
 }  // namespace autofill

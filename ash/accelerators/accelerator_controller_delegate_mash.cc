@@ -16,8 +16,7 @@ AcceleratorControllerDelegateMash::AcceleratorControllerDelegateMash(
     WindowManager* window_manager)
     : window_manager_(window_manager) {}
 
-AcceleratorControllerDelegateMash::~AcceleratorControllerDelegateMash() =
-    default;
+AcceleratorControllerDelegateMash::~AcceleratorControllerDelegateMash() {}
 
 bool AcceleratorControllerDelegateMash::HandlesAction(
     AcceleratorAction action) {

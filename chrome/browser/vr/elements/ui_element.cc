@@ -9,7 +9,6 @@
 #include "base/logging.h"
 #include "base/numerics/ranges.h"
 #include "base/stl_util.h"
-#include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/skia/include/core/SkRRect.h"
@@ -23,6 +22,7 @@ namespace {
 
 static constexpr char kRed[] = "\x1b[31m";
 static constexpr char kGreen[] = "\x1b[32m";
+static constexpr char kYellow[] = "\x1b[33m";
 static constexpr char kBlue[] = "\x1b[34m";
 static constexpr char kCyan[] = "\x1b[36m";
 static constexpr char kReset[] = "\x1b[0m";
@@ -65,26 +65,12 @@ UiElement::~UiElement() {
   animation_player_.set_target(nullptr);
 }
 
-void UiElement::set_name(UiElementName name) {
-  name_ = name;
-  OnSetName();
-}
-
-void UiElement::OnSetName() {}
-
 void UiElement::set_type(UiElementType type) {
   type_ = type;
   OnSetType();
 }
 
 void UiElement::OnSetType() {}
-
-void UiElement::set_draw_phase(DrawPhase draw_phase) {
-  draw_phase_ = draw_phase;
-  OnSetDrawPhase();
-}
-
-void UiElement::OnSetDrawPhase() {}
 
 void UiElement::Render(UiElementRenderer* renderer,
                        const CameraModel& model) const {
@@ -348,12 +334,7 @@ bool UiElement::IsWorldPositioned() const {
 }
 
 std::string UiElement::DebugName() const {
-  return base::StringPrintf(
-      "%s%s%s",
-      UiElementNameToString(name() == kNone ? owner_name_for_test() : name())
-          .c_str(),
-      type() == kTypeNone ? "" : ":",
-      type() == kTypeNone ? "" : UiElementTypeToString(type()).c_str());
+  return UiElementNameToString(name());
 }
 
 void UiElement::DumpHierarchy(std::vector<size_t> counts,
@@ -379,12 +360,16 @@ void UiElement::DumpHierarchy(std::vector<size_t> counts,
   }
   *os << kReset;
 
-  if (!IsVisible() || draw_phase() == kPhaseNone) {
-    *os << kBlue;
+  if (!IsVisible()) {
+    *os << kYellow << "(h) " << kReset;
   }
 
-  *os << DebugName() << kReset << " " << kCyan << DrawPhaseToString(draw_phase_)
-      << " " << kReset;
+  *os << DebugName();
+  if (type_ != kTypeNone) {
+    *os << ":" << UiElementTypeToString(type_);
+  }
+
+  *os << " " << kCyan << DrawPhaseToString(draw_phase_) << " " << kReset;
 
   if (draw_phase_ != kPhaseNone && !size().IsEmpty()) {
     *os << kRed << "[" << size().width() << ", " << size().height() << "] "
@@ -565,7 +550,7 @@ void UiElement::DoLayOutChildren() {
   gfx::RectF bounds;
   bool first = false;
   for (auto& child : children_) {
-    if (!child->IsVisible() || child->size().IsEmpty()) {
+    if (!child->IsVisible()) {
       continue;
     }
     gfx::Point3F child_center(child->local_origin());
@@ -621,9 +606,7 @@ void UiElement::UpdateComputedOpacity() {
 void UiElement::UpdateWorldSpaceTransformRecursive() {
   gfx::Transform transform;
   transform.Translate(local_origin_.x(), local_origin_.y());
-  if (!size_.IsEmpty()) {
-    transform.Scale(size_.width(), size_.height());
-  }
+  transform.Scale(size_.width(), size_.height());
 
   // Compute an inheritable transformation that can be applied to this element,
   // and it's children, if applicable.

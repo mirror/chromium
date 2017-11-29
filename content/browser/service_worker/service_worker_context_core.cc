@@ -39,7 +39,6 @@
 #include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
-#include "third_party/WebKit/common/service_worker/service_worker_provider_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 #include "url/gurl.h"
 
@@ -95,7 +94,7 @@ bool IsSameOriginClientProviderHost(const GURL& origin,
 bool IsSameOriginWindowProviderHost(const GURL& origin,
                                     ServiceWorkerProviderHost* host) {
   return host->provider_type() ==
-             blink::mojom::ServiceWorkerProviderType::kForWindow &&
+             ServiceWorkerProviderType::SERVICE_WORKER_PROVIDER_FOR_WINDOW &&
          host->document_url().GetOrigin() == origin;
 }
 
@@ -173,8 +172,8 @@ class RegistrationDeletionListener
       scoped_refptr<ServiceWorkerRegistration> registration,
       base::OnceClosure callback) {
     DCHECK(!registration->is_deleted());
-    registration->AddListener(
-        new RegistrationDeletionListener(registration, std::move(callback)));
+    registration->AddListener(new RegistrationDeletionListener(
+        std::move(registration), std::move(callback)));
   }
 
   void OnRegistrationDeleted(ServiceWorkerRegistration* registration) override {
@@ -531,7 +530,6 @@ void ServiceWorkerContextCore::DidGetRegistrationsForDeleteForOrigin(
       base::BindOnce(&SuccessReportingCallback, base::Owned(overall_success),
                      std::move(callback)));
   for (const auto& registration : registrations) {
-    DCHECK(registration);
     if (!registration->is_deleted()) {
       RegistrationDeletionListener::WaitForDeletion(registration, barrier);
     } else {

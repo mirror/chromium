@@ -88,7 +88,7 @@ void VerifyCommonProperties(std::unique_ptr<base::DictionaryValue> response,
 
 class MockIt2MeHost : public It2MeHost {
  public:
-  MockIt2MeHost() = default;
+  MockIt2MeHost() {}
 
   // It2MeHost overrides
   void Connect(std::unique_ptr<ChromotingHostContext> context,
@@ -102,7 +102,7 @@ class MockIt2MeHost : public It2MeHost {
   void Disconnect() override;
 
  private:
-  ~MockIt2MeHost() override = default;
+  ~MockIt2MeHost() override {}
 
   void RunSetState(It2MeHostState state);
 
@@ -171,8 +171,8 @@ void MockIt2MeHost::RunSetState(It2MeHostState state) {
 
 class MockIt2MeHostFactory : public It2MeHostFactory {
  public:
-  MockIt2MeHostFactory() = default;
-  ~MockIt2MeHostFactory() override = default;
+  MockIt2MeHostFactory() {}
+  ~MockIt2MeHostFactory() override {}
 
   scoped_refptr<It2MeHost> CreateIt2MeHost() override {
     return new MockIt2MeHost();
@@ -184,8 +184,8 @@ class MockIt2MeHostFactory : public It2MeHostFactory {
 
 class It2MeNativeMessagingHostTest : public testing::Test {
  public:
-  It2MeNativeMessagingHostTest() = default;
-  ~It2MeNativeMessagingHostTest() override = default;
+  It2MeNativeMessagingHostTest() {}
+  ~It2MeNativeMessagingHostTest() override {}
 
   void SetUp() override;
   void TearDown() override;

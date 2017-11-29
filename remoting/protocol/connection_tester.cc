@@ -32,7 +32,8 @@ StreamConnectionTester::StreamConnectionTester(P2PStreamSocket* client_socket,
       write_errors_(0),
       read_errors_(0) {}
 
-StreamConnectionTester::~StreamConnectionTester() = default;
+StreamConnectionTester::~StreamConnectionTester() {
+}
 
 void StreamConnectionTester::Start() {
   InitBuffers();
@@ -151,7 +152,8 @@ DatagramConnectionTester::DatagramConnectionTester(
   sent_packets_.resize(message_count_);
 }
 
-DatagramConnectionTester::~DatagramConnectionTester() = default;
+DatagramConnectionTester::~DatagramConnectionTester() {
+}
 
 void DatagramConnectionTester::Start() {
   DoRead();
@@ -305,7 +307,7 @@ MessagePipeConnectionTester::MessagePipeConnectionTester(
     : client_pipe_(client_pipe),
       sender_(new MessageSender(host_pipe, message_size, message_count)) {}
 
-MessagePipeConnectionTester::~MessagePipeConnectionTester() = default;
+MessagePipeConnectionTester::~MessagePipeConnectionTester() {}
 
 void MessagePipeConnectionTester::RunAndCheckResults() {
   sender_->Start();

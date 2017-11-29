@@ -53,7 +53,8 @@ XmppSignalStrategy::XmppServerConfig::XmppServerConfig()
 XmppSignalStrategy::XmppServerConfig::XmppServerConfig(
     const XmppServerConfig& other) = default;
 
-XmppSignalStrategy::XmppServerConfig::~XmppServerConfig() = default;
+XmppSignalStrategy::XmppServerConfig::~XmppServerConfig() {
+}
 
 class XmppSignalStrategy::Core : public XmppLoginHandler::Delegate {
  public:

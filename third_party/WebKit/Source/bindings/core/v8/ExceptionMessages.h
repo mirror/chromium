@@ -150,7 +150,7 @@ class CORE_EXPORT ExceptionMessages {
 
   static String NotEnoughArguments(unsigned expected, unsigned provided);
 
-  static String ReadOnly(const char* detail = nullptr);
+  static String ReadOnly(const char* detail = 0);
 
  private:
   template <typename NumType>

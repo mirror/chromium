@@ -16,7 +16,8 @@ static base::LazyInstance<LoginEventRecorder>::DestructorAtExit
 LoginEventRecorder::LoginEventRecorder() : delegate_(NULL) {
 }
 
-LoginEventRecorder::~LoginEventRecorder() = default;
+LoginEventRecorder::~LoginEventRecorder() {
+}
 
 // static
 LoginEventRecorder* LoginEventRecorder::Get() {

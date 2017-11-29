@@ -805,7 +805,7 @@ Image::SizeAvailability SVGImage::DataChanged(bool all_data_received) {
       return kSizeAvailableAndLoadingAsynchronously;
 
     case kLoadCompleted:
-      return SvgRootElement(page_.Get()) ? kSizeAvailable : kSizeUnavailable;
+      return kSizeAvailable;
 
     case kDataChangedNotStarted:
     case kWaitingForAsyncLoadCompletion:

@@ -127,7 +127,7 @@ const char kMangleLocalizedStrings[] = "mangle-localized-strings";
 const char kSlowDownCompositingScaleFactor[] =
     "slow-down-compositing-scale-factor";
 
-#if defined(USE_AURA)
+#if BUILDFLAG(ENABLE_MUS)
 // Used to enable the mus service (aka the UI service). This makes mus run in
 // process. It is also used to notify the clients that the UI service is being
 // used. If the value of this flag is set to kMusHostVizValue, then that means

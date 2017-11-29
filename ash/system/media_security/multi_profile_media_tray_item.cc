@@ -60,7 +60,7 @@ class MultiProfileMediaTrayView : public TrayItemView,
 MultiProfileMediaTrayItem::MultiProfileMediaTrayItem(SystemTray* system_tray)
     : SystemTrayItem(system_tray, UMA_MULTI_PROFILE_MEDIA) {}
 
-MultiProfileMediaTrayItem::~MultiProfileMediaTrayItem() = default;
+MultiProfileMediaTrayItem::~MultiProfileMediaTrayItem() {}
 
 views::View* MultiProfileMediaTrayItem::CreateTrayView(LoginStatus status) {
   return new tray::MultiProfileMediaTrayView(this);

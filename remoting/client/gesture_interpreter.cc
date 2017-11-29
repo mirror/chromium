@@ -36,7 +36,7 @@ GestureInterpreter::GestureInterpreter(RendererProxy* renderer,
       true);
 }
 
-GestureInterpreter::~GestureInterpreter() = default;
+GestureInterpreter::~GestureInterpreter() {}
 
 void GestureInterpreter::SetInputMode(InputMode mode) {
   switch (mode) {

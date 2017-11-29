@@ -117,7 +117,7 @@ public class WebappVisibilityTest {
             int securityLevel, WebappScopePolicy scopePolicy, @WebDisplayMode int displayMode) {
         return WebappBrowserControlsDelegate.shouldShowBrowserControls(scopePolicy,
                 createWebappInfo(webappStartUrlOrScopeUrl, scopePolicy, displayMode), url,
-                securityLevel, false);
+                securityLevel);
     }
 
     private static boolean canAutoHideBrowserControls(int securityLevel) {

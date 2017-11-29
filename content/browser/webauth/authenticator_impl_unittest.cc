@@ -9,8 +9,8 @@
 #include "base/base64url.h"
 #include "base/run_loop.h"
 #include "base/test/gtest_util.h"
+#include "content/browser/webauth/attestation_data.h"
 #include "content/browser/webauth/attestation_object.h"
-#include "content/browser/webauth/attested_credential_data.h"
 #include "content/browser/webauth/authenticator_data.h"
 #include "content/browser/webauth/authenticator_utils.h"
 #include "content/browser/webauth/cbor/cbor_writer.h"
@@ -33,12 +33,10 @@ using ::testing::_;
 
 using webauth::mojom::AuthenticatorPtr;
 using webauth::mojom::AuthenticatorStatus;
-using webauth::mojom::MakePublicKeyCredentialOptions;
-using webauth::mojom::MakePublicKeyCredentialOptionsPtr;
-using webauth::mojom::PublicKeyCredentialRpEntity;
-using webauth::mojom::PublicKeyCredentialRpEntityPtr;
-using webauth::mojom::PublicKeyCredentialUserEntity;
-using webauth::mojom::PublicKeyCredentialUserEntityPtr;
+using webauth::mojom::MakeCredentialOptions;
+using webauth::mojom::MakeCredentialOptionsPtr;
+using webauth::mojom::PublicKeyCredentialEntity;
+using webauth::mojom::PublicKeyCredentialEntityPtr;
 using webauth::mojom::PublicKeyCredentialInfoPtr;
 using webauth::mojom::PublicKeyCredentialParameters;
 using webauth::mojom::PublicKeyCredentialParametersPtr;
@@ -59,10 +57,8 @@ constexpr uint8_t kTestChallengeBytes[] = {
     0xB8, 0x8C, 0x25, 0xDB, 0x9E, 0x60, 0x26, 0x45, 0xF1, 0x41};
 
 constexpr char kTestClientDataJsonString[] =
-    "{\"challenge\":\"aHE0loIi7BcgLkJQX47SsWriLxa7BbiMJdueYCZF8UE\","
-    "\"hashAlgorithm\""
-    ":\"SHA-256\",\"origin\":\"google.com\",\"tokenBinding\":\"unused\","
-    "\"type\":\"webauthn.create\"}";
+    "{\"challenge\":\"aHE0loIi7BcgLkJQX47SsWriLxa7BbiMJdueYCZF8UE\",\"hashAlg\""
+    ":\"SHA-256\",\"origin\":\"google.com\",\"tokenBinding\":\"unused\"}";
 
 constexpr uint8_t kTestCredentialRawIdBytes[] = {
     0x89, 0xAF, 0xB5, 0x24, 0x91, 0x1C, 0x40, 0x2B, 0x7F, 0x74, 0x59,
@@ -170,9 +166,9 @@ constexpr uint8_t kTestU2fRegisterResponse[] = {
     0x6F, 0x48, 0xB8, 0x25, 0x69, 0xEA, 0xD8, 0x23, 0x1A, 0x5A, 0x6C, 0x3A,
     0x14, 0x48, 0xDE, 0xAA, 0xAF, 0x15, 0xC0, 0xEF, 0x29, 0x63, 0x1A};
 
-// The attested credential data, excluding the CBOR public key bytes. Append
-// with kTestECPublicKeyCBOR to get the complete attestation data.
-constexpr uint8_t kTestAttestedCredentialDataPrefix[] = {
+// The attestation data, excluding the CBOR public key bytes. Append with
+// kTestECPublicKeyCBOR to get the complete attestation data.
+constexpr uint8_t kTestAttestationDataPrefix[] = {
     // clang-format off
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00,  // 16-byte aaguid
@@ -186,8 +182,8 @@ constexpr uint8_t kTestAttestedCredentialDataPrefix[] = {
     // clang-format on
 };
 
-// The authenticator data, excluding the attested credential data bytes. Append
-// with attested credential data to get the complete authenticator data.
+// The authenticator data, excluding the attestation data bytes. Append with
+// attestation data to get the complete authenticator data.
 constexpr uint8_t kTestAuthenticatorDataPrefix[] = {
     // clang-format off
     // sha256 hash of kTestRelyingPartyId
@@ -354,18 +350,17 @@ const std::vector<uint8_t>& GetU2fAttestationStatementCBOR() {
   return data;
 }
 
-PublicKeyCredentialRpEntityPtr GetTestPublicKeyCredentialRPEntity() {
-  auto entity = PublicKeyCredentialRpEntity::New();
+PublicKeyCredentialEntityPtr GetTestPublicKeyCredentialRPEntity() {
+  auto entity = PublicKeyCredentialEntity::New();
   entity->id = std::string("localhost");
   entity->name = std::string("TestRP@example.com");
   return entity;
 }
 
-PublicKeyCredentialUserEntityPtr GetTestPublicKeyCredentialUserEntity() {
-  auto entity = PublicKeyCredentialUserEntity::New();
+PublicKeyCredentialEntityPtr GetTestPublicKeyCredentialUserEntity() {
+  auto entity = PublicKeyCredentialEntity::New();
   entity->display_name = std::string("User A. Name");
-  std::vector<uint8_t> id(32, 0x0A);
-  entity->id = id;
+  entity->id = std::string("1098237235409872");
   entity->name = std::string("username@example.com");
   entity->icon = GURL("fakeurl2.png");
   return entity;
@@ -381,34 +376,32 @@ GetTestPublicKeyCredentialParameters(int32_t algorithm_identifier) {
   return parameters;
 }
 
-MakePublicKeyCredentialOptionsPtr GetTestMakePublicKeyCredentialOptions() {
-  auto options = MakePublicKeyCredentialOptions::New();
+MakeCredentialOptionsPtr GetTestMakeCredentialOptions() {
+  auto options = MakeCredentialOptions::New();
   std::vector<uint8_t> buffer(32, 0x0A);
   options->relying_party = GetTestPublicKeyCredentialRPEntity();
   options->user = GetTestPublicKeyCredentialUserEntity();
-  options->public_key_parameters =
-      GetTestPublicKeyCredentialParameters(kCoseEs256);
+  options->crypto_parameters = GetTestPublicKeyCredentialParameters(kCoseEs256);
   options->challenge = std::move(buffer);
   options->adjusted_timeout = base::TimeDelta::FromMinutes(1);
   return options;
 }
 
-std::unique_ptr<CollectedClientData> GetTestClientData(std::string type) {
+std::unique_ptr<CollectedClientData> GetTestClientData() {
   std::unique_ptr<CollectedClientData> client_data =
-      CollectedClientData::Create(type, kTestRelyingPartyId,
-                                  GetTestChallengeBytes());
+      CollectedClientData::Create(kTestRelyingPartyId, GetTestChallengeBytes());
   return client_data;
 }
 
-std::vector<uint8_t> GetTestAttestedCredentialDataBytes() {
-  // Combine kTestAttestedCredentialDataPrefix and kTestECPublicKeyCBOR.
-  std::vector<uint8_t> test_attested_data(
-      std::begin(kTestAttestedCredentialDataPrefix),
-      std::end(kTestAttestedCredentialDataPrefix));
-  test_attested_data.insert(test_attested_data.end(),
-                            std::begin(kTestECPublicKeyCBOR),
-                            std::end(kTestECPublicKeyCBOR));
-  return test_attested_data;
+std::vector<uint8_t> GetTestAttestationDataBytes() {
+  // Combine kTestAttestationDataPrefix and kTestECPublicKeyCBOR.
+  std::vector<uint8_t> test_attestation_data(
+      std::begin(kTestAttestationDataPrefix),
+      std::end(kTestAttestationDataPrefix));
+  test_attestation_data.insert(test_attestation_data.end(),
+                               std::begin(kTestECPublicKeyCBOR),
+                               std::end(kTestECPublicKeyCBOR));
+  return test_attestation_data;
 }
 
 std::vector<uint8_t> GetTestAuthenticatorDataBytes() {
@@ -416,11 +409,10 @@ std::vector<uint8_t> GetTestAuthenticatorDataBytes() {
   std::vector<uint8_t> test_authenticator_data(
       std::begin(kTestAuthenticatorDataPrefix),
       std::end(kTestAuthenticatorDataPrefix));
-  std::vector<uint8_t> test_attested_data =
-      GetTestAttestedCredentialDataBytes();
+  std::vector<uint8_t> test_attestation_data = GetTestAttestationDataBytes();
   test_authenticator_data.insert(test_authenticator_data.end(),
-                                 test_attested_data.begin(),
-                                 test_attested_data.end());
+                                 test_attestation_data.begin(),
+                                 test_attestation_data.end());
   return test_authenticator_data;
 }
 
@@ -510,8 +502,7 @@ class TestMakeCredentialCallback {
 TEST_F(AuthenticatorImplTest, MakeCredentialOpaqueOrigin) {
   NavigateAndCommit(GURL("data:text/html,opaque"));
   AuthenticatorPtr authenticator = ConnectToAuthenticator();
-  MakePublicKeyCredentialOptionsPtr options =
-      GetTestMakePublicKeyCredentialOptions();
+  MakeCredentialOptionsPtr options = GetTestMakeCredentialOptions();
 
   TestMakeCredentialCallback cb;
   authenticator->MakeCredential(std::move(options), cb.callback());
@@ -528,9 +519,8 @@ TEST_F(AuthenticatorImplTest, MakeCredentialNoSupportedAlgorithm) {
   SimulateNavigation(GURL(kTestOrigin1));
   AuthenticatorPtr authenticator = ConnectToAuthenticator();
 
-  MakePublicKeyCredentialOptionsPtr options =
-      GetTestMakePublicKeyCredentialOptions();
-  options->public_key_parameters = GetTestPublicKeyCredentialParameters(123);
+  MakeCredentialOptionsPtr options = GetTestMakeCredentialOptions();
+  options->crypto_parameters = GetTestPublicKeyCredentialParameters(123);
 
   TestMakeCredentialCallback cb;
   authenticator->MakeCredential(std::move(options), cb.callback());
@@ -543,9 +533,9 @@ TEST_F(AuthenticatorImplTest, MakeCredentialNoSupportedAlgorithm) {
 
 // Test that client data serializes to JSON properly.
 TEST_F(AuthenticatorImplTest, TestSerializedClientData) {
-  EXPECT_EQ(
-      kTestClientDataJsonString,
-      GetTestClientData(authenticator_utils::kCreateType)->SerializeToJson());
+  std::unique_ptr<CollectedClientData> client_data =
+      CollectedClientData::Create(kTestRelyingPartyId, GetTestChallengeBytes());
+  EXPECT_EQ(kTestClientDataJsonString, client_data->SerializeToJson());
 }
 
 // Test that an EC public key serializes to CBOR properly.
@@ -567,18 +557,18 @@ TEST_F(AuthenticatorImplTest, TestU2fAttestationStatementCBOR) {
   EXPECT_EQ(GetU2fAttestationStatementCBOR(), cbor.value());
 }
 
-// Tests that well-formed attested credential data serializes properly.
-TEST_F(AuthenticatorImplTest, TestAttestedCredentialData) {
+// Tests that well-formed attestation data serializes properly.
+TEST_F(AuthenticatorImplTest, TestAttestationData) {
   std::unique_ptr<ECPublicKey> public_key =
       ECPublicKey::ExtractFromU2fRegistrationResponse(
           authenticator_utils::kEs256, GetTestRegisterResponse());
-  std::unique_ptr<AttestedCredentialData> attested_data =
-      AttestedCredentialData::CreateFromU2fRegisterResponse(
+  std::unique_ptr<AttestationData> attestation_data =
+      AttestationData::CreateFromU2fRegisterResponse(
           GetTestRegisterResponse(), std::vector<uint8_t>(16, 0) /* aaguid */,
           std::move(public_key));
 
-  EXPECT_EQ(GetTestAttestedCredentialDataBytes(),
-            attested_data->SerializeAsBytes());
+  EXPECT_EQ(GetTestAttestationDataBytes(),
+            attestation_data->SerializeAsBytes());
 }
 
 // Tests that well-formed authenticator data serializes properly.
@@ -586,8 +576,8 @@ TEST_F(AuthenticatorImplTest, TestAuthenticatorData) {
   std::unique_ptr<ECPublicKey> public_key =
       ECPublicKey::ExtractFromU2fRegistrationResponse(
           authenticator_utils::kEs256, GetTestRegisterResponse());
-  std::unique_ptr<AttestedCredentialData> attested_data =
-      AttestedCredentialData::CreateFromU2fRegisterResponse(
+  std::unique_ptr<AttestationData> attestation_data =
+      AttestationData::CreateFromU2fRegisterResponse(
           GetTestRegisterResponse(), std::vector<uint8_t>(16, 0) /* aaguid */,
           std::move(public_key));
 
@@ -598,11 +588,9 @@ TEST_F(AuthenticatorImplTest, TestAuthenticatorData) {
           AuthenticatorData::Flag::ATTESTATION);
 
   std::unique_ptr<AuthenticatorData> authenticator_data =
-      AuthenticatorData::Create(
-          GetTestClientData(authenticator_utils::kCreateType)
-              ->SerializeToJson(),
-          flags, std::vector<uint8_t>(4, 0) /* counter */,
-          std::move(attested_data));
+      AuthenticatorData::Create(GetTestClientData()->SerializeToJson(), flags,
+                                std::vector<uint8_t>(4, 0) /* counter */,
+                                std::move(attestation_data));
 
   EXPECT_EQ(GetTestAuthenticatorDataBytes(),
             authenticator_data->SerializeToByteArray());
@@ -613,8 +601,8 @@ TEST_F(AuthenticatorImplTest, TestU2fAttestationObject) {
   std::unique_ptr<ECPublicKey> public_key =
       ECPublicKey::ExtractFromU2fRegistrationResponse(
           authenticator_utils::kEs256, GetTestRegisterResponse());
-  std::unique_ptr<AttestedCredentialData> attested_data =
-      AttestedCredentialData::CreateFromU2fRegisterResponse(
+  std::unique_ptr<AttestationData> attestation_data =
+      AttestationData::CreateFromU2fRegisterResponse(
           GetTestRegisterResponse(), std::vector<uint8_t>(16, 0) /* aaguid */,
           std::move(public_key));
 
@@ -624,11 +612,9 @@ TEST_F(AuthenticatorImplTest, TestU2fAttestationObject) {
       static_cast<AuthenticatorData::Flags>(
           AuthenticatorData::Flag::ATTESTATION);
   std::unique_ptr<AuthenticatorData> authenticator_data =
-      AuthenticatorData::Create(
-          GetTestClientData(authenticator_utils::kCreateType)
-              ->SerializeToJson(),
-          flags, std::vector<uint8_t>(4, 0) /* counter */,
-          std::move(attested_data));
+      AuthenticatorData::Create(GetTestClientData()->SerializeToJson(), flags,
+                                std::vector<uint8_t>(4, 0) /* counter */,
+                                std::move(attestation_data));
 
   // Construct the attestation statement.
   std::unique_ptr<FidoAttestationStatement> fido_attestation_statement =
@@ -645,8 +631,7 @@ TEST_F(AuthenticatorImplTest, TestU2fAttestationObject) {
 
 // Test that a U2F register response is properly parsed.
 TEST_F(AuthenticatorImplTest, TestRegisterResponseData) {
-  std::unique_ptr<CollectedClientData> client_data =
-      GetTestClientData(authenticator_utils::kCreateType);
+  std::unique_ptr<CollectedClientData> client_data = GetTestClientData();
   std::unique_ptr<RegisterResponseData> response =
       RegisterResponseData::CreateFromU2fRegisterResponse(
           std::move(client_data), GetTestRegisterResponse());

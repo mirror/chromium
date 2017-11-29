@@ -16,7 +16,7 @@ MockFileChangeObserver::MockFileChangeObserver()
       create_directory_count_(0),
       remove_directory_count_(0) {}
 
-MockFileChangeObserver::~MockFileChangeObserver() = default;
+MockFileChangeObserver::~MockFileChangeObserver() {}
 
 // static
 ChangeObserverList MockFileChangeObserver::CreateList(

@@ -68,7 +68,7 @@ BlobItemBytesRequest::BlobItemBytesRequest(
       handle_index(handle_index),
       handle_offset(handle_offset) {}
 
-BlobItemBytesRequest::~BlobItemBytesRequest() = default;
+BlobItemBytesRequest::~BlobItemBytesRequest() {}
 
 void PrintTo(const BlobItemBytesRequest& request, std::ostream* os) {
   *os << "{request_number: " << request.request_number

@@ -60,7 +60,8 @@ XmppStreamParser::Core::Core()
       error_(false) {
 }
 
-XmppStreamParser::Core::~Core() = default;
+XmppStreamParser::Core::~Core() {
+}
 
 void XmppStreamParser::Core::SetCallbacks(
     const OnStanzaCallback& on_stanza_callback,

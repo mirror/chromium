@@ -125,7 +125,8 @@ PseudoTcpAdapter::Core::Core(std::unique_ptr<P2PDatagramSocket> socket)
   pseudo_tcp_.NotifyMTU(kDefaultMtu);
 }
 
-PseudoTcpAdapter::Core::~Core() = default;
+PseudoTcpAdapter::Core::~Core() {
+}
 
 int PseudoTcpAdapter::Core::Read(const scoped_refptr<net::IOBuffer>& buffer,
                                  int buffer_size,

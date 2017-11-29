@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "extensions/renderer/bindings/api_binding_types.h"
 #include "gin/wrappable.h"
 #include "v8/include/v8.h"
 
@@ -23,7 +24,8 @@ class APIBindingBridge final : public gin::Wrappable<APIBindingBridge> {
                    v8::Local<v8::Context> context,
                    v8::Local<v8::Value> api_object,
                    const std::string& extension_id,
-                   const std::string& context_type);
+                   const std::string& context_type,
+                   const binding::RunJSFunction& run_js);
   ~APIBindingBridge() override;
 
   static gin::WrapperInfo kWrapperInfo;
@@ -49,6 +51,9 @@ class APIBindingBridge final : public gin::Wrappable<APIBindingBridge> {
 
   // The type of context this belongs to.
   std::string context_type_;
+
+  // A function to run JS safely.
+  binding::RunJSFunction run_js_;
 
   DISALLOW_COPY_AND_ASSIGN(APIBindingBridge);
 };

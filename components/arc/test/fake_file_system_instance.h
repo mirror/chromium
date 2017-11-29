@@ -152,8 +152,7 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
   void GetRecentDocuments(const std::string& authority,
                           const std::string& root_id,
                           GetRecentDocumentsCallback callback) override;
-  void InitDeprecated(mojom::FileSystemHostPtr host) override;
-  void Init(mojom::FileSystemHostPtr host, InitCallback callback) override;
+  void Init(mojom::FileSystemHostPtr host) override;
   void OpenFileToRead(const std::string& url,
                       OpenFileToReadCallback callback) override;
   void RemoveWatcher(int64_t watcher_id,

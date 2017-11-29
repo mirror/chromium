@@ -45,7 +45,7 @@ void PairingHostAuthenticator::Initialize(
                             resume_callback));
 }
 
-PairingHostAuthenticator::~PairingHostAuthenticator() = default;
+PairingHostAuthenticator::~PairingHostAuthenticator() {}
 
 Authenticator::State PairingHostAuthenticator::state() const {
   if (protocol_error_) {

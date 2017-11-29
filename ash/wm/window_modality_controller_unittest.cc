@@ -381,7 +381,7 @@ class TouchTrackerWindowDelegate : public aura::test::TestWindowDelegate {
  public:
   TouchTrackerWindowDelegate()
       : received_touch_(false), last_event_type_(ui::ET_UNKNOWN) {}
-  ~TouchTrackerWindowDelegate() override = default;
+  ~TouchTrackerWindowDelegate() override {}
 
   void reset() {
     received_touch_ = false;

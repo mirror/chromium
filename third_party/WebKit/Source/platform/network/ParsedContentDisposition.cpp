@@ -20,8 +20,7 @@ ParsedContentDisposition::ParsedContentDisposition(
   }
   type_ = type.ToString();
 
-  parameters_ =
-      ParsedContentHeaderFieldParameters::Parse(std::move(tokenizer), mode);
+  parameters_.ParseParameters(std::move(tokenizer), mode);
 }
 
 String ParsedContentDisposition::Filename() const {

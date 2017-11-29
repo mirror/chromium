@@ -16,7 +16,8 @@ TestAttemptState::TestAttemptState(const UserContext& credentials,
                        user_is_new) {
 }
 
-TestAttemptState::~TestAttemptState() = default;
+TestAttemptState::~TestAttemptState() {
+}
 
 void TestAttemptState::PresetOnlineLoginStatus(const AuthFailure& outcome) {
   online_complete_ = true;

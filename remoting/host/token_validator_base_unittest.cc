@@ -74,7 +74,7 @@ TestTokenValidator::TestTokenValidator(const ThirdPartyAuthConfig& config) :
     TokenValidatorBase(config, "", nullptr) {
 }
 
-TestTokenValidator::~TestTokenValidator() = default;
+TestTokenValidator::~TestTokenValidator() {}
 
 void TestTokenValidator::SelectCertificates(
     net::ClientCertIdentityList selected_certs) {

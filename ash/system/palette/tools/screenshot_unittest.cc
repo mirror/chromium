@@ -23,8 +23,8 @@ namespace ash {
 // Base class for all screenshot pallette tools tests.
 class ScreenshotToolTest : public AshTestBase {
  public:
-  ScreenshotToolTest() = default;
-  ~ScreenshotToolTest() override = default;
+  ScreenshotToolTest() {}
+  ~ScreenshotToolTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

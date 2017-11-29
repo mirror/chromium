@@ -46,7 +46,7 @@ class FileStorageStrategy {
         builder(builder),
         current_item_index(0) {}
 
-  ~FileStorageStrategy() = default;
+  ~FileStorageStrategy() {}
 
   void VisitBytesSegment(size_t element_index,
                          uint64_t element_offset,
@@ -99,7 +99,7 @@ class SharedMemoryStorageStrategy {
         builder(builder),
         current_item_size(0),
         current_item_index(0) {}
-  ~SharedMemoryStorageStrategy() = default;
+  ~SharedMemoryStorageStrategy() {}
 
   void VisitBytesSegment(size_t element_index,
                          uint64_t element_offset,
@@ -210,7 +210,7 @@ BlobTransportRequestBuilder::BlobTransportRequestBuilder(
     BlobTransportRequestBuilder&&) = default;
 BlobTransportRequestBuilder& BlobTransportRequestBuilder::operator=(
     BlobTransportRequestBuilder&&) = default;
-BlobTransportRequestBuilder::~BlobTransportRequestBuilder() = default;
+BlobTransportRequestBuilder::~BlobTransportRequestBuilder() {}
 
 // Initializes the transport strategy for file requests.
 void BlobTransportRequestBuilder::InitializeForFileRequests(

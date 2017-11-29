@@ -59,9 +59,6 @@ volatile base::subtle::Atomic32* DiscardableHandleBase::AsAtomic() const {
       buffer_->GetDataAddress(byte_offset_, sizeof(base::subtle::Atomic32)));
 }
 
-ClientDiscardableHandle::ClientDiscardableHandle()
-    : DiscardableHandleBase(nullptr, 0, 0) {}
-
 ClientDiscardableHandle::ClientDiscardableHandle(scoped_refptr<Buffer> buffer,
                                                  uint32_t byte_offset,
                                                  int32_t shm_id)

@@ -16,8 +16,8 @@ namespace ash {
 
 class TrayKeyboardBrightnessTest : public AshTestBase {
  public:
-  TrayKeyboardBrightnessTest() = default;
-  ~TrayKeyboardBrightnessTest() override = default;
+  TrayKeyboardBrightnessTest() {}
+  ~TrayKeyboardBrightnessTest() override {}
 
  protected:
   views::View* CreateDetailedView() {

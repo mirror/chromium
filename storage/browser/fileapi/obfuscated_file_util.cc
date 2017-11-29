@@ -135,7 +135,7 @@ class ObfuscatedFileEnumerator final
     recurse_queue_.push(record);
   }
 
-  ~ObfuscatedFileEnumerator() override = default;
+  ~ObfuscatedFileEnumerator() override {}
 
   base::FilePath Next() override {
     FileInfo file_info;
@@ -220,7 +220,7 @@ class ObfuscatedOriginEnumerator
       origin_database->ListAllOrigins(&origins_);
   }
 
-  ~ObfuscatedOriginEnumerator() override = default;
+  ~ObfuscatedOriginEnumerator() override {}
 
   // Returns the next origin.  Returns empty if there are no more origins.
   GURL Next() override {

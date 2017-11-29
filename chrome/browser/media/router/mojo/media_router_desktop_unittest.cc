@@ -146,11 +146,4 @@ TEST_F(MediaRouterDesktopTest, TestProvideSinks) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Tests that auto-join and Cast SDK join requests are routed to the extension
-// MediaRouteProvider.
-TEST_F(MediaRouterDesktopTest, SendCastJoinRequestsToExtension) {
-  TestJoinRoute(kAutoJoinPresentationId);
-  TestJoinRoute(kCastPresentationIdPrefix + std::string("123"));
-}
-
 }  // namespace media_router

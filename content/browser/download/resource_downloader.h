@@ -8,7 +8,6 @@
 #include "content/browser/download/download_response_handler.h"
 #include "content/browser/download/url_download_handler.h"
 #include "content/browser/url_loader_factory_getter.h"
-#include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/url_loader.mojom.h"
@@ -33,23 +32,29 @@ class ResourceDownloader : public UrlDownloadHandler,
       std::unique_ptr<ResourceRequest> request,
       scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
       scoped_refptr<storage::FileSystemContext> file_system_context,
-      const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
       uint32_t download_id,
       bool is_parallel_request);
 
-  // Create the object with a URLLoader.
-  static std::unique_ptr<ResourceDownloader> CreateWithURLLoader(
+  // Called to intercept a navigation response.
+  static std::unique_ptr<ResourceDownloader> InterceptNavigationResponse(
       base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
       std::unique_ptr<ResourceRequest> resource_request,
-      const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
+      const scoped_refptr<ResourceResponse>& response,
+      mojo::ScopedDataPipeConsumerHandle consumer_handle,
+      const SSLStatus& ssl_status,
+      int frame_tree_node_id,
       std::unique_ptr<ThrottlingURLLoader> url_loader,
+      std::vector<GURL> url_chain,
       base::Optional<network::URLLoaderCompletionStatus> status);
 
-  ResourceDownloader(
-      base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
-      std::unique_ptr<ResourceRequest> resource_request,
-      const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
-      uint32_t download_id);
+  ResourceDownloader(base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
+                     std::unique_ptr<ResourceRequest> resource_request,
+                     std::unique_ptr<DownloadSaveInfo> save_info,
+                     uint32_t download_id,
+                     std::string guid,
+                     bool is_parallel_request,
+                     bool is_transient,
+                     bool fetch_error_body);
   ~ResourceDownloader() override;
 
   // DownloadResponseHandler::Delegate
@@ -58,24 +63,11 @@ class ResourceDownloader : public UrlDownloadHandler,
       mojom::DownloadStreamHandlePtr stream_handle) override;
   void OnReceiveRedirect() override;
 
-  // Helper method to start the navigation interception.
-  void StartNavigationInterception(
-      const scoped_refptr<ResourceResponse>& response,
-      mojo::ScopedDataPipeConsumerHandle consumer_handle,
-      const SSLStatus& ssl_status,
-      std::vector<GURL> url_chain);
-
  private:
   // Helper method to start the network request.
   void Start(scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
              scoped_refptr<storage::FileSystemContext> file_system_context,
-             std::unique_ptr<DownloadUrlParameters> download_url_parameters,
-             bool is_parallel_request);
-
-  // Initializes |url_loader_| to take ownership of the |url_loader|.
-  void InitializeURLLoader(
-      std::unique_ptr<ThrottlingURLLoader> url_loader,
-      base::Optional<network::URLLoaderCompletionStatus> status);
+             std::unique_ptr<DownloadUrlParameters> download_url_parameters);
 
   // Intercepts the navigation response and takes ownership of the |url_loader|.
   void InterceptResponse(
@@ -87,10 +79,6 @@ class ResourceDownloader : public UrlDownloadHandler,
       std::vector<GURL> url_chain,
       base::Optional<network::URLLoaderCompletionStatus> status);
 
-  // Called when URLLoader status is changed.
-  void OnURLLoaderStatusChanged(
-      const network::URLLoaderCompletionStatus& status);
-
   base::WeakPtr<UrlDownloadHandler::Delegate> delegate_;
 
   // URLLoader for sending out the request.
@@ -100,11 +88,10 @@ class ResourceDownloader : public UrlDownloadHandler,
   std::unique_ptr<ResourceRequest> resource_request_;
 
   // Object for handing the server response.
-  std::unique_ptr<mojom::URLLoaderClient> url_loader_client_;
+  DownloadResponseHandler response_handler_;
 
   // URLLoaderClient binding for loading a blob.
-  std::unique_ptr<mojo::Binding<mojom::URLLoaderClient>> blob_client_binding_;
-  // mojo::Binding<mojom::URLLoaderClient> blob_client_binding_;
+  mojo::Binding<mojom::URLLoaderClient> blob_client_binding_;
 
   // ID of the download, or DownloadItem::kInvalidId if this is a new
   // download.
@@ -117,10 +104,7 @@ class ResourceDownloader : public UrlDownloadHandler,
   DownloadUrlParameters::OnStartedCallback callback_;
 
   // Used to get WebContents in browser process.
-  ResourceRequestInfo::WebContentsGetter web_contents_getter_;
-
-  // URLLoader status when intercepting the navigation request.
-  base::Optional<network::URLLoaderCompletionStatus> url_loader_status_;
+  int frame_tree_node_id_ = -1;
 
   base::WeakPtrFactory<ResourceDownloader> weak_ptr_factory_;
 

@@ -573,11 +573,8 @@ ScreenLocker::~ScreenLocker() {
   VLOG(1) << "Destroying ScreenLocker " << this;
   DCHECK(base::MessageLoopForUI::IsCurrent());
 
-  if (authenticator_)
+  if (authenticator_.get())
     authenticator_->SetConsumer(nullptr);
-  if (extended_authenticator_)
-    extended_authenticator_->SetConsumer(nullptr);
-
   ClearErrors();
 
   screen_locker_ = nullptr;

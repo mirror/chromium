@@ -18,9 +18,9 @@
 
 namespace ash {
 
-ShutdownController::ShutdownController() = default;
+ShutdownController::ShutdownController() {}
 
-ShutdownController::~ShutdownController() = default;
+ShutdownController::~ShutdownController() {}
 
 void ShutdownController::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);

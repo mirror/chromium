@@ -6,8 +6,10 @@
 
 namespace chromeos {
 
-AuthAttemptStateResolver::AuthAttemptStateResolver() = default;
+AuthAttemptStateResolver::AuthAttemptStateResolver() {
+}
 
-AuthAttemptStateResolver::~AuthAttemptStateResolver() = default;
+AuthAttemptStateResolver::~AuthAttemptStateResolver() {
+}
 
 }  // namespace chromeos

@@ -97,7 +97,7 @@ PersistentHostScanCacheImpl::PersistentHostScanCacheImpl(
     PrefService* pref_service)
     : pref_service_(pref_service) {}
 
-PersistentHostScanCacheImpl::~PersistentHostScanCacheImpl() = default;
+PersistentHostScanCacheImpl::~PersistentHostScanCacheImpl() {}
 
 std::unordered_map<std::string, HostScanCacheEntry>
 PersistentHostScanCacheImpl::GetStoredCacheEntries() {

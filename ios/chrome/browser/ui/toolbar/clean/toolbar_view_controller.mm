@@ -9,7 +9,6 @@
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/history_popup_commands.h"
-#import "ios/chrome/browser/ui/commands/start_voice_search_command.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
@@ -17,7 +16,6 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_component_options.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
-#import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
@@ -35,13 +33,10 @@
 @property(nonatomic, strong) ToolbarButton* backButton;
 @property(nonatomic, strong) ToolbarButton* forwardButton;
 @property(nonatomic, strong) ToolbarButton* tabSwitchStripButton;
-@property(nonatomic, strong, readwrite) ToolbarToolsMenuButton* toolsMenuButton;
+@property(nonatomic, strong) ToolbarButton* toolsMenuButton;
 @property(nonatomic, strong) ToolbarButton* shareButton;
 @property(nonatomic, strong) ToolbarButton* reloadButton;
 @property(nonatomic, strong) ToolbarButton* stopButton;
-@property(nonatomic, strong) ToolbarButton* voiceSearchButton;
-@property(nonatomic, strong) ToolbarButton* bookmarkButton;
-@property(nonatomic, assign) BOOL voiceSearchEnabled;
 @property(nonatomic, strong) MDCProgressView* progressBar;
 @end
 
@@ -59,9 +54,6 @@
 @synthesize shareButton = _shareButton;
 @synthesize reloadButton = _reloadButton;
 @synthesize stopButton = _stopButton;
-@synthesize voiceSearchButton = _voiceSearchButton;
-@synthesize bookmarkButton = _bookmarkButton;
-@synthesize voiceSearchEnabled = _voiceSearchEnabled;
 @synthesize progressBar = _progressBar;
 
 #pragma mark - Public
@@ -108,8 +100,6 @@
     [self.locationBarContainer addSubview:self.locationBarView];
     AddSameConstraints(self.locationBarContainer, self.locationBarView);
   }
-  [self.locationBarContainer addSubview:self.bookmarkButton];
-  [self.locationBarContainer addSubview:self.voiceSearchButton];
   [self.view addSubview:self.stackView];
   [self.view addSubview:self.progressBar];
   [self setConstraints];
@@ -155,14 +145,6 @@
         constraintEqualToAnchor:self.view.bottomAnchor],
     [self.progressBar.heightAnchor
         constraintEqualToConstant:kProgressBarHeight],
-    [self.bookmarkButton.centerYAnchor
-        constraintEqualToAnchor:self.locationBarContainer.centerYAnchor],
-    [self.voiceSearchButton.centerYAnchor
-        constraintEqualToAnchor:self.locationBarContainer.centerYAnchor],
-    [self.voiceSearchButton.trailingAnchor
-        constraintEqualToAnchor:self.locationBarContainer.trailingAnchor],
-    [self.bookmarkButton.trailingAnchor
-        constraintEqualToAnchor:self.voiceSearchButton.leadingAnchor],
   ];
 
   // Constraint so Toolbar stackview never overlaps with the Status Bar.
@@ -279,29 +261,9 @@
                       action:@selector(stopLoading)
             forControlEvents:UIControlEventTouchUpInside];
 
-  // Voice Search button.
-  self.voiceSearchButton = [self.buttonFactory voiceSearchButton];
-  self.voiceSearchButton.visibilityMask =
-      ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.voiceSearchButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  self.voiceSearchButton.enabled = NO;
-
-  // Bookmark button.
-  self.bookmarkButton = [self.buttonFactory bookmarkToolbarButton];
-  self.bookmarkButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.bookmarkButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.bookmarkButton addTarget:self.dispatcher
-                          action:@selector(bookmarkPage)
-                forControlEvents:UIControlEventTouchUpInside];
-
   // Add buttons to button updater.
   self.buttonUpdater.backButton = self.backButton;
   self.buttonUpdater.forwardButton = self.forwardButton;
-  self.buttonUpdater.voiceSearchButton = self.voiceSearchButton;
 
   // Set the button constraint priority to UILayoutPriorityDefaultHigh so
   // these are not broken when being hidden by the StackView.
@@ -383,7 +345,12 @@
   [super traitCollectionDidChange:previousTraitCollection];
   if (self.traitCollection.horizontalSizeClass !=
       previousTraitCollection.horizontalSizeClass) {
-    [self updateAllButtonsVisibility];
+    for (UIView* view in self.stackView.arrangedSubviews) {
+      if ([view isKindOfClass:[ToolbarButton class]]) {
+        ToolbarButton* button = base::mac::ObjCCastStrict<ToolbarButton>(view);
+        [button updateHiddenInCurrentSizeClass];
+      }
+    }
   }
 }
 
@@ -444,23 +411,6 @@
   [self.tabSwitchStripButton setAccessibilityValue:tabStripButtonValue];
 }
 
-- (void)setPageBookmarked:(BOOL)bookmarked {
-  self.bookmarkButton.selected = bookmarked;
-}
-
-- (void)setVoiceSearchEnabled:(BOOL)voiceSearchEnabled {
-  _voiceSearchEnabled = voiceSearchEnabled;
-  if (voiceSearchEnabled) {
-    self.voiceSearchButton.enabled = YES;
-    [self.voiceSearchButton addTarget:self.dispatcher
-                               action:@selector(preloadVoiceSearch)
-                     forControlEvents:UIControlEventTouchDown];
-    [self.voiceSearchButton addTarget:self
-                               action:@selector(startVoiceSearch:)
-                     forControlEvents:UIControlEventTouchUpInside];
-  }
-}
-
 #pragma mark - ActivityServicePositioner
 
 - (UIView*)shareButtonView {
@@ -495,8 +445,6 @@
       [button updateHiddenInCurrentSizeClass];
     }
   }
-  [self.bookmarkButton updateHiddenInCurrentSizeClass];
-  [self.voiceSearchButton updateHiddenInCurrentSizeClass];
 }
 
 // Sets the priority for an array of constraints and activates them.
@@ -506,17 +454,6 @@
     constraint.priority = priority;
   }
   [NSLayoutConstraint activateConstraints:constraintsArray];
-}
-
-#pragma mark - Private
-
-// TODO(crbug.com/789104): Use named layout guide instead of passing the view.
-// Target of the voice search button.
-- (void)startVoiceSearch:(id)sender {
-  UIView* view = base::mac::ObjCCastStrict<UIView>(sender);
-  StartVoiceSearchCommand* command =
-      [[StartVoiceSearchCommand alloc] initWithOriginView:view];
-  [self.dispatcher startVoiceSearch:command];
 }
 
 @end

@@ -12,7 +12,7 @@
 
 namespace ash {
 
-ResizeShadowController::ResizeShadowController() = default;
+ResizeShadowController::ResizeShadowController() {}
 
 ResizeShadowController::~ResizeShadowController() {
   for (const auto& shadow : window_shadows_)

@@ -356,9 +356,6 @@ Polymer({
     this.passwordManager_.removeExceptionListChangedListener(
         /** @type {function(!Array<PasswordManager.ExceptionEntry>):void} */ (
             this.setPasswordExceptionsListener_));
-
-    if (this.$.undoToast.open)
-      this.$.undoToast.hide();
   },
 
   /**

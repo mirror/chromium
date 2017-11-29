@@ -119,7 +119,7 @@ class TestVideoRendererTest : public testing::Test {
 TestVideoRendererTest::TestVideoRendererTest()
     : timer_(new base::Timer(true, false)) {}
 
-TestVideoRendererTest::~TestVideoRendererTest() = default;
+TestVideoRendererTest::~TestVideoRendererTest() {}
 
 void TestVideoRendererTest::SetUp() {
   if (!base::MessageLoop::current()) {

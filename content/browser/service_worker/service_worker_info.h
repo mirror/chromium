@@ -14,7 +14,6 @@
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_types.h"
-#include "third_party/WebKit/common/service_worker/service_worker_provider_type.mojom.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -29,14 +28,14 @@ struct CONTENT_EXPORT ServiceWorkerVersionInfo {
     ClientInfo(int process_id,
                int route_id,
                const base::Callback<WebContents*(void)>& web_contents_getter,
-               blink::mojom::ServiceWorkerProviderType type);
+               ServiceWorkerProviderType type);
     ClientInfo(const ClientInfo& other);
     ~ClientInfo();
     int process_id;
     int route_id;
     // |web_contents_getter| is only set for PlzNavigate.
     base::Callback<WebContents*(void)> web_contents_getter;
-    blink::mojom::ServiceWorkerProviderType type;
+    ServiceWorkerProviderType type;
   };
 
   ServiceWorkerVersionInfo();

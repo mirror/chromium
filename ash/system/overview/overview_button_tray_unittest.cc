@@ -69,8 +69,8 @@ void PerformDoubleTap() {
 
 class OverviewButtonTrayTest : public AshTestBase {
  public:
-  OverviewButtonTrayTest() = default;
-  ~OverviewButtonTrayTest() override = default;
+  OverviewButtonTrayTest() {}
+  ~OverviewButtonTrayTest() override {}
 
   void SetUp() override;
 

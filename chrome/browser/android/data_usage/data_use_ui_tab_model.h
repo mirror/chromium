@@ -24,6 +24,8 @@ namespace content {
 class NavigationEntry;
 }
 
+namespace chrome {
+
 namespace android {
 
 // DataUseUITabModel tracks data use tracking start and end transitions on the
@@ -197,5 +199,7 @@ class DataUseUITabModel : public KeyedService,
 };
 
 }  // namespace android
+
+}  // namespace chrome
 
 #endif  // CHROME_BROWSER_ANDROID_DATA_USAGE_DATA_USE_UI_TAB_MODEL_H_

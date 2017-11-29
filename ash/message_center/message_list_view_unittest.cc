@@ -71,7 +71,7 @@ MockNotificationView::MockNotificationView(MessageViewDelegate* controller,
   SetPaintToLayer();
 }
 
-MockNotificationView::~MockNotificationView() = default;
+MockNotificationView::~MockNotificationView() {}
 
 gfx::Size MockNotificationView::CalculatePreferredSize() const {
   test_->RegisterCall(GET_PREFERRED_SIZE);
@@ -100,9 +100,9 @@ class MessageListViewTest : public AshTestBase,
                             public MessageListView::Observer,
                             public MessageViewDelegate {
  public:
-  MessageListViewTest() = default;
+  MessageListViewTest() {}
 
-  ~MessageListViewTest() override = default;
+  ~MessageListViewTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

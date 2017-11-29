@@ -77,9 +77,10 @@ FeatureEntry::FeatureState FeatureEntry::StateForOption(int index) const {
 
   if (index == 0)
     return FeatureEntry::FeatureState::DEFAULT;
-  if (index == num_options - 1)
+  else if (index == num_options - 1)
     return FeatureEntry::FeatureState::DISABLED;
-  return FeatureEntry::FeatureState::ENABLED;
+  else
+    return FeatureEntry::FeatureState::ENABLED;
 }
 
 const FeatureEntry::FeatureVariation* FeatureEntry::VariationForOption(

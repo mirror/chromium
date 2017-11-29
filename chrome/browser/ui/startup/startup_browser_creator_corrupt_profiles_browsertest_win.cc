@@ -25,7 +25,6 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/testing_browser_process.h"
-#include "content/public/test/test_launcher.h"
 
 namespace {
 
@@ -188,8 +187,11 @@ if (testing::UnitTest::GetInstance()->current_test_info()->name() == \
 
     // If control goes here, it means SetUpUserDataDirectory is not handled.
     // This is okay for PRE_ tests, but not acceptable for main tests.
-    if (content::IsPreTest())
+    if (base::StartsWith(
+            testing::UnitTest::GetInstance()->current_test_info()->name(),
+             "PRE_", base::CompareCase::SENSITIVE)) {
       return true;
+    }
 
     ADD_FAILURE() << "SetUpUserDataDirectory is not handled by the test.";
     return false;

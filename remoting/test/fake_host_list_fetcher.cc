@@ -7,9 +7,11 @@
 namespace remoting {
 namespace test {
 
-FakeHostListFetcher::FakeHostListFetcher() = default;
+FakeHostListFetcher::FakeHostListFetcher() {
+}
 
-FakeHostListFetcher::~FakeHostListFetcher() = default;
+FakeHostListFetcher::~FakeHostListFetcher() {
+}
 
 void FakeHostListFetcher::RetrieveHostlist(const std::string& access_token,
                                            const std::string& target_url,

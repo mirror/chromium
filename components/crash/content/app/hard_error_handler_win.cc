@@ -100,12 +100,10 @@ bool HardErrorHandler(EXCEPTION_POINTERS* ex_info) {
   if (exception == kExceptionModuleNotFound) {
     ModuleNotFoundHardError(ex_info->ExceptionRecord);
     return true;
-  }
-  if (exception == kExceptionEntryPtNotFound) {
+  } else if (exception == kExceptionEntryPtNotFound) {
     EntryPointNotFoundHardError(ex_info->ExceptionRecord);
     return true;
-  }
-  if (FacilityFromException(exception) == FACILITY_GRAPHICS_KERNEL) {
+  } else if (FacilityFromException(exception) == FACILITY_GRAPHICS_KERNEL) {
     RaiseHardErrorMsg(exception, std::string(), std::string());
     return true;
   }

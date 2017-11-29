@@ -103,6 +103,7 @@
 #include "content/browser/mus_util.h"
 #include "content/browser/net/reporting_service_proxy.h"
 #include "content/browser/notifications/notification_message_filter.h"
+#include "content/browser/notifications/platform_notification_context_impl.h"
 #include "content/browser/payments/payment_manager.h"
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/permissions/permission_service_impl.h"
@@ -137,6 +138,7 @@
 #include "content/browser/websockets/websocket_manager.h"
 #include "content/browser/webui/web_ui_controller_factory_registry.h"
 #include "content/common/child_process_host_impl.h"
+#include "content/common/child_process_messages.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/frame_messages.h"
 #include "content/common/in_process_child_thread_params.h"
@@ -151,7 +153,6 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
-#include "content/public/browser/quota_permission_context.h"
 #include "content/public/browser/render_process_host_factory.h"
 #include "content/public/browser/render_process_host_observer.h"
 #include "content/public/browser/render_widget_host.h"
@@ -226,6 +227,7 @@
 #include "base/win/scoped_com_initializer.h"
 #include "base/win/windows_version.h"
 #include "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.h"
+#include "content/common/font_cache_dispatcher_win.h"
 #include "sandbox/win/src/sandbox_policy.h"
 #include "services/service_manager/sandbox/win/sandbox_win.h"
 #include "ui/display/win/dpi.h"
@@ -253,7 +255,6 @@
 #include "content/browser/renderer_host/p2p/socket_dispatcher_host.h"
 #include "content/browser/webrtc/webrtc_internals.h"
 #include "content/common/media/aec_dump_messages.h"
-#include "content/public/browser/webrtc_log.h"
 #endif
 
 #if BUILDFLAG(USE_MINIKIN_HYPHENATION)
@@ -1752,6 +1753,12 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   AddFilter(new TextInputClientMessageFilter());
 #elif defined(OS_WIN)
   AddFilter(new DWriteFontProxyMessageFilter());
+
+  // The FontCacheDispatcher is required only when we're using GDI rendering.
+  // TODO(scottmg): pdf/ppapi still require the renderer to be able to precache
+  // GDI fonts (http://crbug.com/383227), even when using DirectWrite. This
+  // should eventually be if (!ShouldUseDirectWrite()) guarded.
+  channel_->AddFilter(new FontCacheDispatcher());
 #endif
 
   scoped_refptr<CacheStorageDispatcherHost> cache_storage_filter =
@@ -1773,6 +1780,9 @@ void RenderProcessHostImpl::CreateMessageFilters() {
 
   AddFilter(new TraceMessageFilter(GetID()));
   AddFilter(new ResolveProxyMsgHelper(request_context.get()));
+  AddFilter(new QuotaDispatcherHost(
+      GetID(), storage_partition_impl_->GetQuotaManager(),
+      GetContentClient()->browser()->CreateQuotaPermissionContext()));
 
   scoped_refptr<ServiceWorkerContextWrapper> service_worker_context(
       static_cast<ServiceWorkerContextWrapper*>(
@@ -1824,6 +1834,12 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::Bind(&BackgroundSyncContext::CreateService,
                  base::Unretained(
                      storage_partition_impl_->GetBackgroundSyncContext())));
+  AddUIThreadInterface(
+      registry.get(),
+      base::Bind(&PlatformNotificationContextImpl::CreateService,
+                 base::Unretained(
+                     storage_partition_impl_->GetPlatformNotificationContext()),
+                 GetID()));
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&RenderProcessHostImpl::CreateStoragePartitionService,
@@ -1910,12 +1926,6 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(
       base::Bind(&metrics::CreateSingleSampleMetricsProvider));
 
-  registry->AddInterface(base::Bind(
-      QuotaDispatcherHost::Create, GetID(),
-      base::RetainedRef(storage_partition_impl_->GetQuotaManager()),
-      base::WrapRefCounted(
-          GetContentClient()->browser()->CreateQuotaPermissionContext())));
-
   registry->AddInterface(
       base::Bind(&CreateReportingServiceProxy, storage_partition_impl_));
 
@@ -1924,7 +1934,7 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   associated_interfaces_.reset(new AssociatedInterfaceRegistryImpl());
   GetContentClient()->browser()->ExposeInterfacesToRenderer(
       registry.get(), associated_interfaces_.get(), this);
-  blink::AssociatedInterfaceRegistry* associated_registry =
+  AssociatedInterfaceRegistry* associated_registry =
       associated_interfaces_.get();
   associated_registry->AddInterface(base::Bind(
       &RenderProcessHostImpl::BindRouteProvider, base::Unretained(this)));
@@ -3017,11 +3027,8 @@ void RenderProcessHostImpl::Cleanup() {
     return;
 
 #if BUILDFLAG(ENABLE_WEBRTC)
-  if (is_initialized_) {
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&WebRtcLog::ClearLogMessageCallback, GetID()));
-  }
+  if (is_initialized_)
+    ClearWebRtcLogMessageCallback();
 #endif
 
   if (!keep_alive_start_time_.is_null()) {
@@ -3184,6 +3191,18 @@ void RenderProcessHostImpl::SetEchoCanceller3(bool enable) {
   for (int id : aec_dump_consumers_) {
     Send(new AudioProcessingMsg_EnableAec3(id, enable));
   }
+}
+
+void RenderProcessHostImpl::SetWebRtcLogMessageCallback(
+    base::Callback<void(const std::string&)> callback) {
+  BrowserMainLoop::GetInstance()->media_stream_manager()->
+      RegisterNativeLogCallback(GetID(), callback);
+}
+
+void RenderProcessHostImpl::ClearWebRtcLogMessageCallback() {
+  BrowserMainLoop::GetInstance()
+      ->media_stream_manager()
+      ->UnregisterNativeLogCallback(GetID());
 }
 
 RenderProcessHostImpl::WebRtcStopRtpDumpCallback

@@ -175,8 +175,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
           GetContentClient()->browser()->CreateURLLoaderThrottles(
               web_contents_getter_),
           0 /* routing_id */, 0 /* request_id? */, mojom::kURLLoadOptionNone,
-          *resource_request_, this, kNavigationUrlLoaderTrafficAnnotation,
-          base::ThreadTaskRunnerHandle::Get());
+          *resource_request_, this, kNavigationUrlLoaderTrafficAnnotation);
       return;
     }
 
@@ -240,8 +239,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
           GetContentClient()->browser()->CreateURLLoaderThrottles(
               web_contents_getter_),
           frame_tree_node_id_, *resource_request_, this,
-          kNavigationUrlLoaderTrafficAnnotation,
-          base::ThreadTaskRunnerHandle::Get());
+          kNavigationUrlLoaderTrafficAnnotation);
 
       subresource_loader_params_ =
           handler->MaybeCreateSubresourceLoaderParams();
@@ -315,8 +313,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
         GetContentClient()->browser()->CreateURLLoaderThrottles(
             web_contents_getter_),
         frame_tree_node_id_, 0 /* request_id? */, options, *resource_request_,
-        this, kNavigationUrlLoaderTrafficAnnotation,
-        base::ThreadTaskRunnerHandle::Get());
+        this, kNavigationUrlLoaderTrafficAnnotation);
   }
 
   void FollowRedirect() {

@@ -32,7 +32,7 @@ TrayItemView::TrayItemView(SystemTrayItem* owner)
   SetLayoutManager(new views::FillLayout());
 }
 
-TrayItemView::~TrayItemView() = default;
+TrayItemView::~TrayItemView() {}
 
 void TrayItemView::CreateLabel() {
   label_ = new views::Label;

@@ -95,26 +95,26 @@ class CONTENT_EXPORT StoragePartitionImpl
                           uint32_t quota_storage_remove_mask,
                           const GURL& storage_origin,
                           net::URLRequestContextGetter* request_context_getter,
-                          base::OnceClosure callback) override;
+                          const base::Closure& callback) override;
   void ClearData(uint32_t remove_mask,
                  uint32_t quota_storage_remove_mask,
                  const GURL& storage_origin,
                  const OriginMatcherFunction& origin_matcher,
                  const base::Time begin,
                  const base::Time end,
-                 base::OnceClosure callback) override;
+                 const base::Closure& callback) override;
   void ClearData(uint32_t remove_mask,
                  uint32_t quota_storage_remove_mask,
                  const OriginMatcherFunction& origin_matcher,
                  const CookieMatcherFunction& cookie_matcher,
                  const base::Time begin,
                  const base::Time end,
-                 base::OnceClosure callback) override;
+                 const base::Closure& callback) override;
   void ClearHttpAndMediaCaches(
       const base::Time begin,
       const base::Time end,
       const base::Callback<bool(const GURL&)>& url_matcher,
-      base::OnceClosure callback) override;
+      const base::Closure& callback) override;
   void Flush() override;
   void ClearBluetoothAllowedDevicesMapForTesting() override;
   void SetNetworkFactoryForTesting(
@@ -218,7 +218,7 @@ class CONTENT_EXPORT StoragePartitionImpl
                      net::URLRequestContextGetter* rq_context,
                      const base::Time begin,
                      const base::Time end,
-                     base::OnceClosure callback);
+                     const base::Closure& callback);
 
   // Used by StoragePartitionImplMap.
   //

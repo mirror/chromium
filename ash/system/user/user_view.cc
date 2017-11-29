@@ -155,7 +155,7 @@ class UserDropdownWidgetContents : public views::View {
     set_notify_enter_exit_on_child(true);
   }
 
-  ~UserDropdownWidgetContents() override = default;
+  ~UserDropdownWidgetContents() override {}
 
   bool OnMousePressed(const ui::MouseEvent& event) override { return true; }
   void OnMouseReleased(const ui::MouseEvent& event) override {
@@ -176,8 +176,8 @@ class UserDropdownWidgetContents : public views::View {
 // separator 3dp below the host view.
 class ActiveUserBorder : public views::Border {
  public:
-  ActiveUserBorder() = default;
-  ~ActiveUserBorder() override = default;
+  ActiveUserBorder() {}
+  ~ActiveUserBorder() override {}
 
   // views::Border:
   void Paint(const views::View& view, gfx::Canvas* canvas) override {
@@ -357,8 +357,9 @@ void UserView::ToggleUserDropdownWidget() {
       color_utils::GetResultingPaintColor(kMenuSeparatorColor, bg_color));
   const int separator_horizontal_padding =
       (kTrayPopupItemMinStartWidth - kTrayItemSize) / 2;
-  separator->SetBorder(views::CreateEmptyBorder(
-      0, separator_horizontal_padding, 0, separator_horizontal_padding));
+  separator->SetBorder(
+      views::CreateSolidSidedBorder(0, separator_horizontal_padding, 0,
+                                    separator_horizontal_padding, bg_color));
   user_dropdown_padding->AddChildView(separator);
 
   // Add other logged in users.

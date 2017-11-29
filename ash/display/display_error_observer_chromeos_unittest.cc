@@ -42,9 +42,9 @@ std::unique_ptr<display::DisplaySnapshot> CreateTestDisplaySnapshot(
 
 class DisplayErrorObserverTest : public AshTestBase {
  protected:
-  DisplayErrorObserverTest() = default;
+  DisplayErrorObserverTest() {}
 
-  ~DisplayErrorObserverTest() override = default;
+  ~DisplayErrorObserverTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

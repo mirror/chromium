@@ -79,8 +79,7 @@ class FakeAppInstance : public mojom::AppInstance {
   ~FakeAppInstance() override;
 
   // mojom::AppInstance overrides:
-  void InitDeprecated(mojom::AppHostPtr host_ptr) override;
-  void Init(mojom::AppHostPtr host_ptr, InitCallback callback) override;
+  void Init(mojom::AppHostPtr host_ptr) override;
   void RefreshAppList() override;
   void LaunchAppDeprecated(const std::string& package_name,
                            const std::string& activity,

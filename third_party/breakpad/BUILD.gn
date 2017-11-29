@@ -770,7 +770,10 @@ if (is_linux || is_android) {
     configs += [ ":client_config" ]
 
     if (is_component_build) {
-      ldflags = [ "-Wl,-rpath,\$ORIGIN" ]
+      ldflags = [
+        "-Wl,-rpath,",
+        rebase_path(root_build_dir),
+      ]
     }
   }
 

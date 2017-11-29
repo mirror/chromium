@@ -11,7 +11,7 @@ namespace ash {
 
 class SystemInfoDefaultViewTest : public testing::Test {
  public:
-  SystemInfoDefaultViewTest() = default;
+  SystemInfoDefaultViewTest() {}
 
  protected:
   // Wrapper calls for SystemInfoDefaultView internals.

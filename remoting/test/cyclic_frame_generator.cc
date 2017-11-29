@@ -38,7 +38,7 @@ CyclicFrameGenerator::CyclicFrameGenerator(
   }
 }
 
-CyclicFrameGenerator::~CyclicFrameGenerator() = default;
+CyclicFrameGenerator::~CyclicFrameGenerator() {}
 
 void CyclicFrameGenerator::SetTickClock(base::TickClock* tick_clock) {
   clock_ = tick_clock;

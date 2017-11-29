@@ -34,7 +34,7 @@ class ProjectingObserverTest : public testing::Test {
  public:
   ProjectingObserverTest() : observer_(&fake_power_client_) {}
 
-  ~ProjectingObserverTest() override = default;
+  ~ProjectingObserverTest() override {}
 
  protected:
   chromeos::FakePowerManagerClient fake_power_client_;

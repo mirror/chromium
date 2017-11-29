@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Next MinVersion: 4
+// Next MinVersion: 3
 
 module arc.mojom;
 
@@ -60,11 +60,7 @@ interface VoiceInteractionArcHomeHost {
 };
 
 // Connects with ArcHome.
-// Next method ID: 2
+// Next method ID: 1
 interface VoiceInteractionArcHomeInstance {
-  // DEPRECATED: Please use Init@1 instead.
-  InitDeprecated@0(VoiceInteractionArcHomeHost host_ptr);
-
-  // Establishes full-duplex communication with the host.
-  [MinVersion=3] Init@1(VoiceInteractionArcHomeHost host_ptr) => ();
+  Init@0(VoiceInteractionArcHomeHost host_ptr);
 };

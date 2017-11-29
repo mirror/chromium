@@ -628,14 +628,19 @@ void NavigationHandleImpl::WillStartRequest(
   RunCompleteCallback(result);
 }
 
-void NavigationHandleImpl::UpdateStateFollowingRedirect(
+void NavigationHandleImpl::WillRedirectRequest(
     const GURL& new_url,
     const std::string& new_method,
     const GURL& new_referrer_url,
     bool new_is_external_protocol,
     scoped_refptr<net::HttpResponseHeaders> response_headers,
     net::HttpResponseInfo::ConnectionInfo connection_info,
+    RenderProcessHost* post_redirect_process,
     const ThrottleChecksFinishedCallback& callback) {
+  TRACE_EVENT_ASYNC_STEP_INTO1("navigation", "NavigationHandle", this,
+                               "WillRedirectRequest", "url",
+                               new_url.possibly_invalid_spec());
+
   // |new_url| is not expected to be a "renderer debug" url. It should be
   // blocked in NavigationRequest::OnRequestRedirected or in
   // ResourceLoader::OnReceivedRedirect. If it is not the case,
@@ -647,6 +652,7 @@ void NavigationHandleImpl::UpdateStateFollowingRedirect(
   // Update the navigation parameters.
   url_ = new_url;
   method_ = new_method;
+  UpdateSiteURL(post_redirect_process);
 
   if (!(transition_ & ui::PAGE_TRANSITION_CLIENT_REDIRECT)) {
     sanitized_referrer_.url = new_referrer_url;
@@ -664,24 +670,6 @@ void NavigationHandleImpl::UpdateStateFollowingRedirect(
 
   state_ = WILL_REDIRECT_REQUEST;
   complete_callback_ = callback;
-}
-
-void NavigationHandleImpl::WillRedirectRequest(
-    const GURL& new_url,
-    const std::string& new_method,
-    const GURL& new_referrer_url,
-    bool new_is_external_protocol,
-    scoped_refptr<net::HttpResponseHeaders> response_headers,
-    net::HttpResponseInfo::ConnectionInfo connection_info,
-    RenderProcessHost* post_redirect_process,
-    const ThrottleChecksFinishedCallback& callback) {
-  TRACE_EVENT_ASYNC_STEP_INTO1("navigation", "NavigationHandle", this,
-                               "WillRedirectRequest", "url",
-                               new_url.possibly_invalid_spec());
-  UpdateStateFollowingRedirect(new_url, new_method, new_referrer_url,
-                               new_is_external_protocol, response_headers,
-                               connection_info, callback);
-  UpdateSiteURL(post_redirect_process);
 
   if (IsSelfReferentialURL()) {
     state_ = CANCELING;

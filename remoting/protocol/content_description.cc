@@ -123,7 +123,7 @@ ContentDescription::ContentDescription(
     : candidate_config_(std::move(config)),
       authenticator_message_(std::move(authenticator_message)) {}
 
-ContentDescription::~ContentDescription() = default;
+ContentDescription::~ContentDescription() { }
 
 // ToXml() creates content description for chromoting session. The
 // description looks as follows:

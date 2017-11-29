@@ -61,8 +61,6 @@ var CookieDataForDisplay;
     ['origin', 'serviceWorkerOrigin'], ['size', 'serviceWorkerSize'],
     ['scopes', 'serviceWorkerScopes']
   ],
-  'shared_worker':
-      [['worker', 'sharedWorkerWorker'], ['name', 'sharedWorkerName']],
   'cache_storage': [
     ['origin', 'cacheStorageOrigin'], ['size', 'cacheStorageSize'],
     ['modified', 'cacheStorageLastModified']

@@ -21,7 +21,7 @@ namespace {
 class ClipboardTestClient {
  public:
   ClipboardTestClient() : display_(nullptr) {}
-  ~ClipboardTestClient() = default;
+  ~ClipboardTestClient() {}
 
   void Init(Display* display) {
     display_ = display;

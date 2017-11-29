@@ -46,7 +46,6 @@ using ::testing::Values;
 using ::testing::_;
 using CrashPoint = MockChromeCleanerProcess::CrashPoint;
 using IdleReason = ChromeCleanerController::IdleReason;
-using RegistryKeysReporting = MockChromeCleanerProcess::RegistryKeysReporting;
 using State = ChromeCleanerController::State;
 using UserResponse = ChromeCleanerController::UserResponse;
 
@@ -73,8 +72,8 @@ class MockChromeCleanerControllerObserver
  public:
   MOCK_METHOD1(OnIdle, void(ChromeCleanerController::IdleReason));
   MOCK_METHOD0(OnScanning, void());
-  MOCK_METHOD1(OnInfected, void(const ChromeCleanerScannerResults&));
-  MOCK_METHOD1(OnCleaning, void(const ChromeCleanerScannerResults&));
+  MOCK_METHOD1(OnInfected, void(const std::set<base::FilePath>&));
+  MOCK_METHOD1(OnCleaning, void(const std::set<base::FilePath>&));
   MOCK_METHOD0(OnRebootRequired, void());
   MOCK_METHOD0(OnRebootFailed, void());
   MOCK_METHOD1(OnLogsEnabledChanged, void(bool));
@@ -169,8 +168,10 @@ class ChromeCleanerControllerSimpleTest
 };
 
 SwReporterInvocation GetInvocationWithPromptTrigger() {
-  return SwReporterInvocation(base::CommandLine(base::CommandLine::NO_PROGRAM))
-      .WithSupportedBehaviours(SwReporterInvocation::BEHAVIOUR_TRIGGER_PROMPT);
+  SwReporterInvocation invocation = {};
+  invocation.supported_behaviours |=
+      SwReporterInvocation::BEHAVIOUR_TRIGGER_PROMPT;
+  return invocation;
 }
 
 TEST_P(ChromeCleanerControllerSimpleTest, FlagsPassedToCleanerProcess) {
@@ -220,12 +221,9 @@ enum class UwsFoundStatus {
   kUwsFoundNoRebootRequired,
 };
 
-typedef std::tuple<CleanerProcessStatus,
-                   CrashPoint,
-                   UwsFoundStatus,
-                   RegistryKeysReporting,
-                   UserResponse>
-    ChromeCleanerControllerTestParams;
+typedef std::
+    tuple<CleanerProcessStatus, CrashPoint, UwsFoundStatus, UserResponse>
+        ChromeCleanerControllerTestParams;
 
 // Test fixture that runs a mock Chrome Cleaner process in various
 // configurations and mocks the user's response.
@@ -238,12 +236,11 @@ class ChromeCleanerControllerTest
   ~ChromeCleanerControllerTest() override {}
 
   void SetUp() override {
-    std::tie(process_status_, crash_point_, uws_found_status_,
-             registry_keys_reporting_, user_response_) = GetParam();
+    std::tie(process_status_, crash_point_, uws_found_status_, user_response_) =
+        GetParam();
 
-    cleaner_process_options_.SetReportedResults(
-        uws_found_status_ != UwsFoundStatus::kNoUwsFound,
-        registry_keys_reporting_);
+    cleaner_process_options_.SetDoFindUws(uws_found_status_ !=
+                                          UwsFoundStatus::kNoUwsFound);
     cleaner_process_options_.set_reboot_required(
         uws_found_status_ == UwsFoundStatus::kUwsFoundRebootRequired);
     cleaner_process_options_.set_crash_point(crash_point_);
@@ -360,11 +357,6 @@ class ChromeCleanerControllerTest
 
   bool ExpectedUwsFound() { return ExpectedOnInfectedCalled(); }
 
-  bool ExpectedRegistryKeysReported() {
-    return ExpectedOnInfectedCalled() &&
-           registry_keys_reporting_ == RegistryKeysReporting::kReported;
-  }
-
   bool ExpectedPromptAccepted() {
     return user_response_ == UserResponse::kAcceptedWithLogs ||
            user_response_ == UserResponse::kAcceptedWithoutLogs;
@@ -428,7 +420,6 @@ class ChromeCleanerControllerTest
   CleanerProcessStatus process_status_;
   MockChromeCleanerProcess::CrashPoint crash_point_;
   UwsFoundStatus uws_found_status_;
-  RegistryKeysReporting registry_keys_reporting_;
   ChromeCleanerController::UserResponse user_response_;
 
   MockChromeCleanerProcess::Options cleaner_process_options_;
@@ -490,8 +481,8 @@ TEST_P(ChromeCleanerControllerTest, WithMockCleanerProcess) {
 
   base::RunLoop run_loop;
 
-  ChromeCleanerScannerResults scanner_results_on_infected;
-  ChromeCleanerScannerResults scanner_results_on_cleaning;
+  std::set<base::FilePath> files_to_delete_on_infected;
+  std::set<base::FilePath> files_to_delete_on_cleaning;
 
   if (ExpectedOnIdleCalled()) {
     EXPECT_CALL(mock_observer_, OnIdle(ExpectedIdleReason()))
@@ -503,7 +494,7 @@ TEST_P(ChromeCleanerControllerTest, WithMockCleanerProcess) {
 
   if (ExpectedOnInfectedCalled()) {
     EXPECT_CALL(mock_observer_, OnInfected(_))
-        .WillOnce(DoAll(SaveArg<0>(&scanner_results_on_infected),
+        .WillOnce(DoAll(SaveArg<0>(&files_to_delete_on_infected),
                         InvokeWithoutArgs([this, profile1]() {
                           controller_->ReplyWithUserResponse(profile1,
                                                              user_response_);
@@ -518,7 +509,7 @@ TEST_P(ChromeCleanerControllerTest, WithMockCleanerProcess) {
 
   if (ExpectedOnCleaningCalled()) {
     EXPECT_CALL(mock_observer_, OnCleaning(_))
-        .WillOnce(SaveArg<0>(&scanner_results_on_cleaning));
+        .WillOnce(SaveArg<0>(&files_to_delete_on_cleaning));
   } else {
     EXPECT_CALL(mock_observer_, OnCleaning(_)).Times(0);
   }
@@ -543,25 +534,12 @@ TEST_P(ChromeCleanerControllerTest, WithMockCleanerProcess) {
   EXPECT_NE(cleaner_process_status_.exit_code,
             MockChromeCleanerProcess::kInternalTestFailureExitCode);
   EXPECT_EQ(controller_->state(), ExpectedFinalState());
-
-  EXPECT_EQ(!scanner_results_on_infected.files_to_delete().empty(),
-            ExpectedUwsFound());
-  EXPECT_EQ(!scanner_results_on_cleaning.files_to_delete().empty(),
+  EXPECT_EQ(!files_to_delete_on_infected.empty(), ExpectedUwsFound());
+  EXPECT_EQ(!files_to_delete_on_cleaning.empty(),
             ExpectedUwsFound() && ExpectedOnCleaningCalled());
-  if (!scanner_results_on_cleaning.files_to_delete().empty()) {
-    EXPECT_THAT(scanner_results_on_cleaning.files_to_delete(),
-                UnorderedElementsAreArray(
-                    scanner_results_on_infected.files_to_delete()));
-  }
-
-  EXPECT_EQ(!scanner_results_on_infected.registry_keys().empty(),
-            ExpectedRegistryKeysReported());
-  EXPECT_EQ(!scanner_results_on_cleaning.registry_keys().empty(),
-            ExpectedRegistryKeysReported() && ExpectedOnCleaningCalled());
-  if (!scanner_results_on_cleaning.registry_keys().empty()) {
-    EXPECT_THAT(
-        scanner_results_on_cleaning.registry_keys(),
-        UnorderedElementsAreArray(scanner_results_on_infected.registry_keys()));
+  if (!files_to_delete_on_infected.empty() &&
+      !files_to_delete_on_cleaning.empty()) {
+    EXPECT_EQ(files_to_delete_on_infected, files_to_delete_on_cleaning);
   }
 
   EXPECT_EQ(ExpectedRebootFlowStarted(), reboot_flow_started_);
@@ -630,21 +608,6 @@ std::ostream& operator<<(std::ostream& out, UwsFoundStatus status) {
   }
 }
 
-std::ostream& operator<<(std::ostream& out,
-                         RegistryKeysReporting registry_keys_reporting) {
-  switch (registry_keys_reporting) {
-    case RegistryKeysReporting::kUnsupported:
-      return out << "kUnsupported";
-    case RegistryKeysReporting::kNotReported:
-      return out << "kNotReported";
-    case RegistryKeysReporting::kReported:
-      return out << "kReported";
-    default:
-      NOTREACHED();
-      return out << "UnknownRegistryKeysReporting";
-  }
-}
-
 std::ostream& operator<<(std::ostream& out, UserResponse response) {
   switch (response) {
     case UserResponse::kAcceptedWithLogs:
@@ -672,8 +635,7 @@ struct ChromeCleanerControllerTestParamsToString {
     param_name << std::get<0>(info.param) << "_";
     param_name << std::get<1>(info.param) << "_";
     param_name << std::get<2>(info.param) << "_";
-    param_name << std::get<3>(info.param) << "_";
-    param_name << std::get<4>(info.param);
+    param_name << std::get<3>(info.param);
     return param_name.str();
   }
 };
@@ -694,9 +656,6 @@ INSTANTIATE_TEST_CASE_P(
             Values(UwsFoundStatus::kNoUwsFound,
                    UwsFoundStatus::kUwsFoundRebootRequired,
                    UwsFoundStatus::kUwsFoundNoRebootRequired),
-            Values(RegistryKeysReporting::kUnsupported,
-                   RegistryKeysReporting::kNotReported,
-                   RegistryKeysReporting::kReported),
             Values(UserResponse::kAcceptedWithLogs,
                    UserResponse::kAcceptedWithoutLogs,
                    UserResponse::kDenied,

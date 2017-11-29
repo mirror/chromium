@@ -19,7 +19,7 @@ ProjectingObserver::ProjectingObserver(
   DCHECK(power_manager_client);
 }
 
-ProjectingObserver::~ProjectingObserver() = default;
+ProjectingObserver::~ProjectingObserver() {}
 
 void ProjectingObserver::OnDisplayModeChanged(
     const display::DisplayConfigurator::DisplayStateList& display_states) {

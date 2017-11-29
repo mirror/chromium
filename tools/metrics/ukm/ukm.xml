@@ -446,34 +446,6 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
-<event name="CPUUsageMeasurement">
-  <owner>matthalp@google.com</owner>
-  <owner>oysteine@chromium.org</owner>
-  <summary>
-    A CPU usage measurement that corresponds to a tick in a CPU usage
-    time-series The tick interval is set as a FieldTrial parameter, which can be
-    obtained by cross referencing the UKM entry with the FieldTrial it was
-    launched with. There is also some metadata stored to determine how faitful
-    the CPU usage measurement is (e.g. NumberOfCoresidentTabs).
-  </summary>
-  <metric name="CPUUsage">
-    <summary>
-      CPU usage measurement.
-    </summary>
-  </metric>
-  <metric name="NumberOfCoresidentTabs">
-    <summary>
-      Number of co-resident tabs in all of the render processes a tab is
-      associated with when the CPU usage measurement is taken.
-    </summary>
-  </metric>
-  <metric name="Tick">
-    <summary>
-      Tick CPU Usage measurement was taken at.
-    </summary>
-  </metric>
-</event>
-
 <event name="Event.ScrollUpdate.Touch">
   <owner>nzolghadr@chromium.org</owner>
   <summary>
@@ -1571,21 +1543,6 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
-<event name="Tab.RendererOOM">
-  <owner>ssid@chromium.org</owner>
-  <summary>
-    Metrics about renderer OOM, recorded for each detected OOM of renderer
-    process.
-  </summary>
-  <metric name="TimeSinceLastNavigation">
-    <summary>
-      Duration in MS from when the main frame navigation was triggered to when
-      the tab crashed with OOM. Recorded only on Windows, Android and Chrome OS.
-      We do not have a way to detect OOMs reliably on Linux and Mac.
-    </summary>
-  </metric>
-</event>
-
 <event name="Translate">
   <owner>hamelphi@chromium.org</owner>
   <summary>
@@ -1601,6 +1558,34 @@ be describing additional metrics about the same event.
   <metric name="RankerVersion"/>
   <metric name="SourceLanguage" semantic_type="ST_DEMOGRAPHIC_INFO"/>
   <metric name="TargetLanguage" semantic_type="ST_DEMOGRAPHIC_INFO"/>
+</event>
+
+<event name="CPUUsageMeasurement">
+  <owner>matthalp@google.com</owner>
+  <owner>oysteine@chromium.org</owner>
+  <summary>
+    A CPU usage measurement that corresponds to a tick in a CPU usage
+    time-series The tick interval is set as a FieldTrial parameter, which can be
+    obtained by cross referencing the UKM entry with the FieldTrial it was
+    launched with. There is also some metadata stored to determine how faitful
+    the CPU usage measurement is (e.g. NumberOfCoresidentTabs).
+  </summary>
+  <metric name="CPUUsage">
+    <summary>
+      CPU usage measurement.
+    </summary>
+  </metric>
+  <metric name="NumberOfCoresidentTabs">
+    <summary>
+      Number of co-resident tabs in all of the render processes a tab is
+      associated with when the CPU usage measurement is taken.
+    </summary>
+  </metric>
+  <metric name="Tick">
+    <summary>
+      Tick CPU Usage measurement was taken at.
+    </summary>
+  </metric>
 </event>
 
 <event name="TabManager.Background.FirstAlertFired">
@@ -1927,6 +1912,85 @@ be describing additional metrics about the same event.
       The time when the tab was closed, expressed as the amount of time in MS
       that has elapsed since the main frame navigation providing the content of
       the tab.
+    </summary>
+  </metric>
+</event>
+
+<event name="UserActivity">
+  <owner>jiameng@chromium.org</owner>
+  <summary>
+    Collects user activity events after staying idle for a short period of time.
+  </summary>
+  <metric name="BatteryPercent">
+    <summary>
+      Percentage of battery, bucketed to 5 percents, i.e. [0, 5%) is mapped to
+      0, [5%, 10%) is mapped to 5 etc.
+    </summary>
+  </metric>
+  <metric name="DeviceMode">
+    <summary>
+      An enum representing the mode of the device, defined in
+      |chromeos::power::ml::UserActivityEvent::Feature::DeviceMode|
+    </summary>
+  </metric>
+  <metric name="DeviceType">
+    <summary>
+      An enum representing the type of the device, defined in
+      |chromeos::power::ml::UserActivityEvent::Feature::DeviceType|
+    </summary>
+  </metric>
+  <metric name="EventReason">
+    <summary>
+      An enum representing the reason of the event, defined in
+      |chromeos::power::ml::UserActivityEvent::Event::Reason|.
+    </summary>
+  </metric>
+  <metric name="EventType">
+    <summary>
+      An enum representing the type of the event, defined in
+      |chromeos::power::ml::UserActivityEvent::Event::Type|.
+    </summary>
+  </metric>
+  <metric name="LastActivityDay">
+    <summary>
+      An enum representing the last activity day of the week, defined in
+      |chromeos::power::ml::UserActivityEvent::Feature::DayOfWeek|.
+    </summary>
+  </metric>
+  <metric name="LastActivityTime">
+    <summary>
+      Last activity time as hours since midnight in the local time zone.
+    </summary>
+  </metric>
+  <metric name="LastUserActivityTime">
+    <summary>
+      Last user activity time as hours since midnight in the local time zone.
+    </summary>
+  </metric>
+  <metric name="OnBattery">
+    <summary>
+      Boolean value to represent whether the device is currently on battery
+      power.
+    </summary>
+  </metric>
+  <metric name="RecentTimeActive">
+    <summary>
+      Duration of activity in seconds up to last activity.
+    </summary>
+  </metric>
+  <metric name="TimeSinceLastKey">
+    <summary>
+      Time from last key event in seconds.
+    </summary>
+  </metric>
+  <metric name="TimeSinceLastMouse">
+    <summary>
+      Time from last mouse or touch event in seconds.
+    </summary>
+  </metric>
+  <metric name="URLSourceId">
+    <summary>
+      Source ids of open tabs' URLs.
     </summary>
   </metric>
 </event>

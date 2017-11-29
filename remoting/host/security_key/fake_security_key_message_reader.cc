@@ -13,7 +13,7 @@ namespace remoting {
 FakeSecurityKeyMessageReader::FakeSecurityKeyMessageReader()
     : weak_factory_(this) {}
 
-FakeSecurityKeyMessageReader::~FakeSecurityKeyMessageReader() = default;
+FakeSecurityKeyMessageReader::~FakeSecurityKeyMessageReader() {}
 
 base::WeakPtr<FakeSecurityKeyMessageReader>
 FakeSecurityKeyMessageReader::AsWeakPtr() {

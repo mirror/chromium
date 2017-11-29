@@ -128,7 +128,7 @@ const AudioNodeInfo kUSBCameraInput[] = {
 
 class TestObserver : public chromeos::CrasAudioHandler::AudioObserver {
  public:
-  TestObserver() = default;
+  TestObserver() {}
 
   int active_output_node_changed_count() const {
     return active_output_node_changed_count_;
@@ -176,7 +176,7 @@ class TestObserver : public chromeos::CrasAudioHandler::AudioObserver {
     return output_channel_remixing_changed_count_;
   }
 
-  ~TestObserver() override = default;
+  ~TestObserver() override {}
 
  protected:
   // chromeos::CrasAudioHandler::AudioObserver overrides.
@@ -230,7 +230,7 @@ class SystemMonitorObserver
     : public base::SystemMonitor::DevicesChangedObserver {
  public:
   SystemMonitorObserver() : device_changes_received_(0) {}
-  ~SystemMonitorObserver() override = default;
+  ~SystemMonitorObserver() override {}
 
   void OnDevicesChanged(base::SystemMonitor::DeviceType device_type) override {
     if (device_type == base::SystemMonitor::DeviceType::DEVTYPE_AUDIO)
@@ -247,8 +247,8 @@ class SystemMonitorObserver
 
 class FakeVideoCaptureManager {
  public:
-  FakeVideoCaptureManager() = default;
-  virtual ~FakeVideoCaptureManager() = default;
+  FakeVideoCaptureManager() {}
+  virtual ~FakeVideoCaptureManager() {}
 
   void AddObserver(media::VideoCaptureObserver* observer) {
     observers_.AddObserver(observer);
@@ -279,7 +279,7 @@ class CrasAudioHandlerTest : public testing::TestWithParam<int> {
   CrasAudioHandlerTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
-  ~CrasAudioHandlerTest() override = default;
+  ~CrasAudioHandlerTest() override {}
 
   void SetUp() override {
     system_monitor_.AddDevicesChangedObserver(&system_monitor_observer_);

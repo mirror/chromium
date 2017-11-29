@@ -15,7 +15,7 @@ namespace net {
 
 namespace ct {
 
-enum class CTPolicyCompliance;
+enum class CertPolicyCompliance;
 
 typedef std::vector<scoped_refptr<SignedCertificateTimestamp> > SCTList;
 
@@ -34,7 +34,7 @@ struct NET_EXPORT CTVerifyResult {
   bool ct_policies_applied;
   // The result of evaluating whether the connection complies with the
   // CT certificate policy.
-  CTPolicyCompliance policy_compliance;
+  CertPolicyCompliance cert_policy_compliance;
   // True if the connection was required to comply with the CT certificate
   // policy. This value is only meaningful if |ct_policies_applied| is true.
   bool policy_compliance_required;

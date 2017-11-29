@@ -16,7 +16,7 @@ IpcMouseCursorMonitor::IpcMouseCursorMonitor(
       weak_factory_(this) {
 }
 
-IpcMouseCursorMonitor::~IpcMouseCursorMonitor() = default;
+IpcMouseCursorMonitor::~IpcMouseCursorMonitor() {}
 
 void IpcMouseCursorMonitor::Init(Callback* callback, Mode mode) {
   DCHECK(!callback_);

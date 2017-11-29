@@ -387,6 +387,9 @@ std::unique_ptr<ReferrerChain> DownloadProtectionService::IdentifyReferrerChain(
         referrer_chain.get());
   }
 
+  UMA_HISTOGRAM_COUNTS_100(
+      "SafeBrowsing.ReferrerURLChainSize.DownloadAttribution",
+      referrer_chain->size());
   UMA_HISTOGRAM_ENUMERATION(
       "SafeBrowsing.ReferrerAttributionResult.DownloadAttribution", result,
       SafeBrowsingNavigationObserverManager::ATTRIBUTION_FAILURE_TYPE_MAX);

@@ -30,8 +30,8 @@ namespace ash {
 // A views::WidgetDelegate which uses a CustomFrameViewAsh.
 class CustomFrameTestWidgetDelegate : public views::WidgetDelegateView {
  public:
-  CustomFrameTestWidgetDelegate() = default;
-  ~CustomFrameTestWidgetDelegate() override = default;
+  CustomFrameTestWidgetDelegate() {}
+  ~CustomFrameTestWidgetDelegate() override {}
 
   views::NonClientFrameView* CreateNonClientFrameView(
       views::Widget* widget) override {
@@ -54,8 +54,8 @@ class CustomFrameTestWidgetDelegate : public views::WidgetDelegateView {
 
 class TestWidgetConstraintsDelegate : public CustomFrameTestWidgetDelegate {
  public:
-  TestWidgetConstraintsDelegate() = default;
-  ~TestWidgetConstraintsDelegate() override = default;
+  TestWidgetConstraintsDelegate() {}
+  ~TestWidgetConstraintsDelegate() override {}
 
   // views::View:
   gfx::Size GetMinimumSize() const override { return minimum_size_; }
@@ -102,8 +102,8 @@ class TestWidgetConstraintsDelegate : public CustomFrameTestWidgetDelegate {
 
 class CustomFrameViewAshTest : public AshTestBase {
  public:
-  CustomFrameViewAshTest() = default;
-  ~CustomFrameViewAshTest() override = default;
+  CustomFrameViewAshTest() {}
+  ~CustomFrameViewAshTest() override {}
 
  protected:
   std::unique_ptr<views::Widget> CreateWidget(

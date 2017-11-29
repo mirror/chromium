@@ -163,7 +163,7 @@ class FastUnloadController : public content::NotificationObserver,
     return !on_close_confirmed_.is_null();
   }
 
-  Browser* const browser_;
+  Browser* browser_;
 
   content::NotificationRegistrar registrar_;
 

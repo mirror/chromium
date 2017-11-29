@@ -541,7 +541,7 @@ SkColor GtkUi::GetInactiveSelectionFgColor() const {
   return inactive_selection_fg_color_;
 }
 
-base::TimeDelta GtkUi::GetCursorBlinkInterval() const {
+double GtkUi::GetCursorBlinkInterval() const {
   // From http://library.gnome.org/devel/gtk/unstable/GtkSettings.html, this is
   // the default value for gtk-cursor-blink-time.
   static const gint kGtkDefaultCursorBlinkTime = 1200;
@@ -556,9 +556,7 @@ base::TimeDelta GtkUi::GetCursorBlinkInterval() const {
   gboolean cursor_blink = TRUE;
   g_object_get(gtk_settings_get_default(), "gtk-cursor-blink-time",
                &cursor_blink_time, "gtk-cursor-blink", &cursor_blink, nullptr);
-  return cursor_blink ? base::TimeDelta::FromSecondsD(
-                            cursor_blink_time / kGtkCursorBlinkCycleFactor)
-                      : base::TimeDelta();
+  return cursor_blink ? (cursor_blink_time / kGtkCursorBlinkCycleFactor) : 0.0;
 }
 
 ui::NativeTheme* GtkUi::GetNativeTheme(aura::Window* window) const {

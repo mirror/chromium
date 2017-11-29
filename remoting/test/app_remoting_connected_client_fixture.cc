@@ -43,8 +43,7 @@ AppRemotingConnectedClientFixture::AppRemotingConnectedClientFixture()
           AppRemotingSharedData->GetDetailsFromAppName(GetParam())),
       timer_(new base::Timer(true, false)) {}
 
-AppRemotingConnectedClientFixture::~AppRemotingConnectedClientFixture() =
-    default;
+AppRemotingConnectedClientFixture::~AppRemotingConnectedClientFixture() {}
 
 void AppRemotingConnectedClientFixture::SetUp() {
   connection_helper_.reset(

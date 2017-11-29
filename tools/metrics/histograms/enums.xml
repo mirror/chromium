@@ -1300,11 +1300,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="4" label="Outside of NTP (e.g. bookmarks bar)"/>
 </enum>
 
-<enum name="AppsWindowType">
-  <int value="0" label="Default"/>
-  <int value="1" label="Panel"/>
-</enum>
-
 <enum name="ArcAuthAccountCheckStatus">
   <int value="0" label="Account is up to date"/>
   <int value="1" label="New account"/>
@@ -1840,10 +1835,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="25" label="Kerberos ticket expired while renewing credentials"/>
   <int value="26" label="klist exited with unspecified error"/>
   <int value="27" label="kinit failed because of bad machine name."/>
-  <int value="28" label="New password was rejected during password change."/>
-  <int value="29"
-      label="Could not store device policy since install attributes are not
-             locked yet; stored policy in cache instead."/>
 </enum>
 
 <enum name="AutocheckoutBubble">
@@ -2273,12 +2264,6 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="Submitted with unknown card without selecting suggestions (once)"/>
   <int value="23"
       label="Submitted with no card without selecting suggestions (once)"/>
-  <int value="24"
-      label="Submitted with wrong-length card without selecting suggestions
-             (once)"/>
-  <int value="25"
-      label="Submitted with fail-luhn-check card without selecting
-             suggestions (once)"/>
 </enum>
 
 <enum name="AutofillFormSubmittedState">
@@ -2483,12 +2468,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="5" label="User did type"/>
   <int value="6" label="Suggestions shown"/>
   <int value="7" label="Suggestions shown (once)"/>
-  <int value="8" label="User triggered autofill"/>
-  <int value="9" label="User triggered autofill (once)"/>
+  <int value="8" label="User did autofill"/>
+  <int value="9" label="User did autofill (once)"/>
   <int value="10" label="User edited autofilled field"/>
   <int value="11" label="User edited autofilled field (once)"/>
   <int value="12" label="User entered a UPI VPA into a form"/>
-  <int value="13" label="A field was populated by autofill"/>
 </enum>
 
 <enum name="AutofillWalletAddressConversionType">
@@ -3206,11 +3190,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Allowed"/>
 </enum>
 
-<enum name="BooleanAttached">
-  <int value="0" label="Detached"/>
-  <int value="1" label="Attached"/>
-</enum>
-
 <enum name="BooleanAttempted">
   <int value="0" label="Not Attempted"/>
   <int value="1" label="Attempted"/>
@@ -3269,11 +3248,6 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="BooleanChecked">
   <int value="0" label="Not checked"/>
   <int value="1" label="Checked"/>
-</enum>
-
-<enum name="BooleanChoice">
-  <int value="0" label="Chose CANCEL"/>
-  <int value="1" label="Chose CONTINUE"/>
 </enum>
 
 <enum name="BooleanCleared">
@@ -8367,13 +8341,6 @@ Called by update_net_error_codes.py.-->
   <int value="1" label="ChallengePassed"/>
   <int value="2" label="ChallengeFailed"/>
   <int value="3" label="NeedInjectEntropy"/>
-</enum>
-
-<enum name="DetachableBasePendingRWUpdate">
-  <int value="0" label="CommunicationError"/>
-  <int value="1" label="NoUpdate"/>
-  <int value="2" label="CriticalUpdate"/>
-  <int value="3" label="NonCriticalUpdate"/>
 </enum>
 
 <enum name="DetachableBaseROUpdateResult">
@@ -14417,7 +14384,7 @@ Called by update_net_error_codes.py.-->
   <int value="111" label="kPageCapture"/>
   <int value="112" label="kPointerLock"/>
   <int value="113" label="kPlatformKeys"/>
-  <int value="114" label="kDeleted_Plugin"/>
+  <int value="114" label="kPlugin"/>
   <int value="115" label="kPower"/>
   <int value="116" label="kPreferencesPrivate"/>
   <int value="117" label="kDeleted_PrincipalsPrivate"/>
@@ -17053,7 +17020,6 @@ Called by update_net_error_codes.py.-->
   <int value="2245" label="HTMLAnchorElementDownloadInSandboxWithUserGesture"/>
   <int value="2246"
       label="HTMLAnchorElementDownloadInSandboxWithoutUserGesture"/>
-  <int value="2247" label="WindowOpenRealmMismatch"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -17951,14 +17917,6 @@ Called by update_net_error_codes.py.-->
   <int value="11" label="DRIVE_RECENT"/>
   <int value="12" label="MEDIA_VIEW"/>
   <int value="13" label="RECENT"/>
-</enum>
-
-<enum name="FileManagerTaskType">
-  <int value="0" label="Unknown"/>
-  <int value="1" label="Browser"/>
-  <int value="2" label="Chrome App"/>
-  <int value="3" label="Drive App"/>
-  <int value="4" label="ARC App"/>
 </enum>
 
 <enum name="FileManagerVolumeType">
@@ -21342,9 +21300,6 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   <int value="2" label="InternalsPage">
     A forced close was requested from the indexeddb-internals page.
   </int>
-  <int value="3" label="CopyOrigin">
-    The database is force closed so that it can be copied.
-  </int>
 </enum>
 
 <enum name="IDBException">
@@ -22498,13 +22453,6 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
 <enum name="IOSNTPImpression">
   <int value="0" label="Local suggestions"/>
   <int value="1" label="Remote suggestions"/>
-</enum>
-
-<enum name="IOSPageLoadCountNavigationType">
-  <int value="0" label="Chrome URL Navigation"/>
-  <int value="1" label="Same Document Web Navigation"/>
-  <int value="2" label="Page Load Navigation"/>
-  <int value="3" label="Obsolete - Loading Started"/>
 </enum>
 
 <enum name="IOSRepeatedExternalAppPromptResponse">
@@ -24516,7 +24464,6 @@ from previous Chrome versions.
   <int value="-1691892152" label="SafeSearchUrlReporting:disabled"/>
   <int value="-1691668194" label="enable-new-bookmark-apps"/>
   <int value="-1691281364" label="enable-notification-action-icons"/>
-  <int value="-1686782572" label="ChromeHomeInactivitySheetExpansion:disabled"/>
   <int value="-1670137340"
       label="OptimizeLoadingIPCForSmallResources:disabled"/>
   <int value="-1669486359" label="ImportantSitesInCBD:enabled"/>
@@ -24716,7 +24663,6 @@ from previous Chrome versions.
   <int value="-1158993534" label="PrintScaling:enabled"/>
   <int value="-1155543191" label="CopylessPaste:disabled"/>
   <int value="-1151766565" label="enable-fullscreen-tab-detaching"/>
-  <int value="-1145702446" label="ChromeHomeInactivitySheetExpansion:enabled"/>
   <int value="-1145246849" label="ThirdPartyDoodles:enabled"/>
   <int value="-1137442543" label="enable-slimming-paint"/>
   <int value="-1136627751" label="ignore-autocomplete-off-autofill"/>
@@ -25170,7 +25116,6 @@ from previous Chrome versions.
   <int value="103932290" label="show-autofill-type-predictions"/>
   <int value="105046382" label="ParallelDownloading:disabled"/>
   <int value="106840653" label="mus"/>
-  <int value="107900612" label="ChromeHomePersistentIph:disabled"/>
   <int value="118991027" label="enable-accelerated-fixed-root-background"/>
   <int value="119185738"
       label="OmniboxUIExperimentMaxAutocompleteMatches:disabled"/>
@@ -25561,7 +25506,6 @@ from previous Chrome versions.
   <int value="1221559505" label="enable-spelling-feedback-field-trial"/>
   <int value="1222017136" label="WebRtcUseEchoCanceller3:disabled"/>
   <int value="1235800887" label="V8Ignition:enabled"/>
-  <int value="1235940786" label="ChromeHomePersistentIph:enabled"/>
   <int value="1237297772" label="no-pings"/>
   <int value="1240073971" label="ash-disable-smooth-screen-rotation"/>
   <int value="1242632259" label="ContentSuggestionsCategoryOrder:disabled"/>
@@ -38577,11 +38521,9 @@ Called by update_net_trust_anchors.py.-->
 </enum>
 
 <enum name="SoftwareReporterLogsUploadEnabled">
-  <int value="0" label="SBER Enabled"/>
+  <int value="0" label="Enabled"/>
   <int value="1" label="SBER Disabled"/>
   <int value="2" label="Recently sent logs"/>
-  <int value="3" label="Disabled by user"/>
-  <int value="4" label="Enabled by user"/>
 </enum>
 
 <enum name="SoftwareReporterLogsUploadResult">
@@ -42425,11 +42367,6 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="0" label="VAAPI_ERROR"/>
 </enum>
 
-<enum name="VAJEAEncoderResult">
-  <int value="0" label="VAAPI_SUCCESS"/>
-  <int value="1" label="VAAPI_ERROR"/>
-</enum>
-
 <enum name="ValidateMenuItemSelectorType">
   <int value="0"
       label="The menu items' associated action is an unknown selector."/>
@@ -43115,9 +43052,9 @@ Called by update_traffic_annotation_histograms.py.-->
 
 <enum name="VRUnsupportedMode">
   <int value="0" label="Unhandled code point in URL"/>
-  <int value="1" label="Could not elide URL (obsolete)"/>
+  <int value="1" label="Could not elide URL"/>
   <int value="2" label="Unhandled PageInfo"/>
-  <int value="3" label="URL contained strong RTL chars (obsolete)"/>
+  <int value="3" label="URL contained strong RTL chars"/>
   <int value="4" label="Chrome needs audio permission for voice input"/>
 </enum>
 
@@ -43125,12 +43062,6 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="0" label="UNKNOWN_TYPE"/>
   <int value="1" label="CARDBOARD"/>
   <int value="2" label="DAYDREAM"/>
-</enum>
-
-<enum name="VRVoiceSearchEndState">
-  <int value="0" label="Voice search in VR opened a search page"/>
-  <int value="1" label="Voice search in VR cancelled"/>
-  <int value="2" label="Voice search in VR didn't catch phrase or timed out"/>
 </enum>
 
 <enum name="VTVDAInitializationFailureType">

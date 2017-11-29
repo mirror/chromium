@@ -26,7 +26,7 @@ AppRemotingLatencyTestFixture::AppRemotingLatencyTestFixture()
   // NOTE: Derived fixture must initialize application details in constructor.
 }
 
-AppRemotingLatencyTestFixture::~AppRemotingLatencyTestFixture() = default;
+AppRemotingLatencyTestFixture::~AppRemotingLatencyTestFixture() {}
 
 void AppRemotingLatencyTestFixture::SetUp() {
   std::unique_ptr<TestVideoRenderer> test_video_renderer(

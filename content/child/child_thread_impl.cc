@@ -39,6 +39,7 @@
 #include "content/child/child_histogram_fetcher_impl.h"
 #include "content/child/child_process.h"
 #include "content/child/thread_safe_sender.h"
+#include "content/common/child_process_messages.h"
 #include "content/common/field_trial_recorder.mojom.h"
 #include "content/common/in_process_child_thread_params.h"
 #include "content/public/common/connection_filter.h"
@@ -663,19 +664,11 @@ bool ChildThreadImpl::Send(IPC::Message* msg) {
 
 #if defined(OS_WIN)
 void ChildThreadImpl::PreCacheFont(const LOGFONT& log_font) {
-  GetFontCacheWin()->PreCacheFont(log_font);
+  Send(new ChildProcessHostMsg_PreCacheFont(log_font));
 }
 
 void ChildThreadImpl::ReleaseCachedFonts() {
-  GetFontCacheWin()->ReleaseCachedFonts();
-}
-
-mojom::FontCacheWin* ChildThreadImpl::GetFontCacheWin() {
-  if (!font_cache_win_ptr_) {
-    GetConnector()->BindInterface(mojom::kBrowserServiceName,
-                                  &font_cache_win_ptr_);
-  }
-  return font_cache_win_ptr_.get();
+  Send(new ChildProcessHostMsg_ReleaseCachedFonts());
 }
 #endif
 

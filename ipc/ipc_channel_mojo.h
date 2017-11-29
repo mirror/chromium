@@ -50,8 +50,10 @@ class IPC_EXPORT ChannelMojo : public Channel,
       mojo::ScopedMessagePipeHandle handle,
       Mode mode,
       Listener* listener,
-      const scoped_refptr<base::SingleThreadTaskRunner>& ipc_task_runner,
-      const scoped_refptr<base::SingleThreadTaskRunner>& proxy_task_runner);
+      const scoped_refptr<base::SingleThreadTaskRunner>& ipc_task_runner =
+          base::ThreadTaskRunnerHandle::Get(),
+      const scoped_refptr<base::SingleThreadTaskRunner>& proxy_task_runner =
+          base::ThreadTaskRunnerHandle::Get());
 
   // Create a factory object for ChannelMojo.
   // The factory is used to create Mojo-based ChannelProxy family.

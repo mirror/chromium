@@ -45,7 +45,7 @@ namespace {
 class EventCounter : public ui::EventHandler {
  public:
   EventCounter() : key_events_(0), mouse_events_(0) {}
-  ~EventCounter() override = default;
+  ~EventCounter() override {}
 
   int GetKeyEventCountAndReset() {
     int count = key_events_;
@@ -82,8 +82,8 @@ using aura::Window;
 
 class WindowCycleControllerTest : public AshTestBase {
  public:
-  WindowCycleControllerTest() = default;
-  ~WindowCycleControllerTest() override = default;
+  WindowCycleControllerTest() {}
+  ~WindowCycleControllerTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

@@ -28,8 +28,8 @@ namespace network_icon {
 
 class NetworkIconTest : public chromeos::NetworkStateTest {
  public:
-  NetworkIconTest() = default;
-  ~NetworkIconTest() override = default;
+  NetworkIconTest() {}
+  ~NetworkIconTest() override {}
 
   void SetUp() override {
     chromeos::DBusThreadManager::Initialize();

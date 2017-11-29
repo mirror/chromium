@@ -7,10 +7,10 @@
 namespace remoting {
 namespace protocol {
 
-ClientAuthenticationConfig::ClientAuthenticationConfig() = default;
+ClientAuthenticationConfig::ClientAuthenticationConfig() {}
 ClientAuthenticationConfig::ClientAuthenticationConfig(
     const ClientAuthenticationConfig& other) = default;
-ClientAuthenticationConfig::~ClientAuthenticationConfig() = default;
+ClientAuthenticationConfig::~ClientAuthenticationConfig() {}
 
 }  // namespace protocol
 }  // namespace remoting

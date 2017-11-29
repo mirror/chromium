@@ -140,7 +140,6 @@ bool TypeIsProtected(CookieTreeNode::DetailedInfo::NodeType type) {
     case CookieTreeNode::DetailedInfo::TYPE_INDEXED_DB:
     case CookieTreeNode::DetailedInfo::TYPE_FILE_SYSTEM:
     case CookieTreeNode::DetailedInfo::TYPE_SERVICE_WORKER:
-    case CookieTreeNode::DetailedInfo::TYPE_SHARED_WORKER:
     case CookieTreeNode::DetailedInfo::TYPE_CACHE_STORAGE:
       return true;
 
@@ -267,15 +266,6 @@ CookieTreeNode::DetailedInfo& CookieTreeNode::DetailedInfo::InitServiceWorker(
   Init(TYPE_SERVICE_WORKER);
   this->service_worker_info = service_worker_info;
   this->origin = service_worker_info->origin;
-  return *this;
-}
-
-CookieTreeNode::DetailedInfo& CookieTreeNode::DetailedInfo::InitSharedWorker(
-    const BrowsingDataSharedWorkerHelper::SharedWorkerInfo*
-        shared_worker_info) {
-  Init(TYPE_SHARED_WORKER);
-  this->shared_worker_info = shared_worker_info;
-  this->origin = shared_worker_info->worker.GetOrigin();
   return *this;
 }
 
@@ -582,32 +572,6 @@ CookieTreeNode::DetailedInfo CookieTreeServiceWorkerNode::GetDetailedInfo()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// CookieTreeSharedWorkerNode, public:
-
-CookieTreeSharedWorkerNode::CookieTreeSharedWorkerNode(
-    std::list<BrowsingDataSharedWorkerHelper::SharedWorkerInfo>::iterator
-        shared_worker_info)
-    : CookieTreeNode(base::UTF8ToUTF16(shared_worker_info->worker.spec())),
-      shared_worker_info_(shared_worker_info) {}
-
-CookieTreeSharedWorkerNode::~CookieTreeSharedWorkerNode() {}
-
-void CookieTreeSharedWorkerNode::DeleteStoredObjects() {
-  LocalDataContainer* container = GetLocalDataContainerForNode(this);
-
-  if (container) {
-    container->shared_worker_helper_->DeleteSharedWorker(
-        shared_worker_info_->worker, shared_worker_info_->name);
-    container->shared_worker_info_list_.erase(shared_worker_info_);
-  }
-}
-
-CookieTreeNode::DetailedInfo CookieTreeSharedWorkerNode::GetDetailedInfo()
-    const {
-  return DetailedInfo().InitSharedWorker(&*shared_worker_info_);
-}
-
-///////////////////////////////////////////////////////////////////////////////
 // CookieTreeCacheStorageNode, public:
 
 CookieTreeCacheStorageNode::CookieTreeCacheStorageNode(
@@ -806,15 +770,6 @@ CookieTreeHostNode::GetOrCreateServiceWorkersNode() {
   return service_workers_child_;
 }
 
-CookieTreeSharedWorkersNode*
-CookieTreeHostNode::GetOrCreateSharedWorkersNode() {
-  if (shared_workers_child_)
-    return shared_workers_child_;
-  shared_workers_child_ = new CookieTreeSharedWorkersNode;
-  AddChildSortedByTitle(base::WrapUnique(shared_workers_child_));
-  return shared_workers_child_;
-}
-
 CookieTreeCacheStoragesNode*
 CookieTreeHostNode::GetOrCreateCacheStoragesNode() {
   if (cache_storages_child_)
@@ -995,19 +950,6 @@ CookieTreeNode::DetailedInfo CookieTreeServiceWorkersNode::GetDetailedInfo()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// CookieTreeSharedWorkersNode, public:
-
-CookieTreeSharedWorkersNode::CookieTreeSharedWorkersNode()
-    : CookieTreeNode(l10n_util::GetStringUTF16(IDS_COOKIES_SHARED_WORKERS)) {}
-
-CookieTreeSharedWorkersNode::~CookieTreeSharedWorkersNode() {}
-
-CookieTreeNode::DetailedInfo CookieTreeSharedWorkersNode::GetDetailedInfo()
-    const {
-  return DetailedInfo().Init(DetailedInfo::TYPE_SHARED_WORKERS);
-}
-
-///////////////////////////////////////////////////////////////////////////////
 // CookieTreeCacheStoragesNode, public:
 
 CookieTreeCacheStoragesNode::CookieTreeCacheStoragesNode()
@@ -1149,7 +1091,6 @@ int CookiesTreeModel::GetIconIndex(ui::TreeModelNode* node) {
     case CookieTreeNode::DetailedInfo::TYPE_INDEXED_DB:
     case CookieTreeNode::DetailedInfo::TYPE_FILE_SYSTEM:
     case CookieTreeNode::DetailedInfo::TYPE_SERVICE_WORKER:
-    case CookieTreeNode::DetailedInfo::TYPE_SHARED_WORKER:
     case CookieTreeNode::DetailedInfo::TYPE_CACHE_STORAGE:
     case CookieTreeNode::DetailedInfo::TYPE_MEDIA_LICENSE:
       return DATABASE;
@@ -1197,7 +1138,6 @@ void CookiesTreeModel::UpdateSearchResults(const base::string16& filter) {
   PopulateQuotaInfoWithFilter(data_container(), &notifier, filter);
   PopulateChannelIDInfoWithFilter(data_container(), &notifier, filter);
   PopulateServiceWorkerUsageInfoWithFilter(data_container(), &notifier, filter);
-  PopulateSharedWorkerInfoWithFilter(data_container(), &notifier, filter);
   PopulateCacheStorageUsageInfoWithFilter(data_container(), &notifier, filter);
 }
 
@@ -1281,11 +1221,6 @@ void CookiesTreeModel::PopulateServiceWorkerUsageInfo(
   ScopedBatchUpdateNotifier notifier(this, GetRoot());
   PopulateServiceWorkerUsageInfoWithFilter(
       container, &notifier, base::string16());
-}
-
-void CookiesTreeModel::PopulateSharedWorkerInfo(LocalDataContainer* container) {
-  ScopedBatchUpdateNotifier notifier(this, GetRoot());
-  PopulateSharedWorkerInfoWithFilter(container, &notifier, base::string16());
 }
 
 void CookiesTreeModel::PopulateCacheStorageUsageInfo(
@@ -1525,33 +1460,6 @@ void CookiesTreeModel::PopulateServiceWorkerUsageInfoWithFilter(
           host_node->GetOrCreateServiceWorkersNode();
       service_workers_node->AddServiceWorkerNode(
           base::MakeUnique<CookieTreeServiceWorkerNode>(service_worker_info));
-    }
-  }
-}
-
-void CookiesTreeModel::PopulateSharedWorkerInfoWithFilter(
-    LocalDataContainer* container,
-    ScopedBatchUpdateNotifier* notifier,
-    const base::string16& filter) {
-  CookieTreeRootNode* root = static_cast<CookieTreeRootNode*>(GetRoot());
-
-  if (container->shared_worker_info_list_.empty())
-    return;
-
-  notifier->StartBatchUpdate();
-  for (SharedWorkerInfoList::iterator shared_worker_info =
-           container->shared_worker_info_list_.begin();
-       shared_worker_info != container->shared_worker_info_list_.end();
-       ++shared_worker_info) {
-    const GURL& worker = shared_worker_info->worker;
-
-    if (filter.empty() || (CookieTreeHostNode::TitleForUrl(worker).find(
-                               filter) != base::string16::npos)) {
-      CookieTreeHostNode* host_node = root->GetOrCreateHostNode(worker);
-      CookieTreeSharedWorkersNode* shared_workers_node =
-          host_node->GetOrCreateSharedWorkersNode();
-      shared_workers_node->AddSharedWorkerNode(
-          base::MakeUnique<CookieTreeSharedWorkerNode>(shared_worker_info));
     }
   }
 }

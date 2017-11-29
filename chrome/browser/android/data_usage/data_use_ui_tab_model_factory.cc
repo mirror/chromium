@@ -17,6 +17,8 @@
 #include "components/signin/core/browser/signin_manager.h"
 #include "content/public/browser/browser_thread.h"
 
+namespace chrome {
+
 namespace android {
 
 namespace {
@@ -86,7 +88,7 @@ KeyedService* DataUseUITabModelFactory::BuildServiceInstanceFor(
   content::BrowserThread::PostTaskAndReplyWithResult(
       content::BrowserThread::IO, FROM_HERE,
       base::Bind(&GetDataUseTabModelOnIOThread, g_browser_process->io_thread()),
-      base::Bind(&android::DataUseUITabModel::SetDataUseTabModel,
+      base::Bind(&chrome::android::DataUseUITabModel::SetDataUseTabModel,
                  data_use_ui_tab_model->GetWeakPtr()));
 
   content::BrowserThread::PostTask(
@@ -99,3 +101,5 @@ KeyedService* DataUseUITabModelFactory::BuildServiceInstanceFor(
 }
 
 }  // namespace android
+
+}  // namespace chrome

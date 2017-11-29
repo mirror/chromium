@@ -32,8 +32,8 @@ void SetTouchHudProjectionEnabled(bool enabled) {
 
 class TouchHudTestBase : public AshTestBase {
  public:
-  TouchHudTestBase() = default;
-  ~TouchHudTestBase() override = default;
+  TouchHudTestBase() {}
+  ~TouchHudTestBase() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();
@@ -206,8 +206,8 @@ class TouchHudTestBase : public AshTestBase {
 
 class TouchHudDebugTest : public TouchHudTestBase {
  public:
-  TouchHudDebugTest() = default;
-  ~TouchHudDebugTest() override = default;
+  TouchHudDebugTest() {}
+  ~TouchHudDebugTest() override {}
 
   void SetUp() override {
     // Add ash-touch-hud flag to enable debug touch HUD. This flag should be set
@@ -270,8 +270,8 @@ class TouchHudDebugTest : public TouchHudTestBase {
 
 class TouchHudProjectionTest : public TouchHudTestBase {
  public:
-  TouchHudProjectionTest() = default;
-  ~TouchHudProjectionTest() override = default;
+  TouchHudProjectionTest() {}
+  ~TouchHudProjectionTest() override {}
 
   TouchHudProjection* GetInternalTouchHudProjection() {
     return GetInternalRootController()->touch_hud_projection();

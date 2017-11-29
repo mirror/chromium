@@ -14,7 +14,7 @@
 namespace blink {
 
 class LocalFrame;
-class MakePublicKeyCredentialOptions;
+class MakeCredentialOptions;
 class PublicKeyCredentialRequestOptions;
 
 class WebAuthenticationClient final
@@ -30,7 +30,7 @@ class WebAuthenticationClient final
   virtual ~WebAuthenticationClient();
 
   // WebAuthentication.idl
-  void DispatchMakeCredential(const MakePublicKeyCredentialOptions&,
+  void DispatchMakeCredential(const MakeCredentialOptions&,
                               std::unique_ptr<PublicKeyCallbacks>);
 
   void GetAssertion(const PublicKeyCredentialRequestOptions&,

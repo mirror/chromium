@@ -5,7 +5,6 @@
 #ifndef ServiceWorkerWindowClientCallback_h
 #define ServiceWorkerWindowClientCallback_h
 
-#include "base/macros.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsInfo.h"
 
 namespace blink {
@@ -22,7 +21,7 @@ class NavigateClientCallback : public WebServiceWorkerClientCallbacks {
 
  private:
   Persistent<ScriptPromiseResolver> resolver_;
-  DISALLOW_COPY_AND_ASSIGN(NavigateClientCallback);
+  WTF_MAKE_NONCOPYABLE(NavigateClientCallback);
 };
 
 }  // namespace blink

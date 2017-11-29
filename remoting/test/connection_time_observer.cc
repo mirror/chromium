@@ -13,9 +13,11 @@
 namespace remoting {
 namespace test {
 
-ConnectionTimeObserver::ConnectionTimeObserver() = default;
+ConnectionTimeObserver::ConnectionTimeObserver() {
+}
 
-ConnectionTimeObserver::~ConnectionTimeObserver() = default;
+ConnectionTimeObserver::~ConnectionTimeObserver() {
+}
 
 void ConnectionTimeObserver::SetTransitionTimesMapForTest(
     const std::map<protocol::ConnectionToHost::State, base::TimeTicks>& map) {

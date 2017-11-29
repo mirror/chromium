@@ -25,7 +25,8 @@ SandboxIsolatedOriginDatabase::SandboxIsolatedOriginDatabase(
       origin_directory_(origin_directory) {
 }
 
-SandboxIsolatedOriginDatabase::~SandboxIsolatedOriginDatabase() = default;
+SandboxIsolatedOriginDatabase::~SandboxIsolatedOriginDatabase() {
+}
 
 bool SandboxIsolatedOriginDatabase::HasOriginPath(
     const std::string& origin) {

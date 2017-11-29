@@ -61,7 +61,7 @@ SandboxFileStreamWriter::SandboxFileStreamWriter(
   DCHECK(url_.is_valid());
 }
 
-SandboxFileStreamWriter::~SandboxFileStreamWriter() = default;
+SandboxFileStreamWriter::~SandboxFileStreamWriter() {}
 
 int SandboxFileStreamWriter::Write(
     net::IOBuffer* buf, int buf_len,

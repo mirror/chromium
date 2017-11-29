@@ -17,7 +17,7 @@ class NetLogWithSource;
 
 namespace ct {
 
-enum class CTPolicyCompliance;
+enum class CertPolicyCompliance;
 
 }  // namespace ct
 
@@ -38,7 +38,7 @@ class NET_EXPORT CTPolicyEnforcer {
   // ||verified_scts| contains any/all SCTs associated with |cert| that
   // |have been verified (well-formed, issued by known logs, and
   // |applying to |cert|).
-  virtual ct::CTPolicyCompliance CheckCompliance(
+  virtual ct::CertPolicyCompliance DoesConformToCertPolicy(
       X509Certificate* cert,
       const SCTList& verified_scts,
       const NetLogWithSource& net_log);

@@ -22,8 +22,8 @@ namespace {
 
 class TestVpnListObserver : public VpnList::Observer {
  public:
-  TestVpnListObserver() = default;
-  ~TestVpnListObserver() override = default;
+  TestVpnListObserver() {}
+  ~TestVpnListObserver() override {}
 
   // VpnList::Observer:
   void OnVPNProvidersChanged() override { change_count_++; }

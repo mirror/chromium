@@ -18,7 +18,7 @@
 
 namespace remoting {
 
-SecurityKeyMessageHandler::SecurityKeyMessageHandler() = default;
+SecurityKeyMessageHandler::SecurityKeyMessageHandler() {}
 
 SecurityKeyMessageHandler::~SecurityKeyMessageHandler() {
   DCHECK(thread_checker_.CalledOnValidThread());

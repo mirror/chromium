@@ -16,20 +16,13 @@ class HtmlChecker(object):
     self.file_filter = file_filter
 
   def ClassesUseDashFormCheck(self, line_number, line):
-    msg = "Classes should use dash-form."
-    re = self.input_api.re
-    class_regex = re.compile("""
+    regex = self.input_api.re.compile("""
         (?:^|\s)                    # start of line or whitespace
         (class="[^"]*[A-Z_][^"]*")  # class contains caps or '_'
         """,
-        re.VERBOSE)
-
-    # $i18n{...} messes with highlighting. Special path for this.
-    if "$i18n{" in line:
-      match = re.search(class_regex, re.sub("\$i18n{[^}]+}", "", line))
-      return "  line %d: %s" % (line_number, msg) if match else ""
-
-    return regex_check.RegexCheck(re, line_number, line, class_regex, msg)
+        self.input_api.re.VERBOSE)
+    return regex_check.RegexCheck(self.input_api.re, line_number, line, regex,
+        "Classes should use dash-form.")
 
   def DoNotCloseSingleTagsCheck(self, line_number, line):
     regex = r"(/>)"

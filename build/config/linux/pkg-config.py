@@ -123,7 +123,6 @@ def main():
   parser.add_option('--atleast-version', action='store',
                     dest='atleast_version', type='string')
   parser.add_option('--libdir', action='store_true', dest='libdir')
-  parser.add_option('--dridriverdir', action='store_true', dest='dridriverdir')
   (options, args) = parser.parse_args()
 
   # Make a list of regular expressions to strip out.
@@ -162,18 +161,6 @@ def main():
       return 1
     sys.stdout.write(libdir.strip())
     return 0
-
-  if options.dridriverdir:
-    cmd = [options.pkg_config, "--variable=dridriverdir"] + args
-    if options.debug:
-      sys.stderr.write('Running: %s\n' % cmd)
-    try:
-      dridriverdir = subprocess.check_output(cmd)
-    except:
-      print "Error from pkg-config."
-      return 1
-    sys.stdout.write(dridriverdir.strip())
-    return
 
   cmd = [options.pkg_config, "--cflags", "--libs"] + args
   if options.debug:

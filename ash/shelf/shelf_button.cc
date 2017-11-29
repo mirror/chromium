@@ -67,7 +67,7 @@ class ShelfButtonAnimation : public gfx::AnimationDelegate {
     virtual void AnimationProgressed() = 0;
 
    protected:
-    virtual ~Observer() = default;
+    virtual ~Observer() {}
   };
 
   static ShelfButtonAnimation* GetInstance() {
@@ -100,7 +100,7 @@ class ShelfButtonAnimation : public gfx::AnimationDelegate {
     animation_.SetTweenType(gfx::Tween::SMOOTH_IN_OUT);
   }
 
-  ~ShelfButtonAnimation() override = default;
+  ~ShelfButtonAnimation() override {}
 
   gfx::ThrobAnimation& GetThrobAnimation() {
     if (!animation_.is_animating()) {

@@ -93,30 +93,25 @@ enum EditingPropertiesType {
   kAllEditingProperties
 };
 
-static const Vector<const CSSProperty*>& AllEditingProperties() {
-  DEFINE_STATIC_LOCAL(Vector<const CSSProperty*>, properties, ());
+static const Vector<CSSPropertyID>& AllEditingProperties() {
+  DEFINE_STATIC_LOCAL(Vector<CSSPropertyID>, properties, ());
   if (properties.IsEmpty()) {
     CSSProperty::FilterEnabledCSSPropertiesIntoVector(
         kStaticEditingProperties, WTF_ARRAY_LENGTH(kStaticEditingProperties),
         properties);
-    for (size_t index = 0; index < properties.size(); index++) {
-      if (properties[index]->IDEquals(CSSPropertyTextDecoration)) {
-        properties.EraseAt(index);
-        break;
-      }
-    }
+    properties.EraseAt(properties.Find(CSSPropertyTextDecoration));
   }
   return properties;
 }
 
-static const Vector<const CSSProperty*>& InheritableEditingProperties() {
-  DEFINE_STATIC_LOCAL(Vector<const CSSProperty*>, properties, ());
+static const Vector<CSSPropertyID>& InheritableEditingProperties() {
+  DEFINE_STATIC_LOCAL(Vector<CSSPropertyID>, properties, ());
   if (properties.IsEmpty()) {
     CSSProperty::FilterEnabledCSSPropertiesIntoVector(
         kStaticEditingProperties, WTF_ARRAY_LENGTH(kStaticEditingProperties),
         properties);
     for (size_t index = 0; index < properties.size();) {
-      if (!properties[index]->IsInherited()) {
+      if (!CSSProperty::Get(properties[index]).IsInherited()) {
         properties.EraseAt(index);
         continue;
       }
@@ -135,13 +130,8 @@ static MutableCSSPropertyValueSet* CopyEditingProperties(
   return style->CopyPropertiesInSet(InheritableEditingProperties());
 }
 
-static inline bool IsEditingProperty(CSSPropertyID id) {
-  static const Vector<const CSSProperty*>& properties = AllEditingProperties();
-  for (size_t index = 0; index < properties.size(); index++) {
-    if (properties[index]->IDEquals(id))
-      return true;
-  }
-  return false;
+static inline bool IsEditingProperty(int id) {
+  return AllEditingProperties().Contains(static_cast<CSSPropertyID>(id));
 }
 
 static CSSComputedStyleDeclaration* EnsureComputedStyle(
@@ -701,8 +691,8 @@ static const CSSPropertyID kStaticBlockProperties[] = {
     CSSPropertyTextJustify,
     CSSPropertyWidows};
 
-static Vector<const CSSProperty*>& BlockPropertiesVector() {
-  DEFINE_STATIC_LOCAL(Vector<const CSSProperty*>, properties, ());
+static const Vector<CSSPropertyID>& BlockPropertiesVector() {
+  DEFINE_STATIC_LOCAL(Vector<CSSPropertyID>, properties, ());
   if (properties.IsEmpty())
     CSSProperty::FilterEnabledCSSPropertiesIntoVector(
         kStaticBlockProperties, WTF_ARRAY_LENGTH(kStaticBlockProperties),
@@ -801,6 +791,18 @@ void EditingStyle::CollapseTextDecorationProperties(
   mutable_style_->RemoveProperty(CSSPropertyWebkitTextDecorationsInEffect);
 }
 
+// CSS properties that create a visual difference only when applied to text.
+static const CSSPropertyID kTextOnlyProperties[] = {
+    // FIXME: CSSPropertyTextDecoration needs to be removed when CSS3 Text
+    // Decoration feature is no longer experimental.
+    CSSPropertyTextDecoration,
+    CSSPropertyTextDecorationLine,
+    CSSPropertyWebkitTextDecorationsInEffect,
+    CSSPropertyFontStyle,
+    CSSPropertyFontWeight,
+    CSSPropertyColor,
+};
+
 EditingTriState EditingStyle::TriStateOfStyle(
     EditingStyle* style,
     SecureContextMode secure_context_mode) const {
@@ -817,17 +819,6 @@ EditingTriState EditingStyle::TriStateOfStyle(
   MutableCSSPropertyValueSet* difference = GetPropertiesNotIn(
       mutable_style_.Get(), style_to_compare, secure_context_mode);
 
-  // CSS properties that create a visual difference only when applied to text.
-  static const CSSProperty* kTextOnlyProperties[] = {
-      // FIXME: CSSPropertyTextDecoration needs to be removed when CSS3 Text
-      // Decoration feature is no longer experimental.
-      &GetCSSPropertyTextDecoration(),
-      &GetCSSPropertyTextDecorationLine(),
-      &GetCSSPropertyWebkitTextDecorationsInEffect(),
-      &GetCSSPropertyFontStyle(),
-      &GetCSSPropertyFontWeight(),
-      &GetCSSPropertyColor(),
-  };
   if (should_ignore_text_only_properties == kIgnoreTextOnlyProperties)
     difference->RemovePropertiesInSet(kTextOnlyProperties,
                                       WTF_ARRAY_LENGTH(kTextOnlyProperties));
@@ -1431,9 +1422,9 @@ static void RemovePropertiesInStyle(
     MutableCSSPropertyValueSet* style_to_remove_properties_from,
     CSSPropertyValueSet* style) {
   unsigned property_count = style->PropertyCount();
-  Vector<const CSSProperty*> properties_to_remove(property_count);
+  Vector<CSSPropertyID> properties_to_remove(property_count);
   for (unsigned i = 0; i < property_count; ++i)
-    properties_to_remove[i] = &style->PropertyAt(i).Property();
+    properties_to_remove[i] = style->PropertyAt(i).Id();
 
   style_to_remove_properties_from->RemovePropertiesInSet(
       properties_to_remove.data(), properties_to_remove.size());

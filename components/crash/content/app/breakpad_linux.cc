@@ -1390,8 +1390,7 @@ size_t WaitForCrashReportUploadProcess(int fd, size_t bytes_to_read,
     if (ret < 0) {
       // Error
       break;
-    }
-    if (ret > 0) {
+    } else if (ret > 0) {
       // There is data to read.
       ssize_t len = HANDLE_EINTR(
           sys_read(fd, buf + bytes_read, bytes_to_read - bytes_read));

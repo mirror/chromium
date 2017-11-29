@@ -43,7 +43,8 @@ class SignalListener {
   SignalHandlers signal_handlers_;
 };
 
-SignalListener::SignalListener() = default;
+SignalListener::SignalListener() {
+}
 
 void SignalListener::AddSignalHandler(int signal,
                                       const SignalHandler& handler) {

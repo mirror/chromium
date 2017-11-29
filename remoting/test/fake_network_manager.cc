@@ -21,7 +21,8 @@ FakeNetworkManager::FakeNetworkManager(const rtc::IPAddress& address)
   network_->AddIP(address);
 }
 
-FakeNetworkManager::~FakeNetworkManager() = default;
+FakeNetworkManager::~FakeNetworkManager() {
+}
 
 void FakeNetworkManager::StartUpdating() {
   started_ = true;

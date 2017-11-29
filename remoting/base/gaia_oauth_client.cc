@@ -17,7 +17,7 @@ GaiaOAuthClient::GaiaOAuthClient(
     scoped_refptr<net::URLRequestContextGetter> url_request_context_getter)
     : gaia_oauth_client_(url_request_context_getter.get()) {}
 
-GaiaOAuthClient::~GaiaOAuthClient() = default;
+GaiaOAuthClient::~GaiaOAuthClient() {}
 
 void GaiaOAuthClient::GetCredentialsFromAuthCode(
     const gaia::OAuthClientInfo& oauth_client_info,
@@ -94,6 +94,6 @@ GaiaOAuthClient::Request::Request(
 
 GaiaOAuthClient::Request::Request(const Request& other) = default;
 
-GaiaOAuthClient::Request::~Request() = default;
+GaiaOAuthClient::Request::~Request() {}
 
 }  // namespace remoting

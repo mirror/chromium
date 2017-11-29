@@ -3,8 +3,6 @@
 // found in the LICENSE file.
 
 #include "ui/base/ime/dummy_text_input_client.h"
-
-#include "base/strings/string_util.h"
 #include "ui/events/event.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -120,9 +118,5 @@ bool DummyTextInputClient::IsTextEditCommandEnabled(
 
 void DummyTextInputClient::SetTextEditCommandForNextKeyEvent(
     TextEditCommand command) {}
-
-const std::string& DummyTextInputClient::GetClientSourceInfo() const {
-  return base::EmptyString();
-}
 
 }  // namespace ui

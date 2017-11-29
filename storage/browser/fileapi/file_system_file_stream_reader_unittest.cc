@@ -70,7 +70,7 @@ void NeverCalled(int unused) { ADD_FAILURE(); }
 
 class FileSystemFileStreamReaderTest : public testing::Test {
  public:
-  FileSystemFileStreamReaderTest() = default;
+  FileSystemFileStreamReaderTest() {}
 
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());

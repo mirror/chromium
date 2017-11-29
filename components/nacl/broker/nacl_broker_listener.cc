@@ -50,8 +50,7 @@ void NaClBrokerListener::Listen() {
       CreateNaClServiceContext(base::ThreadTaskRunnerHandle::Get(),
                                &channel_handle);
 
-  channel_ = IPC::Channel::CreateClient(channel_handle.release(), this,
-                                        base::ThreadTaskRunnerHandle::Get());
+  channel_ = IPC::Channel::CreateClient(channel_handle.release(), this);
   CHECK(channel_->Connect());
   run_loop_.Run();
 }

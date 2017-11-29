@@ -80,7 +80,7 @@ TouchpadAndKeyboardDisabler* CreateDisablerAndDelegate(
 
 class TouchpadAndKeyboardDisablerTest : public AshTestBase {
  public:
-  TouchpadAndKeyboardDisablerTest() = default;
+  TouchpadAndKeyboardDisablerTest() {}
 
   // AshTestBase:
   void SetUp() override {

@@ -1523,10 +1523,11 @@ bool IsTabDetachingInFullscreenEnabled() {
                                         withProfile:browser_->profile()];
 }
 
-- (void)onTabChanged:(TabChangeType)change withContents:(WebContents*)contents {
+- (void)onTabChanged:(TabStripModelObserver::TabChangeType)change
+        withContents:(WebContents*)contents {
   // Update titles if this is the currently selected tab and if it isn't just
   // the loading state which changed.
-  if (change != TabChangeType::kLoadingOnly)
+  if (change != TabStripModelObserver::LOADING_ONLY)
     windowShim_->UpdateTitleBar();
 
   // Update the bookmark bar if this is the currently selected tab and if it
@@ -1534,7 +1535,7 @@ bool IsTabDetachingInFullscreenEnabled() {
   // (showing its floating bookmark bar) and normal web pages (showing no
   // bookmark bar).
   // TODO(viettrungluu): perhaps update to not terminate running animations?
-  if (change != TabChangeType::kTitleNotLoading) {
+  if (change != TabStripModelObserver::TITLE_NOT_LOADING) {
     windowShim_->BookmarkBarStateChanged(
         BookmarkBar::DONT_ANIMATE_STATE_CHANGE);
   }

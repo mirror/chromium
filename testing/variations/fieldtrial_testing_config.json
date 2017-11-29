@@ -78,12 +78,10 @@
                 {
                     "name": "Tracking",
                     "params": {
-                        "availability": ">=5",
-                        "event_1": "name:bottom_sheet_expanded_from_button;comparator:<5; window:360;storage:360",
-                        "event_2": "name:chrome_home_cold_start_iph_trigger;comparator:==0;window:30;storage:30",
-                        "event_trigger": "name:chrome_home_cold_start_iph_trigger;comparator:<4;window:360;storage:360",
-                        "event_used": "name:bottom_sheet_expanded_from_swipe;comparator:<5;window:360;storage:360",
-                        "session_rate": "==0"
+                        "availability": "any",
+                        "event_trigger": "name:chrome_home_cold_start_iph_trigger;comparator:==0;window:90;storage:360",
+                        "event_used": "name:bottom_sheet_expanded;comparator:any;window:90;storage:360",
+                        "session_rate": "<0"
                     },
                     "enable_features": [
                         "IPH_ChromeHomeExpand"
@@ -111,32 +109,6 @@
                     },
                     "enable_features": [
                         "IPH_ChromeHomeMenuHeader"
-                    ]
-                }
-            ]
-        }
-    ],
-    "AndroidInProductHelpChromeHomePullToRefresh": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Tracking",
-                    "params": {
-                        "availability": ">=5",
-                        "event_1": "name:bottom_sheet_expanded_from_button;comparator:<5; window:360;storage:360",
-                        "event_2": "name:chrome_home_pull_to_refresh_trigger;comparator:==0;window:30;storage:30",
-                        "event_3": "name:pull_to_refresh;comparator:>3;window:30;storage:30",
-                        "event_trigger": "name:chrome_home_pull_to_refresh_trigger;comparator:<4;window:360;storage:360",
-                        "event_used": "name:bottom_sheet_expanded_from_swipe;comparator:<5;window:360;storage:360",
-                        "session_rate": "any",
-                        "x_iph-timeout-duration-ms": "5000"
-                    },
-                    "enable_features": [
-                        "ChromeHomePersistentIph",
-                        "IPH_ChromeHomePullToRefresh"
                     ]
                 }
             ]
@@ -399,15 +371,10 @@
             ]
         }
     ],
-    "AutofillCreditCardBankNameDisplay": [
+    "AutofillCreditCardDropdownVariations": [
         {
             "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
+                "android"
             ],
             "experiments": [
                 {
@@ -784,48 +751,6 @@
             ]
         }
     ],
-    "ChromeHomeBottomNavLabels": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "ChromeHomeBottomNavLabels"
-                    ]
-                },
-                {
-                    "name": "Default"
-                }
-            ]
-        }
-    ],
-    "ChromeHomeInactivitySheetExpansion": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "ChromeHomeInactivitySheetExpansion"
-                    ]
-                },
-                {
-                    "name": "3Hours",
-                    "params": {
-                        "time_since_backgrounded_in_mins": "180"
-                    },
-                    "enable_features": [
-                        "ChromeHomeInactivitySheetExpansion"
-                    ]
-                }
-            ]
-        }
-    ],
     "ChromeHomePromo": [
         {
             "platforms": [
@@ -927,7 +852,8 @@
                 {
                     "name": "Expected",
                     "params": {
-                        "contextual-search-ranker-model-url": "https://www.gstatic.com/chrome/intelligence/assist/ranker/models/contextual_search/test_ranker_model_20171109_short_words.pb.bin"
+                        "contextual-search-ranker-model-url": "https://www.gstatic.com/chrome/intelligence/assist/ranker/models/contextual_search/test_ranker_model_20171109_short_words.pb.bin",
+                        "enable_ranker_integration": "true"
                     },
                     "enable_features": [
                         "ContextualSearchMlTapSuppression",
@@ -1160,21 +1086,6 @@
                     "name": "DefaultEnableGpuRasterization",
                     "enable_features": [
                         "DefaultEnableGpuRasterization"
-                    ]
-                }
-            ]
-        }
-    ],
-    "DefaultPassthroughCommandDecoder": [
-        {
-            "platforms": [
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "DefaultPassthroughCommandDecoder",
-                    "enable_features": [
-                        "DefaultPassthroughCommandDecoder"
                     ]
                 }
             ]
@@ -2082,6 +1993,22 @@
                     },
                     "enable_features": [
                         "UseSuggestionsEvenIfFew"
+                    ]
+                }
+            ]
+        }
+    ],
+    "NTPMostLikelyFaviconsFromServer": [
+        {
+            "platforms": [
+                "android",
+                "ios"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "NTPMostLikelyFaviconsFromServer"
                     ]
                 }
             ]
@@ -3246,6 +3173,21 @@
                 },
                 {
                     "name": "Default"
+                }
+            ]
+        }
+    ],
+    "SafeBrowsingUseLocalBlacklist": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Use3PAPI",
+                    "params": {
+                        "check_local_blacklist": "false"
+                    }
                 }
             ]
         }

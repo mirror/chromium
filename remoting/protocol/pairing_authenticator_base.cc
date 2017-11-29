@@ -20,7 +20,7 @@ const buzz::StaticQName kPairingErrorAttribute = { "", "error" };
 }  // namespace
 
 PairingAuthenticatorBase::PairingAuthenticatorBase() : weak_factory_(this) {}
-PairingAuthenticatorBase::~PairingAuthenticatorBase() = default;
+PairingAuthenticatorBase::~PairingAuthenticatorBase() {}
 
 Authenticator::State PairingAuthenticatorBase::state() const {
   DCHECK(spake2_authenticator_);

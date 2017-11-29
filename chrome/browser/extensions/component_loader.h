@@ -168,6 +168,7 @@ class ComponentLoader {
   void AddZipArchiverExtension();
   void AddWebstoreWidgetExtension();
   void AddHangoutServicesExtension();
+  void AddHotwordHelperExtension();
   void AddImageLoaderExtension();
   void AddNetworkSpeechSynthesisExtension();
 
@@ -176,6 +177,7 @@ class ComponentLoader {
                                  const std::string& name_string,
                                  const std::string& description_string);
   void AddChromeApp();
+  void AddHotwordAudioVerificationApp();
   void AddKeyboardApp();
   void AddWebStoreApp();
 

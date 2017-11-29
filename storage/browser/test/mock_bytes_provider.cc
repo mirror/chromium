@@ -22,7 +22,7 @@ MockBytesProvider::MockBytesProvider(
       file_request_count_(file_request_count),
       file_modification_time_(file_modification_time) {}
 
-MockBytesProvider::~MockBytesProvider() = default;
+MockBytesProvider::~MockBytesProvider() {}
 
 void MockBytesProvider::RequestAsReply(RequestAsReplyCallback callback) {
   if (reply_request_count_)

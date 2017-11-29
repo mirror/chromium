@@ -59,11 +59,10 @@ class MidpointState final {
   // Adding a pair of midpoints before a character will split it out into a new
   // line box.
   void EnsureCharacterGetsLineBox(Iterator& text_paragraph_separator) {
-    StartIgnoringSpaces(Iterator(nullptr,
+    StartIgnoringSpaces(Iterator(0,
                                  text_paragraph_separator.GetLineLayoutItem(),
                                  text_paragraph_separator.Offset() - 1));
-    StopIgnoringSpaces(Iterator(nullptr,
-                                text_paragraph_separator.GetLineLayoutItem(),
+    StopIgnoringSpaces(Iterator(0, text_paragraph_separator.GetLineLayoutItem(),
                                 text_paragraph_separator.Offset()));
   }
 

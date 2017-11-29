@@ -43,18 +43,14 @@ enum SoftwareReporterExperimentError {
 };
 
 // Callback for running the software reporter after it is downloaded.
-using SwReporterRunner = base::Callback<void(
-    safe_browsing::SwReporterInvocationType invocation_type,
-    safe_browsing::SwReporterInvocationSequence&& invocations)>;
+using SwReporterRunner =
+    base::Callback<void(const safe_browsing::SwReporterQueue& invocations,
+                        const base::Version& version)>;
 
 class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
  public:
-  // Note: |on_sequence_done| will be invoked on the UI thread.
-  SwReporterInstallerPolicy(
-      const SwReporterRunner& reporter_runner,
-      bool is_experimental_engine_supported,
-      safe_browsing::SwReporterInvocationType invocation_type,
-      safe_browsing::OnReporterSequenceDone on_sequence_done);
+  SwReporterInstallerPolicy(const SwReporterRunner& reporter_runner,
+                            bool is_experimental_engine_supported);
   ~SwReporterInstallerPolicy() override;
 
   // ComponentInstallerPolicy implementation.
@@ -85,27 +81,11 @@ class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
   SwReporterRunner reporter_runner_;
   const bool is_experimental_engine_supported_;
 
-  const safe_browsing::SwReporterInvocationType invocation_type_;
-
-  // The action to be called on the first time the invocation sequence
-  // runs.
-  safe_browsing::OnReporterSequenceDone on_sequence_done_;
-
   DISALLOW_COPY_AND_ASSIGN(SwReporterInstallerPolicy);
 };
 
-// Installs the SwReporter component and runs the reporter once it's available.
-// Once ready, this may trigger either a periodic or a user-initiated run of
-// the reporter, depending on |invocation_type|. Once the last invocation
-// finishes, |on_sequence_done| is called with a boolean variable indicating if
-// the run succeeded.
-void RegisterSwReporterComponentWithParams(
-    safe_browsing::SwReporterInvocationType invocation_type,
-    safe_browsing::OnReporterSequenceDone on_sequence_done,
-    ComponentUpdateService* cus);
-
 // Call once during startup to make the component update service aware of the
-// SwReporter. Once ready, this may trigger a periodic run of the reporter.
+// SwReporter.
 void RegisterSwReporterComponent(ComponentUpdateService* cus);
 
 // Register local state preferences related to the SwReporter.

@@ -111,7 +111,7 @@
     TestRunner.evaluateInPage('matchingElements(\'' + escapedPath + '\')', callback);
 
     function callback(result) {
-      TestRunner.assertEquals(1, result);
+      TestRunner.assertEquals(1, result.value);
       dumpNodeData();
     }
   }

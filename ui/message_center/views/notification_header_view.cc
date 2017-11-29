@@ -189,16 +189,14 @@ NotificationHeaderView::NotificationHeaderView(
   DCHECK_EQ(kInnerHeaderHeight, app_icon_view_->GetPreferredSize().height());
   app_info_container->AddChildView(app_icon_view_);
 
-  // Font list for text views. The height must be 15px to match with the mock.
-  gfx::FontList font_list = GetHeaderTextFontList();
+  // Font list for text views.
+  const gfx::FontList& font_list = GetHeaderTextFontList();
+  // The height must be 15px to match with the mock.
   DCHECK_EQ(15, font_list.GetHeight());
-
-  const int font_list_height = font_list.GetHeight();
 
   // App name view
   app_name_view_ = new views::Label(base::string16());
   app_name_view_->SetFontList(font_list);
-  app_name_view_->SetLineHeight(font_list_height);
   app_name_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   app_name_view_->SetEnabledColor(accent_color_);
   app_name_view_->SetBorder(views::CreateEmptyBorder(kTextViewPadding));
@@ -209,7 +207,6 @@ NotificationHeaderView::NotificationHeaderView(
   summary_text_divider_ =
       new views::Label(base::WideToUTF16(kNotificationHeaderDivider));
   summary_text_divider_->SetFontList(font_list);
-  summary_text_divider_->SetLineHeight(font_list_height);
   summary_text_divider_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   summary_text_divider_->SetBorder(views::CreateEmptyBorder(kTextViewPadding));
   summary_text_divider_->SetVisible(false);
@@ -220,7 +217,6 @@ NotificationHeaderView::NotificationHeaderView(
   // Summary text view
   summary_text_view_ = new views::Label(base::string16());
   summary_text_view_->SetFontList(font_list);
-  summary_text_view_->SetLineHeight(font_list_height);
   summary_text_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   summary_text_view_->SetBorder(views::CreateEmptyBorder(kTextViewPadding));
   summary_text_view_->SetVisible(false);
@@ -232,7 +228,6 @@ NotificationHeaderView::NotificationHeaderView(
   timestamp_divider_ =
       new views::Label(base::WideToUTF16(kNotificationHeaderDivider));
   timestamp_divider_->SetFontList(font_list);
-  timestamp_divider_->SetLineHeight(font_list_height);
   timestamp_divider_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   timestamp_divider_->SetBorder(views::CreateEmptyBorder(kTextViewPadding));
   timestamp_divider_->SetVisible(false);
@@ -243,7 +238,6 @@ NotificationHeaderView::NotificationHeaderView(
   // Timestamp view
   timestamp_view_ = new views::Label(base::string16());
   timestamp_view_->SetFontList(font_list);
-  timestamp_view_->SetLineHeight(font_list_height);
   timestamp_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   timestamp_view_->SetBorder(views::CreateEmptyBorder(kTextViewPadding));
   timestamp_view_->SetVisible(false);

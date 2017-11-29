@@ -52,10 +52,7 @@ namespace component_updater {
 
 namespace {
 
-using safe_browsing::OnReporterSequenceDone;
 using safe_browsing::SwReporterInvocation;
-using safe_browsing::SwReporterInvocationSequence;
-using safe_browsing::SwReporterInvocationType;
 
 // These values are used to send UMA information and are replicated in the
 // histograms.xml file, so the order MUST NOT CHANGE.
@@ -130,12 +127,11 @@ void ReportExperimentError(SoftwareReporterExperimentError error) {
 // |reporter_runner| function passed to the |SwReporterInstallerPolicy|
 // constructor in |RegisterSwReporterComponent| below.)
 void RunSwReportersAfterStartup(
-    SwReporterInvocationType invocation_type,
-    safe_browsing::SwReporterInvocationSequence&& invocations) {
+    const safe_browsing::SwReporterQueue& invocations,
+    const base::Version& version) {
   content::BrowserThread::PostAfterStartupTask(
       FROM_HERE, base::ThreadTaskRunnerHandle::Get(),
-      base::Bind(&safe_browsing::RunSwReporters, invocation_type,
-                 base::Passed(&invocations)));
+      base::Bind(&safe_browsing::RunSwReporters, invocations, version));
 }
 
 // Ensures |str| contains only alphanumeric characters and characters from
@@ -188,9 +184,7 @@ bool GetOptionalBehaviour(
 void RunExperimentalSwReporter(const base::FilePath& exe_path,
                                const base::Version& version,
                                std::unique_ptr<base::DictionaryValue> manifest,
-                               const SwReporterRunner& reporter_runner,
-                               SwReporterInvocationType invocation_type,
-                               OnReporterSequenceDone on_sequence_done) {
+                               const SwReporterRunner& reporter_runner) {
   // The experiment requires launch_params so if they aren't present just
   // return.
   base::Value* launch_params = nullptr;
@@ -207,9 +201,7 @@ void RunExperimentalSwReporter(const base::FilePath& exe_path,
 
   const std::string session_id = GenerateSessionId();
 
-  safe_browsing::SwReporterInvocationSequence invocations(
-      version, SwReporterInvocationSequence::Queue(),
-      std::move(on_sequence_done));
+  safe_browsing::SwReporterQueue invocations;
   for (const auto& iter : *parameter_list) {
     const base::DictionaryValue* invocation_params = nullptr;
     if (!iter.GetAsDictionary(&invocation_params)) {
@@ -275,31 +267,31 @@ void RunExperimentalSwReporter(const base::FilePath& exe_path,
     SwReporterInvocation::Behaviours supported_behaviours = 0;
     if (!GetOptionalBehaviour(invocation_params, "prompt",
                               SwReporterInvocation::BEHAVIOUR_TRIGGER_PROMPT,
-                              &supported_behaviours)) {
+                              &supported_behaviours))
       return;
-    }
+    if (!GetOptionalBehaviour(
+            invocation_params, "allow-reporter-logs",
+            SwReporterInvocation::BEHAVIOUR_ALLOW_SEND_REPORTER_LOGS,
+            &supported_behaviours))
+      return;
 
-    invocations.mutable_container().push(
-        SwReporterInvocation(command_line)
-            .WithSuffix(suffix)
-            .WithSupportedBehaviours(supported_behaviours));
+    auto invocation = SwReporterInvocation::FromCommandLine(command_line);
+    invocation.suffix = suffix;
+    invocation.supported_behaviours = supported_behaviours;
+    invocations.push(invocation);
   }
 
-  DCHECK(!invocations.container().empty());
-  reporter_runner.Run(invocation_type, std::move(invocations));
+  DCHECK(!invocations.empty());
+  reporter_runner.Run(invocations, version);
 }
 
 }  // namespace
 
 SwReporterInstallerPolicy::SwReporterInstallerPolicy(
     const SwReporterRunner& reporter_runner,
-    bool is_experimental_engine_supported,
-    SwReporterInvocationType invocation_type,
-    OnReporterSequenceDone on_sequence_done)
+    bool is_experimental_engine_supported)
     : reporter_runner_(reporter_runner),
-      is_experimental_engine_supported_(is_experimental_engine_supported),
-      invocation_type_(invocation_type),
-      on_sequence_done_(std::move(on_sequence_done)) {}
+      is_experimental_engine_supported_(is_experimental_engine_supported) {}
 
 SwReporterInstallerPolicy::~SwReporterInstallerPolicy() {}
 
@@ -334,19 +326,18 @@ void SwReporterInstallerPolicy::ComponentReady(
   const base::FilePath exe_path(install_dir.Append(kSwReporterExeName));
   if (IsExperimentalEngineEnabled()) {
     RunExperimentalSwReporter(exe_path, version, std::move(manifest),
-                              reporter_runner_, invocation_type_,
-                              std::move(on_sequence_done_));
+                              reporter_runner_);
   } else {
     base::CommandLine command_line(exe_path);
     command_line.AppendSwitchASCII(chrome_cleaner::kSessionIdSwitch,
                                    GenerateSessionId());
-    SwReporterInvocationSequence::Queue invocations(
-        {SwReporterInvocation(command_line)
-             .WithSupportedBehaviours(
-                 SwReporterInvocation::BEHAVIOURS_ENABLED_BY_DEFAULT)});
-    reporter_runner_.Run(invocation_type_, SwReporterInvocationSequence(
-                                               version, invocations,
-                                               std::move(on_sequence_done_)));
+    auto invocation = SwReporterInvocation::FromCommandLine(command_line);
+    invocation.supported_behaviours =
+        SwReporterInvocation::BEHAVIOUR_LOG_EXIT_CODE_TO_PREFS |
+        SwReporterInvocation::BEHAVIOUR_TRIGGER_PROMPT |
+        SwReporterInvocation::BEHAVIOUR_ALLOW_SEND_REPORTER_LOGS;
+
+    reporter_runner_.Run(safe_browsing::SwReporterQueue({invocation}), version);
   }
 }
 
@@ -398,11 +389,7 @@ bool SwReporterInstallerPolicy::IsExperimentalEngineEnabled() const {
          base::FeatureList::IsEnabled(kExperimentalEngineFeature);
 }
 
-void RegisterSwReporterComponentWithParams(
-    safe_browsing::SwReporterInvocationType invocation_type,
-    OnReporterSequenceDone on_sequence_done,
-    ComponentUpdateService* cus) {
-  // TODO(crbug.com/774623): this is no longer needed and can be deleted.
+void RegisterSwReporterComponent(ComponentUpdateService* cus) {
   if (!safe_browsing::IsSwReporterEnabled())
     return;
 
@@ -493,17 +480,8 @@ void RegisterSwReporterComponentWithParams(
   auto installer = base::MakeRefCounted<ComponentInstaller>(
       std::make_unique<SwReporterInstallerPolicy>(
           base::Bind(&RunSwReportersAfterStartup),
-          is_experimental_engine_supported, invocation_type,
-          std::move(on_sequence_done)));
+          is_experimental_engine_supported));
   installer->Register(cus, base::OnceClosure());
-}
-
-void RegisterSwReporterComponent(ComponentUpdateService* cus) {
-  // This is called during start-up and there is no pending action to be
-  // performed once done. Because of that, the on sequence done callback
-  // is defined as a no-op.
-  RegisterSwReporterComponentWithParams(SwReporterInvocationType::kPeriodicRun,
-                                        OnReporterSequenceDone(), cus);
 }
 
 void RegisterPrefsForSwReporter(PrefRegistrySimple* registry) {

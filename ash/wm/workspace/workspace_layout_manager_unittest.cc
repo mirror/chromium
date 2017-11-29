@@ -7,7 +7,6 @@
 #include <string>
 #include <utility>
 
-#include "ash/accessibility/accessibility_controller.h"
 #include "ash/accessibility/test_accessibility_delegate.h"
 #include "ash/app_list/test_app_list_presenter_impl.h"
 #include "ash/frame/custom_frame_view_ash.h"
@@ -25,6 +24,7 @@
 #include "ash/shell.h"
 #include "ash/shell_observer.h"
 #include "ash/shell_test_api.h"
+#include "ash/system/tray/system_tray_notifier.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/fullscreen_window_finder.h"
 #include "ash/wm/overview/window_selector_controller.h"
@@ -73,7 +73,7 @@ class MaximizeDelegateView : public views::WidgetDelegateView {
  public:
   explicit MaximizeDelegateView(const gfx::Rect& initial_bounds)
       : initial_bounds_(initial_bounds) {}
-  ~MaximizeDelegateView() override = default;
+  ~MaximizeDelegateView() override {}
 
   bool GetSavedWindowPlacement(const views::Widget* widget,
                                gfx::Rect* bounds,
@@ -985,7 +985,7 @@ WorkspaceLayoutManager* GetWorkspaceLayoutManager(aura::Window* container) {
 class WorkspaceLayoutManagerBackdropTest : public AshTestBase {
  public:
   WorkspaceLayoutManagerBackdropTest() : default_container_(nullptr) {}
-  ~WorkspaceLayoutManagerBackdropTest() override = default;
+  ~WorkspaceLayoutManagerBackdropTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();
@@ -1325,10 +1325,12 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, SpokenFeedbackFullscreenBackground) {
   EXPECT_EQ(kNoSoundKey, accessibility_delegate->GetPlayedEarconAndReset());
 
   // Enable spoken feedback.
-  AccessibilityController* controller =
-      Shell::Get()->accessibility_controller();
-  controller->SetSpokenFeedbackEnabled(true, A11Y_NOTIFICATION_NONE);
-  EXPECT_TRUE(controller->IsSpokenFeedbackEnabled());
+  Shell::Get()->accessibility_delegate()->ToggleSpokenFeedback(
+      ash::A11Y_NOTIFICATION_NONE);
+  Shell::Get()->system_tray_notifier()->NotifyAccessibilityStatusChanged(
+      ash::A11Y_NOTIFICATION_NONE);
+  EXPECT_TRUE(
+      Shell::Get()->accessibility_delegate()->IsSpokenFeedbackEnabled());
 
   generator.MoveMouseTo(300, 300);
   generator.ClickLeftButton();
@@ -1340,8 +1342,12 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, SpokenFeedbackFullscreenBackground) {
   EXPECT_EQ(kNoSoundKey, accessibility_delegate->GetPlayedEarconAndReset());
 
   // Disable spoken feedback. Shadow underlay is restored.
-  controller->SetSpokenFeedbackEnabled(false, A11Y_NOTIFICATION_NONE);
-  EXPECT_FALSE(controller->IsSpokenFeedbackEnabled());
+  Shell::Get()->accessibility_delegate()->ToggleSpokenFeedback(
+      A11Y_NOTIFICATION_NONE);
+  Shell::Get()->system_tray_notifier()->NotifyAccessibilityStatusChanged(
+      A11Y_NOTIFICATION_NONE);
+  EXPECT_FALSE(
+      Shell::Get()->accessibility_delegate()->IsSpokenFeedbackEnabled());
 
   generator.MoveMouseTo(300, 300);
   generator.ClickLeftButton();
@@ -1435,11 +1441,11 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, SpokenFeedbackForArc) {
   TestAccessibilityDelegate* accessibility_delegate =
       static_cast<TestAccessibilityDelegate*>(
           Shell::Get()->accessibility_delegate());
-  AccessibilityController* controller =
-      Shell::Get()->accessibility_controller();
 
-  controller->SetSpokenFeedbackEnabled(true, A11Y_NOTIFICATION_NONE);
-  EXPECT_TRUE(controller->IsSpokenFeedbackEnabled());
+  accessibility_delegate->ToggleSpokenFeedback(A11Y_NOTIFICATION_NONE);
+  Shell::Get()->system_tray_notifier()->NotifyAccessibilityStatusChanged(
+      A11Y_NOTIFICATION_NONE);
+  EXPECT_TRUE(accessibility_delegate->IsSpokenFeedbackEnabled());
 
   aura::test::TestWindowDelegate delegate;
   std::unique_ptr<aura::Window> window_arc(CreateTestWindowInShellWithDelegate(
@@ -1479,7 +1485,7 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, SpokenFeedbackForArc) {
 class WorkspaceLayoutManagerKeyboardTest : public AshTestBase {
  public:
   WorkspaceLayoutManagerKeyboardTest() : layout_manager_(nullptr) {}
-  ~WorkspaceLayoutManagerKeyboardTest() override = default;
+  ~WorkspaceLayoutManagerKeyboardTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();
@@ -1682,8 +1688,8 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, BackdropForSplitScreenTest) {
 
   class SplitViewTestWindowDelegate : public aura::test::TestWindowDelegate {
    public:
-    SplitViewTestWindowDelegate() = default;
-    ~SplitViewTestWindowDelegate() override = default;
+    SplitViewTestWindowDelegate() {}
+    ~SplitViewTestWindowDelegate() override {}
 
     // aura::test::TestWindowDelegate:
     void OnWindowDestroying(aura::Window* window) override { window->Hide(); }

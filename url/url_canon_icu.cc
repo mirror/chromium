@@ -118,7 +118,8 @@ ICUCharsetConverter::ICUCharsetConverter(UConverter* converter)
     : converter_(converter) {
 }
 
-ICUCharsetConverter::~ICUCharsetConverter() = default;
+ICUCharsetConverter::~ICUCharsetConverter() {
+}
 
 void ICUCharsetConverter::ConvertFromUTF16(const base::char16* input,
                                            int input_len,

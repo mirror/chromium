@@ -28,7 +28,7 @@ class TestObserver final : public DisconnectTetheringOperation::Observer {
  public:
   TestObserver() : success_(false) {}
 
-  virtual ~TestObserver() = default;
+  virtual ~TestObserver() {}
 
   std::string last_device_id() { return last_device_id_; }
 

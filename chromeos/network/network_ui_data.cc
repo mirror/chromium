@@ -87,7 +87,8 @@ NetworkUIData::NetworkUIData(const base::DictionaryValue& dict) {
     user_settings_.reset(user_settings->DeepCopy());
 }
 
-NetworkUIData::~NetworkUIData() = default;
+NetworkUIData::~NetworkUIData() {
+}
 
 void NetworkUIData::set_user_settings(
     std::unique_ptr<base::DictionaryValue> dict) {

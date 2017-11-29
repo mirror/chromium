@@ -6,13 +6,15 @@
 
 namespace storage {
 
-SandboxOriginDatabaseInterface::OriginRecord::OriginRecord() = default;
+SandboxOriginDatabaseInterface::OriginRecord::OriginRecord() {
+}
 
 SandboxOriginDatabaseInterface::OriginRecord::OriginRecord(
     const std::string& origin_in, const base::FilePath& path_in)
     : origin(origin_in), path(path_in) {
 }
 
-SandboxOriginDatabaseInterface::OriginRecord::~OriginRecord() = default;
+SandboxOriginDatabaseInterface::OriginRecord::~OriginRecord() {
+}
 
 }  // namespace storage

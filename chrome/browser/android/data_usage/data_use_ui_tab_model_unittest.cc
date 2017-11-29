@@ -35,6 +35,8 @@
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
+namespace chrome {
+
 namespace android {
 
 namespace {
@@ -476,8 +478,8 @@ TEST_F(DataUseUITabModelTest, ConvertTransitionType) {
       {ui::PageTransition(ui::PAGE_TRANSITION_FROM_API |
                           ui::PAGE_TRANSITION_FORM_SUBMIT),
        std::string(), true, DataUseTabModel::TRANSITION_FORM_SUBMIT},
-      {ui::PageTransition(ui::PAGE_TRANSITION_FORM_SUBMIT), std::string(), true,
-       DataUseTabModel::TRANSITION_FORM_SUBMIT},
+      {ui::PageTransition(ui::PAGE_TRANSITION_FORM_SUBMIT),
+       std::string(), true, DataUseTabModel::TRANSITION_FORM_SUBMIT},
       {ui::PageTransition(ui::PAGE_TRANSITION_RELOAD |
                           ui::PAGE_TRANSITION_AUTO_SUBFRAME),
        std::string(), false},
@@ -487,11 +489,10 @@ TEST_F(DataUseUITabModelTest, ConvertTransitionType) {
 
       // Navigating history.
       {ui::PageTransition(ui::PAGE_TRANSITION_AUTO_TOPLEVEL),
-       chrome::kDeprecatedChromeUIHistoryFrameURL, true,
+       kDeprecatedChromeUIHistoryFrameURL, true,
        DataUseTabModel::TRANSITION_HISTORY_ITEM},
       {ui::PageTransition(ui::PAGE_TRANSITION_AUTO_TOPLEVEL),
-       chrome::kChromeUIHistoryURL, true,
-       DataUseTabModel::TRANSITION_HISTORY_ITEM},
+       kChromeUIHistoryURL, true, DataUseTabModel::TRANSITION_HISTORY_ITEM},
       {ui::PageTransition(ui::PAGE_TRANSITION_AUTO_TOPLEVEL), std::string(),
        false},
   };
@@ -626,3 +627,5 @@ TEST_F(DataUseUITabModelTest, ProcessBufferedNavigationEventsAfterMaxLimit) {
 }
 
 }  // namespace android
+
+}  // namespace chrome

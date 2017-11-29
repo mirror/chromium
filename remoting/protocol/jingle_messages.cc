@@ -159,14 +159,14 @@ std::string JingleMessage::GetActionName(ActionType action) {
   return ValueToName(kActionTypes, action);
 }
 
-JingleMessage::JingleMessage() = default;
+JingleMessage::JingleMessage() {}
 
 JingleMessage::JingleMessage(const SignalingAddress& to,
                              ActionType action,
                              const std::string& sid)
     : to(to), action(action), sid(sid) {}
 
-JingleMessage::~JingleMessage() = default;
+JingleMessage::~JingleMessage() {}
 
 bool JingleMessage::ParseXml(const buzz::XmlElement* stanza,
                              std::string* error) {
@@ -403,7 +403,7 @@ JingleMessageReply::JingleMessageReply(ErrorType error,
       text(text_value) {
 }
 
-JingleMessageReply::~JingleMessageReply() = default;
+JingleMessageReply::~JingleMessageReply() { }
 
 std::unique_ptr<buzz::XmlElement> JingleMessageReply::ToXml(
     const buzz::XmlElement* request_stanza) const {
@@ -508,8 +508,8 @@ IceTransportInfo::IceCredentials::IceCredentials(std::string channel,
                                                  std::string password)
     : channel(channel), ufrag(ufrag), password(password) {}
 
-IceTransportInfo::IceTransportInfo() = default;
-IceTransportInfo::~IceTransportInfo() = default;
+IceTransportInfo::IceTransportInfo() {}
+IceTransportInfo::~IceTransportInfo() {}
 
 bool IceTransportInfo::ParseXml(
     const buzz::XmlElement* element) {

@@ -402,7 +402,7 @@ WindowPositioner::WindowPositioner()
       last_popup_position_x_(0),
       last_popup_position_y_(0) {}
 
-WindowPositioner::~WindowPositioner() = default;
+WindowPositioner::~WindowPositioner() {}
 
 gfx::Rect WindowPositioner::GetDefaultWindowBounds(
     const display::Display& display) {

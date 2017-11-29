@@ -142,7 +142,8 @@ void CaptivePortalDetector::GetCaptivePortalResultFromResponse(
 base::Time CaptivePortalDetector::GetCurrentTime() const {
   if (time_for_testing_.is_null())
     return base::Time::Now();
-  return time_for_testing_;
+  else
+    return time_for_testing_;
 }
 
 bool CaptivePortalDetector::FetchingURL() const {

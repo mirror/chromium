@@ -28,11 +28,10 @@ class APIPermission {
   // The IDs of all permissions available to apps. Add as many permissions here
   // as needed to generate meaningful permission messages. Add the rules for the
   // messages to ChromePermissionMessageProvider.
-  // Do not reorder this enumeration or remove any entries. To deprecate an
-  // entry, prefix it with the "kDeleted_" specifier and to add a new entry, add
-  // it just prior to kEnumBoundary, and ensure to update the
-  // "ExtensionPermission3" enum in tools/metrics/histograms/histograms.xml (by
-  // running update_extension_permission.py).
+  // Do not reorder this enumeration or remove any entries. If you need to add a
+  // new entry, add it just prior to kEnumBoundary, and ensure to update the
+  // "ExtensionPermission3" enum in tools/metrics/histograms/histograms.xml
+  // (by running update_extension_permission.py).
   // TODO(sashab): Move this to a more central location, and rename it to
   // PermissionID.
   enum ID {
@@ -155,7 +154,7 @@ class APIPermission {
     kPageCapture,
     kPointerLock,
     kPlatformKeys,
-    kDeleted_Plugin,
+    kPlugin,
     kPower,
     kPreferencesPrivate,
     kDeleted_PrincipalsPrivate,
@@ -352,8 +351,8 @@ class APIPermissionInfo {
   enum Flag {
     kFlagNone = 0,
 
-    // Plugins (NPAPI) are deprecated.
-    // kFlagImpliesFullAccess = 1 << 0,
+    // Indicates if the permission implies full access (native code).
+    kFlagImpliesFullAccess = 1 << 0,
 
     // Indicates if the permission implies full URL access.
     kFlagImpliesFullURLAccess = 1 << 1,
@@ -385,6 +384,11 @@ class APIPermissionInfo {
 
   // Returns the name of this permission.
   const char* name() const { return name_; }
+
+  // Returns true if this permission implies full access (e.g., native code).
+  bool implies_full_access() const {
+    return (flags_ & kFlagImpliesFullAccess) != 0;
+  }
 
   // Returns true if this permission implies full URL access.
   bool implies_full_url_access() const {

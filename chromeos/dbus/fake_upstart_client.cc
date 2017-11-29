@@ -10,9 +10,9 @@
 
 namespace chromeos {
 
-FakeUpstartClient::FakeUpstartClient() = default;
+FakeUpstartClient::FakeUpstartClient() {}
 
-FakeUpstartClient::~FakeUpstartClient() = default;
+FakeUpstartClient::~FakeUpstartClient() {}
 
 void FakeUpstartClient::Init(dbus::Bus* bus) {}
 

@@ -10,7 +10,7 @@ namespace ash {
 
 NewWindowController::NewWindowController() : binding_(this) {}
 
-NewWindowController::~NewWindowController() = default;
+NewWindowController::~NewWindowController() {}
 
 void NewWindowController::BindRequest(
     mojom::NewWindowControllerRequest request) {

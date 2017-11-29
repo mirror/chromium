@@ -5,7 +5,6 @@
 #ifndef ScrollbarPainter_h
 #define ScrollbarPainter_h
 
-#include "base/macros.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/Scrollbar.h"
 
@@ -20,6 +19,7 @@ class LayoutScrollbarPart;
 
 class ScrollbarPainter {
   STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(ScrollbarPainter);
 
  public:
   explicit ScrollbarPainter(const LayoutScrollbar& layout_scrollbar)
@@ -33,8 +33,6 @@ class ScrollbarPainter {
 
  private:
   Member<const LayoutScrollbar> layout_scrollbar_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScrollbarPainter);
 };
 
 }  // namespace blink

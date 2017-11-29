@@ -31,8 +31,8 @@ constexpr base::TimeDelta kFrameDuration =
 
 class FakeAudioSink : public webrtc::AudioTrackSinkInterface{
  public:
-  FakeAudioSink() = default;
-  ~FakeAudioSink() override = default;
+  FakeAudioSink() {}
+  ~FakeAudioSink() override {}
 
   void OnData(const void* audio_data,
               int bits_per_sample,

@@ -182,7 +182,8 @@ class TZRequest {
   DISALLOW_COPY_AND_ASSIGN(TZRequest);
 };
 
-TZRequest::~TZRequest() = default;
+TZRequest::~TZRequest() {
+}
 
 void TZRequest::StartRequestOnNetworkAvailable() {
   resolver_->RecordAttempt();
@@ -389,8 +390,8 @@ TimeZoneResolver::TimeZoneResolverImpl::AsWeakPtr() {
 
 // ------------------------------------------------------------------------
 // TimeZoneResolver::Delegate implementation
-TimeZoneResolver::Delegate::Delegate() = default;
-TimeZoneResolver::Delegate::~Delegate() = default;
+TimeZoneResolver::Delegate::Delegate() {}
+TimeZoneResolver::Delegate::~Delegate() {}
 
 // ------------------------------------------------------------------------
 // TimeZoneResolver implementation

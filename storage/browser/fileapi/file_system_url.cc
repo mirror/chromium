@@ -97,7 +97,7 @@ FileSystemURL::FileSystemURL(const GURL& origin,
       mount_option_(mount_option) {
 }
 
-FileSystemURL::~FileSystemURL() = default;
+FileSystemURL::~FileSystemURL() {}
 
 GURL FileSystemURL::ToGURL() const {
   if (!is_valid_)

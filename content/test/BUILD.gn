@@ -272,7 +272,6 @@ static_library("test_support") {
   configs += [
     "//build/config:precompiled_headers",
     "//v8:external_startup_data",
-    "//tools/v8_context_snapshot:use_v8_context_snapshot",
   ]
 
   public_deps = [
@@ -285,7 +284,6 @@ static_library("test_support") {
     "//media/mojo/interfaces",
     "//third_party/WebKit/public:blink",
     "//third_party/WebKit/public:test_support",
-    "//tools/v8_context_snapshot",
   ]
   deps = [
     ":content_test_mojo_bindings",
@@ -1569,9 +1567,9 @@ test("content_unittests") {
     "../renderer/render_widget_unittest.cc",
     "../renderer/scheduler/resource_dispatch_throttler_unittest.cc",
     "../renderer/service_worker/service_worker_dispatcher_unittest.cc",
+    "../renderer/service_worker/service_worker_event_timer_unittest.cc",
     "../renderer/service_worker/service_worker_provider_context_unittest.cc",
     "../renderer/service_worker/service_worker_subresource_loader_unittest.cc",
-    "../renderer/service_worker/service_worker_timeout_timer_unittest.cc",
     "../renderer/service_worker/thread_safe_script_container_unittest.cc",
     "../renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
     "../renderer/skia_benchmarking_extension_unittest.cc",

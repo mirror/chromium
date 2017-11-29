@@ -50,8 +50,8 @@ void SetCurrentIme(const std::string& current_ime_id,
 
 class ImeMenuTrayTest : public AshTestBase {
  public:
-  ImeMenuTrayTest() = default;
-  ~ImeMenuTrayTest() override = default;
+  ImeMenuTrayTest() {}
+  ~ImeMenuTrayTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

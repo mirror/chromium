@@ -11,9 +11,9 @@
 
 namespace ash {
 
-ImmersiveHandlerFactoryAsh::ImmersiveHandlerFactoryAsh() = default;
+ImmersiveHandlerFactoryAsh::ImmersiveHandlerFactoryAsh() {}
 
-ImmersiveHandlerFactoryAsh::~ImmersiveHandlerFactoryAsh() = default;
+ImmersiveHandlerFactoryAsh::~ImmersiveHandlerFactoryAsh() {}
 
 std::unique_ptr<ImmersiveFocusWatcher>
 ImmersiveHandlerFactoryAsh::CreateFocusWatcher(

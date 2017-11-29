@@ -19,7 +19,7 @@ SecurityKeyExtension::SecurityKeyExtension(
     scoped_refptr<base::SingleThreadTaskRunner> file_task_runner)
     : file_task_runner_(file_task_runner) {}
 
-SecurityKeyExtension::~SecurityKeyExtension() = default;
+SecurityKeyExtension::~SecurityKeyExtension() {}
 
 std::string SecurityKeyExtension::capability() const {
   return kCapability;

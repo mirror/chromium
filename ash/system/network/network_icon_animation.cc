@@ -19,7 +19,7 @@ NetworkIconAnimation::NetworkIconAnimation() : animation_(this) {
   animation_.SetTweenType(gfx::Tween::LINEAR);
 }
 
-NetworkIconAnimation::~NetworkIconAnimation() = default;
+NetworkIconAnimation::~NetworkIconAnimation() {}
 
 void NetworkIconAnimation::AnimationProgressed(
     const gfx::Animation* animation) {

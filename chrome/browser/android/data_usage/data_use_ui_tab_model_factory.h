@@ -17,6 +17,8 @@ namespace content {
 class BrowserContext;
 }
 
+namespace chrome {
+
 namespace android {
 
 class DataUseUITabModel;
@@ -44,5 +46,7 @@ class DataUseUITabModelFactory : public BrowserContextKeyedServiceFactory {
 };
 
 }  // namespace android
+
+}  // namespace chrome
 
 #endif  // CHROME_BROWSER_ANDROID_DATA_USAGE_DATA_USE_UI_TAB_MODEL_FACTORY_H_

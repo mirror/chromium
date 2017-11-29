@@ -25,12 +25,11 @@ class CrashesDOMHandler;
 class FlashDOMHandler;
 }
 
+namespace chrome {
+void AttemptRestart();
 namespace android {
 class ExternalDataUseObserverBridge;
 }
-
-namespace chrome {
-void AttemptRestart();
 }
 
 namespace domain_reliability {
@@ -95,7 +94,7 @@ class ChromeMetricsServiceAccessor : public metrics::MetricsServiceAccessor {
   friend class ::FlashDOMHandler;
   friend class BrowserProcessImpl;
   friend void chrome::AttemptRestart();
-  friend class ::android::ExternalDataUseObserverBridge;
+  friend class chrome::android::ExternalDataUseObserverBridge;
   // For ChromeWinClang.
   friend class ChromeBrowserMainExtraPartsMetrics;
   // For StackSamplingConfiguration.

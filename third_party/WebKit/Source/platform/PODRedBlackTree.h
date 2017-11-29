@@ -113,7 +113,7 @@ class PODRedBlackTree {
   // to init the structure. This constructor is usefull for creating
   // lazy initialized tree.
   explicit PODRedBlackTree(UninitializedTreeEnum)
-      : root_(nullptr),
+      : root_(0),
         needs_full_ordering_comparisons_(false)
 #ifndef NDEBUG
         ,
@@ -155,7 +155,7 @@ class PODRedBlackTree {
   void Clear() {
     MarkFree(root_);
     arena_ = nullptr;
-    root_ = nullptr;
+    root_ = 0;
   }
 
   bool IsInitialized() const { return arena_.get(); }

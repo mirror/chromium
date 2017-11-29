@@ -34,7 +34,7 @@ KeyboardOverlayView::KeyboardOverlayView(content::BrowserContext* context,
                                          WebContentsHandler* handler)
     : views::WebDialogView(context, delegate, handler) {}
 
-KeyboardOverlayView::~KeyboardOverlayView() = default;
+KeyboardOverlayView::~KeyboardOverlayView() {}
 
 void KeyboardOverlayView::Cancel() {
   Shell::Get()->overlay_filter()->Deactivate(this);

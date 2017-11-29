@@ -6,10 +6,9 @@
 #define CanvasAsyncBlobCreator_h
 
 #include <memory>
-
 #include "bindings/core/v8/ScriptPromiseResolver.h"
-#include "bindings/core/v8/v8_blob_callback.h"
 #include "core/CoreExport.h"
+#include "core/fileapi/BlobCallback.h"
 #include "core/typed_arrays/DOMTypedArray.h"
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "platform/geometry/IntSize.h"
@@ -30,7 +29,7 @@ class CORE_EXPORT CanvasAsyncBlobCreator
       DOMUint8ClampedArray* unpremultiplied_rgba_image_data,
       const String& mime_type,
       const IntSize&,
-      V8BlobCallback*,
+      BlobCallback*,
       double start_time,
       ExecutionContext*);
   static CanvasAsyncBlobCreator* Create(
@@ -77,7 +76,7 @@ class CORE_EXPORT CanvasAsyncBlobCreator
   CanvasAsyncBlobCreator(DOMUint8ClampedArray* data,
                          MimeType,
                          const IntSize&,
-                         V8BlobCallback*,
+                         BlobCallback*,
                          double,
                          ExecutionContext*,
                          ScriptPromiseResolver*);
@@ -117,12 +116,7 @@ class CORE_EXPORT CanvasAsyncBlobCreator
   Member<ParentFrameTaskRunners> parent_frame_task_runner_;
 
   // Used for HTMLCanvasElement only
-  //
-  // Note: CanvasAsyncBlobCreator is never held by other objects. As soon as
-  // an instance gets created, ScheduleAsyncBlobCreation is invoked, and then
-  // the instance is only held by a task runner (via PostTask). Thus the
-  // instance has only limited lifetime. Hence, Persistent here is okay.
-  V8BlobCallback::Persistent<V8BlobCallback> callback_;
+  Member<BlobCallback> callback_;
 
   // Used for OffscreenCanvas only
   Member<ScriptPromiseResolver> script_promise_resolver_;

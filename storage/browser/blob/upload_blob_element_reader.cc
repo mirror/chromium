@@ -20,7 +20,7 @@ UploadBlobElementReader::UploadBlobElementReader(
     std::unique_ptr<BlobDataHandle> handle)
     : handle_(std::move(handle)) {}
 
-UploadBlobElementReader::~UploadBlobElementReader() = default;
+UploadBlobElementReader::~UploadBlobElementReader() {}
 
 int UploadBlobElementReader::Init(const net::CompletionCallback& callback) {
   reader_ = handle_->CreateReader();

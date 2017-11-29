@@ -81,7 +81,7 @@ AccessibilityFocusRingController::AccessibilityFocusRingController() {
       base::TimeDelta::FromMilliseconds(kCaretFadeOutTimeMilliseconds);
 }
 
-AccessibilityFocusRingController::~AccessibilityFocusRingController() = default;
+AccessibilityFocusRingController::~AccessibilityFocusRingController() {}
 
 void AccessibilityFocusRingController::SetFocusRingColor(SkColor color) {
   focus_ring_color_ = color;

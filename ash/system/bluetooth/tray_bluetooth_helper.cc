@@ -37,7 +37,7 @@ BluetoothDeviceInfo::BluetoothDeviceInfo()
 BluetoothDeviceInfo::BluetoothDeviceInfo(const BluetoothDeviceInfo& other) =
     default;
 
-BluetoothDeviceInfo::~BluetoothDeviceInfo() = default;
+BluetoothDeviceInfo::~BluetoothDeviceInfo() {}
 
 TrayBluetoothHelper::TrayBluetoothHelper() : weak_ptr_factory_(this) {}
 

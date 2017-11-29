@@ -12,7 +12,8 @@ FakeAccessTokenFetcher::FakeAccessTokenFetcher()
       fail_access_token_from_refresh_token_(false) {
 }
 
-FakeAccessTokenFetcher::~FakeAccessTokenFetcher() = default;
+FakeAccessTokenFetcher::~FakeAccessTokenFetcher() {
+}
 
 void FakeAccessTokenFetcher::GetAccessTokenFromAuthCode(
     const std::string& auth_code,

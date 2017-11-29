@@ -46,7 +46,7 @@ class ScreenshotDelegateMash : public ScreenshotDelegate {
 ShellDelegateMus::ShellDelegateMus(service_manager::Connector* connector)
     : connector_(connector) {}
 
-ShellDelegateMus::~ShellDelegateMus() = default;
+ShellDelegateMus::~ShellDelegateMus() {}
 
 service_manager::Connector* ShellDelegateMus::GetShellConnector() const {
   return connector_;

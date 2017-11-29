@@ -15,7 +15,7 @@ namespace ash {
 SystemTrayController::SystemTrayController()
     : binding_(this), hour_clock_type_(base::GetHourClockType()) {}
 
-SystemTrayController::~SystemTrayController() = default;
+SystemTrayController::~SystemTrayController() {}
 
 void SystemTrayController::ShowSettings() {
   if (system_tray_client_)

@@ -73,13 +73,13 @@ class CORE_EXPORT DocumentMarkerController final
   void AddSuggestionMarker(const EphemeralRange&,
                            const SuggestionMarkerProperties&);
 
-  void MoveMarkers(const Node* src_node, int length, const Node* dst_node);
+  void MoveMarkers(Node* src_node, int length, Node* dst_node);
 
   void PrepareForDestruction();
   void RemoveMarkersInRange(const EphemeralRange&, DocumentMarker::MarkerTypes);
   void RemoveMarkersOfTypes(DocumentMarker::MarkerTypes);
   void RemoveMarkersForNode(
-      const Node*,
+      Node*,
       DocumentMarker::MarkerTypes = DocumentMarker::AllMarkers());
   void RemoveSpellingMarkersUnderWords(const Vector<String>& words);
   void RemoveSuggestionMarkerByTag(const Node*, int32_t marker_tag);
@@ -89,11 +89,11 @@ class CORE_EXPORT DocumentMarkerController final
   bool SetTextMatchMarkersActive(const EphemeralRange&, bool);
   // Returns true if markers within a range defined by a node, |startOffset| and
   // |endOffset| are found.
-  bool SetTextMatchMarkersActive(const Node*,
+  bool SetTextMatchMarkersActive(Node*,
                                  unsigned start_offset,
                                  unsigned end_offset,
                                  bool);
-  bool HasMarkers(const Node* node) const { return markers_.Contains(node); }
+  bool HasMarkers(Node* node) const { return markers_.Contains(node); }
 
   // TODO(rlanday): can these methods for retrieving markers be consolidated
   // without hurting efficiency?
@@ -117,7 +117,7 @@ class CORE_EXPORT DocumentMarkerController final
   MarkersIntersectingRange(const EphemeralRangeInFlatTree&,
                            DocumentMarker::MarkerTypes);
   DocumentMarkerVector MarkersFor(
-      const Node*,
+      Node*,
       DocumentMarker::MarkerTypes = DocumentMarker::AllMarkers());
   DocumentMarkerVector Markers();
 
@@ -143,7 +143,7 @@ class CORE_EXPORT DocumentMarkerController final
   void AddMarkerInternal(
       const EphemeralRange&,
       std::function<DocumentMarker*(int, int)> create_marker_from_offsets);
-  void AddMarkerToNode(const Node*, DocumentMarker*);
+  void AddMarkerToNode(Node*, DocumentMarker*);
 
   using MarkerLists = HeapVector<Member<DocumentMarkerList>,
                                  DocumentMarker::kMarkerTypeIndexesCount>;
@@ -153,7 +153,7 @@ class CORE_EXPORT DocumentMarkerController final
   bool PossiblyHasMarkers(DocumentMarker::MarkerTypes);
   void RemoveMarkersFromList(MarkerMap::iterator, DocumentMarker::MarkerTypes);
   void RemoveMarkers(TextIterator&, DocumentMarker::MarkerTypes);
-  void RemoveMarkersInternal(const Node*,
+  void RemoveMarkersInternal(Node*,
                              unsigned start_offset,
                              int length,
                              DocumentMarker::MarkerTypes);

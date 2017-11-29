@@ -8,11 +8,11 @@
 
 namespace remoting {
 
-KeyEventMapper::KeyEventMapper() = default;
+KeyEventMapper::KeyEventMapper() {}
 
 KeyEventMapper::KeyEventMapper(InputStub* stub) : protocol::InputFilter(stub) {}
 
-KeyEventMapper::~KeyEventMapper() = default;
+KeyEventMapper::~KeyEventMapper() {}
 
 void KeyEventMapper::SetTrapCallback(KeyTrapCallback callback) {
   trap_callback = callback;

@@ -54,8 +54,8 @@ std::unique_ptr<webrtc::DesktopFrame> CreateUnchangedFrame(
 
 class MockVideoEncoder : public VideoEncoder {
  public:
-  MockVideoEncoder() = default;
-  ~MockVideoEncoder() = default;
+  MockVideoEncoder() {}
+  ~MockVideoEncoder() {}
 
   MOCK_METHOD1(SetLosslessEncode, void(bool));
   MOCK_METHOD1(SetLosslessColor, void(bool));

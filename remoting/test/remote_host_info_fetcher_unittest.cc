@@ -57,7 +57,7 @@ namespace test {
 class RemoteHostInfoFetcherTest : public ::testing::Test {
  public:
   RemoteHostInfoFetcherTest() : url_fetcher_factory_(nullptr) {}
-  ~RemoteHostInfoFetcherTest() override = default;
+  ~RemoteHostInfoFetcherTest() override {}
 
   // Used as a RemoteHostInfoCallback for testing.
   void OnRemoteHostInfoRetrieved(

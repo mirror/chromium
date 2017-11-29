@@ -6,7 +6,6 @@
 #define CONTENT_COMMON_SERVICE_WORKER_SERVICE_WORKER_PROVIDER_STRUCT_TRAITS_H_
 
 #include "content/common/service_worker/service_worker_provider.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_provider_type.mojom.h"
 
 namespace mojo {
 
@@ -22,7 +21,7 @@ struct StructTraits<content::mojom::ServiceWorkerProviderHostInfoDataView,
     return info.route_id;
   }
 
-  static blink::mojom::ServiceWorkerProviderType type(
+  static content::ServiceWorkerProviderType type(
       const content::ServiceWorkerProviderHostInfo& info) {
     return info.type;
   }

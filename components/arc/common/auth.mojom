@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 13
+// Next MinVersion: 12
 
 module arc.mojom;
 
@@ -184,13 +184,10 @@ interface AuthHost {
   [MinVersion=9] ReportAccountCheckStatus@9(AccountCheckStatus status);
 };
 
-// Next Method ID: 3
+// Next Method ID: 2
 interface AuthInstance {
-  // DEPRECATED: Please use Init@2 instead.
-  InitDeprecated@0(AuthHost host_ptr);
-
   // Establishes full-duplex communication with the host.
-  [MinVersion=12] Init@2(AuthHost host_ptr) => ();
+  Init@0(AuthHost host_ptr);
 
   // Callback from RequestAccountInfo. This cannot be a normal callback since
   // the result can sometimes take a few minutes in some cases (Kiosk mode),

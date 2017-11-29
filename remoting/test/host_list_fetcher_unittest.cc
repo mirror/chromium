@@ -180,7 +180,7 @@ namespace test {
 class HostListFetcherTest : public ::testing::Test {
  public:
   HostListFetcherTest() : url_fetcher_factory_(nullptr) {}
-  ~HostListFetcherTest() override = default;
+  ~HostListFetcherTest() override {}
 
  protected:
   // testing::Test interface.

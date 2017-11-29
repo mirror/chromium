@@ -19,9 +19,9 @@
 
 namespace ash {
 
-SystemTrayNotifier::SystemTrayNotifier() = default;
+SystemTrayNotifier::SystemTrayNotifier() {}
 
-SystemTrayNotifier::~SystemTrayNotifier() = default;
+SystemTrayNotifier::~SystemTrayNotifier() {}
 
 void SystemTrayNotifier::AddAccessibilityObserver(
     AccessibilityObserver* observer) {

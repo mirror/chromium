@@ -39,8 +39,8 @@ void SharedWorkerDevToolsAgentHost::Reload() {
 }
 
 bool SharedWorkerDevToolsAgentHost::Close() {
-  static_cast<SharedWorkerServiceImpl*>(SharedWorkerService::GetInstance())
-      ->TerminateWorkerById(worker_id().first, worker_id().second);
+  SharedWorkerServiceImpl::GetInstance()->TerminateWorker(worker_id().first,
+                                                          worker_id().second);
   return true;
 }
 

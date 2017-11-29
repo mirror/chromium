@@ -155,9 +155,11 @@ bool FeatureConfigConditionValidator::SessionRateMeetsConditions(
     const Comparator session_rate,
     const base::Feature& feature) const {
   const auto it = times_shown_for_feature_.find(feature.name);
-  if (it == times_shown_for_feature_.end())
+  if (it == times_shown_for_feature_.end()) {
     return session_rate.MeetsCriteria(0u);
-  return session_rate.MeetsCriteria(it->second);
+  } else {
+    return session_rate.MeetsCriteria(it->second);
+  }
 }
 
 }  // namespace feature_engagement

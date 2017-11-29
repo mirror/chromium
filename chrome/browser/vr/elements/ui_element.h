@@ -113,21 +113,11 @@ class UiElement : public cc::AnimationTarget {
   };
 
   UiElementName name() const { return name_; }
-  void set_name(UiElementName name);
-  virtual void OnSetName();
-
-  UiElementName owner_name_for_test() const { return owner_name_for_test_; }
-  void set_owner_name_for_test(UiElementName name) {
-    owner_name_for_test_ = name;
-  }
+  void set_name(UiElementName name) { name_ = name; }
 
   UiElementType type() const { return type_; }
   void set_type(UiElementType type);
   virtual void OnSetType();
-
-  DrawPhase draw_phase() const { return draw_phase_; }
-  void set_draw_phase(DrawPhase draw_phase);
-  virtual void OnSetDrawPhase();
 
   // Returns true if the element needs to be re-drawn.
   virtual bool PrepareToDraw();
@@ -268,6 +258,9 @@ class UiElement : public cc::AnimationTarget {
     x_padding_ = x_padding;
     y_padding_ = y_padding;
   }
+
+  DrawPhase draw_phase() const { return draw_phase_; }
+  void set_draw_phase(DrawPhase draw_phase) { draw_phase_ = draw_phase; }
 
   const gfx::Transform& inheritable_transform() const {
     return inheritable_transform_;
@@ -426,7 +419,7 @@ class UiElement : public cc::AnimationTarget {
   bool bubble_events_ = false;
 
   // The size of the object.  This does not affect children.
-  gfx::SizeF size_;
+  gfx::SizeF size_ = {1.0f, 1.0f};
 
   // The local orgin of the element. This can be updated, say, so that an
   // element can contain its children, even if they are not centered about its
@@ -488,11 +481,6 @@ class UiElement : public cc::AnimationTarget {
   // An optional, but stable and semantic identifier for an element used in lieu
   // of a string.
   UiElementName name_ = UiElementName::kNone;
-
-  // This name is used in tests and debugging output to associate a "component"
-  // element with its logical owner, such as a button icon within a specific,
-  // named button instance.
-  UiElementName owner_name_for_test_ = UiElementName::kNone;
 
   // An optional identifier to categorize a reusable element, such as a button
   // background. It can also be used to identify categories of element for

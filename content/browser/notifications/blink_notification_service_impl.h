@@ -9,7 +9,6 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom.h"
-#include "url/origin.h"
 
 namespace content {
 
@@ -25,12 +24,12 @@ class BlinkNotificationServiceImpl : public blink::mojom::NotificationService {
       PlatformNotificationContextImpl* notification_context,
       ResourceContext* resource_context,
       int render_process_id,
-      const url::Origin& origin,
       mojo::InterfaceRequest<blink::mojom::NotificationService> request);
   ~BlinkNotificationServiceImpl() override;
 
   // blink::mojom::NotificationService implementation.
-  void GetPermissionStatus(GetPermissionStatusCallback callback) override;
+  void GetPermissionStatus(const std::string& origin,
+                           GetPermissionStatusCallback callback) override;
 
  private:
   // Called when an error is detected on binding_.
@@ -42,9 +41,6 @@ class BlinkNotificationServiceImpl : public blink::mojom::NotificationService {
   ResourceContext* resource_context_;
 
   int render_process_id_;
-
-  // The origin that this notification service is communicating with.
-  url::Origin origin_;
 
   mojo::Binding<blink::mojom::NotificationService> binding_;
 

@@ -150,7 +150,7 @@ class PartialMagnificationController::BorderRenderer
         gfx::Vector2d(0, 0), kShadowThickness, kTopShadowColor));
   }
 
-  ~BorderRenderer() override = default;
+  ~BorderRenderer() override {}
 
  private:
   // ui::LayerDelegate:

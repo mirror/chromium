@@ -4,7 +4,6 @@
 
 #include "chrome/browser/chromeos/system_logs/single_debug_daemon_log_source.h"
 
-#include <memory>
 #include <string>
 
 #include "base/bind.h"
@@ -55,7 +54,7 @@ class SingleDebugDaemonLogSourceTest : public ::testing::Test {
   void ClearResponse() { response_.clear(); }
 
  private:
-  void OnFetchComplete(std::unique_ptr<SystemLogsResponse> response) {
+  void OnFetchComplete(SystemLogsResponse* response) {
     ++num_callback_calls_;
     response_ = *response;
   }

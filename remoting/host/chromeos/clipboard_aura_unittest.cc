@@ -43,13 +43,14 @@ class ClientClipboard : public protocol::ClipboardStub {
   DISALLOW_COPY_AND_ASSIGN(ClientClipboard);
 };
 
-ClientClipboard::ClientClipboard() = default;
+ClientClipboard::ClientClipboard() {
+}
 
 }  // namespace
 
 class ClipboardAuraTest : public testing::Test {
  public:
-  ClipboardAuraTest() = default;
+  ClipboardAuraTest() {}
   void SetUp() override;
   void TearDown() override;
 

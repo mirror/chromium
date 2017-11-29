@@ -130,7 +130,8 @@ class TouchSelectionControllerImplTest : public ViewsTestBase {
   }
 
   gfx::Point GetCursorPosition(const gfx::SelectionModel& sel) {
-    return GetCursorRect(sel).origin();
+    gfx::Rect cursor_bounds = GetCursorRect(sel);
+    return gfx::Point(cursor_bounds.x(), cursor_bounds.y());
   }
 
   TouchSelectionControllerImpl* GetSelectionController() {

@@ -11,7 +11,6 @@
 #include <vector>
 
 #include "base/logging.h"
-#include "base/optional.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_piece.h"
@@ -24,23 +23,21 @@
 namespace printing {
 
 // property names
-constexpr char kIppCollate[] = "sheet-collate";  // RFC 3381
-constexpr char kIppCopies[] = CUPS_COPIES;
-constexpr char kIppColor[] = CUPS_PRINT_COLOR_MODE;
-constexpr char kIppMedia[] = CUPS_MEDIA;
-constexpr char kIppDuplex[] = CUPS_SIDES;
-constexpr char kIppResolution[] = "printer-resolution";  // RFC 2911
+const char kIppCollate[] = "sheet-collate";  // RFC 3381
+const char kIppCopies[] = CUPS_COPIES;
+const char kIppColor[] = CUPS_PRINT_COLOR_MODE;
+const char kIppMedia[] = CUPS_MEDIA;
+const char kIppDuplex[] = CUPS_SIDES;
 
 // collation values
-constexpr char kCollated[] = "collated";
-constexpr char kUncollated[] = "uncollated";
+const char kCollated[] = "collated";
+const char kUncollated[] = "uncollated";
 
 namespace {
 
-constexpr int kMicronsPerMM = 1000;
-constexpr double kMMPerInch = 25.4;
-constexpr double kMicronsPerInch = kMMPerInch * kMicronsPerMM;
-constexpr double kCmPerInch = kMMPerInch * 0.1;
+const int kMicronsPerMM = 1000;
+const double kMMPerInch = 25.4;
+const double kMicronsPerInch = kMMPerInch * kMicronsPerMM;
 
 enum Unit {
   INCHES,
@@ -201,43 +198,6 @@ void ExtractCopies(const CupsOptionProvider& printer,
   printer_info->copies_capable = (lower_bound != -1) && (upper_bound >= 2);
 }
 
-// Reads resolution from |attr| and puts into |size| in dots per inch.
-base::Optional<gfx::Size> GetResolution(ipp_attribute_t* attr, int i) {
-  ipp_res_t units;
-  int yres;
-  int xres = ippGetResolution(attr, i, &yres, &units);
-  if (!xres)
-    return {};
-
-  switch (units) {
-    case IPP_RES_PER_INCH:
-      return gfx::Size(xres, yres);
-    case IPP_RES_PER_CM:
-      return gfx::Size(xres * kCmPerInch, yres * kCmPerInch);
-  }
-  return {};
-}
-
-// Initializes |printer_info.dpis| with available resolutions and
-// |printer_info.default_dpi| with default resolution provided by |printer|.
-void ExtractResolutions(const CupsOptionProvider& printer,
-                        PrinterSemanticCapsAndDefaults* printer_info) {
-  ipp_attribute_t* attr = printer.GetSupportedOptionValues(kIppResolution);
-  if (!attr)
-    return;
-
-  int num_options = ippGetCount(attr);
-  for (int i = 0; i < num_options; i++) {
-    base::Optional<gfx::Size> size = GetResolution(attr, i);
-    if (size)
-      printer_info->dpis.push_back(size.value());
-  }
-  ipp_attribute_t* def_attr = printer.GetDefaultOptionValue(kIppResolution);
-  base::Optional<gfx::Size> size = GetResolution(def_attr, 0);
-  if (size)
-    printer_info->default_dpi = size.value();
-}
-
 }  // namespace
 
 ColorModel DefaultColorModel(const CupsOptionProvider& printer) {
@@ -331,7 +291,8 @@ void CapsAndDefaultsFromPrinter(const CupsOptionProvider& printer,
 
   ExtractCopies(printer, printer_info);
   ExtractColor(printer, printer_info);
-  ExtractResolutions(printer, printer_info);
+
+  // TODO(skau): Add dpi and default_dpi
 }
 
 }  //  namespace printing

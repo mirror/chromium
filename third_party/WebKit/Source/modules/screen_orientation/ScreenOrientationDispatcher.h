@@ -5,7 +5,6 @@
 #ifndef ScreenOrientationDispatcher_h
 #define ScreenOrientationDispatcher_h
 
-#include "base/macros.h"
 #include "core/frame/PlatformEventDispatcher.h"
 #include "device/screen_orientation/public/interfaces/screen_orientation.mojom-blink.h"
 #include "platform/heap/Handle.h"
@@ -24,6 +23,7 @@ class ScreenOrientationDispatcher final
     : public GarbageCollectedFinalized<ScreenOrientationDispatcher>,
       public PlatformEventDispatcher {
   USING_GARBAGE_COLLECTED_MIXIN(ScreenOrientationDispatcher);
+  WTF_MAKE_NONCOPYABLE(ScreenOrientationDispatcher);
 
  public:
   static ScreenOrientationDispatcher& Instance();
@@ -40,8 +40,6 @@ class ScreenOrientationDispatcher final
   void StopListening() override;
 
   device::mojom::blink::ScreenOrientationListenerPtr listener_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScreenOrientationDispatcher);
 };
 
 }  // namespace blink

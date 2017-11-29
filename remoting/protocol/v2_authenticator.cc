@@ -66,7 +66,8 @@ V2Authenticator::V2Authenticator(
   pending_messages_.push(key_exchange_impl_.GetNextMessage());
 }
 
-V2Authenticator::~V2Authenticator() = default;
+V2Authenticator::~V2Authenticator() {
+}
 
 Authenticator::State V2Authenticator::state() const {
   if (state_ == ACCEPTED && !pending_messages_.empty())

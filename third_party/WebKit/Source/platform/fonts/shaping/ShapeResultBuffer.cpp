@@ -229,8 +229,7 @@ GlyphData ShapeResultBuffer::EmphasisMarkGlyphData(
 
       return GlyphData(
           run->glyph_data_[0].glyph,
-          run->font_data_->EmphasisMarkFontData(font_description).get(),
-          run->CanvasRotation());
+          run->font_data_->EmphasisMarkFontData(font_description).get());
     }
   }
 

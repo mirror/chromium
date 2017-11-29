@@ -39,6 +39,8 @@ const char kDefaultURL[] = "http://www.google.com/#q=abc";
 
 }  // namespace
 
+namespace chrome {
+
 namespace android {
 
 class ExternalDataUseObserverTest : public testing::Test {
@@ -260,3 +262,5 @@ TEST_F(ExternalDataUseObserverTest, Variations) {
 }
 
 }  // namespace android
+
+}  // namespace chrome

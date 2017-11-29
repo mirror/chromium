@@ -38,7 +38,7 @@
   }
 
   function step5(result) {
-    var text = result;
+    var text = result.description;
     TestRunner.assertEquals(15, text.length, 'text length');
     TestRunner.assertEquals(8, countTextNodes(text), 'nodes count');
     TestRunner.assertEquals(1, countTextNodes('"' + text + '"'), 'nodes with quoted text count');

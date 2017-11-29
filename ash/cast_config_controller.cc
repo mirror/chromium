@@ -11,7 +11,7 @@ namespace ash {
 
 CastConfigController::CastConfigController() : binding_(this) {}
 
-CastConfigController::~CastConfigController() = default;
+CastConfigController::~CastConfigController() {}
 
 bool CastConfigController::Connected() {
   return client_.is_bound();

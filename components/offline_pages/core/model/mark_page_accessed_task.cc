@@ -38,9 +38,7 @@ MarkPageAccessedTask::MarkPageAccessedTask(OfflinePageMetadataStoreSQL* store,
     : store_(store),
       offline_id_(offline_id),
       access_time_(access_time),
-      weak_ptr_factory_(this) {
-  DCHECK(store_);
-}
+      weak_ptr_factory_(this) {}
 
 MarkPageAccessedTask::~MarkPageAccessedTask(){};
 

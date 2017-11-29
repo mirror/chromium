@@ -21,14 +21,15 @@ CompoundBuffer::DataChunk::DataChunk(
 
 CompoundBuffer::DataChunk::DataChunk(const DataChunk& other) = default;
 
-CompoundBuffer::DataChunk::~DataChunk() = default;
+CompoundBuffer::DataChunk::~DataChunk() {}
 
 CompoundBuffer::CompoundBuffer()
     : total_bytes_(0),
       locked_(false) {
 }
 
-CompoundBuffer::~CompoundBuffer() = default;
+CompoundBuffer::~CompoundBuffer() {
+}
 
 void CompoundBuffer::Clear() {
   CHECK(!locked_);
@@ -205,7 +206,8 @@ CompoundBufferInputStream::CompoundBufferInputStream(
   DCHECK(buffer_->locked());
 }
 
-CompoundBufferInputStream::~CompoundBufferInputStream() = default;
+CompoundBufferInputStream::~CompoundBufferInputStream() {
+}
 
 bool CompoundBufferInputStream::Next(const void** data, int* size) {
   if (current_chunk_ < buffer_->chunks_.size()) {

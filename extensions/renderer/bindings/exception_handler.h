@@ -19,7 +19,8 @@ namespace extensions {
 // execution or event handling.
 class ExceptionHandler {
  public:
-  ExceptionHandler(const binding::AddConsoleError& add_console_error);
+  ExceptionHandler(const binding::AddConsoleError& add_console_error,
+                   const binding::RunJSFunction& run_js);
   ~ExceptionHandler();
 
   // Handles an exception in the given |context|. |message| is a message to
@@ -46,6 +47,8 @@ class ExceptionHandler {
   v8::Local<v8::Function> GetCustomHandler(v8::Local<v8::Context> context);
 
   binding::AddConsoleError add_console_error_;
+
+  binding::RunJSFunction run_js_;
 
   DISALLOW_COPY_AND_ASSIGN(ExceptionHandler);
 };

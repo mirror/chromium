@@ -12,7 +12,7 @@ namespace test {
 
 FakeConnectionToHost::FakeConnectionToHost()
     : session_config_(protocol::SessionConfig::ForTest()) {}
-FakeConnectionToHost::~FakeConnectionToHost() = default;
+FakeConnectionToHost::~FakeConnectionToHost() {}
 
 void FakeConnectionToHost::set_client_stub(protocol::ClientStub* client_stub) {}
 

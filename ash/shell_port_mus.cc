@@ -51,7 +51,7 @@ ShellPortMus::ShellPortMus(WindowManager* window_manager)
   DCHECK_EQ(Config::MUS, GetAshConfig());
 }
 
-ShellPortMus::~ShellPortMus() = default;
+ShellPortMus::~ShellPortMus() {}
 
 // static
 ShellPortMus* ShellPortMus::Get() {

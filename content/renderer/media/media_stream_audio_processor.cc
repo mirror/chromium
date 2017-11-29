@@ -30,7 +30,6 @@
 #include "media/base/audio_parameters.h"
 #include "media/base/channel_layout.h"
 #include "third_party/webrtc/api/mediaconstraintsinterface.h"
-#include "third_party/webrtc/modules/audio_processing/include/audio_processing_statistics.h"
 #include "third_party/webrtc/modules/audio_processing/typing_detection.h"
 
 namespace content {
@@ -599,15 +598,6 @@ void MediaStreamAudioProcessor::GetStats(AudioProcessorStats* stats) {
   stats->typing_noise_detected =
       (base::subtle::Acquire_Load(&typing_detected_) != false);
   GetAudioProcessingStats(audio_processing_.get(), stats);
-}
-
-webrtc::AudioProcessorInterface::AudioProcessorStatistics
-MediaStreamAudioProcessor::GetStats(bool has_remote_tracks) {
-  AudioProcessorStatistics stats;
-  stats.typing_noise_detected =
-      (base::subtle::Acquire_Load(&typing_detected_) != false);
-  stats.apm_statistics = audio_processing_->GetStatistics(has_remote_tracks);
-  return stats;
 }
 
 void MediaStreamAudioProcessor::InitializeAudioProcessingModule(

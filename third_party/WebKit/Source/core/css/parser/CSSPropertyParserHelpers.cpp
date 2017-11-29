@@ -1677,22 +1677,22 @@ bool ConsumeShorthandVia2Longhands(
     CSSParserTokenRange& range,
     HeapVector<CSSPropertyValue, 256>& properties) {
   DCHECK_EQ(shorthand.length(), 2u);
-  const CSSProperty** longhands = shorthand.properties();
+  const CSSPropertyID* longhands = shorthand.properties();
 
   const CSSValue* start =
-      ParseLonghand(longhands[0]->PropertyID(), shorthand.id(), context, range);
+      ParseLonghand(longhands[0], shorthand.id(), context, range);
 
   if (!start)
     return false;
 
   const CSSValue* end =
-      ParseLonghand(longhands[1]->PropertyID(), shorthand.id(), context, range);
+      ParseLonghand(longhands[1], shorthand.id(), context, range);
 
   if (!end)
     end = start;
-  AddProperty(longhands[0]->PropertyID(), shorthand.id(), *start, important,
+  AddProperty(longhands[0], shorthand.id(), *start, important,
               IsImplicitProperty::kNotImplicit, properties);
-  AddProperty(longhands[1]->PropertyID(), shorthand.id(), *end, important,
+  AddProperty(longhands[1], shorthand.id(), *end, important,
               IsImplicitProperty::kNotImplicit, properties);
 
   return range.AtEnd();
@@ -1705,24 +1705,22 @@ bool ConsumeShorthandVia4Longhands(
     CSSParserTokenRange& range,
     HeapVector<CSSPropertyValue, 256>& properties) {
   DCHECK_EQ(shorthand.length(), 4u);
-  const CSSProperty** longhands = shorthand.properties();
+  const CSSPropertyID* longhands = shorthand.properties();
   const CSSValue* top =
-      ParseLonghand(longhands[0]->PropertyID(), shorthand.id(), context, range);
+      ParseLonghand(longhands[0], shorthand.id(), context, range);
 
   if (!top)
     return false;
 
   const CSSValue* right =
-      ParseLonghand(longhands[1]->PropertyID(), shorthand.id(), context, range);
+      ParseLonghand(longhands[1], shorthand.id(), context, range);
 
   const CSSValue* bottom = nullptr;
   const CSSValue* left = nullptr;
   if (right) {
-    bottom = ParseLonghand(longhands[2]->PropertyID(), shorthand.id(), context,
-                           range);
+    bottom = ParseLonghand(longhands[2], shorthand.id(), context, range);
     if (bottom) {
-      left = ParseLonghand(longhands[3]->PropertyID(), shorthand.id(), context,
-                           range);
+      left = ParseLonghand(longhands[3], shorthand.id(), context, range);
     }
   }
 
@@ -1733,13 +1731,13 @@ bool ConsumeShorthandVia4Longhands(
   if (!left)
     left = right;
 
-  AddProperty(longhands[0]->PropertyID(), shorthand.id(), *top, important,
+  AddProperty(longhands[0], shorthand.id(), *top, important,
               IsImplicitProperty::kNotImplicit, properties);
-  AddProperty(longhands[1]->PropertyID(), shorthand.id(), *right, important,
+  AddProperty(longhands[1], shorthand.id(), *right, important,
               IsImplicitProperty::kNotImplicit, properties);
-  AddProperty(longhands[2]->PropertyID(), shorthand.id(), *bottom, important,
+  AddProperty(longhands[2], shorthand.id(), *bottom, important,
               IsImplicitProperty::kNotImplicit, properties);
-  AddProperty(longhands[3]->PropertyID(), shorthand.id(), *left, important,
+  AddProperty(longhands[3], shorthand.id(), *left, important,
               IsImplicitProperty::kNotImplicit, properties);
 
   return range.AtEnd();
@@ -1755,14 +1753,14 @@ bool ConsumeShorthandGreedilyViaLonghands(
   DCHECK_LE(shorthand.length(), 6u);
   const CSSValue* longhands[6] = {nullptr, nullptr, nullptr,
                                   nullptr, nullptr, nullptr};
-  const CSSProperty** shorthand_properties = shorthand.properties();
+  const CSSPropertyID* shorthand_properties = shorthand.properties();
   do {
     bool found_longhand = false;
     for (size_t i = 0; !found_longhand && i < shorthand.length(); ++i) {
       if (longhands[i])
         continue;
-      longhands[i] = ParseLonghand(shorthand_properties[i]->PropertyID(),
-                                   shorthand.id(), context, range);
+      longhands[i] = ParseLonghand(shorthand_properties[i], shorthand.id(),
+                                   context, range);
 
       if (longhands[i])
         found_longhand = true;
@@ -1773,11 +1771,10 @@ bool ConsumeShorthandGreedilyViaLonghands(
 
   for (size_t i = 0; i < shorthand.length(); ++i) {
     if (longhands[i]) {
-      AddProperty(shorthand_properties[i]->PropertyID(), shorthand.id(),
-                  *longhands[i], important, IsImplicitProperty::kNotImplicit,
-                  properties);
+      AddProperty(shorthand_properties[i], shorthand.id(), *longhands[i],
+                  important, IsImplicitProperty::kNotImplicit, properties);
     } else {
-      AddProperty(shorthand_properties[i]->PropertyID(), shorthand.id(),
+      AddProperty(shorthand_properties[i], shorthand.id(),
                   *CSSInitialValue::Create(), important,
                   IsImplicitProperty::kNotImplicit, properties);
     }
@@ -1793,9 +1790,9 @@ void AddExpandedPropertyForValue(
   const StylePropertyShorthand& shorthand = shorthandForProperty(property);
   unsigned shorthand_length = shorthand.length();
   DCHECK(shorthand_length);
-  const CSSProperty** longhands = shorthand.properties();
+  const CSSPropertyID* longhands = shorthand.properties();
   for (unsigned i = 0; i < shorthand_length; ++i) {
-    AddProperty(longhands[i]->PropertyID(), property, value, important,
+    AddProperty(longhands[i], property, value, important,
                 IsImplicitProperty::kNotImplicit, properties);
   }
 }

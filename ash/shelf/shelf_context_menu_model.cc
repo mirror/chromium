@@ -166,7 +166,7 @@ ShelfContextMenuModel::ShelfContextMenuModel(MenuItemList menu_items,
   AddItems(this, this, menu_items_, &submenus_);
 }
 
-ShelfContextMenuModel::~ShelfContextMenuModel() = default;
+ShelfContextMenuModel::~ShelfContextMenuModel() {}
 
 // static
 void ShelfContextMenuModel::AddItems(ui::SimpleMenuModel* model,

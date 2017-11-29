@@ -5,6 +5,7 @@
 #include "content/browser/mus_util.h"
 
 #if defined(USE_AURA)
+#include "content/public/browser/context_factory.h"
 #include "ui/aura/env.h"
 #endif
 
@@ -16,6 +17,11 @@ bool IsUsingMus() {
 #else
   return false;
 #endif
+}
+
+bool IsMusHostingViz() {
+  // TODO(sad): Currently mus always is the viz host.
+  return IsUsingMus();
 }
 
 }  // namespace content

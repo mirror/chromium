@@ -67,8 +67,8 @@ void FlingUpOrDown(ui::test::EventGenerator& generator,
 class AppListPresenterDelegateTest : public AshTestBase,
                                      public testing::WithParamInterface<bool> {
  public:
-  AppListPresenterDelegateTest() = default;
-  ~AppListPresenterDelegateTest() override = default;
+  AppListPresenterDelegateTest() {}
+  ~AppListPresenterDelegateTest() override {}
 
   TestAppListPresenterImpl* app_list_presenter_impl() {
     return app_list_presenter_impl_.get();

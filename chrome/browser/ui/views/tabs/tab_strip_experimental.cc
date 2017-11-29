@@ -597,11 +597,10 @@ void TabStripExperimental::TabClosing(const TabDataExperimental* data) {
   */
 }
 
-void TabStripExperimental::TabChanged(const TabDataExperimental* data,
-                                      TabChangeType change_type) {
+void TabStripExperimental::TabChanged(const TabDataExperimental* data) {
   TabExperimental* tab = TabForData(data);
   if (tab)
-    tab->DataUpdated(change_type);
+    tab->DataUpdated();
 }
 
 void TabStripExperimental::TabSelectionChanged(

@@ -10,9 +10,9 @@ namespace chromeos {
 
 namespace tether {
 
-HostConnectionMetricsLogger::HostConnectionMetricsLogger() = default;
+HostConnectionMetricsLogger::HostConnectionMetricsLogger() {}
 
-HostConnectionMetricsLogger::~HostConnectionMetricsLogger() = default;
+HostConnectionMetricsLogger::~HostConnectionMetricsLogger() {}
 
 void HostConnectionMetricsLogger::RecordConnectionToHostResult(
     ConnectionToHostResult result) {

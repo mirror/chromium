@@ -142,7 +142,7 @@ DateView::DateView(SystemTrayItem* owner)
   AddChildView(date_label_);
 }
 
-DateView::~DateView() = default;
+DateView::~DateView() {}
 
 void DateView::SetAction(DateAction action) {
   if (action == action_)
@@ -195,7 +195,7 @@ TimeView::TimeView(ClockLayout clock_layout) : BaseDateTimeView(nullptr) {
   UpdateClockLayout(clock_layout);
 }
 
-TimeView::~TimeView() = default;
+TimeView::~TimeView() {}
 
 void TimeView::UpdateTimeFormat() {
   hour_type_ = Shell::Get()->system_tray_controller()->hour_clock_type();

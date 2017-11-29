@@ -51,8 +51,8 @@ const char kVisibleRowsHistogramName[] =
 
 class ModalWidgetDelegate : public views::WidgetDelegateView {
  public:
-  ModalWidgetDelegate() = default;
-  ~ModalWidgetDelegate() override = default;
+  ModalWidgetDelegate() {}
+  ~ModalWidgetDelegate() override {}
 
   ui::ModalType GetModalType() const override { return ui::MODAL_TYPE_SYSTEM; }
 
@@ -65,7 +65,7 @@ class KeyEventConsumerView : public views::View {
   KeyEventConsumerView() : number_of_consumed_key_events_(0) {
     SetFocusBehavior(FocusBehavior::ALWAYS);
   }
-  ~KeyEventConsumerView() override = default;
+  ~KeyEventConsumerView() override {}
 
   // Overriden from views::View
   bool SkipDefaultKeyEventProcessing(const ui::KeyEvent& event) override {
@@ -89,8 +89,8 @@ class KeyEventConsumerView : public views::View {
 // TraybackgroundView / TrayDragController. crbug.com/745073
 class SystemTrayTest : public AshTestBase {
  public:
-  SystemTrayTest() = default;
-  ~SystemTrayTest() override = default;
+  SystemTrayTest() {}
+  ~SystemTrayTest() override {}
 
   // Swiping on the system tray and ends with finger released. Note, |start| is
   // based on the system tray or system tray bubble's coordinate space.

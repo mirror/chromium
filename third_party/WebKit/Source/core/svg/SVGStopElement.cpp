@@ -73,12 +73,7 @@ void SVGStopElement::DidRecalcStyle() {
 
 Color SVGStopElement::StopColorIncludingOpacity() const {
   const ComputedStyle* style = NonLayoutObjectComputedStyle();
-
-  // Normally, we should always have a computed non-layout style for <stop>
-  // elements.  But there are some odd corner cases (*cough* shadow DOM v0
-  // undistributed light tree *cough*) which leave it null.
-  if (!style)
-    return Color::kBlack;
+  DCHECK(style);
 
   const SVGComputedStyle& svg_style = style->SvgStyle();
   return svg_style.StopColor().CombineWithAlpha(svg_style.StopOpacity());

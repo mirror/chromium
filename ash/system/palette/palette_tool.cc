@@ -32,7 +32,7 @@ void PaletteTool::RegisterToolInstances(PaletteToolManager* tool_manager) {
 
 PaletteTool::PaletteTool(Delegate* delegate) : delegate_(delegate) {}
 
-PaletteTool::~PaletteTool() = default;
+PaletteTool::~PaletteTool() {}
 
 void PaletteTool::OnEnable() {
   enabled_ = true;

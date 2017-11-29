@@ -120,10 +120,7 @@ ClearLegacyTemporaryPagesTask::ClearLegacyTemporaryPagesTask(
     : store_(store),
       policy_controller_(policy_controller),
       legacy_archives_dir_(legacy_archives_dir),
-      weak_ptr_factory_(this) {
-  DCHECK(store_);
-  DCHECK(policy_controller_);
-}
+      weak_ptr_factory_(this) {}
 
 ClearLegacyTemporaryPagesTask::~ClearLegacyTemporaryPagesTask() {}
 

@@ -50,7 +50,7 @@ class PaletteToolManagerTest : public ::testing::Test,
  public:
   PaletteToolManagerTest()
       : palette_tool_manager_(new PaletteToolManager(this)) {}
-  ~PaletteToolManagerTest() override = default;
+  ~PaletteToolManagerTest() override {}
 
  protected:
   // PaletteToolManager::Delegate:

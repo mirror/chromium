@@ -17,8 +17,6 @@
 #include "components/arc/connection_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-class BrowserContextKeyedServiceFactory;
-
 namespace content {
 class BrowserContext;
 }  // namespace content
@@ -31,9 +29,6 @@ class ArcBridgeService;
 class ArcMetricsService : public KeyedService,
                           public mojom::MetricsHost {
  public:
-  // Returns the factory instance for this class.
-  static BrowserContextKeyedServiceFactory* GetFactory();
-
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
   static ArcMetricsService* GetForBrowserContext(

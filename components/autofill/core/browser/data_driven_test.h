@@ -32,8 +32,7 @@ class DataDrivenTest {
   // As above, but runs a test for a single file, the full path of which is
   // given by |test_file_name|.
   void RunOneDataDrivenTest(const base::FilePath& test_file_name,
-                            const base::FilePath& output_directory,
-                            bool is_expected_to_pass);
+                            const base::FilePath& output_directory);
 
   // Given the |input| data, generates the |output| results. The output results
   // must be stable across runs.

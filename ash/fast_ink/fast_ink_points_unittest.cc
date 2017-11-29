@@ -19,7 +19,7 @@ class FastInkPointsTest : public AshTestBase {
         event_time_(base::TimeTicks()),
         screen_size_(1000, 1000) {}
 
-  ~FastInkPointsTest() override = default;
+  ~FastInkPointsTest() override {}
 
  protected:
   FastInkPoints points_;

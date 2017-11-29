@@ -31,8 +31,8 @@ const char* kTimeZones[] = {
 
 class KnownTimeZoneTest : public testing::Test {
  public:
-  KnownTimeZoneTest() = default;
-  ~KnownTimeZoneTest() override = default;
+  KnownTimeZoneTest() {}
+  ~KnownTimeZoneTest() override {}
 
   void SetUp() override {
     for (const char* id : kTimeZones) {

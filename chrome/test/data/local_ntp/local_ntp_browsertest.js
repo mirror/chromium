@@ -93,8 +93,18 @@ function initLocalNTP(isGooglePage) {
 // Advanced tests are controlled from the native side. The helpers here are
 // called from native code to set up the page and to check results.
 
+function handlePostMessage(event) {
+  if (event.data.cmd == 'loaded') {
+    domAutomationController.send('loaded');
+  }
+}
 
-function setupAdvancedTest() {
+
+function setupAdvancedTest(opt_waitForIframeLoaded) {
+  if (opt_waitForIframeLoaded) {
+    window.addEventListener('message', handlePostMessage);
+  }
+
   setUpPage('local-ntp-template');
   initLocalNTP(/*isGooglePage=*/true);
 

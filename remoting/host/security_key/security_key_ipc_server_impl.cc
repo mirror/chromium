@@ -98,7 +98,7 @@ bool SecurityKeyIpcServerImpl::CreateChannel(
               mojo::edk::TransportProtocol::kLegacy,
               mojo::edk::CreateServerHandle(channel_handle, options)))
           .release(),
-      this, base::ThreadTaskRunnerHandle::Get());
+      this);
 
   if (!ipc_channel_->Connect()) {
     ipc_channel_.reset();

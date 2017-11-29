@@ -72,7 +72,7 @@ class ExtensionViewViews : public views::WebView,
   extensions::ExtensionHost* host_;
 
   // The browser window that this view is in.
-  Browser* const browser_;
+  Browser* browser_;
 
   // What we should set the preferred width to once the ExtensionViewViews has
   // loaded.

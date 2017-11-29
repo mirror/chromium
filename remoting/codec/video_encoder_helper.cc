@@ -11,7 +11,7 @@
 
 namespace remoting {
 
-VideoEncoderHelper::VideoEncoderHelper() = default;
+VideoEncoderHelper::VideoEncoderHelper() {}
 
 std::unique_ptr<VideoPacket> VideoEncoderHelper::CreateVideoPacket(
     const webrtc::DesktopFrame& frame) {

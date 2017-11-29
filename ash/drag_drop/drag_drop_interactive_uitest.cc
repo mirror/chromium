@@ -20,8 +20,8 @@ namespace {
 
 class DraggableView : public views::View {
  public:
-  DraggableView() = default;
-  ~DraggableView() override = default;
+  DraggableView() {}
+  ~DraggableView() override {}
 
   // views::View overrides:
   int GetDragOperations(const gfx::Point& press_pt) override {
@@ -39,7 +39,7 @@ class DraggableView : public views::View {
 class TargetView : public views::View {
  public:
   TargetView() : dropped_(false) {}
-  ~TargetView() override = default;
+  ~TargetView() override {}
 
   // views::View overrides:
   bool GetDropFormats(

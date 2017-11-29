@@ -40,8 +40,8 @@ const int kMaxLargeCursorSize = 64;
 
 class CursorWindowDelegate : public aura::WindowDelegate {
  public:
-  CursorWindowDelegate() = default;
-  ~CursorWindowDelegate() override = default;
+  CursorWindowDelegate() {}
+  ~CursorWindowDelegate() override {}
 
   // aura::WindowDelegate overrides:
   gfx::Size GetMinimumSize() const override { return size_; }

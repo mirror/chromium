@@ -17,7 +17,8 @@ CrosSettingsProvider::CrosSettingsProvider(
   : notify_cb_(notify_cb) {
 }
 
-CrosSettingsProvider::~CrosSettingsProvider() = default;
+CrosSettingsProvider::~CrosSettingsProvider() {
+}
 
 void CrosSettingsProvider::Set(const std::string& path,
                                const base::Value& value) {

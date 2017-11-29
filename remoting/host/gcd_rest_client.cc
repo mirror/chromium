@@ -31,7 +31,7 @@ GcdRestClient::GcdRestClient(const std::string& gcd_base_url,
       token_getter_(token_getter),
       clock_(new base::DefaultClock) {}
 
-GcdRestClient::~GcdRestClient() = default;
+GcdRestClient::~GcdRestClient() {}
 
 void GcdRestClient::PatchState(
     std::unique_ptr<base::DictionaryValue> patch_details,

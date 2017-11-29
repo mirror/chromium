@@ -41,7 +41,7 @@ AutoclickControllerCommon::AutoclickControllerCommon(
   InitClickTimer();
 }
 
-AutoclickControllerCommon::~AutoclickControllerCommon() = default;
+AutoclickControllerCommon::~AutoclickControllerCommon() {}
 
 void AutoclickControllerCommon::HandleMouseEvent(const ui::MouseEvent& event) {
   gfx::Point mouse_location = event.location();

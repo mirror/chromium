@@ -430,8 +430,6 @@
 -PreviewsBrowserTest.NoScriptPreviewsEnabled
 # Started failing in r514649.
 -PreviewsNoScriptBrowserTest.NoScriptPreviewsEnabled
-# Added in r519342.
--PreviewsNoScriptBrowserTest.NoScriptPreviewsEnabledHttpRedirectToHttps
 
 # crbug.com/756642 Need to add support for URL blacklist.
 -PolicyTest.FileURLBlacklist
@@ -720,9 +718,6 @@
 -ErrorPageTest.Failed
 -ErrorPageTest.SniffSmallHttpErrorResponseAsDownload
 -ErrorPageTest.StaleCacheStatus
-
-# Likely started to fail after around r519412.
--ErrorPageNavigationCorrectionsFailTest.FetchCorrectionsFails
 
 # Switch test from using a net::URLRequestFileJob that adds load timing to
 # to using a test URLLoaderFactory via SetNetworkFactoryForTesting.

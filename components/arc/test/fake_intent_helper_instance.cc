@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/bind_helpers.h"
 #include "base/threading/thread_task_runner_handle.h"
 
 namespace arc {
@@ -70,15 +69,7 @@ void FakeIntentHelperInstance::HandleUrlList(
     mojom::ActivityNamePtr activity,
     mojom::ActionType action) {}
 
-void FakeIntentHelperInstance::InitDeprecated(
-    mojom::IntentHelperHostPtr host_ptr) {
-  Init(std::move(host_ptr), base::BindOnce(&base::DoNothing));
-}
-
-void FakeIntentHelperInstance::Init(mojom::IntentHelperHostPtr host_ptr,
-                                    InitCallback callback) {
-  std::move(callback).Run();
-}
+void FakeIntentHelperInstance::Init(mojom::IntentHelperHostPtr host_ptr) {}
 
 void FakeIntentHelperInstance::OpenFileToReadDeprecated(
     const std::string& url,

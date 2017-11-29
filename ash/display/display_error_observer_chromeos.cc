@@ -14,9 +14,9 @@
 
 namespace ash {
 
-DisplayErrorObserver::DisplayErrorObserver() = default;
+DisplayErrorObserver::DisplayErrorObserver() {}
 
-DisplayErrorObserver::~DisplayErrorObserver() = default;
+DisplayErrorObserver::~DisplayErrorObserver() {}
 
 void DisplayErrorObserver::OnDisplayModeChangeFailed(
     const display::DisplayConfigurator::DisplayStateList& displays,

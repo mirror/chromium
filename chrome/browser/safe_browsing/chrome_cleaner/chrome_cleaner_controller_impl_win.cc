@@ -223,7 +223,7 @@ bool ChromeCleanerControllerImpl::IsPoweredByPartner() {
   }
 
   const std::string& reporter_engine =
-      reporter_invocation_->command_line().GetSwitchValueASCII(
+      reporter_invocation_->command_line.GetSwitchValueASCII(
           chrome_cleaner::kEngineSwitch);
   // Currently, only engine=2 corresponds to a partner-powered engine. This
   // condition should be updated if other partner-powered engines are added.
@@ -391,10 +391,10 @@ void ChromeCleanerControllerImpl::NotifyObserver(Observer* observer) const {
       observer->OnScanning();
       break;
     case State::kInfected:
-      observer->OnInfected(scanner_results_);
+      observer->OnInfected(*files_to_delete_);
       break;
     case State::kCleaning:
-      observer->OnCleaning(scanner_results_);
+      observer->OnCleaning(*files_to_delete_);
       break;
     case State::kRebootRequired:
       observer->OnRebootRequired();
@@ -420,6 +420,7 @@ void ChromeCleanerControllerImpl::ResetCleanerDataAndInvalidateWeakPtrs() {
 
   weak_factory_.InvalidateWeakPtrs();
   reporter_invocation_.reset();
+  files_to_delete_.reset();
   prompt_user_callback_.Reset();
 }
 
@@ -461,7 +462,7 @@ void ChromeCleanerControllerImpl::OnChromeCleanerFetchedAndVerified(
 // static
 void ChromeCleanerControllerImpl::WeakOnPromptUser(
     const base::WeakPtr<ChromeCleanerControllerImpl>& controller,
-    ChromeCleanerScannerResults&& scanner_results,
+    std::unique_ptr<std::set<base::FilePath>> files_to_delete,
     ChromePrompt::PromptUserCallback prompt_user_callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -473,24 +474,24 @@ void ChromeCleanerControllerImpl::WeakOnPromptUser(
                                              PromptAcceptance::DENIED));
   }
 
-  controller->OnPromptUser(std::move(scanner_results),
+  controller->OnPromptUser(std::move(files_to_delete),
                            std::move(prompt_user_callback));
 }
 
 void ChromeCleanerControllerImpl::OnPromptUser(
-    ChromeCleanerScannerResults&& scanner_results,
+    std::unique_ptr<std::set<base::FilePath>> files_to_delete,
     ChromePrompt::PromptUserCallback prompt_user_callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(files_to_delete);
   DCHECK_EQ(State::kScanning, state());
-  DCHECK(scanner_results_.files_to_delete().empty());
-  DCHECK(scanner_results_.registry_keys().empty());
+  DCHECK(!files_to_delete_);
   DCHECK(!prompt_user_callback_);
   DCHECK(!time_scanning_started_.is_null());
 
   UMA_HISTOGRAM_LONG_TIMES_100("SoftwareReporter.Cleaner.ScanningTime",
                                base::Time::Now() - time_scanning_started_);
 
-  if (scanner_results.files_to_delete().empty()) {
+  if (files_to_delete->empty()) {
     BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)
         ->PostTask(FROM_HERE, base::BindOnce(std::move(prompt_user_callback),
                                              PromptAcceptance::DENIED));
@@ -501,8 +502,8 @@ void ChromeCleanerControllerImpl::OnPromptUser(
   }
 
   UMA_HISTOGRAM_COUNTS_1000("SoftwareReporter.NumberOfFilesToDelete",
-                            scanner_results.files_to_delete().size());
-  scanner_results_ = std::move(scanner_results);
+                            files_to_delete->size());
+  files_to_delete_ = std::move(files_to_delete);
   prompt_user_callback_ = std::move(prompt_user_callback);
   SetStateAndNotifyObservers(State::kInfected);
 }

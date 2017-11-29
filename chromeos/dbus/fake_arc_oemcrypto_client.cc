@@ -12,9 +12,9 @@
 
 namespace chromeos {
 
-FakeArcOemCryptoClient::FakeArcOemCryptoClient() = default;
+FakeArcOemCryptoClient::FakeArcOemCryptoClient() {}
 
-FakeArcOemCryptoClient::~FakeArcOemCryptoClient() = default;
+FakeArcOemCryptoClient::~FakeArcOemCryptoClient() {}
 
 void FakeArcOemCryptoClient::Init(dbus::Bus* bus) {}
 

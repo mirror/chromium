@@ -24,8 +24,8 @@ class BlobSliceTest : public testing::Test {
  protected:
   using BlobSlice = BlobStorageContext::BlobSlice;
 
-  BlobSliceTest() = default;
-  ~BlobSliceTest() override = default;
+  BlobSliceTest() {}
+  ~BlobSliceTest() override {}
 
   scoped_refptr<ShareableBlobDataItem> CreateDataItem(size_t size) {
     std::unique_ptr<DataElement> element(new DataElement());

@@ -5,8 +5,6 @@
 #include "ui/app_list/views/search_box_view.h"
 
 #include <algorithm>
-#include <memory>
-#include <vector>
 
 #include "ash/app_list/model/search_box_model.h"
 #include "base/macros.h"
@@ -881,7 +879,14 @@ void SearchBoxView::SpeechRecognitionButtonPropChanged() {
         gfx::CreateVectorIcon(kIcMicBlackIcon, kMicIconSize,
                               kDefaultSearchboxColor));
 
-    speech_button_->SetTooltipText(speech_button_prop->tooltip);
+    // TODO(warx): consider removing on_tooltip as it is not accessible due to
+    // the overlap of speech UI.
+    if (view_delegate_->GetSpeechUI()->state() ==
+        SPEECH_RECOGNITION_HOTWORD_LISTENING) {
+      speech_button_->SetTooltipText(speech_button_prop->on_tooltip);
+    } else {
+      speech_button_->SetTooltipText(speech_button_prop->off_tooltip);
+    }
   } else {
     if (speech_button_) {
       // Deleting a view will detach it from its parent.

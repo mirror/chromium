@@ -46,7 +46,7 @@ SessionStateAnimator::AnimationSequence::AnimationSequence(
       invoke_callback_(false),
       callback_(std::move(callback)) {}
 
-SessionStateAnimator::AnimationSequence::~AnimationSequence() = default;
+SessionStateAnimator::AnimationSequence::~AnimationSequence() {}
 
 void SessionStateAnimator::AnimationSequence::EndSequence() {
   sequence_ended_ = true;
@@ -73,9 +73,9 @@ void SessionStateAnimator::AnimationSequence::CleanupIfSequenceCompleted() {
   }
 }
 
-SessionStateAnimator::SessionStateAnimator() = default;
+SessionStateAnimator::SessionStateAnimator() {}
 
-SessionStateAnimator::~SessionStateAnimator() = default;
+SessionStateAnimator::~SessionStateAnimator() {}
 
 base::TimeDelta SessionStateAnimator::GetDuration(
     SessionStateAnimator::AnimationSpeed speed) {

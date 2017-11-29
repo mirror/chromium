@@ -24,7 +24,6 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/gpu_data_manager.h"
 #include "content/public/browser/render_process_host.h"
-#include "content/public/browser/webrtc_log.h"
 #include "gpu/config/gpu_info.h"
 #include "media/audio/audio_manager.h"
 #include "net/base/ip_address.h"
@@ -135,7 +134,12 @@ void WebRtcLogBuffer::SetComplete() {
 }
 
 WebRtcTextLogHandler::WebRtcTextLogHandler(int render_process_id)
-    : render_process_id_(render_process_id), logging_state_(CLOSED) {}
+    : render_process_id_(render_process_id),
+      log_buffer_(),  // Should be created by StartLogging.
+      meta_data_(),   // Should be created by StartLogging.
+      stop_callback_(),
+      logging_state_(CLOSED),
+      logging_started_time_(base::Time()) {}
 
 WebRtcTextLogHandler::~WebRtcTextLogHandler() {
   // If the log isn't closed that means we haven't decremented the log count
@@ -245,7 +249,10 @@ bool WebRtcTextLogHandler::StopLogging(const GenericDoneCallback& callback) {
   stop_callback_ = callback;
   logging_state_ = STOPPING;
 
-  content::WebRtcLog::ClearLogMessageCallback(render_process_id_);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &WebRtcTextLogHandler::DisableBrowserProcessLoggingOnUIThread, this));
   return true;
 }
 
@@ -267,9 +274,16 @@ void WebRtcTextLogHandler::StopDone() {
 void WebRtcTextLogHandler::ChannelClosing() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  if (logging_state_ == STARTING || logging_state_ == STARTED)
-    content::WebRtcLog::ClearLogMessageCallback(render_process_id_);
-  logging_state_ = LoggingState::CHANNEL_CLOSING;
+  if (logging_state_ == STARTING || logging_state_ == STARTED) {
+    logging_state_ = LoggingState::CHANNEL_CLOSING;
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(
+            &WebRtcTextLogHandler::DisableBrowserProcessLoggingOnUIThread,
+            this));
+  } else {
+    logging_state_ = LoggingState::CHANNEL_CLOSING;
+  }
 }
 
 void WebRtcTextLogHandler::DiscardLog() {
@@ -387,6 +401,17 @@ void WebRtcTextLogHandler::LogInitialInfoOnIOThread(
     return;
   }
 
+  // Tell the the browser to enable logging. Log messages are received on the
+  // IO thread, so the initial info will finish to be written first.
+  // TODO(terelius): Once we have moved over to Mojo, we could tell the
+  // renderer to start logging here, but for the time being
+  // WebRtcLoggingHandlerHost::StartLogging will be responsible for sending
+  // that IPC message.
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &WebRtcTextLogHandler::EnableBrowserProcessLoggingOnUIThread, this));
+
   // Log start time (current time). We don't use base/i18n/time_formatting.h
   // here because we don't want the format of the current locale.
   base::Time::Exploded now = {0};
@@ -463,12 +488,22 @@ void WebRtcTextLogHandler::LogInitialInfoOnIOThread(
   }
 
   StartDone(callback);
+}
 
-  // After the above data has been written, tell the browser to enable logging.
-  // TODO(terelius): Once we have moved over to Mojo, we could tell the
-  // renderer to start logging here, but for the time being
-  // WebRtcLoggingHandlerHost::StartLogging will be responsible for sending
-  // that IPC message.
-  content::WebRtcLog::SetLogMessageCallback(
-      render_process_id_, base::Bind(&WebRtcTextLogHandler::LogMessage, this));
+void WebRtcTextLogHandler::EnableBrowserProcessLoggingOnUIThread() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  content::RenderProcessHost* host =
+      content::RenderProcessHost::FromID(render_process_id_);
+  if (host) {
+    host->SetWebRtcLogMessageCallback(
+        base::Bind(&WebRtcTextLogHandler::LogMessage, this));
+  }
+}
+
+void WebRtcTextLogHandler::DisableBrowserProcessLoggingOnUIThread() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  content::RenderProcessHost* host =
+      content::RenderProcessHost::FromID(render_process_id_);
+  if (host)
+    host->ClearWebRtcLogMessageCallback();
 }

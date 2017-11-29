@@ -26,6 +26,8 @@ class RE2;
 
 class GURL;
 
+namespace chrome {
+
 namespace android {
 
 // DataUseMatcher stores the matching URL patterns and package names along with
@@ -146,5 +148,7 @@ class DataUseMatcher {
 };
 
 }  // namespace android
+
+}  // namespace chrome
 
 #endif  // CHROME_BROWSER_ANDROID_DATA_USAGE_DATA_USE_MATCHER_H_

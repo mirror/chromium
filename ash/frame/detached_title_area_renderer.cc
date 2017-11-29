@@ -87,8 +87,7 @@ DetachedTitleAreaRendererForInternal::DetachedTitleAreaRendererForInternal(
   ConfigureCommonWidgetProperties(widget_.get());
 }
 
-DetachedTitleAreaRendererForInternal::~DetachedTitleAreaRendererForInternal() =
-    default;
+DetachedTitleAreaRendererForInternal::~DetachedTitleAreaRendererForInternal() {}
 
 DetachedTitleAreaRendererForClient::DetachedTitleAreaRendererForClient(
     aura::Window* parent,
@@ -99,8 +98,6 @@ DetachedTitleAreaRendererForClient::DetachedTitleAreaRendererForClient(
       CreateInitParams("DetachedTitleAreaRendererForClient");
   views::NativeWidgetAura* native_widget =
       new views::NativeWidgetAura(widget_, true);
-  native_widget->GetNativeView()->SetProperty(
-      aura::client::kEmbedType, aura::client::WindowEmbedType::TOP_LEVEL_IN_WM);
   aura::SetWindowType(native_widget->GetNativeWindow(),
                       ui::mojom::WindowType::POPUP);
   ApplyProperties(native_widget->GetNativeWindow(),
@@ -144,7 +141,6 @@ void DetachedTitleAreaRendererForClient::DeleteDelegate() {
   delete this;
 }
 
-DetachedTitleAreaRendererForClient::~DetachedTitleAreaRendererForClient() =
-    default;
+DetachedTitleAreaRendererForClient::~DetachedTitleAreaRendererForClient() {}
 
 }  // namespace ash

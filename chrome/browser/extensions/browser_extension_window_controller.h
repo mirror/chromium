@@ -35,7 +35,7 @@ class BrowserExtensionWindowController : public extensions::WindowController {
       const extensions::Extension* extension) const override;
 
  private:
-  Browser* const browser_;
+  Browser* browser_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserExtensionWindowController);
 };

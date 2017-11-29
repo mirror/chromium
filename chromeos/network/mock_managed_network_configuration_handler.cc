@@ -7,9 +7,11 @@
 namespace chromeos {
 
 MockManagedNetworkConfigurationHandler::
-    MockManagedNetworkConfigurationHandler() = default;
+    MockManagedNetworkConfigurationHandler() {
+}
 
 MockManagedNetworkConfigurationHandler::
-    ~MockManagedNetworkConfigurationHandler() = default;
+    ~MockManagedNetworkConfigurationHandler() {
+}
 
 }  // namespace chromeos

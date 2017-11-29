@@ -5,7 +5,6 @@
 #ifndef InspectorAccessibilityAgent_h
 #define InspectorAccessibilityAgent_h
 
-#include "base/macros.h"
 #include "core/inspector/InspectorBaseAgent.h"
 #include "core/inspector/protocol/Accessibility.h"
 #include "modules/ModulesExport.h"
@@ -22,6 +21,8 @@ using protocol::Accessibility::AXNodeId;
 
 class MODULES_EXPORT InspectorAccessibilityAgent
     : public InspectorBaseAgent<protocol::Accessibility::Metainfo> {
+  WTF_MAKE_NONCOPYABLE(InspectorAccessibilityAgent);
+
  public:
   InspectorAccessibilityAgent(Page*, InspectorDOMAgent*);
 
@@ -86,8 +87,6 @@ class MODULES_EXPORT InspectorAccessibilityAgent
 
   Member<Page> page_;
   Member<InspectorDOMAgent> dom_agent_;
-
-  DISALLOW_COPY_AND_ASSIGN(InspectorAccessibilityAgent);
 };
 
 }  // namespace blink

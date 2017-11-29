@@ -58,11 +58,11 @@ __attribute__((
     // found without having to consult the symbol table.
 #if defined(OS_MACOSX)
     section(SEG_DATA ",crashpad_info"),
-#elif defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_FUCHSIA)
+#elif defined(OS_LINUX) || defined(OS_ANDROID)
     section("crashpad_info"),
-#else
+#else  // !defined(OS_MACOSX) && !defined(OS_LINUX) && !defined(OS_ANDROID)
 #error Port
-#endif
+#endif  // !defined(OS_MACOSX) && !defined(OS_LINUX) && !defined(OS_ANDROID)
 
 #if defined(ADDRESS_SANITIZER)
     // AddressSanitizer would add a trailing red zone of at least 32 bytes,

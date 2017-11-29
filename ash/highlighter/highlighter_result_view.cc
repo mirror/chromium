@@ -184,7 +184,7 @@ HighlighterResultView::HighlighterResultView(aura::Window* root_window) {
   set_owned_by_client();
 }
 
-HighlighterResultView::~HighlighterResultView() = default;
+HighlighterResultView::~HighlighterResultView() {}
 
 void HighlighterResultView::Animate(const gfx::RectF& bounds,
                                     HighlighterGestureType gesture_type,

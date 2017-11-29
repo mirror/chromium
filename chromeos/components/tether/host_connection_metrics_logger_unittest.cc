@@ -14,7 +14,7 @@ namespace tether {
 
 class HostConnectionMetricsLoggerTest : public testing::Test {
  protected:
-  HostConnectionMetricsLoggerTest() = default;
+  HostConnectionMetricsLoggerTest() {}
 
   void SetUp() override {
     metrics_logger_ = base::MakeUnique<HostConnectionMetricsLogger>();

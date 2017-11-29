@@ -4,8 +4,6 @@
 
 #include "chrome/browser/chromeos/system_logs/single_debug_daemon_log_source.h"
 
-#include <memory>
-
 #include "base/bind.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/debug_daemon_client.h"
@@ -63,14 +61,13 @@ void SingleDebugDaemonLogSource::OnFetchComplete(
     base::Optional<std::string> result) const {
   // |result| and |response| are the same type, but |result| is passed in from
   // DebugDaemonClient, which does not use the SystemLogsResponse alias.
-  auto response = std::make_unique<SystemLogsResponse>();
+  SystemLogsResponse response;
   // Return an empty result if the call to GetLog() failed.
-  if (result.has_value()) {
-    response->emplace(log_name,
-                      feedback::AnonymizerTool().Anonymize(result.value()));
-  }
+  if (result.has_value())
+    response.emplace(log_name,
+                     feedback::AnonymizerTool().Anonymize(result.value()));
 
-  callback.Run(std::move(response));
+  callback.Run(&response);
 }
 
 }  // namespace system_logs

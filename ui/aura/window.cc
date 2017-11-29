@@ -1100,7 +1100,7 @@ void Window::OnLayerBoundsChanged(const gfx::Rect& old_bounds,
 void Window::OnLayerOpacityChanged(ui::PropertyChangeReason reason) {
   WindowOcclusionTracker::ScopedPauseOcclusionTracking pause_occlusion_tracking;
   for (WindowObserver& observer : observers_)
-    observer.OnWindowOpacitySet(this, reason);
+    observer.OnWindowOpacityChanged(this, reason);
 }
 
 void Window::OnLayerTransformed(ui::PropertyChangeReason reason) {
@@ -1180,8 +1180,8 @@ std::unique_ptr<ui::Layer> Window::RecreateLayer() {
   // animation ends.
   if (was_animating_opacity) {
     for (WindowObserver& observer : observers_) {
-      observer.OnWindowOpacitySet(this,
-                                  ui::PropertyChangeReason::FROM_ANIMATION);
+      observer.OnWindowOpacityChanged(this,
+                                      ui::PropertyChangeReason::FROM_ANIMATION);
     }
   }
   if (was_animating_transform) {

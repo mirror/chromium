@@ -1407,16 +1407,10 @@ void AutofillControllerJsTest::TestExtractNewForms(
   // Generates verifying javascripts.
   NSMutableArray* verifying_javascripts = [NSMutableArray array];
   for (NSUInteger i = 0U; i < [expected_items count]; ++i) {
-    // All forms created in this test suite are named "TestForm".
-    // If a page contains more than one of these forms, ExtractForms will rename
-    // all forms but the fist one.
-    NSString* formName =
-        (i == 0) ? @"TestForm"
-                 : [NSString stringWithFormat:@"gChrome~form~%" PRIuNS, i];
     [verifying_javascripts
         addObject:[NSString stringWithFormat:@"forms[%" PRIuNS
-                                              "]['name'] === '%@'",
-                                             i, formName]];
+                                              "]['name'] === 'TestForm'",
+                                             i]];
     [verifying_javascripts
         addObject:[NSString stringWithFormat:@"forms[%" PRIuNS
                                               "]['method'] === 'post'",
@@ -1441,7 +1435,7 @@ void AutofillControllerJsTest::TestExtractNewForms(
 
   NSString* actual = ExecuteJavaScriptWithFormat(
       @"var forms = __gCrWeb.autofill.extractNewForms(%" PRIuS "); %@",
-      autofill::MinRequiredFieldsForHeuristics(),
+      autofill::kRequiredFieldsForPredictionRoutines,
       [verifying_javascripts componentsJoinedByString:@"&&"]);
 
   EXPECT_NSEQ(@YES, actual) << base::SysNSStringToUTF8([NSString
@@ -1450,7 +1444,7 @@ void AutofillControllerJsTest::TestExtractNewForms(
                        ExecuteJavaScriptWithFormat(
                            @"var forms = __gCrWeb.autofill.extractNewForms("
                             "%" PRIuS "); __gCrWeb.stringify(forms)",
-                           autofill::MinRequiredFieldsForHeuristics()),
+                           autofill::kRequiredFieldsForPredictionRoutines),
                        verifying_javascripts]);
 }
 
@@ -1490,6 +1484,58 @@ TEST_F(AutofillControllerJsTest, ExtractFormsAndFormElements) {
   }
   html = [html stringByAppendingFormat:@"</body></html>"];
   TestExtractNewForms(html, true, test_forms);
+}
+
+TEST_F(AutofillControllerJsTest, ExtractFormsAndFormElementsNestedFrame) {
+  NSArray* testFirstFormItems = @[
+    GetTestFormInputElementWithLabelFromPrevious(),
+    GetTestFormInputElementWithLabelFromPreviousSpan(),
+    GetTestFormInputElementWithLabelFromPreviousParagraph(),
+    GetTestFormInputElementWithLabelFromPreviousLabel(),
+    GetTestFormInputElementWithLabelFromPreviousLabelOtherIgnored(),
+    GetTestFormInputElementWithLabelFromPreviousTextSpanBr(),
+    GetTestFormInputElementWithLabelFromPreviousTextBrAndSpan(),
+    GetTestFormInputElementWithLabelFromListItem(),
+    GetTestFormInputElementWithLabelFromTableColumnTD(),
+    GetTestFormInputElementWithLabelFromTableColumnTH(),
+    GetTestFormInputElementWithLabelFromTableNested(),
+    GetTestFormInputElementWithLabelFromTableRow(),
+    GetTestFormInputElementWithLabelFromDivTable(),
+    GetTestFormInputElementWithLabelFromDefinitionList(), GetTestInputRadio(),
+    GetTestInputCheckbox()
+  ];
+  NSArray* testSecondFormItems = @[
+    GetTestFormInputElementWithLabelFromDivTable(), GetTestFormSelectElement(),
+    GetTestFormSelectElementWithOptgroup()
+  ];
+  NSArray* test_forms = @[ testFirstFormItems, testSecondFormItems ];
+
+  // Test an html that has nested frames.
+  NSString* nested_frame_html_fragment = @"<html><body>";
+  for (NSUInteger i = 0; i < [test_forms count]; ++i) {
+    NSArray* test_elements = [test_forms objectAtIndex:i];
+    NSString* form_string =
+        @"<form name='TestForm' action='http://c.com' method='post'>";
+    for (NSUInteger j = 0; j < [test_elements count]; ++j) {
+      form_string =
+          [form_string stringByAppendingString:[[test_elements objectAtIndex:j]
+                                                   objectAtIndex:0U]];
+    }
+    form_string = [form_string stringByAppendingFormat:@"</form>"];
+
+    if (i == 0) {
+      nested_frame_html_fragment =
+          [nested_frame_html_fragment stringByAppendingString:form_string];
+    } else {
+      nested_frame_html_fragment = [nested_frame_html_fragment
+          stringByAppendingString:
+              [NSString stringWithFormat:@"<iframe srcdoc=\"%@\"></iframe>",
+                                         form_string]];
+    }
+  }
+  nested_frame_html_fragment =
+      [nested_frame_html_fragment stringByAppendingString:@"</body></html>"];
+  TestExtractNewForms(nested_frame_html_fragment, false, test_forms);
 }
 
 TEST_F(AutofillControllerJsTest,
@@ -1625,9 +1671,9 @@ TEST_F(AutofillControllerJsTest, ExtractForms) {
     ]
   };
 
-  NSString* result =
-      ExecuteJavaScriptWithFormat(@"__gCrWeb.autofill.extractForms(%zu)",
-                                  autofill::MinRequiredFieldsForHeuristics());
+  NSString* result = ExecuteJavaScriptWithFormat(
+      @"__gCrWeb.autofill.extractForms(%zu)",
+      autofill::kRequiredFieldsForPredictionRoutines);
   NSDictionary* resultDict = [NSJSONSerialization
       JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding]
                  options:0
@@ -1643,7 +1689,7 @@ TEST_F(AutofillControllerJsTest, ExtractForms) {
   result = ExecuteJavaScriptWithFormat(
       @"Object.prototype.toJSON=function(){return 'abcde';};"
        "__gCrWeb.autofill.extractForms(%zu)",
-      autofill::MinRequiredFieldsForHeuristics());
+      autofill::kRequiredFieldsForPredictionRoutines);
   resultDict = [NSJSONSerialization
       JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding]
                  options:0
@@ -1659,7 +1705,7 @@ TEST_F(AutofillControllerJsTest, ExtractForms) {
   result = ExecuteJavaScriptWithFormat(
       @"Array.prototype.toJSON=function(){return 'abcde';};"
        "__gCrWeb.autofill.extractForms(%zu)",
-      autofill::MinRequiredFieldsForHeuristics());
+      autofill::kRequiredFieldsForPredictionRoutines);
   resultDict = [NSJSONSerialization
       JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding]
                  options:0
@@ -1740,7 +1786,7 @@ TEST_F(AutofillControllerJsTest, ExtractNewForms) {
 
     NSString* result =
         ExecuteJavaScriptWithFormat(@"__gCrWeb.autofill.extractForms(%zu)",
-                                    autofill::MinRequiredFieldsForHeuristics());
+                                    autofill::kRequiredFieldsForUpload);
     NSDictionary* resultDict = [NSJSONSerialization
         JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding]
                    options:0

@@ -47,9 +47,9 @@ class ChromeRenderThreadObserver : public content::RenderThreadObserver,
  private:
   // content::RenderThreadObserver:
   void RegisterMojoInterfaces(
-      blink::AssociatedInterfaceRegistry* associated_interfaces) override;
+      content::AssociatedInterfaceRegistry* associated_interfaces) override;
   void UnregisterMojoInterfaces(
-      blink::AssociatedInterfaceRegistry* associated_interfaces) override;
+      content::AssociatedInterfaceRegistry* associated_interfaces) override;
 
   // chrome::mojom::RendererConfiguration:
   void SetInitialConfiguration(bool is_incognito_process) override;

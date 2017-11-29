@@ -6,7 +6,6 @@
 
 #include "base/metrics/histogram_macros.h"
 #include "base/time/default_clock.h"
-#include "chromeos/components/tether/ad_hoc_ble_advertiser.h"
 #include "chromeos/components/tether/ble_constants.h"
 #include "chromeos/components/tether/timer_factory.h"
 #include "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h"
@@ -51,7 +50,7 @@ BleConnectionManager::ConnectionMetadata::ConnectionMetadata(
       manager_(manager),
       weak_ptr_factory_(this) {}
 
-BleConnectionManager::ConnectionMetadata::~ConnectionMetadata() = default;
+BleConnectionManager::ConnectionMetadata::~ConnectionMetadata() {}
 
 void BleConnectionManager::ConnectionMetadata::RegisterConnectionReason(
     const MessageType& connection_reason) {
@@ -191,7 +190,7 @@ void BleConnectionManager::ConnectionMetadata::OnMessageSent(
 
 void BleConnectionManager::ConnectionMetadata::
     OnGattCharacteristicsNotAvailable() {
-  manager_->OnGattCharacteristicsNotAvailable(remote_device_);
+  // TODO(khorimoto): Work around GATT bug. See crbug.com/784968.
 }
 
 BleConnectionManager::BleConnectionManager(
@@ -199,14 +198,12 @@ BleConnectionManager::BleConnectionManager(
     scoped_refptr<device::BluetoothAdapter> adapter,
     BleAdvertisementDeviceQueue* ble_advertisement_device_queue,
     BleAdvertiser* ble_advertiser,
-    BleScanner* ble_scanner,
-    AdHocBleAdvertiser* ad_hoc_ble_advertisement)
+    BleScanner* ble_scanner)
     : cryptauth_service_(cryptauth_service),
       adapter_(adapter),
       ble_advertisement_device_queue_(ble_advertisement_device_queue),
       ble_advertiser_(ble_advertiser),
       ble_scanner_(ble_scanner),
-      ad_hoc_ble_advertisement_(ad_hoc_ble_advertisement),
       timer_factory_(base::MakeUnique<TimerFactory>()),
       clock_(base::MakeUnique<base::DefaultClock>()),
       has_registered_observer_(false),
@@ -519,14 +516,6 @@ void BleConnectionManager::OnSecureChannelStatusChanged(
     const cryptauth::SecureChannel::Status& new_status) {
   SendSecureChannelStatusChangeEvent(remote_device, old_status, new_status);
   UpdateConnectionAttempts();
-}
-
-void BleConnectionManager::OnGattCharacteristicsNotAvailable(
-    const cryptauth::RemoteDevice& remote_device) {
-  PA_LOG(WARNING) << "Previous connection attempt failed due to unavailable "
-                  << "GATT services for device ID \""
-                  << remote_device.GetTruncatedDeviceIdForLogs() << "\".";
-  ad_hoc_ble_advertisement_->RequestGattServicesForDevice(remote_device);
 }
 
 void BleConnectionManager::SendMessageReceivedEvent(

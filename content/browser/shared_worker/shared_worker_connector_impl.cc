@@ -70,12 +70,10 @@ void SharedWorkerConnectorImpl::Connect(
     mojom::SharedWorkerClientPtr client,
     blink::mojom::SharedWorkerCreationContextType creation_context_type,
     mojo::ScopedMessagePipeHandle message_port) {
-  static_cast<SharedWorkerServiceImpl*>(SharedWorkerService::GetInstance())
-      ->ConnectToWorker(process_id_, frame_id_, std::move(info),
-                        std::move(client), creation_context_type,
-                        blink::MessagePortChannel(std::move(message_port)),
-                        resource_context_,
-                        WorkerStoragePartitionId(worker_storage_partition_));
+  SharedWorkerServiceImpl::GetInstance()->ConnectToWorker(
+      process_id_, frame_id_, std::move(info), std::move(client),
+      creation_context_type, blink::MessagePortChannel(std::move(message_port)),
+      resource_context_, WorkerStoragePartitionId(worker_storage_partition_));
 }
 
 }  // namespace content

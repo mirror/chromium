@@ -11,7 +11,7 @@
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/metrics_hashes.h"
 #include "base/strings/stringprintf.h"
-#include "chrome/browser/android/chrome_feature_list.h"
+#include "chrome/browser/android/contextualsearch/contextual_search_field_trial.h"
 #include "chrome/browser/assist_ranker/assist_ranker_service_factory.h"
 #include "chrome/browser/browser_process.h"
 #include "components/assist_ranker/assist_ranker_service_impl.h"
@@ -28,6 +28,9 @@ namespace content {
 class BrowserContext;
 }
 
+const base::Feature kContextualSearchRankerQuery{
+    "ContextualSearchRankerQuery", base::FEATURE_DISABLED_BY_DEFAULT};
+
 namespace {
 
 const char kContextualSearchRankerModelUrlParamName[] =
@@ -39,8 +42,8 @@ const char kContextualSearchRankerDidPredict[] = "OutcomeRankerDidPredict";
 const char kContextualSearchRankerPrediction[] = "OutcomeRankerPrediction";
 
 const base::FeatureParam<std::string> kModelUrl{
-    &chrome::android::kContextualSearchRankerQuery,
-    kContextualSearchRankerModelUrlParamName, ""};
+    &kContextualSearchRankerQuery, kContextualSearchRankerModelUrlParamName,
+    ""};
 
 // TODO(donnd, hamelphi): move hex-hash-string to Ranker.
 std::string HexHashFeatureName(const std::string& feature_name) {
@@ -55,12 +58,15 @@ ContextualSearchRankerLoggerImpl::ContextualSearchRankerLoggerImpl(JNIEnv* env,
     : ukm_recorder_(nullptr),
       source_id_(0),
       builder_(nullptr),
+      field_trial_(nullptr),
       predictor_(nullptr),
       browser_context_(nullptr),
       ranker_example_(nullptr),
       has_predicted_decision_(false),
       java_object_(nullptr) {
   java_object_.Reset(env, obj);
+  // TODO(donnd): consider making a singleton CSFieldTrial instead of many?
+  field_trial_.reset(new ContextualSearchFieldTrial());
 }
 
 ContextualSearchRankerLoggerImpl::~ContextualSearchRankerLoggerImpl() {
@@ -80,7 +86,7 @@ void ContextualSearchRankerLoggerImpl::SetupLoggingAndRanker(
   ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
   SetUkmRecorder(ukm_recorder, page_url);
 
-  if (IsRankerQueryEnabled()) {
+  if (IsRankerEnabled()) {
     SetupRankerPredictor(web_contents);
     // Start building example data based on features to be gathered and logged.
     ranker_example_.reset(new assist_ranker::RankerExample());
@@ -104,7 +110,7 @@ void ContextualSearchRankerLoggerImpl::SetUkmRecorder(
 void ContextualSearchRankerLoggerImpl::SetupRankerPredictor(
     content::WebContents* web_contents) {
   // Set up the Ranker predictor.
-  if (IsRankerQueryEnabled()) {
+  if (IsRankerEnabled()) {
     // Create one predictor for the current BrowserContext.
     content::BrowserContext* browser_context =
         web_contents->GetBrowserContext();
@@ -130,8 +136,8 @@ void ContextualSearchRankerLoggerImpl::LogLong(
   if (builder_)
     builder_->AddMetric(feature.c_str(), j_long);
 
-  // Also write to Ranker if we're logging data needed to predict a decision.
-  if (IsRankerQueryEnabled() && !has_predicted_decision_) {
+  // Also write to Ranker if prediction of the decision has not been made yet.
+  if (IsRankerEnabled() && !has_predicted_decision_) {
     std::string hex_feature_key(HexHashFeatureName(feature));
     auto& features = *ranker_example_->mutable_features();
     features[hex_feature_key].set_int32_value(j_long);
@@ -144,7 +150,7 @@ AssistRankerPrediction ContextualSearchRankerLoggerImpl::RunInference(
   has_predicted_decision_ = true;
   bool prediction = false;
   bool was_able_to_predict = false;
-  if (IsRankerQueryEnabled()) {
+  if (IsRankerEnabled()) {
     was_able_to_predict = predictor_->Predict(*ranker_example_, &prediction);
     // Log to UMA whether we were able to predict or not.
     base::UmaHistogramBoolean("Search.ContextualSearchRankerWasAbleToPredict",
@@ -183,9 +189,9 @@ void ContextualSearchRankerLoggerImpl::WriteLogAndReset(JNIEnv* env,
   ranker_example_.reset();
 }
 
-bool ContextualSearchRankerLoggerImpl::IsRankerQueryEnabled() {
-  return base::FeatureList::IsEnabled(
-      chrome::android::kContextualSearchRankerQuery);
+bool ContextualSearchRankerLoggerImpl::IsRankerEnabled() {
+  return field_trial_->IsRankerIntegrationOrMlTapSuppressionEnabled() &&
+         base::FeatureList::IsEnabled(kContextualSearchRankerQuery);
 }
 
 // Java wrapper boilerplate

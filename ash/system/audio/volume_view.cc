@@ -77,7 +77,7 @@ class VolumeButton : public ButtonListenerActionableView {
     set_notify_enter_exit_on_child(true);
   }
 
-  ~VolumeButton() override = default;
+  ~VolumeButton() override {}
 
   void Update() {
     CrasAudioHandler* audio_handler = CrasAudioHandler::Get();
@@ -140,7 +140,7 @@ VolumeView::VolumeView(SystemTrayItem* owner,
   Update();
 }
 
-VolumeView::~VolumeView() = default;
+VolumeView::~VolumeView() {}
 
 void VolumeView::Update() {
   icon_->Update();

@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 3
 
 module arc.mojom;
 
@@ -11,6 +10,7 @@ module arc.mojom;
 // either a |blob| or a |text|.
 
 // Value for |ClipRepresentation|.
+// Next MinVersion: 1
 // Next ID: 2
 union ClipValue {
   // For images and other opaque structures.
@@ -20,6 +20,7 @@ union ClipValue {
 };
 
 // One possible representation of the |ClipData|: |mime_type| + its |value|.
+// Next MinVersion: 1
 // Next ID: 2
 struct ClipRepresentation {
   // The mime type.
@@ -29,6 +30,7 @@ struct ClipRepresentation {
 };
 
 // The |ClipData| to transfer.
+// Next MinVersion: 1
 // Next ID: 1
 struct ClipData {
   // A |ClipData| could have multiple representations.
@@ -36,6 +38,7 @@ struct ClipData {
   array<ClipRepresentation> representations@0;
 };
 
+// Next MinVersion: 2
 // Next method ID: 4
 // IDs to be removed 18 weeks after being up revved: 0, 1
 interface ClipboardHost {
@@ -58,14 +61,12 @@ interface ClipboardHost {
   [MinVersion=1] GetClipContent@3() => (ClipData data);
 };
 
-// Next method ID: 4
+// Next MinVersion: 2
+// Next method ID: 3
 // IDs to be removed 18 weeks after being up revved: 1
 interface ClipboardInstance {
-  // DEPRECATED: Please use Init@3 instead.
-  InitDeprecated@0(ClipboardHost host_ptr);
-
   // Establishes full-duplex communication with the host.
-  [MinVersion=2] Init@3(ClipboardHost host_ptr) => ();
+  Init@0(ClipboardHost host_ptr);
 
   // Passes the result of ClipboardHost.GetTextContentDeprecated().
   OnGetTextContentDeprecated@1(string returned_text);

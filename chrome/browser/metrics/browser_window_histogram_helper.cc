@@ -15,7 +15,7 @@ BrowserWindowHistogramHelper::MaybeRecordValueAndCreateInstanceOnBrowserPaint(
     ui::Compositor* compositor) {
   static bool did_first_paint = false;
   if (did_first_paint)
-    return nullptr;
+    return std::unique_ptr<BrowserWindowHistogramHelper>();
 
   did_first_paint = true;
 

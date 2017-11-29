@@ -267,7 +267,7 @@ void DocumentMarkerController::AddMarkerInternal(
 
     // Ignore text emitted by TextIterator for non-text nodes (e.g. implicit
     // newlines)
-    const Node* const node = marked_text.CurrentContainer();
+    Node* const node = marked_text.CurrentContainer();
     if (!node->IsTextNode())
       continue;
 
@@ -277,7 +277,7 @@ void DocumentMarkerController::AddMarkerInternal(
   }
 }
 
-void DocumentMarkerController::AddMarkerToNode(const Node* node,
+void DocumentMarkerController::AddMarkerToNode(Node* node,
                                                DocumentMarker* new_marker) {
   possibly_existing_marker_types_.Add(new_marker->GetType());
   SetContext(document_);
@@ -301,9 +301,9 @@ void DocumentMarkerController::AddMarkerToNode(const Node* node,
 
 // Moves markers from src_node to dst_node. Markers are moved if their start
 // offset is less than length. Markers that run past that point are truncated.
-void DocumentMarkerController::MoveMarkers(const Node* src_node,
+void DocumentMarkerController::MoveMarkers(Node* src_node,
                                            int length,
-                                           const Node* dst_node) {
+                                           Node* dst_node) {
   if (length <= 0)
     return;
 
@@ -342,7 +342,7 @@ void DocumentMarkerController::MoveMarkers(const Node* src_node,
 }
 
 void DocumentMarkerController::RemoveMarkersInternal(
-    const Node* node,
+    Node* node,
     unsigned start_offset,
     int length,
     DocumentMarker::MarkerTypes marker_types) {
@@ -435,12 +435,11 @@ DocumentMarkerController::MarkersIntersectingRange(
   if (!PossiblyHasMarkers(types))
     return node_marker_pairs;
 
-  const Node* const range_start_container =
+  Node* const range_start_container =
       range.StartPosition().ComputeContainerNode();
   const unsigned range_start_offset =
       range.StartPosition().ComputeOffsetInContainerNode();
-  const Node* const range_end_container =
-      range.EndPosition().ComputeContainerNode();
+  Node* const range_end_container = range.EndPosition().ComputeContainerNode();
   const unsigned range_end_offset =
       range.EndPosition().ComputeOffsetInContainerNode();
 
@@ -478,7 +477,7 @@ DocumentMarkerController::MarkersIntersectingRange(
 }
 
 DocumentMarkerVector DocumentMarkerController::MarkersFor(
-    const Node* node,
+    Node* node,
     DocumentMarker::MarkerTypes marker_types) {
   DocumentMarkerVector result;
   if (!PossiblyHasMarkers(marker_types))
@@ -588,7 +587,7 @@ void DocumentMarkerController::Trace(blink::Visitor* visitor) {
 }
 
 void DocumentMarkerController::RemoveMarkersForNode(
-    const Node* node,
+    Node* node,
     DocumentMarker::MarkerTypes marker_types) {
   if (!PossiblyHasMarkers(marker_types))
     return;
@@ -727,10 +726,9 @@ bool DocumentMarkerController::SetTextMatchMarkersActive(
 
   DCHECK(!markers_.IsEmpty());
 
-  const Node* const start_container =
-      range.StartPosition().ComputeContainerNode();
+  Node* const start_container = range.StartPosition().ComputeContainerNode();
   DCHECK(start_container);
-  const Node* const end_container = range.EndPosition().ComputeContainerNode();
+  Node* const end_container = range.EndPosition().ComputeContainerNode();
   DCHECK(end_container);
 
   const unsigned container_start_offset =
@@ -748,7 +746,7 @@ bool DocumentMarkerController::SetTextMatchMarkersActive(
   return marker_found;
 }
 
-bool DocumentMarkerController::SetTextMatchMarkersActive(const Node* node,
+bool DocumentMarkerController::SetTextMatchMarkersActive(Node* node,
                                                          unsigned start_offset,
                                                          unsigned end_offset,
                                                          bool active) {

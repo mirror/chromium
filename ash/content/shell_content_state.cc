@@ -37,6 +37,6 @@ ShellContentState::ShellContentState() {
   keyboard::InitializeKeyboard();
 }
 
-ShellContentState::~ShellContentState() = default;
+ShellContentState::~ShellContentState() {}
 
 }  // namespace ash

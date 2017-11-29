@@ -21,7 +21,7 @@ namespace {
 class ArcOemCryptoClientImpl : public ArcOemCryptoClient {
  public:
   ArcOemCryptoClientImpl() : weak_ptr_factory_(this) {}
-  ~ArcOemCryptoClientImpl() override = default;
+  ~ArcOemCryptoClientImpl() override {}
 
   // ArcOemCryptoClient override:
   void BootstrapMojoConnection(base::ScopedFD fd,
@@ -73,9 +73,9 @@ class ArcOemCryptoClientImpl : public ArcOemCryptoClient {
 
 }  // namespace
 
-ArcOemCryptoClient::ArcOemCryptoClient() = default;
+ArcOemCryptoClient::ArcOemCryptoClient() {}
 
-ArcOemCryptoClient::~ArcOemCryptoClient() = default;
+ArcOemCryptoClient::~ArcOemCryptoClient() {}
 
 // static
 ArcOemCryptoClient* ArcOemCryptoClient::Create() {

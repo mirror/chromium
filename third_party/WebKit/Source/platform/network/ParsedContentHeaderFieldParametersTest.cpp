@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "platform/network/HeaderFieldTokenizer.h"
 #include "platform/network/ParsedContentDisposition.h"
 #include "platform/network/ParsedContentHeaderFieldParameters.h"
 #include "platform/network/ParsedContentType.h"
@@ -18,8 +17,9 @@ using Mode = ParsedContentHeaderFieldParameters::Mode;
 void CheckValidity(bool expected,
                    const String& input,
                    Mode mode = Mode::kNormal) {
-  EXPECT_EQ(expected, !!ParsedContentHeaderFieldParameters::Parse(
-                          HeaderFieldTokenizer(input), mode))
+  EXPECT_EQ(expected,
+            ParsedContentHeaderFieldParameters::CreateForTesting(input, mode)
+                .IsValid())
       << input;
 
   const String disposition_input = "attachment" + input;
@@ -68,24 +68,22 @@ TEST(ParsedContentHeaderFieldParametersTest, ParameterName) {
 
   CheckValidity(true, input);
 
-  WTF::Optional<ParsedContentHeaderFieldParameters> t =
-      ParsedContentHeaderFieldParameters::Parse(HeaderFieldTokenizer(input),
-                                                Mode::kNormal);
-  ASSERT_TRUE(t);
-
-  EXPECT_EQ(6u, t->ParameterCount());
-  EXPECT_TRUE(t->HasDuplicatedNames());
-  EXPECT_EQ(String(), t->ParameterValueForName("a"));
-  EXPECT_EQ(String(), t->ParameterValueForName("x"));
-  EXPECT_EQ("u", t->ParameterValueForName("y"));
-  EXPECT_EQ("S", t->ParameterValueForName("t"));
-  EXPECT_EQ("t u\"x", t->ParameterValueForName("k"));
-  EXPECT_EQ("U", t->ParameterValueForName("Q"));
-  EXPECT_EQ("S", t->ParameterValueForName("T"));
+  ParsedContentHeaderFieldParameters t =
+      ParsedContentHeaderFieldParameters::CreateForTesting(input,
+                                                           Mode::kNormal);
+  EXPECT_TRUE(t.IsValid());
+  EXPECT_EQ(4u, t.ParameterCount());
+  EXPECT_EQ(String(), t.ParameterValueForName("a"));
+  EXPECT_EQ(String(), t.ParameterValueForName("x"));
+  EXPECT_EQ("u", t.ParameterValueForName("y"));
+  EXPECT_EQ("S", t.ParameterValueForName("t"));
+  EXPECT_EQ("t u\"x", t.ParameterValueForName("k"));
+  EXPECT_EQ("U", t.ParameterValueForName("Q"));
+  EXPECT_EQ("S", t.ParameterValueForName("T"));
 
   String kelvin = String::FromUTF8("\xe2\x84\xaa");
   DCHECK_EQ(kelvin.LowerUnicode(AtomicString()), "k");
-  EXPECT_EQ(String(), t->ParameterValueForName(kelvin));
+  EXPECT_EQ(String(), t.ParameterValueForName(kelvin));
 }
 
 TEST(ParsedContentHeaderFieldParametersTest, RelaxedParameterName) {
@@ -93,72 +91,20 @@ TEST(ParsedContentHeaderFieldParametersTest, RelaxedParameterName) {
 
   CheckValidity(true, input, Mode::kRelaxed);
 
-  WTF::Optional<ParsedContentHeaderFieldParameters> t =
-      ParsedContentHeaderFieldParameters::Parse(HeaderFieldTokenizer(input),
-                                                Mode::kRelaxed);
-  ASSERT_TRUE(t);
-  EXPECT_EQ(2u, t->ParameterCount());
-  EXPECT_FALSE(t->HasDuplicatedNames());
-  EXPECT_EQ("q/t:()<>@,:\\/[]?=", t->ParameterValueForName("z"));
-  EXPECT_EQ("u", t->ParameterValueForName("y"));
+  ParsedContentHeaderFieldParameters t =
+      ParsedContentHeaderFieldParameters::CreateForTesting(input,
+                                                           Mode::kRelaxed);
+  EXPECT_TRUE(t.IsValid());
+  EXPECT_EQ(2u, t.ParameterCount());
+  EXPECT_EQ("q/t:()<>@,:\\/[]?=", t.ParameterValueForName("z"));
+  EXPECT_EQ("u", t.ParameterValueForName("y"));
 }
 
-TEST(ParsedContentHeaderFieldParametersTest, BeginEnd) {
-  String input = "; a=b; a=c; b=d";
-
-  WTF::Optional<ParsedContentHeaderFieldParameters> t =
-      ParsedContentHeaderFieldParameters::Parse(HeaderFieldTokenizer(input),
-                                                Mode::kNormal);
-  ASSERT_TRUE(t);
-  EXPECT_TRUE(t->HasDuplicatedNames());
-  EXPECT_EQ(3u, t->ParameterCount());
-
-  auto i = t->begin();
-  ASSERT_NE(i, t->end());
-  EXPECT_EQ(i->name, "a");
-  EXPECT_EQ(i->value, "b");
-
-  ++i;
-  ASSERT_NE(i, t->end());
-  EXPECT_EQ(i->name, "a");
-  EXPECT_EQ(i->value, "c");
-
-  ++i;
-  ASSERT_NE(i, t->end());
-  EXPECT_EQ(i->name, "b");
-  EXPECT_EQ(i->value, "d");
-
-  ++i;
-  ASSERT_EQ(i, t->end());
-}
-
-TEST(ParsedContentHeaderFieldParametersTest, RBeginEnd) {
-  String input = "; a=B; A=c; b=d";
-
-  WTF::Optional<ParsedContentHeaderFieldParameters> t =
-      ParsedContentHeaderFieldParameters::Parse(HeaderFieldTokenizer(input),
-                                                Mode::kNormal);
-  ASSERT_TRUE(t);
-  EXPECT_TRUE(t->HasDuplicatedNames());
-  EXPECT_EQ(3u, t->ParameterCount());
-
-  auto i = t->rbegin();
-  ASSERT_NE(i, t->rend());
-  EXPECT_EQ(i->name, "b");
-  EXPECT_EQ(i->value, "d");
-
-  ++i;
-  ASSERT_NE(i, t->rend());
-  EXPECT_EQ(i->name, "A");
-  EXPECT_EQ(i->value, "c");
-
-  ++i;
-  ASSERT_NE(i, t->rend());
-  EXPECT_EQ(i->name, "a");
-  EXPECT_EQ(i->value, "B");
-
-  ++i;
-  ASSERT_EQ(i, t->rend());
+TEST(ParsedContentHeaderFieldParametersTest, StrictParameterName) {
+  CheckValidity(true, "", Mode::kStrict);
+  CheckValidity(true, "; p1=a", Mode::kStrict);
+  CheckValidity(false, "; p1=a; p1=b", Mode::kStrict);
+  CheckValidity(true, "; p1=a; p2=b", Mode::kStrict);
 }
 
 }  // namespace

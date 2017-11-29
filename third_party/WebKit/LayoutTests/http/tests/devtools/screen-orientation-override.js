@@ -13,7 +13,7 @@
     TestRunner.evaluateInPage('dump()', dumpCallback);
 
     function dumpCallback(result) {
-      TestRunner.addResult(result);
+      TestRunner.addResult(result.value);
       next();
     }
   }
@@ -49,7 +49,7 @@
       TestRunner.evaluateInPage('dump()', dumpCallback);
 
       function dumpCallback(result) {
-        original = result;
+        original = result.value;
         next();
       }
     },
@@ -94,7 +94,7 @@
       }
 
       function dumpCallback(result) {
-        TestRunner.addResult('Equals to initial: ' + (original === result ? 'true' : 'false'));
+        TestRunner.addResult('Equals to initial: ' + (original === result.value ? 'true' : 'false'));
         next();
       }
     }

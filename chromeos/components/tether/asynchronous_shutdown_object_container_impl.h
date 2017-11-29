@@ -10,7 +10,6 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "chromeos/components/tether/ad_hoc_ble_advertiser.h"
 #include "chromeos/components/tether/asynchronous_shutdown_object_container.h"
 #include "chromeos/components/tether/ble_advertiser.h"
 #include "chromeos/components/tether/ble_scanner.h"
@@ -48,8 +47,7 @@ class AsynchronousShutdownObjectContainerImpl
     : public AsynchronousShutdownObjectContainer,
       public BleAdvertiser::Observer,
       public BleScanner::Observer,
-      public DisconnectTetheringRequestSender::Observer,
-      public AdHocBleAdvertiser::Observer {
+      public DisconnectTetheringRequestSender::Observer {
  public:
   class Factory {
    public:
@@ -106,21 +104,16 @@ class AsynchronousShutdownObjectContainerImpl
   // DisconnectTetheringRequestSender::Observer:
   void OnPendingDisconnectRequestsComplete() override;
 
-  // AdHocBleAdvertiser::Observer:
-  void OnAsynchronousShutdownComplete() override;
-
  private:
   friend class AsynchronousShutdownObjectContainerImplTest;
 
   void ShutdownIfPossible();
   bool AreAsynchronousOperationsActive();
 
-  void SetTestDoubles(
-      std::unique_ptr<BleAdvertiser> ble_advertiser,
-      std::unique_ptr<BleScanner> ble_scanner,
-      std::unique_ptr<DisconnectTetheringRequestSender>
-          disconnect_tethering_request_sender,
-      std::unique_ptr<AdHocBleAdvertiser> ad_hoc_ble_advertiser);
+  void SetTestDoubles(std::unique_ptr<BleAdvertiser> ble_advertiser,
+                      std::unique_ptr<BleScanner> ble_scanner,
+                      std::unique_ptr<DisconnectTetheringRequestSender>
+                          disconnect_tethering_request_sender);
 
   scoped_refptr<device::BluetoothAdapter> adapter_;
 
@@ -133,7 +126,6 @@ class AsynchronousShutdownObjectContainerImpl
   std::unique_ptr<BleSynchronizer> ble_synchronizer_;
   std::unique_ptr<BleAdvertiser> ble_advertiser_;
   std::unique_ptr<BleScanner> ble_scanner_;
-  std::unique_ptr<AdHocBleAdvertiser> ad_hoc_ble_advertiser_;
   std::unique_ptr<BleConnectionManager> ble_connection_manager_;
   std::unique_ptr<DisconnectTetheringRequestSender>
       disconnect_tethering_request_sender_;

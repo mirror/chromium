@@ -135,9 +135,6 @@ struct GPU_EXPORT GpuPreferences {
   // round intermediate values in ANGLE.
   bool emulate_shader_precision = false;
 
-  // Use a dedicated RasterDecoder instead of generic GLES2Decoder.
-  bool enable_raster_decoder = false;
-
   // ===================================
   // Settings from //ui/gl/gl_switches.h
 

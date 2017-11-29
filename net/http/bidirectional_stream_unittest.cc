@@ -1372,7 +1372,8 @@ TEST_F(BidirectionalStreamTest, PropagateProtocolError) {
   // BidirectionalStreamSpdyStreamJob does not count the bytes sent for |rst|
   // because it is sent after SpdyStream::Delegate::OnClose is called.
   EXPECT_EQ(CountWriteBytes(writes, 1), delegate->GetTotalSentBytes());
-  EXPECT_EQ(0, delegate->GetTotalReceivedBytes());
+  EXPECT_EQ(CountReadBytes(reads, arraysize(reads)),
+            delegate->GetTotalReceivedBytes());
 
   TestNetLogEntry::List entries;
   net_log_.GetEntries(&entries);
@@ -1600,7 +1601,8 @@ TEST_F(BidirectionalStreamTest, DeleteStreamDuringOnFailed) {
   // Bytes sent excludes the RST frame.
   EXPECT_EQ(CountWriteBytes(writes, arraysize(writes) - 1),
             delegate->GetTotalSentBytes());
-  EXPECT_EQ(0, delegate->GetTotalReceivedBytes());
+  EXPECT_EQ(CountReadBytes(reads, arraysize(reads)),
+            delegate->GetTotalReceivedBytes());
 }
 
 TEST_F(BidirectionalStreamTest, TestHonorAlternativeServiceHeader) {

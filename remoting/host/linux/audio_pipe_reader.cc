@@ -54,7 +54,7 @@ AudioPipeReader::AudioPipeReader(
       observers_(new base::ObserverListThreadSafe<StreamObserver>()) {
 }
 
-AudioPipeReader::~AudioPipeReader() = default;
+AudioPipeReader::~AudioPipeReader() {}
 
 void AudioPipeReader::AddObserver(StreamObserver* observer) {
   observers_->AddObserver(observer);

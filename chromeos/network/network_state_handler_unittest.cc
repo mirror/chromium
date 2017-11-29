@@ -83,7 +83,7 @@ class TestObserver final : public chromeos::NetworkStateHandlerObserver {
         scan_requested_count_(0),
         scan_completed_count_(0) {}
 
-  ~TestObserver() override = default;
+  ~TestObserver() override {}
 
   void DeviceListChanged() override {
     NetworkStateHandler::DeviceStateList devices;
@@ -204,8 +204,8 @@ class TestObserver final : public chromeos::NetworkStateHandlerObserver {
 
 class TestTetherSortDelegate : public NetworkStateHandler::TetherSortDelegate {
  public:
-  TestTetherSortDelegate() = default;
-  ~TestTetherSortDelegate() = default;
+  TestTetherSortDelegate() {}
+  ~TestTetherSortDelegate() {}
 
   // NetworkStateHandler::TetherSortDelegate:
   void SortTetherNetworkList(
@@ -238,7 +238,7 @@ class NetworkStateHandlerTest : public testing::Test {
         manager_test_(nullptr),
         profile_test_(nullptr),
         service_test_(nullptr) {}
-  ~NetworkStateHandlerTest() override = default;
+  ~NetworkStateHandlerTest() override {}
 
   void SetUp() override {
     // Initialize DBusThreadManager with a stub implementation.

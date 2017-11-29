@@ -272,7 +272,7 @@ bool WebrtcVideoEncoderVpx::IsSupportedByVP9(
          profile.resolution.height() <= 65536;
 }
 
-WebrtcVideoEncoderVpx::~WebrtcVideoEncoderVpx() = default;
+WebrtcVideoEncoderVpx::~WebrtcVideoEncoderVpx() {}
 
 void WebrtcVideoEncoderVpx::SetTickClockForTests(base::TickClock* tick_clock) {
   clock_ = tick_clock;

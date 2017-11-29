@@ -55,9 +55,7 @@ MidiManagerAndroid::~MidiManagerAndroid() {
   base::AutoLock lock(lock_);
   DCHECK(devices_.empty());
   DCHECK(all_input_ports_.empty());
-  DCHECK(input_port_to_index_.empty());
   DCHECK(all_output_ports_.empty());
-  DCHECK(output_port_to_index_.empty());
   DCHECK(raw_manager_.is_null());
 }
 
@@ -81,9 +79,7 @@ void MidiManagerAndroid::Finalize() {
   // is enabled by default.
   base::AutoLock lock(lock_);
   devices_.clear();
-  all_input_ports_.clear();
   input_port_to_index_.clear();
-  all_output_ports_.clear();
   output_port_to_index_.clear();
   raw_manager_.Reset();
 }

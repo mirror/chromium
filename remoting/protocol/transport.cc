@@ -24,7 +24,7 @@ std::string TransportRoute::GetTypeString(RouteType type) {
 }
 
 TransportRoute::TransportRoute() : type(DIRECT) {}
-TransportRoute::~TransportRoute() = default;
+TransportRoute::~TransportRoute() {}
 
 }  // namespace protocol
 }  // namespace remoting

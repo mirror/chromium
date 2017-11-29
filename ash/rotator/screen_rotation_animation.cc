@@ -42,7 +42,7 @@ ScreenRotationAnimation::ScreenRotationAnimation(ui::Layer* layer,
   interpolated_transform_->SetChild(std::move(rotation));
 }
 
-ScreenRotationAnimation::~ScreenRotationAnimation() = default;
+ScreenRotationAnimation::~ScreenRotationAnimation() {}
 
 void ScreenRotationAnimation::OnStart(ui::LayerAnimationDelegate* delegate) {}
 

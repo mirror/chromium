@@ -29,7 +29,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/push_event_payload.h"
 #include "content/public/common/push_messaging_status.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_provider_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "url/gurl.h"
 
@@ -384,8 +383,7 @@ void ServiceWorkerHandler::OnWorkerVersionUpdated(
     base::flat_set<std::string> client_set;
 
     for (const auto& client : version.clients) {
-      if (client.second.type ==
-          blink::mojom::ServiceWorkerProviderType::kForWindow) {
+      if (client.second.type == SERVICE_WORKER_PROVIDER_FOR_WINDOW) {
         // PlzNavigate: a navigation may not yet be associated with a
         // RenderFrameHost. Use the |web_contents_getter| instead.
         WebContents* web_contents =

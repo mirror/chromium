@@ -32,8 +32,8 @@ namespace ash {
 
 class SplitViewControllerTest : public AshTestBase {
  public:
-  SplitViewControllerTest() = default;
-  ~SplitViewControllerTest() override = default;
+  SplitViewControllerTest() {}
+  ~SplitViewControllerTest() override {}
 
   // test::AshTestBase:
   void SetUp() override {
@@ -93,8 +93,8 @@ class SplitViewControllerTest : public AshTestBase {
  private:
   class SplitViewTestWindowDelegate : public aura::test::TestWindowDelegate {
    public:
-    SplitViewTestWindowDelegate() = default;
-    ~SplitViewTestWindowDelegate() override = default;
+    SplitViewTestWindowDelegate() {}
+    ~SplitViewTestWindowDelegate() override {}
 
     // aura::test::TestWindowDelegate:
     void OnWindowDestroying(aura::Window* window) override { window->Hide(); }

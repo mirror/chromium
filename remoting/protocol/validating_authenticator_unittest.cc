@@ -81,9 +81,9 @@ class ValidatingAuthenticatorTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(ValidatingAuthenticatorTest);
 };
 
-ValidatingAuthenticatorTest::ValidatingAuthenticatorTest() = default;
+ValidatingAuthenticatorTest::ValidatingAuthenticatorTest() {}
 
-ValidatingAuthenticatorTest::~ValidatingAuthenticatorTest() = default;
+ValidatingAuthenticatorTest::~ValidatingAuthenticatorTest() {}
 
 void ValidatingAuthenticatorTest::ValidateCallback(
     const std::string& remote_jid,

@@ -19,8 +19,8 @@ namespace ash {
 
 class ExtendedMouseWarpControllerTest : public AshTestBase {
  public:
-  ExtendedMouseWarpControllerTest() = default;
-  ~ExtendedMouseWarpControllerTest() override = default;
+  ExtendedMouseWarpControllerTest() {}
+  ~ExtendedMouseWarpControllerTest() override {}
 
  protected:
   MouseCursorEventFilter* event_filter() {

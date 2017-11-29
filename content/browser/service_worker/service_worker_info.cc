@@ -18,13 +18,13 @@ ServiceWorkerVersionInfo::ClientInfo::ClientInfo()
     : ClientInfo(ChildProcessHost::kInvalidUniqueID,
                  MSG_ROUTING_NONE,
                  base::Callback<WebContents*(void)>(),
-                 blink::mojom::ServiceWorkerProviderType::kUnknown) {}
+                 SERVICE_WORKER_PROVIDER_UNKNOWN) {}
 
 ServiceWorkerVersionInfo::ClientInfo::ClientInfo(
     int process_id,
     int route_id,
     const base::Callback<WebContents*(void)>& web_contents_getter,
-    blink::mojom::ServiceWorkerProviderType type)
+    ServiceWorkerProviderType type)
     : process_id(process_id),
       route_id(route_id),
       web_contents_getter(web_contents_getter),

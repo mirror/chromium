@@ -41,9 +41,9 @@ bool IsSystemKey(ui::KeyboardCode key_code) {
 
 }  // namespace
 
-AcceleratorRouter::AcceleratorRouter() = default;
+AcceleratorRouter::AcceleratorRouter() {}
 
-AcceleratorRouter::~AcceleratorRouter() = default;
+AcceleratorRouter::~AcceleratorRouter() {}
 
 bool AcceleratorRouter::ProcessAccelerator(aura::Window* target,
                                            const ui::KeyEvent& key_event,

@@ -31,7 +31,8 @@ const char PairingRegistry::kClientIdKey[] = "clientId";
 const char PairingRegistry::kClientNameKey[] = "clientName";
 const char PairingRegistry::kSharedSecretKey[] = "sharedSecret";
 
-PairingRegistry::Pairing::Pairing() = default;
+PairingRegistry::Pairing::Pairing() {
+}
 
 PairingRegistry::Pairing::Pairing(const base::Time& created_time,
                                   const std::string& client_name,
@@ -45,7 +46,8 @@ PairingRegistry::Pairing::Pairing(const base::Time& created_time,
 
 PairingRegistry::Pairing::Pairing(const Pairing& other) = default;
 
-PairingRegistry::Pairing::~Pairing() = default;
+PairingRegistry::Pairing::~Pairing() {
+}
 
 PairingRegistry::Pairing PairingRegistry::Pairing::Create(
     const std::string& client_name) {
@@ -170,7 +172,8 @@ void PairingRegistry::ClearAllPairings(
   ServiceOrQueueRequest(request);
 }
 
-PairingRegistry::~PairingRegistry() = default;
+PairingRegistry::~PairingRegistry() {
+}
 
 void PairingRegistry::PostTask(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,

@@ -238,7 +238,6 @@ TEST_P(AlignmentTest, VerifyCorrectPosition) {
   // Add a child to the parent, with anchoring.
   element = base::MakeUnique<UiElement>();
   UiElement* child = element.get();
-  element->SetSize(1, 1);
   element->set_x_anchoring(GetParam().x_anchoring);
   element->set_y_anchoring(GetParam().y_anchoring);
   element->set_x_centering(GetParam().x_centering);

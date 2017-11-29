@@ -38,7 +38,7 @@ class TextInputView : public views::WidgetDelegateView {
     SetLayoutManager(new views::FillLayout);
   }
 
-  ~TextInputView() override = default;
+  ~TextInputView() override {}
 
   gfx::Size CalculatePreferredSize() const override {
     return gfx::Size(kTextInputWindowWidth, kTextInputWindowHeight);
@@ -57,7 +57,7 @@ class TextInputView : public views::WidgetDelegateView {
 class MagnificationControllerTest : public AshTestBase {
  public:
   MagnificationControllerTest() : text_input_view_(NULL) {}
-  ~MagnificationControllerTest() override = default;
+  ~MagnificationControllerTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

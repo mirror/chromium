@@ -60,7 +60,7 @@ TEST_F(PaintChunkerTest, Empty) {
 TEST_F(PaintChunkerTest, SingleNonEmptyRange) {
   PaintChunker chunker;
   PaintChunk::Id id(client_, DisplayItemType(1));
-  chunker.UpdateCurrentPaintChunkProperties(id, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id, DefaultPaintChunkProperties());
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   Vector<PaintChunk> chunks = chunker.ReleasePaintChunks();
@@ -72,10 +72,10 @@ TEST_F(PaintChunkerTest, SingleNonEmptyRange) {
 TEST_F(PaintChunkerTest, SamePropertiesTwiceCombineIntoOneChunk) {
   PaintChunker chunker;
   PaintChunk::Id id(client_, DisplayItemType(1));
-  chunker.UpdateCurrentPaintChunkProperties(id, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id, DefaultPaintChunkProperties());
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
-  chunker.UpdateCurrentPaintChunkProperties(id, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id, DefaultPaintChunkProperties());
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   Vector<PaintChunk> chunks = chunker.ReleasePaintChunks();
 
@@ -86,7 +86,8 @@ TEST_F(PaintChunkerTest, SamePropertiesTwiceCombineIntoOneChunk) {
 TEST_F(PaintChunkerTest, BuildMultipleChunksWithSinglePropertyChanging) {
   PaintChunker chunker;
   PaintChunk::Id id1(client_, DisplayItemType(1));
-  chunker.UpdateCurrentPaintChunkProperties(id1, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id1,
+                                            DefaultPaintChunkProperties());
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
@@ -98,7 +99,7 @@ TEST_F(PaintChunkerTest, BuildMultipleChunksWithSinglePropertyChanging) {
           .get());
 
   PaintChunk::Id id2(client_, DisplayItemType(2));
-  chunker.UpdateCurrentPaintChunkProperties(id2, simple_transform);
+  chunker.UpdateCurrentPaintChunkProperties(&id2, simple_transform);
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
   PaintChunkProperties another_transform = DefaultPaintChunkProperties();
@@ -108,7 +109,7 @@ TEST_F(PaintChunkerTest, BuildMultipleChunksWithSinglePropertyChanging) {
                                          FloatPoint3D(9, 8, 7))
           .get());
   PaintChunk::Id id3(client_, DisplayItemType(3));
-  chunker.UpdateCurrentPaintChunkProperties(id3, another_transform);
+  chunker.UpdateCurrentPaintChunkProperties(&id3, another_transform);
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
   Vector<PaintChunk> chunks = chunker.ReleasePaintChunks();
@@ -122,7 +123,8 @@ TEST_F(PaintChunkerTest, BuildMultipleChunksWithSinglePropertyChanging) {
 TEST_F(PaintChunkerTest, BuildMultipleChunksWithDifferentPropertyChanges) {
   PaintChunker chunker;
   PaintChunk::Id id1(client_, DisplayItemType(1));
-  chunker.UpdateCurrentPaintChunkProperties(id1, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id1,
+                                            DefaultPaintChunkProperties());
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
   PaintChunkProperties simple_transform = DefaultPaintChunkProperties();
@@ -132,7 +134,7 @@ TEST_F(PaintChunkerTest, BuildMultipleChunksWithDifferentPropertyChanges) {
                                          FloatPoint3D(9, 8, 7))
           .get());
   PaintChunk::Id id2(client_, DisplayItemType(2));
-  chunker.UpdateCurrentPaintChunkProperties(id2, simple_transform);
+  chunker.UpdateCurrentPaintChunkProperties(&id2, simple_transform);
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
@@ -143,7 +145,7 @@ TEST_F(PaintChunkerTest, BuildMultipleChunksWithDifferentPropertyChanges) {
   simple_transform_and_effect.property_tree_state.SetEffect(
       CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.5f).get());
   PaintChunk::Id id3(client_, DisplayItemType(3));
-  chunker.UpdateCurrentPaintChunkProperties(id3, simple_transform_and_effect);
+  chunker.UpdateCurrentPaintChunkProperties(&id3, simple_transform_and_effect);
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
@@ -162,13 +164,13 @@ TEST_F(PaintChunkerTest, BuildMultipleChunksWithDifferentPropertyChanges) {
                      .get());
   PaintChunk::Id id4(client_, DisplayItemType(4));
   chunker.UpdateCurrentPaintChunkProperties(
-      id4, simple_transform_and_effect_with_updated_transform);
+      &id4, simple_transform_and_effect_with_updated_transform);
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
   // Test that going back to a previous chunk property still creates a new
   // chunk.
-  chunker.UpdateCurrentPaintChunkProperties(WTF::nullopt,
+  chunker.UpdateCurrentPaintChunkProperties(nullptr,
                                             simple_transform_and_effect);
   TestChunkerDisplayItem item_after_restore(client_, DisplayItemType(10));
   chunker.IncrementDisplayItemIndex(item_after_restore);
@@ -200,7 +202,8 @@ TEST_F(PaintChunkerTest, BuildChunksFromNestedTransforms) {
   // </root xform>
   PaintChunker chunker;
   PaintChunk::Id id1(client_, DisplayItemType(1));
-  chunker.UpdateCurrentPaintChunkProperties(id1, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id1,
+                                            DefaultPaintChunkProperties());
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
   PaintChunkProperties simple_transform = DefaultPaintChunkProperties();
@@ -210,11 +213,11 @@ TEST_F(PaintChunkerTest, BuildChunksFromNestedTransforms) {
                                          FloatPoint3D(9, 8, 7))
           .get());
   PaintChunk::Id id2(client_, DisplayItemType(2));
-  chunker.UpdateCurrentPaintChunkProperties(id2, simple_transform);
+  chunker.UpdateCurrentPaintChunkProperties(&id2, simple_transform);
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
-  chunker.UpdateCurrentPaintChunkProperties(WTF::nullopt,
+  chunker.UpdateCurrentPaintChunkProperties(nullptr,
                                             DefaultPaintChunkProperties());
   TestChunkerDisplayItem item_after_restore(client_, DisplayItemType(10));
   chunker.IncrementDisplayItemIndex(item_after_restore);
@@ -232,7 +235,8 @@ TEST_F(PaintChunkerTest, ChangingPropertiesWithoutItems) {
   // Test that properties can change without display items being generated.
   PaintChunker chunker;
   PaintChunk::Id id1(client_, DisplayItemType(1));
-  chunker.UpdateCurrentPaintChunkProperties(id1, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id1,
+                                            DefaultPaintChunkProperties());
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
   PaintChunkProperties first_transform = DefaultPaintChunkProperties();
@@ -242,7 +246,7 @@ TEST_F(PaintChunkerTest, ChangingPropertiesWithoutItems) {
                                          FloatPoint3D(9, 8, 7))
           .get());
   PaintChunk::Id id2(client_, DisplayItemType(2));
-  chunker.UpdateCurrentPaintChunkProperties(WTF::nullopt, first_transform);
+  chunker.UpdateCurrentPaintChunkProperties(nullptr, first_transform);
 
   PaintChunkProperties second_transform = DefaultPaintChunkProperties();
   second_transform.property_tree_state.SetTransform(
@@ -251,7 +255,7 @@ TEST_F(PaintChunkerTest, ChangingPropertiesWithoutItems) {
                                          FloatPoint3D(3, 2, 1))
           .get());
   PaintChunk::Id id3(client_, DisplayItemType(3));
-  chunker.UpdateCurrentPaintChunkProperties(id3, second_transform);
+  chunker.UpdateCurrentPaintChunkProperties(&id3, second_transform);
 
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   Vector<PaintChunk> chunks = chunker.ReleasePaintChunks();
@@ -273,7 +277,8 @@ TEST_F(PaintChunkerTest, CreatesSeparateChunksWhenRequested) {
   TestDisplayItemRequiringSeparateChunk i3(client3);
 
   PaintChunk::Id id0(client_, DisplayItemType(0));
-  chunker.UpdateCurrentPaintChunkProperties(id0, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id0,
+                                            DefaultPaintChunkProperties());
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(i1);
   chunker.IncrementDisplayItemIndex(i2);
@@ -296,18 +301,21 @@ TEST_F(PaintChunkerTest, CreatesSeparateChunksWhenRequested) {
 TEST_F(PaintChunkerTest, ForceNewChunk) {
   PaintChunker chunker;
   PaintChunk::Id id0(client_, DisplayItemType(0));
-  chunker.UpdateCurrentPaintChunkProperties(id0, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id0,
+                                            DefaultPaintChunkProperties());
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
   chunker.ForceNewChunk();
   PaintChunk::Id id1(client_, DisplayItemType(10));
-  chunker.UpdateCurrentPaintChunkProperties(id1, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id1,
+                                            DefaultPaintChunkProperties());
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
   PaintChunk::Id id2(client_, DisplayItemType(20));
-  chunker.UpdateCurrentPaintChunkProperties(id2, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id2,
+                                            DefaultPaintChunkProperties());
   chunker.ForceNewChunk();
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
@@ -338,7 +346,8 @@ TEST_F(PaintChunkerTest, ChunksFollowingForcedChunk) {
   TestChunkerDisplayItem after_forced2(client, DisplayItemType(12));
 
   PaintChunk::Id id0(client, DisplayItemType(8));
-  chunker.UpdateCurrentPaintChunkProperties(id0, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id0,
+                                            DefaultPaintChunkProperties());
   // Both before_forced items should be in a chunk together.
   chunker.IncrementDisplayItemIndex(before_forced1);
   chunker.IncrementDisplayItemIndex(before_forced2);
@@ -361,7 +370,8 @@ TEST_F(PaintChunkerTest, ChunkIdsSkippingCache) {
   PaintChunker chunker;
 
   PaintChunk::Id id1(client_, DisplayItemType(1));
-  chunker.UpdateCurrentPaintChunkProperties(id1, DefaultPaintChunkProperties());
+  chunker.UpdateCurrentPaintChunkProperties(&id1,
+                                            DefaultPaintChunkProperties());
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(TestChunkerDisplayItem(client_));
 
@@ -372,7 +382,7 @@ TEST_F(PaintChunkerTest, ChunkIdsSkippingCache) {
                                          FloatPoint3D(9, 8, 7))
           .get());
   PaintChunk::Id id2(client_, DisplayItemType(2));
-  chunker.UpdateCurrentPaintChunkProperties(id2, simple_transform);
+  chunker.UpdateCurrentPaintChunkProperties(&id2, simple_transform);
 
   TestChunkerDisplayItem uncacheable_item(client_);
   uncacheable_item.SetSkippedCache();
@@ -387,7 +397,7 @@ TEST_F(PaintChunkerTest, ChunkIdsSkippingCache) {
   TestChunkerDisplayItem after_separate_chunk(client_, DisplayItemType(3));
   chunker.IncrementDisplayItemIndex(after_separate_chunk);
 
-  chunker.UpdateCurrentPaintChunkProperties(WTF::nullopt,
+  chunker.UpdateCurrentPaintChunkProperties(nullptr,
                                             DefaultPaintChunkProperties());
   TestChunkerDisplayItem after_restore(client_, DisplayItemType(4));
   chunker.IncrementDisplayItemIndex(after_restore);

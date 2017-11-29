@@ -19,5 +19,5 @@
     [MeasureAs=PointerEventAttributeCount]   readonly    attribute boolean   isPrimary;
 
     // https://w3c.github.io/pointerevents/extension.html#extensions-to-the-pointerevent-interface
-    sequence<PointerEvent> getCoalescedEvents();
+    [RuntimeEnabled=CoalescedEvents] sequence<PointerEvent> getCoalescedEvents();
 };

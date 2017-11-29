@@ -144,7 +144,7 @@ public class CustomTabActivityTest {
     private static final String FRAGMENT_TEST_PAGE = "/chrome/test/data/android/fragment.html";
     private static final String TEST_MENU_TITLE = "testMenuTitle";
     private static final String PRIVATE_DATA_DIRECTORY_SUFFIX = "chrome";
-    private static final String WEBLITE_PREFIX = "http://googleweblight.com/i?u=";
+    private static final String WEBLITE_PREFIX = "http://googleweblight.com/?lite_url=";
     private static final String JS_MESSAGE = "from_js";
     private static final String TITLE_FROM_POSTMESSAGE_TO_CHANNEL =
             "<!DOCTYPE html><html><body>"
@@ -2575,8 +2575,8 @@ public class CustomTabActivityTest {
      */
     @Test
     @SmallTest
-    @CommandLineFlags.
-    Add({"enable-spdy-proxy-auth", "enable-features=DataReductionProxyDecidesTransform"})
+    @CommandLineFlags.Add({"enable-spdy-proxy-auth", "data-reduction-proxy-lo-fi=always-on",
+            "enable-data-reduction-proxy-lite-page"})
     @RetryOnFailure
     public void testLaunchWebLiteURL() throws Exception {
         final String testUrl = WEBLITE_PREFIX + mTestPage;
@@ -2593,10 +2593,29 @@ public class CustomTabActivityTest {
      */
     @Test
     @SmallTest
-    @CommandLineFlags.
-    Add({"enable-spdy-proxy-auth", "disable-features=DataReductionProxyDecidesTransform"})
+    @CommandLineFlags.Add({"enable-spdy-proxy-auth",
+            "disable-features=DataReductionProxyDecidesTransform",
+            "data-reduction-proxy-lo-fi=always-on"})
     @RetryOnFailure
     public void testLaunchWebLiteURLNoPreviews() throws Exception {
+        final String testUrl = WEBLITE_PREFIX + mTestPage;
+        mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
+                CustomTabsTestUtils.createMinimalCustomTabIntent(
+                        InstrumentationRegistry.getTargetContext(), testUrl));
+        Tab tab = mCustomTabActivityTestRule.getActivity().getActivityTab();
+        Assert.assertEquals(testUrl, tab.getUrl());
+    }
+
+    /**
+     * Tests that a Weblite URL from an external app does not use the lite_url param when Data
+     * Reduction Proxy is not using Lo-Fi.
+     */
+    @Test
+    @SmallTest
+    @CommandLineFlags.Add({"enable-spdy-proxy-auth",
+            "disable-features=DataReductionProxyDecidesTransform"})
+    @RetryOnFailure
+    public void testLaunchWebLiteURLNoLoFi() throws Exception {
         final String testUrl = WEBLITE_PREFIX + mTestPage;
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
                 CustomTabsTestUtils.createMinimalCustomTabIntent(
@@ -2611,7 +2630,8 @@ public class CustomTabActivityTest {
      */
     @Test
     @SmallTest
-    @CommandLineFlags.Add({"enable-features=DataReductionProxyDecidesTransform"})
+    @CommandLineFlags.Add({"data-reduction-proxy-lo-fi=always-on",
+            "enable-data-reduction-proxy-lite-page"})
     @RetryOnFailure
     public void testLaunchWebLiteURLNoDataReductionProxy() throws Exception {
         final String testUrl = WEBLITE_PREFIX + mTestPage;
@@ -2628,8 +2648,8 @@ public class CustomTabActivityTest {
      */
     @Test
     @SmallTest
-    @CommandLineFlags.
-    Add({"enable-spdy-proxy-auth", "enable-features=DataReductionProxyDecidesTransform"})
+    @CommandLineFlags.Add({"enable-spdy-proxy-auth", "data-reduction-proxy-lo-fi=always-on",
+            "enable-data-reduction-proxy-lite-page"})
     @RetryOnFailure
     public void testLaunchHttpsWebLiteURL() throws Exception {
         final String testUrl = WEBLITE_PREFIX + mTestPage.replaceFirst("http", "https");
@@ -2646,8 +2666,8 @@ public class CustomTabActivityTest {
      */
     @Test
     @SmallTest
-    @CommandLineFlags.
-    Add({"enable-spdy-proxy-auth", "enable-features=DataReductionProxyDecidesTransform"})
+    @CommandLineFlags.Add({"enable-spdy-proxy-auth", "data-reduction-proxy-lo-fi=always-on",
+            "enable-data-reduction-proxy-lite-page"})
     @RetryOnFailure
     public void testLaunchNonWebLiteURL() throws Exception {
         final String testUrl = mTestPage2 + "/?lite_url=" + mTestPage;

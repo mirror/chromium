@@ -88,7 +88,8 @@ AccessTokenFetcherTest::AccessTokenFetcherTest()
     : url_fetcher_factory_(nullptr) {
 }
 
-AccessTokenFetcherTest::~AccessTokenFetcherTest() = default;
+AccessTokenFetcherTest::~AccessTokenFetcherTest() {
+}
 
 void AccessTokenFetcherTest::OnAccessTokenRetrieved(
     base::Closure done_closure,

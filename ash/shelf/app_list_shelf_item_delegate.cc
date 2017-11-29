@@ -16,7 +16,7 @@ namespace ash {
 AppListShelfItemDelegate::AppListShelfItemDelegate()
     : ShelfItemDelegate(ShelfID(kAppListId)) {}
 
-AppListShelfItemDelegate::~AppListShelfItemDelegate() = default;
+AppListShelfItemDelegate::~AppListShelfItemDelegate() {}
 
 void AppListShelfItemDelegate::ItemSelected(std::unique_ptr<ui::Event> event,
                                             int64_t display_id,

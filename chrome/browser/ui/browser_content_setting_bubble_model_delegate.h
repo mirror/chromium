@@ -26,7 +26,7 @@ class BrowserContentSettingBubbleModelDelegate
   void ShowLearnMorePage(ContentSettingsType type) override;
 
  private:
-  Browser* const browser_;
+  Browser* browser_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserContentSettingBubbleModelDelegate);
 };

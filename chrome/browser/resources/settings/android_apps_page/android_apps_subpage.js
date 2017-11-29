@@ -74,7 +74,7 @@ Polymer({
   onConfirmDisableDialogConfirm_: function() {
     this.setPrefValue('arc.enabled', false);
     this.$.confirmDisableDialog.close();
-    // Sub-page will be closed in onAndroidAppsInfoUpdate_ call.
+    settings.navigateToPreviousRoute();
   },
 
   /**

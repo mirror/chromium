@@ -88,7 +88,7 @@ AutoclickApplication::AutoclickApplication()
                  base::Unretained(this)));
 }
 
-AutoclickApplication::~AutoclickApplication() = default;
+AutoclickApplication::~AutoclickApplication() {}
 
 void AutoclickApplication::OnStart() {
   const bool register_path_provider = running_standalone_;

@@ -19,8 +19,8 @@ namespace {
 
 class TestModalDialogDelegate : public views::DialogDelegateView {
  public:
-  TestModalDialogDelegate() = default;
-  ~TestModalDialogDelegate() override = default;
+  TestModalDialogDelegate() {}
+  ~TestModalDialogDelegate() override {}
 
   // Overridden from views::WidgetDelegate:
   ui::ModalType GetModalType() const override { return ui::MODAL_TYPE_SYSTEM; }
@@ -38,7 +38,7 @@ class CountingEventHandler : public ui::EventHandler {
     *mouse_events_registered = 0;
   }
 
-  ~CountingEventHandler() override = default;
+  ~CountingEventHandler() override {}
 
  private:
   // ui::EventHandler overrides.
@@ -57,7 +57,7 @@ class FirstRunHelperTest : public AshTestBase, public FirstRunHelper::Observer {
  public:
   FirstRunHelperTest() : cancelled_times_(0) {}
 
-  ~FirstRunHelperTest() override = default;
+  ~FirstRunHelperTest() override {}
 
   void SetUp() override {
     AshTestBase::SetUp();

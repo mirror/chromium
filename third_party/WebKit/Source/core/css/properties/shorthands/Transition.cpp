@@ -59,16 +59,15 @@ bool Transition::ParseShorthand(
   }
 
   for (size_t i = 0; i < longhand_count; ++i) {
-    if (shorthand.properties()[i]->IDEquals(CSSPropertyTransitionProperty) &&
+    if (shorthand.properties()[i] == CSSPropertyTransitionProperty &&
         !CSSPropertyTransitionPropertyUtils::IsValidPropertyList(*longhands[i]))
       return false;
   }
 
   for (size_t i = 0; i < longhand_count; ++i) {
     CSSPropertyParserHelpers::AddProperty(
-        shorthand.properties()[i]->PropertyID(), shorthand.id(), *longhands[i],
-        important, CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit,
-        properties);
+        shorthand.properties()[i], shorthand.id(), *longhands[i], important,
+        CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit, properties);
   }
 
   return range.AtEnd();

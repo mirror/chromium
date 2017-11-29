@@ -30,7 +30,6 @@
 #include "components/flags_ui/flags_ui_switches.h"
 #include "components/ntp_tiles/switches.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
-#include "components/password_manager/core/common/password_manager_features.h"
 #include "components/payments/core/features.h"
 #include "components/search_provider_logos/switches.h"
 #include "components/security_state/core/switches.h"
@@ -196,10 +195,7 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(kCleanToolbar)},
     {"bookmark-new-edit-page", flag_descriptions::kBookmarkNewEditPageName,
      flag_descriptions::kBookmarkNewEditPageDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(kBookmarkNewEditPage)},
-    {"password-export", flag_descriptions::kPasswordExportName,
-     flag_descriptions::kPasswordExportDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(password_manager::features::kPasswordExport)}};
+     FEATURE_VALUE_TYPE(kBookmarkNewEditPage)}};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
