@@ -73,6 +73,11 @@ ComputeInlineBoxPosition(const PositionInFlatTreeWithAffinity&,
                          TextDirection primary_direction);
 CORE_EXPORT InlineBoxPosition ComputeInlineBoxPosition(const VisiblePosition&);
 
+PositionWithAffinity ComputeInlineAdjustedPosition(const PositionWithAffinity&);
+PositionInFlatTreeWithAffinity ComputeInlineAdjustedPosition(
+    const PositionInFlatTreeWithAffinity&);
+PositionWithAffinity ComputeInlineAdjustedPosition(const VisiblePosition&);
+
 // The print for |InlineBoxPosition| is available only for testing
 // in "webkit_unit_tests", and implemented in
 // "core/editing/InlineBoxPositionTest.cpp".
