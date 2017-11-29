@@ -675,6 +675,15 @@ class CORE_EXPORT LocalFrameView final
   IntPoint ConvertSelfToChild(const EmbeddedContentView&,
                               const IntPoint&) const;
 
+  // Maps from "absolute" coordinates to root frame coordinates.
+  // TODO(bokan) This is a temporary shim to hide the difference between
+  // root-layer-scrolling being on and off. Once RLS is turned on, this becomes
+  // (and can be replaced with) ConvertToRootFrame since "frame coordinates" ==
+  // "absolute coordinates" in RLS. Without RLS, "absolute coordinates" ==
+  // "document coordinates". https://crbug.com/417782.
+  IntRect AbsoluteToRootFrame(const IntRect&) const;
+  IntRect RootFrameToDocument(const IntRect&);
+
   // Handles painting of the contents of the view as well as the scrollbars.
   void Paint(GraphicsContext&,
              const GlobalPaintFlags,
