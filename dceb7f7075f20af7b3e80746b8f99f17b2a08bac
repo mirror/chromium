@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "053debec_6bf1be74",
+        "filename": "chrome/browser/chromeos/file_system_provider/fake_extension_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-29T19:30:43Z",
+      "side": 1,
+      "message": "std::make_unique? And some below...",
+      "revId": "dceb7f7075f20af7b3e80746b8f99f17b2a08bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692daee3_898da0df",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-29T19:30:43Z",
+      "side": 1,
+      "message": "Remove extra line.",
+      "revId": "dceb7f7075f20af7b3e80746b8f99f17b2a08bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72735bce_fc76e72a",
         "filename": "chrome/browser/chromeos/file_system_provider/provider_interface.h",
         "patchSetId": 7
