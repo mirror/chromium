@@ -147,7 +147,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   net::HostPortPair GetSocketAddress() override;
   const net::HttpResponseHeaders* GetResponseHeaders() override;
   net::HttpResponseInfo::ConnectionInfo GetConnectionInfo() override;
-  const base::Optional<net::SSLInfo>& GetSSLInfo() override;
+  const net::SSLInfo& GetSSLInfo() override;
   bool ShouldSSLErrorsBeFatal() override;
   void RegisterThrottleForTesting(
       std::unique_ptr<NavigationThrottle> navigation_throttle) override;
@@ -341,7 +341,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
       scoped_refptr<net::HttpResponseHeaders> response_headers,
       net::HttpResponseInfo::ConnectionInfo connection_info,
       const net::HostPortPair& socket_address,
-      const SSLStatus& ssl_status,
+      const net::SSLInfo& ssl_info,
       const GlobalRequestID& request_id,
       bool should_replace_current_entry,
       bool is_download,
@@ -378,7 +378,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
     navigation_data_ = std::move(navigation_data);
   }
 
-  SSLStatus ssl_status() { return ssl_status_; }
+  SSLStatus ssl_status() { return SSLStatus(ssl_info_); }
 
   // Called when the navigation is transferred to a different renderer.
   void Transfer();
@@ -507,7 +507,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   bool subframe_entry_committed_;
   scoped_refptr<net::HttpResponseHeaders> response_headers_;
   net::HttpResponseInfo::ConnectionInfo connection_info_;
-  base::Optional<net::SSLInfo> ssl_info_;
+  net::SSLInfo ssl_info_;
   bool should_ssl_errors_be_fatal_;
 
   // The original url of the navigation. This may differ from |url_| if the
