@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "989d45c3_a1fbd121",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-29T18:53:32Z",
+      "side": 1,
+      "message": "Done and thanks!",
+      "parentUuid": "0afbab81_6c4b9f1e",
+      "range": {
+        "startLine": 12,
+        "startChar": 48,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24098ff1_4dde339a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-29T18:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c80b2898_9bdfe818",
+      "range": {
+        "startLine": 12,
+        "startChar": 32,
+        "endLine": 12,
+        "endChar": 37
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caa8c0b1_e3b7d142",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1defda6e_3b19802b",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2174,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-29T18:53:32Z",
+      "side": 1,
+      "message": "Hmm, this is not necessary for this refactor and is a separate cleanup. But I believe it can wait to be _added_ in a separate CL (e.g.,  the one refactoring Web[FrameWidget|View]Impl::SelectionBounds which is used in in GetSelectionBounds referenced in line 2194.\n\nSo I will undo this. Thanks for pointing this out.",
+      "parentUuid": "caa8c0b1_e3b7d142",
+      "range": {
+        "startLine": 2174,
+        "startChar": 21,
+        "endLine": 2174,
+        "endChar": 60
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "34cd99e7_c836d00c",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-29T18:53:32Z",
+      "side": 1,
+      "message": "Asking out of curiosity, do we not initialize basic types in IPC_STRUCT_MEMBER or sth. I had hard time following the macros.\n\nBut as for clarity I agree it is worth adding the line.",
+      "parentUuid": "e5720840_5d0f7081",
+      "range": {
+        "startLine": 2202,
+        "startChar": 8,
+        "endLine": 2202,
+        "endChar": 30
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfc038e9_ae5c0248",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-29T06:35:49Z",
       "side": 1,
       "message": "It\u0027s a bit sad to have to implement this again, given that we already have FocusedLocalFrameInWidget() on WebFrameWidgetImpl.  WDYT about exposing something like that publicly from WebFrameWidget?  Would Blink owners be ok with that?",
+      "range": {
+        "startLine": 2578,
+        "startChar": 0,
+        "endLine": 2581,
+        "endChar": 76
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5764f7_48dbd951",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2581,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-29T18:53:32Z",
+      "side": 1,
+      "message": "I agree it will be a good API to live inside WebFrameWidget. Essentially, it would be a public (wrapper) of the blink/core method WebFrameWidgetBase::FocusedLocalFrameInWidget() which we use for IME. I will wait for blink owner\u0027s feedback on this.",
+      "parentUuid": "bfc038e9_ae5c0248",
       "range": {
         "startLine": 2578,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "51414a2d_fd12fd08",
+        "filename": "content/renderer/render_widget.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-29T18:53:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "82b7221d_cc8dd5c0",
+      "range": {
+        "startLine": 886,
+        "startChar": 0,
+        "endLine": 886,
+        "endChar": 64
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32f21262_99e531a0",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 3
@@ -154,6 +298,24 @@
       "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd606c82_a1978b7f",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-29T18:53:32Z",
+      "side": 1,
+      "message": "Done. Ditto for IsSelectionAnchorFirst().",
+      "parentUuid": "32f21262_99e531a0",
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
