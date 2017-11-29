@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81589eb9_4655dbd6",
+        "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-29T15:41:13Z",
+      "side": 1,
+      "message": "I was also surprised, and yes, I followed the old implementation here, unlike below,\njust because I was not sure whether we should change this or not, TBH.\nTony, if you have comments, please let us know.",
+      "parentUuid": "8f94af80_df78d7e1",
+      "revId": "4934e14b9d85969cc82d6168ead8bdba97db2a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c75a7773_3937ca72",
         "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos.cc",
         "patchSetId": 1
