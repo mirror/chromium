@@ -16,6 +16,24 @@
       "revId": "3f8c27eb8613c697da176a322c3d1078b45aaa4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aaa8f7e_ed5f1154",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ComputedStylePropertyMap.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-29T02:59:47Z",
+      "side": 1,
+      "message": "I can\u0027t remember Darren, but I\u0027m pretty sure I needed it because a unit test was hitting it with Invalid. Possibly the unit test was calling it directly though, in which case we should probably just remove the test.\n\nI\u0027ll look into it.",
+      "parentUuid": "46644134_4e5a85a6",
+      "revId": "3f8c27eb8613c697da176a322c3d1078b45aaa4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
