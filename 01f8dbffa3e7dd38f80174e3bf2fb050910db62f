@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "b326dfd0_ed0a8dff",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-29T11:49:26Z",
+      "side": 1,
+      "message": "Thanks for both these comments that stem from me not paying close attention... \u003e.\u003c\"",
+      "parentUuid": "43ca8001_bca52431",
+      "range": {
+        "startLine": 636,
+        "startChar": 4,
+        "endLine": 636,
+        "endChar": 10
+      },
+      "revId": "01f8dbffa3e7dd38f80174e3bf2fb050910db62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d1c3d5f_9bd94ed3",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-29T11:49:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cee1a92b_7bc62526",
+      "range": {
+        "startLine": 636,
+        "startChar": 60,
+        "endLine": 636,
+        "endChar": 62
+      },
+      "revId": "01f8dbffa3e7dd38f80174e3bf2fb050910db62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85f92fa2_6a552d2d",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 6
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "145c87f4_b787f991",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-29T11:49:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85f92fa2_6a552d2d",
+      "range": {
+        "startLine": 641,
+        "startChar": 4,
+        "endLine": 641,
+        "endChar": 36
+      },
+      "revId": "01f8dbffa3e7dd38f80174e3bf2fb050910db62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2650890_29c1f484",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "01f8dbffa3e7dd38f80174e3bf2fb050910db62f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4aadac1_50703771",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-29T11:49:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2650890_29c1f484",
+      "range": {
+        "startLine": 651,
+        "startChar": 4,
+        "endLine": 651,
+        "endChar": 45
+      },
+      "revId": "01f8dbffa3e7dd38f80174e3bf2fb050910db62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
