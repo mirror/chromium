@@ -109,6 +109,17 @@ void NotificationManager::OnPermissionServiceConnectionError() {
   permission_service_.reset();
 }
 
+void NotificationManager::DisplayNonPersistentNotification(
+    const String& title) {
+  if (!notification_service_) {
+    GetSupplementable()->GetInterfaceProvider()->GetInterface(
+        mojo::MakeRequest(&notification_service_));
+  }
+  // TODO(crbug.com/595685): Pass the rest of the notification properties here.
+  notification_service_->DisplayNonPersistent(
+      GetSupplementable()->GetSecurityOrigin(), title);
+}
+
 const mojom::blink::NotificationServicePtr&
 NotificationManager::GetNotificationService() {
   if (!notification_service_) {
