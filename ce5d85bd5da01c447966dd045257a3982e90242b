@@ -289,6 +289,30 @@
     },
     {
       "key": {
+        "uuid": "5230aa05_f8c63257",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-11-29T03:45:08Z",
+      "side": 1,
+      "message": "Would something like this test be reasonable? https://cs.chromium.org/chromium/src/chrome/browser/ssl/ssl_browsertest.cc?l\u003d6287\u0026rcl\u003df53e38f39880031626a488f4c8dee4846a074660\nI\u0027m thinking of using CertVerifierBrowserTest to swap in a certificate containing SCTs and set verify_result.is_issued_by_known_root \u003d true, and then checking that a CT-specific histogram is updated, e.g. \"Net.CertificateTransparency.CanInclusionCheckSCT\".",
+      "parentUuid": "b31bc74b_61827cdd",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
