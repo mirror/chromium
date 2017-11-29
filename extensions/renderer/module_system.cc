@@ -298,7 +298,7 @@ void ModuleSystem::CallModuleMethodSafe(const std::string& module_name,
   v8::HandleScope handle_scope(GetIsolate());
   v8::Local<v8::Value> no_args;
   CallModuleMethodSafe(module_name, method_name, 0, &no_args,
-                       ScriptInjectionCallback::CompleteCallback());
+                       JSRunner::ResultCallback());
 }
 
 void ModuleSystem::CallModuleMethodSafe(
@@ -306,7 +306,7 @@ void ModuleSystem::CallModuleMethodSafe(
     const std::string& method_name,
     std::vector<v8::Local<v8::Value>>* args) {
   CallModuleMethodSafe(module_name, method_name, args->size(), args->data(),
-                       ScriptInjectionCallback::CompleteCallback());
+                       JSRunner::ResultCallback());
 }
 
 void ModuleSystem::CallModuleMethodSafe(const std::string& module_name,
@@ -314,15 +314,14 @@ void ModuleSystem::CallModuleMethodSafe(const std::string& module_name,
                                         int argc,
                                         v8::Local<v8::Value> argv[]) {
   CallModuleMethodSafe(module_name, method_name, argc, argv,
-                       ScriptInjectionCallback::CompleteCallback());
+                       JSRunner::ResultCallback());
 }
 
-void ModuleSystem::CallModuleMethodSafe(
-    const std::string& module_name,
-    const std::string& method_name,
-    int argc,
-    v8::Local<v8::Value> argv[],
-    const ScriptInjectionCallback::CompleteCallback& callback) {
+void ModuleSystem::CallModuleMethodSafe(const std::string& module_name,
+                                        const std::string& method_name,
+                                        int argc,
+                                        v8::Local<v8::Value> argv[],
+                                        JSRunner::ResultCallback callback) {
   TRACE_EVENT2("v8", "v8.callModuleMethodSafe", "module_name", module_name,
                "method_name", method_name);
 
@@ -345,7 +344,7 @@ void ModuleSystem::CallModuleMethodSafe(
   {
     v8::TryCatch try_catch(GetIsolate());
     try_catch.SetCaptureMessage(true);
-    context_->SafeCallFunction(function, argc, argv, callback);
+    context_->SafeCallFunction(function, argc, argv, std::move(callback));
     if (try_catch.HasCaught())
       HandleException(try_catch);
   }

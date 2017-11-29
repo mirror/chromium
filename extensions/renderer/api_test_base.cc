@@ -221,9 +221,10 @@ void ApiTestEnvironment::RunTestInner(const std::string& test_name,
   bool did_run = false;
   auto callback = [](bool* did_run, const base::Closure& quit_closure,
                      const std::string& test_name,
-                     const std::vector<v8::Local<v8::Value>>& result) {
+                     v8::Local<v8::Context> context,
+                     v8::Local<v8::Value> result) {
     *did_run = true;
-    if (result.empty() || result[0].IsEmpty() || !result[0]->IsTrue()) {
+    if (result.IsEmpty() || !result->IsTrue()) {
       base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure);
       FAIL() << "Failed to run test \"" << test_name << "\"";
     }

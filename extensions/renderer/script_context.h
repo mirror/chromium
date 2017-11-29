@@ -13,14 +13,15 @@
 #include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/unguessable_token.h"
 #include "extensions/common/features/feature.h"
 #include "extensions/common/permissions/api_permission_set.h"
+#include "extensions/renderer/bindings/js_runner.h"
 #include "extensions/renderer/module_system.h"
 #include "extensions/renderer/request_sender.h"
 #include "extensions/renderer/safe_builtins.h"
-#include "extensions/renderer/script_injection_callback.h"
 #include "gin/runner.h"
 #include "url/gurl.h"
 #include "v8/include/v8.h"
@@ -119,11 +120,10 @@ class ScriptContext : public RequestSender::Source {
   void SafeCallFunction(const v8::Local<v8::Function>& function,
                         int argc,
                         v8::Local<v8::Value> argv[]);
-  void SafeCallFunction(
-      const v8::Local<v8::Function>& function,
-      int argc,
-      v8::Local<v8::Value> argv[],
-      const ScriptInjectionCallback::CompleteCallback& callback);
+  void SafeCallFunction(const v8::Local<v8::Function>& function,
+                        int argc,
+                        v8::Local<v8::Value> argv[],
+                        JSRunner::ResultCallback callback);
 
   // Returns the availability of the API |api_name|.
   Feature::Availability GetAvailability(const std::string& api_name);
@@ -235,6 +235,9 @@ class ScriptContext : public RequestSender::Source {
                                     int argc,
                                     v8::Local<v8::Value> argv[]) const;
 
+  void OnFunctionComplete(JSRunner::ResultCallback callback,
+                          const std::vector<v8::Local<v8::Value>>& results);
+
   class Runner;
 
   // Whether this context is valid.
@@ -287,6 +290,8 @@ class ScriptContext : public RequestSender::Source {
   std::unique_ptr<Runner> runner_;
 
   base::ThreadChecker thread_checker_;
+
+  base::WeakPtrFactory<ScriptContext> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ScriptContext);
 };
