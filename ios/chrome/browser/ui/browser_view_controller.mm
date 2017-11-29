@@ -4449,8 +4449,18 @@ bubblePresenterForFeature:(const base::Feature&)feature
   if (currentTab && self.viewVisible) {
     [currentTab updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
   }
+
+  ProceduralBlock tabAddedCompletion = nil;
+  if (command.shouldFocusOmnibox) {
+    __weak BrowserViewController* weakSelf = self;
+    tabAddedCompletion = ^{
+      [weakSelf focusOmnibox];
+    };
+  }
   [self addSelectedTabWithURL:GURL(kChromeUINewTabURL)
-                   transition:ui::PAGE_TRANSITION_TYPED];
+                      atIndex:[_model count]
+                   transition:ui::PAGE_TRANSITION_TYPED
+           tabAddedCompletion:tabAddedCompletion];
 }
 
 - (void)printTab {
