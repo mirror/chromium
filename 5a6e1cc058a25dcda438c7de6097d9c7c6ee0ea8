@@ -22,6 +22,30 @@
       "revId": "5a6e1cc058a25dcda438c7de6097d9c7c6ee0ea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c68d286_fe851793",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T23:17:21Z",
+      "side": 1,
+      "message": "Leaving it as is. Yes, this #if is a bit hairy, but I also don\u0027t like having the same #include twice. git cl lint will complain, and it creates more opportunity to create confusion. e.g. Two #ifs that contradict each other.",
+      "parentUuid": "af1781bb_de49ea46",
+      "range": {
+        "startLine": 239,
+        "startChar": 27,
+        "endLine": 239,
+        "endChar": 34
+      },
+      "revId": "5a6e1cc058a25dcda438c7de6097d9c7c6ee0ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
