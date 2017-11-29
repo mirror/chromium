@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7ac32e0f_6ca14145",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-29T21:14:01Z",
+      "side": 1,
+      "message": "Ah, I see now. There are two trace events in LatencyInfo::AddLatencyNumber*. The TRACE_EVENT_WITH_FLOW1 one is cross process and would need to be globally unique.\n\nI look into either fixing that or disabling it for frame events.",
+      "parentUuid": "ed4ecccc_5b91f954",
+      "range": {
+        "startLine": 1819,
+        "startChar": 18,
+        "endLine": 1819,
+        "endChar": 33
+      },
+      "revId": "f78b9454da0b35d997c9e59cb3062d55af35afb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "974e2a78_d7bb2ad3",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 5
