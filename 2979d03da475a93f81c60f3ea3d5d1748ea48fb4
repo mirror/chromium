@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "650a4cb7_7c6cf4b0",
+        "filename": "cc/layers/recording_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-29T02:06:03Z",
+      "side": 1,
+      "message": "nit: Avoid a default value if its not too much effort.",
+      "range": {
+        "startLine": 46,
+        "startChar": 29,
+        "endLine": 46,
+        "endChar": 63
+      },
+      "revId": "2979d03da475a93f81c60f3ea3d5d1748ea48fb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
