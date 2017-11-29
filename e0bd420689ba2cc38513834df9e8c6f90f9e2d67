@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90105df1_a1e95411",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "s/scroll-boundary-behavior/overscroll-behavior/ here and elsewhere in the description",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9390257d_27ee7869",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "This is not necessary.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 68
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ff703d_fff8eb4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "nit: I suggest:\nuse overscroll-behavior css property on viewport defining element \nto control overscroll navigation. This patch enables this for CrOS swipe \nnavigation.\n\nI think something like this is more to the point and accurate.",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 11,
+        "endChar": 72
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bddea507_84837702",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "Update the link with new repo name and link to the specific section.",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 72
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c6b001_b33967fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "nit: this is just a repeat of what is said just above. remove.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 5
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71809ed_bd656a18",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "Why is it being reset here? Isn\u0027t it enough just to do so on OnDidOverscroll",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 40
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504f3e94_d76e192d",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "This does not feel right. I think if we return early here we\nrisk leaving the state machine in a confused state as it is\nnot seeing all the acks.\n\nAlso, if we are returning early here shouldn\u0027t we be returning\nearly on WillHandleEvent? i.e., should this check be moved\nto ShouldProcessEvent?\n\n\nAs a more general observation, I like to see the renderer_disabled_overscroll_ \nplay nicely with existing state machine. Here are two options \nhow this can be done:\n - Make it input to the state machine, i.e., prevent transition\n   to say STATE_OVERSCROLLING if it is not allowed.\n - Leave state machine as is, and then use this to make\n   a decision to either notify delegate or not.\n\nAt the moment, the boolean seems to break the state machine in\nunexpected ways.",
+      "range": {
+        "startLine": 158,
+        "startChar": 32,
+        "endLine": 158,
+        "endChar": 65
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8ca11e_da01124c",
+        "filename": "content/browser/renderer_host/overscroll_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "do you mean ReceivedEventAck?",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d3e962_c240bcaa",
+        "filename": "content/browser/renderer_host/overscroll_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "I don\u0027t think this comment should discuss \"ack_result\" at all. Just the fact that\nDidOverScrollParams contains two ScrollBoundaryBehavior values that can\nprevent overscroll navigations.",
+      "range": {
+        "startLine": 56,
+        "startChar": 48,
+        "endLine": 59,
+        "endChar": 67
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2213c7d_5923fb59",
+        "filename": "content/browser/renderer_host/overscroll_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "This sentence is not relevant and confusing. Please remove.",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590692e1_279cab53",
+        "filename": "content/browser/renderer_host/overscroll_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "This is outdated. Also please use the css property name \u0027overscroll-behavior\u0027",
+      "range": {
+        "startLine": 158,
+        "startChar": 5,
+        "endLine": 158,
+        "endChar": 30
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6c715a_d72a5859",
+        "filename": "content/browser/renderer_host/overscroll_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-29T17:49:54Z",
+      "side": 1,
+      "message": "\"renderer\" is not really relevant info. How about either:\n1) overscroll_disabled_\n2) overscroll_effects_disabled_",
+      "range": {
+        "startLine": 159,
+        "startChar": 7,
+        "endLine": 159,
+        "endChar": 36
+      },
+      "revId": "e0bd420689ba2cc38513834df9e8c6f90f9e2d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
