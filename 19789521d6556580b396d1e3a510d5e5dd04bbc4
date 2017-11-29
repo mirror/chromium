@@ -16,6 +16,46 @@
       "revId": "19789521d6556580b396d1e3a510d5e5dd04bbc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af1adb4_3f8e97f1",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-29T21:28:32Z",
+      "side": 1,
+      "message": "Not used?",
+      "range": {
+        "startLine": 190,
+        "startChar": 31,
+        "endLine": 190,
+        "endChar": 45
+      },
+      "revId": "19789521d6556580b396d1e3a510d5e5dd04bbc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de03058_a7cca855",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-29T21:28:32Z",
+      "side": 1,
+      "message": "When we exit split mode but keep in overview mode, do we want to hide the header again? Other wise there are two headers?",
+      "revId": "19789521d6556580b396d1e3a510d5e5dd04bbc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
