@@ -30,18 +30,25 @@ namespace {
 // The thin wrapper for InterfacePtr<T>, where T is one of ARC mojo Instance
 // class.
 template <typename InstanceType, typename HostType>
-class MojoChannelImpl : public ArcBridgeHostImpl::MojoChannel {
+class MojoChannelImpl : public ArcBridgeHostImpl::MojoChannel,
+                        public ConnectionObserver<InstanceType> {
  public:
   MojoChannelImpl(ConnectionHolder<InstanceType, HostType>* holder,
                   mojo::InterfacePtr<InstanceType> ptr)
       : holder_(holder), ptr_(std::move(ptr)) {
+    ptr_.set_connection_error_handler(base::BindOnce(
+        &MojoChannelImpl::OnConnectionClosed, base::Unretained(this)));
+    holder_->AddObserver(this);
     // Delay registration to the ConnectionHolder until the version is ready.
   }
 
-  ~MojoChannelImpl() override { holder_->SetInstance(nullptr, 0); }
+  ~MojoChannelImpl() override {
+    holder_->SetInstance(nullptr, 0);
+    holder_->RemoveObserver(this);
+  }
 
   void set_connection_error_handler(base::OnceClosure error_handler) {
-    ptr_.set_connection_error_handler(std::move(error_handler));
+    error_handler_ = std::move(error_handler);
   }
 
   void QueryVersion() {
@@ -50,6 +57,9 @@ class MojoChannelImpl : public ArcBridgeHostImpl::MojoChannel {
         base::Bind(&MojoChannelImpl::OnVersionReady, base::Unretained(this)));
   }
 
+  // ConnectionObserver<InstanceType> override:
+  void OnConnectionClosed() override { std::move(error_handler_).Run(); }
+
  private:
   void OnVersionReady(uint32_t unused_version) {
     holder_->SetInstance(ptr_.get(), ptr_.version());
@@ -57,6 +67,8 @@ class MojoChannelImpl : public ArcBridgeHostImpl::MojoChannel {
 
   // Owned by ArcBridgeService.
   ConnectionHolder<InstanceType, HostType>* const holder_;
+
+  base::OnceClosure error_handler_;
 
   // Put as a last member to ensure that any callback tied to the |ptr_|
   // is not invoked.

@@ -154,8 +154,9 @@ class ConnectionHolderImpl {
       binding_->Bind(mojo::MakeRequest(&host_proxy));
       // Note: because the callback will be destroyed with |binding_|,
       // base::Unretained() can be safely used.
-      binding_->set_connection_error_handler(base::BindOnce(
-          &mojo::Binding<HostType>::Close, base::Unretained(binding_.get())));
+      binding_->set_connection_error_handler(
+          base::BindOnce(&ConnectionHolderImpl::SetInstance,
+                         base::Unretained(this), nullptr, 0));
 
       // Call the appropriate version of Init().
       CallInstanceInit<InstanceType>(std::move(host_proxy),
