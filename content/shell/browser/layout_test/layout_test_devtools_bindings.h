@@ -24,6 +24,7 @@ class LayoutTestDevToolsBindings : public ShellDevToolsBindings {
                              WebContents* inspected_contents,
                              const std::string& settings,
                              const GURL& frontend_url,
+                             const GURL& test_url,
                              bool new_harness);
 
   void EvaluateInFrontend(int call_id, const std::string& expression);
@@ -41,6 +42,7 @@ class LayoutTestDevToolsBindings : public ShellDevToolsBindings {
   void RenderFrameCreated(RenderFrameHost* render_frame_host) override;
 
   void NavigateDevToolsFrontend();
+  void Init(bool new_harness);
 
   bool ready_for_test_ = false;
   GURL frontend_url_;
