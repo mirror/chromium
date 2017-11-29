@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a799d16e_ff4ff899",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 50
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-29T06:35:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d1d0ed7f_6d0a4854",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29987573_d934452c",
         "filename": "docs/design/gpu_synchronization.md",
         "patchSetId": 50
@@ -213,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "a5d36d31_62cefdea",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 2810,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-29T06:35:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "832bed36_02f0a405",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bd7db52_cae31302",
         "filename": "gpu/ipc/in_process_command_buffer.cc",
         "patchSetId": 50
@@ -260,6 +296,24 @@
       "side": 1,
       "message": "\u003e Done - this turned out to be a bit tedious since the InProcessCommandBuffer uses base::(Repeating)Closure, so the base::OnceCallback needed AdaptCallbackForRepeating\n\nDrats, we should fix that, QueueTask should take OnceClosures instead. Filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d789349\n\n\u003e and I couldn\u0027t use the existing WrapCallback for thread trampolining since that didn\u0027t handle a 1-argument callback, just a closure. Does this look right now?\n\nThere\u0027s still a thread thing, see comment on l.983.\n\n\u003e I added some basic testing in gpu/ipc/client/gpu_context_tests.h and verified that this ends up calling the InProcessCommandBuffer functions successfully when run on Android.\n\nThanks!",
       "parentUuid": "c60bd3d2_69c36504",
+      "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02ae73a2_d195cb2e",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-29T06:35:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "684ad9a0_c2df4dbb",
       "revId": "dccdb6a6bfb7146104afb699656abf673a193cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
