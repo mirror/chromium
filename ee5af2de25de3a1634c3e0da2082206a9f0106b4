@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c42d746_e58bf704",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-29T23:10:17Z",
+      "side": 1,
+      "message": "To me, it looks like the meta-annotations would come before the class annotations.  In collectChildNodes, we add the annotations first and then the parent.  We\u0027d then process the annotations next in sweepAnnotations right?",
+      "range": {
+        "startLine": 77,
+        "startChar": 13,
+        "endLine": 77,
+        "endChar": 17
+      },
+      "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a0e44a_3b074405",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-29T23:10:17Z",
+      "side": 1,
+      "message": "is this used outside of this class/test?  Should this be package protected?",
+      "range": {
+        "startLine": 90,
+        "startChar": 11,
+        "endLine": 90,
+        "endChar": 17
+      },
+      "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d97819f_566a04c1",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-29T23:10:17Z",
+      "side": 1,
+      "message": "are the annotation types guaranteed to be in the list?  I\u0027m wondering if we should return -1 for that like indexOf will do or if MAX_INT is correct for your sorting logic.",
+      "range": {
+        "startLine": 103,
+        "startChar": 23,
+        "endLine": 103,
+        "endChar": 39
+      },
+      "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc67f71_002326c4",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-29T23:10:17Z",
+      "side": 1,
+      "message": "I do find this code somewhat complicated to following.  Having it across three methods and two classes all adding to the same data structures is making this somewhat hard to follow.\n\nYou also have two directions of traversal (upward with getParent and then getting the meta annotations of the annotations is downward).\n\nI wonder if we could have something like:\n\nList\u003cAnnotation\u003e annotations;\nwhile (annotatedNode !\u003d null) {\n    List\u003cAnnotation\u003e nodeAnnotations \u003d annotatedNode.getAnnotations();\n    annotations.addAll(pruneInvalidAnnotations(nodeAnnotations));\n    for (Annotation nodeAnnotation : nodeAnnotations) {\n        annotations.addAll(pruneInvalidAnnotations(getMetaAnnotations(nodeAnnotation)));\n    }\n    annotatedNode \u003d annotatedNode.getParent();\n}\n\nList\u003cAnnotation\u003e getMetaAnnotations(Annotation) {}\n\nList\u003cAnnotation\u003e pruneInvalidAnnotations(List\u003cAnnotation\u003e) {}\n\n-------\n\nMy general thinking is we could split out the two directions of traversal, but this really depends on the desired ordering.  \u003cIF\u003e the above code could even work, it would add the meta annotations before traversing up the train, but it\u0027s hard for me to reason about how that should work.",
+      "range": {
+        "startLine": 138,
+        "startChar": 20,
+        "endLine": 138,
+        "endChar": 30
+      },
+      "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfdf3fde_0d48db30",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-29T23:10:17Z",
+      "side": 1,
+      "message": "What does this line do?  It seems like this stops processing annotations if the annotation type has ever been visited before.  What is the intent of that?  Is this to stop some sort of cycles?",
+      "range": {
+        "startLine": 152,
+        "startChar": 33,
+        "endLine": 152,
+        "endChar": 43
+      },
+      "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336950eb_5185e6c7",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-29T23:10:17Z",
+      "side": 1,
+      "message": "should we enforce the passed in Annotation\u0027s too the Extractor are also Chromium annotations?",
+      "range": {
+        "startLine": 153,
+        "startChar": 21,
+        "endLine": 153,
+        "endChar": 41
+      },
+      "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
