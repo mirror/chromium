@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9228feda_878c8a21",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-29T09:06:49Z",
+      "side": 1,
+      "message": "I don\u0027t think this is allowed by our style guide. Please confirm or remove.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "6be24784c3ac8311b4e43c630516e3e8505e15a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
