@@ -16,6 +16,24 @@
       "revId": "b7ada056d91a800e98facb98d55718da83117025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a272a00_e82619f3",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-29T17:34:29Z",
+      "side": 1,
+      "message": "This is fine because We create the GpuClient in RenderProcessHostImpl constructor, and destroys it in RenderProcessHostImpl destructor by posting a task to IO thread. So it\u0027s guaranteed the weak pointer is valid.",
+      "parentUuid": "18cf030e_2c16aea2",
+      "revId": "b7ada056d91a800e98facb98d55718da83117025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
