@@ -117,6 +117,30 @@
       "revId": "852ef29761b24bba37b187b240a1c6a9a074841e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507d8c87_369a3d1c",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-29T22:43:07Z",
+      "side": 1,
+      "message": "That is a fantastic argument. Ok. I\u0027ll look into the dependency tomorrow. Thanks!",
+      "parentUuid": "8375cda9_43e5ad83",
+      "range": {
+        "startLine": 213,
+        "startChar": 39,
+        "endLine": 213,
+        "endChar": 66
+      },
+      "revId": "852ef29761b24bba37b187b240a1c6a9a074841e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
