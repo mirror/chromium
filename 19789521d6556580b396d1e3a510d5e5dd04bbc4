@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "5727ad72_ee999cca",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-29T22:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5af1adb4_3f8e97f1",
+      "range": {
+        "startLine": 190,
+        "startChar": 31,
+        "endLine": 190,
+        "endChar": 45
+      },
+      "revId": "19789521d6556580b396d1e3a510d5e5dd04bbc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6de03058_a7cca855",
         "filename": "ash/frame/custom_frame_view_ash.cc",
         "patchSetId": 1
@@ -56,6 +80,24 @@
       "revId": "19789521d6556580b396d1e3a510d5e5dd04bbc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e13366_d8e14c3b",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-29T22:25:28Z",
+      "side": 1,
+      "message": "Done. I couldn\u0027t test this because actually there is a bug currently when that happens, the snapped window does not go back on the window grid. But in theory we should hide header again.",
+      "parentUuid": "6de03058_a7cca855",
+      "revId": "19789521d6556580b396d1e3a510d5e5dd04bbc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
