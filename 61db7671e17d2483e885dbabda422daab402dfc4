@@ -141,6 +141,24 @@
       "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b767acb_7f5d6156",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T20:18:07Z",
+      "side": 1,
+      "message": "The types of deadlocks we ran into in the past is that some GDI operations cause implicit sync IPCs (Windows ones, not Chrome ones) to the thread that owns the affected window. Since they are not visible to the Chrome IPC system, there is no option to have them re-enter. If the GPU thread needs the browser IO thread to make progress (so that it can process WM messages), it could cause a deadlock if the SetParent is also blocking on the GPU thread to finish.",
+      "parentUuid": "43a29069_b5d1865b",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
