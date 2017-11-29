@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "b2db7aef_07f3511b",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-29T07:09:10Z",
+      "side": 1,
+      "message": "You are right! Done.",
+      "parentUuid": "0fc068e7_b129e175",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8be338b4_8be354a7",
         "filename": "chrome/browser/media/router/discovery/dial/device_description_service.h",
         "patchSetId": 9
@@ -300,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "8ebb2a7b_8e9bfa0a",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-29T07:09:10Z",
+      "side": 1,
+      "message": "Made it back to a class and passing the connector in the constructor.",
+      "parentUuid": "585b07e4_4ca79a81",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e5d4714_b7f065ca",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
         "patchSetId": 9
@@ -350,6 +386,24 @@
       "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ebc0de_f2bc452c",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-29T07:09:10Z",
+      "side": 1,
+      "message": "OK, the batch_id (got renamed in another SafeXmlParser CL) is now set in the SafeDialDeviceDescriptionParser. I made it a random string so different instances do not share the same process. It\u0027s probably overkill, but can be changed when you make DeviceDescriptionService a singleton.",
+      "parentUuid": "c2d60726_e87eb470",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -468,6 +522,24 @@
       "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d75592d_d427aeb4",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-29T07:09:10Z",
+      "side": 1,
+      "message": "Sorry replied to your other question before I was done finishing the updated CL.\nDone.",
+      "parentUuid": "8928bef9_a953b0b0",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

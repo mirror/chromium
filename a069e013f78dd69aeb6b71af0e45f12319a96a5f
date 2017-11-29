@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "23aa785c_3e78f59d",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-29T07:09:10Z",
+      "side": 1,
+      "message": "Oh, you are right. I kept the unretained for these 2 calls since they are safe. Using the weakptr for the SafeXmlParser.",
+      "parentUuid": "59c624e8_a5820351",
+      "range": {
+        "startLine": 212,
+        "startChar": 27,
+        "endLine": 212,
+        "endChar": 37
+      },
+      "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b96ce8b_da0e0761",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
         "patchSetId": 11
