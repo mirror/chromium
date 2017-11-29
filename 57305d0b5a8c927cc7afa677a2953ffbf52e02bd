@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "5602bca5_c5c71fe4",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:58:54Z",
+      "side": 1,
+      "message": "Don\u0027t get this. For the case of a web socket request where |info| is not null, we won\u0027t detect the correct |web_request_type|.",
+      "parentUuid": "09524114_45192e3c",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 24
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd0302b1_ed175c64",
         "filename": "extensions/browser/api/web_request/web_request_info.cc",
         "patchSetId": 8
@@ -445,6 +469,30 @@
       "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbd00c7_5cd3efde",
+        "filename": "extensions/shell/browser/shell_network_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baa93fa0_92e2418e",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 44
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

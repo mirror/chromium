@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "738a6304_0334327f",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_types.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:58:54Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "a38b2d61_3c97f04c",
+      "range": {
+        "startLine": 602,
+        "startChar": 36,
+        "endLine": 602,
+        "endChar": 60
+      },
+      "revId": "32f03c7af5378ddc65cc849b218a1a66d978b3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60492972_c854fd93",
         "filename": "extensions/browser/api/declarative_webrequest/webrequest_condition.h",
         "patchSetId": 6
