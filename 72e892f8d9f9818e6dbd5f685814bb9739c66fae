@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42377eb8_a616479a",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "s/MockMFPhotoCallbackFactory/MockPhotoCallbackFactoryMFWin/ ?",
+      "range": {
+        "startLine": 153,
+        "startChar": 6,
+        "endLine": 153,
+        "endChar": 32
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266d2426_fb7f32f6",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "Is this method called? If not, please remove.",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1324699_3262d0f4",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "Is this actually needed? If not, please remove.\n(You can keep line 784\u0027s |callback| alive in the\ntest case itself).",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 62
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b86780ff_55a0cf7e",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "nit: no {} for one-line bodies.",
+      "range": {
+        "startLine": 776,
+        "startChar": 2,
+        "endLine": 776,
+        "endChar": 3
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed41f72a_dcc6a652",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "On second thoughts, and since MockMFPhotoCallbackFactory\ndoesn\u0027t override CreateCallback(), do we actually need\nit, or can we just use here a PhotoCallbackFactoryMFWin ?\nIf yes, this line should be:\n\nauto callback_factory \u003d \n    std::make_unique\u003cPhotoCallbackFactoryMFWin\u003e(std::move(callback));",
+      "range": {
+        "startLine": 790,
+        "startChar": 10,
+        "endLine": 790,
+        "endChar": 36
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975afd29_a900bf98",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "Not needed: .Times(1) is the default.",
+      "range": {
+        "startLine": 813,
+        "startChar": 0,
+        "endLine": 813,
+        "endChar": 15
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a6d7b7_f3f83fe1",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "This is a bit of a personal preference, but Chromium C++\u0027s Dos and Don\u0027ts\nrecommends using \u003d default; for these cases:\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Prefer-to-use-default",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 23
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e652ad20_1f7c804c",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "This class is just a wrapper for CreateCallback() and, other\nthan the |sequence_checker_|, has no state. I wonder if we could\nconsider:\na) removingf this class\nb) moving MFPhotoCallback to an anonymous namespace in\n media/capture/video/win/video_capture_device_mf_win.cc\nc) adding in the said file a static function \n CreateMFPhotoCallback() or some such that would do the\n same factory operation as is done here in l.95.\n\nWDYT?",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80baf449_0e924787",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "VideoCaptureFormat is not a move only type, so no\nneed for std::move().\n\nhttps://cs.chromium.org/chromium/src/media/capture/video_capture_types.h?type\u003dcs\u0026q\u003dVideoCaptureFormat\u0026sq\u003dpackage:chromium\u0026l\u003d81",
+      "range": {
+        "startLine": 101,
+        "startChar": 47,
+        "endLine": 101,
+        "endChar": 64
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76bf1515_25332615",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "Please use here DPLOG(ERROR); it boils down to PLOG_STREAM() [1]\nwhich automatically appends the GetLastSystemErrorCode() stringified,\nsee https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/Og8-JZlt_ys\n\n[1] https://cs.chromium.org/chromium/src/base/logging.h?type\u003dcs\u0026q\u003dDPLOG\u0026sq\u003dpackage:chromium\u0026l\u003d461\n\nWith that and removing the unnecessary parts you could just have \nsomething like:\n\n#if !defined(NDEBUG)\nvoid LogError(const Location\u0026 from_here, HRESULT hr) {\n  DPLOG(ERROR) \u003c\u003c from_here.ToString() \u003c\u003c \" hr \u003d \" \n               \u003c\u003c logging::SystemErrorCodeToString(hr);\n}\n#endif\n\n(note that there\u0027s no need to say \"error\" with D{P}LOG(error),\nand VideoCaptureDeviceMFWin is already present in the form of\nthe file name that is prepended by |from_here|.",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8fac5aa_9b1f057c",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "s/0/false/",
+      "range": {
+        "startLine": 294,
+        "startChar": 18,
+        "endLine": 294,
+        "endChar": 19
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd2286d_384e5038",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "s/NULL/nullptr/",
+      "range": {
+        "startLine": 332,
+        "startChar": 68,
+        "endLine": 332,
+        "endChar": 72
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1870779_16049fe4",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "DCHECK_EQ(expected, actual); \nso this should be\nDCHECK_EQ(false, is_started_);",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 32
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6c599b_45deeea3",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "0? DWORD is an unsigned int.",
+      "range": {
+        "startLine": 411,
+        "startChar": 31,
+        "endLine": 411,
+        "endChar": 35
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a45e617_7f30503c",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "Could you also change this method to be:\nhr \u003d ...;\nif (FAILED(hr)) {\n  LogError(FROM_HERE, hr);\n  return;\n}\n \nOtherwise the distance between an error arising and it \nbeing handled is large.",
+      "range": {
+        "startLine": 455,
+        "startChar": 0,
+        "endLine": 455,
+        "endChar": 33
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf0ab8a_01a245f0",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "Same as before, no need for std::move() here.",
+      "range": {
+        "startLine": 517,
+        "startChar": 48,
+        "endLine": 517,
+        "endChar": 65
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5f719f_cdf13230",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "nit: {} for multi-line bodies.",
+      "range": {
+        "startLine": 668,
+        "startChar": 28,
+        "endLine": 670,
+        "endChar": 73
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

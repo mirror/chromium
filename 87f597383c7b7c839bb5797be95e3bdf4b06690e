@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "c0516264_b76fc418",
+        "filename": "AUTHORS",
+        "patchSetId": 29
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "Ah, ok, ack.",
+      "parentUuid": "514250ce_bdb85f89",
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d749dabe_718cf287",
         "filename": "media/capture/video/video_capture_device_unittest.cc",
         "patchSetId": 29
@@ -119,6 +137,30 @@
       "side": 1,
       "message": "You have multiple test named MAYBE_*.\nExample: MAYBE_GetPhotoState\nWithout this guy, it doesn\u0027t compile.\nIt worked before because tests were TEST_F and not TEST_P.\n\nYou can have a look at https://github.com/google/googletest/issues/389",
       "parentUuid": "d749dabe_718cf287",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 35
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00639b62_73f1ed92",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "Hmm okay, weird. Would you mind mentioning that\nURL here in the comment?\nAlso: s/test_name/|test_name|/ \n(variables in comments must be escaped).",
+      "parentUuid": "1200f656_f9ff42ac",
       "range": {
         "startLine": 91,
         "startChar": 0,
@@ -354,6 +396,30 @@
       "side": 1,
       "message": "Static_cast are not the same between the two cases.",
       "parentUuid": "75485820_f6b33d25",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 5
+      },
+      "revId": "87f597383c7b7c839bb5797be95e3bdf4b06690e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d7d8601_15c13c73",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T15:52:42Z",
+      "side": 1,
+      "message": "Oh, my bad, ack.",
+      "parentUuid": "25690f5a_74f6038b",
       "range": {
         "startLine": 197,
         "startChar": 0,
