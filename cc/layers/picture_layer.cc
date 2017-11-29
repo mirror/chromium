@@ -127,11 +127,11 @@ bool PictureLayer::Update() {
             ContentLayerClient::PAINTING_BEHAVIOR_NORMAL);
     picture_layer_inputs_.painter_reported_memory_usage =
         picture_layer_inputs_.client->GetApproximateUnsharedMemoryUsage();
+    recording_source_->SetRecordingScaleFactor(
+        layer_tree_host()->recording_scale_factor());
     recording_source_->UpdateDisplayItemList(
         picture_layer_inputs_.display_list,
         picture_layer_inputs_.painter_reported_memory_usage);
-    recording_source_->SetRecordingScaleFactor(
-        layer_tree_host()->recording_scale_factor());
 
     SetNeedsPushProperties();
   } else {
