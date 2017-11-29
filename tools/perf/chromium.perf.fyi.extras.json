@@ -148,7 +148,6 @@
         ],
         "merge": {
           "args": [
-            "--verbose"
           ],
           "script": "//tools/perf/core/merge_script.py"
         },
