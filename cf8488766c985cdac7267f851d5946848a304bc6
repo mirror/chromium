@@ -159,6 +159,23 @@
       "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fadd8125_5c300e78",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8282,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T18:06:12Z",
+      "side": 1,
+      "message": "A 1x1 draw rect wont be solid color when 10x10, but that\u0027s why this test adds 100 rects, cuz a small number at 0x0 it plays them back witha 0x0 clip and determines solid color.",
+      "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
