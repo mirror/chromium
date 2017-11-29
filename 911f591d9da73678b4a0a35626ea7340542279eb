@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba90c841_e2c86fbf",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac_interactive_uitest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-29T15:48:17Z",
+      "side": 1,
+      "message": "s//SettingStatus/",
+      "range": {
+        "startLine": 20,
+        "startChar": 57,
+        "endLine": 20,
+        "endChar": 61
+      },
+      "revId": "911f591d9da73678b4a0a35626ea7340542279eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c8ae1a_cf5fdf94",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac_interactive_uitest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-29T15:48:17Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(NSApp.hidden) after this",
+      "revId": "911f591d9da73678b4a0a35626ea7340542279eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5904ded9_79b0a5a4",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac_interactive_uitest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-29T15:48:17Z",
+      "side": 1,
+      "message": "EXPECT_FALSE(NSApp.hidden) after this",
+      "revId": "911f591d9da73678b4a0a35626ea7340542279eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
