@@ -19,6 +19,7 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h"
+#import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #import "ios/third_party/material_components_ios/src/components/ProgressView/src/MaterialProgressView.h"
@@ -43,9 +44,12 @@
 @property(nonatomic, strong) ToolbarButton* bookmarkButton;
 @property(nonatomic, assign) BOOL voiceSearchEnabled;
 @property(nonatomic, strong) MDCProgressView* progressBar;
+// Background view, used to display the background color of the toolbar.
+@property(nonatomic, strong) UIView* backgroundView;
 @end
 
 @implementation ToolbarViewController
+@synthesize backgroundView = _backgroundView;
 @synthesize buttonFactory = _buttonFactory;
 @synthesize buttonUpdater = _buttonUpdater;
 @synthesize dispatcher = _dispatcher;
@@ -98,18 +102,31 @@
   // TODO(crbug.com/785756): Implement this.
 }
 
+- (void)setBackgroundAlpha:(CGFloat)alpha {
+  self.backgroundView.backgroundColor =
+      [[self.buttonFactory.toolbarConfiguration backgroundColor]
+          colorWithAlphaComponent:alpha];
+}
+
 #pragma mark - View lifecyle
 
 - (void)viewDidLoad {
+  // |self.view| is only visible on incognito.
   self.view.backgroundColor =
-      [self.buttonFactory.toolbarConfiguration backgroundColor];
+      [UIColor colorWithWhite:kNTPBackgroundColorBrightnessIncognito alpha:1.0];
+
   [self setUpToolbarStackView];
+  self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+  self.backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+  self.backgroundView.backgroundColor =
+      [self.buttonFactory.toolbarConfiguration backgroundColor];
   if (self.locationBarView) {
     [self.locationBarContainer addSubview:self.locationBarView];
     AddSameConstraints(self.locationBarContainer, self.locationBarView);
   }
   [self.locationBarContainer addSubview:self.bookmarkButton];
   [self.locationBarContainer addSubview:self.voiceSearchButton];
+  [self.view addSubview:self.backgroundView];
   [self.view addSubview:self.stackView];
   [self.view addSubview:self.progressBar];
   [self setConstraints];
@@ -164,6 +181,9 @@
     [self.bookmarkButton.trailingAnchor
         constraintEqualToAnchor:self.voiceSearchButton.leadingAnchor],
   ];
+
+  // Constraints to have the background view of the same size of the view.
+  AddSameConstraints(self.backgroundView, self.view);
 
   // Constraint so Toolbar stackview never overlaps with the Status Bar.
   NSLayoutYAxisAnchor* topAnchor;

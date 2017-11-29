@@ -51,6 +51,8 @@
 - (void)updateForSideSwipeSnapshotOnNTP:(BOOL)onNTP;
 // Resets the view after taking a snapshot for a side swipe.
 - (void)resetAfterSideSwipeSnapshot;
+// Sets the alpha of the background of the toolbar.
+- (void)setBackgroundAlpha:(CGFloat)alpha;
 
 @end
 
