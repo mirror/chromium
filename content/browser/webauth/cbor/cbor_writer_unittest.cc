@@ -42,6 +42,36 @@ TEST(CBORWriterTest, TestWriteUint) {
   }
 }
 
+TEST(CBORWriterTest, TestWriteNegativeInteger) {
+  typedef struct {
+    const uint64_t negative_int_magnitude;
+    const base::StringPiece cbor;
+  } NegativeIntTestCase;
+
+  static const NegativeIntTestCase kNegativeIntTestCases[] = {
+      {1, base::StringPiece("\x20")},
+      {10, base::StringPiece("\x29")},
+      {23, base::StringPiece("\x36")},
+      {24, base::StringPiece("\x37")},
+      {25, base::StringPiece("\x38\x18")},
+      {100, base::StringPiece("\x38\x63")},
+      {1000, base::StringPiece("\x39\x03\xe7")},
+      {0xFFFFFFFF, base::StringPiece("\x3a\xff\xff\xff\xfe")},
+  };
+
+  int test_case_index = 0;
+  for (const NegativeIntTestCase& test_case : kNegativeIntTestCases) {
+    testing::Message scope_message;
+    scope_message << "testing negative int at index : " << test_case_index++;
+    SCOPED_TRACE(scope_message);
+
+    auto cbor = CBORWriter::Write(CBORValue(test_case.negative_int_magnitude,
+                                            CBORValue::IntegerType::NEGATIVE));
+    ASSERT_TRUE(cbor.has_value());
+    EXPECT_THAT(cbor.value(), testing::ElementsAreArray(test_case.cbor));
+  }
+}
+
 TEST(CBORWriterTest, TestWriteBytes) {
   typedef struct {
     const std::vector<uint8_t> bytes;
