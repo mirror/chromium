@@ -22,6 +22,30 @@
       "revId": "67c1f06dacfe6df9d50d27c8c0f84b3e25bf35a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc23054_0d0bef72",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-29T00:16:27Z",
+      "side": 1,
+      "message": "Oh... Thanks a lot. hmm.. how did  it work when I tested my build locally?  \nAha... the line is for  macOS 10.13. I tested it on a macOS 10.13 device, but uploaded this CL from a macOS 10.12 device.",
+      "parentUuid": "1931b3fc_64864306",
+      "range": {
+        "startLine": 163,
+        "startChar": 59,
+        "endLine": 163,
+        "endChar": 60
+      },
+      "revId": "67c1f06dacfe6df9d50d27c8c0f84b3e25bf35a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
