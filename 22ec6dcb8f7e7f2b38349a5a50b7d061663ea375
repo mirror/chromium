@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6780470d_e6e2d0d8",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T04:52:15Z",
+      "side": 1,
+      "message": "In general, with minimum user activity tray and settings has similar performance(settings being a little more sluggish). 1s is the most smooth, 500ms/750ms is probably acceptable too. \n1s: a little sluggish but mostly no hang.\n750ms: freeze for about 1-2 mins\n500ms: freeze for about 1-2 mins\n200ms: freeze for about 2-3 mins",
+      "parentUuid": "7e087fb1_569eca6c",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee58a219_06d235f5",
         "filename": "ash/system/bluetooth/tray_bluetooth.cc",
         "patchSetId": 4
@@ -188,6 +212,30 @@
       "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8351893_0da5ee9e",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T04:52:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a3c66d7_5c454a99",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 12
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -643,6 +691,30 @@
       "side": 1,
       "message": "When we set the timeout to 0 for tests, we still need to wait a frame after calling setDevicesForTest. Instead of using waitForTimeout, you can use Polymer.Base.async:\n\nPolymer.Base.async(function() {\n   assertEquals(4, subpage.deviceList_.length);\n   ...\n});",
       "parentUuid": "f020fb28_fed13512",
+      "range": {
+        "startLine": 144,
+        "startChar": 28,
+        "endLine": 144,
+        "endChar": 32
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbefaff4_b90a1fe4",
+        "filename": "chrome/test/data/webui/settings/bluetooth_page_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T04:52:15Z",
+      "side": 1,
+      "message": "Polymer.Base.async seems to run with mircotask timing[1] which is before the setTimeout callback?\nI use another setTimeout(0) here which should be executed after the previous setTimeout(0) callback.\n\n[1]:https://www.polymer-project.org/1.0/docs/devguide/instance-methods",
+      "parentUuid": "8a5c455b_a25c467a",
       "range": {
         "startLine": 144,
         "startChar": 28,

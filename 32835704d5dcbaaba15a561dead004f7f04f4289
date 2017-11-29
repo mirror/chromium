@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13d507ca_5cae4514",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T04:52:15Z",
+      "side": 1,
+      "message": "Changed to device_list.",
+      "parentUuid": "41452ca2_fb4faa97",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f6b5bc5_d166a80c",
         "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392c228d_b2f0120c",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T04:52:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f6b5bc5_d166a80c",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7eded228_05acc199",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T04:52:15Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "fddeadef_8c1e74b8",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22d54ad8_4bda2342",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfaf7548_ab436ae1",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T04:52:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22d54ad8_4bda2342",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8201728f_5874dc83",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T04:52:15Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "9c51dbbd_c2f9aafd",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eddc22d_c89f05c1",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23905190_fbca750a",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-29T04:52:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eddc22d_c89f05c1",
+      "revId": "32835704d5dcbaaba15a561dead004f7f04f4289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
