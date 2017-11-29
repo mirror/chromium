@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9cc2961_538e4133",
+        "filename": "net/quic/chromium/quic_chromium_client_session_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-29T18:07:30Z",
+      "side": 1,
+      "message": "Thanks for catching this, I keep mixing those up, fixed them now.",
+      "parentUuid": "9bb8863c_d208ee27",
+      "range": {
+        "startLine": 229,
+        "startChar": 2,
+        "endLine": 229,
+        "endChar": 14
+      },
+      "revId": "8e0c241cd33a187c2bf29b941a85c69de376cda7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ed434b5_156dd69c",
         "filename": "net/socket/ssl_client_socket_unittest.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3f28dc90_48561a77",
+        "filename": "net/socket/ssl_client_socket_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2732,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-29T18:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ed434b5_156dd69c",
+      "range": {
+        "startLine": 2732,
+        "startChar": 14,
+        "endLine": 2732,
+        "endChar": 33
+      },
+      "revId": "8e0c241cd33a187c2bf29b941a85c69de376cda7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3045c529_f98d18f1",
         "filename": "net/socket/ssl_client_socket_unittest.cc",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "8e0c241cd33a187c2bf29b941a85c69de376cda7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3037bde_82738307",
+        "filename": "net/socket/ssl_client_socket_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2744,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-29T18:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3045c529_f98d18f1",
+      "range": {
+        "startLine": 2744,
+        "startChar": 2,
+        "endLine": 2744,
+        "endChar": 14
+      },
+      "revId": "8e0c241cd33a187c2bf29b941a85c69de376cda7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
