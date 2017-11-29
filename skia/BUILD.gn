@@ -7,7 +7,9 @@ import("//build/config/freetype/freetype.gni")
 import("//build/config/sanitizers/sanitizers.gni")
 import("//printing/features/features.gni")
 import("//testing/test.gni")
+import("//testing/libfuzzer/fuzzer_test.gni")
 import("//third_party/skia/gn/shared_sources.gni")
+import("//device/vr/features/features.gni")
 
 if (current_cpu == "arm") {
   import("//build/config/arm.gni")
@@ -748,4 +750,10 @@ if (!is_ios) {
       "//build/win:default_exe_manifest",
     ]
   }
+}
+
+group("fuzzers") {
+  deps = [
+    "tools/fuzzers",
+  ]
 }
