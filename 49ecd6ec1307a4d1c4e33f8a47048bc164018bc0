@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc05ce97_6513ee6a",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngineTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-29T02:45:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean. I think this test only uses Color. I just pulled this out because it was used over 30 times. I can change it back.",
+      "parentUuid": "1f6b9a20_c4d5af32",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba144f89_ef132939",
         "filename": "third_party/WebKit/Source/core/css/properties/ReneesParserStuff.h",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T02:27:17Z",
       "side": 1,
       "message": "Lol maybe you should put a DO NOT SUBMIT line here also for clarity.",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10414e8c_f08c3539",
+        "filename": "third_party/WebKit/Source/core/css/properties/ReneesParserStuff.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-29T02:45:40Z",
+      "side": 1,
+      "message": "Like a comment? Or is there actually a tag that the presub with catch?",
+      "parentUuid": "ba144f89_ef132939",
       "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bea93fab_e15e4ae2",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/BackgroundColor.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-29T02:45:40Z",
+      "side": 1,
+      "message": "Na, this is called from CSSValueFromComputedStyle via VisitedDependentColor. By this point we should always have checked that visited styles are allowed.",
+      "parentUuid": "fb80f3cc_4da748da",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c799bd7e_b3277cb9",
         "filename": "third_party/WebKit/Source/core/css/properties/longhands/BorderLeftColor.cpp",
         "patchSetId": 15
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-29T02:27:17Z",
       "side": 1,
       "message": "This looks very similar to BorderBottomColor::ColorIncludingFallback. Should you be pulling this out into a util to avoid duplicate code?",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5b201b_57e1d6b3",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/BorderLeftColor.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-29T02:45:40Z",
+      "side": 1,
+      "message": "It is very similar, but the first part can\u0027t be consolidated because of the named getters. I can probably put the second part in a helper.",
+      "parentUuid": "c799bd7e_b3277cb9",
       "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
