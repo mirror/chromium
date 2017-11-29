@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a42cf3d_c9782d48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-11-29T19:13:32Z",
+      "side": 1,
+      "message": "Thank you for the suggestion, using the same distribution of buckets as on Windows and Mac sounds reasonable to me. \nWe can adjust the distribution later when we make this metric non-experimental.",
+      "parentUuid": "bebb0dc7_b484faf4",
+      "range": {
+        "startLine": 215,
+        "startChar": 55,
+        "endLine": 215,
+        "endChar": 0
+      },
+      "revId": "2742fa0bf56fdf35fa05e351a178a7d52884c70e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37123097_eafae42f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "2742fa0bf56fdf35fa05e351a178a7d52884c70e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43f75cf_b20abe5b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 37716,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-11-29T19:13:32Z",
+      "side": 1,
+      "message": "SGTM.\nDone",
+      "parentUuid": "37123097_eafae42f",
+      "range": {
+        "startLine": 37716,
+        "startChar": 31,
+        "endLine": 37716,
+        "endChar": 43
+      },
+      "revId": "2742fa0bf56fdf35fa05e351a178a7d52884c70e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
