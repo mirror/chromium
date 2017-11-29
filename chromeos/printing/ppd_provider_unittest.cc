@@ -20,6 +20,7 @@
 #include "base/test/test_message_loop.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/version.h"
 #include "chromeos/chromeos_paths.h"
 #include "chromeos/printing/ppd_cache.h"
 #include "chromeos/printing/ppd_provider.h"
@@ -127,6 +128,13 @@ class PpdProviderTest : public ::testing::Test {
             ["printer_a", "printer_a_ref"],
             ["printer_b", "printer_b_ref"]
             ])"},
+        {"metadata_v2/manufacturer_a.json",
+         R"([
+            ["printer_a", "printer_a_ref",
+              {"min_milestone":62.0000, "unstable":true}],
+            ["printer_b", "printer_b_ref",
+              {"min_milestone":62.0000, "unstable":true}]
+            ])"},
         {"metadata/manufacturer_b.json",
          R"([
             ["printer_c", "printer_c_ref"]
@@ -138,6 +146,10 @@ class PpdProviderTest : public ::testing::Test {
         {"metadata_v2/reverse_index-en-19.json",
          R"([
              ])"},
+        {"metadata_v2/manufacturer_b.json",
+         R"([
+            ["printer_c", "printer_c_ref"]
+            ])"},
         {"ppds/printer_a.ppd", kCupsFilterPpdContents},
         {"ppds/printer_b.ppd", kCupsFilter2PpdContents},
         {"ppds/printer_c.ppd", "c"},
@@ -434,6 +446,7 @@ TEST_F(PpdProviderTest, ResolvePrinters) {
   provider->ResolvePrinters("manufacturer_b_en",
                             base::Bind(&PpdProviderTest::CaptureResolvePrinters,
                                        base::Unretained(this)));
+
   scoped_task_environment_.RunUntilIdle();
   ASSERT_EQ(2UL, captured_resolve_printers_.size());
   EXPECT_EQ(PpdProvider::SUCCESS, captured_resolve_printers_[0].first);
@@ -444,18 +457,22 @@ TEST_F(PpdProviderTest, ResolvePrinters) {
   // reference effective make and models of printer_a_ref and printer_b_ref.
   const auto& capture0 = captured_resolve_printers_[0].second;
   ASSERT_EQ(2UL, capture0.size());
-  EXPECT_EQ("printer_a", capture0[0].first);
-  EXPECT_EQ("printer_a_ref", capture0[0].second.effective_make_and_model);
+  EXPECT_EQ("printer_a", capture0[0].name);
+  EXPECT_EQ("printer_a_ref", capture0[0].ppd_ref.effective_make_and_model);
+  EXPECT_EQ(base::Version("62"), capture0[0].restrictions.min_milestone);
+  EXPECT_EQ(true, capture0[0].restrictions.unstable);
 
-  EXPECT_EQ("printer_b", capture0[1].first);
-  EXPECT_EQ("printer_b_ref", capture0[1].second.effective_make_and_model);
+  EXPECT_EQ("printer_b", capture0[1].name);
+  EXPECT_EQ("printer_b_ref", capture0[1].ppd_ref.effective_make_and_model);
+  EXPECT_EQ(base::Version("62"), capture0[1].restrictions.min_milestone);
+  EXPECT_EQ(true, capture0[1].restrictions.unstable);
 
   // Second capture should get back printer_c with effective make and model of
   // printer_c_ref
   const auto& capture1 = captured_resolve_printers_[1].second;
   ASSERT_EQ(1UL, capture1.size());
-  EXPECT_EQ("printer_c", capture1[0].first);
-  EXPECT_EQ("printer_c_ref", capture1[0].second.effective_make_and_model);
+  EXPECT_EQ("printer_c", capture1[0].name);
+  EXPECT_EQ("printer_c_ref", capture1[0].ppd_ref.effective_make_and_model);
 }
 
 // Test that if we give a bad reference to ResolvePrinters(), we get an

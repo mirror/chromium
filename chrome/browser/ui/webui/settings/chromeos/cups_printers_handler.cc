@@ -34,6 +34,7 @@
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "chromeos/printing/ppd_cache.h"
 #include "chromeos/printing/ppd_provider.h"
+#include "components/version_info/version_info.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_ui.h"
@@ -277,6 +278,24 @@ std::unique_ptr<chromeos::Printer> DictToPrinter(
   printer->set_uri(printer_uri);
 
   return printer;
+}
+
+// Returns true if this printer with these |retrictions| if excluded from the
+// |current_version|.
+static bool IsPrinterRestricted(const PpdProvider::Restrictions& restrictions,
+                                const base::Version& current_version) {
+  if (restrictions.unstable)
+    return true;
+
+  if (restrictions.min_milestone.CompareTo(base::Version("0.0")) != 0 &&
+      restrictions.min_milestone.CompareTo(current_version) == 1)
+    return true;
+
+  if (restrictions.max_milestone.CompareTo(base::Version("0.0")) != 0 &&
+      restrictions.max_milestone.CompareTo(current_version) == -1)
+    return true;
+
+  return false;
 }
 
 }  // namespace
@@ -567,8 +586,8 @@ void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
     // model.
     bool found = false;
     for (const auto& resolved_printer : resolved_printers_[ppd_manufacturer]) {
-      if (resolved_printer.first == ppd_model) {
-        *printer->mutable_ppd_reference() = resolved_printer.second;
+      if (resolved_printer.name == ppd_model) {
+        *(printer->mutable_ppd_reference()) = resolved_printer.ppd_ref;
         found = true;
         break;
       }
@@ -744,8 +763,14 @@ void CupsPrintersHandler::ResolvePrintersDone(
   auto printers_value = base::MakeUnique<base::ListValue>();
   if (result_code == PpdProvider::SUCCESS) {
     resolved_printers_[manufacturer] = printers;
+    base::Version current_version =
+        base::Version(version_info::GetVersionNumber());
     for (const auto& printer : printers) {
-      printers_value->AppendString(printer.first);
+      if (IsPrinterRestricted(printer.restrictions, current_version)) {
+        VLOG(1) << "Limitations exclude this model: " << printer.name;
+      } else {
+        printers_value->AppendString(printer.name);
+      }
     }
   }
   base::DictionaryValue response;
