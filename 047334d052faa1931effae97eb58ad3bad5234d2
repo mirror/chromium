@@ -771,6 +771,30 @@
     },
     {
       "key": {
+        "uuid": "534656e9_91e70222",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-29T07:38:28Z",
+      "side": 1,
+      "message": "I believe the existing scenario in offline mode isn\u0027t affected. If there are enough space to cache all the files, they are cached offline and it\u0027s synced when the connection is back.",
+      "parentUuid": "26cac8e8_23a423c9",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 69
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59b50ba7_f2f00b7c",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
