@@ -247,7 +247,8 @@ void HTMLSlotElement::AttributeChanged(
     const AttributeModificationParams& params) {
   if (params.name == nameAttr) {
     if (ShadowRoot* root = ContainingShadowRoot()) {
-      if (root->IsV1() && params.old_value != params.new_value) {
+      if ((root->IsV1() || root->IsUserAgentV1()) &&
+          params.old_value != params.new_value) {
         root->GetSlotAssignment().DidRenameSlot(
             NormalizeSlotName(params.old_value), *this);
       }
@@ -262,7 +263,7 @@ Node::InsertionNotificationRequest HTMLSlotElement::InsertedInto(
   if (SupportsAssignment()) {
     ShadowRoot* root = ContainingShadowRoot();
     DCHECK(root);
-    DCHECK(root->IsV1());
+    DCHECK(root->IsV1() || root->IsUserAgentV1());
     DCHECK(root->Owner());
     if (root == insertion_point->ContainingShadowRoot()) {
       // This slot is inserted into the same tree of |insertion_point|
@@ -465,7 +466,7 @@ void HTMLSlotElement::EnqueueSlotChangeEvent() {
 bool HTMLSlotElement::HasAssignedNodesSlow() const {
   ShadowRoot* root = ContainingShadowRoot();
   DCHECK(root);
-  DCHECK(root->IsV1());
+  DCHECK(root->IsV1() || root->IsUserAgentV1());
   SlotAssignment& assignment = root->GetSlotAssignment();
   if (assignment.FindSlotByName(GetName()) != this)
     return false;
@@ -475,7 +476,7 @@ bool HTMLSlotElement::HasAssignedNodesSlow() const {
 bool HTMLSlotElement::FindHostChildWithSameSlotName() const {
   ShadowRoot* root = ContainingShadowRoot();
   DCHECK(root);
-  DCHECK(root->IsV1());
+  DCHECK(root->IsV1() || root->IsUserAgentV1());
   SlotAssignment& assignment = root->GetSlotAssignment();
   return assignment.FindHostChildBySlotName(GetName());
 }
