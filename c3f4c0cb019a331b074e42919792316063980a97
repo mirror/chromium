@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2379abb4_9f2f3ab6",
+        "filename": "chrome/browser/ui/apps/app_info_dialog.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-29T02:32:38Z",
+      "side": 1,
+      "message": "Uhhhhh. I think I did it..?",
+      "parentUuid": "2a8a75df_4a492dab",
+      "revId": "c3f4c0cb019a331b074e42919792316063980a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44060d18_69e3f5a9",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-28T03:46:18Z",
       "side": 1,
       "message": "What\u0027s the point of this class?",
+      "revId": "c3f4c0cb019a331b074e42919792316063980a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abca42e_d041b9a3",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-29T02:32:38Z",
+      "side": 1,
+      "message": "Makes parameterized test harness always turn on DesktopPWAs. See line 709 vs 710.",
+      "parentUuid": "44060d18_69e3f5a9",
       "revId": "c3f4c0cb019a331b074e42919792316063980a97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6aa06d55_6014ad1c",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-29T02:32:38Z",
+      "side": 1,
+      "message": "The Widget is created synchronously, and the callback isn\u0027t posted so.... nope \u003dD",
+      "parentUuid": "d2ca3dd4_e561d27a",
+      "range": {
+        "startLine": 470,
+        "startChar": 14,
+        "endLine": 470,
+        "endChar": 28
+      },
+      "revId": "c3f4c0cb019a331b074e42919792316063980a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cd28e9c_a7075d6c",
         "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_container.cc",
         "patchSetId": 6
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-28T03:46:18Z",
       "side": 1,
       "message": "Why was this added? It seems like this class (BaseSomething) is just a base class and shouldn\u0027t have actual instances?",
+      "revId": "c3f4c0cb019a331b074e42919792316063980a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ae5e1a_27b60e77",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_container.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-29T02:32:38Z",
+      "side": 1,
+      "message": "Oops, sorry, left this in from a previous attempt at making tests work. Removed.",
+      "parentUuid": "7cd28e9c_a7075d6c",
       "revId": "c3f4c0cb019a331b074e42919792316063980a97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
