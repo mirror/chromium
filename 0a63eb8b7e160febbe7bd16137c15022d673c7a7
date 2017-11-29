@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1fe3e1a1_04f980b4",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-29T01:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a983d22_73d4f1d4",
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "204f73d8_30a8d694",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4947f4a2_0e492fcc",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-29T01:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "204f73d8_30a8d694",
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "01445bf5_9fa53097",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-29T01:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09d35097_e17a02bb",
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b1bb7f4_7ab35b05",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ab792f58_ef73fede",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-29T01:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b1bb7f4_7ab35b05",
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9543ce9e_76987888",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d35c242_3164f2c5",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-29T01:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9543ce9e_76987888",
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +197,30 @@
       "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2838c8_adae821a",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-29T01:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8deb914e_a3cedd60",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 10
+      },
+      "revId": "0a63eb8b7e160febbe7bd16137c15022d673c7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
