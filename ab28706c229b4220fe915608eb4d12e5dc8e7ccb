@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4901e651_c3224dd9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T17:15:02Z",
+      "side": 1,
+      "message": "It\u0027d be nice if more of this logic could move out of BottomSheet. Maybe in a follow-up... it looks like it may be hard to break apart.",
+      "revId": "ab28706c229b4220fe915608eb4d12e5dc8e7ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a8fba7_8b080775",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetSwipeDetector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T17:15:02Z",
+      "side": 1,
+      "message": "nit: Should this JavaDoc also talk about converting swipes/flings to sheet offsets and setting state on the bottom sheet?",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "ab28706c229b4220fe915608eb4d12e5dc8e7ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1eca4c_3811eee2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetSwipeDetector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T17:15:02Z",
+      "side": 1,
+      "message": "nit: JavaDoc",
+      "range": {
+        "startLine": 157,
+        "startChar": 11,
+        "endLine": 157,
+        "endChar": 35
+      },
+      "revId": "ab28706c229b4220fe915608eb4d12e5dc8e7ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
