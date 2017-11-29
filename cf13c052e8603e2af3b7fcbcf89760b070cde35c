@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93f11d34_73b7b4ab",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T23:53:25Z",
+      "side": 1,
+      "message": "Just thinking about this.. can you double check that things very close to 0 are still invertible? Floats don\u0027t always behave well.",
+      "revId": "cf13c052e8603e2af3b7fcbcf89760b070cde35c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0333723d_9af03097",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T23:53:25Z",
+      "side": 1,
+      "message": "nit: inverted",
+      "revId": "cf13c052e8603e2af3b7fcbcf89760b070cde35c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4632c1cc_8106a007",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T23:53:25Z",
+      "side": 1,
+      "message": "nit: Yeah, the way the comment sits is always awkward on else ifs with our style choices. Maybe put these case comments instead each block instead of on top of them?",
+      "revId": "cf13c052e8603e2af3b7fcbcf89760b070cde35c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
