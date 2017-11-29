@@ -59,6 +59,8 @@ class CC_EXPORT RecordingSource {
   const DisplayItemList* GetDisplayItemList();
   gfx::Rect recorded_viewport() const { return recorded_viewport_; }
 
+  bool is_solid_color() const { return is_solid_color_; }
+
  protected:
   gfx::Rect recorded_viewport_;
   gfx::Size size_;
