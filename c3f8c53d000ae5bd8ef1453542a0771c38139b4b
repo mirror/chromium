@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2be2974_9167d2c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T21:38:30Z",
+      "side": 1,
+      "message": "nit: s/accpet/accept",
+      "revId": "c3f8c53d000ae5bd8ef1453542a0771c38139b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "debcc5ad_4937a0b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T21:38:30Z",
+      "side": 1,
+      "message": "nit: remove this comma",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "c3f8c53d000ae5bd8ef1453542a0771c38139b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b62b46d_e2c1f156",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T21:38:30Z",
+      "side": 1,
+      "message": "JavaDoc",
+      "range": {
+        "startLine": 69,
+        "startChar": 13,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "c3f8c53d000ae5bd8ef1453542a0771c38139b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb31191_8254db01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T21:38:30Z",
+      "side": 1,
+      "message": "nit: mAddLanguageButton",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 31
+      },
+      "revId": "c3f8c53d000ae5bd8ef1453542a0771c38139b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea71797_b04a2ba5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T21:38:30Z",
+      "side": 1,
+      "message": "s/interfaces/interface",
+      "revId": "c3f8c53d000ae5bd8ef1453542a0771c38139b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1154f3_712c4f4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T21:38:30Z",
+      "side": 1,
+      "message": "If we use a LinkedHashMap we can preserve insertion order, facilitate easy look ups, and easily iterate over the list. I think that would allow us to remove mLanguageList, so that we\u0027re only keeping 1 copy of the languages rather than 2.",
+      "range": {
+        "startLine": 42,
+        "startChar": 28,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "c3f8c53d000ae5bd8ef1453542a0771c38139b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a9a87b_69d266aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T21:38:30Z",
+      "side": 1,
+      "message": "How about getLanguageItemsExcludingUserAccept()? That way the method name describes what it\u0027s doing rather than what it\u0027s (currently) used for.",
+      "range": {
+        "startLine": 79,
+        "startChar": 30,
+        "endLine": 79,
+        "endChar": 55
+      },
+      "revId": "c3f8c53d000ae5bd8ef1453542a0771c38139b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37d0d03_15ba566f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T21:38:30Z",
+      "side": 1,
+      "message": "When does this get called?",
+      "revId": "c3f8c53d000ae5bd8ef1453542a0771c38139b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
