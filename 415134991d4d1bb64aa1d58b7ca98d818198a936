@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62b21528_66a86577",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-29T19:56:53Z",
+      "side": 1,
+      "message": "With RLS, are the root sticky objects tracked on the frameview (and therefore frame_view-\u003eHasViewportConstrainedObjects() returns true), or the sticky_constraints_map_ on this PLSA (or both)?",
+      "revId": "415134991d4d1bb64aa1d58b7ca98d818198a936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
