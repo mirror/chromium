@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b369d50_61e3aa74",
+        "filename": "net/dns/dns_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-29T17:01:33Z",
+      "side": 1,
+      "message": "This is the deprecated way of doing field trials. You want go/feature-api instead.",
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f045d2_e87d9e0e",
+        "filename": "net/dns/dns_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-29T17:01:33Z",
+      "side": 1,
+      "message": "This would be more clear with the tuple as a struct instead, or at least a typedef for \"DohServerConfig\" or something. Also it should be private.",
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6d161a_2a9376f3",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-29T17:01:33Z",
+      "side": 1,
+      "message": "I think a config with no nameservers would normally be considered invalid and this code wouldn\u0027t be reached in the first place. So if you want the case where there are DoH servers but no normal nameservers to work, there are probably more changes necessary in the config logic.",
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37bf8d34_b6234540",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-29T17:01:33Z",
+      "side": 1,
+      "message": "Why don\u0027t you want a fallback to the system resolver when DoH is enabled? I don\u0027t think the async resolver is ready for that on any of the platforms where it\u0027s used, and I can\u0027t think of any problems with it that don\u0027t also exist with fallback to UDP when DoH doesn\u0027t work.\n\n(This function in its current state probably should have been deleted, the rest of it doesn\u0027t work anymore and that field trial hasn\u0027t run in a very long time.)",
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
