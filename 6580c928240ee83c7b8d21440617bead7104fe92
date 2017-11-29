@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "db145913_41062e0a",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T01:04:36Z",
+      "side": 1,
+      "message": "I was thinking of the error case where OnComplete() was called with error. The BlobReaderClient contract doesn\u0027t explicitly guarantee that OnCalculatedSize() is not called in that case, it just says \"might not get called\".",
+      "parentUuid": "483cf2f5_5b02eca2",
+      "revId": "6580c928240ee83c7b8d21440617bead7104fe92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0919a44_4927ecaf",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T01:04:36Z",
+      "side": 1,
+      "message": "This is potentially null if OnCalculatedSize() was called successfully, but an error later occurred and OnComplete() was called with error.",
+      "revId": "6580c928240ee83c7b8d21440617bead7104fe92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24939112_11a2607c",
         "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
         "patchSetId": 11
@@ -36,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "48d8fe89_c7f4ad94",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T01:04:36Z",
+      "side": 1,
+      "message": "Yea... this interface is a simplified version of blob.mojom without mentioning \"blob\" since that\u0027s a web platform feature that should not be known in NetworkService. I could change the comment to \"Reads the content into |pipe|\" or just change the name to WriteToDataPipe, I\u0027ll probably do the former for consistency with blob.mojom.\n\nAnd yes passing the producer handle makes it so we don\u0027t need a new interface like BlobReaderClient and is consistent with the Blob interface.",
+      "parentUuid": "24939112_11a2607c",
+      "revId": "6580c928240ee83c7b8d21440617bead7104fe92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16477172_6e79ecfd",
         "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
         "patchSetId": 11
@@ -47,6 +100,30 @@
       "writtenOn": "2017-11-28T22:21:17Z",
       "side": 1,
       "message": "Out of curiosity, is there any foreseeable future where this becomes an actual enum?",
+      "range": {
+        "startLine": 13,
+        "startChar": 44,
+        "endLine": 13,
+        "endChar": 49
+      },
+      "revId": "6580c928240ee83c7b8d21440617bead7104fe92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c2d46e_23932640",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T01:04:36Z",
+      "side": 1,
+      "message": "I\u0027d imagine someday... this is again following blob.mojom\u0027s lead.",
+      "parentUuid": "16477172_6e79ecfd",
       "range": {
         "startLine": 13,
         "startChar": 44,
