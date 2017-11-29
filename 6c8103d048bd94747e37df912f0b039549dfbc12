@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "040a4ea4_847722a6",
+        "filename": "content/common/appcache.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-29T18:51:21Z",
+      "side": 1,
+      "message": "AppCacheErrorReason reason \u003d APPCACHE_UNKNOWN_ERROR;",
+      "revId": "6c8103d048bd94747e37df912f0b039549dfbc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4492708_8aeab4a0",
+        "filename": "content/common/appcache_interfaces.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-29T18:51:21Z",
+      "side": 1,
+      "message": "Are we cool with this style of importing the enums into the content namespace?\n\nI\u0027m a fan: I think it is more readable than the alternative of spelling out mojom:: each time, and it dumps fewer symbols into the namespace this way anyway. I just couldn\u0027t find this usage elsewhere, so it seems like we\u0027re setting a precedent here.",
+      "revId": "6c8103d048bd94747e37df912f0b039549dfbc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c392f45f_0c7ca941",
+        "filename": "content/public/common/appcache_info.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-29T18:51:21Z",
+      "side": 1,
+      "message": "Make this explicitly `\u003d APPCACHE_STATUS_UNCACHED` ?",
+      "revId": "6c8103d048bd94747e37df912f0b039549dfbc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be01a9da_5fcfb7ec",
+        "filename": "content/renderer/appcache/appcache_frontend_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-29T18:51:21Z",
+      "side": 1,
+      "message": "DCHECK_NE while you\u0027re here?",
+      "revId": "6c8103d048bd94747e37df912f0b039549dfbc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7e0b99_b982b77c",
+        "filename": "content/renderer/appcache/appcache_frontend_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-29T18:51:21Z",
+      "side": 1,
+      "message": "DCHECK_NE",
+      "revId": "6c8103d048bd94747e37df912f0b039549dfbc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c6b315_51d36f26",
+        "filename": "content/renderer/appcache/web_application_cache_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-29T18:51:21Z",
+      "side": 1,
+      "message": "DCHECK_NE",
+      "revId": "6c8103d048bd94747e37df912f0b039549dfbc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff183c1_f79ef75f",
+        "filename": "content/renderer/appcache/web_application_cache_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-29T18:51:21Z",
+      "side": 1,
+      "message": "DCHECK_NE",
+      "revId": "6c8103d048bd94747e37df912f0b039549dfbc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
