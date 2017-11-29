@@ -1498,7 +1498,7 @@ TEST_F(LayerTreeHostImplTest, ScrollByReturnsCorrectValue) {
           .did_scroll);
 }
 
-TEST_F(LayerTreeHostImplTest, ScrollBoundaryBehaviorPreventsPropagation) {
+TEST_F(LayerTreeHostImplTest, OverscrollBehaviorPreventsPropagation) {
   LayerImpl* scroll_layer = SetupScrollAndContentsLayers(gfx::Size(200, 200));
   host_impl_->SetViewportSize(gfx::Size(100, 100));
 
@@ -1519,7 +1519,7 @@ TEST_F(LayerTreeHostImplTest, ScrollBoundaryBehaviorPreventsPropagation) {
   DrawFrame();
   gfx::Point scroll_position(50, 50);
 
-  // ScrollBoundaryBehaviorTypeAuto shouldn't prevent scroll propagation.
+  // OverscrollBehaviorTypeAuto shouldn't prevent scroll propagation.
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
       host_impl_
@@ -1536,15 +1536,14 @@ TEST_F(LayerTreeHostImplTest, ScrollBoundaryBehaviorPreventsPropagation) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 30), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
-  overflow->test_properties()->scroll_boundary_behavior =
-      ScrollBoundaryBehavior(
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeContain,
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto);
+  overflow->test_properties()->overscroll_behavior =
+      OverscrollBehavior(OverscrollBehavior::kOverscrollBehaviorTypeContain,
+                         OverscrollBehavior::kOverscrollBehaviorTypeAuto);
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   DrawFrame();
 
-  // ScrollBoundaryBehaviorContain on x should prevent propagations of scroll
+  // OverscrollBehaviorContain on x should prevent propagations of scroll
   // on x.
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
@@ -1559,7 +1558,7 @@ TEST_F(LayerTreeHostImplTest, ScrollBoundaryBehaviorPreventsPropagation) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 30), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
-  // ScrollBoundaryBehaviorContain on x shouldn't prevent propagations of
+  // OverscrollBehaviorContain on x shouldn't prevent propagations of
   // scroll on y.
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
@@ -1590,15 +1589,14 @@ TEST_F(LayerTreeHostImplTest, ScrollBoundaryBehaviorPreventsPropagation) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
   // Changing scroll-boundary-behavior to y axis.
-  overflow->test_properties()->scroll_boundary_behavior =
-      ScrollBoundaryBehavior(
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto,
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeContain);
+  overflow->test_properties()->overscroll_behavior =
+      OverscrollBehavior(OverscrollBehavior::kOverscrollBehaviorTypeAuto,
+                         OverscrollBehavior::kOverscrollBehaviorTypeContain);
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   DrawFrame();
 
-  // ScrollBoundaryBehaviorContain on y shouldn't prevent propagations of
+  // OverscrollBehaviorContain on y shouldn't prevent propagations of
   // scroll on x.
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
@@ -1613,7 +1611,7 @@ TEST_F(LayerTreeHostImplTest, ScrollBoundaryBehaviorPreventsPropagation) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 20), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
-  // ScrollBoundaryBehaviorContain on y should prevent propagations of scroll
+  // OverscrollBehaviorContain on y should prevent propagations of scroll
   // on y.
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
