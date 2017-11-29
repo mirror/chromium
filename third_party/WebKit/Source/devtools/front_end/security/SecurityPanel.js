@@ -11,9 +11,10 @@ Security.SecurityPanel = class extends UI.PanelWithSidebar {
 
     this._mainView = new Security.SecurityMainView(this);
 
+    var title = createElementWithClass('span', 'title');
+    title.textContent = Common.UIString('Overview');
     this._sidebarMainViewElement = new Security.SecurityPanelSidebarTreeElement(
-        Common.UIString('Overview'), this._setVisibleView.bind(this, this._mainView),
-        'security-main-view-sidebar-tree-item', 'lock-icon');
+        title, this._setVisibleView.bind(this, this._mainView), 'security-main-view-sidebar-tree-item', 'lock-icon');
     this._sidebarTree = new Security.SecurityPanelSidebarTree(this._sidebarMainViewElement, this.showOrigin.bind(this));
     this.panelSidebarElement().appendChild(this._sidebarTree.element);
 
@@ -60,6 +61,31 @@ Security.SecurityPanel = class extends UI.PanelWithSidebar {
       InspectorFrontendHost.showCertificateViewer(names);
     }, 'security-certificate-button');
   }
+
+  /**
+   * @param {string} url
+   * @param {string} securityState
+   * @return {!Element}
+   */
+  static createHighlightedUrl(url, securityState) {
+    var schemeSeparator = '://';
+    var index = url.indexOf(schemeSeparator);
+
+    // If the separator is not found, just display the text without highlighting.
+    if (index === -1)
+      return createElement('span', '').textContent = url;
+
+    var highlightedUrl = createElement('span', 'url-text');
+
+    var scheme = url.substr(0, index);
+    var content = url.slice(index + schemeSeparator.length);
+    highlightedUrl.createChild('span', 'url-scheme-' + securityState).textContent = scheme;
+    highlightedUrl.createChild('span', 'url-scheme-separator').textContent = schemeSeparator;
+    highlightedUrl.createChild('span').textContent = content;
+
+    return highlightedUrl;
+  }
+
 
   /**
    * @param {!Protocol.Security.SecurityState} securityState
@@ -410,8 +436,8 @@ Security.SecurityPanelSidebarTree = class extends UI.TreeOutlineInShadow {
    */
   addOrigin(origin, securityState) {
     var originElement = new Security.SecurityPanelSidebarTreeElement(
-        origin, this._showOriginInPanel.bind(this, origin), 'security-sidebar-tree-item', 'security-property');
-    originElement.listItemElement.title = origin;
+        Security.SecurityPanel.createHighlightedUrl(origin, securityState), this._showOriginInPanel.bind(this, origin),
+        'security-sidebar-tree-item', 'security-property');
     this._elementsByOrigin.set(origin, originElement);
     this.updateOrigin(origin, securityState);
   }
@@ -492,19 +518,19 @@ Security.SecurityPanelSidebarTree.OriginGroupName = {
  */
 Security.SecurityPanelSidebarTreeElement = class extends UI.TreeElement {
   /**
-   * @param {string} text
+   * @param {!Element} textElement
    * @param {function()} selectCallback
    * @param {string} className
    * @param {string} cssPrefix
    */
-  constructor(text, selectCallback, className, cssPrefix) {
+  constructor(textElement, selectCallback, className, cssPrefix) {
     super('', false);
     this._selectCallback = selectCallback;
     this._cssPrefix = cssPrefix;
     this.listItemElement.classList.add(className);
     this._iconElement = this.listItemElement.createChild('div', 'icon');
     this._iconElement.classList.add(this._cssPrefix);
-    this.listItemElement.createChild('span', 'title').textContent = text;
+    this.listItemElement.appendChild(textElement);
     this.setSecurityState(Protocol.Security.SecurityState.Unknown);
   }
 
@@ -767,7 +793,8 @@ Security.SecurityOriginView = class extends UI.VBox {
       if (originState.securityDetails.keyExchangeGroup)
         table.addRow(Common.UIString('Key exchange group'), originState.securityDetails.keyExchangeGroup);
       table.addRow(
-          Common.UIString('Cipher'), originState.securityDetails.cipher +
+          Common.UIString('Cipher'),
+          originState.securityDetails.cipher +
               (originState.securityDetails.mac ? ' with ' + originState.securityDetails.mac : ''));
 
       // Create the certificate section outside the callback, so that it appears in the right place.
