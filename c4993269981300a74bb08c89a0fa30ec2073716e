@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84965ba3_67f6f753",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-29T16:06:42Z",
+      "side": 1,
+      "message": "FYI: after looking closer at these garbage metrics, I really want to remove them, but only after your change lands. Here is a WIP with more justification: https://chromium-review.googlesource.com/c/chromium/src/+/796772",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 66
+      },
+      "revId": "c4993269981300a74bb08c89a0fa30ec2073716e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a035961b_b0da8701",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-29T16:06:42Z",
+      "side": 1,
+      "message": "While the histogram is experimental, we can simplify it by avoiding the ZoomedIn/ZoomedOut variants. This complexity was introduced by me occasionally having to debug sub-bucket transitions on the previous (zoomedout-like) histogram. Hopefully we will have a more compact distribution this time, and will adjust the intervals accordingly.\n\nSG?",
+      "range": {
+        "startLine": 216,
+        "startChar": 21,
+        "endLine": 216,
+        "endChar": 47
+      },
+      "revId": "c4993269981300a74bb08c89a0fa30ec2073716e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ab9d5524_aa0ae852",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-29T16:06:42Z",
+      "side": 1,
+      "message": "Thank you for the rationale. Sounds good.\n\nOften reviewers miss what other reviewers wrote. Can you please copy this text to the commit message?",
+      "parentUuid": "436e2345_6a37ed31",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2209e134_a47b392b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
         "patchSetId": 2
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "The CCT test uses startCustomTabActivityWithIntent() that indeed returns after a tab is initialized. However, these tests use the startMainActivity* methods that return after the load is completed.\nFrom a comment for ChromeActivityTestRule: \"This method waits for DEFERRED_STARTUP to fire as well as a subsequent idle-sync of the main looper thread, and the initial tab must either complete its load or it must crash before this method will return.\" (https://cs.chromium.org/chromium/src/chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestRule.java?rcl\u003df2d55a253ceb67d8c2218e35a449d7b4abc003df\u0026l\u003d385)\nApparently, loadUrl() has the same guarantees as startMainActivityWithIntent().",
       "parentUuid": "141a0adb_b25d2b90",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 42
+      },
+      "revId": "2fec2e0c44f7037abdf6cad8758c9297f2b6c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24335332_8bd8fe90",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-29T16:06:42Z",
+      "side": 1,
+      "message": "oh, not sure how I did not notice this. Thank you for pointing this out, Alex.\n\nHow about the NTP case below? We are not waiting for anything when the url \u003d\u003d null, which probably makes the test not check much. I\u0027m OK either removing it or waiting for some meaningful event in the context of NTP, but I have nothing specific to suggest right now :/",
+      "parentUuid": "9ac7150f_400c7d45",
       "range": {
         "startLine": 72,
         "startChar": 8,
