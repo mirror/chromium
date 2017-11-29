@@ -10,6 +10,7 @@
 
 #include "base/base64.h"
 #include "base/build_time.h"
+#include "base/huffman_trie.h"
 #include "base/json/json_writer.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
@@ -257,140 +258,6 @@ std::string CanonicalizeHost(const std::string& host) {
   return new_host;
 }
 
-// BitReader is a class that allows a bytestring to be read bit-by-bit.
-class BitReader {
- public:
-  BitReader(const uint8_t* bytes, size_t num_bits)
-      : bytes_(bytes),
-        num_bits_(num_bits),
-        num_bytes_((num_bits + 7) / 8),
-        current_byte_index_(0),
-        num_bits_used_(8) {}
-
-  // Next sets |*out| to the next bit from the input. It returns false if no
-  // more bits are available or true otherwise.
-  bool Next(bool* out) {
-    if (num_bits_used_ == 8) {
-      if (current_byte_index_ >= num_bytes_) {
-        return false;
-      }
-      current_byte_ = bytes_[current_byte_index_++];
-      num_bits_used_ = 0;
-    }
-
-    *out = 1 & (current_byte_ >> (7 - num_bits_used_));
-    num_bits_used_++;
-    return true;
-  }
-
-  // Read sets the |num_bits| least-significant bits of |*out| to the value of
-  // the next |num_bits| bits from the input. It returns false if there are
-  // insufficient bits in the input or true otherwise.
-  bool Read(unsigned num_bits, uint32_t* out) {
-    DCHECK_LE(num_bits, 32u);
-
-    uint32_t ret = 0;
-    for (unsigned i = 0; i < num_bits; ++i) {
-      bool bit;
-      if (!Next(&bit)) {
-        return false;
-      }
-      ret |= static_cast<uint32_t>(bit) << (num_bits - 1 - i);
-    }
-
-    *out = ret;
-    return true;
-  }
-
-  // Unary sets |*out| to the result of decoding a unary value from the input.
-  // It returns false if there were insufficient bits in the input and true
-  // otherwise.
-  bool Unary(size_t* out) {
-    size_t ret = 0;
-
-    for (;;) {
-      bool bit;
-      if (!Next(&bit)) {
-        return false;
-      }
-      if (!bit) {
-        break;
-      }
-      ret++;
-    }
-
-    *out = ret;
-    return true;
-  }
-
-  // Seek sets the current offest in the input to bit number |offset|. It
-  // returns true if |offset| is within the range of the input and false
-  // otherwise.
-  bool Seek(size_t offset) {
-    if (offset >= num_bits_) {
-      return false;
-    }
-    current_byte_index_ = offset / 8;
-    current_byte_ = bytes_[current_byte_index_++];
-    num_bits_used_ = offset % 8;
-    return true;
-  }
-
- private:
-  const uint8_t* const bytes_;
-  const size_t num_bits_;
-  const size_t num_bytes_;
-  // current_byte_index_ contains the current byte offset in |bytes_|.
-  size_t current_byte_index_;
-  // current_byte_ contains the current byte of the input.
-  uint8_t current_byte_;
-  // num_bits_used_ contains the number of bits of |current_byte_| that have
-  // been read.
-  unsigned num_bits_used_;
-};
-
-// HuffmanDecoder is a very simple Huffman reader. The input Huffman tree is
-// simply encoded as a series of two-byte structures. The first byte determines
-// the "0" pointer for that node and the second the "1" pointer. Each byte
-// either has the MSB set, in which case the bottom 7 bits are the value for
-// that position, or else the bottom seven bits contain the index of a node.
-//
-// The tree is decoded by walking rather than a table-driven approach.
-class HuffmanDecoder {
- public:
-  HuffmanDecoder(const uint8_t* tree, size_t tree_bytes)
-      : tree_(tree), tree_bytes_(tree_bytes) {}
-
-  bool Decode(BitReader* reader, char* out) {
-    const uint8_t* current = &tree_[tree_bytes_ - 2];
-
-    for (;;) {
-      bool bit;
-      if (!reader->Next(&bit)) {
-        return false;
-      }
-
-      uint8_t b = current[bit];
-      if (b & 0x80) {
-        *out = static_cast<char>(b & 0x7f);
-        return true;
-      }
-
-      unsigned offset = static_cast<unsigned>(b) * 2;
-      DCHECK_LT(offset, tree_bytes_);
-      if (offset >= tree_bytes_) {
-        return false;
-      }
-
-      current = &tree_[offset];
-    }
-  }
-
- private:
-  const uint8_t* const tree_;
-  const size_t tree_bytes_;
-};
-
 // PreloadResult is the result of resolving a specific name in the preloaded
 // data.
 struct PreloadResult {
@@ -437,10 +304,10 @@ struct PreloadResult {
 bool DecodeHSTSPreloadRaw(const std::string& search_hostname,
                           bool* out_found,
                           PreloadResult* out) {
-  HuffmanDecoder huffman(g_hsts_source->huffman_tree,
-                         g_hsts_source->huffman_tree_size);
-  BitReader reader(g_hsts_source->preloaded_data,
-                   g_hsts_source->preloaded_bits);
+  base::TrieHuffmanDecoder huffman(g_hsts_source->huffman_tree,
+                                   g_hsts_source->huffman_tree_size);
+  base::BitReader reader(g_hsts_source->preloaded_data,
+                         g_hsts_source->preloaded_bits);
   size_t bit_offset = g_hsts_source->root_position;
   static const char kEndOfString = 0;
   static const char kEndOfTable = 127;
