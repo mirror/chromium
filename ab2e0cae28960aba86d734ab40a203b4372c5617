@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34c006b8_db0c4d22",
+        "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-11-29T23:15:53Z",
+      "side": 1,
+      "message": "I haven\u0027t tested this CL on a Chromebook as I\u0027m working remotely. I also considered this possibility, and that\u0027s why I put the check here and not in the constructor. Non-started Cryptauth*Service should still return some sane results (e.g. empty lists).",
+      "parentUuid": "6e649758_911b72b7",
+      "range": {
+        "startLine": 313,
+        "startChar": 29,
+        "endLine": 313,
+        "endChar": 59
+      },
+      "revId": "ab2e0cae28960aba86d734ab40a203b4372c5617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c10b793_0af5dfa4",
         "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4ba75727_d47bf0e2",
+        "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-11-29T23:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c10b793_0af5dfa4",
+      "range": {
+        "startLine": 317,
+        "startChar": 38,
+        "endLine": 317,
+        "endChar": 39
+      },
+      "revId": "ab2e0cae28960aba86d734ab40a203b4372c5617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab61692_c2ab50bf",
         "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "ab2e0cae28960aba86d734ab40a203b4372c5617",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b22e683_b5821406",
+        "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-11-29T23:15:53Z",
+      "side": 1,
+      "message": "Hmm... I think any where we put this check would have discoverability problems, i.e. it wouldn\u0027t be obvious for a new implementor to know the existence of this check. \n\nI added a log message that \"CryptAuth enrollment is disabled by enterprise policy.\", so someone developing a new feature would see this message and can then grep for where the code is.",
+      "parentUuid": "bab61692_c2ab50bf",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 338,
+        "endChar": 69
+      },
+      "revId": "ab2e0cae28960aba86d734ab40a203b4372c5617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
