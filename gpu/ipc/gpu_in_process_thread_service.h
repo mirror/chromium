@@ -8,6 +8,7 @@
 #include "base/compiler_specific.h"
 #include "base/single_thread_task_runner.h"
 #include "gpu/command_buffer/service/mailbox_manager.h"
+#include "gpu/command_buffer/service/scheduler.h"
 #include "gpu/gpu_export.h"
 #include "gpu/ipc/in_process_command_buffer.h"
 #include "ui/gl/gl_share_group.h"
@@ -23,6 +24,7 @@ class GPU_EXPORT GpuInProcessThreadService
   GpuInProcessThreadService(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       gpu::SyncPointManager* sync_point_manager,
+      gpu::Scheduler* scheduler,
       gpu::gles2::MailboxManager* mailbox_manager,
       scoped_refptr<gl::GLShareGroup> share_group,
       const GpuFeatureInfo& gpu_feature_info);
@@ -32,6 +34,7 @@ class GPU_EXPORT GpuInProcessThreadService
   void ScheduleDelayedWork(const base::Closure& task) override;
   bool UseVirtualizedGLContexts() override;
   gpu::SyncPointManager* sync_point_manager() override;
+  gpu::Scheduler* scheduler() override;
   void AddRef() const override;
   void Release() const override;
   bool BlockThreadOnWaitSyncToken() const override;
@@ -44,6 +47,7 @@ class GPU_EXPORT GpuInProcessThreadService
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   gpu::SyncPointManager* sync_point_manager_;  // Non-owning.
+  gpu::Scheduler* scheduler_;                  // Non-owning.
 
   DISALLOW_COPY_AND_ASSIGN(GpuInProcessThreadService);
 };
