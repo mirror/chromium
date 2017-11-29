@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "d9a50598_8d04404e",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-29T12:40:50Z",
+      "side": 1,
+      "message": "I think this also makes how the waiter works more clear: it\u0027s easy to see exactly what the run loop is used for as its scope matches its use. Especially for tests I think that\u0027s important.",
+      "parentUuid": "4e35584d_07fccbaf",
+      "range": {
+        "startLine": 234,
+        "startChar": 40,
+        "endLine": 234,
+        "endChar": 74
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09d457e8_06ef6703",
         "filename": "chrome/browser/prerender/prerender_browsertest.cc",
         "patchSetId": 1
@@ -238,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "b5728c2c_a203830a",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-29T12:40:50Z",
+      "side": 1,
+      "message": "As I said, this makes it easier to read and understand, because the assumptions (saw_metrics_ is what triggers the run loop) are clearly documented.",
+      "parentUuid": "93ccbbcd_0ecabfaf",
+      "range": {
+        "startLine": 248,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 30
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed030a7d_db70d901",
         "filename": "chrome/browser/prerender/prerender_browsertest.cc",
         "patchSetId": 1
@@ -297,6 +345,30 @@
       "side": 1,
       "message": "What constraints in particular? The RunLoop API allows calling Quit() multiple times, why having extra defensive logic for not doing it?\n\nI am sure you would not vote for implementing an AddressSanitizer fork with a unique feature set just for this test to be extra defensive. So why adding these 4 lines of extra checks?\n\nConsistency argument: another class in this file does not go into such defenses, and we seem to agree that they are not worth introducing for that class.",
       "parentUuid": "101857bb_819c68aa",
+      "range": {
+        "startLine": 253,
+        "startChar": 4,
+        "endLine": 253,
+        "endChar": 18
+      },
+      "revId": "1602e4d8341b962188a8d92944be3948ba2fbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bde0f77_77dd90c7",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-29T12:40:50Z",
+      "side": 1,
+      "message": "See above comment about lifetime of run loop.",
+      "parentUuid": "3c392dfd_00e79bc1",
       "range": {
         "startLine": 253,
         "startChar": 4,
