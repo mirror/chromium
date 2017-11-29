@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43d038f9_2faa52ff",
+        "filename": "chrome/browser/resources/md_extensions/item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-29T02:44:22Z",
+      "side": 1,
+      "message": "I think it would be good to use a different icon for this, if we can.  Maybe Alan has a quick idea of something that would work?",
+      "revId": "0eafac8795d2ddbdc6569bde03511610d122b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
