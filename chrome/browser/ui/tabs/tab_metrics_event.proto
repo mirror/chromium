@@ -44,4 +44,34 @@ message TabMetricsEvent {
   }
 
   optional ContentType content_type = 1;
+
+  // Schemes that are assigned to a protocol handler.
+  enum Scheme {
+    // Not one of the below, including custom handlers.
+    SCHEME_OTHER = 0;
+
+    // Schemes whitelisted for registerProtocolHandler.
+    SCHEME_BITCOIN = 1;
+    SCHEME_GEO = 2;
+    SCHEME_IM = 3;
+    SCHEME_IRC = 4;
+    SCHEME_IRCS = 5;
+    SCHEME_MAGNET = 6;
+    SCHEME_MAILTO = 7;
+    SCHEME_MMS = 8;
+    SCHEME_NEWS = 9;
+    SCHEME_NNTP = 10;
+    SCHEME_OPENPGP4FPR = 11;
+    SCHEME_SIP = 12;
+    SCHEME_SMS = 13;
+    SCHEME_SMSTO = 14;
+    SCHEME_SSH = 15;
+    SCHEME_TEL = 16;
+    SCHEME_URN = 17;
+    SCHEME_WEBCAL = 18;
+    SCHEME_WTAI = 19;
+    SCHEME_XMPP = 20;
+  }
+
+  repeated Scheme enabled_protocol_handlers = 2;
 }
