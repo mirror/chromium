@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1726da2e_faf0cf2d",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-29T19:55:03Z",
+      "side": 1,
+      "message": "I still don\u0027t understand why this line should run based on\nwhether or not we already had |manager|.\n\nIs there any scenario in which we want to reset the\naccessibility mode.\n\nIt seems to me that UpdateEnabledState(false) is only\ncalled when we lose a RenderWidgetHost, so there\u0027s no\nneed to update the accessibility mode, right - since it\u0027s\ngoing away anyway.\n\nThe case when we want to reset the accessibility mode is\nwhen Android accessibility is disabled globally, but currently\nthat won\u0027t ever trigger UpdateEnabledState(false) as far\nas I can tell.\n\nIt seems like a better fix would be to just delete everything\nin this function after set_web_contents_accessibility(nullptr).",
+      "revId": "c889b8020b5399e6e600548b984d8703ac428ea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
