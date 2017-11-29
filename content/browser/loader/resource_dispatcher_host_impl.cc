@@ -1178,6 +1178,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   }
 
   // Construct the request.
+  CHECK(request_context);
   std::unique_ptr<net::URLRequest> new_request = request_context->CreateRequest(
       is_navigation_stream_request ? request_data.resource_body_stream_url
                                    : request_data.url,
