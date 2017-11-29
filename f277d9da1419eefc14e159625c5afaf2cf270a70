@@ -22,6 +22,29 @@
       "revId": "f277d9da1419eefc14e159625c5afaf2cf270a70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05011d7b_53ea7ad1",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-29T10:28:48Z",
+      "side": 1,
+      "message": "nit: You can initialize as current_size(videoWidth(), videoHeight())",
+      "range": {
+        "startLine": 310,
+        "startChar": 24,
+        "endLine": 310,
+        "endChar": 25
+      },
+      "revId": "f277d9da1419eefc14e159625c5afaf2cf270a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
