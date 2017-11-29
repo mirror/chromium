@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "88a1436f_2fc0dfdb",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-29T10:56:31Z",
+      "side": 1,
+      "message": "If USE_V8_CONTEXT_SNAPSHOT is not set, shouldn\u0027t we be using the non-context snapshot data here?",
+      "revId": "5d371a0a6d8b68e2a32b34acf112823c99744a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2b3c453_f1b59317",
         "filename": "gin/isolate_holder.cc",
         "patchSetId": 10
@@ -13,6 +30,47 @@
       "writtenOn": "2017-11-29T09:08:02Z",
       "side": 1,
       "message": "I don\u0027t fully understand this comment. Would you elaborate?",
+      "revId": "5d371a0a6d8b68e2a32b34acf112823c99744a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0054d25_baedde79",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-29T10:56:31Z",
+      "side": 1,
+      "message": "+1. Also we shouldn\u0027t mention Blink here since gin can be embedded from other users.\n\nAlso, as an aside - this was added before I started looking at this code, but it seems really confusing to me to have a separate IsolateHolder constructor which is no-args and is only used for creating the blink snapshot. Can we not move the snapshot creation code somewhere outside of gin (into v8_context_snapshot_generator or similar)",
+      "parentUuid": "b2b3c453_f1b59317",
+      "revId": "5d371a0a6d8b68e2a32b34acf112823c99744a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e639877_c5b15621",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-29T10:56:31Z",
+      "side": 1,
+      "message": "Is this necessary? GetMappedFileData will crash with a clear error if snapshot is null.",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 286,
+        "endChar": 18
+      },
       "revId": "5d371a0a6d8b68e2a32b34acf112823c99744a70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
