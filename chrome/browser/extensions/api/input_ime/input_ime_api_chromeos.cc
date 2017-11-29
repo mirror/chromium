@@ -634,6 +634,7 @@ void InputImeAPI::OnExtensionLoaded(content::BrowserContext* browser_context,
 void InputImeAPI::OnExtensionUnloaded(content::BrowserContext* browser_context,
                                       const Extension* extension,
                                       UnloadedExtensionReason reason) {
+  LOG(ERROR) << "Unloaded";
   const std::vector<InputComponentInfo>* input_components =
       InputComponents::GetInputComponents(extension);
   if (!input_components || input_components->empty())
@@ -641,6 +642,7 @@ void InputImeAPI::OnExtensionUnloaded(content::BrowserContext* browser_context,
   InputImeEventRouter* event_router =
       GetInputImeEventRouter(Profile::FromBrowserContext(browser_context));
   if (event_router) {
+    LOG(ERROR) << "UnRegister All Imes" << extension->id();
     event_router->UnregisterAllImes(extension->id());
   }
 }
