@@ -101,6 +101,24 @@
       "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019b9451_f31915a6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-29T22:51:28Z",
+      "side": 1,
+      "message": "FWIW, I don\u0027t think that histograms handle negative numbers elegantly.  Please test to verify whether this is, in practice, a problem for how these metrics are implemented.",
+      "parentUuid": "57f3f674_c2c8b4f7",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "24a23b2b_152b6219",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-29T22:51:28Z",
+      "side": 1,
+      "message": "nit: I\u0027d name this something like kReportBucketCount or kReportBuckets",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc9f76aa_8766486d",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 6
@@ -13,6 +36,30 @@
       "writtenOn": "2017-11-29T15:06:03Z",
       "side": 1,
       "message": "I\u0027m slightly concerned that this appoach will lead to missing some data due to the fact that renderer process can be killed without a warning and we won\u0027t have a chance to flush the metrics. I believe that it\u0027s the procedure now for tearing down the renderer process when user closes the tab, which means that if the tab was sitting in background for a long time and user closed it, we\u0027d lose all the metrics from it.\n\nShould we record the metrics (at least TrafficBytes ones) after completing each request?",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 30
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cb9c86_3d476f73",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-29T22:51:28Z",
+      "side": 1,
+      "message": "+1, fast process shutdown is a concern for reporting metrics from the renderer process.  Persistent histograms should ensure that any metrics that were emitted prior to shutdown are not lost upon shutdown; but it\u0027s still up to the metrics implementations to ensure that metrics are not being emitted upon object destruction that might be skipped during fast process shutdown.\n\nFor the Total* metrics, I suspect that the only way to correctly implement them is to send IPCs to the browser process, which would aggregate and report the metrics.",
+      "parentUuid": "bc9f76aa_8766486d",
       "range": {
         "startLine": 230,
         "startChar": 2,
@@ -41,6 +88,52 @@
         "startChar": 48,
         "endLine": 82,
         "endChar": 67
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57055f8a_97fa6295",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 6873,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-29T22:51:28Z",
+      "side": 1,
+      "message": "nit: What is \"now\"?  In other words, please document what event causes this metric to be recorded.",
+      "range": {
+        "startLine": 6873,
+        "startChar": 21,
+        "endLine": 6873,
+        "endChar": 24
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6952694a_42068d73",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 6904,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-29T22:51:28Z",
+      "side": 1,
+      "message": "Please update this description.",
+      "range": {
+        "startLine": 6904,
+        "startChar": 76,
+        "endLine": 6904,
+        "endChar": 0
       },
       "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
