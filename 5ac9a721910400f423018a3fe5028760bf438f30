@@ -45,6 +45,23 @@
       "revId": "5ac9a721910400f423018a3fe5028760bf438f30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aafc7ba_d3bc9a27",
+        "filename": "ui/file_manager/file_manager/background/js/drive_sync_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-29T04:27:06Z",
+      "side": 1,
+      "message": "Return.",
+      "revId": "5ac9a721910400f423018a3fe5028760bf438f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
