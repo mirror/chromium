@@ -201,6 +201,9 @@ class CONTENT_EXPORT StoragePartition {
   // null pointer will restore the default behavior.
   virtual void SetNetworkFactoryForTesting(
       mojom::URLLoaderFactory* test_factory) = 0;
+  // Call |FlushForTesting()| on Network Service related interfaces. For test
+  // use only.
+  virtual void FlushNetworkInterfaceForTesting() = 0;
 
  protected:
   virtual ~StoragePartition() {}
