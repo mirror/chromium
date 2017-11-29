@@ -91,9 +91,12 @@ FileSystemURLParser::~FileSystemURLParser() {
 bool FileSystemURLParser::Parse() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (url_.type() != storage::kFileSystemTypeProvided)
-    return false;
+  LOG(ERROR) << url_.DebugString();
 
+  if (url_.type() != storage::kFileSystemTypeProvided){
+    LOG(ERROR) << '1';
+    return false;
+}
   // First, find the service handling the mount point of the URL.
   const std::vector<Profile*>& profiles =
       g_browser_process->profile_manager()->GetLoadedProfiles();
@@ -108,32 +111,39 @@ bool FileSystemURLParser::Parse() {
     }
 
     Service* const service = Service::Get(original_profile);
-    if (!service)
+    if (!service){
       continue;
+    }
 
+    LOG(ERROR) << "~~ Profile name used for getting service:" << original_profile->GetDebugName();
+
+    LOG(ERROR) << "Calling get pfs with filesystem id " << url_.filesystem_id();
     ProvidedFileSystemInterface* const file_system =
         service->GetProvidedFileSystem(url_.filesystem_id());
-    if (!file_system)
+    if (!file_system){
+      LOG(ERROR) << "PARSE: filesystem is NULL";
       continue;
-
+    }
     // Strip the mount path name from the local path, to extract the file path
     // within the provided file system.
     file_system_ = file_system;
     std::vector<base::FilePath::StringType> components;
     url_.path().GetComponents(&components);
-    if (components.size() < 3)
+    if (components.size() < 3){
+       LOG(ERROR) << '2';
       return false;
-
+    }
     file_path_ = base::FilePath(FILE_PATH_LITERAL("/"));
     for (size_t i = 3; i < components.size(); ++i) {
       // TODO(mtomasz): This could be optimized, to avoid unnecessary copies.
       file_path_ = file_path_.Append(components[i]);
     }
-
+     LOG(ERROR) << '3';
     return true;
   }
 
   // Nothing has been found.
+  LOG(ERROR) << '4';
   return false;
 }
 
