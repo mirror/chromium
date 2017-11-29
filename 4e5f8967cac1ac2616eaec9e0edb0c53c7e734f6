@@ -134,6 +134,24 @@
       "revId": "4e5f8967cac1ac2616eaec9e0edb0c53c7e734f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177f6894_2934e53c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 92552,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-29T22:26:35Z",
+      "side": 1,
+      "message": "Good point! Initially, I wanted to report general assets load status. However, then I added the component version to it, which makes this very much coupled to the component. So, the name change makes sense now. Changed.",
+      "parentUuid": "b4b5cc4a_589797a7",
+      "revId": "4e5f8967cac1ac2616eaec9e0edb0c53c7e734f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
