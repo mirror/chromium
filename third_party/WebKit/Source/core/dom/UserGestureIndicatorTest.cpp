@@ -120,7 +120,7 @@ TEST(UserGestureIndicatorTest, MultipleGesturesWithTheSameToken) {
 }
 
 TEST(UserGestureIndicatorTest, Timeouts) {
-  TimeFunction previous = SetTimeFunctionsForTesting(MockTimeFunction);
+  ScopedTimeFunctionsOverrideForTesting override(WTF::Bind(&MockTimeFunction));
 
   {
     // Token times out after 1 second.
@@ -155,8 +155,6 @@ TEST(UserGestureIndicatorTest, Timeouts) {
       EXPECT_FALSE(token->HasGestures());
     }
   }
-
-  SetTimeFunctionsForTesting(previous);
 }
 
 }  // namespace blink

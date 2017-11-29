@@ -34,29 +34,80 @@
 
 namespace WTF {
 
-static TimeFunction g_mock_time_function_for_testing = nullptr;
+// Store references rather than the callbacks themselves to avoid global
+// destructors.
+static TimeCallback* g_mock_time_callback = nullptr;
+static TimeCallback* g_mock_monotonically_increasing_time_callback = nullptr;
 
 double CurrentTime() {
-  if (g_mock_time_function_for_testing)
-    return g_mock_time_function_for_testing();
+  if (g_mock_time_callback)
+    return g_mock_time_callback->Run();
   return base::Time::Now().ToDoubleT();
 }
 
 double MonotonicallyIncreasingTime() {
-  if (g_mock_time_function_for_testing)
-    return g_mock_time_function_for_testing();
+  if (g_mock_monotonically_increasing_time_callback)
+    return g_mock_monotonically_increasing_time_callback->Run();
   return base::TimeTicks::Now().ToInternalValue() /
          static_cast<double>(base::Time::kMicrosecondsPerSecond);
 }
 
-TimeFunction SetTimeFunctionsForTesting(TimeFunction new_function) {
-  TimeFunction old_function = g_mock_time_function_for_testing;
-  g_mock_time_function_for_testing = new_function;
-  return old_function;
+TimeCallback* SetCurrentTimeCallbackForTesting(TimeCallback* new_callback) {
+  DCHECK(!new_callback || *new_callback);
+  TimeCallback* old_callback = g_mock_time_callback;
+  g_mock_time_callback = new_callback;
+  return old_callback;
 }
 
-TimeFunction GetTimeFunctionForTesting() {
-  return g_mock_time_function_for_testing;
+TimeCallback* SetMonotonicallyIncreasingTimeCallbackForTesting(
+    TimeCallback* new_callback) {
+  DCHECK(!new_callback || *new_callback);
+  TimeCallback* old_callback = g_mock_monotonically_increasing_time_callback;
+  g_mock_monotonically_increasing_time_callback = new_callback;
+  return old_callback;
+}
+
+TimeCallback* GetMonotonicallyIncreasingTimeCallbackForTesting() {
+  return g_mock_monotonically_increasing_time_callback;
+}
+
+ScopedTimeFunctionsOverrideForTesting::ScopedTimeFunctionsOverrideForTesting(
+    TimeCallback current_time_callback,
+    TimeCallback monotonically_increasing_time_callback)
+    : current_time_callback_(std::move(current_time_callback)),
+      monotonically_increasing_time_callback_(
+          std::move(monotonically_increasing_time_callback)) {
+  if (current_time_callback_) {
+    original_current_time_callback_ =
+        SetCurrentTimeCallbackForTesting(&current_time_callback_);
+  }
+  if (monotonically_increasing_time_callback_) {
+    original_monotonically_increasing_time_callback_ =
+        SetMonotonicallyIncreasingTimeCallbackForTesting(
+            &monotonically_increasing_time_callback_);
+  }
+}
+
+// WTF::Function is not copyable, so convert to base::Callback and copy that.
+ScopedTimeFunctionsOverrideForTesting::ScopedTimeFunctionsOverrideForTesting(
+    TimeCallback current_and_monotonically_increasing_time_callback)
+    : ScopedTimeFunctionsOverrideForTesting(ConvertToBaseCallback(
+          std::move(current_and_monotonically_increasing_time_callback))) {}
+
+ScopedTimeFunctionsOverrideForTesting::ScopedTimeFunctionsOverrideForTesting(
+    base::Callback<double()> current_and_monotonically_increasing_time_callback)
+    : ScopedTimeFunctionsOverrideForTesting(
+          TimeCallback(current_and_monotonically_increasing_time_callback),
+          TimeCallback(current_and_monotonically_increasing_time_callback)) {}
+
+ScopedTimeFunctionsOverrideForTesting::
+    ~ScopedTimeFunctionsOverrideForTesting() {
+  if (current_time_callback_)
+    SetCurrentTimeCallbackForTesting(original_current_time_callback_);
+  if (monotonically_increasing_time_callback_) {
+    SetMonotonicallyIncreasingTimeCallbackForTesting(
+        original_monotonically_increasing_time_callback_);
+  }
 }
 
 }  // namespace WTF

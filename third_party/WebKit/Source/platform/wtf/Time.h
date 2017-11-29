@@ -5,7 +5,9 @@
 #ifndef WTF_Time_h
 #define WTF_Time_h
 
+#include "base/callback.h"
 #include "base/time/time.h"
+#include "platform/wtf/Functional.h"
 #include "platform/wtf/WTFExport.h"
 
 namespace WTF {
@@ -44,15 +46,43 @@ inline double MonotonicallyIncreasingTimeMS() {
 }
 
 using TimeFunction = double (*)();
+using TimeCallback = WTF::RepeatingFunction<double()>;
 
-// Make all the time functions (currentTime(), monotonicallyIncreasingTime(),
-// systemTraceTime()) return the result of the supplied function. Returns the
-// pointer to the old time function. For both setting and getting, nullptr
-// means using the default timing function returning the actual time.
-WTF_EXPORT TimeFunction SetTimeFunctionsForTesting(TimeFunction);
+// Make CurrentTime() and CurrentTimeMs() return the result of the supplied
+// callback. Returns the pointer to the old time callback. |nullptr| disables
+// the override. Caller maintains ownership of callback.
+WTF_EXPORT TimeCallback* SetCurrentTimeCallbackForTesting(TimeCallback*);
 
-// Allows wtf/Time.h to use the same mock time function
-WTF_EXPORT TimeFunction GetTimeFunctionForTesting();
+// Make MonotonicallyIncreasingTime() and MonotonicallyIncreasingTimeMs() return
+// the result of the supplied callback. Returns the pointer to the old time
+// callback. |nullptr| disables the override. Caller maintains ownership of
+// callback.
+WTF_EXPORT TimeCallback* SetMonotonicallyIncreasingTimeCallbackForTesting(
+    TimeCallback*);
+
+// Allows wtf/Time.h to use the same mock callback.
+WTF_EXPORT TimeCallback* GetMonotonicallyIncreasingTimeCallbackForTesting();
+
+class WTF_EXPORT ScopedTimeFunctionsOverrideForTesting {
+ public:
+  ScopedTimeFunctionsOverrideForTesting(
+      TimeCallback current_time_callback,
+      TimeCallback monotonically_increasing_time_callback);
+  // Helper to facilitate overriding both functions with the same callback.
+  ScopedTimeFunctionsOverrideForTesting(
+      TimeCallback current_and_monotonically_increasing_time_callback);
+  ~ScopedTimeFunctionsOverrideForTesting();
+
+ private:
+  ScopedTimeFunctionsOverrideForTesting(
+      base::Callback<double()>
+          current_and_monotonically_increasing_time_callback);
+
+  TimeCallback current_time_callback_;
+  TimeCallback monotonically_increasing_time_callback_;
+  TimeCallback* original_current_time_callback_;
+  TimeCallback* original_monotonically_increasing_time_callback_;
+};
 
 class TimeTicks {
  public:
@@ -60,8 +90,9 @@ class TimeTicks {
   TimeTicks(base::TimeTicks value) : value_(value) {}
 
   static TimeTicks Now() {
-    if (WTF::GetTimeFunctionForTesting()) {
-      double seconds = (WTF::GetTimeFunctionForTesting())();
+    if (GetMonotonicallyIncreasingTimeCallbackForTesting()) {
+      double seconds =
+          GetMonotonicallyIncreasingTimeCallbackForTesting()->Run();
       return TimeTicks() + TimeDelta::FromSecondsD(seconds);
     }
     return TimeTicks(base::TimeTicks::Now());
@@ -124,8 +155,11 @@ using WTF::CurrentTime;
 using WTF::CurrentTimeMS;
 using WTF::MonotonicallyIncreasingTime;
 using WTF::MonotonicallyIncreasingTimeMS;
-using WTF::SetTimeFunctionsForTesting;
+using WTF::ScopedTimeFunctionsOverrideForTesting;
+using WTF::SetCurrentTimeCallbackForTesting;
+using WTF::SetMonotonicallyIncreasingTimeCallbackForTesting;
 using WTF::Time;
+using WTF::TimeCallback;
 using WTF::TimeDelta;
 using WTF::TimeFunction;
 using WTF::TimeTicks;

@@ -8,6 +8,7 @@
 #include <memory>
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Time.h"
 #include "public/platform/WebThread.h"
 
 namespace base {
@@ -71,6 +72,7 @@ class TestingPlatformSupportWithMockScheduler : public TestingPlatformSupport {
   scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
   std::unique_ptr<scheduler::RendererSchedulerImpl> scheduler_;
   std::unique_ptr<WebThread> thread_;
+  ScopedTimeFunctionsOverrideForTesting time_functions_override_;
 };
 
 }  // namespace blink

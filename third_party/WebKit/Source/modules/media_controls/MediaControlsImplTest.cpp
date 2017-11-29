@@ -185,13 +185,14 @@ class MediaControlsImplTest : public PageTestBase,
 
  protected:
   virtual void SetUp() {
-    original_time_function_ =
-        SetTimeFunctionsForTesting([] { return g_current_time; });
+    time_functions_override_ =
+        std::make_unique<ScopedTimeFunctionsOverrideForTesting>(
+            WTF::Bind([] { return g_current_time; }));
 
     InitializePage();
   }
 
-  void TearDown() { SetTimeFunctionsForTesting(original_time_function_); }
+  void TearDown() { time_functions_override_.reset(); }
 
   void InitializePage() {
     Page::PageClients clients;
@@ -293,7 +294,8 @@ class MediaControlsImplTest : public PageTestBase,
  private:
   Persistent<MediaControlsImpl> media_controls_;
   HistogramTester histogram_tester_;
-  TimeFunction original_time_function_;
+  std::unique_ptr<ScopedTimeFunctionsOverrideForTesting>
+      time_functions_override_;
 };
 
 void MediaControlsImplTest::MouseDownAt(WebFloatPoint pos) {

@@ -576,12 +576,12 @@ class TextFinderFakeTimerTest : public TextFinderTest {
  protected:
   void SetUp() override {
     time_elapsed_ = 0.0;
-    original_time_function_ = SetTimeFunctionsForTesting(ReturnMockTime);
+    time_functions_override_ =
+        std::make_unique<ScopedTimeFunctionsOverrideForTesting>(
+            WTF::Bind(&ReturnMockTime));
   }
 
-  void TearDown() override {
-    SetTimeFunctionsForTesting(original_time_function_);
-  }
+  void TearDown() override { time_functions_override_.reset(); }
 
  private:
   static double ReturnMockTime() {
@@ -589,7 +589,8 @@ class TextFinderFakeTimerTest : public TextFinderTest {
     return time_elapsed_;
   }
 
-  TimeFunction original_time_function_;
+  std::unique_ptr<ScopedTimeFunctionsOverrideForTesting>
+      time_functions_override_;
   static double time_elapsed_;
 };
 
