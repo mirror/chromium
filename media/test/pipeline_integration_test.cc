@@ -833,18 +833,8 @@ TEST_F(PipelineIntegrationTest, ReinitRenderersWhileAudioTrackIsDisabled) {
   Stop();
 }
 
-// Disabled on Linux due to flaky DCHECK; see https://crbug.com/788387.
-#if defined(OS_LINUX)
-#define MAYBE_ReinitRenderersWhileVideoTrackIsDisabled \
-  DISABLED_ReinitRenderersWhileVideoTrackIsDisabled
-#else
-#define MAYBE_ReinitRenderersWhileVideoTrackIsDisabled \
-  ReinitRenderersWhileVideoTrackIsDisabled
-#endif
-TEST_F(PipelineIntegrationTest,
-       MAYBE_ReinitRenderersWhileVideoTrackIsDisabled) {
+TEST_F(PipelineIntegrationTest, ReinitRenderersWhileVideoTrackIsDisabled) {
   ASSERT_EQ(PIPELINE_OK, Start("bear-320x240.webm", kHashed));
-  Play();
 
   // These get triggered every time playback is resumed.
   EXPECT_CALL(*this, OnVideoNaturalSizeChange(gfx::Size(320, 240)))
@@ -859,6 +849,7 @@ TEST_F(PipelineIntegrationTest,
   ASSERT_TRUE(Resume(TimestampMs(100)));
   // Now re-enable the video track, playback should continue successfully.
   pipeline_->OnSelectedVideoTrackChanged(MediaTrack::Id("1"));
+  Play();
   ASSERT_TRUE(WaitUntilCurrentTimeIsAfter(TimestampMs(200)));
 
   Stop();
