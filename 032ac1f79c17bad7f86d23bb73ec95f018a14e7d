@@ -34,6 +34,24 @@
       "revId": "032ac1f79c17bad7f86d23bb73ec95f018a14e7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3f0794_c931701f",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-29T20:19:16Z",
+      "side": 1,
+      "message": "It would actually be a good idea to request the initial device list with no delay instead. This could be accomplished by checking for an empty device list or by passing an argument like requestImmediately to requestListUpdate_().",
+      "parentUuid": "6b46456f_f1c52bde",
+      "revId": "032ac1f79c17bad7f86d23bb73ec95f018a14e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
