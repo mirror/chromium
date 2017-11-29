@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ac71dd7_b8f8963d",
+        "filename": "net/spdy/chromium/spdy_session_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1699,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-29T15:26:05Z",
+      "side": 1,
+      "message": "The linked bug seems unrelated?",
+      "revId": "81ba08db3fd0a0143353820b37370ba865e39da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
