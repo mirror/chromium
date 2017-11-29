@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b56bab7_e79d2684",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "nit: out params should be passed by pointer rather than by reference.",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92a2aab_d5b69eb0",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "out param by pointer here, too",
+      "range": {
+        "startLine": 135,
+        "startChar": 40,
+        "endLine": 135,
+        "endChar": 47
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee7c0bf_899d1100",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "nit: omit parens",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ebc0a0_b4af4f58",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "nit: omit parens",
+      "range": {
+        "startLine": 144,
+        "startChar": 21,
+        "endLine": 144,
+        "endChar": 22
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f9b5700_7acdd28a",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "wdyt of adding the FILE_FLAG_SEQUENTIAL_SCAN hint? do you anticipate a time when the reader wouldn\u0027t be making a single linear pass?",
+      "range": {
+        "startLine": 151,
+        "startChar": 44,
+        "endLine": 151,
+        "endChar": 65
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b15c2b7_996c618a",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "can you collapse the two \"bail out\" blocks into one with something like:\n  status \u003d open();\n  if (status \u003d\u003d notfound)\n    return success;\n  if (status \u003d\u003d success) {\n    status \u003d read;\n    closehandle;\n  }\n  if (status \u003d\u003d success || status \u003d\u003d zero)\n    return success;\n  clean up;\n  return status;",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62337591_97205c09",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "save the parens! ;-)",
+      "range": {
+        "startLine": 217,
+        "startChar": 6,
+        "endLine": 217,
+        "endChar": 7
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb1b7b7_dea4db71",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "!",
+      "range": {
+        "startLine": 232,
+        "startChar": 6,
+        "endLine": 232,
+        "endChar": 7
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6cfe86_e47a8a96",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "could you add test cases for the various things that are handled in InitInternal? from the top of my head:\n- neither file exists\n- only one of the two files exists (do both)\n- either file can\u0027t be opened\n- a file is too small (has a complete header but not enough data; has partial header)\n- etc...",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f4cb9b_d73e6332",
+        "filename": "chrome_elf/whitelist/whitelist_file_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "nit: declare the constants here, but define them in a .cc file.",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c07efc31_db8a2d9e",
+        "filename": "chrome_elf/whitelist/whitelist_file_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "how will this be used?",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66395575_caa48485",
+        "filename": "chrome_elf/whitelist/whitelist_file_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T12:37:22Z",
+      "side": 1,
+      "message": "this is never given a value. intentional?",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
