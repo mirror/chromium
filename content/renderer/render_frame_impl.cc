@@ -784,6 +784,10 @@ class RenderFrameImpl::FrameURLLoaderFactory
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const WebURLRequest& request,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner) override {
+    /*
+    LOG(INFO) << "*** Creating URLLoader: "
+              << request.Url().GetString().Utf8();
+              */
     // This should not be called if the frame is detached.
     DCHECK(frame_);
     frame_->UpdatePeakMemoryStats();
