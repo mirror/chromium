@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "418d105c_d515b012",
+        "filename": "ui/base/class_property.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-29T15:58:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this change to DEFINE too?",
+      "revId": "83db178635010de2ae7ee2ff09555c997cfbd25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
