@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85d40d28_2e0661ae",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-29T17:29:30Z",
+      "side": 1,
+      "message": "Yes we can. The drawback will be that DownloadManagerImpl::AddUrlDownloader is private. In the previous version, they solved it by creating a callback\nbase::BindOnce(\u0026DownloadManagerImpl::AddUrlDownloadHandler, weak_factory_.GetWeakPtr()) in DownloadManager::InterceptNavigation and calling it in ::InterceptNavigationResponse. That\u0027s very artificial.\n\nI prefer this version because it is more understandable. It is easier to follow what gets called in code search.\n\nWhat do you think? If you prefer the previous version, I can restore it.",
+      "parentUuid": "86592cec_b33695ed",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dca4ae56_9c4c3d7e",
         "filename": "content/browser/download/resource_downloader.h",
         "patchSetId": 33
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-27T14:56:14Z",
       "side": 1,
       "message": "Do they really need the ThrottlingURLloader client, or is just there because it was more convenient to do the transfer? If the latter, let\u0027s remove the ThrottlingURLloader client and replace it by transfering the URLLoader + URLLoaderClient. This will avoid having two ways to start the ThrottlingURLLoader.",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de1d04a_fcc4880f",
+        "filename": "content/browser/download/resource_downloader.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-29T17:29:30Z",
+      "side": 1,
+      "message": "Yes we can because they are no Throttle. I did it in next patch. It is nicer. Thanks!",
+      "parentUuid": "dca4ae56_9c4c3d7e",
       "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f699d643_d18c3c61",
+        "filename": "content/browser/file_url_loader_factory.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-29T17:29:30Z",
+      "side": 1,
+      "message": "I explained it in the git message (the part about the deadlock).\nThe URLResponseBodyConsumer needs to know when there are no more data to read in the datapipe (or future data that will appear later).\nSo we close the datapipe after everything has been written to notify the URLResponseBodyConsumer that its job is done.\n\nI will add a small comment in the code.\n\nThat looks reasonable, isn\u0027t it? The real question is:\n\nWhy it was ~working before?\nWhen the NavigationRequest is deleted (at ReadyToCommit time), it caused:\n* the deletion of the NavigationURLLoaderNetworkService\n* the deletion of its controller\n* the deletion of its ThrottlingURLLoader\n* the closing of the two message datapipe (URLLoaderClient and URLLoader)\n* FileURLLoader::OnConnectionError() is called.\n* FileURLLoader::MaybeDeleteItSelf() is called.\n* FileURLLoader::~FileURLLoader is called.\n* FileURLLOader::data_producer is deleted.\n\nNow, the two datapipe endpoints (URLLoaderClientRequest and URLLoaderPtr) are transferred to the renderer. They will be closed when the response is read or cancelled.",
+      "parentUuid": "208e2fa1_84d82319",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df6fa5e5_e77afda4",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 33
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-27T14:56:14Z",
       "side": 1,
       "message": "Why do we need the ResourceRequest here when we didn\u0027t need it before? Also, if needed, consider manufacturing it in NavigationRequest at the beginning of navigation, and then passing to the NavigationURLLoader instead of creating it in NavigationURLLoaderNetworkService.",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e31a57_d38c4611",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-29T17:29:30Z",
+      "side": 1,
+      "message": "It was provided by the NavigationURLLoaderNetworkService. Maybe we can construct the ResourceRequest in NavigationRequest and then then NavigationURLLoaderNetworkService will send it back to us in in OnResponseStarted. Unfortunately, it will be valid only when the Network Service is enabled. I would like to do it right in another CL.",
+      "parentUuid": "df6fa5e5_e77afda4",
       "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0b722021_0ae3bbd2",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-29T17:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc02f54f_931c4edf",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dfb06b3_f2d53445",
         "filename": "content/browser/frame_host/navigation_request.h",
         "patchSetId": 33
@@ -101,6 +191,24 @@
       "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ef1d9c_847b9bda",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-29T17:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dfb06b3_f2d53445",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ac4f2e5b_67831afa",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-29T17:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64d28efa_390cf4d9",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92dbd536_39b4b44d",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 33
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-27T14:56:14Z",
       "side": 1,
       "message": "Could you add a TODO that in NavigationResponseOverMojo this is false and we need to use the info provided by the network stack, where it is computed by the MimeSniffingResourceHandler.",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfde0314_4f706571",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-29T17:29:30Z",
+      "side": 1,
+      "message": "Okay done, but is this true without the Network Service?",
+      "parentUuid": "92dbd536_39b4b44d",
       "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "0665b321_28a1ba97",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-29T17:29:30Z",
+      "side": 1,
+      "message": "Done.\nI chose to use mojom::URLLoaderClientEndpoints.",
+      "parentUuid": "345785cf_8fc2ba6b",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ca69f6b_083d2272",
         "filename": "content/common/throttling_url_loader.h",
         "patchSetId": 33
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "533e934f_f6899a21",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-29T17:29:30Z",
+      "side": 1,
+      "message": "It was used when intercepting a navigation that turns to be a download.\nNo more used in the latest patchset.",
+      "parentUuid": "5ca69f6b_083d2272",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f80cc3a_51197459",
         "filename": "content/renderer/loader/url_loader_client_impl.h",
         "patchSetId": 33
@@ -183,6 +363,24 @@
       "writtenOn": "2017-11-27T14:56:14Z",
       "side": 1,
       "message": "nit: s/PlzNavigateOverMojo/Used in NavigationResponseOverMojo.\n\nAlso, where do you put the URLLoader and URLLoaderClient in subresource loads?",
+      "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed0396d_d6ab8ea1",
+        "filename": "content/renderer/loader/url_loader_client_impl.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-29T17:29:30Z",
+      "side": 1,
+      "message": "Done (but with NavigationMojoResponse instead)\n\nIn subresource loads, the URLLoaderClientImpl is wrapped by the ThrottlingURLLoader. It has its own url_loader and url_loader_client_binding_ and forward any calls to URLLoaderClientImpl.",
+      "parentUuid": "4f80cc3a_51197459",
       "revId": "1b6f2d34749f0afd0885f91c5b56d3f9a0ed2be0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
