@@ -534,6 +534,7 @@ test("ios_web_inttests") {
     "//ios/testing:ios_test_support",
     "//ios/web:resources_grit",
     "//ios/web/download:download_inttests",
+    "//ios/web/interstitials",
     "//ios/web/navigation:core",
     "//ios/web/public/test",
     "//ios/web/public/test/fakes",
@@ -551,6 +552,7 @@ test("ios_web_inttests") {
   ]
   sources = [
     "browser_state_web_view_partition_inttest.mm",
+    "interstitials/web_interstitial_impl_inttest.mm",
     "navigation/history_state_operations_inttest.mm",
     "navigation/window_location_inttest.mm",
     "public/test/http_server_inttest.mm",
