@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fe8ff91_6b0acc6e",
+        "filename": "third_party/WebKit/Source/core/clipboard/DataTransfer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-29T07:05:20Z",
+      "side": 0,
+      "message": "From https://crrev.com/c/695720, this used to be RootFrameToContents (and indeed that\u0027s what this code implies) so the name of the variable is wrong. I added some logging here and tried it out to make sure.",
+      "range": {
+        "startLine": 357,
+        "startChar": 12,
+        "endLine": 357,
+        "endChar": 31
+      },
+      "revId": "41d6dd9c882cdddee66b1c8d352feb8a80480d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
