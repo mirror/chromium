@@ -1019,6 +1019,8 @@ class CORE_EXPORT Element : public ContainerNode {
   void DetachAttrNodeFromElementWithValue(Attr*, const AtomicString& value);
   void DetachAttrNodeAtIndex(Attr*, size_t index);
 
+  void ShowVirtualKeyboardOnElementFocusIfNeeded();
+
   Member<ElementData> element_data_;
 };
 
