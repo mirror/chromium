@@ -500,6 +500,8 @@ void BrowserContext::Initialize(
       service_manager::EmbeddedServiceInfo info;
       info.factory = base::Bind(&file::CreateFileService);
       connection->AddEmbeddedService(file::mojom::kServiceName, info);
+      info.factory = base::Bind(&metrics::CreateMetricsService);
+      services->emplace(metrics::mojom::kMetricsServiceName, info);
     }
 
     ContentBrowserClient::StaticServiceMap services;

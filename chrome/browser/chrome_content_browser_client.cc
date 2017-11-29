@@ -3149,8 +3149,6 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
         std::make_pair(prefs::mojom::kLocalStateServiceName, info));
   }
   service_manager::EmbeddedServiceInfo info;
-  info.factory = base::Bind(&metrics::CreateMetricsService);
-  services->emplace(metrics::mojom::kMetricsServiceName, info);
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
   {
     service_manager::EmbeddedServiceInfo info;
