@@ -141,6 +141,24 @@
       "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7a03c1_dfd2e434",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8282,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-29T17:59:20Z",
+      "side": 1,
+      "message": "Does it? It certainly seemed like making the draw_rect be 1x1 made it be detected as solid color.\n\nAnyway, sorry.  I feel like I went down a tiny detail rabbit hole, and none of this really matters.  I think the original patch is fine.",
+      "parentUuid": "b3b243a3_5c6cd8a2",
+      "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
