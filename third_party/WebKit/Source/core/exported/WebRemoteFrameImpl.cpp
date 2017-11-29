@@ -377,6 +377,10 @@ void WebRemoteFrameImpl::ScrollRectToVisible(
   scroll_sequencer->RunQueuedAnimations();
 }
 
+void WebRemoteFrameImpl::SetHasReceivedUserGestureBeforeNavigation() {
+  GetFrame()->SetDocumentHasReceivedUserGestureBeforeNavigation(true);
+}
+
 v8::Local<v8::Object> WebRemoteFrameImpl::GlobalProxy() const {
   return GetFrame()
       ->GetWindowProxy(DOMWrapperWorld::MainWorld())

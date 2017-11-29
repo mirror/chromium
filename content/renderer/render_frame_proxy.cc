@@ -279,6 +279,8 @@ void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
   web_frame_->SetReplicatedFeaturePolicyHeader(state.feature_policy_header);
   if (state.has_received_user_gesture)
     web_frame_->SetHasReceivedUserGesture();
+  if (state.has_received_user_gesture_before_nav)
+    web_frame_->SetHasReceivedUserGestureBeforeNavigation();
 
   web_frame_->ResetReplicatedContentSecurityPolicy();
   OnAddContentSecurityPolicies(state.accumulated_csp_headers);
@@ -363,6 +365,8 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_SetHasReceivedUserGesture,
                         OnSetHasReceivedUserGesture)
     IPC_MESSAGE_HANDLER(FrameMsg_ScrollRectToVisible, OnScrollRectToVisible)
+    IPC_MESSAGE_HANDLER(FrameMsg_SetHasReceivedUserGestureBeforeNavigation,
+                        OnSetHasReceivedUserGestureBeforeNavigation)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -530,6 +534,10 @@ void RenderFrameProxy::WasResized() {
         surface_id));
     sent_resize_params_ = pending_resize_params_;
   }
+}
+
+void RenderFrameProxy::OnSetHasReceivedUserGestureBeforeNavigation() {
+  web_frame_->SetHasReceivedUserGestureBeforeNavigation();
 }
 
 void RenderFrameProxy::FrameDetached(DetachType type) {

@@ -3630,6 +3630,10 @@ void RenderFrameImpl::SetHasReceivedUserGesture() {
   Send(new FrameHostMsg_SetHasReceivedUserGesture(routing_id_));
 }
 
+void RenderFrameImpl::SetHasReceivedUserGestureBeforeNavigation() {
+  Send(new FrameHostMsg_SetHasReceivedUserGestureBeforeNavigation(routing_id_));
+}
+
 bool RenderFrameImpl::ShouldReportDetailedMessageForSource(
     const blink::WebString& source) {
   return GetContentClient()->renderer()->ShouldReportDetailedMessageForSource(
