@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dbea2724_44ef399e",
+        "filename": "components/viz/service/display/display_perftest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T23:18:26Z",
+      "side": 1,
+      "message": "Do you want to do frame_ \u003d CompositorFrame() instead of nothing at the end? Or each call to this method will have one more renderpass in the list.",
+      "revId": "e27a71d951cc422121521e90eb1f4964dec95666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d4a2461_2036159c",
         "filename": "components/viz/service/display/remove_overdraw_quads.cc",
         "patchSetId": 7

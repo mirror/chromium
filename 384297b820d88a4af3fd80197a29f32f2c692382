@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efa4c234_000908f7",
+        "filename": "components/viz/service/display/display_perftest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T23:18:26Z",
+      "side": 1,
+      "message": "FWIW I think the classname/testsuite was ok as it was, this class has lots of things specific for this quad removal case.",
+      "revId": "384297b820d88a4af3fd80197a29f32f2c692382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14d80c4_9ef57655",
+        "filename": "components/viz/service/display/display_perftest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T23:18:26Z",
+      "side": 1,
+      "message": "prefer base::MakeRefCounted over new",
+      "revId": "384297b820d88a4af3fd80197a29f32f2c692382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f8cf9d_54f159ad",
+        "filename": "components/viz/service/display/display_perftest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T23:18:26Z",
+      "side": 1,
+      "message": "nit: T* t \u003d stuff() reads a bit nicer than T* t(stuff); IMO",
+      "revId": "384297b820d88a4af3fd80197a29f32f2c692382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
