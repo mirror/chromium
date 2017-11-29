@@ -45,6 +45,7 @@ if (ozone_platform_wayland) {
 if (ozone_platform_x11) {
   ozone_platforms += [ "x11" ]
   ozone_platform_deps += [ "platform/x11" ]
+  ozone_platform_test_deps += [ "//ui/platform_window/x11:x11_ozone_unittests" ]
 }
 
 platform_list_cc_file = "$target_gen_dir/platform_list.cc"
@@ -155,7 +156,10 @@ source_set("platform") {
   allow_circular_includes_from = ozone_platform_deps
 
   # This is used for platform tests.
-  visibility += [ "//ui/ozone/platform/*" ]
+  visibility += [
+    "//ui/ozone/platform/*",
+    "//ui/platform_window/x11/*",
+  ]
 }
 
 component("ozone") {
