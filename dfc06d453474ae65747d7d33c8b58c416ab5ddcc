@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a4e2905_1d59946a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 6983,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-29T12:29:07Z",
+      "side": 1,
+      "message": "This text is marking that the \"clear on exit\" button did something, though, so I think it has to be in the past tense. Ideally it\u0027d be \"Will be cleared on exit\" but I think that\u0027s too unwieldy to fit here.",
+      "parentUuid": "fbf322b2_2ffa1a35",
+      "range": {
+        "startLine": 6983,
+        "startChar": 8,
+        "endLine": 6983,
+        "endChar": 23
+      },
+      "revId": "dfc06d453474ae65747d7d33c8b58c416ab5ddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "042c2675_674a4fcd",
         "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7101689b_bc3e8c3e",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-29T12:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "042c2675_674a4fcd",
+      "range": {
+        "startLine": 97,
+        "startChar": 13,
+        "endLine": 97,
+        "endChar": 27
+      },
+      "revId": "dfc06d453474ae65747d7d33c8b58c416ab5ddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c676d783_d26c97fa",
         "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "dfc06d453474ae65747d7d33c8b58c416ab5ddcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7157ada2_c05ff6e0",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-29T12:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c676d783_d26c97fa",
+      "range": {
+        "startLine": 105,
+        "startChar": 56,
+        "endLine": 106,
+        "endChar": 21
+      },
+      "revId": "dfc06d453474ae65747d7d33c8b58c416ab5ddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
