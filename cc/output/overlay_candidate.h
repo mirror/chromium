@@ -35,7 +35,8 @@ class CC_EXPORT OverlayCandidate {
  public:
   // Returns true and fills in |candidate| if |draw_quad| is of a known quad
   // type and contains an overlayable resource.
-  static bool FromDrawQuad(DisplayResourceProvider* resource_provider,
+  static bool FromDrawQuad(const SkMatrix44& output_color_matrix,
+                           DisplayResourceProvider* resource_provider,
                            const viz::DrawQuad* quad,
                            OverlayCandidate* candidate);
   // Returns true if |quad| will not block quads underneath from becoming
