@@ -85,7 +85,23 @@ class TestPreviewsBlackList : public PreviewsBlackList {
   // PreviewsBlackList:
   PreviewsEligibilityReason IsLoadedAndAllowed(
       const GURL& url,
-      PreviewsType type) const override {
+      PreviewsType type,
+      PassedPreviewsEligibilities* passed_reasons) const override {
+    PreviewsEligibilityReason ordered_reasons[] = {
+        PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED,
+        PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT,
+        PreviewsEligibilityReason::USER_BLACKLISTED,
+        PreviewsEligibilityReason::HOST_BLACKLISTED,
+        PreviewsEligibilityReason::ALLOWED,
+    };
+
+    for (auto reason : ordered_reasons) {
+      if (status_ == reason) {
+        return status_;
+      }
+      passed_reasons->push_back(reason);
+    }
+    NOTREACHED();
     return status_;
   }
 
@@ -157,6 +173,11 @@ class TestPreviewsUIService : public PreviewsUIService {
     return decision_times_;
   }
 
+  const std::vector<std::unique_ptr<PassedPreviewsEligibilities>>&
+  decision_passed_reasons() const {
+    return decision_passed_reasons_;
+  }
+
   // Expose passed in LogPreviewsNavigation parameters.
   const std::vector<GURL>& navigation_urls() const { return navigation_urls_; }
   const std::vector<bool>& navigation_opt_outs() const {
@@ -190,14 +211,17 @@ class TestPreviewsUIService : public PreviewsUIService {
     navigation_times_.push_back(time);
   }
 
-  void LogPreviewDecisionMade(PreviewsEligibilityReason reason,
-                              const GURL& url,
-                              base::Time time,
-                              PreviewsType type) override {
+  void LogPreviewDecisionMade(
+      PreviewsEligibilityReason reason,
+      const GURL& url,
+      base::Time time,
+      PreviewsType type,
+      std::unique_ptr<PassedPreviewsEligibilities> passed_reasons) override {
     decision_reasons_.push_back(reason);
     decision_urls_.push_back(GURL(url));
     decision_times_.push_back(time);
     decision_types_.push_back(type);
+    decision_passed_reasons_.push_back(std::move(passed_reasons));
   }
 
   // Passed in params for blacklist status events.
@@ -211,6 +235,8 @@ class TestPreviewsUIService : public PreviewsUIService {
   std::vector<GURL> decision_urls_;
   std::vector<PreviewsType> decision_types_;
   std::vector<base::Time> decision_times_;
+  std::vector<std::unique_ptr<PassedPreviewsEligibilities>>
+      decision_passed_reasons_;
 
   // Passed in LogPreviewsNavigation parameters.
   std::vector<GURL> navigation_urls_;
@@ -741,26 +767,33 @@ TEST_F(PreviewsIODataTest, LogPreviewDecisionMadePassInCorrectParams) {
   GURL url("http://www.url_a.com/url_a");
   base::Time time = base::Time::Now();
   PreviewsType type = PreviewsType::OFFLINE;
+  std::unique_ptr<PassedPreviewsEligibilities> passed_reasons =
+      base::MakeUnique<PassedPreviewsEligibilities>();
+  passed_reasons->push_back(PreviewsEligibilityReason::NETWORK_NOT_SLOW);
+  passed_reasons->push_back(PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT);
+  passed_reasons->push_back(PreviewsEligibilityReason::RELOAD_DISALLOWED);
+  PassedPreviewsEligibilities* expected_passed_reasons = passed_reasons.get();
 
-  io_data()->LogPreviewDecisionMade(reason, url, time, type);
+  io_data()->LogPreviewDecisionMade(reason, url, time, type,
+                                    std::move(passed_reasons));
   base::RunLoop().RunUntilIdle();
 
   EXPECT_THAT(ui_service()->decision_reasons(), ::testing::ElementsAre(reason));
   EXPECT_THAT(ui_service()->decision_urls(), ::testing::ElementsAre(url));
   EXPECT_THAT(ui_service()->decision_types(), ::testing::ElementsAre(type));
   EXPECT_THAT(ui_service()->decision_times(), ::testing::ElementsAre(time));
-}
+  EXPECT_EQ(1UL, ui_service()->decision_passed_reasons().size());
+  EXPECT_EQ(expected_passed_reasons,
+            ui_service()->decision_passed_reasons()[0].get());
+}  // namespace
 
-TEST_F(PreviewsIODataTest, BlacklistNotAvailableLogDecisionMade) {
+TEST_F(PreviewsIODataTest, LogDecisionMadeBlacklistNotAvailable) {
   InitializeUIService();
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
   auto expected_reason = PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE;
   auto expected_type = PreviewsType::LOFI;
 
-  std::unique_ptr<TestPreviewsBlackList> blacklist =
-      base::MakeUnique<TestPreviewsBlackList>(expected_reason, io_data());
-  io_data()->InjectTestBlacklist(std::move(blacklist));
-
+  io_data()->InjectTestBlacklist(nullptr /* blacklist */);
   io_data()->ShouldAllowPreviewAtECT(*CreateRequest(), expected_type,
                                      net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN,
                                      {});
@@ -772,7 +805,7 @@ TEST_F(PreviewsIODataTest, BlacklistNotAvailableLogDecisionMade) {
               ::testing::Contains(expected_type));
 }
 
-TEST_F(PreviewsIODataTest, BlacklistStatusesLogDecisionMadeDefault) {
+TEST_F(PreviewsIODataTest, LogDecisionMadeBlacklistStatusesDefault) {
   InitializeUIService();
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
 
@@ -784,8 +817,11 @@ TEST_F(PreviewsIODataTest, BlacklistStatusesLogDecisionMadeDefault) {
   };
 
   auto expected_type = PreviewsType::LOFI;
+  const size_t reasons_size = 4;
 
-  for (auto expected_reason : expected_reasons) {
+  for (size_t i = 0; i < reasons_size; i++) {
+    auto expected_reason = expected_reasons[i];
+
     std::unique_ptr<TestPreviewsBlackList> blacklist =
         base::MakeUnique<TestPreviewsBlackList>(expected_reason, io_data());
     io_data()->InjectTestBlacklist(std::move(blacklist));
@@ -795,14 +831,17 @@ TEST_F(PreviewsIODataTest, BlacklistStatusesLogDecisionMadeDefault) {
                                        {});
     base::RunLoop().RunUntilIdle();
     // Testing correct log method is called.
-    EXPECT_THAT(ui_service()->decision_reasons(),
-                ::testing::Contains(expected_reason));
+    // Check for all decision upto current decision is logged.
+    for (size_t j = 0; j <= i; j++) {
+      EXPECT_THAT(ui_service()->decision_reasons(),
+                  ::testing::Contains(expected_reasons[j]));
+    }
     EXPECT_THAT(ui_service()->decision_types(),
                 ::testing::Contains(expected_type));
   }
 }
 
-TEST_F(PreviewsIODataTest, BlacklistStatusesLogDecisionMadeIgnore) {
+TEST_F(PreviewsIODataTest, LogDecisionMadeBlacklistStatusesIgnore) {
   InitializeUIService();
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
   network_quality_estimator()->set_effective_connection_type(
@@ -838,7 +877,7 @@ TEST_F(PreviewsIODataTest, BlacklistStatusesLogDecisionMadeIgnore) {
   }
 }
 
-TEST_F(PreviewsIODataTest, NetworkQualityNotAvailableCallsLogDecisionMade) {
+TEST_F(PreviewsIODataTest, LogDecisionMadeNetworkQualityNotAvailable) {
   InitializeUIService();
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
   std::unique_ptr<TestPreviewsBlackList> blacklist =
@@ -848,6 +887,14 @@ TEST_F(PreviewsIODataTest, NetworkQualityNotAvailableCallsLogDecisionMade) {
 
   auto expected_reason = PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE;
   auto expected_type = PreviewsType::LOFI;
+
+  PassedPreviewsEligibilities checked_decisions = {
+      PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE,
+      PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED,
+      PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT,
+      PreviewsEligibilityReason::USER_BLACKLISTED,
+      PreviewsEligibilityReason::HOST_BLACKLISTED,
+  };
 
   network_quality_estimator()->set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN);
@@ -863,9 +910,13 @@ TEST_F(PreviewsIODataTest, NetworkQualityNotAvailableCallsLogDecisionMade) {
               ::testing::Contains(expected_reason));
   EXPECT_THAT(ui_service()->decision_types(),
               ::testing::Contains(expected_type));
+
+  EXPECT_EQ(1UL, ui_service()->decision_passed_reasons().size());
+  EXPECT_EQ(checked_decisions.size(),
+            ui_service()->decision_passed_reasons()[0]->size());
 }
 
-TEST_F(PreviewsIODataTest, NetworkNotSlowLogDecisionMade) {
+TEST_F(PreviewsIODataTest, LogDecisionMadeNetworkNotSlow) {
   InitializeUIService();
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
   std::unique_ptr<TestPreviewsBlackList> blacklist =
@@ -879,6 +930,15 @@ TEST_F(PreviewsIODataTest, NetworkNotSlowLogDecisionMade) {
   auto expected_reason = PreviewsEligibilityReason::NETWORK_NOT_SLOW;
   auto expected_type = PreviewsType::LOFI;
 
+  PassedPreviewsEligibilities checked_decisions = {
+      PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE,
+      PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED,
+      PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT,
+      PreviewsEligibilityReason::USER_BLACKLISTED,
+      PreviewsEligibilityReason::HOST_BLACKLISTED,
+      PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE,
+  };
+
   io_data()->ShouldAllowPreviewAtECT(
       *CreateRequest(), expected_type,
       net::EFFECTIVE_CONNECTION_TYPE_2G /* threshold */, {});
@@ -888,9 +948,13 @@ TEST_F(PreviewsIODataTest, NetworkNotSlowLogDecisionMade) {
               ::testing::Contains(expected_reason));
   EXPECT_THAT(ui_service()->decision_types(),
               ::testing::Contains(expected_type));
+
+  EXPECT_EQ(1UL, ui_service()->decision_passed_reasons().size());
+  EXPECT_EQ(checked_decisions.size(),
+            ui_service()->decision_passed_reasons()[0]->size());
 }
 
-TEST_F(PreviewsIODataTest, HostBlacklistedLogDecisionMade) {
+TEST_F(PreviewsIODataTest, LogDecisionMadeHostBlacklisted) {
   InitializeUIService();
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled",
                              {{"short_host_blacklist", "example.com"}});
@@ -905,6 +969,17 @@ TEST_F(PreviewsIODataTest, HostBlacklistedLogDecisionMade) {
   auto expected_reason = PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER;
   auto expected_type = PreviewsType::LOFI;
 
+  PassedPreviewsEligibilities checked_decisions = {
+      PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE,
+      PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED,
+      PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT,
+      PreviewsEligibilityReason::USER_BLACKLISTED,
+      PreviewsEligibilityReason::HOST_BLACKLISTED,
+      PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE,
+      PreviewsEligibilityReason::NETWORK_NOT_SLOW,
+      PreviewsEligibilityReason::RELOAD_DISALLOWED,
+  };
+
   io_data()->ShouldAllowPreviewAtECT(
       *CreateRequest(), expected_type,
       params::EffectiveConnectionTypeThresholdForClientLoFi(),
@@ -916,9 +991,13 @@ TEST_F(PreviewsIODataTest, HostBlacklistedLogDecisionMade) {
               ::testing::Contains(expected_reason));
   EXPECT_THAT(ui_service()->decision_types(),
               ::testing::Contains(expected_type));
+
+  EXPECT_EQ(1UL, ui_service()->decision_passed_reasons().size());
+  EXPECT_EQ(checked_decisions.size(),
+            ui_service()->decision_passed_reasons()[0]->size());
 }
 
-TEST_F(PreviewsIODataTest, ReloadDisallowedLogDecisionMade) {
+TEST_F(PreviewsIODataTest, LogDecisionMadeReloadDisallowed) {
   InitializeUIService();
   std::unique_ptr<TestPreviewsBlackList> blacklist =
       base::MakeUnique<TestPreviewsBlackList>(
@@ -933,6 +1012,16 @@ TEST_F(PreviewsIODataTest, ReloadDisallowedLogDecisionMade) {
   auto expected_reason = PreviewsEligibilityReason::RELOAD_DISALLOWED;
   auto expected_type = PreviewsType::OFFLINE;
 
+  PassedPreviewsEligibilities checked_decisions = {
+      PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE,
+      PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED,
+      PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT,
+      PreviewsEligibilityReason::USER_BLACKLISTED,
+      PreviewsEligibilityReason::HOST_BLACKLISTED,
+      PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE,
+      PreviewsEligibilityReason::NETWORK_NOT_SLOW,
+  };
+
   io_data()->ShouldAllowPreviewAtECT(
       *request, expected_type,
       params::EffectiveConnectionTypeThresholdForClientLoFi(),
@@ -944,9 +1033,13 @@ TEST_F(PreviewsIODataTest, ReloadDisallowedLogDecisionMade) {
               ::testing::Contains(expected_reason));
   EXPECT_THAT(ui_service()->decision_types(),
               ::testing::Contains(expected_type));
+
+  EXPECT_EQ(1UL, ui_service()->decision_passed_reasons().size());
+  EXPECT_EQ(checked_decisions.size(),
+            ui_service()->decision_passed_reasons()[0]->size());
 }
 
-TEST_F(PreviewsIODataTest, AllowPreviewsOnECTLogDecisionMade) {
+TEST_F(PreviewsIODataTest, LogDecisionMadeAllowPreviewsOnECT) {
   InitializeUIService();
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
 
@@ -962,6 +1055,18 @@ TEST_F(PreviewsIODataTest, AllowPreviewsOnECTLogDecisionMade) {
   auto expected_reason = PreviewsEligibilityReason::ALLOWED;
   auto expected_type = PreviewsType::LOFI;
 
+  PassedPreviewsEligibilities checked_decisions = {
+      PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE,
+      PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED,
+      PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT,
+      PreviewsEligibilityReason::USER_BLACKLISTED,
+      PreviewsEligibilityReason::HOST_BLACKLISTED,
+      PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE,
+      PreviewsEligibilityReason::NETWORK_NOT_SLOW,
+      PreviewsEligibilityReason::RELOAD_DISALLOWED,
+      PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER,
+  };
+
   io_data()->ShouldAllowPreviewAtECT(
       *CreateRequest(), expected_type,
       params::EffectiveConnectionTypeThresholdForClientLoFi(),
@@ -973,6 +1078,10 @@ TEST_F(PreviewsIODataTest, AllowPreviewsOnECTLogDecisionMade) {
               ::testing::Contains(expected_reason));
   EXPECT_THAT(ui_service()->decision_types(),
               ::testing::Contains(expected_type));
+
+  EXPECT_EQ(1UL, ui_service()->decision_passed_reasons().size());
+  EXPECT_EQ(checked_decisions.size(),
+            ui_service()->decision_passed_reasons()[0]->size());
 }
 
 TEST_F(PreviewsIODataTest, OnNewBlacklistedHostCallsUIMethodCorrectly) {
