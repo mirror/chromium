@@ -92,6 +92,13 @@ void AppBannerManagerDesktop::ShowBannerUi() {
   bookmark_app_helper_.reset(
       new extensions::BookmarkAppHelper(profile, web_app_info, contents));
 
+  if (IsExperimentalAppBannersEnabled()) {
+    ReportStatus(SHOWING_WEB_APP_BANNER);
+    bookmark_app_helper_->Create(base::Bind(
+        &AppBannerManager::DidFinishCreatingBookmarkApp, GetWeakPtr()));
+    return;
+  }
+
   // This differs from Android, where there is a concrete
   // AppBannerInfoBarAndroid class to interface with Java, and the manager calls
   // the InfoBarService to show the banner. On desktop, an InfoBar class
