@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6854aa9_f5c2b7a7",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-29T02:30:25Z",
+      "side": 1,
+      "message": "Dear Antoine, \nIt looks correct not to include vulkan libs in skia/BUILD.gn\n(https://chromium-review.googlesource.com/c/chromium/src/+/649387/30/skia/BUILD.gn#65)\n\nSince Vulkan APIs are required here, I may need to add vulkan libs in components/viz/common/BUILD.gn\n   if (enable_vulkan) {\n+    vulkan_lib_dir \u003d getenv(\"VULKAN_SDK\") + \"/lib\"\n     deps +\u003d [ \"//gpu/vulkan\" ]\n+    libs \u003d [ \"vulkan\" ]\n+    lib_dirs \u003d [ vulkan_lib_dir ]\n   }\n\nShould this be Ok ?",
+      "revId": "59aaf7107aab598249b5b42cec55b8344d049419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d2a9606_cbbde98d",
         "filename": "skia/BUILD.gn",
         "patchSetId": 30
@@ -13,6 +30,30 @@
       "writtenOn": "2017-11-28T13:04:07Z",
       "side": 1,
       "message": "is it needed to include the vulkan libs for skia? Is chrome not simply passing Skia function to the getProcAddr functions. Thus only chrome itself should need to link against the lib?",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "59aaf7107aab598249b5b42cec55b8344d049419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e01e214_5fbe2e9b",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 30
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-29T02:30:25Z",
+      "side": 1,
+      "message": "I agree on your point. I will check once on this.",
+      "parentUuid": "2d2a9606_cbbde98d",
       "range": {
         "startLine": 64,
         "startChar": 4,
