@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c267e129_94ff1564",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-29T17:20:53Z",
+      "side": 1,
+      "message": "Actually, on second thought, I would very much like to get this in before branch so we can get this data from M64 stable. So maybe we can leave the ssl_client_socket_impl_unittest as-is (separate tests) for now and rework them after branch?",
+      "parentUuid": "9b19d7fb_a54d4fb6",
+      "range": {
+        "startLine": 807,
+        "startChar": 27,
+        "endLine": 807,
+        "endChar": 0
+      },
+      "revId": "1983a89f29e137d0673d8688c2001aab00c40664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9181b590_6965f0aa",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
