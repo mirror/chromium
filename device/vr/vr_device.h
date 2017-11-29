@@ -12,6 +12,18 @@
 
 namespace device {
 
+enum class ViewerType {
+  UNKNOWN_TYPE = 0,
+  GVR_CARDBOARD = 1,
+  GVR_DAYDREAM = 2,
+  GVR_UNKNOWN = 3,
+  FAKE_DEVICE = 4,
+  OPENVR_UNKNOWN = 5,
+  OPENVR_VIVE = 6,
+  OPENVR_RIFT_CV1 = 7,
+  VIEWER_TYPE_MAX,
+};
+
 const unsigned int VR_DEVICE_LAST_ID = 0xFFFFFFFF;
 
 // Represents one of the platform's VR devices. Owned by the respective
