@@ -164,8 +164,8 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
   if (net::IsCertStatusError(response_head.cert_status)) {
     // TODO(nhiroki): Show an error message equivalent to kSSLError in
     // service_worker_write_to_cache_job.cc.
-    CommitCompleted(
-        network::URLLoaderCompletionStatus(net::ERR_INSECURE_RESPONSE));
+    CommitCompleted(network::URLLoaderCompletionStatus(
+        net::MapCertStatusToNetError(response_head.cert_status)));
     return;
   }
 
@@ -189,6 +189,7 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
             version_->scope(), request_url_,
             has_header ? &service_worker_allowed : nullptr, &error_message)) {
       // TODO(nhiroki): Report |error_message|.
+      LOG(ERROR) << "Path restriction";
       CommitCompleted(
           network::URLLoaderCompletionStatus(net::ERR_INSECURE_RESPONSE));
       return;
