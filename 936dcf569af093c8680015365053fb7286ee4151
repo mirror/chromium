@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "22cad064_59f298cd",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-29T18:18:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this header would need to become public - unless we change the type being passed the didFinishCollectingMetrics delegate.  What is the use case you are imagining?",
+      "parentUuid": "1cb54f74_aeb29778",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 4
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d406f67_1534bba8",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 20
