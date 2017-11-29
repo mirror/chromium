@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a1ae8c2_6640d59c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-29T04:26:25Z",
+      "side": 1,
+      "message": "Link to the infini-backup bug.",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 6
+      },
+      "revId": "5ac9a721910400f423018a3fe5028760bf438f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997717d1_d1987ee8",
+        "filename": "ui/file_manager/file_manager/background/js/drive_sync_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-29T04:26:25Z",
+      "side": 1,
+      "message": "We don\u0027t have to translate the error message for developers.\nInline the text and remove the ID.",
+      "range": {
+        "startLine": 234,
+        "startChar": 20,
+        "endLine": 234,
+        "endChar": 24
+      },
+      "revId": "5ac9a721910400f423018a3fe5028760bf438f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
