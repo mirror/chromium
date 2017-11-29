@@ -9,6 +9,7 @@
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSPropertyValueSet.h"
+#include "core/css/MutableCSSPropertyValueSet.h"
 #include "core/css/parser/CSSParserContext.h"
 
 namespace blink {
