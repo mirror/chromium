@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6a10ed4_818ab58f",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-29T20:55:58Z",
+      "side": 1,
+      "message": "This target depends on //content, which doesn\u0027t compile on iOS.  I suspect that the trybot will be happy if we move this to the !iOS block at lines 176-228.  Could we try that to see if it works?",
+      "revId": "a27394af7d9888e952e69a998cd6b097f45da36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
