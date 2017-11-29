@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b19d7fb_a54d4fb6",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-29T01:06:49Z",
+      "side": 1,
+      "message": "Done. I tried to do this in ssl_client_socket_unittest as well, but there\u0027s only a single MockCertVerifier in those tests and MCV doesn\u0027t support overwriting a result for the same cert so it\u0027s not as straightforward there. Happy to add that functionality to MockCertVerifier if you think it\u0027s worthwhile.",
+      "parentUuid": "42b9d82e_2f6092a3",
+      "range": {
+        "startLine": 807,
+        "startChar": 27,
+        "endLine": 807,
+        "endChar": 0
+      },
+      "revId": "1983a89f29e137d0673d8688c2001aab00c40664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9181b590_6965f0aa",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "1983a89f29e137d0673d8688c2001aab00c40664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7ea49e_d20157af",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 40370,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-29T01:06:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9181b590_6965f0aa",
+      "revId": "1983a89f29e137d0673d8688c2001aab00c40664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
