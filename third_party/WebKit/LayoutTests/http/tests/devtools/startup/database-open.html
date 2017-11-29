@@ -5,7 +5,6 @@
 <script src="../../inspector/resources-test.js"></script>
 
 <script>
-
 function onload()
 {
     if (window.testRunner)
@@ -15,7 +14,7 @@ function onload()
     var db2 = openDatabase("InspectorDatabaseTest2", "1.0", "Test of database instrumentation 2", 1);
 
     if (window.testRunner)
-        testRunner.showWebInspector();
+      testRunner.showWebInspector(JSON.stringify({retainStorage: true}));
     runTest();
 }
 

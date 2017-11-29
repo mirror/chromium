@@ -471,7 +471,7 @@ void BlinkTestController::LoadDevToolsJSTest() {
   Shell* secondary = SecondaryWindow();
   devtools_bindings_ = base::MakeUnique<LayoutTestDevToolsBindings>(
       devtools_window_->web_contents(), secondary->web_contents(), "",
-      test_url_, true);
+      test_url_, test_url_, true);
 }
 
 bool BlinkTestController::ResetAfterLayoutTest() {
@@ -568,8 +568,6 @@ bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_SetPopupBlockingEnabled,
                         OnSetPopupBlockingEnabled)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_TestFinished, OnTestFinished)
-    IPC_MESSAGE_HANDLER(ShellViewHostMsg_ClearDevToolsLocalStorage,
-                        OnClearDevToolsLocalStorage)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_ShowDevTools, OnShowDevTools)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_EvaluateInDevTools,
                         OnEvaluateInDevTools)
@@ -955,22 +953,12 @@ void BlinkTestController::OnSetPopupBlockingEnabled(bool block_popups) {
   LayoutTestContentBrowserClient::Get()->SetPopupBlockingEnabled(block_popups);
 }
 
-void BlinkTestController::OnClearDevToolsLocalStorage() {
-  ShellBrowserContext* browser_context =
-      ShellContentBrowserClient::Get()->browser_context();
-  StoragePartition* storage_partition =
-      BrowserContext::GetStoragePartition(browser_context, nullptr);
-  storage_partition->GetDOMStorageContext()->DeleteLocalStorage(
-      content::LayoutTestDevToolsBindings::GetDevToolsPathAsURL("")
-          .GetOrigin());
-}
-
 void BlinkTestController::OnShowDevTools(const std::string& settings,
                                          const std::string& frontend_url) {
   devtools_window_ = SecondaryWindow();
   devtools_bindings_ = base::MakeUnique<LayoutTestDevToolsBindings>(
       devtools_window_->web_contents(), main_window_->web_contents(), settings,
-      GURL(frontend_url), false);
+      GURL(frontend_url), test_url_, false);
   devtools_window_->web_contents()->GetRenderViewHost()->GetWidget()->Focus();
   devtools_window_->web_contents()->Focus();
 }
