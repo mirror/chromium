@@ -189,8 +189,7 @@ void RunExperimentalSwReporter(const base::FilePath& exe_path,
                                const base::Version& version,
                                std::unique_ptr<base::DictionaryValue> manifest,
                                const SwReporterRunner& reporter_runner,
-                               SwReporterInvocationType invocation_type,
-                               OnReporterSequenceDone on_sequence_done) {
+                               SwReporterInvocationType invocation_type) {
   // The experiment requires launch_params so if they aren't present just
   // return.
   base::Value* launch_params = nullptr;
@@ -208,8 +207,7 @@ void RunExperimentalSwReporter(const base::FilePath& exe_path,
   const std::string session_id = GenerateSessionId();
 
   safe_browsing::SwReporterInvocationSequence invocations(
-      version, SwReporterInvocationSequence::Queue(),
-      std::move(on_sequence_done));
+      version, SwReporterInvocationSequence::Queue());
   for (const auto& iter : *parameter_list) {
     const base::DictionaryValue* invocation_params = nullptr;
     if (!iter.GetAsDictionary(&invocation_params)) {
@@ -294,12 +292,10 @@ void RunExperimentalSwReporter(const base::FilePath& exe_path,
 SwReporterInstallerPolicy::SwReporterInstallerPolicy(
     const SwReporterRunner& reporter_runner,
     bool is_experimental_engine_supported,
-    SwReporterInvocationType invocation_type,
-    OnReporterSequenceDone on_sequence_done)
+    SwReporterInvocationType invocation_type)
     : reporter_runner_(reporter_runner),
       is_experimental_engine_supported_(is_experimental_engine_supported),
-      invocation_type_(invocation_type),
-      on_sequence_done_(std::move(on_sequence_done)) {}
+      invocation_type_(invocation_type) {}
 
 SwReporterInstallerPolicy::~SwReporterInstallerPolicy() {}
 
@@ -334,8 +330,7 @@ void SwReporterInstallerPolicy::ComponentReady(
   const base::FilePath exe_path(install_dir.Append(kSwReporterExeName));
   if (IsExperimentalEngineEnabled()) {
     RunExperimentalSwReporter(exe_path, version, std::move(manifest),
-                              reporter_runner_, invocation_type_,
-                              std::move(on_sequence_done_));
+                              reporter_runner_, invocation_type_);
   } else {
     base::CommandLine command_line(exe_path);
     command_line.AppendSwitchASCII(chrome_cleaner::kSessionIdSwitch,
@@ -344,9 +339,8 @@ void SwReporterInstallerPolicy::ComponentReady(
         {SwReporterInvocation(command_line)
              .WithSupportedBehaviours(
                  SwReporterInvocation::BEHAVIOURS_ENABLED_BY_DEFAULT)});
-    reporter_runner_.Run(invocation_type_, SwReporterInvocationSequence(
-                                               version, invocations,
-                                               std::move(on_sequence_done_)));
+    reporter_runner_.Run(invocation_type_,
+                         SwReporterInvocationSequence(version, invocations));
   }
 }
 
@@ -400,7 +394,6 @@ bool SwReporterInstallerPolicy::IsExperimentalEngineEnabled() const {
 
 void RegisterSwReporterComponentWithParams(
     safe_browsing::SwReporterInvocationType invocation_type,
-    OnReporterSequenceDone on_sequence_done,
     ComponentUpdateService* cus) {
   // TODO(crbug.com/774623): this is no longer needed and can be deleted.
   if (!safe_browsing::IsSwReporterEnabled())
@@ -493,8 +486,7 @@ void RegisterSwReporterComponentWithParams(
   auto installer = base::MakeRefCounted<ComponentInstaller>(
       std::make_unique<SwReporterInstallerPolicy>(
           base::Bind(&RunSwReportersAfterStartup),
-          is_experimental_engine_supported, invocation_type,
-          std::move(on_sequence_done)));
+          is_experimental_engine_supported, invocation_type));
   installer->Register(cus, base::OnceClosure());
 }
 
@@ -503,7 +495,7 @@ void RegisterSwReporterComponent(ComponentUpdateService* cus) {
   // performed once done. Because of that, the on sequence done callback
   // is defined as a no-op.
   RegisterSwReporterComponentWithParams(SwReporterInvocationType::kPeriodicRun,
-                                        OnReporterSequenceDone(), cus);
+                                        cus);
 }
 
 void RegisterPrefsForSwReporter(PrefRegistrySimple* registry) {
