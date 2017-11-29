@@ -350,6 +350,24 @@
       "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8143cdfa_69036b83",
+        "filename": "chrome/browser/profiles/profile_io_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-29T17:41:28Z",
+      "side": 1,
+      "message": "Changed to 3-state enum as per our CL-level discussion.",
+      "parentUuid": "1304e023_93541f62",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
