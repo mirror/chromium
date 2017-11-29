@@ -49,7 +49,7 @@ void TexturedElement::SetRerenderIfNotDirtyForTesting() {
   g_rerender_if_not_dirty_for_testing_ = true;
 }
 
-bool TexturedElement::UpdateTexture() {
+bool TexturedElement::PrepareToDraw() {
   if (!initialized_ ||
       !(GetTexture()->dirty() || g_rerender_if_not_dirty_for_testing_) ||
       !IsVisible())
@@ -100,10 +100,6 @@ void TexturedElement::Render(UiElementRenderer* renderer,
       texture_handle_, UiElementRenderer::kTextureLocationLocal,
       model.view_proj_matrix * world_space_transform(), copy_rect,
       computed_opacity(), size(), corner_radius());
-}
-
-bool TexturedElement::PrepareToDraw() {
-  return UpdateTexture();
 }
 
 }  // namespace vr
