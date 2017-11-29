@@ -16,6 +16,24 @@
       "revId": "831e539c694bac23d355418a5ef4869519dd5518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8caef9a0_45b15341",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-29T02:31:37Z",
+      "side": 1,
+      "message": "Looks weird, but probably is not worth investigating, since we have another working solution",
+      "parentUuid": "e8028db6_4767309b",
+      "revId": "831e539c694bac23d355418a5ef4869519dd5518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

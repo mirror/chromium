@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa605bef_07c54c53",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-29T02:31:37Z",
+      "side": 1,
+      "message": "Let\u0027s simply do:\n\n  command +\u003d \u0027 --test-launcher-jobs\u003d1\u0027",
+      "range": {
+        "startLine": 269,
+        "startChar": 4,
+        "endLine": 270,
+        "endChar": 44
+      },
+      "revId": "cad09dca1a529e09502486abc9c21ab4b079a621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032caf2e_cf22a481",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-29T02:31:37Z",
+      "side": 1,
+      "message": "\"output_file_name\" and \"output_file_path\" below",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 278,
+        "endChar": 14
+      },
+      "revId": "cad09dca1a529e09502486abc9c21ab4b079a621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388b3877_77d4859b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-29T02:31:37Z",
+      "side": 1,
+      "message": "let\u0027s use target + \"_output\", it\u0027s clearer",
+      "range": {
+        "startLine": 278,
+        "startChar": 54,
+        "endLine": 278,
+        "endChar": 66
+      },
+      "revId": "cad09dca1a529e09502486abc9c21ab4b079a621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f43ec8_63ac9195",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-29T02:31:37Z",
+      "side": 1,
+      "message": "Would be better to print(\u0027Running command \"%s\", the output is redirected to \"%s\".\u0027 % ....)",
+      "range": {
+        "startLine": 281,
+        "startChar": 9,
+        "endLine": 281,
+        "endChar": 78
+      },
+      "revId": "cad09dca1a529e09502486abc9c21ab4b079a621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d19ffa_97ab5f18",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-29T02:31:37Z",
+      "side": 1,
+      "message": "We need to use:\n\n  command.replace(binary_path, rebased_binary_path, 1)\n\nbecause the command may have `binary_path` substring among its arguments (e.g. \"my_fuzzer -runs\u003d0 ./my_fuzzer_corpus\"), and we shouldn\u0027t replace those.",
+      "range": {
+        "startLine": 302,
+        "startChar": 57,
+        "endLine": 302,
+        "endChar": 58
+      },
+      "revId": "cad09dca1a529e09502486abc9c21ab4b079a621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
