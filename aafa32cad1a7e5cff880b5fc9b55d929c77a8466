@@ -70,6 +70,24 @@
       "revId": "aafa32cad1a7e5cff880b5fc9b55d929c77a8466",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6b926c_78311dad",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-11-29T20:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "888c3df5_6251dbf7",
+      "revId": "aafa32cad1a7e5cff880b5fc9b55d929c77a8466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
