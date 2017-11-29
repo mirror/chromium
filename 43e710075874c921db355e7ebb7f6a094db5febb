@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd1b3332_520cef42",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-11-29T21:37:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4ce8201_71697d6e",
+      "revId": "43e710075874c921db355e7ebb7f6a094db5febb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef3749d6_1e91619b",
         "filename": "chrome/common/pref_names.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "43e710075874c921db355e7ebb7f6a094db5febb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fe8fce_233a7657",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-11-29T21:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef3749d6_1e91619b",
+      "revId": "43e710075874c921db355e7ebb7f6a094db5febb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
