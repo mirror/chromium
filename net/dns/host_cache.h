@@ -266,6 +266,17 @@ class NET_EXPORT HostCache {
   DISALLOW_COPY_AND_ASSIGN(HostCache);
 };
 
+// Checks whether |cache| contains an entry for |hostname|.
+// If so, returns true and writes the source (e.g. DNS, HOSTS file, etc.) to
+// |source_out| and the staleness to |stale_out| (if they are not null).
+// It tries using two common address_family and host_resolver_flag
+// combinations when performing lookups in the cache; this means false negatives
+// are possible, but unlikely.
+NET_EXPORT_PRIVATE bool HasCacheEntry(HostCache* cache,
+                                      base::StringPiece hostname,
+                                      HostCache::Entry::Source* source_out,
+                                      HostCache::EntryStaleness* stale_out);
+
 }  // namespace net
 
 #endif  // NET_DNS_HOST_CACHE_H_
