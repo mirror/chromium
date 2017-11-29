@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f11cf962_bcf7478c",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-29T20:33:29Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we fast fail if the feature isn\u0027t enabled?",
+      "revId": "3144e5fb6db4f8b50ecf2a1f1cdf3b6d4e995d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b373b57_9316f490",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-29T20:33:29Z",
+      "side": 1,
+      "message": "nit: newline",
+      "revId": "3144e5fb6db4f8b50ecf2a1f1cdf3b6d4e995d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
