@@ -554,5 +554,15 @@ interface is used relatively frequently, connecting once and reusing the
 interface pointer is probably a good idea.
 
 
+## Ensure An Explicit Grant For WebUI Bindings
+
+WebUI renderers sometimes need to call special, powerful IPC endpoints in a
+privileged process. It is important to enforce the constraint that the
+privileged callee previously created and blessed the calling process as a WebUI
+process, and not as a (potentially compromised) web renderer or other
+low-privilege process. Check for an explicit call to `AllowBindings`
+([example](https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/mojo_web_ui_controller.cc?q=chrome/browser/ui/webui/mojo_web_ui_controller.cc&sq=package:chromium&l=22)).
+
+
 [security-tips-for-ipc]: https://www.chromium.org/Home/chromium-security/education/security-tips-for-ipc
 [NfcTypeConverter.java]: https://chromium.googlesource.com/chromium/src/+/e97442ee6e8c4cf6bcf7f5623c6fb2cc8cce92ac/services/device/nfc/android/java/src/org/chromium/device/nfc/NfcTypeConverter.java
