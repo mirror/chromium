@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02948aac_cf270e69",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-29T10:34:13Z",
+      "side": 1,
+      "message": "This is the new code added in this version of the CL (compared to the version that was reverted https://chromium-review.googlesource.com/c/chromium/src/+/789032).",
+      "range": {
+        "startLine": 357,
+        "startChar": 0,
+        "endLine": 363,
+        "endChar": 5
+      },
+      "revId": "66e114190a42f142fb8875f05c696e8e5017802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
