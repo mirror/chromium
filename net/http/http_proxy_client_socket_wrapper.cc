@@ -291,6 +291,10 @@ int64_t HttpProxyClientSocketWrapper::GetTotalReceivedBytes() const {
   return transport_socket_->GetTotalReceivedBytes();
 }
 
+void HttpProxyClientSocketWrapper::Tag(const SocketTag& tag) {
+  return transport_socket_->Tag(tag);
+}
+
 int HttpProxyClientSocketWrapper::Read(IOBuffer* buf,
                                        int buf_len,
                                        const CompletionCallback& callback) {
