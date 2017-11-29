@@ -17,15 +17,16 @@ class TextTexture;
 
 class Text : public TexturedElement {
  public:
-  Text(int maximum_width_pixels,
-       float font_height_meters,
-       float text_width_meters);
+  Text(int maximum_width_pixels, float font_height_meters);
   ~Text() override;
 
   void SetText(const base::string16& text);
   void SetColor(SkColor color);
 
   void SetTextAlignment(UiTexture::TextAlignment alignment);
+  void SetMultiLine(bool multiline);
+
+  void OnSetSize(gfx::SizeF size) override;
 
  private:
   UiTexture* GetTexture() const override;
