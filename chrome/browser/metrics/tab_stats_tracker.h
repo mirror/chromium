@@ -90,6 +90,10 @@ class TabStatsTracker : public TabStripModelObserver,
     daily_event_.reset(daily_event);
   }
 
+  void reset_data_store(TabStatsDataStore* data_store) {
+    tab_stats_data_store_.reset(data_store);
+  }
+
   // chrome::BrowserListObserver:
   void OnBrowserAdded(Browser* browser) override;
   void OnBrowserRemoved(Browser* browser) override;
@@ -102,9 +106,16 @@ class TabStatsTracker : public TabStripModelObserver,
   void TabClosingAt(TabStripModel* model,
                     content::WebContents* web_contents,
                     int index) override;
+  void ActiveTabChanged(content::WebContents* old_contents,
+                        content::WebContents* new_contents,
+                        int index,
+                        int reason) override;
 
   // base::PowerObserver:
   void OnResume() override;
+
+  // Callback when an interval timer triggers.
+  void OnInterval(size_t interval_time_in_sec);
 
   // The name of the histogram used to report that the daily event happened.
   static const char kTabStatsDailyEventHistogramName[];
@@ -122,6 +133,10 @@ class TabStatsTracker : public TabStripModelObserver,
   // The timer used to periodically check if the daily event should be
   // triggered.
   base::RepeatingTimer timer_;
+
+  // The timers used to analyze how tabs are used during a given interval of
+  // time.
+  std::vector<std::unique_ptr<base::RepeatingTimer>> usage_interval_timers_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
@@ -147,6 +162,14 @@ class TabStatsTracker::UmaStatsReportingDelegate {
   // opened in a day.
   static const char kMaxWindowsInADayHistogramName[];
 
+  // The name of the histograms that records how tabs have been used during a
+  // given period of time. Will be appended with '_T' with T being the interval
+  // window (in seconds).
+  static const char kUnusedAndClosedInIntervalHistogramNameBase[];
+  static const char kUnusedTabsInIntervalHistogramNameBase[];
+  static const char kUsedAndClosedInIntervalHistogramNameBase[];
+  static const char kUsedTabsInIntervalHistogramNameBase[];
+
   UmaStatsReportingDelegate() {}
   ~UmaStatsReportingDelegate() {}
 
@@ -155,6 +178,12 @@ class TabStatsTracker::UmaStatsReportingDelegate {
 
   // Called once per day to report the metrics.
   void ReportDailyMetrics(const TabStatsDataStore::TabsStats& tab_stats);
+
+  // Report some information about how tabs have been used during a given
+  // interval of time.
+  void ReportUsageDuringInterval(
+      const TabStatsDataStore::TabsStateDuringIntervalMap& interval_map,
+      size_t interval_time_in_sec);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(UmaStatsReportingDelegate);

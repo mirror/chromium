@@ -4,9 +4,12 @@
 
 #include "chrome/browser/metrics/tab_stats_data_store.h"
 
+#include "base/test/scoped_task_environment.h"
 #include "chrome/browser/metrics/tab_stats_tracker.h"
+#include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/testing_pref_service.h"
+#include "content/public/browser/web_contents.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace metrics {
@@ -15,7 +18,7 @@ namespace {
 
 using TabsStats = TabStatsDataStore::TabsStats;
 
-using TabStatsDataStoreTest = testing::Test;
+using TabStatsDataStoreTest = ChromeRenderViewHostTestHarness;
 
 }  // namespace
 
@@ -29,7 +32,13 @@ TEST_F(TabStatsDataStoreTest, TabStatsGetsReloadedFromLocalState) {
   std::unique_ptr<TabStatsDataStore> data_store(
       std::make_unique<TabStatsDataStore>(&pref_service));
   size_t expected_tab_count = 12;
-  data_store->OnTabsAdded(expected_tab_count);
+  std::vector<std::unique_ptr<content::WebContents>> test_web_contents_vec;
+  for (size_t i = 0; i < expected_tab_count; ++i) {
+    std::unique_ptr<content::WebContents> test_web_contents =
+        base::WrapUnique(CreateTestWebContents());
+    data_store->OnTabAdded(test_web_contents.get());
+    test_web_contents_vec.push_back(std::move(test_web_contents));
+  }
   size_t expected_window_count = 5;
   for (size_t i = 0; i < expected_window_count; ++i)
     data_store->OnWindowAdded();
