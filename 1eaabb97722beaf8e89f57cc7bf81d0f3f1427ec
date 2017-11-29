@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "38ed8718_bc1e1b75",
+        "filename": "cc/trees/layer_tree_frame_sink.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T20:19:59Z",
+      "side": 1,
+      "message": "We don\u0027t need it for TestLTFS, it\u0027s for layout tests, but the other 2 yeah.",
+      "parentUuid": "7a38b019_858d1404",
+      "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee2d385f_80be07e3",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 2
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "b9ac5d46_7c602538",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T20:19:59Z",
+      "side": 1,
+      "message": "We can post the weakptr to the FrameSink and the client* and then call the client.",
+      "parentUuid": "a3c98e9f_f91897af",
+      "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09fd24bd_6828e710",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 2
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "We can check the bool without taking the lock. It may be out of date, so we might create an LTFS with a lost worker context whose context lost callback hasn\u0027t run yet, only to destroy it shortly after. piman@ WDYT about removing the status check and lock?",
       "parentUuid": "09fd24bd_6828e710",
+      "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d738c32d_ab164c8f",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2481,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T20:19:59Z",
+      "side": 1,
+      "message": "I\u0027d probably go the other way, the status check tells us more than the bool and the lock doesn\u0027t seem terrible this isn\u0027t a critical path.",
+      "parentUuid": "d56a0aaf_243d7280",
       "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
