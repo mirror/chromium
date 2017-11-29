@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e13dd7e_0917fc17",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-29T00:30:57Z",
+      "side": 1,
+      "message": "Is it fair to assume that the LayoutTest changes are all for debugging purposes, and will not be landed as part of this CL?",
+      "revId": "606a14812c3f20f34ae68cbf9ac1245121907d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071b361e_a388c7ce",
+        "filename": "third_party/WebKit/Tools/Scripts/apache_config/win-httpd.conf",
+        "patchSetId": 20
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-29T00:30:57Z",
+      "side": 1,
+      "message": "Can you please make this comment more explicit?\n\nExample - \"TODO(crbug.com/786152): Uncomment the line below after adding mod_env.so to the Windows Apache installation in Google Cloud Storage\"?\n\n(same for below)",
+      "revId": "606a14812c3f20f34ae68cbf9ac1245121907d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd1ccfb_4897742e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/win.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-29T00:30:57Z",
+      "side": 1,
+      "message": "Given the apache_envvars list below, would it make sense to reset \u0027TMP\u0027 to match \u0027TEMP\u0027?",
+      "revId": "606a14812c3f20f34ae68cbf9ac1245121907d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d511c8d0_4864cd27",
+        "filename": "third_party/apache-win32/README.chromium",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-29T00:30:57Z",
+      "side": 1,
+      "message": "Not sure what the .sha1 check buys us. The previous download is over https, so it should have integrity guarantees. An attacker powerful enough to compromise the .msi file can (most likely) also change the .sha1 file, as they (most likely) reside on the same server.",
+      "revId": "606a14812c3f20f34ae68cbf9ac1245121907d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
