@@ -513,6 +513,12 @@ const char kEnablePixelCanvasRecordingDescription[] =
 const char kEnableTokenBindingName[] = "Token Binding.";
 const char kEnableTokenBindingDescription[] = "Enable Token Binding support.";
 
+extern const char kEnableTouchpadAndWheelScrollLatchingName[] =
+    "Wheel Scroll Latching.";
+extern const char kEnableTouchpadAndWheelScrollLatchingDescription[] =
+    "Wheel scroll latching allows latching to a single element for the "
+    "duration of a scroll sequence.";
+
 const char kEnableUsernameCorrectionName[] = "Enable username correction";
 const char kEnableUsernameCorrectionDescription[] =
     "While on the pending password state, add an edit button to the bubble so "
