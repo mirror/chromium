@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58e1396c_fda8fd71",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-29T23:50:12Z",
+      "side": 1,
+      "message": "Please write tests using the non-deprecated test methods, since these are being removed by https://chromium-review.googlesource.com/c/chromium/src/+/774120",
+      "range": {
+        "startLine": 983,
+        "startChar": 4,
+        "endLine": 999,
+        "endChar": 5
+      },
+      "revId": "2bc8b7dcf3209f9323316e2a9b132e37be1704cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
