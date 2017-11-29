@@ -32,6 +32,7 @@ CWV_EXPORT
 @property(nonatomic, readonly, getter=isDragging) BOOL dragging;
 @property(nonatomic) BOOL scrollsToTop;
 @property(nonatomic, readonly) UIPanGestureRecognizer* panGestureRecognizer;
+@property(nonatomic, readonly, copy) NSArray<__kindof UIView*>* subviews;
 
 // KVO compliant.
 @property(nonatomic, readonly) CGSize contentSize;
