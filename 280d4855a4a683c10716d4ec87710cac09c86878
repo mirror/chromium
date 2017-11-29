@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97b24c31_225d60d8",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-29T00:09:07Z",
+      "side": 1,
+      "message": "this makes sense to remove as we shouldn\u0027t be modifying pending_damage_/damage_ from internal damage but the rest of the changes I\u0027m not sure.",
+      "revId": "280d4855a4a683c10716d4ec87710cac09c86878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161c6138_980a3bd8",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-29T00:09:07Z",
+      "side": 1,
+      "message": "this shouldn\u0027t be needed anymore as we always re-create resources when a surface is added to the tree now.",
+      "revId": "280d4855a4a683c10716d4ec87710cac09c86878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad81b7af_897b8a70",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-29T00:09:07Z",
+      "side": 1,
+      "message": "we shouldn\u0027t modify damage_ here. and it shouldn\u0027t be required",
+      "revId": "280d4855a4a683c10716d4ec87710cac09c86878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

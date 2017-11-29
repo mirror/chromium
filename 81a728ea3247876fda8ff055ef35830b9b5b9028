@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36dec9ea_29204221",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-29T00:09:07Z",
+      "side": 0,
+      "message": "I think we still need this. how are we otherwise handling damage from subsurfaces correctly?",
+      "range": {
+        "startLine": 449,
+        "startChar": 4,
+        "endLine": 452,
+        "endChar": 32
+      },
+      "revId": "81a728ea3247876fda8ff055ef35830b9b5b9028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5cbdd3_49c5f835",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-29T00:09:07Z",
+      "side": 0,
+      "message": "keep this?",
+      "revId": "81a728ea3247876fda8ff055ef35830b9b5b9028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
