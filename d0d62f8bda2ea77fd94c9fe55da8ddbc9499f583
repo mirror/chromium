@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a47c42c1_e8de2ec5",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-29T21:35:51Z",
+      "side": 1,
+      "message": "You could, but logically, it belongs to features extracted, so should be part of ExtractFeatures.",
+      "parentUuid": "b73336ba_f25e249f",
+      "revId": "d0d62f8bda2ea77fd94c9fe55da8ddbc9499f583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c72ed4b9_5220dd77",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "d0d62f8bda2ea77fd94c9fe55da8ddbc9499f583",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7e25e4_ba013ce7",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-29T21:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c72ed4b9_5220dd77",
+      "revId": "d0d62f8bda2ea77fd94c9fe55da8ddbc9499f583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
