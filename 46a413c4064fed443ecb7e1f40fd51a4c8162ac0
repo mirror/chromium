@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d45523b7_edc82641",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-29T01:47:53Z",
+      "side": 1,
+      "message": "Why must it be one of these two?",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aeaa3c7_07a46c8b",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-29T01:47:53Z",
+      "side": 1,
+      "message": "Why don\u0027t you need the using_builder boolean anymore? Was it just a premature\noptimization in the first place?",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb3a610_b3c39608",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-29T01:47:53Z",
+      "side": 1,
+      "message": "Scale then translate, or translate then scale? the two places in this\nfile that reference kSvgUnitTypeUserspaceonuse do it in opposite orders.",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72f7247_35c1d822",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-29T01:47:53Z",
+      "side": 1,
+      "message": "Is this ClipRecorder just an optimization? Why do you need it but previously\nit was not?",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cb6b57_c7fca1c9",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-29T01:47:53Z",
+      "side": 1,
+      "message": "Nit: remove stray semicolon.",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9650bfac_2e96893c",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-29T01:47:53Z",
+      "side": 1,
+      "message": "s/CanUsePathBasedClip/PathBasedClip/",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b97709_9724bf67",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-29T01:47:53Z",
+      "side": 1,
+      "message": "Document what LocalReferenceBox returns.",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
