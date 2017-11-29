@@ -17,6 +17,8 @@ def MergeJson(output_json, jsons_to_merge, print_input=True):
     jsons_to_merge: A list of paths to JSON files that should be merged.
   """
   shard_results_list = []
+  print "Outputing jsons to merge:"
+  print jsons_to_merge
   for j in jsons_to_merge:
     with open(j) as f:
       shard_results_list.append(json.load(f))
