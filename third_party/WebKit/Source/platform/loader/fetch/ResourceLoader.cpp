@@ -148,9 +148,11 @@ void ResourceLoader::StartWith(const ResourceRequest& request) {
     loader_->LoadAsynchronously(WrappedResourceRequest(request), this);
 }
 
-void ResourceLoader::Release(ResourceLoadScheduler::ReleaseOption option) {
+void ResourceLoader::Release(ResourceLoadScheduler::ReleaseOption option,
+                             int64_t decoded_body_length) {
   DCHECK_NE(ResourceLoadScheduler::kInvalidClientId, scheduler_client_id_);
-  bool released = scheduler_->Release(scheduler_client_id_, option);
+  bool released =
+      scheduler_->Release(scheduler_client_id_, option, decoded_body_length);
   DCHECK(released);
   scheduler_client_id_ = ResourceLoadScheduler::kInvalidClientId;
 }
@@ -627,7 +629,8 @@ void ResourceLoader::DidFinishLoading(double finish_time,
   resource_->SetEncodedBodyLength(encoded_body_length);
   resource_->SetDecodedBodyLength(decoded_body_length);
 
-  Release(ResourceLoadScheduler::ReleaseOption::kReleaseAndSchedule);
+  Release(ResourceLoadScheduler::ReleaseOption::kReleaseAndSchedule,
+          decoded_body_length);
   loader_.reset();
 
   network_instrumentation::EndResourceLoad(
@@ -657,7 +660,7 @@ void ResourceLoader::HandleError(const ResourceError& error) {
     return;
   }
 
-  Release(ResourceLoadScheduler::ReleaseOption::kReleaseAndSchedule);
+  Release(ResourceLoadScheduler::ReleaseOption::kReleaseAndSchedule, -1);
   loader_.reset();
 
   network_instrumentation::EndResourceLoad(
@@ -721,7 +724,7 @@ void ResourceLoader::Dispose() {
   // ignored due to GC, this case happens. We just release here because we can
   // not schedule another request safely. See crbug.com/675947.
   if (scheduler_client_id_ != ResourceLoadScheduler::kInvalidClientId)
-    Release(ResourceLoadScheduler::ReleaseOption::kReleaseOnly);
+    Release(ResourceLoadScheduler::ReleaseOption::kReleaseOnly, -1);
 }
 
 void ResourceLoader::ActivateCacheAwareLoadingIfNeeded(

@@ -62,12 +62,177 @@ uint32_t GetOutstandingThrottledLimit(FetchContext* context) {
 
 }  // namespace
 
+class ResourceLoadScheduler::TrafficMonitor {
+ public:
+  TrafficMonitor(bool is_main_frame);
+  ~TrafficMonitor();
+
+  // Reports traffic metrics.
+  void Flush(WebFrameScheduler::ThrottlingState);
+
+  // Tracks resource request completion.
+  void Track(int64_t decoded_body_length);
+
+ private:
+  const bool is_main_frame_;
+
+  WebFrameScheduler::ThrottlingState last_state_ =
+      WebFrameScheduler::ThrottlingState::kStopped;
+
+  size_t request_count_ = 0;
+  size_t traffic_bytes_ = 0;
+  size_t total_throttled_request_count_ = 0;
+  size_t total_throttled_traffic_bytes_ = 0;
+  size_t total_not_throttled_request_count_ = 0;
+  size_t total_not_throttled_traffic_bytes_ = 0;
+};
+
+ResourceLoadScheduler::TrafficMonitor::TrafficMonitor(bool is_main_frame)
+    : is_main_frame_(is_main_frame) {}
+
+ResourceLoadScheduler::TrafficMonitor::~TrafficMonitor() {
+  Flush(WebFrameScheduler::ThrottlingState::kStopped);
+
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, main_frame_total_throttled_request_count,
+      ("Blink.ResourceLoadScheduler.TotalRequestCount.MainframeThrottled", 0,
+       10000, 25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, main_frame_total_not_throttled_request_count,
+      ("Blink.ResourceLoadScheduler.TotalRequestCount.MainframeNotThrottled", 0,
+       10000, 25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, sub_frame_total_throttled_request_count,
+      ("Blink.ResourceLoadScheduler.TotalRequestCount.SubframeThrottled", 0,
+       10000, 25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, sub_frame_total_not_throttled_request_count,
+      ("Blink.ResourceLoadScheduler.TotalRequestCount.SubframeNotThrottled", 0,
+       10000, 25));
+
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, main_frame_total_throttled_traffic_bytes,
+      ("Blink.ResourceLoadScheduler.TotalTrafficBytes.MainframeThrottled", 0,
+       10000, 25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, main_frame_total_not_throttled_traffic_bytes,
+      ("Blink.ResourceLoadScheduler.TotalTrafficBytes.MainframeNotThrottled", 0,
+       10000, 25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, sub_frame_total_throttled_traffic_bytes,
+      ("Blink.ResourceLoadScheduler.TotalTrafficBytes.SubframeThrottled", 0,
+       10000, 25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, sub_frame_total_not_throttled_traffic_bytes,
+      ("Blink.ResourceLoadScheduler.TotalTrafficBytes.SubframeNotThrottled", 0,
+       10000, 25));
+
+  if (is_main_frame_) {
+    main_frame_total_throttled_request_count.Count(
+        total_throttled_request_count_);
+    main_frame_total_not_throttled_request_count.Count(
+        total_not_throttled_request_count_);
+    main_frame_total_throttled_traffic_bytes.Count(
+        total_throttled_traffic_bytes_);
+    main_frame_total_not_throttled_traffic_bytes.Count(
+        total_not_throttled_traffic_bytes_);
+  } else {
+    sub_frame_total_throttled_request_count.Count(
+        total_throttled_request_count_);
+    sub_frame_total_not_throttled_request_count.Count(
+        total_not_throttled_request_count_);
+    sub_frame_total_throttled_traffic_bytes.Count(
+        total_throttled_traffic_bytes_);
+    sub_frame_total_not_throttled_traffic_bytes.Count(
+        total_not_throttled_traffic_bytes_);
+  }
+}
+
+void ResourceLoadScheduler::TrafficMonitor::Flush(
+    WebFrameScheduler::ThrottlingState state) {
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, main_frame_throttled_request_count,
+      ("Blink.ResourceLoadScheduler.RequestCount.MainframeThrottled", 0, 10000,
+       25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, main_frame_not_throttled_request_count,
+      ("Blink.ResourceLoadScheduler.RequestCount.MainframeNotThrottled", 0,
+       10000, 25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, sub_frame_throttled_request_count,
+      ("Blink.ResourceLoadScheduler.RequestCount.SubframeThrottled", 0, 10000,
+       25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, sub_frame_not_throttled_request_count,
+      ("Blink.ResourceLoadScheduler.RequestCount.SubframeNotThrottled", 0,
+       10000, 25));
+
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, main_frame_throttled_traffic_bytes,
+      ("Blink.ResourceLoadScheduler.RequestCount.MainframeThrottled", 0, 10000,
+       25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, main_frame_not_throttled_traffic_bytes,
+      ("Blink.ResourceLoadScheduler.RequestCount.MainframeNotThrottled", 0,
+       10000, 25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, sub_frame_throttled_traffic_bytes,
+      ("Blink.ResourceLoadScheduler.RequestCount.SubframeThrottled", 0, 10000,
+       25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, sub_frame_not_throttled_traffic_bytes,
+      ("Blink.ResourceLoadScheduler.RequestCount.SubframeNotThrottled", 0,
+       10000, 25));
+
+  switch (last_state_) {
+    case WebFrameScheduler::ThrottlingState::kThrottled:
+      if (is_main_frame_) {
+        main_frame_throttled_request_count.Count(request_count_);
+        main_frame_throttled_traffic_bytes.Count(traffic_bytes_);
+      } else {
+        sub_frame_throttled_request_count.Count(request_count_);
+        sub_frame_throttled_traffic_bytes.Count(traffic_bytes_);
+      }
+      break;
+      total_throttled_request_count_ += request_count_;
+      total_throttled_traffic_bytes_ += traffic_bytes_;
+    case WebFrameScheduler::ThrottlingState::kNotThrottled:
+      if (is_main_frame_) {
+        main_frame_not_throttled_request_count.Count(request_count_);
+        main_frame_not_throttled_traffic_bytes.Count(traffic_bytes_);
+      } else {
+        sub_frame_not_throttled_request_count.Count(request_count_);
+        sub_frame_not_throttled_traffic_bytes.Count(traffic_bytes_);
+      }
+      total_not_throttled_request_count_ += request_count_;
+      total_not_throttled_traffic_bytes_ += traffic_bytes_;
+      break;
+    case WebFrameScheduler::ThrottlingState::kStopped:
+      break;
+  }
+
+  last_state_ = state;
+  request_count_ = 0;
+  traffic_bytes_ = 0;
+}
+
+void ResourceLoadScheduler::TrafficMonitor::Track(int64_t decoded_body_length) {
+  if (decoded_body_length < 0)
+    return;
+
+  request_count_++;
+  traffic_bytes_ += decoded_body_length;
+}
+
 constexpr ResourceLoadScheduler::ClientId
     ResourceLoadScheduler::kInvalidClientId;
 
 ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
     : outstanding_throttled_limit_(GetOutstandingThrottledLimit(context)),
       context_(context) {
+  traffic_monitor_ = std::make_unique<ResourceLoadScheduler::TrafficMonitor>(
+      context_->IsMainFrame());
+
   if (!RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled())
     return;
 
@@ -79,6 +244,8 @@ ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
   scheduler->AddThrottlingObserver(WebFrameScheduler::ObserverType::kLoader,
                                    this);
 }
+
+ResourceLoadScheduler::~ResourceLoadScheduler() = default;
 
 void ResourceLoadScheduler::Trace(blink::Visitor* visitor) {
   visitor->Trace(pending_request_map_);
@@ -116,15 +283,16 @@ void ResourceLoadScheduler::Request(ResourceLoadSchedulerClient* client,
   MaybeRun();
 }
 
-bool ResourceLoadScheduler::Release(
-    ResourceLoadScheduler::ClientId id,
-    ResourceLoadScheduler::ReleaseOption option) {
+bool ResourceLoadScheduler::Release(ResourceLoadScheduler::ClientId id,
+                                    ResourceLoadScheduler::ReleaseOption option,
+                                    int64_t decoded_body_length) {
   // Check kInvalidClientId that can not be passed to the HashSet.
   if (id == kInvalidClientId)
     return false;
 
   if (running_requests_.find(id) != running_requests_.end()) {
     running_requests_.erase(id);
+    traffic_monitor_->Track(decoded_body_length);
     if (option == ReleaseOption::kReleaseAndSchedule)
       MaybeRun();
     return true;
@@ -204,6 +372,9 @@ void ResourceLoadScheduler::OnNetworkQuiet() {
 
 void ResourceLoadScheduler::OnThrottlingStateChanged(
     WebFrameScheduler::ThrottlingState state) {
+  // Flush traffic reports before activating another scheduling below.
+  traffic_monitor_->Flush(state);
+
   switch (state) {
     case WebFrameScheduler::ThrottlingState::kThrottled:
       if (throttling_history_ == ThrottlingHistory::kInitial)
