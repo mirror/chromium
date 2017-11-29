@@ -388,6 +388,7 @@ source_set("ui_internal") {
   ]
   libs = [
     "AssetsLibrary.framework",
+    "CoreBluetooth.framework",
     "MessageUI.framework",
     "MobileCoreServices.framework",
     "PassKit.framework",
