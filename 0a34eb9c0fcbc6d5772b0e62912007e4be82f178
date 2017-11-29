@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ff4bec4_539bddaf",
+        "filename": "components/viz/service/display/remove_quad_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:14:09Z",
+      "side": 1,
+      "message": "nit: CreateFoo() usually returns ownership, which this does not, so the raw pointer looks more ambiguous than it needs to. AppendFoo() would be more clear, or CreateAndAppendFoo().",
+      "revId": "0a34eb9c0fcbc6d5772b0e62912007e4be82f178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d4a2461_2036159c",
+        "filename": "components/viz/service/display/remove_overdraw_quads.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:14:09Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "e27a71d951cc422121521e90eb1f4964dec95666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b1de01_bf3ccc80",
+        "filename": "components/viz/service/display/remove_overdraw_quads.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:14:09Z",
+      "side": 1,
+      "message": "Raw pointers aren\u0027t ownership transfer. These should be owned here then, cuz they\u0027re being leaked as is.",
+      "revId": "e27a71d951cc422121521e90eb1f4964dec95666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621995af_cf70512e",
+        "filename": "components/viz/service/display/remove_overdraw_quads.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:14:09Z",
+      "side": 1,
+      "message": "I think we have a TestContextProvider::Create() that takes no params that does this same thing",
+      "revId": "e27a71d951cc422121521e90eb1f4964dec95666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c456fc_27c90bcc",
+        "filename": "components/viz/service/display/remove_overdraw_quads.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:14:09Z",
+      "side": 1,
+      "message": "same for these new calls",
+      "revId": "e27a71d951cc422121521e90eb1f4964dec95666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503e0a1d_94189402",
+        "filename": "components/viz/service/display/remove_overdraw_quads.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:14:09Z",
+      "side": 1,
+      "message": "use same task runner for scheduler and display pls",
+      "revId": "e27a71d951cc422121521e90eb1f4964dec95666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50542cce_88eb8182",
+        "filename": "components/viz/service/display/remove_overdraw_quads.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:14:09Z",
+      "side": 1,
+      "message": "do you mean std::make_unique\u003cCompositorFrame\u003e() ?  I think this is making a compositor frame, and moving it into another CompositorFrame allocated on the heap..\n\nsame for other places this appears",
+      "revId": "e27a71d951cc422121521e90eb1f4964dec95666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe270e25_700df4f0",
+        "filename": "components/viz/service/display/remove_overdraw_quads.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:14:09Z",
+      "side": 1,
+      "message": "nit: If |pass| is only used to pass it along you can skip it, frame-\u003elist.push_back(RenderPass::Create());",
+      "revId": "e27a71d951cc422121521e90eb1f4964dec95666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fd59e0_a83f2134",
+        "filename": "components/viz/service/display/remove_overdraw_quads.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:14:09Z",
+      "side": 1,
+      "message": "We could drop the unique_ptr and just store it directly",
+      "revId": "e27a71d951cc422121521e90eb1f4964dec95666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
