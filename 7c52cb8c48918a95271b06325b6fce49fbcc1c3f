@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e7b6e47b_8b9322c1",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-29T21:22:39Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that this file has established a different precedent, but please name these new histograms so that they are in the \"VR\" namespace, i.e. \"VR.Session.DLA\".  The dashboards treat anything before the first dot in a histogram name as a name that\u0027s part of the global namespace.  As such, it\u0027s a best practice to keep those names fairly broad.",
+      "range": {
+        "startLine": 67,
+        "startChar": 43,
+        "endLine": 67,
+        "endChar": 55
+      },
+      "revId": "7c52cb8c48918a95271b06325b6fce49fbcc1c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af7d75b_74c8eb97",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-29T21:22:39Z",
+      "side": 1,
+      "message": "It looks like this code is templatized purely to ensure that the UMA_HISTOGRAM_CUSTOM_TIMES macro is instantiated separately for each possible SessionType.  Is that correct?  If so, it would likely be more efficient overall to use base::UmaHistogramCustomTimes, which allows variable histogram names from a single callsite.\n\n(Probably best to address this in a follow-up CL, if you agree that it\u0027s worth changing.)",
+      "range": {
+        "startLine": 142,
+        "startChar": 75,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "7c52cb8c48918a95271b06325b6fce49fbcc1c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aca7a6c2_f907b5d6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
