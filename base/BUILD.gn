@@ -376,6 +376,8 @@ jumbo_component("base") {
     "guid.h",
     "hash.cc",
     "hash.h",
+    "huffman_trie.cc",
+    "huffman_trie.h",
     "ios/block_types.h",
     "ios/callback_counter.h",
     "ios/callback_counter.mm",
