@@ -344,6 +344,12 @@ void ToastContentsView::ClickOnSettingsButton(
     collection_->ClickOnSettingsButton(notification_id);
 }
 
+void ToastContentsView::DisableNotification(
+    const std::string& notification_id) {
+  if (collection_)
+    collection_->DisableNotification(notification_id);
+}
+
 void ToastContentsView::UpdateNotificationSize(
     const std::string& notification_id) {
   if (collection_)

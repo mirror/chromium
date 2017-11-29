@@ -54,6 +54,7 @@ class NotificationViewMDTest : public views::ViewsTestBase,
                                           int button_index,
                                           const base::string16& reply) override;
   void ClickOnSettingsButton(const std::string& notification_id) override;
+  void DisableNotification(const std::string& id) override;
   void UpdateNotificationSize(const std::string& notification_id) override;
 
   NotificationViewMD* notification_view() const {
@@ -168,6 +169,12 @@ void NotificationViewMDTest::ClickOnNotificationButtonWithReply(
 }
 
 void NotificationViewMDTest::ClickOnSettingsButton(
+    const std::string& notification_id) {
+  // For this test, this method should not be invoked.
+  NOTREACHED();
+}
+
+void NotificationViewMDTest::DisableNotification(
     const std::string& notification_id) {
   // For this test, this method should not be invoked.
   NOTREACHED();
