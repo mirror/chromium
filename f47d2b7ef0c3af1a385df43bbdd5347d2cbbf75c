@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce93057b_32895a57",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-29T22:07:44Z",
+      "side": 1,
+      "message": "I\u0027d still recommend splitting this metric into a second type of event, since it will make the data easier to deal with.  I don\u0027t think you need privacy reapproval for that change (or for the change to invert the relation) since it records the same information.",
+      "range": {
+        "startLine": 1939,
+        "startChar": 2,
+        "endLine": 1943,
+        "endChar": 11
+      },
+      "revId": "f47d2b7ef0c3af1a385df43bbdd5347d2cbbf75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
