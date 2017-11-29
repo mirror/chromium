@@ -52,6 +52,8 @@ typedef NS_ENUM(NSInteger, ReadingListToolbarHeight) {
 // message and no title.
 - (ActionSheetCoordinator*)actionSheetForMarkWithBaseViewController:
     (UIViewController*)viewController;
+// Update the height of the toolbar.
+- (void)updateHeight;
 
 @end
 
