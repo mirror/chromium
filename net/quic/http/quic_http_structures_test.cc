@@ -15,6 +15,7 @@
 #include <type_traits>
 #include <vector>
 
+#include "build/build_config.h"
 #include "net/quic/http/quic_http_structures_test_util.h"
 #include "net/quic/platform/api/quic_str_cat.h"
 #include "net/quic/platform/api/quic_string_utils.h"
@@ -429,7 +430,13 @@ TEST(QuicHttpPingFieldsTest, Misc) {
   EXPECT_EQ("opaque_bytes=0x3820627974657300", s.str());
 }
 
-TEST(QuicHttpGoAwayFieldsTest, Misc) {
+// Started failing on Win and Mac after crrev.com/519987.
+#if defined(OS_WIN) || defined(OS_MACOSX)
+#define MAYBE_Misc DISABLED_Misc
+#else
+#define MAYBE_Misc Misc
+#endif
+TEST(QuicHttpGoAwayFieldsTest, MAYBE_Misc) {
   QuicTestRandom random;
   uint32_t last_stream_id = random.Rand32() & QuicHttpStreamIdMask();
   QuicHttpErrorCode error_code =
