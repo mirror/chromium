@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e8f42c4_32e024b9",
+        "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T05:29:31Z",
+      "side": 1,
+      "message": "Thanks for the catching. Done",
+      "parentUuid": "7ebbbec7_6b64f605",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 59
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "620ecd8b_785bb494",
         "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d85564a2_28fc74da",
+        "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T05:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "620ecd8b_785bb494",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2adae74_b261db8e",
         "filename": "chrome/android/java/res/layout/list_menu_item.xml",
         "patchSetId": 11
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-29T02:09:34Z",
       "side": 1,
       "message": "Is there a listPreferredItemPaddingStart/End that we can use instead of Left/Right?",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 68
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb71a8d0_b4eae8bd",
+        "filename": "chrome/android/java/res/layout/list_menu_item.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T05:29:31Z",
+      "side": 1,
+      "message": "I did ask myself the same question when I added this attr here. \n\nBut the fact is listPreferredItemPaddingLeft/Right is supported from v14.\nhttps://developer.android.com/reference/android/R.attr.html#listPreferredItemPaddingLeft\nwhile listPreferredItemPaddingStart/End is supported from v17.\nhttps://developer.android.com/reference/android/R.attr.html#listPreferredItemPaddingStart\n\nAnd Chrome Android minSdkVersion is v16, which is interesting. \nhttps://cs.chromium.org/chromium/src/build/android/AndroidManifest.xml?l\u003d18\n\nSo for safe, I decided to keep the old values.",
+      "parentUuid": "b2adae74_b261db8e",
       "range": {
         "startLine": 9,
         "startChar": 40,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5121f2c1_fce69b6a",
+        "filename": "chrome/android/java/res/xml/languages_preferences.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T05:29:31Z",
+      "side": 1,
+      "message": "Talkback will add \"(on/off) switch\" at the end of the summary based on the switch\u0027s state for every tap.",
+      "parentUuid": "844f7940_9effd7f4",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 72
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24f80a07_f280aa44",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
         "patchSetId": 11
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-29T02:09:34Z",
       "side": 1,
       "message": "s/preffered/preferred\n\nInsteda of \"strings\", can this be explicit? It\u0027s returning locales (rather than display names or something like that), rights?",
+      "range": {
+        "startLine": 914,
+        "startChar": 26,
+        "endLine": 914,
+        "endChar": 35
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188be4f9_7c53e6a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T05:29:31Z",
+      "side": 1,
+      "message": "A transitive code for the first version. \nPlease refer to\nhttps://chromium-review.googlesource.com/c/chromium/src/+/790091/6/chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java#921",
+      "parentUuid": "24f80a07_f280aa44",
       "range": {
         "startLine": 914,
         "startChar": 26,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "75416383_4d9016f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T05:29:31Z",
+      "side": 1,
+      "message": "Also a transitive code, there is removed in new CL.",
+      "parentUuid": "9300f41e_d0955506",
+      "range": {
+        "startLine": 918,
+        "startChar": 54,
+        "endLine": 918,
+        "endChar": 65
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "627302a2_3d143e3f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 11
@@ -160,6 +304,30 @@
       "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1cef106_ea2e7ebe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T05:29:31Z",
+      "side": 1,
+      "message": "oh. Not in this CL. And all unused params are removed in crrev.com/c/790091\n\nI am wondering whether it\u0027s easier to submit the other CL directly after both are LGTM. So we can avoid these *transition code* and comments.\n\nAnyway, I will remove it now.",
+      "parentUuid": "627302a2_3d143e3f",
+      "range": {
+        "startLine": 105,
+        "startChar": 39,
+        "endLine": 105,
+        "endChar": 51
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "26130e27_e499fd94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T05:29:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d202339_61eb97cb",
+      "range": {
+        "startLine": 37,
+        "startChar": 46,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24d98c43_e34c4312",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
         "patchSetId": 11
@@ -206,6 +398,30 @@
       "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4e219c_34534bc3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T05:29:31Z",
+      "side": 1,
+      "message": "Based on the comments from David, he worried about the non-icon item\u0027s was set wrongly from previous item convertView with an icon.\n\nSo I think it\u0027d better set the compound drawable for all item, If endIconId is 0, it will clear the end icon.",
+      "parentUuid": "24d98c43_e34c4312",
+      "range": {
+        "startLine": 172,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 82
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "f2035209_61f16464",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T05:29:31Z",
+      "side": 1,
+      "message": "I believe Shimi/Yana are the best people for help.\nWill ping them offline.",
+      "parentUuid": "b165841f_a40979b4",
+      "range": {
+        "startLine": 922,
+        "startChar": 65,
+        "endLine": 922,
+        "endChar": 126
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cac0bad_69cc9cee",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 11
@@ -243,6 +483,24 @@
       "writtenOn": "2017-11-29T02:09:34Z",
       "side": 1,
       "message": "Based on the PRD slide deck, rather than \"a language you read\", we should use something like \"Offer to translate pages in other languages\" or \"Offer to translate pages not in the languages above\". Please ping Shimi/Yana to find out which one they decided to go with.",
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc8b90e_e98bd7ab",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-29T05:29:31Z",
+      "side": 1,
+      "message": "Sure, will ping Shimi for more details",
+      "parentUuid": "2cac0bad_69cc9cee",
       "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
