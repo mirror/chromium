@@ -247,6 +247,24 @@
       "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f62fe4_94b21cfd",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-29T17:30:42Z",
+      "side": 1,
+      "message": "Lowered to 50.",
+      "parentUuid": "c003a570_27c51761",
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
