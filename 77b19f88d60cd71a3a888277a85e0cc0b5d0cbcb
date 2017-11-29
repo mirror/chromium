@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7942f3a_c0410d9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01358922_21533995",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3802aa71_78b1a2ff",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-29T01:06:42Z",
       "side": 1,
       "message": "Bug:, Test: are missing.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37469bbb_3c140466",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3802aa71_78b1a2ff",
       "range": {
         "startLine": 9,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0c8cf213_ef18ebae",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2aa1d99_5c53a7fc",
+      "range": {
+        "startLine": 186,
+        "startChar": 10,
+        "endLine": 186,
+        "endChar": 26
+      },
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "993d9e6b_3bb903e7",
         "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-29T01:06:42Z",
       "side": 1,
       "message": "nit: Please add a short comment, especially what and when is returned.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a322e01c_1d3b092b",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "993d9e6b_3bb903e7",
       "range": {
         "startLine": 23,
         "startChar": 5,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fe8c6fae_b846108b",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58052e35_3bf07bca",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5ad4992_b7109775",
         "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.cc",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-29T01:06:42Z",
       "side": 1,
       "message": "Please use a correct link format:\n\ncrrev.com/c/767629",
+      "range": {
+        "startLine": 64,
+        "startChar": 22,
+        "endLine": 64,
+        "endChar": 31
+      },
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c778dcc7_fde48fa4",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5ad4992_b7109775",
       "range": {
         "startLine": 64,
         "startChar": 22,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0ac5dbbd_ae375ae4",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dbb5af6_1560cff7",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 44
+      },
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921143cf_6167aff2",
         "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.h",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2017-11-29T01:06:42Z",
       "side": 1,
       "message": "For overriden methods no need for a comment. We usually do:\n\n// XXX overrides.\nvoid MethodA() override;\nvoid MethodB() override;\n\nAnd put comments to each method only in the interface or base class.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39fb591a_21c9ab58",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "921143cf_6167aff2",
       "range": {
         "startLine": 31,
         "startChar": 2,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "bb3ba205_fa51d4d6",
+        "filename": "chrome/browser/chromeos/file_system_provider/fake_extension_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d672563_7c3ad320",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 1
+      },
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0da05217_4197b9a4",
         "filename": "chrome/browser/chromeos/file_system_provider/fake_extension_provider.h",
         "patchSetId": 2
@@ -220,6 +436,30 @@
       "writtenOn": "2017-11-29T01:06:42Z",
       "side": 1,
       "message": "ditto. Add \"// ProviderInterface overrides.\" and remove these comments.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 64
+      },
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26b02cab_cbc75c5e",
+        "filename": "chrome/browser/chromeos/file_system_provider/fake_extension_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da05217_4197b9a4",
       "range": {
         "startLine": 26,
         "startChar": 2,
@@ -249,6 +489,24 @@
     },
     {
       "key": {
+        "uuid": "81369acc_27398eb8",
+        "filename": "chrome/browser/chromeos/file_system_provider/fileapi/file_stream_writer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6dcb1e7_3255a1a6",
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c38a4f46_837358e3",
         "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.cc",
         "patchSetId": 2
@@ -266,6 +524,24 @@
     },
     {
       "key": {
+        "uuid": "f295d312_229d8767",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c38a4f46_837358e3",
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d7af4a7_41d76e24",
         "filename": "chrome/browser/chromeos/file_system_provider/provider_interface.h",
         "patchSetId": 2
@@ -277,6 +553,30 @@
       "writtenOn": "2017-11-29T01:06:42Z",
       "side": 1,
       "message": "nit: Is this needed?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "77b19f88d60cd71a3a888277a85e0cc0b5d0cbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "189c0669_bd43ba1e",
+        "filename": "chrome/browser/chromeos/file_system_provider/provider_interface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d7af4a7_41d76e24",
       "range": {
         "startLine": 32,
         "startChar": 2,

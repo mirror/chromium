@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72735bce_fc76e72a",
+        "filename": "chrome/browser/chromeos/file_system_provider/provider_interface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "@mtomasz: Including this for FileSystemProviderSource. Should FileSystemProviderSource be factored out and then used by both file_system_provider_capabilities_handler.h and this file?",
+      "revId": "dceb7f7075f20af7b3e80746b8f99f17b2a08bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

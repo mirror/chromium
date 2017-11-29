@@ -22,6 +22,30 @@
       "revId": "6be24784c3ac8311b4e43c630516e3e8505e15a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "297331ce_fa693f36",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-29T19:23:46Z",
+      "side": 1,
+      "message": "My interpretation of https://google.github.io/styleguide/cppguide.html#Namespaces is that using declarations for namespaces cannot be used, but individual using statements can be. Here is an example of some code that I saw this in: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/extensions/file_system_provider/provider_function.cc?dr\u003dCSs",
+      "parentUuid": "9228feda_878c8a21",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "6be24784c3ac8311b4e43c630516e3e8505e15a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
