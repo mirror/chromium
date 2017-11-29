@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9021ae79_f1937854",
+        "filename": "chrome/browser/ui/cocoa/profiles/signin_view_controller_delegate_mac.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T19:22:40Z",
+      "side": 1,
+      "message": "Please only one factory function. Make the width base::Optional.",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 25
+      },
+      "revId": "41781688d01ff0d026fdb8614f23d091a4f8298b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
