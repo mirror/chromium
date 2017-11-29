@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d00c09bc_fb9530e5",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-29T00:43:28Z",
+      "side": 1,
+      "message": "nit: seems these two lines can be combined",
+      "revId": "946cd9ea8d82f2f5389aa26c90164c2dec17c4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
