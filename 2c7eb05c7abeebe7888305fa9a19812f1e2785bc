@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0afee918_0a0ccc3e",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-29T08:44:28Z",
+      "side": 1,
+      "message": "Better also describe what is updated here. Something like: Check if the page is in almost idle state. If so, returns true and update |was_almost_idle_|.",
+      "revId": "2c7eb05c7abeebe7888305fa9a19812f1e2785bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57981988_402f6421",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-29T08:44:28Z",
+      "side": 1,
+      "message": "s/IsAlmostIdle/CheckAndUpdateAlmostIdleStateIfNeeded",
+      "range": {
+        "startLine": 50,
+        "startChar": 30,
+        "endLine": 50,
+        "endChar": 42
+      },
+      "revId": "2c7eb05c7abeebe7888305fa9a19812f1e2785bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376006f5_c2c1bc97",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-29T08:44:28Z",
+      "side": 1,
+      "message": "s/IsAlmostIdle/CheckAndUpdateAlmostIdleStateIfNeeded",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 17
+      },
+      "revId": "2c7eb05c7abeebe7888305fa9a19812f1e2785bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db75b59a_bcbdaca0",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-29T08:44:28Z",
+      "side": 1,
+      "message": "Also add EXPECT_FALSE(cu_graph.page-\u003eWasAlmostIdle()); before this line. This is because we call WasAlmostIdle before CheckAndUpdateAlmostIdleStateIfNeeded in the code.",
+      "revId": "2c7eb05c7abeebe7888305fa9a19812f1e2785bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266940c4_70f54170",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-29T08:44:28Z",
+      "side": 1,
+      "message": "Add EXPECT_TRUE(cu_graph.page-\u003eWasAlmostIdle()); before this line.",
+      "revId": "2c7eb05c7abeebe7888305fa9a19812f1e2785bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f8fc79_64341934",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-29T08:44:28Z",
+      "side": 1,
+      "message": "Add EXPECT_FALSE(cu_graph.page-\u003eWasAlmostIdle()); before this line.",
+      "revId": "2c7eb05c7abeebe7888305fa9a19812f1e2785bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
