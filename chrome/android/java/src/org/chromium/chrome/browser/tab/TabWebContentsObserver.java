@@ -20,6 +20,7 @@ import org.chromium.chrome.browser.media.MediaCaptureNotificationService;
 import org.chromium.chrome.browser.metrics.UmaUtils;
 import org.chromium.chrome.browser.policy.PolicyAuditor;
 import org.chromium.chrome.browser.policy.PolicyAuditor.AuditEvent;
+import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 
@@ -206,22 +207,22 @@ public class TabWebContentsObserver extends WebContentsObserver {
             recordErrorInPolicyAuditor(url, errorDescription, errorCode);
         }
 
-        if (!hasCommitted) return;
-        if (isInMainFrame && UmaUtils.hasComeToForeground()) {
+        if (UmaUtils.isRunningApplicationStart() && hasCommitted && isInMainFrame && !isErrorPage
+                && !isSameDocument && !isFragmentNavigation && UrlUtilities.isHttpOrHttps(url)) {
             // Current median is 550ms, and long tail is very long. ZoomedIn gives good view of the
             // median and ZoomedOut gives a good overview.
+            long duration = SystemClock.uptimeMillis() - UmaUtils.getApplicationStartTimeMs();
             RecordHistogram.recordCustomTimesHistogram(
-                    "Startup.FirstCommitNavigationTime3.ZoomedIn",
-                    SystemClock.uptimeMillis() - UmaUtils.getForegroundStartTime(), 200, 1000,
-                    TimeUnit.MILLISECONDS, 100);
+                    "MobileStartup.Experimental.Cold.TimeToFirstNavigationCommit.ZoomedIn",
+                    duration, 200, 1000, TimeUnit.MILLISECONDS, 100);
             // For ZoomedOut very rarely is it under 50ms and this range matches
-            // CustomTabs.IntentToFirstCommitNavigationTime2.ZoomedOut.
+            // CustomTabs.IntentToFirstCommitNavigationTime3.ZoomedOut.
             RecordHistogram.recordCustomTimesHistogram(
-                    "Startup.FirstCommitNavigationTime3.ZoomedOut",
-                    SystemClock.uptimeMillis() - UmaUtils.getForegroundStartTime(), 50,
-                    TimeUnit.MINUTES.toMillis(10), TimeUnit.MILLISECONDS, 50);
-            UmaUtils.setRunningApplicationStart(false);
+                    "MobileStartup.Experimental.Cold.TimeToFirstNavigationCommit.ZoomedOut",
+                    duration, 50, TimeUnit.MINUTES.toMillis(10), TimeUnit.MILLISECONDS, 50);
         }
+        UmaUtils.setRunningApplicationStart(false);
+        if (!hasCommitted) return;
 
         if (isInMainFrame) {
             mTab.setIsTabStateDirty(true);
