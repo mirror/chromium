@@ -64,6 +64,7 @@ class PreviewsBrowserTest : public InProcessBrowserTest {
  private:
   // Called by |https_server_|.
   void MonitorResourceRequest(const net::test_server::HttpRequest& request) {
+    LOG(WARNING) << "XXXXXX  MonitorResourceRequest " << request.GetURL();
     if (request.GetURL().spec().find("noscript_test.css") !=
         std::string::npos) {
       noscript_css_requested_ = true;
@@ -137,7 +138,9 @@ class PreviewsNoScriptBrowserTest : public PreviewsBrowserTest {
 // script resource is not loaded.
 IN_PROC_BROWSER_TEST_F(PreviewsNoScriptBrowserTest,
                        MAYBE_NoScriptPreviewsEnabled) {
+    LOG(WARNING) << "XXXXXX  TEST NoScriptPreviewsEnabled ";
   ui_test_utils::NavigateToURL(browser(), https_url());
+    LOG(WARNING) << "XXXXXX  TEST   NoScriptPreviewsEnabled navigated ";
 
   // Verify loaded noscript tag triggered css resource but not js one.
   EXPECT_TRUE(noscript_css_requested());
