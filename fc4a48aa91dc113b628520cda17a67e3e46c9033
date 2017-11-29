@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "988b72ed_d30e977b",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T23:03:54Z",
+      "side": 1,
+      "message": "This function is a bit too dense and long. Do you think we could refactor it a bit to make it more readable? Suggsetion (let me know if it makes sense):\n\nupdateSettingsAvailable_: function() {\n  const caps \u003d ...;\n\n  // Keep simple calculations within this function.\n  this.set(\u0027settings.copies.available\u0027, !!caps \u0026\u0026 !!(caps.copies));\n  this.set(\u0027settings.collate.available\u0027, !!caps \u0026\u0026 !!(caps.collate));\n\n  // Move complex calculations to dedicated helper methods\n  this.set(\u0027settings.layout.available\u0027, this.isLayoutAvailable_(caps));\n  ...\n},\n\nisLayoutAvailable_: function(caps) {\n  return ...\n},\n...",
+      "revId": "fc4a48aa91dc113b628520cda17a67e3e46c9033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b3ad05_9662640b",
+        "filename": "chrome/browser/resources/print_preview/new/settings_behavior.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T23:03:54Z",
+      "side": 1,
+      "message": "It\u0027s not very clear here why we assert only if the new value is false. Perhaps add a comment?",
+      "revId": "fc4a48aa91dc113b628520cda17a67e3e46c9033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce4d543_f914821a",
+        "filename": "chrome/test/data/webui/print_preview/settings_section_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T23:03:54Z",
+      "side": 1,
+      "message": "Let\u0027s use let/const in this file since it is new code. Note that ESLint checks are now enabled on chrome/test/data/webui/ so we could convert everything under print_preview/ to let/const and add a check for it.",
+      "revId": "fc4a48aa91dc113b628520cda17a67e3e46c9033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd3aacb_3afbefff",
+        "filename": "chrome/test/data/webui/print_preview/settings_section_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T23:03:54Z",
+      "side": 1,
+      "message": "Nit: That is probably not necessary since we call clearBody() and add a new page in setup() (which runs before each test).",
+      "revId": "fc4a48aa91dc113b628520cda17a67e3e46c9033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f664dfb8_a39926d2",
+        "filename": "chrome/test/data/webui/print_preview/settings_section_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T23:03:54Z",
+      "side": 1,
+      "message": "Can this just be as follows?\nfunction getCdd() { ... }",
+      "revId": "fc4a48aa91dc113b628520cda17a67e3e46c9033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b086452e_eeec9e8c",
+        "filename": "chrome/test/data/webui/print_preview/settings_section_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T23:03:54Z",
+      "side": 1,
+      "message": "Indent off by +2?",
+      "revId": "fc4a48aa91dc113b628520cda17a67e3e46c9033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53d4ed6_1ccce6c3",
+        "filename": "chrome/test/data/webui/print_preview/settings_section_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T23:03:54Z",
+      "side": 1,
+      "message": "s/layout_cap/layoutCap",
+      "range": {
+        "startLine": 112,
+        "startChar": 16,
+        "endLine": 112,
+        "endChar": 26
+      },
+      "revId": "fc4a48aa91dc113b628520cda17a67e3e46c9033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
