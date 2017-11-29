@@ -279,13 +279,16 @@ cr.define('bluetooth_internals', function() {
     // actions after the page is loaded but before any script is run.
     window.setupFn()
         .then(function() {
+console.error("initializeViews");
           setupPages();
           return adapter_broker.getAdapterBroker();
         })
         .then(function(broker) {
+console.error("initializeViews");
           adapterBroker = broker;
         })
         .then(function() {
+console.error("initializeViews");
           return adapterBroker.getInfo();
         })
         .then(setupAdapterSystem)

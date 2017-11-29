@@ -11,7 +11,7 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace bluetooth {
-
+/*
 AdapterFactory::AdapterFactory() : weak_ptr_factory_(this) {}
 AdapterFactory::~AdapterFactory() {}
 
@@ -27,7 +27,7 @@ void AdapterFactory::GetAdapter(GetAdapterCallback callback) {
         base::Bind(&AdapterFactory::OnGetAdapter,
                    weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
   } else {
-    std::move(callback).Run(nullptr /* AdapterPtr */);
+    std::move(callback).Run(nullptr);
   }
 }
 
@@ -39,5 +39,5 @@ void AdapterFactory::OnGetAdapter(
                           mojo::MakeRequest(&adapter_ptr));
   std::move(callback).Run(std::move(adapter_ptr));
 }
-
+*/
 }  // namespace bluetooth
