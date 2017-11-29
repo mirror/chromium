@@ -31,6 +31,7 @@ class WebFaviconDriver : public web::WebStateObserver,
                                 history::HistoryService* history_service);
 
   // FaviconDriver implementation.
+  void FetchFavicon(const GURL& page_url, bool is_same_document) override;
   gfx::Image GetFavicon() const override;
   bool FaviconIsValid() const override;
   GURL GetActiveURL() override;
@@ -60,8 +61,6 @@ class WebFaviconDriver : public web::WebStateObserver,
                    history::HistoryService* history_service);
 
   // web::WebStateObserver implementation.
-  void DidStartNavigation(web::WebState* web_state,
-                          web::NavigationContext* navigation_context) override;
   void DidFinishNavigation(web::WebState* web_state,
                            web::NavigationContext* navigation_context) override;
   void FaviconUrlUpdated(
@@ -76,8 +75,8 @@ class WebFaviconDriver : public web::WebStateObserver,
   // Image Fetcher used to fetch favicon.
   image_fetcher::IOSImageDataFetcherWrapper image_fetcher_;
 
-  // Caches the favicon URLs candidates for same-document navigations.
-  std::vector<favicon::FaviconURL> candidates_;
+  // The URL passed to FetchFavicon().
+  GURL fetch_favicon_url_;
 
   // The WebState this instance is observing. Will be null after
   // WebStateDestroyed has been called.
