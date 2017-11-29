@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8f7ccc3_19ae1b3d",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-29T01:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f0e2b6_5ba609c8",
+      "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3976039_fa18ca9c",
         "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "124ea010_64f64739",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-29T01:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3976039_fa18ca9c",
+      "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7397bf2_b9b14c59",
         "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1475ecfc_590fba99",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-29T01:48:49Z",
+      "side": 1,
+      "message": "Can\u0027t, CUs don\u0027t get notified about changes of other CUs, and observers can only ask information. Thus I made it fetch the state when the it\u0027s needed to report.\n\nThat said, I think we should make it const somehow. I added a TODO to follow up here.",
+      "parentUuid": "f7397bf2_b9b14c59",
+      "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420f72a5_e97c886b",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-29T01:48:49Z",
+      "side": 1,
+      "message": "Observers shouldn\u0027t set back to CUs. I split it to two conditions.",
+      "parentUuid": "12059691_4501e190",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 58
+      },
+      "revId": "40f38d7e3880a7391a57f5062bb70dbfbc462462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
