@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca145ef9_f8cfe4b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T23:16:39Z",
+      "side": 1,
+      "message": "Done - replaced with a brand new bug - https://crbug.com/789738",
+      "parentUuid": "8ea027b9_634956af",
+      "revId": "d5a42df6338a026ea008e14c7d33c1a880a2d6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfe10d01_51187290",
         "filename": "base/lazy_instance.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "d5a42df6338a026ea008e14c7d33c1a880a2d6b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cacaca_38897332",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfe10d01_51187290",
+      "revId": "d5a42df6338a026ea008e14c7d33c1a880a2d6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
