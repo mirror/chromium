@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09967bc0_46518c4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-29T04:38:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4e7fe93_c7cfca67",
+      "revId": "5d0c393926d657e6a091b7852cd8802e102c199e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21635c02_fef4c54b",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5d0c393926d657e6a091b7852cd8802e102c199e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47b841e_23fbdd8e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-29T04:38:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21635c02_fef4c54b",
+      "revId": "5d0c393926d657e6a091b7852cd8802e102c199e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,24 @@
       "revId": "5d0c393926d657e6a091b7852cd8802e102c199e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423b3b0a_e56391db",
+        "filename": "chrome/browser/ui/cocoa/browser_window_command_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-29T04:38:57Z",
+      "side": 1,
+      "message": "Yeah the scattering is not ideal, but it\u0027s very temporary :)",
+      "parentUuid": "7a44abe0_3e212838",
+      "revId": "5d0c393926d657e6a091b7852cd8802e102c199e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
