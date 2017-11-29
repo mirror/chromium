@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23e41846_73eacf53",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-29T00:32:04Z",
+      "side": 1,
+      "message": "bug id does not exist?",
+      "range": {
+        "startLine": 338,
+        "startChar": 51,
+        "endLine": 338,
+        "endChar": 57
+      },
+      "revId": "04953b7ec735a0e6e769a44ba1231c783ae3f2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
