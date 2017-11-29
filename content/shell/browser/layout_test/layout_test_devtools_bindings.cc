@@ -4,6 +4,8 @@
 
 #include "content/shell/browser/layout_test/layout_test_devtools_bindings.h"
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
@@ -12,10 +14,14 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "content/public/browser/dom_storage_context.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "content/shell/browser/layout_test/blink_test_controller.h"
 #include "content/shell/browser/shell.h"
+#include "content/shell/browser/shell_browser_context.h"
+#include "content/shell/browser/shell_content_browser_client.h"
 #include "content/shell/common/layout_test/layout_test_switches.h"
 #include "net/base/filename_util.h"
 
@@ -142,18 +148,42 @@ LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
     WebContents* inspected_contents,
     const std::string& settings,
     const GURL& frontend_url,
+    const GURL& test_url,
     bool new_harness)
     : ShellDevToolsBindings(devtools_contents, inspected_contents, nullptr),
       frontend_url_(frontend_url) {
   SetPreferences(settings);
+  base::Value* retainStorage = GetSetting("retainStorage");
+  if (retainStorage != nullptr && retainStorage->GetBool()) {
+    LayoutTestDevToolsBindings::Init(new_harness);
+    return;
+  }
 
+  // Reset storage state before each DevTools test to avoid flakiness
+  // Storage state isn't reset after every layout test due to performance
+  // concerns (~100 ms overhead to clear storage data)
+  ShellBrowserContext* browser_context =
+      ShellContentBrowserClient::Get()->browser_context();
+  StoragePartition* storage_partition =
+      BrowserContext::GetStoragePartition(browser_context, nullptr);
+
+  storage_partition->ClearData(
+      content::StoragePartition::REMOVE_DATA_MASK_ALL,
+      content::StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL, GURL(),
+      content::StoragePartition::OriginMatcherFunction(), base::Time(),
+      base::Time::Max(),
+      base::Bind(&LayoutTestDevToolsBindings::Init, base::Unretained(this),
+                 new_harness));
+}
+
+void LayoutTestDevToolsBindings::Init(bool new_harness) {
   if (new_harness) {
     secondary_observer_ = base::MakeUnique<SecondaryObserver>(this);
     NavigationController::LoadURLParams params(
-        GetInspectedPageURL(frontend_url));
+        GetInspectedPageURL(frontend_url_));
     params.transition_type = ui::PageTransitionFromInt(
         ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
-    inspected_contents->GetController().LoadURLWithParams(params);
+    inspected_contents()->GetController().LoadURLWithParams(params);
   } else {
     NavigateDevToolsFrontend();
   }
