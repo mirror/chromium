@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efb71e50_1b1726ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-29T22:04:41Z",
+      "side": 1,
+      "message": "Especially -\u003e Specifically",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6db942_8b52679e",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-29T22:04:41Z",
+      "side": 1,
+      "message": "Can you please document what happens if EGLContext is specified vs. not? What operations can be done with the EGLImage?",
+      "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31548518_78e8c0c2",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-29T22:04:41Z",
+      "side": 1,
+      "message": "Have you verified that the object ownership and transferral into these arrays is correct?",
+      "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7770fc0b_4e469a1e",
+        "filename": "ui/gl/gl_image_native_pixmap_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-29T22:04:41Z",
+      "side": 1,
+      "message": "Use a default argument:\n  bool skip_test_ \u003d true;\nTo have better defined behavior.",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 17
+      },
+      "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20fb0bc_03310d2e",
+        "filename": "ui/gl/gl_image_native_pixmap_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-29T22:04:41Z",
+      "side": 1,
+      "message": "Are you planning to implement and test EGL_EXT_image_dma_buf_import too?",
+      "range": {
+        "startLine": 76,
+        "startChar": 32,
+        "endLine": 76,
+        "endChar": 51
+      },
+      "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
