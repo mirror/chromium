@@ -78,6 +78,7 @@ class CORE_EXPORT UseCounter {
   };
 
   UseCounter(Context = kDefaultContext);
+  void SetUseCounterContext(Context);
 
   // An interface to observe UseCounter changes. Note that this is never
   // notified when the counter is disabled by |m_muteCount| or when |m_context|
