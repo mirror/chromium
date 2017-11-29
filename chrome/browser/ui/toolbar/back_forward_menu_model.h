@@ -187,14 +187,14 @@ class BackForwardMenuModel : public ui::MenuModel {
   // An index of -1 means no index.
   std::string BuildActionName(const std::string& name, int index) const;
 
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
 
   // The unit tests will provide their own WebContents to use.
   content::WebContents* test_web_contents_;
 
   // Represents whether this is the delegate for the forward button or the
   // back button.
-  ModelType model_type_;
+  const ModelType model_type_;
 
   // Keeps track of which favicons have already been requested from the history
   // to prevent duplicate requests, identified by

@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/find_bar/find_bar_controller.h"
 
 #include <algorithm>
+#include <utility>
 
 #include "base/i18n/rtl.h"
 #include "base/logging.h"
@@ -33,8 +34,9 @@ using content::WebContents;
 // The minimum space between the FindInPage window and the search result.
 static const int kMinFindWndDistanceFromSelection = 5;
 
-FindBarController::FindBarController(FindBar* find_bar, Browser* browser)
-    : find_bar_(find_bar), browser_(browser) {}
+FindBarController::FindBarController(std::unique_ptr<FindBar> find_bar,
+                                     Browser* browser)
+    : find_bar_(std::move(find_bar)), browser_(browser) {}
 
 FindBarController::~FindBarController() {
   DCHECK(!web_contents_);

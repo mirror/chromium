@@ -217,11 +217,15 @@ AppMenuModel::AppMenuModel(ui::AcceleratorProvider* provider, Browser* browser)
     : ui::SimpleMenuModel(this),
       uma_action_recorded_(false),
       provider_(provider),
-      browser_(browser) {}
+      browser_(browser) {
+  DCHECK(browser_);
+  DCHECK(browser_->tab_strip_model());
+}
 
 AppMenuModel::~AppMenuModel() {
-  if (browser_)  // Null in Cocoa tests.
-    browser_->tab_strip_model()->RemoveObserver(this);
+  DCHECK(browser_);
+  DCHECK(browser_->tab_strip_model());
+  browser_->tab_strip_model()->RemoveObserver(this);
 }
 
 void AppMenuModel::Init() {
@@ -586,13 +590,13 @@ void AppMenuModel::LogMenuAction(AppMenuAction action_id) {
 }
 
 bool AppMenuModel::IsCommandIdChecked(int command_id) const {
+  if (command_id == IDC_PROFILING_ENABLED)
+    return Profiling::BeingProfiled();
+  if (command_id == IDC_TOGGLE_REQUEST_TABLET_SITE)
+    return chrome::IsRequestingTabletSite(browser_);
   if (command_id == IDC_SHOW_BOOKMARK_BAR) {
     return browser_->profile()->GetPrefs()->GetBoolean(
         bookmarks::prefs::kShowBookmarkBar);
-  } else if (command_id == IDC_PROFILING_ENABLED) {
-    return Profiling::BeingProfiled();
-  } else if (command_id == IDC_TOGGLE_REQUEST_TABLET_SITE) {
-    return chrome::IsRequestingTabletSite(browser_);
   }
 
   return false;
@@ -811,11 +815,10 @@ void AppMenuModel::CreateZoomMenu() {
 
 void AppMenuModel::UpdateZoomControls() {
   int zoom_percent = 100;
-  if (browser_->tab_strip_model() &&
-      browser_->tab_strip_model()->GetActiveWebContents()) {
-    zoom_percent = zoom::ZoomController::FromWebContents(
-                       browser_->tab_strip_model()->GetActiveWebContents())
-                       ->GetZoomPercent();
+  auto* contents = browser_->tab_strip_model()->GetActiveWebContents();
+  if (contents) {
+    zoom_percent =
+        zoom::ZoomController::FromWebContents(contents)->GetZoomPercent();
   }
   zoom_label_ = base::FormatPercent(zoom_percent);
 }
