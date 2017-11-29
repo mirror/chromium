@@ -46,6 +46,13 @@ namespace autofill {
 
 namespace {
 
+// Describes fields filtering criteria. More priority criteria has higher value
+// in the enum. The fields with the maximal criteria are considered in a form,
+// others are ignored. For example, if there is a password field with user
+// input, the password fields without user input are ignored (independently
+// whether the fields are visible or not).
+enum FieldFilteringLevel { NO_FILTER = 0, VISIBILITY = 1, USER_INPUT = 2 };
+
 // PasswordForms can be constructed for both WebFormElements and for collections
 // of WebInputElements that are not in a WebFormElement. This intermediate
 // aggregating structure is provided so GetPasswordForm() only has one
@@ -110,6 +117,16 @@ struct LoginAndSignupLazyInstanceTraits
 
 base::LazyInstance<re2::RE2, LoginAndSignupLazyInstanceTraits>
     g_login_and_signup_matcher = LAZY_INSTANCE_INITIALIZER;
+
+WebInputElement* GetEnabledTextInputFieldOrNull(
+    WebFormControlElement* control_element) {
+  WebInputElement* input_element = ToWebInputElement(control_element);
+  if (input_element && input_element->IsEnabled() &&
+      input_element->IsTextField())
+    return input_element;
+  else
+    return nullptr;
+}
 
 // Given the sequence of non-password and password text input fields of a form,
 // represented as a string of Ns (non-password) and Ps (password), computes the
@@ -318,48 +335,35 @@ bool FieldHasPropertiesMask(const FieldValueAndPropertiesMaskMap* field_map,
   return it != field_map->end() && (it->second.second & mask);
 }
 
-// Returns true iff |control_elements| contains any enabled password field. Also
-// sets |found_password_with_user_input| to true iff any password field has user
-// input (autofilled value doesn't count here).
-bool FormHasPasswordFields(
-    const std::vector<blink::WebFormControlElement>& control_elements,
-    const FieldValueAndPropertiesMaskMap* field_value_and_properties_map,
-    bool* found_password_with_user_input) {
-  DCHECK(found_password_with_user_input);
-
-  *found_password_with_user_input = false;
-  bool found_password_field = false;
-  for (const blink::WebFormControlElement& control_element : control_elements) {
-    const WebInputElement* input_element = ToWebInputElement(&control_element);
-    if (!input_element || !input_element->IsPasswordField() ||
-        !input_element->IsEnabled())
-      continue;
-    if (FieldHasPropertiesMask(field_value_and_properties_map, *input_element,
-                               FieldPropertiesFlags::USER_TYPED)) {
-      *found_password_with_user_input = true;
-      return true;
-    }
-
-    found_password_field = true;
+// Return the maximal filtering criteria that |element| passes.
+FieldFilteringLevel GetFiltertingLevelForField(
+    const blink::WebFormControlElement& element,
+    const FieldValueAndPropertiesMaskMap* field_value_and_properties_map) {
+  if (FieldHasPropertiesMask(field_value_and_properties_map, element,
+                             FieldPropertiesFlags::USER_TYPED)) {
+    return USER_INPUT;
+  } else if (form_util::IsWebElementVisible(element)) {
+    return VISIBILITY;
+  } else {
+    return NO_FILTER;
   }
-  return found_password_field;
 }
 
-// Helper function that checks the presence of visible password and username
-// fields in |control_elements|.
-// Iff a visible password is found, then |*found_visible_password| is set to
-// true. Iff a visible password is found AND there is a visible username before
-// it, then |*found_visible_username_before_visible_password| is set to true.
-void FindVisiblePasswordAndVisibleUsernameBeforePassword(
+// Calculates the maximal filtering criteria for password and non-password
+// fields and saves them to |non_password_fields_level| and
+// |password_fields_level|. The criteria for non-password fields considers only
+// the fields before the first password field that has maximal filtering level.
+void GetFieldFilteringLevels(
     const std::vector<blink::WebFormControlElement>& control_elements,
-    bool* found_visible_password,
-    bool* found_visible_username_before_visible_password) {
-  DCHECK(found_visible_password);
-  DCHECK(found_visible_username_before_visible_password);
-  *found_visible_password = false;
-  *found_visible_username_before_visible_password = false;
+    const FieldValueAndPropertiesMaskMap* field_value_and_properties_map,
+    FieldFilteringLevel* non_password_fields_level,
+    FieldFilteringLevel* password_fields_level) {
+  DCHECK(password_fields_level);
+  DCHECK(non_password_fields_level);
+  *non_password_fields_level = NO_FILTER;
+  *password_fields_level = NO_FILTER;
 
-  bool found_visible_username = false;
+  FieldFilteringLevel max_non_password_field_level_found = NO_FILTER;
   for (auto& control_element : control_elements) {
     const WebInputElement* input_element = ToWebInputElement(&control_element);
     if (!input_element || !input_element->IsEnabled() ||
@@ -367,15 +371,18 @@ void FindVisiblePasswordAndVisibleUsernameBeforePassword(
       continue;
     }
 
-    if (!form_util::IsWebElementVisible(*input_element))
-      continue;
+    FieldFilteringLevel current_field_filtering_level =
+        GetFiltertingLevelForField(control_element,
+                                   field_value_and_properties_map);
 
     if (input_element->IsPasswordField()) {
-      *found_visible_password = true;
-      *found_visible_username_before_visible_password = found_visible_username;
-      break;
+      if (*password_fields_level < current_field_filtering_level) {
+        *password_fields_level = current_field_filtering_level;
+        *non_password_fields_level = max_non_password_field_level_found;
+      }
     } else {
-      found_visible_username = true;
+      max_non_password_field_level_found = std::max(
+          max_non_password_field_level_found, current_field_filtering_level);
     }
   }
 }
@@ -439,6 +446,16 @@ bool GetPasswordForm(
     const FieldValueAndPropertiesMaskMap* field_value_and_properties_map,
     const FormsPredictionsMap* form_predictions,
     UsernameDetectorCache* username_detector_cache) {
+  bool form_has_password_field =
+      std::find_if(form.control_elements.begin(), form.control_elements.end(),
+                   [](WebFormControlElement e) {
+                     WebInputElement* input_element =
+                         GetEnabledTextInputFieldOrNull(&e);
+                     return input_element && input_element->IsPasswordField();
+                   }) != form.control_elements.end();
+  if (!form_has_password_field)
+    return false;
+
   WebInputElement username_element;
   UsernameDetectionMethod username_detection_method =
       UsernameDetectionMethod::NO_USERNAME_DETECTED;
@@ -474,27 +491,12 @@ bool GetPasswordForm(
     }
   }
 
-  bool found_password_with_user_input = false;
-  if (!FormHasPasswordFields(form.control_elements,
-                             field_value_and_properties_map,
-                             &found_password_with_user_input))
-    return false;
-
-  // If there is user input, don't care about visibility.
-  // Otherwise:
-  // Check the presence of visible password and username fields.
-  // If there is a visible password field, then ignore invisible password
-  // fields. If there is a visible username before visible password, then ignore
-  // invisible username fields.
-  // If there is no visible password field, don't ignore any elements (i.e. use
-  // the latest username field just before selected password field).
-  bool ignore_invisible_passwords = false;
-  bool ignore_invisible_usernames = false;
-  if (!found_password_with_user_input) {
-    FindVisiblePasswordAndVisibleUsernameBeforePassword(
-        form.control_elements, &ignore_invisible_passwords,
-        &ignore_invisible_usernames);
-  }
+  // Calculate filtering levels for password and non-password fields. For
+  // details see to comments to |FieldFilteringLevel|.
+  FieldFilteringLevel non_password_fields_filter = NO_FILTER;
+  FieldFilteringLevel password_fields_filter = NO_FILTER;
+  GetFieldFilteringLevels(form.control_elements, field_value_and_properties_map,
+                          &non_password_fields_filter, &password_fields_filter);
 
   std::string layout_sequence;
   layout_sequence.reserve(form.control_elements.size());
@@ -502,14 +504,9 @@ bool GetPasswordForm(
   for (size_t i = 0; i < form.control_elements.size(); ++i) {
     WebFormControlElement control_element = form.control_elements[i];
 
-    WebInputElement* input_element = ToWebInputElement(&control_element);
-    if (!input_element || !input_element->IsEnabled())
-      continue;
-
-    if (found_password_with_user_input &&
-        !FieldHasPropertiesMask(field_value_and_properties_map, *input_element,
-                                FieldPropertiesFlags::USER_TYPED |
-                                    FieldPropertiesFlags::AUTOFILLED))
+    WebInputElement* input_element =
+        GetEnabledTextInputFieldOrNull(&control_element);
+    if (!input_element)
       continue;
 
     // Fill |...without_heuristics| variables before heuristics are applied.
@@ -530,23 +527,19 @@ bool GetPasswordForm(
          IsCreditCardVerificationPasswordField(*input_element)))
       continue;
 
-    bool element_is_invisible = !form_util::IsWebElementVisible(*input_element);
-    if (input_element->IsTextField()) {
-      if (input_element->IsPasswordField()) {
-        if (element_is_invisible && ignore_invisible_passwords)
-          continue;
-        layout_sequence.push_back('P');
-      } else {
-        if (FieldHasPropertiesMask(field_value_and_properties_map,
-                                   *input_element,
-                                   FieldPropertiesFlags::USER_TYPED |
-                                       FieldPropertiesFlags::AUTOFILLED)) {
-          ++number_of_non_empty_text_non_password_fields;
-        }
-        if (element_is_invisible && ignore_invisible_usernames)
-          continue;
-        layout_sequence.push_back('N');
-      }
+    FieldFilteringLevel current_field_level = GetFiltertingLevelForField(
+        control_element, field_value_and_properties_map);
+
+    if (input_element->IsPasswordField()) {
+      if (current_field_level < password_fields_filter)
+        continue;
+      layout_sequence.push_back('P');
+    } else {
+      if (current_field_level == USER_INPUT)
+        ++number_of_non_empty_text_non_password_fields;
+      if (current_field_level < non_password_fields_filter)
+        continue;
+      layout_sequence.push_back('N');
     }
 
     // If the password field is readonly, the page is likely using a virtual
@@ -579,7 +572,7 @@ bool GetPasswordForm(
     }
 
     // Various input types such as text, url, email can be a username field.
-    if (input_element->IsTextField() && !input_element->IsPasswordField()) {
+    if (!input_element->IsPasswordField()) {
       if (!input_element->Value().IsEmpty()) {
         all_possible_usernames.push_back(*input_element);
       }
