@@ -313,7 +313,8 @@ void CompositingRequirementsUpdater::UpdateRecursive(
   // layer meets the requirements (i.e. opaque, integer transform, etc).
   const bool moves_with_respect_to_compositing_ancestor =
       layer->SticksToScroller() &&
-      !current_recursion_data.compositing_ancestor_->IsRootLayer();
+      (!current_recursion_data.compositing_ancestor_->IsRootLayer() ||
+       RuntimeEnabledFeatures::RootLayerScrollingEnabled());
   // TODO(chrishtr): use |hasCompositedScrollingAncestor| instead.
   const bool ignore_lcd_text =
       current_recursion_data.has_composited_scrolling_ancestor_ ||
