@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c8e9cb1_7cd3436c",
+        "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-29T19:45:02Z",
+      "side": 1,
+      "message": "It seems strange to fix this by having the platform-specific output-stream ignore the requested sample rate, if the issue is actually that we have loopback consumers assumign 48kHz - wouldn\u0027t it make more sense to fix the calling code to always request 48kHz in the first place?",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 43
+      },
+      "revId": "b0c4b960685dfbd303eed839cfd3eb26eac7bb36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
