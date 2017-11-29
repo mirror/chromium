@@ -1889,6 +1889,15 @@ gfx::Size Browser::GetSizeForNewRenderView(WebContents* web_contents) const {
   return size;
 }
 
+content::WebContents* Browser::GetWebContentsOpener(
+    content::WebContents* web_contents) {
+  if (!web_contents)
+    return nullptr;
+
+  return tab_strip_model_->GetOpenerOfWebContentsAt(
+      tab_strip_model_->GetIndexOfWebContents(web_contents));
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, CoreTabHelperDelegate implementation:
 
