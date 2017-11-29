@@ -87,6 +87,24 @@
       "revId": "e225d4d44b82f7c9c429e360cd774e52eb9728e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7e1243_c5433c5f",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-29T20:24:00Z",
+      "side": 1,
+      "message": "See this log: https://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_rel_ng%2F593636%2F%2B%2Frecipes%2Fsteps%2Fcompile__with_patch_%2F0%2Fstdout\n\nThat was how it failed when I tried. I used the standard ATK checks (as the ones we are using for enums). The error happens on validating the installer.\n\nMaybe for other platforms we create more than one binary? I.e. on bots I see we have different builders for win10 and win7...",
+      "parentUuid": "e82d760f_6387a5c8",
+      "revId": "e225d4d44b82f7c9c429e360cd774e52eb9728e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
