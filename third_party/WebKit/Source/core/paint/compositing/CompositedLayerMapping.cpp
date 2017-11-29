@@ -2499,7 +2499,9 @@ bool CompositedLayerMapping::UpdateScrollingLayers(
       if (scrolling_coordinator && scrollable_area) {
         scrolling_coordinator->ScrollableAreaScrollLayerDidChange(
             scrollable_area);
-        scrolling_coordinator->ScrollableAreasDidChange();
+        LocalFrameView* frame_view =
+            ToLayoutView(GetLayoutObject()).GetFrameView();
+        frame_view->ScrollableAreasDidChange();
       }
     }
   } else if (scrolling_layer_) {
@@ -2509,7 +2511,9 @@ bool CompositedLayerMapping::UpdateScrollingLayers(
     if (scrolling_coordinator && scrollable_area) {
       scrolling_coordinator->ScrollableAreaScrollLayerDidChange(
           scrollable_area);
-      scrolling_coordinator->ScrollableAreasDidChange();
+      LocalFrameView* frame_view =
+          ToLayoutView(GetLayoutObject()).GetFrameView();
+      frame_view->ScrollableAreasDidChange();
     }
   }
 
