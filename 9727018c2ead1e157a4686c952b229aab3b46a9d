@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f45f1f9_9974d7be",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-29T17:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c95869a_24a2b1a9",
+      "revId": "9727018c2ead1e157a4686c952b229aab3b46a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca2591c_83607365",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillManager.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-28T22:29:29Z",
       "side": 1,
       "message": "Hmm... Can you also make this more actionable? Can we add the following message?\n\nYou shouldn\u0027t use application context.",
+      "range": {
+        "startLine": 82,
+        "startChar": 31,
+        "endLine": 82,
+        "endChar": 47
+      },
+      "revId": "9727018c2ead1e157a4686c952b229aab3b46a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a27848_3515f756",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-29T17:53:53Z",
+      "side": 1,
+      "message": "I think this is sufficient, we already have Android API document for this, also it seemed that most of developers should know what they are doing, they just have to use application context.\n\nWe add it here mostly for debugging purpose.",
+      "parentUuid": "dca2591c_83607365",
       "range": {
         "startLine": 82,
         "startChar": 31,
