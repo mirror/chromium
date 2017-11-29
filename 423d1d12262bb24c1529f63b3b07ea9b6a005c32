@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc7235e6_a67c9fe5",
+        "filename": "chrome/browser/chromeos/system_logs/single_debug_daemon_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-29T18:26:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c1273bd_47066c54",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 74
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89a4346_369e94bf",
         "filename": "chrome/browser/chromeos/system_logs/single_debug_daemon_log_source.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8420687a_2630721e",
+        "filename": "chrome/browser/chromeos/system_logs/single_debug_daemon_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-29T18:26:29Z",
+      "side": 1,
+      "message": "Done.\n\nI think that we don\u0027t need to block shutdown. We may receive one feedback report less but the operation may take too long to justify blocking the shutdown in my opinion.",
+      "parentUuid": "e89a4346_369e94bf",
+      "range": {
+        "startLine": 81,
+        "startChar": 17,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64a63805_3be78348",
         "filename": "components/feedback/anonymizer_tool.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-28T19:09:08Z",
       "side": 1,
       "message": "Optional: Since this class is sequence friendly but not thread-safe, consider adding a sequence checker to catch any accidental concurrent use.\n\nhttps://cs.chromium.org/chromium/src/base/sequence_checker.h\n\nA SEQUENCE_CHECKER(sequence_checker_) goes here and then Anonymize can use\nDCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_).\n\nThis class is consumed on a different thread in SystemLogsFetcher, so you\u0027ll need a \nDETACH_FROM_SEQUENCE(sequence_checker_);\n\nAnd then at SystemLogsFetcher destruction, do a \ntask_runner_for_anonymizer-\u003eDeleteSoon(FROM_HERE, std::move(anonymizer_));",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b43c53f3_b93956b1",
+        "filename": "components/feedback/anonymizer_tool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-29T18:26:29Z",
+      "side": 1,
+      "message": "Done.\n\nFrom the documentation it is not obvious that this DeleteSoon is guaranteed to be executed before the task_runner_for_anonymizer_ is destroyed. Can I assume that?",
+      "parentUuid": "64a63805_3be78348",
       "range": {
         "startLine": 30,
         "startChar": 6,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8a3ce994_98676131",
+        "filename": "components/feedback/anonymizer_tool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-29T18:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b84568f_d10a828a",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 12
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b98af8bd_f2f3194a",
         "filename": "components/feedback/system_logs/system_logs_fetcher.cc",
         "patchSetId": 4
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b17d9b00_64409349",
+        "filename": "components/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-29T18:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b98af8bd_f2f3194a",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 44
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a62c223_d68aa4bf",
         "filename": "components/feedback/system_logs/system_logs_fetcher.cc",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ea4fbf_52aecfe8",
+        "filename": "components/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-29T18:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a62c223_d68aa4bf",
+      "range": {
+        "startLine": 89,
+        "startChar": 13,
+        "endLine": 89,
+        "endChar": 17
+      },
+      "revId": "423d1d12262bb24c1529f63b3b07ea9b6a005c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
