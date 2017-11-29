@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecdc7bb6_9edf4a6f",
+        "filename": "jingle/notifier/communicator/login.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-29T13:10:54Z",
+      "side": 1,
+      "message": "This observer should be checking |type|.  From the comment about Login it sounds like this observer should follow this recommendation from OnNetworkChanged()\u0027s desription: \"Observers performing \"constructive\" activities like trying to establish a connection to a server should only do so when |type !\u003d CONNECTION_NONE|.\"   Without checking |type| reconnect attempts may waste resources and get terminated with ERR_NETWORK_CHANGED.",
+      "range": {
+        "startLine": 92,
+        "startChar": 32,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "e6b499815db9d30fce1d22542ecc903a4522f6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
