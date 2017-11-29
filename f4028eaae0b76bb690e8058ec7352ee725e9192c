@@ -134,6 +134,29 @@
     },
     {
       "key": {
+        "uuid": "b0e21b0b_2063ff1a",
+        "filename": "chrome/common/interstitial_page.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-29T23:50:25Z",
+      "side": 1,
+      "message": "May be explain what is set as true?\nAlso, it might be useful to make the comment more general, instead of focusing on a specific implementation?",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "f4028eaae0b76bb690e8058ec7352ee725e9192c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77c0e3c7_06ff5785",
         "filename": "chrome/renderer/content_settings_observer.h",
         "patchSetId": 5
@@ -150,6 +173,29 @@
         "startChar": 7,
         "endLine": 129,
         "endChar": 32
+      },
+      "revId": "f4028eaae0b76bb690e8058ec7352ee725e9192c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e577d0_191148c5",
+        "filename": "chrome/renderer/content_settings_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-29T23:50:25Z",
+      "side": 1,
+      "message": "Seems like this method can be private?",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 33
       },
       "revId": "f4028eaae0b76bb690e8058ec7352ee725e9192c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
