@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "bef58205_95894f36",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-29T19:51:30Z",
+      "side": 1,
+      "message": "Ok, then I guess you\u0027ll be going with this!\n\nI\u0027m worried that it might not be meaningful because it\u0027s really two metrics squished into one. A scenario I could imagine is, you set a particular threshold for reasonable latency, but you\u0027d maybe want it different for installed vs not-installed. In that case, you\u0027d have trouble knowing how many times you\u0027re above the threshold for the installed case since the not-installed case is mixed in.\n\nAnyway, you\u0027re right, you\u0027ll probably get useful data from this as is!",
+      "parentUuid": "6751a1f9_048a1c0a",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 62
+      },
+      "revId": "1a9e93b8d2078bb219b87ba712df4c0907d629dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf972f9c_5c1662b6",
         "filename": "chrome/browser/vr/metrics_helper.cc",
         "patchSetId": 9
