@@ -70,6 +70,30 @@
       "revId": "a5fa3ee8b4421717d29694e3dd77cdd7ea8c5200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6348db_acc63bd5",
+        "filename": "content/common/media/media_devices.typemap",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-29T12:48:33Z",
+      "side": 0,
+      "message": "In that case, how about moving media_devices.mojom to //WebKit/public/platform/modules/mediastream?",
+      "parentUuid": "0eed7c01_efc45f94",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "a5fa3ee8b4421717d29694e3dd77cdd7ea8c5200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
