@@ -92851,6 +92851,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The version of the runtime being used for VR.</summary>
 </histogram>
 
+<histogram name="VRSessionDLA" units="ms">
+  <owner>ymalik@chromium.org</owner>
+  <summary>
+    The duration of a single VR session initiated via a deep-linked WebVR app.
+    Logged when a new disjoint session has begun, or when the session has ended
+    in a non-continuable way.
+  </summary>
+</histogram>
+
 <histogram name="VRSessionNavigationCount">
   <owner>billorr@chromium.org</owner>
   <summary>
@@ -108905,6 +108914,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="WebVR"
       label="The session is restricted to the period that browser is
              displaying WebVR contents."/>
+  <affected-histogram name="VRSessionDLA"/>
   <affected-histogram name="VRSessionTime"/>
   <affected-histogram name="VRSessionVideoTime"/>
 </histogram_suffixes>

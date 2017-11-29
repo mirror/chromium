@@ -230,6 +230,8 @@ class VrShell : device::GvrGamepadDataProvider,
 
   bool webvr_mode_ = false;
 
+  bool started_with_autopresentation_ = false;
+
   content::WebContents* web_contents_ = nullptr;
   bool web_contents_is_native_page_ = false;
   base::android::ScopedJavaGlobalRef<jobject> j_motion_event_synthesizer_;

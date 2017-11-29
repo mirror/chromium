@@ -157,6 +157,9 @@ VrShell::VrShell(JNIEnv* env,
 
   gl_thread_->Start();
 
+  started_with_autopresentation_ =
+      ui_initial_state.web_vr_autopresentation_expected;
+
   if (ui_initial_state.in_web_vr ||
       ui_initial_state.web_vr_autopresentation_expected) {
     UMA_HISTOGRAM_BOOLEAN("VRAutopresentedWebVR", !ui_initial_state.in_web_vr);
@@ -217,7 +220,8 @@ void VrShell::SwapContents(
   // tabs. crbug.com/684661
   metrics_helper_ = base::MakeUnique<VrMetricsHelper>(
       GetNonNativePageWebContents(),
-      webvr_mode_ ? VRMode::WEBVR : VRMode::VR_BROWSER);
+      webvr_mode_ ? VRMode::WEBVR : VRMode::VR_BROWSER,
+      started_with_autopresentation_);
 }
 
 void VrShell::SetUiState() {
