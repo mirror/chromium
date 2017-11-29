@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "21a38aa6_b4b737ea",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/templates/StylePropertyShorthand.cpp.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-29T05:52:18Z",
+      "side": 1,
+      "message": "You mean ribbonizing this class, i.e. the thing we were considering making an intern project out of? Yeah, we can do that any time. I don\u0027t have time this quarter but I can pick it up next month. It should be quite easy.",
+      "parentUuid": "a73a85c1_24e02b3a",
+      "revId": "803a74041c1eec3a1dd699f1348fef15c6003215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7001208b_07922f55",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
         "patchSetId": 8
