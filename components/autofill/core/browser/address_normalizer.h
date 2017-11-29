@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/callback_forward.h"
+#include "components/keyed_service/core/keyed_service.h"
 #include "third_party/libaddressinput/chromium/chrome_address_validator.h"
 
 namespace autofill {
@@ -15,7 +16,8 @@ namespace autofill {
 class AutofillProfile;
 
 // A class used to normalize addresses.
-class AddressNormalizer : public autofill::LoadRulesListener {
+class AddressNormalizer : public autofill::LoadRulesListener,
+                          public KeyedService {
  public:
   using NormalizationCallback =
       base::OnceCallback<void(bool /*success*/,
