@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4712d3f4_4ea19b46",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-29T23:25:55Z",
+      "side": 0,
+      "message": "this should never be in our test expectations - this is an internal string that code mirror uses for text measurements (and isn\u0027t actually visible).",
+      "revId": "97f4417444a6d90d4501b4e878745d6bdf5d49dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
