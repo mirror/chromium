@@ -1173,19 +1173,6 @@ IPC_MESSAGE_ROUTED0(FrameHostMsg_DidStopLoading)
 // Notifies the browser that this frame has new session history information.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateState, content::PageState /* state */)
 
-// Sent when the frame changes its window.name.
-IPC_MESSAGE_ROUTED2(FrameHostMsg_DidChangeName,
-                    std::string /* name */,
-                    std::string /* unique_name */)
-
-// Notifies the browser process that HTTP headers which affect the frame
-// polices were delivered with the document being lodaded into the frame. This
-// can be either or both of 'Feature-Policy' or 'Content-Security-Policy' (which
-// can set sandbox flags).
-IPC_MESSAGE_ROUTED2(FrameHostMsg_DidSetFramePolicyHeaders,
-                    blink::WebSandboxFlags,
-                    blink::ParsedFeaturePolicy /* parsed_header */)
-
 // Notifies the browser process about a new Content Security Policy that needs
 // to be applies to the frame.  This message is sent when a frame commits
 // navigation to a new location (reporting accumulated policies from HTTP
@@ -1194,13 +1181,6 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_DidSetFramePolicyHeaders,
 // dynamically added or a static <meta> element).
 IPC_MESSAGE_ROUTED1(FrameHostMsg_DidAddContentSecurityPolicies,
                     std::vector<content::ContentSecurityPolicy> /* policies */)
-
-// Sent when the frame starts enforcing an insecure request policy. Sending
-// this information in DidCommitProvisionalLoad isn't sufficient; this
-// message is needed because, for example, a document can dynamically insert
-// a <meta> tag that causes strict mixed content checking to be enforced.
-IPC_MESSAGE_ROUTED1(FrameHostMsg_EnforceInsecureRequestPolicy,
-                    blink::WebInsecureRequestPolicy)
 
 // Sent when the frame is set to a unique origin. TODO(estark): this IPC
 // only exists to support dynamic sandboxing via a CSP delivered in a
