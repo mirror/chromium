@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e8c4f393_8428d409",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-29T14:42:26Z",
+      "side": 1,
+      "message": "I cleaned up this file.",
+      "parentUuid": "81bc7d7c_b67f25d3",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3eb9b2e5_e19f4b71",
         "filename": "components/exo/keyboard_unittest.cc",
         "patchSetId": 10
@@ -50,6 +68,24 @@
       "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28516c3f_c01114d6",
+        "filename": "components/exo/keyboard_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-29T14:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eb9b2e5_e19f4b71",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "85159d8b_6b4596b4",
+        "filename": "components/exo/test/exo_test_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-29T14:42:26Z",
+      "side": 1,
+      "message": "Done for ShellSurface.\n\nI kept ClientControlledShellSurface because some tests are already ClientControlled specific.",
+      "parentUuid": "5f31f86b_aa21c443",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f734c0e4_9e3acf66",
         "filename": "components/exo/touch_unittest.cc",
         "patchSetId": 10
@@ -132,6 +186,24 @@
       "writtenOn": "2017-11-27T23:36:54Z",
       "side": 1,
       "message": "ditto",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f43ad7b_f68dc75d",
+        "filename": "components/exo/touch_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-29T14:42:26Z",
+      "side": 1,
+      "message": "\u003e ditto\n\nThis is for client controlled specific tests. I\u0027ll move them into different file in a followup CL.",
+      "parentUuid": "f734c0e4_9e3acf66",
       "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -158,6 +230,30 @@
       "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0fbb92_f4f83c40",
+        "filename": "components/exo/xdg_shell_surface.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-29T14:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9445c756_fa3081f5",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +337,24 @@
     },
     {
       "key": {
+        "uuid": "86fe34cd_1cc75f9e",
+        "filename": "components/exo/xdg_shell_surface.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-29T14:42:26Z",
+      "side": 1,
+      "message": "\u003e is this comment still relevant? not sure if I understand it..\n\nNope. Removed. thank you for catching.",
+      "parentUuid": "39976ae4_df32da67",
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c46831_1851e5d8",
         "filename": "components/exo/xdg_shell_surface.h",
         "patchSetId": 10
@@ -252,6 +366,30 @@
       "writtenOn": "2017-11-27T23:36:54Z",
       "side": 1,
       "message": "nit: remove this as location can never be controlled by client using XDG protocol. ideally we\u0027d remove bounds_mode param too as |origin| is enough to determine if this is a fixed position surface but fine to just add a TODO here for that for now.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 56
+      },
+      "revId": "c941f686d587495b7f4da8f9c7d772496a6264f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fe8122_26ee0982",
+        "filename": "components/exo/xdg_shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-29T14:42:26Z",
+      "side": 1,
+      "message": "\u003e nit: remove this as location can never be controlled by client using XDG protocol. ideally we\u0027d remove bounds_mode param too as |origin| is enough to \n\ndo you mean container? (fixed always uses menu container)\n\n\u003e determine if this is a fixed position surface but fine to just add a TODO here for that for now.",
+      "parentUuid": "b5c46831_1851e5d8",
       "range": {
         "startLine": 49,
         "startChar": 2,
