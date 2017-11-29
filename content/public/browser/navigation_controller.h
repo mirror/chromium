@@ -455,6 +455,9 @@ class NavigationController {
   // crash.
   virtual void PruneAllButLastCommitted() = 0;
 
+  // Remove navigation entries matching |origins|.
+  virtual void PruneNavigationEntries(const std::set<GURL>& origins) = 0;
+
   // Clears all screenshots associated with navigation entries in this
   // controller. Useful to reduce memory consumption in low-memory situations.
   virtual void ClearAllScreenshots() = 0;

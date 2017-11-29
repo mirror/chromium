@@ -18,6 +18,7 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/browser/banners/app_banner_settings_helper.h"
+#include "chrome/browser/browsing_data/navigation_entry_remover.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/engagement/site_engagement_helper.h"
 #include "chrome/browser/engagement/site_engagement_metrics.h"
@@ -588,6 +589,9 @@ void SiteEngagementService::OnURLsDeleted(
       base::Bind(
           &SiteEngagementService::GetCountsAndLastVisitForOriginsComplete,
           weak_factory_.GetWeakPtr(), hs, origins, expired));
+  // Move to its own HistoryServiceObserver
+  if (!expired)
+    browsing_data::RemoveNavigationEntries(profile_, all_history, deleted_rows);
 }
 
 SiteEngagementScore SiteEngagementService::CreateEngagementScore(
