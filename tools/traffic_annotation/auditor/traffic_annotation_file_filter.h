@@ -45,6 +45,12 @@ class TrafficAnnotationFileFilter {
 
   const std::vector<std::string>& git_files() { return git_files_; }
 
+  // Finds all required files to process given target files.
+  bool GetAllRequiredFiles(const base::FilePath& source_path,
+                           const base::FilePath& build_path,
+                           const std::vector<std::string>& target_files,
+                           std::vector<std::string>* required_files);
+
  private:
   std::vector<std::string> git_files_;
   base::FilePath git_file_for_test_;
