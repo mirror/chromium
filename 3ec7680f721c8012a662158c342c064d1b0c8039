@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1327f2ab_0b6db637",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-29T23:06:55Z",
+      "side": 1,
+      "message": "To fix the access-control-origin-header-in-isolated-world.html test, we could experiment with making this e.g.:\n\nif (origin \u0026\u0026 !origin-\u003eIsUnique() \u0026\u0026 !origin-\u003eIsSameSchemeHostPort(Context().GetSecurityOrigin()))\n\nThe reason for worrying about IsUnique here is to avoid overwriting some another place that\u0027s also calling SetRequestorOrigin. We should audited all the other places where we assign SetRequestorOrigin.\n\nI\u0027m also aware of a bug, where if a content script does an xhr to a site that it has permissions for, but the response redirects it to a third site that it doesn\u0027t have permissions for, the Origin header isn\u0027t chrome-extension:// but the page\u0027s origin.",
+      "revId": "3ec7680f721c8012a662158c342c064d1b0c8039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
