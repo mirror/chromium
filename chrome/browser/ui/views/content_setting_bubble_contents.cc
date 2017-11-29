@@ -329,6 +329,18 @@ gfx::Size ContentSettingBubbleContents::CalculatePreferredSize() const {
   } else {
     preferred_size.set_width(std::min(preferred_width, kMaxContentsWidth));
   }
+
+  // These bubbles should all be the "small" dialog width, but only when in
+  // Harmony mode.
+  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  if (provider->IsHarmonyMode()) {
+    // Subtract out the dialog insets, because they're re-added when sizing the
+    // frame to contain this content view.
+    preferred_size.set_width(
+        provider->GetSnappedDialogWidth(0) -
+        provider->GetInsetsMetric(views::INSETS_DIALOG).width());
+  }
+
   return preferred_size;
 }
 

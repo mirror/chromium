@@ -80,6 +80,7 @@ Checkbox::Checkbox(const base::string16& label, bool force_md)
   SetHorizontalAlignment(gfx::ALIGN_LEFT);
   SetFocusForPlatform();
   SetFocusPainter(nullptr);
+  this->label()->SetMultiLine(true);
 
   if (UseMd()) {
     set_request_focus_on_press(false);
