@@ -2,7 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/process/launch.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -69,6 +71,81 @@ const base::FilePath kDownstreamUpdater =
 const std::string kCodeSearchLink("https://cs.chromium.org/chromium/src/");
 
 }  // namespace
+
+std::string GetGit(base::FilePath& source_path) {
+  base::FilePath original_path;
+  base::GetCurrentDirectory(&original_path);
+  base::SetCurrentDirectory(source_path);
+
+  std::string report;
+  {
+    base::FilePath current_path;
+    base::GetCurrentDirectory(&current_path);
+    report += base::StringPrintf("\nCurrent Dir: %s\n",
+                                 current_path.MaybeAsASCII().c_str());
+  }
+
+  // DIFF WITH CACHE
+  {
+    std::string git_output;
+    const base::CommandLine::CharType* args[] = {"git", "diff"};
+    base::CommandLine cmdline(2, args);
+    cmdline.AppendArg("--cached");
+    cmdline.AppendArg("--name-only");
+
+    report += base::StringPrintf("\nDiff/Cached: %s\n",
+                                 cmdline.GetCommandLineString().c_str());
+    if (!base::GetAppOutputAndError(cmdline, &git_output))
+      report += "FAILED.";
+    else
+      report += base::StringPrintf("%s\n", git_output.c_str());
+  }
+
+  // DIFF WITHOUT
+  {
+    std::string git_output;
+    const base::CommandLine::CharType* args[] = {"git", "diff"};
+    base::CommandLine cmdline(2, args);
+
+    report += base::StringPrintf("\nDiff: %s\n",
+                                 cmdline.GetCommandLineString().c_str());
+    if (!base::GetAppOutputAndError(cmdline, &git_output))
+      report += "FAILED.";
+    else
+      report += base::StringPrintf("%s\n", git_output.c_str());
+  }
+
+  // STATUS
+  {
+    std::string git_output;
+    const base::CommandLine::CharType* args[] = {"git", "status"};
+    base::CommandLine cmdline(2, args);
+
+    report += base::StringPrintf("\nStatus: %s\n",
+                                 cmdline.GetCommandLineString().c_str());
+    if (!base::GetAppOutputAndError(cmdline, &git_output))
+      report += "FAILED.";
+    else
+      report += base::StringPrintf("%s\n", git_output.c_str());
+  }
+
+  // DIFF LOG
+  {
+    std::string git_output;
+    const base::CommandLine::CharType* args[] = {"git", "log"};
+    base::CommandLine cmdline(2, args);
+
+    report += base::StringPrintf("\nLog: %s\n",
+                                 cmdline.GetCommandLineString().c_str());
+    if (!base::GetAppOutput(cmdline, &git_output))
+      report += "FAILED.";
+    else
+      report += base::StringPrintf("%s\n", git_output.c_str());
+  }
+
+  base::SetCurrentDirectory(original_path);
+  return report;
+}
 
 // Calls |kDownstreamUpdater| script to update files that depend on
 // annotations.xml.
@@ -288,6 +365,8 @@ int wmain(int argc, wchar_t* argv[]) {
 #else
 int main(int argc, char* argv[]) {
 #endif
+  LOG(ERROR) << "STARTING.";
+
   // Parse switches.
   base::CommandLine command_line = base::CommandLine(argc, argv);
   if (command_line.HasSwitch("help") || command_line.HasSwitch("h") ||
@@ -349,9 +428,15 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  LOG(ERROR) << "GETING GIT...";
+  LOG(ERROR) << GetGit(source_path);
+  LOG(ERROR) << "GIT GOT!";
+  return 1;
+
   TrafficAnnotationAuditor auditor(source_path, build_path, tool_path);
 
   // Extract annotations.
+  LOG(ERROR) << "STARTING EXTRACT.";
   if (extractor_input.empty()) {
     if (!auditor.RunClangTool(path_filters, full_run)) {
       LOG(ERROR) << "Failed to run clang tool.";
@@ -375,15 +460,18 @@ int main(int argc, char* argv[]) {
     }
   }
 
+  LOG(ERROR) << "STARTING PROCESS.";
   // Process extractor output.
   if (!auditor.ParseClangToolRawOutput())
     return 1;
 
+  LOG(ERROR) << "STARTING CHECKS.";
   // Perform checks.
   if (!auditor.RunAllChecks()) {
     LOG(ERROR) << "Running checks failed.";
     return 1;
   }
+  LOG(ERROR) << "END OF CHECKS.";
 
   // Write the summary file.
   if (!summary_file.empty() &&

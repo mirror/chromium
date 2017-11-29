@@ -168,6 +168,12 @@ bool TrafficAnnotationAuditor::RunClangTool(
     }
     for (const auto& file_path : file_paths)
       fprintf(options_file, "%s ", file_path.c_str());
+
+    std::vector<std::string> required_files;
+    if (!filter.GetAllRequiredFiles(source_path_, build_path_, file_paths,
+                                    &required_files))
+      ;
+    return false;
   }
   base::CloseFile(options_file);
 
