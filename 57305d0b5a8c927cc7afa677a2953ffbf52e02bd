@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d416a608_cad995ff",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:22:31Z",
+      "side": 1,
+      "message": "Early return if render_process_id \u003d\u003d -1 (request is from browser).",
+      "range": {
+        "startLine": 182,
+        "startChar": 18,
+        "endLine": 182,
+        "endChar": 35
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2430d1d6_01a6c470",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:22:31Z",
+      "side": 1,
+      "message": "nit: if condition is not needed.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c6a9b0_530ebc9c",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:22:31Z",
+      "side": 1,
+      "message": "This can be removed now.",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 10
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a127a72d_2452c49b",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:22:31Z",
+      "side": 1,
+      "message": "This if condition will always be true now. Change to:\n\nweb_request_type \u003d request-\u003eurl().SchemeIsWSOrWSS() ? WebRequestResourceType::WEB_SOCKET : ToWebRequestResourceType(type.value());",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 24
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0302b1_ed175c64",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:22:31Z",
+      "side": 1,
+      "message": "optional nit: navigation_ui_data \u003d browser_client ? browser_client-\u003eGetExtensionNavigationUIData(url_request) : nullptr;",
+      "range": {
+        "startLine": 151,
+        "startChar": 29,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28c76a9_84d748e1",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:22:31Z",
+      "side": 1,
+      "message": "nit: s/NavigationUIData/ExtensionNavigationUIData",
+      "range": {
+        "startLine": 165,
+        "startChar": 36,
+        "endLine": 165,
+        "endChar": 52
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c37b49_68fdf4e3",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:22:31Z",
+      "side": 1,
+      "message": "Does this need to be within frame_id \u003e\u003d 0 or is that only relevant for FrameData below?",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 28
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4052b440_ab6875a9",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:22:31Z",
+      "side": 1,
+      "message": "nit: Isn\u0027t this also applicable for non-PlzNavigate navigation requests?",
+      "range": {
+        "startLine": 178,
+        "startChar": 7,
+        "endLine": 178,
+        "endChar": 29
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3987935_9f5b5a67",
+        "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:22:31Z",
+      "side": 1,
+      "message": "This is redundant. We are doing this check above.",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 27
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa93fa0_92e2418e",
+        "filename": "extensions/shell/browser/shell_network_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-29T23:22:31Z",
+      "side": 1,
+      "message": "Wouldn\u0027t we want to add response info here as well (and similarly in some of the other network request stages)?",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 44
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
