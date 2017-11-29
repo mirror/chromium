@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aaa9ac5_5849ba37",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-29T00:02:08Z",
+      "side": 1,
+      "message": "Sorry I missed this - please add {} since the IF is multi-line now.",
+      "revId": "1f1f0ba2c7f23b0946b0e3b27c2dc9502660c913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b20795_79287bbe",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-29T00:02:08Z",
+      "side": 1,
+      "message": "nit: \"... invalid: \" \u003c\u003c static_cast\u003cint\u003e(page);\n\nmight be more useful for debugging etc.",
+      "revId": "1f1f0ba2c7f23b0946b0e3b27c2dc9502660c913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b8d0c0_71b6ea25",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-29T00:02:08Z",
+      "side": 1,
+      "message": "nit: could you remove } and { ?",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 10
+      },
+      "revId": "1f1f0ba2c7f23b0946b0e3b27c2dc9502660c913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
