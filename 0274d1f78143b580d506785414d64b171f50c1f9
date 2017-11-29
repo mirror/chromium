@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "566959de_95910c06",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-11-29T13:57:52Z",
+      "side": 1,
+      "message": "The rounding of stackview\u0027s distribution is kind of unpredictable.\nE.g.,  if availableWidth \u003d 272, button widths will be 90.5, 91, 90.5, but not 90.66, 90.66, 90.66.  And this leads to incorrect bar height when some buttons is 91 or 90 wide (English/Korean on iPhone5s).  There is no guarantee this behavior will stay the same in future iOS.  So I end up manually maintaining the button widths myself.",
+      "range": {
+        "startLine": 444,
+        "startChar": 2,
+        "endLine": 445,
+        "endChar": 69
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
