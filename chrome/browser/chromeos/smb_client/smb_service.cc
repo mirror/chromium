@@ -11,26 +11,13 @@ using chromeos::file_system_provider::Service;
 
 namespace chromeos {
 namespace smb_client {
-namespace {
 
-using file_system_provider::ProvidedFileSystemInterface;
-using file_system_provider::ProviderId;
-
-ProviderId kSmbProviderId = ProviderId::CreateFromNativeId("smb");
-
-// Factory for smb file systems. |profile| must not be NULL.
-std::unique_ptr<ProvidedFileSystemInterface> CreateSmbFileSystem(
-    Profile* profile,
-    const file_system_provider::ProvidedFileSystemInfo& file_system_info) {
-  DCHECK(profile);
-  return base::MakeUnique<SmbFileSystem>(file_system_info);
-}
-
-}  // namespace
+file_system_provider::ProviderId kSmbProviderId =
+    ProviderId::CreateFromNativeId("smb");
 
 SmbService::SmbService(Profile* profile) : profile_(profile) {
-  GetProviderService()->RegisterFileSystemFactory(
-      kSmbProviderId, base::Bind(&CreateSmbFileSystem));
+  GetProviderService()->RegisterNativeProvider(
+      kSmbProviderId, base::MakeUnique<SmbService>(profile));
 }
 
 SmbService::~SmbService() {}
@@ -42,6 +29,19 @@ base::File::Error SmbService::Mount(
 
 Service* SmbService::GetProviderService() const {
   return file_system_provider::Service::Get(profile_);
+}
+
+std::unique_ptr<ProvidedFileSystemInterface>
+SmbService::CreateProvidedFileSystem(
+    Profile* profile,
+    const ProvidedFileSystemInfo& file_system_info) {
+  DCHECK(profile);
+  return base::MakeUnique<SmbFileSystem>(file_system_info);
+}
+
+Capabilities SmbService::GetCapabilities(Profile* profile,
+                                         const ProviderId& provider_id) {
+  return Capabilities(false, false, false, extensions::SOURCE_NETWORK);
 }
 
 }  // namespace smb_client

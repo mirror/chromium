@@ -39,6 +39,7 @@ class ProviderId {
   const std::string& GetIdUnsafe() const;
   const std::string& GetExtensionId() const;
   const std::string& GetNativeId() const;
+
   std::string ToString() const;
 
   ProviderType GetType() const;
