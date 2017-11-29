@@ -76,11 +76,11 @@ class SearchPermissionsService : public KeyedService {
 
   // Returns whether the geolocation and notifications permissions are being
   // configured for the DSE for that given origin.
-  bool ArePermissionsControlledByDSE(const url::Origin& requesting_origin);
+  bool IsPermissionControlledByDSE(ContentSettingsType type,
+                                   const url::Origin& requesting_origin);
 
-  // Resets the DSE permission for a single ContentSettingsType. Returns true
-  // if that type is controlled by the DSE and was thus reset, false otherwise.
-  bool ResetDSEPermission(ContentSettingsType type);
+  // Resets the DSE permission for a single ContentSettingsType.
+  void ResetDSEPermission(ContentSettingsType type);
 
   // Reset all supported DSE permissions.
   void ResetDSEPermissions();
