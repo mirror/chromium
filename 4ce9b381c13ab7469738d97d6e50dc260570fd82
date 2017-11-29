@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94f67dcf_63d2cb9f",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T13:45:52Z",
+      "side": 1,
+      "message": "huh. this test is now failing reliably, whereas it was passing reliably last week. maybe a regression snuck in because the test was disabled. sigh. i\u0027ll re-disable it and file a new bug.",
+      "revId": "4ce9b381c13ab7469738d97d6e50dc260570fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
