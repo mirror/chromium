@@ -16,6 +16,24 @@
       "revId": "c0c0d100d6ce747a9d1c595f37ec5804cbb354c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9aa2ce_c7c86b94",
+        "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T19:01:23Z",
+      "side": 0,
+      "message": "Re-added those checks.\nAlthough, to be clear, the code currently simply looks on whether \u0027prettifiedPath\u0027 is populated to determine whether to show it or not, see [1]. If for some reason C++ sent a populated \u0027prettifiedPath\u0027 for an extension that does not have chrome.developerPrivate.Location.UNPACKED location, it would still be displayed.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/detail_view.html?l\u003d376",
+      "parentUuid": "a8d27227_b31cdea4",
+      "revId": "c0c0d100d6ce747a9d1c595f37ec5804cbb354c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
