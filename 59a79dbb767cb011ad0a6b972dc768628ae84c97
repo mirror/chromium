@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0e231fd0_f8bb736b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4417,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T14:42:35Z",
+      "side": 1,
+      "message": "But this is only correct in some environments; in others it\u0027s just unnecessary. Here we expect the completion to be run after the new tab animation (if any) completes -- that part of the API of -addSelectedTabWithURL:atIndex:transition:completion:. If we were to move this call elsewhere, and pass in some other omnibox focuser, that other caller would need to decide if weakification was needed (it probably wouldn\u0027t be).\n\n(For slightly larger context, I see a lot of non-Chrome code that does weak/strong around every block by default, when it is often not needed).",
+      "parentUuid": "046a6e1d_37050bc2",
+      "range": {
+        "startLine": 4417,
+        "startChar": 32,
+        "endLine": 4417,
+        "endChar": 40
+      },
+      "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ed5b586_ba040b30",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0df4e5_fb2c9e54",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4418,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T14:42:35Z",
+      "side": 1,
+      "message": "Yeah, this was me misunderstanding the diff. Sorry.",
+      "parentUuid": "f73c52c6_8c66123b",
+      "range": {
+        "startLine": 4418,
+        "startChar": 8,
+        "endLine": 4418,
+        "endChar": 34
+      },
+      "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
