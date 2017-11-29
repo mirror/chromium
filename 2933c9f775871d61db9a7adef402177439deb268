@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6190029a_5fe5b948",
+        "filename": "tools/bisect-builds.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-29T19:42:47Z",
+      "side": 1,
+      "message": "Added a comment about why the glob, and why I changed it to fail silently.\n\nSwitched to os.path.exists and shutil.copy2.",
+      "parentUuid": "b7ac6395_de4e932f",
+      "revId": "2933c9f775871d61db9a7adef402177439deb268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49dbd5e2_6c45539a",
         "filename": "tools/bisect-builds.py",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "2933c9f775871d61db9a7adef402177439deb268",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4e6126_4d6492c5",
+        "filename": "tools/bisect-builds.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-29T19:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49dbd5e2_6c45539a",
+      "range": {
+        "startLine": 540,
+        "startChar": 47,
+        "endLine": 542,
+        "endChar": 3
+      },
+      "revId": "2933c9f775871d61db9a7adef402177439deb268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +112,24 @@
       "writtenOn": "2017-11-29T19:21:51Z",
       "side": 1,
       "message": "Do we know why this is and why we don\u0027t just fix it?",
+      "revId": "2933c9f775871d61db9a7adef402177439deb268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39394fd8_40ae121f",
+        "filename": "tools/bisect-builds.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-29T19:42:47Z",
+      "side": 1,
+      "message": "I already filed bug 789612 for the most recent issue (libminigbm),\nif you know anything about how the archives are produced please help\nroute it to the right person to fix it!\n\nHowever, even if fixed, we need to maintain this hack basically forever\nbecause thousands of archived builds are now bad, and unless there\u0027s\na process to regenerate them or patch them, this hack will be needed\nanytime anyone wants to do a bisect that spans this time range.",
+      "parentUuid": "a3c4c018_b866a046",
       "revId": "2933c9f775871d61db9a7adef402177439deb268",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
