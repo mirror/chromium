@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "38f45d9a_951899f8",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-29T20:43:09Z",
+      "side": 1,
+      "message": "VideoCaptureDeviceMFWin::photo_callback_factory_ is created\nand only held from VideoCaptureDeviceMFWin, so we\u0027re not \nutilizing its reference counting, right? What I\u0027m proposing\nis to have a\n\nscoped_refptr\u003cIMFCaptureEngineOnSampleCallback\u003e CreateMFPhotoCallback(\n    VideoCaptureDevice::TakePhotoCallback callback,\n    VideoCaptureFormat format) {\n  return scoped_refptr\u003cIMFCaptureEngineOnSampleCallback\u003e(\n      new MFPhotoCallback(std::move(callback), format));\n}\n\nin video/win/video_capture_device_mf_win.cc\u0027s anonymous \nnamespace, where MFPhotoCallback would also be, and remove \n|photo_callback_factory_|. Then just call this new method \n(file-static) from l.523. WDYT?\n\nYou\u0027d need to square that with the unit tests.",
+      "parentUuid": "cbff17e9_6afea7b0",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80baf449_0e924787",
         "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
         "patchSetId": 31
