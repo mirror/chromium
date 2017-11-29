@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b7b779b_d3a43dd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "I\u0027ve reworded the CL description to focus on the fact that with and without PlzNavigate only the final URL matters for choosing the renderer process.",
+      "parentUuid": "8690176e_a5f3f3cf",
+      "range": {
+        "startLine": 11,
+        "startChar": 23,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c23feb1a_09043f04",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "09439331_06c33553",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "I\u0027ve reworded the CL description to focus on the fact that with and without PlzNavigate only the final URL matters for choosing the renderer process.",
+      "parentUuid": "c23feb1a_09043f04",
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9a9c174_0352ac2e",
         "filename": "chrome/browser/ui/browser_browsertest.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56595ebc_b744ef11",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "Not sure.  I think it is okay to keep doing the redirect:\n\n- More coverage this way\n\n- The test explicitly tests that we observed the expected redirects via RedirectObserver (test asserts on lins 796-798)\n\n\nOTOH, maybe this test should use --site-per-process instead of a custom ContentBrowserClient (as you suggested in another CR comment).  I moved this test (and the one below) to //chrome/browser/chrome_site_per_process_browsertest.cc",
+      "parentUuid": "b9a9c174_0352ac2e",
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "f199b403_e36bbfea",
+        "filename": "chrome/renderer/extensions/extension_process_policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "No - unfortunately not.  This is still used for ShouldFork decisions (see chrome/renderer/extensions/chrome_extensions_renderer_client.cc).  I am trying to limit applicability of ShouldFork to extensions, but in https://crrev.com/c/791814 I am still trying to tip-toe around hosted apps (and so leaving CrossExtensionProcessBoundary in place...).",
+      "parentUuid": "116c4b78_14840499",
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "429e7207_578c12bc",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 1
@@ -170,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "7bdb8801_6b57a188",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "Done.  (follow-up CL at https://chromium-review.googlesource.com/#/c/chromium/src/+/797470 - hopefully the tryjobs will turn out green...)",
+      "parentUuid": "ff523f4a_7b41f88d",
+      "range": {
+        "startLine": 1240,
+        "startChar": 0,
+        "endLine": 1243,
+        "endChar": 76
+      },
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "688d8736_e1effe25",
         "filename": "content/shell/browser/shell_content_browser_client.cc",
         "patchSetId": 1
@@ -184,6 +286,24 @@
       "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84bbeea4_5ecb07ee",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "Thanks for pointing this out.  I\u0027ve removed ShellContentBrowserClient::DoesSiteRequireDedicatedProcess in the latest patchset.  See my other (test-suite-specific) comments for how the test coverage is preserved.",
+      "parentUuid": "688d8736_e1effe25",
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6756820_c1ddd711",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "Copied from the old location without changes...",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "0fc6404d134074217a0f8774626581fb0e8a4512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "546d4bcc_43f0f002",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "Small change here to use different sites for all the URLs in the test.",
+      "range": {
+        "startLine": 577,
+        "startChar": 47,
+        "endLine": 577,
+        "endChar": 55
+      },
+      "revId": "0fc6404d134074217a0f8774626581fb0e8a4512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06c32a4e_a316c6c0",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "Using |embedded_test_server()| rather than a separate |net::EmbeddedTestServer https_test_server| that the test used to declare (and that I deleted).",
+      "range": {
+        "startLine": 587,
+        "startChar": 18,
+        "endLine": 587,
+        "endChar": 38
+      },
+      "revId": "0fc6404d134074217a0f8774626581fb0e8a4512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad6c7bc1_162e3cbf",
+        "filename": "content/browser/cross_site_transfer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "No need to call ShellContentBrowserClient::SetSwapProcessesForRedirect(true) in this test, because CrossSiteTransferTest::SetUpCommandLine already calls IsolateAllSitesForTesting.",
+      "range": {
+        "startLine": 266,
+        "startChar": 23,
+        "endLine": 267,
+        "endChar": 66
+      },
+      "revId": "0fc6404d134074217a0f8774626581fb0e8a4512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "193a3bb9_5efb63b5",
+        "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "I think there is no need to explicitly call ShellContentBrowserClient::SetSwapProcessesForRedirect(true), because this test will be run by linux_chromium_rel_ng with and without --site-per-process (since this bot has a separate site_per_process_content_browsertests step).",
+      "range": {
+        "startLine": 535,
+        "startChar": 23,
+        "endLine": 535,
+        "endChar": 70
+      },
+      "revId": "0fc6404d134074217a0f8774626581fb0e8a4512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7dbaeee5_caee6662",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2586,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 1,
+      "message": "This test was *not* covered by linux_chromium_rel_ng because it is disabled on linux because of flakiness :-(.  Therefore, to keep coverage on Windows, I made the test explicitly opt into --site-per-process.",
+      "range": {
+        "startLine": 2585,
+        "startChar": 23,
+        "endLine": 2586,
+        "endChar": 46
+      },
+      "revId": "0fc6404d134074217a0f8774626581fb0e8a4512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

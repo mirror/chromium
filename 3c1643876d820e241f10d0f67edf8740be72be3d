@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "596f2486_6aaaf177",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 0,
+      "message": "This test is moved to chrome/browser/chrome_site_per_process_browsertest.cc",
+      "range": {
+        "startLine": 759,
+        "startChar": 23,
+        "endLine": 759,
+        "endChar": 67
+      },
+      "revId": "3c1643876d820e241f10d0f67edf8740be72be3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2888a491_b3b82e29",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T18:20:06Z",
+      "side": 0,
+      "message": "The test is also moved to chrome/browser/chrome_site_per_process_browsertest.cc",
+      "range": {
+        "startLine": 810,
+        "startChar": 23,
+        "endLine": 810,
+        "endChar": 67
+      },
+      "revId": "3c1643876d820e241f10d0f67edf8740be72be3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
