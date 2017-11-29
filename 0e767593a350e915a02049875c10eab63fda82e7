@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d9781ee_a17f35ee",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T13:02:49Z",
+      "side": 1,
+      "message": "s/above/inside/?",
+      "range": {
+        "startLine": 209,
+        "startChar": 23,
+        "endLine": 209,
+        "endChar": 28
+      },
+      "revId": "0e767593a350e915a02049875c10eab63fda82e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7fef65b_00c8eec4",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T13:02:49Z",
+      "side": 1,
+      "message": "Please use CGPointMake() to construct points.",
+      "revId": "0e767593a350e915a02049875c10eab63fda82e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fedd586_04d6911c",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T13:02:49Z",
+      "side": 1,
+      "message": "Please use chrome_test_util::GetActiveViewController() instead of [UIWindow rootViewController].",
+      "range": {
+        "startLine": 212,
+        "startChar": 34,
+        "endLine": 212,
+        "endChar": 52
+      },
+      "revId": "0e767593a350e915a02049875c10eab63fda82e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897f5004_65edbbeb",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T13:02:49Z",
+      "side": 1,
+      "message": "Verify tab count as well (to ensure that a new tab was created), as in the tests above?",
+      "revId": "0e767593a350e915a02049875c10eab63fda82e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
