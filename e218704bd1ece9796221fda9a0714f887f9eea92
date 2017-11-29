@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "405d9090_0a05fe2a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/document-user-activation-cross-origin-feature-policy-delegation.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T13:20:26Z",
+      "side": 1,
+      "message": "maybe add \"when the allow attribute is used\"? It sounds to me that you mean same origin frame but I don\u0027t think that\u0027s what you mean.",
+      "range": {
+        "startLine": 3,
+        "startChar": 43,
+        "endLine": 3,
+        "endChar": 55
+      },
+      "revId": "e218704bd1ece9796221fda9a0714f887f9eea92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33fded4_1371f4e7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/document-user-activation-cross-origin-feature-policy-gesture.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T13:20:26Z",
+      "side": 1,
+      "message": "This seems contradictory with the `simulateFrameClick()`?",
+      "range": {
+        "startLine": 3,
+        "startChar": 56,
+        "endLine": 3,
+        "endChar": 66
+      },
+      "revId": "e218704bd1ece9796221fda9a0714f887f9eea92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2401bcec_a81e77f2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/document-user-activation-iframe-delegation.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T13:20:26Z",
+      "side": 1,
+      "message": "👍",
+      "revId": "e218704bd1ece9796221fda9a0714f887f9eea92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fe07330_cbd037ee",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T13:20:26Z",
+      "side": 1,
+      "message": "Feel free to ignore as it is nitpicky but maybe the name of the file should sound more like \"autoplay-test.js\" instead of \"video\". Complete bikeshedding though :)",
+      "revId": "e218704bd1ece9796221fda9a0714f887f9eea92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
