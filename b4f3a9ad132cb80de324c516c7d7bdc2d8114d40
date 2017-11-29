@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7dc638ae_e0ee4685",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-29T01:48:25Z",
+      "side": 1,
+      "message": "Changed the names in the prior CL.",
+      "parentUuid": "03a17feb_da85202e",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcc7259c_7e2eae02",
         "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001cdf88_e8c5f830",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-29T01:48:25Z",
+      "side": 1,
+      "message": "Ack. I think I\u0027d rather see the \"actual\" number if this fails, though.",
+      "parentUuid": "bcc7259c_7e2eae02",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +203,30 @@
       "side": 1,
       "message": "I like 2 as it better mirrors how the code is actually used.",
       "parentUuid": "88b34bed_e57c6df2",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 19
+      },
+      "revId": "b4f3a9ad132cb80de324c516c7d7bdc2d8114d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35722e4a_82e55ef5",
+        "filename": "chrome/browser/ui/tabs/tab_snapshot_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-29T01:48:25Z",
+      "side": 1,
+      "message": "Done -- PTAL.",
+      "parentUuid": "18a29a48_c07c6222",
       "range": {
         "startLine": 108,
         "startChar": 2,
