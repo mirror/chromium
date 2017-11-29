@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e1feae0_8b7928b4",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-29T20:28:01Z",
+      "side": 1,
+      "message": "Thanks for pointing this out! I wasn\u0027t aware how unnamed namespaces work so far. We use static inside unnamed namespaces in a couple of places. I was following this. Learned something new!",
+      "parentUuid": "558f4a10_1b94d7d2",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 6
+      },
+      "revId": "5f11d5dada7ff1cf7b0c5f28c357529df482ab76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49cc24b7_cb6e8589",
         "filename": "chrome/browser/vr/metrics_helper.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "5f11d5dada7ff1cf7b0c5f28c357529df482ab76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56892caf_1f3fb72b",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-29T20:28:01Z",
+      "side": 1,
+      "message": "As discussed offline, it\u0027s in the base CL.",
+      "parentUuid": "49cc24b7_cb6e8589",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "5f11d5dada7ff1cf7b0c5f28c357529df482ab76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
