@@ -21,8 +21,7 @@ UserScriptSetManager::UserScriptSetManager()
   content::RenderThread::Get()->AddObserver(this);
 }
 
-UserScriptSetManager::~UserScriptSetManager() {
-}
+UserScriptSetManager::~UserScriptSetManager() = default;
 
 void UserScriptSetManager::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);

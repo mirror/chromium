@@ -34,8 +34,8 @@ DeclarativeUserScriptManagerFactory::DeclarativeUserScriptManagerFactory()
   DependsOn(ExtensionRegistryFactory::GetInstance());
 }
 
-DeclarativeUserScriptManagerFactory::~DeclarativeUserScriptManagerFactory() {
-}
+DeclarativeUserScriptManagerFactory::~DeclarativeUserScriptManagerFactory() =
+    default;
 
 KeyedService* DeclarativeUserScriptManagerFactory::BuildServiceInstanceFor(
     BrowserContext* context) const {

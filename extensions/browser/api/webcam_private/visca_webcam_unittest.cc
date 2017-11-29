@@ -22,7 +22,7 @@ class TestSerialConnection : public SerialConnection {
   TestSerialConnection(device::mojom::SerialIoHandlerPtrInfo io_handler_info)
       : SerialConnection("dummy_path", "dummy_id", std::move(io_handler_info)) {
   }
-  ~TestSerialConnection() override {}
+  ~TestSerialConnection() override = default;
 
   void SetReceiveBuffer(const std::vector<char>& receive_buffer) {
     receive_buffer_ = receive_buffer;
@@ -109,7 +109,7 @@ class ViscaWebcamTest : public testing::Test {
     webcam_->OpenForTesting(
         std::make_unique<TestSerialConnection>(std::move(io_handler_info)));
   }
-  ~ViscaWebcamTest() override {}
+  ~ViscaWebcamTest() override = default;
 
   Webcam* webcam() { return webcam_.get(); }
 

@@ -70,6 +70,6 @@ UpdateService::UpdateService(
       new UpdateDataProvider(context_, base::Bind(&InstallUpdateCallback));
 }
 
-UpdateService::~UpdateService() {}
+UpdateService::~UpdateService() = default;
 
 }  // namespace extensions

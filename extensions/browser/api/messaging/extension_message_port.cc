@@ -31,7 +31,7 @@ class ExtensionMessagePort::FrameTracker : public content::WebContentsObserver,
  public:
   explicit FrameTracker(ExtensionMessagePort* port)
       : pm_observer_(this), port_(port), interstitial_frame_(nullptr) {}
-  ~FrameTracker() override {}
+  ~FrameTracker() override = default;
 
   void TrackExtensionProcessFrames() {
     pm_observer_.Add(ProcessManager::Get(port_->browser_context_));
@@ -158,7 +158,7 @@ ExtensionMessagePort::ExtensionMessagePort(
   }
 }
 
-ExtensionMessagePort::~ExtensionMessagePort() {}
+ExtensionMessagePort::~ExtensionMessagePort() = default;
 
 void ExtensionMessagePort::RevalidatePort() {
   // Only opener ports need to be revalidated, because these are created in the

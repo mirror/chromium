@@ -45,7 +45,7 @@ DOMActivityLogger::DOMActivityLogger(const std::string& extension_id)
     : extension_id_(extension_id) {
 }
 
-DOMActivityLogger::~DOMActivityLogger() {}
+DOMActivityLogger::~DOMActivityLogger() = default;
 
 void DOMActivityLogger::AttachToWorld(int world_id,
                                       const std::string& extension_id) {

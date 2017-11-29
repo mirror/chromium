@@ -10,11 +10,9 @@
 
 namespace extensions {
 
-UsbPrinterManifestHandler::UsbPrinterManifestHandler() {
-}
+UsbPrinterManifestHandler::UsbPrinterManifestHandler() = default;
 
-UsbPrinterManifestHandler::~UsbPrinterManifestHandler() {
-}
+UsbPrinterManifestHandler::~UsbPrinterManifestHandler() = default;
 
 bool UsbPrinterManifestHandler::Parse(Extension* extension,
                                       base::string16* error) {

@@ -53,7 +53,7 @@ class FileHandlersMimeUtilTest : public ExtensionsTest {
  protected:
   FileHandlersMimeUtilTest()
       : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
-  ~FileHandlersMimeUtilTest() override {}
+  ~FileHandlersMimeUtilTest() override = default;
 
   void SetUp() override {
     ExtensionsTest::SetUp();

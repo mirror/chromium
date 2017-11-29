@@ -18,11 +18,9 @@ using api::system_cpu::CpuInfo;
 base::LazyInstance<scoped_refptr<CpuInfoProvider>>::DestructorAtExit
     CpuInfoProvider::provider_ = LAZY_INSTANCE_INITIALIZER;
 
-CpuInfoProvider::CpuInfoProvider() {
-}
+CpuInfoProvider::CpuInfoProvider() = default;
 
-CpuInfoProvider::~CpuInfoProvider() {
-}
+CpuInfoProvider::~CpuInfoProvider() = default;
 
 void CpuInfoProvider::InitializeForTesting(
     scoped_refptr<CpuInfoProvider> provider) {

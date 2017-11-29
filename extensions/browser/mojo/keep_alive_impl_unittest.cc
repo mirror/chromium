@@ -20,7 +20,7 @@ class KeepAliveTest : public ExtensionsTest {
  public:
   KeepAliveTest()
       : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
-  ~KeepAliveTest() override {}
+  ~KeepAliveTest() override = default;
 
   void SetUp() override {
     ExtensionsTest::SetUp();

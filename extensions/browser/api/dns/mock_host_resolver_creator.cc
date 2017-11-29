@@ -20,8 +20,7 @@ MockHostResolverCreator::MockHostResolverCreator()
                       base::WaitableEvent::InitialState::NOT_SIGNALED),
       mock_host_resolver_(NULL) {}
 
-MockHostResolverCreator::~MockHostResolverCreator() {
-}
+MockHostResolverCreator::~MockHostResolverCreator() = default;
 
 net::HostResolver* MockHostResolverCreator::CreateMockHostResolver() {
   DCHECK(!mock_host_resolver_);

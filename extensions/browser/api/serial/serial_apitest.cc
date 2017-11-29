@@ -192,7 +192,7 @@ void DropBindRequest(const std::string& interface_name,
 
 class SerialApiTest : public ExtensionApiTest {
  public:
-  SerialApiTest() {}
+  SerialApiTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionApiTest::SetUpCommandLine(command_line);

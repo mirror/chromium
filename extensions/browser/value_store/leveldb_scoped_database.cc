@@ -45,7 +45,7 @@ LeveldbScopedDatabase::LeveldbScopedDatabase(const std::string& uma_client_name,
                                              const base::FilePath& path)
     : LazyLevelDb(uma_client_name, path) {}
 
-LeveldbScopedDatabase::~LeveldbScopedDatabase() {}
+LeveldbScopedDatabase::~LeveldbScopedDatabase() = default;
 
 ValueStore::Status LeveldbScopedDatabase::Read(
     const std::string& scope,

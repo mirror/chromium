@@ -16,11 +16,9 @@
 
 namespace extensions {
 
-ShellApiTest::ShellApiTest() {
-}
+ShellApiTest::ShellApiTest() = default;
 
-ShellApiTest::~ShellApiTest() {
-}
+ShellApiTest::~ShellApiTest() = default;
 
 const Extension* ShellApiTest::LoadExtension(const std::string& extension_dir) {
   base::ScopedAllowBlockingForTesting allow_blocking;

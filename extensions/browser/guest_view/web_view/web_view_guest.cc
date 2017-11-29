@@ -798,8 +798,7 @@ WebViewGuest::WebViewGuest(WebContents* owner_web_contents)
       ExtensionsAPIClient::Get()->CreateWebViewGuestDelegate(this));
 }
 
-WebViewGuest::~WebViewGuest() {
-}
+WebViewGuest::~WebViewGuest() = default;
 
 void WebViewGuest::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {

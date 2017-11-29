@@ -32,8 +32,8 @@ std::string GetKeyForScriptContext(ScriptContext* script_context) {
 
 }  // namespace
 
-EventBookkeeper::~EventBookkeeper() {}
-EventBookkeeper::EventBookkeeper() {}
+EventBookkeeper::~EventBookkeeper() = default;
+EventBookkeeper::EventBookkeeper() = default;
 
 // static
 EventBookkeeper* EventBookkeeper::Get() {

@@ -9,8 +9,7 @@ WebUIInjectionHost::WebUIInjectionHost(const HostID& host_id)
     url_(host_id.id()) {
 }
 
-WebUIInjectionHost::~WebUIInjectionHost() {
-}
+WebUIInjectionHost::~WebUIInjectionHost() = default;
 
 std::string WebUIInjectionHost::GetContentSecurityPolicy() const {
   return std::string();

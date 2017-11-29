@@ -53,8 +53,7 @@ TestExtensionRegistryObserver::TestExtensionRegistryObserver(
   extension_registry_observer_.Add(registry);
 }
 
-TestExtensionRegistryObserver::~TestExtensionRegistryObserver() {
-}
+TestExtensionRegistryObserver::~TestExtensionRegistryObserver() = default;
 
 const Extension* TestExtensionRegistryObserver::WaitForExtensionUninstalled() {
   return Wait(&uninstalled_waiter_);

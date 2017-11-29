@@ -33,8 +33,7 @@ LazyBackgroundTaskQueueFactory::LazyBackgroundTaskQueueFactory()
   DependsOn(ExtensionRegistryFactory::GetInstance());
 }
 
-LazyBackgroundTaskQueueFactory::~LazyBackgroundTaskQueueFactory() {
-}
+LazyBackgroundTaskQueueFactory::~LazyBackgroundTaskQueueFactory() = default;
 
 KeyedService* LazyBackgroundTaskQueueFactory::BuildServiceInstanceFor(
     BrowserContext* context) const {

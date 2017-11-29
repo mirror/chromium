@@ -14,7 +14,7 @@ ShellExtensionWebContentsObserver::ShellExtensionWebContentsObserver(
     : ExtensionWebContentsObserver(web_contents) {
 }
 
-ShellExtensionWebContentsObserver::~ShellExtensionWebContentsObserver() {
-}
+ShellExtensionWebContentsObserver::~ShellExtensionWebContentsObserver() =
+    default;
 
 }  // namespace extensions

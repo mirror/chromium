@@ -30,8 +30,7 @@ IdleManagerFactory::IdleManagerFactory()
   DependsOn(ExtensionsBrowserClient::Get()->GetExtensionSystemFactory());
 }
 
-IdleManagerFactory::~IdleManagerFactory() {
-}
+IdleManagerFactory::~IdleManagerFactory() = default;
 
 KeyedService* IdleManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

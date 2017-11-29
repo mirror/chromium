@@ -58,8 +58,8 @@ class APIRequestHandlerTest : public APIBindingTest {
   }
 
  protected:
-  APIRequestHandlerTest() {}
-  ~APIRequestHandlerTest() override {}
+  APIRequestHandlerTest() = default;
+  ~APIRequestHandlerTest() override = default;
 
   bool did_run_js() const { return did_run_js_; }
 

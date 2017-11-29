@@ -23,8 +23,7 @@ OfflineEnabledInfo::OfflineEnabledInfo(bool is_offline_enabled)
     : offline_enabled(is_offline_enabled) {
 }
 
-OfflineEnabledInfo::~OfflineEnabledInfo() {
-}
+OfflineEnabledInfo::~OfflineEnabledInfo() = default;
 
 // static
 bool OfflineEnabledInfo::IsOfflineEnabled(const Extension* extension) {
@@ -33,11 +32,9 @@ bool OfflineEnabledInfo::IsOfflineEnabled(const Extension* extension) {
   return info ? info->offline_enabled : false;
 }
 
-OfflineEnabledHandler::OfflineEnabledHandler() {
-}
+OfflineEnabledHandler::OfflineEnabledHandler() = default;
 
-OfflineEnabledHandler::~OfflineEnabledHandler() {
-}
+OfflineEnabledHandler::~OfflineEnabledHandler() = default;
 
 bool OfflineEnabledHandler::Parse(Extension* extension, base::string16* error) {
   if (!extension->manifest()->HasKey(keys::kOfflineEnabled)) {

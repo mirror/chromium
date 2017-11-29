@@ -166,8 +166,7 @@ URLPattern::URLPattern(int valid_schemes, base::StringPiece pattern)
 
 URLPattern::URLPattern(const URLPattern& other) = default;
 
-URLPattern::~URLPattern() {
-}
+URLPattern::~URLPattern() = default;
 
 bool URLPattern::operator<(const URLPattern& other) const {
   return GetAsString() < other.GetAsString();

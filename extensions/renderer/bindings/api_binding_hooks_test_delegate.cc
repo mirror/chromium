@@ -6,8 +6,8 @@
 
 namespace extensions {
 
-APIBindingHooksTestDelegate::APIBindingHooksTestDelegate() {}
-APIBindingHooksTestDelegate::~APIBindingHooksTestDelegate() {}
+APIBindingHooksTestDelegate::APIBindingHooksTestDelegate() = default;
+APIBindingHooksTestDelegate::~APIBindingHooksTestDelegate() = default;
 
 bool APIBindingHooksTestDelegate::CreateCustomEvent(
     v8::Local<v8::Context> context,

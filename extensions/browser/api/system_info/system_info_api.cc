@@ -242,8 +242,7 @@ SystemInfoAPI::SystemInfoAPI(content::BrowserContext* context)
   router->RegisterObserver(this, system_display::OnDisplayChanged::kEventName);
 }
 
-SystemInfoAPI::~SystemInfoAPI() {
-}
+SystemInfoAPI::~SystemInfoAPI() = default;
 
 void SystemInfoAPI::Shutdown() {
   EventRouter::Get(browser_context_)->UnregisterObserver(this);

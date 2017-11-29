@@ -30,9 +30,9 @@ ContextVector::iterator FindContext(ContextVector* contexts,
 
 }  // namespace
 
-WorkerScriptContextSet::WorkerScriptContextSet() {}
+WorkerScriptContextSet::WorkerScriptContextSet() = default;
 
-WorkerScriptContextSet::~WorkerScriptContextSet() {}
+WorkerScriptContextSet::~WorkerScriptContextSet() = default;
 
 void WorkerScriptContextSet::Insert(std::unique_ptr<ScriptContext> context) {
   DCHECK_GT(content::WorkerThread::GetCurrentId(), 0)

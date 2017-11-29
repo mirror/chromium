@@ -104,9 +104,9 @@ base::LazyInstance<WebRequestConditionAttributeFactory>::Leaky
 // WebRequestConditionAttribute
 //
 
-WebRequestConditionAttribute::WebRequestConditionAttribute() {}
+WebRequestConditionAttribute::WebRequestConditionAttribute() = default;
 
-WebRequestConditionAttribute::~WebRequestConditionAttribute() {}
+WebRequestConditionAttribute::~WebRequestConditionAttribute() = default;
 
 bool WebRequestConditionAttribute::Equals(
     const WebRequestConditionAttribute* other) const {
@@ -135,7 +135,7 @@ WebRequestConditionAttributeResourceType::
     : types_(types) {}
 
 WebRequestConditionAttributeResourceType::
-~WebRequestConditionAttributeResourceType() {}
+    ~WebRequestConditionAttributeResourceType() = default;
 
 // static
 scoped_refptr<const WebRequestConditionAttribute>
@@ -216,7 +216,7 @@ WebRequestConditionAttributeContentType(
       inclusive_(inclusive) {}
 
 WebRequestConditionAttributeContentType::
-~WebRequestConditionAttributeContentType() {}
+    ~WebRequestConditionAttributeContentType() = default;
 
 // static
 scoped_refptr<const WebRequestConditionAttribute>
@@ -374,7 +374,7 @@ class HeaderMatcher {
 
 // HeaderMatcher implementation.
 
-HeaderMatcher::~HeaderMatcher() {}
+HeaderMatcher::~HeaderMatcher() = default;
 
 // static
 std::unique_ptr<const HeaderMatcher> HeaderMatcher::Create(
@@ -422,7 +422,7 @@ HeaderMatcher::StringMatchTest::Create(const base::Value& data,
   return base::WrapUnique(new StringMatchTest(str, type, case_sensitive));
 }
 
-HeaderMatcher::StringMatchTest::~StringMatchTest() {}
+HeaderMatcher::StringMatchTest::~StringMatchTest() = default;
 
 bool HeaderMatcher::StringMatchTest::Matches(
     const std::string& str) const {
@@ -463,7 +463,7 @@ HeaderMatcher::HeaderMatchTest::HeaderMatchTest(
     : name_match_(std::move(name_match)),
       value_match_(std::move(value_match)) {}
 
-HeaderMatcher::HeaderMatchTest::~HeaderMatchTest() {}
+HeaderMatcher::HeaderMatchTest::~HeaderMatchTest() = default;
 
 // static
 std::unique_ptr<const HeaderMatcher::HeaderMatchTest>
@@ -554,7 +554,7 @@ WebRequestConditionAttributeRequestHeaders::
     : header_matcher_(std::move(header_matcher)), positive_(positive) {}
 
 WebRequestConditionAttributeRequestHeaders::
-~WebRequestConditionAttributeRequestHeaders() {}
+    ~WebRequestConditionAttributeRequestHeaders() = default;
 
 namespace {
 
@@ -648,7 +648,7 @@ WebRequestConditionAttributeResponseHeaders::
     : header_matcher_(std::move(header_matcher)), positive_(positive) {}
 
 WebRequestConditionAttributeResponseHeaders::
-~WebRequestConditionAttributeResponseHeaders() {}
+    ~WebRequestConditionAttributeResponseHeaders() = default;
 
 // static
 scoped_refptr<const WebRequestConditionAttribute>
@@ -725,7 +725,7 @@ WebRequestConditionAttributeThirdParty(bool match_third_party)
     : match_third_party_(match_third_party) {}
 
 WebRequestConditionAttributeThirdParty::
-~WebRequestConditionAttributeThirdParty() {}
+    ~WebRequestConditionAttributeThirdParty() = default;
 
 // static
 scoped_refptr<const WebRequestConditionAttribute>
@@ -794,8 +794,8 @@ WebRequestConditionAttributeStages::
 WebRequestConditionAttributeStages(int allowed_stages)
     : allowed_stages_(allowed_stages) {}
 
-WebRequestConditionAttributeStages::
-~WebRequestConditionAttributeStages() {}
+WebRequestConditionAttributeStages::~WebRequestConditionAttributeStages() =
+    default;
 
 namespace {
 

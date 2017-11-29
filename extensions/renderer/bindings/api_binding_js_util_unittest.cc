@@ -28,8 +28,8 @@ const char kHandleException[] =
 
 class APIBindingJSUtilUnittest : public APIBindingsSystemTest {
  protected:
-  APIBindingJSUtilUnittest() {}
-  ~APIBindingJSUtilUnittest() override {}
+  APIBindingJSUtilUnittest() = default;
+  ~APIBindingJSUtilUnittest() override = default;
 
   gin::Handle<APIBindingJSUtil> CreateUtil() {
     return gin::CreateHandle(

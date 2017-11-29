@@ -61,7 +61,7 @@ WebRequestData::WebRequestData(
       navigation_ui_data(navigation_ui_data),
       original_response_headers(original_response_headers) {}
 
-WebRequestData::~WebRequestData() {}
+WebRequestData::~WebRequestData() = default;
 
 //
 // WebRequestDataWithMatchIds
@@ -71,7 +71,7 @@ WebRequestDataWithMatchIds::WebRequestDataWithMatchIds(
     const WebRequestData* request_data)
     : data(request_data) {}
 
-WebRequestDataWithMatchIds::~WebRequestDataWithMatchIds() {}
+WebRequestDataWithMatchIds::~WebRequestDataWithMatchIds() = default;
 
 //
 // WebRequestCondition
@@ -91,7 +91,7 @@ WebRequestCondition::WebRequestCondition(
   }
 }
 
-WebRequestCondition::~WebRequestCondition() {}
+WebRequestCondition::~WebRequestCondition() = default;
 
 bool WebRequestCondition::IsFulfilled(
     const MatchData& request_data) const {

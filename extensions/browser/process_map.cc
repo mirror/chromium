@@ -21,11 +21,7 @@ struct ProcessMap::Item {
 
   // Purposely implicit constructor needed on older gcc's. See:
   // http://codereview.chromium.org/8769022/
-  explicit Item(const ProcessMap::Item& other)
-      : extension_id(other.extension_id),
-        process_id(other.process_id),
-        site_instance_id(other.site_instance_id) {
-  }
+  explicit Item(const ProcessMap::Item& other) = default;
 
   Item(const std::string& extension_id, int process_id,
        int site_instance_id)
@@ -34,8 +30,7 @@ struct ProcessMap::Item {
         site_instance_id(site_instance_id) {
   }
 
-  ~Item() {
-  }
+  ~Item() = default;
 
   bool operator<(const ProcessMap::Item& other) const {
     return std::tie(extension_id, process_id, site_instance_id) <
@@ -50,11 +45,9 @@ struct ProcessMap::Item {
 
 
 // ProcessMap
-ProcessMap::ProcessMap() {
-}
+ProcessMap::ProcessMap() = default;
 
-ProcessMap::~ProcessMap() {
-}
+ProcessMap::~ProcessMap() = default;
 
 // static
 ProcessMap* ProcessMap::Get(content::BrowserContext* browser_context) {

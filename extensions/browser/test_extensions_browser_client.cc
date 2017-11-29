@@ -35,7 +35,7 @@ TestExtensionsBrowserClient::TestExtensionsBrowserClient(
 TestExtensionsBrowserClient::TestExtensionsBrowserClient()
     : TestExtensionsBrowserClient(nullptr) {}
 
-TestExtensionsBrowserClient::~TestExtensionsBrowserClient() {}
+TestExtensionsBrowserClient::~TestExtensionsBrowserClient() = default;
 
 void TestExtensionsBrowserClient::SetUpdateClientFactory(
     const base::Callback<update_client::UpdateClient*(void)>& factory) {

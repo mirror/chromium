@@ -40,7 +40,7 @@ Feature::Availability Feature::IsAvailableToExtension(
 
 Feature::Feature() : no_parent_(false) {}
 
-Feature::~Feature() {}
+Feature::~Feature() = default;
 
 void Feature::set_name(base::StringPiece name) {
   name_ = name.as_string();

@@ -91,7 +91,7 @@ class TimedScriptInjectionCallback : public ScriptInjectionCallback {
                        base::Unretained(this))),
         injection_(injection),
         async_run_info_(async_run_info) {}
-  ~TimedScriptInjectionCallback() override {}
+  ~TimedScriptInjectionCallback() override = default;
 
   void OnCompleted(const std::vector<v8::Local<v8::Value>>& result) {
     if (injection_) {
@@ -131,7 +131,7 @@ class ScriptInjection::FrameWatcher : public content::RenderFrameObserver {
                ScriptInjection* injection)
       : content::RenderFrameObserver(render_frame),
         injection_(injection) {}
-  ~FrameWatcher() override {}
+  ~FrameWatcher() override = default;
 
  private:
   void FrameDetached() override { injection_->invalidate_render_frame(); }

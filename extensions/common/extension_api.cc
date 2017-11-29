@@ -153,8 +153,7 @@ void ExtensionAPI::LoadSchema(const std::string& name,
 ExtensionAPI::ExtensionAPI() : default_configuration_initialized_(false) {
 }
 
-ExtensionAPI::~ExtensionAPI() {
-}
+ExtensionAPI::~ExtensionAPI() = default;
 
 void ExtensionAPI::InitDefaultConfiguration() {
   const char* names[] = {"api", "manifest", "permission"};

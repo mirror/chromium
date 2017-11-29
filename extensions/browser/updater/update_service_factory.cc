@@ -31,8 +31,7 @@ UpdateServiceFactory::UpdateServiceFactory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-UpdateServiceFactory::~UpdateServiceFactory() {
-}
+UpdateServiceFactory::~UpdateServiceFactory() = default;
 
 KeyedService* UpdateServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

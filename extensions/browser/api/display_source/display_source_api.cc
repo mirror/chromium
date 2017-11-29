@@ -22,7 +22,7 @@ const char kErrorInvalidArguments[] = "Invalid arguments";
 // DisplaySourceGetAvailableSinksFunction
 
 DisplaySourceGetAvailableSinksFunction::
-    ~DisplaySourceGetAvailableSinksFunction() {}
+    ~DisplaySourceGetAvailableSinksFunction() = default;
 
 ExtensionFunction::ResponseAction
 DisplaySourceGetAvailableSinksFunction::Run() {
@@ -58,7 +58,7 @@ void DisplaySourceGetAvailableSinksFunction::OnGetSinksFailed(
 // DisplaySourceRequestAuthenticationFunction
 
 DisplaySourceRequestAuthenticationFunction::
-    ~DisplaySourceRequestAuthenticationFunction() {}
+    ~DisplaySourceRequestAuthenticationFunction() = default;
 
 ExtensionFunction::ResponseAction
 DisplaySourceRequestAuthenticationFunction::Run() {

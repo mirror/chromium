@@ -47,8 +47,7 @@ StreamContainer::StreamContainer(std::unique_ptr<content::StreamInfo> stream,
   DCHECK(stream_);
 }
 
-StreamContainer::~StreamContainer() {
-}
+StreamContainer::~StreamContainer() = default;
 
 void StreamContainer::Abort(const base::Closure& callback) {
   if (!stream_->handle) {
@@ -79,8 +78,7 @@ MimeHandlerViewGuest::MimeHandlerViewGuest(WebContents* owner_web_contents)
       embedder_frame_routing_id_(MSG_ROUTING_NONE),
       embedder_widget_routing_id_(MSG_ROUTING_NONE) {}
 
-MimeHandlerViewGuest::~MimeHandlerViewGuest() {
-}
+MimeHandlerViewGuest::~MimeHandlerViewGuest() = default;
 
 bool MimeHandlerViewGuest::CanUseCrossProcessFrames() {
   return false;

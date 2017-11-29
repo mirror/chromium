@@ -59,7 +59,7 @@ LogSourceAccessManager::LogSourceAccessManager(content::BrowserContext* context)
       tick_clock_(std::make_unique<base::DefaultTickClock>()),
       weak_factory_(this) {}
 
-LogSourceAccessManager::~LogSourceAccessManager() {}
+LogSourceAccessManager::~LogSourceAccessManager() = default;
 
 // static
 void LogSourceAccessManager::SetRateLimitingTimeoutForTesting(

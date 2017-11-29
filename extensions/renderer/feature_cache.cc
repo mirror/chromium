@@ -14,7 +14,7 @@
 
 namespace extensions {
 
-FeatureCache::FeatureCache() {}
+FeatureCache::FeatureCache() = default;
 FeatureCache::~FeatureCache() = default;
 
 FeatureCache::FeatureNameVector FeatureCache::GetAvailableFeatures(

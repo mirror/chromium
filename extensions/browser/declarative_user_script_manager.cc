@@ -18,8 +18,7 @@ DeclarativeUserScriptManager::DeclarativeUserScriptManager(
   extension_registry_observer_.Add(ExtensionRegistry::Get(browser_context));
 }
 
-DeclarativeUserScriptManager::~DeclarativeUserScriptManager() {
-}
+DeclarativeUserScriptManager::~DeclarativeUserScriptManager() = default;
 
 // static
 DeclarativeUserScriptManager* DeclarativeUserScriptManager::Get(

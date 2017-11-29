@@ -14,11 +14,9 @@ namespace extensions {
 
 namespace SendPacket = api::diagnostics::SendPacket;
 
-DiagnosticsSendPacketFunction::DiagnosticsSendPacketFunction() {
-}
+DiagnosticsSendPacketFunction::DiagnosticsSendPacketFunction() = default;
 
-DiagnosticsSendPacketFunction::~DiagnosticsSendPacketFunction() {
-}
+DiagnosticsSendPacketFunction::~DiagnosticsSendPacketFunction() = default;
 
 bool DiagnosticsSendPacketFunction::Prepare() {
   parameters_ = SendPacket::Params::Create(*args_);

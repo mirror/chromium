@@ -144,8 +144,7 @@ const char kErrorUnconfiguredNetwork[] = "Error.UnconfiguredNetwork";
 // NetworkingPrivateGetPropertiesFunction
 
 NetworkingPrivateGetPropertiesFunction::
-    ~NetworkingPrivateGetPropertiesFunction() {
-}
+    ~NetworkingPrivateGetPropertiesFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateGetPropertiesFunction::Run() {
@@ -179,8 +178,7 @@ void NetworkingPrivateGetPropertiesFunction::Failure(const std::string& error) {
 // NetworkingPrivateGetManagedPropertiesFunction
 
 NetworkingPrivateGetManagedPropertiesFunction::
-    ~NetworkingPrivateGetManagedPropertiesFunction() {
-}
+    ~NetworkingPrivateGetManagedPropertiesFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateGetManagedPropertiesFunction::Run() {
@@ -216,8 +214,8 @@ void NetworkingPrivateGetManagedPropertiesFunction::Failure(
 ////////////////////////////////////////////////////////////////////////////////
 // NetworkingPrivateGetStateFunction
 
-NetworkingPrivateGetStateFunction::~NetworkingPrivateGetStateFunction() {
-}
+NetworkingPrivateGetStateFunction::~NetworkingPrivateGetStateFunction() =
+    default;
 
 ExtensionFunction::ResponseAction NetworkingPrivateGetStateFunction::Run() {
   std::unique_ptr<private_api::GetState::Params> params =
@@ -249,8 +247,7 @@ void NetworkingPrivateGetStateFunction::Failure(const std::string& error) {
 // NetworkingPrivateSetPropertiesFunction
 
 NetworkingPrivateSetPropertiesFunction::
-    ~NetworkingPrivateSetPropertiesFunction() {
-}
+    ~NetworkingPrivateSetPropertiesFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateSetPropertiesFunction::Run() {
@@ -291,8 +288,7 @@ void NetworkingPrivateSetPropertiesFunction::Failure(const std::string& error) {
 // NetworkingPrivateCreateNetworkFunction
 
 NetworkingPrivateCreateNetworkFunction::
-    ~NetworkingPrivateCreateNetworkFunction() {
-}
+    ~NetworkingPrivateCreateNetworkFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateCreateNetworkFunction::Run() {
@@ -337,8 +333,7 @@ void NetworkingPrivateCreateNetworkFunction::Failure(const std::string& error) {
 // NetworkingPrivateForgetNetworkFunction
 
 NetworkingPrivateForgetNetworkFunction::
-    ~NetworkingPrivateForgetNetworkFunction() {
-}
+    ~NetworkingPrivateForgetNetworkFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateForgetNetworkFunction::Run() {
@@ -369,8 +364,8 @@ void NetworkingPrivateForgetNetworkFunction::Failure(const std::string& error) {
 ////////////////////////////////////////////////////////////////////////////////
 // NetworkingPrivateGetNetworksFunction
 
-NetworkingPrivateGetNetworksFunction::~NetworkingPrivateGetNetworksFunction() {
-}
+NetworkingPrivateGetNetworksFunction::~NetworkingPrivateGetNetworksFunction() =
+    default;
 
 ExtensionFunction::ResponseAction NetworkingPrivateGetNetworksFunction::Run() {
   std::unique_ptr<private_api::GetNetworks::Params> params =
@@ -409,8 +404,7 @@ void NetworkingPrivateGetNetworksFunction::Failure(const std::string& error) {
 // NetworkingPrivateGetVisibleNetworksFunction
 
 NetworkingPrivateGetVisibleNetworksFunction::
-    ~NetworkingPrivateGetVisibleNetworksFunction() {
-}
+    ~NetworkingPrivateGetVisibleNetworksFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateGetVisibleNetworksFunction::Run() {
@@ -457,8 +451,7 @@ void NetworkingPrivateGetVisibleNetworksFunction::Failure(
 // NetworkingPrivateGetEnabledNetworkTypesFunction
 
 NetworkingPrivateGetEnabledNetworkTypesFunction::
-    ~NetworkingPrivateGetEnabledNetworkTypesFunction() {
-}
+    ~NetworkingPrivateGetEnabledNetworkTypesFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateGetEnabledNetworkTypesFunction::Run() {
@@ -503,8 +496,7 @@ NetworkingPrivateGetEnabledNetworkTypesFunction::Run() {
 // NetworkingPrivateGetDeviceStatesFunction
 
 NetworkingPrivateGetDeviceStatesFunction::
-    ~NetworkingPrivateGetDeviceStatesFunction() {
-}
+    ~NetworkingPrivateGetDeviceStatesFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateGetDeviceStatesFunction::Run() {
@@ -523,8 +515,7 @@ NetworkingPrivateGetDeviceStatesFunction::Run() {
 // NetworkingPrivateEnableNetworkTypeFunction
 
 NetworkingPrivateEnableNetworkTypeFunction::
-    ~NetworkingPrivateEnableNetworkTypeFunction() {
-}
+    ~NetworkingPrivateEnableNetworkTypeFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateEnableNetworkTypeFunction::Run() {
@@ -543,8 +534,7 @@ NetworkingPrivateEnableNetworkTypeFunction::Run() {
 // NetworkingPrivateDisableNetworkTypeFunction
 
 NetworkingPrivateDisableNetworkTypeFunction::
-    ~NetworkingPrivateDisableNetworkTypeFunction() {
-}
+    ~NetworkingPrivateDisableNetworkTypeFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateDisableNetworkTypeFunction::Run() {
@@ -562,8 +552,7 @@ NetworkingPrivateDisableNetworkTypeFunction::Run() {
 // NetworkingPrivateRequestNetworkScanFunction
 
 NetworkingPrivateRequestNetworkScanFunction::
-    ~NetworkingPrivateRequestNetworkScanFunction() {
-}
+    ~NetworkingPrivateRequestNetworkScanFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateRequestNetworkScanFunction::Run() {
@@ -580,8 +569,7 @@ NetworkingPrivateRequestNetworkScanFunction::Run() {
 // NetworkingPrivateStartConnectFunction
 
 NetworkingPrivateStartConnectFunction::
-    ~NetworkingPrivateStartConnectFunction() {
-}
+    ~NetworkingPrivateStartConnectFunction() = default;
 
 ExtensionFunction::ResponseAction NetworkingPrivateStartConnectFunction::Run() {
   std::unique_ptr<private_api::StartConnect::Params> params =
@@ -624,8 +612,7 @@ void NetworkingPrivateStartConnectFunction::Failure(const std::string& guid,
 // NetworkingPrivateStartDisconnectFunction
 
 NetworkingPrivateStartDisconnectFunction::
-    ~NetworkingPrivateStartDisconnectFunction() {
-}
+    ~NetworkingPrivateStartDisconnectFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateStartDisconnectFunction::Run() {
@@ -657,8 +644,7 @@ void NetworkingPrivateStartDisconnectFunction::Failure(
 // NetworkingPrivateStartActivateFunction
 
 NetworkingPrivateStartActivateFunction::
-    ~NetworkingPrivateStartActivateFunction() {
-}
+    ~NetworkingPrivateStartActivateFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateStartActivateFunction::Run() {
@@ -694,8 +680,7 @@ void NetworkingPrivateStartActivateFunction::Failure(const std::string& error) {
 // NetworkingPrivateVerifyDestinationFunction
 
 NetworkingPrivateVerifyDestinationFunction::
-    ~NetworkingPrivateVerifyDestinationFunction() {
-}
+    ~NetworkingPrivateVerifyDestinationFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateVerifyDestinationFunction::Run() {
@@ -741,8 +726,7 @@ void NetworkingPrivateVerifyDestinationFunction::Failure(
 // NetworkingPrivateVerifyAndEncryptCredentialsFunction
 
 NetworkingPrivateVerifyAndEncryptCredentialsFunction::
-    ~NetworkingPrivateVerifyAndEncryptCredentialsFunction() {
-}
+    ~NetworkingPrivateVerifyAndEncryptCredentialsFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateVerifyAndEncryptCredentialsFunction::Run() {
@@ -790,8 +774,7 @@ void NetworkingPrivateVerifyAndEncryptCredentialsFunction::Failure(
 // NetworkingPrivateVerifyAndEncryptDataFunction
 
 NetworkingPrivateVerifyAndEncryptDataFunction::
-    ~NetworkingPrivateVerifyAndEncryptDataFunction() {
-}
+    ~NetworkingPrivateVerifyAndEncryptDataFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateVerifyAndEncryptDataFunction::Run() {
@@ -838,8 +821,7 @@ void NetworkingPrivateVerifyAndEncryptDataFunction::Failure(
 // NetworkingPrivateSetWifiTDLSEnabledStateFunction
 
 NetworkingPrivateSetWifiTDLSEnabledStateFunction::
-    ~NetworkingPrivateSetWifiTDLSEnabledStateFunction() {
-}
+    ~NetworkingPrivateSetWifiTDLSEnabledStateFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateSetWifiTDLSEnabledStateFunction::Run() {
@@ -883,8 +865,7 @@ void NetworkingPrivateSetWifiTDLSEnabledStateFunction::Failure(
 // NetworkingPrivateGetWifiTDLSStatusFunction
 
 NetworkingPrivateGetWifiTDLSStatusFunction::
-    ~NetworkingPrivateGetWifiTDLSStatusFunction() {
-}
+    ~NetworkingPrivateGetWifiTDLSStatusFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateGetWifiTDLSStatusFunction::Run() {
@@ -928,8 +909,7 @@ void NetworkingPrivateGetWifiTDLSStatusFunction::Failure(
 // NetworkingPrivateGetCaptivePortalStatusFunction
 
 NetworkingPrivateGetCaptivePortalStatusFunction::
-    ~NetworkingPrivateGetCaptivePortalStatusFunction() {
-}
+    ~NetworkingPrivateGetCaptivePortalStatusFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateGetCaptivePortalStatusFunction::Run() {
@@ -965,7 +945,7 @@ void NetworkingPrivateGetCaptivePortalStatusFunction::Failure(
 // NetworkingPrivateUnlockCellularSimFunction
 
 NetworkingPrivateUnlockCellularSimFunction::
-    ~NetworkingPrivateUnlockCellularSimFunction() {}
+    ~NetworkingPrivateUnlockCellularSimFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateUnlockCellularSimFunction::Run() {
@@ -1004,7 +984,7 @@ void NetworkingPrivateUnlockCellularSimFunction::Failure(
 // NetworkingPrivateSetCellularSimStateFunction
 
 NetworkingPrivateSetCellularSimStateFunction::
-    ~NetworkingPrivateSetCellularSimStateFunction() {}
+    ~NetworkingPrivateSetCellularSimStateFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateSetCellularSimStateFunction::Run() {
@@ -1045,7 +1025,7 @@ void NetworkingPrivateSetCellularSimStateFunction::Failure(
 // NetworkingPrivateSelectCellularMobileNetworkFunction
 
 NetworkingPrivateSelectCellularMobileNetworkFunction::
-    ~NetworkingPrivateSelectCellularMobileNetworkFunction() {}
+    ~NetworkingPrivateSelectCellularMobileNetworkFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateSelectCellularMobileNetworkFunction::Run() {
@@ -1086,7 +1066,7 @@ void NetworkingPrivateSelectCellularMobileNetworkFunction::Failure(
 // NetworkingPrivateGetGlobalPolicyFunction
 
 NetworkingPrivateGetGlobalPolicyFunction::
-    ~NetworkingPrivateGetGlobalPolicyFunction() {}
+    ~NetworkingPrivateGetGlobalPolicyFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateGetGlobalPolicyFunction::Run() {
@@ -1106,7 +1086,7 @@ NetworkingPrivateGetGlobalPolicyFunction::Run() {
 // NetworkingPrivateGetCertificateListsFunction
 
 NetworkingPrivateGetCertificateListsFunction::
-    ~NetworkingPrivateGetCertificateListsFunction() {}
+    ~NetworkingPrivateGetCertificateListsFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingPrivateGetCertificateListsFunction::Run() {

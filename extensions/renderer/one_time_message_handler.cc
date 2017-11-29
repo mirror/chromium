@@ -110,7 +110,7 @@ void OneTimeMessageResponseHelper(
 OneTimeMessageHandler::OneTimeMessageHandler(
     NativeExtensionBindingsSystem* bindings_system)
     : bindings_system_(bindings_system), weak_factory_(this) {}
-OneTimeMessageHandler::~OneTimeMessageHandler() {}
+OneTimeMessageHandler::~OneTimeMessageHandler() = default;
 
 bool OneTimeMessageHandler::HasPort(ScriptContext* script_context,
                                     const PortId& port_id) {

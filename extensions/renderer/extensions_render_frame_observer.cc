@@ -86,8 +86,7 @@ ExtensionsRenderFrameObserver::ExtensionsRenderFrameObserver(
                  base::Unretained(this)));
 }
 
-ExtensionsRenderFrameObserver::~ExtensionsRenderFrameObserver() {
-}
+ExtensionsRenderFrameObserver::~ExtensionsRenderFrameObserver() = default;
 
 void ExtensionsRenderFrameObserver::BindAppWindowRequest(
     mojom::AppWindowRequest request) {

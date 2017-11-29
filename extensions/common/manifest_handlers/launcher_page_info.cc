@@ -13,11 +13,9 @@
 
 namespace extensions {
 
-LauncherPageHandler::LauncherPageHandler() {
-}
+LauncherPageHandler::LauncherPageHandler() = default;
 
-LauncherPageHandler::~LauncherPageHandler() {
-}
+LauncherPageHandler::~LauncherPageHandler() = default;
 
 // static
 LauncherPageInfo* LauncherPageHandler::GetInfo(const Extension* extension) {

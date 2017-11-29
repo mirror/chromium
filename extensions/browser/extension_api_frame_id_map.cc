@@ -67,7 +67,7 @@ ExtensionApiFrameIdMap::FrameDataCallbacks::FrameDataCallbacks()
 ExtensionApiFrameIdMap::FrameDataCallbacks::FrameDataCallbacks(
     const FrameDataCallbacks& other) = default;
 
-ExtensionApiFrameIdMap::FrameDataCallbacks::~FrameDataCallbacks() {}
+ExtensionApiFrameIdMap::FrameDataCallbacks::~FrameDataCallbacks() = default;
 
 bool ExtensionApiFrameIdMap::RenderFrameIdKey::operator<(
     const RenderFrameIdKey& other) const {
@@ -90,7 +90,7 @@ ExtensionApiFrameIdMap::ExtensionApiFrameIdMap() {
   }
 }
 
-ExtensionApiFrameIdMap::~ExtensionApiFrameIdMap() {}
+ExtensionApiFrameIdMap::~ExtensionApiFrameIdMap() = default;
 
 // static
 ExtensionApiFrameIdMap* ExtensionApiFrameIdMap::Get() {

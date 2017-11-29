@@ -31,11 +31,9 @@ ManifestHandlerRegistry* GetRegistry() {
 
 }  // namespace
 
-ManifestHandler::ManifestHandler() {
-}
+ManifestHandler::ManifestHandler() = default;
 
-ManifestHandler::~ManifestHandler() {
-}
+ManifestHandler::~ManifestHandler() = default;
 
 bool ManifestHandler::Validate(const Extension* extension,
                                std::string* error,
@@ -116,8 +114,7 @@ const std::vector<std::string> ManifestHandler::SingleKey(
 ManifestHandlerRegistry::ManifestHandlerRegistry() : is_finalized_(false) {
 }
 
-ManifestHandlerRegistry::~ManifestHandlerRegistry() {
-}
+ManifestHandlerRegistry::~ManifestHandlerRegistry() = default;
 
 void ManifestHandlerRegistry::Finalize() {
   CHECK(!is_finalized_);

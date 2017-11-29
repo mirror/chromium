@@ -26,7 +26,7 @@ ExtensionResource::ExtensionResource(const std::string& extension_id,
 
 ExtensionResource::ExtensionResource(const ExtensionResource& other) = default;
 
-ExtensionResource::~ExtensionResource() {}
+ExtensionResource::~ExtensionResource() = default;
 
 void ExtensionResource::set_follow_symlinks_anywhere() {
   follow_symlinks_anywhere_ = true;

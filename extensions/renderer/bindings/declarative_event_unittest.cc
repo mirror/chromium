@@ -57,7 +57,7 @@ class DeclarativeEventTest : public APIBindingTest {
  public:
   DeclarativeEventTest()
       : type_refs_(APITypeReferenceMap::InitializeTypeCallback()) {}
-  ~DeclarativeEventTest() override {}
+  ~DeclarativeEventTest() override = default;
 
   void OnRequest(std::unique_ptr<APIRequestHandler::Request> request,
                  v8::Local<v8::Context> context) {
@@ -176,8 +176,8 @@ TEST_F(DeclarativeEventTest, TestRulesSchema) {
 
 class DeclarativeEventWithSchemaTest : public APIBindingsSystemTest {
  protected:
-  DeclarativeEventWithSchemaTest() {}
-  ~DeclarativeEventWithSchemaTest() override {}
+  DeclarativeEventWithSchemaTest() = default;
+  ~DeclarativeEventWithSchemaTest() override = default;
 
   std::vector<FakeSpec> GetAPIs() override {
     // events.removeRules and events.getRules are specified in the events.json

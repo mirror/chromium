@@ -32,8 +32,8 @@ namespace {
 
 class MockEventDelegate : public IdleManager::EventDelegate {
  public:
-  MockEventDelegate() {}
-  virtual ~MockEventDelegate() {}
+  MockEventDelegate() = default;
+  virtual ~MockEventDelegate() = default;
   MOCK_METHOD2(OnStateChanged, void(const std::string&, ui::IdleState));
   virtual void RegisterObserver(EventRouter::Observer* observer) {}
   virtual void UnregisterObserver(EventRouter::Observer* observer) {}
@@ -58,8 +58,7 @@ class TestIdleProvider : public IdleManager::IdleTimeProvider {
 TestIdleProvider::TestIdleProvider() : idle_time_(0), locked_(false) {
 }
 
-TestIdleProvider::~TestIdleProvider() {
-}
+TestIdleProvider::~TestIdleProvider() = default;
 
 void TestIdleProvider::CalculateIdleState(int idle_threshold,
                                           ui::IdleCallback notify) {

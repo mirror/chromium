@@ -115,7 +115,7 @@ APIEventHandler::APIEventHandler(
       call_js_sync_(call_js_sync),
       listeners_changed_(listeners_changed),
       exception_handler_(exception_handler) {}
-APIEventHandler::~APIEventHandler() {}
+APIEventHandler::~APIEventHandler() = default;
 
 v8::Local<v8::Object> APIEventHandler::CreateEventInstance(
     const std::string& event_name,

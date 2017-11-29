@@ -57,11 +57,9 @@ std::vector<T> Sorted(const std::vector<T>& in) {
 
 }  // namespace
 
-ExternallyConnectableHandler::ExternallyConnectableHandler() {
-}
+ExternallyConnectableHandler::ExternallyConnectableHandler() = default;
 
-ExternallyConnectableHandler::~ExternallyConnectableHandler() {
-}
+ExternallyConnectableHandler::~ExternallyConnectableHandler() = default;
 
 bool ExternallyConnectableHandler::Parse(Extension* extension,
                                          base::string16* error) {
@@ -211,8 +209,7 @@ std::unique_ptr<ExternallyConnectableInfo> ExternallyConnectableInfo::FromValue(
       matches, ids, all_ids, accepts_tls_channel_id));
 }
 
-ExternallyConnectableInfo::~ExternallyConnectableInfo() {
-}
+ExternallyConnectableInfo::~ExternallyConnectableInfo() = default;
 
 ExternallyConnectableInfo::ExternallyConnectableInfo(
     const URLPatternSet& matches,

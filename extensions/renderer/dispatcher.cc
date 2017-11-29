@@ -273,8 +273,7 @@ Dispatcher::Dispatcher(std::unique_ptr<DispatcherDelegate> delegate)
   EnableCustomElementWhiteList();
 }
 
-Dispatcher::~Dispatcher() {
-}
+Dispatcher::~Dispatcher() = default;
 
 void Dispatcher::OnRenderFrameCreated(content::RenderFrame* render_frame) {
   script_injection_manager_->OnRenderFrameCreated(render_frame);

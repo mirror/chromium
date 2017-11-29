@@ -54,7 +54,7 @@ constexpr char kSendNativeMessage[] = "runtime.sendNativeMessage";
 RuntimeHooksDelegate::RuntimeHooksDelegate(
     NativeRendererMessagingService* messaging_service)
     : messaging_service_(messaging_service) {}
-RuntimeHooksDelegate::~RuntimeHooksDelegate() {}
+RuntimeHooksDelegate::~RuntimeHooksDelegate() = default;
 
 RequestResult RuntimeHooksDelegate::HandleRequest(
     const std::string& method_name,

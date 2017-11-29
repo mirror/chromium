@@ -24,8 +24,8 @@ using error_test_util::CreateNewManifestError;
 
 class ErrorMapUnitTest : public testing::Test {
  public:
-  ErrorMapUnitTest() { }
-  ~ErrorMapUnitTest() override {}
+  ErrorMapUnitTest() = default;
+  ~ErrorMapUnitTest() override = default;
 
   void SetUp() override { testing::Test::SetUp(); }
 

@@ -39,11 +39,9 @@ bool GetNaClPluginPath(base::FilePath* path) {
 
 }  // namespace
 
-ShellContentClient::ShellContentClient() {
-}
+ShellContentClient::ShellContentClient() = default;
 
-ShellContentClient::~ShellContentClient() {
-}
+ShellContentClient::~ShellContentClient() = default;
 
 void ShellContentClient::AddPepperPlugins(
     std::vector<content::PepperPluginInfo>* plugins) {

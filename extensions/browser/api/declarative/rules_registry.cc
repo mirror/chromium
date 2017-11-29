@@ -315,8 +315,7 @@ void RulesRegistry::ReportInternalError(const std::string& extension_id,
                                               std::move(error_instance));
 }
 
-RulesRegistry::~RulesRegistry() {
-}
+RulesRegistry::~RulesRegistry() = default;
 
 void RulesRegistry::MarkReady(base::Time storage_init_time) {
   DCHECK_CURRENTLY_ON(owner_thread());

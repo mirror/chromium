@@ -28,7 +28,7 @@ using content::BrowserThread;
 SettingsFunction::SettingsFunction()
     : settings_namespace_(settings_namespace::INVALID) {}
 
-SettingsFunction::~SettingsFunction() {}
+SettingsFunction::~SettingsFunction() = default;
 
 bool SettingsFunction::ShouldSkipQuotaLimiting() const {
   // Only apply quota if this is for sync storage.

@@ -16,7 +16,7 @@ UninstallPingSender::UninstallPingSender(ExtensionRegistry* registry,
   observer_.Add(registry);
 }
 
-UninstallPingSender::~UninstallPingSender() {}
+UninstallPingSender::~UninstallPingSender() = default;
 
 void UninstallPingSender::OnExtensionUninstalled(
     content::BrowserContext* browser_context,

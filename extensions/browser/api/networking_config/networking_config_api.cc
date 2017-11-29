@@ -26,8 +26,7 @@ const char kUnsupportedNetworkType[] = "Unsupported network type.";
 }  // namespace
 
 NetworkingConfigSetNetworkFilterFunction::
-    NetworkingConfigSetNetworkFilterFunction() {
-}
+    NetworkingConfigSetNetworkFilterFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingConfigSetNetworkFilterFunction::Run() {
@@ -67,12 +66,10 @@ NetworkingConfigSetNetworkFilterFunction::Run() {
 }
 
 NetworkingConfigSetNetworkFilterFunction::
-    ~NetworkingConfigSetNetworkFilterFunction() {
-}
+    ~NetworkingConfigSetNetworkFilterFunction() = default;
 
 NetworkingConfigFinishAuthenticationFunction::
-    NetworkingConfigFinishAuthenticationFunction() {
-}
+    NetworkingConfigFinishAuthenticationFunction() = default;
 
 ExtensionFunction::ResponseAction
 NetworkingConfigFinishAuthenticationFunction::Run() {
@@ -121,7 +118,6 @@ NetworkingConfigFinishAuthenticationFunction::Run() {
 }
 
 NetworkingConfigFinishAuthenticationFunction::
-    ~NetworkingConfigFinishAuthenticationFunction() {
-}
+    ~NetworkingConfigFinishAuthenticationFunction() = default;
 
 }  // namespace extensions

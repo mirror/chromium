@@ -19,8 +19,7 @@ ShellNativeAppWindow::ShellNativeAppWindow(
     : app_window_(app_window) {
 }
 
-ShellNativeAppWindow::~ShellNativeAppWindow() {
-}
+ShellNativeAppWindow::~ShellNativeAppWindow() = default;
 
 bool ShellNativeAppWindow::IsMaximized() const {
   return false;

@@ -32,8 +32,7 @@ ShellURLRequestContextGetter::ShellURLRequestContextGetter(
       browser_context_(browser_context),
       extension_info_map_(extension_info_map) {}
 
-ShellURLRequestContextGetter::~ShellURLRequestContextGetter() {
-}
+ShellURLRequestContextGetter::~ShellURLRequestContextGetter() = default;
 
 std::unique_ptr<net::NetworkDelegate>
 ShellURLRequestContextGetter::CreateNetworkDelegate() {

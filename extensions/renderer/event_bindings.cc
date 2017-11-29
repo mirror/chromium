@@ -106,7 +106,7 @@ EventBindings::EventBindings(ScriptContext* context,
       base::Bind(&EventBindings::OnInvalidated, base::Unretained(this)));
 }
 
-EventBindings::~EventBindings() {}
+EventBindings::~EventBindings() = default;
 
 // static
 void EventBindings::DispatchEventInContext(

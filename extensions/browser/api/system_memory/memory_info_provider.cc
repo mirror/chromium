@@ -14,11 +14,9 @@ using api::system_memory::MemoryInfo;
 base::LazyInstance<scoped_refptr<MemoryInfoProvider>>::DestructorAtExit
     MemoryInfoProvider::provider_ = LAZY_INSTANCE_INITIALIZER;
 
-MemoryInfoProvider::MemoryInfoProvider() {
-}
+MemoryInfoProvider::MemoryInfoProvider() = default;
 
-MemoryInfoProvider::~MemoryInfoProvider() {
-}
+MemoryInfoProvider::~MemoryInfoProvider() = default;
 
 void MemoryInfoProvider::InitializeForTesting(
     scoped_refptr<MemoryInfoProvider> provider) {

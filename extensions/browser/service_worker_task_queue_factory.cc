@@ -28,7 +28,7 @@ ServiceWorkerTaskQueueFactory::ServiceWorkerTaskQueueFactory()
           "ServiceWorkerTaskQueue",
           BrowserContextDependencyManager::GetInstance()) {}
 
-ServiceWorkerTaskQueueFactory::~ServiceWorkerTaskQueueFactory() {}
+ServiceWorkerTaskQueueFactory::~ServiceWorkerTaskQueueFactory() = default;
 
 KeyedService* ServiceWorkerTaskQueueFactory::BuildServiceInstanceFor(
     BrowserContext* context) const {

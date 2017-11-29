@@ -40,8 +40,7 @@ ResourceBundleSourceMap::ResourceBundleSourceMap(
     : resource_bundle_(resource_bundle) {
 }
 
-ResourceBundleSourceMap::~ResourceBundleSourceMap() {
-}
+ResourceBundleSourceMap::~ResourceBundleSourceMap() = default;
 
 void ResourceBundleSourceMap::RegisterSource(const char* const name,
                                              int resource_id,

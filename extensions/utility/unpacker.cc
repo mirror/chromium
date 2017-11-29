@@ -120,8 +120,7 @@ Unpacker::Unpacker(const base::FilePath& working_dir,
   internal_data_.reset(new InternalData());
 }
 
-Unpacker::~Unpacker() {
-}
+Unpacker::~Unpacker() = default;
 
 // static
 bool Unpacker::ShouldExtractFile(bool is_theme,

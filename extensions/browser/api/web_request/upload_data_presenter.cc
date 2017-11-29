@@ -50,13 +50,13 @@ void AppendKeyValuePair(const char* key,
 
 }  // namespace subtle
 
-UploadDataPresenter::~UploadDataPresenter() {}
+UploadDataPresenter::~UploadDataPresenter() = default;
 
 RawDataPresenter::RawDataPresenter()
   : success_(true),
     list_(new base::ListValue) {
 }
-RawDataPresenter::~RawDataPresenter() {}
+RawDataPresenter::~RawDataPresenter() = default;
 
 void RawDataPresenter::FeedNext(const net::UploadElementReader& reader) {
   if (!success_)
@@ -104,7 +104,7 @@ ParsedDataPresenter::ParsedDataPresenter(const net::URLRequest& request)
     dictionary_(success_ ? new base::DictionaryValue() : NULL) {
 }
 
-ParsedDataPresenter::~ParsedDataPresenter() {}
+ParsedDataPresenter::~ParsedDataPresenter() = default;
 
 void ParsedDataPresenter::FeedNext(const net::UploadElementReader& reader) {
   if (!success_)

@@ -51,6 +51,6 @@ void TestRulesRegistry::SetResult(const std::string& result) {
   result_ = result;
 }
 
-TestRulesRegistry::~TestRulesRegistry() {}
+TestRulesRegistry::~TestRulesRegistry() = default;
 
 }  // namespace extensions

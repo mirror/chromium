@@ -403,8 +403,7 @@ UsbPermissionCheckingFunction::UsbPermissionCheckingFunction()
     : device_permissions_manager_(nullptr) {
 }
 
-UsbPermissionCheckingFunction::~UsbPermissionCheckingFunction() {
-}
+UsbPermissionCheckingFunction::~UsbPermissionCheckingFunction() = default;
 
 bool UsbPermissionCheckingFunction::HasDevicePermission(
     scoped_refptr<UsbDevice> device) {
@@ -439,11 +438,9 @@ void UsbPermissionCheckingFunction::RecordDeviceLastUsed() {
   }
 }
 
-UsbConnectionFunction::UsbConnectionFunction() {
-}
+UsbConnectionFunction::UsbConnectionFunction() = default;
 
-UsbConnectionFunction::~UsbConnectionFunction() {
-}
+UsbConnectionFunction::~UsbConnectionFunction() = default;
 
 scoped_refptr<device::UsbDeviceHandle> UsbConnectionFunction::GetDeviceHandle(
     const extensions::api::usb::ConnectionHandle& handle) {
@@ -468,11 +465,9 @@ void UsbConnectionFunction::ReleaseDeviceHandle(
   manager->Remove(extension_id(), handle.handle);
 }
 
-UsbTransferFunction::UsbTransferFunction() {
-}
+UsbTransferFunction::UsbTransferFunction() = default;
 
-UsbTransferFunction::~UsbTransferFunction() {
-}
+UsbTransferFunction::~UsbTransferFunction() = default;
 
 void UsbTransferFunction::OnCompleted(UsbTransferStatus status,
                                       scoped_refptr<net::IOBuffer> data,
@@ -501,11 +496,9 @@ void UsbTransferFunction::OnCompleted(UsbTransferStatus status,
   }
 }
 
-UsbFindDevicesFunction::UsbFindDevicesFunction() {
-}
+UsbFindDevicesFunction::UsbFindDevicesFunction() = default;
 
-UsbFindDevicesFunction::~UsbFindDevicesFunction() {
-}
+UsbFindDevicesFunction::~UsbFindDevicesFunction() = default;
 
 ExtensionFunction::ResponseAction UsbFindDevicesFunction::Run() {
   std::unique_ptr<extensions::api::usb::FindDevices::Params> parameters =
@@ -592,11 +585,9 @@ void UsbFindDevicesFunction::OpenComplete() {
   Respond(OneArgument(std::move(result_)));
 }
 
-UsbGetDevicesFunction::UsbGetDevicesFunction() {
-}
+UsbGetDevicesFunction::UsbGetDevicesFunction() = default;
 
-UsbGetDevicesFunction::~UsbGetDevicesFunction() {
-}
+UsbGetDevicesFunction::~UsbGetDevicesFunction() = default;
 
 ExtensionFunction::ResponseAction UsbGetDevicesFunction::Run() {
   std::unique_ptr<extensions::api::usb::GetDevices::Params> parameters =
@@ -645,11 +636,11 @@ void UsbGetDevicesFunction::OnGetDevicesComplete(
   Respond(OneArgument(std::move(result)));
 }
 
-UsbGetUserSelectedDevicesFunction::UsbGetUserSelectedDevicesFunction() {
-}
+UsbGetUserSelectedDevicesFunction::UsbGetUserSelectedDevicesFunction() =
+    default;
 
-UsbGetUserSelectedDevicesFunction::~UsbGetUserSelectedDevicesFunction() {
-}
+UsbGetUserSelectedDevicesFunction::~UsbGetUserSelectedDevicesFunction() =
+    default;
 
 ExtensionFunction::ResponseAction UsbGetUserSelectedDevicesFunction::Run() {
   std::unique_ptr<extensions::api::usb::GetUserSelectedDevices::Params>
@@ -697,9 +688,9 @@ void UsbGetUserSelectedDevicesFunction::OnDevicesChosen(
   Respond(OneArgument(std::move(result)));
 }
 
-UsbGetConfigurationsFunction::UsbGetConfigurationsFunction() {}
+UsbGetConfigurationsFunction::UsbGetConfigurationsFunction() = default;
 
-UsbGetConfigurationsFunction::~UsbGetConfigurationsFunction() {}
+UsbGetConfigurationsFunction::~UsbGetConfigurationsFunction() = default;
 
 ExtensionFunction::ResponseAction UsbGetConfigurationsFunction::Run() {
   std::unique_ptr<extensions::api::usb::GetConfigurations::Params> parameters =
@@ -741,11 +732,9 @@ ExtensionFunction::ResponseAction UsbGetConfigurationsFunction::Run() {
   return RespondNow(OneArgument(std::move(configs)));
 }
 
-UsbRequestAccessFunction::UsbRequestAccessFunction() {
-}
+UsbRequestAccessFunction::UsbRequestAccessFunction() = default;
 
-UsbRequestAccessFunction::~UsbRequestAccessFunction() {
-}
+UsbRequestAccessFunction::~UsbRequestAccessFunction() = default;
 
 ExtensionFunction::ResponseAction UsbRequestAccessFunction::Run() {
   std::unique_ptr<extensions::api::usb::RequestAccess::Params> parameters =
@@ -754,11 +743,9 @@ ExtensionFunction::ResponseAction UsbRequestAccessFunction::Run() {
   return RespondNow(OneArgument(std::make_unique<base::Value>(true)));
 }
 
-UsbOpenDeviceFunction::UsbOpenDeviceFunction() {
-}
+UsbOpenDeviceFunction::UsbOpenDeviceFunction() = default;
 
-UsbOpenDeviceFunction::~UsbOpenDeviceFunction() {
-}
+UsbOpenDeviceFunction::~UsbOpenDeviceFunction() = default;
 
 ExtensionFunction::ResponseAction UsbOpenDeviceFunction::Run() {
   std::unique_ptr<extensions::api::usb::OpenDevice::Params> parameters =
@@ -808,11 +795,9 @@ void UsbOpenDeviceFunction::OnDeviceOpened(
       device->vendor_id(), device->product_id())));
 }
 
-UsbSetConfigurationFunction::UsbSetConfigurationFunction() {
-}
+UsbSetConfigurationFunction::UsbSetConfigurationFunction() = default;
 
-UsbSetConfigurationFunction::~UsbSetConfigurationFunction() {
-}
+UsbSetConfigurationFunction::~UsbSetConfigurationFunction() = default;
 
 ExtensionFunction::ResponseAction UsbSetConfigurationFunction::Run() {
   std::unique_ptr<extensions::api::usb::SetConfiguration::Params> parameters =
@@ -839,11 +824,9 @@ void UsbSetConfigurationFunction::OnComplete(bool success) {
   }
 }
 
-UsbGetConfigurationFunction::UsbGetConfigurationFunction() {
-}
+UsbGetConfigurationFunction::UsbGetConfigurationFunction() = default;
 
-UsbGetConfigurationFunction::~UsbGetConfigurationFunction() {
-}
+UsbGetConfigurationFunction::~UsbGetConfigurationFunction() = default;
 
 ExtensionFunction::ResponseAction UsbGetConfigurationFunction::Run() {
   std::unique_ptr<extensions::api::usb::GetConfiguration::Params> parameters =
@@ -867,11 +850,9 @@ ExtensionFunction::ResponseAction UsbGetConfigurationFunction::Run() {
   }
 }
 
-UsbListInterfacesFunction::UsbListInterfacesFunction() {
-}
+UsbListInterfacesFunction::UsbListInterfacesFunction() = default;
 
-UsbListInterfacesFunction::~UsbListInterfacesFunction() {
-}
+UsbListInterfacesFunction::~UsbListInterfacesFunction() = default;
 
 ExtensionFunction::ResponseAction UsbListInterfacesFunction::Run() {
   std::unique_ptr<extensions::api::usb::ListInterfaces::Params> parameters =
@@ -900,11 +881,9 @@ ExtensionFunction::ResponseAction UsbListInterfacesFunction::Run() {
   }
 }
 
-UsbCloseDeviceFunction::UsbCloseDeviceFunction() {
-}
+UsbCloseDeviceFunction::UsbCloseDeviceFunction() = default;
 
-UsbCloseDeviceFunction::~UsbCloseDeviceFunction() {
-}
+UsbCloseDeviceFunction::~UsbCloseDeviceFunction() = default;
 
 ExtensionFunction::ResponseAction UsbCloseDeviceFunction::Run() {
   std::unique_ptr<extensions::api::usb::CloseDevice::Params> parameters =
@@ -922,11 +901,9 @@ ExtensionFunction::ResponseAction UsbCloseDeviceFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-UsbClaimInterfaceFunction::UsbClaimInterfaceFunction() {
-}
+UsbClaimInterfaceFunction::UsbClaimInterfaceFunction() = default;
 
-UsbClaimInterfaceFunction::~UsbClaimInterfaceFunction() {
-}
+UsbClaimInterfaceFunction::~UsbClaimInterfaceFunction() = default;
 
 ExtensionFunction::ResponseAction UsbClaimInterfaceFunction::Run() {
   std::unique_ptr<extensions::api::usb::ClaimInterface::Params> parameters =
@@ -953,11 +930,9 @@ void UsbClaimInterfaceFunction::OnComplete(bool success) {
   }
 }
 
-UsbReleaseInterfaceFunction::UsbReleaseInterfaceFunction() {
-}
+UsbReleaseInterfaceFunction::UsbReleaseInterfaceFunction() = default;
 
-UsbReleaseInterfaceFunction::~UsbReleaseInterfaceFunction() {
-}
+UsbReleaseInterfaceFunction::~UsbReleaseInterfaceFunction() = default;
 
 ExtensionFunction::ResponseAction UsbReleaseInterfaceFunction::Run() {
   std::unique_ptr<extensions::api::usb::ReleaseInterface::Params> parameters =
@@ -984,12 +959,10 @@ void UsbReleaseInterfaceFunction::OnComplete(bool success) {
 }
 
 UsbSetInterfaceAlternateSettingFunction::
-    UsbSetInterfaceAlternateSettingFunction() {
-}
+    UsbSetInterfaceAlternateSettingFunction() = default;
 
 UsbSetInterfaceAlternateSettingFunction::
-    ~UsbSetInterfaceAlternateSettingFunction() {
-}
+    ~UsbSetInterfaceAlternateSettingFunction() = default;
 
 ExtensionFunction::ResponseAction
 UsbSetInterfaceAlternateSettingFunction::Run() {
@@ -1017,11 +990,9 @@ void UsbSetInterfaceAlternateSettingFunction::OnComplete(bool success) {
   }
 }
 
-UsbControlTransferFunction::UsbControlTransferFunction() {
-}
+UsbControlTransferFunction::UsbControlTransferFunction() = default;
 
-UsbControlTransferFunction::~UsbControlTransferFunction() {
-}
+UsbControlTransferFunction::~UsbControlTransferFunction() = default;
 
 ExtensionFunction::ResponseAction UsbControlTransferFunction::Run() {
   std::unique_ptr<extensions::api::usb::ControlTransfer::Params> parameters =
@@ -1074,11 +1045,9 @@ ExtensionFunction::ResponseAction UsbControlTransferFunction::Run() {
   return RespondLater();
 }
 
-UsbBulkTransferFunction::UsbBulkTransferFunction() {
-}
+UsbBulkTransferFunction::UsbBulkTransferFunction() = default;
 
-UsbBulkTransferFunction::~UsbBulkTransferFunction() {
-}
+UsbBulkTransferFunction::~UsbBulkTransferFunction() = default;
 
 ExtensionFunction::ResponseAction UsbBulkTransferFunction::Run() {
   std::unique_ptr<extensions::api::usb::BulkTransfer::Params> parameters =
@@ -1120,11 +1089,9 @@ ExtensionFunction::ResponseAction UsbBulkTransferFunction::Run() {
   return RespondLater();
 }
 
-UsbInterruptTransferFunction::UsbInterruptTransferFunction() {
-}
+UsbInterruptTransferFunction::UsbInterruptTransferFunction() = default;
 
-UsbInterruptTransferFunction::~UsbInterruptTransferFunction() {
-}
+UsbInterruptTransferFunction::~UsbInterruptTransferFunction() = default;
 
 ExtensionFunction::ResponseAction UsbInterruptTransferFunction::Run() {
   std::unique_ptr<extensions::api::usb::InterruptTransfer::Params> parameters =
@@ -1166,11 +1133,9 @@ ExtensionFunction::ResponseAction UsbInterruptTransferFunction::Run() {
   return RespondLater();
 }
 
-UsbIsochronousTransferFunction::UsbIsochronousTransferFunction() {
-}
+UsbIsochronousTransferFunction::UsbIsochronousTransferFunction() = default;
 
-UsbIsochronousTransferFunction::~UsbIsochronousTransferFunction() {
-}
+UsbIsochronousTransferFunction::~UsbIsochronousTransferFunction() = default;
 
 ExtensionFunction::ResponseAction UsbIsochronousTransferFunction::Run() {
   std::unique_ptr<extensions::api::usb::IsochronousTransfer::Params>
@@ -1272,11 +1237,9 @@ void UsbIsochronousTransferFunction::OnCompleted(
   }
 }
 
-UsbResetDeviceFunction::UsbResetDeviceFunction() {
-}
+UsbResetDeviceFunction::UsbResetDeviceFunction() = default;
 
-UsbResetDeviceFunction::~UsbResetDeviceFunction() {
-}
+UsbResetDeviceFunction::~UsbResetDeviceFunction() = default;
 
 ExtensionFunction::ResponseAction UsbResetDeviceFunction::Run() {
   parameters_ = ResetDevice::Params::Create(*args_);

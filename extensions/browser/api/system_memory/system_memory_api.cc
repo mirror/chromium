@@ -10,11 +10,9 @@ namespace extensions {
 
 using api::system_memory::MemoryInfo;
 
-SystemMemoryGetInfoFunction::SystemMemoryGetInfoFunction() {
-}
+SystemMemoryGetInfoFunction::SystemMemoryGetInfoFunction() = default;
 
-SystemMemoryGetInfoFunction::~SystemMemoryGetInfoFunction() {
-}
+SystemMemoryGetInfoFunction::~SystemMemoryGetInfoFunction() = default;
 
 bool SystemMemoryGetInfoFunction::RunAsync() {
   MemoryInfoProvider::Get()->StartQueryInfo(

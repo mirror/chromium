@@ -54,10 +54,9 @@ GURL GetDocumentUrlForFrame(blink::WebLocalFrame* frame) {
 
 }  // namespace
 
-UserScriptSet::UserScriptSet() {}
+UserScriptSet::UserScriptSet() = default;
 
-UserScriptSet::~UserScriptSet() {
-}
+UserScriptSet::~UserScriptSet() = default;
 
 void UserScriptSet::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);

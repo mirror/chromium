@@ -8,5 +8,4 @@ InjectionHost::InjectionHost(const HostID& host_id) :
     id_(host_id) {
 }
 
-InjectionHost::~InjectionHost() {
-}
+InjectionHost::~InjectionHost() = default;

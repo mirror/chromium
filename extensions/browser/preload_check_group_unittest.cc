@@ -24,7 +24,7 @@ class PreloadCheckGroupTest : public testing::Test {
  public:
   PreloadCheckGroupTest()
       : check_group_(std::make_unique<PreloadCheckGroup>()) {}
-  ~PreloadCheckGroupTest() override {}
+  ~PreloadCheckGroupTest() override = default;
 
  protected:
   // Adds a check to |check_group_|, storing its unique_ptr in |checks_|.

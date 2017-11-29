@@ -12,11 +12,9 @@ namespace extensions {
 ExtensionDownloaderDelegate::PingResult::PingResult() : did_ping(false) {
 }
 
-ExtensionDownloaderDelegate::PingResult::~PingResult() {
-}
+ExtensionDownloaderDelegate::PingResult::~PingResult() = default;
 
-ExtensionDownloaderDelegate::~ExtensionDownloaderDelegate() {
-}
+ExtensionDownloaderDelegate::~ExtensionDownloaderDelegate() = default;
 
 void ExtensionDownloaderDelegate::OnExtensionDownloadFailed(
     const std::string& id,

@@ -128,7 +128,7 @@ class MimeHandlerViewTest : public ExtensionApiTest,
     GuestViewManager::set_factory_for_testing(&factory_);
   }
 
-  ~MimeHandlerViewTest() override {}
+  ~MimeHandlerViewTest() override = default;
 
   void SetUpOnMainThread() override {
     ExtensionApiTest::SetUpOnMainThread();

@@ -95,8 +95,7 @@ ShellBrowserMainParts::ShellBrowserMainParts(
       browser_main_delegate_(browser_main_delegate) {
 }
 
-ShellBrowserMainParts::~ShellBrowserMainParts() {
-}
+ShellBrowserMainParts::~ShellBrowserMainParts() = default;
 
 void ShellBrowserMainParts::PreMainMessageLoopStart() {
 #if defined(USE_AURA) && defined(USE_X11)

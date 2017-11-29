@@ -115,8 +115,7 @@ MimeHandlerStreamManager::MimeHandlerStreamManager()
     : extension_registry_observer_(this) {
 }
 
-MimeHandlerStreamManager::~MimeHandlerStreamManager() {
-}
+MimeHandlerStreamManager::~MimeHandlerStreamManager() = default;
 
 // static
 MimeHandlerStreamManager* MimeHandlerStreamManager::Get(

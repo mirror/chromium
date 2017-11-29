@@ -40,8 +40,7 @@ PrinterProviderAPIFactory::PrinterProviderAPIFactory()
   DependsOn(ExtensionRegistryFactory::GetInstance());
 }
 
-PrinterProviderAPIFactory::~PrinterProviderAPIFactory() {
-}
+PrinterProviderAPIFactory::~PrinterProviderAPIFactory() = default;
 
 KeyedService* PrinterProviderAPIFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

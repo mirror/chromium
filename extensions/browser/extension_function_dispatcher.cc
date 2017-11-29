@@ -125,7 +125,7 @@ class ExtensionFunctionDispatcher::UIThreadResponseCallbackWrapper
         weak_ptr_factory_(this) {
   }
 
-  ~UIThreadResponseCallbackWrapper() override {}
+  ~UIThreadResponseCallbackWrapper() override = default;
 
   // content::WebContentsObserver overrides.
   void RenderFrameDeleted(
@@ -183,7 +183,7 @@ class ExtensionFunctionDispatcher::UIThreadWorkerResponseCallbackWrapper
                ->ExtensionAPIEnabledInExtensionServiceWorkers());
   }
 
-  ~UIThreadWorkerResponseCallbackWrapper() override {}
+  ~UIThreadWorkerResponseCallbackWrapper() override = default;
 
   // content::RenderProcessHostObserver override.
   void RenderProcessExited(content::RenderProcessHost* rph,
@@ -346,8 +346,7 @@ ExtensionFunctionDispatcher::ExtensionFunctionDispatcher(
     content::BrowserContext* browser_context)
     : browser_context_(browser_context), delegate_(nullptr) {}
 
-ExtensionFunctionDispatcher::~ExtensionFunctionDispatcher() {
-}
+ExtensionFunctionDispatcher::~ExtensionFunctionDispatcher() = default;
 
 void ExtensionFunctionDispatcher::Dispatch(
     const ExtensionHostMsg_Request_Params& params,

@@ -141,8 +141,7 @@ ImageLoader::ImageRepresentation::ImageRepresentation(
       desired_size(desired_size),
       scale_factor(scale_factor) {}
 
-ImageLoader::ImageRepresentation::~ImageRepresentation() {
-}
+ImageLoader::ImageRepresentation::~ImageRepresentation() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // ImageLoader::LoadResult
@@ -167,8 +166,7 @@ ImageLoader::LoadResult::LoadResult(
       image_representation(image_representation) {
 }
 
-ImageLoader::LoadResult::~LoadResult() {
-}
+ImageLoader::LoadResult::~LoadResult() = default;
 
 namespace {
 
@@ -214,8 +212,7 @@ ImageLoader::ImageLoader()
     : weak_ptr_factory_(this) {
 }
 
-ImageLoader::~ImageLoader() {
-}
+ImageLoader::~ImageLoader() = default;
 
 // static
 ImageLoader* ImageLoader::Get(content::BrowserContext* context) {

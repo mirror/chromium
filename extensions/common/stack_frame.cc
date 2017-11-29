@@ -18,12 +18,7 @@ const char kAnonymousFunction[] = "(anonymous function)";
 StackFrame::StackFrame() : line_number(1), column_number(1) {
 }
 
-StackFrame::StackFrame(const StackFrame& frame)
-    : line_number(frame.line_number),
-      column_number(frame.column_number),
-      source(frame.source),
-      function(frame.function) {
-}
+StackFrame::StackFrame(const StackFrame& frame) = default;
 
 StackFrame::StackFrame(uint32_t line_number,
                        uint32_t column_number,
@@ -35,8 +30,7 @@ StackFrame::StackFrame(uint32_t line_number,
       function(function.empty() ? base::UTF8ToUTF16(kAnonymousFunction)
                                 : function) {}
 
-StackFrame::~StackFrame() {
-}
+StackFrame::~StackFrame() = default;
 
 // Create a stack frame from the passed text. The text must follow one of two
 // formats:

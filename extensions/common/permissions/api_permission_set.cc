@@ -191,11 +191,9 @@ PermissionID::PermissionID(APIPermission::ID id,
     : std::pair<APIPermission::ID, base::string16>(id, parameter) {
 }
 
-PermissionID::~PermissionID() {
-}
+PermissionID::~PermissionID() = default;
 
-PermissionIDSet::PermissionIDSet() {
-}
+PermissionIDSet::PermissionIDSet() = default;
 
 PermissionIDSet::PermissionIDSet(
     std::initializer_list<APIPermission::ID> permissions) {
@@ -206,8 +204,7 @@ PermissionIDSet::PermissionIDSet(
 
 PermissionIDSet::PermissionIDSet(const PermissionIDSet& other) = default;
 
-PermissionIDSet::~PermissionIDSet() {
-}
+PermissionIDSet::~PermissionIDSet() = default;
 
 void PermissionIDSet::insert(APIPermission::ID permission_id) {
   insert(permission_id, base::string16());

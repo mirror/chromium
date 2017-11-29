@@ -53,7 +53,7 @@ MimeHandlerServiceImpl::MimeHandlerServiceImpl(
     base::WeakPtr<StreamContainer> stream_container)
     : stream_(stream_container), weak_factory_(this) {}
 
-MimeHandlerServiceImpl::~MimeHandlerServiceImpl() {}
+MimeHandlerServiceImpl::~MimeHandlerServiceImpl() = default;
 
 // static
 void MimeHandlerServiceImpl::Create(

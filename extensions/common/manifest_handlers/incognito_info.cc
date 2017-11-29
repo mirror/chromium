@@ -18,8 +18,7 @@ namespace keys = manifest_keys;
 
 IncognitoInfo::IncognitoInfo(Mode mode) : mode(mode) {}
 
-IncognitoInfo::~IncognitoInfo() {
-}
+IncognitoInfo::~IncognitoInfo() = default;
 
 // static
 bool IncognitoInfo::IsSplitMode(const Extension* extension) {
@@ -35,11 +34,9 @@ bool IncognitoInfo::IsIncognitoAllowed(const Extension* extension) {
   return info ? info->mode != Mode::NOT_ALLOWED : true;
 }
 
-IncognitoHandler::IncognitoHandler() {
-}
+IncognitoHandler::IncognitoHandler() = default;
 
-IncognitoHandler::~IncognitoHandler() {
-}
+IncognitoHandler::~IncognitoHandler() = default;
 
 bool IncognitoHandler::Parse(Extension* extension, base::string16* error) {
   // Extensions and Chrome apps default to spanning mode.

@@ -39,7 +39,7 @@ ValueStoreChange::ValueStoreChange(const std::string& key,
 
 ValueStoreChange::ValueStoreChange(const ValueStoreChange& other) = default;
 
-ValueStoreChange::~ValueStoreChange() {}
+ValueStoreChange::~ValueStoreChange() = default;
 
 const std::string& ValueStoreChange::key() const {
   DCHECK(inner_.get());
@@ -63,4 +63,4 @@ ValueStoreChange::Inner::Inner(const std::string& key,
       old_value_(std::move(old_value)),
       new_value_(std::move(new_value)) {}
 
-ValueStoreChange::Inner::~Inner() {}
+ValueStoreChange::Inner::~Inner() = default;

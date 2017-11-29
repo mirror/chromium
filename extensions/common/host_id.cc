@@ -17,8 +17,7 @@ HostID::HostID(const HostID& host_id)
       id_(host_id.id()) {
 }
 
-HostID::~HostID() {
-}
+HostID::~HostID() = default;
 
 bool HostID::operator<(const HostID& host_id) const {
   if (type_ != host_id.type())

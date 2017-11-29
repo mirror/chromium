@@ -27,8 +27,7 @@ using extensions::ManifestPermissionSet;
 using extensions::PermissionSet;
 using extensions::URLPatternSet;
 
-ExtensionMsg_PermissionSetStruct::ExtensionMsg_PermissionSetStruct() {
-}
+ExtensionMsg_PermissionSetStruct::ExtensionMsg_PermissionSetStruct() = default;
 
 ExtensionMsg_PermissionSetStruct::ExtensionMsg_PermissionSetStruct(
     const PermissionSet& permissions)
@@ -41,8 +40,7 @@ ExtensionMsg_PermissionSetStruct::ExtensionMsg_PermissionSetStruct(
 ExtensionMsg_PermissionSetStruct::ExtensionMsg_PermissionSetStruct(
     const ExtensionMsg_PermissionSetStruct& other) = default;
 
-ExtensionMsg_PermissionSetStruct::~ExtensionMsg_PermissionSetStruct() {
-}
+ExtensionMsg_PermissionSetStruct::~ExtensionMsg_PermissionSetStruct() = default;
 
 std::unique_ptr<const PermissionSet>
 ExtensionMsg_PermissionSetStruct::ToPermissionSet() const {
@@ -54,7 +52,7 @@ ExtensionMsg_Loaded_Params::ExtensionMsg_Loaded_Params()
     : location(Manifest::INVALID_LOCATION),
       creation_flags(Extension::NO_FLAGS) {}
 
-ExtensionMsg_Loaded_Params::~ExtensionMsg_Loaded_Params() {}
+ExtensionMsg_Loaded_Params::~ExtensionMsg_Loaded_Params() = default;
 
 ExtensionMsg_Loaded_Params::ExtensionMsg_Loaded_Params(
     const Extension* extension,

@@ -39,8 +39,8 @@ namespace {
 // code. For now, this implementation does nothing.
 class ShellPermissionMessageProvider : public PermissionMessageProvider {
  public:
-  ShellPermissionMessageProvider() {}
-  ~ShellPermissionMessageProvider() override {}
+  ShellPermissionMessageProvider() = default;
+  ~ShellPermissionMessageProvider() override = default;
 
   // PermissionMessageProvider implementation.
   PermissionMessages GetPermissionMessages(
@@ -76,8 +76,7 @@ ShellExtensionsClient::ShellExtensionsClient()
       webstore_base_url_(extension_urls::kChromeWebstoreBaseURL),
       webstore_update_url_(extension_urls::kChromeWebstoreUpdateURL) {}
 
-ShellExtensionsClient::~ShellExtensionsClient() {
-}
+ShellExtensionsClient::~ShellExtensionsClient() = default;
 
 void ShellExtensionsClient::Initialize() {
   RegisterCommonManifestHandlers();

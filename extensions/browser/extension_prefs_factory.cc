@@ -43,8 +43,7 @@ ExtensionPrefsFactory::ExtensionPrefsFactory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-ExtensionPrefsFactory::~ExtensionPrefsFactory() {
-}
+ExtensionPrefsFactory::~ExtensionPrefsFactory() = default;
 
 KeyedService* ExtensionPrefsFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

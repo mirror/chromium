@@ -74,7 +74,7 @@ class FakeUpdateClient : public update_client::UpdateClient {
 
  protected:
   friend class base::RefCounted<FakeUpdateClient>;
-  ~FakeUpdateClient() override {}
+  ~FakeUpdateClient() override = default;
 
   std::vector<update_client::CrxComponent> data_;
   std::vector<UninstallPing> uninstall_pings_;
@@ -83,7 +83,7 @@ class FakeUpdateClient : public update_client::UpdateClient {
   DISALLOW_COPY_AND_ASSIGN(FakeUpdateClient);
 };
 
-FakeUpdateClient::FakeUpdateClient() {}
+FakeUpdateClient::FakeUpdateClient() = default;
 
 void FakeUpdateClient::Update(const std::vector<std::string>& ids,
                               CrxDataCallback crx_data_callback,
@@ -114,7 +114,7 @@ class FakeExtensionSystem : public MockExtensionSystem {
  public:
   explicit FakeExtensionSystem(content::BrowserContext* context)
       : MockExtensionSystem(context) {}
-  ~FakeExtensionSystem() override {}
+  ~FakeExtensionSystem() override = default;
 
   struct InstallUpdateRequest {
     std::string extension_id;
@@ -150,7 +150,7 @@ class UpdateServiceTest : public ExtensionsTest {
  public:
   UpdateServiceTest()
       : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
-  ~UpdateServiceTest() override {}
+  ~UpdateServiceTest() override = default;
 
   void SetUp() override {
     ExtensionsTest::SetUp();

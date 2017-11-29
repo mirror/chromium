@@ -35,8 +35,8 @@ INSTANTIATE_TEST_CASE_P(
 
 class LeveldbValueStoreUnitTest : public testing::Test {
  public:
-  LeveldbValueStoreUnitTest() {}
-  ~LeveldbValueStoreUnitTest() override {}
+  LeveldbValueStoreUnitTest() = default;
+  ~LeveldbValueStoreUnitTest() override = default;
 
  protected:
   void SetUp() override {

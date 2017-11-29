@@ -36,7 +36,7 @@ GinPort::GinPort(const PortId& port_id,
       event_handler_(event_handler),
       delegate_(delegate) {}
 
-GinPort::~GinPort() {}
+GinPort::~GinPort() = default;
 
 gin::WrapperInfo GinPort::kWrapperInfo = {gin::kEmbedderNativeGin};
 

@@ -29,7 +29,7 @@ namespace keys = manifest_keys;
 namespace errors = manifest_errors;
 
 OAuth2Info::OAuth2Info() : auto_approve(false) {}
-OAuth2Info::~OAuth2Info() {}
+OAuth2Info::~OAuth2Info() = default;
 
 static base::LazyInstance<OAuth2Info>::DestructorAtExit g_empty_oauth2_info =
     LAZY_INSTANCE_INITIALIZER;
@@ -41,11 +41,9 @@ const OAuth2Info& OAuth2Info::GetOAuth2Info(const Extension* extension) {
   return info ? *info : g_empty_oauth2_info.Get();
 }
 
-OAuth2ManifestHandler::OAuth2ManifestHandler() {
-}
+OAuth2ManifestHandler::OAuth2ManifestHandler() = default;
 
-OAuth2ManifestHandler::~OAuth2ManifestHandler() {
-}
+OAuth2ManifestHandler::~OAuth2ManifestHandler() = default;
 
 bool OAuth2ManifestHandler::Parse(Extension* extension,
                                   base::string16* error) {

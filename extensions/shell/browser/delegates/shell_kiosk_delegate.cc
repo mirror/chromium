@@ -6,9 +6,9 @@
 
 namespace extensions {
 
-ShellKioskDelegate::ShellKioskDelegate() {}
+ShellKioskDelegate::ShellKioskDelegate() = default;
 
-ShellKioskDelegate::~ShellKioskDelegate() {}
+ShellKioskDelegate::~ShellKioskDelegate() = default;
 
 bool ShellKioskDelegate::IsAutoLaunchedKioskApp(const ExtensionId& id) const {
   // Every app in AppShell is auto-launched and AppShell only runs in

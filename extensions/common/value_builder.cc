@@ -19,7 +19,7 @@ DictionaryBuilder::DictionaryBuilder() : dict_(new base::DictionaryValue) {}
 DictionaryBuilder::DictionaryBuilder(const base::DictionaryValue& init)
     : dict_(init.DeepCopy()) {}
 
-DictionaryBuilder::~DictionaryBuilder() {}
+DictionaryBuilder::~DictionaryBuilder() = default;
 
 std::string DictionaryBuilder::ToJSON() const {
   std::string json;
@@ -70,7 +70,7 @@ DictionaryBuilder& DictionaryBuilder::SetBoolean(
 ListBuilder::ListBuilder() : list_(new base::ListValue) {}
 ListBuilder::ListBuilder(const base::ListValue& init) : list_(init.DeepCopy()) {
 }
-ListBuilder::~ListBuilder() {}
+ListBuilder::~ListBuilder() = default;
 
 ListBuilder& ListBuilder::Append(int in_value) {
   list_->AppendInteger(in_value);

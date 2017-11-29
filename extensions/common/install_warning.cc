@@ -20,8 +20,7 @@ InstallWarning::InstallWarning(const std::string& message,
     : message(message), key(key), specific(specific) {
 }
 
-InstallWarning::~InstallWarning() {
-}
+InstallWarning::~InstallWarning() = default;
 
 void PrintTo(const InstallWarning& warning, ::std::ostream* os) {
   // This is just for test error messages, so no need to escape '"'

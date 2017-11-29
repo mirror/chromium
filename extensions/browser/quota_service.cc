@@ -110,7 +110,7 @@ QuotaLimitHeuristic::QuotaLimitHeuristic(const Config& config,
                                          const std::string& name)
     : config_(config), bucket_mapper_(map), name_(name) {}
 
-QuotaLimitHeuristic::~QuotaLimitHeuristic() {}
+QuotaLimitHeuristic::~QuotaLimitHeuristic() = default;
 
 bool QuotaLimitHeuristic::ApplyToArgs(const base::ListValue* args,
                                       const base::TimeTicks& event_time) {

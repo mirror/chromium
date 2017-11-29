@@ -39,7 +39,7 @@ APIBindingsSystem::APIBindingsSystem(
       get_api_schema_(get_api_schema),
       on_silent_request_(on_silent_request) {}
 
-APIBindingsSystem::~APIBindingsSystem() {}
+APIBindingsSystem::~APIBindingsSystem() = default;
 
 v8::Local<v8::Object> APIBindingsSystem::CreateAPIInstance(
     const std::string& api_name,

@@ -30,8 +30,7 @@ ExtensionError::ExtensionError(Type type,
       occurrences_(1u) {
 }
 
-ExtensionError::~ExtensionError() {
-}
+ExtensionError::~ExtensionError() = default;
 
 std::string ExtensionError::GetDebugString() const {
   return std::string("Extension Error:") +
@@ -68,8 +67,7 @@ ManifestError::ManifestError(const std::string& extension_id,
       manifest_specific_(manifest_specific) {
 }
 
-ManifestError::~ManifestError() {
-}
+ManifestError::~ManifestError() = default;
 
 std::string ManifestError::GetDebugString() const {
   return ExtensionError::GetDebugString() +
@@ -107,8 +105,7 @@ RuntimeError::RuntimeError(const std::string& extension_id,
   CleanUpInit();
 }
 
-RuntimeError::~RuntimeError() {
-}
+RuntimeError::~RuntimeError() = default;
 
 std::string RuntimeError::GetDebugString() const {
   std::string result = ExtensionError::GetDebugString() +
@@ -177,8 +174,7 @@ InternalError::InternalError(const std::string& extension_id,
                      message) {
 }
 
-InternalError::~InternalError() {
-}
+InternalError::~InternalError() = default;
 
 std::string InternalError::GetDebugString() const {
   return ExtensionError::GetDebugString() +

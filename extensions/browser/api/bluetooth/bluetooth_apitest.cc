@@ -44,7 +44,7 @@ static const char* kName = "whatsinaname";
 
 class BluetoothApiTest : public ExtensionApiTest {
  public:
-  BluetoothApiTest() {}
+  BluetoothApiTest() = default;
 
   void SetUpOnMainThread() override {
     ExtensionApiTest::SetUpOnMainThread();

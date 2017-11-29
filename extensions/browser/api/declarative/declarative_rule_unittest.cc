@@ -246,7 +246,7 @@ class SummingAction : public base::RefCounted<SummingAction> {
 
  private:
   friend class base::RefCounted<SummingAction>;
-  virtual ~SummingAction() {}
+  virtual ~SummingAction() = default;
 
   int increment_;
   int min_priority_;

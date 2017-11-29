@@ -39,8 +39,8 @@ void DoNothingOnEventListenersChanged(const std::string& event_name,
 
 class APIEventHandlerTest : public APIBindingTest {
  protected:
-  APIEventHandlerTest() {}
-  ~APIEventHandlerTest() override {}
+  APIEventHandlerTest() = default;
+  ~APIEventHandlerTest() override = default;
 
   void SetUp() override {
     APIBindingTest::SetUp();

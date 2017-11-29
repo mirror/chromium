@@ -62,7 +62,7 @@ class RequirementsCheckerTest : public ExtensionsTest {
     manifest_dict_ = std::make_unique<base::DictionaryValue>();
   }
 
-  ~RequirementsCheckerTest() override {}
+  ~RequirementsCheckerTest() override = default;
 
   void CreateExtension() {
     manifest_dict_->SetString("name", "dummy name");

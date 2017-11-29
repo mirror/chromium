@@ -200,8 +200,7 @@ ModuleSystem::ModuleSystem(ScriptContext* context, const SourceMap* source_map)
   }
 }
 
-ModuleSystem::~ModuleSystem() {
-}
+ModuleSystem::~ModuleSystem() = default;
 
 void ModuleSystem::Invalidate() {
   // Clear the module system properties from the global context. It's polite,

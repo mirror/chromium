@@ -77,7 +77,7 @@ AudioAPI::AudioAPI(content::BrowserContext* context)
   audio_service_observer_.Add(service_.get());
 }
 
-AudioAPI::~AudioAPI() {}
+AudioAPI::~AudioAPI() = default;
 
 AudioService* AudioAPI::GetService() const {
   return service_.get();

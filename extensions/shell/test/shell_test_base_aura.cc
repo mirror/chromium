@@ -19,7 +19,7 @@ namespace extensions {
 ShellTestBaseAura::ShellTestBaseAura()
     : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
 
-ShellTestBaseAura::~ShellTestBaseAura() {}
+ShellTestBaseAura::~ShellTestBaseAura() = default;
 
 void ShellTestBaseAura::SetUp() {
   helper_ = std::make_unique<ShellTestHelperAura>();

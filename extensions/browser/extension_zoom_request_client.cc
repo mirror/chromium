@@ -21,7 +21,6 @@ bool ExtensionZoomRequestClient::ShouldSuppressBubble() const {
   return feature && feature->IsAvailableToExtension(extension()).is_available();
 }
 
-ExtensionZoomRequestClient::~ExtensionZoomRequestClient() {
-}
+ExtensionZoomRequestClient::~ExtensionZoomRequestClient() = default;
 
 }  // namespace extensions

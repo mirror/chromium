@@ -9,11 +9,9 @@
 
 namespace extensions {
 
-PermissionFeature::PermissionFeature() {
-}
+PermissionFeature::PermissionFeature() = default;
 
-PermissionFeature::~PermissionFeature() {
-}
+PermissionFeature::~PermissionFeature() = default;
 
 Feature::Availability PermissionFeature::IsAvailableToContext(
     const Extension* extension,

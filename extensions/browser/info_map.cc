@@ -44,7 +44,7 @@ InfoMap::ExtraData::ExtraData()
     : incognito_enabled(false), notifications_disabled(false) {
 }
 
-InfoMap::ExtraData::~ExtraData() {}
+InfoMap::ExtraData::~ExtraData() = default;
 
 InfoMap::InfoMap() : ruleset_manager_(this) {}
 

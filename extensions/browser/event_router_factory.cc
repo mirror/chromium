@@ -35,8 +35,7 @@ EventRouterFactory::EventRouterFactory()
   DependsOn(ExtensionPrefsFactory::GetInstance());
 }
 
-EventRouterFactory::~EventRouterFactory() {
-}
+EventRouterFactory::~EventRouterFactory() = default;
 
 KeyedService* EventRouterFactory::BuildServiceInstanceFor(
     BrowserContext* context) const {

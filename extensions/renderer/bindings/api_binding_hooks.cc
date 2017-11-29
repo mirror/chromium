@@ -200,14 +200,14 @@ APIBindingHooks::RequestResult::RequestResult(
     : code(code), custom_callback(custom_callback) {}
 APIBindingHooks::RequestResult::RequestResult(std::string invocation_error)
     : code(INVALID_INVOCATION), error(std::move(invocation_error)) {}
-APIBindingHooks::RequestResult::~RequestResult() {}
+APIBindingHooks::RequestResult::~RequestResult() = default;
 APIBindingHooks::RequestResult::RequestResult(const RequestResult& other) =
     default;
 
 APIBindingHooks::APIBindingHooks(const std::string& api_name,
                                  const binding::RunJSFunctionSync& run_js)
     : api_name_(api_name), run_js_(run_js) {}
-APIBindingHooks::~APIBindingHooks() {}
+APIBindingHooks::~APIBindingHooks() = default;
 
 APIBindingHooks::RequestResult APIBindingHooks::RunHooks(
     const std::string& method_name,

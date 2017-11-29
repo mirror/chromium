@@ -15,7 +15,7 @@
 
 namespace extensions {
 
-WebRequestHooks::WebRequestHooks() {}
+WebRequestHooks::WebRequestHooks() = default;
 WebRequestHooks::~WebRequestHooks() = default;
 
 bool WebRequestHooks::CreateCustomEvent(

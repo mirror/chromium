@@ -26,8 +26,7 @@ ShellNativeAppWindowAura::ShellNativeAppWindowAura(
   SetBounds(bounds);
 }
 
-ShellNativeAppWindowAura::~ShellNativeAppWindowAura() {
-}
+ShellNativeAppWindowAura::~ShellNativeAppWindowAura() = default;
 
 bool ShellNativeAppWindowAura::IsActive() const {
   // Even though app_shell only supports a single app window, there might be

@@ -22,8 +22,8 @@ const char kTestUMAClientName[] = "Test";
 
 class LeveldbScopedDatabaseUnitTest : public testing::Test {
  public:
-  LeveldbScopedDatabaseUnitTest() {}
-  ~LeveldbScopedDatabaseUnitTest() override {}
+  LeveldbScopedDatabaseUnitTest() = default;
+  ~LeveldbScopedDatabaseUnitTest() override = default;
 
  protected:
   void SetUp() override {

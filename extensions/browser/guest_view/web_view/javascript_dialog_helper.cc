@@ -39,8 +39,7 @@ JavaScriptDialogHelper::JavaScriptDialogHelper(WebViewGuest* guest)
     : web_view_guest_(guest) {
 }
 
-JavaScriptDialogHelper::~JavaScriptDialogHelper() {
-}
+JavaScriptDialogHelper::~JavaScriptDialogHelper() = default;
 
 void JavaScriptDialogHelper::RunJavaScriptDialog(
     content::WebContents* web_contents,

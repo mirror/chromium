@@ -164,7 +164,7 @@ content::BrowserContext* CastChannelAPI::GetBrowserContext() const {
   return browser_context_;
 }
 
-CastChannelAPI::~CastChannelAPI() {}
+CastChannelAPI::~CastChannelAPI() = default;
 
 void CastChannelAPI::OnListenerAdded(const EventListenerInfo& details) {
   // Observer has been registered to CastSocketService.
@@ -199,7 +199,7 @@ void BrowserContextKeyedAPIFactory<
 CastChannelAsyncApiFunction::CastChannelAsyncApiFunction()
     : cast_socket_service_(nullptr) {}
 
-CastChannelAsyncApiFunction::~CastChannelAsyncApiFunction() { }
+CastChannelAsyncApiFunction::~CastChannelAsyncApiFunction() = default;
 
 bool CastChannelAsyncApiFunction::PrePrepare() {
   cast_socket_service_ = cast_channel::CastSocketService::GetInstance();
@@ -243,9 +243,9 @@ void CastChannelAsyncApiFunction::SetResultFromChannelInfo(
   SetResult(channel_info.ToValue());
 }
 
-CastChannelOpenFunction::CastChannelOpenFunction() {}
+CastChannelOpenFunction::CastChannelOpenFunction() = default;
 
-CastChannelOpenFunction::~CastChannelOpenFunction() { }
+CastChannelOpenFunction::~CastChannelOpenFunction() = default;
 
 net::IPEndPoint* CastChannelOpenFunction::ParseConnectInfo(
     const ConnectInfo& connect_info) {
@@ -338,9 +338,9 @@ void CastChannelOpenFunction::OnOpen(CastSocket* socket) {
   AsyncWorkCompleted();
 }
 
-CastChannelSendFunction::CastChannelSendFunction() { }
+CastChannelSendFunction::CastChannelSendFunction() = default;
 
-CastChannelSendFunction::~CastChannelSendFunction() { }
+CastChannelSendFunction::~CastChannelSendFunction() = default;
 
 bool CastChannelSendFunction::Prepare() {
   params_ = Send::Params::Create(*args_);
@@ -402,9 +402,9 @@ void CastChannelSendFunction::OnSend(int result) {
   AsyncWorkCompleted();
 }
 
-CastChannelCloseFunction::CastChannelCloseFunction() { }
+CastChannelCloseFunction::CastChannelCloseFunction() = default;
 
-CastChannelCloseFunction::~CastChannelCloseFunction() { }
+CastChannelCloseFunction::~CastChannelCloseFunction() = default;
 
 bool CastChannelCloseFunction::PrePrepare() {
   api_ = CastChannelAPI::Get(browser_context());

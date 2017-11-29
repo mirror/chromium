@@ -62,7 +62,7 @@ RendererStartupHelper::RendererStartupHelper(BrowserContext* browser_context)
                  content::NotificationService::AllBrowserContextsAndSources());
 }
 
-RendererStartupHelper::~RendererStartupHelper() {}
+RendererStartupHelper::~RendererStartupHelper() = default;
 
 void RendererStartupHelper::Observe(
     int type,
@@ -288,7 +288,7 @@ RendererStartupHelperFactory::RendererStartupHelperFactory()
   // No dependencies on other services.
 }
 
-RendererStartupHelperFactory::~RendererStartupHelperFactory() {}
+RendererStartupHelperFactory::~RendererStartupHelperFactory() = default;
 
 KeyedService* RendererStartupHelperFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

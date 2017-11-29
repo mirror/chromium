@@ -26,7 +26,7 @@ class TestUpstartClient : public FakeUpstartClient {
  public:
   TestUpstartClient() : enqueue_requests_(false) {}
 
-  ~TestUpstartClient() override {}
+  ~TestUpstartClient() override = default;
 
   // Overrides behavior to queue start requests.
   void StartMediaAnalytics(const UpstartCallback& callback) override {

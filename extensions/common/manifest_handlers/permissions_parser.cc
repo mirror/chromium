@@ -45,8 +45,7 @@ ManifestPermissions::ManifestPermissions(
     std::unique_ptr<const PermissionSet> permissions)
     : permissions(std::move(permissions)) {}
 
-ManifestPermissions::~ManifestPermissions() {
-}
+ManifestPermissions::~ManifestPermissions() = default;
 
 // Checks whether the host |pattern| is allowed for the given |extension|,
 // given API permissions |permissions|.
@@ -237,11 +236,9 @@ struct PermissionsParser::InitialPermissions {
   URLPatternSet scriptable_hosts;
 };
 
-PermissionsParser::PermissionsParser() {
-}
+PermissionsParser::PermissionsParser() = default;
 
-PermissionsParser::~PermissionsParser() {
-}
+PermissionsParser::~PermissionsParser() = default;
 
 bool PermissionsParser::Parse(Extension* extension, base::string16* error) {
   initial_required_permissions_.reset(new InitialPermissions);

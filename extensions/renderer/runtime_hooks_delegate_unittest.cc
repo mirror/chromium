@@ -48,8 +48,8 @@ void CallAPIAndExpectError(v8::Local<v8::Context> context,
 
 class RuntimeHooksDelegateTest : public NativeExtensionBindingsSystemUnittest {
  public:
-  RuntimeHooksDelegateTest() {}
-  ~RuntimeHooksDelegateTest() override {}
+  RuntimeHooksDelegateTest() = default;
+  ~RuntimeHooksDelegateTest() override = default;
 
   // NativeExtensionBindingsSystemUnittest:
   void SetUp() override {
@@ -293,8 +293,8 @@ TEST_F(RuntimeHooksDelegateTest, SendMessageErrors) {
 class RuntimeHooksDelegateNativeMessagingTest
     : public RuntimeHooksDelegateTest {
  public:
-  RuntimeHooksDelegateNativeMessagingTest() {}
-  ~RuntimeHooksDelegateNativeMessagingTest() override {}
+  RuntimeHooksDelegateNativeMessagingTest() = default;
+  ~RuntimeHooksDelegateNativeMessagingTest() override = default;
 
   scoped_refptr<Extension> BuildExtension() override {
     return ExtensionBuilder("foo").AddPermission("nativeMessaging").Build();

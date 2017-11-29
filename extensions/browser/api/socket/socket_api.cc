@@ -74,9 +74,9 @@ bool IsPortValid(int port) {
 using content::BrowserThread;
 using content::SocketPermissionRequest;
 
-SocketAsyncApiFunction::SocketAsyncApiFunction() {}
+SocketAsyncApiFunction::SocketAsyncApiFunction() = default;
 
-SocketAsyncApiFunction::~SocketAsyncApiFunction() {}
+SocketAsyncApiFunction::~SocketAsyncApiFunction() = default;
 
 bool SocketAsyncApiFunction::PrePrepare() {
   manager_ = CreateSocketResourceManager();
@@ -186,8 +186,8 @@ SocketExtensionWithDnsLookupFunction::SocketExtensionWithDnsLookupFunction()
     : resource_context_(NULL) {
 }
 
-SocketExtensionWithDnsLookupFunction::~SocketExtensionWithDnsLookupFunction() {
-}
+SocketExtensionWithDnsLookupFunction::~SocketExtensionWithDnsLookupFunction() =
+    default;
 
 bool SocketExtensionWithDnsLookupFunction::PrePrepare() {
   if (!SocketAsyncApiFunction::PrePrepare())
@@ -224,7 +224,7 @@ void SocketExtensionWithDnsLookupFunction::OnDnsLookup(int resolve_result) {
 SocketCreateFunction::SocketCreateFunction()
     : socket_type_(kSocketTypeInvalid) {}
 
-SocketCreateFunction::~SocketCreateFunction() {}
+SocketCreateFunction::~SocketCreateFunction() = default;
 
 bool SocketCreateFunction::Prepare() {
   params_ = api::socket::Create::Params::Create(*args_);
@@ -270,7 +270,7 @@ SocketConnectFunction::SocketConnectFunction()
     : socket_id_(0), hostname_(), port_(0) {
 }
 
-SocketConnectFunction::~SocketConnectFunction() {}
+SocketConnectFunction::~SocketConnectFunction() = default;
 
 bool SocketConnectFunction::Prepare() {
   EXTENSION_FUNCTION_VALIDATE(args_->GetInteger(0, &socket_id_));
@@ -413,9 +413,9 @@ void SocketBindFunction::AsyncWorkStart() {
   OpenFirewallHole(address_, socket_id_, socket);
 }
 
-SocketListenFunction::SocketListenFunction() {}
+SocketListenFunction::SocketListenFunction() = default;
 
-SocketListenFunction::~SocketListenFunction() {}
+SocketListenFunction::~SocketListenFunction() = default;
 
 bool SocketListenFunction::Prepare() {
   params_ = api::socket::Listen::Params::Create(*args_);
@@ -454,9 +454,9 @@ void SocketListenFunction::AsyncWorkStart() {
   OpenFirewallHole(params_->address, params_->socket_id, socket);
 }
 
-SocketAcceptFunction::SocketAcceptFunction() {}
+SocketAcceptFunction::SocketAcceptFunction() = default;
 
-SocketAcceptFunction::~SocketAcceptFunction() {}
+SocketAcceptFunction::~SocketAcceptFunction() = default;
 
 bool SocketAcceptFunction::Prepare() {
   params_ = api::socket::Accept::Params::Create(*args_);
@@ -489,9 +489,9 @@ void SocketAcceptFunction::OnAccept(
   AsyncWorkCompleted();
 }
 
-SocketReadFunction::SocketReadFunction() {}
+SocketReadFunction::SocketReadFunction() = default;
 
-SocketReadFunction::~SocketReadFunction() {}
+SocketReadFunction::~SocketReadFunction() = default;
 
 bool SocketReadFunction::Prepare() {
   params_ = api::socket::Read::Params::Create(*args_);
@@ -531,7 +531,7 @@ void SocketReadFunction::OnCompleted(int bytes_read,
 SocketWriteFunction::SocketWriteFunction()
     : socket_id_(0), io_buffer_(NULL), io_buffer_size_(0) {}
 
-SocketWriteFunction::~SocketWriteFunction() {}
+SocketWriteFunction::~SocketWriteFunction() = default;
 
 bool SocketWriteFunction::Prepare() {
   const auto& list = args_->GetList();
@@ -570,9 +570,9 @@ void SocketWriteFunction::OnCompleted(int bytes_written) {
   AsyncWorkCompleted();
 }
 
-SocketRecvFromFunction::SocketRecvFromFunction() {}
+SocketRecvFromFunction::SocketRecvFromFunction() = default;
 
-SocketRecvFromFunction::~SocketRecvFromFunction() {}
+SocketRecvFromFunction::~SocketRecvFromFunction() = default;
 
 bool SocketRecvFromFunction::Prepare() {
   params_ = api::socket::RecvFrom::Params::Create(*args_);
@@ -617,7 +617,7 @@ SocketSendToFunction::SocketSendToFunction()
     : socket_id_(0), io_buffer_(NULL), io_buffer_size_(0), port_(0) {
 }
 
-SocketSendToFunction::~SocketSendToFunction() {}
+SocketSendToFunction::~SocketSendToFunction() = default;
 
 bool SocketSendToFunction::Prepare() {
   const auto& list = args_->GetList();
@@ -700,9 +700,9 @@ void SocketSendToFunction::OnCompleted(int bytes_written) {
   AsyncWorkCompleted();
 }
 
-SocketSetKeepAliveFunction::SocketSetKeepAliveFunction() {}
+SocketSetKeepAliveFunction::SocketSetKeepAliveFunction() = default;
 
-SocketSetKeepAliveFunction::~SocketSetKeepAliveFunction() {}
+SocketSetKeepAliveFunction::~SocketSetKeepAliveFunction() = default;
 
 bool SocketSetKeepAliveFunction::Prepare() {
   params_ = api::socket::SetKeepAlive::Params::Create(*args_);
@@ -724,9 +724,9 @@ void SocketSetKeepAliveFunction::Work() {
   SetResult(std::make_unique<base::Value>(result));
 }
 
-SocketSetNoDelayFunction::SocketSetNoDelayFunction() {}
+SocketSetNoDelayFunction::SocketSetNoDelayFunction() = default;
 
-SocketSetNoDelayFunction::~SocketSetNoDelayFunction() {}
+SocketSetNoDelayFunction::~SocketSetNoDelayFunction() = default;
 
 bool SocketSetNoDelayFunction::Prepare() {
   params_ = api::socket::SetNoDelay::Params::Create(*args_);
@@ -744,9 +744,9 @@ void SocketSetNoDelayFunction::Work() {
   SetResult(std::make_unique<base::Value>(result));
 }
 
-SocketGetInfoFunction::SocketGetInfoFunction() {}
+SocketGetInfoFunction::SocketGetInfoFunction() = default;
 
-SocketGetInfoFunction::~SocketGetInfoFunction() {}
+SocketGetInfoFunction::~SocketGetInfoFunction() = default;
 
 bool SocketGetInfoFunction::Prepare() {
   params_ = api::socket::GetInfo::Params::Create(*args_);
@@ -842,9 +842,9 @@ void SocketGetNetworkListFunction::SendResponseOnUIThread(
   SendResponse(true);
 }
 
-SocketJoinGroupFunction::SocketJoinGroupFunction() {}
+SocketJoinGroupFunction::SocketJoinGroupFunction() = default;
 
-SocketJoinGroupFunction::~SocketJoinGroupFunction() {}
+SocketJoinGroupFunction::~SocketJoinGroupFunction() = default;
 
 bool SocketJoinGroupFunction::Prepare() {
   params_ = api::socket::JoinGroup::Params::Create(*args_);
@@ -886,9 +886,9 @@ void SocketJoinGroupFunction::Work() {
   SetResult(std::make_unique<base::Value>(result));
 }
 
-SocketLeaveGroupFunction::SocketLeaveGroupFunction() {}
+SocketLeaveGroupFunction::SocketLeaveGroupFunction() = default;
 
-SocketLeaveGroupFunction::~SocketLeaveGroupFunction() {}
+SocketLeaveGroupFunction::~SocketLeaveGroupFunction() = default;
 
 bool SocketLeaveGroupFunction::Prepare() {
   params_ = api::socket::LeaveGroup::Params::Create(*args_);
@@ -929,9 +929,11 @@ void SocketLeaveGroupFunction::Work() {
   SetResult(std::make_unique<base::Value>(result));
 }
 
-SocketSetMulticastTimeToLiveFunction::SocketSetMulticastTimeToLiveFunction() {}
+SocketSetMulticastTimeToLiveFunction::SocketSetMulticastTimeToLiveFunction() =
+    default;
 
-SocketSetMulticastTimeToLiveFunction::~SocketSetMulticastTimeToLiveFunction() {}
+SocketSetMulticastTimeToLiveFunction::~SocketSetMulticastTimeToLiveFunction() =
+    default;
 
 bool SocketSetMulticastTimeToLiveFunction::Prepare() {
   params_ = api::socket::SetMulticastTimeToLive::Params::Create(*args_);
@@ -961,10 +963,10 @@ void SocketSetMulticastTimeToLiveFunction::Work() {
 }
 
 SocketSetMulticastLoopbackModeFunction::
-    SocketSetMulticastLoopbackModeFunction() {}
+    SocketSetMulticastLoopbackModeFunction() = default;
 
 SocketSetMulticastLoopbackModeFunction::
-    ~SocketSetMulticastLoopbackModeFunction() {}
+    ~SocketSetMulticastLoopbackModeFunction() = default;
 
 bool SocketSetMulticastLoopbackModeFunction::Prepare() {
   params_ = api::socket::SetMulticastLoopbackMode::Params::Create(*args_);
@@ -994,9 +996,9 @@ void SocketSetMulticastLoopbackModeFunction::Work() {
   SetResult(std::make_unique<base::Value>(result));
 }
 
-SocketGetJoinedGroupsFunction::SocketGetJoinedGroupsFunction() {}
+SocketGetJoinedGroupsFunction::SocketGetJoinedGroupsFunction() = default;
 
-SocketGetJoinedGroupsFunction::~SocketGetJoinedGroupsFunction() {}
+SocketGetJoinedGroupsFunction::~SocketGetJoinedGroupsFunction() = default;
 
 bool SocketGetJoinedGroupsFunction::Prepare() {
   params_ = api::socket::GetJoinedGroups::Params::Create(*args_);
@@ -1036,11 +1038,9 @@ void SocketGetJoinedGroupsFunction::Work() {
   SetResult(std::move(values));
 }
 
-SocketSecureFunction::SocketSecureFunction() {
-}
+SocketSecureFunction::SocketSecureFunction() = default;
 
-SocketSecureFunction::~SocketSecureFunction() {
-}
+SocketSecureFunction::~SocketSecureFunction() = default;
 
 bool SocketSecureFunction::Prepare() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

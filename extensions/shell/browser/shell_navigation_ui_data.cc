@@ -9,7 +9,7 @@
 
 namespace extensions {
 
-ShellNavigationUIData::ShellNavigationUIData() {}
+ShellNavigationUIData::ShellNavigationUIData() = default;
 
 ShellNavigationUIData::ShellNavigationUIData(
     content::NavigationHandle* navigation_handle) {
@@ -17,7 +17,7 @@ ShellNavigationUIData::ShellNavigationUIData(
       std::make_unique<ExtensionNavigationUIData>(navigation_handle, -1, -1);
 }
 
-ShellNavigationUIData::~ShellNavigationUIData() {}
+ShellNavigationUIData::~ShellNavigationUIData() = default;
 
 std::unique_ptr<content::NavigationUIData> ShellNavigationUIData::Clone()
     const {

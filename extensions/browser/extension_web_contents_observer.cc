@@ -45,8 +45,7 @@ ExtensionWebContentsObserver::ExtensionWebContentsObserver(
   dispatcher_.set_delegate(this);
 }
 
-ExtensionWebContentsObserver::~ExtensionWebContentsObserver() {
-}
+ExtensionWebContentsObserver::~ExtensionWebContentsObserver() = default;
 
 void ExtensionWebContentsObserver::InitializeRenderFrame(
     content::RenderFrameHost* render_frame_host) {

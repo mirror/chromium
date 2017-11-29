@@ -105,8 +105,7 @@ UserScriptInjector::UserScriptInjector(const UserScript* script,
   user_script_set_observer_.Add(script_list);
 }
 
-UserScriptInjector::~UserScriptInjector() {
-}
+UserScriptInjector::~UserScriptInjector() = default;
 
 void UserScriptInjector::OnUserScriptsUpdated(
     const std::set<HostID>& changed_hosts,

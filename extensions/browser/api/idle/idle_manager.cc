@@ -43,8 +43,7 @@ DefaultEventDelegate::DefaultEventDelegate(content::BrowserContext* context)
     : context_(context) {
 }
 
-DefaultEventDelegate::~DefaultEventDelegate() {
-}
+DefaultEventDelegate::~DefaultEventDelegate() = default;
 
 void DefaultEventDelegate::OnStateChanged(const std::string& extension_id,
                                           ui::IdleState new_state) {
@@ -76,11 +75,9 @@ class DefaultIdleProvider : public IdleManager::IdleTimeProvider {
   bool CheckIdleStateIsLocked() override;
 };
 
-DefaultIdleProvider::DefaultIdleProvider() {
-}
+DefaultIdleProvider::DefaultIdleProvider() = default;
 
-DefaultIdleProvider::~DefaultIdleProvider() {
-}
+DefaultIdleProvider::~DefaultIdleProvider() = default;
 
 void DefaultIdleProvider::CalculateIdleState(int idle_threshold,
                                              ui::IdleCallback notify) {
@@ -127,8 +124,7 @@ IdleManager::IdleManager(content::BrowserContext* context)
       weak_factory_(this) {
 }
 
-IdleManager::~IdleManager() {
-}
+IdleManager::~IdleManager() = default;
 
 void IdleManager::Init() {
   extension_registry_observer_.Add(ExtensionRegistry::Get(context_));

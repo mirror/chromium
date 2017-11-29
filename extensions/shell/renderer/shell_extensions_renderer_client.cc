@@ -14,8 +14,7 @@ ShellExtensionsRendererClient::ShellExtensionsRendererClient()
     : dispatcher_(std::make_unique<Dispatcher>(
           std::make_unique<DispatcherDelegate>())) {}
 
-ShellExtensionsRendererClient::~ShellExtensionsRendererClient() {
-}
+ShellExtensionsRendererClient::~ShellExtensionsRendererClient() = default;
 
 bool ShellExtensionsRendererClient::IsIncognitoProcess() const {
   // app_shell doesn't support off-the-record contexts.

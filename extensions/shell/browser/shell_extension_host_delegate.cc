@@ -12,11 +12,9 @@
 
 namespace extensions {
 
-ShellExtensionHostDelegate::ShellExtensionHostDelegate() {
-}
+ShellExtensionHostDelegate::ShellExtensionHostDelegate() = default;
 
-ShellExtensionHostDelegate::~ShellExtensionHostDelegate() {
-}
+ShellExtensionHostDelegate::~ShellExtensionHostDelegate() = default;
 
 void ShellExtensionHostDelegate::OnExtensionHostCreated(
     content::WebContents* web_contents) {

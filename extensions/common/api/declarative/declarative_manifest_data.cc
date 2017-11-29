@@ -68,11 +68,9 @@ bool ConvertManifestRule(const linked_ptr<DeclarativeManifestData::Rule>& rule,
 
 }  // namespace
 
-DeclarativeManifestData::DeclarativeManifestData() {
-}
+DeclarativeManifestData::DeclarativeManifestData() = default;
 
-DeclarativeManifestData::~DeclarativeManifestData() {
-}
+DeclarativeManifestData::~DeclarativeManifestData() = default;
 
 // static
 DeclarativeManifestData* DeclarativeManifestData::Get(

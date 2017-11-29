@@ -17,7 +17,7 @@ SocketsManifestData::SocketsManifestData(
   DCHECK(permission_);
 }
 
-SocketsManifestData::~SocketsManifestData() {}
+SocketsManifestData::~SocketsManifestData() = default;
 
 // static
 SocketsManifestData* SocketsManifestData::Get(const Extension* extension) {

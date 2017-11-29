@@ -58,8 +58,7 @@ LazyBackgroundTaskQueue::LazyBackgroundTaskQueue(
   extension_registry_observer_.Add(ExtensionRegistry::Get(browser_context));
 }
 
-LazyBackgroundTaskQueue::~LazyBackgroundTaskQueue() {
-}
+LazyBackgroundTaskQueue::~LazyBackgroundTaskQueue() = default;
 
 // static
 LazyBackgroundTaskQueue* LazyBackgroundTaskQueue::Get(

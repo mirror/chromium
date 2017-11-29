@@ -24,7 +24,7 @@ UpdateDataProvider::UpdateDataProvider(content::BrowserContext* context,
                                        const InstallCallback& callback)
     : context_(context), callback_(callback) {}
 
-UpdateDataProvider::~UpdateDataProvider() {}
+UpdateDataProvider::~UpdateDataProvider() = default;
 
 void UpdateDataProvider::Shutdown() {
   context_ = nullptr;

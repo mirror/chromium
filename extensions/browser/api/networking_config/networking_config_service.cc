@@ -62,8 +62,7 @@ NetworkingConfigService::NetworkingConfigService(
   registry_observer_.Add(extension_registry);
 }
 
-NetworkingConfigService::~NetworkingConfigService() {
-}
+NetworkingConfigService::~NetworkingConfigService() = default;
 
 void NetworkingConfigService::OnExtensionUnloaded(
     content::BrowserContext* browser_context,

@@ -277,7 +277,7 @@ APISignature::APISignature(const base::ListValue& specification) {
 APISignature::APISignature(std::vector<std::unique_ptr<ArgumentSpec>> signature)
     : signature_(std::move(signature)) {}
 
-APISignature::~APISignature() {}
+APISignature::~APISignature() = default;
 
 bool APISignature::ParseArgumentsToV8(
     v8::Local<v8::Context> context,

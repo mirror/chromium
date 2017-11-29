@@ -12,8 +12,7 @@ TestAppWindowContents::TestAppWindowContents(
     std::unique_ptr<content::WebContents> web_contents)
     : web_contents_(std::move(web_contents)) {}
 
-TestAppWindowContents::~TestAppWindowContents() {
-}
+TestAppWindowContents::~TestAppWindowContents() = default;
 
 void TestAppWindowContents::Initialize(content::BrowserContext* context,
                                        content::RenderFrameHost* creator_frame,

@@ -24,7 +24,7 @@ ValueStore::Status CreateStatusCopy(const ValueStore::Status& status) {
 
 TestingValueStore::TestingValueStore() : read_count_(0), write_count_(0) {}
 
-TestingValueStore::~TestingValueStore() {}
+TestingValueStore::~TestingValueStore() = default;
 
 void TestingValueStore::set_status_code(StatusCode status_code) {
   status_ = ValueStore::Status(status_code, kGenericErrorMessage);

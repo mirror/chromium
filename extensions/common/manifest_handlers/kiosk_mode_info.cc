@@ -30,8 +30,7 @@ KioskModeInfo::KioskModeInfo(KioskStatus kiosk_status,
       required_platform_version(required_platform_version),
       always_update(always_update) {}
 
-KioskModeInfo::~KioskModeInfo() {
-}
+KioskModeInfo::~KioskModeInfo() = default;
 
 // static
 KioskModeInfo* KioskModeInfo::Get(const Extension* extension) {
@@ -70,8 +69,7 @@ KioskModeHandler::KioskModeHandler() {
   supported_keys_.push_back(keys::kKioskSecondaryApps);
 }
 
-KioskModeHandler::~KioskModeHandler() {
-}
+KioskModeHandler::~KioskModeHandler() = default;
 
 bool KioskModeHandler::Parse(Extension* extension, base::string16* error) {
   const Manifest* manifest = extension->manifest();

@@ -47,8 +47,7 @@ WebcamPrivateAPI::WebcamPrivateAPI(content::BrowserContext* context)
       new ApiResourceManager<WebcamResource>(context));
 }
 
-WebcamPrivateAPI::~WebcamPrivateAPI() {
-}
+WebcamPrivateAPI::~WebcamPrivateAPI() = default;
 
 Webcam* WebcamPrivateAPI::GetWebcam(const std::string& extension_id,
                                     const std::string& webcam_id) {
@@ -174,12 +173,11 @@ bool WebcamPrivateAPI::RemoveWebcamResource(const std::string& extension_id,
   return false;
 }
 
-WebcamPrivateOpenSerialWebcamFunction::WebcamPrivateOpenSerialWebcamFunction() {
-}
+WebcamPrivateOpenSerialWebcamFunction::WebcamPrivateOpenSerialWebcamFunction() =
+    default;
 
 WebcamPrivateOpenSerialWebcamFunction::
-    ~WebcamPrivateOpenSerialWebcamFunction() {
-}
+    ~WebcamPrivateOpenSerialWebcamFunction() = default;
 
 bool WebcamPrivateOpenSerialWebcamFunction::RunAsync() {
   std::unique_ptr<webcam_private::OpenSerialWebcam::Params> params(
@@ -210,11 +208,9 @@ void WebcamPrivateOpenSerialWebcamFunction::OnOpenWebcam(
   }
 }
 
-WebcamPrivateCloseWebcamFunction::WebcamPrivateCloseWebcamFunction() {
-}
+WebcamPrivateCloseWebcamFunction::WebcamPrivateCloseWebcamFunction() = default;
 
-WebcamPrivateCloseWebcamFunction::~WebcamPrivateCloseWebcamFunction() {
-}
+WebcamPrivateCloseWebcamFunction::~WebcamPrivateCloseWebcamFunction() = default;
 
 bool WebcamPrivateCloseWebcamFunction::RunAsync() {
   std::unique_ptr<webcam_private::CloseWebcam::Params> params(
@@ -225,11 +221,9 @@ bool WebcamPrivateCloseWebcamFunction::RunAsync() {
       ->CloseWebcam(extension_id(), params->webcam_id);
 }
 
-WebcamPrivateSetFunction::WebcamPrivateSetFunction() {
-}
+WebcamPrivateSetFunction::WebcamPrivateSetFunction() = default;
 
-WebcamPrivateSetFunction::~WebcamPrivateSetFunction() {
-}
+WebcamPrivateSetFunction::~WebcamPrivateSetFunction() = default;
 
 bool WebcamPrivateSetFunction::RunAsync() {
   std::unique_ptr<webcam_private::Set::Params> params(
@@ -334,8 +328,7 @@ WebcamPrivateGetFunction::WebcamPrivateGetFunction()
       get_zoom_(false),
       success_(true) {}
 
-WebcamPrivateGetFunction::~WebcamPrivateGetFunction() {
-}
+WebcamPrivateGetFunction::~WebcamPrivateGetFunction() = default;
 
 bool WebcamPrivateGetFunction::RunAsync() {
   std::unique_ptr<webcam_private::Get::Params> params(
@@ -419,11 +412,9 @@ void WebcamPrivateGetFunction::OnGetWebcamParameters(InquiryType type,
   }
 }
 
-WebcamPrivateResetFunction::WebcamPrivateResetFunction() {
-}
+WebcamPrivateResetFunction::WebcamPrivateResetFunction() = default;
 
-WebcamPrivateResetFunction::~WebcamPrivateResetFunction() {
-}
+WebcamPrivateResetFunction::~WebcamPrivateResetFunction() = default;
 
 bool WebcamPrivateResetFunction::RunAsync() {
   std::unique_ptr<webcam_private::Reset::Params> params(

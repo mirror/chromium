@@ -30,8 +30,7 @@ RuntimeCustomBindings::RuntimeCustomBindings(ScriptContext* context)
                            base::Unretained(this)));
 }
 
-RuntimeCustomBindings::~RuntimeCustomBindings() {
-}
+RuntimeCustomBindings::~RuntimeCustomBindings() = default;
 
 void RuntimeCustomBindings::GetManifest(
     const v8::FunctionCallbackInfo<v8::Value>& args) {

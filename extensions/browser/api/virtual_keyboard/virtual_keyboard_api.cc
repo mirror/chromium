@@ -19,7 +19,7 @@ using chromeos::input_method::InputMethodManager;
 namespace extensions {
 
 VirtualKeyboardRestrictFeaturesFunction::
-    VirtualKeyboardRestrictFeaturesFunction() {}
+    VirtualKeyboardRestrictFeaturesFunction() = default;
 
 ExtensionFunction::ResponseAction
 VirtualKeyboardRestrictFeaturesFunction::Run() {

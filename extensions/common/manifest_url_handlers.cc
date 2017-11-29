@@ -81,11 +81,9 @@ const GURL ManifestURL::GetDetailsURL(const Extension* extension) {
       GURL::EmptyGURL();
 }
 
-HomepageURLHandler::HomepageURLHandler() {
-}
+HomepageURLHandler::HomepageURLHandler() = default;
 
-HomepageURLHandler::~HomepageURLHandler() {
-}
+HomepageURLHandler::~HomepageURLHandler() = default;
 
 bool HomepageURLHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<ManifestURL> manifest_url(new ManifestURL);
@@ -111,11 +109,9 @@ const std::vector<std::string> HomepageURLHandler::Keys() const {
   return SingleKey(keys::kHomepageURL);
 }
 
-UpdateURLHandler::UpdateURLHandler() {
-}
+UpdateURLHandler::UpdateURLHandler() = default;
 
-UpdateURLHandler::~UpdateURLHandler() {
-}
+UpdateURLHandler::~UpdateURLHandler() = default;
 
 bool UpdateURLHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<ManifestURL> manifest_url(new ManifestURL);
@@ -143,11 +139,9 @@ const std::vector<std::string> UpdateURLHandler::Keys() const {
   return SingleKey(keys::kUpdateURL);
 }
 
-AboutPageHandler::AboutPageHandler() {
-}
+AboutPageHandler::AboutPageHandler() = default;
 
-AboutPageHandler::~AboutPageHandler() {
-}
+AboutPageHandler::~AboutPageHandler() = default;
 
 bool AboutPageHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<ManifestURL> manifest_url(new ManifestURL);

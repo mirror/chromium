@@ -6,10 +6,8 @@
 
 namespace extensions {
 
-GrantedFileEntry::GrantedFileEntry() {
-}
+GrantedFileEntry::GrantedFileEntry() = default;
 
-GrantedFileEntry::~GrantedFileEntry() {
-}
+GrantedFileEntry::~GrantedFileEntry() = default;
 
 }  // namespace extensions

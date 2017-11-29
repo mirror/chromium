@@ -55,7 +55,7 @@ class WakeEventPage::WakeEventPageNativeHandler
         &WakeEventPageNativeHandler::DeleteSelf, base::Unretained(this)));
   };
 
-  ~WakeEventPageNativeHandler() override {}
+  ~WakeEventPageNativeHandler() override = default;
 
  private:
   void DeleteSelf() {
@@ -151,11 +151,11 @@ WakeEventPage::RequestData::RequestData(int thread_id,
                                         const OnResponseCallback& on_response)
     : thread_id(thread_id), on_response(on_response) {}
 
-WakeEventPage::RequestData::~RequestData() {}
+WakeEventPage::RequestData::~RequestData() = default;
 
-WakeEventPage::WakeEventPage() {}
+WakeEventPage::WakeEventPage() = default;
 
-WakeEventPage::~WakeEventPage() {}
+WakeEventPage::~WakeEventPage() = default;
 
 void WakeEventPage::MakeRequest(const std::string& extension_id,
                                 const OnResponseCallback& on_response) {

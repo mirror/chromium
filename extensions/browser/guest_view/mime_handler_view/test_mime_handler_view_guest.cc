@@ -16,7 +16,7 @@ TestMimeHandlerViewGuest::TestMimeHandlerViewGuest(
     : MimeHandlerViewGuest(owner_web_contents),
       weak_ptr_factory_(this) {}
 
-TestMimeHandlerViewGuest::~TestMimeHandlerViewGuest() {}
+TestMimeHandlerViewGuest::~TestMimeHandlerViewGuest() = default;
 
 // static
 GuestViewBase* TestMimeHandlerViewGuest::Create(

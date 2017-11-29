@@ -28,8 +28,8 @@ namespace {
 // be a persistent object available to tests?
 class ExtensionsContentClient : public content::ContentClient {
  public:
-  ExtensionsContentClient() {}
-  ~ExtensionsContentClient() override {}
+  ExtensionsContentClient() = default;
+  ~ExtensionsContentClient() override = default;
 
   // content::ContentClient overrides:
   void AddAdditionalSchemes(Schemes* schemes) override {
@@ -60,7 +60,7 @@ class ExtensionsTestSuite : public content::ContentTestSuiteBase {
 ExtensionsTestSuite::ExtensionsTestSuite(int argc, char** argv)
     : content::ContentTestSuiteBase(argc, argv) {}
 
-ExtensionsTestSuite::~ExtensionsTestSuite() {}
+ExtensionsTestSuite::~ExtensionsTestSuite() = default;
 
 void ExtensionsTestSuite::Initialize() {
   content::ContentTestSuiteBase::Initialize();

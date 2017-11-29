@@ -76,8 +76,7 @@ ExtensionIconPlaceholder::ExtensionIconPlaceholder(
       base_image_(GetBackgroundImageForIconSize(size)) {
 }
 
-ExtensionIconPlaceholder::~ExtensionIconPlaceholder() {
-}
+ExtensionIconPlaceholder::~ExtensionIconPlaceholder() = default;
 
 gfx::Image ExtensionIconPlaceholder::CreateImage(
     extension_misc::ExtensionIcons size,

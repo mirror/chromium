@@ -100,7 +100,7 @@ class PrinterProviderApiTest : public ShellApiTest {
     PRINT_REQUEST_DATA_TYPE_BYTES
   };
 
-  PrinterProviderApiTest() {}
+  PrinterProviderApiTest() = default;
   ~PrinterProviderApiTest() override {
     base::ScopedAllowBlockingForTesting allow_blocking;
     ignore_result(data_dir_.Delete());

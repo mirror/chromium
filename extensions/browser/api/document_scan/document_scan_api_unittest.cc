@@ -24,7 +24,7 @@ class DocumentScanScanFunctionTest : public ApiUnitTest {
   DocumentScanScanFunctionTest()
       : function_(new DocumentScanScanFunction()),
         document_scan_interface_(new MockDocumentScanInterface()) {}
-  ~DocumentScanScanFunctionTest() override {}
+  ~DocumentScanScanFunctionTest() override = default;
 
   void SetUp() override {
     ApiUnitTest::SetUp();

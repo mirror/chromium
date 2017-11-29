@@ -32,8 +32,7 @@ WarningServiceFactory::WarningServiceFactory()
   DependsOn(ExtensionRegistryFactory::GetInstance());
 }
 
-WarningServiceFactory::~WarningServiceFactory() {
-}
+WarningServiceFactory::~WarningServiceFactory() = default;
 
 KeyedService* WarningServiceFactory::BuildServiceInstanceFor(
     BrowserContext* context) const {

@@ -18,7 +18,7 @@ namespace extensions {
 
 // PreloadCheckRunner:
 PreloadCheckRunner::PreloadCheckRunner() : called_(false) {}
-PreloadCheckRunner::~PreloadCheckRunner() {}
+PreloadCheckRunner::~PreloadCheckRunner() = default;
 
 void PreloadCheckRunner::Run(PreloadCheck* check) {
   check->Start(GetCallback());
@@ -60,7 +60,7 @@ void PreloadCheckRunner::OnCheckComplete(const PreloadCheck::Errors& errors) {
 PreloadCheckStub::PreloadCheckStub(const Errors& errors)
     : PreloadCheck(nullptr), errors_(errors), weak_ptr_factory_(this) {}
 
-PreloadCheckStub::~PreloadCheckStub() {}
+PreloadCheckStub::~PreloadCheckStub() = default;
 
 void PreloadCheckStub::Start(ResultCallback callback) {
   DCHECK(!callback.is_null());

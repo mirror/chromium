@@ -40,8 +40,7 @@ ContentHashReader::ContentHashReader(const std::string& extension_id,
       file_missing_from_verified_contents_(false),
       block_size_(0) {}
 
-ContentHashReader::~ContentHashReader() {
-}
+ContentHashReader::~ContentHashReader() = default;
 
 bool ContentHashReader::Init() {
   base::ElapsedTimer timer;

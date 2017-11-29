@@ -11,7 +11,7 @@ namespace extensions {
 
 class ProductIconManifestTest : public ManifestTest {
  public:
-  ProductIconManifestTest() {}
+  ProductIconManifestTest() = default;
 
  protected:
   std::unique_ptr<base::DictionaryValue> CreateManifest(

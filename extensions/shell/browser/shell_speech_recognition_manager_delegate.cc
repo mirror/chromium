@@ -19,12 +19,11 @@ using content::WebContents;
 namespace extensions {
 namespace speech {
 
-ShellSpeechRecognitionManagerDelegate::ShellSpeechRecognitionManagerDelegate() {
-}
+ShellSpeechRecognitionManagerDelegate::ShellSpeechRecognitionManagerDelegate() =
+    default;
 
 ShellSpeechRecognitionManagerDelegate::
-~ShellSpeechRecognitionManagerDelegate() {
-}
+    ~ShellSpeechRecognitionManagerDelegate() = default;
 
 void ShellSpeechRecognitionManagerDelegate::OnRecognitionStart(int session_id) {
 }

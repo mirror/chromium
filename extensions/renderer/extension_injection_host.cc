@@ -19,8 +19,7 @@ ExtensionInjectionHost::ExtensionInjectionHost(
       extension_(extension) {
 }
 
-ExtensionInjectionHost::~ExtensionInjectionHost() {
-}
+ExtensionInjectionHost::~ExtensionInjectionHost() = default;
 
 // static
 std::unique_ptr<const InjectionHost> ExtensionInjectionHost::Create(

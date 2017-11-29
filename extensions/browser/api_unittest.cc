@@ -32,7 +32,7 @@ namespace extensions {
 ApiUnitTest::ApiUnitTest()
     : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
 
-ApiUnitTest::~ApiUnitTest() {}
+ApiUnitTest::~ApiUnitTest() = default;
 
 void ApiUnitTest::SetUp() {
   ExtensionsTest::SetUp();

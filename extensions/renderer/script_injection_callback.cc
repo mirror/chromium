@@ -13,8 +13,7 @@ ScriptInjectionCallback::ScriptInjectionCallback(
     : injection_completed_callback_(injection_completed_callback) {
 }
 
-ScriptInjectionCallback::~ScriptInjectionCallback() {
-}
+ScriptInjectionCallback::~ScriptInjectionCallback() = default;
 
 void ScriptInjectionCallback::Completed(
     const blink::WebVector<v8::Local<v8::Value>>& result) {

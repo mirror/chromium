@@ -34,8 +34,7 @@ DefaultEventDelegate::DefaultEventDelegate(content::BrowserContext* context)
     : context_(context) {
 }
 
-DefaultEventDelegate::~DefaultEventDelegate() {
-}
+DefaultEventDelegate::~DefaultEventDelegate() = default;
 
 bool DefaultEventDelegate::HasExtensionRegisteredForEvent(
     const std::string& extension_id) const {
@@ -66,8 +65,7 @@ NetworkingConfigServiceFactory::NetworkingConfigServiceFactory()
   DependsOn(extensions::ExtensionRegistryFactory::GetInstance());
 }
 
-NetworkingConfigServiceFactory::~NetworkingConfigServiceFactory() {
-}
+NetworkingConfigServiceFactory::~NetworkingConfigServiceFactory() = default;
 
 KeyedService* NetworkingConfigServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

@@ -51,7 +51,7 @@ struct ResponseInfo {
         app_view_guest(app_view_guest),
         callback(callback) {}
 
-  ~ResponseInfo() {}
+  ~ResponseInfo() = default;
 };
 
 using PendingResponseMap = std::map<int, std::unique_ptr<ResponseInfo>>;
@@ -113,8 +113,7 @@ AppViewGuest::AppViewGuest(WebContents* owner_web_contents)
     app_delegate_.reset(app_view_guest_delegate_->CreateAppDelegate());
 }
 
-AppViewGuest::~AppViewGuest() {
-}
+AppViewGuest::~AppViewGuest() = default;
 
 bool AppViewGuest::HandleContextMenu(const content::ContextMenuParams& params) {
   if (app_view_guest_delegate_) {

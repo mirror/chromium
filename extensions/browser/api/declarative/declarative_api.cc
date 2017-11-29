@@ -135,9 +135,9 @@ void ConvertBinaryDictionaryValuesToBase64(base::Value* dict) {
 
 }  // namespace
 
-RulesFunction::RulesFunction() {}
+RulesFunction::RulesFunction() = default;
 
-RulesFunction::~RulesFunction() {}
+RulesFunction::~RulesFunction() = default;
 
 bool RulesFunction::HasPermission() {
   std::string event_name;
