@@ -180,30 +180,29 @@ static bool ReadCRL(base::StringPiece* data, std::string* out_parent_spki_hash,
 }
 
 // static
-bool CRLSetStorage::CopyBlockedSPKIsFromHeader(
-    CRLSet* crl_set,
-    base::DictionaryValue* header_dict) {
-  base::ListValue* blocked_spkis_list = NULL;
-  if (!header_dict->GetList("BlockedSPKIs", &blocked_spkis_list)) {
-    // BlockedSPKIs is optional, so it's fine if we don't find it.
+bool CRLSetStorage::CopyHashListFromHeader(base::DictionaryValue* header_dict,
+                                           const char* key,
+                                           std::vector<std::string>* out) {
+  base::ListValue* list = nullptr;
+  if (!header_dict->GetList(key, &list)) {
+    // Hash lists are optional so it's not an error if not present.
     return true;
   }
 
-  crl_set->blocked_spkis_.clear();
-  crl_set->blocked_spkis_.reserve(blocked_spkis_list->GetSize());
+  out->clear();
+  out->reserve(list->GetSize());
 
-  std::string spki_sha256_base64;
+  std::string sha256_base64;
 
-  for (size_t i = 0; i < blocked_spkis_list->GetSize(); ++i) {
-    spki_sha256_base64.clear();
+  for (size_t i = 0; i < list->GetSize(); ++i) {
+    sha256_base64.clear();
 
-    if (!blocked_spkis_list->GetString(i, &spki_sha256_base64))
+    if (!list->GetString(i, &sha256_base64))
       return false;
 
-    crl_set->blocked_spkis_.push_back(std::string());
-    if (!base::Base64Decode(spki_sha256_base64,
-                            &crl_set->blocked_spkis_.back())) {
-      crl_set->blocked_spkis_.pop_back();
+    out->push_back(std::string());
+    if (!base::Base64Decode(sha256_base64, &out->back())) {
+      out->pop_back();
       return false;
     }
   }
@@ -356,8 +355,12 @@ bool CRLSetStorage::Parse(base::StringPiece data,
     crl_set->crls_index_by_issuer_[back_pair->first] = crl_index;
   }
 
-  if (!CopyBlockedSPKIsFromHeader(crl_set.get(), header_dict.get()))
+  if (!CopyHashListFromHeader(header_dict.get(), "BlockedSPKIs",
+                              &crl_set->blocked_spkis_) ||
+      !CopyHashListFromHeader(header_dict.get(), "BlockedSubjects",
+                              &crl_set->blocked_subjects_)) {
     return false;
+  }
 
   *out_crl_set = crl_set;
   return true;
@@ -403,8 +406,12 @@ bool CRLSetStorage::ApplyDelta(const CRLSet* in_crl_set,
   crl_set->sequence_ = static_cast<uint32_t>(sequence);
   crl_set->not_after_ = static_cast<uint64_t>(not_after);
 
-  if (!CopyBlockedSPKIsFromHeader(crl_set.get(), header_dict.get()))
+  if (!CopyHashListFromHeader(header_dict.get(), "BlockedSPKIs",
+                              &crl_set->blocked_spkis_) ||
+      !CopyHashListFromHeader(header_dict.get(), "BlockedSubjects",
+                              &crl_set->blocked_subjects_)) {
     return false;
+  }
 
   std::vector<uint8_t> crl_changes;
 

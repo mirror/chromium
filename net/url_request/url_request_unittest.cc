@@ -11378,7 +11378,8 @@ TEST_F(HTTPSEVCRLSetTest, FreshCRLSetCovered) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status =
       SpawnedTestServer::SSLOptions::OCSP_INVALID_RESPONSE;
-  ScopedSetCRLSet set_crlset(CRLSet::ForTesting(false, &kOCSPTestCertSPKI, ""));
+  ScopedSetCRLSet set_crlset(
+      CRLSet::ForTesting(false, &kOCSPTestCertSPKI, "", ""));
 
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
@@ -11484,7 +11485,32 @@ TEST_F(HTTPSCRLSetTest, CRLSetRevoked) {
   ssl_options.ocsp_status = SpawnedTestServer::SSLOptions::OCSP_OK;
   ssl_options.cert_serial = 10;
   ScopedSetCRLSet set_crlset(
-      CRLSet::ForTesting(false, &kOCSPTestCertSPKI, "\x0a"));
+      CRLSet::ForTesting(false, &kOCSPTestCertSPKI, "\x0a", ""));
+
+  CertStatus cert_status = 0;
+  DoConnection(ssl_options, &cert_status);
+
+  // If the certificate is recorded as revoked in the CRLSet, that should be
+  // reflected without online revocation checking.
+  EXPECT_EQ(CERT_STATUS_REVOKED, cert_status & CERT_STATUS_ALL_ERRORS);
+  EXPECT_FALSE(cert_status & CERT_STATUS_IS_EV);
+  EXPECT_FALSE(
+      static_cast<bool>(cert_status & CERT_STATUS_REV_CHECKING_ENABLED));
+}
+
+TEST_F(HTTPSCRLSetTest, CRLSetRevokedBySubject) {
+#if defined(OS_ANDROID)
+  LOG(WARNING) << "Skipping test because system doesn't support CRLSets";
+  return;
+#endif
+
+  SpawnedTestServer::SSLOptions ssl_options(
+      SpawnedTestServer::SSLOptions::CERT_AUTO);
+  ssl_options.ocsp_status = SpawnedTestServer::SSLOptions::OCSP_OK;
+  static const char kCommonName[] = "Test CN";
+  ssl_options.cert_common_name = kCommonName;
+  ScopedSetCRLSet set_crlset(
+      CRLSet::ForTesting(false, nullptr, "", kCommonName));
 
   CertStatus cert_status = 0;
   DoConnection(ssl_options, &cert_status);

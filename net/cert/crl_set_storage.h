@@ -44,10 +44,12 @@ class NET_EXPORT CRLSetStorage {
   static std::string Serialize(const CRLSet* crl_set);
 
  private:
-  // CopyBlockedSPKIsFromHeader sets |blocked_spkis_| to the list of values
-  // from "BlockedSPKIs" in |header_dict|.
-  static bool CopyBlockedSPKIsFromHeader(CRLSet* crl_set,
-                                         base::DictionaryValue* header_dict);
+  // CopyHashListFromHeader parses a list of base64-encoded, SHA-256 hashes
+  // from the given |key| in |header_dict| and sets |*out| to the decoded
+  // values. It's not an error if |key| is not found in |header_dict|.
+  static bool CopyHashListFromHeader(base::DictionaryValue* header_dict,
+                                     const char* key,
+                                     std::vector<std::string>* out);
 };
 
 }  // namespace net

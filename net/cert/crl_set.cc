@@ -6,6 +6,9 @@
 
 #include "base/logging.h"
 #include "base/time/time.h"
+#include "crypto/sha2.h"
+#include "third_party/boringssl/src/include/openssl/bytestring.h"
+#include "third_party/boringssl/src/include/openssl/mem.h"
 
 namespace net {
 
@@ -22,6 +25,21 @@ CRLSet::Result CRLSet::CheckSPKI(const base::StringPiece& spki_hash) const {
        i != blocked_spkis_.end(); ++i) {
     if (spki_hash.size() == i->size() &&
         memcmp(spki_hash.data(), i->data(), i->size()) == 0) {
+      return REVOKED;
+    }
+  }
+
+  return GOOD;
+}
+
+CRLSet::Result CRLSet::CheckSubject(
+    const base::StringPiece& encoded_subject) const {
+  uint8_t digest[crypto::kSHA256Length];
+  crypto::SHA256HashString(encoded_subject, &digest, sizeof(digest));
+
+  for (const auto& i : blocked_subjects_) {
+    if (i.size() == sizeof(digest) &&
+        memcmp(i.data(), digest, sizeof(digest)) == 0) {
       return REVOKED;
     }
   }
@@ -77,20 +95,51 @@ const CRLSet::CRLList& CRLSet::crls() const {
 
 // static
 CRLSet* CRLSet::EmptyCRLSetForTesting() {
-  return ForTesting(false, NULL, "");
+  return ForTesting(false, NULL, "", "");
 }
 
 CRLSet* CRLSet::ExpiredCRLSetForTesting() {
-  return ForTesting(true, NULL, "");
+  return ForTesting(true, NULL, "", "");
 }
 
 // static
 CRLSet* CRLSet::ForTesting(bool is_expired,
                            const SHA256HashValue* issuer_spki,
-                           const std::string& serial_number) {
+                           const std::string& serial_number,
+                           const std::string& common_name) {
+  std::string subject_hash;
+  if (!common_name.empty()) {
+    CBB cbb, top_level, set, inner_seq, oid, cn;
+    uint8_t* x501_data;
+    size_t x501_len;
+    static const uint8_t kCommonNameOID[] = {0x55, 0x04, 0x03};  // 2.5.4.3
+
+    CBB_zero(&cbb);
+
+    if (!CBB_init(&cbb, 32) ||
+        !CBB_add_asn1(&cbb, &top_level, CBS_ASN1_SEQUENCE) ||
+        !CBB_add_asn1(&top_level, &set, CBS_ASN1_SET) ||
+        !CBB_add_asn1(&set, &inner_seq, CBS_ASN1_SEQUENCE) ||
+        !CBB_add_asn1(&inner_seq, &oid, CBS_ASN1_OBJECT) ||
+        !CBB_add_bytes(&oid, kCommonNameOID, sizeof(kCommonNameOID)) ||
+        !CBB_add_asn1(&inner_seq, &cn, CBS_ASN1_PRINTABLESTRING) ||
+        !CBB_add_bytes(&cn,
+                       reinterpret_cast<const uint8_t*>(common_name.data()),
+                       common_name.size()) ||
+        !CBB_finish(&cbb, &x501_data, &x501_len)) {
+      CBB_cleanup(&cbb);
+      return nullptr;
+    }
+
+    subject_hash.assign(crypto::SHA256HashString(
+        base::StringPiece(reinterpret_cast<char*>(x501_data), x501_len)));
+    OPENSSL_free(x501_data);
+  }
+
   CRLSet* crl_set = new CRLSet;
   if (is_expired)
     crl_set->not_after_ = 1;
+
   if (issuer_spki != NULL) {
     const std::string spki(reinterpret_cast<const char*>(issuer_spki->data),
                            sizeof(issuer_spki->data));
@@ -100,6 +149,9 @@ CRLSet* CRLSet::ForTesting(bool is_expired,
 
   if (!serial_number.empty())
     crl_set->crls_[0].second.push_back(serial_number);
+
+  if (!subject_hash.empty())
+    crl_set->blocked_subjects_.push_back(subject_hash);
 
   return crl_set;
 }
