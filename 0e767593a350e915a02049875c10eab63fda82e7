@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c42d730c_325e4aca",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-29T17:10:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d9781ee_a17f35ee",
+      "range": {
+        "startLine": 209,
+        "startChar": 23,
+        "endLine": 209,
+        "endChar": 28
+      },
+      "revId": "0e767593a350e915a02049875c10eab63fda82e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7fef65b_00c8eec4",
         "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "0e767593a350e915a02049875c10eab63fda82e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc3e221_a4362763",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-29T17:10:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7fef65b_00c8eec4",
+      "revId": "0e767593a350e915a02049875c10eab63fda82e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e369872c_07ffe843",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-29T17:10:09Z",
+      "side": 1,
+      "message": "That isn\u0027t exposed, only DispatcherForActiveViewController is. Should I expose the ActiveViewController itself? I didn\u0027t want to promote it\u0027s use, but I agree that rootViewController is not desirable here.",
+      "parentUuid": "4fedd586_04d6911c",
+      "range": {
+        "startLine": 212,
+        "startChar": 34,
+        "endLine": 212,
+        "endChar": 52
+      },
+      "revId": "0e767593a350e915a02049875c10eab63fda82e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "897f5004_65edbbeb",
         "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
         "patchSetId": 3
@@ -76,6 +142,24 @@
       "writtenOn": "2017-11-29T13:02:49Z",
       "side": 1,
       "message": "Verify tab count as well (to ensure that a new tab was created), as in the tests above?",
+      "revId": "0e767593a350e915a02049875c10eab63fda82e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030bce73_5e3de879",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-29T17:10:09Z",
+      "side": 1,
+      "message": "I actually do above on line 221:\n   [ChromeEarlGrey waitForMainTabCount:2];\n\nI moved the ordering because the other tests verify the URL before waiting for the tab. I was going to separately look into fixing the other tests so I don\u0027t mix that with this CL.",
+      "parentUuid": "897f5004_65edbbeb",
       "revId": "0e767593a350e915a02049875c10eab63fda82e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
