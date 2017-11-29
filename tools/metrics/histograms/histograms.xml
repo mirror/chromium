@@ -6863,6 +6863,48 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true" name="Blink.ResourceLoadScheduler.RequestCount"
+    units="requests">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>toyoshim@chromium.org</owner>
+  <summary>
+    Total number of resource requests completed between the last scheduling
+    state change and now.
+  </summary>
+</histogram>
+
+<histogram base="true" name="Blink.ResourceLoadScheduler.TotalRequestCount"
+    units="requests">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>toyoshim@chromium.org</owner>
+  <summary>
+    Total number of resource requests completed during the frame life cycle.
+  </summary>
+</histogram>
+
+<histogram base="true" name="Blink.ResourceLoadScheduler.TotalTrafficBytes"
+    units="bytes">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>toyoshim@chromium.org</owner>
+  <summary>
+    Total traffic bytes of resource requests completed during the frame life
+    cycle.
+  </summary>
+</histogram>
+
+<histogram base="true" name="Blink.ResourceLoadScheduler.TrafficBytes"
+    units="bytes">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>toyoshim@chromium.org</owner>
+  <summary>
+    Total number of resource requests completed during the frame life cycle.
+  </summary>
+</histogram>
+
 <histogram name="Blink.RestoredCachedStyleSheet"
     enum="RestoredCachedStyleSheet">
   <obsolete>
@@ -107166,6 +107208,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="SubframePartiallyThrottled"
       label="Sub frame, partially throttled"/>
   <affected-histogram name="Blink.ResourceLoadScheduler.PeakRequests"/>
+  <affected-histogram name="Blink.ResourceLoadScheduler.RequestCount"/>
+  <affected-histogram name="Blink.ResourceLoadScheduler.TotalRequestCount"/>
+  <affected-histogram name="Blink.ResourceLoadScheduler.TotalTrafficBytes"/>
+  <affected-histogram name="Blink.ResourceLoadScheduler.TrafficBytes"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="ResourcePrefetchPredictorNetworkTypePrefetch"
