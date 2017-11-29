@@ -797,7 +797,6 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
   EXPECT_FALSE(child_resource_provider_->InUseByConsumer(id3));
 
   {
-    child_resource_provider_->WaitSyncToken(id1);
     ResourceProvider::ScopedWriteLockGL lock(child_resource_provider_.get(),
                                              id1);
     ASSERT_NE(0U, lock.GetTexture());
@@ -805,7 +804,6 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
   // Ensure copying to resource doesn't fail.
   child_resource_provider_->CopyToResource(id2, data2, size);
   {
-    child_resource_provider_->WaitSyncToken(id2);
     ResourceProvider::ScopedWriteLockGL lock(child_resource_provider_.get(),
                                              id2);
     ASSERT_NE(0U, lock.GetTexture());
@@ -1177,7 +1175,6 @@ TEST_P(ResourceProviderTest, ReadLockCountStopsReturnToChildOrDelete) {
   EXPECT_EQ(1u, returned_to_child.size());
   child_resource_provider_->ReceiveReturnsFromParent(returned_to_child);
 
-  child_resource_provider_->WaitSyncToken(id1);
   EXPECT_EQ(1u, child_resource_provider_->num_resources());
   child_resource_provider_->DeleteResource(id1);
   EXPECT_EQ(0u, child_resource_provider_->num_resources());
