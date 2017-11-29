@@ -74,6 +74,10 @@
   return _proxy.panGestureRecognizer;
 }
 
+- (NSArray<__kindof UIView*>*)subviews {
+  return _proxy.subviews;
+}
+
 - (UIEdgeInsets)contentInset {
   return _proxy.contentInset;
 }
