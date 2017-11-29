@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0b6d604_351a5984",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-29T01:43:13Z",
+      "side": 1,
+      "message": "Could you explain more why updating CanContainRangeEndPoint fixes\nNextBoundary behavior in description?",
+      "revId": "17620dbd9b7c6d18a1c9538233530d098c37247a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
