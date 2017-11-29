@@ -227,6 +227,24 @@
       "revId": "750d580c69d691b586c5d66b386d119da1660c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f23fa57_937db036",
+        "filename": "chromeos/login/auth/authpolicy_test_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-29T10:35:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7006988_64b2027a",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
