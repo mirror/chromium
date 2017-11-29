@@ -98,6 +98,17 @@ class CORE_EXPORT V8ScriptValueSerializer
                                size_t,
                                size_t* actual_size) override;
   void FreeBufferMemory(void* buffer) override;
+  // TODO(pwnall): The methods below should have "override" after
+  //               https://crrev.com/c/707724 lands in V8 and is rolled into
+  //               Chromium.
+  bool StartBundle(uint32_t bundle_type, v8::MemorySpan<const uint8_t> version);
+  bool StartItem(uint64_t item_id,
+                 size_t item_size,
+                 v8::ValueSerializer::VersionPredicate);
+  v8::MemorySpan<uint8_t> NextItemBuffer(size_t min_size);
+  void ReleaseItemBuffer();
+  void EndItem();
+  bool EndBundle();
 
   scoped_refptr<ScriptState> script_state_;
   scoped_refptr<SerializedScriptValue> serialized_script_value_;
@@ -105,11 +116,20 @@ class CORE_EXPORT V8ScriptValueSerializer
   const Transferables* transferables_ = nullptr;
   const ExceptionState* exception_state_ = nullptr;
   WebBlobInfoArray* blob_info_array_ = nullptr;
+  SerializedScriptValue::BundleArray* bundle_array_ = nullptr;
   ArrayBufferArray shared_array_buffers_;
   Options::WasmSerializationPolicy wasm_policy_;
   bool for_storage_ = false;
 #if DCHECK_IS_ON()
   bool serialize_invoked_ = false;
+  // True between StartBundle() and EndBundle().
+  bool bundle_opened_ = false;
+  // True between StartItem() and EndItem().
+  bool bundle_item_opened_ = false;
+  // True between NextItemBuffer() and ReleaseItemBuffer().
+  bool bundle_item_buffer_locked_ = false;
+  // Item IDs that were already allocated in the current bundle.
+  HashSet<size_t> bundle_item_ids_;
 #endif
 };
 
