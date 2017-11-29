@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bfc6b796_fcd35607",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-29T22:39:27Z",
+      "side": 1,
+      "message": "Unfortunately, there\u0027s no way to migrate the existing data.  What some teams do is introduce the new metric name and record to both for a few milestones, then deprecate the old name.  I think it would be nice to rename the existing histograms if it\u0027s not too much overhead (again, in a follow-up CL, if deemed appropriate); but it\u0027s not critical.  In either case, I do think that using just \"VR.\" as a prefix for new names is best going forward – unless there\u0027s a reason to disprefer that approach, which I\u0027m overlooking?",
+      "parentUuid": "046ef316_24a296b7",
+      "range": {
+        "startLine": 67,
+        "startChar": 43,
+        "endLine": 67,
+        "endChar": 55
+      },
+      "revId": "7c52cb8c48918a95271b06325b6fce49fbcc1c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4af7d75b_74c8eb97",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 3
