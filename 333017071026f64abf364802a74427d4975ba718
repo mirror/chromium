@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7d8e85_fbe552ff",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-29T16:07:01Z",
+      "side": 1,
+      "message": "did you mean in the key?",
+      "range": {
+        "startLine": 567,
+        "startChar": 27,
+        "endLine": 567,
+        "endChar": 35
+      },
+      "revId": "333017071026f64abf364802a74427d4975ba718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10199149_0a1b4935",
+        "filename": "net/dns/host_cache.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-29T16:07:01Z",
+      "side": 1,
+      "message": "This is written as a nonmember function but it looks more like a const method on HostCache to me. Can it move into the class?",
+      "revId": "333017071026f64abf364802a74427d4975ba718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
