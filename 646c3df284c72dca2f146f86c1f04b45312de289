@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04a4741d_96ef41f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T13:09:33Z",
+      "side": 1,
+      "message": "Don\u0027t use these kinds of directives in commits that intended for landing. Update the subject to describe the problem being fixed instead.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "646c3df284c72dca2f146f86c1f04b45312de289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef852b6_1f5fbd69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T13:09:33Z",
+      "side": 1,
+      "message": "Suggest you rephrase this, I think something like:\n\n\"Fallout from ...\"\n\nmay be enough. (\"clusterfuzz failure\" isn\u0027t very interesting.)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "646c3df284c72dca2f146f86c1f04b45312de289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70562c2b_1f8ef618",
+        "filename": "third_party/WebKit/LayoutTests/svg/as-image/svg-as-image-div-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T13:09:33Z",
+      "side": 1,
+      "message": "Does the document need to in quirks mode? (I suspect not, replace \u003chtml\u003e with \u003c!DOCTYPE html\u003e if so.)",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "646c3df284c72dca2f146f86c1f04b45312de289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c35ef7e_00edbd39",
+        "filename": "third_party/WebKit/LayoutTests/svg/as-image/svg-as-image-div-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T13:09:33Z",
+      "side": 1,
+      "message": "Not used, drop.",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 5
+      },
+      "revId": "646c3df284c72dca2f146f86c1f04b45312de289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d39e59_8e1572b3",
+        "filename": "third_party/WebKit/LayoutTests/svg/as-image/svg-as-image-div-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T13:09:33Z",
+      "side": 1,
+      "message": "So, is what\u0027s happening here is that XML parsing failed? In that case it would be good to make that more clear both in the test (including its name) and the CL description. It also seems like something we should be able to detect (Document::WellFormed) and report an error for - this is after all not a valid image.",
+      "range": {
+        "startLine": 11,
+        "startChar": 92,
+        "endLine": 11,
+        "endChar": 136
+      },
+      "revId": "646c3df284c72dca2f146f86c1f04b45312de289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a4ac81_e9e98835",
+        "filename": "third_party/WebKit/LayoutTests/svg/as-image/svg-as-image-div-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T13:09:33Z",
+      "side": 1,
+      "message": "Is the encoding tag needed to trigger the bug? If not, drop.",
+      "range": {
+        "startLine": 11,
+        "startChar": 46,
+        "endLine": 11,
+        "endChar": 51
+      },
+      "revId": "646c3df284c72dca2f146f86c1f04b45312de289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022b2096_43bf1cfa",
+        "filename": "third_party/WebKit/LayoutTests/svg/as-image/svg-as-image-div-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T13:09:33Z",
+      "side": 1,
+      "message": "If this test does not depend on exact parsing semantics here, make this \u003cdiv\u003e start tag correct.",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "646c3df284c72dca2f146f86c1f04b45312de289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf35986_3e5d40c3",
+        "filename": "third_party/WebKit/LayoutTests/svg/as-image/svg-as-image-div-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T13:09:33Z",
+      "side": 1,
+      "message": "Drop.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 7
+      },
+      "revId": "646c3df284c72dca2f146f86c1f04b45312de289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
