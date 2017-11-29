@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2b5a003_9ce9aa8f",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-29T00:11:44Z",
+      "side": 1,
+      "message": "Sorry, can you elaborate?  Is what you\u0027re referring to the same as my question about Chrome templated classes?\nhttps://chromium-review.googlesource.com/c/chromium/src/+/792264/1/chrome/browser/ui/views/payments/payment_request_browsertest_base.cc#24",
+      "parentUuid": "d1d6e0d9_76247931",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "f10098d5c3c05265da043aea36bf4b981dda2bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96887bf5_e2cb1be8",
         "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "f10098d5c3c05265da043aea36bf4b981dda2bca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e444c0c_bdc8dfcf",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-29T00:11:44Z",
+      "side": 1,
+      "message": "Changed to ASSERT_EQ, thanks.",
+      "parentUuid": "96887bf5_e2cb1be8",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "f10098d5c3c05265da043aea36bf4b981dda2bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f0017da4_6fb94a0e",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-29T00:11:44Z",
+      "side": 1,
+      "message": "SG.  Renamed to DialogEventWaiter.  (This change impacted a lot of browsertest files; added to this CL)",
+      "parentUuid": "27c455c7_48d3ff50",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "f10098d5c3c05265da043aea36bf4b981dda2bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd844d5e_8ccaa5fc",
         "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "f10098d5c3c05265da043aea36bf4b981dda2bca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728ee416_99a5aa9f",
+        "filename": "chrome/browser/ui/views/autofill/dialog_event_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-29T00:11:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd844d5e_8ccaa5fc",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "f10098d5c3c05265da043aea36bf4b981dda2bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
