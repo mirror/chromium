@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a0ed525c_1c326b35",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-29T21:19:42Z",
+      "side": 1,
+      "message": "I don\u0027t really mind but my thought is the opposite. If the feature is broken we should probably turn it off on all clients even if they have the enterprise policy on. Most use cases we know of only care about setting the policy off anyway.",
+      "parentUuid": "dcb939f9_dcc4e4ad",
+      "revId": "3144e5fb6db4f8b50ecf2a1f1cdf3b6d4e995d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b373b57_9316f490",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
         "patchSetId": 3
