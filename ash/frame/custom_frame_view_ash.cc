@@ -15,7 +15,9 @@
 #include "ash/public/cpp/immersive/immersive_fullscreen_controller.h"
 #include "ash/public/cpp/immersive/immersive_fullscreen_controller_delegate.h"
 #include "ash/shell.h"
+#include "ash/wm/overview/window_selector_controller.h"
 #include "ash/wm/resize_handle_window_targeter.h"
+#include "ash/wm/splitview/split_view_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_observer.h"
 #include "ash/wm/window_state.h"
@@ -167,9 +169,12 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
 
 CustomFrameViewAshBase::CustomFrameViewAshBase() {
   Shell::Get()->AddShellObserver(this);
+  Shell::Get()->split_view_controller()->AddObserver(this);
 }
 
 CustomFrameViewAshBase::~CustomFrameViewAshBase() {
+  if (Shell::Get()->split_view_controller())
+    Shell::Get()->split_view_controller()->RemoveObserver(this);
   Shell::Get()->RemoveShellObserver(this);
 }
 
@@ -179,6 +184,13 @@ void CustomFrameViewAshBase::OnOverviewModeStarting() {
 
 void CustomFrameViewAshBase::OnOverviewModeEnded() {
   SetShouldPaintHeader(true);
+}
+
+void CustomFrameViewAshBase::OnSplitViewStateChanged(
+    SplitViewController::State /* previous_state */,
+    SplitViewController::State state) {
+  if (Shell::Get()->window_selector_controller()->IsSelecting())
+    MaybePaintHeaderForSplitview(state);
 }
 
 // static
@@ -489,6 +501,24 @@ void CustomFrameViewAsh::SetVisible(bool visible) {
 
 const views::View* CustomFrameViewAsh::GetAvatarIconViewForTest() const {
   return header_view_->avatar_icon();
+}
+
+void CustomFrameViewAsh::MaybePaintHeaderForSplitview(
+    SplitViewController::State state) {
+  if (state == SplitViewController::NO_SNAP) {
+    header_view_->SetShouldPaintHeader(false /* paint */);
+    return;
+  }
+
+  SplitViewController* controller = Shell::Get()->split_view_controller();
+  aura::Window* window = nullptr;
+  if (state == SplitViewController::LEFT_SNAPPED)
+    window = controller->left_window();
+  else if (state == SplitViewController::RIGHT_SNAPPED)
+    window = controller->right_window();
+
+  if (window && window == frame_->GetNativeWindow())
+    header_view_->SetShouldPaintHeader(true /* paint */);
 }
 
 void CustomFrameViewAsh::SetShouldPaintHeader(bool paint) {
