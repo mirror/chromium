@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68fff479_37bb2336",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-29T02:47:31Z",
+      "side": 1,
+      "message": "I\u0027m inverting the condition here so that the branch with fewer lines comes first: this feels like a better early return.",
+      "range": {
+        "startLine": 1387,
+        "startChar": 0,
+        "endLine": 1387,
+        "endChar": 18
+      },
+      "revId": "7a83b15a1f08b637545b6870e768b7e37c040350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
