@@ -10,7 +10,7 @@ Original contents:
 | <embed>
 |   src="http://localhost:8000/evil.swf"
 |   <shadow:root>
-|     <content>
+|     <slot>
 | "
 "
 | <object>
@@ -23,7 +23,7 @@ Original contents:
 |     <shadow:root>
 |       <content>
 |   <shadow:root>
-|     <content>
+|     <slot>
 | "
 "
 
