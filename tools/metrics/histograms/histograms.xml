@@ -91054,6 +91054,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="V8.CompileScriptMicroSeconds.BackgroundThread"
+    units="microseconds">
+  <owner>rmcilroy@chromium.org</owner>
+  <summary>
+    Total time spent in compiling a script (incl. parsing) on a background
+    thread.
+  </summary>
+</histogram>
+
 <histogram name="V8.CompileScriptMicroSeconds.ConsumeCache"
     units="microseconds">
   <owner>leszeks@chromium.org</owner>
