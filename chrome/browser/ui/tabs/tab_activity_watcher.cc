@@ -70,6 +70,11 @@ class TabActivityWatcher::WebContentsData
     // Clear the per-SourceId last log time.
     last_log_time_for_source_ = base::TimeTicks();
   }
+  void DidStopLoading() override {
+    // Instead of logging immediately when a navigation commits, wait until the
+    // tab stops loading to log metrics about its contents.
+    TabActivityWatcher::GetInstance()->OnDidStopLoading(web_contents());
+  }
   void WasHidden() override {
     TabActivityWatcher::GetInstance()->OnWasHidden(web_contents());
   }
@@ -110,6 +115,13 @@ void TabActivityWatcher::OnWasHidden(content::WebContents* web_contents) {
   DCHECK(web_contents);
 
   MaybeLogTab(web_contents);
+}
+
+void TabActivityWatcher::OnDidStopLoading(content::WebContents* web_contents) {
+  // We only want UKMs for hidden tabs (eg in a background tab or a minimized
+  // window).
+  if (!web_contents->IsVisible())
+    MaybeLogTab(web_contents);
 }
 
 void TabActivityWatcher::MaybeLogTab(content::WebContents* web_contents) {

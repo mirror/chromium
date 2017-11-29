@@ -46,6 +46,8 @@ class TabActivityWatcher : public TabStripModelObserver {
   // Called from WebContentsData.
   void OnWasHidden(content::WebContents* web_contents);
 
+  void OnDidStopLoading(content::WebContents* web_contents);
+
   // Logs the tab with |web_contents| if the tab hasn't been logged for the same
   // source ID within a timeout window.
   void MaybeLogTab(content::WebContents* web_contents);

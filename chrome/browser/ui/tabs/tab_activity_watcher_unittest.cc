@@ -78,12 +78,20 @@ class TabActivityWatcherTest : public ChromeRenderViewHostTestHarness {
 
   // Creates a new WebContents suitable for testing, adds it to the tab strip
   // and navigates it to |initial_url|. The result is owned by the
-  // TabStripModel, so its tab must be closed later (e.g. via CloseAllTabs()).
+  // TabStripModel, so its tab must be closed later, e.g. via CloseAllTabs().
   content::WebContents* AddWebContentsAndNavigate(
       TabStripModel* tab_strip_model,
       const GURL& initial_url) {
+    // Note the initial entry count to verify when it changes.
+    size_t old_entry_count = GetEntryCount();
+
+    // Create as a background tab if there are other tabs in the tab strip.
+    bool is_background = tab_strip_model->count() > 0;
+
+    content::WebContents::CreateParams params(profile(), nullptr);
+    params.initially_hidden = is_background;
     content::WebContents* test_contents =
-        WebContentsTester::CreateTestWebContents(profile(), nullptr);
+        WebContentsTester::CreateTestWebContents(params);
 
     // Create the TestWebContentsObserver to observe |test_contents|. When the
     // WebContents is destroyed, the observer will be reset automatically.
@@ -92,6 +100,7 @@ class TabActivityWatcherTest : public ChromeRenderViewHostTestHarness {
 
     tab_strip_model->AppendWebContents(test_contents, false);
     WebContentsTester::For(test_contents)->NavigateAndCommit(initial_url);
+    EXPECT_EQ(old_entry_count, GetEntryCount());
     return test_contents;
   }
 
@@ -109,6 +118,10 @@ class TabActivityWatcherTest : public ChromeRenderViewHostTestHarness {
       ukm::TestUkmRecorder::ExpectEntryMetric(entry, metric.first,
                                               metric.second);
     }
+  }
+
+  size_t GetEntryCount() {
+    return ukm_recorder()->GetEntriesByName(kEntryName).size();
   }
 
   // Sets |new_index| as the active tab in its tab strip, hiding the previously
@@ -151,24 +164,30 @@ TEST_F(TabActivityWatcherTest, Basic) {
 
   TabStripModel* tab_strip_model = browser->tab_strip_model();
   AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[0]));
-  AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[1]));
-
-  // Start with the leftmost tab activated.
   tab_strip_model->ActivateTabAt(0, false);
-  EXPECT_EQ(0u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+
+  // Adding and activating a foreground tab doesn't trigger logging.
+  EXPECT_EQ(0u, GetEntryCount());
+
+  // The second web contents is added as a background tab, so it logs an entry
+  // when it stops loading.
+  content::WebContents* bg_contents =
+      AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[1]));
+  WebContentsTester::For(bg_contents)->TestSetIsLoading(false);
+  EXPECT_EQ(1u, GetEntryCount());
 
   // Activating a tab logs the deactivated tab.
   SwitchToTabAt(tab_strip_model, 1);
   {
     SCOPED_TRACE("");
-    EXPECT_EQ(1u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+    EXPECT_EQ(2u, GetEntryCount());
     ExpectEntry(kTestUrls[0], kBasicMetricValues);
   }
 
   SwitchToTabAt(tab_strip_model, 0);
   {
     SCOPED_TRACE("");
-    EXPECT_EQ(2u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+    EXPECT_EQ(3u, GetEntryCount());
     ExpectEntry(kTestUrls[1], kBasicMetricValues);
   }
 
@@ -176,7 +195,7 @@ TEST_F(TabActivityWatcherTest, Basic) {
   // The TestWebContentsObserver simulates hiding these tabs as they are closed;
   // verify that no logging occurs.
   tab_strip_model->CloseAllTabs();
-  EXPECT_EQ(2u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+  EXPECT_EQ(3u, GetEntryCount());
 }
 
 // Tests when tab events like pinning and navigating trigger logging.
@@ -187,31 +206,39 @@ TEST_F(TabActivityWatcherTest, TabEvents) {
   TabStripModel* tab_strip_model = browser->tab_strip_model();
   content::WebContents* test_contents_1 =
       AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[0]));
+  tab_strip_model->ActivateTabAt(0, false);
+
+  // Opening the background tab triggers logging once the page finishes loading.
   content::WebContents* test_contents_2 =
       AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[1]));
-  tab_strip_model->ActivateTabAt(0, false);
+  EXPECT_EQ(0u, GetEntryCount());
+  WebContentsTester::For(test_contents_2)->TestSetIsLoading(false);
+  EXPECT_EQ(1u, GetEntryCount());
 
   // Navigating the active tab doesn't trigger logging.
   WebContentsTester::For(test_contents_1)->NavigateAndCommit(kTestUrls[2]);
-  EXPECT_EQ(0u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+  WebContentsTester::For(test_contents_1)->TestSetIsLoading(false);
+  EXPECT_EQ(1u, GetEntryCount());
 
   // Pinning the active tab doesn't trigger logging.
   tab_strip_model->SetTabPinned(0, true);
-  EXPECT_EQ(0u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+  EXPECT_EQ(1u, GetEntryCount());
 
   // Pinning and unpinning the background tab triggers logging.
   tab_strip_model->SetTabPinned(1, true);
-  EXPECT_EQ(1u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+  EXPECT_EQ(2u, GetEntryCount());
   tab_strip_model->SetTabPinned(1, false);
-  EXPECT_EQ(2u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+  EXPECT_EQ(3u, GetEntryCount());
 
-  // Navigating the background tab doesn't trigger logging.
-  // TODO(michaelpg): Logging should occur once the page loads.
+  // Navigating the background tab triggers logging once the page finishes
+  // loading.
   WebContentsTester::For(test_contents_2)->NavigateAndCommit(kTestUrls[0]);
-  EXPECT_EQ(2u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+  EXPECT_EQ(3u, GetEntryCount());
+  WebContentsTester::For(test_contents_2)->TestSetIsLoading(false);
+  EXPECT_EQ(4u, GetEntryCount());
 
   tab_strip_model->CloseAllTabs();
-  EXPECT_EQ(2u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+  EXPECT_EQ(4u, GetEntryCount());
 }
 
 // Tests setting and changing tab metrics.
@@ -222,13 +249,20 @@ TEST_F(TabActivityWatcherTest, TabMetrics) {
   TabStripModel* tab_strip_model = browser->tab_strip_model();
   content::WebContents* test_contents_1 =
       AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[0]));
-  content::WebContents* test_contents_2 =
-      AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[1]));
   tab_strip_model->ActivateTabAt(0, false);
-  EXPECT_EQ(0u, ukm_recorder()->GetEntriesByName(kEntryName).size());
 
   // Expected metrics for tab event.
   MetricMap expected_metrics(kBasicMetricValues);
+
+  // Load background contents and verify UKM entry.
+  content::WebContents* test_contents_2 =
+      AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[1]));
+  WebContentsTester::For(test_contents_2)->TestSetIsLoading(false);
+  {
+    SCOPED_TRACE("");
+    EXPECT_EQ(1u, GetEntryCount());
+    ExpectEntry(kTestUrls[1], expected_metrics);
+  }
 
   // Site engagement score should round down to the nearest 10.
   SiteEngagementService::Get(profile())->ResetBaseScoreForURL(kTestUrls[1], 45);
@@ -239,38 +273,34 @@ TEST_F(TabActivityWatcherTest, TabMetrics) {
   expected_metrics[TabManager_TabMetrics::kIsPinnedName] = 1;
   {
     SCOPED_TRACE("");
-    EXPECT_EQ(1u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+    EXPECT_EQ(2u, GetEntryCount());
     ExpectEntry(kTestUrls[1], expected_metrics);
   }
 
   // Navigate the background tab to a new domain.
   // Site engagement score for the new domain is 0.
   WebContentsTester::For(test_contents_2)->NavigateAndCommit(kTestUrls[2]);
-  EXPECT_EQ(1u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+  WebContentsTester::For(test_contents_2)->TestSetIsLoading(false);
   expected_metrics[TabManager_TabMetrics::kSiteEngagementScoreName] = 0;
-
-  // Unpin the background tab to log an event.
-  tab_strip_model->SetTabPinned(0, false);
-  expected_metrics[TabManager_TabMetrics::kIsPinnedName] = 0;
   {
     SCOPED_TRACE("");
-    EXPECT_EQ(2u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+    EXPECT_EQ(3u, GetEntryCount());
     ExpectEntry(kTestUrls[2], expected_metrics);
   }
 
   // Navigate the active tab and switch away from it. The entry should reflect
-  // the new URL.
+  // the new URL (even when the page hasn't finished loading).
   WebContentsTester::For(test_contents_1)->NavigateAndCommit(kTestUrls[2]);
   SwitchToTabAt(tab_strip_model, 0);
   {
     SCOPED_TRACE("");
-    EXPECT_EQ(3u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+    EXPECT_EQ(4u, GetEntryCount());
     // This tab still has the default metrics.
     ExpectEntry(kTestUrls[2], kBasicMetricValues);
   }
 
   tab_strip_model->CloseAllTabs();
-  EXPECT_EQ(3u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+  EXPECT_EQ(4u, GetEntryCount());
 }
 
 // Tests that logging happens when the browser window is hidden (even if the
@@ -288,14 +318,14 @@ TEST_F(TabActivityWatcherTest, HideWindow) {
   test_contents->WasHidden();
   {
     SCOPED_TRACE("");
-    EXPECT_EQ(1u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+    EXPECT_EQ(1u, GetEntryCount());
     ExpectEntry(kTestUrls[0], kBasicMetricValues);
   }
 
   // Showing the window does not.
   test_contents->WasShown();
-  EXPECT_EQ(1u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+  EXPECT_EQ(1u, GetEntryCount());
 
   tab_strip_model->CloseAllTabs();
-  EXPECT_EQ(1u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+  EXPECT_EQ(1u, GetEntryCount());
 }
