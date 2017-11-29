@@ -18,11 +18,24 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/ukm/test_ukm_recorder.h"
 #include "components/ukm/ukm_source.h"
+#include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/web_contents_tester.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebMouseEvent.h"
+
+/*
+ * TODO: figure out key/touch testing
+#include "content/public/browser/native_web_keyboard_event.h"
+#include "content/public/test/browser_test_utils.h"
+#include "ui/events/base_event_utils.h"
+#include "ui/events/keycodes/dom/dom_key.h"
+#include "ui/events/keycodes/keyboard_codes.h"
+*/
 
 using content::WebContentsTester;
 using metrics::TabEvent;
@@ -44,7 +57,10 @@ const MetricMap kBasicMetricValues({
     {TabManager_TabMetrics::kContentTypeName, TabEvent::CONTENT_TYPE_TEXT_HTML},
     {TabManager_TabMetrics::kHasFormEntryName, 0},
     {TabManager_TabMetrics::kIsPinnedName, 0},
+    {TabManager_TabMetrics::kKeyEventCountName, 0},
+    {TabManager_TabMetrics::kMouseEventCountName, 0},
     {TabManager_TabMetrics::kSiteEngagementScoreName, 0},
+    {TabManager_TabMetrics::kTouchEventCountName, 0},
 });
 
 // Helper class to respond to WebContents lifecycle events we can't
@@ -63,6 +79,11 @@ class TestWebContentsObserver : public content::WebContentsObserver {
  private:
   DISALLOW_COPY_AND_ASSIGN(TestWebContentsObserver);
 };
+
+blink::WebMouseEvent GetMouseEvent(blink::WebInputEvent::Type event_type) {
+  return blink::WebMouseEvent(event_type, blink::WebInputEvent::kNoModifiers,
+                              blink::WebInputEvent::kTimeStampForTesting);
+}
 
 }  // namespace
 
@@ -269,6 +290,92 @@ TEST_F(TabActivityWatcherTest, TabMetrics) {
 
   tab_strip_model->CloseAllTabs();
   EXPECT_EQ(3u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+}
+
+// Tests counting input events. TODO(michaelpg): Currently only tests mouse
+// events.
+TEST_F(TabActivityWatcherTest, InputEvents) {
+  Browser::CreateParams params(profile(), true);
+  auto browser = CreateBrowserWithTestWindowForParams(&params);
+
+  TabStripModel* tab_strip_model = browser->tab_strip_model();
+  content::WebContents* test_contents_1 =
+      AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[0]));
+  content::WebContents* test_contents_2 =
+      AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[1]));
+  tab_strip_model->ActivateTabAt(0, false);
+
+  MetricMap expected_metrics_1(kBasicMetricValues);
+  MetricMap expected_metrics_2(kBasicMetricValues);
+
+  // Fake some input events.
+  content::RenderWidgetHost* widget_1 =
+      test_contents_1->GetRenderViewHost()->GetWidget();
+  widget_1->ForwardMouseEvent(GetMouseEvent(blink::WebInputEvent::kMouseDown));
+  widget_1->ForwardMouseEvent(GetMouseEvent(blink::WebInputEvent::kMouseUp));
+  widget_1->ForwardMouseEvent(GetMouseEvent(blink::WebInputEvent::kMouseMove));
+  expected_metrics_1[TabManager_TabMetrics::kMouseEventCountName] = 3;
+
+  // TODO(michaelpg): We may need a browser test for key
+  // and touch events. DO_NO_SUBMIT commented-out code:
+  /*
+  test_contents_1->GetRenderViewHost()->GetWidget()->ForwardKeyboardEvent(
+      GetKeyboardEvent(blink::WebInputEvent::kRawKeyDown));
+
+  content::SimulateKeyPress(test_contents_1, ui::DomKey::FromCharacter('U'),
+                            ui::DomCode::US_U, ui::VKEY_U, false, false, false,
+                            false);
+  */
+
+  // Switch to the background tab. The current tab is deactivated and logged.
+  SwitchToTabAt(tab_strip_model, 1);
+  {
+    SCOPED_TRACE("");
+    EXPECT_EQ(1u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+    ExpectEntry(kTestUrls[0], expected_metrics_1);
+  }
+
+  // The second tab's counts are independent of the other's.
+  content::RenderWidgetHost* widget_2 =
+      test_contents_2->GetRenderViewHost()->GetWidget();
+  widget_2->ForwardMouseEvent(GetMouseEvent(blink::WebInputEvent::kMouseMove));
+  expected_metrics_2[TabManager_TabMetrics::kMouseEventCountName] = 1;
+
+  // Switch back to the first tab to log the second tab.
+  SwitchToTabAt(tab_strip_model, 0);
+  {
+    SCOPED_TRACE("");
+    EXPECT_EQ(2u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+    ExpectEntry(kTestUrls[1], expected_metrics_2);
+  }
+
+  // New events are added to the first tab's existing counts.
+  widget_1->ForwardMouseEvent(GetMouseEvent(blink::WebInputEvent::kMouseMove));
+  widget_1->ForwardMouseEvent(GetMouseEvent(blink::WebInputEvent::kMouseMove));
+  expected_metrics_1[TabManager_TabMetrics::kMouseEventCountName] = 5;
+  test_contents_1->WasHidden();
+  {
+    SCOPED_TRACE("");
+    EXPECT_EQ(3u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+    ExpectEntry(kTestUrls[0], expected_metrics_1);
+  }
+  test_contents_1->WasShown();
+
+  // After a navigation, test that the counts are reset.
+  WebContentsTester::For(test_contents_1)->NavigateAndCommit(kTestUrls[2]);
+  // The widget may have been invalidated by the navigation.
+  widget_1 = test_contents_1->GetRenderViewHost()->GetWidget();
+  widget_1->ForwardMouseEvent(GetMouseEvent(blink::WebInputEvent::kMouseMove));
+  expected_metrics_1[TabManager_TabMetrics::kMouseEventCountName] = 1;
+  test_contents_1->WasHidden();
+  {
+    SCOPED_TRACE("");
+    EXPECT_EQ(4u, ukm_recorder()->GetEntriesByName(kEntryName).size());
+    ExpectEntry(kTestUrls[2], expected_metrics_1);
+  }
+
+  tab_strip_model->CloseAllTabs();
+  EXPECT_EQ(4u, ukm_recorder()->GetEntriesByName(kEntryName).size());
 }
 
 // Tests that logging happens when the browser window is hidden (even if the
