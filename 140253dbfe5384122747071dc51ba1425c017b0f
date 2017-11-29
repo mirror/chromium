@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26620ad0_53210948",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T07:52:23Z",
+      "side": 1,
+      "message": "iter \u003d erase(iter) here too",
+      "revId": "140253dbfe5384122747071dc51ba1425c017b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9adadd11_e314a03a",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T07:52:23Z",
+      "side": 1,
+      "message": "Can you say this points to this request\u0027s entry in |request_timeouts_|?",
+      "revId": "140253dbfe5384122747071dc51ba1425c017b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8caa126a_d9fe09c9",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-29T07:52:23Z",
+      "side": 1,
+      "message": "on the -\u003e at the",
+      "range": {
+        "startLine": 696,
+        "startChar": 49,
+        "endLine": 696,
+        "endChar": 51
+      },
+      "revId": "140253dbfe5384122747071dc51ba1425c017b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
