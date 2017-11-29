@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "834bf171_cf205fe4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T17:42:24Z",
+      "side": 1,
+      "message": "nit: Capitalize \"The\" in \"The resource ID...\" and add a period to the end of this sentence.",
+      "range": {
+        "startLine": 371,
+        "startChar": 28,
+        "endLine": 371,
+        "endChar": 31
+      },
+      "revId": "572f3d360ca2b853b520b682cb1c3275bdb78daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7401b5_848eba74",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T17:42:24Z",
+      "side": 1,
+      "message": "s/retireve/retrieve",
+      "revId": "572f3d360ca2b853b520b682cb1c3275bdb78daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84700cd9_2d62c26d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T17:42:24Z",
+      "side": 1,
+      "message": "style nit: put the code comment above the assert rather than semi-inline",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 48
+      },
+      "revId": "572f3d360ca2b853b520b682cb1c3275bdb78daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
