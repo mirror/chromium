@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4609e434_6c06425c",
+        "filename": "ui/keyboard/keyboard_ukm_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-29T19:03:30Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to check this, as this gets handled internally already.\n\n(Basically, ukm::UkmRecorder::Get() will be null and when its passed to Record(), it will be a no-op.)",
+      "range": {
+        "startLine": 15,
+        "startChar": 56,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "1abf7c84d94b5717c12f9e96b61ffc16424e8204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c057515_d3f3a124",
+        "filename": "ui/keyboard/keyboard_ukm_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-29T19:03:30Z",
+      "side": 1,
+      "message": "Just inline this on line 33.",
+      "revId": "1abf7c84d94b5717c12f9e96b61ffc16424e8204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
