@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f771e67_f8688f62",
+        "filename": "chrome/browser/ui/views/frame/browser_frame.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-29T21:32:12Z",
+      "side": 1,
+      "message": "1. The title of the bug was changed long ago to remove the fullscreen context. We want to provide this to all webpages (not just full screen ones).\n\n2. I agree, I\u0027ll put the change inside the class itself.",
+      "parentUuid": "54baed39_990c6db6",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 68
+      },
+      "revId": "987551442d69326cd875fc2db07b3cb469eabdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f733428_6d96bc4b",
         "filename": "third_party/WebKit/Source/core/input/EventHandlerTest.cpp",
         "patchSetId": 5
