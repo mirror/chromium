@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c66bc38b_344ab2fd",
+        "filename": "ui/views/widget/desktop_aura/desktop_screen_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-11-29T23:31:31Z",
+      "side": 1,
+      "message": "I don\u0027t think you should do this. \n\nWe have |has_xrandr_| so we can try to detect whether the server has xrr and keep track of whether we can access it. It is entirely valid for an x server to not have xrr. But UpdateDisplays() unconditionally requests data from XRR instead of only doing so if the server we\u0027re connected to supports the extension.\n\nI think you should be checking |has_xrandr_| a few stack frames up instead. (And maybe put a DCHECK at the start of BuildDisplaysFromXRandRInfo() to check that has_xrandr_ is true.)",
+      "range": {
+        "startLine": 341,
+        "startChar": 63,
+        "endLine": 341,
+        "endChar": 64
+      },
+      "revId": "a00b3305eb3255c57ed4768595c0d2e0f257c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
