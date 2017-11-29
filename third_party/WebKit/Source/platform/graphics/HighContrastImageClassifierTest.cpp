@@ -70,7 +70,7 @@ TEST_F(HighContrastImageClassifierTest, FeaturesAndClassification) {
       "/LayoutTests/images/resources/grid-large.png", &features));
   EXPECT_EQ(classifier()->ClassifyImageUsingDecisionTreeForTesting(features),
             HighContrastClassification::kApplyHighContrastFilter);
-  AssertFeaturesEqual(features, {0.0f, 0.1875f, 0.0f, 0.1f});
+  AssertFeaturesEqual(features, {0.0f, 0.25f, 0.0f, 0.1f});
 
   // Test Case 2:
   // Grayscale
@@ -81,41 +81,41 @@ TEST_F(HighContrastImageClassifierTest, FeaturesAndClassification) {
       "/LayoutTests/images/resources/apng08-ref.png", &features));
   EXPECT_EQ(classifier()->ClassifyImageUsingDecisionTreeForTesting(features),
             HighContrastClassification::kNotClassified);
-  AssertFeaturesEqual(features, {0.0f, 0.8125f, 0.409f, 0.59f});
+  AssertFeaturesEqual(features, {0.0f, 0.875f, 0.409f, 0.59f});
 
   // Test Case 3:
   // Color
   // Color Buckets Ratio: Low
   // Decision Tree: Apply
-  // Neural Network: NA.
+  // Neural Network: N/A
   EXPECT_TRUE(GetFeaturesAndClassification(
-      "/LayoutTests/images/resources/count-down-color-test.png", &features));
+      "/LayoutTests/images/resources/apng11-ref.png", &features));
   EXPECT_EQ(classifier()->ClassifyImageUsingDecisionTreeForTesting(features),
             HighContrastClassification::kApplyHighContrastFilter);
-  AssertFeaturesEqual(features, {1.0f, 0.0134277f, 0.0f, 0.43f});
+  AssertFeaturesEqual(features, {1.0f, 0.003906f, 0.0f, 0.42f});
 
   // Test Case 4:
   // Color
-  // Color Buckets Ratio: High
-  // Decision Tree: Do Not Apply
-  // Neural Network: NA.
+  // Color Buckets Ratio: Medium
+  // Decision Tree: Can't Decide
+  // Neural Network: Don't Apply
   EXPECT_FALSE(GetFeaturesAndClassification(
       "/LayoutTests/images/resources/blue-wheel-srgb-color-profile.png",
       &features));
   EXPECT_EQ(classifier()->ClassifyImageUsingDecisionTreeForTesting(features),
-            HighContrastClassification::kDoNotApplyHighContrastFilter);
-  AssertFeaturesEqual(features, {1.0f, 0.03027f, 0.0f, 0.24f});
+            HighContrastClassification::kNotClassified);
+  AssertFeaturesEqual(features, {1.0f, 0.126953f, 0.0f, 0.24f});
 
   // Test Case 5:
   // Color
-  // Color Buckets Ratio: Medium
-  // Decision Tree: Can't Decide
-  // Neural Network: Apply.
-  EXPECT_TRUE(GetFeaturesAndClassification(
-      "/LayoutTests/images/resources/ycbcr-444-float.jpg", &features));
+  // Color Buckets Ratio: High
+  // Decision Tree: Don't Apply
+  // Neural Network: N/A
+  EXPECT_FALSE(GetFeaturesAndClassification(
+      "/LayoutTests/images/resources/ycbcr-progressive-001.jpg", &features));
   EXPECT_EQ(classifier()->ClassifyImageUsingDecisionTreeForTesting(features),
-            HighContrastClassification::kNotClassified);
-  AssertFeaturesEqual(features, {1.0f, 0.0166016f, 0.0f, 0.59f});
+            HighContrastClassification::kDoNotApplyHighContrastFilter);
+  AssertFeaturesEqual(features, {1.0f, 0.228516f, 0.0f, 0.06f});
 }
 
 }  // namespace blink
