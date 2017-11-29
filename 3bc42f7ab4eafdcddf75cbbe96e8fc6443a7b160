@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb70cb48_aa68017c",
+        "filename": "chrome/browser/extensions/data_deleter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-29T16:40:08Z",
+      "side": 0,
+      "message": "Again, explicitly call out that the method is fire-and-forget somehow?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "3bc42f7ab4eafdcddf75cbbe96e8fc6443a7b160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc13446b_1f9ef0e4",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-29T16:40:08Z",
+      "side": 0,
+      "message": "Could you replace this with some gesture at fire-and-forget semantic?  Maybe \"No notification is done upon completion of the task\"?",
+      "range": {
+        "startLine": 123,
+        "startChar": 5,
+        "endLine": 123,
+        "endChar": 14
+      },
+      "revId": "3bc42f7ab4eafdcddf75cbbe96e8fc6443a7b160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
