@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64023cad_ba7237e0",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-29T02:27:45Z",
+      "side": 1,
+      "message": "DetermineClipStrategy() guarantees that only LayoutSVGShape (which is created by SVGGeometryElement) can use path-based implementation.",
+      "parentUuid": "d45523b7_edc82641",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aeaa3c7_07a46c8b",
         "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceClipper.cpp",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T01:47:53Z",
       "side": 1,
       "message": "Why don\u0027t you need the using_builder boolean anymore? Was it just a premature\noptimization in the first place?",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd13b28c_fdffd02e",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-29T02:27:45Z",
+      "side": 1,
+      "message": "Yes, I think this optimization does little, and could be done in SkOpBuilder if it does matter.",
+      "parentUuid": "4aeaa3c7_07a46c8b",
       "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "386de987_6d102d7b",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-29T02:27:45Z",
+      "side": 1,
+      "message": "They are actually in the same order because matrix operations are always pre-op, so\nmask_to_content.Translate(reference_box.X(), reference_box.Y());\nmask_to_content.Scale(resource_clipper.StyleRef().EffectiveZoom());\napplies scale first, then translate.",
+      "parentUuid": "efb3a610_b3c39608",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e72f7247_35c1d822",
         "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
         "patchSetId": 13
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-29T01:47:53Z",
       "side": 1,
       "message": "Is this ClipRecorder just an optimization? Why do you need it but previously\nit was not?",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b0359d_8accd73c",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-29T02:27:45Z",
+      "side": 1,
+      "message": "Previously it was done by DisplayItem::kSVGClipBoundsHack to guarantee the content layer at least as big as the mask. (Otherwise black mask can leak.)\n\nAs we switched from kSrcIn to kDstIn, the hack is no longer needed for SPv1(in the case that the mask being smaller than the content, Skia would detect kDstIn and expand the mask layer), but we will create a clip node in SPv175+, because cc doesn\u0027t handle such special case (mask bounds smaller than contents).",
+      "parentUuid": "e72f7247_35c1d822",
       "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "951a07c5_120324f6",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-29T02:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65cb6b57_c7fca1c9",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9650bfac_2e96893c",
         "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
         "patchSetId": 13
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c0df9c0e_e7a38157",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-29T02:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9650bfac_2e96893c",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6b97709_9724bf67",
         "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.h",
         "patchSetId": 13
@@ -118,6 +226,24 @@
       "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244ab3c8_897ff5a0",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-29T02:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6b97709_9724bf67",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "8d71ca83bd7d6e377d06e0b13db6521faff8313d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2184c30f_da1c28c4",
+        "filename": "third_party/WebKit/Source/core/style/ClipPathOperation.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-29T02:27:45Z",
+      "side": 0,
+      "message": "This function always returns a new object and DESTROY the old one, and the old object was never reused. i.e. there was no optimization but an anti-pattern...",
+      "parentUuid": "f3e99a24_55ab24d0",
+      "revId": "8d71ca83bd7d6e377d06e0b13db6521faff8313d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
