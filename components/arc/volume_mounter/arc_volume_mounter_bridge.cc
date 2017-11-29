@@ -74,11 +74,15 @@ void ArcVolumeMounterBridge::OnConnectionReady() {
                            base::BindOnce(&SendAllMountEvents, this));
 }
 
-void ArcVolumeMounterBridge::OnDiskEvent(
+void ArcVolumeMounterBridge::OnAutoMountableDiskEvent(
     chromeos::disks::DiskMountManager::DiskEvent event,
     const chromeos::disks::DiskMountManager::Disk* disk) {
   // Ignored. DiskEvents will be maintained in Vold during MountEvents.
 }
+
+void ArcVolumeMounterBridge::OnBootDeviceDiskEvent(
+    chromeos::disks::DiskMountManager::DiskEvent event,
+    const chromeos::disks::DiskMountManager::Disk* disk) {}
 
 void ArcVolumeMounterBridge::OnDeviceEvent(
     chromeos::disks::DiskMountManager::DeviceEvent event,
