@@ -46,6 +46,30 @@
       "revId": "d6572d3aefee78056bd33a0d889558b5bcaebdca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b253e237_dc17206a",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-29T01:22:55Z",
+      "side": 1,
+      "message": "I like it. A little verbose, but super simple.",
+      "parentUuid": "07399a87_db57b2c1",
+      "range": {
+        "startLine": 545,
+        "startChar": 2,
+        "endLine": 548,
+        "endChar": 12
+      },
+      "revId": "d6572d3aefee78056bd33a0d889558b5bcaebdca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
