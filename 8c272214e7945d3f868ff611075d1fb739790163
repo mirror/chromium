@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "4fca2c27_23e33f8b",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T13:54:29Z",
+      "side": 1,
+      "message": "typo: a valid",
+      "range": {
+        "startLine": 23,
+        "startChar": 16,
+        "endLine": 23,
+        "endChar": 22
+      },
+      "revId": "8c272214e7945d3f868ff611075d1fb739790163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbaa925f_c4f46ae0",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T13:54:29Z",
+      "side": 1,
+      "message": "ChromeCoordinator has a viewController property already that you can use for this.",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 42
+      },
+      "revId": "8c272214e7945d3f868ff611075d1fb739790163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed57a0d_1866f0d6",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T13:54:29Z",
+      "side": 1,
+      "message": "DCHECK(self.webState)?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 13
+      },
+      "revId": "8c272214e7945d3f868ff611075d1fb739790163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94038948_b407b48d",
         "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
         "patchSetId": 5
@@ -13,6 +82,30 @@
       "writtenOn": "2017-11-28T19:12:51Z",
       "side": 1,
       "message": "Mark, on ios-chrome-passkit design doc you said that it\u0027s OK to have dependencies on InfoBarManager, InfoBarManagerImpl and SimpleAlertInfoBarDelegate:\nhttps://docs.google.com/a/google.com/document/d/1ww4AGMXxgGc25l1VIZkTPblJWrRe4kStGzDHmHtFCpo/edit?disco\u003dAAAABbPXWH8\n\nbut you also said that coordinator should delegate infobar presentation to BVC:\nhttps://docs.google.com/a/google.com/document/d/1ww4AGMXxgGc25l1VIZkTPblJWrRe4kStGzDHmHtFCpo/edit?disco\u003dAAAABbPXWIw\n\nI think if we have to choose between 2 bad options (add code to BVC, or present infobar in coordinator), I would go with presenting the infobar in the coordinator. This is because I believe that bloated BVC is a bigger problem, than coordinators dependency on infobar code. But I don\u0027t have a strong opinion, so please let me know if you prefer the delegation for presenting the infobar.",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 26
+      },
+      "revId": "8c272214e7945d3f868ff611075d1fb739790163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b06eda5_cb055b03",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-29T13:54:29Z",
+      "side": 1,
+      "message": "What you have here is actually in line with what I described in the doc -- since the BVC already owns the infobar container, it\u0027s responsible for the UI layer part of showing the infobar. What\u0027s happening here is just the controller/model layer part, which is fine for the coordinator to initiate. This is no different than sending a command to a dispatcher, really.",
+      "parentUuid": "94038948_b407b48d",
       "range": {
         "startLine": 47,
         "startChar": 12,
