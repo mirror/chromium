@@ -17,6 +17,7 @@ public class UmaUtils {
     private static long sApplicationStartWallClockMs;
 
     private static boolean sRunningApplicationStart;
+    private static long sApplicationStartTimeMs;
     private static long sForegroundStartTimeMs;
     private static long sBackgroundTimeMs;
 
@@ -30,6 +31,7 @@ public class UmaUtils {
         // then need the start time in the C++ side before we return to Java. As such we
         // save it in a static that the C++ can fetch once it has initialized the JNI.
         sApplicationStartWallClockMs = System.currentTimeMillis();
+        sApplicationStartTimeMs = SystemClock.uptimeMillis();
     }
 
     /**
@@ -56,6 +58,16 @@ public class UmaUtils {
      */
     public static boolean hasComeToForeground() {
         return sForegroundStartTimeMs != 0;
+    }
+
+    /**
+     * Whether the application is in the early stage since the browser process start. The
+     * "application start" ends right after the last histogram related to browser startup is
+     * recorded. Currently, the very first navigation commit in the lifetime of the process ends the
+     * "application start". Must only be called on the UI thread.
+     */
+    public static boolean isRunningApplicationStart() {
+        return sRunningApplicationStart;
     }
 
     /**
@@ -86,6 +98,10 @@ public class UmaUtils {
     @CalledByNative
     public static long getMainEntryPointWallTime() {
         return sApplicationStartWallClockMs;
+    }
+
+    public static long getApplicationStartTimeMs() {
+        return sApplicationStartTimeMs;
     }
 
     public static long getForegroundStartTime() {
