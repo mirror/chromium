@@ -14,6 +14,7 @@
 #include "chrome/browser/media/media_engagement_score.h"
 #include "chrome/browser/media/media_engagement_service.h"
 #include "chrome/browser/media/media_engagement_service_factory.h"
+#include "chrome/browser/media/media_engagement_session.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/ukm/test_ukm_recorder.h"
@@ -36,16 +37,28 @@ class MediaEngagementContentsObserverTest
                                              std::string());
 
     ChromeRenderViewHostTestHarness::SetUp();
+
     SetContents(content::WebContentsTester::CreateTestWebContents(
         browser_context(), nullptr));
 
     service_ = base::WrapUnique(
         new MediaEngagementService(profile(), base::WrapUnique(test_clock_)));
-    contents_observer_ =
-        new MediaEngagementContentsObserver(web_contents(), service_.get());
+    contents_observer_ = CreateContentsObserverFor(web_contents());
+
+    // Navigate to an initial URL to setup the |session|.
+    content::WebContentsTester::For(web_contents())
+        ->NavigateAndCommit(GURL("https://first.example.com"));
 
     contents_observer_->SetTaskRunnerForTest(task_runner_);
     SimulateInaudible();
+  }
+
+  MediaEngagementContentsObserver* CreateContentsObserverFor(
+      content::WebContents* web_contents) {
+    MediaEngagementContentsObserver* contents_observer =
+        new MediaEngagementContentsObserver(web_contents, service_.get());
+    service_->contents_observers_.insert({web_contents, contents_observer});
+    return contents_observer;
   }
 
   bool IsTimerRunning() const {
@@ -60,8 +73,10 @@ class MediaEngagementContentsObserverTest
            audible_row->second.second;
   }
 
+  bool HasSession() const { return !!contents_observer_->session_; }
+
   bool WasSignificantPlaybackRecorded() const {
-    return contents_observer_->significant_playback_recorded_;
+    return contents_observer_->session_->significant_playback_recorded();
   }
 
   size_t GetSignificantActivePlayersCount() const {
@@ -137,7 +152,7 @@ class MediaEngagementContentsObserverTest
   }
 
   void SimulateSignificantPlaybackRecorded() {
-    contents_observer_->significant_playback_recorded_ = true;
+    contents_observer_->session_->RecordSignificantPlayback();
   }
 
   void SimulateSignificantPlaybackTimeForPage() {
@@ -194,7 +209,17 @@ class MediaEngagementContentsObserverTest
         content::NavigationHandle::CreateNavigationHandleForTesting(
             GURL(url), main_rfh(), true /** committed */);
     contents_observer_->DidFinishNavigation(test_handle.get());
-    contents_observer_->committed_origin_ = url::Origin::Create(url);
+  }
+
+  scoped_refptr<MediaEngagementSession> GetOrCreateSession(
+      const url::Origin& origin,
+      content::WebContents* opener) {
+    return contents_observer_->GetOrCreateSession(origin, opener);
+  }
+
+  scoped_refptr<MediaEngagementSession> GetSessionFor(
+      MediaEngagementContentsObserver* contents_observer) {
+    return contents_observer->session_;
   }
 
   void SimulateAudible() {
@@ -259,6 +284,10 @@ class MediaEngagementContentsObserverTest
   }
 
   void ExpectNoUkmEntry() { EXPECT_FALSE(test_ukm_recorder_.sources_count()); }
+
+  void ExpectNoUkmEntryForUrl(GURL url) {
+    EXPECT_EQ(nullptr, test_ukm_recorder_.GetSourceForUrl(url.spec().c_str()));
+  }
 
   void SimulateDestroy() { contents_observer_->WebContentsDestroyed(); }
 
@@ -736,18 +765,6 @@ TEST_F(MediaEngagementContentsObserverTest,
       MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 0);
 }
 
-TEST_F(MediaEngagementContentsObserverTest,
-       DoNotRecordScoreOnPlayback_InternalUrl) {
-  GURL url("chrome://about");
-  SetScores(url, 6, 5);
-
-  base::HistogramTester tester;
-  Navigate(url);
-  SimulateAudioVideoPlaybackStarted(0);
-  tester.ExpectTotalCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 0);
-}
-
 TEST_F(MediaEngagementContentsObserverTest, VisibilityNotRequired) {
   EXPECT_FALSE(IsTimerRunning());
 
@@ -845,16 +862,13 @@ TEST_F(MediaEngagementContentsObserverTest,
   ExpectUkmEntry(url, 6, 7, 86, 1, true, 2, 5, 2, 3, 900);
 }
 
-TEST_F(MediaEngagementContentsObserverTest, DoNotRecordMetricsOnInternalUrl) {
+TEST_F(MediaEngagementContentsObserverTest, DoNotCreateSessionOnInternalUrl) {
   Navigate(GURL("chrome://about"));
 
-  EXPECT_FALSE(WasSignificantPlaybackRecorded());
-  SimulateSignificantVideoPlayer(0);
-  SimulateSignificantPlaybackTimeForPage();
-  EXPECT_TRUE(WasSignificantPlaybackRecorded());
+  EXPECT_FALSE(HasSession());
 
   SimulateDestroy();
-  ExpectNoUkmEntry();
+  ExpectNoUkmEntryForUrl(GURL("chrome://about"));
 }
 
 TEST_F(MediaEngagementContentsObserverTest, RecordAudiblePlayers_OnDestroy) {
@@ -1048,4 +1062,43 @@ TEST_F(MediaEngagementContentsObserverTest, OnlyIgnoreFinishedMedia) {
   SimulateDestroy();
   ExpectScores(url, 0, 1, 0, 1, 0);
   ExpectNoUkmIgnoreEntry(url);
+}
+
+TEST_F(MediaEngagementContentsObserverTest, GetOrCreateSession) {
+  // Internal URLs are not allowed to have a session.
+  EXPECT_EQ(nullptr, GetOrCreateSession(
+                         url::Origin::Create(GURL("about:blank")), nullptr));
+  EXPECT_EQ(nullptr,
+            GetOrCreateSession(url::Origin::Create(GURL("chrome://settings")),
+                               nullptr));
+  EXPECT_EQ(nullptr, GetOrCreateSession(
+                         url::Origin::Create(GURL("localhost://")), nullptr));
+  EXPECT_EQ(nullptr, GetOrCreateSession(
+                         url::Origin::Create(GURL("file:///tmp/")), nullptr));
+
+  // Regular URLs with no |opener| have a new session (non-null).
+  EXPECT_NE(nullptr,
+            GetOrCreateSession(url::Origin::Create(GURL("https://example.com")),
+                               nullptr));
+
+  // Regular URLs with an |opener| from a different origin have a new session.
+  std::unique_ptr<content::WebContents> opener(
+      content::WebContentsTester::CreateTestWebContents(browser_context(),
+                                                        nullptr));
+  MediaEngagementContentsObserver* other_observer =
+      CreateContentsObserverFor(opener.get());
+  content::WebContentsTester::For(opener.get())
+      ->NavigateAndCommit(GURL("https://second.example.com"));
+  EXPECT_NE(GetSessionFor(other_observer),
+            GetOrCreateSession(url::Origin::Create(GURL("https://example.com")),
+                               opener.get()));
+
+  // Same origin gets the session from the opener.
+  content::WebContentsTester::For(web_contents())
+      ->NavigateAndCommit(GURL("https://example.com"));
+  content::WebContentsTester::For(opener.get())
+      ->NavigateAndCommit(GURL("https://example.com"));
+  EXPECT_EQ(GetSessionFor(other_observer),
+            GetOrCreateSession(url::Origin::Create(GURL("https://example.com")),
+                               opener.get()));
 }

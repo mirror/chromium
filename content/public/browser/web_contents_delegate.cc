@@ -268,4 +268,9 @@ bool WebContentsDelegate::DoBrowserControlsShrinkBlinkSize() const {
   return false;
 }
 
+WebContents* WebContentsDelegate::GetWebContentsOpener(
+    WebContents* web_contents) {
+  return nullptr;
+}
+
 }  // namespace content
