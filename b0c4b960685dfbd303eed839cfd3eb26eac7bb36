@@ -22,6 +22,30 @@
       "revId": "b0c4b960685dfbd303eed839cfd3eb26eac7bb36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d3f2a9_e3a7f659",
+        "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-11-29T21:37:52Z",
+      "side": 1,
+      "message": "Loopback issue is not the only reason we want use 48kHz here. Resampling in cast_shell will allow to avoid low-quality resampler in the media service, and that is Fuchia-specific issue.\n\nSecond problem is that the calling code (StreamMixer) doesn\u0027t know if any of the loopback observers expects only 48khz. I think ideally that loopback code should be fixed to handle any sample rate.\n\nBut I agree that this is not the best place to implement this fix. For Alsa we have a command line switch that allows to specify fixes sample rate to be used for the output. I think a better solution would be to add a cross-platform switch that does the same. I\u0027ll abandon this CL and will make a separate CL to add the new switch in stream_mixer.",
+      "parentUuid": "4c8e9cb1_7cd3436c",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 43
+      },
+      "revId": "b0c4b960685dfbd303eed839cfd3eb26eac7bb36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
