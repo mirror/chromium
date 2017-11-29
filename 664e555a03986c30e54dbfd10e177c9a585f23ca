@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88a3c108_4a519a19",
+        "filename": "crypto/ec_private_key.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-11-29T18:04:09Z",
+      "side": 1,
+      "message": "To make sure I understand the TOTW advice correctly, let me restate it and you can tell me if I\u0027m wrong.\n\nFor copy constructors, there are obvious benefits to using default.\n\nFor destructors, {} and default are identical (?).\n\nFor constructors, {} and default are identical *EXCEPT* that, when specified inline in the class declaration, it turns on aggregate initialization, which we don\u0027t want here. However, if one adds a Foo() declaration in the class block while leaving the default out-of-line, then it does not turn on aggregate initialization. That\u0027s what\u0027s going on here, thus TOTW recommends always saying \"\u003d default\" for consistency. Moreover, having private fields turns off aggregate initialization, and it seems consistent to say you are okay with aggregate initialization if all fields are public since the caller could have just filled them in by hand anyway.",
+      "revId": "664e555a03986c30e54dbfd10e177c9a585f23ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
