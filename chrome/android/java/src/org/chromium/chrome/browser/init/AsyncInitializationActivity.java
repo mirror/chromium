@@ -358,7 +358,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
      * @return Whether or not the user needs to go through First Run before using this Activity.
      */
     protected boolean requiresFirstRunToBeCompleted(Intent intent) {
-        return true;
+        return !isFirstRunActivity();
     }
 
     /**
@@ -519,8 +519,8 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     public void onNewIntentWithNative(Intent intent) { }
 
     @Override
-    public Intent getInitialIntent() {
-        return getIntent();
+    public boolean isFirstRunActivity() {
+        return false;
     }
 
     /**
