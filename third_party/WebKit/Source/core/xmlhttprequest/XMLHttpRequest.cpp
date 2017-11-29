@@ -331,6 +331,12 @@ SecurityOrigin* XMLHttpRequest::GetSecurityOrigin() const {
              : GetExecutionContext()->GetSecurityOrigin();
 }
 
+SecurityOrigin* XMLHttpRequest::GetMutableSecurityOrigin() {
+  return isolated_world_security_origin_
+             ? isolated_world_security_origin_.get()
+             : GetExecutionContext()->GetMutableSecurityOrigin();
+}
+
 XMLHttpRequest::State XMLHttpRequest::readyState() const {
   return state_;
 }
@@ -379,7 +385,7 @@ void XMLHttpRequest::InitResponseDocument() {
     response_document_ = XMLDocument::Create(init);
 
   // FIXME: Set Last-Modified.
-  response_document_->SetSecurityOrigin(GetSecurityOrigin());
+  response_document_->SetSecurityOrigin(GetMutableSecurityOrigin());
   response_document_->SetContextFeatures(GetDocument()->GetContextFeatures());
   response_document_->SetMimeType(FinalResponseMIMETypeWithFallback());
 }
