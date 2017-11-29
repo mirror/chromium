@@ -94,6 +94,30 @@
       "revId": "a5fa3ee8b4421717d29694e3dd77cdd7ea8c5200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253c2631_8d98a23e",
+        "filename": "content/common/media/media_devices.typemap",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-29T12:59:22Z",
+      "side": 0,
+      "message": "We still need to access MediaDevicesDispatcherHost from content/renderer/media (at least for now). Can that still be done if we move the .mojom to //WebKit/public/platform/modules/mediastream ?",
+      "parentUuid": "6b6348db_acc63bd5",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "a5fa3ee8b4421717d29694e3dd77cdd7ea8c5200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
