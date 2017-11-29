@@ -90,6 +90,8 @@ component("base") {
     "cocoa/appkit_utils.mm",
     "cocoa/base_view.h",
     "cocoa/base_view.mm",
+    "cocoa/bubble_closer.h",
+    "cocoa/bubble_closer.mm",
     "cocoa/cocoa_base_utils.h",
     "cocoa/cocoa_base_utils.mm",
     "cocoa/command_dispatcher.h",
