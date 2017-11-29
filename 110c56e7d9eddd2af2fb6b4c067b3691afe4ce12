@@ -34,6 +34,24 @@
       "revId": "110c56e7d9eddd2af2fb6b4c067b3691afe4ce12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52c0668_4b704a14",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-29T05:49:59Z",
+      "side": 1,
+      "message": "calling  TrackUserResponse(USER_RESPONSE_WEB_APP_ACCEPTED) here would skew the ratio of\n\nUSER_RESPONSE_WEB_APP_ACCEPTED : USER_RESPONSE_WEB_APP_IGNORED\n\nand there is no logical place to record a USER_RESPONSE_WEB_APP_IGNORED if the banner is not shown.\n\nDo we ever look at that ratio?",
+      "parentUuid": "b2c6e2b2_a770608f",
+      "revId": "110c56e7d9eddd2af2fb6b4c067b3691afe4ce12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
