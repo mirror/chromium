@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af1781bb_de49ea46",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-29T22:46:44Z",
+      "side": 1,
+      "message": "Consider moving/copying this include to line 207, so all the Linux stuff is together. (i.e This #include will be mentioned twice in this file, which may be unappealing.)",
+      "range": {
+        "startLine": 239,
+        "startChar": 27,
+        "endLine": 239,
+        "endChar": 34
+      },
+      "revId": "5a6e1cc058a25dcda438c7de6097d9c7c6ee0ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
