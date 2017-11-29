@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f4417bce_57f19875",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-29T07:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b3a620_645270a0",
+      "range": {
+        "startLine": 407,
+        "startChar": 12,
+        "endLine": 407,
+        "endChar": 55
+      },
+      "revId": "4e4be6a9699a153a9a8b8dd26d7dadfc38fcd67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0acd929_31e148eb",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
         "patchSetId": 10
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ff205626_635ec8fb",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-29T07:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0acd929_31e148eb",
+      "range": {
+        "startLine": 480,
+        "startChar": 30,
+        "endLine": 481,
+        "endChar": 20
+      },
+      "revId": "4e4be6a9699a153a9a8b8dd26d7dadfc38fcd67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cd10bd3_42104ff9",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
         "patchSetId": 10
@@ -86,6 +134,24 @@
       "revId": "4e4be6a9699a153a9a8b8dd26d7dadfc38fcd67f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82de223f_0dcdfcb7",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-29T07:53:55Z",
+      "side": 1,
+      "message": "\u003e nit: Do we need this nested scope any longer?\nYes, we need it to destroy |recorder|. I\u0027ve added a comment.",
+      "parentUuid": "7cd10bd3_42104ff9",
+      "revId": "4e4be6a9699a153a9a8b8dd26d7dadfc38fcd67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
