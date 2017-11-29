@@ -248,8 +248,9 @@ void RenderWidgetHostViewChildFrame::Hide() {
     frame_connector_->SetVisibilityForChildViews(false);
 }
 
-bool RenderWidgetHostViewChildFrame::IsShowing() {
-  return !host_->is_hidden();
+Visibility RenderWidgetHostViewChildFrame::GetVisibility() const {
+  // RenderWidgetHostViewChildFrame doesn't track occlusion.
+  return host_->is_hidden() ? Visibility::HIDDEN : Visibility::VISIBLE;
 }
 
 gfx::Rect RenderWidgetHostViewChildFrame::GetViewBounds() const {
