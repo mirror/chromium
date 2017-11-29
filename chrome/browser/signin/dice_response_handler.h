@@ -39,12 +39,8 @@ class ProcessDiceHeaderDelegate {
   virtual void WillStartRefreshTokenFetch(const std::string& gaia_id,
                                           const std::string& email) = 0;
 
-  // Called after the refresh token was fetched.
-  // If this returns true, then the credentials for the account will be updated
-  // in the token service.
-  virtual bool ShouldUpdateCredentials(const std::string& gaia_id,
-                                       const std::string& email,
-                                       const std::string& refresh_token) = 0;
+  // Called after the refresh token was fetched and added to the token service.
+  virtual void EnableSync(const std::string& account_id) = 0;
 };
 
 // Processes the Dice responses from Gaia.
@@ -86,6 +82,10 @@ class DiceResponseHandler : public KeyedService {
     const std::string& authorization_code() const {
       return authorization_code_;
     }
+    bool should_enable_sync() const { return should_enable_sync_; }
+    void set_should_enable_sync(bool should_enable_sync) {
+      should_enable_sync_ = should_enable_sync;
+    }
 
    private:
     // Called by |timeout_closure_| when the request times out.
@@ -102,6 +102,7 @@ class DiceResponseHandler : public KeyedService {
     std::string gaia_id_;
     std::string email_;
     std::string authorization_code_;
+    bool should_enable_sync_ = false;
     std::unique_ptr<ProcessDiceHeaderDelegate> delegate_;
     DiceResponseHandler* dice_response_handler_;
     base::CancelableClosure timeout_closure_;
@@ -123,6 +124,11 @@ class DiceResponseHandler : public KeyedService {
       const std::string& gaia_id,
       const std::string& email,
       const std::string& authorization_code,
+      std::unique_ptr<ProcessDiceHeaderDelegate> delegate);
+
+  void ProcessEnableSyncHeader(
+      const std::string& gaia_id,
+      const std::string& email,
       std::unique_ptr<ProcessDiceHeaderDelegate> delegate);
 
   // Process the Dice signout action.

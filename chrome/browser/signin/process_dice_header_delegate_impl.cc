@@ -88,13 +88,10 @@ bool ProcessDiceHeaderDelegateImpl::ShouldEnableSync() {
   return true;
 }
 
-bool ProcessDiceHeaderDelegateImpl::ShouldUpdateCredentials(
-    const std::string& gaia_id,
-    const std::string& email,
-    const std::string& refresh_token) {
+void ProcessDiceHeaderDelegateImpl::EnableSync(const std::string& account_id) {
   if (!ShouldEnableSync()) {
     // No special treatment is needed if the user is not enabling sync.
-    return true;
+    return;
   }
 
   content::WebContents* web_contents = this->web_contents();
@@ -110,10 +107,5 @@ bool ProcessDiceHeaderDelegateImpl::ShouldUpdateCredentials(
   // enabling sync).
   VLOG(1) << "Start sync after web sign-in.";
   new DiceTurnSyncOnHelper(profile_, browser, signin_access_point_,
-                           signin_reason_, gaia_id, email, refresh_token);
-
-  // Avoid updating the credentials when the user is turning on sync as in
-  // some special cases the refresh token may actually need to be copied to
-  // a new profile.
-  return false;
+                           signin_reason_, account_id);
 }

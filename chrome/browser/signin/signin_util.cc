@@ -46,11 +46,13 @@ void ResetForceSigninForTesting() {
 }
 
 GURL GetGaiaAddAccountUrlForDice(Profile* profile) {
-  // Pass www.gooogle.com as the continue URL as otherwise Gaia navigates to
-  // myaccount which may be very confusing for the user.
-  return net::AppendQueryParameter(
+  GURL url = net::AppendQueryParameter(
       GaiaUrls::GetInstance()->add_account_url(), "continue",
       UIThreadSearchTermsData(profile).GoogleBaseURLValue());
+  url = net::AppendQueryParameter(url, "email", "totobling@gmail.com");
+  // Pass www.gooogle.com as the continue URL as otherwise Gaia navigates to
+  // myaccount which may be very confusing for the user.
+  return url;
 }
 
 }  // namespace signin_util

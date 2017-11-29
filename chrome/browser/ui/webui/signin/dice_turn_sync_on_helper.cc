@@ -72,6 +72,11 @@ DiceTurnSyncOnHelper::DiceTurnSyncOnHelper(
   DCHECK(!gaia_id_.empty());
   DCHECK(!email_.empty());
   DCHECK(!refresh_token_.empty());
+
+  // One initial sign-in goes throught the DiceTurnSyncOnHelper with a refresh
+  // token.
+  DCHECK_EQ(signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
+            signin_reason_);
   Initialize();
 }
 
@@ -83,10 +88,6 @@ void DiceTurnSyncOnHelper::Initialize() {
 
   // Force sign-in uses the modal sign-in flow.
   DCHECK(!signin_util::IsForceSigninEnabled());
-
-  // One initial sign-in goes throught the DiceTurnSyncOnHelper.
-  DCHECK_EQ(signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
-            signin_reason_);
 
   if (!HandleCanOfferSigninError() && !HandleCrossAccountError()) {
     CreateSyncStarter(OneClickSigninSyncStarter::CURRENT_PROFILE);

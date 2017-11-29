@@ -297,6 +297,26 @@ void DiceResponseHandler::ProcessDiceSigninHeader(
       std::move(delegate), this));
 }
 
+void DiceResponseHandler::ProcessEnableSyncHeader(
+    const std::string& gaia_id,
+    const std::string& email,
+    std::unique_ptr<ProcessDiceHeaderDelegate> delegate) {
+  VLOG(1) << "Start processing Dice enable sync response";
+  for (auto it = token_fetchers_.begin(); it != token_fetchers_.end(); ++it) {
+    DiceTokenFetcher* fetcher = it->get();
+    if (fetcher->gaia_id() == gaia_id) {
+      // If there is a fetch in progress for a resfresh token for the given
+      // account, then simply mark it to enable sync after the refresh token is
+      // available.
+      fetcher->set_should_enable_sync(true);
+      return;  // There is already a request in flight with the same parameters.
+    }
+  }
+  std::string account_id =
+      account_tracker_service_->PickAccountIdForAccount(gaia_id, email);
+  delegate->EnableSync(account_id);
+}
+
 void DiceResponseHandler::ProcessDiceSignoutHeader(
     const std::vector<std::string>& gaia_ids,
     const std::vector<std::string>& emails) {
@@ -371,13 +391,15 @@ void DiceResponseHandler::OnTokenExchangeSuccess(
     std::unique_ptr<ProcessDiceHeaderDelegate> delegate) {
   if (!CanGetTokenForAccount(gaia_id, email))
     return;
+  bool should_enable_sync = token_fetcher->should_enable_sync();
 
   VLOG(1) << "[Dice] OAuth success for email " << email;
   DeleteTokenFetcher(token_fetcher);
-  if (delegate->ShouldUpdateCredentials(gaia_id, email, refresh_token)) {
-    std::string account_id =
-        account_tracker_service_->SeedAccountInfo(gaia_id, email);
-    token_service_->UpdateCredentials(account_id, refresh_token);
+  std::string account_id =
+      account_tracker_service_->SeedAccountInfo(gaia_id, email);
+  token_service_->UpdateCredentials(account_id, refresh_token);
+  if (should_enable_sync) {
+    delegate->EnableSync(account_id);
   }
 }
 

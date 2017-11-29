@@ -326,6 +326,20 @@ void OneClickSigninSyncStarter::CompleteInitForNewProfile(
       DCHECK(!old_signin_manager->IsAuthenticated());
       DCHECK(!new_signin_manager->IsAuthenticated());
 
+      if (signin::IsDicePrepareMigrationEnabled()) {
+        CancelSigninAndDelete();
+
+        profiles::FindOrCreateNewWindowForProfile(
+            new_profile, chrome::startup::IS_PROCESS_STARTUP,
+            chrome::startup::IS_FIRST_RUN, false);
+        Browser* browser = chrome::FindTabbedBrowser(new_profile, false);
+        DCHECK(browser);
+        browser->signin_view_controller()->ShowSignin(
+            profiles::BUBBLE_VIEW_MODE_GAIA_REAUTH, browser,
+            signin_metrics::AccessPoint::ACCESS_POINT_START_PAGE);
+        return;
+      }
+
       // Copy credentials from the old profile to the just-created profile,
       // and switch over to tracking that profile.
       new_signin_manager->CopyCredentialsFrom(*old_signin_manager);
@@ -366,6 +380,11 @@ void OneClickSigninSyncStarter::CompleteInitForNewProfile(
         chrome::startup::IS_PROCESS_STARTUP,
         chrome::startup::IS_FIRST_RUN,
         false);
+      Browser* browser = chrome::FindTabbedBrowser(profile_, false);
+      DCHECK(browser);
+      browser->signin_view_controller()->ShowSignin(
+          profiles::BUBBLE_VIEW_MODE_GAIA_REAUTH, browser,
+          signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN);
       break;
     }
     case Profile::CREATE_STATUS_REMOTE_FAIL:
