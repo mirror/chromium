@@ -487,8 +487,12 @@ function generateRequestDeviceArgsWithServices(services = ['heart_rate']) {
   }];
 }
 
-// Simulates a pre-connected device with |address|, |name| and
-// |knownServiceUUIDs|.
+// There are two ways to discover devices: Already connected devices and through
+// advertisements.
+
+// Simulates discovering a device because it is already connected.
+// |knownServiceUUIDs| enumerates services contained in the device (but not
+// necessarily advertised by the device).
 function setUpPreconnectedDevice({
   address = '00:00:00:00:00:00', name = 'LE Device', knownServiceUUIDs = []}) {
   return navigator.bluetooth.test.simulateCentral({state: 'powered-on'})
