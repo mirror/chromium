@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef070c56_f1477a3d",
+        "filename": "cc/paint/paint_op_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-29T01:59:45Z",
+      "side": 1,
+      "message": "Is the \u003c case possible? Also do you wanna start over from the first op. Otherwise it just does one deserialization pass for each op.",
+      "range": {
+        "startLine": 76,
+        "startChar": 33,
+        "endLine": 76,
+        "endChar": 35
+      },
+      "revId": "e0cfcb9e22ff1f2d8472266433cb1ebbfaa65894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
