@@ -123,6 +123,24 @@
       "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b243a3_5c6cd8a2",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8282,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T16:38:21Z",
+      "side": 1,
+      "message": "Sure, the only thing is it has to make more than kMaxOpsToAnalyzeForLayer ops in order to defeat solid color detection. Cuz if it actually runs, then empty rect is in fact solid color. The point here is that even solid color things return false if complex enough. The FakeContentLayerClient won\u0027t have an easy way to verify that it did in fact make it solid color like this test does. Maybe I should expose that constant for it to use?",
+      "parentUuid": "047064ab_2c125b53",
+      "revId": "cf8488766c985cdac7267f851d5946848a304bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
