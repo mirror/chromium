@@ -13,6 +13,9 @@
 #include "base/metrics/user_metrics_action.h"
 #include "base/synchronization/lock.h"
 #include "base/values.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/component_updater/sw_reporter_installer_win.h"
+#include "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h"
 #include "chrome/grit/generated_resources.h"
 #include "content/public/browser/web_contents.h"
@@ -48,6 +51,10 @@ std::string IdleReasonToString(
   switch (idle_reason) {
     case ChromeCleanerController::IdleReason::kInitial:
       return "initial";
+    case ChromeCleanerController::IdleReason::kReporterFoundNothing:
+      return "reporter_found_nothing";
+    case ChromeCleanerController::IdleReason::kReporterFailed:
+      return "reporter_failed";
     case ChromeCleanerController::IdleReason::kScanningFoundNothing:
       return "scanning_found_nothing";
     case ChromeCleanerController::IdleReason::kScanningFailed:
@@ -82,6 +89,9 @@ void ChromeCleanupHandler::RegisterMessages() {
       "registerChromeCleanerObserver",
       base::Bind(&ChromeCleanupHandler::HandleRegisterChromeCleanerObserver,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "startScanning", base::Bind(&ChromeCleanupHandler::HandleStartScanning,
+                                  base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
       "restartComputer",
       base::Bind(&ChromeCleanupHandler::HandleRestartComputer,
@@ -190,6 +200,26 @@ void ChromeCleanupHandler::HandleRegisterChromeCleanerObserver(
 
   // Send the current logs upload state.
   OnLogsEnabledChanged(controller_->logs_enabled());
+}
+
+void ChromeCleanupHandler::HandleStartScanning(const base::ListValue* args) {
+  CHECK_EQ(1U, args->GetSize());
+  bool allow_logs_upload = false;
+  args->GetBoolean(0, &allow_logs_upload);
+
+  // The state is propagated to all open tabs and should be consistent.
+  DCHECK_EQ(controller_->logs_enabled(), allow_logs_upload);
+
+  component_updater::RegisterSwReporterComponentWithParams(
+      allow_logs_upload ? safe_browsing::SwReporterInvocationType::
+                              kUserInitiatedWithLogsAllowed
+                        : safe_browsing::SwReporterInvocationType::
+                              kUserInitiatedWithLogsDisallowed,
+      safe_browsing::OnReporterSequenceDone(),
+      g_browser_process->component_updater());
+
+  base::RecordAction(
+      base::UserMetricsAction("SoftwareReporter.CleanupWebui_StartScanning"));
 }
 
 void ChromeCleanupHandler::HandleRestartComputer(const base::ListValue* args) {

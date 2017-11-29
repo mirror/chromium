@@ -23,6 +23,8 @@ class TaskRunner;
 
 namespace safe_browsing {
 
+class ChromeCleanerController;
+
 // A special exit code identifying a failure to run the reporter.
 const int kReporterNotLaunchedExitCode = INT_MAX;
 
@@ -135,6 +137,9 @@ enum class SwReporterInvocationResult {
   // The reporter ran successfully, but didn't find cleanable unwanted software.
   kNothingFound,
   // The reporter ran successfully and found cleanable unwanted software.
+  // However, for this run, the user shouldn't be prompted at this time.
+  kRemovableUwSFound,
+  // The reporter ran successfully and found cleanable unwanted software.
   kCleanupNeeded,
 };
 
@@ -184,16 +189,15 @@ void RunSwReporters(SwReporterInvocationType invocation_type,
 
 // A delegate used by tests to implement test doubles (e.g., stubs, fakes, or
 // mocks).
+//
+// TODO(crbug.com/776538): Replace this with a proper delegate that defines the
+// default behaviour to be overriden (instead of defined) by tests.
 class SwReporterTestingDelegate {
  public:
   virtual ~SwReporterTestingDelegate() {}
 
   // Invoked by tests in place of base::LaunchProcess.
   virtual int LaunchReporter(const SwReporterInvocation& invocation) = 0;
-
-  // Invoked by tests in place of the actual prompting logic.
-  // See MaybeFetchSRT().
-  virtual void TriggerPrompt() = 0;
 
   // Invoked by tests to override the current time.
   // See Now() in reporter_runner_win.cc.
@@ -202,6 +206,12 @@ class SwReporterTestingDelegate {
   // A task runner used to spawn the reporter process (which blocks).
   // See ReporterRunner::ScheduleNextInvocation().
   virtual base::TaskRunner* BlockingTaskRunner() const = 0;
+
+  // Invoked by tests to return a mock to the cleaner controller.
+  virtual ChromeCleanerController* GetCleanerController() = 0;
+
+  // Invoked by tests in place of the actual creation of the dialog controller.
+  virtual void CreateChromeCleanerDialogController() = 0;
 };
 
 // Set a delegate for testing. The implementation will not take ownership of

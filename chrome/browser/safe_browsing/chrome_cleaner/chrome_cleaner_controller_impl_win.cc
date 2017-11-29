@@ -293,6 +293,49 @@ void ChromeCleanerControllerImpl::RemoveObserver(Observer* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
+void ChromeCleanerControllerImpl::OnReporterSequenceStarted() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (!UserInitiatedCleanupsEnabled())
+    return;
+
+  if (state() == State::kIdle)
+    SetStateAndNotifyObservers(State::kReporterRunning);
+}
+
+void ChromeCleanerControllerImpl::OnReporterSequenceDone(
+    SwReporterInvocationResult result) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_NE(SwReporterInvocationResult::kUnspecified, result);
+
+  if (!UserInitiatedCleanupsEnabled())
+    return;
+
+  if (state() != State::kIdle && state() != State::kReporterRunning)
+    return;
+
+  State new_state = State::kIdle;
+  switch (result) {
+    case SwReporterInvocationResult::kNotScheduled:
+    case SwReporterInvocationResult::kTimedOut:
+    case SwReporterInvocationResult::kProcessFailedToLaunch:
+    case SwReporterInvocationResult::kGeneralFailure:
+      new_state = State::kIdle;
+      idle_reason_ = IdleReason::kReporterFailed;
+      break;
+
+    case SwReporterInvocationResult::kNothingFound:
+      new_state = State::kIdle;
+      idle_reason_ = IdleReason::kReporterFoundNothing;
+      break;
+
+    case SwReporterInvocationResult::kCleanupNeeded:
+    default:
+      NOTREACHED();
+  }
+
+  SetStateAndNotifyObservers(State::kIdle);
+}
+
 void ChromeCleanerControllerImpl::Scan(
     const SwReporterInvocation& reporter_invocation) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -386,6 +429,9 @@ void ChromeCleanerControllerImpl::NotifyObserver(Observer* observer) const {
   switch (state_) {
     case State::kIdle:
       observer->OnIdle(idle_reason_);
+      break;
+    case State::kReporterRunning:
+      observer->OnReporterRunning();
       break;
     case State::kScanning:
       observer->OnScanning();
