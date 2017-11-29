@@ -1353,8 +1353,9 @@ void ResourceFetcher::HandleLoaderFinish(Resource* resource,
           encoded_data_length == -1 ? 0 : encoded_data_length);
     }
   }
-  if (scoped_refptr<ResourceTimingInfo> info =
-          resource_timing_info_map_.Take(resource)) {
+  scoped_refptr<ResourceTimingInfo> info =
+      resource_timing_info_map_.Take(resource);
+  if (info) {
     // Store redirect responses that were packed inside the final response.
     AddRedirectsToTimingInfo(resource, info.get());
 
@@ -1374,6 +1375,9 @@ void ResourceFetcher::HandleLoaderFinish(Resource* resource,
       resource->ReportResourceTimingToClients(*info);
     }
   }
+  network_instrumentation::EndResourceLoad(
+      resource->Identifier(), resource, info.get(),
+      network_instrumentation::RequestOutcome::kSuccess);
 
   resource->VirtualTimePauser().PauseVirtualTime(false);
   Context().DispatchDidFinishLoading(
@@ -1741,6 +1745,14 @@ void ResourceFetcher::StopFetchingInternal(StopFetchingTarget target) {
 
 void ResourceFetcher::StopFetchingIncludingKeepaliveLoaders() {
   StopFetchingInternal(StopFetchingTarget::kIncludingKeepaliveLoaders);
+}
+
+ResourceTimingInfo* ResourceFetcher::GetResourceTimingInfo(Resource* resource) {
+  auto iterator = resource_timing_info_map_.find(resource);
+  if (iterator != resource_timing_info_map_.end()) {
+    return iterator->value.get();
+  }
+  return nullptr;
 }
 
 void ResourceFetcher::Trace(blink::Visitor* visitor) {
