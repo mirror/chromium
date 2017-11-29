@@ -249,6 +249,24 @@
       "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08fb2f13_4a6a32b9",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-29T09:45:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0ebf115_48138f91",
+      "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
