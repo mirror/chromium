@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a88de65e_4e5c4b81",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-29T21:17:29Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be simpler and more efficient to only ever set the dirty bit on the local frame root, rather than recursing down the frame tree looking at all the bits?\n\nIt also more closely resembles how this works without OOPIFs, where there is a single bit that can be set by any local frame in the tree.",
+      "revId": "9d21c087e3b0d5efa6ef2e9bb207c24f4f089655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
