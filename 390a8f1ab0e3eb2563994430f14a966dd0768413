@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b44a94f_a125305e",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-29T22:39:05Z",
+      "side": 1,
+      "message": "nit: mind using a fixed time in this test instead of Now()?",
+      "revId": "390a8f1ab0e3eb2563994430f14a966dd0768413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d75c7a0_104faa35",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-29T22:39:05Z",
+      "side": 1,
+      "message": "nit: mind using a fixed time instead of Now()?",
+      "revId": "390a8f1ab0e3eb2563994430f14a966dd0768413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
