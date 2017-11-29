@@ -203,11 +203,14 @@ class BaseIdleHelperTest : public ::testing::Test {
             CreateTaskQueueManagerWithUnownedClockForTest(
                 message_loop,
                 message_loop ? message_loop->task_runner() : mock_task_runner_,
-                clock_.get()))),
+                clock_.get()),
+            nullptr)),
         idle_helper_(new IdleHelperForTest(
             scheduler_helper_.get(),
             required_quiescence_duration_before_long_idle_period,
-            scheduler_helper_->NewTaskQueue(TaskQueue::Spec("idle_test")))),
+            scheduler_helper_->NewTaskQueue(
+                TaskQueue::Spec("idle_test"),
+                WorkerTaskQueue::QueueType::kIdle))),
         default_task_runner_(scheduler_helper_->DefaultWorkerTaskQueue()),
         idle_task_runner_(idle_helper_->IdleTaskRunner()) {
     clock_->Advance(base::TimeDelta::FromMicroseconds(5000));

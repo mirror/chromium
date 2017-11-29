@@ -10,12 +10,16 @@ namespace blink {
 namespace scheduler {
 
 WorkerSchedulerHelper::WorkerSchedulerHelper(
-    std::unique_ptr<TaskQueueManager> manager)
-    : SchedulerHelper(std::move(manager)),
-      default_task_queue_(NewTaskQueue(TaskQueue::Spec("worker_default_tq")
-                                           .SetShouldMonitorQuiescence(true))),
-      control_task_queue_(NewTaskQueue(TaskQueue::Spec("worker_control_tq")
-                                           .SetShouldNotifyObservers(false))) {
+    std::unique_ptr<TaskQueueManager> task_queue_manager,
+    WorkerScheduler* worker_scheduler)
+    : SchedulerHelper(std::move(task_queue_manager)),
+      worker_scheduler_(worker_scheduler),
+      default_task_queue_(NewTaskQueue(
+          TaskQueue::Spec("worker_default_tq").SetShouldMonitorQuiescence(true),
+          WorkerTaskQueue::QueueType::kDefault)),
+      control_task_queue_(NewTaskQueue(
+          TaskQueue::Spec("worker_control_tq").SetShouldNotifyObservers(false),
+          WorkerTaskQueue::QueueType::kControl)) {
   InitDefaultQueues(default_task_queue_, control_task_queue_);
 }
 
@@ -41,8 +45,10 @@ scoped_refptr<TaskQueue> WorkerSchedulerHelper::ControlTaskQueue() {
 }
 
 scoped_refptr<WorkerTaskQueue> WorkerSchedulerHelper::NewTaskQueue(
-    const TaskQueue::Spec& spec) {
-  return task_queue_manager_->CreateTaskQueue<WorkerTaskQueue>(spec);
+    const TaskQueue::Spec& spec,
+    WorkerTaskQueue::QueueType queue_type) {
+  return task_queue_manager_->CreateTaskQueue<WorkerTaskQueue>(
+      spec, queue_type, worker_scheduler_);
 }
 
 }  // namespace scheduler

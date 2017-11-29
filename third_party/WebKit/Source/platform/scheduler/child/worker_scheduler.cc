@@ -28,7 +28,8 @@ scoped_refptr<WorkerTaskQueue> WorkerScheduler::CreateTaskRunner() {
   helper_->CheckOnValidThread();
   return helper_->NewTaskQueue(TaskQueue::Spec("worker_tq")
                                    .SetShouldMonitorQuiescence(true)
-                                   .SetTimeDomain(nullptr));
+                                   .SetTimeDomain(nullptr),
+                               WorkerTaskQueue::QueueType::kGlobalScope);
 }
 
 }  // namespace scheduler

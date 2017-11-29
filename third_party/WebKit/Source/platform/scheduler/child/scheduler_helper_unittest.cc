@@ -57,7 +57,8 @@ class SchedulerHelperTest : public ::testing::Test {
         scheduler_helper_(new WorkerSchedulerHelper(
             CreateTaskQueueManagerWithUnownedClockForTest(nullptr,
                                                           mock_task_runner_,
-                                                          clock_.get()))),
+                                                          clock_.get()),
+            nullptr)),
         default_task_runner_(scheduler_helper_->DefaultWorkerTaskQueue()) {
     clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
   }
@@ -192,7 +193,8 @@ TEST_F(SchedulerHelperTest, OnTriedToExecuteBlockedTask) {
   scheduler_helper_->SetObserver(&observer);
 
   scoped_refptr<TaskQueue> task_queue = scheduler_helper_->NewTaskQueue(
-      TaskQueue::Spec("test").SetShouldReportWhenExecutionBlocked(true));
+      TaskQueue::Spec("test").SetShouldReportWhenExecutionBlocked(true),
+      WorkerTaskQueue::QueueType::kTest);
   std::unique_ptr<TaskQueue::QueueEnabledVoter> voter =
       task_queue->CreateQueueEnabledVoter();
   voter->SetQueueEnabled(false);
