@@ -7,7 +7,8 @@
 #include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/common/child_process_host_impl.h"
-#include "content/public/browser/browser_thread.h"
+#include "content/public/browser/content_browser_client.h"
+#include "content/public/common/content_client.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl_shared_memory.h"
@@ -46,7 +47,8 @@ void GpuClient::OnEstablishGpuChannel(
     GpuProcessHost::EstablishChannelStatus status) {
   DCHECK_EQ(channel_handle.is_valid(),
             status == GpuProcessHost::EstablishChannelStatus::SUCCESS);
-  if (status == GpuProcessHost::EstablishChannelStatus::GPU_HOST_INVALID) {
+  if (status == GpuProcessHost::EstablishChannelStatus::GPU_HOST_INVALID &&
+      GetContentClient()->browser()->AllowGpuLaunchRetryOnIOThread()) {
     // GPU process may have crashed or been killed. Try again.
     EstablishGpuChannel(callback);
     return;
