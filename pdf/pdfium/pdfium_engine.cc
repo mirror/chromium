@@ -3618,7 +3618,7 @@ PDFiumEngine::MouseDownState::MouseDownState(
     const PDFiumPage::LinkTarget& target)
     : area_(area), target_(target) {}
 
-PDFiumEngine::MouseDownState::~MouseDownState() {}
+PDFiumEngine::MouseDownState::~MouseDownState() = default;
 
 void PDFiumEngine::MouseDownState::Set(const PDFiumPage::Area& area,
                                        const PDFiumPage::LinkTarget& target) {
@@ -3648,7 +3648,7 @@ bool PDFiumEngine::MouseDownState::Matches(
 
 PDFiumEngine::FindTextIndex::FindTextIndex() : valid_(false), index_(0) {}
 
-PDFiumEngine::FindTextIndex::~FindTextIndex() {}
+PDFiumEngine::FindTextIndex::~FindTextIndex() = default;
 
 void PDFiumEngine::FindTextIndex::Invalidate() {
   valid_ = false;
