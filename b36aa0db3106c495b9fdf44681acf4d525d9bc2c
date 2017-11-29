@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4aec616_d4d5b873",
+        "filename": "ios/chrome/browser/snapshots/web_controller_snapshot_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-29T19:14:40Z",
+      "side": 0,
+      "message": "I don\u0027t think that SnapshotHelper can operate without web controller. Can we keep this DCHECK?",
+      "revId": "b36aa0db3106c495b9fdf44681acf4d525d9bc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
