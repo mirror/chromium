@@ -46,6 +46,30 @@
       "revId": "cd1eb24c886b4beabfe881360b8f78337f250738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166e0a5b_f76db417",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-29T13:27:27Z",
+      "side": 1,
+      "message": "Thanks for bringing this up, we need to clarify this.\n\nMy idea with the design was that actually the callback would become the same on all platforms -- sending the serialised data back to the platform-dependent code. That code would then always take care of writing the data.\n\nThis would mean that PasswordManagerExporter would no longer get a Destination, and there would be no Write call in PasswordManagerExporter::OnPasswordsSerialised. There would also be no Destination interface. PasswordsPrivateDelegateImpl::OnCompletedWritingToDestination would do the writing instead.\n\nThis departure from the original design seemed necessary to me once I realised that the mobile platforms need to postpone writing after the user chose the destination. The callback in its current form is not useful to mobile platforms.",
+      "parentUuid": "1e223e47_a99d049f",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 76
+      },
+      "revId": "cd1eb24c886b4beabfe881360b8f78337f250738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
