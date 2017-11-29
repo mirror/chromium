@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5ed9d74_aee990ef",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-29T01:39:36Z",
+      "side": 1,
+      "message": "nit: Remain the old name SetPathIds(..) since you\u0027re setting more than one id?",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7161db67_a6b2248a",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-29T01:39:36Z",
+      "side": 1,
+      "message": "Why make it Optional? It looks like SetPathId(..) should be guaranteed to be called.",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "269e5fb8_f588c5ae",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-29T01:39:36Z",
+      "side": 1,
+      "message": "Probably better to make the name consistent with other static variables? i.e., kDirChromeOSWallpapersPathId, .. ?",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdcc42a_480cd79d",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-29T01:39:36Z",
+      "side": 1,
+      "message": "Q: is there any problem to make it remain in the constructor?",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
