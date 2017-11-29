@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cf54735_5c9efd2f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-29T18:31:04Z",
+      "side": 1,
+      "message": "Sentence is incomplete..?",
+      "revId": "ef8ac9fc466f68a8089bcff34108973ec3e67ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a3ca58_3c9fe16d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-29T18:31:04Z",
+      "side": 1,
+      "message": "Don\u0027t you need to check the containing block? In particular, if you have an abspos element with a legacy parent but an NG containing block, NG will place it, right?",
+      "revId": "ef8ac9fc466f68a8089bcff34108973ec3e67ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a94a71_bb86156c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-29T18:31:04Z",
+      "side": 1,
+      "message": "Ah, hm, I see. So the issue is that we use the cached fragment on LayoutNGBlockFlow but it does not have the right offset? Maybe there\u0027s a way we could fix up the offset when we access the fragment?\n\nI\u0027m fine with this approach for now though. But can you add a comment (here or in the commit message) that the reason the offset is wrong is because we just access the cached_fragment_ in the LayoutNGBlockFlow which is untouched after layout? (Or if I misunderstood the reason, please describe the actual reason :) )",
+      "revId": "ef8ac9fc466f68a8089bcff34108973ec3e67ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
