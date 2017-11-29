@@ -214,7 +214,7 @@ void TextControlElement::select() {
 void TextControlElement::SetValueBeforeFirstUserEditIfNotSet() {
   if (!value_before_first_user_edit_.IsNull())
     return;
-  String value = this->value();
+  String value = value();
   value_before_first_user_edit_ = value.IsNull() ? g_empty_string : value;
 }
 

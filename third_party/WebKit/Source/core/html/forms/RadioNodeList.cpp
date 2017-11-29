@@ -63,7 +63,7 @@ static inline HTMLInputElement* ToRadioButtonInputElement(Element& element) {
 String RadioNodeList::value() const {
   if (ShouldOnlyMatchImgElements())
     return String();
-  unsigned length = this->length();
+  unsigned length = length();
   for (unsigned i = 0; i < length; ++i) {
     const HTMLInputElement* input_element = ToRadioButtonInputElement(*item(i));
     if (!input_element || !input_element->checked())
@@ -76,7 +76,7 @@ String RadioNodeList::value() const {
 void RadioNodeList::setValue(const String& value) {
   if (ShouldOnlyMatchImgElements())
     return;
-  unsigned length = this->length();
+  unsigned length = length();
   for (unsigned i = 0; i < length; ++i) {
     HTMLInputElement* input_element = ToRadioButtonInputElement(*item(i));
     if (!input_element || input_element->value() != value)

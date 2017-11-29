@@ -100,7 +100,7 @@ String HTMLOutputElement::value() const {
 void HTMLOutputElement::setValue(const String& value) {
   // The value mode flag set to "value" when the value attribute is set.
   is_default_value_mode_ = false;
-  if (value == this->value())
+  if (value == value())
     return;
   setTextContent(value);
 }

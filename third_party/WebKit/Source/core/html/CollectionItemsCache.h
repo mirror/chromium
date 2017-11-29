@@ -80,8 +80,8 @@ void CollectionItemsCache<Collection, NodeType>::Invalidate() {
 template <class Collection, class NodeType>
 unsigned CollectionItemsCache<Collection, NodeType>::NodeCount(
     const Collection& collection) {
-  if (this->IsCachedNodeCountValid())
-    return this->CachedNodeCount();
+  if (IsCachedNodeCountValid())
+    return CachedNodeCount();
 
   NodeType* current_node = collection.TraverseToFirst();
   unsigned current_index = 0;
@@ -91,9 +91,9 @@ unsigned CollectionItemsCache<Collection, NodeType>::NodeCount(
         current_index + 1, *current_node, current_index);
   }
 
-  this->SetCachedNodeCount(cached_list_.size());
+  SetCachedNodeCount(cached_list_.size());
   list_valid_ = true;
-  return this->CachedNodeCount();
+  return CachedNodeCount();
 }
 
 template <typename Collection, typename NodeType>
@@ -101,8 +101,8 @@ inline NodeType* CollectionItemsCache<Collection, NodeType>::NodeAt(
     const Collection& collection,
     unsigned index) {
   if (list_valid_) {
-    DCHECK(this->IsCachedNodeCountValid());
-    return index < this->CachedNodeCount() ? cached_list_[index] : nullptr;
+    DCHECK(IsCachedNodeCountValid());
+    return index < CachedNodeCount() ? cached_list_[index] : nullptr;
   }
   return Base::NodeAt(collection, index);
 }
