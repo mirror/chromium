@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "91ed7e09_119423ca",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2481,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T20:27:45Z",
+      "side": 1,
+      "message": "I think in general the callback is also what will cause GetGraphicsResetStatusKHR() to start reporting errors, so you effectively have the same info. The off case that a sync IPC is what causes the lost context to be reported *and* another LTFS is requested at the same time (the case where GetGraphicsResetStatusKHR() would report error but callback hasn\u0027t run yet), is likely rare enough that it probably doesn\u0027t matter much. Keeping in mind that we\u0027re still in a lost context situation, we have to handle things well, but performance is not exactly critical.\n\nOTOH taking the lock here doesn\u0027t seem critical, its cost is dwarfed by the allocations and other locks (e.g. for PostTask) needed to create a new LTFS.\n\n\nI guess bottom line I would keep one or the other to simplify, I wouldn\u0027t worry about micro-optimizing either the lock or that race.",
+      "parentUuid": "d56a0aaf_243d7280",
+      "revId": "1eaabb97722beaf8e89f57cc7bf81d0f3f1427ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ad8e938_a2699548",
         "filename": "content/renderer/render_thread_impl.h",
         "patchSetId": 2
