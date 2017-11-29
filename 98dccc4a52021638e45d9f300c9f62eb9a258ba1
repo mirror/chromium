@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea45b6b_542ee4b5",
+        "filename": "third_party/crashpad/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-29T20:04:17Z",
+      "side": 1,
+      "message": "This one isn\u0027t necessary.",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 19
+      },
+      "revId": "98dccc4a52021638e45d9f300c9f62eb9a258ba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82868de_952bcd03",
+        "filename": "third_party/crashpad/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-29T20:04:17Z",
+      "side": 1,
+      "message": "No need for the inner () here, and the string is quite lined up below (or is that +4 indent sort of?)",
+      "range": {
+        "startLine": 293,
+        "startChar": 13,
+        "endLine": 293,
+        "endChar": 14
+      },
+      "revId": "98dccc4a52021638e45d9f300c9f62eb9a258ba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
