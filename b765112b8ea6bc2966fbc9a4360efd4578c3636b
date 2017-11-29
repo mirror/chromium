@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b24a841_88f29c79",
+        "filename": "chrome/browser/ui/cocoa/base_bubble_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-29T12:33:34Z",
+      "side": 1,
+      "message": "This test (and LionRightClickOutsideClosesWithContextMenu below) were the inspiration for the new tests. The ones here are still useful though since they check a few more things.",
+      "revId": "b765112b8ea6bc2966fbc9a4360efd4578c3636b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
