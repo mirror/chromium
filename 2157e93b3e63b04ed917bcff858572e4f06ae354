@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "185c2bc1_74a5db8c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-29T18:51:54Z",
+      "side": 1,
+      "message": "ultranit: Usually it\u0027s written on one line: WorkerScheduler* worker_scheduler_;  // Not owned\nThat helps with readability when we have a lot of pointers.",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "2157e93b3e63b04ed917bcff858572e4f06ae354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
