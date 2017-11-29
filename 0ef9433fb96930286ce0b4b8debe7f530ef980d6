@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a048306b_d9ddc8ac",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy_iframes.php",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-29T19:01:16Z",
+      "side": 1,
+      "message": "Maybe we should make these point to an actual page in the test server -- right now, loading this layout test will trigger an actual network load from www.example.com and probably load the root index page from 127.0.0.1 as well.\n\nMaybe use http://127.0.0.1:8000/resources/dummy.html for local and http://localhost:8000/resources/dummy.html for remote?",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7e4a87_f4c05b68",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy_iframes.php",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-29T19:01:16Z",
+      "side": 1,
+      "message": "I think this would be clearer if it were split into two -- one for fullscreen and one for camera. The difference between them is that fullscreen should also be allowed for any arbitrary origin -- you should be able to \nassert_true(local_iframe_policy.allowsFeature(\"fullscreen\", \"http://www.example.org\")), and that should be false for \"camera\".",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9426a392_d34f0dc9",
+        "filename": "third_party/WebKit/LayoutTests/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 2765,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-29T19:01:16Z",
+      "side": 1,
+      "message": "Does this need to be set on the WebView interface listing as well?",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a38f64b_574db700",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-29T19:01:16Z",
+      "side": 1,
+      "message": "I think that this will cause policy_ to *own* the document\u0027s feature policy, since it\u0027s a unique_ptr. When this object gets destructed, the document\u0027s actual policy will be destroyed as well.\n\nCan you make a copy of the document\u0027s policy in this case, and set policy_ to *that* instead?",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a9347e8_f1c9aa39",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-29T19:01:16Z",
+      "side": 1,
+      "message": "I think it\u0027s okay to name the parameters in Blink headers if they\u0027re non-obvious",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a05f16_75263538",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-29T19:01:16Z",
+      "side": 1,
+      "message": "Probably name this one too. Also drop \u0027explicit\u0027; it\u0027s not necessary if there is more than one argument.",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

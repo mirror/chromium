@@ -204,6 +204,24 @@
       "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e395ffc6_e80e0239",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-29T19:01:16Z",
+      "side": 1,
+      "message": "I think it is cleaner. And it shouldn\u0027t be too bad since it will only be instantiated if someone actually requests the policy for an element",
+      "parentUuid": "c7f82af0_72632cee",
+      "revId": "a97c78fff0a4dd2ff88165c4913c6e05f82301e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
