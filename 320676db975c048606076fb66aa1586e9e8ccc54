@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3d4f452_68bde3ac",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-29T08:50:56Z",
+      "side": 1,
+      "message": "Can we just say recorder \u003d nulltpr? A nested scope seems like a heavy-handed way to achieve that. :)",
+      "revId": "320676db975c048606076fb66aa1586e9e8ccc54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f39bf103_a6f893b4",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-29T08:50:56Z",
+      "side": 1,
+      "message": "Sorry, probably my typo: on.",
+      "range": {
+        "startLine": 481,
+        "startChar": 27,
+        "endLine": 481,
+        "endChar": 30
+      },
+      "revId": "320676db975c048606076fb66aa1586e9e8ccc54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
