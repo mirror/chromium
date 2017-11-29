@@ -64,21 +64,24 @@ int GetSiteEngagementScore(const content::WebContents* web_contents) {
 TabMetricsLoggerImpl::TabMetricsLoggerImpl() = default;
 TabMetricsLoggerImpl::~TabMetricsLoggerImpl() = default;
 
-void TabMetricsLoggerImpl::LogBackgroundTab(
-    ukm::SourceId ukm_source_id,
-    content::WebContents* web_contents) {
+void TabMetricsLoggerImpl::LogBackgroundTab(ukm::SourceId ukm_source_id,
+                                            const TabMetrics& tab_metrics) {
   if (!ukm_source_id)
     return;
 
+  content::WebContents* web_contents = tab_metrics.web_contents;
   Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
   if (!browser)
     return;
 
+  ukm::builders::TabManager_TabMetrics entry(ukm_source_id);
+  entry.SetKeyEventCount(tab_metrics.page_metrics.key_event_count)
+      .SetMouseEventCount(tab_metrics.page_metrics.mouse_event_count)
+      .SetTouchEventCount(tab_metrics.page_metrics.touch_event_count);
+
   const TabStripModel* tab_strip_model = browser->tab_strip_model();
   int index = tab_strip_model->GetIndexOfWebContents(web_contents);
   DCHECK_NE(index, TabStripModel::kNoTab);
-
-  ukm::builders::TabManager_TabMetrics entry(ukm_source_id);
 
   if (SiteEngagementService::IsEnabled())
     entry.SetSiteEngagementScore(GetSiteEngagementScore(web_contents));
