@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26421194_226d245e",
+        "filename": "ash/sidebar/sidebar.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-29T19:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "877cbad3_230a5917",
+      "revId": "24b08db5ddae41ffb62d2ae9070c5d18be54dbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8e65114_0dcabd1a",
         "filename": "ash/sidebar/sidebar_widget.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "24b08db5ddae41ffb62d2ae9070c5d18be54dbea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d226a2af_7ea0e833",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-29T19:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8e65114_0dcabd1a",
+      "revId": "24b08db5ddae41ffb62d2ae9070c5d18be54dbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "03002443_f6e25daf",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-29T19:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ced79cc_cdd70dde",
+      "revId": "24b08db5ddae41ffb62d2ae9070c5d18be54dbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2ba45ba_09ab8cde",
         "filename": "ash/sidebar/sidebar_widget.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "24b08db5ddae41ffb62d2ae9070c5d18be54dbea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5df43fd_6cbdfd99",
+        "filename": "ash/sidebar/sidebar_widget.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-29T19:12:51Z",
+      "side": 1,
+      "message": "Let me leave this.",
+      "parentUuid": "b2ba45ba_09ab8cde",
+      "revId": "24b08db5ddae41ffb62d2ae9070c5d18be54dbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
