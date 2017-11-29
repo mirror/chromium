@@ -1249,20 +1249,11 @@ bool NavigationHandleImpl::MaybeTransferAndProceedInternal() {
     return true;
   }
 
-  // In the site-per-process model, the RenderFrameHostManager may decide
-  // that a process transfer is needed. Process transfers are skipped for
-  // WebUI processes for now, since e.g. chrome://settings has multiple
-  // "cross-site" chrome:// frames, and that doesn't yet work cross-process.
+  // Start the transfer if needed.
   RenderFrameHostManager* manager =
       render_frame_host_->frame_tree_node()->render_manager();
-  bool should_transfer = false;
-  if (!ChildProcessSecurityPolicyImpl::GetInstance()->HasWebUIBindings(
-          render_frame_host_->GetProcess()->GetID())) {
-    should_transfer |= manager->IsRendererTransferNeededForNavigation(
-        render_frame_host_, url_);
-  }
-
-  // Start the transfer if needed.
+  bool should_transfer =
+      manager->IsRendererTransferNeededForNavigation(render_frame_host_, url_);
   if (should_transfer) {
     // This may destroy the NavigationHandle if the transfer fails.
     base::WeakPtr<NavigationHandleImpl> weak_self = weak_factory_.GetWeakPtr();
