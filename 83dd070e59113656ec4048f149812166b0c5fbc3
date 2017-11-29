@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46a0b66c_1daafe7b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_collection.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-29T10:33:46Z",
+      "side": 1,
+      "message": "IIUC, even if we had only one component at all, we cannot resolve mutual cross references at this phase, right?  Then, the main reason should be mutual cross references, I think.",
+      "range": {
+        "startLine": 7,
+        "startChar": 69,
+        "endLine": 7,
+        "endChar": 76
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7144ef_2b19d133",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_collection.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-29T10:33:46Z",
+      "side": 1,
+      "message": "typo: referred",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 12
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b70038_31019790",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_collection.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-29T10:33:46Z",
+      "side": 1,
+      "message": "nit: s/name/path/\n\nFilename and filepath are different concepts, and it\u0027s better to use the exact term.",
+      "range": {
+        "startLine": 20,
+        "startChar": 54,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b39184_acded707",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-29T10:33:46Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure, but IIUC, Python doesn\u0027t support a scope for private symbols or even doesn\u0027t support the concept of \"private\".  It\u0027s just a convention that symbols starting with an underscore are considered as private.\n\nThus, IIUC, if foo.py defined _Metadata and bar.py also defined _Metadata, they conflict.  (I\u0027ve not tested it for myself.)  Thus, we\u0027d better to avoid a general name like _Metadata.\n\nThat\u0027s why I recommended something like _Collection_Metadata.",
+      "range": {
+        "startLine": 157,
+        "startChar": 6,
+        "endLine": 157,
+        "endChar": 15
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6cf610_151be9ec",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-29T10:33:46Z",
+      "side": 1,
+      "message": "nit: \"irregular\" sounds weird to me.  They\u0027re well defined in the spec.\n\nI understand that the code generator gives special care to some of extended attributes.  It doesn\u0027t mean that they\u0027re \"irregular\".",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d11b82_610bc8ae",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-29T10:33:46Z",
+      "side": 1,
+      "message": "If this is a list of extended attributes except for three\u0027s, then don\u0027t call it \"attributes\".  It\u0027s super confusing.\n\nIf this doesn\u0027t contain constructors/named_constructors/exposures, then we should make it clear.\n\nWhenever you have hard time to come up with a good name, I\u0027m happy to discuss it.  And it must not be only me.  :)",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5b07e7_21acc43d",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_definition_builder.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-29T10:33:46Z",
+      "side": 1,
+      "message": "It\u0027s nice to have a pydoc comment especially when the return value is not trivial.  This function returns two values, and it makes it non-trivial.  It\u0027s better to explain what the return value is.\n\nIn other words, the function name is \"idl_definitions\", but this function doesn\u0027t return a list (or generator) of IDL definitions.",
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce963c7d_8af8b559",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_definition_builder.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-29T10:33:46Z",
+      "side": 1,
+      "message": "This function returns two values, and the function name doesn\u0027t give me any hint.",
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
