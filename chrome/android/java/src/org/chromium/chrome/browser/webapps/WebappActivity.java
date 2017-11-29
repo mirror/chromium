@@ -70,7 +70,6 @@ import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -182,14 +181,6 @@ public class WebappActivity extends SingleTabActivity {
         }
     }
 
-    /** Initialization-on-demand holder. This exists for thread-safe lazy initialization. */
-    private static class Holder {
-        // This static map is used to cache WebappInfo objects between their initial creation in
-        // WebappLauncherActivity and final use in WebappActivity.
-        private static final HashMap<String, WebappInfo> sWebappInfoMap =
-                new HashMap<String, WebappInfo>();
-    }
-
     /**
      * Construct all the variables that shouldn't change.  We do it here both to clarify when the
      * objects are created and to ensure that they exist throughout the parallelized initialization
@@ -210,7 +201,8 @@ public class WebappActivity extends SingleTabActivity {
 
         super.onNewIntent(intent);
 
-        WebappInfo newWebappInfo = popWebappInfo(WebappInfo.idFromIntent(intent));
+        WebappInfo newWebappInfo =
+                WebappPendingLaunches.removeWebappInfo(WebappInfo.idFromIntent(intent));
         if (newWebappInfo == null) newWebappInfo = createWebappInfo(intent);
 
         if (newWebappInfo == null) {
@@ -247,15 +239,10 @@ public class WebappActivity extends SingleTabActivity {
     }
 
     @Override
-    protected boolean shouldPreferLightweightFre(Intent intent) {
-        return intent.getBooleanExtra(TrustedWebUtils.EXTRA_LAUNCH_AS_TRUSTED_WEB_ACTIVITY, false);
-    }
-
-    @Override
     public void preInflationStartup() {
         Intent intent = getIntent();
         String id = WebappInfo.idFromIntent(intent);
-        WebappInfo info = popWebappInfo(id);
+        WebappInfo info = WebappPendingLaunches.removeWebappInfo(id);
         // When WebappActivity is killed by the Android OS, and an entry stays in "Android Recents"
         // (The user does not swipe it away), when WebappActivity is relaunched it is relaunched
         // with the intent stored in WebappActivity#getIntent() at the time that the WebappActivity
@@ -564,14 +551,6 @@ public class WebappActivity extends SingleTabActivity {
      */
     public String getWebappScope() {
         return mWebappInfo.scopeUri().toString();
-    }
-
-    public static void addWebappInfo(String id, WebappInfo info) {
-        Holder.sWebappInfoMap.put(id, info);
-    }
-
-    public static WebappInfo popWebappInfo(String id) {
-        return Holder.sWebappInfoMap.remove(id);
     }
 
     private void initializeWebappData() {

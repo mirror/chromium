@@ -277,8 +277,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         }
 
         if (requiresFirstRunToBeCompleted(intent)
-                && FirstRunFlowSequencer.launch(this, intent, false /* requiresBroadcast */,
-                           shouldPreferLightweightFre(intent))) {
+                && FirstRunFlowSequencer.launch(this, intent, false /* requiresBroadcast */)) {
             abortLaunch();
             return;
         }
@@ -359,14 +358,6 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
      */
     protected boolean requiresFirstRunToBeCompleted(Intent intent) {
         return !isFirstRunActivity();
-    }
-
-    /**
-     * Whether to use the Lightweight First Run Experience instead of the
-     * non-Lightweight First Run Experience.
-     */
-    protected boolean shouldPreferLightweightFre(Intent intent) {
-        return false;
     }
 
     /**

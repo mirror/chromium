@@ -30,8 +30,13 @@ import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.vr_shell.VrIntentUtils;
+import org.chromium.chrome.browser.webapps.WebApkActivity;
+import org.chromium.chrome.browser.webapps.WebApkInfo;
+import org.chromium.chrome.browser.webapps.WebappInfo;
+import org.chromium.chrome.browser.webapps.WebappPendingLaunches;
 import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.ChromeSigninController;
+import org.chromium.webapk.lib.common.WebApkConstants;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -57,6 +62,32 @@ public abstract class FirstRunFlowSequencer  {
     private Account[] mGoogleAccounts;
     private boolean mOnlyOneAccount;
     private boolean mForceEduSignIn;
+
+    /** Contains information needed to build the launch intent for the FirstRunActivity. */
+    private static class FreData {
+        private WebappInfo mWebappInfo;
+
+        public static FreData createForLightweightFre(WebappInfo webappInfo) {
+            assert webappInfo != null;
+            return new FreData(webappInfo);
+        }
+
+        public static FreData createForGenericFre() {
+            return new FreData(null);
+        }
+
+        private FreData(WebappInfo webappInfo) {
+            mWebappInfo = webappInfo;
+        }
+
+        boolean useLightweightFre() {
+            return mWebappInfo != null;
+        }
+
+        WebappInfo webappInfo() {
+            return mWebappInfo;
+        }
+    }
 
     /**
      * Callback that is called once the flow is determined.
@@ -244,8 +275,7 @@ public abstract class FirstRunFlowSequencer  {
      *         Experience.
      */
     @Nullable
-    public static Intent checkIfFirstRunIsNecessary(
-            Context context, Intent fromIntent, boolean preferLightweightFre) {
+    public static Intent checkIfFirstRunIsNecessary(Context context, Intent fromIntent) {
         // If FRE is disabled (e.g. in tests), proceed directly to the intent handling.
         if (CommandLine.getInstance().hasSwitch(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)
                 || ApiCompatibilityUtils.isDemoUser(context)) {
@@ -261,10 +291,11 @@ public abstract class FirstRunFlowSequencer  {
 
         final boolean baseFreComplete = FirstRunStatus.getFirstRunFlowComplete();
         if (!baseFreComplete) {
-            if (preferLightweightFre) {
+            FreData freData = buildFreData(fromIntent);
+            if (freData.useLightweightFre()) {
                 if (!FirstRunStatus.shouldSkipWelcomePage()
                         && !FirstRunStatus.getLightweightFirstRunFlowComplete()) {
-                    return createLightweightFirstRunIntent(context);
+                    return createLightweightFirstRunIntent(context, freData);
                 }
             } else {
                 return createGenericFirstRunIntent(context, fromChromeIcon);
@@ -273,6 +304,44 @@ public abstract class FirstRunFlowSequencer  {
 
         // Promo pages are removed, so there is nothing else to show in FRE.
         return null;
+    }
+
+    /**
+     * Builds {@link FreData} object with whether to show lightweight first run experience and
+     * information needed to build the launch intent for the FirstRunActivity.
+     */
+    private static FreData buildFreData(Intent intent) {
+        // Both WebApkActivity and WebApkActivity0-9 can use the lightweight first run experience.
+        if (intent == null
+                || !intent.getComponent().getClassName().startsWith(
+                           WebApkActivity.class.getName())) {
+            return FreData.createForGenericFre();
+        }
+
+        String webApkPackageName =
+                IntentUtils.safeGetStringExtra(intent, WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME);
+
+        // Bound WebAPKs use the regular first run experience.
+        if (webApkPackageName == null
+                || webApkPackageName.startsWith(WebApkConstants.WEBAPK_PACKAGE_PREFIX)) {
+            return FreData.createForGenericFre();
+        }
+
+        // WebApkInfo#create() is expensive. Avoid calling WebApkInfo#create() if another call site
+        // has already done so.
+        WebappInfo info = WebappPendingLaunches.getWebappInfo(
+                WebApkConstants.WEBAPK_ID_PREFIX + webApkPackageName);
+        if (info == null) {
+            info = WebApkInfo.create(intent);
+            if (info != null) {
+                WebappPendingLaunches.addWebappInfo(info);
+            }
+        }
+
+        if (info == null) return FreData.createForGenericFre();
+
+        WebappPendingLaunches.addWebappInfo(info);
+        return FreData.createForLightweightFre(info);
     }
 
     /**
@@ -288,9 +357,11 @@ public abstract class FirstRunFlowSequencer  {
     }
 
     /** Returns an intent to show lightweight first run activity. */
-    public static Intent createLightweightFirstRunIntent(Context context) {
+    private static Intent createLightweightFirstRunIntent(Context context, FreData freData) {
         Intent intent = new Intent();
         intent.setClassName(context, LightweightFirstRunActivity.class.getName());
+        intent.putExtra(LightweightFirstRunActivity.EXTRA_ASSOCIATED_APP_NAME,
+                freData.webappInfo().shortName());
         return intent;
     }
 
@@ -324,11 +395,9 @@ public abstract class FirstRunFlowSequencer  {
      * @param caller               Activity instance that is checking if first run is necessary.
      * @param intent               Intent used to launch the caller.
      * @param requiresBroadcast    Whether or not the Intent triggers a BroadcastReceiver.
-     * @param preferLightweightFre Whether to prefer the Lightweight First Run Experience.
      * @return Whether startup must be blocked (e.g. via Activity#finish or dropping the Intent).
      */
-    public static boolean launch(Context caller, Intent intent, boolean requiresBroadcast,
-            boolean preferLightweightFre) {
+    public static boolean launch(Context caller, Intent intent, boolean requiresBroadcast) {
         // Check if the user just came back from the FRE.
         boolean firstRunActivityResult = IntentUtils.safeGetBooleanExtra(
                 intent, FirstRunActivity.EXTRA_FIRST_RUN_ACTIVITY_RESULT, false);
@@ -340,7 +409,7 @@ public abstract class FirstRunFlowSequencer  {
         }
 
         // Check if the user needs to go through First Run at all.
-        Intent freIntent = checkIfFirstRunIsNecessary(caller, intent, preferLightweightFre);
+        Intent freIntent = checkIfFirstRunIsNecessary(caller, intent);
         if (freIntent == null) return false;
 
         Log.d(TAG, "Redirecting user through FRE.");

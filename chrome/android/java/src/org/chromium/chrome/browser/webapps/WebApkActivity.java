@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.webapps;
 
-import static org.chromium.webapk.lib.common.WebApkConstants.WEBAPK_PACKAGE_PREFIX;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -13,9 +11,7 @@ import android.os.SystemClock;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.metrics.WebApkUma;
-import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.content.browser.ChildProcessCreationParams;
-import org.chromium.webapk.lib.common.WebApkConstants;
 
 import java.util.concurrent.TimeUnit;
 
@@ -52,17 +48,6 @@ public class WebApkActivity extends WebappActivity {
     protected void initializeUI(Bundle savedInstance) {
         super.initializeUI(savedInstance);
         getActivityTab().setWebappManifestScope(mWebappInfo.scopeUri().toString());
-    }
-
-    @Override
-    public boolean shouldPreferLightweightFre(Intent intent) {
-        // We cannot use getWebApkPackageName() because {@link WebappActivity#preInflationStartup()}
-        // may not have been called yet.
-        String webApkPackageName =
-                IntentUtils.safeGetStringExtra(intent, WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME);
-
-        // Use the lightweight FRE for unbound WebAPKs.
-        return webApkPackageName != null && !webApkPackageName.startsWith(WEBAPK_PACKAGE_PREFIX);
     }
 
     @Override

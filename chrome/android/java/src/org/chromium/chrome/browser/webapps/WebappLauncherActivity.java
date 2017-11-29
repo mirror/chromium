@@ -101,7 +101,7 @@ public class WebappLauncherActivity extends Activity {
             // WebappActivity#sWebappInfoMap} to launch intent. When the Android OS has killed a
             // WebappActivity and the user selects the WebappActivity from "Android Recents" the
             // WebappActivity is launched without going through WebappLauncherActivity first.
-            WebappActivity.addWebappInfo(webappInfo.id(), webappInfo);
+            WebappPendingLaunches.addWebappInfo(webappInfo);
             Intent launchIntent = createWebappLaunchIntent(webappInfo, validWebApk);
             IntentHandler.addTimestampToIntent(launchIntent, mCreateTime);
             startActivity(launchIntent);

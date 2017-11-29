@@ -47,9 +47,9 @@ import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.chrome.browser.vr.CustomTabVrActivity;
 import org.chromium.chrome.browser.vr_shell.VrIntentUtils;
 import org.chromium.chrome.browser.webapps.ActivityAssigner;
-import org.chromium.chrome.browser.webapps.WebappActivity;
 import org.chromium.chrome.browser.webapps.WebappInfo;
 import org.chromium.chrome.browser.webapps.WebappLauncherActivity;
+import org.chromium.chrome.browser.webapps.WebappPendingLaunches;
 import org.chromium.ui.widget.Toast;
 
 import java.lang.annotation.Retention;
@@ -226,8 +226,7 @@ public class LaunchIntentDispatcher implements IntentHandler.IntentHandlerDelega
         }
 
         // Check if we should push the user through First Run.
-        if (FirstRunFlowSequencer.launch(mActivity, mIntent, false /* requiresBroadcast */,
-                    false /* preferLightweightFre */)) {
+        if (FirstRunFlowSequencer.launch(mActivity, mIntent, false /* requiresBroadcast */)) {
             return Action.FINISH_ACTIVITY;
         }
 
@@ -460,7 +459,7 @@ public class LaunchIntentDispatcher implements IntentHandler.IntentHandlerDelega
         WebappInfo info = WebappInfo.create(mIntent, session);
         if (info == null) return false;
 
-        WebappActivity.addWebappInfo(info.id(), info);
+        WebappPendingLaunches.addWebappInfo(info);
         Intent launchIntent = WebappLauncherActivity.createWebappLaunchIntent(info, false);
         launchIntent.putExtras(mIntent.getExtras());
 
