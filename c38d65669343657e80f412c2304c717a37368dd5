@@ -70,6 +70,30 @@
       "revId": "c38d65669343657e80f412c2304c717a37368dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b032c18_2d7d04d4",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-29T18:37:16Z",
+      "side": 0,
+      "message": "Added a DCHECK().\n\nI added WebSecurityOrigin::operator\u003d\u003d() to check the security origin is not changed.",
+      "parentUuid": "0f6dd65b_ce75432d",
+      "range": {
+        "startLine": 274,
+        "startChar": 14,
+        "endLine": 274,
+        "endChar": 39
+      },
+      "revId": "c38d65669343657e80f412c2304c717a37368dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
