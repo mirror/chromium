@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4fa3560_a8930244",
+        "filename": "ios/chrome/browser/infobars/infobar_container_delegate_ios.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-29T22:30:47Z",
+      "side": 1,
+      "message": "I think we should forward declare SlideAnimation and include SkColor.h here, since they are only implicitly included through infobar_container.h right now.",
+      "revId": "5ebae6a3383341941a13c898ae79cc647fd2fd55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0854f0d_dc568f4b",
+        "filename": "ios/chrome/browser/infobars/infobar_container_delegate_ios.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-29T22:30:47Z",
+      "side": 1,
+      "message": "I don\u0027t know if I would say this, since the animations, for example, are driven by cross-platform infobar code. \n\nI would instead say that the iOS implementation does not use some of the cross-platform UI elements.",
+      "range": {
+        "startLine": 15,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 31
+      },
+      "revId": "5ebae6a3383341941a13c898ae79cc647fd2fd55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f405020_9b7eeae4",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 4933,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-29T22:30:47Z",
+      "side": 1,
+      "message": "Should this be deleted?",
+      "revId": "5ebae6a3383341941a13c898ae79cc647fd2fd55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
