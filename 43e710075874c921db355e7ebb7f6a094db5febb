@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4ce8201_71697d6e",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T18:49:58Z",
+      "side": 1,
+      "message": "FYI, there\u0027s base::Value changes happening, so base::ListValue is eventually going away.",
+      "revId": "43e710075874c921db355e7ebb7f6a094db5febb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3749d6_1e91619b",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T18:49:58Z",
+      "side": 1,
+      "message": "This file is a mess and I haven\u0027t had time to organize it. Stick this with another \"if BUILDFLAG(ENABLE_EXTENSIONS)\" pref name?",
+      "revId": "43e710075874c921db355e7ebb7f6a094db5febb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
