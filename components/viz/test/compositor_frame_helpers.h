@@ -7,27 +7,58 @@
 
 #include <vector>
 
+#include "components/viz/common/quads/compositor_frame.h"
+#include "components/viz/common/quads/render_pass.h"
 #include "components/viz/common/resources/transferable_resource.h"
 #include "components/viz/common/surfaces/surface_id.h"
 
 namespace viz {
-class CompositorFrame;
 
-namespace test {
+// A builder class for constructing CompositorFrames in tests.
+class CompositorFrameBuilder {
+ public:
+  CompositorFrameBuilder();
+  ~CompositorFrameBuilder();
 
-// Creates a valid CompositorFrame.
-CompositorFrame MakeCompositorFrame(const gfx::Size& size = gfx::Size(20, 20));
+  // Builds the CompositorFrame and leaves |this| in an invalid state.
+  CompositorFrame Build();
+
+  // Adds a render pass with 20x20 output_rect and empty damage_rect.
+  CompositorFrameBuilder& AddDefaultRenderPass();
+  // Adds a render pass with specified |output_rect| and |damage_rect|.
+  CompositorFrameBuilder& AddRenderPass(const gfx::Rect& output_rect,
+                                        const gfx::Rect& damage_rect);
+  CompositorFrameBuilder& AddRenderPass(
+      std::unique_ptr<RenderPass> render_pass);
+
+  // Sets the BeginFrameAck. This replaces the default BeginFrameAck.
+  CompositorFrameBuilder& SetBeginFrameAck(const BeginFrameAck& ack);
+  CompositorFrameBuilder& SetActivationDependencies(
+      std::vector<SurfaceId> activation_dependencies);
+  CompositorFrameBuilder& SetReferencedSurfaces(
+      std::vector<SurfaceId> referenced_surfaces);
+  CompositorFrameBuilder& SetTransferableResources(
+      std::vector<TransferableResource> resource_list);
+  CompositorFrameBuilder& SetDeviceScaleFactor(float device_scale_factor);
+  CompositorFrameBuilder& SetFrameToken(uint32_t frame_token);
+  CompositorFrameBuilder& SetContentSourceId(uint32_t content_source_id);
+  CompositorFrameBuilder& SetPresentationToken(uint32_t presentation_token);
+
+ private:
+  CompositorFrame frame_;
+  uint64_t next_render_pass_id_ = 1;
+
+  DISALLOW_COPY_AND_ASSIGN(CompositorFrameBuilder);
+};
+
+// Creates a CompositorFrame that has a render pass with 20x20 output_rect and
+// empty damage_rect. This CompositorFrame is valid and can be sent over IPC.
+CompositorFrame MakeDefaultCompositorFrame();
 
 // Creates a CompositorFrame that will be valid once its render_pass_list is
 // initialized.
 CompositorFrame MakeEmptyCompositorFrame();
 
-CompositorFrame MakeCompositorFrame(
-    std::vector<SurfaceId> activation_dependencies,
-    std::vector<SurfaceId> referenced_surfaces,
-    std::vector<TransferableResource> resource_list);
-
-}  // namespace test
 }  // namespace viz
 
 #endif  // COMPONENTS_VIZ_TEST_COMPOSITOR_FRAME_HELPERS_H_
