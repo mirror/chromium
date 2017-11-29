@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93ca9a1a_fd8ac7fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-29T23:06:45Z",
+      "side": 1,
+      "message": "You can just leave this line out.",
+      "revId": "8940b08f6072401e56bc733ebe82d2b0496d99ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
