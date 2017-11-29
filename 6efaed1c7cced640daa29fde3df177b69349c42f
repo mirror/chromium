@@ -16,6 +16,24 @@
       "revId": "6efaed1c7cced640daa29fde3df177b69349c42f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660a2a99_e52b2799",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-29T20:24:26Z",
+      "side": 1,
+      "message": "This change basically tells ATK object listeners (in process, and out of process through AT-SPI) that the object is becoming invalid, so they should realize any access to it will be detached from the actual objects (basically all the method calls are going to return invalid information). We need this, because on ATK objects there is reference counting, and other objects may still keep a reference to it (i.e. because they are accessing the values).\n\nA solution could be just emiting the signal _just after_ the m_object has been set to nullptr, instead of before. In this case, any callback taht would happen would already be detached from the AX model, so there would be no possibility to interact with the backing object.\n\nIn WebKit the implementation is essentially the same. The only difference is quite interesting, as they do not have null checks everywhere. What they do is replacing the regular backing object (our AXPlatformNodeAuraLinux) with a fake one that returns generic values. That\u0027s an optimization that avoids needing to do checks everywhere for m_object validity.",
+      "parentUuid": "9f85619d_1196508e",
+      "revId": "6efaed1c7cced640daa29fde3df177b69349c42f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
