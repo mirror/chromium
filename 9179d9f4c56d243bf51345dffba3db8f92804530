@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41a704cd_259af66a",
+        "filename": "ui/base/cocoa/bubble_closer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-29T19:50:56Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there always be an event_tap_ ?",
+      "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b6b14a_e32e21f0",
+        "filename": "ui/base/cocoa/bubble_closer_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-29T19:50:56Z",
+      "side": 1,
+      "message": "Maybe just write this as a lambda?",
+      "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
