@@ -144,6 +144,48 @@
       "revId": "1ae94231a05359bda36ed4fc18a16e36b69c7771",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "326343c8_8d865ff4",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-29T00:19:34Z",
+      "side": 1,
+      "message": "Cool! Thanks for the info. I\u0027ll give it a try and hopefully I\u0027ll have the CL ready tomorrow.",
+      "parentUuid": "08b15751_b20048d1",
+      "range": {
+        "startLine": 172,
+        "startChar": 15,
+        "endLine": 172,
+        "endChar": 31
+      },
+      "revId": "1ae94231a05359bda36ed4fc18a16e36b69c7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6f56c6_313ac0bb",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-29T00:19:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "086a1d16_ba188a50",
+      "revId": "1ae94231a05359bda36ed4fc18a16e36b69c7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
