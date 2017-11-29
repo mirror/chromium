@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9b4c42d8_5aea1e03",
+        "filename": "AUTHORS",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-29T14:58:24Z",
+      "side": 1,
+      "message": "Yeah, sorting is Hard, I know. Without a locale to sort in, the \"no case, diacritic insensitivity\" rule is the simplest. It\u0027s probably wrong in some case but at least it\u0027s simple and consistently broken everywhere. :\\",
+      "parentUuid": "84c44e91_be2ba6fd",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 17
+      },
+      "revId": "77b5dd41acc9d5aab372beb61bf183f76ab1ee9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ea6f2f_5681d5bb",
         "filename": "AUTHORS",
         "patchSetId": 2
