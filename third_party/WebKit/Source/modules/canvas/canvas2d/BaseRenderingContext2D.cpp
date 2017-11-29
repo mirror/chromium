@@ -1314,6 +1314,12 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
 
   ValidateStateStack();
 
+  if (OriginClean() &&
+      WouldTaintOrigin(image_source, ExecutionContext::From(script_state))) {
+    ModifiableState().ClearResolvedFilter();
+    SetOriginTainted();
+  }
+
   Draw(
       [this, &image_source, &image, &src_rect, dst_rect](
           PaintCanvas* c, const PaintFlags* flags)  // draw lambda
@@ -1346,9 +1352,6 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
       buffer->SetHasExpensiveOp();
   }
 
-  if (OriginClean() &&
-      WouldTaintOrigin(image_source, ExecutionContext::From(script_state)))
-    SetOriginTainted();
 
   timer->Count((WTF::MonotonicallyIncreasingTime() - start_time) *
                WTF::Time::kMicrosecondsPerSecond);

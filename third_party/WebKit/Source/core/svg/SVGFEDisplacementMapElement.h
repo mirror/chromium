@@ -61,6 +61,8 @@ class SVGFEDisplacementMapElement final
   void SvgAttributeChanged(const QualifiedName&) override;
   FilterEffect* Build(SVGFilterBuilder*, Filter*) override;
 
+  bool TaintsOrigin(bool inputs_taint_origin) const override;
+
   Member<SVGAnimatedNumber> scale_;
   Member<SVGAnimatedString> in1_;
   Member<SVGAnimatedString> in2_;
