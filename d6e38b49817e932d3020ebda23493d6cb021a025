@@ -22,6 +22,30 @@
       "revId": "d6e38b49817e932d3020ebda23493d6cb021a025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110aa267_ab6dda9f",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-29T13:19:29Z",
+      "side": 1,
+      "message": "Probably? Not sure :). Let\u0027s find out through a CL:\nhttps://chromium-review.googlesource.com/#/c/chromium/src/+/796412\n\nThank you for the input!",
+      "parentUuid": "ee411dc4_8a9bcd37",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "d6e38b49817e932d3020ebda23493d6cb021a025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
