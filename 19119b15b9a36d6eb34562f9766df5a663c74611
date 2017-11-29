@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "683b6c3b_6017ba97",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-29T19:16:18Z",
+      "side": 1,
+      "message": "This is auto\u0026 state \u003d animation_state_map_[image_id]?",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 39
+      },
+      "revId": "19119b15b9a36d6eb34562f9766df5a663c74611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
