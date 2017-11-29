@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "738092cf_d87d986f",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-29T00:32:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec9862eb_7ccd9b68",
+      "revId": "77be96cf6ffd031ed36e9b7fd514a6df323fc3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a81e7d76_1f6c6c17",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 1
