@@ -22,6 +22,30 @@
       "revId": "a00b3305eb3255c57ed4768595c0d2e0f257c961",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5934c454_082894b0",
+        "filename": "ui/views/widget/desktop_aura/desktop_screen_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-29T23:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c66bc38b_344ab2fd",
+      "range": {
+        "startLine": 341,
+        "startChar": 63,
+        "endLine": 341,
+        "endChar": 64
+      },
+      "revId": "a00b3305eb3255c57ed4768595c0d2e0f257c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
