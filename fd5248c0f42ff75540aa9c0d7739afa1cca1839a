@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9784da58_f717f7e3",
+        "filename": "components/exo/data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:40:16Z",
+      "side": 1,
+      "message": "Now we use weak_ptr to track lifetime of DataSourceReader. So removed the tracker.",
+      "parentUuid": "8dbaa998_6ca7a249",
+      "revId": "fd5248c0f42ff75540aa9c0d7739afa1cca1839a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3f46b03_5b2e5e55",
         "filename": "components/exo/data_source.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9798a930_aed83d70",
+        "filename": "components/exo/data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3f46b03_5b2e5e55",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 3
+      },
+      "revId": "fd5248c0f42ff75540aa9c0d7739afa1cca1839a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77b3dd4a_f1889397",
         "filename": "components/exo/data_source.cc",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "fd5248c0f42ff75540aa9c0d7739afa1cca1839a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278b3e95_96fbe39b",
+        "filename": "components/exo/data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77b3dd4a_f1889397",
+      "revId": "fd5248c0f42ff75540aa9c0d7739afa1cca1839a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "fd5248c0f42ff75540aa9c0d7739afa1cca1839a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3cc73d_3870a2ad",
+        "filename": "components/exo/data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-29T04:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e03b61e_935f70fe",
+      "range": {
+        "startLine": 107,
+        "startChar": 14,
+        "endLine": 109,
+        "endChar": 15
+      },
+      "revId": "fd5248c0f42ff75540aa9c0d7739afa1cca1839a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
