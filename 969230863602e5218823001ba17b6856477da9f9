@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "81164c04_d5383308",
+        "filename": "mojo/public/cpp/bindings/binding_set.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T22:53:22Z",
+      "side": 1,
+      "message": "The main concern I have with this is that it means the bad message callback (subtly) may re-enter its caller to directly invoke the error handler. Maybe reporting a bad message should invoke the connection error handler, but if so: (a) it should probably be done asynchronously and (b) we need it to be consistent across all binding types, not just do it for BindingSet.\n\nWe should discuss making that change separately For now can you please revert this bit and just have service worker code manually invoke OnConnectionError as needed?",
+      "parentUuid": "74a464de_9d93dca5",
+      "range": {
+        "startLine": 188,
+        "startChar": 24,
+        "endLine": 188,
+        "endChar": 42
+      },
+      "revId": "969230863602e5218823001ba17b6856477da9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2151d0de_97dedae8",
         "filename": "mojo/public/cpp/bindings/binding_set.h",
         "patchSetId": 13
