@@ -21,6 +21,9 @@ struct OpenURLParams;
 class WebContents;
 }  // namespace content
 
+namespace user_prefs {
+class PrefRegistrySyncable;
+}
 
 extern const base::Feature kAbusiveExperienceEnforce;
 
@@ -66,6 +69,8 @@ class SafeBrowsingTriggeredPopupBlocker
     kCount
   };
 
+  static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
+
   static std::unique_ptr<SafeBrowsingTriggeredPopupBlocker> MaybeCreate(
       content::WebContents* web_contents);
   ~SafeBrowsingTriggeredPopupBlocker() override;
@@ -90,6 +95,14 @@ class SafeBrowsingTriggeredPopupBlocker
       safe_browsing::SBThreatType threat_type,
       const safe_browsing::ThreatMetadata& threat_metadata) override;
   void OnSubresourceFilterGoingAway() override;
+
+  // If feature is disabled, return false (policy may be not set, set to true or
+  // false): This is a scenario where the feature overrides the policy either
+  // through finch or command line,
+  // Else if policy is not set, return true (since feature is enabled),
+  // Else If policy is set, return the policy value (overriding the feature
+  // enabled).
+  static bool IsEnabled(const content::WebContents* web_contents);
 
   // Data scoped to a single page. Will be reset at navigation commit.
   class PageData {
