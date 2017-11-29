@@ -22,6 +22,30 @@
       "revId": "b72b9b2862f4c6488c14388311ed897dc565beef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209def9e_94587f70",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30341,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-29T21:07:27Z",
+      "side": 1,
+      "message": "This is for a metric that i\u0027ll remove next week, and I\u0027ll be the only one looking at it, so I\u0027m going to skip this.",
+      "parentUuid": "9e14e949_a50a72a3",
+      "range": {
+        "startLine": 30341,
+        "startChar": 70,
+        "endLine": 30341,
+        "endChar": 77
+      },
+      "revId": "b72b9b2862f4c6488c14388311ed897dc565beef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
