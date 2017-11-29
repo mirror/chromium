@@ -545,9 +545,7 @@ initWithRootViewController:(UIViewController*)rootViewController
   [self pushViewController:controller animated:YES];
 }
 
-// TODO(crbug.com/779791) : Do not pass |baseViewController| through dispatcher.
-- (void)showSyncPassphraseSettingsFromViewController:
-    (UIViewController*)baseViewController {
+- (void)showSyncPassphraseSettings {
   SyncEncryptionPassphraseCollectionViewController* controller =
       [[SyncEncryptionPassphraseCollectionViewController alloc]
           initWithBrowserState:mainBrowserState_];

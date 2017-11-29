@@ -605,7 +605,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   } else if (ShouldShowSyncSettings(syncState)) {
     [self.dispatcher showSyncSettingsFromViewController:self];
   } else if (ShouldShowSyncPassphraseSettings(syncState)) {
-    [self.dispatcher showSyncPassphraseSettingsFromViewController:self];
+    [self.dispatcher showSyncPassphraseSettings];
   }
 }
 
