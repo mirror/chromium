@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8552e02_47fb1278",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-29T08:09:37Z",
+      "side": 1,
+      "message": "When I wrap the SetGlobalBinderForTesting(lat, long) into a new-added \"static std::unique_ptr\u003cFakeGeolocationContext\u003e OverrideGeolocationForService()\", I found the ClearGlobalBinderForTesting() is left alone outside (line 540).\nAnd it is not always safe to put the SetGlobalBinderForTesting(lat, long) in  SetUpOnMainThread(), for example in GeolocationBrowsertests it is put in constructor. So I\u0027m thinking is it acceptable just not wrap it?\n\nI\u0027m adding the test for the FakeGeolocation too. I plan to add a simple Unittest instead of the BrowserTest. The reason is the FakeGeolocation will be moved to //service while BrowserTest depends on the //content. The simple unittest doesn\u0027t have the context to get a Connector. It means no matter we wrap it or not, the test is against FakeGeolocation and is not against the new-added OverrideGeolocationForService() wrapper function.\n\nWDYT? thanks very much.",
+      "range": {
+        "startLine": 529,
+        "startChar": 6,
+        "endLine": 535,
+        "endChar": 65
+      },
+      "revId": "052e259c766fb5d83dee8cd32e1b1423f6fde74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
