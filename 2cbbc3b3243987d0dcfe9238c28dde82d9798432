@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7accc6d_c6db2340",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-29T22:35:30Z",
+      "side": 1,
+      "message": "Do we need to check if we are in overview mode or not to set this flag?\nor Is splitview only enabled in overview mode?",
+      "revId": "2cbbc3b3243987d0dcfe9238c28dde82d9798432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
