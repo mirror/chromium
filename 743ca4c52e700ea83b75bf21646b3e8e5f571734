@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "9e33831a_5c10d559",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-29T22:43:46Z",
+      "side": 1,
+      "message": "It won\u0027t work in all cases. Here is the race condition for different mode.\nIn case of non-managed ARC this checks works fine because\n\n1. We start ARC OOBE Screen\n2. Set arc.enabled true\n3. This triggers ArcSessionManager that accesses this function and everything is correct.\n\nHowever for managed case we have different order.\n\n1. arc.enabled is already true\n2. ArcSessionManager accesses this function but we may not show OOBE page yet and ArcSessionManager thinks this is not OOBE case which is wrong.\n3. Only now ARC OOBE Screen is shown.\n\nSo. It is not very readable :( but we cannot rely only for L420-428",
+      "parentUuid": "83a5a54d_0df535bf",
+      "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c22776b2_060473d0",
         "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
         "patchSetId": 2
