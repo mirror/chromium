@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29535457_9afe6c84",
+        "filename": "third_party/crashpad/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-29T21:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ea45b6b_542ee4b5",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 19
+      },
+      "revId": "98dccc4a52021638e45d9f300c9f62eb9a258ba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f82868de_952bcd03",
         "filename": "third_party/crashpad/update.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "98dccc4a52021638e45d9f300c9f62eb9a258ba1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4a9ce9_663ba386",
+        "filename": "third_party/crashpad/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-29T21:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f82868de_952bcd03",
+      "range": {
+        "startLine": 293,
+        "startChar": 13,
+        "endLine": 293,
+        "endChar": 14
+      },
+      "revId": "98dccc4a52021638e45d9f300c9f62eb9a258ba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
