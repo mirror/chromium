@@ -349,7 +349,8 @@ class ProfileIOData {
 #if defined(OS_CHROMEOS)
     std::unique_ptr<policy::PolicyCertVerifier> policy_cert_verifier;
     std::string username_hash;
-    bool use_system_key_slot;
+    bool use_system_key_slot_nss_context;
+    bool use_system_key_slot_client_certs;
     std::unique_ptr<chromeos::CertificateProvider> certificate_provider;
 #endif
 
@@ -589,7 +590,7 @@ class ProfileIOData {
   mutable std::unique_ptr<ChromeExpectCTReporter> expect_ct_reporter_;
 #if defined(OS_CHROMEOS)
   mutable std::string username_hash_;
-  mutable bool use_system_key_slot_;
+  mutable bool use_system_key_slot_client_certs_;
   mutable std::unique_ptr<chromeos::CertificateProvider> certificate_provider_;
 #endif
 
