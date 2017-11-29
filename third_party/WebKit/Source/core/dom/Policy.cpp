@@ -9,7 +9,6 @@
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/text/StringUTF8Adaptor.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy.h"
 
 namespace blink {
 
@@ -18,13 +17,30 @@ Policy* Policy::Create(Document* document) {
   return new Policy(document);
 }
 
+Policy* Policy::Create(Document* parent_document,
+                       const ParsedFeaturePolicy& container_policy,
+                       const scoped_refptr<SecurityOrigin> origin) {
+  return new Policy(parent_document, container_policy, origin);
+}
+
 // explicit
-Policy::Policy(Document* document) : document_(document) {}
+Policy::Policy(Document* document) : document_(document) {
+  ParsedFeaturePolicy container_policy;
+  policy_ = FeaturePolicy::CreateFromParentPolicy(
+      document_->GetFeaturePolicy(), container_policy,
+      document_->GetSecurityOrigin()->ToUrlOrigin());
+}
+
+Policy::Policy(Document* parent_document,
+               const ParsedFeaturePolicy& container_policy,
+               const scoped_refptr<SecurityOrigin> origin)
+    : document_(parent_document) {
+  UpdateContainerPolicy(container_policy, origin);
+}
 
 bool Policy::allowsFeature(const String& feature) const {
   if (GetDefaultFeatureNameMap().Contains(feature)) {
-    return document_->GetFeaturePolicy()->IsFeatureEnabled(
-        GetDefaultFeatureNameMap().at(feature));
+    return policy_->IsFeatureEnabled(GetDefaultFeatureNameMap().at(feature));
   }
 
   AddWarningForUnrecognizedFeature(feature);
@@ -46,14 +62,14 @@ bool Policy::allowsFeature(const String& feature, const String& url) const {
     return false;
   }
 
-  return document_->GetFeaturePolicy()->IsFeatureEnabledForOrigin(
+  return policy_->IsFeatureEnabledForOrigin(
       GetDefaultFeatureNameMap().at(feature), origin->ToUrlOrigin());
 }
 
 Vector<String> Policy::allowedFeatures() const {
   Vector<String> allowed_features;
   for (const auto& entry : GetDefaultFeatureNameMap()) {
-    if (document_->GetFeaturePolicy()->IsFeatureEnabled(entry.value))
+    if (policy_->IsFeatureEnabled(entry.value))
       allowed_features.push_back(entry.key);
   }
   return allowed_features;
@@ -62,8 +78,7 @@ Vector<String> Policy::allowedFeatures() const {
 Vector<String> Policy::getAllowlistForFeature(const String& feature) const {
   if (GetDefaultFeatureNameMap().Contains(feature)) {
     const FeaturePolicy::Whitelist whitelist =
-        document_->GetFeaturePolicy()->GetWhitelistForFeature(
-            GetDefaultFeatureNameMap().at(feature));
+        policy_->GetWhitelistForFeature(GetDefaultFeatureNameMap().at(feature));
     if (whitelist.MatchesAll())
       return Vector<String>({"*"});
     Vector<String> allowlist;
@@ -75,6 +90,12 @@ Vector<String> Policy::getAllowlistForFeature(const String& feature) const {
 
   AddWarningForUnrecognizedFeature(feature);
   return Vector<String>();
+}
+
+void Policy::UpdateContainerPolicy(const ParsedFeaturePolicy& container_policy,
+                                   const scoped_refptr<SecurityOrigin> origin) {
+  policy_ = FeaturePolicy::CreateFromParentPolicy(
+      document_->GetFeaturePolicy(), container_policy, origin->ToUrlOrigin());
 }
 
 void Policy::AddWarningForUnrecognizedFeature(const String& feature) const {
