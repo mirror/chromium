@@ -16,6 +16,24 @@
       "revId": "9361296365503204367f6f13ea86b63df93db035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcee30d_39e64c89",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-29T10:26:08Z",
+      "side": 1,
+      "message": "Abstracted this into a new method and opened a bug to refactor these method to re-use more code.",
+      "parentUuid": "43853b62_21c6deab",
+      "revId": "9361296365503204367f6f13ea86b63df93db035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
