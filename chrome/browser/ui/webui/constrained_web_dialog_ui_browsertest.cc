@@ -16,7 +16,7 @@
 #include "chrome/browser/ui/webui/constrained_web_dialog_ui.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/in_process_browser_test.h"
-#include "components/viz/common/switches.h"
+#include "components/viz/common/features.h"
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -98,6 +98,18 @@ class ConstrainedWebDialogBrowserTest : public InProcessBrowserTest {
     return true;
   }
 
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    if (ShouldEnableSurfaceSynchronization()) {
+      feature_list()->InitAndEnableFeature(
+          features::kEnableSurfaceSynchronization);
+    } else {
+      feature_list()->InitAndDisableFeature(
+          features::kEnableSurfaceSynchronization);
+    }
+  }
+
+  virtual bool ShouldEnableSurfaceSynchronization() const { return false; }
+
  protected:
   bool IsShowingWebContentsModalDialog(WebContents* web_contents) const {
     WebContentsModalDialogManager* web_contents_modal_dialog_manager =
@@ -109,9 +121,7 @@ class ConstrainedWebDialogBrowserTest : public InProcessBrowserTest {
 class ConstrainedWebDialogSurfaceSynchronizationBrowserTest
     : public ConstrainedWebDialogBrowserTest {
  public:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitch(switches::kEnableSurfaceSynchronization);
-  }
+  bool ShouldEnableSurfaceSynchronization() const override { return true; }
 };
 
 // Tests that opening/closing the constrained window won't crash it.

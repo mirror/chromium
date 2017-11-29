@@ -51,7 +51,7 @@
 #include "components/guest_view/browser/guest_view_manager_delegate.h"
 #include "components/guest_view/browser/guest_view_manager_factory.h"
 #include "components/guest_view/browser/test_guest_view_manager.h"
-#include "components/viz/common/switches.h"
+#include "components/viz/common/features.h"
 #include "content/public/browser/ax_event_notification_details.h"
 #include "content/public/browser/gpu_data_manager.h"
 #include "content/public/browser/interstitial_page.h"
@@ -865,7 +865,17 @@ class WebViewTest : public WebViewTestBase,
       scoped_feature_list_.InitAndDisableFeature(
           features::kGuestViewCrossProcessFrames);
     }
+
+    if (ShouldEnableSurfaceSynchronization()) {
+      scoped_feature_list_.InitAndEnableFeature(
+          features::kEnableSurfaceSynchronization);
+    } else {
+      scoped_feature_list_.InitAndDisableFeature(
+          features::kEnableSurfaceSynchronization);
+    }
   }
+
+  virtual bool ShouldEnableSurfaceSynchronization() const { return false; }
 
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
@@ -905,10 +915,8 @@ class WebViewDPITest : public WebViewTest {
 INSTANTIATE_TEST_CASE_P(WebViewTests, WebViewDPITest, testing::Bool());
 
 class WebViewSurfaceSynchronizationTest : public WebViewTest {
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    WebViewTest::SetUpCommandLine(command_line);
-    command_line->AppendSwitch(switches::kEnableSurfaceSynchronization);
-  }
+ public:
+  bool ShouldEnableSurfaceSynchronization() const override { return true; }
 };
 INSTANTIATE_TEST_CASE_P(WebViewTests,
                         WebViewSurfaceSynchronizationTest,
