@@ -159,6 +159,24 @@
       "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6add5a_e7a345d5",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-29T20:48:20Z",
+      "side": 1,
+      "message": "Oh, ack, this approach needs to change then. I\u0027ll have it post back to UI and see if that introduces much delay?",
+      "parentUuid": "0b767acb_7f5d6156",
+      "revId": "61db7671e17d2483e885dbabda422daab402dfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
