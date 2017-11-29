@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99b64cf5_18f0bf97",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "follow-up request: post this change, it would make sense to extract this class into its own file. same goes for the other classes in this file.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f807524a_0d0814ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "This formally changes the state of the object, but no events get emitted. You should emit the event here and call this._setBgColorInternal(bgColor) instead of this.setBgColor from within this._updateBgColorFromGradient to avoid double event.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0131dc0b_d771277e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "This looks like a widget to me, should it inherit from UI.HBox? That would give you a way to resize it dynamically and provide it with this.element.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78f4d73_a5b9ad5d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "I understand that this is not the new code, but field this._contrastDetails inside ContrastDetails class is confusing, please append Element to the name. Or just use this._element.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5231b2b_e09f02b9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "Why do we need visible here? I thought the section will be either expanded or collapsed, but it\u0027ll always be there.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30468996_f1e2623a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "Why can this happen, what would this mean to the user? Something disappears?",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416f4b9b_6f7a15ba",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "You should not need to call update - contrast info will trigger it for you. Also, why can\u0027t the called of this method do it on the contrastInfo right away? We should not have a method on view that only delegates mutation to the model. Call sites should operate on model.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d64577_68c143d6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "I don\u0027t see this._toolsContainer being used outside of this method, why is it now a field?\n\nAlso, why did this style change? I don\u0027t think you are changing the looks of this part.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379d77b2_de54d771",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "We should implement the expand logic as a part of your section control. We can see it at all times, either in expanded or collapsed state, so it should be able to make itself larger or smaller without calling into the embedder. I.e. This callback should not be necessary.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a870241_4f23a7dd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "And we should not need this._contrastOverlay field if everything goes right.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451e1704_935300fa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "And we should not need this._contrastDetails field if everything goes right.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85ba99b_b3de8911",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-29T21:50:35Z",
+      "side": 1,
+      "message": "What is the difference between _paletteContainer and _paletteColorsContainer? The palette always referts to colors...",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
