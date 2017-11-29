@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8dbadab4_357a1a61",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-29T12:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a0d0356_3593e33d",
+      "range": {
+        "startLine": 12,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16d12ba4_73cfbf62",
         "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.h",
         "patchSetId": 6
@@ -45,6 +69,54 @@
       "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a66993_5f72b727",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-29T12:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16d12ba4_73cfbf62",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92aa91bb_303a80a6",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-29T12:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16d12ba4_73cfbf62",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c2fcff54_f75c40d7",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-29T12:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "199df0aa_3b4956af",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 24
+      },
+      "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eeb980ad_5c3a2f68",
         "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
         "patchSetId": 6
@@ -94,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "462d4a8e_f01be6b9",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-29T12:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeb980ad_5c3a2f68",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 22
+      },
+      "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68689dc2_ad46b184",
         "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
         "patchSetId": 6
@@ -114,6 +234,30 @@
       "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc43959f_6f007b5f",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-29T12:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68689dc2_ad46b184",
+      "range": {
+        "startLine": 268,
+        "startChar": 12,
+        "endLine": 268,
+        "endChar": 34
+      },
+      "revId": "6214d41ac0977e5ce114e3757bfdd55fec0ed2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
