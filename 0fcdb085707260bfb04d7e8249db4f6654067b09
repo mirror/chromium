@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87ed86b8_45323998",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T00:47:58Z",
+      "side": 1,
+      "message": "How about adding \"reflectToAttribute: true\" to expanded_, and changing\n\n#devDrawer[expanded] .dev-controls {...}\nto\n:host([expanded]) devDrawer .dev-controls {...}\n\nThis eliminates the need to manually keep devDrawer\u0027s expanded and this.expanded_ in sync.",
+      "range": {
+        "startLine": 100,
+        "startChar": 24,
+        "endLine": 100,
+        "endChar": 48
+      },
+      "revId": "0fcdb085707260bfb04d7e8249db4f6654067b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fd9e74_afaaf89c",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T00:47:58Z",
+      "side": 1,
+      "message": "Nit (optional): We usually don\u0027t follow alphabetical order, and list observer after \u0027type\u0027 and \u0027value\u0027.",
+      "revId": "0fcdb085707260bfb04d7e8249db4f6654067b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d054a2ad_6fef42f0",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-29T00:47:58Z",
+      "side": 1,
+      "message": "This listener should either be added in ready(), or be removed in detached(). Otherwise we are leaking listeners if this element get\u0027s attached-\u003edetached-\u003eattached.\n\nA different (maybe preferred) approach would be to use listenOnce() and only add this listener when an transition is spawned.",
+      "revId": "0fcdb085707260bfb04d7e8249db4f6654067b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
