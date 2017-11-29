@@ -124,6 +124,9 @@ class NET_EXPORT TCPSocketWin : public base::win::ObjectWatcher::Delegate {
   // write, or accept operations should be pending.
   SocketDescriptor ReleaseSocketDescriptorForTesting();
 
+  // Apply |tag| to this socket.
+  void Tag(const SocketTag& tag);
+
  private:
   class Core;
 

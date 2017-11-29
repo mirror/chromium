@@ -35,6 +35,7 @@
 #include "net/log/net_log_source_type.h"
 #include "net/socket/socket_descriptor.h"
 #include "net/socket/socket_options.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/udp_net_log_parameters.h"
 
 #if defined(OS_ANDROID)
@@ -1075,6 +1076,13 @@ int UDPSocketPosix::SetDiffServCodePoint(DiffServCodePoint dscp) {
 
 void UDPSocketPosix::DetachFromThread() {
   DETACH_FROM_THREAD(thread_checker_);
+}
+
+void UDPSocketPosix::Tag(const SocketTag& tag) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_NE(socket_, kInvalidSocket);
+  DCHECK(is_connected());
+  tag.Apply(socket_);
 }
 
 }  // namespace net

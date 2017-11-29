@@ -143,6 +143,7 @@ class WrappedStreamSocket : public StreamSocket {
   int64_t GetTotalReceivedBytes() const override {
     return transport_->GetTotalReceivedBytes();
   }
+  void Tag(const SocketTag& tag) override { transport_->Tag(tag); }
 
   // Socket implementation:
   int Read(IOBuffer* buf,

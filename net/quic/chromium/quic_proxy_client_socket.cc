@@ -159,6 +159,11 @@ int64_t QuicProxyClientSocket::GetTotalReceivedBytes() const {
   return stream_->NumBytesConsumed();
 }
 
+void QuicProxyClientSocket::Tag(const SocketTag& tag) {
+  // |session_| can be tagged, but |stream_| cannot.
+  CHECK(false);
+}
+
 int QuicProxyClientSocket::Read(IOBuffer* buf,
                                 int buf_len,
                                 const CompletionCallback& callback) {
