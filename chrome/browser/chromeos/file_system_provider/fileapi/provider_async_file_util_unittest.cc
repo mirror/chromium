@@ -18,6 +18,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/run_loop.h"
 #include "chrome/browser/chromeos/file_system_provider/fake_provided_file_system.h"
+#include "chrome/browser/chromeos/file_system_provider/fake_registry.h"
 #include "chrome/browser/chromeos/file_system_provider/service.h"
 #include "chrome/browser/chromeos/file_system_provider/service_factory.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -25,6 +26,9 @@
 #include "chrome/test/base/testing_profile_manager.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/common/extension.h"
+#include "extensions/common/manifest_constants.h"
+#include "extensions/common/permissions/api_permission.h"
 #include "storage/browser/blob/shareable_file_reference.h"
 #include "storage/browser/fileapi/async_file_util.h"
 #include "storage/browser/fileapi/external_mount_points.h"
@@ -105,6 +109,36 @@ storage::FileSystemURL CreateFileSystemURL(const std::string& mount_point_name,
       base::FilePath::FromUTF8Unsafe(mount_point_name).Append(file_path));
 }
 
+scoped_refptr<extensions::Extension> CreateFakeExtension(
+    const std::string& extension_id, bool should_have_api_permission) {
+  base::DictionaryValue manifest;
+  std::string error;
+  manifest.SetKey(extensions::manifest_keys::kVersion, base::Value("1.0.0.0"));
+  manifest.SetKey(extensions::manifest_keys::kName, base::Value("unused"));
+
+  if (should_have_api_permission){
+    auto permissions = base::MakeUnique<base::ListValue>();
+    permissions->AppendString("fileSystemProvider");
+    manifest.Set(extensions::manifest_keys::kPermissions, std::move(permissions));
+
+    auto capabilities = base::MakeUnique<base::DictionaryValue>();
+    capabilities->SetString("source", "network");
+    manifest.Set(extensions::manifest_keys::kFileSystemProviderCapabilities, std::move(capabilities));
+  }
+
+  auto ext = extensions::Extension::Create(base::FilePath(),
+                                       extensions::Manifest::UNPACKED,
+                                       manifest,
+                                       extensions::Extension::NO_FLAGS,
+                                       extension_id,
+                                       &error);
+  
+  LOG(ERROR) << error; // Added this so we could see the error that was generated (this is working now)
+  return ext;
+}
+
+
+
 }  // namespace
 
 // Tests in this file are very lightweight and just test integration between
@@ -128,22 +162,36 @@ class FileSystemProviderProviderAsyncFileUtilTest : public testing::Test {
     file_system_context_ =
         content::CreateFileSystemContextForTesting(NULL, data_dir_.GetPath());
 
-    Service* service = Service::Get(profile_);  // Owned by its factory.
-    service->SetExtensionFileSystemFactoryForTesting(
-        base::Bind(&FakeProvidedFileSystem::Create));
+    extensions::ExtensionRegistry* extension_registry = extensions::ExtensionRegistry::Get(profile_);
+    extension_ = CreateFakeExtension(kExtensionId, true);
+    extension_registry->AddEnabled(extension_);
 
-    const base::File::Error result = service->MountFileSystem(
-        kProviderId, MountOptions(kFileSystemId, "Testing File System"));
+    service_.reset(new Service(profile_, extension_registry));  // Owned by its factory.
+    service_->SetExtensionFileSystemFactoryForTesting(base::Bind(&FakeProvidedFileSystem::Create));
+
+    registry_ = new FakeRegistry;
+    // Passes ownership to the service instance.
+    service_->SetRegistryForTesting(base::WrapUnique(registry_));
+
+    const base::File::Error result = service_->MountFileSystem(
+        ProviderId::CreateFromExtensionId(kExtensionId), MountOptions(kFileSystemId, "Testing File System"));
     ASSERT_EQ(base::File::FILE_OK, result);
     const ProvidedFileSystemInfo& file_system_info =
-        service->GetProvidedFileSystem(kProviderId, kFileSystemId)
+        service_->GetProvidedFileSystem(ProviderId::CreateFromExtensionId(kExtensionId), kFileSystemId)
             ->GetFileSystemInfo();
     const std::string mount_point_name =
         file_system_info.mount_path().BaseName().AsUTF8Unsafe();
-
+    //LOG(ERROR) << "MountPointName:" << mount_point_name;
     file_url_ = CreateFileSystemURL(
         mount_point_name,
         base::FilePath(kFakeFilePath + 1 /* No leading slash. */));
+    //LOG(ERROR) << "Create File System URL" << file_url_.DebugString();
+
+
+    // just added this to see if the filesystem could be found before the end of setup
+    service_->GetProvidedFileSystem("test");
+    //
+
     ASSERT_TRUE(file_url_.is_valid());
     directory_url_ = CreateFileSystemURL(
         mount_point_name, base::FilePath(FILE_PATH_LITERAL("hello")));
@@ -158,6 +206,11 @@ class FileSystemProviderProviderAsyncFileUtilTest : public testing::Test {
         file_system_context_.get());
   }
 
+  void TearDown() override {
+    service_->Shutdown();
+  }
+
+
   content::TestBrowserThreadBundle thread_bundle_;
   base::ScopedTempDir data_dir_;
   std::unique_ptr<TestingProfileManager> profile_manager_;
@@ -167,7 +220,12 @@ class FileSystemProviderProviderAsyncFileUtilTest : public testing::Test {
   storage::FileSystemURL file_url_;
   storage::FileSystemURL directory_url_;
   storage::FileSystemURL root_url_;
+  std::unique_ptr<Service> service_;
+  scoped_refptr<extensions::Extension> extension_;
+  FakeRegistry* registry_;
 };
+
+
 
 TEST_F(FileSystemProviderProviderAsyncFileUtilTest, CreateOrOpen_Create) {
   EventLogger logger;
