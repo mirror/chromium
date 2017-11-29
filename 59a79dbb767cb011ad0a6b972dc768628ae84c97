@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "0cf4ef7c_3dabe690",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4424,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-29T08:33:45Z",
+      "side": 1,
+      "message": "If you look at the code, the first thing addSelectedTabWithURL:...tabAddedCompletion: is doing is to add the completion block to self.foregroundTabWasAddedCompletionBlock. So...",
+      "parentUuid": "5d9752c9_458a36c9",
+      "range": {
+        "startLine": 4421,
+        "startChar": 30,
+        "endLine": 4424,
+        "endChar": 14
+      },
+      "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34aef091_34d864c0",
         "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
         "patchSetId": 3
