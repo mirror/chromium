@@ -68,6 +68,9 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   gfx::NativeWindow GetNativeWindow() const override;
 #endif
 
+  // Callback for when the password list has been written to the destination.
+  void OnPasswordsExportCompleted(const std::string& error);
+
   // KeyedService overrides:
   void Shutdown() override;
 

@@ -106,10 +106,12 @@ void PasswordImportConsumer::ConsumePassword(
 
 PasswordManagerPorter::PasswordManagerPorter(
     password_manager::CredentialProviderInterface*
-        credential_provider_interface)
+        credential_provider_interface,
+    base::RepeatingCallback<void(const std::string&)> on_exported_callback)
     : PasswordManagerPorter(
           std::make_unique<password_manager::PasswordManagerExporter>(
-              credential_provider_interface)) {}
+              credential_provider_interface,
+              std::move(on_exported_callback))) {}
 
 PasswordManagerPorter::PasswordManagerPorter(
     std::unique_ptr<password_manager::PasswordManagerExporter> exporter)
