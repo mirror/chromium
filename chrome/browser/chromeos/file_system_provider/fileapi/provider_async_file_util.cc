@@ -205,6 +205,7 @@ void CopyEntryOnUIThread(
 
   if (!source_parser.Parse() || !target_parser.Parse() ||
       source_parser.file_system() != target_parser.file_system()) {
+    LOG(ERROR) << "INVALID OP CopyEntryOnUIThread";
     callback.Run(base::File::FILE_ERROR_INVALID_OPERATION);
     return;
   }
