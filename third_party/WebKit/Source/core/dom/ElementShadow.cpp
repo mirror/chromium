@@ -126,19 +126,21 @@ void ElementShadow::Detach(const Node::AttachContext& context) {
 }
 
 void ElementShadow::SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc() {
-  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() && IsV1())
+  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
+      (IsV1() || IsUserAgentV1()))
     YoungestShadowRoot().SetNeedsAssignmentRecalc();
   else
     SetNeedsDistributionRecalc();
 }
 
 void ElementShadow::SetNeedsDistributionRecalc() {
-  DCHECK(!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() && IsV1()));
+  DCHECK(!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
+           (IsV1() || IsUserAgentV1())));
   if (needs_distribution_recalc_)
     return;
   needs_distribution_recalc_ = true;
   Host().MarkAncestorsWithChildNeedsDistributionRecalc();
-  if (!IsV1())
+  if (!IsV1() && !IsUserAgentV1())
     V0().ClearDistribution();
 }
 
@@ -163,7 +165,7 @@ bool ElementShadow::HasSameStyles(const ElementShadow& other) const {
 }
 
 void ElementShadow::Distribute() {
-  if (IsV1())
+  if (IsV1() || IsUserAgentV1())
     YoungestShadowRoot().DistributeV1();
   else
     V0().Distribute();
