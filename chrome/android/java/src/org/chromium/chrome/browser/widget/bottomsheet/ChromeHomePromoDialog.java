@@ -75,6 +75,9 @@ public class ChromeHomePromoDialog extends PromoDialog {
     /** Whether Chrome Home is enabled when the promo is shown. */
     private boolean mChromeHomeEnabledOnShow;
 
+    /** Whether the promo is acting as an info-only dialog. i.e. it does not provide options. */
+    private boolean mIsInfoDialog;
+
     /**
      * Default constructor.
      * @param activity The {@link Activity} showing the promo.
@@ -85,6 +88,7 @@ public class ChromeHomePromoDialog extends PromoDialog {
         setOnDismissListener(this);
         mShowReason = showReason;
         mChromeHomeShouldBeEnabled = FeatureUtilities.isChromeHomeEnabled();
+        mIsInfoDialog = ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_INFO_ONLY);
 
         RecordHistogram.recordEnumeratedHistogram("Android.ChromeHome.Promo.ShowReason", showReason,
                 ChromeHomePromoDialog.ShowReason.BOUNDARY);
@@ -106,7 +110,9 @@ public class ChromeHomePromoDialog extends PromoDialog {
                 ? R.string.chrome_home_promo_dialog_message_accessibility
                 : R.string.chrome_home_promo_dialog_message;
 
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (mIsInfoDialog) {
+            params.primaryButtonStringResource = R.string.ok;
+        } else if (FeatureUtilities.isChromeHomeEnabled()) {
             params.primaryButtonStringResource = R.string.ok;
             params.secondaryButtonStringResource = R.string.chrome_home_promo_dialog_turn_off;
         } else {
@@ -192,6 +198,10 @@ public class ChromeHomePromoDialog extends PromoDialog {
 
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
+        // If the dialog is info-only, do not record any metrics since there were no provided
+        // options.
+        if (mIsInfoDialog) return;
+
         // If the state of Chrome Home changed while this dialog was opened, do nothing. This can
         // happen in multi-window if this dialog is shown in both windows.
         if (mChromeHomeEnabledOnShow != FeatureUtilities.isChromeHomeEnabled()) return;

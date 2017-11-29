@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
@@ -52,6 +53,8 @@ public class FeatureUtilities {
     private static final String SYNTHETIC_CHROME_HOME_EXPERIMENT_NAME = "SyntheticChromeHome";
     private static final String ENABLED_EXPERIMENT_GROUP = "Enabled";
     private static final String DISABLED_EXPERIMENT_GROUP = "Disabled";
+
+    private static final long CHROME_HOME_MAX_ENABLED_TIME_MS = 60000; // 60 seconds.
 
     private static Boolean sHasGoogleAccountAuthenticator;
     private static Boolean sHasRecognitionIntentHandler;
@@ -381,16 +384,32 @@ public class FeatureUtilities {
      * @return Whether the Chrome Home promo should be shown for cold-start.
      */
     public static boolean shouldShowChromeHomePromoForStartup() {
-        if (DeviceFormFactor.isTablet() || isChromeHomeEnabled()
-                || !ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)
-                || !ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_ON_STARTUP)) {
-            return false;
+        if (DeviceFormFactor.isTablet()) return false;
+
+        // The preference will be set if the promo has been seen before. If that is the case, do not
+        // show it again.
+        ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
+        boolean isChromeHomePrefSet = prefManager.isChromeHomeUserPreferenceSet();
+        if (isChromeHomePrefSet) return false;
+
+        if (isChromeHomeEnabled()
+                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_INFO_ONLY)) {
+            SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+            long chromeHomeEnabledDate = sharedPreferences.getLong(
+                    ChromePreferenceManager.CHROME_HOME_SHARED_PREFERENCES_KEY,
+                    System.currentTimeMillis());
+
+            long timeDeadlineForPromo = chromeHomeEnabledDate + CHROME_HOME_MAX_ENABLED_TIME_MS;
+
+            // If Chrome Home has been enabled for < 60 seconds, show the info dialog.
+            return System.currentTimeMillis() < timeDeadlineForPromo;
+        } else if (!isChromeHomeEnabled()
+                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)
+                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_ON_STARTUP)) {
+            return true;
         }
 
-        ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
-
-        // Don't show the promo is the user has Chrome Home enabled.
-        return !prefManager.isChromeHomeUserPreferenceSet();
+        return false;
     }
 
     private static native void nativeSetCustomTabVisible(boolean visible);
