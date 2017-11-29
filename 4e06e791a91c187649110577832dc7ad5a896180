@@ -16,6 +16,24 @@
       "revId": "4e06e791a91c187649110577832dc7ad5a896180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f6e791_228776de",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-29T01:17:48Z",
+      "side": 1,
+      "message": "ah, i think i know. we expect that first_layout must be set before first_paint, but that doesn\u0027t appear to be a valid assumption for svg files. because this expectation is not met, we do not dispatch any timing updates, so it looks to the test like the load event never fires, and it times out.\n\ni think it\u0027s reasonable to remove this check, since it doesn\u0027t hold generally.\n\nthe code to remove is:\n  if (!EventsInOrder(timing.document_timing-\u003efirst_layout,\n                     timing.paint_timing-\u003efirst_paint)) {\n    // This can happen when we process an XHTML document that doesn\u0027t contain\n    // well formed XML. See crbug.com/627607.\n    DLOG(ERROR) \u003c\u003c \"Invalid first_layout \"\n                \u003c\u003c timing.document_timing-\u003efirst_layout \u003c\u003c \" for first_paint \"\n                \u003c\u003c timing.paint_timing-\u003efirst_paint;\n    return internal::INVALID_ORDER_FIRST_LAYOUT_FIRST_PAINT;\n  }\n\nin IsValidPageLoadTiming in page_load_metrics_update_dispatcher.cc.",
+      "parentUuid": "7176b9f0_a8861210",
+      "revId": "4e06e791a91c187649110577832dc7ad5a896180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
