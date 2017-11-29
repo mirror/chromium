@@ -34,8 +34,10 @@ class PasswordManagerPorter : public ui::SelectFileDialog::Listener,
   explicit PasswordManagerPorter(
       std::unique_ptr<password_manager::PasswordManagerExporter> exporter);
 
-  explicit PasswordManagerPorter(password_manager::CredentialProviderInterface*
-                                     credential_provider_interface);
+  explicit PasswordManagerPorter(
+      password_manager::CredentialProviderInterface*
+          credential_provider_interface,
+      base::RepeatingCallback<void(const std::string&)> on_exported_callback);
 
   ~PasswordManagerPorter() override;
 

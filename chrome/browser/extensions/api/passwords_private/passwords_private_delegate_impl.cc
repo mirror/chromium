@@ -38,7 +38,10 @@ PasswordsPrivateDelegateImpl::PasswordsPrivateDelegateImpl(Profile* profile)
       password_manager_presenter_(
           std::make_unique<PasswordManagerPresenter>(this)),
       password_manager_porter_(std::make_unique<PasswordManagerPorter>(
-          password_manager_presenter_.get())),
+          password_manager_presenter_.get(),
+          base::BindRepeating(
+              &PasswordsPrivateDelegateImpl::OnCompletedWritingToDestination,
+              base::Unretained(this)))),
       password_access_authenticator_(
           base::BindRepeating(&PasswordsPrivateDelegateImpl::OsReauthCall,
                               base::Unretained(this))),
@@ -260,6 +263,11 @@ gfx::NativeWindow PasswordsPrivateDelegateImpl::GetNativeWindow() const {
   return web_contents_->GetTopLevelNativeWindow();
 }
 #endif
+
+void PasswordsPrivateDelegateImpl::OnCompletedWritingToDestination(
+    const std::string& error) {
+  // TODO(crbug.com/785237) Implementing sending event to UI.
+}
 
 void PasswordsPrivateDelegateImpl::Shutdown() {
   password_manager_presenter_.reset();

@@ -25,7 +25,7 @@ class Profile;
 // PasswordManagerPresenter.
 class PasswordUIView {
  public:
-  virtual ~PasswordUIView() {}
+  virtual ~PasswordUIView() = default;
 
   // Returns the profile associated with the currently active profile.
   virtual Profile* GetProfile() = 0;
