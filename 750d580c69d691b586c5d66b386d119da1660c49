@@ -209,6 +209,24 @@
       "revId": "750d580c69d691b586c5d66b386d119da1660c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7006988_64b2027a",
+        "filename": "chromeos/login/auth/authpolicy_test_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-29T03:19:57Z",
+      "side": 1,
+      "message": "Either that, or install_attributes.{h,cc}? I think if we end up with a couple of related functions, we can pull it out into a separate file, but otherwise this overhead seems unnecessary?",
+      "parentUuid": "ab044b2a_92544686",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
