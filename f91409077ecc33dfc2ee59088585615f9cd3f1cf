@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c54a8f4f_ac16753c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-29T23:18:26Z",
+      "side": 1,
+      "message": "You are not checking that the anonymous block is wrapping text nodes -- is that the only case where that can happen?",
+      "revId": "f91409077ecc33dfc2ee59088585615f9cd3f1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
