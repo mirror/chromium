@@ -847,7 +847,7 @@ inline void InlineBidiResolver::AppendRun(BidiRunList<BidiRun>& runs) {
     // Keep track of when we enter/leave "unicode-bidi: isolate" inlines.
     // Initialize our state depending on if we're starting in the middle of such
     // an inline.
-    // FIXME: Could this initialize from this->inIsolate() instead of walking up
+    // FIXME: Could this initialize from inIsolate() instead of walking up
     // the layout tree?
     IsolateTracker isolate_tracker(runs, NumberOfIsolateAncestors(sor_));
     int start = sor_.Offset();
