@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1c7bade_fb8c36bd",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3484,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-29T21:13:46Z",
+      "side": 1,
+      "message": "\"so we can\u0027t share it\" \u003d\u003e does this imply that they should not be able to do parallel writing. That should not happen since request1\u0027s entry is doomed so this part of the comment may be removed.",
+      "revId": "565e15708b51e379dffc3778b5905fe765d7d705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627c527b_8d1eddac",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3494,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-29T21:13:46Z",
+      "side": 1,
+      "message": "Why does this read from a doomed entry?",
+      "revId": "565e15708b51e379dffc3778b5905fe765d7d705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
