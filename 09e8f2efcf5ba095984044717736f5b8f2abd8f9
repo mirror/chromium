@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2efc588d_e12aef4c",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T20:52:00Z",
+      "side": 1,
+      "message": "Will this modify the list you are iterating over? Is that safe?",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 49
+      },
+      "revId": "09e8f2efcf5ba095984044717736f5b8f2abd8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533055d2_c19d4e89",
+        "filename": "services/ui/ws/platform_display_mirror.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T20:52:00Z",
+      "side": 1,
+      "message": "Don\u0027t inline overrides (see chromiume style guide).",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 58
+      },
+      "revId": "09e8f2efcf5ba095984044717736f5b8f2abd8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea97edb1_3545b679",
+        "filename": "services/ui/ws/platform_display_mirror.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T20:52:00Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "09e8f2efcf5ba095984044717736f5b8f2abd8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b80f59_5bf81749",
+        "filename": "services/ui/ws/platform_display_mirror.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T20:52:00Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 18
+      },
+      "revId": "09e8f2efcf5ba095984044717736f5b8f2abd8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
