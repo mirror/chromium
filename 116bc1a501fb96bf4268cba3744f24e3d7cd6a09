@@ -329,6 +329,30 @@
       "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41b4e28_f7c269bb",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-29T05:55:50Z",
+      "side": 1,
+      "message": "Oh yes, sorry I didn\u0027t see the latest patch for some reason. And I guess ObjCCast just returns nil if it can\u0027t cast it, without DCHECKing. It\u0027s more clear now. Thanks.",
+      "parentUuid": "f05a65df_1aa9e540",
+      "range": {
+        "startLine": 340,
+        "startChar": 2,
+        "endLine": 341,
+        "endChar": 54
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
