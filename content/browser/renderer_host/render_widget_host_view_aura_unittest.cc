@@ -85,6 +85,7 @@
 #include "ui/aura/test/test_cursor_client.h"
 #include "ui/aura/test/test_screen.h"
 #include "ui/aura/test/test_window_delegate.h"
+#include "ui/aura/test/window_test_api.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_observer.h"
@@ -1748,34 +1749,36 @@ TEST_F(RenderWidgetHostViewAuraTest, WasOccluded) {
   view_->Show();
   EXPECT_FALSE(widget_host_->is_hidden());
 
-  // Verifies WasOccluded sets RenderWidgetHostImpl as hidden and WasUnOccluded
-  // resets the state.
-  view_->WasOccluded();
+  aura::test::WindowTestApi window_test_api(view_->GetNativeView());
+
+  // Verifies that occluding the window sets the RenderWidgetHostImpl as hidden
+  // and unoccluding it resets the state.
+  window_test_api.SetOccluded(true);
   EXPECT_TRUE(widget_host_->is_hidden());
-  view_->WasUnOccluded();
+  window_test_api.SetOccluded(false);
   EXPECT_FALSE(widget_host_->is_hidden());
 
-  // Verifies WasOccluded sets RenderWidgetHostImpl as hidden and Show resets
-  // the state.
-  view_->WasOccluded();
+  // Verifies that occluding the window sets the RenderWidgetHostImpl as hidden
+  // and Show doesn't reset the state.
+  window_test_api.SetOccluded(true);
   EXPECT_TRUE(widget_host_->is_hidden());
   view_->Show();
-  EXPECT_FALSE(widget_host_->is_hidden());
+  EXPECT_TRUE(widget_host_->is_hidden());
 
-  // WasOccluded and WasUnOccluded are not in pairs. The last one dictates
-  // the final state.
+  // When aura::Window::SetOccluded() is called multiple times, the last one
+  // dictates the final state.
   for (int i = 0; i < 2; ++i) {
-    view_->WasOccluded();
+    window_test_api.SetOccluded(true);
     EXPECT_TRUE(widget_host_->is_hidden());
   }
-  view_->WasUnOccluded();
+  window_test_api.SetOccluded(false);
   EXPECT_FALSE(widget_host_->is_hidden());
 
   for (int i = 0; i < 4; ++i) {
-    view_->WasUnOccluded();
+    window_test_api.SetOccluded(false);
     EXPECT_FALSE(widget_host_->is_hidden());
   }
-  view_->WasOccluded();
+  window_test_api.SetOccluded(true);
   EXPECT_TRUE(widget_host_->is_hidden());
 }
 
