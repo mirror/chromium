@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88112a4f_092bb0fa",
+        "filename": "ash/shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T18:37:32Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "74e83563_2e4fbc06",
+      "revId": "406deb8282062438f27bf0c547ff7e252fab9175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98f72a54_c50c7459",
         "filename": "ash/shell/content/client/shell_browser_main_parts.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "406deb8282062438f27bf0c547ff7e252fab9175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e22285_56fc895b",
+        "filename": "ash/shell/content/client/shell_browser_main_parts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T18:37:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98f72a54_c50c7459",
+      "revId": "406deb8282062438f27bf0c547ff7e252fab9175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f56c9126_aaa580f0",
+        "filename": "ash/shell/content/client/shell_browser_main_parts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T18:37:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61585ac1_32229c8f",
+      "revId": "406deb8282062438f27bf0c547ff7e252fab9175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e066811_bb0d7098",
         "filename": "ash/shell_init_params.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "406deb8282062438f27bf0c547ff7e252fab9175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc77a32_8bbbb80a",
+        "filename": "ash/shell_init_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T18:37:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e066811_bb0d7098",
+      "revId": "406deb8282062438f27bf0c547ff7e252fab9175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
