@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a33cd04_2cf010aa",
+        "filename": "ui/file_manager/file_manager/background/js/drive_sync_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-29T13:51:23Z",
+      "side": 1,
+      "message": "nit: \u0027\" right now. ...\u0027",
+      "range": {
+        "startLine": 219,
+        "startChar": 11,
+        "endLine": 219,
+        "endChar": 16
+      },
+      "revId": "a2cef2174edb3eec2975158bf5099d54550d5d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
