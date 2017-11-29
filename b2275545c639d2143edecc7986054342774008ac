@@ -238,6 +238,30 @@
       "revId": "b2275545c639d2143edecc7986054342774008ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d60d8f23_c14d88d4",
+        "filename": "components/arc/arc_bridge_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-29T19:07:23Z",
+      "side": 1,
+      "message": "I mentioned this somewhere already:\nhttps://cs.chromium.org/chromium/src/components/arc/connection_holder.h?l\u003d133\nThere won\u0027t be more than one PrintInstance at a time.\nThere shouldn\u0027t be more that one PrinterDiscoverySession at a time, although nothing prevents it from working either way.",
+      "parentUuid": "a07ba96d_f06f31dc",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
