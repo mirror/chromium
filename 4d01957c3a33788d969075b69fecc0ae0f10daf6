@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "312903e9_87b6a27d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/document-user-activation-feature-policy-alternating.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T10:26:13Z",
+      "side": 1,
+      "message": "I have added a specific same origin test.",
+      "parentUuid": "efacf894_0622278d",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfedc3f4_3139e9ba",
         "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "writtenOn": "2017-11-27T17:49:30Z",
       "side": 1,
       "message": "I would recommend checking what the flag was and reverting to it.",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742fe359_90b3a67c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T10:26:13Z",
+      "side": 1,
+      "message": "There are no getters on window.internals.settings. I could add one if you want?",
+      "parentUuid": "dfedc3f4_3139e9ba",
       "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +125,42 @@
     },
     {
       "key": {
+        "uuid": "62945d46_3c9c4dd0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T10:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a43f28a4_f533a02c",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "661ab092_41497635",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T10:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "074bdbe4_68cb877c",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1279593_1f7c6ca5",
         "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
         "patchSetId": 5
@@ -103,6 +175,24 @@
       "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18be1c6_31a55459",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T10:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1279593_1f7c6ca5",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "1ceaf48a_8bf47120",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T10:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b79801a_1939c153",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32b709c6_aeb5759e",
         "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
         "patchSetId": 5
@@ -134,6 +242,24 @@
       "writtenOn": "2017-11-27T17:49:30Z",
       "side": 1,
       "message": "I assume this will check for the parent chain. Could check that if iframe 1b gives allow\u003dautoplay to iframe 2, iframe 2 can\u0027t autoplay?",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fee372_7d53af43",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T10:26:13Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand here. If iframe1b gives allow\u003dautoplay to iframe 2 it should be able to autoplay?",
+      "parentUuid": "32b709c6_aeb5759e",
       "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -175,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "4a6ec528_f5299f03",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T10:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3df9129_34cccb0b",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "333c418d_44c652f5",
         "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
         "patchSetId": 5
@@ -189,6 +333,24 @@
       "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd5f546_0d069577",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T10:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "333c418d_44c652f5",
+      "revId": "4d01957c3a33788d969075b69fecc0ae0f10daf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
