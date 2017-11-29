@@ -16,6 +16,24 @@
       "revId": "eb2d9698e84e09c6ff523bb0d587c0d8b898eb12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b6e1a3_3b7f40a9",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-11-29T22:04:06Z",
+      "side": 1,
+      "message": "It was because I wasn\u0027t sure how the format would end up so was mostly just verifying I could make something similar to the correct format. This now returns a string.",
+      "parentUuid": "d263d8ad_599e7b8f",
+      "revId": "eb2d9698e84e09c6ff523bb0d587c0d8b898eb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
