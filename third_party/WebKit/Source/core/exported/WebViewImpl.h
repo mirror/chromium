@@ -449,7 +449,7 @@ class CORE_EXPORT WebViewImpl final
   // changed.
   void DidUpdateBrowserControls();
 
-  void SetScrollBoundaryBehavior(const WebScrollBoundaryBehavior&);
+  void SetOverscrollBehavior(const WebOverscrollBehavior&);
 
   void ForceNextWebGLContextCreationToFail() override;
   void ForceNextDrawingBufferCreationToFail() override;
