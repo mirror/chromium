@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83877ca6_03725cd9",
+        "filename": "components/sessions/core/serialized_navigation_entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T19:29:26Z",
+      "side": 1,
+      "message": "I\u0027m ok with what you have here, but another option is to rev the format.",
+      "range": {
+        "startLine": 251,
+        "startChar": 2,
+        "endLine": 252,
+        "endChar": 29
+      },
+      "revId": "be872012fe17853b803265ff54adc2281064a504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
